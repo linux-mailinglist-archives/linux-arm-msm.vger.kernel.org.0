@@ -2,326 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C43D34F851D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 18:43:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 996BE4F8548
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 18:52:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345801AbiDGQp5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Apr 2022 12:45:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33810 "EHLO
+        id S1345854AbiDGQx6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Apr 2022 12:53:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238769AbiDGQp5 (ORCPT
+        with ESMTP id S1345874AbiDGQxh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Apr 2022 12:45:57 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BC7F1C1E43
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Apr 2022 09:43:49 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id o20so5454448pla.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 09:43:49 -0700 (PDT)
+        Thu, 7 Apr 2022 12:53:37 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BA665DE78;
+        Thu,  7 Apr 2022 09:51:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ua13KjJ44TnzMW/JsRGbxh5MdZZs5pUlw2C+XLDEQAU=;
-        b=kmDrfwgHcJfDO6CqJKi8wbwaQKrr9LHOWNheZWqSFdFeL5ZuSgD/YmQiUhFyOVy0uC
-         DBgRoipvJ6c+7bzP67Ywn7+E+dMJO/70nCuF9MA7VAN0nq4x1nOsZ2iW3RwcUxwv3K3A
-         uJ1qPh4r7v36KtvUEx9Ql+TtTyVbVd94RSdwA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ua13KjJ44TnzMW/JsRGbxh5MdZZs5pUlw2C+XLDEQAU=;
-        b=D7OxSMG7RtxVzBYnuu/Ob5AeqUz50Y2Mx4rJxTrhGAoEsz0Q051UnIWGGA7/vlnZNU
-         aw0/BV1zpRve+alxtvB73v2zCIDMiPsT9ctx7MMbYoLXI/jLVMcrF5iHgrsM+WbJwxKU
-         yDMCXegdVkRp+APDtsFQtFormbti5OcBuNLuDtgxD8WfX97ZfaBOWA6wBKlN6ZedcDjy
-         B5INnokini8XIMZzreqTvafsxSwz5zshwYfskLOhs/wQTlZSoKlWa4ECO/V4S3yPi+f0
-         NAnbYsEApukL4wZBlpkri9fl7jSk2qe3Vxh+LNmd9balbQcQFmVQqY0voj5B+qPcKX/8
-         KqRw==
-X-Gm-Message-State: AOAM5306YvLScqiDW7d6uxsHT0UUQrg27WMgs/tBQdgSDpBCA/opuZ40
-        7Z/MZSxKPk4IOyoTyVluohHQBA==
-X-Google-Smtp-Source: ABdhPJwD9ZPPEfmsluDZxDBfd5nSYo8Z7c3H37FzPDzr6bIxpBhX5zCHgKTIjg7w21SQZT7dKdhNLw==
-X-Received: by 2002:a17:90b:915:b0:1ca:b584:8241 with SMTP id bo21-20020a17090b091500b001cab5848241mr16878815pjb.46.1649349828860;
-        Thu, 07 Apr 2022 09:43:48 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:693e:9ca0:42a0:6bf7])
-        by smtp.gmail.com with UTF8SMTPSA id q7-20020a056a00084700b004fb205947c7sm24520071pfk.131.2022.04.07.09.43.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Apr 2022 09:43:48 -0700 (PDT)
-Date:   Thu, 7 Apr 2022 09:43:46 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>
-Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] [v2]arm64: dts: qcom: Add sc7180-gelarshie
-Message-ID: <Yk8Uws1/Uia1B4Ok@google.com>
-References: <20220407075427.41141-1-chenxiangrui@huaqin.corp-partner.google.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649350297; x=1680886297;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=zWgHs9WoOcSa0eb+PT/FFhzIfcD017bTdrABzx78AoA=;
+  b=FUpXUQZ8jDaKyE3dRbEKHSFUqRcJjj/r5XFUdd44utfo5Kd8tXn/qQXO
+   nygI5t4BW8BgDf7XtMaEYoZipQAg7m4EcCgp0F1DZcH89nQNOh/iSBtVz
+   b71wc56C4R2fkXSQub87TPR13VZ9snRWLklYJY/j0mRsz8zRXSfte1boi
+   M=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 07 Apr 2022 09:51:35 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2022 09:51:35 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 7 Apr 2022 09:51:34 -0700
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 7 Apr 2022 09:51:34 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH] drm/msm/dp: add fail safe mode outside of event_mutex context
+Date:   Thu, 7 Apr 2022 09:51:26 -0700
+Message-ID: <1649350286-11504-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220407075427.41141-1-chenxiangrui@huaqin.corp-partner.google.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 07, 2022 at 03:54:26PM +0800, Mars Chen wrote:
+There is possible circular locking dependency detected on event_mutex.
+To break this possible circular locking, this patch move setting fail
+safe mode out of event_mutex scope.
 
-> Subject: [PATCH] [v2]arm64: dts: qcom: Add sc7180-gelarshie
+Fixes: d4aca422539c ("drm/msm/dp:  always add fail-safe mode into connector mode list")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c |  6 ++++++
+ drivers/gpu/drm/msm/dp/dp_panel.c   | 20 ++++++++++----------
+ drivers/gpu/drm/msm/dp/dp_panel.h   |  1 +
+ 3 files changed, 17 insertions(+), 10 deletions(-)
 
-Krzysztof already pointed out that the subject is incorrect. Besides that
-the version number also looks wrong. This is at least v3:
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 178b774..a42732b 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -580,6 +580,12 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+ 			dp->dp_display.connector_type, state);
+ 	mutex_unlock(&dp->event_mutex);
+ 
++	/*
++	 * add fail safe mode outside event_mutex scope
++	 * to avoid potiential circular lock with drm thread
++	 */
++	dp_panel_add_fail_safe_mode(dp->dp_display.connector);
++
+ 	/* uevent will complete connection part */
+ 	return 0;
+ };
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index f141872..26c3653 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -151,6 +151,15 @@ static int dp_panel_update_modes(struct drm_connector *connector,
+ 	return rc;
+ }
+ 
++void dp_panel_add_fail_safe_mode(struct drm_connector *connector)
++{
++	/* fail safe edid */
++	mutex_lock(&connector->dev->mode_config.mutex);
++	if (drm_add_modes_noedid(connector, 640, 480))
++		drm_set_preferred_mode(connector, 640, 480);
++	mutex_unlock(&connector->dev->mode_config.mutex);
++}
++
+ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 	struct drm_connector *connector)
+ {
+@@ -207,16 +216,7 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 			goto end;
+ 		}
+ 
+-		/* fail safe edid */
+-		mutex_lock(&connector->dev->mode_config.mutex);
+-		if (drm_add_modes_noedid(connector, 640, 480))
+-			drm_set_preferred_mode(connector, 640, 480);
+-		mutex_unlock(&connector->dev->mode_config.mutex);
+-	} else {
+-		/* always add fail-safe mode as backup mode */
+-		mutex_lock(&connector->dev->mode_config.mutex);
+-		drm_add_modes_noedid(connector, 640, 480);
+-		mutex_unlock(&connector->dev->mode_config.mutex);
++		dp_panel_add_fail_safe_mode(connector);
+ 	}
+ 
+ 	if (panel->aux_cfg_update_done) {
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+index 9023e5b..99739ea 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.h
++++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+@@ -59,6 +59,7 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel);
+ int dp_panel_deinit(struct dp_panel *dp_panel);
+ int dp_panel_timing_cfg(struct dp_panel *dp_panel);
+ void dp_panel_dump_regs(struct dp_panel *dp_panel);
++void dp_panel_add_fail_safe_mode(struct drm_connector *connector);
+ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 		struct drm_connector *connector);
+ u32 dp_panel_get_mode_bpp(struct dp_panel *dp_panel, u32 mode_max_bpp,
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-v3: this patch
-v2 dupe (?): https://patchwork.kernel.org/project/linux-arm-msm/patch/20220406094156.3191-1-chenxiangrui@huaqin.corp-partner.google.com/
-v2 dupe (?): https://patchwork.kernel.org/project/linux-arm-msm/patch/20220406074707.2393-1-chenxiangrui@huaqin.corp-partner.google.com/
-v2: https://patchwork.kernel.org/project/linux-arm-msm/patch/20220406073756.2041-1-chenxiangrui@huaqin.corp-partner.google.com/
-v1: https://patchwork.kernel.org/project/linux-arm-msm/patch/20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com/
-
-> Add device tree for Gelarshie, a trogdor variant
-> 
-> Signed-off-by: Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../dts/qcom/sc7180-trogdor-gelarshie-r0.dts  |  15 +
->  .../dts/qcom/sc7180-trogdor-gelarshie.dtsi    | 280 ++++++++++++++++++
->  3 files changed, 296 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index f9e6343acd03..cf8f88b065c3 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -57,6 +57,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3-lte.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-gelarshie-r0.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r3.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r4.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
-> new file mode 100644
-> index 000000000000..027d6d563a5f
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
-> @@ -0,0 +1,15 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-> + * Google Gelarshie board device tree source
-> + *
-> + * Copyright 2022 Google LLC.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sc7180-trogdor-gelarshie.dtsi"
-> +
-> +/ {
-> +	model = "Google Gelarshie (rev0+)";
-> +	compatible = "google,gelarshie", "qcom,sc7180";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi
-> new file mode 100644
-> index 000000000000..8758cafb2d89
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi
->
-> ...
->
-> +&sound {
-> +	compatible = "google,sc7180-gelarshie";
-
-There is currently no device tree binding for this compatible string. Is
-the gelarshie audio config different from that of coachz? If not the
-compatible string "google,sc7180-coachz" should be used.
-
-> +	model = "sc7180-adau7002-max98357a";
-> +	audio-routing = "PDM_DAT", "DMIC";
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&dmic_clk_en>;
-> +};
-> +
-> +&sound_multimedia0_codec {
-> +	sound-dai = <&adau7002>;
-> +};
-> +
-> +/* PINCTRL - modifications to sc7180-trogdor.dtsi */
-> +
-> +&en_pp3300_dx_edp {
-> +	pinmux  {
-> +		pins = "gpio67";
-> +	};
-> +
-> +	pinconf {
-> +		pins = "gpio67";
-> +	};
-> +};
-> +
-> +&ts_reset_l {
-> +	pinconf {
-> +		/*
-> +		 * We want reset state by default and it will be up to the
-> +		 * driver to disable this when it's ready.
-> +		 */
-> +		output-low;
-> +	};
-> +};
-> +
-> +/* PINCTRL - board-specific pinctrl */
-> +
-> +&tlmm {
-> +	gpio-line-names = "HUB_RST_L",
-
-nit: to make this list more digestible you could add comments with
-pin numbers for every 10th pin and an empty line to separate the
-'pin groups'  even more visually. See sc7280-herobrine-herobrine-r1.dts
-for an example.
-
-> +			  "AP_RAM_ID0",
-> +			  "AP_SKU_ID2",
-> +			  "AP_RAM_ID1",
-> +			  "WF_CAM_EN2",
-> +			  "AP_RAM_ID2",
-> +			  "UF_CAM_EN",
-> +			  "WF_CAM_EN",
-> +			  "TS_RESET_L",
-> +			  "TS_INT_L",
-> +			  "",
-> +			  "EDP_BRIJ_IRQ",
-> +			  "AP_EDP_BKLTEN",
-> +			  "UF_CAM_MCLK",
-> +			  "WF_CAM_MCLK",
-> +			  "EDP_BRIJ_I2C_SDA",
-> +			  "EDP_BRIJ_I2C_SCL",
-> +			  "UF_CAM_SDA",
-> +			  "UF_CAM_SCL",
-> +			  "WF_CAM_SDA",
-> +			  "WF_CAM_SCL",
-> +			  "",
-> +			  "",
-> +			  "AMP_EN",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "WF_CAM_RST_L",
-> +			  "UF_CAM_RST_L",
-> +			  "AP_BRD_ID2",
-> +			  "BRIJ_SUSPEND",
-> +			  "AP_BRD_ID0",
-> +			  "AP_H1_SPI_MISO",
-> +			  "AP_H1_SPI_MOSI",
-> +			  "AP_H1_SPI_CLK",
-> +			  "AP_H1_SPI_CS_L",
-> +			  "BT_UART_CTS",
-> +			  "BT_UART_RTS",
-> +			  "BT_UART_TXD",
-> +			  "BT_UART_RXD",
-> +			  "H1_AP_INT_ODL",
-> +			  "",
-> +			  "UART_AP_TX_DBG_RX",
-> +			  "UART_DBG_TX_AP_RX",
-> +			  "",
-> +			  "",
-> +			  "FORCED_USB_BOOT",
-> +			  "AMP_BCLK",
-> +			  "AMP_LRCLK",
-> +			  "AMP_DIN",
-> +			  "",
-> +			  "HP_BCLK",
-> +			  "HP_LRCLK",
-> +			  "HP_DOUT",
-> +			  "",
-> +			  "",
-> +			  "AP_SKU_ID0",
-> +			  "AP_EC_SPI_MISO",
-> +			  "AP_EC_SPI_MOSI",
-> +			  "AP_EC_SPI_CLK",
-> +			  "AP_EC_SPI_CS_L",
-> +			  "AP_SPI_CLK",
-> +			  "AP_SPI_MOSI",
-> +			  "AP_SPI_MISO",
-> +			  /*
-> +			   * AP_FLASH_WP_L is crossystem ABI. Schematics
-> +			   * call it BIOS_FLASH_WP_L.
-> +			   */
-> +			  "AP_FLASH_WP_L",
-> +			  "EN_PP3300_DX_EDP",
-> +			  "AP_SPI_CS0_L",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "WLAN_SW_CTRL",
-> +			  "BOOT_CONFIG_0",
-> +			  "REPORT_SWITCH",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "DMIC_CLK_EN",
-> +			  "HUB_EN",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "AP_SKU_ID1",
-> +			  "AP_RST_REQ",
-> +			  "",
-> +			  "AP_BRD_ID1",
-> +			  "AP_EC_INT_L",
-> +			  "BOOT_CONFIG_1",
-> +			  "",
-> +			  "",
-> +			  "BOOT_CONFIG_4",
-> +			  "BOOT_CONFIG_2",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "EDP_BRIJ_EN",
-> +			  "",
-> +			  "",
-> +			  "BOOT_CONFIG_3",
-> +			  "WCI2_LTE_COEX_TXD",
-> +			  "WCI2_LTE_COEX_RXD",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "",
-> +			  "FORCED_USB_BOOT_POL",
-> +			  "AP_TS_PEN_I2C_SDA",
-> +			  "AP_TS_PEN_I2C_SCL",
-> +			  "DP_HOT_PLUG_DET",
-> +			  "EC_IN_RW_ODL";
-> +
-> +	dmic_clk_en: dmic_clk_en {
-
-node names should use dashes as separators, i.e.:
-	dmic_clk_en: dmic-clk-en {
-
-> +		pinmux {
-> +			pins = "gpio83";
-> +			function = "gpio";
-> +		};
-> +
-> +		pinconf {
-> +			pins = "gpio83";
-> +			drive-strength = <8>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +};
