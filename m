@@ -2,336 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAB764F8A49
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 00:16:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 262C94F8B0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 02:56:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232125AbiDGWKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Apr 2022 18:10:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48614 "EHLO
+        id S232277AbiDGWkY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Apr 2022 18:40:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232043AbiDGWKt (ORCPT
+        with ESMTP id S232155AbiDGWkP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Apr 2022 18:10:49 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E92D62993C4;
-        Thu,  7 Apr 2022 15:03:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649369012; x=1680905012;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=CtdHjGdwi53B95XEwjnchoG2NHlfPeYAN9cH0Dtn04c=;
-  b=KjbZj6nehMlvNEVN6g8diq3ve/mU+Pd+whtA16d8XyCNetw5dSSGjiAH
-   Sv12+9njGNe/TvxbOzEjTbTaRldA5EATdWB989xlUT1ByfMVOGLM5cKwa
-   isaTmOWSffFT36NHxVM3hwmbqya0XS2yLKXXE093L86fNIBJT1EBZmNZd
-   U=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 07 Apr 2022 15:03:31 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2022 15:03:30 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 7 Apr 2022 15:03:09 -0700
-Received: from [10.111.161.146] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 7 Apr 2022
- 15:03:06 -0700
-Message-ID: <225d2c0a-42ec-28ad-688c-e7e9e2035ee1@quicinc.com>
-Date:   Thu, 7 Apr 2022 15:03:03 -0700
+        Thu, 7 Apr 2022 18:40:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 65FFE129E8E
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Apr 2022 15:37:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1649371064;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=NOIZSnS98gQ3xydj16FHLPEIjDJjA+ZwlFfjRBiVUDY=;
+        b=Ufpqi9h9sFb+JOx8UKIkxqn0Qet61F8SOHh0vJ891v2iq9Quf5c8evRD75w/XaWkVoJDsJ
+        bYj0zmQLayYIhxEsKb23N4o6pgXtTMKJDiO8+kig/FxupnZZpjYtOK2e/Wzba+M9manIYp
+        tx9GVjCDsgDiu0SboTBPWizpKbKZvQM=
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
+ [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-189-os8_b5-YMKuX3H4LhWVEeQ-1; Thu, 07 Apr 2022 18:37:41 -0400
+X-MC-Unique: os8_b5-YMKuX3H4LhWVEeQ-1
+Received: by mail-oa1-f71.google.com with SMTP id 586e51a60fabf-e2100f7451so3756191fac.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 15:37:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=NOIZSnS98gQ3xydj16FHLPEIjDJjA+ZwlFfjRBiVUDY=;
+        b=GRBocszBBP2qadaiErFsy187YjxqOoe+buNij90mi2kY6mLSmB6sIyWogRWnqHt1uV
+         0oagtutbJp6euWSc896OLrbW3/LXSj3jkXk27KbegyqrcIQfHTA+8OsbLIMbeGfI2Rm+
+         Zfj/oQMf3sh3PAvSQ5Fb5tQoVFWmECUPvQCrNQhS0fkJNYyo090dRwuruz11U/AK3Aet
+         zAfWlFv0TRhUND+nXRm7pH9+2fv/rzFJ0QWvAtrCqO52NxTs2JBjlVO+ox0n72YQo7eY
+         pSifFlVPbItHE8Gu2N+abA+R0BwcfdCoWWbcejovqYqo0G8o5+UPz5Uspa4i9W9Ltbkq
+         W7IQ==
+X-Gm-Message-State: AOAM531PMVGezUSiSISN2iQvsc7lVnzhDrf03lDK6h4Nwy3udfj8bu3D
+        diJxLGIfyO2RFgilPKa2gCAvi+wH+b4osudIltMPtN8ZkFFrCewpfc9XvjUMbGH6IGj6WlT6c9P
+        g82z44iY30l+fWz8pIf8Pw3nbAg==
+X-Received: by 2002:a9d:ee7:0:b0:5cd:feb9:66b5 with SMTP id 94-20020a9d0ee7000000b005cdfeb966b5mr5515074otj.216.1649371061194;
+        Thu, 07 Apr 2022 15:37:41 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxcVZwyerJlnB50z195byTw9JBG/9w1iOCvt6QyoKpKsIz/rFvJndsMgHRlm6GD1Fo6Sk8OMg==
+X-Received: by 2002:a9d:ee7:0:b0:5cd:feb9:66b5 with SMTP id 94-20020a9d0ee7000000b005cdfeb966b5mr5515064otj.216.1649371060962;
+        Thu, 07 Apr 2022 15:37:40 -0700 (PDT)
+Received: from redhat.com ([38.15.36.239])
+        by smtp.gmail.com with ESMTPSA id c8-20020a4ad788000000b0031ce69b1640sm7642523oou.10.2022.04.07.15.37.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Apr 2022 15:37:40 -0700 (PDT)
+Date:   Thu, 7 Apr 2022 16:37:37 -0600
+From:   Alex Williamson <alex.williamson@redhat.com>
+To:     Jason Gunthorpe <jgg@nvidia.com>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        "Tian, Kevin" <kevin.tian@intel.com>,
+        Christoph Hellwig <hch@lst.de>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Christian Benvenuti <benve@cisco.com>,
+        Cornelia Huck <cohuck@redhat.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        Jason Wang <jasowang@redhat.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+        "linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        "Michael S. Tsirkin" <mst@redhat.com>,
+        Nelson Escobar <neescoba@cisco.com>,
+        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        "virtualization@lists.linux-foundation.org" 
+        <virtualization@lists.linux-foundation.org>,
+        Will Deacon <will@kernel.org>
+Subject: Re: [PATCH 1/5] iommu: Replace uses of IOMMU_CAP_CACHE_COHERENCY
+ with dev_is_dma_coherent()
+Message-ID: <20220407163737.2a7ccd7a.alex.williamson@redhat.com>
+In-Reply-To: <20220407152331.GN2120790@nvidia.com>
+References: <db5a6daa-bfe9-744f-7fc5-d5167858bc3e@arm.com>
+        <20220406142432.GF2120790@nvidia.com>
+        <20220406151823.GG2120790@nvidia.com>
+        <20220406155056.GA30433@lst.de>
+        <20220406160623.GI2120790@nvidia.com>
+        <20220406161031.GA31790@lst.de>
+        <20220406171729.GJ2120790@nvidia.com>
+        <BN9PR11MB5276F9CEA2B01B3E75094B6D8CE69@BN9PR11MB5276.namprd11.prod.outlook.com>
+        <20220407135946.GM2120790@nvidia.com>
+        <fb55a025-348e-800c-e368-48be075d8e9c@arm.com>
+        <20220407152331.GN2120790@nvidia.com>
+Organization: Red Hat
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v6 1/8] drm/msm/dp: Add eDP support via aux_bus
-Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-CC:     "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>,
-        quic_kalyant <quic_kalyant@quicinc.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        quic_vproddut <quic_vproddut@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        LKML <linux-kernel@vger.kernel.org>
-References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com>
- <1648656179-10347-2-git-send-email-quic_sbillaka@quicinc.com>
- <CAD=FV=X+QvjwoT2zGP82KW4kD0oMUY6ZgCizSikNX_Uj8dNDqA@mail.gmail.com>
- <392b933f-760c-3c81-1040-c514045df3da@linaro.org>
- <CAD=FV=W4PYK-t607yjRbfjDjjEZX0KdgHDRukw_vSH8E8EDH6w@mail.gmail.com>
- <CAA8EJppt9XONbgtKfmHmN+==QNqiVJeb8GKJFdZm=yyY-tgmHQ@mail.gmail.com>
- <CAD=FV=U5-sTDLYdkeJWLAOG-0wgxR49VxtwUyUO7z2PuibLGsg@mail.gmail.com>
- <CAA8EJppgfYgQjG8A4LsR-1wmBj3Ku3eO8cKfAYhxjWXL7e3eHg@mail.gmail.com>
- <CAD=FV=V=a1CnT8fqTJR40WoS3BaDQ3xZ=HnHVHqZh=MEmVUZBA@mail.gmail.com>
- <3e5fa57f-d636-879a-b98f-77323d07c156@linaro.org>
- <CAD=FV=Uibu-kZyix7K4_WVc-+C8xpzTqU4WFy7O=6sukMZrX5g@mail.gmail.com>
- <MW4PR02MB7186245772DAC3E04FA8D1C0E1E69@MW4PR02MB7186.namprd02.prod.outlook.com>
- <CAD=FV=Wk3U7_bVdiCPp8iQ4bcCA_Botemu4pwHeRtgBa3Xk6KQ@mail.gmail.com>
- <c4f086ce-c56f-f7c9-4092-7f2432330d50@quicinc.com>
- <CAD=FV=UmU_BVUaL_X75yOEvQPtGUBTR5-jiVWBHq7uSRt6HM4Q@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAD=FV=UmU_BVUaL_X75yOEvQPtGUBTR5-jiVWBHq7uSRt6HM4Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Doug
+On Thu, 7 Apr 2022 12:23:31 -0300
+Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-Thanks for the response, some comments below.
-
-Abhinav
-On 4/7/2022 1:47 PM, Doug Anderson wrote:
-> Hi,
+> On Thu, Apr 07, 2022 at 04:17:11PM +0100, Robin Murphy wrote:
 > 
-> On Thu, Apr 7, 2022 at 1:11 PM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->> Hi Doug and Dmitry
->>
->> Sorry, but I caught up on this email just now.
->>
->> Some comments below.
->>
->> Thanks
->>
->> Abhinav
->> On 4/7/2022 10:07 AM, Doug Anderson wrote:
->>> Hi,
->>>
->>> On Thu, Apr 7, 2022 at 7:19 AM Sankeerth Billakanti (QUIC)
->>> <quic_sbillaka@quicinc.com> wrote:
->>>>
->>>> Hi Dmitry and Doug,
->>>>
->>>>> Hi,
->>>>>
->>>>> On Tue, Apr 5, 2022 at 10:36 AM Dmitry Baryshkov
->>>>> <dmitry.baryshkov@linaro.org> wrote:
->>>>>>
->>>>>> On 05/04/2022 20:02, Doug Anderson wrote:
->>>>>>> Hi,
->>>>>>>
->>>>>>> On Tue, Apr 5, 2022 at 5:54 AM Dmitry Baryshkov
->>>>>>> <dmitry.baryshkov@linaro.org> wrote:
->>>>>>>>> 3. For DP and eDP HPD means something a little different.
->>>>>>>>> Essentially there are two concepts: a) is a display physically
->>>>>>>>> connected and b) is the display powered up and ready. For DP, the
->>>>>>>>> two are really tied together. From the kernel's point of view you
->>>>>>>>> never "power down" a DP display and you can't detect that it's
->>>>>>>>> physically connected until it's ready. Said another way, on you
->>>>>>>>> tie "is a display there" to the HPD line and the moment a display
->>>>>>>>> is there it's ready for you to do AUX transfers. For eDP, in the
->>>>>>>>> lowest power state of a display it _won't_ assert its "HPD"
->>>>>>>>> signal. However, it's still physically present. For eDP you simply
->>>>>>>>> have to _assume_ it's present without any actual proof since you
->>>>>>>>> can't get proof until you power it up. Thus for eDP, you report
->>>>>>>>> that the display is there as soon as we're asked. We can't _talk_
->>>>>>>>> to the display yet, though. So in get_modes() we need to be able
->>>>>>>>> to power the display on enough to talk over the AUX channel to it.
->>>>>>>>> As part of this, we wait for the signal named "HPD" which really means
->>>>> "panel finished powering on" in this context.
->>>>>>>>>
->>>>>>>>> NOTE: for aux transfer, we don't have the _display_ pipe and
->>>>>>>>> clocks running. We only have enough stuff running to do the AUX
->>>>> transfer.
->>>>>>>>> We're not clocking out pixels. We haven't fully powered on the
->>>>>>>>> display. The AUX transfer is designed to be something that can be
->>>>>>>>> done early _before_ you turn on the display.
->>>>>>>>>
->>>>>>>>>
->>>>>>>>> OK, so basically that was a longwinded way of saying: yes, we
->>>>>>>>> could avoid the AUX transfer in probe, but we can't wait all the
->>>>>>>>> way to enable. We have to be able to transfer in get_modes(). If
->>>>>>>>> you think that's helpful I think it'd be a pretty easy patch to
->>>>>>>>> write even if it would look a tad bit awkward IMO. Let me know if
->>>>>>>>> you want me to post it up.
->>>>>>>>
->>>>>>>> I think it would be a good idea. At least it will allow us to
->>>>>>>> judge, which is the more correct way.
->>>>>>>
->>>>>>> I'm still happy to prototype this, but the more I think about it the
->>>>>>> more it feels like a workaround for the Qualcomm driver. The eDP
->>>>>>> panel driver is actually given a pointer to the AUX bus at probe
->>>>>>> time. It's really weird to say that we can't do a transfer on it
->>>>>>> yet... As you said, this is a little sideband bus. It should be able
->>>>>>> to be used without all the full blown infra of the rest of the driver.
->>>>>>
->>>>>> Yes, I have that feeling too. However I also have a feeling that just
->>>>>> powering up the PHY before the bus probe is ... a hack. There are no
->>>>>> obvious stopgaps for the driver not to power it down later.
->>>>>
->>
->> Lets go back to why we need to power up the PHY before the bus probe.
->>
->> We need to power up PHY before bus probe because panel-eDP tries to read
->> the EDID in probe() for the panel_id. Not get_modes().
->>
->> So doug, I didnt follow your comment that panel-eDP only does EDID read
->> in get_modes()
->>
->>          panel_id = drm_edid_get_panel_id(panel->ddc);
->>          if (!panel_id) {
->>                  dev_err(dev, "Couldn't identify panel via EDID\n");
->>                  ret = -EIO;
->>                  goto exit;
->>          }
->>
->> If we do not need this part, we really dont need to power up the PHY
->> before the probe(). The hack which dmitry was referring to.
+> > For the specific case of overriding PCIe No Snoop (which is more problematic
+> > from an Arm SMMU PoV) when assigning to a VM, would that not be easier
+> > solved by just having vfio-pci clear the "Enable No Snoop" control bit in
+> > the endpoint's PCIe capability?  
 > 
-> Right. ...so we _could_ remove the above from the panel-edp probe and
-> defer it to get_modes() and it wouldn't be that hard. ...but:
+> Ideally.
 > 
-> 1. It feels like a hack to work around the Qualcomm driver. The way
-> the AUX bus is designed is that a pointer to the AUX bus is passed to
-> the panel-edp probe. It seems kinda strange to say that the panel
-> isn't allowed to do transfers with the pointer that's passed in.
+> That was rediscussed recently, apparently there are non-compliant
+> devices and drivers that just ignore the bit. 
 > 
+> Presumably this is why x86 had to move to an IOMMU enforced feature..
 
-And thats why to satisfy the requirements of passing an initialized AUX, 
-sankeerth is delaying devm_of_dp_aux_populate_ep_devices() till PHY is 
-initialized which seems reasonable to satisfy the probe() time requirements.
+I considered this option when implementing the current solution, but
+ultimately I didn't have confidence in being able to prevent drivers
+from using device specific means to effect the change anyway.  GPUs
+especially have various back channels to config space.  Thanks,
 
-Even if we move to pm_runtime(), yes I agree it will club all the 
-resources needed to control AUX in one place but you will still have to 
-initialize PHY before probe() under the hood of pm_runtime().
+Alex
 
-So how will it help this cause?
-
-We just have to accept that initializing PHY is a requirement to use AUX 
-and before calling panel-eDP's probe(), we have to have an initialized AUX.
-
-So we are not working around the driver but just satisfying the hardware 
-requirements to be able to satisfy panel-edp's and 
-drm_panel_dp_aux_backlight()'s aux bus requirements.
-
-> 2. There's a second place where we might do an AUX transfer at probe
-> time which is when we're using the DP AUX backlight. There we call
-> drm_panel_dp_aux_backlight(). Conceivably this too could be deferred
-> until the get_modes(), but now it feels even more like a hack. We're
-> going to be registering the backlight in the first call to
-> get_modes()? That's, ummm, unexpected. We could look at perhaps
-> breaking the "DP AUX backlight" in two parts also, but that gets
-> involved. I think we're supposed to know the number of backlight
-> levels at device init time for backlight devices and we need an AUX
-> transfer to that.
-> 
-
-
-> 
-> So the answer is that we could probably make it work, but it seems
-> like an uglier solution than just making the Qualcomm driver able to
-> do AUX transfers when it should be able to.
-
-Correct and by delaying the panel-edp's probe(), we are doing exactly that?
-
-> 
->> So this is boiling down to why or how panel-eDP was originally designed.
->>
->>>>> This is why I think we need to move to Runtime PM to manage this. Basically:
->>>>>
->>>>> 1. When an AUX transfer happens, you grab a PM runtime reference that
->>>>> _that_ powers up the PHY.
->>
->> This will not be trivial and needs to be scoped out as sankeerth said
->> but if the above is the only concern, why do we need to do this? There
->> seems to be an explanation why we are doing this and its not a hack.
->>
->> How would Dmitry's rework address this? We need some RFC to conclude on
->> that first.
->>
->>>>>
->>>>> 2. At the end of the AUX transfer function, you do a "put_autosuspend".
->>>>>
->>>>> Then it becomes not a hack, right?
->>>>>
->>>>>
->>>>
->>>> pm runtime ops needs to be implemented for both eDP and DP. This change
->>>> take good amount of planning and code changes as it affects DP also.
->>>>
->>>> Because this patch series consist of basic eDP changes for SC7280 bootup,
->>>> shall we take this pm_runtime implementation in subsequent patch series?
->>>
->>> Dmitry is the real decision maker here, but in my opinion it would be
->>> OK to get something landed first that worked OK and wasn't taking us
->>> too far in the wrong direction and then we could get a follow up patch
->>> to move to pm_runtime.
->>
->> I would say the discussion changed into a direction of implementing
->> pm-runtime because the current patch series does what it takes to adhere
->> to panel-eDP's design along with aux bus requirements of PHY needing to
->> be on.
->>
->> So doug, to answer your questions here:
->>
->> "So I guess the net result is maybe we should just keep it where it is.
->> Long term I'd be interested in knowing if there's a reason why we
->> can't structure the driver so that AUX transfers can happen with less
->> intertwining with the rest of the code, but that can happen later. I
->> would expect that you'd basically just need clocks and regulators on
->> and maybe your PHY on."
->>
->> Yes PHY needs to be absolutely on and configured before aux transfers.
->>
->> If we want to change that up to stop reading the panel_id in the panel
->> probe() and do it later, perhaps some of the changes done here are not
->> needed.
->>
->> It only seems reasonable that we first prototype that in a separate
->> patch even a RFC perhaps and take this further as these set of changes
->> are needed for basic display functionality on sc7280 chromebooks.
->>
->> Let us know what are the concerns with doing it in a follow up change.
-> 
-> As per above, I'm not objecting to it being a follow-up change, but I
-> do believe it's the right design and will lead to an overall cleaner
-> solution. I think I even mentioned in my reviews that the current
-> patch series seems to "scattershot" enable resources and that's how we
-> end up with patches like patch #5 in this series ("drm/msm/dp: prevent
-> multiple votes for dp resources"). IMO there should be be a 1-to-1
-> mapping between "turn on resources" and "turn off resources" and it
-> should be reference counted. So if your codepath turned on resources
-> then it's up to your codepath to turn resources off when done. If a
-> seconde code path might be running at the same time then it should
-> also turn on/off resources itself. ...and it should all be managed by
-> pm_runtime which is _exactly designed_ for this specific use case.
-> 
-Agreed on this topic, moving to pm_runtime() will club all resources in 
-one place and make things cleaner that way.
-
-Complexity of it obviously needs to be evaluated to check the effort Vs 
-rewards.
-
-But it will still not address the original concern of this thread that
-powering up the PHY before the probe() is a hack.
-
-"Yes, I have that feeling too. However I also have a feeling that just
- > powering up the PHY before the bus probe is ... a hack. There are no
- > obvious stopgaps for the driver not to power it down later."
-
-We would still end up doing that under the hood of pm_runtime.
-
-And thats why its an improvement and not a necessity qualifying it for a 
-separate change.
-
-> -Doug
