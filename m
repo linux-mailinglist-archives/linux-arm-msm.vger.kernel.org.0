@@ -2,114 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F14734F7B98
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 11:27:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 433354F7BAC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 11:32:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243777AbiDGJ3d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Apr 2022 05:29:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47924 "EHLO
+        id S243796AbiDGJd4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Apr 2022 05:33:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243775AbiDGJ3d (ORCPT
+        with ESMTP id S230193AbiDGJd4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Apr 2022 05:29:33 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4CF461A11
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Apr 2022 02:27:33 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id i27so9542671ejd.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 02:27:33 -0700 (PDT)
+        Thu, 7 Apr 2022 05:33:56 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E78B615FDC;
+        Thu,  7 Apr 2022 02:31:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tvjrnyli3QMelnewMZziigqajOZNR5QEHUsi4Mp0djY=;
-        b=p3ULPi0cyERr1Dv8VmKELpnBQL2ebtWgryo2YH3BSV+Mrugzv3ntjAoxGg6bqVEL2b
-         PTmJlzRGvWf1xHDsRyBrzptISXqbsn24BccoQEbLClGI21RqMmVJjTl1DydbyyCmp6ew
-         s1GnXEOrLJ1iKPQyS/VfhzAZl4KHVR+3za3q09u4/f1TNntxdZfWr8lm+E330dGlCfha
-         DFTCSHqkvCAYWKzh8U61GldznUdgmnhV6NupS5CJzxidX5o0J18askUIOG06ByIBxwph
-         w34f9K3DzbpWdnmTOPv0G8RM0gKwTJ+6jXV63zPPjFOBl7mSo6S5YP5rry3jiulJW8zO
-         AxMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tvjrnyli3QMelnewMZziigqajOZNR5QEHUsi4Mp0djY=;
-        b=t95BgiiNfb0mkdhBIkZFLJeOc4fR4nTq72pfkJvImqw/nnfTawJKNQG7t04vCpVrPW
-         3WChaf8Eeb4+m/WDc9bZI5WEUlX19nda/Q5TsTBVtqhLoCH7/7xjFF5YUQVKLlnctFVs
-         kxzLBZInWL3H8dCKw6rSOH/CcPBY2xXJquCvqftxvvoFfSFNHB09h/Du7jPTfySoJM6z
-         gFld8PCGQHscOcVZOEP58Jiy2AgL91Uri682eWo+uCAuOQL0hjJPEHP8gOyHOFjBkJqX
-         NxZTWHgETkBaDn4Bvt82amZ+BjBu9WoRvxOf+Z+/PCXUynoQy4JXd1rwv1rDWsQ5yAsI
-         pRdw==
-X-Gm-Message-State: AOAM531MjW09CCnnUYElbN62wY9TuxNGrgR7Q3IYBEJTFluDR8xZIVZv
-        4PAMJ0DrHHjk2NBn6VToe9jKnw==
-X-Google-Smtp-Source: ABdhPJy/4Gx1gqe8CTqLfxNWBysJvQLIBo0Zs3aHFrJ4Lak2QmDQE4w3xnChxDtygXQx3u0BuTmdbA==
-X-Received: by 2002:a17:907:3c81:b0:6e6:9387:3d74 with SMTP id gl1-20020a1709073c8100b006e693873d74mr12489705ejc.589.1649323652182;
-        Thu, 07 Apr 2022 02:27:32 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id s14-20020aa7cb0e000000b00410bf015567sm8649435edt.92.2022.04.07.02.27.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Apr 2022 02:27:31 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [RESEND PATCH v3 3/3] arm64: dts: qcom: sm8350: drop duplicated ref_clk in UFS
-Date:   Thu,  7 Apr 2022 11:27:25 +0200
-Message-Id: <20220407092725.232463-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220407092725.232463-1-krzysztof.kozlowski@linaro.org>
-References: <20220407092725.232463-1-krzysztof.kozlowski@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649323917; x=1680859917;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=1w69Q6nTSQ3x3tu7JISRRajme3osv7e1/VnGFgbm3vQ=;
+  b=nun0H+uOUWX1G9mIG1mbTotdc5iOgg0CnJOhdKjj4Sc2IUD3kDa64qga
+   ZZuf5EFJQ+IwdXA48mHIizowAfo/dbeg9ltzSwTBtLEa2sXRA+r5WCx9L
+   FzdAnDOKsTAlGuAZlZwk9iO/Rf3vC1qPSg2bDD2LeqTQlF+JqDfxmDDxP
+   8=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 07 Apr 2022 02:31:56 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2022 02:31:46 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 7 Apr 2022 02:31:45 -0700
+Received: from c-sanm-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 7 Apr 2022 02:31:40 -0700
+From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_kriskura@quicinc.com>,
+        <quic_vpulyala@quicinc.com>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Subject: [PATCH v3 0/2] Skip phy initialization for DWC3 USB Controllers 
+Date:   Thu, 7 Apr 2022 15:01:26 +0530
+Message-ID: <1649323888-12420-1-git-send-email-quic_c_sanm@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-ref_clk clock in UFS node is already there with a <0 0> frequency, which
-matches other DTSI files.
+Runtime suspend of phy drivers was failing from DWC3 driver as
+runtime usage value is 2 because the phy is initialized from
+DWC3 core and HCD core.
+Some controllers like DWC3 and CDNS3 manage phy in their core drivers.
+This property can be set to avoid phy initialization in HCD core.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 3 ---
- 1 file changed, 3 deletions(-)
+v3:
+Coming back to this series based on discussion at below thread
+https://patchwork.kernel.org/project/linux-arm-msm/patch/1648103831-12347-4-git-send-email-quic_c_sanm@quicinc.com/
+Dropped the dt bindings PATCH 1/3 in v2
+https://patchwork.kernel.org/project/linux-arm-msm/cover/1636353710-25582-1-git-send-email-quic_c_sanm@quicinc.com/ 
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 20f850b94158..e70687d6c2da 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -1916,7 +1916,6 @@ ufs_mem_hc: ufshc@1d84000 {
- 			iommus = <&apps_smmu 0xe0 0x0>;
- 
- 			clock-names =
--				"ref_clk",
- 				"core_clk",
- 				"bus_aggr_clk",
- 				"iface_clk",
-@@ -1926,7 +1925,6 @@ ufs_mem_hc: ufshc@1d84000 {
- 				"rx_lane0_sync_clk",
- 				"rx_lane1_sync_clk";
- 			clocks =
--				<&rpmhcc RPMH_CXO_CLK>,
- 				<&gcc GCC_UFS_PHY_AXI_CLK>,
- 				<&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
- 				<&gcc GCC_UFS_PHY_AHB_CLK>,
-@@ -1936,7 +1934,6 @@ ufs_mem_hc: ufshc@1d84000 {
- 				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
- 				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
- 			freq-table-hz =
--				<75000000 300000000>,
- 				<75000000 300000000>,
- 				<0 0>,
- 				<0 0>,
+v2:
+Updated the commit descriptions.
+Changed subject prefix from dwc to dwc3.
+Increased props array size.
+
+Sandeep Maheswaram (2):
+  usb: host: xhci-plat: Add device property to set XHCI_SKIP_PHY_INIT
+    quirk
+  usb: dwc3: host: Set the property usb-skip-phy-init
+
+ drivers/usb/dwc3/host.c      | 4 +++-
+ drivers/usb/host/xhci-plat.c | 3 +++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
 -- 
-2.32.0
+2.7.4
 
