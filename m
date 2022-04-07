@@ -2,89 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 685644F85A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 19:13:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B77144F8601
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 19:25:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345996AbiDGRPf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Apr 2022 13:15:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53872 "EHLO
+        id S1346268AbiDGR1D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Apr 2022 13:27:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345986AbiDGRPd (ORCPT
+        with ESMTP id S1346254AbiDGR0z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Apr 2022 13:15:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25437196101;
-        Thu,  7 Apr 2022 10:13:31 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9F96D61597;
-        Thu,  7 Apr 2022 17:13:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019C5C385A9;
-        Thu,  7 Apr 2022 17:12:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649351580;
-        bh=GBt4PUS2fgno+UwF/Aa8hXaiVk1GCJZbQR8MKbe6zrQ=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=CcdFHzg3VV6DcFogTNUaEhjsfeGTa19fo0x8cHrJKn9GQSxALlzZa/8jCBmiVXaCk
-         nzZ6ur8nPashDm6q8BdhVmKPjLdmF2GXi87mnsaW0TyWILIX+fmcTajcjwh0O6mv0g
-         NGE6Suh0wZEQxBaQ9kYmu82FNVcYiYdGLEIWQ5PBKyMXEeVwgQUZoni2DAs5WkIUs2
-         Njp0mO2+U2gr7MMY/Xf/InJB5k5sH8eIFIAeNGoi3avx+x+T3+aB1nlPJlTwLKhPrb
-         vijXQ/MTCxRePjtAmX/vJlVgJF1twkGQih38+YWP+ZDpykyW1hOX1zSkIcJ3TO+lO7
-         md52LyPJ+q0aQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     vkoul@kernel.org
-Cc:     linux-spi@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-In-Reply-To: <20220406132238.1029249-1-vkoul@kernel.org>
-References: <20220406132238.1029249-1-vkoul@kernel.org>
-Subject: Re: [PATCH] spi: core: add dma_map_dev for __spi_unmap_msg()
-Message-Id: <164935157872.1057547.10486810513176613790.b4-ty@kernel.org>
-Date:   Thu, 07 Apr 2022 18:12:58 +0100
+        Thu, 7 Apr 2022 13:26:55 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A87C4BBE14
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Apr 2022 10:22:56 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id p8so5504448qvv.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 10:22:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20210112.gappssmtp.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fJ7ygznwMb8eMV9TQWtxLT1BB8Rhj4Ph1t5ZxtOvIow=;
+        b=xn4+0Nos2g51p+lcpGJlZFvm2hai2DIrfj/tZa5rBsoMbGHHcl0jqvEukq1yEFPAbx
+         w1PDodJoC0hLLRox2rQHwPcAayQykC8xbV8FwZm14KN2JU8qBdXv52Xg6WO+0BrQziyn
+         LK/AOd+Hkih2906m5voLSl0tTLE4O5siC6Tp1MRI1bE9l5tpOQ+sCfq/1urT2wyqFAK7
+         6qfH5BqO6RPzo+7eXpG8uWy4pif15V70nRaqlXxHO+0O1zcqj6/XSOODiE3BWASOHCsM
+         qqMWWhAdJdpuZ/c0iA5DlAqDuHlV59iW32Jkm0Vlp9PESMOdrR7LIg7J1sXhRBVHiBdw
+         kS8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fJ7ygznwMb8eMV9TQWtxLT1BB8Rhj4Ph1t5ZxtOvIow=;
+        b=I2ERFpDxcuYg0RX5jCPTYMWkg0WUlDs5eaAZ7lzSummqNsWvbdo0CWXWXj4AcEhvTF
+         /e9bYEqeYoaJlbuhBQqJrls5ACeRuti09jCaGJBwZ4dzjGCo3Q8Vw/mDTWzUn88h+8M6
+         3PAFk4YfJrQ1BxwIfVfHdZpmWvalvjJZcEgdnJnohaRi3O74AcVZN1C4kW1fYLQXpet8
+         0TY1ocrqHjXth1s8k5kiqbH3WsO9NvkbVAgSLZLn2vgj9U4uqe7EPiIL8zCoqx7BBApI
+         B4EfN6imn3t634UdN7au10sSvntJsnj3jZK6zCIGq0lxcCT/g0aQq4fhusjFibxXsxZe
+         9Hhg==
+X-Gm-Message-State: AOAM531EaP5AAsH9z+B+MEQ+HRBZAgvp7WrzbuBxLJ5cK04fTvcPrEyp
+        0snVdROg0nv1FX8WpiookVQzlbWPpmgMjgZF
+X-Google-Smtp-Source: ABdhPJxkctuq4Ghg/MMeyC6Ih/RKwTBtPHnXbwIvhrDACYUcVwAyr7lC4zNd8ddTKIr2HeEFhghXcg==
+X-Received: by 2002:a05:6214:2388:b0:441:37e5:baec with SMTP id fw8-20020a056214238800b0044137e5baecmr12970171qvb.66.1649352175146;
+        Thu, 07 Apr 2022 10:22:55 -0700 (PDT)
+Received: from localhost.localdomain (modemcable134.222-177-173.mc.videotron.ca. [173.177.222.134])
+        by smtp.gmail.com with ESMTPSA id g71-20020a379d4a000000b0069a029c7659sm1235212qke.35.2022.04.07.10.22.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Apr 2022 10:22:54 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] arm64: dts: qcom: sm8450: delete incorrect ufs interconnect fields
+Date:   Thu,  7 Apr 2022 13:21:45 -0400
+Message-Id: <20220407172145.31903-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 6 Apr 2022 18:52:38 +0530, Vinod Koul wrote:
-> Commit b470e10eb43f ("spi: core: add dma_map_dev for dma device") added
-> dma_map_dev for _spi_map_msg() but missed to add for unmap routine,
-> __spi_unmap_msg(), so add it now.
-> 
-> 
+Upstream sm8450.dtsi has #interconnect-cells = <2>; so these are wrong.
+Ignored and undocumented with upstream UFS driver so delete for now.
 
-Applied to
+Fixes: aa2d0bf04a3c ("arm64: dts: qcom: sm8450: add interconnect nodes")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 2c18e1ef9e82d..90cdbec3cac99 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -1663,9 +1663,6 @@ ufs_mem_hc: ufshc@1d84000 {
+ 
+ 			iommus = <&apps_smmu 0xe0 0x0>;
+ 
+-			interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
+-					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
+-			interconnect-names = "ufs-ddr", "cpu-ufs";
+ 			clock-names =
+ 				"core_clk",
+ 				"bus_aggr_clk",
+-- 
+2.26.1
 
-Thanks!
-
-[1/1] spi: core: add dma_map_dev for __spi_unmap_msg()
-      commit: 409543cec01a84610029d6440c480c3fdd7214fb
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
