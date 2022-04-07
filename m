@@ -2,105 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED6BE4F86FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 20:16:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD4B64F8862
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 22:32:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233600AbiDGSSQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Apr 2022 14:18:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34556 "EHLO
+        id S229768AbiDGUap (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Apr 2022 16:30:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233115AbiDGSSL (ORCPT
+        with ESMTP id S229743AbiDGUa3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Apr 2022 14:18:11 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DACEE22FD95
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Apr 2022 11:16:10 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id v75so6501449oie.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 11:16:10 -0700 (PDT)
+        Thu, 7 Apr 2022 16:30:29 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 695CE48AB3D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Apr 2022 13:14:53 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id d29so9443211wra.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 13:14:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=XVxlM+817FJT8H5/eqfV4sWLJEZR2m3rmCdfP3oay/E=;
-        b=PEWjTExje4yOFoYkMCrvWFzabQQ92bC6+VE85If+xFzo5BTgyvE3rOzNo9S/7ZQwzw
-         UMa/sVntgHsH3hl/uMMswllsEbJKO1EuMWWP3ocVij7fnewQ4j7+pMCW9CYl9ByGBSy8
-         gE2RqOly+Ze/uPNpVkb/CV4pVHjFGH5H5M2JE=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=539tKapVnhTf+rr/UYXZW8Cq7Ffl8HHTv+MpMPMBGwU=;
+        b=ffo6LfUuDcD6KO3JYi4Bph7AGnw9CfbScz/u0s/+boAFG7UTH2D4eV4A9G5S1n6Llp
+         MyhQArAjnTTLRhZahWihXQWI+3bLYesLkmBOK1ffEgvcrrBsmi2zY/eNLm9eYG8HGfr0
+         fVHMnwDXny2Kr09j7dKRgeIHQc9UWgqJlsrkbbpMdLGujwyCnH8JQaKTIpcZGRgMHPQX
+         uhl55nyqi7NvGXWRAReZ879L1RbS25Y+QYZMBiQHFeKreSIOkqmg17F9gay/cwSOdVRB
+         ptExR9O7EmEyFV5VenF12VqrgrprAmwEnA95kjwS4LQGqzgn/gcr2evW0L5OpWkgvg35
+         Lm4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=XVxlM+817FJT8H5/eqfV4sWLJEZR2m3rmCdfP3oay/E=;
-        b=GvUuxZu5Qqv9xzYEYYm8IryswZQOHAhcndFs0LIE+nBeEZljYRAKJllV9P4dbmPBNJ
-         YL0psJZJxySlxB9ZbeZNrQ8UDsuKH2o8m3uYMgH1amf6WUfoaiDyCNjdYHfySvxZ43Cc
-         qTbp3/7u5+5lw043smnnmFYCe0s9ZbqJrGCi8biy3zQhaKc6uFvOgmHgawkDkvAhYbpO
-         +xfGq7osuv9a89sUwDbgrvQkIkQVVWO1T6SrU/3eR3GebMgkelr8s1s83p7kNqotaBla
-         h83cZoLKHFHgZYUulRIT+roVVWQz/0+DhvnmeOj36rRgspE4/8leC2dZcWw++BunwROU
-         wMoQ==
-X-Gm-Message-State: AOAM532uSSgvbHTOfhc7bFT+two9qpoSwG2kWCToSukK+aLdB52WddM9
-        YONYWmnouv9jCYzbAgiMZoujXNNpnUhPQ7XwIS51XQ==
-X-Google-Smtp-Source: ABdhPJwuAuhdX0hEySqeCo3+X9rbYlLqdOPDPqFH6dFaZe2W7uWs32pWCAifwoqvygyfqx9dlJdbFUtM5ngGNZ/aFdc=
-X-Received: by 2002:aca:a9c8:0:b0:2da:45b6:b796 with SMTP id
- s191-20020acaa9c8000000b002da45b6b796mr6042316oie.193.1649355370278; Thu, 07
- Apr 2022 11:16:10 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 7 Apr 2022 11:16:09 -0700
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=539tKapVnhTf+rr/UYXZW8Cq7Ffl8HHTv+MpMPMBGwU=;
+        b=q6qXB7/sMEh3BX5zJkrKkLTY6ZiQiAMJhIJXXSj38/isCdUr8/dnokaW2wIFdih7Uf
+         O8eUp6F6SR1Cx6rZkyyyenp/9wIwJgdAJnS30eCRKykD9xYbvpr3pGIDtp6hUEc+ux0b
+         5ftm17qiipxYM839RB+rioOx9CZfzJVOvY4qAQ/Wm5UaXObKCqZ1DlglV+9g4qo3m4w+
+         Xbv5nITUgEf00upgTSDSYjBi754R4DxEH8m2weQB082WJli52jbZeE8lFf+LnJh7mDjf
+         hsAdzW0362Rv+lDiF6cq0R7kf7gQYgZVCU0jQsm3nxRBeB4/fETbUDi+/TgndC+U6aTa
+         /RvQ==
+X-Gm-Message-State: AOAM531jLCwN4GCTvHbkzjGK5uthXXd2Hg2T/7txEyhkFSa1KIPbv2Xh
+        IqNkiHz4IRM/+cklvhv27dYleIkE6gpLbZ55
+X-Google-Smtp-Source: ABdhPJwjCz/scWlPU6Kt2+e4Q1dq3Q08NUjCeAlPsLiSPT5fACZSj0YnzfNW6uP0kVDbmCFlTABcmw==
+X-Received: by 2002:a2e:9092:0:b0:24b:4cd4:ca5a with SMTP id l18-20020a2e9092000000b0024b4cd4ca5amr667427ljg.260.1649360438002;
+        Thu, 07 Apr 2022 12:40:38 -0700 (PDT)
+Received: from [192.168.1.102] (88-113-46-102.elisa-laajakaista.fi. [88.113.46.102])
+        by smtp.gmail.com with ESMTPSA id f17-20020a2e1f11000000b00247f8eb86a7sm1968503ljf.108.2022.04.07.12.40.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Apr 2022 12:40:37 -0700 (PDT)
+Message-ID: <e41c26c2-8aa4-cfd2-27b0-eb011f45eda0@linaro.org>
+Date:   Thu, 7 Apr 2022 22:40:27 +0300
 MIME-Version: 1.0
-In-Reply-To: <5c87d5d9-66d0-41d9-4adb-53b3ec7cadeb@quicinc.com>
-References: <20220406111101.27412-1-quic_mpubbise@quicinc.com>
- <CAE-0n51vq_V85SKh+hN1Ueas9t1dV7ZFaFyQsG9vukRBAHUc5A@mail.gmail.com> <5c87d5d9-66d0-41d9-4adb-53b3ec7cadeb@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 7 Apr 2022 11:16:09 -0700
-Message-ID: <CAE-0n51PheX1poksttyYVEOVe2amWbWwZSQMwguTUxajSHm6bQ@mail.gmail.com>
-Subject: Re: [PATCH v11] arm64: dts: qcom: sc7280: Add WPSS remoteproc node
-To:     Manikanta Pubbisetty <quic_mpubbise@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_sibis@quicinc.com,
-        kuabhs@chromium.org, quic_pillair@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: delete incorrect ufs
+ interconnect fields
+Content-Language: en-US
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+References: <20220407172145.31903-1-jonathan@marek.ca>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20220407172145.31903-1-jonathan@marek.ca>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Manikanta Pubbisetty (2022-04-06 23:11:50)
->
->
-> On 4/6/2022 8:47 PM, Stephen Boyd wrote:
-> > Quoting Manikanta Pubbisetty (2022-04-06 04:11:01)
-> >> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> >> index ecbf2b89d896..f61a3e15fa8b 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> >> @@ -547,3 +547,6 @@ sw_ctrl: sw-ctrl {
-> >>          };
-> >>   };
-> >>
-> >> +&remoteproc_wpss {
-> >> +       status = "okay";
-> >> +};
-> >
-> > This should be before the PINCTRL section in this file. I believe after
-> > the uart node.
->
-> I have not understood your concern, any specific reason as why
-> remoteproc_wpss node has to be before PINCTRL section?
-> There is no problem in moving, just wanted to understand the reason.
->
+On 4/7/22 20:21, Jonathan Marek wrote:
+> Upstream sm8450.dtsi has #interconnect-cells = <2>; so these are wrong.
+> Ignored and undocumented with upstream UFS driver so delete for now.
 
-It's a style that this file is following. The end of the file is for
-pinctrl configurations. Before that section is where soc nodes are
-modified. There are different sections of the file with comments
-delineating them.
+Basically the description was added by a commit 462c5c0aa798 ("dt-bindings: ufs:
+qcom,ufs: convert to dtschema").
 
-Furthermore, adding things to the end of the file is a recipe for
-conflicts when applying patches as a maintainer. This is another reason
-why we sort the nodes. I suspect having different sections helps here so
-that we don't sort everything alphabetically and have pinctrl settings
-scattered throughout the file.
+It's questionable, if an example in the new yaml file is totally correct
+in connection to the discussed issue.
+
+> Fixes: aa2d0bf04a3c ("arm64: dts: qcom: sm8450: add interconnect nodes")
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 3 ---
+>   1 file changed, 3 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 2c18e1ef9e82d..90cdbec3cac99 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -1663,9 +1663,6 @@ ufs_mem_hc: ufshc@1d84000 {
+>   
+>   			iommus = <&apps_smmu 0xe0 0x0>;
+>   
+> -			interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
+> -					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
+> -			interconnect-names = "ufs-ddr", "cpu-ufs";
+>   			clock-names =
+>   				"core_clk",
+>   				"bus_aggr_clk",
+
+You may look at https://lore.kernel.org/linux-arm-msm/20220310221934.1560729-1-vladimir.zapolskiy@linaro.org/
+
+--
+Best wishes,
+Vladimir
