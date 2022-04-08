@@ -2,170 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F35F4F9EA7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 23:06:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34ED84F9EFC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 23:12:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239671AbiDHVIC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Apr 2022 17:08:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37700 "EHLO
+        id S235190AbiDHVOo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Apr 2022 17:14:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239701AbiDHVIA (ORCPT
+        with ESMTP id S232359AbiDHVOo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Apr 2022 17:08:00 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABEF5140747
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Apr 2022 14:05:55 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id z9-20020a05683020c900b005b22bf41872so6903276otq.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Apr 2022 14:05:55 -0700 (PDT)
+        Fri, 8 Apr 2022 17:14:44 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F7CB22536
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Apr 2022 14:12:40 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id s137so6068127pgs.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Apr 2022 14:12:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/6bF252QqnY12H7PjXHxtHVXzmjhuS4IY4ywpEiT3F4=;
-        b=bX3q3cffPSL7HX15VA0/7vcodNKzm9GcJLAGtQNZRrY/jo2zHyo67+eaqjF0TZuH9O
-         UJs47CoLQXfKzFmbPYXlgUIQCeaixSBKNKxng6izLWyH5UXqPjSh5AfIq63mYDGW9ITF
-         QdxLQnhX09H/zcdLRTK8kByv5nsZFMrOYPz0YvTg09r69NMRQq5ZfM7M5STkxl+VgHp1
-         lCKElw75Tn3au3nk1577813tB9U6jNKrH8T7/zpHn8Ku698P0kl8qOWNH6CHOKjIs2EP
-         sALiAz/v/AkLsOcSBwh7AiIfkT6X3rtmsTfo1iJlHOn31PvJITVuFIkvKtoO09ysM97d
-         klwg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nk1qUFXg3SiseuNYjEIl+VPm4EeXFht7d29XrU4KaA4=;
+        b=hHTYVCbzDxg/E6f2Y5m+SrW5q0WvHz2DjhOqkt9ageKVHSkzhR36bFmCGsjUHf6l46
+         g8lbXxqsW6ogDLPjvXs161Wnur99anKCZOV1yg7BjtKY2pHGJmAFmkqlWrmEehmNOf2U
+         1GgiQCxoOJRaOLN/FYVn9voavYu9gGLQehaSe0lg4eINObxUDrkjRN809DqSqJ0nEqPm
+         m6fVJvimqwyI7aafsQeLPxLUjmY7gTpQZXsNkynW1z1enXVR/h4clXHFNFegenDJasV6
+         DNSMQ7Sw84CLuUxbYRwTcWB6mYCTELyC6JVhbsRRb4I7g/wsr5q+a9BmKzco85tUIg+M
+         vK4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/6bF252QqnY12H7PjXHxtHVXzmjhuS4IY4ywpEiT3F4=;
-        b=Cg4I9Pcq0vJA+6vjCFUKOFsaqEzngH6uRFM03l8MAtTPmD+FemsUIt6Q7yVdiF1S4y
-         aTZpO7ncEDF5ml4bB2NWgt1oQzQOKkPVbgu2iKv0rX1ofF/HD7wFjIsqtZqXX/dX08qC
-         7B7cPsxlFCgPy13B6PZ/OnBOEY1N7LdhJfa+NqJGI4c3T56a6bS0JTOaieBeGd/eV0s1
-         gRMoPi0+NzUBNoMImwoRd3d9yL6aDRUxue7QxycGf+/mztqxifyQWPplitKSCZ5GP9l1
-         tRnVxvSmOF1TyhDmR9Yv8/pV0thBi71dY3pyTfUQnVeLXCgATJs3vmzoLBsanjaR+3aE
-         73Fw==
-X-Gm-Message-State: AOAM5336TlWfF5yYQW8H/yvrsAJJuuIGNEOojetYm5FQ19cTQrrxzbbI
-        W4K2zVvtb8QDRFMn9KMHQm5w6A==
-X-Google-Smtp-Source: ABdhPJzyHOxnC2y32CYITmSfyBZzFVbKrQ+pRvockWV4jxLwEx0YqRBgTITQPSRrQgGmtquEJ4txBQ==
-X-Received: by 2002:a05:6830:1605:b0:5c9:4fde:ba63 with SMTP id g5-20020a056830160500b005c94fdeba63mr7352822otr.84.1649451954926;
-        Fri, 08 Apr 2022 14:05:54 -0700 (PDT)
-Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id y18-20020a056871011200b000e1f5910d45sm6560356oab.7.2022.04.08.14.05.53
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nk1qUFXg3SiseuNYjEIl+VPm4EeXFht7d29XrU4KaA4=;
+        b=gnQQWaiNWqm5D03ysQacnso/WZd4AwFgqR5KVTNVfHo8Gkr3KBqjAsm4XRmnGGDxkL
+         5gFFrogRdoH+lKwtBlVlFdqX/rjjusgsuGUfwf8XMapwzFgHKonTx79bHGzG/m2yW5+r
+         ySA48pl6wECyZy6coB0OWjSgx8xlK+zpLaLyxXMnX4mwiN3snB5Fe7mGf0SC+7q4+Fw5
+         ihNmQzYd0yGMPsKYMDafBQJWsXYP0Yz9mb/nIUMn4FI9xIj9gvOIWGGJ9y9xh45nptAy
+         7gQrwmEmSuZbuh3SCZ5oDml0ZtLCFb3fdo3SEjgUSB//4OpZZK+30COP4XC0LOQmclF0
+         4Bmg==
+X-Gm-Message-State: AOAM532T0qWj8SpHNl4ofVRpu3gIR6Rt6HsV1m5/94I2Zvpx672ggSgs
+        2X8zgdLg4DyZd/sr3qLvLJ4=
+X-Google-Smtp-Source: ABdhPJwttnVHc5lT1HgmINnh+1IbLwkQVQL2uri4evMfw1Up+524IZGFS0MQjKMwPf5h0DYx5sW0hQ==
+X-Received: by 2002:a63:e24b:0:b0:399:1d7e:1503 with SMTP id y11-20020a63e24b000000b003991d7e1503mr16974463pgj.335.1649452359613;
+        Fri, 08 Apr 2022 14:12:39 -0700 (PDT)
+Received: from olv-glaptop3.lan ([2601:647:4400:452:c6d0:c747:3e11:b8e3])
+        by smtp.gmail.com with ESMTPSA id b7-20020a17090ae38700b001ca8947e73csm12277207pjz.0.2022.04.08.14.12.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Apr 2022 14:05:54 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
+        Fri, 08 Apr 2022 14:12:38 -0700 (PDT)
+From:   Chia-I Wu <olvaffe@gmail.com>
+To:     freedreno@lists.freedesktop.org
+Cc:     dri-devel@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v3 2/2] drm/msm/dpu: Issue MDSS reset during initialization
-Date:   Fri,  8 Apr 2022 14:08:13 -0700
-Message-Id: <20220408210813.581391-2-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220408210813.581391-1-bjorn.andersson@linaro.org>
-References: <20220408210813.581391-1-bjorn.andersson@linaro.org>
+        David Airlie <airlied@linux.ie>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@chromium.org>
+Subject: [PATCH] drm/msm: add trace_dma_fence_emit to msm_gpu_submit
+Date:   Fri,  8 Apr 2022 14:12:30 -0700
+Message-Id: <20220408211230.601475-1-olvaffe@gmail.com>
+X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's typical for the bootloader to bring up the display for showing a
-boot splash or efi framebuffer. But in some cases the kernel driver ends
-up only partially configuring (in particular) the DPU, which might
-result in e.g. that two different data paths attempts to push data to
-the interface - with resulting graphical artifacts.
+In practice, trace_dma_fence_init is good enough and almost no driver
+calls trace_dma_fence_emit.  But this is still more correct in theory.
 
-Naturally the end goal would be to inherit the bootloader's
-configuration and provide the user with a glitch free handover from the
-boot configuration to a running DPU.
-
-But as implementing seamless transition from the bootloader
-configuration to the running OS will be a considerable effort, start by
-simply resetting the entire MDSS to its power-on state, to avoid the
-partial configuration.
-
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Cc: Rob Clark <robdclark@chromium.org>
 ---
+ drivers/gpu/drm/msm/msm_gpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Changes since v2:
-- Move the reset before the probing of the children, to avoid issues if child
-  drivers touched hardware at probe time.
-- Extend reset assert time as the previous 1us showed reliability issues on
-  Lenovo Flex 5G.
-
- drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c | 32 ++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-index b10ca505f9ac..6f921910d0e0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-@@ -3,10 +3,12 @@
-  * Copyright (c) 2018, The Linux Foundation
-  */
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index faf0c242874e..a82193f41ea2 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -15,6 +15,7 @@
+ #include <linux/string_helpers.h>
+ #include <linux/devcoredump.h>
+ #include <linux/sched/task.h>
++#include <trace/events/dma_fence.h>
  
-+#include <linux/delay.h>
- #include <linux/irq.h>
- #include <linux/irqchip.h>
- #include <linux/irqdesc.h>
- #include <linux/irqchip/chained_irq.h>
-+#include <linux/reset.h>
- #include "dpu_kms.h"
+ /*
+  * Power Management:
+@@ -769,6 +770,7 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+ 	gpu->active_submits++;
+ 	mutex_unlock(&gpu->active_lock);
  
- #define to_dpu_mdss(x) container_of(x, struct dpu_mdss, base)
-@@ -197,6 +199,32 @@ static void dpu_mdss_destroy(struct msm_mdss *mdss)
- 	dpu_mdss->mmio = NULL;
- }
++	trace_dma_fence_emit(submit->hw_fence);
+ 	gpu->funcs->submit(gpu, submit);
+ 	gpu->cur_ctx_seqno = submit->queue->ctx->seqno;
  
-+static int dpu_mdss_reset(struct device *dev)
-+{
-+	struct reset_control *reset;
-+
-+	reset = reset_control_get_optional_exclusive(dev, NULL);
-+	if (!reset) {
-+		/* Optional reset not specified */
-+		return 0;
-+	} else if (IS_ERR(reset)) {
-+		DPU_ERROR("failed to acquire mdss reset, ret=%ld", PTR_ERR(reset));
-+		return PTR_ERR(reset);
-+	}
-+
-+	reset_control_assert(reset);
-+	/*
-+	 * Tests indicate that reset has to be held for some period of time,
-+	 * make it one frame in a typical system
-+	 */
-+	msleep(20);
-+	reset_control_deassert(reset);
-+
-+	reset_control_put(reset);
-+
-+	return 0;
-+}
-+
- static const struct msm_mdss_funcs mdss_funcs = {
- 	.enable	= dpu_mdss_enable,
- 	.disable = dpu_mdss_disable,
-@@ -210,6 +238,10 @@ int dpu_mdss_init(struct platform_device *pdev)
- 	int ret;
- 	int irq;
- 
-+	ret = dpu_mdss_reset(&pdev->dev);
-+	if (ret)
-+		return ret;
-+
- 	dpu_mdss = devm_kzalloc(&pdev->dev, sizeof(*dpu_mdss), GFP_KERNEL);
- 	if (!dpu_mdss)
- 		return -ENOMEM;
 -- 
-2.35.1
+2.35.1.1178.g4f1659d476-goog
 
