@@ -2,252 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A52504F9464
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 13:43:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00C0F4F9486
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 13:52:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235028AbiDHLpO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Apr 2022 07:45:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41796 "EHLO
+        id S232876AbiDHLyn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Apr 2022 07:54:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235022AbiDHLpN (ORCPT
+        with ESMTP id S231684AbiDHLym (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Apr 2022 07:45:13 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 620CA1CA399
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Apr 2022 04:43:09 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a6so16883244ejk.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Apr 2022 04:43:09 -0700 (PDT)
+        Fri, 8 Apr 2022 07:54:42 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F045A3888
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Apr 2022 04:52:38 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id v13so4544123qkv.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Apr 2022 04:52:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4tXWRt0uQ+KwfgraCk0yFBPONTSxaKlttzw/exd66MY=;
-        b=IYc/fuyF3oOJ1Cih6uDRi1Q5jMTNw+Et2/Rand6G+NCp2/ja0r5FE0T5/6xNpG7Mcs
-         ALpuZu4lpekuaTNyIRZHNADsCvbg4HRVz3oHhO8pUbpAsV0K4pP2ZxeXx6KDUXaBRGiS
-         u58HmpdSNt/0wYmGVTWe3rbACs4A/10yHZYwXaElnMZI1MiQo4KlJEtgvehmI0FuXhe0
-         7Edw+oEHElhP5SNRZnak99EKkbflgC8hqovI4JVI7+8GNEHcxJXBzftk5mMgH5qMD0OM
-         ckKA/52FSrvrnHnM7SpKMAlNNwLEvrRpphW6lm2h71y95gT/jbiPaeSBtzPxuwClPkcw
-         07Sw==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Jx6/Lgbitqz5l2vaW1Kah0wGVIvKoz5skxFr6Jlav/w=;
+        b=S++XNMlvf3Vbg3Rih1bTFb/lLZQdn7EPa8DKSd1j6649HfU0cdQo29mEKO/CM1UKZm
+         PASfkvYlTmczerTPeFCsnWQhsCz17nJ06x4kVN6JCl6sCIEOfC2CUg0hiZPc/AQ4Ln4t
+         7W2rglnBywYnttvathHjgcJhn0UzVdsnGI1vr/VO9rZUsvLXxK+1hPIkGbS8BR+IWSn+
+         IggrY86KAq9S9cEWy5t8J4iTDfPtYX/1+TilDScxqfwi886SS9VDp8q3ITUyiUTUC2Ah
+         CRtJb2ekFG8s6seSnbe3BfEhhW7KuH35uo1ioN1V8UdWV0NKkZ9MpIxqsfW4X+F1vdHv
+         h8dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4tXWRt0uQ+KwfgraCk0yFBPONTSxaKlttzw/exd66MY=;
-        b=bVqvDKqPcKyLwu8iPDJVcTF9/umb0S+fo7OTwfP3PtwaRHKY9Iie+oeKetBNRALJwr
-         mo4WgR1S0Miicn7Rtbti2XHrzg6E5fOlWvKH2frgebeuCdmy+qTyecYIqqWXYrMddkIA
-         asDwvXFvAQtTnNl7hlV4rz/oqrB87uvuwTiUvxQWoFl1g9+HFDXhqqY+HxCV9EYk0h06
-         nqMf2vi7PZq/nDJOsSKTjXGX2In+j51mQLOiizX14mE2c53lNPOg6L1G2ZW9vMCwnc44
-         0eu2RL41PuHzpwYT+MFSYjHXIk1uBR+OFB+2w2baELvWsKJpeinIFqE5LH0Zp1UeL/Kq
-         IvtQ==
-X-Gm-Message-State: AOAM531uZlu3eS0KeiWM9ZsfzvSnhbVNfVIk4J2MbIL7Lkb7C1teeysk
-        X7T62ueyj8FhrGPE4qu+PM/CffMY8P2sVA==
-X-Google-Smtp-Source: ABdhPJyho+o3aTEmD2Ke8WkDUWYXh6grtVSYns9Ulv1jbUfDFG6AwwAqD5rNNVAa9ZC8wpejO5Mhhw==
-X-Received: by 2002:a17:907:d09:b0:6e8:3eef:3192 with SMTP id gn9-20020a1709070d0900b006e83eef3192mr6327933ejc.122.1649418187586;
-        Fri, 08 Apr 2022 04:43:07 -0700 (PDT)
-Received: from otso.. (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id h5-20020a170906718500b006e7edcda732sm5909557ejk.125.2022.04.08.04.43.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Apr 2022 04:43:07 -0700 (PDT)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sm6350: Add I2C busses
-Date:   Fri,  8 Apr 2022 13:42:05 +0200
-Message-Id: <20220408114205.234635-2-luca.weiss@fairphone.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220408114205.234635-1-luca.weiss@fairphone.com>
-References: <20220408114205.234635-1-luca.weiss@fairphone.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Jx6/Lgbitqz5l2vaW1Kah0wGVIvKoz5skxFr6Jlav/w=;
+        b=5d3px2CPhWWS7w9AKJ6nPoIRClw79JytEGWdKCU+tS/JtHB3HPfGAVtWq1Qe19qg/y
+         Z5Hn3hJQU8JsbI1I1VZOti6i2b5kOG4fYB2QfoNE/S86x1gJB3v3cwt5KPG7OvGZCtVS
+         5DhYZRYNtyYmK5QiHpG24kzCrf7Rt4R0wmS+umPotcuQGgLnnpRr4kMdYeT53INCIbIA
+         AMjmAZQnT+sQDUAiS2SySGJ1XyZYOxObHfLXJObmuRRp6wlbbOm7GGv1H5tN5lhPfsO4
+         La8mQB3+ew/6yIIliSDqTIfV/qpMFXAsl4vZ9CX1niaZVrZ0Trdv3WFjL1Y0+KnuoJlX
+         5hFA==
+X-Gm-Message-State: AOAM530hPXEVZrGrZ4t644wV1Vy/j1iYTMBHGjmPnyNFPtst7p/wFq+X
+        ct/DpCO6Qey3UkQeWyXuDCrnmCT7XdsLYtN9oU2W0w==
+X-Google-Smtp-Source: ABdhPJzUx8+jelie1GKF76E3MKGQcEpF3pUQ1g+FajnC79YKu7g3Y5icMIcl67VWS851AmyeK0Edv1CTDuLA810H2Ic=
+X-Received: by 2002:a05:620a:2449:b0:69a:4ae:85e5 with SMTP id
+ h9-20020a05620a244900b0069a04ae85e5mr4876649qkn.30.1649418758129; Fri, 08 Apr
+ 2022 04:52:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1649350286-11504-1-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1649350286-11504-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 8 Apr 2022 14:52:27 +0300
+Message-ID: <CAA8EJpo7UGvhH0WYFm6gdOdX22++9kErudA7_ce-mbPBY3KEpw@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dp: add fail safe mode outside of event_mutex context
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes for the I2C busses on sm6350.
+On Thu, 7 Apr 2022 at 19:51, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+> There is possible circular locking dependency detected on event_mutex.
+> To break this possible circular locking, this patch move setting fail
+> safe mode out of event_mutex scope.
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 134 +++++++++++++++++++++++++++
- 1 file changed, 134 insertions(+)
+Please provide the lockdep trace here, it might help other people
+trying to fix the issue or working on backports to stable kernels.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index ef43af39569c..81db25952cf1 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -517,6 +517,45 @@ opp-384000000 {
- 			};
- 		};
- 
-+		qupv3_id_0: geniqup@8c0000 {
-+			compatible = "qcom,geni-se-qup";
-+			reg = <0x0 0x8c0000 0x0 0x2000>;
-+			clock-names = "m-ahb", "s-ahb";
-+			clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
-+				 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			iommus = <&apps_smmu 0x43 0x0>;
-+			ranges;
-+			status = "disabled";
-+
-+			i2c0: i2c@880000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00880000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c0_default>;
-+				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			i2c2: i2c@888000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00888000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S2_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c2_default>;
-+				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+		};
-+
- 		qupv3_id_1: geniqup@9c0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0x0 0x9c0000 0x0 0x2000>;
-@@ -529,6 +568,45 @@ qupv3_id_1: geniqup@9c0000 {
- 			ranges;
- 			status = "disabled";
- 
-+			i2c6: i2c@980000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00980000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S0_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c6_default>;
-+				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			i2c7: i2c@984000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00984000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S1_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c7_default>;
-+				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			i2c8: i2c@988000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00988000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S2_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c8_default>;
-+				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			uart9: serial@98c000 {
- 				compatible = "qcom,geni-debug-uart";
- 				reg = <0 0x98c000 0 0x4000>;
-@@ -539,6 +617,20 @@ uart9: serial@98c000 {
- 				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 			};
-+
-+			i2c10: i2c@990000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00990000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S4_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c10_default>;
-+				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 		};
- 
- 		tcsr_mutex: hwlock@1f40000 {
-@@ -980,6 +1072,48 @@ qup_uart9_default: qup-uart9-default {
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
-+
-+			qup_i2c0_default: qup-i2c0-default {
-+				pins = "gpio0", "gpio1";
-+				function = "qup00";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			qup_i2c2_default: qup-i2c2-default {
-+				pins = "gpio45", "gpio46";
-+				function = "qup02";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			qup_i2c6_default: qup-i2c6-default {
-+				pins = "gpio13", "gpio14";
-+				function = "qup10";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			qup_i2c7_default: qup-i2c7-default {
-+				pins = "gpio27", "gpio28";
-+				function = "qup11";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			qup_i2c8_default: qup-i2c8-default {
-+				pins = "gpio19", "gpio20";
-+				function = "qup12";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			qup_i2c10_default: qup-i2c10-default {
-+				pins = "gpio4", "gpio5";
-+				function = "qup14";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
- 		};
- 
- 		apps_smmu: iommu@15000000 {
+>
+> Fixes: d4aca422539c ("drm/msm/dp:  always add fail-safe mode into connector mode list")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c |  6 ++++++
+>  drivers/gpu/drm/msm/dp/dp_panel.c   | 20 ++++++++++----------
+>  drivers/gpu/drm/msm/dp/dp_panel.h   |  1 +
+>  3 files changed, 17 insertions(+), 10 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 178b774..a42732b 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -580,6 +580,12 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+>                         dp->dp_display.connector_type, state);
+>         mutex_unlock(&dp->event_mutex);
+>
+> +       /*
+> +        * add fail safe mode outside event_mutex scope
+> +        * to avoid potiential circular lock with drm thread
+> +        */
+> +       dp_panel_add_fail_safe_mode(dp->dp_display.connector);
+> +
+>         /* uevent will complete connection part */
+>         return 0;
+>  };
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+> index f141872..26c3653 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+> @@ -151,6 +151,15 @@ static int dp_panel_update_modes(struct drm_connector *connector,
+>         return rc;
+>  }
+>
+> +void dp_panel_add_fail_safe_mode(struct drm_connector *connector)
+> +{
+> +       /* fail safe edid */
+> +       mutex_lock(&connector->dev->mode_config.mutex);
+> +       if (drm_add_modes_noedid(connector, 640, 480))
+> +               drm_set_preferred_mode(connector, 640, 480);
+> +       mutex_unlock(&connector->dev->mode_config.mutex);
+> +}
+> +
+>  int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+>         struct drm_connector *connector)
+>  {
+> @@ -207,16 +216,7 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+>                         goto end;
+>                 }
+>
+> -               /* fail safe edid */
+> -               mutex_lock(&connector->dev->mode_config.mutex);
+> -               if (drm_add_modes_noedid(connector, 640, 480))
+> -                       drm_set_preferred_mode(connector, 640, 480);
+> -               mutex_unlock(&connector->dev->mode_config.mutex);
+> -       } else {
+> -               /* always add fail-safe mode as backup mode */
+> -               mutex_lock(&connector->dev->mode_config.mutex);
+> -               drm_add_modes_noedid(connector, 640, 480);
+> -               mutex_unlock(&connector->dev->mode_config.mutex);
+> +               dp_panel_add_fail_safe_mode(connector);
+>         }
+>
+>         if (panel->aux_cfg_update_done) {
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+> index 9023e5b..99739ea 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+> @@ -59,6 +59,7 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel);
+>  int dp_panel_deinit(struct dp_panel *dp_panel);
+>  int dp_panel_timing_cfg(struct dp_panel *dp_panel);
+>  void dp_panel_dump_regs(struct dp_panel *dp_panel);
+> +void dp_panel_add_fail_safe_mode(struct drm_connector *connector);
+>  int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+>                 struct drm_connector *connector);
+>  u32 dp_panel_get_mode_bpp(struct dp_panel *dp_panel, u32 mode_max_bpp,
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
+
+
 -- 
-2.35.1
-
+With best wishes
+Dmitry
