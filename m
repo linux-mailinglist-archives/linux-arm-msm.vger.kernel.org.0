@@ -2,68 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6955F4F958B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 14:21:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C34924F958F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 14:22:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235469AbiDHMXg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Apr 2022 08:23:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57536 "EHLO
+        id S235540AbiDHMX4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Apr 2022 08:23:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233011AbiDHMXf (ORCPT
+        with ESMTP id S235463AbiDHMX4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Apr 2022 08:23:35 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C7A233D0F4
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Apr 2022 05:21:31 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id ke15so7304177qvb.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Apr 2022 05:21:31 -0700 (PDT)
+        Fri, 8 Apr 2022 08:23:56 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 233B833D81C
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Apr 2022 05:21:53 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id z15so1251135qtj.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Apr 2022 05:21:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=YRo7o4btpESJNDRm1Sx3TiY7NQIcJDsdvvXgFQ9NGKc=;
-        b=fC4YVY0voFTb7xf7jGHf5z4ClA2JWzzjJAJk/eJAafLPDNcd51omB5oEC5gIAPs+mb
-         9vwV+W+ZpWER1jaHI/z80OUDSzO11ylNsDJh1oPo2W/tegkiykV45tyH+zyV8TRB4lrM
-         SQcT6so8RswTm3LdtHFeJsdwz0qW0J+J8t21nI24qlqYvkUY+jnggPRjnnVTWz0Eh0an
-         rNCxcXVQG4PloCSVuG3qvJp8sc7syNWTI0oQ719vT9lY704ztiYvv0xb4WmfkyFyLKWd
-         jess8X1HhbxeJdjhmgoM8zkWQQ9+//RUAemVGiLaC5mggO/ishyKoOgv6ycLk5TSKHFt
-         kUJQ==
+        bh=+/BWz3Pk8r30Gfc4qGV4ZOyYfEY0sq1wDYCw1e9kQ38=;
+        b=K+SFu/xAxfSv8ptmfSt0vivA6W2FAX95a45VvUQlpVTHnKOdxmllKplZItjMf+HOQC
+         9DYIktpng9TB25OnHxCrL64xd6fagaJZqoStF5Wx0Hy3ikDlXsYpsImSLq3jJX7NTozr
+         jtJAtIG8hw7MQ1aH37SBKuyIZgS9cGBl6TipnChp/SytE1xsSgwhG4Uzcr65ZrCPcP+H
+         sAhYViuQqi8e3dsmU1FBooELOGstjUC1c8KwpSr76ErlET7J3vbBGnI1/nfA4XuHLqHU
+         HNG9mVm9fFu/DvOkx0m06XL6cqKui8Sturp1GWXhuphbUv9x0d4AJRfHRzn1njbuw5PG
+         NScg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=YRo7o4btpESJNDRm1Sx3TiY7NQIcJDsdvvXgFQ9NGKc=;
-        b=TgxG9iOfZpSib0Eau0oyyqKAj91o3kDgHWAzSgQ6iuffJlMhsHkauhesZnUzxj9mb9
-         oUzYKIPfWwfrgd92xj+CdUQvyaFUjHPSDYc111Kxoex2wx8+xoCWPlvlwhMnL5am5kP3
-         yI0pxugx1IwfT83FFIjXPYxB5cAr4MsnflVrGamZjurB8cU6cO8jDRT3HiGRkTJmUZlD
-         rgwlIvtMvJ4FX7MZV8rUqrsgAVkXkpISkTuNnVPiwa64JSFSp2YvhgU892FkkJxQSuNv
-         Wmj/2zxbDGWNXlno+s454QlxTiOcblO+vKrrZfewvDTIKnENZHOGnn12lm9c3ZZhOjMe
-         HgNA==
-X-Gm-Message-State: AOAM532HSLTLZqTN2uUL3HDRigQbe8HBMzUxt7WGe+FzMtjz0+7Ak93i
-        dE/lKrnGjACop+zAk8tFCxGy5Uy6JdGh+YEuvrRjuw==
-X-Google-Smtp-Source: ABdhPJzyPvV2EX3O5x5qzKd7QrCWD7nwrriMxeUbFZZ/oV9CoHBlI4Bman5yBlnB8oOnR72ONhBZO5Vt7RuHEAXJx9g=
-X-Received: by 2002:a05:6214:921:b0:443:ce3d:577b with SMTP id
- dk1-20020a056214092100b00443ce3d577bmr15918452qvb.122.1649420490768; Fri, 08
- Apr 2022 05:21:30 -0700 (PDT)
+        bh=+/BWz3Pk8r30Gfc4qGV4ZOyYfEY0sq1wDYCw1e9kQ38=;
+        b=XUv1h/yc8408O3w781DCq4HMdxqyZU5BIyFr67peJwsAqcarDuBrN2FnF1pytHwx+N
+         tsQiTJbAx0wj2Wuz6Pljbu3GL4fuYL8iLARRPbOJU8sLu9m7x1LYJhIeSJslES6VguNY
+         39ATDXmve9oT4kkIB7xpYNP/4lhzOnBEuPKxv4d7NBIjSSHeG0KZPtrOjDYrflwSnsmQ
+         5VsD8LSEmwkXMFTpFPFRG5K6HGMNCY2/Lf1LW+8QIITvsLcjgey4dsvIDm74QkDaX5hD
+         QV4BsdBMWB3wgh8StjaENrGKYTmzxYEwX9A4KYGtttevcIqFjY2Nt/Fzn/N2T8kvIx2W
+         Zusg==
+X-Gm-Message-State: AOAM531nu7TQee5aVD4ma/Umry1QkOk7dHK1nD8CcK5pENNWIhL07e1I
+        RrLTNPa7qMcGgB/YPmQLoUE7jkVy/BsLt/fp42+R6Q==
+X-Google-Smtp-Source: ABdhPJwFncjOacPlNFbEfJskgVWNz1y73VUg9c9DTYFByySPmUZZzySIYxy5P7V4YxD2DiJx66tjsu6VB/xf/JxBQmg=
+X-Received: by 2002:ac8:7dd1:0:b0:2e0:6fe1:189b with SMTP id
+ c17-20020ac87dd1000000b002e06fe1189bmr16058848qte.629.1649420512329; Fri, 08
+ Apr 2022 05:21:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220407202836.1211268-1-robdclark@gmail.com>
-In-Reply-To: <20220407202836.1211268-1-robdclark@gmail.com>
+References: <tencent_8E2A1C78140EE1784AB2FF4B2088CC0AB908@qq.com>
+In-Reply-To: <tencent_8E2A1C78140EE1784AB2FF4B2088CC0AB908@qq.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 8 Apr 2022 15:21:20 +0300
-Message-ID: <CAA8EJpqfoPwmsJcwMvFgz1KL7sE5XahFGV4WoJ=Eg9Sr8R39RQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Fix range size vs end confusion
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        open list <linux-kernel@vger.kernel.org>
+Date:   Fri, 8 Apr 2022 15:21:42 +0300
+Message-ID: <CAA8EJprFBJeQQo79LOdJR0pA75wbzM64KRnPLHqLOGJ2KpJkEg@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/mdp5: check the return of kzalloc()
+To:     xkernel.wang@foxmail.com
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
+        airlied@linux.ie, daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -75,41 +68,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 7 Apr 2022 at 23:27, Rob Clark <robdclark@gmail.com> wrote:
+On Thu, 7 Apr 2022 at 05:33, <xkernel.wang@foxmail.com> wrote:
 >
-> From: Rob Clark <robdclark@chromium.org>
+> From: Xiaoke Wang <xkernel.wang@foxmail.com>
 >
-> The fourth param is size, rather than range_end.
+> kzalloc() is a memory allocation function which can return NULL when
+> some internal memory errors happen. So it is better to check it to
+> prevent potential wrong memory access.
 >
-> Note that we could increase the address space size if we had a way to
-> prevent buffers from spanning a 4G split, mostly just to avoid fw bugs
-> with 64b math.
+> Besides, since mdp5_plane_reset() is void type, so we should better
+> set `plane-state` to NULL after releasing it.
 >
-> Fixes: 84c31ee16f90 ("drm/msm/a6xx: Add support for per-instance pagetables")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Xiaoke Wang <xkernel.wang@foxmail.com>
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 > ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> ChangeLog:
+> v1->v2 simplify the patch and update the description.
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 3 +++
+>  1 file changed, 3 insertions(+)
 >
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 17de46fc4bf2..80d57608b34a 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1742,7 +1742,7 @@ a6xx_create_private_address_space(struct msm_gpu *gpu)
->                 return ERR_CAST(mmu);
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+> index c6b69af..50e8542 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+> @@ -90,7 +90,10 @@ static void mdp5_plane_reset(struct drm_plane *plane)
+>                 __drm_atomic_helper_plane_destroy_state(plane->state);
 >
->         return msm_gem_address_space_create(mmu,
-> -               "gpu", 0x100000000ULL, 0x1ffffffffULL);
-> +               "gpu", 0x100000000ULL, SZ_4G);
->  }
+>         kfree(to_mdp5_plane_state(plane->state));
+> +       plane->state = NULL;
+>         mdp5_state = kzalloc(sizeof(*mdp5_state), GFP_KERNEL);
+> +       if (!mdp5_state)
+> +               return;
 >
->  static uint32_t a6xx_get_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
+>         if (plane->type == DRM_PLANE_TYPE_PRIMARY)
+>                 mdp5_state->base.zpos = STAGE_BASE;
 > --
-> 2.35.1
->
+
 
 
 -- 
