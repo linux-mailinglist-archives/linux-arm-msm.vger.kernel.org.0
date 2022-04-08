@@ -2,138 +2,325 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF6904F95AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 14:26:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AB314F95C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 14:29:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235649AbiDHM2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Apr 2022 08:28:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50740 "EHLO
+        id S235719AbiDHM36 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Apr 2022 08:29:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232419AbiDHM2r (ORCPT
+        with ESMTP id S235701AbiDHM3m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Apr 2022 08:28:47 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 506AD33DC8A;
-        Fri,  8 Apr 2022 05:26:43 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 781F9620B6;
-        Fri,  8 Apr 2022 12:26:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D980DC385A1;
-        Fri,  8 Apr 2022 12:26:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649420802;
-        bh=S3ySNvfP+7/EjC7ydSU5pgHi80ITmCMi6D5xYdpcZfQ=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=pf/0VyasQmdk2dqcdDNTe6uD8ftrzrsCh9VZZ27cOntYN0Q9oSzNI+YcPrybBbcnv
-         TQes4oCXUSO7OQqbrWM2RERmLKTV531tUey0rnkiL7POktivIVi4rCjIR0RwqIK2Z8
-         pRk7HKhWYdMMTGCAxLHik6UQ2Ib9Q3jsNwRBsE9TxkJHR2QL0usfROCkzNS2r2RZGw
-         6rXis+KDt40iE+Bg1xL2irIs4nKCYwQbDTrzP02+IE/BTdrNt2/BPp6y7xQXjynniK
-         7+v2+HLGjeyHcH/lgSqu82WWznfZzJOrd98bLngMah+77+7PIIpEF8Eswi/R6nMH58
-         ZuyINO7fu77kw==
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <maz@kernel.org>)
-        id 1ncnhI-002lRF-Hu; Fri, 08 Apr 2022 13:26:40 +0100
+        Fri, 8 Apr 2022 08:29:42 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 050BF33DCB4
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Apr 2022 05:27:38 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id d40so7243017lfv.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Apr 2022 05:27:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=K0ZCLZVZHjdQHjkYjq3C12VlmjiKcOqPn8qAHZEMDHQ=;
+        b=le54dYxu8FyFjTVPe2rw9al+gUfpK8XpisfSSexN51FHGO0IKgVuuQYfFkdi5dN9+v
+         bnHH8KuPRCenyHJ+fX9a7adPG7owTMYVXSBstsfTNPfGD6kf0GgzaV69JnJzzFORMNBl
+         MP3OX4iPLVYpIVgd8ys8J0+Rufm7V6kjcNdAqk9klTGQ7mDW2X+tlWu5bnz2ysSqexaO
+         h9zdGqcdVHN8zOXaVb1FvnkhS+hvzg38XYBByoMH2DQz/u75Bsvck7a6cdQMZD8ozrcC
+         zQBE5XnYneJWrxEv/ZXzIiTP0nMGlNvHsQZPb809zW+BAcLt7UJdg6O7Qq5LMTe6fSTn
+         kkaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=K0ZCLZVZHjdQHjkYjq3C12VlmjiKcOqPn8qAHZEMDHQ=;
+        b=HCSbM4g/YQvPBCp3xqBf79EeAsEk45nPT7VzwEW+2Et62UzW+foh8HhFEsw1E+yElU
+         YNT/8L5alVBmOz5ErSSaXtCxogAzmm42yBm+BAZdWuAu6aAwI5thuUx8gO+LJrBhIdN7
+         SmshLRojwH5nMVUIdQiUXCRdR7xG0td031UlvPwX0sfkLCV5nedLRuIxL2lLlgyzRCQ/
+         WmXFCgpZSrEjhrHQLBwXdtYqOLvggxj6T4f9TrGMQfkRt+4AEuC5T5Gn3DWRPbVglTHd
+         oi1awrKJYQeDXhyjr61aPM6d0exYY/lRAb5UMbVl8EkdIJ1IDW5Tg/yKFtlfCr62iuJl
+         6GJQ==
+X-Gm-Message-State: AOAM531RW/ARsvhVe9wWD7zd0CgQ5H3b+U2yle7QzkLQb0LG2FHo5Mqf
+        SA5qSEG6j4f0eQ8fHMEjB343ygXANs/WVw==
+X-Google-Smtp-Source: ABdhPJzBSUDRvdN9JvvkhYDhLk+irBa4u3Y8M14DyV37zV5TOvxgfbqWJ42CgbTKxCHU5yPrW8KMxw==
+X-Received: by 2002:a05:6512:3a89:b0:44a:796c:8db0 with SMTP id q9-20020a0565123a8900b0044a796c8db0mr12343651lfu.123.1649420857060;
+        Fri, 08 Apr 2022 05:27:37 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id k1-20020a2ea281000000b0024b54446beesm50453lja.107.2022.04.08.05.27.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Apr 2022 05:27:36 -0700 (PDT)
+Message-ID: <625ce8a0-4e25-5513-5599-c1cdebf5a3a5@linaro.org>
+Date:   Fri, 8 Apr 2022 15:27:35 +0300
 MIME-Version: 1.0
-Date:   Fri, 08 Apr 2022 13:26:40 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Joey Gouly <joey.gouly@arm.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org,
-        Android Kernel Team <kernel-team@android.com>
-Subject: Re: [PATCH v2 10/10] Documentation: Update the recommended pattern
- for GPIO irqchips
-In-Reply-To: <CAHp75Ve5tMyUdj-cYV0pzL4zvVitTwC_gGv50-ZHTETiiQSbeA@mail.gmail.com>
-References: <20220405135444.199295-1-maz@kernel.org>
- <20220405135444.199295-11-maz@kernel.org>
- <CAHp75Ve5tMyUdj-cYV0pzL4zvVitTwC_gGv50-ZHTETiiQSbeA@mail.gmail.com>
-User-Agent: Roundcube Webmail/1.4.13
-Message-ID: <84a1ed7e4442e04e16730ae112a43aea@kernel.org>
-X-Sender: maz@kernel.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2] drm/msm/dp: enhance both connect and disconnect
+ pending_timeout handle
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, vkoul@kernel.org,
+        daniel@ffwll.ch, airlied@linux.ie, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1649280493-4393-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1649280493-4393-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: andy.shevchenko@gmail.com, linux-kernel@vger.kernel.org, linus.walleij@linaro.org, brgl@bgdev.pl, thierry.reding@gmail.com, joey.gouly@arm.com, jonathanh@nvidia.com, marcan@marcan.st, sven@svenpeter.dev, alyssa@rosenzweig.io, bjorn.andersson@linaro.org, agross@kernel.org, jeffrey.l.hugo@gmail.com, tglx@linutronix.de, Basavaraj.Natikar@amd.com, Shyam-sundar.S-k@amd.com, linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-04-08 12:33, Andy Shevchenko wrote:
-> On Wed, Apr 6, 2022 at 1:57 PM Marc Zyngier <maz@kernel.org> wrote:
->> 
->> Update the documentation to get rid of the per-gpio_irq_chip
->> irq_chip structure, and give examples of the new pattern.
-> 
-> ...
-> 
->> +  static void my_gpio_mask_irq(struct irq_data *d)
->> +  {
->> +      struct gpio_chip *gc = irq_desc_get_handler_data(d);
->> +
->> +      /*
->> +       * Perform any necessary action to mask the interrupt,
->> +       * and then call into the core code to synchronise the
->> +       * state.
->> +       */
->> +
->> +      gpiochip_disable_irq(gc, d->hwirq);
-> 
-> (1)
-> 
->> +  }
->> +
->> +  static void my_gpio_unmask_irq(struct irq_data *d)
->> +  {
->> +      struct gpio_chip *gc = irq_desc_get_handler_data(d);
-> 
->> +      gpiochip_disable_irq(gc, d->hwirq);
-> 
-> (2)
-> 
->> +      /*
->> +       * Perform any necessary action to unmask the interrupt,
->> +       * after having called into the core code to synchronise
->> +       * the state.
->> +       */
->> +  }
-> 
-> If (1) and (2) being the same is not a mistake (typo) it probably
-> needs additional explanation.
+On 07/04/2022 00:28, Kuogee Hsieh wrote:
+> dp_hpd_plug_handle() is responsible for setting up main link and send
+> uevent to notify user space framework to start video stream. Similarly,
+> dp_hdp_unplug_handle is responsible to send uevent to notify user space
+> framework to stop video stream and then tear down main link.
+> However there are rare cases, such as in the middle of system suspending,
+> that uevent could not be delivered to user space framework. Therefore
+> some kind of recover mechanism armed by timer need to be in place in the
+> case of user space framework does not respond to uevent.
 
-Well spotted, this is definitely a copy-paste issue.
-I'll fix this locally.
+Hmm, how does userpsace 'respond' to the uevent? The driver should send 
+hotplug notifications to userspace, but it must not expect any 
+particular reaction. The userspace might be as simple, as fbdev 
+emulation, but the driver still should function correctly.
 
-Thanks,
+> This patch have both dp_conenct_pending_timeout and
+> dp_disconnect_pending_timeout are used to stop video stream and tear down
+> main link and eventually restore DP driver state to known default
+> DISCONNECTED state in the case of timer fired due to framework does not
+> respond to uevent so that DP driver can recover itself gracefully at next
+> dongle unplug followed by plugin event.
+> 
+> Changes in v2:
+> -- replace dp_display_usbpd_disconnect_cb with dp_display_notify_disconnect
+> 
+> Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/dp/dp_ctrl.c    | 36 ++++++++++++++++++++-----
+>   drivers/gpu/drm/msm/dp/dp_ctrl.h    |  1 +
+>   drivers/gpu/drm/msm/dp/dp_display.c | 54 ++++++++++++++++++++++++++++---------
+>   3 files changed, 72 insertions(+), 19 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index dcd0126..48990fb 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1910,15 +1910,12 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
+>   	return ret;
+>   }
+>   
+> -int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
+> +int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl)
+>   {
+>   	struct dp_ctrl_private *ctrl;
+>   	struct dp_io *dp_io;
+>   	struct phy *phy;
+> -	int ret = 0;
+> -
+> -	if (!dp_ctrl)
+> -		return -EINVAL;
+> +	int ret;
+>   
+>   	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+>   	dp_io = &ctrl->parser->io;
+> @@ -1926,7 +1923,34 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
+>   
+>   	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
+>   
+> -	dp_catalog_ctrl_reset(ctrl->catalog);
+> +	ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, false);
+> +	if (ret) {
+> +		DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
+> +	}
+> +
+> +	DRM_DEBUG_DP("Before, phy=%p init_count=%d power_on=%d\n",
+> +		phy, phy->init_count, phy->power_count);
+> +
+> +	phy_power_off(phy);
+> +
+> +	DRM_DEBUG_DP("After, phy=%p init_count=%d power_on=%d\n",
+> +		phy, phy->init_count, phy->power_count);
+> +
+> +	return ret;
+> +}
+> +
+> +int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
+> +{
+> +	struct dp_ctrl_private *ctrl;
+> +	struct dp_io *dp_io;
+> +	struct phy *phy;
+> +	int ret;
+> +
+> +	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+> +	dp_io = &ctrl->parser->io;
+> +	phy = dp_io->phy;
+> +
+> +	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
+>   
+>   	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, false);
+>   	if (ret)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> index 2433edb..ffafe17 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> @@ -22,6 +22,7 @@ struct dp_ctrl {
+>   int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
+>   int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
+>   int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
+> +int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
+>   int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
+>   void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
+>   void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 178b774..a6200a5 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -451,11 +451,14 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
+>   
+>   static int dp_display_usbpd_disconnect_cb(struct device *dev)
+>   {
+> +	return 0;
+> +}
+> +
+> +static void dp_display_notify_disconnect(struct device *dev)
+> +{
+>   	struct dp_display_private *dp = dev_get_dp_display_private(dev);
+>   
+>   	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+> -
+> -	return 0;
+>   }
+>   
+>   static void dp_display_handle_video_request(struct dp_display_private *dp)
+> @@ -593,10 +596,16 @@ static int dp_connect_pending_timeout(struct dp_display_private *dp, u32 data)
+>   
+>   	mutex_lock(&dp->event_mutex);
+>   
+> +	/*
+> +	 * main link had been setup but video is not ready yet
+> +	 * only tear down main link
+> +	 */
+>   	state = dp->hpd_state;
+>   	if (state == ST_CONNECT_PENDING) {
+> -		dp->hpd_state = ST_CONNECTED;
+>   		DRM_DEBUG_DP("type=%d\n", dp->dp_display.connector_type);
+> +		dp_ctrl_off_link(dp->ctrl);
+> +		dp_display_host_phy_exit(dp);
+> +		dp->hpd_state = ST_DISCONNECTED;
+>   	}
+>   
+>   	mutex_unlock(&dp->event_mutex);
+> @@ -645,6 +654,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+>   		if (dp->link->sink_count == 0) {
+>   			dp_display_host_phy_exit(dp);
+>   		}
+> +		dp_display_notify_disconnect(&dp->pdev->dev);
+>   		mutex_unlock(&dp->event_mutex);
+>   		return 0;
+>   	}
+> @@ -661,19 +671,22 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+>   		return 0;
+>   	}
+>   
+> -	dp->hpd_state = ST_DISCONNECT_PENDING;
+> -
+>   	/* disable HPD plug interrupts */
+>   	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
+>   
+>   	/*
+>   	 * We don't need separate work for disconnect as
+>   	 * connect/attention interrupts are disabled
+> -	 */
+> -	dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
+> +	*/
+> +	dp_display_notify_disconnect(&dp->pdev->dev);
+>   
+> -	/* start sentinel checking in case of missing uevent */
+> -	dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
+> +	if (state == ST_DISPLAY_OFF) {
+> +		dp->hpd_state = ST_DISCONNECTED;
+> +	} else {
+> +		/* start sentinel checking in case of missing uevent */
+> +		dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
+> +		dp->hpd_state = ST_DISCONNECT_PENDING;
+> +	}
+>   
+>   	/* signal the disconnect event early to ensure proper teardown */
+>   	dp_display_handle_plugged_change(&dp->dp_display, false);
+> @@ -695,10 +708,16 @@ static int dp_disconnect_pending_timeout(struct dp_display_private *dp, u32 data
+>   
+>   	mutex_lock(&dp->event_mutex);
+>   
+> +	/*
+> +	 * main link had been set up and video is ready
+> +	 * tear down main link, video stream and phy
+> +	 */
+>   	state =  dp->hpd_state;
+>   	if (state == ST_DISCONNECT_PENDING) {
+> -		dp->hpd_state = ST_DISCONNECTED;
+>   		DRM_DEBUG_DP("type=%d\n", dp->dp_display.connector_type);
+> +		dp_ctrl_off(dp->ctrl);
+> +		dp_display_host_phy_exit(dp);
+> +		dp->hpd_state = ST_DISCONNECTED;
+>   	}
+>   
+>   	mutex_unlock(&dp->event_mutex);
+> @@ -1571,6 +1590,12 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+>   
+>   	mutex_lock(&dp_display->event_mutex);
+>   
+> +	state = dp_display->hpd_state;
+> +	if (state == ST_DISCONNECTED) {
+> +		mutex_unlock(&dp_display->event_mutex);
+> +		return rc;
+> +	}
+> +
+>   	/* stop sentinel checking */
+>   	dp_del_event(dp_display, EV_CONNECT_PENDING_TIMEOUT);
+>   
+> @@ -1588,8 +1613,6 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+>   		return rc;
+>   	}
+>   
+> -	state =  dp_display->hpd_state;
+> -
+>   	if (state == ST_DISPLAY_OFF)
+>   		dp_display_host_phy_init(dp_display);
+>   
+> @@ -1638,13 +1661,18 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+>   	/* stop sentinel checking */
+>   	dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
+>   
+> +	state = dp_display->hpd_state;
+> +	if (state == ST_DISCONNECTED || state == ST_DISPLAY_OFF) {
+> +		mutex_unlock(&dp_display->event_mutex);
+> +		return rc;
+> +	}
+> +
+>   	dp_display_disable(dp_display, 0);
+>   
+>   	rc = dp_display_unprepare(dp);
+>   	if (rc)
+>   		DRM_ERROR("DP display unprepare failed, rc=%d\n", rc);
+>   
+> -	state =  dp_display->hpd_state;
+>   	if (state == ST_DISCONNECT_PENDING) {
+>   		/* completed disconnection */
+>   		dp_display->hpd_state = ST_DISCONNECTED;
 
-         M.
+
 -- 
-Jazz is not dead. It just smells funny...
+With best wishes
+Dmitry
