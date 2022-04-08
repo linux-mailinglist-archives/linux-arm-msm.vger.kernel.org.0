@@ -2,166 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 447D54F9496
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 13:54:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3BDD4F955F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 14:08:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235231AbiDHLzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Apr 2022 07:55:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57606 "EHLO
+        id S233645AbiDHMKa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Apr 2022 08:10:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235237AbiDHLzs (ORCPT
+        with ESMTP id S229686AbiDHMK3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Apr 2022 07:55:48 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F8BBE339A
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Apr 2022 04:53:44 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id r10so9782030eda.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Apr 2022 04:53:44 -0700 (PDT)
+        Fri, 8 Apr 2022 08:10:29 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A07E23969A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Apr 2022 05:08:19 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id 10so10359377qtz.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Apr 2022 05:08:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=TuDwf9DmfKjZ+Hb8XYy4JWoDUAtU27fdQoF6Y3FaEbI=;
-        b=I9Hti15oCiC+1r9/T+zZIT1MUflgV81Xou4UucCb06wTS93uAeuHskYIC9qzSXemRD
-         eQoiI+Et4U5fTIebjGWx7pp4sE3m+9SZKqNJf6N9MMNSfrrZOo8GNMtoL5c0JCYao5qN
-         i5z/LeQE8KtHM9y0Hq2hdON+yPvGYIVgGgRsuJnhPKmeFIoRUd7sjFTS5TvTM3N7Rc0S
-         ugMHzrx/VUpxWwxdHzpIPsfMqKiaSXnXBH4GNOfcSDkMSZnwa2TfPdubUPYOqCUxoI1H
-         C6XhOWhbmHfrBcs3NYRlqQqBU8VyCczN4WqLVpHXOtNOghRAxOLVKWUINX3iRTSNNoCB
-         HMDg==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iWcOdSTeii/l+pRmYuGQf4RJhfwwNZEYurFdlxkZUaY=;
+        b=OENOHcX7cCbgmhpSKLPUZxrLFHPmlHC/+n5h20Td7RCij1+nFhwcnu94n2CmBE9dIC
+         vagdD5iplHtmyO66W93NURendZZEphRDfeLzBTDhepzp3576i1gV27FbyErRm6Nnn72t
+         LLNy15iGT6BiHd3bZB7y0A/ZCINDQ0ICWXdIZbSCeCqpwOPBNjKzjGglD7cAMAVthWaH
+         LeF82YbvUw8Q+Japqgb77cxrbx+ayEmGyyoUd18+nJ5i5r4Mkwq+M+LkPktY1lNiOteO
+         oIQN0qiWl0jBvkWXk2izVQcQRDSRjrdMDq72YfzwCaJLBCEaHwQwFD+v+Xc6yUsPO5Bl
+         91QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TuDwf9DmfKjZ+Hb8XYy4JWoDUAtU27fdQoF6Y3FaEbI=;
-        b=TmowE4QKx4gLUS9iLGQBWyzoDCrk5jxth4I7dB0QWJXyDgdMyPt2QQdV+TIKwLXpXk
-         XkCge7Hkukr6iZLdhTxnl0K9/6JAvnblArgsfeZ41E/HJ57THuQh2/aYSIJesIISmClb
-         bvsjecNd5zGe2yWG7+G5A2PW+qP8scnM+k4kUGgpEQWDRge9GMXygaNEl/cuxKahT8nt
-         s7X8OEx0MW8grbwBKQIoUlfceCYDk6hA5R2NPKB0PbYjIX8+jAmLmAIGK5w8sRZDrJrO
-         Qiwg0CKdC8lENBWFYM8cF2aYB9XPKWGWfh7fb+7jOA3HM8ocYkcSsBNsr3JO1ztVAF/h
-         imQg==
-X-Gm-Message-State: AOAM530ShP3aMkAad9EsbaS8YshjJetmgi0F6CocpC2F/fMqtQqj/03w
-        kEjyydEyGoJ0Img8NdjfqKv4ng==
-X-Google-Smtp-Source: ABdhPJx9CMUuOFZ7M6KLhPEfsnIyRxwVd/e2o+GD6WcluNzSPL96cEabbtQ9QSpF8hxSTM+ijA1puA==
-X-Received: by 2002:a05:6402:1652:b0:41d:5896:a7b0 with SMTP id s18-20020a056402165200b0041d5896a7b0mr517524edx.128.1649418822970;
-        Fri, 08 Apr 2022 04:53:42 -0700 (PDT)
-Received: from otso.. (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id r29-20020a50c01d000000b00415fb0dc793sm10470899edb.47.2022.04.08.04.53.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Apr 2022 04:53:42 -0700 (PDT)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-To:     linux-input@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: sm7225-fairphone-fp4: Add AW8695 haptics
-Date:   Fri,  8 Apr 2022 13:53:10 +0200
-Message-Id: <20220408115311.237039-3-luca.weiss@fairphone.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220408115311.237039-1-luca.weiss@fairphone.com>
-References: <20220408115311.237039-1-luca.weiss@fairphone.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iWcOdSTeii/l+pRmYuGQf4RJhfwwNZEYurFdlxkZUaY=;
+        b=4O6A+og1VDURHDcdfPHbIVooqFqma8/v5udeR94hoaI+r7xabmz+B0EMTM7ITY4HGL
+         NSvnpPsf9tdWkKp4oc3ZIh4lA5vJvPtsEk+UI9B+QVz0ClGmJfJOKFhUzmrlOTi6CUMT
+         nXc/2PEtO4NSNz1zO9jmIp5qTon4lm3nNsxmMONHdaIjU5i5+pbhiMnFAD6Law7vquTk
+         EnL3Dx0GAiuWQF5LNXCQBGoAy0e/+IpWwBw8hSFj8hxFsgr5PtLItv4CZQp9r/SAYMn8
+         uE6mEP/G9Q93PCRawOMSKhJ7uDeaoXAz2Mvk+jKW2Ewzo0MtTMVo71HtgBhXt89royRq
+         QLAA==
+X-Gm-Message-State: AOAM532RFKWsfooodKlV9XmGpEH6jgidNSj96t/vzdTAFI3qmS9yWRie
+        TzNee3m1qn7oWHev7S1bUGR0QhP4I4hN+02Q1rYmog==
+X-Google-Smtp-Source: ABdhPJxproQt8DFvW7F/hhPbMHO0l7y9QXrApPgXog0kABlOZ/Hcl/Kg+9BCf5mwXCM/fvud95Fw+Y1DpN59iztdwjU=
+X-Received: by 2002:ac8:5a46:0:b0:2e2:2edd:374 with SMTP id
+ o6-20020ac85a46000000b002e22edd0374mr15446114qta.295.1649419698450; Fri, 08
+ Apr 2022 05:08:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com>
+ <1648656179-10347-9-git-send-email-quic_sbillaka@quicinc.com>
+ <CAA8EJprvE31ex3fCQHZ-=x+EWHK4UZ0qqHRh+rH4dk5TPhmVyw@mail.gmail.com>
+ <MW4PR02MB71867220A90FCFED295830D0E1E19@MW4PR02MB7186.namprd02.prod.outlook.com>
+ <CAD=FV=VK0D_GzYBv+u+o6-ks-UAsw97__0mWsSn9OycX72LJFg@mail.gmail.com>
+ <MW4PR02MB71865B8E17F3D194B05013EDE1E59@MW4PR02MB7186.namprd02.prod.outlook.com>
+ <CAA8EJpqFh7c9ohDbR_0kG5t106-djE7TYfaoAbiT-W4-294jTw@mail.gmail.com> <MW4PR02MB71868617E96D59D659EFD87EE1E69@MW4PR02MB7186.namprd02.prod.outlook.com>
+In-Reply-To: <MW4PR02MB71868617E96D59D659EFD87EE1E69@MW4PR02MB7186.namprd02.prod.outlook.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 8 Apr 2022 15:08:08 +0300
+Message-ID: <CAA8EJpqd+JVHqjNrwZ4MHi+9JMdA5QPX2UwGpeM6RhUntv0brA@mail.gmail.com>
+Subject: Re: [PATCH v6 8/8] drm/msm/dp: Handle eDP mode_valid differently from dp
+To:     "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "seanpaul@chromium.org" <seanpaul@chromium.org>,
+        "swboyd@chromium.org" <swboyd@chromium.org>,
+        quic_kalyant <quic_kalyant@quicinc.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "sean@poorly.run" <sean@poorly.run>,
+        "airlied@linux.ie" <airlied@linux.ie>,
+        "daniel@ffwll.ch" <daniel@ffwll.ch>,
+        quic_vproddut <quic_vproddut@quicinc.com>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a node for the haptics driver found on the phone.
+On Thu, 7 Apr 2022 at 17:05, Sankeerth Billakanti (QUIC)
+<quic_sbillaka@quicinc.com> wrote:
+>
+> Hi Dmitry,
+>
+> > > > > > On Wed, 30 Mar 2022 at 19:04, Sankeerth Billakanti
+> > > > > > <quic_sbillaka@quicinc.com> wrote:
+> > > > > > >
+> > > > > > > The panel-edp driver modes needs to be validated differently
+> > > > > > > from DP because the link capabilities are not available for EDP by
+> > that time.
+> > > > > > >
+> > > > > > > Signed-off-by: Sankeerth Billakanti
+> > > > > > > <quic_sbillaka@quicinc.com>
+> > > > > >
+> > > > > > This should not be necessary after
+> > > > > >
+> > > >
+> > https://patchwork.freedesktop.org/patch/479261/?series=101682&rev=1.
+> > > > > > Could you please check?
+> > > > > >
+> > > > >
+> > > > > The check for DP_MAX_PIXEL_CLK_KHZ is not necessary anymore but
+> > we
+> > > > > need to return early for eDP because unlike DP, eDP context will
+> > > > > not have the information about the number of lanes and link clock.
+> > > > >
+> > > > > So, I will modify the patch to return after the
+> > > > > DP_MAX_PIXEL_CLK_KHZ
+> > > > check if is_eDP is set.
+> > > >
+> > > > I haven't walked through all the relevant code but something you
+> > > > said above sounds strange. You say that for eDP we don't have info
+> > > > about the number of lanes? We _should_.
+> > > >
+> > > > It's certainly possible to have a panel that supports _either_ 1 or
+> > > > 2 lanes but then only physically connect 1 lane to it. ...or you
+> > > > could have a panel that supports 2 or 4 lanes and you only connect 1 lane.
+> > > > See, for instance, ti_sn_bridge_parse_lanes. There we assume 4 lanes
+> > > > but if a "data-lanes" property is present then we can use that to
+> > > > know that fewer lanes are physically connected.
+> > > >
+> > > > It's also possible to connect more lanes to a panel than it supports.
+> > > > You could connect 2 lanes to it but then it only supports 1. This
+> > > > case needs to be handled as well...
+> > > >
+> > >
+> > > I was referring to the checks we do for DP in dp_bridge_mode_valid. We
+> > > check if the Link bandwidth can support the pixel bandwidth. For an
+> > > external DP connection, the Initial DPCD/EDID read after cable
+> > > connection will return the sink capabilities like link rate, lane
+> > > count and bpp information that are used to we filter out the unsupported
+> > modes from the list of modes from EDID.
+> > >
+> > > For eDP case, the dp driver performs the first dpcd read during
+> > > bridge_enable. The dp_bridge_mode_valid function is executed before
+> > > bridge_enable and hence does not have the full link or the sink
+> > > capabilities information like external DP connection, by then.
+> >
+> > It sounds to me like we should emulate the HPD event for eDP to be handled
+> > earlier than the get_modes()/prepare() calls are attempted.
+> > However this might open another can of worms.
+> >
+>
+> For DP, the HPD handler mainly initiates link training and gets the EDID.
+>
+> Before adding support for a separate eDP panel, we had discussed about
+> this internally and decided to emulate eDP HPD during enable(). Main reason
+> being, eDP power is guaranteed to be on only after bridge_enable().
+> So, eDP link training can happen and sustain only after bridge_enable().
+>
+> Emulating HPD before/during get_modes will not have any effect because:
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
-This patch depends on the i2c10 node introduced in this patch:
-https://lore.kernel.org/linux-arm-msm/20220408114205.234635-2-luca.weiss@fairphone.com/
+As we have seen, the term HPD is significantly overloaded. What do you
+want to emulate?
 
-For reference, the dt properties are based on the following properties
-from the original vendor driver:
+>
+> 1. get_modes() will go to panel's get_modes() function to power on read EDID
+>
+> 2. panel power will be turned off after get_modes(). Panel power off will
+> reset every write transaction in DPCD. anyway invalidating link training
 
-vib_f0_pre = < 2350 >;
-=> awinic,f0-preset = <2350>;
+I tend to agree with Doug here. eDP link power status should be
+handled by the pm_runtime_autosuspend with grace period being high
+enough to cover the timeslot between get_mode() and enable().
 
-vib_f0_coeff = < 260 >;
-=> awinic,f0-coefficient = <260>;
+panel-edp already does most of required work.
 
-vib_f0_cali_percen = < 7 >;
-=> awinic,f0-calibration-percent = <7>;
+>
+> 3. mode_valid will land in dp driver but panel will not be powered on at that
+> time and we cannot do aux transfers or DPCD read writes.
 
-vib_cont_drv_lev = < 125 >;
-=> awinic,drive-level = <125>;
+Why do we need to perform AUX writes in mode_valid?
 
-vib_f0_trace_parameter = < 0x05 0x03 0x02 0x0f >;
-=> awinic,f0-detection-play-time = <5>;
-=> awinic,f0-detection-wait-time = <3>;
-=> awinic,f0-detection-repeat = <2>;
-=> awinic,f0-detection-trace = <15>;
+>
+> > > So, we need to proceed with the reported mode for eDP.
+> >
+> > Well... Even if during the first call to get_modes() the DPCD is not read,
+> > during subsequent calls the driver has necessary information, so it can
+> > proceed with all the checks, can't it?
+> >
+>
+> get_modes() currently does not land in DP driver. It gets executed in panel
+> bridge. But the mode_valid() comes to DP driver to check the controller
+> compatibility.
 
-vib_bstdbg = < 0x30 0xeb 0xd4 0 0 0 >;
-=> awinic,boost-debug = /bits/ 8 <0x30 0xeb 0xd4>;
+Yes, this is correct. the DP's mode_valid() knows the hardware
+limitations (max clock speed, amount of lanes, etc) and thus it can
+decide whether the mode is supported by the whole chain or not.
+We should not skip such checks for the eDP.
 
-vib_tset = < 0x12 >;
-=> awinic,tset = /bits/ 8 <0x12>;
 
-vib_r_spare = < 0x68 >;
-=> awinic,r-spare = /bits/ 8 <0x68>;
-
-vib_bemf_config = < 0x10 0x08 0x03 0xf8 >;
-                                 (0x10 << 8) | 0x08
-=> awinic,bemf-upper-threshold = <4104>;
-                                 (0x03 << 8) | 0xf8
-=> awinic,bemf-lower-threshold = <1016>;
-
- .../boot/dts/qcom/sm7225-fairphone-fp4.dts    | 29 +++++++++++++++++++
- 1 file changed, 29 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-index 67d14bda3797..4691a5e5c8e5 100644
---- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-@@ -296,6 +296,35 @@ &cdsp {
- 	firmware-name = "qcom/sm7225/fairphone4/cdsp.mdt";
- };
- 
-+&i2c10 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	haptics@5a {
-+		compatible = "awinic,aw8695";
-+		reg = <0x5a>;
-+		interrupts-extended = <&tlmm 85 IRQ_TYPE_EDGE_FALLING>;
-+		reset-gpios = <&tlmm 90 GPIO_ACTIVE_HIGH>;
-+
-+		awinic,f0-preset = <2350>;
-+		awinic,f0-coefficient = <260>;
-+		awinic,f0-calibration-percent = <7>;
-+		awinic,drive-level = <125>;
-+
-+		awinic,f0-detection-play-time = <5>;
-+		awinic,f0-detection-wait-time = <3>;
-+		awinic,f0-detection-repeat = <2>;
-+		awinic,f0-detection-trace = <15>;
-+
-+		awinic,boost-debug = /bits/ 8 <0x30 0xeb 0xd4>;
-+		awinic,tset = /bits/ 8 <0x12>;
-+		awinic,r-spare = /bits/ 8 <0x68>;
-+
-+		awinic,bemf-upper-threshold = <4104>;
-+		awinic,bemf-lower-threshold = <1016>;
-+	};
-+};
-+
- &mpss {
- 	status = "okay";
- 	firmware-name = "qcom/sm7225/fairphone4/modem.mdt";
 -- 
-2.35.1
-
+With best wishes
+Dmitry
