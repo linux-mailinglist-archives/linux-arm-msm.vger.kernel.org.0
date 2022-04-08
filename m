@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 256F84F8ABC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 02:55:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B7034F8B25
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 02:56:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232975AbiDHAW4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Apr 2022 20:22:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48988 "EHLO
+        id S232974AbiDHAXZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Apr 2022 20:23:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232969AbiDHAWy (ORCPT
+        with ESMTP id S232840AbiDHAXY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Apr 2022 20:22:54 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6696BC12C2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Apr 2022 17:20:52 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id g20so8288293edw.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 17:20:52 -0700 (PDT)
+        Thu, 7 Apr 2022 20:23:24 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A1D214FBB5
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Apr 2022 17:21:21 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id f18so8294379edc.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 17:21:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=EUO4ZkagqI35g4dyGZeSriotv9HvxG7vujGEgbCcZkU=;
-        b=TEef53cSAydlsremUikPhSFLztWvs7WNKJRSiFhTfUee8wYEynR3p69EEhAbLFPoHE
-         b29Gzz98Zuy76c+968HMXG1B9jQMg4QDHrYN4LM3amlXHkzn5hT+Pf77Sa8oH5mwkTxV
-         oBPd9oZf+Ph6Z2N5mV3Z4xjh9ozw8I7/7moPc=
+        bh=4AEJnP5mTsYddtMXtuB9PzpAwm62Zr/93tws7knCoTY=;
+        b=FrYI2nBdk+yG/OOXXygzXyvL+ZpcWJWtKe8unV3SbCy1rXBwNnk84WeXyNP/2VlDJy
+         Kg/uBh0NPlU2+DivSPdwyS8dsLdPzD8+y5xmEtYYC5jD30jJr5S+ozejI/3/UdKogkht
+         sWSHEixJSYchJR9gauZlQDTuFx098SCzhXo+o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=EUO4ZkagqI35g4dyGZeSriotv9HvxG7vujGEgbCcZkU=;
-        b=J4JQGB9CfgVYYM88k5iGD0nSqtla/bpVC4l1PDeLZWgBetOYfV2l3+yBStbBEWL0Mt
-         Igq1PaMyu/l0iiHjUxqJXI5+8Bxlk3v7JNTv62KEp8Cpcjz/f0HYspqlj8+aXg2FnozF
-         VDoj2fpCPXmtCkA65x6GaJU6sYdl0swcv3IkPP8rYlMoDqWA7st7Vc2LZ+s8FAlkl0uu
-         d3KOKXfz6u2ZbhTe5oKWlzlZuznX41kmuyYwO8daJHP0n2IDJc3C86r3zAY0tnOh4Wr0
-         jlgDg1GypiJU4K0oHzxoVlvLW+0EnyhEVsArt9D3fHTIs59qB8eMAFfMuIq5MqG8WBf0
-         IBsg==
-X-Gm-Message-State: AOAM531QR2opGLI+1piBJTbdkhCd5sowO3G5qT2/BP8FBct33r4RkdQS
-        gUVh+KTVKJCIf4GSMsIIAoz6X8MJUIVpZ4VfHDU=
-X-Google-Smtp-Source: ABdhPJwa3tM2keK1nYHq9GV3iWq+W5Jn+N+yGnfT/99Y+aqWKveeUHN1EIEVys55J20CbXoCcOD2wA==
-X-Received: by 2002:a05:6402:2794:b0:419:2ed8:f36e with SMTP id b20-20020a056402279400b004192ed8f36emr16908105ede.44.1649377251178;
-        Thu, 07 Apr 2022 17:20:51 -0700 (PDT)
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com. [209.85.221.53])
-        by smtp.gmail.com with ESMTPSA id u6-20020a170906124600b006e843964f9asm540774eja.55.2022.04.07.17.20.47
+        bh=4AEJnP5mTsYddtMXtuB9PzpAwm62Zr/93tws7knCoTY=;
+        b=OLjexb2Bn6KQ+msru3gHtFIReZdZ0QzsxmsGw3YF3lmgjuvZABOMvHPN0DCEGzXDjV
+         m2R1IVvQRZUqZ/hlu1iSpRanacE9PHvvi1Qn+9LuY7v1RHK/8us7wwZsEum+VMK1mEOA
+         jgC+CKNdN1d0Y22jymnxUBqdkPqeTqllu2OAONhLDniSr+p4dd+o4XeaFfh+x99zfldS
+         XzNzfxR53PhIY2GjuPICONeUhhYnPXox9afiKVoA+7XAA6cziuRpy/E53NKW8nKHh2Jn
+         A8Ys9IwdOcfe2F2nvaJIxzfZwB2WBz2B57WDQfY9zCHyWokKKSUSImRxR5pVwMF0tsxK
+         KWQQ==
+X-Gm-Message-State: AOAM532FF8OrrsZSTXgDBC4YBYYA4ndTw48lAwz25OZIRrsGFB0HCJyy
+        h/KWybm9VR2eKDXAHSUgwzoNr8MBfMo/fSt7zRY=
+X-Google-Smtp-Source: ABdhPJy0IW5tZJBclgf35lG7HjgCEEIaMXwUqSSWko0FW37v/7VdM9vdkbLBEKlRa/mWq96cU2VOPw==
+X-Received: by 2002:a50:ce03:0:b0:41c:c36b:c75 with SMTP id y3-20020a50ce03000000b0041cc36b0c75mr16610004edi.195.1649377279701;
+        Thu, 07 Apr 2022 17:21:19 -0700 (PDT)
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com. [209.85.221.41])
+        by smtp.gmail.com with ESMTPSA id k26-20020a056402049a00b004197b0867e0sm9788480edv.42.2022.04.07.17.21.19
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Apr 2022 17:20:48 -0700 (PDT)
-Received: by mail-wr1-f53.google.com with SMTP id u3so10552034wrg.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 17:20:47 -0700 (PDT)
-X-Received: by 2002:a5d:674d:0:b0:206:163c:f70c with SMTP id
- l13-20020a5d674d000000b00206163cf70cmr12433627wrw.679.1649377247367; Thu, 07
- Apr 2022 17:20:47 -0700 (PDT)
+        Thu, 07 Apr 2022 17:21:19 -0700 (PDT)
+Received: by mail-wr1-f41.google.com with SMTP id b19so10498887wrh.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 17:21:19 -0700 (PDT)
+X-Received: by 2002:a5d:568e:0:b0:207:8d1a:46c6 with SMTP id
+ f14-20020a5d568e000000b002078d1a46c6mr3186227wrv.422.1649377278855; Thu, 07
+ Apr 2022 17:21:18 -0700 (PDT)
 MIME-Version: 1.0
 References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com>
  <1648656179-10347-2-git-send-email-quic_sbillaka@quicinc.com>
@@ -63,12 +63,14 @@ References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com>
  <3e5fa57f-d636-879a-b98f-77323d07c156@linaro.org> <CAD=FV=Uibu-kZyix7K4_WVc-+C8xpzTqU4WFy7O=6sukMZrX5g@mail.gmail.com>
  <MW4PR02MB7186245772DAC3E04FA8D1C0E1E69@MW4PR02MB7186.namprd02.prod.outlook.com>
  <CAD=FV=Wk3U7_bVdiCPp8iQ4bcCA_Botemu4pwHeRtgBa3Xk6KQ@mail.gmail.com>
- <c4f086ce-c56f-f7c9-4092-7f2432330d50@quicinc.com> <CAA8EJprdV64jOexEF-XqbkwsNDWBNRRndOAas-QqMHaL=zp9rw@mail.gmail.com>
-In-Reply-To: <CAA8EJprdV64jOexEF-XqbkwsNDWBNRRndOAas-QqMHaL=zp9rw@mail.gmail.com>
+ <c4f086ce-c56f-f7c9-4092-7f2432330d50@quicinc.com> <CAD=FV=UmU_BVUaL_X75yOEvQPtGUBTR5-jiVWBHq7uSRt6HM4Q@mail.gmail.com>
+ <225d2c0a-42ec-28ad-688c-e7e9e2035ee1@quicinc.com> <CAD=FV=W=WjSACHvRDFBnkLUp-LU2c4XMu3=FTzTx=zexNF5PAw@mail.gmail.com>
+ <CAA8EJpqLZ9up4euGEbhf5QyBqm4tJuLcHi7D+0Si7ak9Jej52w@mail.gmail.com>
+In-Reply-To: <CAA8EJpqLZ9up4euGEbhf5QyBqm4tJuLcHi7D+0Si7ak9Jej52w@mail.gmail.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 7 Apr 2022 17:20:34 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XdRKWFQnJx9AKYmB2p26sXmhjqxLzz+LYyCt7rg+zF6w@mail.gmail.com>
-Message-ID: <CAD=FV=XdRKWFQnJx9AKYmB2p26sXmhjqxLzz+LYyCt7rg+zF6w@mail.gmail.com>
+Date:   Thu, 7 Apr 2022 17:21:06 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XwOzsRf7RnvyBjr5TtedMhC0LJFKoK9tp-kw1eEyuJmQ@mail.gmail.com>
+Message-ID: <CAD=FV=XwOzsRf7RnvyBjr5TtedMhC0LJFKoK9tp-kw1eEyuJmQ@mail.gmail.com>
 Subject: Re: [PATCH v6 1/8] drm/msm/dp: Add eDP support via aux_bus
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -92,7 +94,7 @@ Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -101,28 +103,38 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Thu, Apr 7, 2022 at 4:36 PM Dmitry Baryshkov
+On Thu, Apr 7, 2022 at 4:46 PM Dmitry Baryshkov
 <dmitry.baryshkov@linaro.org> wrote:
 >
-> The ps8640 driver looks 'working by coincidence'. It calls
-> dp_aux_populate, then immediately after the function returns it checks
-> for the panel. If panel-edp is built as a module, the probe might fail
-> easily.
-> The anx7625 driver has the same kind of issue. The DP AUX bus is
-> populated from the probe() and after some additional work the panel is
-> being checked.
-> This design is fragile and from my quick glance it can break (or be
-> broken) too easy. It reminds me of our drm msm 'probe' loops
-> preventing the device to boot completely if the dsi bridge/panel could
-> not be probed in time.
+> > The way I'm arguing it should work is that:
+> >
+> > 1. A whole bunch of the DP init code should move to the DP driver's
+> > probe function. This includes parsing the DT, acquiring clocks,
+> > getting a handle to our PHY, and IO mapping registers. As far as I
+> > know, there's no reason to wait on all the components being probed in
+> > order to do this stuff.
+>
+> Yes. And that's one of the reasons I tried to stay away from the DP
+> driver. Each time I open the source code, my hands itch to start
+> refactoring the code.
+>
+> >
+> > 2. Once we have done the above things, it should be possible to do AUX
+> > transfers, correct? ...and then we can populate the AUX bus from the
+> > probe function too.
+>
+> No. In the DP case the AUX bus is inaccessible until the dongle is
+> plugged (see all the HPD handling, phy_init()/phy_power_on() is hidden
+> somewhere in that path)
 
-I did spend some time thinking about this, at least for ps8640. I
-believe that as long as the panel's probe isn't asynchronous.
-Basically if the panel isn't ready then ps8640 should return and we'll
-retry later. I do remember the probe loops that we used to have with
-msm and I don't _think_ this would trigger it.
+I guess my thought was that in DP you could still create the AUX bus
+at probe time. Then for DP you just return an instant "transfer
+failed" from the AUX bus if HPD isn't asserted. For eDP (as discussed
+elsewhere) when we try to do an AUX transfer then we delay until HPD
+is there.
 
-That being said, if we need to separate out the AUX bus into a
-sub-device like we did in sn65dsi86 we certainly could.
+So we can still acquire resources (clocks, PHY, io maps, etc) at probe
+time for DP and create the AUX bus, right? It will just return
+"-ENODEV" if HPD isn't asserted and you're DP?
 
 -Doug
