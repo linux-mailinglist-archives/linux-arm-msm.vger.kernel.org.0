@@ -2,244 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD0DB4FAA4E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Apr 2022 20:44:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA3BE4FACF1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Apr 2022 10:38:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243127AbiDISoF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Apr 2022 14:44:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52830 "EHLO
+        id S235726AbiDJIkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Apr 2022 04:40:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243116AbiDISoA (ORCPT
+        with ESMTP id S235350AbiDJIkN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Apr 2022 14:44:00 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 143981EA282;
-        Sat,  9 Apr 2022 11:41:47 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id bx5so11495401pjb.3;
-        Sat, 09 Apr 2022 11:41:47 -0700 (PDT)
+        Sun, 10 Apr 2022 04:40:13 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13AA12C118
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 01:38:03 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id lc2so4547873ejb.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 01:38:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nr/u+ZwKEd/3qo8bgunaAebE8NIooSpd7ML7VX6zww8=;
-        b=ORpVOFSr646Ql7vJ1+XFDYPaH7B//S/QTQFt2peAcDjG8NTWuujcwc1XQh/ZJyHCKz
-         EUJRYfrNFf6tHJmfDfjZL3jv/5U49PsmpvVMe5nrtETSRks4zvmTV/95yk2ULrSWCmkd
-         K7nd/Fs46vk6zjdJ100C3ebD++EdHwGhcryCGEG4BB1TNSjv9owxDPBYrKkoqKZ3mBVZ
-         +9td/QosqwkFE/TiPULqnyhgD413YYaae9eqgaK3a3KoPqeyk3xJUP7HGC/WgEMeORHp
-         42YGws9DymTA2NJfNFHbp62fqPy/8ASoeEvllCoZAYmKxJPbk5MMaa+MAmwVGEhQL+LJ
-         iCGw==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=gh/AAtf8cRdIoELrwepmpCDeMPbSdp9UytLl5DDKHr4=;
+        b=x77uAlufM1epd1LMPe9Z/2F2riMaIPZRMerJ87AO+zQtngB7ZoBqlLFePS3p1rpT/x
+         wxEByYkYLXXr9KJ213Y7HEVVxLJ2t8WN4e2+G9j2o5xKutWghtaoMr39E4GFqIi+FDXF
+         CXytZ5L1aYOQSRw8KIgTLBiRj516kpVXl62p6NLhPG7xTs2Si5PiQLpXZXb79m2YK7IU
+         Jk8ZXKC/KAJbCt6jeNhbDxJEtw+Y9I2EZ9/FUm1e7m55PueRHsYG5G+Aetsoywucp53d
+         61+WqRWfpmygyk5kav5wDrWA18af463WGbAB0XdhmZDjj0teluS/13ASd5wY3s6yzrJf
+         3iQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nr/u+ZwKEd/3qo8bgunaAebE8NIooSpd7ML7VX6zww8=;
-        b=aEPjvV5S62/OBCB5pdNrZr1fQjjlHUD0clLuruA6kn5MycJMkw6Hq4rRPOst6CAjAO
-         OpBkIuQqrUy5Hp2zjoD5QcAHfM6m9TMyAhYAfZWTSeZcXNCE6UDRrTC71DOUNWSOu0Th
-         AjRdAixXccQ8nT15LPwwNbekSPAEXZBWSFm3OyT/Aqpt4OLjFaAs0v0BGfZ4L2OVwK3i
-         ivOmNbJSW7DHocWRoK21gIGdkmwbPGdO2AzFUW9Xf2lqqnkkpSc79Oby8yFMC+0fVTgi
-         SzJOb9yKo8u8pqx82YolJbODkfOfV90Lu0Ju2YDSjEZDOPbRrU79p5wKM+qv+CsBaNo1
-         oKjw==
-X-Gm-Message-State: AOAM531QFAn5pksilvkcthP+X5TQNHw+3oQflxXOjmvQgk7B7LHRoPpV
-        78OYntHSz9bJ8aAl/HZPRnVeTEDMvqk=
-X-Google-Smtp-Source: ABdhPJzja9LrsRzXqXNp8RFic/Yugyg703WRs0+shieU7z82s7cnwbYCZ+zAH6Ag6ZFgtTHNmgz4vQ==
-X-Received: by 2002:a17:90b:1b4d:b0:1c6:bd9e:a63d with SMTP id nv13-20020a17090b1b4d00b001c6bd9ea63dmr28264713pjb.56.1649529706232;
-        Sat, 09 Apr 2022 11:41:46 -0700 (PDT)
-Received: from localhost.localdomain ([122.161.51.18])
-        by smtp.gmail.com with ESMTPSA id g3-20020a63ad03000000b003821d0f0ef4sm25813933pgf.71.2022.04.09.11.41.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Apr 2022 11:41:45 -0700 (PDT)
-From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Kuldeep Singh <singh.kuldeep87k@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: [PATCH 6/6] dt-bindings: dma: Convert Qualcomm BAM DMA binding to json format
-Date:   Sun, 10 Apr 2022 00:11:15 +0530
-Message-Id: <20220409184115.15612-7-singh.kuldeep87k@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220409184115.15612-1-singh.kuldeep87k@gmail.com>
-References: <20220409184115.15612-1-singh.kuldeep87k@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=gh/AAtf8cRdIoELrwepmpCDeMPbSdp9UytLl5DDKHr4=;
+        b=yAwgOXJQjfI9OlpwZbvxuxEh8PLr5ubAHPspgDz4/DK5EGouJfC7gh5kDYViMGK8rZ
+         gli6h6oS/JqQiPohb9JgY3P1ZT6353O/7KXbg4DjbP4fUQ8NuP8LaFO1VSu6eJJD5wSu
+         q9sRuTy4b+poGazC8KodydoId29bJ1YAzvSzD8vqsLVCe/idsD4IcAROT4mXvhCKcvkC
+         g1miMDLiTMDVxhcIzZStngL3qDMkLkJU2G8CcM20hpmzMJnB9R9c7OSYwHZiUhjPPhtY
+         87oDNjXO/3wigkvAtNSPeV+cVfAFbDF7wlR8WfvUhOZCwEpghU1448a67dhi/jsJ2GDR
+         uJig==
+X-Gm-Message-State: AOAM5307yc3ql7s/zmKC/dX+KDMCLYcvImnpP69eBpbnDiNb+fyyN7oB
+        vwZ/CoA3ZMRhki5kcw4eM09xR/z7OkVRaAU4
+X-Google-Smtp-Source: ABdhPJwWopm2EQV2ZJwh6NTf592QrsI18/yNtY37mQW+51gPPFLvkjJsgKAo0HfXO4jYgMRD1boAsA==
+X-Received: by 2002:a17:906:d552:b0:6e8:4edc:f2ee with SMTP id cr18-20020a170906d55200b006e84edcf2eemr10035344ejc.572.1649579881603;
+        Sun, 10 Apr 2022 01:38:01 -0700 (PDT)
+Received: from [192.168.0.188] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id s20-20020a056402015400b00418f9574a36sm13021400edu.73.2022.04.10.01.38.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 Apr 2022 01:38:00 -0700 (PDT)
+Message-ID: <4f20ad11-40c5-638e-7335-c68d2369373d@linaro.org>
+Date:   Sun, 10 Apr 2022 10:37:59 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2] dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC
+Content-Language: en-US
+To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     ~okias/devicetree@lists.sr.ht,
+        Caleb Connolly <caleb@connolly.tech>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220111220026.102838-1-david@ixit.cz>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220111220026.102838-1-david@ixit.cz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm BAM DMA controller binding to DT schema format using
-json schema.
+On 11/01/2022 23:00, David Heidelberg wrote:
+> Convert Qualcomm SPMI PMIC binding to yaml format.
+> 
+> Additional changes:
+>  - filled many missing compatibles
+> 
+> Co-developed-by: Caleb Connolly <caleb@connolly.tech>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
 
-Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
----
- .../devicetree/bindings/dma/qcom,bam-dma.yaml | 90 +++++++++++++++++++
- .../devicetree/bindings/dma/qcom_bam_dma.txt  | 52 -----------
- 2 files changed, 90 insertions(+), 52 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
- delete mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+Thank you for your patch. There is something to discuss/improve.
 
-diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-new file mode 100644
-index 000000000000..606c19f83db3
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-@@ -0,0 +1,90 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/qcom,bam-dma.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Technologies Inc BAM DMA controller
-+
-+maintainers:
-+  - Andy Gross <agross@kernel.org>
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+
-+allOf:
-+  - $ref: dma-controller.yaml#
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,bam-v1.3.0
-+      - qcom,bam-v1.4.0
-+      - qcom,bam-v1.7.0
-+
-+  clocks:
-+    maxItems: 1
-+
-+  clock-names:
-+    items:
-+      - const: bam_clk
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  iommus:
-+    minItems: 1
-+    maxItems: 4
-+
-+  num-channels:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description:
-+      Indicates supported number of DMA channels in a remotely controlled bam.
-+
-+  qcom,controlled-remotely:
-+    $ref: /schemas/types.yaml#/definitions/flag
-+    description:
-+      Indicates that the bam is controlled by remote proccessor i.e. execution
-+      environment.
-+
-+  qcom,ee:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description:
-+      Indicates the active Execution Environment identifier (0-7) used in the
-+      secure world.
-+
-+  qcom,num-ees:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description:
-+      Indicates supported number of Execution Environments in a remotely
-+      controlled bam.
-+
-+  qcom,powered-remotely:
-+    $ref: /schemas/types.yaml#/definitions/flag
-+    description:
-+      Indicates that the bam is powered up by a remote processor but must be
-+      initialized by the local processor.
-+
-+  reg:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - interrupts
-+  - reg
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/qcom,gcc-msm8974.h>
-+
-+    dma-controller@f9944000 {
-+        compatible = "qcom,bam-v1.4.0";
-+        reg = <0xf9944000 0x15000>;
-+        interrupts = <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>;
-+        clocks = <&gcc GCC_BLSP2_AHB_CLK>;
-+        clock-names = "bam_clk";
-+        #dma-cells = <1>;
-+        qcom,ee = <0>;
-+    };
-+...
-diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt b/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
-deleted file mode 100644
-index 6e9a5497b3f2..000000000000
---- a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
-+++ /dev/null
-@@ -1,52 +0,0 @@
--QCOM BAM DMA controller
--
--Required properties:
--- compatible: must be one of the following:
-- * "qcom,bam-v1.4.0" for MSM8974, APQ8074 and APQ8084
-- * "qcom,bam-v1.3.0" for APQ8064, IPQ8064 and MSM8960
-- * "qcom,bam-v1.7.0" for MSM8916
--- reg: Address range for DMA registers
--- interrupts: Should contain the one interrupt shared by all channels
--- #dma-cells: must be <1>, the cell in the dmas property of the client device
--  represents the channel number
--- clocks: required clock
--- clock-names: must contain "bam_clk" entry
--- qcom,ee : indicates the active Execution Environment identifier (0-7) used in
--  the secure world.
--- qcom,controlled-remotely : optional, indicates that the bam is controlled by
--  remote proccessor i.e. execution environment.
--- qcom,powered-remotely : optional, indicates that the bam is powered up by
--  a remote processor but must be initialized by the local processor.
--- num-channels : optional, indicates supported number of DMA channels in a
--  remotely controlled bam.
--- qcom,num-ees : optional, indicates supported number of Execution Environments
--  in a remotely controlled bam.
--
--Example:
--
--	uart-bam: dma@f9984000 = {
--		compatible = "qcom,bam-v1.4.0";
--		reg = <0xf9984000 0x15000>;
--		interrupts = <0 94 0>;
--		clocks = <&gcc GCC_BAM_DMA_AHB_CLK>;
--		clock-names = "bam_clk";
--		#dma-cells = <1>;
--		qcom,ee = <0>;
--	};
--
--DMA clients must use the format described in the dma.txt file, using a two cell
--specifier for each channel.
--
--Example:
--	serial@f991e000 {
--		compatible = "qcom,msm-uart";
--		reg = <0xf991e000 0x1000>
--			<0xf9944000 0x19000>;
--		interrupts = <0 108 0>;
--		clocks = <&gcc GCC_BLSP1_UART2_APPS_CLK>,
--			<&gcc GCC_BLSP1_AHB_CLK>;
--		clock-names = "core", "iface";
--
--		dmas = <&uart-bam 0>, <&uart-bam 1>;
--		dma-names = "rx", "tx";
--	};
--- 
-2.25.1
+(...)
 
+> +
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,pm660
+> +          - qcom,pm660l
+> +          - qcom,pm6150
+> +          - qcom,pm6150l
+> +          - qcom,pm6350
+> +          - qcom,pm7325
+> +          - qcom,pm8004
+> +          - qcom,pm8005
+> +          - qcom,pm8009
+> +          - qcom,pm8019
+> +          - qcom,pm8110
+> +          - qcom,pm8150
+> +          - qcom,pm8150b
+> +          - qcom,pm8150l
+> +          - qcom,pm8226
+> +          - qcom,pm8350
+> +          - qcom,pm8350b
+> +          - qcom,pm8350c
+> +          - qcom,pm8841
+> +          - qcom,pm8909
+> +          - qcom,pm8916
+> +          - qcom,pm8941
+> +          - qcom,pm8950
+> +          - qcom,pm8994
+> +          - qcom,pm8998
+> +          - qcom,pma8084
+> +          - qcom,pmd9635
+> +          - qcom,pmi8950
+> +          - qcom,pmi8962
+> +          - qcom,pmi8994
+> +          - qcom,pmi8998
+> +          - qcom,pmk8350
+> +          - qcom,pmm8155au
+> +          - qcom,pmr735a
+> +          - qcom,pmr735b
+> +          - qcom,pms405
+> +          - qcom,pmx55
+> +          - qcom,smb2351
+> +      - const: qcom,spmi-pmic
+> +
+> +  reg: true
+
+maxItems
+
+> +
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 0
+> +
+> +
+
+Just one blank line.
+
+> +patternProperties:
+> +  '^(labibb|([a-z][a-z0-9]+-)?regulators)$':
+> +    type: object
+> +
+
+This should be more specific, preferably by including schema for
+regulators (or any other children if applicable).
+
+> +    required:
+> +      - compatible
+
+unevaluatedProperties: false
+> +
+> +  '@[0-9a-f]+$':
+> +    type: object
+> +    description: >
+
+You don't need '>'.
+
+This also should be specified - what is expected to be here? Usually the
+children are exactly known.
+
+> +      Each child node of the PMIC represents a function of it.
+> +
+> +    properties:
+> +      reg: true
+
+maxItems
+
+> +
+> +      interrupts:
+> +        description: >
+
+No need for >
+
+> +          Interrupts are specified as a 4-tuple. For more information see
+> +          Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+> +
+> +    required:
+> +      - compatible
+> +
+> +    additionalProperties: true
+
+This will have to unevaluated or additional properties false, depending
+whether you include other schema or not.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+
+
+Best regards,
+Krzysztof
