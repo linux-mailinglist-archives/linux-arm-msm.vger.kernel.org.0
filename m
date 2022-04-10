@@ -2,188 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 192974FACFB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Apr 2022 10:58:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 428B14FAF63
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Apr 2022 19:51:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235921AbiDJJBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 Apr 2022 05:01:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45270 "EHLO
+        id S243756AbiDJRxS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Apr 2022 13:53:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229769AbiDJJA7 (ORCPT
+        with ESMTP id S239062AbiDJRxQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 Apr 2022 05:00:59 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C6EE5C37E
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 01:58:49 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id t25so2089801edt.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 01:58:49 -0700 (PDT)
+        Sun, 10 Apr 2022 13:53:16 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E35244B418;
+        Sun, 10 Apr 2022 10:51:05 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id h15-20020a17090a054f00b001cb7cd2b11dso2184937pjf.5;
+        Sun, 10 Apr 2022 10:51:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=JFX533NuQqTvrQqJuffC8j9JQ1wOAyBQkOCJGQOKmfY=;
-        b=ZUrgrIc/hCeQ93qMHjV9hA4zGWWEXT9nCNU3N/y0myeeik0/CNUUdx2MbAj6X+S8J3
-         X7281RVJj3qk7wY/JwCPK7rjYGGJy1TwE4SL8iVomkuW+CLdVcCvw7vxUJBWEGwmeXY7
-         hNVz5tW6f0xbdoPft7B74cgvDmCMFGdZYXmJW5l8VB090bVXGsfIyu+c1uMz4Xaybfc5
-         x4YUsSrd2veAI1oFDsuFQZdoJDkBWE/FZ1b6/RgxC0+vU6j7v3ds55di+Sv4h6ka+H5E
-         7fSjdqTNap2NafdcfTeaEv12LR3dtyLOKv1ezzCEDpyLNQTpeG7Af57jpuSWwbNgdDaT
-         FT6w==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ddTuY51+NiyyyGu6kYjILoiFlTrP+EFOSDUDkBgM0uA=;
+        b=iwnAxDjmJ1vS6PUSd7MR8Ekp/APJVgQ14d49KgbNS00wDZQ9Duxha03gKADEtyg41W
+         44aehX0d2nL8IcdFTifJTTxXIVQqKobmS9vpVP/eUlFdP86lsUCPswMtfyKHUuVHyqVP
+         Vjymy/KXOMwepfAVpYV9T2SDXoh6XPXXNy0HfkjwEzDAcBdb9V3LEdX56XWI2pqzySlL
+         6ZM9jx2/8j6IWFWoqEAhljoWg4wC4HNFDAHgz+dk3lvkZpcYq0pbsJ6Gb5+TOE7mitqz
+         7LhP8oaV2A5flnsDrXQ4/3opUTEet19ykvQOv1LWjgXX3IWdhSAyJcKqfV9WOjeRNPEE
+         n7Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=JFX533NuQqTvrQqJuffC8j9JQ1wOAyBQkOCJGQOKmfY=;
-        b=aWkfENekSq0sfKQnnkdP8MjOMQHaiktQktLSt5fFNuJXdunpr0y3ZJ87wvY+RT6ePG
-         wOJ2BDw5usQ31mtNjiw77RpTTZ+z3M0ng6rqitGrq/3g2Gl4MVg4V+ZIaAoFE/ewrF9Z
-         bDmsTQuX6H3hFFU7LY2VssLRKL3xab6CBX0c5z0WV0hDdqyDDXVi3n1QjpjHbdKkzI5j
-         bG5OINrSE4RsgXfs0snwTQhhlxD+83n34fm3YXePinNhBvBYB1ZTomK5gG5dOIKkNAz5
-         WlQRNropENvn2Zg25Jv7exs+8PkG5ne8KCXjYmLWDFGJrE/yuP2vPjVD5II1i9A+FMd7
-         konQ==
-X-Gm-Message-State: AOAM533NoQhd40MEbf9LyfxRA/QA40uhzLSFXeu6ymkfH+aJytMbkxA4
-        FSbjbNhluKeEn/TI1dTdh/gRdQ==
-X-Google-Smtp-Source: ABdhPJxKJRbTErQIz0J6+3cst4WNTzb+Ci+4ig6b0DTTHr1CXk0jvrivdMzRNRBK2zeOuxj/JQCHOA==
-X-Received: by 2002:a05:6402:d4c:b0:410:a415:fd95 with SMTP id ec12-20020a0564020d4c00b00410a415fd95mr27872574edb.288.1649581128102;
-        Sun, 10 Apr 2022 01:58:48 -0700 (PDT)
-Received: from [192.168.0.188] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id y17-20020a056402359100b0041926ea1e12sm13543144edc.53.2022.04.10.01.58.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Apr 2022 01:58:47 -0700 (PDT)
-Message-ID: <7659ba7c-1db8-1cdf-d969-d100785f20aa@linaro.org>
-Date:   Sun, 10 Apr 2022 10:58:46 +0200
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ddTuY51+NiyyyGu6kYjILoiFlTrP+EFOSDUDkBgM0uA=;
+        b=Pa7pFx1yE+dP1/MBOh1iJ5CJO53Y8aEKUcn8A59Z5E0odrXSV40R71yA0YHIXtOloP
+         fDeVeVO8PN2pCXtnAWpiJK2uPra7lZQmqB36TJeEqg+xULircjzCaiPKeY1a4LOsG+BT
+         3GNe1mMvM0EvjYTYXFONW1CIqf88YnIMv7Q0CFYglvOithVv+qpNfykosa7l5CNkefnB
+         5bbq+IroXiIKNxJv+2Usold1XHoB5BrqiL1A7U5uSJQjfvEC7iIonwGlKaIaQuufl8af
+         EjZyCckRj2y625OiVX8Ij8rCWHRhtIP/ZU9avmw8oRF44DEJvjDRvc5OIiWtHBn6Dqv+
+         rCGg==
+X-Gm-Message-State: AOAM533UGry5p+VN0LBdDW2NkjEzCCgVpcvrpO2eiyCYI8gvOGxBk66Z
+        3qaTkDWUrZNKWUrw724b2Z0=
+X-Google-Smtp-Source: ABdhPJziPCzciczn2y/4FTjz4x6mjJD+Gzy7mktHg9TwS9MMNAJzyTxUOJaOSBGMid8RoMFzNtD8/g==
+X-Received: by 2002:a17:90b:3b4c:b0:1c6:d91f:fbf5 with SMTP id ot12-20020a17090b3b4c00b001c6d91ffbf5mr32457230pjb.81.1649613065342;
+        Sun, 10 Apr 2022 10:51:05 -0700 (PDT)
+Received: from localhost.localdomain ([122.161.51.18])
+        by smtp.gmail.com with ESMTPSA id l4-20020a056a0016c400b004f79504ef9csm32283286pfc.3.2022.04.10.10.51.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 10 Apr 2022 10:51:05 -0700 (PDT)
+From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 1/6] ARM: dts: qcom: apq8064: User generic node name for DMA
+Date:   Sun, 10 Apr 2022 23:20:51 +0530
+Message-Id: <20220410175056.79330-2-singh.kuldeep87k@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220410175056.79330-1-singh.kuldeep87k@gmail.com>
+References: <20220410175056.79330-1-singh.kuldeep87k@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] dt-bindings: firmware: convert Qualcomm SCM binding to
- the yaml
-Content-Language: en-US
-To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     ~okias/devicetree@lists.sr.ht, Andy Gross <andy.gross@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20211218194038.26913-1-david@ixit.cz>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20211218194038.26913-1-david@ixit.cz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/12/2021 20:40, David Heidelberg wrote:
-> Convert Qualcomm SCM firmware binding to the yaml format.
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
-> This patch comes with followup question -> since not all definitions
-> follow `"qcom,scm-*chipset*", "qcom,scm"`, should I change them or adjust this
-> binding to cover all cases?
-> 
+Qcom BAM DT spec expects generic DMA controller node name as
+"dma-controller" to enable validations.
 
-Thank you for your patch. I hope you will continue to work on this and
-send a v2. :)
+Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
+---
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-There is something to discuss/improve.
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index a1c8ae516d21..b2975be3ae04 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -1040,7 +1040,7 @@ sata0: sata@29000000 {
+ 		};
+ 
+ 		/* Temporary fixed regulator */
+-		sdcc1bam:dma@12402000{
++		sdcc1bam: dma-controller@12402000{
+ 			compatible = "qcom,bam-v1.3.0";
+ 			reg = <0x12402000 0x8000>;
+ 			interrupts = <0 98 IRQ_TYPE_LEVEL_HIGH>;
+@@ -1050,7 +1050,7 @@ sdcc1bam:dma@12402000{
+ 			qcom,ee = <0>;
+ 		};
+ 
+-		sdcc3bam:dma@12182000{
++		sdcc3bam: dma-controller@12182000{
+ 			compatible = "qcom,bam-v1.3.0";
+ 			reg = <0x12182000 0x8000>;
+ 			interrupts = <0 96 IRQ_TYPE_LEVEL_HIGH>;
+@@ -1060,7 +1060,7 @@ sdcc3bam:dma@12182000{
+ 			qcom,ee = <0>;
+ 		};
+ 
+-		sdcc4bam:dma@121c2000{
++		sdcc4bam: dma-controller@121c2000{
+ 			compatible = "qcom,bam-v1.3.0";
+ 			reg = <0x121c2000 0x8000>;
+ 			interrupts = <0 95 IRQ_TYPE_LEVEL_HIGH>;
+-- 
+2.25.1
 
->  .../devicetree/bindings/firmware/qcom,scm.txt |  54 ---------
->  .../bindings/firmware/qcom,scm.yaml           | 112 ++++++++++++++++++
->  2 files changed, 112 insertions(+), 54 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.txt
->  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> 
-
-(...)
-
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - qcom,scm-apq8064
-> +          - qcom,scm-apq8084
-> +          - qcom,scm-ipq4019
-> +          - qcom,scm-ipq806x
-> +          - qcom,scm-ipq8074
-> +          - qcom,scm-mdm9607
-> +          - qcom,scm-msm8226
-> +          - qcom,scm-msm8660
-> +          - qcom,scm-msm8916
-> +          - qcom,scm-msm8953
-> +          - qcom,scm-msm8960
-> +          - qcom,scm-msm8974
-> +          - qcom,scm-msm8994
-> +          - qcom,scm-msm8996
-> +          - qcom,scm-msm8998
-> +          - qcom,scm-sc7180
-> +          - qcom,scm-sc7280
-> +          - qcom,scm-sdm845
-> +          - qcom,scm-sdx55
-> +          - qcom,scm-sm8150
-> +          - qcom,scm-sm8250
-> +          - qcom,scm-sm8350
-> +      - const: qcom,scm
-> +
-> +  clocks:
-> +    minItems: 1
-> +    maxItems: 3
-> +
-> +  clock-names: true
-> +
-> +  qcom,dload-mode:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: >
-
-No need for >
-
-> +      TCSR hardware block and offset of the download mode control register
-
-Could you define the items (and I think it has to be phandle-array in
-such case) like here for samsung,sysreg:
-https://elixir.bootlin.com/linux/v5.18-rc1/source/Documentation/devicetree/bindings/soc/samsung/exynos-usi.yaml#L42
-
-This helps to validate the actual phandle.
-
-The DTSes have also few other properties (like reset-cells). They can be
-added in this commit, just please mention it in the commit msg.
-
-> +
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,scm-apq8064
-> +              - qcom,scm-msm8660
-> +              - qcom,scm-msm8960
-> +    then:
-> +      properties:
-> +        clock-names:
-> +          items:
-> +            - const: core
-> +
-> +      required:
-> +        - clocks
-> +        - clock-names
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,scm-apq8084
-
-Based on the driver you also need (this can be in separate commit or
-just mention in commit msg):
-qcom,scm-mdm9607
-
-
-Best regards,
-Krzysztof
