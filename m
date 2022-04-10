@@ -2,156 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C9ED4FAFC6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Apr 2022 21:22:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE7584FAFF7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Apr 2022 22:01:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241589AbiDJTY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 Apr 2022 15:24:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34338 "EHLO
+        id S243868AbiDJUDq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Apr 2022 16:03:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241572AbiDJTY0 (ORCPT
+        with ESMTP id S241911AbiDJUDp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 Apr 2022 15:24:26 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D0BB61A3C
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 12:22:14 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id b15so15908310edn.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 12:22:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=s6KjH9J3ytpASWaQQB4P5MO6mBW14v4qfdZP5NXbNT4=;
-        b=oLuTi98g+Wdw5qPwwn5hP22zOCPhryp+4nyUj6UfFG29yTGiWEaT7fPcbqEEbdjqDg
-         urUPjUKu8t8lNEP1V5nReYVu4Pi3XlfHg1AAU8Pt974pzKlUT9aDDJW3WTSMz5WODnnO
-         2/XQpm+hbjqIBHUVDHNwpZdUFvm/al1ejJAMZWONzVLSFmW+Pw2D56OejF+K/NhAvJWW
-         WzRmWk1qT0WcXB+BgPUAlhJB4GzUkrS4kysDrYl2YAcFcxazQtohQ6GnpkWdxXdueJfG
-         1e78ZaIet0s2fUVTBern6ieCmkSsR/HtDlx5QKbWyGko/kMkL7kQk3q3HjYHLTj7AV2V
-         JByg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=s6KjH9J3ytpASWaQQB4P5MO6mBW14v4qfdZP5NXbNT4=;
-        b=A9B9qqiiRZpsGaoFQyEFwB7plqr7lBWNfsFVlOVymJdaOLmnUZ/7QoGgjqNtkqSA2b
-         y1ZLQG5inbkuBAwXsthgqBiRWJtSIx2fm6wxbYC2SBPA048XmRM/h+EcGR5pRJfDp259
-         QQdoZOem7/3Hyhf5TF4pBNmI7h3tJXqUcwVXUVNDEpkQTAA0YGFAiNfhhxykrm8LLp2l
-         qpHlfR9KhgYOrHaqbL74iUrdxsqF6d0MQbiOlXYVPnSufMpERPhE1l5a61obJmwcsuOl
-         Um2ym2HwzzbGFnH0nHlNN7JTNzhgpCHh36B3Xbp3EJMfcG31l8DVj0/U4Jz3gQZWFFns
-         2Adg==
-X-Gm-Message-State: AOAM531p4dql+3rVhEhkccY3rh9WrPCF97u/9peH6rFmLvasZEAVf3Co
-        9d36I6eb6HDUN+ifICV+LrsLTg==
-X-Google-Smtp-Source: ABdhPJx3cpzWE+zgaW9gPdnaedxS3xosxveySly6+/6lSyGnvAOznTJckftEgJaLGW0IBNmNpDCj8g==
-X-Received: by 2002:a05:6402:11d4:b0:419:5a50:75a4 with SMTP id j20-20020a05640211d400b004195a5075a4mr30229188edw.226.1649618533103;
-        Sun, 10 Apr 2022 12:22:13 -0700 (PDT)
-Received: from [192.168.0.191] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id w1-20020a1709064a0100b006e89334f5dfsm441488eju.136.2022.04.10.12.22.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Apr 2022 12:22:12 -0700 (PDT)
-Message-ID: <14ecb746-56f0-2d3b-2f93-1af9407de4b7@linaro.org>
-Date:   Sun, 10 Apr 2022 21:22:11 +0200
+        Sun, 10 Apr 2022 16:03:45 -0400
+X-Greylist: delayed 184 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 10 Apr 2022 13:01:33 PDT
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.160])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C257EFD03;
+        Sun, 10 Apr 2022 13:01:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1649620707;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=Q0zaa6x8L/zJq4EZoJdZZ2aoEeM96eYpbKva6Ikjg7w=;
+    b=eB2ElaJDX0IIBjs2WfdN2c7Ss67RD+FHFHeU5hg3U5BMf2/meme44lyyHvX4E5c6dF
+    i7Vy/DPYYkEc+RHxDyER41NlwCsJ7xgTPbSf9EufN4H9K8vvwo1eKWi2s2FmsoP5Jpcn
+    Uc8AI6BMGtvQVdETK8jsJzrf8IhxRD9MC3snQlWC25M7R0p5mwxVeQUCmRUAu6ygtQRG
+    GNSxpV4eCP+hXoOB0X3Eij9qQcAQypDQ69FWMrD9mjCOFcrKf39c1W0nV/Uzchb4OVO+
+    7hr18MY0nrgTcYYNzCWKrXRMY8adwJyPpNTbraZ7zXxjoUJNrbWQdKV7ArVkwh4A1wUQ
+    4llA==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXQ7UOGqRde+a0fiL/b+s="
+X-RZG-CLASS-ID: mo00
+Received: from droid..
+    by smtp.strato.de (RZmta 47.42.2 AUTH)
+    with ESMTPSA id u05e50y3AJwRAOp
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Sun, 10 Apr 2022 21:58:27 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 0/2] msm8916-huawei-g7: Add sound and clarify installation
+Date:   Sun, 10 Apr 2022 21:51:11 +0200
+Message-Id: <20220410195113.13646-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v2 6/6] dt-bindings: dma: Convert Qualcomm BAM DMA binding
- to json format
-Content-Language: en-US
-To:     Kuldeep Singh <singh.kuldeep87k@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
-References: <20220410175056.79330-1-singh.kuldeep87k@gmail.com>
- <20220410175056.79330-7-singh.kuldeep87k@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220410175056.79330-7-singh.kuldeep87k@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/04/2022 19:50, Kuldeep Singh wrote:
-> Convert Qualcomm BAM DMA controller binding to DT schema format using
-> json schema.
+This patch set adds the sound card to the msm8916-huawei-g7 device tree
+and clarifies the suggested installation instructions. Speakers, 
+headphones and the microphones are all functional, although the audio 
+jack detection is a bit unreliable sometimes (not a big problem though).
 
-Thank you for your patch. There is something to discuss/improve.
+Stephan Gerhold (2):
+  arm64: dts: qcom: msm8916-huawei-g7: Clarify installation instructions
+  arm64: dts: qcom: msm8916-huawei-g7: Add sound card
 
-(...)
+ .../arm64/boot/dts/qcom/msm8916-huawei-g7.dts | 59 ++++++++++++++++---
+ 1 file changed, 50 insertions(+), 9 deletions(-)
 
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  iommus:
-> +    minItems: 1
-> +    maxItems: 4
+-- 
+2.35.1
 
-This is something new and it seems only one SoC defines it (not even one
-BAM version). I wonder whether this is actually correct or this
-particular version of BAM is slightly different. Maybe someone could
-clarify it, but if no - looks ok.
-
-> +
-> +  num-channels:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description:
-> +      Indicates supported number of DMA channels in a remotely controlled bam.
-> +
-> +  qcom,controlled-remotely:
-> +    $ref: /schemas/types.yaml#/definitions/flag
-
-type: boolean
-
-> +    description:
-> +      Indicates that the bam is controlled by remote proccessor i.e. execution
-> +      environment.
-> +
-> +  qcom,ee:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description:
-> +      Indicates the active Execution Environment identifier (0-7) used in the
-> +      secure world.
-
-maximum: 7
-
-> +
-> +  qcom,num-ees:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description:
-> +      Indicates supported number of Execution Environments in a remotely
-> +      controlled bam.
-> +
-> +  qcom,powered-remotely:
-> +    $ref: /schemas/types.yaml#/definitions/flag
-
-type: boolean
-
-> +    description:
-> +      Indicates that the bam is powered up by a remote processor but must be
-> +      initialized by the local processor.
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - "#dma-cells"
-> +  - interrupts
-> +  - reg
-
-clocks, clock-names, qcom-ee - these are required according to old bindings.
-
-
-Best regards,
-Krzysztof
