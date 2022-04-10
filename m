@@ -2,77 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9177C4FAFAD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Apr 2022 21:11:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C9ED4FAFC6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Apr 2022 21:22:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240894AbiDJTMy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 Apr 2022 15:12:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54850 "EHLO
+        id S241589AbiDJTY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Apr 2022 15:24:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235150AbiDJTMx (ORCPT
+        with ESMTP id S241572AbiDJTY0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 Apr 2022 15:12:53 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E78760CFB
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 12:10:42 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id b24so15835487edu.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 12:10:41 -0700 (PDT)
+        Sun, 10 Apr 2022 15:24:26 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D0BB61A3C
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 12:22:14 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id b15so15908310edn.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 12:22:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=N8ogQDlkv/YncYDLitO+ZzY4zCeqZnsOOoWX3crcddY=;
-        b=biDtNxdPPd1Cssfs5BTWVtn4W5wFEfaXWB/8o7xryYj8kILF7pFw7xQ0n6ZVhH5Bii
-         kONLXZKWGRDsDGcHsGlQ4eWMTukRMTS0qhk7iYYXJ/3kwvIGqXAxJ5QE7l9z1FjYwDHx
-         97x8ywJ5NwpbQMDyodmOhk0LO92jRjRP8w6ClVeBD5vz7nftv4z37IUPzkW8mezlmbbG
-         eTWnIKyf4/kXolW9rFHinul/xLFXHWnTlar006wUH8H3b56sqTx8WQeoxhpBUma7GnS6
-         fVfylszT/LVBlHmIEx4RLCBffwBFtGII45r6DbmwLQXeZglpeRh2xKLjQKl7nX5uiHC4
-         IP9Q==
+        bh=s6KjH9J3ytpASWaQQB4P5MO6mBW14v4qfdZP5NXbNT4=;
+        b=oLuTi98g+Wdw5qPwwn5hP22zOCPhryp+4nyUj6UfFG29yTGiWEaT7fPcbqEEbdjqDg
+         urUPjUKu8t8lNEP1V5nReYVu4Pi3XlfHg1AAU8Pt974pzKlUT9aDDJW3WTSMz5WODnnO
+         2/XQpm+hbjqIBHUVDHNwpZdUFvm/al1ejJAMZWONzVLSFmW+Pw2D56OejF+K/NhAvJWW
+         WzRmWk1qT0WcXB+BgPUAlhJB4GzUkrS4kysDrYl2YAcFcxazQtohQ6GnpkWdxXdueJfG
+         1e78ZaIet0s2fUVTBern6ieCmkSsR/HtDlx5QKbWyGko/kMkL7kQk3q3HjYHLTj7AV2V
+         JByg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=N8ogQDlkv/YncYDLitO+ZzY4zCeqZnsOOoWX3crcddY=;
-        b=6zORuM5vtntWG105hBvGDoNmN6HsxGEAn2W2UspLcxP1NYoMUYQxMhjlYQlL50iEsz
-         jD90ylsFisWsn9+HW3Va0RQDNPsd0Alge74VVDV4sOXEfUvd+1DsZdpSAcYFXR2C69L+
-         x8hmbkK5awu1QFtVQ8ZziGdao8L93MPs5z7LzQ+L1hHtgFJnKP16GBIbZE/SDtbp5IBW
-         SYbVqfLzDchAbWgNRedb8yTdzI3FD+xl9YqMijvBOER2BghjXsccdHw9LKLAJw3k4zWh
-         lCVIchJ2ikj/3inwXFCEaZe+0GNYs+QxLi/y9Ai4jJbFDmAXCiPm+s5I8Em40u9vr9Co
-         6BZw==
-X-Gm-Message-State: AOAM5308Dnrhn4m60IJzAZItt1tm64VZArxRkyE1vMWADWXi1p3bf+bK
-        oO41ELX/1OeR+VvbDyNSST9y/g==
-X-Google-Smtp-Source: ABdhPJwPYAjKWOeMBZg9+TfHTBh8t9CBvZTbit/20elRwUocnWp4J4XZic654M9df1XmEKYLZWL3mg==
-X-Received: by 2002:aa7:d494:0:b0:41d:704f:7718 with SMTP id b20-20020aa7d494000000b0041d704f7718mr7120246edr.147.1649617840574;
-        Sun, 10 Apr 2022 12:10:40 -0700 (PDT)
+        bh=s6KjH9J3ytpASWaQQB4P5MO6mBW14v4qfdZP5NXbNT4=;
+        b=A9B9qqiiRZpsGaoFQyEFwB7plqr7lBWNfsFVlOVymJdaOLmnUZ/7QoGgjqNtkqSA2b
+         y1ZLQG5inbkuBAwXsthgqBiRWJtSIx2fm6wxbYC2SBPA048XmRM/h+EcGR5pRJfDp259
+         QQdoZOem7/3Hyhf5TF4pBNmI7h3tJXqUcwVXUVNDEpkQTAA0YGFAiNfhhxykrm8LLp2l
+         qpHlfR9KhgYOrHaqbL74iUrdxsqF6d0MQbiOlXYVPnSufMpERPhE1l5a61obJmwcsuOl
+         Um2ym2HwzzbGFnH0nHlNN7JTNzhgpCHh36B3Xbp3EJMfcG31l8DVj0/U4Jz3gQZWFFns
+         2Adg==
+X-Gm-Message-State: AOAM531p4dql+3rVhEhkccY3rh9WrPCF97u/9peH6rFmLvasZEAVf3Co
+        9d36I6eb6HDUN+ifICV+LrsLTg==
+X-Google-Smtp-Source: ABdhPJx3cpzWE+zgaW9gPdnaedxS3xosxveySly6+/6lSyGnvAOznTJckftEgJaLGW0IBNmNpDCj8g==
+X-Received: by 2002:a05:6402:11d4:b0:419:5a50:75a4 with SMTP id j20-20020a05640211d400b004195a5075a4mr30229188edw.226.1649618533103;
+        Sun, 10 Apr 2022 12:22:13 -0700 (PDT)
 Received: from [192.168.0.191] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id d2-20020a170906040200b006e84213fdffsm3706692eja.201.2022.04.10.12.10.39
+        by smtp.gmail.com with ESMTPSA id w1-20020a1709064a0100b006e89334f5dfsm441488eju.136.2022.04.10.12.22.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Apr 2022 12:10:40 -0700 (PDT)
-Message-ID: <b480ec98-3538-43d7-0595-afe859d40a77@linaro.org>
-Date:   Sun, 10 Apr 2022 21:10:39 +0200
+        Sun, 10 Apr 2022 12:22:12 -0700 (PDT)
+Message-ID: <14ecb746-56f0-2d3b-2f93-1af9407de4b7@linaro.org>
+Date:   Sun, 10 Apr 2022 21:22:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH v2 5/6] ARM: dts: qcom: ipq8064: User generic node name
- for DMA
+Subject: Re: [PATCH v2 6/6] dt-bindings: dma: Convert Qualcomm BAM DMA binding
+ to json format
 Content-Language: en-US
 To:     Kuldeep Singh <singh.kuldeep87k@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
 Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
 References: <20220410175056.79330-1-singh.kuldeep87k@gmail.com>
- <20220410175056.79330-6-singh.kuldeep87k@gmail.com>
+ <20220410175056.79330-7-singh.kuldeep87k@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220410175056.79330-6-singh.kuldeep87k@gmail.com>
+In-Reply-To: <20220410175056.79330-7-singh.kuldeep87k@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,17 +82,75 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 10/04/2022 19:50, Kuldeep Singh wrote:
-> Qcom BAM DT spec expects generic DMA controller node name as
-> "dma-controller" to enable validations.
-> 
-> Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
-> ---
->  arch/arm/boot/dts/qcom-ipq8064.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
+> Convert Qualcomm BAM DMA controller binding to DT schema format using
+> json schema.
 
+Thank you for your patch. There is something to discuss/improve.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+(...)
+
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  iommus:
+> +    minItems: 1
+> +    maxItems: 4
+
+This is something new and it seems only one SoC defines it (not even one
+BAM version). I wonder whether this is actually correct or this
+particular version of BAM is slightly different. Maybe someone could
+clarify it, but if no - looks ok.
+
+> +
+> +  num-channels:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      Indicates supported number of DMA channels in a remotely controlled bam.
+> +
+> +  qcom,controlled-remotely:
+> +    $ref: /schemas/types.yaml#/definitions/flag
+
+type: boolean
+
+> +    description:
+> +      Indicates that the bam is controlled by remote proccessor i.e. execution
+> +      environment.
+> +
+> +  qcom,ee:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      Indicates the active Execution Environment identifier (0-7) used in the
+> +      secure world.
+
+maximum: 7
+
+> +
+> +  qcom,num-ees:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      Indicates supported number of Execution Environments in a remotely
+> +      controlled bam.
+> +
+> +  qcom,powered-remotely:
+> +    $ref: /schemas/types.yaml#/definitions/flag
+
+type: boolean
+
+> +    description:
+> +      Indicates that the bam is powered up by a remote processor but must be
+> +      initialized by the local processor.
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - "#dma-cells"
+> +  - interrupts
+> +  - reg
+
+clocks, clock-names, qcom-ee - these are required according to old bindings.
 
 
 Best regards,
