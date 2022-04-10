@@ -2,64 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E47C74FB046
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Apr 2022 22:59:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8B1D4FB0DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 01:45:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242351AbiDJVBU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 Apr 2022 17:01:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50052 "EHLO
+        id S232797AbiDJXrO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Apr 2022 19:47:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242425AbiDJVBT (ORCPT
+        with ESMTP id S230233AbiDJXrN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 Apr 2022 17:01:19 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2704C296
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 13:59:06 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id r2so2517128ljd.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 13:59:06 -0700 (PDT)
+        Sun, 10 Apr 2022 19:47:13 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE3E1D0C9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 16:45:01 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id o2so2137172lfu.13
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 16:45:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=V6gQlFkX6arSWeceCappRrDDbouyR79OAj94g6yrqM4=;
-        b=ge/T+374NYComgBadZq1vZeaTvSVqPq/NETXmdMMqlwqtdSRrVxawR7+kWg2IVZE+I
-         niK3AY1mvFKCKNbOwhOUjhuDzgLbBjMbA8sDpgAgqXvWy6SgWn7InU3DawuM1bmwY5bE
-         Ra+SRrZzGFSkIOc5WPV9TU7legrYgDxHqt6fgcDhcJ9Z3zp7dS8GVF0Tiu+h+VZV6nWl
-         3lhx1mTu+Gap+H/gzw4rYJLBcHwjl0qSR8thcHlFRFFw9rWxN91Rd6wQYoSao3B3mHzP
-         i52qEixExJyNW6Cc3/XeF2fG4FhQoY8OXdLjRiHhpRhy0G0LKkYt4bZb8Kl7s6adSf+P
-         OugA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yjP26hSDnI1G4H4to8/mQn99hO5ICfo5ZSgNeliqLSo=;
+        b=jpXw39N5r52tqWxd7i9I19lx6zBBoOKjEpBA/GGGoPWye3IhrPfNj2VTbNmdncm0r1
+         Sn6G2IonEOasOeKAh8fB+OeXyUq2DipPRw7kAdP+LMuoz9BYfpUodYTMlTnVxq5TUigQ
+         1bEqYTQkdqK9cGP/006m0IpxiPFYYVmIYtaQPQFpDBVIRmbehDlGfoohKrDc+4TGtx1j
+         16xm9P2Cb4apRXn0zv6ukaBJQBJ1R1Qgk0vg+RFStH5ybqRFdI/sbtBQk9JTs6eczz7J
+         ceVBWA728ohL+KT85WmRwKLfnPKQ+re37u3Rf4acfqCy/HiWMBinfaMVngQwjjpIsRwc
+         g10A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=V6gQlFkX6arSWeceCappRrDDbouyR79OAj94g6yrqM4=;
-        b=OEX00m5RpiqEbp9PlP1rCzUHkjysoQy5uOLXGfCM58Nvelg10SiGo7PuyfDepAqplh
-         MUiHejK7JexqmCZyCNTrOH1MzOlQrzxLqeTDDA7hq99goZKkQbhKNeu1TgwcvA51wC3F
-         13Q1UVfHlF2d+2cBj+2AoSa3qbpVOlWVnub7dA8YCPLHz0xBrNOCvEYEMawytKteH2ln
-         JsBY4QZJEROrBAuHJC72Z6/RUd9V54uSWk6G/Uox1TorAFPyX/goSJObyaHK1tkXvRh7
-         POog/oPzIM4guRsjiBogz3mnYLLwhZ1chakUaZItvxov/eKqbMSGnO3ZHjRjmeUmEvJQ
-         qLBg==
-X-Gm-Message-State: AOAM530GKqMk/GTIhjR0vLzVsHDLu4Npt8BgaOht/JMSucGbEsoITqRt
-        CXHwLQdOqhNVelJiPOVA9RAEoA==
-X-Google-Smtp-Source: ABdhPJy3P422AYF7b0O9BKynXiNzjxSPMMLN4WUPGlyFiV0NIUUxdu671LH/N/iIxEz2OwGUUFu+/g==
-X-Received: by 2002:a2e:bd17:0:b0:24b:4c2a:20c5 with SMTP id n23-20020a2ebd17000000b0024b4c2a20c5mr9969055ljq.422.1649624344389;
-        Sun, 10 Apr 2022 13:59:04 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yjP26hSDnI1G4H4to8/mQn99hO5ICfo5ZSgNeliqLSo=;
+        b=cv4gVpxuI4EbHcPW26yjv2bmVUWALwIRro5zicuZw+xfZ97tRZjHXmperH2W00/lXf
+         rgJClqOCVWagUfZ4txqU3+q4KDA7jZhaQrv0LmSkHEKmO6X3oKjBBjWG6UocTEgAT0dt
+         XBLp3D/ekNYdapfnUFuT3TH7Yj3ItVkHk+pNT3Gf+y5c882t7QBAxk3wV3cYxQuHo/ot
+         V5NVzHudtwae4XBEelnan4WGkqTQ4GUsSgFMv1vWeYgT4nebSXVe9QLcj47dYB4Ob5v7
+         wR/wEBZK9sBMD6O0j2kaf+5szSmeYs94jNKzGOIn6oYfxmTIp8xHlitC/HJzdOYlnWkh
+         NOig==
+X-Gm-Message-State: AOAM531LEzJ9D5+Qc5WcCSx784XgmkH2Z08/dvtUcMSU4yYwQHRbLDIn
+        phNh5c5laYVnXkDc9oQ/RUGgzA==
+X-Google-Smtp-Source: ABdhPJxMh6D5cwlUtzDsV6EDkKQjq18N7F8h35knzU61fMq12tiwwNYlQSPfzq+JNIl5xrh0cDoQ+w==
+X-Received: by 2002:a05:6512:ad3:b0:44a:254b:da97 with SMTP id n19-20020a0565120ad300b0044a254bda97mr19645005lfu.485.1649634299578;
+        Sun, 10 Apr 2022 16:44:59 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id t17-20020a192d51000000b0044a5a9960f9sm3114809lft.236.2022.04.10.13.59.03
+        by smtp.gmail.com with ESMTPSA id m28-20020a19435c000000b00464f6d27ff1sm1153881lfj.103.2022.04.10.16.44.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Apr 2022 13:59:03 -0700 (PDT)
+        Sun, 10 Apr 2022 16:44:58 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8450: add fastrpc nodes
-Date:   Sun, 10 Apr 2022 23:59:01 +0300
-Message-Id: <20220410205901.1672089-3-dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Subject: [PATCH 0/3] arm64: dts: qcom: sm8450: add thermal zones and cooling maps
+Date:   Mon, 11 Apr 2022 02:44:55 +0300
+Message-Id: <20220410234458.1739279-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220410205901.1672089-1-dmitry.baryshkov@linaro.org>
-References: <20220410205901.1672089-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,157 +71,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add fastrpc device tree nodes for aDSP, cDSP and SLPI.
+Add thermal related definitions for the SM8450 platform:
+- Add two tsens thermal sensors nodes
+- Add corresponding thermal zones
+- Link thermal zones to cooling devices provided by CPU clusters.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 119 +++++++++++++++++++++++++++
- 1 file changed, 119 insertions(+)
+Dmitry Baryshkov (1):
+  arm64: dts: qcom: sm8450: add cooling-maps to CPU trip points
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 934e29b9e153..385892330017 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -887,6 +887,33 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 
- 				label = "slpi";
- 				qcom,remote-pid = <3>;
-+
-+				fastrpc {
-+					compatible = "qcom,fastrpc";
-+					qcom,glink-channels = "fastrpcglink-apps-dsp";
-+					label = "sdsp";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					compute-cb@1 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <1>;
-+						iommus = <&apps_smmu 0x0541 0x0>;
-+					};
-+
-+					compute-cb@2 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <2>;
-+						iommus = <&apps_smmu 0x0542 0x0>;
-+					};
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+						iommus = <&apps_smmu 0x0543 0x0>;
-+						/* note: shared-cb = <4> in downstream */
-+					};
-+				};
- 			};
- 		};
- 
-@@ -927,6 +954,32 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 
- 				label = "lpass";
- 				qcom,remote-pid = <2>;
-+
-+				fastrpc {
-+					compatible = "qcom,fastrpc";
-+					qcom,glink-channels = "fastrpcglink-apps-dsp";
-+					label = "adsp";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+						iommus = <&apps_smmu 0x1803 0x0>;
-+					};
-+
-+					compute-cb@4 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <4>;
-+						iommus = <&apps_smmu 0x1804 0x0>;
-+					};
-+
-+					compute-cb@5 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <5>;
-+						iommus = <&apps_smmu 0x1805 0x0>;
-+					};
-+				};
- 			};
- 		};
- 
-@@ -967,6 +1020,72 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 
- 				label = "cdsp";
- 				qcom,remote-pid = <5>;
-+
-+				fastrpc {
-+					compatible = "qcom,fastrpc";
-+					qcom,glink-channels = "fastrpcglink-apps-dsp";
-+					label = "cdsp";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					compute-cb@1 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <1>;
-+						iommus = <&apps_smmu 0x2161 0x0400>,
-+							 <&apps_smmu 0x1021 0x1420>;
-+					};
-+
-+					compute-cb@2 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <2>;
-+						iommus = <&apps_smmu 0x2162 0x0400>,
-+							 <&apps_smmu 0x1022 0x1420>;
-+					};
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+						iommus = <&apps_smmu 0x2163 0x0400>,
-+							 <&apps_smmu 0x1023 0x1420>;
-+					};
-+
-+					compute-cb@4 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <4>;
-+						iommus = <&apps_smmu 0x2164 0x0400>,
-+							 <&apps_smmu 0x1024 0x1420>;
-+					};
-+
-+					compute-cb@5 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <5>;
-+						iommus = <&apps_smmu 0x2165 0x0400>,
-+							 <&apps_smmu 0x1025 0x1420>;
-+					};
-+
-+					compute-cb@6 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <6>;
-+						iommus = <&apps_smmu 0x2166 0x0400>,
-+							 <&apps_smmu 0x1026 0x1420>;
-+					};
-+
-+					compute-cb@7 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <7>;
-+						iommus = <&apps_smmu 0x2167 0x0400>,
-+							 <&apps_smmu 0x1027 0x1420>;
-+					};
-+
-+					compute-cb@8 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <8>;
-+						iommus = <&apps_smmu 0x2168 0x0400>,
-+							 <&apps_smmu 0x1028 0x1420>;
-+					};
-+
-+					/* note: secure cb9 in downstream */
-+				};
- 			};
- 		};
- 
+Vladimir Zapolskiy (2):
+  arm64: dts: qcom: sm8450: Add thermal sensor controllers
+  arm64: dts: qcom: sm8450: Add thermal zones
+
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 1056 ++++++++++++++++++++++++++
+ 1 file changed, 1056 insertions(+)
+
 -- 
 2.35.1
 
