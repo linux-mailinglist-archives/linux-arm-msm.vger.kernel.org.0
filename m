@@ -2,145 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 039C54FC551
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 21:53:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 860764FC567
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 22:05:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349727AbiDKTz4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 15:55:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43170 "EHLO
+        id S1347670AbiDKUHw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 16:07:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349741AbiDKTzv (ORCPT
+        with ESMTP id S230306AbiDKUHu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 15:55:51 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B02D36E11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 12:53:36 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id s8so15488824pfk.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 12:53:36 -0700 (PDT)
+        Mon, 11 Apr 2022 16:07:50 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92D171CB32;
+        Mon, 11 Apr 2022 13:05:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=HQW6p5XHkDmFdXcFFMAKSTMR7c12bQrCmTxneppa4IY=;
-        b=XvKXaBY0+FG1tmG2ZLkX8lj/1RrGPbuWStt06IKqgUgYXG7WbsoyWzr/CPktw6vaSt
-         9u8QllcxrheruT/2xpSBgn5YwZTJCIq6Er+X7a0dVcaWxTy7gOiWb/kZsyeqW6kXI4XK
-         g4M4l8yBaZLKP85vov6kQkDBpdgna/tx6D9HQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=HQW6p5XHkDmFdXcFFMAKSTMR7c12bQrCmTxneppa4IY=;
-        b=H6GcQ2KnYqGvPUkhdooyUBPaT0xgB29Nnh++AAguMJ2AGd3yq49IjgPxYqQwNIxadk
-         xx3rsKePaZEFTpYDUnl/3t84/lBQ2vqxx8JONAuX04cAO8RPTxBXgtsWCJU6rPxdR5We
-         c5WhahNCFEgChWXw12Fm175Tf496u/0473ViKctX73VnV/wmISIQyfwyuxvmiOue/wr3
-         Xdb9xDDIwbZb581h5JvIZRytlk1oVTIMdf626XrSYqmCx51SeV6NHnKp6N7+1gqdDj9W
-         wy8Ltek2Hmf5DDr7WqgkB7DO59EzuNQxt/7drMH0fu/PDSY82Ic2yvXERKzacreJllyk
-         WYFw==
-X-Gm-Message-State: AOAM5305mI1ATRl2UKTsvz+h/feLSvekV1OB0XI5nIt6rVMHFQnDFB8B
-        C1FCXfTd3aCtCOpBL/fp66jiug==
-X-Google-Smtp-Source: ABdhPJy46Nb67XtLDVVS/w6pd6omc5Ct5ml3k8IojyyCxOY1LCYD4hjqOd6yvjcWEYJbLnmUIjJs1A==
-X-Received: by 2002:a65:614e:0:b0:380:bfd9:d4ea with SMTP id o14-20020a65614e000000b00380bfd9d4eamr27582317pgv.92.1649706816054;
-        Mon, 11 Apr 2022 12:53:36 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:eb96:76ba:e2a1:2442])
-        by smtp.gmail.com with UTF8SMTPSA id nv11-20020a17090b1b4b00b001c71b0bf18bsm292189pjb.11.2022.04.11.12.53.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Apr 2022 12:53:35 -0700 (PDT)
-Date:   Mon, 11 Apr 2022 12:53:33 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>,
-        quic_rohkumar@quicinc.com
-Subject: Re: [PATCH v6 1/3] arm64: dts: qcom: sc7280: Add nodes for va tx and
- rx macros and external codecs
-Message-ID: <YlSHPU7XITS2dju/@google.com>
-References: <1649157220-29304-1-git-send-email-quic_srivasam@quicinc.com>
- <1649157220-29304-2-git-send-email-quic_srivasam@quicinc.com>
- <Yky2Iwt+tvxvu4/S@google.com>
- <8fea1165-c8b6-6ce2-86dc-82274af8c43d@quicinc.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649707536; x=1681243536;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=jhv6EkHDtQ4ltXXOFpDhNcSEV9W9C2fd4dh3zQjQ+Ew=;
+  b=ATLnV1hHO3j2PkiXGH3TrFOUZE4+l4oyTd4LO+nPN8s7D/P4xK0g01rp
+   fB/mOE1ufMo5ZzG/eW0qnaYR16wPIHmHHmaVZxvVQvXT4appyZ4rIMPOP
+   4NpRERJRK18Ek30Ye6/cdSrEJXrcvEVa/YuB/L/CD+cGumu09JE4irjZh
+   M=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 11 Apr 2022 13:05:35 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Apr 2022 13:05:35 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 11 Apr 2022 13:05:34 -0700
+Received: from hu-amelende-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 11 Apr 2022 13:05:33 -0700
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+To:     <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <sre@kernel.org>,
+        <robh+dt@kernel.org>
+CC:     <linux-input@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <collinsd@codeaurora.org>,
+        <bjorn.andersson@linaro.org>, <swboyd@chromium.org>,
+        <skakit@codeaurora.org>, <linux-doc@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Anjelique Melendez <quic_amelende@quicinc.com>
+Subject: [PATCH v5 0/5] Extend pm8941-pwrkey driver
+Date:   Mon, 11 Apr 2022 13:05:01 -0700
+Message-ID: <20220411200506.22891-1-quic_amelende@quicinc.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <8fea1165-c8b6-6ce2-86dc-82274af8c43d@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 11, 2022 at 07:32:33PM +0530, Srinivasa Rao Mandadapu wrote:
-> 
-> On 4/6/2022 3:05 AM, Matthias Kaehlcke wrote:
-> Thanks for your time Matthias!!!
-> > On Tue, Apr 05, 2022 at 04:43:38PM +0530, Srinivasa Rao Mandadapu wrote:
-> > > SC7280 has VA, TX and RX macros with SoundWire Controllers to attach with
-> > > codecs like WCD938x, max98360a using soundwire masters and i2s bus.
-> > > Add these nodes for sc7280 based platforms audio use case.
-> > > Add tlmm gpio property in wcd938x node for switching CTIA/OMTP Headset.
-> > > 
-> > > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> > > Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> > > Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> > > ---
-> > A change log would be helpful for reviewers
-> Change log added in cover letter.
+Changes from v4:
+  - Added new dt-binding patch as 1/5
+ 
+Changes from v3:
+  - Fixed dereference issue in 2/4
+  - Added Stephen's reviewed by tag for 2/4
 
-From my perspective as a reviewer I find it more practical to have a
-change log per patch.
+Changes from v2:
+  - Addressed Stephen's comments
+    - Add Stephen's reviewed by tag for 1/4
+    - Fixed style for 2/4
+    - Corrected function call to use correct function for 3/4
 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> > > index de646d9..c6a04c3 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> > > @@ -20,6 +20,14 @@
-> > >   #include "sc7280-chrome-common.dtsi"
-> > >   / {
-> > > +	max98360a: audio-codec-0 {
-> > > +		compatible = "maxim,max98360a";
-> > > +		pinctrl-names = "default";
-> > > +		pinctrl-0 = <&amp_en>;
-> > > +		sdmode-gpios = <&tlmm 63 GPIO_ACTIVE_HIGH>;
-> > > +		#sound-dai-cells = <0>;
-> > > +	};
-> > > +
-> > This node shouldn't be at top but with the other device nodes, in
-> > alphabetical order, i.e. before 'pwmleds'.
-> 
-> Actually we are sorting as per node name. Hence kept it here. As per
-> previous reviewer comments, sorted accordingly.
-> 
-> Please suggest better approach.
+Changes from v1:
+  - Removed Change-Id from all patches
+  - Updated subject line of cover letter
+  - Addressed Stephen's comments for v1 1/3
+    - Separated error message fix to own patch (v2 1/4)
+    - Separated PON GEN3 base address changes to own patch (v2 2/4)
+    - Added new variables and functions to make code more readable
+  - Removed v1 3/3 as per Bjorn's comments
 
-True, I forgot the node names are used for sorting, not the labels.
+Anjelique Melendez (2):
+  input: misc: pm8941-pwrkey: fix error message
+  input: misc: pm8941-pwrkey: add support for PON GEN3 base addresses
 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > index db74fc3..78ec84c 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > @@ -822,6 +822,127 @@
-> > >   			#power-domain-cells = <1>;
-> > >   		};
-> > > +		rxmacro: codec@3200000 {
-> > These node are not at the correct position. They should be sorted by
-> > address and hence be inserted between 'lpasscc@3000000' and
-> > 'interconnect@3c40000'.
-> 
-> Actually we are sorting as per node(codec) name. Hence kept it here. As per
-> previous reviewer comments, sorted accordingly.
+David Collins (3):
+  dt-bindings: power: reset: qcom-pon: update "reg" property details
+  input: misc: pm8941-pwrkey: add software key press debouncing support
+  input: misc: pm8941-pwrkey: simulate missed key press events
 
-Could you provide a pointer to those comments?
+ Documentation/devicetree/bindings/power/reset/qcom,pon.yaml | 20 +++++++++++++++++++-
+ drivers/input/misc/pm8941-pwrkey.c | 124 +++++++++++++++++++++++++----
+ 2 files changed, 129 insertions(+), 15 deletions(-)
 
-My understanding is that we are sorting by node name when nodes don't have
-addresses or for overrides in board files/snippets, however the nodes under
-'soc@0' are sorted by address.
+-- 
+2.35.1
 
-Another nit: 'rx_macro, tx_macro, va_macro' instead of the labels without
-underscore? Not really important, but maybe slightly more readable and
-would match the 'spelling' of the compatible strings.
