@@ -2,70 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8221F4FB0DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 01:45:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68D584FB129
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 02:53:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232759AbiDJXrS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 Apr 2022 19:47:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36874 "EHLO
+        id S237200AbiDKAzS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Apr 2022 20:55:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244214AbiDJXrR (ORCPT
+        with ESMTP id S233951AbiDKAzR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 Apr 2022 19:47:17 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ECCC21279
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 16:45:04 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id j9so15703702lfe.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 16:45:04 -0700 (PDT)
+        Sun, 10 Apr 2022 20:55:17 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3660F1CFEA
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 17:53:05 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id q189so1651619ljb.13
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 17:53:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=z0iwiGRxOyeqOGHo3JL2L+l4TGSZbXHltWbEO9ZLp08=;
-        b=tmJyxnaFeYxmluppOXvP8Ju1pWTrSOtbZUygbxFGh6RGMqU7C9sQBTMeSsGZdsNKd2
-         X/IW2zZBWEPbh216At0VZqxvU4bdoKivN94dtk2bn26vAM3/nsCOgf0ome7rKI8IiM4P
-         IIg4btq6NWASr53mn4g6tg0hn4ZehSoFLKCiRWUBLGxqdFEB22zMo+KVlSY+2Ck6HofV
-         Y3Dy9/2KpykOWz+MdpAFFH5sFxY82wmg7N+R7qy86Nu9wsRd9fryTQqqOYpQIPnLIWcU
-         zNDzbxur6VO7ZeVwzCWq2k/UkKVhN8kTCt+Av6/O/FJmrvMdyS4dQ0B32aTAbwG1Dz4L
-         V/xw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=CXm5mSwaFzwzu++u9kIOHnOh36g7ghfH6gNr3++uBxs=;
+        b=ZgLIKzQad+UIXhvwSf+OMYFQR95XXCDgfdbZbmLSyUys+coUKRAZFrBx8CJTb7acPK
+         EAmY9lUFYaQxjPK6n1LWaGz4pFdLyuMJRDHAGbJka9iw0H+aQxw0+FY4ioxWAzwRo1NI
+         ZEG66HRw5csV2NRgVpWBRHvsX75LVPB35CPQwiD1mTcZwdvvFkd7MAR5xlF03CgSqhCW
+         u2o+VXQwphHxMRN+dUEWK7qJ9Rj9S72czNdxi9o8ZaKeKx9HCbKuPN5VR5TEgg3AKy3a
+         xWTX4BRCxouPVrUGXQtPMRx8IldlPOWXpZA3sSf/Ix60phSyRcJ2GkI0yMjPEDHzTEU9
+         HebQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=z0iwiGRxOyeqOGHo3JL2L+l4TGSZbXHltWbEO9ZLp08=;
-        b=5NzcXpXtRwOtPebxZ3stvKFaEYhqjc726Au0TalW5GWmzfKvgTwC0jJVPgnYgH8BzN
-         mZQKeTuj4wu/1Jy+1ndSIWW+NzOpVklAkyaDY2NMQw4TRDflCi3O8s91tYvUMGvUj32l
-         7g3WGm4BDmY2+IiGcmYhyCvvvuQ2HhywcpFkGdnpmigavGuwKaJNTkMN+IPF6f+Jq9GK
-         9Ut1/hUwFHjbKRibZkLhn8tiYyrSgpCJ9vaeCB2rW0o3CPFvWrtraVTHAifqEFKjr340
-         ql8RABhJU5o2W5diXmps+dFPzXIELZdL6x0brQi1D9yhNLe33rLihbhl3+PrFoMu/jiD
-         VQgw==
-X-Gm-Message-State: AOAM530qQKQGuS1dPt9SBNpeSXjMMYAG2x1Fy2/6DFcbEJt/B72umzXT
-        FOToaOBgj+WeHRCG1Wj1aucgIQ==
-X-Google-Smtp-Source: ABdhPJyd1OESP0/054g4EmzjAxYzmdqFfSSZPFIucwHQN1E/J0vyGFNnLk4DQ57aibD6BYwnENLoZg==
-X-Received: by 2002:ac2:4899:0:b0:464:f80b:a86d with SMTP id x25-20020ac24899000000b00464f80ba86dmr11650228lfc.65.1649634302415;
-        Sun, 10 Apr 2022 16:45:02 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id m28-20020a19435c000000b00464f6d27ff1sm1153881lfj.103.2022.04.10.16.45.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Apr 2022 16:45:01 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8450: add cooling-maps to CPU trip points
-Date:   Mon, 11 Apr 2022 02:44:58 +0300
-Message-Id: <20220410234458.1739279-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220410234458.1739279-1-dmitry.baryshkov@linaro.org>
-References: <20220410234458.1739279-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=CXm5mSwaFzwzu++u9kIOHnOh36g7ghfH6gNr3++uBxs=;
+        b=kb0G5ZEbMsrNeEce22jl6YQlN0A5x2DfdVFoNhAibSldijEDtiAeiO/WxthMfyYSF5
+         /nvpMkafbRNS65ktD0yu9BaRz0b117u7UfppUPplwh17p5GbwtVHdyA+padfSd7y6h/H
+         +aw8x6l+YnQ+ItrQCW2OPQMaUi0ovaZZWNAMkRnuXVDRN90hc13nt/LvcG934+QSxorU
+         xSeZJkbLrneEsqcj9M53CGRQRZKeYR6wHiBs9rxg/4GT6X7SzUHPCFM4XhAdm4IsaJ/q
+         nRrc/bGz7vYeR6RIojgMFj3tAVZkNSeiJgAJgJmlWEZItAISFTu0maqEht6GT8MQet1w
+         yjFA==
+X-Gm-Message-State: AOAM531tQYQIMFXWvig8apblnE7XwiNXTju3Si/i2GEdeRyo3xXUSTjg
+        wAJS47AkDyqvu8Fz7gaHBEewsgCTMUL9wA==
+X-Google-Smtp-Source: ABdhPJxyt0wopKX7fx+Gbcpumbb1jU9zmGiIFPN4SS2c3gNFlQccFPOBLZ8BD2gFf85jsGnoRSBT0g==
+X-Received: by 2002:a05:651c:1046:b0:24a:edc2:d107 with SMTP id x6-20020a05651c104600b0024aedc2d107mr18796586ljm.285.1649638383435;
+        Sun, 10 Apr 2022 17:53:03 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id m5-20020a197105000000b0046bab1edfddsm47552lfc.264.2022.04.10.17.53.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 Apr 2022 17:53:02 -0700 (PDT)
+Message-ID: <4deb0930-b244-677a-9f97-3730686eff5a@linaro.org>
+Date:   Mon, 11 Apr 2022 03:53:01 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] drm/msm/gpu: Avoid -Wunused-function with
+ !CONFIG_PM_SLEEP
+Content-Language: en-GB
+To:     Nathan Chancellor <nathan@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        patches@lists.linux.dev
+References: <20220330180541.62250-1-nathan@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220330180541.62250-1-nathan@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,302 +78,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Follow the lead of other Qualcomm platforms and add cooling maps for CPU
-trip points. Handle three clusters separately, cooling cores 0-3 for
-cpu0-3 trip points, cores 4-6 for cpu4-6 trip points and only cpu7 for
-cpu7 trip points.
+On 30/03/2022 21:05, Nathan Chancellor wrote:
+> When building with CONFIG_PM=y and CONFIG_PM_SLEEP=n (such as ARCH=riscv
+> allmodconfig), the following warnings/errors occur:
+> 
+>    drivers/gpu/drm/msm/adreno/adreno_device.c:679:12: error: 'adreno_system_resume' defined but not used [-Werror=unused-function]
+>      679 | static int adreno_system_resume(struct device *dev)
+>          |            ^~~~~~~~~~~~~~~~~~~~
+>    drivers/gpu/drm/msm/adreno/adreno_device.c:655:12: error: 'adreno_system_suspend' defined but not used [-Werror=unused-function]
+>      655 | static int adreno_system_suspend(struct device *dev)
+>          |            ^~~~~~~~~~~~~~~~~~~~~
+>    cc1: all warnings being treated as errors
+> 
+> These functions are only used in SET_SYSTEM_SLEEP_PM_OPS(), which
+> evaluates to empty when CONFIG_PM_SLEEP is not set, making these
+> functions unused.
+> 
+> Traditionally, these functions are marked as __maybe_unused but in this
+> case, there is already an '#ifdef CONFIG_PM' in the code, so just do the
+> same thing with CONFIG_PM_SLEEP to resolve the warning.
+> 
+> Fixes: 7e4167c9e021 ("drm/msm/gpu: Park scheduler threads for system suspend")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 191 +++++++++++++++++++++++++++
- 1 file changed, 191 insertions(+)
+I'd suggest using __maybe_unused instead (and maybe even sending the 
+followup patch changing the #ifdef CONFIG_PM to __maybe_unused too):
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 4f3c7e7d2855..dd8ef4438fd0 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -1651,6 +1651,21 @@ cpu4_top_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu4_top_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu4_top_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu4-bottom-thermal {
-@@ -1677,6 +1692,21 @@ cpu4_bottom_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu4_bottom_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu4_bottom_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu5-top-thermal {
-@@ -1703,6 +1733,21 @@ cpu5_top_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu5_top_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu5_top_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu5-bottom-thermal {
-@@ -1729,6 +1774,21 @@ cpu5_bottom_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu5_bottom_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu5_bottom_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu6-top-thermal {
-@@ -1755,6 +1815,21 @@ cpu6_top_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu6_top_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu6_top_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu6-bottom-thermal {
-@@ -1781,6 +1856,21 @@ cpu6_bottom_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu6_bottom_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu6_bottom_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu7-top-thermal {
-@@ -1807,6 +1897,17 @@ cpu7_top_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu7_top_alert0>;
-+					cooling-device = <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu7_top_alert1>;
-+					cooling-device = <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu7-middle-thermal {
-@@ -1833,6 +1934,17 @@ cpu7_middle_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu7_middle_alert0>;
-+					cooling-device = <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu7_middle_alert1>;
-+					cooling-device = <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu7-bottom-thermal {
-@@ -1859,6 +1971,17 @@ cpu7_bottom_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu7_bottom_alert0>;
-+					cooling-device = <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu7_bottom_alert1>;
-+					cooling-device = <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		gpu-top-thermal {
-@@ -1969,6 +2092,23 @@ cpu0_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu0_alert0>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu0_alert1>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu1-thermal {
-@@ -1995,6 +2135,23 @@ cpu1_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu1_alert0>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu1_alert1>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu2-thermal {
-@@ -2021,6 +2178,23 @@ cpu2_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu2_alert0>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu2_alert1>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu3-thermal {
-@@ -2047,6 +2221,23 @@ cpu3_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu3_alert0>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+				map1 {
-+					trip = <&cpu3_alert1>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cdsp0-thermal {
+If the code is included into the compilation, it means it's more widely 
+compile tested. Which tends to reveal obscure bugs, dependencies, etc.
+
+
+> ---
+>   drivers/gpu/drm/msm/adreno/adreno_device.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index 661dfa7681fb..b25915230bab 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -621,6 +621,7 @@ static int adreno_runtime_suspend(struct device *dev)
+>   	return gpu->funcs->pm_suspend(gpu);
+>   }
+>   
+> +#ifdef CONFIG_PM_SLEEP
+>   static void suspend_scheduler(struct msm_gpu *gpu)
+>   {
+>   	int i;
+> @@ -681,8 +682,8 @@ static int adreno_system_resume(struct device *dev)
+>   	resume_scheduler(dev_to_gpu(dev));
+>   	return pm_runtime_force_resume(dev);
+>   }
+> -
+> -#endif
+> +#endif /* CONFIG_PM_SLEEP */
+> +#endif /* CONFIG_PM */
+>   
+>   static const struct dev_pm_ops adreno_pm_ops = {
+>   	SET_SYSTEM_SLEEP_PM_OPS(adreno_system_suspend, adreno_system_resume)
+> 
+> base-commit: 05241de1f69eb7f56b0a5e0bec96a7752fad1b2f
+
+
 -- 
-2.35.1
-
+With best wishes
+Dmitry
