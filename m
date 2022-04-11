@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 359DB4FBA4D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 12:59:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B6A24FBA70
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 13:03:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345830AbiDKLB1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 07:01:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
+        id S1344312AbiDKLFM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 07:05:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345808AbiDKLBX (ORCPT
+        with ESMTP id S240792AbiDKLFL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 07:01:23 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 957B2C2C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 03:59:08 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id b15so17879870edn.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 03:59:08 -0700 (PDT)
+        Mon, 11 Apr 2022 07:05:11 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 851C5443C8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 04:02:57 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id i27so30051217ejd.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 04:02:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=zw3vSAK0pJhTjl0Tya4Qny5h2u5hqroyCgDzzcOD6F4=;
-        b=JQeWz9JruHE6fvJG/mAZuZxY/g7URi8MDaPjHIdq/u3Taoj39k1J8FMGd25pw6oHk2
-         hgo3QpiJ+fgVAE6hhqRhbXLssCANlOVUY7wGthfaFuvsqSU9O8q+LBsDfiUzOjzayZGP
-         jSsviHKu4xvFW/58sQjouIHT6ZH+mJ8stvib5ocpr5xpisEtBijU1s1eOgOn4WRhwtco
-         IDlGjrsx1Mj34NOM5xqzrkHOyYx3h/tdXWsDelEhLijhPJJfXz3gfNT0eNB/PjqgIh4z
-         3dNRcnaQYwdVbBSbnEquje6EeCN4Xw2IpvrTccj3aF1ngh0kQ/RaV/kM+Vqeo/nGz/4m
-         bhkw==
+        bh=NrhjMPDWVMpnH0vGXH4JML8AsEUrRppRhTIbZkMHMtg=;
+        b=q1AEI5QMqWZueRnKCNAHimfoWg6UCP9Lk1hEQEEaN2ub7v0Eajkt0P2lExv6gx/IEX
+         AH3uYloLfAb8KySJP4wayKgaeRV8eqAjlsxzVSFpV/nPl4Bd9HEc3vaBa513BlsAcJvM
+         SeJlsBUJsXCKWgoT8OhDcfybWtY8ix2Da9fUm/KXudI3nq2Kp4+5Vo7Jp/B3OpKAA8iz
+         s3/q/u/itZS9+slHeFvkO7BaC+I85xtSx3g5bpunXKchMaSF3eTq7m9OhcXdfH65d14c
+         LCLGU2RxHE2z0nCFXgnNdn/euRRLNjES3fBvFBIpuXazsk+JtjkQKSCS1FonVuLH3s3Z
+         4g2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=zw3vSAK0pJhTjl0Tya4Qny5h2u5hqroyCgDzzcOD6F4=;
-        b=OEWpXeuZ2LH6bED5har4o6F0Wx2RRTjCyuyegj+xNbAfYDHX5pyTC7FyJyhO79Ihz6
-         XpT2PrK8TI+r5+cHWDhdb5Sg8Gn+3Ab1lGoMrgJPZ9TpLojIf2MQKgoNWbaD5B89XFPD
-         Et14fuSC9pCU9qkAwfHyggGeEJ+gn7ib/ANXMEOutpzO/ZRmaBpmM3oh4oAfzoVg4riB
-         LElqe5Uzbhdl40TtnPgG/QCGM/ngL3uvITXmL4trtN+3DmPMRIgi2y6FVEFHTQREHBoT
-         JIcguS+J12n0PzYR8RsYOVX8Savt4ZwCRF4OrMmxNZ4XehwWKKT5EjkZDNG3icsun7G5
-         WQnQ==
-X-Gm-Message-State: AOAM530nakkudKGn7B+/u6Iplo4doDim3tib2qx5xMRLobfsbnB/ZoP2
-        1HMBoK9cWriZX1RS5KQ4uBePLQ==
-X-Google-Smtp-Source: ABdhPJyEOy7ko1JKO6Gp9yC03o5o0k/8DcPcwlJQDltuZcFVFm1jJVVIip/g86PxqzRvehue9AHgHg==
-X-Received: by 2002:a05:6402:4248:b0:419:4583:eaa2 with SMTP id g8-20020a056402424800b004194583eaa2mr32575686edb.376.1649674747020;
-        Mon, 11 Apr 2022 03:59:07 -0700 (PDT)
+        bh=NrhjMPDWVMpnH0vGXH4JML8AsEUrRppRhTIbZkMHMtg=;
+        b=mJO0fCewfYPh4N2lQuolpTIWfCg2Ldm52kfXKDgxwz3IET8NnA/PpI4YA1oedUu6fN
+         sGp6qhML0fxmqbgMLZCuIUlT/acG8Syx5yyeZ6GylwPAVIE7zBIAgbPNu7AgjI8fX42s
+         J05eAxtuvZMFRm9G8epjaPtBGjzQ6ZyLG+YTwjHD5bMm/1QRObRZvrpjMbA0m6IhfIEU
+         WzHKlFLMZrl7pQOe7l9AEwFHDNwLEazbFwAH2z+nCYy1RjeP3C8KY6JPdFtDcDUvNoRY
+         ra7V4XozctQeNJZFikrJyl1/rQb7KpFhZgeZ7Rt8M9gGZg7JuTT9bF8UllOnxIamyEKV
+         Z9Bw==
+X-Gm-Message-State: AOAM533TRFMNNplm/7TAVXf5dINzIv+2fqqa00qU5XwYCkYR2/vYe6aN
+        DOF3d6ZbvU4m30SYnx0Hy6s5+g==
+X-Google-Smtp-Source: ABdhPJzs5WUk5RcgDGjmx05qg1LQX8CHENqcYVHEYQ8+118ck5dW3vjDXr/APWGQaUFxBkmhW0L6cQ==
+X-Received: by 2002:a17:906:4795:b0:6e8:7121:3c80 with SMTP id cw21-20020a170906479500b006e871213c80mr9235700ejc.352.1649674976100;
+        Mon, 11 Apr 2022 04:02:56 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id kk23-20020a170907767700b006e8a6e53a7bsm70276ejc.139.2022.04.11.03.59.06
+        by smtp.gmail.com with ESMTPSA id fq6-20020a1709069d8600b006e891c0b7e0sm1231664ejc.129.2022.04.11.04.02.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Apr 2022 03:59:06 -0700 (PDT)
+        Mon, 11 Apr 2022 04:02:55 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,13 +55,12 @@ To:     Andy Gross <agross@kernel.org>,
         Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        David Collins <collinsd@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] regulator: dt-bindings: qcom,rpmh: document h and k ID
-Date:   Mon, 11 Apr 2022 12:59:03 +0200
-Message-Id: <20220411105903.230733-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] regulator: dt-bindings: qcom,rpmh: update maintainers
+Date:   Mon, 11 Apr 2022 13:02:53 +0200
+Message-Id: <20220411110253.231745-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -75,27 +74,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document used PMIC IDs: 'h' (sm8450-hdk, sm8450-qrd) and 'k'
-(sc7280-crd).
+David Collins' email bounces ("Recipient address rejected: undeliverable
+address: No such user here").
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../devicetree/bindings/regulator/qcom,rpmh-regulator.yaml      | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/regulator/qcom,rpmh-regulator.yaml     | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
-index e28ee9e46788..2714a790ff83 100644
+index 2714a790ff83..842ccef691b8 100644
 --- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
 +++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
-@@ -78,7 +78,7 @@ properties:
-         RPMh resource name suffix used for the regulators found
-         on this PMIC.
-     $ref: /schemas/types.yaml#/definitions/string
--    enum: [a, b, c, d, e, f]
-+    enum: [a, b, c, d, e, f, h, k]
+@@ -7,7 +7,8 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: Qualcomm Technologies, Inc. RPMh Regulators
  
-   qcom,always-wait-for-ack:
-     description: |
+ maintainers:
+-  - David Collins <collinsd@codeaurora.org>
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ 
+ description: |
+     rpmh-regulator devices support PMIC regulator management via the Voltage
 -- 
 2.32.0
 
