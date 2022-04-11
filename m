@@ -2,64 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7ACA44FBD46
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 15:37:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EBEE4FBD75
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 15:41:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346424AbiDKNjV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 09:39:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34556 "EHLO
+        id S1346617AbiDKNnU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 09:43:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346163AbiDKNjU (ORCPT
+        with ESMTP id S1346593AbiDKNnT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 09:39:20 -0400
+        Mon, 11 Apr 2022 09:43:19 -0400
 Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 020CC2180D;
-        Mon, 11 Apr 2022 06:37:05 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E4B015FD1;
+        Mon, 11 Apr 2022 06:41:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649684225; x=1681220225;
+  t=1649684464; x=1681220464;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=U5xmi+ZKs6LVmqmHM/hjJ79x5Wcf0VgOcaX88wCM5wg=;
-  b=zToeqIQRVcW9YSL5LKnaxA4mfkLWnhB/vVKVUPjMwdCBciDgHglfMInY
-   VUwJSBc8+Q2WkTr4qIg24srRmQXFtEjsrC3LR6iXFYOjDGGXsVmtMuAoJ
-   MMRJGkrtgWk7vU5ii/nt52HySHpLT6AgK6UUHxrhIol/uCPBI4c+9ghSU
-   s=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 11 Apr 2022 06:37:05 -0700
+  bh=B4MQ7T14IRb4CS1kUI7tBVcKJAmTTsUChGoW5RsNlM8=;
+  b=mm8wHjO3i5GBlvyQmDv2i4qTJoSijm/n+AnPkNBonMlVR7mPuKGGYzO4
+   34UKBAyH4qyYIv4GLBRVi9GV+HyoyPtSVhnXa/Xu4jrJOuToEmtJqqktw
+   xVAASLXNHSZIu2AFUt03ed3Ub5qGCE9X5lVM0ek3lVgyY+k6zsZ53O3lT
+   o=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 11 Apr 2022 06:41:03 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Apr 2022 06:37:05 -0700
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Apr 2022 06:41:03 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 11 Apr 2022 06:37:04 -0700
-Received: from [10.50.47.200] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ 15.2.986.22; Mon, 11 Apr 2022 06:41:03 -0700
+Received: from [10.216.15.65] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 11 Apr
- 2022 06:37:00 -0700
-Message-ID: <8a627cc0-8f9b-0bda-c9b5-6d51a788948a@quicinc.com>
-Date:   Mon, 11 Apr 2022 19:06:56 +0530
+ 2022 06:40:58 -0700
+Message-ID: <da9d1c86-0d99-9199-fc4f-1c158ec47993@quicinc.com>
+Date:   Mon, 11 Apr 2022 19:10:56 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [PATCH 2/3] soc: qcom: llcc: Add sc8180x and sc8280xp
- configurations
+Subject: Re: [PATCH v6 1/2] arm64: dts: qcom: sc7280: Add pinmux for I2S
+ speaker and Headset
 Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Luca Weiss <luca.weiss@fairphone.com>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20220408213336.581661-1-bjorn.andersson@linaro.org>
- <20220408213336.581661-2-bjorn.andersson@linaro.org>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <20220408213336.581661-2-bjorn.andersson@linaro.org>
+        <quic_rohitkr@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1649157167-29106-1-git-send-email-quic_srivasam@quicinc.com>
+ <1649157167-29106-2-git-send-email-quic_srivasam@quicinc.com>
+ <YkyLuemETXD97Jv1@google.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <YkyLuemETXD97Jv1@google.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
@@ -73,167 +75,181 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
 
-Looks like downstream LLCC configuration data is not up to date, I have cross checked with SCT table in IP doc
-and have suggested the changes inline as per the latest doc.
-
-On 4/9/2022 3:03 AM, Bjorn Andersson wrote:
-> Add LLCC configuration data for the SC8180X and SC8280XP platforms,
-> based on the downstream tables.
+On 4/6/2022 12:04 AM, Matthias Kaehlcke wrote:
+Thanks for your time Matthias!!!
+> On Tue, Apr 05, 2022 at 04:42:46PM +0530, Srinivasa Rao Mandadapu wrote:
+>> Add AMP enable node and pinmux for primary and secondary I2S
+>> for SC7280 based platforms.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 34 +++++++++++++++++++++
+>>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 20 +++++++++++++
+>>   arch/arm64/boot/dts/qcom/sc7280.dtsi           | 41 ++++++++++++++++++++++++++
+>>   3 files changed, 95 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+>> index dc17f20..de646d9 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+>> @@ -530,6 +530,26 @@ ap_ec_spi: &spi10 {
+>>   	drive-strength = <2>;
+>>   };
+>>   
+>> +&pri_mi2s_data0 {
+>> +	drive-strength = <6>;
+> Isn't this pin used as an input (HP_DIN)? Is specifying the drive strength
+> really needed?
+Okay. will remove this.
 >
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->   drivers/soc/qcom/llcc-qcom.c       | 60 ++++++++++++++++++++++++++++++
->   include/linux/soc/qcom/llcc-qcom.h |  2 +
->   2 files changed, 62 insertions(+)
+>> +};
+>> +
+>> +&pri_mi2s_data1 {
+>> +	drive-strength = <6>;
+>> +};
+>> +
+>> +&pri_mi2s_mclk {
+>> +	drive-strength = <6>;
+>> +};
+>> +
+>> +&pri_mi2s_sclk {
+>> +	drive-strength = <6>;
+>> +};
+>> +
+>> +&pri_mi2s_ws {
+>> +	drive-strength = <6>;
+>> +};
+>> +
+>>   &qspi_cs0 {
+>>   	bias-disable;
+>>   	drive-strength = <8>;
+>> @@ -610,6 +630,20 @@ ap_ec_spi: &spi10 {
+>>   	drive-strength = <10>;
+>>   };
+>>   
+>> +&sec_mi2s_data0 {
+>> +	drive-strength = <6>;
+>> +	bias-disable;
+>> +};
+>> +
+>> +&sec_mi2s_sclk {
+>> +	drive-strength = <6>;
+>> +	bias-disable;
+>> +};
+>> +
+>> +&sec_mi2s_ws {
+>> +	drive-strength = <6>;
+>> +};
+> Actually there are several sound configs for herobrine boards. For now I
+> think it's ok to specify the config for herobrine -rev1 (as this patch
+> does) and we can sort out later how to best support the different configs.
+Okay. Will skip this for now.
 >
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index eecafeded56f..a76d58195637 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -130,6 +130,50 @@ static const struct llcc_slice_config sc7280_data[] =  {
->   	{ LLCC_MODPE,    29, 64,  1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
->   };
->   
-> +static const struct llcc_slice_config sc8180x_data[] = {
-> +	{ LLCC_CPUSS,    1, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 1 },
-> +	{ LLCC_VIDSC0,    2, 512, 2, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_VIDSC1,    3, 512, 2, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_ROTATOR,    4, 1024, 2, 1, 0xfff, 0x0, 2, 0, 0, 1, 0 },
-> +	{ LLCC_VOICE,    5, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-
-These two are not present in latest SCT table, you can remove these.
-
-> +	{ LLCC_AUDIO,    6, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-
-Max size is 1024KB -> { LLCC_AUDIO,    6, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-
-> +	{ LLCC_MDMHPGRW,    7, 1024, 2, 0, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-
-Max size is 3072KB , priority is 1, fixed size is 1, bonus ways is 0x3ff, reserved ways is 0xc00, change like below.
-
-{ LLCC_MDMHPGRW,    7, 3072, 1, 1, 0x3ff, 0xc00, 0, 0, 0, 1, 0 },
-
-> +	{ LLCC_MDM,    8, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-
-Max size is 3072KB -> { LLCC_MDM,    8, 3072, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-There is one more entry for LLCC_MODHW like below after LLCC_MDM,
-
-{ LLCC_MODHW,    9, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-
-> +	{ LLCC_CMPT,   10, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_GPUHTW,   11, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_GPU,   12, 5120, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_MMUHWT,   13, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1 },
-
-Max size is 1024KB -> { LLCC_MMUHWT,   13, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1 },
-
-> +	{ LLCC_CMPTDMA,   15, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_DISP,   16, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_VIDFW,   17, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-
-Max size is 1024KB -> { LLCC_VIDFW,   17, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-
-> +	{ LLCC_MDMHPFX,   20, 1024, 2, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_MDMPNG,   21, 1024, 0, 1, 0xf, 0x0, 0, 0, 0, 1, 0 },
-
-Bonus ways is 0xc -> { LLCC_MDMPNG,   21, 1024, 0, 1, 0xc, 0x0, 0, 0, 0, 1, 0 },
-
-> +	{ LLCC_AUDHW,   22, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_NPU,   23, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_WLHW,   24, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_PIMEM,   25, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-
-There is no PIMEM entry, you can remove that and add 3 other entries as below,
-
-{ LLCC_MODPE,    29, 512,  1, 1, 0xc,   0x0, 0, 0, 0, 1, 0 },
-{ LLCC_APTCM,    30, 512,  3, 1, 0x0,   0x1, 1, 0, 0, 1, 0 },
-{ LLCC_WRCACHE,  31, 128,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0 },
-
-
-> +};
-> +
-> +static const struct llcc_slice_config sc8280xp_data[] = {
-> +	{ LLCC_CPUSS,    1,  6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 1 },
-> +	{ LLCC_VIDSC0,   2,  512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_AUDIO,    6,  1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0 },
-> +	{ LLCC_CMPT,     10, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0 },
-> +	{ LLCC_GPUHTW,   11, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_GPU,      12, 4608, 1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-
-Max capacity in 4096KB, fixed size is 1 -> { LLCC_GPU,      12, 4096, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-
-> +	{ LLCC_MMUHWT,   13, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1 },
-> +	{ LLCC_DISP,     16, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_AUDHW,    22, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_DRE,      26, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_CVP,      28, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_APTCM,    30, 1024, 3, 1, 0x0,   0x1, 1, 0, 0, 1, 0 },
-> +	{ LLCC_WRCACHE,  31, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1 },
-
-Max capacity is 1024KB -> { LLCC_WRCACHE,  31, 1024,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1 },
-
-> +	{ LLCC_CVPFW,    17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_CPUSS1,   3,  2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_CAMEXP0,  14, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0 },
-
-This is not present in latest LLCC SCT table, you can remove it.
-
-> +	{ LLCC_CPUHWT,   5,  512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1 },
-> +};
-> +
-
-Also need one more column field (write_scid_en) at the end with all false(0) values except for GPU SCID (12)
-which is true (1) for sc8280xp.
-
->   static const struct llcc_slice_config sdm845_data[] =  {
->   	{ LLCC_CPUSS,    1,  2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 1 },
->   	{ LLCC_VIDSC0,   2,  512,  2, 1, 0x0,   0x0f0, 0, 0, 1, 1, 0 },
-> @@ -276,6 +320,20 @@ static const struct qcom_llcc_config sc7280_cfg = {
->   	.reg_offset	= llcc_v1_2_reg_offset,
->   };
->   
-> +static const struct qcom_llcc_config sc8180x_cfg = {
-> +	.sct_data	= sc8180x_data,
-> +	.size		= ARRAY_SIZE(sc8180x_data),
-> +	.need_llcc_cfg	= true,
-> +	.reg_offset	= llcc_v1_2_reg_offset,
-> +};
-> +
-> +static const struct qcom_llcc_config sc8280xp_cfg = {
-> +	.sct_data	= sc8280xp_data,
-> +	.size		= ARRAY_SIZE(sc8280xp_data),
-> +	.need_llcc_cfg	= true,
-> +	.reg_offset	= llcc_v1_2_reg_offset,
-> +};
-> +
->   static const struct qcom_llcc_config sdm845_cfg = {
->   	.sct_data	= sdm845_data,
->   	.size		= ARRAY_SIZE(sdm845_data),
-> @@ -741,6 +799,8 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->   static const struct of_device_id qcom_llcc_of_match[] = {
->   	{ .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfg },
->   	{ .compatible = "qcom,sc7280-llcc", .data = &sc7280_cfg },
-> +	{ .compatible = "qcom,sc8180x-llcc", .data = &sc8180x_cfg },
-> +	{ .compatible = "qcom,sc8280xp-llcc", .data = &sc8280xp_cfg },
->   	{ .compatible = "qcom,sdm845-llcc", .data = &sdm845_cfg },
->   	{ .compatible = "qcom,sm6350-llcc", .data = &sm6350_cfg },
->   	{ .compatible = "qcom,sm8150-llcc", .data = &sm8150_cfg },
-> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-> index 0bc21ee58fac..9ed5384c5ca1 100644
-> --- a/include/linux/soc/qcom/llcc-qcom.h
-> +++ b/include/linux/soc/qcom/llcc-qcom.h
-> @@ -29,6 +29,8 @@
->   #define LLCC_AUDHW       22
->   #define LLCC_NPU         23
->   #define LLCC_WLHW        24
-> +#define LLCC_PIMEM       25
-> +#define LLCC_DRE         26
->   #define LLCC_CVP         28
->   #define LLCC_MODPE       29
->   #define LLCC_APTCM       30
-
-
-Thanks,
-Sai
+>>   /* PINCTRL - board-specific pinctrl */
+>>   
+>>   &pm7325_gpios {
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> index ecbf2b8..2afbbe3 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> @@ -462,7 +462,27 @@
+>>   	drive-strength = <10>;
+>>   };
+>>   
+>> +&sec_mi2s_data0 {
+>> +	drive-strength = <6>;
+>> +	bias-disable;
+>> +};
+>> +
+>> +&sec_mi2s_sclk {
+>> +	drive-strength = <6>;
+>> +	bias-disable;
+>> +};
+>> +
+>> +&sec_mi2s_ws {
+>> +	drive-strength = <6>;
+>> +};
+>> +
+>>   &tlmm {
+>> +	amp_en: amp-en {
+>> +		pins = "gpio63";
+>> +		bias-pull-down;
+>> +		drive-strength = <2>;
+>> +	};
+> nit: all the other pins are i2s related, it might make sense to add amp_en
+> in a separate patch.
+Okay. will add it in corresponding consumer patch.
+>
+>> +
+>>   	bt_en: bt-en {
+>>   		pins = "gpio85";
+>>   		function = "gpio";
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index f0b64be..8d8cec5 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -3527,6 +3527,31 @@
+>>   				function = "pcie1_clkreqn";
+>>   			};
+>>   
+>> +			pri_mi2s_data0: pri-mi2s-data0 {
+>> +				pins = "gpio98";
+>> +				function = "mi2s0_data0";
+>> +			};
+>> +
+>> +			pri_mi2s_data1: pri-mi2s-data1 {
+>> +				pins = "gpio99";
+>> +				function = "mi2s0_data1";
+>> +			};
+>> +
+>> +			pri_mi2s_mclk: pri-mi2s-mclk {
+>> +				pins = "gpio96";
+>> +				function = "pri_mi2s";
+>> +			};
+>> +
+>> +			pri_mi2s_sclk: pri-mi2s-sclk {
+>> +				pins = "gpio97";
+>> +				function = "mi2s0_sck";
+>> +			};
+>> +
+>> +			pri_mi2s_ws: pri-mi2s-ws {
+>> +				pins = "gpio100";
+>> +				function = "mi2s0_ws";
+>> +			};
+>> +
+>>   			qspi_clk: qspi-clk {
+>>   				pins = "gpio14";
+>>   				function = "qspi_clk";
+>> @@ -4261,6 +4286,22 @@
+>>   				drive-strength = <2>;
+>>   				bias-bus-hold;
+>>   			};
+>> +
+>> +			sec_mi2s_data0: sec-mi2s-data0 {
+>> +				pins = "gpio107";
+>> +				function = "mi2s1_data0";
+>> +			};
+>> +
+>> +			sec_mi2s_sclk: sec-mi2s-sclk {
+>> +				pins = "gpio106";
+>> +				function = "mi2s1_sck";
+>> +			};
+>> +
+>> +			sec_mi2s_ws: sec-mi2s-ws {
+>> +				pins = "gpio108";
+>> +				function = "mi2s1_ws";
+>> +			};
+> Is there a particular reason for the pri/sec nomenclature? The datasheet and
+> schematics call the pin mi2sN_xyz, it seems it would be clearer to follow
+> that naming. Primary/secondary seems to imply a 'master/slave' topology, but
+> these are independent controllers IIUC. The datasheet refers to pin 96 as
+> PRI_MI2S_MCLK and pin 105 SEC_MI2S_MCLK, I guess the naming was derived from
+> that.
+>
+> My suggestion would be to follow the naming in the datasheet/schematic, i.e.
+> mi2sN_data0, mi2sN_data1, pri/sec_mi2s_mclk, mi2sN_sck, mi2sN_ws.
+Okay. Actually we followed same in Rennel architecture. Will change 
+accordingly.
