@@ -2,67 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A4BB4FC110
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 17:39:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFCED4FC133
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 17:44:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348083AbiDKPlV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 11:41:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59780 "EHLO
+        id S1348156AbiDKPqZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 11:46:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240237AbiDKPlV (ORCPT
+        with ESMTP id S1348154AbiDKPqV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 11:41:21 -0400
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B243E2DEE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 08:39:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1649691544; x=1681227544;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=4OuhLMDm2gIHeo2uWhK5RkdHal1Usw5svsUTMNNReMA=;
-  b=ea2dIGZ8w0s6wAICc/l/YVRiUeFrD0BIaqNKUyz0v1B4qm2gcFX+8+n/
-   cP/xEOwjdOwcUgIibhcFThOCBtppnreEtwHHMrCGm09Peb6mCx0I1p9/E
-   LBt6ydv5CfgPVCxYaDzEmPC1cIssr3v7IuVCj87EUUNuVb2RBbRb8OTqy
-   /56cMA9+w9eiWqHi44lCpiXP8TNXvfYjC271zkY3dlk20WKggzIETYxLv
-   ABmzhrurv9uapv60Ofh6/LBe/ypJlOUoB0Gs6J1S1fmEgzIeRMMufFNTR
-   vbDkgQKXbYtwsGXkIenxRZIDs4C3Pl7oLtPYmP+X0gG/51wHDF1wEbd3H
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10314"; a="261890440"
-X-IronPort-AV: E=Sophos;i="5.90,252,1643702400"; 
-   d="scan'208";a="261890440"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Apr 2022 08:39:04 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,252,1643702400"; 
-   d="scan'208";a="611029400"
-Received: from lkp-server02.sh.intel.com (HELO d3fc50ef50de) ([10.239.97.151])
-  by fmsmga008.fm.intel.com with ESMTP; 11 Apr 2022 08:39:01 -0700
-Received: from kbuild by d3fc50ef50de with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1ndw84-0001wt-Su;
-        Mon, 11 Apr 2022 15:39:00 +0000
-Date:   Mon, 11 Apr 2022 23:38:09 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Mon, 11 Apr 2022 11:46:21 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 780AEDE3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 08:44:05 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id i27so31742187ejd.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 08:44:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=COpNw57lgu0himePeZKRGKWRjP8G0QfB49lG6bBArPo=;
+        b=KijVpViNNcNMkejFTsh0iTzo1brscJx+JZ8eFgBlDRWQVtq4SZbHS5MNvUYGEU/MxN
+         L0OGthoesxBuvzQyg0Cnl9iT5+5qP9g5jBm8ogfos9ZGsB79pSpWkKOCtnQKAm9bUhdh
+         eP55Hmmlrqntt8SZjlMbut6phumsVchdb0lSgUxnPcTN7Qc1oa+2tqi2JLQ9v3AHQGV9
+         evAjYVYW1IV/xOGj/nJG+UOCZClv19IRVB6bOVlirDbVucpLC6IPI0uWrHBK6XGrF7Hg
+         qi+3QsbPeauFFmkw/Jjq0hz+qedquY0EjzKX3vwbECO2uvl/ZKNaZNn3KDsAc0CsX81O
+         7ESg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=COpNw57lgu0himePeZKRGKWRjP8G0QfB49lG6bBArPo=;
+        b=AK+AmEy/oj0mDUt5oMzZH1R8tdBJHYe3/R/hmF700d319OSZ64TVx8ifMOCwYwCY5V
+         SQyVcwHV/sLizdLJvE5mMVOyFxcx1oJ/GJsJ04QdaF5WIl5WE8IKc5K9EkthXfcDR2Yn
+         ln6gSCCgCjZGFh1FK72jHQLellV0i9vnYAu8vs2uXGwLUKiQeM2w7ACT/z2JWd+uD8IH
+         zBBoyN2R3qcBLkyeOL4WX9JwUFIpTGmuT6OtmIW+C311IBVOprdVVa+xCfcOVQ1AHrN9
+         /0sFy2BHG249xCHtrM5dJwqQMOYZXRIRiPrcFnqF7K7g07SbzO4GhrXxXY1Zt7UJRefy
+         mbgA==
+X-Gm-Message-State: AOAM531qAoUBqmFS0HzS1kAS+h1edCxpGYWCxFGhGWFQeFI2nP6DiueO
+        xQuqV2SNCJKViBJhfHRtBvVtzw==
+X-Google-Smtp-Source: ABdhPJwMBgmWhN9Jcvz1+nkn4w/kwhwjVuDaMN+onbQcbN0Ysm3OfM9jnty6wEdQqJ/ZbGYwYFTzIA==
+X-Received: by 2002:a17:907:9720:b0:6e8:3613:6224 with SMTP id jg32-20020a170907972000b006e836136224mr20084190ejc.421.1649691844019;
+        Mon, 11 Apr 2022 08:44:04 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id t14-20020a170906608e00b006d1455acc62sm12173177ejj.74.2022.04.11.08.44.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Apr 2022 08:44:03 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     kbuild-all@lists.01.org, David Airlie <airlied@linux.ie>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH] drm/msm: properly add and remove internal bridges
-Message-ID: <202204112350.b4eldlK1-lkp@intel.com>
-References: <20220408130623.866092-1-dmitry.baryshkov@linaro.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [RFC PATCH v2 0/6] ufs: set power domain performance state when scaling gears
+Date:   Mon, 11 Apr 2022 17:43:41 +0200
+Message-Id: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220408130623.866092-1-dmitry.baryshkov@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,38 +82,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+Hi,
 
-Thank you for the patch! Yet something to improve:
+This is a proof-of-concept/RFC for changing the performance state
+of power rails when scaling gears.
 
-[auto build test ERROR on drm/drm-next]
-[also build test ERROR on v5.18-rc2 next-20220411]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Changes since v1
+================
+1. Patch #1 qcom,gcc-sdm845: fix typo (Stephen).
+2. Patch #2 ufs dt-bindings: not adding Rob's review because patch
+   changed significantly.
+3. PM: add new code for handling multiple clocks.
+4. UFS: deprecate freq-table-hz property and use PM opps instead.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-msm-properly-add-and-remove-internal-bridges/20220408-210744
-base:   git://anongit.freedesktop.org/drm/drm drm-next
-config: arm64-defconfig (https://download.01.org/0day-ci/archive/20220411/202204112350.b4eldlK1-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/fe14b6490aa99b01a424580fb84462519a9a310c
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Dmitry-Baryshkov/drm-msm-properly-add-and-remove-internal-bridges/20220408-210744
-        git checkout fe14b6490aa99b01a424580fb84462519a9a310c
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=arm64 SHELL=/bin/bash
+Dependencies
+============
+The UFS patch depends on PM opp adding multiple clock support.
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+Best regards,
+Krzysztof
 
-All errors (new ones prefixed by >>, old ones prefixed by <<):
+Krzysztof Kozlowski (6):
+  dt-bindings: clock: qcom,gcc-sdm845: add parent power domain
+  dt-bindings: opp: accept array of frequencies
+  dt-bindings: ufs: common: add OPP table
+  PM: opp: allow control of multiple clocks
+  ufs: use PM OPP when scaling gears
+  arm64: dts: qcom: sdm845: control RPMHPD performance states with UFS
 
->> ERROR: modpost: "drm_bridge_detach" [drivers/gpu/drm/msm/msm.ko] undefined!
+ .../bindings/clock/qcom,gcc-sdm845.yaml       |   3 +
+ .../devicetree/bindings/opp/opp-v2-base.yaml  |   8 +
+ .../devicetree/bindings/ufs/ufs-common.yaml   |  34 ++-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  43 +++-
+ drivers/opp/core.c                            | 205 ++++++++++++++----
+ drivers/opp/of.c                              |  48 ++++
+ drivers/opp/opp.h                             |   9 +-
+ drivers/scsi/ufs/ufshcd-pltfrm.c              |  69 ++++++
+ drivers/scsi/ufs/ufshcd.c                     | 115 +++++++---
+ drivers/scsi/ufs/ufshcd.h                     |   4 +
+ include/linux/pm_opp.h                        |  23 ++
+ 11 files changed, 475 insertions(+), 86 deletions(-)
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.32.0
+
