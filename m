@@ -2,256 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 487054FC4B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 21:07:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30A534FC4D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 21:17:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245113AbiDKTJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 15:09:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44060 "EHLO
+        id S1349533AbiDKTTc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 15:19:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245543AbiDKTIn (ORCPT
+        with ESMTP id S235610AbiDKTTb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 15:08:43 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEF8D369E1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 12:06:22 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id 12so16780190oix.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 12:06:22 -0700 (PDT)
+        Mon, 11 Apr 2022 15:19:31 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C0536B7D;
+        Mon, 11 Apr 2022 12:17:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=RdbC5zZXK0Z4kBByxzvgYOMlUHgPAJvUgEWB8Fum0Hc=;
-        b=Ym8Fal3cYlNCBLVdzfE20kPQyKyhsTo96BrRzYwKRtgPDso/8SVHyyvUWtudn9JVVp
-         +6iQeiM14p1K90i2N7kqrjAgNGGAT4fV5qQPfsZ0kTMY89bK5vFxrIv6EW7ytmG3SDge
-         QKP5D0ON66P+E5Lm/S70IF0R27OL9hbyiOXz0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=RdbC5zZXK0Z4kBByxzvgYOMlUHgPAJvUgEWB8Fum0Hc=;
-        b=c/uiuCcl+oBD6s92NUNqxUSaYQJ7qWxKdrv4YAF8eECzKQNkYLVg2iMXLSEYlZoPB2
-         bAv+UHP1v4xVy6A49laZUZ91jIgUcn8ZH/D05K7fU3xeqxff9Kvg5msw+oA7l893fpT8
-         4JjM5kYmG6cuW7g/QdfWP4oXB6gfpbTMhAQd6KjKDxSr2WMfLDWdiEfSO+rIyQYbm5Ln
-         cK/2QxhvSC3/FyIjSu11p8qPkr+L7MkksXVtsZsIZrlVjQBxQBMADRrX4C8GUpLL/7KT
-         708EFbPHgiAo0TF0c8gq3xqUTYdjBLcs2fuaRnry2qJGbhsHtLVCYdquSxEkLV+oN/5L
-         qdzA==
-X-Gm-Message-State: AOAM533N/5N/1heiUmFJOAnUu0zaK43CNVUWZPWZzU7hf5AiPwvMSj6W
-        4T6N26cB2STcuZMihGTXcti7+VdeQJQFMFQLBYEG4A==
-X-Google-Smtp-Source: ABdhPJwlBI/fFYx01i38B5hEvQXoeEWMkBRWkDrBkzl4iwCNeX1GWbC4RdmhHPzCP/ubzgsGtJGFozK8iNyTRy06Fyo=
-X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
- n62-20020acabd41000000b002ecff42814fmr268281oif.63.1649703980184; Mon, 11 Apr
- 2022 12:06:20 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 11 Apr 2022 12:06:19 -0700
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649704636; x=1681240636;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=mbUW3srWuVfsoiZRfQkQ+9JmE1U2RGmsleTsivhYkdw=;
+  b=eBzVF6vtwb0hyZmCcwE0y9Pa9uf2keKmbWuouIMy6iS+k9/AbTmm/eye
+   moHY1vZc1h55VxDrY8atLMGjq+59jiW65b+X9JTmyPiSOYL54i+KesY9X
+   igF9Mxy/9fMZq5ky8EW9S9U7/Lx4PpR1vtfbvoW5kl1Ki2NnewMv0VuHJ
+   g=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 11 Apr 2022 12:17:16 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Apr 2022 12:17:15 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 11 Apr 2022 12:17:15 -0700
+Received: from c-sanm-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 11 Apr 2022 12:17:09 -0700
+From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "Matthias Kaehlcke" <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_kriskura@quicinc.com>, <quic_vpulyala@quicinc.com>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Subject: [PATCH v13 0/6] USB DWC3 host wake up support from system suspend
+Date:   Tue, 12 Apr 2022 00:46:48 +0530
+Message-ID: <1649704614-31518-1-git-send-email-quic_c_sanm@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-In-Reply-To: <a96a010d-9bd7-f760-3c03-d842feef41aa@linaro.org>
-References: <20211125174751.25317-1-djakov@kernel.org> <CAE-0n51xeigKFS9Zek44HZGD9cdc4Em91aQ5HHzuy7P1FBmfFg@mail.gmail.com>
- <a96a010d-9bd7-f760-3c03-d842feef41aa@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Mon, 11 Apr 2022 12:06:19 -0700
-Message-ID: <CAE-0n51-hpG_5O11FbGrHaMr_mN0ZAky8CVzZNmDj29aK8wGog@mail.gmail.com>
-Subject: Re: [PATCH v3] interconnect: qcom: icc-rpmh: Add BCMs to commit list
- in pre_aggregate
-To:     Alex Elder <elder@linaro.org>, djakov@kernel.org,
-        okukatla@codeaurora.org, quic_mdtipton@quicinc.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Mike Tipton <mdtipton@codeaurora.org>, mka@chromium.org,
-        dianders@chromium.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Alex Elder (2022-04-11 08:59:07)
-> On 4/5/22 6:00 PM, Stephen Boyd wrote:
-> > Quoting Georgi Djakov (2021-11-25 09:47:51)
-> >> From: Mike Tipton <mdtipton@codeaurora.org>
-> >>
-> >> We're only adding BCMs to the commit list in aggregate(), but there are
-> >> cases where pre_aggregate() is called without subsequently calling
-> >> aggregate(). In particular, in icc_sync_state() when a node with initial
-> >> BW has zero requests. Since BCMs aren't added to the commit list in
-> >> these cases, we don't actually send the zero BW request to HW. So the
-> >> resources remain on unnecessarily.
-> >>
-> >> Add BCMs to the commit list in pre_aggregate() instead, which is always
-> >> called even when there are no requests.
-> >>
-> >> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
-> >> [georgi: remove icc_sync_state for platforms with incomplete support]
-> >> Signed-off-by: Georgi Djakov <djakov@kernel.org>
->
-> I'm back from vacation and am finally giving proper attention to
-> this.  I want to make sure I understand the problem, because there
-> are (at least) two parts to it.
->
-> - The first problem you observe is that you are not seeing XO
->    shutdown on suspend on a Lazor device.
-> - You didn't say this directly but I think you are seeing this
->    on Linux v5.15.y (the 5.15 LTS branch), or perhaps on something
->    derived from that branch.
+Avoiding phy powerdown in host mode when wakeup capable devices are 
+connected, so that it can be wake up by devices.
+Keep usb30_prim gdsc active to retain controller status
+during suspend/resume.
 
-Yes.
+Changes in v13:
+Moved the dt bindings patch to start.
+Changed dwc3_set_phy_speed_mode to dwc3_check_phy_speed_mode.
+Check wakep-source property for dwc3 core node to set the
+wakeup capability. Drop the device_init_wakeup call from
+runtime suspend and resume.
+Added GENPD_FLAG_RPM_ALWAYS_ON and set GENPD_FLAG_ALWAYS_ON if
+wakeup is supported.
 
-> - You find that if you back-port (or cherry-pick?) the commit
->    that landed upstream as b95b668eaaa2 ("interconnect: qcom:
->    icc-rpmh: Add BCMs to commit list in pre_aggregate
-> "), you
->    *do* see XO shutdown on suspend, as desired.
+Changes in v12:
+Squashed PATCH 1/5 and 2/5 of v11.
+Added dt bindings and device tree entry for wakeup-source property
+for dwc3 core node.
+Dropped redundant phy_set_mode call.
 
-Correct.
 
->
-> Here's what I understand that commit to do:
-> - In some cases, the bus clock managers (BCMs) are configured
->    by the boot loader so that some interconnects have non-zero
->    initial bandwidth.
-> - There is no sense in keeping an interconnect active if Linux
->    has nothing that requires its use.  So we would like Linux to
->    ensure the configured bandwidth for an *unused* interconnect
->    is zero.
-> - Prior to that commit, BCM-managed hardware was only queued
->    to update its configuration when the ->aggregate interconnect
->    provider function was called.  After that commit, updates were
->    queued by the ->pre_aggregate provider function.
+Changes in v11:
+Moving back to v8 version
+https://patchwork.kernel.org/project/linux-arm-msm/cover/1624882097-23265-1-git-send-email-sanm@codeaurora.org
+as we are getting interrupts during suspend
+when enabling both DP hs phy irq and DM hs phy irq.
+Moved the set phy mode function to dwc3/core.c from xhci-plat.c
+We didn't find any other option other than accessing xhci from dwc.
 
-Also before that commit interconnects are maxed out, which doesn't
-really matter for XO shutdown but it means that we're running faster
-than what the bootloader configures if boot is slower.
+Changes in v10:
+PATCH 1/6: Change device_set_wakeup_capable to device_set_wakeup_enable
+PATCH 2/6: Remove redundant else part in dwc3_resume_common
+PATCH 4/6: Change the irg flags
+PATCH 5/6: Set flag GENPD_FLAG_ALWAYS_ON
+PATCH 6/6: Remove disable interrupts function and enable
+interrupts in probe.
 
-> - Unlike the ->aggregate callback, the ->pre_aggregate provider
->    function queues updates to the hardware configuration whether
->    or not they have active users.
-> - The result of this commit is that the hardware configuration
->    for all defined BCM-managed interconnects is updated, and in
->    particular, the configured bandwidth for unused interconnects
->    is set to zero.
 
-Yep.
+Changes in v9:
+Checking with device_may_makeup property instead of phy_power_off flag.
+Changed the IRQ flags and removed hs_phy_mode variable.
 
->
-> When unused interconnects are configured for zero bandwidth, they
-> do not require an active main XO clock, and so with this commit
-> it becomes possible for the XO clock to be shut down.
->
-> And that's why this commit addresses your XO shutdown problem on
-> the Linux 5.15 LTS branch.
->
-> Is the above an accurate description?
+Changes in v8:
+Moved the dwc3 suspend quirk code in dwc3/host.c to xhci-plat.c
+Checking phy_power_off flag instead of usb_wakeup_enabled_descendants 
+to keep gdsc active.
 
-Yeah pretty much. Without the interconnect patch I can't get XO
-shutdown.
+Changes in v7:
+Change in commit text and message in PATCH 1/5 and PATCH 5/5
+as per Matthias suggestion.
+Added curly braces for if and else if sections in PATCH 4/5.
 
->
-> Looking at that branch, I see this commit:  f753067494c27
-> ("Revert "interconnect: qcom: icc-rpmh: Add BCMs to commit
-> list in pre_aggregate"
-> ").  Which shows that an attempt was made
-> to include this commit in the 5.15 LTS branch, but it caused
-> some *other* regressions.  That suggests this might not be
-> easy to fix.
+Changes in v6:
+Addressed comments in host.c and core.c
+Separated the patches in dwc3-qcom.c to make it simple.
+Dropped wakeup-source change as it is not related to this series.
 
-Indeed. The commit was reverted because it broke reboot for me. I see it
-was reintroduced a few months later though when I was eating
-Thanksgiving dinner and I didn't notice until now. Interestingly the
-reboot issue is gone. Here's the crash from back then.
+Changes in v5:
+Added phy_power_off flag to check presence of wakeup capable devices.
+Dropped patch[v4,4/5] as it is present linux-next.
+Addressed comments in host.c and dwc3-qcom.c.
 
- SError Interrupt on CPU6, code 0xbe000411 -- SError
- CPU: 6 PID: 8772 Comm: reboot Not tainted 5.14.0-rc5-next-20210810+ #1
- Hardware name: Google Lazor (rev3+) with KB Backlight (DT)
- pstate: 004000c9 (nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : el1_interrupt+0x20/0x60
- lr : el1h_64_irq_handler+0x18/0x24
- sp : ffffffc0114139c0
- x29: ffffffc0114139c0 x28: ffffff808a8b2240 x27: 0000000000000000
- x26: ffffff80817ec018 x25: ffffffd79e8f0000 x24: ffffffd79e957000
- x23: 0000000000400009 x22: ffffffd79dac527c x21: ffffffc011413b40
- x20: ffffffd79d6100f8 x19: ffffffc0114139f0 x18: 0000000000022a07
- x17: 0000000000000000 x16: ffffffd79dac52e4 x15: ffffff80d291fe80
- x14: 0000000000000580 x13: 000000000000300c x12: ffffff80b4f7ed10
- x11: 0000000000000003 x10: 00000000c0000000 x9 : 0000000000000003
- x8 : 00000000000000c0 x7 : bbbbbbbbbbbbbbbb x6 : 0000000000000001
- x5 : 0000000000170006 x4 : ffffff80d291bcc0 x3 : ffffffd79e429b41
- x2 : 0000000000000002 x1 : ffffffd79d6100f8 x0 : ffffffc0114139f0
- Kernel panic - not syncing: Asynchronous SError Interrupt
- CPU: 6 PID: 8772 Comm: reboot Not tainted 5.14.0-rc5-next-20210810+ #1
- Hardware name: Google Lazor (rev3+) with KB Backlight (DT)
- Call trace:
-  dump_backtrace+0x0/0x1d4
-  show_stack+0x24/0x30
-  dump_stack_lvl+0x64/0x7c
-  dump_stack+0x18/0x38
-  panic+0x150/0x38c
-  nmi_panic+0x88/0xa0
-  arm64_serror_panic+0x74/0x80
-  is_valid_bugaddr+0x0/0x1c
-  el1h_64_error_handler+0x30/0x48
-  el1h_64_error+0x78/0x7c
-  el1_interrupt+0x20/0x60
-  el1h_64_irq_handler+0x18/0x24
-  el1h_64_irq+0x78/0x7c
-  refcount_dec_not_one+0x48/0xb0
-  refcount_dec_and_mutex_lock+0x1c/0xb4
-  ipa_clock_put+0x34/0x74 [ipa]
-  ipa_uc_deconfig+0x4c/0x5c [ipa]
-  ipa_deconfig+0x30/0x90 [ipa]
-  ipa_remove+0xbc/0x11c [ipa]
-  platform_shutdown+0x30/0x3c
-  device_shutdown+0x150/0x208
-  kernel_restart_prepare+0x44/0x50
+Changes in v4:
+Addressed Matthias comments raised in v3.
 
->
-> ---
->
-> The second problem you have is exhibited by the IPA driver if
-> the "fix" commit (upstream b95b668eaaa2) is back-ported to the
-> Linux 5.10.y LTS branch (along with some other prerequisite
-> commits).  We can conclude that applying the above commit
-> makes the bandwidth for an unused interconnect (or perhaps
-> the rate for the IPA core clock) get set to zero.  And in that
-> case, an attempt to access IPA hardware leads to the crash you
-> observed.
->
-> The IPA driver does not implement runtime power management
-> until Linux v5.15.  You later said you thought enabling that
-> might ensure the clock and interconnects were active when
-> needed by the IPA driver, and I concur (but there could be a
-> little more to it).
+Changes in v3:
+Removed need_phy_for_wakeup flag and by default avoiding phy powerdown.
+Addressed Matthias comments and added entry for DEV_SUPERSPEED.
+Added suspend_quirk in dwc3 host and moved the dwc3_set_phy_speed_flags.
+Added wakeup-source dt entry and reading in dwc-qcom.c glue driver.
 
-Is the runtime PM patch series necessary to enable the IPA clk and
-interconnects? Things don't look good on 5.10.y and I'm not sure it will
-be workable. Commit b1d681d8d324 ("interconnect: Add sync state
-support") was introduced in v5.10 and that seems to be the commit that
-broke suspend on Lazor.
+Changes in v2:
+Dropped the patch in clock to set GENPD_FLAG_ACTIVE_WAKEUP flag and 
+setting in usb dwc3 driver.
+Separated the core patch and glue driver patch.
+Made need_phy_for_wakeup flag part of dwc structure and 
+hs_phy_flags as unsgined int.
+Adrressed the comment on device_init_wakeup call.
+Corrected offset for reading portsc register.
+Added pacth to support wakeup in xo shutdown case.
 
->
-> In any case, based on the time stamp in your log, it seems
-> this problem is likely occurring upon the first access to IPA
-> hardware.
->
-> I have a hunch about what might be happening here.  There is
-> some synchronization that must occur between the AP and modem
-> when IPA is starting up.  Until that synchronization step has
-> completed, we can't allow the IPA network device to be opened.
+Sandeep Maheswaram (6):
+  dt-bindings: usb: dwc3: Add wakeup-source property support
+  usb: dwc3: core: Host wake up support from system suspend
+  usb: dwc3: qcom: Add helper functions to enable,disable wake irqs
+  usb: dwc3: qcom: Configure wakeup interrupts during suspend
+  usb: dwc3: qcom: Keep power domain on to retain controller status
+  arm64: dts: qcom: sc7280: Add wakeup-source property for USB node
 
-Is there a commit that implements this? Or how is the synchronization
-done? I can debug more and see if that synchronization is happening.
+ .../devicetree/bindings/usb/snps,dwc3.yaml         |  5 ++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |  1 +
+ drivers/usb/dwc3/core.c                            | 33 +++++----
+ drivers/usb/dwc3/core.h                            |  4 ++
+ drivers/usb/dwc3/dwc3-qcom.c                       | 79 +++++++++++++---------
+ drivers/usb/dwc3/host.c                            | 25 +++++++
+ 6 files changed, 103 insertions(+), 44 deletions(-)
 
-> In later kernels I think this is precluded, but perhaps in
-> Linux v5.10 it isn't.  Until I look a little more closely I'm
-> not sure what would happen, but it *could* be this.
->
-> I'm going to look a little how the particular access that
-> caused the crash is prevented in newer kernels.  It could
-> be that back-porting that (or re-implementing it for the
-> older kernel) will address the crash you're seeing.
->
+-- 
+2.7.4
+
