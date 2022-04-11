@@ -2,71 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77B9C4FC2EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 19:09:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB43B4FC3C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 20:04:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345106AbiDKRMC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 13:12:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34310 "EHLO
+        id S240001AbiDKSGk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 14:06:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235105AbiDKRL7 (ORCPT
+        with ESMTP id S1349037AbiDKSGi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 13:11:59 -0400
-X-Greylist: delayed 1773 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 11 Apr 2022 10:09:43 PDT
-Received: from www.learnfrenchbypodcast.com (unknown [46.22.130.145])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AD4823BDD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 10:09:42 -0700 (PDT)
-Received: from apache by www.learnfrenchbypodcast.com with local (Exim 4.76)
-        (envelope-from <apache@www.learnfrenchbypodcast.com>)
-        id 1ndx5D-0004Ch-99
-        for linux-arm-msm@vger.kernel.org; Mon, 11 Apr 2022 16:40:07 +0000
-Date:   Mon, 11 Apr 2022 16:40:07 +0000
-To:     06ojlmj 8fi8d12 <linux-arm-msm@vger.kernel.org>
-From:   Learn German By Podcast <info@learngermanbypodcast.com>
-Subject: Welcome to Learn German by Podcast!
-Message-ID: <3c12e96b00b91184a44f4bd9ea1777f1@learngermanbypodcast.com>
-X-Priority: 3
-X-Mailer: PHPMailer (phpmailer.sourceforge.net) [version 2.0.0 rc3]
+        Mon, 11 Apr 2022 14:06:38 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 828511FCF7;
+        Mon, 11 Apr 2022 11:04:23 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 432CDB80CAF;
+        Mon, 11 Apr 2022 18:04:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F07AC385A3;
+        Mon, 11 Apr 2022 18:04:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649700261;
+        bh=mEtcO+luL+M3MFSDWidwlLniHaY0sogkYUV/bgSCS6U=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=febxVfGC1uZxrOXZD8gaO6VngV1he/m8F53duvNrhcH9XvdYR1J76jEHeG+zWyNeF
+         B3gL49CkYKWcYR+RS+xsBrrkaV5YWRAEp3NSYKw1WWedLc47i4axfb6Ky10awPHFXS
+         VCRubFB3mWmkH1vdymqVjI0CB5oQuC6nqqFxMZn8+d2D0z55njQj0mRuND0Qbfd+vW
+         yu6VTmDxwKQlhS063xQFWrNkg6zi5Jrh1wNzSGTvlfAkDz/fGQN83OKS0BQlmg6sH7
+         Vab5HzjIDDNhr/LIm5B5+1LgI6VQ4tvvuPwISHbmTeJsQ+9NmC5MUljN+7WQxie8xV
+         huDLqgMdLHIOw==
+Date:   Mon, 11 Apr 2022 23:34:15 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/6] dt-bindings: phy: qcom,qmp: Add SM6350 UFS PHY
+ bindings
+Message-ID: <YlRtn6RhVQ7+oeep@matsya>
+References: <20220321133318.99406-1-luca.weiss@fairphone.com>
+ <20220321133318.99406-3-luca.weiss@fairphone.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: Yes, score=6.0 required=5.0 tests=BAYES_99,BAYES_999,
-        HEADER_FROM_DIFFERENT_DOMAINS,KHOP_HELO_FCRDNS,SHORT_SHORTNER,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220321133318.99406-3-luca.weiss@fairphone.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
-X-Spam-Report: *  0.2 BAYES_999 BODY: Bayes spam probability is 99.9 to 100%
-        *      [score: 0.9998]
-        *  3.5 BAYES_99 BODY: Bayes spam probability is 99 to 100%
-        *      [score: 0.9998]
-        *  0.2 HEADER_FROM_DIFFERENT_DOMAINS From and EnvelopeFrom 2nd level
-        *      mail domains are different
-        *  0.0 SPF_NONE SPF: sender does not publish an SPF Record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  2.0 SHORT_SHORTNER Short body with little more than a link to a
-        *      shortener
-        *  0.1 KHOP_HELO_FCRDNS Relay HELO differs from its IP's reverse DNS
-X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello, 06ojlmj 8fi8d12!
+On 21-03-22, 14:33, Luca Weiss wrote:
+> Document the compatible string for the UFS PHY found in SM6350.
 
-You recently registered for a new account at the Learn German by
-Podcast website.
-
-Username: 💌 You have unread messages (4) from Linda! Read now:
-http://inx.lv/FQgA?1tvy 💌
-Password: r3vyxg8n
-
-We advise that you log in to your Learn German by Podcast account as
-soon as possible and change this password to something a little easier
-to remember.
-
-Thank you for joining Learn German by Podcast!
-
-Best Wishes,
-The Learn German by Podcast Team
+Applied, thanks
+-- 
+~Vinod
