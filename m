@@ -2,103 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC4194FC68E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 23:15:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B2E04FC6F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 23:58:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350157AbiDKVSH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 17:18:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51010 "EHLO
+        id S1345707AbiDKWA0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 18:00:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237359AbiDKVSG (ORCPT
+        with ESMTP id S232000AbiDKWAZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 17:18:06 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB1721B7B8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 14:15:51 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id g18so8500691ejc.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 14:15:51 -0700 (PDT)
+        Mon, 11 Apr 2022 18:00:25 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84ECF11C02;
+        Mon, 11 Apr 2022 14:58:10 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id q142so15313532pgq.9;
+        Mon, 11 Apr 2022 14:58:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=u3IPKba47VHgKeeSAVtwOFmES8+Ru1c827vSgPVijTU=;
-        b=EOnIBkqU4gAnFTiOCLuuFJuYrgMFSYtiBJzSaGkZhWnqDoH7SY2EVy1Wolr2JY+s1/
-         GyAySIrorqGQ2K1QrPWNJOesbKQvhPoaTxKwZNEl5RzrcglL3fjjESgXCExNPX/fI2Ue
-         qiSGZ4q5xIUeoA3H9DI8cr5VuAKNL1LKU4xDI=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hjX9OiCRZovNS7uWD7qtI1tuIPYpsaOZmyjT0QclAFo=;
+        b=F0BkDSIuJxh7VvjREkPIPyYuDDgZFYrtitXYRDq9e3ICyFdaihszLA2XvhrMFFCLrK
+         sDAfc8QQRxTGKsTaLm6UqLwG9ltH/W3wrni2xKPAaR57aOEeJpkiZj/xd5V6qowkLMz7
+         9fzTAYw3bQPaOQrxIAyBMztGa67zHyd5QZ+kdX8lRhaa0t2vz7PwGsak+iu6rLvpO38B
+         PN7w/N25HOnBRMuwC7ciNos+MPLB1Bxd8VMksodnlxDXIWrRluZoTvoGQHO9qAtBXoZi
+         Kwwmxpxc2WhERFSdxTqrEp8uNHJ9IAnX6iEm+lWgiFG1o8/jndwNuktgmzyhv7F9guD5
+         Fxaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=u3IPKba47VHgKeeSAVtwOFmES8+Ru1c827vSgPVijTU=;
-        b=WdRDzYKSntQ0QrTBIvUcWHbwQ6vbtoXC7eQtV0Pt2D1udnr16pVNa1de9IO8SFNowZ
-         fisCykLKzfjn8C4Onxn0SfJtAGgZoMFwTbHvD1qsmBm8sjkrMFnAkAOJ1zYNpxoNVt1i
-         dCQTgnwFyCYxjk6UAvVLi4nKLPkZkk1Vravo1De72z6zW7cR3GTZUuLhyEkyFkAtSqZ4
-         rNpRm5sP6kCh9TN8edc/nOvzY5JWZ/Nv6xt+FmmXJKbm/cZw57GE5elZ0igStd7j1gf3
-         BqxoCwoRoRj5wEoihvYC9sHEjErYNnh83967YrVMElQ7R6zA8dbDhrPNubPQIpVZ+bPa
-         3AoA==
-X-Gm-Message-State: AOAM530nUEoWdoAnhygqJXTaa+9po6JnVXbQytqvH8fCbl7GpHgCuSkB
-        Nb1opRz5oYRl5HwFFVRJksw/L//bpYJZZsAa
-X-Google-Smtp-Source: ABdhPJxFK3LJC324BGC3wjcVVZLbarbRPnT0xDL6dT10iYjMrB/0jfLy3/tohZpG500RNOxsuz21Ig==
-X-Received: by 2002:a17:907:1623:b0:6df:c9da:a6a8 with SMTP id hb35-20020a170907162300b006dfc9daa6a8mr31003033ejc.303.1649711750143;
-        Mon, 11 Apr 2022 14:15:50 -0700 (PDT)
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com. [209.85.128.49])
-        by smtp.gmail.com with ESMTPSA id x1-20020a1709060ee100b006e8a49f215dsm696771eji.73.2022.04.11.14.15.48
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Apr 2022 14:15:49 -0700 (PDT)
-Received: by mail-wm1-f49.google.com with SMTP id ay36-20020a05600c1e2400b0038ebc885115so364948wmb.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 14:15:48 -0700 (PDT)
-X-Received: by 2002:a05:600c:3ca4:b0:38e:54d0:406d with SMTP id
- bg36-20020a05600c3ca400b0038e54d0406dmr922556wmb.199.1649711748286; Mon, 11
- Apr 2022 14:15:48 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hjX9OiCRZovNS7uWD7qtI1tuIPYpsaOZmyjT0QclAFo=;
+        b=ve5CVqqFbEs3xQtH7Tb71JubxOuW7BE5UvMc1J1JeRmkKnrqQ3bbLuR/YM/jDdpjuD
+         RoPqFbWQv+tKuuiLYDK5siT4R9vxcQ+Q0xo0pFyrIT4FP7HlA1erHp9nVauRqXCh0ut3
+         4i62kgFF6IeTWsZ17qR1emo6ld16ZUami4jg1qyneo8hmnhJE/vlGHd3O8xSUpN69Cng
+         GUvYdLHYfODtUSYySuFEiaFrHEPGXzfMm15NqP2r0a+sciHf7fV2N9bmO/awE2YEqqDP
+         nB1jiujjWjvw1cyUnndTO1eJ2GrvcHxnyjEqbZilLtKHh1SpaimfyZzVveF/rP+n+pYm
+         KdGw==
+X-Gm-Message-State: AOAM533OIBbMqs7nPOvXIwyY5FUNGgNN6FN8h4LTj5qnJh1J74OnPn8Q
+        HzYg9Q1rk6UmPFrs28OIUgQ=
+X-Google-Smtp-Source: ABdhPJzJd1UCJJvv1QvVM06xqzDOGkc+c37rzWJj+lcOhADFhNzsU6dBpsMSxyK69YiEI2NWIzzPLQ==
+X-Received: by 2002:a05:6a00:138f:b0:505:d077:33db with SMTP id t15-20020a056a00138f00b00505d07733dbmr1426061pfg.36.1649714289859;
+        Mon, 11 Apr 2022 14:58:09 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id j63-20020a636e42000000b003987df110edsm641375pgc.42.2022.04.11.14.58.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Apr 2022 14:58:08 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-kernel@vger.kernel.org (open list),
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Wang Qing <wangqing@vivo.com>,
+        Yangtao Li <tiny.windzz@gmail.com>
+Subject: [PATCH v4 00/10] drm/msm: Userspace allocated GPU addresses
+Date:   Mon, 11 Apr 2022 14:58:29 -0700
+Message-Id: <20220411215849.297838-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-References: <20220411141332.v2.1.I9f06fec63b978699fe62591fec9e5ac31bb3a69d@changeid>
-In-Reply-To: <20220411141332.v2.1.I9f06fec63b978699fe62591fec9e5ac31bb3a69d@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 11 Apr 2022 14:15:36 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X8sWD0ktzFLou1m4RSoutj7N22hjCjFVS2xqB_Lnb8KQ@mail.gmail.com>
-Message-ID: <CAD=FV=X8sWD0ktzFLou1m4RSoutj7N22hjCjFVS2xqB_Lnb8KQ@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280-herobrine: Audio codec wants
- 1.8V, not 1.62V
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Judy Hsiao <judyhsiao@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+From: Rob Clark <robdclark@chromium.org>
 
-On Mon, Apr 11, 2022 at 2:14 PM Douglas Anderson <dianders@chromium.org> wrote:
->
-> The L2C rail on herobrine boards is intended to go to the audio
-> codec. Let's override the 1.62V specified in the qcard.dtsi file to be
-> 1.8V.
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->
-> Changes in v2:
-> - Adjust Qcard regulator override section heading
->
->  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
+The first six paches are various cleanups and simplifications.  The
+next two get rid of redundant vma lookups in the submit and retire
+paths.  Following that, fenced vma lets us indicate a fence value
+following which the vma is no longer used, which is needed because
+otherwise userspace could observe the signaled fence prior to
+retire_submits() finishing.  (With userspace allocated GPU addresses
+userspace is tracking when a buffer is no longer used and it's vma can
+be deleted.)  And finally the last patch adds the new uabi for user-
+space allocated iova.
 
-...and I somehow forgot to add in from v1:
+v2: Fix inuse check in last patch, split GEM_WARN_ON() conversion to
+    separate patch, and nits
+v3: Fix nested fb prepares in 06/10, return -EBUSY if trying to set
+    iova on buffer that already has one in 10/10
+v4: Fix race condition in 09/10
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Rob Clark (10):
+  drm/msm/gem: Move prototypes
+  drm/msm/gpu: Drop duplicate fence counter
+  drm/msm/gem: Convert some missed GEM_WARN_ON()s
+  drm/msm/gem: Split out inuse helper
+  drm/msm/gem: Drop PAGE_SHIFT for address space mm
+  drm/msm: Drop msm_gem_iova()
+  drm/msm/gem: Rework vma lookup and pin
+  drm/msm/gem: Split vma lookup and pin
+  drm/msm/gem: Add fenced vma unpin
+  drm/msm: Add a way for userspace to allocate GPU iova
+
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |   2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c   |   2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c   |   2 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c |  14 ++-
+ drivers/gpu/drm/msm/msm_drv.c           |  21 ++++
+ drivers/gpu/drm/msm/msm_drv.h           |  23 ----
+ drivers/gpu/drm/msm/msm_fb.c            |  20 +++-
+ drivers/gpu/drm/msm/msm_fence.c         |   6 +-
+ drivers/gpu/drm/msm/msm_fence.h         |   3 +
+ drivers/gpu/drm/msm/msm_gem.c           | 151 ++++++++++++++----------
+ drivers/gpu/drm/msm/msm_gem.h           |  52 +++++++-
+ drivers/gpu/drm/msm/msm_gem_submit.c    |  32 ++---
+ drivers/gpu/drm/msm/msm_gem_vma.c       |  61 +++++++---
+ drivers/gpu/drm/msm/msm_gpu.c           |   8 +-
+ drivers/gpu/drm/msm/msm_gpu.h           |   2 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.c    |  13 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.h    |   1 -
+ include/uapi/drm/msm_drm.h              |   3 +
+ 18 files changed, 277 insertions(+), 139 deletions(-)
+
+-- 
+2.35.1
+
