@@ -2,76 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11F314FB152
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 03:20:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C5434FB211
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 04:56:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244252AbiDKBWh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 Apr 2022 21:22:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44960 "EHLO
+        id S237051AbiDKC6N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Apr 2022 22:58:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242691AbiDKBW2 (ORCPT
+        with ESMTP id S232344AbiDKC6L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 Apr 2022 21:22:28 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCF7EB1F1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 18:20:15 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id bu29so24098942lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Apr 2022 18:20:15 -0700 (PDT)
+        Sun, 10 Apr 2022 22:58:11 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54FDD1837A;
+        Sun, 10 Apr 2022 19:55:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=05X/pQBV2MI76IjGX7fSWAPTcXgd+Vfg/z1tUXGVcQc=;
-        b=HL6xtEPacsZ6zEKa4xgS6WpIIMLbpOvanq1tH1R7pc6+fIzJsqF2GEV5pG2IK8elON
-         hsvsroTmMu2x5m6FPVW5qBKhOYyboosL2EwPqiYVFTS0jKuLzouTo1KtofUzvDfkD4cs
-         xL4TYxCEuMsVT4bKCXdH+iC0gQLvWGlE8UbgE/VycNqIfEchp1SI7lntYmR437jI/5qy
-         PkYk45rDiQT6d9iXs7Ub/EwEvcr3AmZ8U60Qn8oScXCXO00MkqUaTkU0MRXRw1mygVbw
-         QjrFj7UF2xCBo+z2qiy9CNBAqj9VWhvR7o0CcSEuWatpe88mc5YfMKKWYZ9/DaVqB5d7
-         KWfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=05X/pQBV2MI76IjGX7fSWAPTcXgd+Vfg/z1tUXGVcQc=;
-        b=aWdECV0nAEr3kvMTNiM5WsH+c3P+H+QHX+bHiS1pxrtL0jyxEh5LzRDGCUQxwmk4jk
-         sSiFya413nM25dNOXrBHjp0KjrVzI/ScYTgWlotGzc4qsARX6OvtvrMVMpRrUl+csV5V
-         qXynFsRQcX1UfW8gIzHzS7xLc/9EOXPw8XD9bNHGGhLRcka57bWBUePEfwMpSgYTt/aJ
-         vy2FccmvNJU5tXwczO3yP1XUEHOEJ+CyJOAiRlr75CraNdo1cAf65TCMXAGdCe8zpxtZ
-         OdeV0slUSQH7uoeofNomr6BhVauTTTD2y3qYHO4XgAiiidE7IGCJdt+KnIIX79GwOIC0
-         ouew==
-X-Gm-Message-State: AOAM533Y8E4fO5GkS71hDULVo7xxLrRGZJuOpIROpIZIj/0Gz3blV/0N
-        1t/ykFCmIQz8nMZlHNnrFbWc8w==
-X-Google-Smtp-Source: ABdhPJwgOvDStoVkU5PcymcKMDfs/8Fh2oeLos5hkTOAv/lK50CRFRy3NioQSwXdvc/8q7VUKZrx6g==
-X-Received: by 2002:a05:6512:3994:b0:44a:7125:c689 with SMTP id j20-20020a056512399400b0044a7125c689mr20002136lfu.166.1649640014132;
-        Sun, 10 Apr 2022 18:20:14 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b16-20020a2ebc10000000b0024b63f0da2csm154707ljf.13.2022.04.10.18.20.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Apr 2022 18:20:13 -0700 (PDT)
-Message-ID: <7e0592bc-1e8f-0981-cea2-f74402ab5886@linaro.org>
-Date:   Mon, 11 Apr 2022 04:20:12 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649645758; x=1681181758;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=o9PyONh5kKN5lsZKeCWL128gzOV0T80G46wNVOCj6Kc=;
+  b=vUtW15qM7RYYIquoAnXRe0JwIx61ktSRaOevt01lP5gGLsJ0Y0Vs0ymL
+   B/OplSuXDSPXI91bxpaOcLyOGhFCU3rQwIIQHUenWO4S6C0K41YBHt7MM
+   PiouepOKb3Zp5TaQGY4xRZugjo0sLAk4ROLhZIiQsrcHDEjcaFPFxQylr
+   M=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 10 Apr 2022 19:55:58 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2022 19:55:57 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Sun, 10 Apr 2022 19:55:56 -0700
+Received: from [10.239.133.9] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Sun, 10 Apr
+ 2022 19:55:53 -0700
+Message-ID: <059d74ef-78c2-57f2-4c14-4b20526c984c@quicinc.com>
+Date:   Mon, 11 Apr 2022 10:55:50 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] dpu1: dpu_encoder: fix a missing check on list iterator
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Xiaomeng Tong <xiam0nd.tong@gmail.com>, robdclark@gmail.com,
-        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch
-Cc:     quic_abhinavk@quicinc.com, swboyd@chromium.org,
-        bjorn.andersson@linaro.org, quic_khsieh@quicinc.com,
-        quic_kalyant@quicinc.com, markyacoub@google.com,
-        jsanka@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20220327073252.10871-1-xiam0nd.tong@gmail.com>
- <0788b245-ee8f-25de-dde3-7ff10f6c688c@linaro.org>
-In-Reply-To: <0788b245-ee8f-25de-dde3-7ff10f6c688c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v4 01/10] Use IDR to maintain all the enabled sources'
+ paths.
+Content-Language: en-US
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20220324121734.21531-1-quic_jinlmao@quicinc.com>
+ <20220324121734.21531-2-quic_jinlmao@quicinc.com>
+ <YjxjXnXAXVXfZqr/@kroah.com>
+ <e78ff137-fc5e-ff00-0e57-91304288d860@quicinc.com>
+ <7d571b9d-2066-8217-5485-da0e6ace65eb@arm.com>
+ <8698dc76-613e-a00d-340b-220c752d9449@quicinc.com>
+ <CANLsYkwZxqYMtx-v=OZoZAYshFHW2s_7isUq1UgUV18pVvSB8w@mail.gmail.com>
+ <b4d4ca6f-13ae-8050-debe-57e6c8be6254@quicinc.com>
+ <ff1931d7-61b4-4362-7e3b-45c64c0211fc@arm.com>
+From:   Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <ff1931d7-61b4-4362-7e3b-45c64c0211fc@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,71 +86,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/04/2022 03:56, Dmitry Baryshkov wrote:
-> On 27/03/2022 10:32, Xiaomeng Tong wrote:
->> The bug is here:
->>      cstate = to_dpu_crtc_state(drm_crtc->state);
->>
->> For the drm_for_each_crtc(), just like list_for_each_entry(),
->> the list iterator 'drm_crtc' will point to a bogus position
->> containing HEAD if the list is empty or no element is found.
->> This case must be checked before any use of the iterator,
->> otherwise it will lead to a invalid memory access.
->>
->> To fix this bug, use a new variable 'iter' as the list iterator,
->> while use the origin variable 'drm_crtc' as a dedicated pointer
->> to point to the found element.
->>
->> Cc: stable@vger.kernel.org
->> Fixes: b107603b4ad0f ("drm/msm/dpu: map mixer/ctl hw blocks in encoder 
->> modeset")
->> Signed-off-by: Xiaomeng Tong <xiam0nd.tong@gmail.com>
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-On the other hand, this code has been removed in 5.18-rc1 in the commit 
-764332bf96244cbc8baf08aa35844b29106da312.
-
-> 
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 11 ++++++++---
->>   1 file changed, 8 insertions(+), 3 deletions(-)
+On 3/30/2022 5:05 PM, Suzuki K Poulose wrote:
+> On 30/03/2022 03:10, Jinlong Mao wrote:
 >>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> index 1e648db439f9..d3fdb18e96f9 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> @@ -965,7 +965,7 @@ static void dpu_encoder_virt_mode_set(struct 
->> drm_encoder *drm_enc,
->>       struct dpu_kms *dpu_kms;
->>       struct list_head *connector_list;
->>       struct drm_connector *conn = NULL, *conn_iter;
->> -    struct drm_crtc *drm_crtc;
->> +    struct drm_crtc *drm_crtc = NULL, *iter;
->>       struct dpu_crtc_state *cstate;
->>       struct dpu_global_state *global_state;
->>       struct dpu_hw_blk *hw_pp[MAX_CHANNELS_PER_ENC];
->> @@ -1007,9 +1007,14 @@ static void dpu_encoder_virt_mode_set(struct 
->> drm_encoder *drm_enc,
->>           return;
->>       }
->> -    drm_for_each_crtc(drm_crtc, drm_enc->dev)
->> -        if (drm_crtc->state->encoder_mask & drm_encoder_mask(drm_enc))
->> +    drm_for_each_crtc(iter, drm_enc->dev)
->> +        if (iter->state->encoder_mask & drm_encoder_mask(drm_enc)) {
->> +            drm_crtc = iter;
->>               break;
->> +        }
->> +
->> +    if (!drm_crtc)
->> +        return;
->>       /* Query resource that have been reserved in atomic check step. */
->>       num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-> 
-> 
+>> On 3/29/2022 10:36 PM, Mathieu Poirier wrote:
+>>> On Tue, 29 Mar 2022 at 07:56, Jinlong Mao<quic_jinlmao@quicinc.com>  
+>>> wrote:
+>>>> Hi Suzuki,
+>>>>
+>>>> On 3/28/2022 4:33 PM, Suzuki K Poulose wrote:
+>>>>> On 24/03/2022 14:23, Jinlong Mao wrote:
+>>>>>> Hi Greg,
+>>>>>>
+>>>>>> Thanks for your review.
+>>>>>>
+>>>>>> On 3/24/2022 8:26 PM, Greg Kroah-Hartman wrote:
+>>>>>>> On Thu, Mar 24, 2022 at 08:17:25PM +0800, Mao Jinlong wrote:
+>>>>>>>> Use hash length of the source's device name to map to the pointer
+>>>>>>>> of the enabled path. Using IDR will be more efficient than using
+>>>>>>>> the list. And there could be other sources except STM and CPU etms
+>>>>>>>> in the new HWs. It is better to maintain all the paths together.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Mao Jinlong<quic_jinlmao@quicinc.com>
+>>>>>>>> ---
+>>>>>>>>    drivers/hwtracing/coresight/coresight-core.c | 75
+>>>>>>>> +++++++-------------
+>>>>>>>>    1 file changed, 26 insertions(+), 49 deletions(-)
+>>>>>>> Your subject line is odd.  Please put back the driver subsystem 
+>>>>>>> in the
+>>>>>>> subject line so that it makes more sense.
+>>>>>> I will update the subject in next version.
+>>>>>>> And how have you measured "more efficient"?
+>>>>>> Using IDR would be better than doing a sequential search as there
+>>>>>> will be much more device  in future.
+>>>>> Where do we use sequential search now ? For non-CPU bound sources, 
+>>>>> yes
+>>>>> we may need something. But CPU case is straight forward, and could be
+>>>>> retained as it is. i.e., per-cpu list of paths.
+>>>>>
+>>>> We use list to store the paths for both ETM and non-CPU bound 
+>>>> sources in
+>>>> patch below.
+>>>>
+>>>> “[PATCH 01/10] coresight: add support to enable more coresight paths”
+>>>>
+>>>> According to Mathieu's comments, IDR is used now.  So i added 
+>>>> "Using IDR
+>>>> will be more efficient than using
+>>>> the list" this message in my commit message. I think we need to use 
+>>>> one
+>>>> mechanism to store ETM and
+>>>> non-CPU bound sources.
+>>>>
+>>>>
+>>>> Mathieu's comments:
+>>>>
+>>>> So many TPDM and many ETMs...  That is definitely a reason to do 
+>>>> better than a
+>>>> sequential search.
+>>>>
+>>>> If an IDR (or some other kind of mechanism) is used then we can use 
+>>>> that to
+>>>> store paths associated with ETMs as well.  That way everything 
+>>>> works the same
+>>>> way and access time is constant for any kind of source.
+>>> As per my last sentence above, the goal of  my comment was to simplify
+>>> things so that we don't have two different ways of managing sources.
+>>> But if that ends up causing more trouble than benefit then it should
+>>> be avoided.
+>>
+>> Hi Mathieu,
+>>
+>> I didn't see any disadvantage to use IDR to store both ETM source and 
+>> non-CPU bound sources.
+>>
+>> Benefits:
+>>
+>>   * Only need to maintain one way of managing sources.
+>>   * Less time to search the path
+>
+> My preference is to keep the ETM source paths per-CPU. For the reasons
+> below :
+>   - It is straight forward for an ETM. per_cpu(paths, cpu)
+>   - It is faster than the IDR.
+>   - Makes the debugging easier. Simply lookup the per_cpu variable.
+>
+> I agree that the IDR is required for the non ETM sources. And I am fine
+> with that.
+>
+> Suzuki
 
+Hi Suzuki,
 
--- 
-With best wishes
-Dmitry
+I will address your comments in next version.
+
+Could you please help to review other patches ?
+
+Thanks
+
+Jinlong Mao
+
+>
+>>
+>> Thanks
+>> Jinlong Mao
+>>>> Thanks
+>>>>
+>>>> Jinlong Mao
+>>>>
+>>>>> Cheers
+>>>>> Suzuki
+>>>>>
+>>>>>
+>>>>>>> thanks,
+>>>>>>>
+>>>>>>> greg k-h
+>>>>>> Thanks
+>>>>>>
+>>>>>> Jinlong Mao
+>>>>>>
+>>> _______________________________________________
+>>> CoreSight mailing list --coresight@lists.linaro.org
+>>> To unsubscribe send an email tocoresight-leave@lists.linaro.org
+>
