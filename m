@@ -2,72 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6436C4FC649
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 23:04:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AD844FC684
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 23:14:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349998AbiDKVHA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 17:07:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54140 "EHLO
+        id S1350121AbiDKVPt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 17:15:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239690AbiDKVG7 (ORCPT
+        with ESMTP id S1350151AbiDKVPp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 17:06:59 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B7982AC42
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 14:04:44 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id n19-20020a9d7113000000b005cd9cff76c3so12138055otj.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 14:04:44 -0700 (PDT)
+        Mon, 11 Apr 2022 17:15:45 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FD082B27A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 14:13:27 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id s137so12538756pgs.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 14:13:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=77PX79Y9IPAg5eHYXNxxfMPoxrPEosfgIY3QM8YJll8=;
-        b=HIkQz44wBum19qdatUG526f4XiRWheHtHVxCYhxfaqqiEtuH7WwWxZFamXzz+JtPju
-         0VL/DG2XsnoF8crLKPRzng22wuqnKv1jFHYcE0nfRina9YGLEziQigyZ9zgcapaUqWmL
-         tpcRMrF0WOTRhrxTDoN7wh/oDuu9PlXbRIDKDglMpud+OyWhQYPFRQbZiAz0HAD0RjPS
-         2ga8Qtn/MnguZjyUfG+OLq80Wb8tvC3z/qZ9dCNnjcnlRDXGPonmfx+aAA8zn/OmrzQi
-         KU0KwgwzX5DLw4bMxg1VAwSacniZGQH7EhWC6sJ89kog6hR2frMO5TByrUcHVWs28Dd9
-         ys2w==
+        bh=YKAYMKKcSN6w/x99fPnQm5TkOR6xo+gMRiTH6ZYG4Ro=;
+        b=EhR7QpOZ0HnE4rK5R9d0GxRj98mteeaRTItJIa6EJKU2EEGKdAvwcfi6lrILXJYsHJ
+         Fe+doXlqcFFqdNwpAUThfV36GNrU385i6+ZEIurapg8Hf5gEChmCWLZkWC0AdlETBoIE
+         nb8QW/fT0q6lxGQJ3Zit+MVsN33ry+N1Lmuo8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=77PX79Y9IPAg5eHYXNxxfMPoxrPEosfgIY3QM8YJll8=;
-        b=od7A9dOpkkfjeGlgEoqYIo9oEIlkF1W5A5Vd5LZovKdZQXKmpSuaEXo0iebC5B36Wb
-         ixswHTfBV/Yr4pYnQQzf6LE2GmIJ0ZI2GXsYfwI6YlIpD43NpjqvQ7UMfQ3El6Q37fEr
-         pndT2HCkK9TW6S2emp6xoBqcr6jmXBLzhSreNBgkBKGK/Zut5d8xGA5u8WB6uOTS/KPQ
-         1Zs0+nNYfkMInlMaMvza7kQcIkuH5wz2DJUahJcnsxgEfpNp9hmeYLJb9LzcRpYcYAhU
-         YfsskjUAyGtgXRGKa7TXDxtODS0TugxBNC3wRo+6yHVSmaS7FIYbg/CvFAkPI7+aFb7O
-         LuPg==
-X-Gm-Message-State: AOAM5313WhqKke9/H0CNlXk2/QrJu54JXmwgO8gFbOofll3k7NGfcqxH
-        28hE92LXcjAO9WQdNq7Fg1IZCQ==
-X-Google-Smtp-Source: ABdhPJzbt+6r3bUkdCzVZS8rMIyYxfN0BphKqVhmcZuHTHMoVlPWzuKcs4sx10u/Py/5hjORnkewrA==
-X-Received: by 2002:a05:6830:d8:b0:5b2:553d:2cf8 with SMTP id x24-20020a05683000d800b005b2553d2cf8mr12021675oto.156.1649711083390;
-        Mon, 11 Apr 2022 14:04:43 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id i28-20020a9d4a9c000000b005ce06a77de2sm13366637otf.48.2022.04.11.14.04.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Apr 2022 14:04:42 -0700 (PDT)
-Date:   Mon, 11 Apr 2022 16:04:40 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sai Teja Aluvala <quic_saluvala@quicinc.com>
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, marcel@holtmann.org,
-        johan.hedberg@gmail.com, mka@chromium.org,
-        linux-bluetooth@vger.kernel.org, quic_hemantg@quicinc.com,
-        quic_bgodavar@quicinc.com, quic_rjliao@quicinc.com,
-        mcchou@chromium.org
-Subject: Re: [RESEND v3] arm64: dts: qcom: sc7280: Add IO regulator handler
- in SC7280 CRD platforms
-Message-ID: <YlSX6AvqoZafn2Kn@builder.lan>
-References: <1647937864-25661-1-git-send-email-quic_saluvala@quicinc.com>
+        bh=YKAYMKKcSN6w/x99fPnQm5TkOR6xo+gMRiTH6ZYG4Ro=;
+        b=SQSFuYUzFZVS5e/RBvL3goUTi0JFdL0ztrvvMO5R7h7zPgUUwRBiYnsK97aTj+85f5
+         5jHcJa2wz3H17w23WRrrw7t11/j2Vy42qvsYLPfu/3iLS2SG1pE4NeIAFR+xwfDABpN6
+         XWvmL+9OlP78V5yZlelkhDQF6BGMAXQvXccu8LSvSI+dW14FUvobF6zvH7NM2ELOGvOQ
+         k10Xw26Toh6sbgsvuxurKlH/ASPkEZrRojWQgcd4mCmq+nfA3DFk/T2YZ9Wjp1WTX8Dg
+         mRghUNZFkx5m3+ouhIbSwaPStIzrDR8HkDKf/KYAWLMSMYDia/O3dKzaNfO9GYHHNp/d
+         JlVQ==
+X-Gm-Message-State: AOAM531SzdTP9mfKbn4rS/YuGz8ToE1AyfhLv16mXeN8GIemr0USZdTS
+        SBspzqkYvDjxPYNu3ugZPtuJrg==
+X-Google-Smtp-Source: ABdhPJzl8rfg8ySS5Ytnevu8E/f/F9vTdYrGegE0Oef11S5yT3t9PqIHOQ2qCbAfFdF2WkI3wjs0Nw==
+X-Received: by 2002:a63:e5c:0:b0:39d:8460:4708 with SMTP id 28-20020a630e5c000000b0039d84604708mr1977629pgo.401.1649711604530;
+        Mon, 11 Apr 2022 14:13:24 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:eb96:76ba:e2a1:2442])
+        by smtp.gmail.com with UTF8SMTPSA id d4-20020a17090ad3c400b001c65ba76911sm392429pjw.3.2022.04.11.14.13.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Apr 2022 14:13:24 -0700 (PDT)
+Date:   Mon, 11 Apr 2022 14:13:22 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_kriskura@quicinc.com, quic_vpulyala@quicinc.com
+Subject: Re: [PATCH v13 5/6] usb: dwc3: qcom: Keep power domain on to retain
+ controller status
+Message-ID: <YlSZ8uk8MjygY7uf@google.com>
+References: <1649704614-31518-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1649704614-31518-6-git-send-email-quic_c_sanm@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1647937864-25661-1-git-send-email-quic_saluvala@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <1649704614-31518-6-git-send-email-quic_c_sanm@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,48 +79,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 22 Mar 03:31 CDT 2022, Sai Teja Aluvala wrote:
-
-> Add IO regulator handler in SC7280 CRD based platforms.
-> As IO regulator varies in different SC7280 platforms
-> updating this handler in individual platform bluetooth node.
+On Tue, Apr 12, 2022 at 12:46:53AM +0530, Sandeep Maheswaram wrote:
+> Keep the power domain always on during runtime suspend or if the
+> controller supports wakeup in order to retain controller status
+> and to support wakeup from devices.
 > 
-
-To me a significant part of this change is "bluetooth", yet it's not
-mentioned until the very end of the commit message.
-
-Please update your $subject to be more to the point and to include
-"bluetooth", and please don't repeat $subject as the first line in your
-commit message.
-
-Thanks,
-Bjorn
-
-> Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
+> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
 > ---
-> v3: Updated commit text to reflect the change
-> v2: updated reviewer comments.
-> v1: intial patch
-> ---
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-crd.dts | 4 ++++
->  1 file changed, 4 insertions(+)
+>  drivers/usb/dwc3/dwc3-qcom.c | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> index cd2755c..53ea3b4 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> @@ -23,6 +23,10 @@
->  	};
->  };
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 9804a19..9747be6 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -17,6 +17,7 @@
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/phy/phy.h>
+> +#include <linux/pm_domain.h>
+>  #include <linux/usb/of.h>
+>  #include <linux/reset.h>
+>  #include <linux/iopoll.h>
+> @@ -724,6 +725,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>  	struct resource		*res, *parent_res = NULL;
+>  	int			ret, i;
+>  	bool			ignore_pipe_clk;
+> +	struct generic_pm_domain *genpd;
+
+nit: I'm not really a fan of gazillions of whitespaces between the type
+and the variable name, but if they are kept all variable names above
+should move a tab to the right. In any case the style in this file isn't
+consistent, so an alternative would be to just get rid of the alignment
+completely.
+
+>  	qcom = devm_kzalloc(&pdev->dev, sizeof(*qcom), GFP_KERNEL);
+>  	if (!qcom)
+> @@ -732,6 +734,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>  	platform_set_drvdata(pdev, qcom);
+>  	qcom->dev = &pdev->dev;
 >  
-> +&bluetooth {
-> +	vddio-supply = <&vreg_l18b_1p8>;
-> +};
+> +	genpd = pd_to_genpd(qcom->dev->pm_domain);
 > +
->  ap_tp_i2c: &i2c0 {
->  	status = "okay";
->  	clock-frequency = <400000>;
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc.
-> 
+>  	if (has_acpi_companion(dev)) {
+>  		qcom->acpi_pdata = acpi_device_get_match_data(dev);
+>  		if (!qcom->acpi_pdata) {
+> @@ -839,7 +843,12 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto interconnect_exit;
+>  
+> -	device_init_wakeup(&pdev->dev, 1);
+> +	genpd->flags |= GENPD_FLAG_RPM_ALWAYS_ON;
+> +
+> +	if (device_may_wakeup(&qcom->dwc3->dev))
+> +		genpd->flags |= GENPD_FLAG_ALWAYS_ON;
+
+In v12 only GENPD_FLAG_ALWAYS_ON was set, not GENPD_FLAG_RPM_ALWAYS_ON.
+I asked a few times for a change log, in this instance it would be
+useful to explain why GENPD_FLAG_RPM_ALWAYS_ON is now set.
+
+> +
+> +	device_init_wakeup(&pdev->dev, device_may_wakeup(&qcom->dwc3->dev));
+
+device_may_wakeup() isn't an expensive operation, but it's still not nice to
+call it twice in three lines of code. Instead you could do this:
+
+	if (device_may_wakeup(&qcom->dwc3->dev)) {
+		genpd->flags |= GENPD_FLAG_ALWAYS_ON;
+		device_init_wakeup(&pdev->dev, true);
+	}
