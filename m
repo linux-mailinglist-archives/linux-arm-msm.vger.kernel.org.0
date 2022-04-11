@@ -2,83 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA33D4FBC43
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 14:39:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1742A4FBD17
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 15:30:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232573AbiDKMlo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 08:41:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51690 "EHLO
+        id S1345933AbiDKNdA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 09:33:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346166AbiDKMlh (ORCPT
+        with ESMTP id S1344372AbiDKNc7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 08:41:37 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D666C3EB90;
-        Mon, 11 Apr 2022 05:39:23 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id c64so6048115edf.11;
-        Mon, 11 Apr 2022 05:39:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ud08G4s/0xjBy6Vv4C3jyp2d/2WCW9Z15cTVyED8BKc=;
-        b=oAOIW4z3DcQ4J+Ql7KHgqtzw3+pKUPC7cpD+7xpymzdsGwvSaTmGEiNYL2PkWK8jo1
-         lIK6flFSiDB+bVC0erzxMvJ5hiRhVOH7v5NgTfmygl/4USPlyr4BLpgAVv4JcW/oVmFa
-         SM5VFQbf/sALbUd4FOrS5tKrOp1ZM2JXdkMidunSGOHNZYEAxqWHMG0N+x45H1c1pCwF
-         EYEVThL665B7y2jrXTyDnKCKbp5BP7YvXICJaz45ebjwUSi2uILVdgSnW0qOYHbYkYyT
-         Uovkv5zGkRbkP59Z9gXhCdviBPUZmSmtmZA1mlLSeKClDOyy7+1bFyKAgEbsf6S3b85M
-         7c3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ud08G4s/0xjBy6Vv4C3jyp2d/2WCW9Z15cTVyED8BKc=;
-        b=2pevS1HF4mGQzf/D4Q8Rfirh39OJEeQ10OnYa5X7nWCxlBHHnpYKF/3ItBO79KbN00
-         72oLhHFS0tJR52kbFNiTip7AJY/1L+G7YTrYFxQQb5qNVBnAelfHH47mrQUKIRaOHTqR
-         UQBaWAYOBbZOaeszJzJtuKPyzeXHTTSGSvayDwi5aM762bQa1/bzQAiVhTB39MJm1X3Z
-         fnuAuybaWpi6aGSW/S462mcakwzQvTBrDnGQV5u3bSJzvhSmBAJX7O4T2xjmQzs+F88L
-         DmPCvqA9LRW5XBTBiRoKy/pkIg5x3u2VPfU/dnlmOK/Wvdf3mRXsBI9myOAGwEjZzZho
-         bHqw==
-X-Gm-Message-State: AOAM532ib+DoAOiL1Zkwwl/8O5l+WPGjdPCnrBnyldcnPLiArqLRMwED
-        iMONqhBZNpxFkJD+ayNay5N+xqam2VA=
-X-Google-Smtp-Source: ABdhPJyKXVNmQUBaNyN3MN5SEMx8A8Il7pcI0GIX+S0c4wogac6dfMFHedHThQkRv9cnv1j16He+DQ==
-X-Received: by 2002:a05:6402:54:b0:419:9b58:e305 with SMTP id f20-20020a056402005400b004199b58e305mr32680114edu.158.1649680762381;
-        Mon, 11 Apr 2022 05:39:22 -0700 (PDT)
-Received: from ThinkStation-P340.. (static-82-85-31-68.clienti.tiscali.it. [82.85.31.68])
-        by smtp.gmail.com with ESMTPSA id m3-20020a17090679c300b006cf9ce53354sm11898283ejo.190.2022.04.11.05.39.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Apr 2022 05:39:21 -0700 (PDT)
-From:   Daniele Palmas <dnlplm@gmail.com>
-To:     dnlplm@gmail.com, manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, mhi@lists.linux.dev,
-        quic_bbhatt@quicinc.com, quic_hemantk@quicinc.com
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Sort mhi_pci_id_table based on the PID'
-Date:   Mon, 11 Apr 2022 14:37:15 +0200
-Message-Id: <20220411123715.3640935-1-dnlplm@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220411054831.16344-1-manivannan.sadhasivam@linaro.org>
-References: <20220411054831.16344-1-manivannan.sadhasivam@linaro.org>
+        Mon, 11 Apr 2022 09:32:59 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 187C0EBD;
+        Mon, 11 Apr 2022 06:30:46 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A729160FAF;
+        Mon, 11 Apr 2022 13:30:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB6BC385A5;
+        Mon, 11 Apr 2022 13:30:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649683845;
+        bh=gUEFNz2ZvRfZ6XHal7LLowTMm6RR0s9wpCOWjkYj/78=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=btVkYfbeBEQVuTdjBp8B3BigqHcGf5HpRkLstQIBcH9LWLmRh5vsXIpGU0kALfJsg
+         GsKeRk1/noyp4G95qkgYxpGqQZyUsBerE9nn97aTLhTMsaqwN79SSJcIB1fzwEnHQK
+         ad7/sn5GWbzNqIHYmeloa6QFylpGlGN8QxgnfwG9IGl+8NpsxrUyqrP8cF71ycRJvm
+         MzhlXcRErl7tMRQktqqQpLtY+WGszokeXTV6MBFutpTZ65mPWYkPO21USiXLMonxTN
+         4Eop22Qa3dln+5zaDE4gLm2tcAKGlCDahEoKx8sNecU/r6E9be3t4Gi/dYSQP169BZ
+         zNhTBxsrNnI6w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ndu7q-0005UC-MX; Mon, 11 Apr 2022 15:30:38 +0200
+Date:   Mon, 11 Apr 2022 15:30:38 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [RESEND 2/2] soc: qcom: rpmhpd: add sc8280xp rpmh power-domains
+Message-ID: <YlQtfu5K9IeJLPcS@hovoldconsulting.com>
+References: <20220225054345.2479565-1-bjorn.andersson@linaro.org>
+ <20220225054345.2479565-2-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_RANDOM_ENVFROM,
-        HK_RANDOM_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220225054345.2479565-2-bjorn.andersson@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mani,
+On Thu, Feb 24, 2022 at 09:43:45PM -0800, Bjorn Andersson wrote:
+> The Qualcomm sc8280xp platform has 8 power-domains. Add these, and their
+> relevant active-only variants, to the RPMh power-domain driver.
 
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
+As we discussed off-list, the sc8280xp apparently has 13 domains. Guess
+the commit message should be updated even if you don't expose all of
+these to Linux.
 
-Shouldn't this entry be after all PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306,
-ones?
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  drivers/soc/qcom/rpmhpd.c | 26 ++++++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+> index 58f1dc9b9cb7..71602eb824f7 100644
+> --- a/drivers/soc/qcom/rpmhpd.c
+> +++ b/drivers/soc/qcom/rpmhpd.c
+> @@ -180,6 +180,11 @@ static struct rpmhpd mxc_ao = {
+>  	.res_name = "mxc.lvl",
+>  };
+>  
+> +static struct rpmhpd nsp = {
+> +	.pd = { .name = "nsp", },
+> +	.res_name = "nsp.lvl",
+> +};
+> +
+>  /* SDM845 RPMH powerdomains */
+>  static struct rpmhpd *sdm845_rpmhpds[] = {
+>  	[SDM845_CX] = &cx_w_mx_parent,
+> @@ -363,10 +368,31 @@ static const struct rpmhpd_desc sc8180x_desc = {
+>  	.num_pds = ARRAY_SIZE(sc8180x_rpmhpds),
+>  };
+>  
+> +/* SC8280xp RPMH powerdomains */
+> +static struct rpmhpd *sc8280xp_rpmhpds[] = {
+> +	[SC8280XP_CX] = &cx,
+> +	[SC8280XP_CX_AO] = &cx_ao,
+> +	[SC8280XP_MX] = &mx,
+> +	[SC8280XP_MX_AO] = &mx_ao,
+> +	[SC8280XP_EBI] = &ebi,
+> +	[SC8280XP_LCX] = &lcx,
+> +	[SC8280XP_LMX] = &lmx,
+> +	[SC8280XP_GFX] = &gfx,
+> +	[SC8280XP_MMCX] = &mmcx,
+> +	[SC8280XP_MMCX_AO] = &mmcx_ao,
+> +	[SC8280XP_NSP] = &nsp,
+> +};
 
-Otherwise will it catch all of them?
+Commit 90c74c1c2574 ("soc: qcom: rpmhpd: Sort power-domain definitions
+and lists") recently sorted the other arrays. Sorting by address like
+you've implicitly done here makes it easy to compare with the firmware
+interface, but perhaps you want to sort alphabetically for consistency.
 
-Thanks,
-Daniele
+Since there apparently are no users for active-only domains in the tree,
+perhaps they can also be added later.
+
+> +
+> +static const struct rpmhpd_desc sc8280xp_desc = {
+> +	.rpmhpds = sc8280xp_rpmhpds,
+> +	.num_pds = ARRAY_SIZE(sc8280xp_rpmhpds),
+> +};
+> +
+>  static const struct of_device_id rpmhpd_match_table[] = {
+>  	{ .compatible = "qcom,sc7180-rpmhpd", .data = &sc7180_desc },
+>  	{ .compatible = "qcom,sc7280-rpmhpd", .data = &sc7280_desc },
+>  	{ .compatible = "qcom,sc8180x-rpmhpd", .data = &sc8180x_desc },
+> +	{ .compatible = "qcom,sc8280xp-rpmhpd", .data = &sc8280xp_desc },
+>  	{ .compatible = "qcom,sdm845-rpmhpd", .data = &sdm845_desc },
+>  	{ .compatible = "qcom,sdx55-rpmhpd", .data = &sdx55_desc},
+>  	{ .compatible = "qcom,sm6350-rpmhpd", .data = &sm6350_desc },
+
+Johan
