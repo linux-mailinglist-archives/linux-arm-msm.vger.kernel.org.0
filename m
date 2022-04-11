@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B75864FB6A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 10:59:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01B664FB6A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Apr 2022 11:00:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344028AbiDKJCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 05:02:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43932 "EHLO
+        id S1344014AbiDKJCN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 05:02:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344006AbiDKJCG (ORCPT
+        with ESMTP id S1344022AbiDKJCH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 05:02:06 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FB69286C8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 01:59:50 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id z99so8872660ede.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 01:59:50 -0700 (PDT)
+        Mon, 11 Apr 2022 05:02:07 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A02123ED20
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 01:59:51 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id bg10so29453256ejb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 01:59:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=avk57uBtr+IXFGoDGCejGYQLJ/Mrk+YHjjSKlOtbCtI=;
-        b=bLzg0xpc4DZyHNbBAHztGfeDKzWe5zvpuYnmTDOZp6BJ7yWpcKCozgwALfZKRfrbyo
-         ZP6tcG1Z4tLdsCySpPUc4trLonXETILH9guYK6mxyMU8Mtn4j6rb/SDW0L9c8Y5FegIY
-         r08ry3UHYqJkXv7lH54G59AemofyvrIxMfPV6aWOlLoergqSPwudR47V15qasLQRaQPl
-         hoRMNO357rPFzOAWc8FwN9Ih/h+u0SePhtGNbBTTkZhi8k+PRn7KK5MxbuFZKAj8TkVC
-         ksVPw+MOdYm9gpLzuqdU8ZTViIqu3H0pnJ9QcG6fgP87rc8S6OFOnpxyrpUAeweTv3pZ
-         tikQ==
+        bh=rc69LIllmgRf7vbSQlFUqLbxtA3mmK6fFRVeHFBvEso=;
+        b=ZtBIAWZfMwJRLnMjFDnnzsD+a32eYDsJraswdAMsypg/nhGtIBd2E1Vv1EV8aM5/SO
+         efltsNS95hR1vy6CKaHvxa+Usw/FYccqNxeQPZQDgMJPNjjTkA1jXKnMt597RrqhTLf7
+         sPiD1hqoRxuNUVZ55axnjSI/TCv+5rDByBj+bGSszNln2bNAKNWcte8BHBJJTqqIMqxI
+         evweJzDei1CD6n2WI9jDPNnauVwtIJ+P5vYkoAWmdnkY8Q1cc7MFTxcTeeIVHAxOTxHT
+         5fl+1FvVEDOJH0mtHqwjsQzhFBDIyXLqDpG/KNOL2tSKOPbTeLyJ+hmdygvPUB0G5HNb
+         71Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=avk57uBtr+IXFGoDGCejGYQLJ/Mrk+YHjjSKlOtbCtI=;
-        b=vqJH9tC+rioPBV4NaKz+w37kduravVt1iKACGrk4fTB35RP3lBooRk6bUlliUegAhF
-         6bGVhKMhKJMPP5KdDzI++lPGlT/Q5JlY3KE1E2IiS9bNWiFrSeVr3+/PTSWLr3z396og
-         jVb0FEGu+aymV7QtFJ513F+wnJsgpJfoXIq3/kxKFbAdJwSxMBspDhrtBqk/Wnwh4+ex
-         hXCCzgpWb5k8zRYpe4btbmpCXFcsVJ3Hx3WRkwzPujcxKMasHn6pAdIo8W4zVZg/y28c
-         2NOaFs68sCCTV9S8itaeIueNYLZ6jYEOFhP9HPCMl4/zXulIH87TrHTUtO/2DHlv+pEI
-         LNCQ==
-X-Gm-Message-State: AOAM531zM4KH+bx9TkIiOLcflVBPqw2X8AcnovmSQ7KO40nUjY51sxak
-        Rs2Gq5WhtpjdrVjB+T2DI/rRtg==
-X-Google-Smtp-Source: ABdhPJwGujOXdkBsRPkDP3qSxhCcF+A+gj89YIuUabpEI/GB0BphT+Eif2UthLDzCmS/vLBETdUe+A==
-X-Received: by 2002:a05:6402:4391:b0:419:2f2d:a1da with SMTP id o17-20020a056402439100b004192f2da1damr32112124edc.298.1649667588860;
-        Mon, 11 Apr 2022 01:59:48 -0700 (PDT)
+        bh=rc69LIllmgRf7vbSQlFUqLbxtA3mmK6fFRVeHFBvEso=;
+        b=hYN9q8Q2p3M5KM0oA7TkH9gh9j90xmG5H42jGmAJhi2tuJPog2XLoB3N30fyrCZ7aX
+         Wu2d4O2ymbW2erER1P4DVsMYiKGq9rH4n1GHpiO8Ldif4e4v7OnAoy0TLcclwxrlTWEm
+         39P5x3S86VV4HY1yX4yb7TCL+IpXdLLQ7OeSZgF+1Ot1gYuTc945VBi8ICEkF6Ny5PHP
+         D+md4HnbQxrfUP3TJOj5ScEFWsdLXzxM2LCNHYHk9qHpDoHLawTfKeWPtDpm3vop0bQA
+         pThH2+nInGt0vsDX2Mo5rqE4x17Pt3HqDYEX7ST1OoOqw1MqStDyOif4aSApY/fv34kj
+         d8tQ==
+X-Gm-Message-State: AOAM531S8dI7rurwoqAIFD9rFCQYM2cq9ZJ8rT96blnDT7Pn+SQ0ErSM
+        ljmwVGJ71LE3qvC795lqB21Kfw==
+X-Google-Smtp-Source: ABdhPJzxp5gK+6mo01IKUXO19ZqPNKPmjGNciUm2HErbM1DHA2IhXyk9haPio0X8Kghqchtl/vNL7A==
+X-Received: by 2002:a17:906:2b93:b0:6cf:bb48:5a80 with SMTP id m19-20020a1709062b9300b006cfbb485a80mr28490139ejg.681.1649667589943;
+        Mon, 11 Apr 2022 01:59:49 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id x17-20020a170906297100b006e49a9535f3sm11705416ejd.114.2022.04.11.01.59.47
+        by smtp.gmail.com with ESMTPSA id x17-20020a170906297100b006e49a9535f3sm11705416ejd.114.2022.04.11.01.59.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Apr 2022 01:59:48 -0700 (PDT)
+        Mon, 11 Apr 2022 01:59:49 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/4] ARM: dts: qcom: sdx55: remove wrong unit address from RPMH RSC clocks
-Date:   Mon, 11 Apr 2022 10:59:33 +0200
-Message-Id: <20220411085935.130072-2-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 3/4] arm64: dts: qcom: do not use underscore in BCM node name
+Date:   Mon, 11 Apr 2022 10:59:34 +0200
+Message-Id: <20220411085935.130072-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220411085935.130072-1-krzysztof.kozlowski@linaro.org>
 References: <20220411085935.130072-1-krzysztof.kozlowski@linaro.org>
@@ -76,28 +76,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The clock controller of RPMH RSC does not have 'reg' property, so should
-not have unit address.
+Align BCM voter node with DT schema by using hyphen instead of
+underscore.
 
-Fixes: bae2f5979c6e ("ARM: dts: qcom: Add SDX65 platform and MTP board support")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm/boot/dts/qcom-sdx65.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
-index 796641d30e06..0c3f93603adc 100644
---- a/arch/arm/boot/dts/qcom-sdx65.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
-@@ -202,7 +202,7 @@ apps_rsc: rsc@17830000 {
- 				<WAKE_TCS    2>,
- 				<CONTROL_TCS 1>;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index e1c46b80f14a..86175d257b1e 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -3522,7 +3522,7 @@ rpmhpd_opp_turbo_l1: opp11 {
+ 				};
+ 			};
  
--			rpmhcc: clock-controller@1 {
-+			rpmhcc: clock-controller {
- 				compatible = "qcom,sdx65-rpmh-clk";
- 				#clock-cells = <1>;
- 				clock-names = "xo";
+-			apps_bcm_voter: bcm_voter {
++			apps_bcm_voter: bcm-voter {
+ 				compatible = "qcom,bcm-voter";
+ 			};
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index d7c9edff19f7..443cd9c7f49f 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1217,7 +1217,7 @@ rpmhpd_opp_turbo_l1: opp10 {
+ 				};
+ 			};
+ 
+-			apps_bcm_voter: bcm_voter {
++			apps_bcm_voter: bcm-voter {
+ 				compatible = "qcom,bcm-voter";
+ 			};
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 15f3bf2e7ea0..b5c418d326b2 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -3744,7 +3744,7 @@ rpmhpd_opp_turbo_l1: opp11 {
+ 				};
+ 			};
+ 
+-			apps_bcm_voter: bcm_voter {
++			apps_bcm_voter: bcm-voter {
+ 				compatible = "qcom,bcm-voter";
+ 			};
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index af8f22636436..56bf95b7f6ff 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -4654,7 +4654,7 @@ rpmhpd_opp_turbo_l1: opp10 {
+ 				};
+ 			};
+ 
+-			apps_bcm_voter: bcm_voter {
++			apps_bcm_voter: bcm-voter {
+ 				compatible = "qcom,bcm-voter";
+ 			};
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index 20f850b94158..008f6188c8b4 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1881,7 +1881,7 @@ rpmhpd_opp_turbo_l1: opp10 {
+ 				};
+ 			};
+ 
+-			apps_bcm_voter: bcm_voter {
++			apps_bcm_voter: bcm-voter {
+ 				compatible = "qcom,bcm-voter";
+ 			};
+ 		};
 -- 
 2.32.0
 
