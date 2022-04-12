@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A48974FEBAC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 01:56:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6CD24FEBAD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 01:58:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230461AbiDLXw6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 19:52:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33080 "EHLO
+        id S229452AbiDMABL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 20:01:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231226AbiDLXwb (ORCPT
+        with ESMTP id S229501AbiDMABK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 19:52:31 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A92FCE1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 16:50:11 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id m14so286191wrb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 16:50:11 -0700 (PDT)
+        Tue, 12 Apr 2022 20:01:10 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC09A13F49
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 16:58:49 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id c7so365924wrd.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 16:58:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ShN/rXSZKDhy7VrfNgli/IlBDtGr/3iqN8cN4k09Vn8=;
-        b=iLzG9wP7sgYVdHoHOo3azGNItHgaCWAOJDkB/QBUnw/Edh1jsVv6a5T9dYGhH5tyKJ
-         0a5HcblT9K+dlIXdpQ3tFA0+camcJdIhX0sVlnpfyClqUU7xSErsL1ZHMAXe3RYDUVxU
-         pnQPunWVA93FVmVDTT1ynO2I0EP0jpsgjLcqbANq40SqMPeafOc2qptouftJDbwWKxiU
-         YJntqySSJKzHtApqQ6+95e1SKgtfSwT+pxvIAnSf7+4KbMJSLYzztGaEgx3ZsDsoaByw
-         DIk3kvIbfnwO+DYlR+ylE7IcBednV1Xsg/xKC98C0JJmhUv92qhnXZ8FlabDhfJDBUPC
-         gfKA==
+        bh=FL3dQ5oq8uwKlQGOuD2PIcyWr8wH6ZhoQGF6m+YuFGk=;
+        b=bKsQuGJSyZpNV2iwcTDoDX/oUuDryKo+A6OKIFj4Sm2NQI35/VXWQlYDFAMeY9b9Px
+         xkcKGwXLjYPKZFfORSpc1rWz6ot3gG4koVlxsgjAxFrcCbBPg6/c+pr8oN8qxfZviTTo
+         BpLqHIvX5tOT9a4rc+C9TvEazIoBDSAxZuBN2VDMT8bT+jR9gGwj2fGdUWlhIcQUpn78
+         +qRTZNq8GE68NicrAyXuKkgPwkdij4Yi4oSbxb/gAcehi7k4MQfnPYDFZ8TZ8Z7hpADV
+         DdF8XubM/+1wj53ptuxwzXDUmGxL6O78Q2ihxSOD6S+8kRENM1Irqv/cX2tnx/zRZ6OB
+         vJVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=ShN/rXSZKDhy7VrfNgli/IlBDtGr/3iqN8cN4k09Vn8=;
-        b=NXjRzkKckWg55EOS0JKJUqMb6Nw80lf9oZ+52Mons50x2eAJ6r+KQ/oZMTv+haeT8l
-         m+IFD5fiSNGrjJjYD1SuC0+eSGTaPxymz6M1DQVvsYozb7TlM9CKHaVr+1H8whuYfWBl
-         oQCu9dJxNwsoruhuPEgf8atglY3cJ1t1nozCyjskfuxmyMugEnhj9qyVPrtWrapv28uf
-         wB2spD02WuQGWY/3isdmYlhdiHwU6pd7AKm7UnzdBtUSrJQgW4QiiCiICpq4xooV3QWU
-         hFJYd5Xhoc/PE3lc/Fd9uJ7Cjj5WcZYLzbZU2lE0ciR3YZrsgeZgKSAHemBtl1w8gevx
-         Sl4g==
-X-Gm-Message-State: AOAM532Dma1qfpXKLv0NON2WpTsGz2zkrd0Ere9wL1/PYsB81tBqRfri
-        75Ka44N0251Zmvaw1teAb2Pn0A==
-X-Google-Smtp-Source: ABdhPJxVYF5/Ot+Wn6f/JaZIXiK9MrZIXg76PjvIZTuYXtHcHsUoi1/vTnJRY+UCQUGAWjcHqtPuRw==
-X-Received: by 2002:a5d:6205:0:b0:1e4:b3fd:9ba8 with SMTP id y5-20020a5d6205000000b001e4b3fd9ba8mr30055376wru.426.1649807409850;
-        Tue, 12 Apr 2022 16:50:09 -0700 (PDT)
+        bh=FL3dQ5oq8uwKlQGOuD2PIcyWr8wH6ZhoQGF6m+YuFGk=;
+        b=EOQC2ycgQPJBJ1pqBELI6AKLTsX6rqE2i2cprF26x6hV7GlI/T2cnIhjaoYdEafFIx
+         HXpVSOphpxPe+Oa83oKoBScVeKSYXwyci2UScASmcJoIwE8VJ+qMdob7jLoft07oeDiv
+         BqOzh+xtwYeECTHc1fk5AsSEko+sbCWS9OemcOiJOm1RXn2+Z7z5L7qPTciSUA0/Dlqa
+         AnUao7ayzy4ZudulDvlIzSVZwiqOHVWQ1EB8YkYFyyoPTH/WHY9v6SO4ZkIVNi/dbmaB
+         A8PXUev2tWfZO5kffPidHc8zEbEvtzIODma3IkO1Z1N/YEc1VhE9PzFcgDB9fkD99KyW
+         yCoQ==
+X-Gm-Message-State: AOAM530S0oSXorvRDxgyUcAdh5+w7/0LMMEC0IvbVErG2d+8c40X95Kj
+        tPYNVb5czKBDLs6ZkcU73E/Z7A==
+X-Google-Smtp-Source: ABdhPJxvJceWes8rQxej61V9yXxR0CfMae+EkznDKTLXl3NN52tsdR1osiiCXHAvoqqAxjTl0uIHJg==
+X-Received: by 2002:adf:ed81:0:b0:207:a82a:bcf1 with SMTP id c1-20020adfed81000000b00207a82abcf1mr8662784wro.194.1649807928430;
+        Tue, 12 Apr 2022 16:58:48 -0700 (PDT)
 Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o6-20020a05600002c600b00207a389117csm9169769wry.53.2022.04.12.16.50.08
+        by smtp.gmail.com with ESMTPSA id m1-20020a1ca301000000b0038ea15d5f75sm780387wme.38.2022.04.12.16.58.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Apr 2022 16:50:09 -0700 (PDT)
-Message-ID: <50aa0994-a139-dcd6-7483-83bf80c37394@linaro.org>
-Date:   Wed, 13 Apr 2022 00:50:07 +0100
+        Tue, 12 Apr 2022 16:58:48 -0700 (PDT)
+Message-ID: <46d73e5f-3d8c-e260-5fae-f976660432b6@linaro.org>
+Date:   Wed, 13 Apr 2022 00:58:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sm8250: camss: Add downstream
- camera pin definitions
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8250: camss: Add CCI definitions
 Content-Language: en-US
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     agross@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
@@ -63,10 +62,10 @@ Cc:     agross@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
         dmitry.baryshkov@linaro.org, jonathan@marek.ca, hfink@snap.com,
         jgrahsl@snap.com
 References: <20220409164556.2832782-1-bryan.odonoghue@linaro.org>
- <20220409164556.2832782-4-bryan.odonoghue@linaro.org>
- <YlTeFYp6IoPJfHEb@builder.lan>
+ <20220409164556.2832782-5-bryan.odonoghue@linaro.org>
+ <YlTeng8OcnvUnILZ@builder.lan>
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <YlTeFYp6IoPJfHEb@builder.lan>
+In-Reply-To: <YlTeng8OcnvUnILZ@builder.lan>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,76 +78,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/04/2022 03:04, Bjorn Andersson wrote:
+On 12/04/2022 03:06, Bjorn Andersson wrote:
 > On Sat 09 Apr 11:45 CDT 2022, Bryan O'Donoghue wrote:
 > 
->> There are a number of pin mux descriptions for the CAMSS block which are
->> defined downstream.
+>> sm8250 has two CCI busses with two I2C busses apiece.
 >>
->> Bring in the definitions now. Subsequent changes will optionally activate
->> those muxes for different sm8250 based boards.
->>
-> 
-> I'm not able to spot where these are referenced, are they not used or am
-> I just failing the search today?
-
-Used here:
-
-https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=br-v5.19b%2brb5-dts%2bsensors&id=96d26b916efca18450ff67d385d846b50d8eb7e1
-
-I'll send out the RB5 patch once I get regulator_bulk_*() added to the 
-imx412 driver
-
-https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=br-v5.19b%2brb5-dts%2bsensors&id=e11966d8101350d0e76eb3e1520165864bdbc296
-
-> 
-> I would prefer that we don't sprinkle pinctrl states that potentially
-> might be used at a later time...
-> 
+>> Co-developed-by: Julian Grahsl <jgrahsl@snap.com>
+>> Signed-off-by: Julian Grahsl <jgrahsl@snap.com>
 >> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 >> ---
->>   arch/arm64/boot/dts/qcom/sm8250.dtsi | 471 +++++++++++++++++++++++++++
->>   1 file changed, 471 insertions(+)
+>>   arch/arm64/boot/dts/qcom/sm8250.dtsi | 82 ++++++++++++++++++++++++++++
+>>   1 file changed, 82 insertions(+)
 >>
 >> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
->> index 3d6c617de045..91ed079edbf7 100644
+>> index 91ed079edbf7..98e96527702b 100644
 >> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
 >> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
->> @@ -3687,6 +3687,477 @@ tlmm: pinctrl@f100000 {
->>   			gpio-ranges = <&tlmm 0 0 181>;
->>   			wakeup-parent = <&pdc>;
+>> @@ -3150,6 +3150,88 @@ videocc: clock-controller@abf0000 {
+>>   			#power-domain-cells = <1>;
+>>   		};
 >>   
->> +			cam_sensor_mclk0_active: cam_sensor_mclk0_active {
+>> +		cci0: cci@ac4f000 {
+>> +			compatible = "qcom,sm8250-cci";
+>> +			#address-cells = <1>;
+>> +			#size-cells = <0>;
+>> +
+>> +			reg = <0 0x0ac4f000 0 0x1000>;
+>> +			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
+>> +			power-domains = <&camcc TITAN_TOP_GDSC>;
+>> +
+>> +			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
+>> +				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
+>> +				 <&camcc CAM_CC_CPAS_AHB_CLK>,
+>> +				 <&camcc CAM_CC_CCI_0_CLK>,
+>> +				 <&camcc CAM_CC_CCI_0_CLK_SRC>;
+>> +			clock-names = "camnoc_axi",
+>> +				      "slow_ahb_src",
+>> +				      "cpas_ahb",
+>> +				      "cci",
+>> +				      "cci_src";
+>> +
+>> +			pinctrl-names = "default", "sleep";
+>> +			pinctrl-0 = <&cci0_default &cci1_default>;
+>> +			pinctrl-1 = <&cci0_sleep &cci1_sleep>;
 > 
-> Please don't use '_' in the node name.
-> 
->> +				/* MCLK0 */
-> 
-> I would prefer that we don't inherit the mux/config split upstream.
-> 
-> You can either do:
-> 
-> cam-sensor-mclk0-active-state {
-> 	pins = ;
-> 	function = ;
-> 	bias...
-> };
-> 
-> or:
-> 
-> cam-sensor-mclk0-active-state {
-> 	mclk0 {
-> 		pins = ;
-> 		function = ;
-> 		bias...
-> 	};
-> };
-> 
-> And depending on how this state is actually used you could lump together
-> the configuration of several pins - with different properties - in the
-> same state node.
+> I would prefer that you include these in the same patch.
 
-Sure np
+You mean CAMSS and CCI in the one patch ?
+Sure.
+
+> 
+>> +
+>> +			status = "disabled";
+>> +
+>> +			cci_i2c0: i2c-bus@0 {
+>> +				reg = <0>;
+>> +				clock-frequency = <1000000>;
+>> +				#address-cells = <1>;
+>> +				#size-cells = <0>;
+>> +			};
+>> +
+>> +			cci_i2c1: i2c-bus@1 {
+>> +				reg = <1>;
+>> +				clock-frequency = <1000000>;
+>> +				#address-cells = <1>;
+>> +				#size-cells = <0>;
+>> +			};
+>> +		};
+>> +
+>> +		cci1: cci@ac50000 {
+>> +			compatible = "qcom,sm8250-cci";
+>> +			#address-cells = <1>;
+>> +			#size-cells = <0>;
+>> +
+>> +			reg = <0 0x0ac50000 0 0x1000>;
+>> +			interrupts = <GIC_SPI 271 IRQ_TYPE_EDGE_RISING>;
+>> +			power-domains = <&camcc TITAN_TOP_GDSC>;
+>> +
+>> +			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
+>> +				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
+>> +				 <&camcc CAM_CC_CPAS_AHB_CLK>,
+>> +				 <&camcc CAM_CC_CCI_1_CLK>,
+>> +				 <&camcc CAM_CC_CCI_1_CLK_SRC>;
+>> +			clock-names = "camnoc_axi",
+>> +				      "slow_ahb_src",
+>> +				      "cpas_ahb",
+>> +				      "cci",
+>> +				      "cci_src";
+>> +
+>> +			pinctrl-names = "default", "sleep";
+>> +			pinctrl-0 = <&cci2_default &cci3_default>;
+>> +			pinctrl-1 = <&cci2_sleep &cci3_sleep>;
+>> +
+>> +			status = "disabled";
+>> +
+>> +			cci_i2c2: i2c-bus@0 {
+> 
+> Are these names (the label) used somewhere in the schematics? How about
+> cci0_i2c0 and cci1_i2c0 instead (unless these names are defined by some
+> documentation)?
+
+Schematic just says cci_i2c_sda0, cci_i2c_sda3 and so on.
+
+I'll rename.
 
 ---
 bod
