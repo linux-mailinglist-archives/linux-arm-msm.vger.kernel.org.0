@@ -2,69 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DEFC4FEAC6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 01:46:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3754A4FEAB7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 01:46:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229699AbiDLXW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 19:22:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52208 "EHLO
+        id S229897AbiDLXY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 19:24:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbiDLXWk (ORCPT
+        with ESMTP id S229900AbiDLXYK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 19:22:40 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BCA2CF49E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 15:09:02 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id cj5so233450pfb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 15:09:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=m1PgMlQ/c6d7ywcKlgwyQP4QhYqQ6ZhRRf8MqOPdNS8=;
-        b=CFKaskt5J+Hjt1iheyHTHO1Hfw6AkzqezfNlKJ+nAvMUM720+8imfirmjfE6/OEkQU
-         wRzFlrRoetvWkHTCpCMVXlr7Rv3zM35tvIPHub0Dse9Rfd1m3Ql56B8kpYymxzN9j1Aw
-         q5Fxz8YtY4dXwct3mgjUG2sUIr+QXTOyuhg2c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=m1PgMlQ/c6d7ywcKlgwyQP4QhYqQ6ZhRRf8MqOPdNS8=;
-        b=pf/X2LWCdvWaGPd/fa8rM4v1ZQqcdefKVChGXaUTG3vcVRhB5xhlnz/R+Bk+GSacJV
-         9Cora1a6Jl1ccpoY7ZfxD/XUUk5C4iz/Yy4dKt/ugOQSazyub5LOk6NKiZmfBsn5sD/s
-         JvNXQkLSWXLioSCFt+4u7JvQyWCV3udadBwDZRNJyH/rixq5y5tCDMv0GUazifEEBCg6
-         alVBnckOJXesthqHFvYhUqU52jkzG5QiMRK7SOSUYSTRCXwwr/o1tOEnDs206E6rReQy
-         VNBFgKjPiefbqi8ckztOwaOhnCejh8hJVcPIZ+Fp0J6+JWLZNjEtmk70SPBJvFb0S731
-         YZyw==
-X-Gm-Message-State: AOAM532LtkpiwU2Szr5PUgdwG/WsL5Ho+1dDBxCaf8Z9QAghFC1Jg3/3
-        uVTgOeq75uq9O0w/vskJg/afDDzMDUDH0g==
-X-Google-Smtp-Source: ABdhPJzeKTKBQ2FnG11WQUFGeA/Ru70BLnML8/dBikS6ligVTc2DOSF5rckZLGS2y4lfWiIYvaYTUw==
-X-Received: by 2002:a05:6a00:238f:b0:4f7:78b1:2f6b with SMTP id f15-20020a056a00238f00b004f778b12f6bmr40175310pfc.17.1649800839223;
-        Tue, 12 Apr 2022 15:00:39 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:e880:a5db:8eff:6b6a])
-        by smtp.gmail.com with ESMTPSA id p13-20020a056a000b4d00b004faecee6e89sm40565288pfo.208.2022.04.12.15.00.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 15:00:38 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Georgi Djakov <djakov@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Alex Elder <elder@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-Subject: [PATCH 2/2] interconnect: qcom: sdx55: Drop IP0 interconnects
-Date:   Tue, 12 Apr 2022 15:00:33 -0700
-Message-Id: <20220412220033.1273607-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
-In-Reply-To: <20220412220033.1273607-1-swboyd@chromium.org>
-References: <20220412220033.1273607-1-swboyd@chromium.org>
+        Tue, 12 Apr 2022 19:24:10 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D59C2A8EEB;
+        Tue, 12 Apr 2022 15:46:51 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 90F5AB82050;
+        Tue, 12 Apr 2022 22:46:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C897DC385A1;
+        Tue, 12 Apr 2022 22:46:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649803609;
+        bh=ffZYKwatNc5nZJyZ3dD5dRgf2cNxyz6TOXNBsJ+l5EE=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=jlyaLcuIIGFUt/+a3KrMJBXgJ5vFHdz1jIZgvJP/jtrm24Idy+ad2Wp1E2RgdFkjf
+         JjZ4eSQy92doGD8tiWLYBiCNGYnSvKlt9nbObLDbJtI3VykyUCnLTfh/S6F4e95xAX
+         N0xEgS18DuWSzyqLgNCX8SHooE7keCmHfrqdTODH4D4jlpfR0zHgaZZQ6C63q+hXJz
+         UsluBF4mqLNc3pR2gw46PmJewRrMODQD3O7L7boPy03byZZHPD5T0ppH9CEF0/9BFD
+         XStz96DwmJe2W3yqTBqRQHdLZ8HSApZxOS3zRfoFeCoUHzrWOGvx+EA0HvEjfnu9XO
+         Uchx1ty/MLoGg==
+Date:   Tue, 12 Apr 2022 17:46:47 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Prasad Malisetty <quic_pmaliset@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        rajatja@google.com, refactormyself@gmail.com,
+        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
+        Vidya Sagar <vidyas@nvidia.com>,
+        "Kenneth R. Crudup" <kenny@panix.com>
+Subject: Re: [PATCH v2] [RFC PATCH] PCI: Update LTR threshold based on LTRME
+ bit
+Message-ID: <20220412224647.GA639905@bhelgaas>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1646679549-12494-1-git-send-email-quic_pmaliset@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,85 +61,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Similar to the sc7180 commit, let's drop the IP0 interconnects here
-because the IP0 resource is also used in the clk-rpmh driver on sdx55.
-It's bad to have the clk framework and interconnect framework control
-the same RPMh resource without any coordination. The rpmh driver in the
-kernel doesn't aggregate resources between clients either, so leaving
-control to clk-rpmh avoids any issues with unused interconnects turning
-off IP0 behind the back of the clk framework.
+[+cc Vidya, Kenny]
 
-Cc: Alex Elder <elder@linaro.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Mike Tipton <quic_mdtipton@quicinc.com>
-Fixes: b2150cab9a97 ("clk: qcom: rpmh: add support for SDX55 rpmh IPA clock")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/interconnect/qcom/sdx55.c | 21 ---------------------
- 1 file changed, 21 deletions(-)
+On Tue, Mar 08, 2022 at 12:29:09AM +0530, Prasad Malisetty wrote:
+> Update LTR threshold scale and value based on LTRME (Latency
+> Tolenrance Reporting Mechanism) from device capabilities.
+> 
+> In ASPM driver, LTR threshold scale and value is updating
+> based on tcommon_mode and t_poweron values. In kioxia NVMe,
+> L1.2 is failing due to LTR threshold scale and value is
+> greater values than max snoop/non snoop value.
+> 
+> In general, updated LTR threshold scale and value should be
+> less than max snoop/non snoop value to enter the device
+> into L1.2 state.
 
-diff --git a/drivers/interconnect/qcom/sdx55.c b/drivers/interconnect/qcom/sdx55.c
-index 03d604f84cc5..e3ac25a997b7 100644
---- a/drivers/interconnect/qcom/sdx55.c
-+++ b/drivers/interconnect/qcom/sdx55.c
-@@ -18,7 +18,6 @@
- #include "icc-rpmh.h"
- #include "sdx55.h"
- 
--DEFINE_QNODE(ipa_core_master, SDX55_MASTER_IPA_CORE, 1, 8, SDX55_SLAVE_IPA_CORE);
- DEFINE_QNODE(llcc_mc, SDX55_MASTER_LLCC, 4, 4, SDX55_SLAVE_EBI_CH0);
- DEFINE_QNODE(acm_tcu, SDX55_MASTER_TCU_0, 1, 8, SDX55_SLAVE_LLCC, SDX55_SLAVE_MEM_NOC_SNOC, SDX55_SLAVE_MEM_NOC_PCIE_SNOC);
- DEFINE_QNODE(qnm_snoc_gc, SDX55_MASTER_SNOC_GC_MEM_NOC, 1, 8, SDX55_SLAVE_LLCC);
-@@ -40,7 +39,6 @@ DEFINE_QNODE(xm_pcie, SDX55_MASTER_PCIE, 1, 8, SDX55_SLAVE_ANOC_SNOC);
- DEFINE_QNODE(xm_qdss_etr, SDX55_MASTER_QDSS_ETR, 1, 8, SDX55_SLAVE_SNOC_CFG, SDX55_SLAVE_EMAC_CFG, SDX55_SLAVE_USB3, SDX55_SLAVE_AOSS, SDX55_SLAVE_SPMI_FETCHER, SDX55_SLAVE_QDSS_CFG, SDX55_SLAVE_PDM, SDX55_SLAVE_SNOC_MEM_NOC_GC, SDX55_SLAVE_TCSR, SDX55_SLAVE_CNOC_DDRSS, SDX55_SLAVE_SPMI_VGI_COEX, SDX55_SLAVE_QPIC, SDX55_SLAVE_OCIMEM, SDX55_SLAVE_IPA_CFG, SDX55_SLAVE_USB3_PHY_CFG, SDX55_SLAVE_AOP, SDX55_SLAVE_BLSP_1, SDX55_SLAVE_SDCC_1, SDX55_SLAVE_CNOC_MSS, SDX55_SLAVE_PCIE_PARF, SDX55_SLAVE_ECC_CFG, SDX55_SLAVE_AUDIO, SDX55_SLAVE_AOSS, SDX55_SLAVE_PRNG, SDX55_SLAVE_CRYPTO_0_CFG, SDX55_SLAVE_TCU, SDX55_SLAVE_CLK_CTL, SDX55_SLAVE_IMEM_CFG);
- DEFINE_QNODE(xm_sdc1, SDX55_MASTER_SDCC_1, 1, 8, SDX55_SLAVE_AOSS, SDX55_SLAVE_IPA_CFG, SDX55_SLAVE_ANOC_SNOC, SDX55_SLAVE_AOP, SDX55_SLAVE_AUDIO);
- DEFINE_QNODE(xm_usb3, SDX55_MASTER_USB3, 1, 8, SDX55_SLAVE_ANOC_SNOC);
--DEFINE_QNODE(ipa_core_slave, SDX55_SLAVE_IPA_CORE, 1, 8);
- DEFINE_QNODE(ebi, SDX55_SLAVE_EBI_CH0, 1, 4);
- DEFINE_QNODE(qns_llcc, SDX55_SLAVE_LLCC, 1, 16, SDX55_SLAVE_EBI_CH0);
- DEFINE_QNODE(qns_memnoc_snoc, SDX55_SLAVE_MEM_NOC_SNOC, 1, 8, SDX55_MASTER_MEM_NOC_SNOC);
-@@ -82,7 +80,6 @@ DEFINE_QNODE(xs_sys_tcu_cfg, SDX55_SLAVE_TCU, 1, 8);
- DEFINE_QBCM(bcm_mc0, "MC0", true, &ebi);
- DEFINE_QBCM(bcm_sh0, "SH0", true, &qns_llcc);
- DEFINE_QBCM(bcm_ce0, "CE0", false, &qxm_crypto);
--DEFINE_QBCM(bcm_ip0, "IP0", false, &ipa_core_slave);
- DEFINE_QBCM(bcm_pn0, "PN0", false, &qhm_snoc_cfg);
- DEFINE_QBCM(bcm_sh3, "SH3", false, &xm_apps_rdwr);
- DEFINE_QBCM(bcm_sh4, "SH4", false, &qns_memnoc_snoc, &qns_sys_pcie);
-@@ -219,22 +216,6 @@ static const struct qcom_icc_desc sdx55_system_noc = {
- 	.num_bcms = ARRAY_SIZE(system_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *ipa_virt_bcms[] = {
--	&bcm_ip0,
--};
--
--static struct qcom_icc_node *ipa_virt_nodes[] = {
--	[MASTER_IPA_CORE] = &ipa_core_master,
--	[SLAVE_IPA_CORE] = &ipa_core_slave,
--};
--
--static const struct qcom_icc_desc sdx55_ipa_virt = {
--	.nodes = ipa_virt_nodes,
--	.num_nodes = ARRAY_SIZE(ipa_virt_nodes),
--	.bcms = ipa_virt_bcms,
--	.num_bcms = ARRAY_SIZE(ipa_virt_bcms),
--};
--
- static const struct of_device_id qnoc_of_match[] = {
- 	{ .compatible = "qcom,sdx55-mc-virt",
- 	  .data = &sdx55_mc_virt},
-@@ -242,8 +223,6 @@ static const struct of_device_id qnoc_of_match[] = {
- 	  .data = &sdx55_mem_noc},
- 	{ .compatible = "qcom,sdx55-system-noc",
- 	  .data = &sdx55_system_noc},
--	{ .compatible = "qcom,sdx55-ipa-virt",
--	  .data = &sdx55_ipa_virt},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, qnoc_of_match);
--- 
-https://chromeos.dev
+Interesting that you mention an L1.2 issue on a KIOXIA NVMe device.
 
+Kenny also reported an L1 Substates issue related to a KIOXIA NVMe
+device at [1].  That issue happened when saving/restoring the L1 SS
+state for suspend/resume.
+
+We ended up reverting 4257f7e008ea to avoid the problem, but when he
+tested that commit later, the issue did not occur [2].
+
+I don't know if there's a connection here, so this is just a heads-up
+in case there is.
+
+[1] https://lore.kernel.org/r/20201228040513.GA611645@bjorn-Precision-5520
+[2] https://lore.kernel.org/r/3ca14a7-b726-8430-fe61-a3ac183a1088@panix.com
+
+> Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
+> 
+> ---
+> Changes since v1:
+> 	- Added missing variable declaration in v1 patch.
+> ---
+>  drivers/pci/pcie/aspm.c | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> index a96b742..a67746c 100644
+> --- a/drivers/pci/pcie/aspm.c
+> +++ b/drivers/pci/pcie/aspm.c
+> @@ -463,6 +463,7 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+>  	u32 val1, val2, scale1, scale2;
+>  	u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
+>  	u32 ctl1 = 0, ctl2 = 0;
+> +	u32 cap;
+>  	u32 pctl1, pctl2, cctl1, cctl2;
+>  	u32 pl1_2_enables, cl1_2_enables;
+>  
+> @@ -499,9 +500,14 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+>  	 * Table 5-11.  T(POWER_OFF) is at most 2us and T(L1.2) is at
+>  	 * least 4us.
+>  	 */
+> -	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
+> -	encode_l12_threshold(l1_2_threshold, &scale, &value);
+> -	ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
+> +	pcie_capability_read_dword(child, PCI_EXP_DEVCAP2, &cap);
+> +	if (!(cap & PCI_EXP_DEVCAP2_LTR)) {
+> +		l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
+> +		encode_l12_threshold(l1_2_threshold, &scale, &value);
+> +		ctl1 |= scale << 29 | value << 16;
+> +	}
+> +
+> +	ctl1 |= t_common_mode;
+>  
+>  	/* Some broken devices only support dword access to L1 SS */
+>  	pci_read_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1, &pctl1);
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
