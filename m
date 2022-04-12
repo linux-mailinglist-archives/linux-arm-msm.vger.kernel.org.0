@@ -2,75 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D6354FE811
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 20:32:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1E584FE82B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 20:43:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231317AbiDLSeq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 14:34:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47510 "EHLO
+        id S1358785AbiDLSpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 14:45:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232756AbiDLSep (ORCPT
+        with ESMTP id S241938AbiDLSpY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 14:34:45 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDEBB4EDF6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 11:32:25 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id a19so15417194oie.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 11:32:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2WXD2iuN6pAX6EeuItghKADIiBu6DLmqZqNZpUmEXOc=;
-        b=EMPEg9LFAWgd3a+DMjzgPTmhKsM6uLowfqpCHmXQhQZs/+/GOsTGlejnBfFZdMHtHh
-         FlWAI/CZUYOz00Z8i4AE7heKXRlTIYlk8HGghgFd69LLA2JSfITxN/Qfoe3EPX50SpHK
-         uWrHxz1IT70mjfsQHtt+CQN0fG7RQ1iOCzyqbtwQ3Cxqhru3rQXAo7HhA3qJy5qQGgm/
-         XknH2NzfrUDG2XDjhLlG/8aHVtAlMYSq7AIzlhNUhXDTfhC/v66dyYKVoY4UCmh5ODXs
-         uQvA8InWhkZMCy+/Qk4bt+H1ECJGla+CWDuBPvv7X5W70fGuJZKFh8fGLPLxchn5Vg5E
-         J2TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2WXD2iuN6pAX6EeuItghKADIiBu6DLmqZqNZpUmEXOc=;
-        b=cxmRV2Z3QB7KbePShgO4gSsP9iphXLO5JCRhP3uvBdYhopQHdW0iJH+M3Ozb8OUMEy
-         U0htdnCe+JkbR5OniLlj8FfoQQYqcADomvotRCWSjUcNfUNm8XJb2PXtevgthKesN5CP
-         vO8YnLeZM9waCh6N/d6Bjzi+b2CDhTSYycZF6z1EatdXJ2/xUnpCTlWrAMfnfm5Y78db
-         /lZaXXOVabBl/xg4pPMirJ2BXAbLk05v2JsylRS4TccgCXAFrP343lUOoDwjPm38piLm
-         ORvej/0wUGCLimmnwbWDbHON3czLBJhYKNUv6DyBd8AG8Uge0JBPTXoIFT8tjOrvOfGt
-         p6dg==
-X-Gm-Message-State: AOAM5332gW4PgdMhSLW2ABRRMbzRUmdM4VWLuqxpKS75fkk7XPvCx2H0
-        fkbxFOS1hMGN2cZw7GjNAdQ9og==
-X-Google-Smtp-Source: ABdhPJy2zx0uyPdG59VNJ1iJmbVIEDs1PL1AmyuQKjinnL1M/SJFFtLw2w90LUGh1zi1vgTtWzYpXg==
-X-Received: by 2002:a05:6808:1925:b0:2f9:b8ca:8333 with SMTP id bf37-20020a056808192500b002f9b8ca8333mr2443295oib.12.1649788345125;
-        Tue, 12 Apr 2022 11:32:25 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id r23-20020a056830237700b005b2610517c8sm14236071oth.56.2022.04.12.11.32.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 11:32:24 -0700 (PDT)
-Date:   Tue, 12 Apr 2022 13:32:22 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof Wilczy??ski <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: Re: [PATCH v1 1/5] clk: qcom: regmap-mux: add pipe clk implementation
-Message-ID: <YlXFtt/+YwpMQ0va@builder.lan>
-References: <20220323085010.1753493-1-dmitry.baryshkov@linaro.org>
- <20220323085010.1753493-2-dmitry.baryshkov@linaro.org>
+        Tue, 12 Apr 2022 14:45:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B78E54BC0;
+        Tue, 12 Apr 2022 11:43:05 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2728961B48;
+        Tue, 12 Apr 2022 18:43:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79012C385A8;
+        Tue, 12 Apr 2022 18:43:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649788984;
+        bh=w2CtaQZcF4jWpOWkg14I1V3aX1NHUeLpL6sv3cNvE14=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=TTbUWeGTGtqpQE0D+lZtb/8tdEIjV52Fc7it9gm8vfWhdnCkaw5s/ZzlO9/VmCjtT
+         x7yguM8OC+11YUql9KlJFvivx1SokY2L1/DebBVzV8mFHd4FSJXchqqvtdk/Sirj9b
+         59J2M48SwJd7L5LiI2uzBieuW6atj60W1SwRCBJO43dvOm2lDP9K6xesW8WAZXOfIb
+         /f9wvnN5cbMnDvQ6F+7ww7FAn2A3XpQl/hqqF1QdpfDWCGNEn9wv2rU+Gf5gbMSPDQ
+         SflqFvq2sZTWlYqUGvLonrr3GLMx5Jn7e9gV0o/2DDG1OVmBLKkIa5/ACr2hkZbbfU
+         KUXMsDy8/rDqg==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220323085010.1753493-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAA8EJpod2cNOYr3g+DmdWo_2Ujv7-pW39fBKqcpCPvtVgP5-NQ@mail.gmail.com>
+References: <20220406002648.393486-1-dmitry.baryshkov@linaro.org> <20220406154028.EC897C385A3@smtp.kernel.org> <CAA8EJpod2cNOYr3g+DmdWo_2Ujv7-pW39fBKqcpCPvtVgP5-NQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] arm: qcom: qcom-apq8064: add separate device node for tsens
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Amit Kucheria <amitk@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-clk@vger.kernel.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 12 Apr 2022 11:43:02 -0700
+User-Agent: alot/0.10
+Message-Id: <20220412184304.79012C385A8@smtp.kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,142 +61,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 23 Mar 03:50 CDT 2022, Dmitry Baryshkov wrote:
+Quoting Dmitry Baryshkov (2022-04-06 12:57:30)
+> On Wed, 6 Apr 2022 at 18:40, Stephen Boyd <sboyd@kernel.org> wrote:
+> >
+> > Quoting Dmitry Baryshkov (2022-04-05 17:26:44)
+> > > Currently gcc-msm8960 driver manually creates tsens device. Instantia=
+te
+> > > the device using DT node instead. This follow the IPQ8064 device tree
+> > > schema.
+> >
+> > Why can't the schema be changed?
+>=20
+> But these commits change the schema. They make apq8064 follow more
+> logical scheme of ipq8064.
+>=20
 
-> On recent Qualcomm platforms the QMP PIPE clocks feed into a set of
-> muxes which must be parked to the "safe" source (bi_tcxo) when
-> corresponding GDSC is turned off and on again. Currently this is
-> handcoded in the PCIe driver by reparenting the gcc_pipe_N_clk_src
-> clock. However the same code sequence should be applied in the
-> pcie-qcom endpoint, USB3 and UFS drivers.
-> 
-> Rather than copying this sequence over and over again, follow the
-> example of clk_rcg2_shared_ops and implement this parking in the
-> enable() and disable() clock operations. As we are changing the parent
-> behind the back of the clock framework, also implement custom
-> set_parent() and get_parent() operations behaving accroding to the clock
-> framework expectations (cache the new parent if the clock is in disabled
-> state, return cached parent).
-> 
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/clk/qcom/clk-regmap-mux.c | 78 +++++++++++++++++++++++++++++++
->  drivers/clk/qcom/clk-regmap-mux.h |  3 ++
->  2 files changed, 81 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/clk-regmap-mux.c b/drivers/clk/qcom/clk-regmap-mux.c
-> index 45d9cca28064..c39ee783ee83 100644
-> --- a/drivers/clk/qcom/clk-regmap-mux.c
-> +++ b/drivers/clk/qcom/clk-regmap-mux.c
-> @@ -49,9 +49,87 @@ static int mux_set_parent(struct clk_hw *hw, u8 index)
->  	return regmap_update_bits(clkr->regmap, mux->reg, mask, val);
->  }
->  
-> +static u8 mux_safe_get_parent(struct clk_hw *hw)
-> +{
-> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
-> +	unsigned int val;
-> +
-> +	if (clk_hw_is_enabled(hw))
-> +		return mux_get_parent(hw);
-> +
-> +	val = mux->stored_parent_cfg;
-> +
-> +	if (mux->parent_map)
-> +		return qcom_find_cfg_index(hw, mux->parent_map, val);
-> +
-> +	return val;
-> +}
-> +
-> +static int mux_safe_set_parent(struct clk_hw *hw, u8 index)
-> +{
-> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
-> +
-> +	if (clk_hw_is_enabled(hw))
-> +		return mux_set_parent(hw, index);
-> +
-> +	if (mux->parent_map)
-> +		index = mux->parent_map[index].cfg;
-> +
-> +	mux->stored_parent_cfg = index;
-> +
-> +	return 0;
-> +}
-> +
-> +static void mux_safe_disable(struct clk_hw *hw)
-> +{
-> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
-> +	struct clk_regmap *clkr = to_clk_regmap(hw);
-> +	unsigned int mask = GENMASK(mux->width + mux->shift - 1, mux->shift);
-> +	unsigned int val;
-> +
-> +	regmap_read(clkr->regmap, mux->reg, &val);
-> +
-> +	mux->stored_parent_cfg = (val & mask) >> mux->shift;
-> +
-> +	val = mux->safe_src_parent;
-> +	if (mux->parent_map) {
-> +		int index = qcom_find_src_index(hw, mux->parent_map, val);
-> +
-> +		if (WARN_ON(index < 0))
-> +			return;
-> +
-> +		val = mux->parent_map[index].cfg;
-> +	}
-> +	val <<= mux->shift;
-> +
-> +	regmap_update_bits(clkr->regmap, mux->reg, mask, val);
-> +}
-> +
-> +static int mux_safe_enable(struct clk_hw *hw)
-> +{
-> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
-> +	struct clk_regmap *clkr = to_clk_regmap(hw);
-> +	unsigned int mask = GENMASK(mux->width + mux->shift - 1, mux->shift);
-> +	unsigned int val;
-> +
-> +	val = mux->stored_parent_cfg;
-> +	val <<= mux->shift;
-> +
-> +	return regmap_update_bits(clkr->regmap, mux->reg, mask, val);
-> +}
-> +
->  const struct clk_ops clk_regmap_mux_closest_ops = {
->  	.get_parent = mux_get_parent,
->  	.set_parent = mux_set_parent,
->  	.determine_rate = __clk_mux_determine_rate_closest,
->  };
->  EXPORT_SYMBOL_GPL(clk_regmap_mux_closest_ops);
-> +
-> +const struct clk_ops clk_regmap_mux_safe_ops = {
-> +	.enable = mux_safe_enable,
-> +	.disable = mux_safe_disable,
-> +	.get_parent = mux_safe_get_parent,
-> +	.set_parent = mux_safe_set_parent,
-> +	.determine_rate = __clk_mux_determine_rate_closest,
-> +};
-> +EXPORT_SYMBOL_GPL(clk_regmap_mux_safe_ops);
-> diff --git a/drivers/clk/qcom/clk-regmap-mux.h b/drivers/clk/qcom/clk-regmap-mux.h
-> index db6f4cdd9586..f86c674ce139 100644
-> --- a/drivers/clk/qcom/clk-regmap-mux.h
-> +++ b/drivers/clk/qcom/clk-regmap-mux.h
-> @@ -14,10 +14,13 @@ struct clk_regmap_mux {
->  	u32			reg;
->  	u32			shift;
->  	u32			width;
-> +	u8			safe_src_parent;
-> +	u8			stored_parent_cfg;
->  	const struct parent_map	*parent_map;
->  	struct clk_regmap	clkr;
->  };
->  
->  extern const struct clk_ops clk_regmap_mux_closest_ops;
-> +extern const struct clk_ops clk_regmap_mux_safe_ops;
->  
->  #endif
-> -- 
-> 2.35.1
-> 
+Sounds like ipq8064 and apq8064 follow different schemas. Is there any
+benefit to harmonizing the two vs. just leaving it as it is in the dts
+and making the schema match whatever the dts has?
