@@ -2,919 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E60264FDE68
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 13:45:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1AE74FDE8B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 13:54:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238665AbiDLLqm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 07:46:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39296 "EHLO
+        id S1348484AbiDLLux (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 07:50:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234242AbiDLLp7 (ORCPT
+        with ESMTP id S1354998AbiDLLtI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 07:45:59 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0DA95575C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 03:26:31 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id r13so36421886ejd.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 03:26:31 -0700 (PDT)
+        Tue, 12 Apr 2022 07:49:08 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2E1EB39;
+        Tue, 12 Apr 2022 03:32:31 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id nt14-20020a17090b248e00b001ca601046a4so2427096pjb.0;
+        Tue, 12 Apr 2022 03:32:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jrW/94cAa5hNSk55rAAwC9rYait37O4q4k3EokURmfk=;
-        b=iAgiRWQdZyFos/TNNKR/PiDgndtsLB14oCW9Ap6BCQTuXAMLDNRKR+HEipBoV5j/RS
-         rkaPVykP16ohiNJUwOcR8EVYzEb9rnwLUeLyJ9Mt4JxtcqrgqzKSe/5FCXr9B7jxlzGy
-         NUA8BSXqE3wEaDP1U33TJogDAqq+dIHSLoyZcqBnri3Y8l0KtqB+kWSu5dBCEYRxbtUw
-         PhULvB0uy7QNVggp+nanvQozu2dB1XUgTX1a+6hxk5X6dy5bAPX/M8UZf0A6VRjokkq9
-         QF/yCuFIWp7BewrBNPiQgEW4leQZNbQseA4NoO8hiJPyIjWiF/HGlpuvHcHEdKbNV7IM
-         z3ZA==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=j/diUgJ6on6fJMFNZB8r5qR9Df3QD60+s0BeH3kCZZE=;
+        b=eqPtoZXzQy7EibLkilIePwxil9cDXhi/222u6HQ2xkHFy75qv8m1UEp+2XcV9YhqkW
+         p3je/XJIODmDyyGCDBKS9Jmn0dg4o/PFO1+1Azg+eluYxdUV8KxfEtNsJ7svBi/TOwKM
+         sSPcvpjYZx7RQbfeQ4IBRkNzDn4OpDRwFmftZTa9dzB6IO8cFYhXR7GcQQYbVkorRwBP
+         5uU+FN9jHnKI/bTKHafONRvng3twc2hF1FQWmeUptt4Z+SnkXExC3M+4EdC3k3K52iXU
+         MdUp3TckFSJDchBbp6Mb8NH7d2wVL3T1DEHoxVExopqRIurj5lML/4Fz3Vy9CHzNpFYq
+         VUwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jrW/94cAa5hNSk55rAAwC9rYait37O4q4k3EokURmfk=;
-        b=mxB9YQAcd9tGmDtCin4H9LFcTkA/YogG65wgSFv/eUJgjOmYrfrCRXARVV9/dm0bxW
-         zR2yTwO2DfpqDbLFew03Bs3L5H9bmqZ/27pSUH07AmxljNVsEczOc1L7JgYHT3LdTQGX
-         S3m8KNj6QRxmbOLYcg+kfHbdZzYG1S6j9wTaVuwGbRuKAsx98Dvp0bepD26jZvblTjop
-         3BjFcIphwym9WAkl/5rNMAyCR0nensdvQAhl0q5MqNZINxT/jzgTTKsoyR3Q1nTswOi4
-         zoBEmav3zJ/V5V9P4sgmaVPKr7Nhzm3puzRKRsQRaTBb5yw/phEPtDO32xfzVAgFOFvf
-         +oiA==
-X-Gm-Message-State: AOAM531MIwIHq3ZtirkXGASiT5FLmDFcshuEBVpn0UjfP5lHPFmmUS5F
-        kbQoCpZj9n0wrpzJlHh9rCAA0fFWIZYYiIo/
-X-Google-Smtp-Source: ABdhPJxQ0DFgtHdPc7npkD3wNC7QSKrKJsMeJGJez/mZHjEuG4i7/jCS+AcT2gEVgn28sGKCD8b45Q==
-X-Received: by 2002:a17:906:3ecc:b0:6e7:f3f1:ea8b with SMTP id d12-20020a1709063ecc00b006e7f3f1ea8bmr13281643ejj.725.1649759190303;
-        Tue, 12 Apr 2022 03:26:30 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id z21-20020a170906435500b006e8669fae36sm4468959ejm.189.2022.04.12.03.26.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 03:26:29 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/3] interconnect: qcom: constify qcom_icc_bcm pointers
-Date:   Tue, 12 Apr 2022 12:26:23 +0200
-Message-Id: <20220412102623.227607-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220412102623.227607-1-krzysztof.kozlowski@linaro.org>
-References: <20220412102623.227607-1-krzysztof.kozlowski@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=j/diUgJ6on6fJMFNZB8r5qR9Df3QD60+s0BeH3kCZZE=;
+        b=w1SUXwDPaifQYAvkxkKi0+u59K1kz8FNtxNr4pXEm0UDwWuPhjqEZkDe36DFhipVVw
+         /pcC0X2HFdTVWikl/784UkdjpKVDN2FXFophoGoDoNCyVvzpNBDmQODm+zKfD5FzPWJg
+         wQ3EBls8MnzOdSIyb2jXzDRKBBuSQk2CIZYln0w7k0KZsFbgYCS38/rLlMHkaNu1t46z
+         JghvXpU2dFclKTm3fnNc6ZiIB+6+FpKhNc6jItGSRQmnErFIBpSR+fJ2/YlkN9QkmOc6
+         /dnNMyM8kA6H+29aZQ7Z5+8WYfojpnxgJ0tmQtLJQe8g2Y37K+zLb1cahgcCelJlh5Zj
+         It0A==
+X-Gm-Message-State: AOAM532rIcTcpyu3dGO8DuRaiva457raAXnSG7LGYWPahWRdSTKzsxse
+        mPrBvc0kWz1nwTeZjpoeQ1ghNqB/mdcTrZMqwC4=
+X-Google-Smtp-Source: ABdhPJxJgTuTm/K4D0Rn0JofYXhgZEIj20GsEhgefL/eIQuy+S3UNBl/Ih83/Cuo5UxX8n90jH9/N/sU99mGf9nIj20=
+X-Received: by 2002:a17:902:edc5:b0:156:68e4:416 with SMTP id
+ q5-20020a170902edc500b0015668e40416mr36483483plk.87.1649759551356; Tue, 12
+ Apr 2022 03:32:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+References: <20220411133428.42165-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20220411133428.42165-1-manivannan.sadhasivam@linaro.org>
+From:   Daniele Palmas <dnlplm@gmail.com>
+Date:   Tue, 12 Apr 2022 12:30:18 +0200
+Message-ID: <CAGRyCJEFjx6unWLavitXzyWU9G7vLnW9=b+xU-sLLq6LwU3Aow@mail.gmail.com>
+Subject: Re: [PATCH v2] bus: mhi: host: pci_generic: Sort mhi_pci_id_table
+ based on the PID
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
+        quic_bbhatt@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_RANDOM_ENVFROM,
+        HK_RANDOM_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Pointers to struct qcom_icc_bcm are not modified, so they can be made
-const for safety.  The contents of struct qcom_icc_bcm must stay
-non-const.
+Hi Mani,
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/interconnect/qcom/icc-rpmh.h |  4 ++--
- drivers/interconnect/qcom/sc7180.c   | 22 +++++++++++-----------
- drivers/interconnect/qcom/sc7280.c   | 24 ++++++++++++------------
- drivers/interconnect/qcom/sc8180x.c  | 20 ++++++++++----------
- drivers/interconnect/qcom/sdm845.c   | 16 ++++++++--------
- drivers/interconnect/qcom/sdx55.c    |  8 ++++----
- drivers/interconnect/qcom/sm8150.c   | 22 +++++++++++-----------
- drivers/interconnect/qcom/sm8250.c   | 22 +++++++++++-----------
- drivers/interconnect/qcom/sm8350.c   | 20 ++++++++++----------
- drivers/interconnect/qcom/sm8450.c   | 22 +++++++++++-----------
- 10 files changed, 90 insertions(+), 90 deletions(-)
+Il giorno lun 11 apr 2022 alle ore 15:34 Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> ha scritto:
+>
+> Sorting this way helps in identifying the products of vendors. There is no
+> sorting required for VID and the new VID should be added as the last entry.
+>
+> Let's also add a note clarifying this.
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>
 
-diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
-index 5dfc26072593..d29929461c17 100644
---- a/drivers/interconnect/qcom/icc-rpmh.h
-+++ b/drivers/interconnect/qcom/icc-rpmh.h
-@@ -22,7 +22,7 @@
- struct qcom_icc_provider {
- 	struct icc_provider provider;
- 	struct device *dev;
--	struct qcom_icc_bcm **bcms;
-+	struct qcom_icc_bcm * const *bcms;
- 	size_t num_bcms;
- 	struct bcm_voter *voter;
- };
-@@ -114,7 +114,7 @@ struct qcom_icc_fabric {
- struct qcom_icc_desc {
- 	struct qcom_icc_node * const *nodes;
- 	size_t num_nodes;
--	struct qcom_icc_bcm **bcms;
-+	struct qcom_icc_bcm * const *bcms;
- 	size_t num_bcms;
- };
- 
-diff --git a/drivers/interconnect/qcom/sc7180.c b/drivers/interconnect/qcom/sc7180.c
-index 11e221edbd1c..67191230f05b 100644
---- a/drivers/interconnect/qcom/sc7180.c
-+++ b/drivers/interconnect/qcom/sc7180.c
-@@ -181,7 +181,7 @@ DEFINE_QBCM(bcm_sn7, "SN7", false, &qnm_aggre1_noc);
- DEFINE_QBCM(bcm_sn9, "SN9", false, &qnm_aggre2_noc);
- DEFINE_QBCM(bcm_sn12, "SN12", false, &qnm_gemnoc);
- 
--static struct qcom_icc_bcm *aggre1_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
- 	&bcm_cn1,
- };
- 
-@@ -203,7 +203,7 @@ static const struct qcom_icc_desc sc7180_aggre1_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre1_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *aggre2_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre2_noc_bcms[] = {
- 	&bcm_ce0,
- };
- 
-@@ -226,7 +226,7 @@ static const struct qcom_icc_desc sc7180_aggre2_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre2_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *camnoc_virt_bcms[] = {
-+static struct qcom_icc_bcm * const camnoc_virt_bcms[] = {
- 	&bcm_mm1,
- };
- 
-@@ -244,7 +244,7 @@ static const struct qcom_icc_desc sc7180_camnoc_virt = {
- 	.num_bcms = ARRAY_SIZE(camnoc_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *compute_noc_bcms[] = {
-+static struct qcom_icc_bcm * const compute_noc_bcms[] = {
- 	&bcm_co0,
- 	&bcm_co2,
- 	&bcm_co3,
-@@ -263,7 +263,7 @@ static const struct qcom_icc_desc sc7180_compute_noc = {
- 	.num_bcms = ARRAY_SIZE(compute_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *config_noc_bcms[] = {
-+static struct qcom_icc_bcm * const config_noc_bcms[] = {
- 	&bcm_cn0,
- 	&bcm_cn1,
- };
-@@ -342,7 +342,7 @@ static const struct qcom_icc_desc sc7180_dc_noc = {
- 	.num_nodes = ARRAY_SIZE(dc_noc_nodes),
- };
- 
--static struct qcom_icc_bcm *gem_noc_bcms[] = {
-+static struct qcom_icc_bcm * const gem_noc_bcms[] = {
- 	&bcm_sh0,
- 	&bcm_sh2,
- 	&bcm_sh3,
-@@ -372,7 +372,7 @@ static const struct qcom_icc_desc sc7180_gem_noc = {
- 	.num_bcms = ARRAY_SIZE(gem_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *ipa_virt_bcms[] = {
-+static struct qcom_icc_bcm * const ipa_virt_bcms[] = {
- 	&bcm_ip0,
- };
- 
-@@ -388,7 +388,7 @@ static const struct qcom_icc_desc sc7180_ipa_virt = {
- 	.num_bcms = ARRAY_SIZE(ipa_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *mc_virt_bcms[] = {
-+static struct qcom_icc_bcm * const mc_virt_bcms[] = {
- 	&bcm_acv,
- 	&bcm_mc0,
- };
-@@ -405,7 +405,7 @@ static const struct qcom_icc_desc sc7180_mc_virt = {
- 	.num_bcms = ARRAY_SIZE(mc_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *mmss_noc_bcms[] = {
-+static struct qcom_icc_bcm * const mmss_noc_bcms[] = {
- 	&bcm_mm0,
- 	&bcm_mm1,
- 	&bcm_mm2,
-@@ -451,7 +451,7 @@ static const struct qcom_icc_desc sc7180_npu_noc = {
- 	.num_nodes = ARRAY_SIZE(npu_noc_nodes),
- };
- 
--static struct qcom_icc_bcm *qup_virt_bcms[] = {
-+static struct qcom_icc_bcm * const qup_virt_bcms[] = {
- 	&bcm_qup0,
- };
- 
-@@ -469,7 +469,7 @@ static const  struct qcom_icc_desc sc7180_qup_virt = {
- 	.num_bcms = ARRAY_SIZE(qup_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *system_noc_bcms[] = {
-+static struct qcom_icc_bcm * const system_noc_bcms[] = {
- 	&bcm_sn0,
- 	&bcm_sn1,
- 	&bcm_sn2,
-diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
-index d969bc6c4610..971f538bc98a 100644
---- a/drivers/interconnect/qcom/sc7280.c
-+++ b/drivers/interconnect/qcom/sc7280.c
-@@ -1476,7 +1476,7 @@ static struct qcom_icc_bcm bcm_sn14 = {
- 	.nodes = { &qns_pcie_mem_noc },
- };
- 
--static struct qcom_icc_bcm *aggre1_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
- 	&bcm_sn5,
- 	&bcm_sn6,
- 	&bcm_sn14,
-@@ -1507,7 +1507,7 @@ static const struct qcom_icc_desc sc7280_aggre1_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre1_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *aggre2_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre2_noc_bcms[] = {
- 	&bcm_ce0,
- };
- 
-@@ -1529,7 +1529,7 @@ static const struct qcom_icc_desc sc7280_aggre2_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre2_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *clk_virt_bcms[] = {
-+static struct qcom_icc_bcm * const clk_virt_bcms[] = {
- 	&bcm_qup0,
- 	&bcm_qup1,
- };
-@@ -1548,7 +1548,7 @@ static const struct qcom_icc_desc sc7280_clk_virt = {
- 	.num_bcms = ARRAY_SIZE(clk_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *cnoc2_bcms[] = {
-+static struct qcom_icc_bcm * const cnoc2_bcms[] = {
- 	&bcm_cn1,
- 	&bcm_cn2,
- };
-@@ -1610,7 +1610,7 @@ static const struct qcom_icc_desc sc7280_cnoc2 = {
- 	.num_bcms = ARRAY_SIZE(cnoc2_bcms),
- };
- 
--static struct qcom_icc_bcm *cnoc3_bcms[] = {
-+static struct qcom_icc_bcm * const cnoc3_bcms[] = {
- 	&bcm_cn0,
- 	&bcm_cn1,
- 	&bcm_sn3,
-@@ -1642,7 +1642,7 @@ static const struct qcom_icc_desc sc7280_cnoc3 = {
- 	.num_bcms = ARRAY_SIZE(cnoc3_bcms),
- };
- 
--static struct qcom_icc_bcm *dc_noc_bcms[] = {
-+static struct qcom_icc_bcm * const dc_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const dc_noc_nodes[] = {
-@@ -1658,7 +1658,7 @@ static const struct qcom_icc_desc sc7280_dc_noc = {
- 	.num_bcms = ARRAY_SIZE(dc_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *gem_noc_bcms[] = {
-+static struct qcom_icc_bcm * const gem_noc_bcms[] = {
- 	&bcm_sh0,
- 	&bcm_sh2,
- 	&bcm_sh3,
-@@ -1694,7 +1694,7 @@ static const struct qcom_icc_desc sc7280_gem_noc = {
- 	.num_bcms = ARRAY_SIZE(gem_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *lpass_ag_noc_bcms[] = {
-+static struct qcom_icc_bcm * const lpass_ag_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const lpass_ag_noc_nodes[] = {
-@@ -1714,7 +1714,7 @@ static const struct qcom_icc_desc sc7280_lpass_ag_noc = {
- 	.num_bcms = ARRAY_SIZE(lpass_ag_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *mc_virt_bcms[] = {
-+static struct qcom_icc_bcm * const mc_virt_bcms[] = {
- 	&bcm_acv,
- 	&bcm_mc0,
- };
-@@ -1731,7 +1731,7 @@ static const struct qcom_icc_desc sc7280_mc_virt = {
- 	.num_bcms = ARRAY_SIZE(mc_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *mmss_noc_bcms[] = {
-+static struct qcom_icc_bcm * const mmss_noc_bcms[] = {
- 	&bcm_mm0,
- 	&bcm_mm1,
- 	&bcm_mm4,
-@@ -1758,7 +1758,7 @@ static const struct qcom_icc_desc sc7280_mmss_noc = {
- 	.num_bcms = ARRAY_SIZE(mmss_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *nsp_noc_bcms[] = {
-+static struct qcom_icc_bcm * const nsp_noc_bcms[] = {
- 	&bcm_co0,
- 	&bcm_co3,
- };
-@@ -1777,7 +1777,7 @@ static const struct qcom_icc_desc sc7280_nsp_noc = {
- 	.num_bcms = ARRAY_SIZE(nsp_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *system_noc_bcms[] = {
-+static struct qcom_icc_bcm * const system_noc_bcms[] = {
- 	&bcm_sn0,
- 	&bcm_sn2,
- 	&bcm_sn7,
-diff --git a/drivers/interconnect/qcom/sc8180x.c b/drivers/interconnect/qcom/sc8180x.c
-index f6b69b9df410..136c62afb3b2 100644
---- a/drivers/interconnect/qcom/sc8180x.c
-+++ b/drivers/interconnect/qcom/sc8180x.c
-@@ -191,53 +191,53 @@ DEFINE_QBCM(bcm_sn11, "SN11", false, &mas_qnm_aggre2_noc);
- DEFINE_QBCM(bcm_sn14, "SN14", false, &slv_qns_pcie_mem_noc);
- DEFINE_QBCM(bcm_sn15, "SN15", false, &mas_qnm_gemnoc);
- 
--static struct qcom_icc_bcm *aggre1_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
- 	&bcm_sn3,
- 	&bcm_ce0,
- 	&bcm_qup0,
- };
- 
--static struct qcom_icc_bcm *aggre2_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre2_noc_bcms[] = {
- 	&bcm_sn14,
- 	&bcm_ce0,
- 	&bcm_qup0,
- };
- 
--static struct qcom_icc_bcm *camnoc_virt_bcms[] = {
-+static struct qcom_icc_bcm * const camnoc_virt_bcms[] = {
- 	&bcm_mm1,
- };
- 
--static struct qcom_icc_bcm *compute_noc_bcms[] = {
-+static struct qcom_icc_bcm * const compute_noc_bcms[] = {
- 	&bcm_co0,
- 	&bcm_co2,
- };
- 
--static struct qcom_icc_bcm *config_noc_bcms[] = {
-+static struct qcom_icc_bcm * const config_noc_bcms[] = {
- 	&bcm_cn0,
- };
- 
--static struct qcom_icc_bcm *gem_noc_bcms[] = {
-+static struct qcom_icc_bcm * const gem_noc_bcms[] = {
- 	&bcm_sh0,
- 	&bcm_sh2,
- 	&bcm_sh3,
- };
- 
--static struct qcom_icc_bcm *ipa_virt_bcms[] = {
-+static struct qcom_icc_bcm * const ipa_virt_bcms[] = {
- 	&bcm_ip0,
- };
- 
--static struct qcom_icc_bcm *mc_virt_bcms[] = {
-+static struct qcom_icc_bcm * const mc_virt_bcms[] = {
- 	&bcm_mc0,
- 	&bcm_acv,
- };
- 
--static struct qcom_icc_bcm *mmss_noc_bcms[] = {
-+static struct qcom_icc_bcm * const mmss_noc_bcms[] = {
- 	&bcm_mm0,
- 	&bcm_mm1,
- 	&bcm_mm2,
- };
- 
--static struct qcom_icc_bcm *system_noc_bcms[] = {
-+static struct qcom_icc_bcm * const system_noc_bcms[] = {
- 	&bcm_sn0,
- 	&bcm_sn1,
- 	&bcm_sn2,
-diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
-index 1af0e6972bad..954e7bd13fc4 100644
---- a/drivers/interconnect/qcom/sdm845.c
-+++ b/drivers/interconnect/qcom/sdm845.c
-@@ -175,7 +175,7 @@ DEFINE_QBCM(bcm_sn12, "SN12", false, &qnm_gladiator_sodv, &xm_gic);
- DEFINE_QBCM(bcm_sn14, "SN14", false, &qnm_pcie_anoc);
- DEFINE_QBCM(bcm_sn15, "SN15", false, &qnm_memnoc);
- 
--static struct qcom_icc_bcm *aggre1_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
- 	&bcm_sn9,
- 	&bcm_qup0,
- };
-@@ -201,7 +201,7 @@ static const struct qcom_icc_desc sdm845_aggre1_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre1_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *aggre2_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre2_noc_bcms[] = {
- 	&bcm_ce0,
- 	&bcm_sn11,
- 	&bcm_qup0,
-@@ -230,7 +230,7 @@ static const struct qcom_icc_desc sdm845_aggre2_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre2_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *config_noc_bcms[] = {
-+static struct qcom_icc_bcm * const config_noc_bcms[] = {
- 	&bcm_cn0,
- };
- 
-@@ -291,7 +291,7 @@ static const struct qcom_icc_desc sdm845_config_noc = {
- 	.num_bcms = ARRAY_SIZE(config_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *dc_noc_bcms[] = {
-+static struct qcom_icc_bcm * const dc_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const dc_noc_nodes[] = {
-@@ -307,7 +307,7 @@ static const struct qcom_icc_desc sdm845_dc_noc = {
- 	.num_bcms = ARRAY_SIZE(dc_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *gladiator_noc_bcms[] = {
-+static struct qcom_icc_bcm * const gladiator_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const gladiator_noc_nodes[] = {
-@@ -325,7 +325,7 @@ static const struct qcom_icc_desc sdm845_gladiator_noc = {
- 	.num_bcms = ARRAY_SIZE(gladiator_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *mem_noc_bcms[] = {
-+static struct qcom_icc_bcm * const mem_noc_bcms[] = {
- 	&bcm_mc0,
- 	&bcm_acv,
- 	&bcm_sh0,
-@@ -360,7 +360,7 @@ static const struct qcom_icc_desc sdm845_mem_noc = {
- 	.num_bcms = ARRAY_SIZE(mem_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *mmss_noc_bcms[] = {
-+static struct qcom_icc_bcm * const mmss_noc_bcms[] = {
- 	&bcm_mm0,
- 	&bcm_mm1,
- 	&bcm_mm2,
-@@ -394,7 +394,7 @@ static const struct qcom_icc_desc sdm845_mmss_noc = {
- 	.num_bcms = ARRAY_SIZE(mmss_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *system_noc_bcms[] = {
-+static struct qcom_icc_bcm * const system_noc_bcms[] = {
- 	&bcm_sn0,
- 	&bcm_sn1,
- 	&bcm_sn2,
-diff --git a/drivers/interconnect/qcom/sdx55.c b/drivers/interconnect/qcom/sdx55.c
-index 74ebf107d62f..3477e7094718 100644
---- a/drivers/interconnect/qcom/sdx55.c
-+++ b/drivers/interconnect/qcom/sdx55.c
-@@ -102,7 +102,7 @@ DEFINE_QBCM(bcm_sn9, "SN9", false, &qnm_memnoc);
- DEFINE_QBCM(bcm_sn10, "SN10", false, &qnm_memnoc_pcie);
- DEFINE_QBCM(bcm_sn11, "SN11", false, &qnm_ipa, &xm_ipa2pcie_slv);
- 
--static struct qcom_icc_bcm *mc_virt_bcms[] = {
-+static struct qcom_icc_bcm * const mc_virt_bcms[] = {
- 	&bcm_mc0,
- };
- 
-@@ -118,7 +118,7 @@ static const struct qcom_icc_desc sdx55_mc_virt = {
- 	.num_bcms = ARRAY_SIZE(mc_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *mem_noc_bcms[] = {
-+static struct qcom_icc_bcm * const mem_noc_bcms[] = {
- 	&bcm_sh0,
- 	&bcm_sh3,
- 	&bcm_sh4,
-@@ -140,7 +140,7 @@ static const struct qcom_icc_desc sdx55_mem_noc = {
- 	.num_bcms = ARRAY_SIZE(mem_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *system_noc_bcms[] = {
-+static struct qcom_icc_bcm * const system_noc_bcms[] = {
- 	&bcm_ce0,
- 	&bcm_pn0,
- 	&bcm_pn1,
-@@ -219,7 +219,7 @@ static const struct qcom_icc_desc sdx55_system_noc = {
- 	.num_bcms = ARRAY_SIZE(system_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *ipa_virt_bcms[] = {
-+static struct qcom_icc_bcm * const ipa_virt_bcms[] = {
- 	&bcm_ip0,
- };
- 
-diff --git a/drivers/interconnect/qcom/sm8150.c b/drivers/interconnect/qcom/sm8150.c
-index 5e08f2fba2a8..1d04a4bfea80 100644
---- a/drivers/interconnect/qcom/sm8150.c
-+++ b/drivers/interconnect/qcom/sm8150.c
-@@ -186,7 +186,7 @@ DEFINE_QBCM(bcm_sn12, "SN12", false, &qxm_pimem, &xm_gic);
- DEFINE_QBCM(bcm_sn14, "SN14", false, &qns_pcie_mem_noc);
- DEFINE_QBCM(bcm_sn15, "SN15", false, &qnm_gemnoc);
- 
--static struct qcom_icc_bcm *aggre1_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
- 	&bcm_qup0,
- 	&bcm_sn3,
- };
-@@ -209,7 +209,7 @@ static const struct qcom_icc_desc sm8150_aggre1_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre1_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *aggre2_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre2_noc_bcms[] = {
- 	&bcm_ce0,
- 	&bcm_qup0,
- 	&bcm_sn14,
-@@ -244,7 +244,7 @@ static const struct qcom_icc_desc sm8150_aggre2_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre2_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *camnoc_virt_bcms[] = {
-+static struct qcom_icc_bcm * const camnoc_virt_bcms[] = {
- 	&bcm_mm1,
- };
- 
-@@ -262,7 +262,7 @@ static const struct qcom_icc_desc sm8150_camnoc_virt = {
- 	.num_bcms = ARRAY_SIZE(camnoc_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *compute_noc_bcms[] = {
-+static struct qcom_icc_bcm * const compute_noc_bcms[] = {
- 	&bcm_co0,
- 	&bcm_co1,
- };
-@@ -279,7 +279,7 @@ static const struct qcom_icc_desc sm8150_compute_noc = {
- 	.num_bcms = ARRAY_SIZE(compute_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *config_noc_bcms[] = {
-+static struct qcom_icc_bcm * const config_noc_bcms[] = {
- 	&bcm_cn0,
- };
- 
-@@ -347,7 +347,7 @@ static const struct qcom_icc_desc sm8150_config_noc = {
- 	.num_bcms = ARRAY_SIZE(config_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *dc_noc_bcms[] = {
-+static struct qcom_icc_bcm * const dc_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const dc_noc_nodes[] = {
-@@ -363,7 +363,7 @@ static const struct qcom_icc_desc sm8150_dc_noc = {
- 	.num_bcms = ARRAY_SIZE(dc_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *gem_noc_bcms[] = {
-+static struct qcom_icc_bcm * const gem_noc_bcms[] = {
- 	&bcm_sh0,
- 	&bcm_sh2,
- 	&bcm_sh3,
-@@ -398,7 +398,7 @@ static const struct qcom_icc_desc sm8150_gem_noc = {
- 	.num_bcms = ARRAY_SIZE(gem_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *ipa_virt_bcms[] = {
-+static struct qcom_icc_bcm * const ipa_virt_bcms[] = {
- 	&bcm_ip0,
- };
- 
-@@ -414,7 +414,7 @@ static const struct qcom_icc_desc sm8150_ipa_virt = {
- 	.num_bcms = ARRAY_SIZE(ipa_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *mc_virt_bcms[] = {
-+static struct qcom_icc_bcm * const mc_virt_bcms[] = {
- 	&bcm_acv,
- 	&bcm_mc0,
- };
-@@ -431,7 +431,7 @@ static const struct qcom_icc_desc sm8150_mc_virt = {
- 	.num_bcms = ARRAY_SIZE(mc_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *mmss_noc_bcms[] = {
-+static struct qcom_icc_bcm * const mmss_noc_bcms[] = {
- 	&bcm_mm0,
- 	&bcm_mm1,
- 	&bcm_mm2,
-@@ -461,7 +461,7 @@ static const struct qcom_icc_desc sm8150_mmss_noc = {
- 	.num_bcms = ARRAY_SIZE(mmss_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *system_noc_bcms[] = {
-+static struct qcom_icc_bcm * const system_noc_bcms[] = {
- 	&bcm_sn0,
- 	&bcm_sn1,
- 	&bcm_sn11,
-diff --git a/drivers/interconnect/qcom/sm8250.c b/drivers/interconnect/qcom/sm8250.c
-index b186a76493ba..5cdb058fa095 100644
---- a/drivers/interconnect/qcom/sm8250.c
-+++ b/drivers/interconnect/qcom/sm8250.c
-@@ -195,7 +195,7 @@ DEFINE_QBCM(bcm_sn9, "SN9", false, &qnm_gemnoc_pcie);
- DEFINE_QBCM(bcm_sn11, "SN11", false, &qnm_gemnoc);
- DEFINE_QBCM(bcm_sn12, "SN12", false, &qns_pcie_modem_mem_noc, &qns_pcie_mem_noc);
- 
--static struct qcom_icc_bcm *aggre1_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
- 	&bcm_qup0,
- 	&bcm_sn12,
- };
-@@ -223,7 +223,7 @@ static const struct qcom_icc_desc sm8250_aggre1_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre1_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *aggre2_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre2_noc_bcms[] = {
- 	&bcm_ce0,
- 	&bcm_qup0,
- 	&bcm_sn12,
-@@ -253,7 +253,7 @@ static const struct qcom_icc_desc sm8250_aggre2_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre2_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *compute_noc_bcms[] = {
-+static struct qcom_icc_bcm * const compute_noc_bcms[] = {
- 	&bcm_co0,
- 	&bcm_co2,
- };
-@@ -270,7 +270,7 @@ static const struct qcom_icc_desc sm8250_compute_noc = {
- 	.num_bcms = ARRAY_SIZE(compute_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *config_noc_bcms[] = {
-+static struct qcom_icc_bcm * const config_noc_bcms[] = {
- 	&bcm_cn0,
- };
- 
-@@ -336,7 +336,7 @@ static const struct qcom_icc_desc sm8250_config_noc = {
- 	.num_bcms = ARRAY_SIZE(config_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *dc_noc_bcms[] = {
-+static struct qcom_icc_bcm * const dc_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const dc_noc_nodes[] = {
-@@ -352,7 +352,7 @@ static const struct qcom_icc_desc sm8250_dc_noc = {
- 	.num_bcms = ARRAY_SIZE(dc_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *gem_noc_bcms[] = {
-+static struct qcom_icc_bcm * const gem_noc_bcms[] = {
- 	&bcm_sh0,
- 	&bcm_sh2,
- 	&bcm_sh3,
-@@ -386,7 +386,7 @@ static const struct qcom_icc_desc sm8250_gem_noc = {
- 	.num_bcms = ARRAY_SIZE(gem_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *ipa_virt_bcms[] = {
-+static struct qcom_icc_bcm * const ipa_virt_bcms[] = {
- 	&bcm_ip0,
- };
- 
-@@ -402,7 +402,7 @@ static const struct qcom_icc_desc sm8250_ipa_virt = {
- 	.num_bcms = ARRAY_SIZE(ipa_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *mc_virt_bcms[] = {
-+static struct qcom_icc_bcm * const mc_virt_bcms[] = {
- 	&bcm_acv,
- 	&bcm_mc0,
- };
-@@ -419,7 +419,7 @@ static const struct qcom_icc_desc sm8250_mc_virt = {
- 	.num_bcms = ARRAY_SIZE(mc_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *mmss_noc_bcms[] = {
-+static struct qcom_icc_bcm * const mmss_noc_bcms[] = {
- 	&bcm_mm0,
- 	&bcm_mm1,
- 	&bcm_mm2,
-@@ -449,7 +449,7 @@ static const struct qcom_icc_desc sm8250_mmss_noc = {
- 	.num_bcms = ARRAY_SIZE(mmss_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *npu_noc_bcms[] = {
-+static struct qcom_icc_bcm * const npu_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const npu_noc_nodes[] = {
-@@ -475,7 +475,7 @@ static const struct qcom_icc_desc sm8250_npu_noc = {
- 	.num_bcms = ARRAY_SIZE(npu_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *system_noc_bcms[] = {
-+static struct qcom_icc_bcm * const system_noc_bcms[] = {
- 	&bcm_sn0,
- 	&bcm_sn1,
- 	&bcm_sn11,
-diff --git a/drivers/interconnect/qcom/sm8350.c b/drivers/interconnect/qcom/sm8350.c
-index dd0809f08388..5398e7c8d826 100644
---- a/drivers/interconnect/qcom/sm8350.c
-+++ b/drivers/interconnect/qcom/sm8350.c
-@@ -198,7 +198,7 @@ DEFINE_QBCM(bcm_mm4_disp, "MM4", false, &qns_mem_noc_sf_disp);
- DEFINE_QBCM(bcm_mm5_disp, "MM5", false, &qxm_rot_disp);
- DEFINE_QBCM(bcm_sh0_disp, "SH0", false, &qns_llcc_disp);
- 
--static struct qcom_icc_bcm *aggre1_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const aggre1_noc_nodes[] = {
-@@ -220,7 +220,7 @@ static const struct qcom_icc_desc sm8350_aggre1_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre1_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *aggre2_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre2_noc_bcms[] = {
- 	&bcm_ce0,
- 	&bcm_sn5,
- 	&bcm_sn6,
-@@ -251,7 +251,7 @@ static const struct qcom_icc_desc sm8350_aggre2_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre2_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *config_noc_bcms[] = {
-+static struct qcom_icc_bcm * const config_noc_bcms[] = {
- 	&bcm_cn0,
- 	&bcm_cn1,
- 	&bcm_cn2,
-@@ -330,7 +330,7 @@ static const struct qcom_icc_desc sm8350_config_noc = {
- 	.num_bcms = ARRAY_SIZE(config_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *dc_noc_bcms[] = {
-+static struct qcom_icc_bcm * const dc_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const dc_noc_nodes[] = {
-@@ -346,7 +346,7 @@ static const struct qcom_icc_desc sm8350_dc_noc = {
- 	.num_bcms = ARRAY_SIZE(dc_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *gem_noc_bcms[] = {
-+static struct qcom_icc_bcm * const gem_noc_bcms[] = {
- 	&bcm_sh0,
- 	&bcm_sh2,
- 	&bcm_sh3,
-@@ -386,7 +386,7 @@ static const struct qcom_icc_desc sm8350_gem_noc = {
- 	.num_bcms = ARRAY_SIZE(gem_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *lpass_ag_noc_bcms[] = {
-+static struct qcom_icc_bcm * const lpass_ag_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const lpass_ag_noc_nodes[] = {
-@@ -406,7 +406,7 @@ static const struct qcom_icc_desc sm8350_lpass_ag_noc = {
- 	.num_bcms = ARRAY_SIZE(lpass_ag_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *mc_virt_bcms[] = {
-+static struct qcom_icc_bcm * const mc_virt_bcms[] = {
- 	&bcm_acv,
- 	&bcm_mc0,
- 	&bcm_acv_disp,
-@@ -427,7 +427,7 @@ static const struct qcom_icc_desc sm8350_mc_virt = {
- 	.num_bcms = ARRAY_SIZE(mc_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *mmss_noc_bcms[] = {
-+static struct qcom_icc_bcm * const mmss_noc_bcms[] = {
- 	&bcm_mm0,
- 	&bcm_mm1,
- 	&bcm_mm4,
-@@ -466,7 +466,7 @@ static const struct qcom_icc_desc sm8350_mmss_noc = {
- 	.num_bcms = ARRAY_SIZE(mmss_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *nsp_noc_bcms[] = {
-+static struct qcom_icc_bcm * const nsp_noc_bcms[] = {
- 	&bcm_co0,
- 	&bcm_co3,
- };
-@@ -485,7 +485,7 @@ static const struct qcom_icc_desc sm8350_compute_noc = {
- 	.num_bcms = ARRAY_SIZE(nsp_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *system_noc_bcms[] = {
-+static struct qcom_icc_bcm * const system_noc_bcms[] = {
- 	&bcm_sn0,
- 	&bcm_sn2,
- 	&bcm_sn7,
-diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
-index 71fc31f59407..7e3d372b712f 100644
---- a/drivers/interconnect/qcom/sm8450.c
-+++ b/drivers/interconnect/qcom/sm8450.c
-@@ -1526,7 +1526,7 @@ static struct qcom_icc_bcm bcm_sh1_disp = {
- 	.nodes = { &qnm_pcie_disp },
- };
- 
--static struct qcom_icc_bcm *aggre1_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const aggre1_noc_nodes[] = {
-@@ -1547,7 +1547,7 @@ static const struct qcom_icc_desc sm8450_aggre1_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre1_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *aggre2_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre2_noc_bcms[] = {
- 	&bcm_ce0,
- };
- 
-@@ -1574,7 +1574,7 @@ static const struct qcom_icc_desc sm8450_aggre2_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre2_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *clk_virt_bcms[] = {
-+static struct qcom_icc_bcm * const clk_virt_bcms[] = {
- 	&bcm_qup0,
- 	&bcm_qup1,
- 	&bcm_qup2,
-@@ -1596,7 +1596,7 @@ static const struct qcom_icc_desc sm8450_clk_virt = {
- 	.num_bcms = ARRAY_SIZE(clk_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *config_noc_bcms[] = {
-+static struct qcom_icc_bcm * const config_noc_bcms[] = {
- 	&bcm_cn0,
- };
- 
-@@ -1665,7 +1665,7 @@ static const struct qcom_icc_desc sm8450_config_noc = {
- 	.num_bcms = ARRAY_SIZE(config_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *gem_noc_bcms[] = {
-+static struct qcom_icc_bcm * const gem_noc_bcms[] = {
- 	&bcm_sh0,
- 	&bcm_sh1,
- 	&bcm_sh0_disp,
-@@ -1700,7 +1700,7 @@ static const struct qcom_icc_desc sm8450_gem_noc = {
- 	.num_bcms = ARRAY_SIZE(gem_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *lpass_ag_noc_bcms[] = {
-+static struct qcom_icc_bcm * const lpass_ag_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const lpass_ag_noc_nodes[] = {
-@@ -1722,7 +1722,7 @@ static const struct qcom_icc_desc sm8450_lpass_ag_noc = {
- 	.num_bcms = ARRAY_SIZE(lpass_ag_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *mc_virt_bcms[] = {
-+static struct qcom_icc_bcm * const mc_virt_bcms[] = {
- 	&bcm_acv,
- 	&bcm_mc0,
- 	&bcm_acv_disp,
-@@ -1743,7 +1743,7 @@ static const struct qcom_icc_desc sm8450_mc_virt = {
- 	.num_bcms = ARRAY_SIZE(mc_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *mmss_noc_bcms[] = {
-+static struct qcom_icc_bcm * const mmss_noc_bcms[] = {
- 	&bcm_mm0,
- 	&bcm_mm1,
- 	&bcm_mm0_disp,
-@@ -1778,7 +1778,7 @@ static const struct qcom_icc_desc sm8450_mmss_noc = {
- 	.num_bcms = ARRAY_SIZE(mmss_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *nsp_noc_bcms[] = {
-+static struct qcom_icc_bcm * const nsp_noc_bcms[] = {
- 	&bcm_co0,
- };
- 
-@@ -1796,7 +1796,7 @@ static const struct qcom_icc_desc sm8450_nsp_noc = {
- 	.num_bcms = ARRAY_SIZE(nsp_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *pcie_anoc_bcms[] = {
-+static struct qcom_icc_bcm * const pcie_anoc_bcms[] = {
- 	&bcm_sn7,
- };
- 
-@@ -1815,7 +1815,7 @@ static const struct qcom_icc_desc sm8450_pcie_anoc = {
- 	.num_bcms = ARRAY_SIZE(pcie_anoc_bcms),
- };
- 
--static struct qcom_icc_bcm *system_noc_bcms[] = {
-+static struct qcom_icc_bcm * const system_noc_bcms[] = {
- 	&bcm_sn0,
- 	&bcm_sn1,
- 	&bcm_sn2,
--- 
-2.32.0
+Reviewed-by: Daniele Palmas <dnlplm@gmail.com>
 
+I will wait for this change to be merged, then rebase the FN980 one.
+
+Thanks,
+Daniele
+
+> Changes in v2:
+>
+> * Fixup the 0x0306 entry by moving it after subid
+>
+>  drivers/bus/mhi/host/pci_generic.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 541ced27d941..8858f3bf4f04 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -446,20 +446,21 @@ static const struct mhi_pci_dev_info mhi_sierra_em919x_info = {
+>         .sideband_wake = false,
+>  };
+>
+> +/* Keep the list sorted based on the PID. New VID should be added as the last entry */
+>  static const struct pci_device_id mhi_pci_id_table[] = {
+> +       { PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+> +               .driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
+>         /* EM919x (sdx55), use the same vid:pid as qcom-sdx55m */
+>         { PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, 0x18d7, 0x0200),
+>                 .driver_data = (kernel_ulong_t) &mhi_sierra_em919x_info },
+>         { PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
+>                 .driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
+> -       { PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+> -               .driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
+> +       { PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+> +               .driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
+>         { PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
+>                 .driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+>         { PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
+>                 .driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+> -       { PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+> -               .driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
+>         /* T99W175 (sdx55), Both for eSIM and Non-eSIM */
+>         { PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
+>                 .driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> --
+> 2.25.1
+>
