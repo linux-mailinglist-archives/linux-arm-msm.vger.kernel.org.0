@@ -2,75 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 346FA4FDF8E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 14:29:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E09774FE075
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 14:39:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352862AbiDLMVA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 08:21:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54328 "EHLO
+        id S1350810AbiDLMgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 08:36:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355421AbiDLMTK (ORCPT
+        with ESMTP id S1347461AbiDLMf6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 08:19:10 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C08C05D1BF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 04:21:50 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id r13so36695227ejd.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 04:21:50 -0700 (PDT)
+        Tue, 12 Apr 2022 08:35:58 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE84F326E8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 04:54:46 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id p15so36805751ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 04:54:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=CICJfzFu5LJCinZ65ytfGl8MaNmqBDc806/TqIYFmE4=;
-        b=t0CxHk6qxRxUG3wltlf/YmWunz2ZgYolmtg7475YgERjvcWmmHNyahpEW83mH9I5Wb
-         YHabjg5dIPqsoaAmw2mbAwibWLYkxHa6vSW0KojZ16M2Cet/K3Ba8inJDxb/iZDvMMRD
-         H2ze+OtTC+Kl5gtExnIVF0BybHMv0YParQDpttPZDFmE0GROM1ZZk+1fpnJtAaalW5kq
-         q0+ZrKRN8qjY6KDj+B1UiEe7yqFNiNjnd9lFAgkkjyfSycYzUWlZWBiCdh4ynGg9fPji
-         zAZdah0a6YpidCJME+kLL9iy9558PLiEcnIl6AjVDNolqn/s79i7MxzEIhv2+Cluw8p+
-         r/hQ==
+        bh=6udN7p84mQQbGIPlPrTSL/PLuG+dh1guReUObCKNXP8=;
+        b=DpJ5xce5z1oKLNoQI5H77n+qFkrR2trfG6eiMK3QQPicwsTlh1LbOMYrgQK2Jwkdwj
+         LK4vOsQSTqEtifdm6tfTeWzv5O6laFEG0jqXYJI8aqW9qc8WznM4Wh4ljvA2WY057Y2X
+         BOGQY5uI3BLeoeBOdfi3C/KNrD9lwiHjVqr88X5WIDgjNizuqzL4SvOf5YrNCrawGh8A
+         sXIlPr21fu2tSAT5DJoGwj0mpoVZPaVDZ20xJ6aJQ94w8uMTA94CkuyR12nglFQ5Ks7w
+         RaEhnkEIVS+j23IO68YdoptMq+MMdR6wiU1zJDTfHdQgmNoaxVKVcknvT8kKsjeHBk2v
+         d0QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=CICJfzFu5LJCinZ65ytfGl8MaNmqBDc806/TqIYFmE4=;
-        b=F2cibTHkTt3ncWmDWppNgF+PNM+nEkNxvOfeoBWX4egFox2e21pP+PbKTiVuLWeuDg
-         5vRC/LXbzMCkS28SpELbZFDs1ruCrbXQ1mWvWwMBD9/3SBx3qNK59qTnzmljv3Nfljms
-         qZWAfg3ubYJydO2c8d2arNKgmAFc4Lej9p1GRulu61iMDYgM1lVRaFrMHkjQpxiSej8A
-         LQ9aEnVKeuyagNxBJCBdEBJ4rgybNg+7FzfMrwEd7hoXvnVVkq7LGGVvTMJfneeNAvAF
-         vTNzfJupng4iGatKfQY6KIMe2Lxq+WznCC/8d7SOzWx+ji+A57nK0cEjgA4FLPR06tNl
-         0aMw==
-X-Gm-Message-State: AOAM533Q+6CRzZqMHfAKTKsoz7JwllDoyzf6oB/HNjIEPLe4IPNJ118z
-        GOoHLiweGbXN3TnldHcJTsc8gw==
-X-Google-Smtp-Source: ABdhPJznPjeApaTPet9E9iJ/1AMeuU5YvWAH3lJZ/Xq8ze46Vckwc2+EqvWt5ID9ZLuDwbNkQ1lR/w==
-X-Received: by 2002:a17:907:761c:b0:6d6:e553:7bd1 with SMTP id jx28-20020a170907761c00b006d6e5537bd1mr33821579ejc.5.1649762509294;
-        Tue, 12 Apr 2022 04:21:49 -0700 (PDT)
-Received: from [192.168.0.194] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id a22-20020a50ff16000000b00410d029ea5csm16422858edu.96.2022.04.12.04.21.48
+        bh=6udN7p84mQQbGIPlPrTSL/PLuG+dh1guReUObCKNXP8=;
+        b=WO7tSfgpgdMiZOQQRgJF5nRXMrQYcbavKkj9V86I2Pw1mmqhhbKxeqJGm0EhVvJeJM
+         FxeAm+l3IwXFKTfspz5jo6vkSU+mwLraEyhEACvCB2oPPr8jHGVedo27bVyuhOowmYg8
+         4NkN5ecoSl+5uLCjrZ0AcYKlk9Ez3RtOteAhyo9a5HWsMLUvPjNAsxoWXBxNJib+fgLW
+         PBM2iIi23HPAEt/kCUqxc4fWglk1xf9dWP406x2iQIon3K3VKuZ7PaYT9muB/i696EXX
+         xBfe6bBRI6Ub6sGFqrffYCVAvZSXmTMHCSrpzSEav01S3NfA7TK7XW/6fGttvCfBmIC8
+         ESsA==
+X-Gm-Message-State: AOAM531tP7ymZQx51HvG0wiR8NE1s2Lvm4cZVA3Gx7+AV9EJSpR4Yset
+        cVuGdEqJH7dSha9b/F1dEO8PNw==
+X-Google-Smtp-Source: ABdhPJyJhJm8ZVPk7tw6VD+la4hCwdTsmQiQ9k85Y+ogd6oPi0J+6g0dtxAMCcJdiZDIn+K32a4jtw==
+X-Received: by 2002:a17:907:1b1b:b0:6e4:7fac:6ce0 with SMTP id mp27-20020a1709071b1b00b006e47fac6ce0mr34100414ejc.617.1649764485066;
+        Tue, 12 Apr 2022 04:54:45 -0700 (PDT)
+Received: from [192.168.0.195] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id u4-20020aa7db84000000b004136c2c357csm16632865edt.70.2022.04.12.04.54.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Apr 2022 04:21:48 -0700 (PDT)
-Message-ID: <0dfd0d99-3519-3e1d-0f9e-07f1fcf2e0a4@linaro.org>
-Date:   Tue, 12 Apr 2022 13:21:47 +0200
+        Tue, 12 Apr 2022 04:54:44 -0700 (PDT)
+Message-ID: <1b0c00bd-de0e-3096-556d-4d944e5d9b00@linaro.org>
+Date:   Tue, 12 Apr 2022 13:54:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH 3/4] ARM: dts: qcom: sdx65: Add USB3 and PHY support
+Subject: Re: [PATCH v2 4/7] dt-bindings: arm-smmu: Add binding for SDX65 SMMU
 Content-Language: en-US
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, gregkh@linuxfoundation.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1649761414-19217-1-git-send-email-quic_rohiagar@quicinc.com>
- <1649761414-19217-4-git-send-email-quic_rohiagar@quicinc.com>
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, will@kernel.org,
+        robin.murphy@arm.com, joro@8bytes.org, robh+dt@kernel.org,
+        krzk+dt@kernel.org, ulf.hansson@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     manivannan.sadhasivam@linaro.org,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <1649670615-21268-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1649670615-21268-5-git-send-email-quic_rohiagar@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1649761414-19217-4-git-send-email-quic_rohiagar@quicinc.com>
+In-Reply-To: <1649670615-21268-5-git-send-email-quic_rohiagar@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,115 +81,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/04/2022 13:03, Rohit Agarwal wrote:
-> Add devicetree nodes for enabling USB3 controller, Qcom QMP PHY and
-> SNPS HS PHY on SDX65.
+On 11/04/2022 11:50, Rohit Agarwal wrote:
+> Add devicetree binding for Qualcomm SDX65 SMMU.
 > 
 > Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
 > ---
->  arch/arm/boot/dts/qcom-sdx65.dtsi | 83 +++++++++++++++++++++++++++++++++++++++
->  1 file changed, 83 insertions(+)
+>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
-> index 3e4dc63..e419e47 100644
-> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
-> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
-> @@ -130,6 +130,7 @@
->  			reg = <0x00100000 0x001f7400>;
->  			clocks = <&rpmhcc RPMH_CXO_CLK>, <&rpmhcc RPMH_CXO_CLK_A>, <&sleep_clk>;
->  			clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
-> +			#power-domain-cells = <1>;
->  			#clock-cells = <1>;
->  			#reset-cells = <1>;
->  		};
-> @@ -143,6 +144,45 @@
->  			status = "disabled";
->  		};
->  
-> +		usb_hsphy: hsphy@ff4000 {
 
-Generic node names, so "phy".
 
-> +			compatible = "qcom,usb-snps-hs-7nm-phy";
-> +			reg = <0xff4000 0x120>;
-> +			#phy-cells = <0>;
-> +			status = "disabled";
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>;
-> +			clock-names = "ref";
-> +			resets = <&gcc GCC_QUSB2PHY_BCR>;
-> +		};
-> +
-> +		usb_qmpphy: phy@ff6000 {
-> +			compatible = "qcom,sdx65-qmp-usb3-uni-phy";
-> +			reg = <0x00ff6000 0x1c8>;
-> +			status = "disabled";
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +			ranges;
-> +
-> +			clocks = <&gcc GCC_USB3_PHY_AUX_CLK>,
-> +				 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-> +				 <&gcc GCC_USB3_PRIM_CLKREF_EN>;
-> +			clock-names = "aux", "cfg_ahb", "ref";
-> +
-> +			resets = <&gcc GCC_USB3PHY_PHY_BCR>,
-> +				 <&gcc GCC_USB3_PHY_BCR>;
-> +			reset-names = "phy", "common";
-> +
-> +			usb_ssphy: phy@ff6200 {
-> +				reg = <0x00ff6e00 0x160>,
-> +				      <0x00ff7000 0x1ec>,
-> +				      <0x00ff6200 0x1e00>;
-> +				#phy-cells = <0>;
-> +				#clock-cells = <0>;
-> +				clocks = <&gcc GCC_USB3_PHY_PIPE_CLK>;
-> +				clock-names = "pipe0";
-> +				clock-output-names = "usb3_uni_phy_pipe_clk_src";
-> +			};
-> +		};
-> +
->  		system_noc: interconnect@1620000 {
->  			compatible = "qcom,sdx65-system-noc";
->  			reg = <0x1620000 0x31200>;
-> @@ -182,6 +222,49 @@
->  			status = "disabled";
->  		};
->  
-> +		usb: usb@a6f8800 {
-> +			compatible = "qcom,sdx65-dwc3", "qcom,dwc3";
-> +			reg = <0x0a6f8800 0x400>;
-> +			status = "disabled";
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +			ranges;
-> +
-> +			clocks = <&gcc GCC_USB30_SLV_AHB_CLK>,
-> +				 <&gcc GCC_USB30_MASTER_CLK>,
-> +				 <&gcc GCC_USB30_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_USB30_MOCK_UTMI_CLK>,
-> +				 <&gcc GCC_USB30_SLEEP_CLK>;
-> +			clock-names = "cfg_noc", "core", "iface", "mock_utmi",
-> +					"sleep";
-> +
-> +			assigned-clocks = <&gcc GCC_USB30_MOCK_UTMI_CLK>,
-> +					  <&gcc GCC_USB30_MASTER_CLK>;
-> +			assigned-clock-rates = <19200000>, <200000000>;
-> +
-> +			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&pdc 19 IRQ_TYPE_EDGE_BOTH>,
-> +					      <&pdc 76 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&pdc 18 IRQ_TYPE_EDGE_BOTH>;
-> +			interrupt-names = "hs_phy_irq", "dp_hs_phy_irq",
-> +					  "ss_phy_irq", "dm_hs_phy_irq";
-> +
-> +			power-domains = <&gcc USB30_GDSC>;
-> +
-> +			resets = <&gcc GCC_USB30_BCR>;
-> +
-> +			usb_dwc3: dwc3@a600000 {
-
-usb. Please test your changes with `make dtbs_check`. This should
-clearly fail.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
 Best regards,
