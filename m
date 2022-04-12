@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E74C64FEA62
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 01:46:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D9844FEAB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 01:46:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229906AbiDLX2a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 19:28:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39168 "EHLO
+        id S229929AbiDLX2d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 19:28:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230377AbiDLX1x (ORCPT
+        with ESMTP id S230106AbiDLX0t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 19:27:53 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D63C6E125D;
-        Tue, 12 Apr 2022 15:34:59 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id l7so432716ejn.2;
-        Tue, 12 Apr 2022 15:34:59 -0700 (PDT)
+        Tue, 12 Apr 2022 19:26:49 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD045E5E2A;
+        Tue, 12 Apr 2022 15:37:16 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id bh17so392487ejb.8;
+        Tue, 12 Apr 2022 15:37:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:from:to:cc:subject:references:mime-version
          :content-disposition:in-reply-to;
-        bh=FafwHJHCvkay4y+ls36HJhZzn1yzq14wSSj6X3swf1s=;
-        b=Dzvnd0rPx94Q971Tqc9OactuCidS+CcvfBihaMSIB6c93FCmcYavPo3PQ+O1DaIfbR
-         iOYNOQyUFXKiBdd26mUWabthDPhNpeFx5B8o8OOiRMmvFAriub7uoNIQAqlIVjgA3y0b
-         Nzu3SaJUgoTAhVLLbf2j/eXSqfvY6v/0uiB/BjHZW9RvZXup1wMIbuYL0IuZp8xHZakS
-         l8EdBL7nvLygGN40kZLSsDKp1u/3/QNlR3EzsHj9erGLwLIToAbdFZYBjOglT6TvArqK
-         2+W++bx8ZE4Ln9mE2QxtmSlhJNyuiPl8V1pExYLJAfPAOKirg2ly92HSOr4asx1RfULv
-         QV2A==
+        bh=Fi7MSAw9JJfEvAstthfKaej5RCtbNw/RZ/uRsivb1lk=;
+        b=P0UAHya9e7CASxMUbhq+/+mZprtCmglz9V4rIrQxtp/2QWoEr6dcyh2A77/WSJ9ZQ9
+         MzS3J/xT0o1MaHzzIWjNkb+O3ATx8QEftezuDBugYJJKvaR2wK5xHunebttC/0nHQTd6
+         xQVcX/ye+UobRN4t/8PjkZd9H18AYH7RXVDTD2tUlOPiTO6mXikOzUUB/Kid2+axYFjd
+         xTR5Fku5CdDPgoL7balX19T3uzgItp0GQe1Ij2eWWZKiyWoiIGI6SnMvOu+Iq7Y0+d5G
+         fP9FxGITJMK2Zx/cg7mfn9RhZ4ifYp2D3g08reHUUW6CjUnLn+iz0nJVfEz8ABt0QNej
+         MIaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:from:to:cc:subject:references
          :mime-version:content-disposition:in-reply-to;
-        bh=FafwHJHCvkay4y+ls36HJhZzn1yzq14wSSj6X3swf1s=;
-        b=HG3JO9mDQL/6qZMY5V1UHF9iUNYVACWRWqqudJaKnkWcseMqNKzd8Yk3jOZ6SCs0Bz
-         z7/Fe2MuI/2tYRh72AvyhmiDQLVy4KZtIhYctsggqisARGT9AggNpi4d87Imn0RTFCPW
-         S0jxkRwLUsisfH/YwbbIWE0Nu+7+5yQpLu29TIy6KX6ChB3+Zg7k9kRKyW63jxOAj1xx
-         MaD2jxcXoySstMGNBTQ7yy5rJxW0W1AtZKmkifsFYOCgrMMSVAq0UR7TwtIiQodn06HY
-         72s9b2lxO0br3Cr9fsZtrXVDtnI9//g/M07e7yS5O8L0ZcwsD+L9fTwzUajhjvyr8XIw
-         iVLQ==
-X-Gm-Message-State: AOAM532s+x7q5O2yueral1uIvBq6Sg6RQnoHqgz4Pz+DtzkzridmNhJ1
-        HGmd8mjR2GEsgKKGGfrm0IWiIPuFSiU=
-X-Google-Smtp-Source: ABdhPJyCPaqifSUltjbLOIjqRmekqDuH9+xXz8yac5SgvHPlXlNL/9gn0d81nbGQj31HuPnxA7sQjA==
-X-Received: by 2002:a17:907:1b09:b0:6d8:faa8:4a06 with SMTP id mp9-20020a1709071b0900b006d8faa84a06mr36414759ejc.701.1649802898274;
-        Tue, 12 Apr 2022 15:34:58 -0700 (PDT)
+        bh=Fi7MSAw9JJfEvAstthfKaej5RCtbNw/RZ/uRsivb1lk=;
+        b=ATOEVXBWRxPWWCAWzOUABYPf9OAfxa/gtez7QfIPn6jvxJJkFbOGk7qL1VHY2X3Bcv
+         C3lpJCQTq7F7sSkXdYy4SUo0ctdJau45mnpjBRalUQ+tYM7UoKbhQgvXhxhqQzYw5Yw0
+         JgzpEDcYAcBusp6uGB/F4g5O3xNc8FcV5ZXQb5nZ7IAxfFbL9NmzZrfBuiWg9p1+tp2Y
+         aR8peEIrrTe9/ees3mKMVu6IwDtMNsfNSM8+vxYJoVwtMYKqtKR7OfXRVJp/hjq7E2Tg
+         006MXx4alk5dZiR0n+s8q15JldenHzoGI7byUmrdGDlLZ8j24tBc8dlRawCro6QrzBg8
+         xC5A==
+X-Gm-Message-State: AOAM531OBFQk1J4dfJj1RcD0Z9YienAj9qkycfIk78quoKiWfEEjyyt3
+        c1sdxR6Jq3m17rUVPuUveXg=
+X-Google-Smtp-Source: ABdhPJyYVVu7QfZdAoEiOX9n+x0N4MK17YbtHf77uSWQez4CJOaLjbCP0v6dWK2uaL8ANUwRNSw+gQ==
+X-Received: by 2002:a17:906:3082:b0:6e0:111f:8986 with SMTP id 2-20020a170906308200b006e0111f8986mr35114749ejv.677.1649803035186;
+        Tue, 12 Apr 2022 15:37:15 -0700 (PDT)
 Received: from Ansuel-xps. (host-80-182-176-248.pool80182.interbusiness.it. [80.182.176.248])
-        by smtp.gmail.com with ESMTPSA id g2-20020a50bf42000000b0041cc5233252sm342550edk.57.2022.04.12.15.34.56
+        by smtp.gmail.com with ESMTPSA id u10-20020a50d94a000000b004131aa2525esm336339edj.49.2022.04.12.15.37.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 15:34:57 -0700 (PDT)
-Message-ID: <6255fe91.1c69fb81.3ce58.2045@mx.google.com>
-X-Google-Original-Message-ID: <YlXcG1EB1yu4NEOG@Ansuel-xps.>
-Date:   Tue, 12 Apr 2022 22:07:55 +0200
+        Tue, 12 Apr 2022 15:37:14 -0700 (PDT)
+Message-ID: <6255ff1a.1c69fb81.bae17.1e86@mx.google.com>
+X-Google-Original-Message-ID: <YlXcpPCmMBPPzuXM@Ansuel-xps.>
+Date:   Tue, 12 Apr 2022 22:10:12 +0200
 From:   Ansuel Smith <ansuelsmth@gmail.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Jonathan McDowell <noodles@earth.li>
-Subject: Re: [PATCH v3 03/18] ARM: dts: qcom: add missing rpm regulators and
- cells for ipq8064
+Subject: Re: [PATCH v3 13/18] ARM: dts: qcom: add opp table for cpu and l2
+ for ipq8064
 References: <20220309190152.7998-1-ansuelsmth@gmail.com>
- <20220309190152.7998-4-ansuelsmth@gmail.com>
- <YlXXH3ikA5Tcdx9R@builder.lan>
+ <20220309190152.7998-14-ansuelsmth@gmail.com>
+ <YlXcHJminisFjobl@builder.lan>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YlXXH3ikA5Tcdx9R@builder.lan>
+In-Reply-To: <YlXcHJminisFjobl@builder.lan>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -75,94 +75,152 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 12, 2022 at 02:46:39PM -0500, Bjorn Andersson wrote:
+On Tue, Apr 12, 2022 at 03:07:56PM -0500, Bjorn Andersson wrote:
 > On Wed 09 Mar 13:01 CST 2022, Ansuel Smith wrote:
 > 
-> > Add cells definition for rpm node
-> 
-> Why do we need the cells?
->
-
-Mh I'm referring to address-cells and size-cells required for reg or dtb
-will give warnings.
-
-> > and add missing regulators for the 4
-> > regulator present on ipq8064. There regulators are controlled by rpm and
-> > to correctly works gsbi4_i2c require to be NEVER disabled or rpm will
-> 
-> Are you saying "...to correctly work, gsbi4_i2c must NEVER be disabled..."?
-> 
-> If so, that's good information, but how does it relate to this
-> particular change?
-> 
-
-It doesn't but since it I had many days trying to debug the regulators
-not working only to discover that the problem was with the pin, I thought
-it was a good idea to add this info. Should I just drop it or should i
-add some comments in the dts?
-
-> Regards,
-> Bjorn
-> 
-> > reject any regulator change request.
+> > Add opp table for cpu and l2 cache. While the current cpufreq is
+> > the generic one that doesn't scale the L2 cache, we add the l2
+> > cache opp anyway for the sake of completeness. This will be handy in the
+> > future when a dedicated cpufreq driver is introduced for krait cores
+> > that will correctly scale l2 cache with the core freq.
+> > 
+> > Opp-level is set based on the logic of
+> > 0: idle level
+> > 1: normal level
+> > 2: turbo level
 > > 
 > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > > Tested-by: Jonathan McDowell <noodles@earth.li>
 > > ---
-> >  arch/arm/boot/dts/qcom-ipq8064.dtsi | 36 +++++++++++++++++++++++++++++
-> >  1 file changed, 36 insertions(+)
+> >  arch/arm/boot/dts/qcom-ipq8064.dtsi | 99 +++++++++++++++++++++++++++++
+> >  1 file changed, 99 insertions(+)
 > > 
 > > diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > index b309bc0fbbcd..0938838a4af8 100644
+> > index 7dd0b901cd30..a1079583def9 100644
 > > --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
 > > +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > @@ -842,10 +842,46 @@ rpm: rpm@108000 {
-> >  			clocks = <&gcc RPM_MSG_RAM_H_CLK>;
-> >  			clock-names = "ram";
-> >  
-> > +			#address-cells = <1>;
-> > +			#size-cells = <0>;
-> > +
-> >  			rpmcc: clock-controller {
-> >  				compatible = "qcom,rpmcc-ipq806x", "qcom,rpmcc";
-> >  				#clock-cells = <1>;
-> >  			};
-> > +
-> > +			smb208_regulators: regulators {
-> > +				compatible = "qcom,rpm-smb208-regulators";
-> > +				status = "okay";
-> > +
-> > +				smb208_s1a: s1a {
-> > +					regulator-min-microvolt = <1050000>;
-> > +					regulator-max-microvolt = <1150000>;
-> > +
-> > +					qcom,switch-mode-frequency = <1200000>;
-> > +				};
-> > +
-> > +				smb208_s1b: s1b {
-> > +					regulator-min-microvolt = <1050000>;
-> > +					regulator-max-microvolt = <1150000>;
-> > +
-> > +					qcom,switch-mode-frequency = <1200000>;
-> > +				};
-> > +
-> > +				smb208_s2a: s2a {
-> > +					regulator-min-microvolt = < 800000>;
-> > +					regulator-max-microvolt = <1250000>;
-> > +
-> > +					qcom,switch-mode-frequency = <1200000>;
-> > +				};
-> > +
-> > +				smb208_s2b: s2b {
-> > +					regulator-min-microvolt = < 800000>;
-> > +					regulator-max-microvolt = <1250000>;
-> > +
-> > +					qcom,switch-mode-frequency = <1200000>;
-> > +				};
-> > +			};
+> > @@ -48,6 +48,105 @@ L2: l2-cache {
 > >  		};
+> >  	};
 > >  
-> >  		tcsr: syscon@1a400000 {
+> > +	opp_table_l2: opp_table_l2 {
+> 
+> Please don't use '_' in the node names.
+> 
+> > +		compatible = "operating-points-v2";
+> > +
+> > +		opp-384000000 {
+> > +			opp-hz = /bits/ 64 <384000000>;
+> > +			opp-microvolt = <1100000>;
+> > +			clock-latency-ns = <100000>;
+> > +			opp-level = <0>;
+> > +		};
+> > +
+> > +		opp-1000000000 {
+> > +			opp-hz = /bits/ 64 <1000000000>;
+> > +			opp-microvolt = <1100000>;
+> > +			clock-latency-ns = <100000>;
+> > +			opp-level = <1>;
+> > +		};
+> > +
+> > +		opp-1200000000 {
+> > +			opp-hz = /bits/ 64 <1200000000>;
+> > +			opp-microvolt = <1150000>;
+> > +			clock-latency-ns = <100000>;
+> > +			opp-level = <2>;
+> > +		};
+> > +	};
+> > +
+> > +	opp_table0: opp_table0 {
+> 
+> Perhaps you can name this opp-table-kryo, to make it consistent with
+> opp-table-l2 above?
+> 
+> Regards,
+> Bjorn
+>
+
+Considering this is krait, I think I should use krait. Also about this
+we have from ages the wrong compatible but we had too keep kryo to not
+break compatibility with old dt. Can I fix this for once and just add
+this additional compatible?
+
+> > +		compatible = "operating-points-v2-kryo-cpu";
+> > +		nvmem-cells = <&speedbin_efuse>;
+> > +
+> > +		/*
+> > +		 * Voltage thresholds are <target min max>
+> > +		 */
+> > +		opp-384000000 {
+> > +			opp-hz = /bits/ 64 <384000000>;
+> > +			opp-microvolt-speed0-pvs0-v0 = <1000000 950000 1050000>;
+> > +			opp-microvolt-speed0-pvs1-v0 = <925000 878750 971250>;
+> > +			opp-microvolt-speed0-pvs2-v0 = <875000 831250 918750>;
+> > +			opp-microvolt-speed0-pvs3-v0 = <800000 760000 840000>;
+> > +			opp-supported-hw = <0x1>;
+> > +			clock-latency-ns = <100000>;
+> > +			opp-level = <0>;
+> > +		};
+> > +
+> > +		opp-600000000 {
+> > +			opp-hz = /bits/ 64 <600000000>;
+> > +			opp-microvolt-speed0-pvs0-v0 = <1050000 997500 1102500>;
+> > +			opp-microvolt-speed0-pvs1-v0 = <975000 926250 1023750>;
+> > +			opp-microvolt-speed0-pvs2-v0 = <925000 878750 971250>;
+> > +			opp-microvolt-speed0-pvs3-v0 = <850000 807500 892500>;
+> > +			opp-supported-hw = <0x1>;
+> > +			clock-latency-ns = <100000>;
+> > +			opp-level = <1>;
+> > +		};
+> > +
+> > +		opp-800000000 {
+> > +			opp-hz = /bits/ 64 <800000000>;
+> > +			opp-microvolt-speed0-pvs0-v0 = <1100000 1045000 1155000>;
+> > +			opp-microvolt-speed0-pvs1-v0 = <1025000 973750 1076250>;
+> > +			opp-microvolt-speed0-pvs2-v0 = <995000 945250 1044750>;
+> > +			opp-microvolt-speed0-pvs3-v0 = <900000 855000 945000>;
+> > +			opp-supported-hw = <0x1>;
+> > +			clock-latency-ns = <100000>;
+> > +			opp-level = <1>;
+> > +		};
+> > +
+> > +		opp-1000000000 {
+> > +			opp-hz = /bits/ 64 <1000000000>;
+> > +			opp-microvolt-speed0-pvs0-v0 = <1150000 1092500 1207500>;
+> > +			opp-microvolt-speed0-pvs1-v0 = <1075000 1021250 1128750>;
+> > +			opp-microvolt-speed0-pvs2-v0 = <1025000 973750 1076250>;
+> > +			opp-microvolt-speed0-pvs3-v0 = <950000 902500 997500>;
+> > +			opp-supported-hw = <0x1>;
+> > +			clock-latency-ns = <100000>;
+> > +			opp-level = <1>;
+> > +		};
+> > +
+> > +		opp-1200000000 {
+> > +			opp-hz = /bits/ 64 <1200000000>;
+> > +			opp-microvolt-speed0-pvs0-v0 = <1200000 1140000 1260000>;
+> > +			opp-microvolt-speed0-pvs1-v0 = <1125000 1068750 1181250>;
+> > +			opp-microvolt-speed0-pvs2-v0 = <1075000 1021250 1128750>;
+> > +			opp-microvolt-speed0-pvs3-v0 = <1000000 950000 1050000>;
+> > +			opp-supported-hw = <0x1>;
+> > +			clock-latency-ns = <100000>;
+> > +			opp-level = <2>;
+> > +		};
+> > +
+> > +		opp-1400000000 {
+> > +			opp-hz = /bits/ 64 <1400000000>;
+> > +			opp-microvolt-speed0-pvs0-v0 = <1250000 1187500 1312500>;
+> > +			opp-microvolt-speed0-pvs1-v0 = <1175000 1116250 1233750>;
+> > +			opp-microvolt-speed0-pvs2-v0 = <1125000 1068750 1181250>;
+> > +			opp-microvolt-speed0-pvs3-v0 = <1050000 997500 1102500>;
+> > +			opp-supported-hw = <0x1>;
+> > +			clock-latency-ns = <100000>;
+> > +			opp-level = <2>;
+> > +		};
+> > +	};
+> > +
+> >  	thermal-zones {
+> >  		sensor0-thermal {
+> >  			polling-delay-passive = <0>;
 > > -- 
 > > 2.34.1
 > > 
