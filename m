@@ -2,68 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2732C4FC947
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 02:31:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DA854FCC21
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 04:05:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240425AbiDLAdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 20:33:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48434 "EHLO
+        id S229521AbiDLCG0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 22:06:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229609AbiDLAdY (ORCPT
+        with ESMTP id S241449AbiDLCGZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 20:33:24 -0400
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6311625594
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 17:31:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1649723468; x=1681259468;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Agc/9Y7wOfxwFujbzIMC+t72NgHYwPEL9fQAInAnmBk=;
-  b=I3I+0NnwNtEG7ujk75y7G7ClvzMr5YcnRUQ87gaTh+RYxNmrj/22kN4P
-   9auiSQs4KOXfN6RUi1Yrr3wSysJGAJgMzfeVZEh/DKA7DK3RD73BMGGuc
-   xEik2zqhemP5G96nb7AEpc1h/vsVlWGvgo+Hn91h82No42W5bbkZY7XaZ
-   jFy1074i6df0mxdsQKjKMHf1NhsmvemBVq3I1j+EiVz7d7Q+64RaCU1Ie
-   kRMdHZwzERvfTCgsZUEdAV9o+rwFMNhqhui++acENelEy5qnI1Xtd6aoD
-   h6XEEYk1XSGKbf3KpD/s/HgfHlcR5PTaaZqJmLFM583gWGGA38sq/8ay2
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10314"; a="262425742"
-X-IronPort-AV: E=Sophos;i="5.90,252,1643702400"; 
-   d="scan'208";a="262425742"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Apr 2022 17:31:07 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,252,1643702400"; 
-   d="scan'208";a="644495956"
-Received: from lkp-server02.sh.intel.com (HELO d3fc50ef50de) ([10.239.97.151])
-  by FMSMGA003.fm.intel.com with ESMTP; 11 Apr 2022 17:31:04 -0700
-Received: from kbuild by d3fc50ef50de with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1ne4Qx-0002Mc-Hi;
-        Tue, 12 Apr 2022 00:31:03 +0000
-Date:   Tue, 12 Apr 2022 08:30:39 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        jani.nikula@intel.com, intel-gfx@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, rodrigo.vivi@intel.com
-Cc:     kbuild-all@lists.01.org, David Airlie <airlied@linux.ie>,
-        markyacoub@chromium.org, Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        abhinavk@codeaurora.org, swboyd@chromium.org,
-        Sean Paul <seanpaul@chromium.org>,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
-Subject: Re: [PATCH v5 10/10] drm/msm: Implement HDCP 1.x using the new drm
- HDCP helpers
-Message-ID: <202204120815.MYwHtGG5-lkp@intel.com>
-References: <20220411204741.1074308-11-sean@poorly.run>
+        Mon, 11 Apr 2022 22:06:25 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A41641115E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 19:04:08 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id c18-20020a056830001200b005e6ed2a21c9so3108704otp.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 19:04:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=zvoTA19lOSf+RxDApoV2g7DS34QXv7Uz6a91gdazgbA=;
+        b=ixp9N3OdCGMLEWbM85IfczdFOK7x+zrcNuK3oJ4WhGQxYpvj4UfCQAnTEUrqBqlyE6
+         ut2nO/TwJIq6HLJ4OKIwqEqhzJTUUpdWdkczYCxo21mHB2iCymaDiavkq0M8+flowO7L
+         4noEM57ZTiBbtarzb9G0UaxFmSZOfJyEo+AnT9VekGmz6IPsTmVsydW9IJjo7ZgQS0EI
+         JhK/lb0XUaSl1aLVhDtWOuOfLhVd0xmzLQckqEoK4gpdiyDQ/hzq5C5sbrdsdJ0r9g8D
+         JeAzyB/cvIzpW+XQe50o/MI/TQ9qJFBHRvV5APtZal+jyzEckldKZDD+gXzTk+rygGp8
+         QopQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zvoTA19lOSf+RxDApoV2g7DS34QXv7Uz6a91gdazgbA=;
+        b=ZKaiKpDMYNdqCnFZ6da2Sy+cyLvYYOic8jA+ypgm3EkN39n1IfqzTwWOOsP4btTM6w
+         ckC+SERWNkSwjx7Qc0MdDOMxNKI+jyBMq6AOma1KgJImIx1y8UTN3jOK9JUulaqgSN1S
+         reZwC7iBGbmJMUeEraD0W4LIctehWEWVRpZqLj+ysOX5qNxV5hqwcSP83ojVlLFnN8oU
+         oWHlnHhJ4FKCSF03RkTyJ6CNzMmyUZN5xAd23k4McBAGqp9zMAVkXmIpNH0yoSdU1TeS
+         eLuKMCQI1GnpQkaR5yXVE8qBK8U8te1o+pWoUE1bjIwe1ACWOzPko+po9RTomJcmVKKG
+         rEhg==
+X-Gm-Message-State: AOAM533SNAi/bomHiGQI5m0smVU5dNtNt5AEqLQ+ANTwbGgtAj5S5nLx
+        UfrNKoJF9tZrTsRQEMC6XHUtiw==
+X-Google-Smtp-Source: ABdhPJwi6fbVaWoKpsh9S0HWoxo7SRLOfsxglqmhbKSzasOJYyo3IRZ+780Yb9Se1kR1rsouyJuaeQ==
+X-Received: by 2002:a9d:7486:0:b0:5e6:c299:4ab5 with SMTP id t6-20020a9d7486000000b005e6c2994ab5mr6521984otk.95.1649729047530;
+        Mon, 11 Apr 2022 19:04:07 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id u139-20020acaab91000000b002ecb2639985sm11937935oie.20.2022.04.11.19.04.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Apr 2022 19:04:06 -0700 (PDT)
+Date:   Mon, 11 Apr 2022 21:04:05 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        dmitry.baryshkov@linaro.org, jonathan@marek.ca, hfink@snap.com,
+        jgrahsl@snap.com
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sm8250: camss: Add downstream
+ camera pin definitions
+Message-ID: <YlTeFYp6IoPJfHEb@builder.lan>
+References: <20220409164556.2832782-1-bryan.odonoghue@linaro.org>
+ <20220409164556.2832782-4-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220411204741.1074308-11-sean@poorly.run>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <20220409164556.2832782-4-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,53 +74,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sean,
+On Sat 09 Apr 11:45 CDT 2022, Bryan O'Donoghue wrote:
 
-I love your patch! Yet something to improve:
+> There are a number of pin mux descriptions for the CAMSS block which are
+> defined downstream.
+> 
+> Bring in the definitions now. Subsequent changes will optionally activate
+> those muxes for different sm8250 based boards.
+> 
 
-[auto build test ERROR on drm-tip/drm-tip]
-[also build test ERROR on v5.18-rc2 next-20220411]
-[cannot apply to drm/drm-next drm-intel/for-linux-next robh/for-next]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+I'm not able to spot where these are referenced, are they not used or am
+I just failing the search today?
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Sean-Paul/drm-hdcp-Pull-HDCP-auth-exchange-check-into-helpers/20220412-045000
-base:   git://anongit.freedesktop.org/drm/drm-tip drm-tip
-config: parisc-buildonly-randconfig-r003-20220411 (https://download.01.org/0day-ci/archive/20220412/202204120815.MYwHtGG5-lkp@intel.com/config)
-compiler: hppa-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/ba0d7728b853712a831745c4fddff8d72be1c9c8
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Sean-Paul/drm-hdcp-Pull-HDCP-auth-exchange-check-into-helpers/20220412-045000
-        git checkout ba0d7728b853712a831745c4fddff8d72be1c9c8
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=parisc SHELL=/bin/bash drivers/gpu/drm/msm/
+I would prefer that we don't sprinkle pinctrl states that potentially
+might be used at a later time...
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 471 +++++++++++++++++++++++++++
+>  1 file changed, 471 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index 3d6c617de045..91ed079edbf7 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -3687,6 +3687,477 @@ tlmm: pinctrl@f100000 {
+>  			gpio-ranges = <&tlmm 0 0 181>;
+>  			wakeup-parent = <&pdc>;
+>  
+> +			cam_sensor_mclk0_active: cam_sensor_mclk0_active {
 
-All errors (new ones prefixed by >>):
+Please don't use '_' in the node name.
 
->> drivers/gpu/drm/msm/msm_atomic.c:10:10: fatal error: dp_drm.h: No such file or directory
-      10 | #include "dp_drm.h"
-         |          ^~~~~~~~~~
-   compilation terminated.
+> +				/* MCLK0 */
 
+I would prefer that we don't inherit the mux/config split upstream.
 
-vim +10 drivers/gpu/drm/msm/msm_atomic.c
+You can either do:
 
-     9	
-  > 10	#include "dp_drm.h"
-    11	#include "msm_atomic_trace.h"
-    12	#include "msm_drv.h"
-    13	#include "msm_gem.h"
-    14	#include "msm_kms.h"
-    15	
+cam-sensor-mclk0-active-state {
+	pins = ;
+	function = ;
+	bias...
+};
 
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+or:
+
+cam-sensor-mclk0-active-state {
+	mclk0 {
+		pins = ;
+		function = ;
+		bias...
+	};
+};
+
+And depending on how this state is actually used you could lump together
+the configuration of several pins - with different properties - in the
+same state node.
+
+Regards,
+Bjorn
