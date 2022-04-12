@@ -2,69 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D9844FEAB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 01:46:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4C064FEB45
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 01:47:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229929AbiDLX2d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 19:28:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38762 "EHLO
+        id S230143AbiDLXbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 19:31:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230106AbiDLX0t (ORCPT
+        with ESMTP id S230346AbiDLXbT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 19:26:49 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD045E5E2A;
-        Tue, 12 Apr 2022 15:37:16 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id bh17so392487ejb.8;
-        Tue, 12 Apr 2022 15:37:16 -0700 (PDT)
+        Tue, 12 Apr 2022 19:31:19 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8342290271
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 15:28:31 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id s2so300632pfh.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 15:28:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Fi7MSAw9JJfEvAstthfKaej5RCtbNw/RZ/uRsivb1lk=;
-        b=P0UAHya9e7CASxMUbhq+/+mZprtCmglz9V4rIrQxtp/2QWoEr6dcyh2A77/WSJ9ZQ9
-         MzS3J/xT0o1MaHzzIWjNkb+O3ATx8QEftezuDBugYJJKvaR2wK5xHunebttC/0nHQTd6
-         xQVcX/ye+UobRN4t/8PjkZd9H18AYH7RXVDTD2tUlOPiTO6mXikOzUUB/Kid2+axYFjd
-         xTR5Fku5CdDPgoL7balX19T3uzgItp0GQe1Ij2eWWZKiyWoiIGI6SnMvOu+Iq7Y0+d5G
-         fP9FxGITJMK2Zx/cg7mfn9RhZ4ifYp2D3g08reHUUW6CjUnLn+iz0nJVfEz8ABt0QNej
-         MIaQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JqPjwNSGzY9+HzHZDgw3eVUdEY3fO13OJf0xVug0ueo=;
+        b=Rx8iu67QAQwZex6fWL1sgh8cglXQ0Z3CWcYve31a4UC5d8j2CV7Vw2Ehyn7Jl5D/dy
+         KRLOS9ND5rXOD6H9AKNJP8qIbbx4HicQAJh2mV4/MW/DUyyYnZ0IRnaYZjsE4+n01Dtx
+         7TvlEsBNYYjr9c2l6zl2ZhXQ+hoWGpWsz1HvM/Ie71Fzu7AvydchWb1482ARULazfIDD
+         83mA7Z4abQjO0XQukQQFXvbIJ/WAX4QMxJtTPwRMqpMfxZzD+VvidqqBTw5krHUpsJHc
+         jSQ24icK4yMtWbRzlJDnw0ZBKh0TFJMWjtm5yl8UuBCC80ftU/EbNnxI8V9wS0HQYeK/
+         5vSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Fi7MSAw9JJfEvAstthfKaej5RCtbNw/RZ/uRsivb1lk=;
-        b=ATOEVXBWRxPWWCAWzOUABYPf9OAfxa/gtez7QfIPn6jvxJJkFbOGk7qL1VHY2X3Bcv
-         C3lpJCQTq7F7sSkXdYy4SUo0ctdJau45mnpjBRalUQ+tYM7UoKbhQgvXhxhqQzYw5Yw0
-         JgzpEDcYAcBusp6uGB/F4g5O3xNc8FcV5ZXQb5nZ7IAxfFbL9NmzZrfBuiWg9p1+tp2Y
-         aR8peEIrrTe9/ees3mKMVu6IwDtMNsfNSM8+vxYJoVwtMYKqtKR7OfXRVJp/hjq7E2Tg
-         006MXx4alk5dZiR0n+s8q15JldenHzoGI7byUmrdGDlLZ8j24tBc8dlRawCro6QrzBg8
-         xC5A==
-X-Gm-Message-State: AOAM531OBFQk1J4dfJj1RcD0Z9YienAj9qkycfIk78quoKiWfEEjyyt3
-        c1sdxR6Jq3m17rUVPuUveXg=
-X-Google-Smtp-Source: ABdhPJyYVVu7QfZdAoEiOX9n+x0N4MK17YbtHf77uSWQez4CJOaLjbCP0v6dWK2uaL8ANUwRNSw+gQ==
-X-Received: by 2002:a17:906:3082:b0:6e0:111f:8986 with SMTP id 2-20020a170906308200b006e0111f8986mr35114749ejv.677.1649803035186;
-        Tue, 12 Apr 2022 15:37:15 -0700 (PDT)
-Received: from Ansuel-xps. (host-80-182-176-248.pool80182.interbusiness.it. [80.182.176.248])
-        by smtp.gmail.com with ESMTPSA id u10-20020a50d94a000000b004131aa2525esm336339edj.49.2022.04.12.15.37.13
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JqPjwNSGzY9+HzHZDgw3eVUdEY3fO13OJf0xVug0ueo=;
+        b=3ndJO+vBDE7Xam5TyANBj0K/epcUV6BuJDxuXeVicH2KNW+MjlIIRSK1j9/pszYs8d
+         Z5EGm1p+9p9wZQ/olIRFfX+MWN9T6+q2hpvAiVgww5kPRLcUeUa+EuC23xaaTzqu98ny
+         9Ol44GtfxAi6VCFfgw1By8KrPTIwiBpyvxLqz4kwIvFCom3PAGg7U9TDRpD/xGdn/tIA
+         z64rEaZwr1ZUAJhAadfVaHG7sRe9vieWN0sdniFClHsWRypqMVUiaQALnyqM8YhWGXtZ
+         eNUEQiNXbVMeToSoVSSrNECbIaxxcbIhfHkSwuRlyIVu8KUDf+7kp2Fiy3lm7EmmUGWG
+         5ZhQ==
+X-Gm-Message-State: AOAM533u978FK2GLJ7KfOh3VcN+iUwMYnzV845hIZpdq3NMPkNggvkrW
+        CjSf4kngUm4mZ3kEnIavtw71J3hlaHk=
+X-Google-Smtp-Source: ABdhPJxUi7dNDCCedyqkYea6nCWY5Rkxx0r9qRfxILcmYFc0nHZ83e8fDCSJYzQ0dALjg8dz9y2zAQ==
+X-Received: by 2002:a17:902:7fc5:b0:158:1de9:4646 with SMTP id t5-20020a1709027fc500b001581de94646mr23027600plb.91.1649798775636;
+        Tue, 12 Apr 2022 14:26:15 -0700 (PDT)
+Received: from olv-glaptop3.lan ([2601:647:4400:452:1661:f107:58eb:51b7])
+        by smtp.gmail.com with ESMTPSA id 196-20020a6300cd000000b0039940fd184dsm3784363pga.9.2022.04.12.14.26.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 15:37:14 -0700 (PDT)
-Message-ID: <6255ff1a.1c69fb81.bae17.1e86@mx.google.com>
-X-Google-Original-Message-ID: <YlXcpPCmMBPPzuXM@Ansuel-xps.>
-Date:   Tue, 12 Apr 2022 22:10:12 +0200
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jonathan McDowell <noodles@earth.li>
-Subject: Re: [PATCH v3 13/18] ARM: dts: qcom: add opp table for cpu and l2
- for ipq8064
-References: <20220309190152.7998-1-ansuelsmth@gmail.com>
- <20220309190152.7998-14-ansuelsmth@gmail.com>
- <YlXcHJminisFjobl@builder.lan>
+        Tue, 12 Apr 2022 14:26:15 -0700 (PDT)
+From:   Chia-I Wu <olvaffe@gmail.com>
+To:     freedreno@lists.freedesktop.org
+Cc:     dri-devel@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2] drm/msm: add trace_dma_fence_emit to msm_gpu_submit
+Date:   Tue, 12 Apr 2022 14:25:58 -0700
+Message-Id: <20220412212558.827289-1-olvaffe@gmail.com>
+X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YlXcHJminisFjobl@builder.lan>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -75,155 +74,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 12, 2022 at 03:07:56PM -0500, Bjorn Andersson wrote:
-> On Wed 09 Mar 13:01 CST 2022, Ansuel Smith wrote:
-> 
-> > Add opp table for cpu and l2 cache. While the current cpufreq is
-> > the generic one that doesn't scale the L2 cache, we add the l2
-> > cache opp anyway for the sake of completeness. This will be handy in the
-> > future when a dedicated cpufreq driver is introduced for krait cores
-> > that will correctly scale l2 cache with the core freq.
-> > 
-> > Opp-level is set based on the logic of
-> > 0: idle level
-> > 1: normal level
-> > 2: turbo level
-> > 
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > Tested-by: Jonathan McDowell <noodles@earth.li>
-> > ---
-> >  arch/arm/boot/dts/qcom-ipq8064.dtsi | 99 +++++++++++++++++++++++++++++
-> >  1 file changed, 99 insertions(+)
-> > 
-> > diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > index 7dd0b901cd30..a1079583def9 100644
-> > --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > @@ -48,6 +48,105 @@ L2: l2-cache {
-> >  		};
-> >  	};
-> >  
-> > +	opp_table_l2: opp_table_l2 {
-> 
-> Please don't use '_' in the node names.
-> 
-> > +		compatible = "operating-points-v2";
-> > +
-> > +		opp-384000000 {
-> > +			opp-hz = /bits/ 64 <384000000>;
-> > +			opp-microvolt = <1100000>;
-> > +			clock-latency-ns = <100000>;
-> > +			opp-level = <0>;
-> > +		};
-> > +
-> > +		opp-1000000000 {
-> > +			opp-hz = /bits/ 64 <1000000000>;
-> > +			opp-microvolt = <1100000>;
-> > +			clock-latency-ns = <100000>;
-> > +			opp-level = <1>;
-> > +		};
-> > +
-> > +		opp-1200000000 {
-> > +			opp-hz = /bits/ 64 <1200000000>;
-> > +			opp-microvolt = <1150000>;
-> > +			clock-latency-ns = <100000>;
-> > +			opp-level = <2>;
-> > +		};
-> > +	};
-> > +
-> > +	opp_table0: opp_table0 {
-> 
-> Perhaps you can name this opp-table-kryo, to make it consistent with
-> opp-table-l2 above?
-> 
-> Regards,
-> Bjorn
->
+In practice, trace_dma_fence_init called from dma_fence_init is good
+enough and almost no driver calls trace_dma_fence_emit.  But drm_sched
+and virtio both have cases where trace_dma_fence_init and
+trace_dma_fence_emit can be apart.  It is easier for visualization tools
+to always use the more correct trace_dma_fence_emit when visualizing
+fence timelines.
 
-Considering this is krait, I think I should use krait. Also about this
-we have from ages the wrong compatible but we had too keep kryo to not
-break compatibility with old dt. Can I fix this for once and just add
-this additional compatible?
+v2: improve commit message (Dmitry)
 
-> > +		compatible = "operating-points-v2-kryo-cpu";
-> > +		nvmem-cells = <&speedbin_efuse>;
-> > +
-> > +		/*
-> > +		 * Voltage thresholds are <target min max>
-> > +		 */
-> > +		opp-384000000 {
-> > +			opp-hz = /bits/ 64 <384000000>;
-> > +			opp-microvolt-speed0-pvs0-v0 = <1000000 950000 1050000>;
-> > +			opp-microvolt-speed0-pvs1-v0 = <925000 878750 971250>;
-> > +			opp-microvolt-speed0-pvs2-v0 = <875000 831250 918750>;
-> > +			opp-microvolt-speed0-pvs3-v0 = <800000 760000 840000>;
-> > +			opp-supported-hw = <0x1>;
-> > +			clock-latency-ns = <100000>;
-> > +			opp-level = <0>;
-> > +		};
-> > +
-> > +		opp-600000000 {
-> > +			opp-hz = /bits/ 64 <600000000>;
-> > +			opp-microvolt-speed0-pvs0-v0 = <1050000 997500 1102500>;
-> > +			opp-microvolt-speed0-pvs1-v0 = <975000 926250 1023750>;
-> > +			opp-microvolt-speed0-pvs2-v0 = <925000 878750 971250>;
-> > +			opp-microvolt-speed0-pvs3-v0 = <850000 807500 892500>;
-> > +			opp-supported-hw = <0x1>;
-> > +			clock-latency-ns = <100000>;
-> > +			opp-level = <1>;
-> > +		};
-> > +
-> > +		opp-800000000 {
-> > +			opp-hz = /bits/ 64 <800000000>;
-> > +			opp-microvolt-speed0-pvs0-v0 = <1100000 1045000 1155000>;
-> > +			opp-microvolt-speed0-pvs1-v0 = <1025000 973750 1076250>;
-> > +			opp-microvolt-speed0-pvs2-v0 = <995000 945250 1044750>;
-> > +			opp-microvolt-speed0-pvs3-v0 = <900000 855000 945000>;
-> > +			opp-supported-hw = <0x1>;
-> > +			clock-latency-ns = <100000>;
-> > +			opp-level = <1>;
-> > +		};
-> > +
-> > +		opp-1000000000 {
-> > +			opp-hz = /bits/ 64 <1000000000>;
-> > +			opp-microvolt-speed0-pvs0-v0 = <1150000 1092500 1207500>;
-> > +			opp-microvolt-speed0-pvs1-v0 = <1075000 1021250 1128750>;
-> > +			opp-microvolt-speed0-pvs2-v0 = <1025000 973750 1076250>;
-> > +			opp-microvolt-speed0-pvs3-v0 = <950000 902500 997500>;
-> > +			opp-supported-hw = <0x1>;
-> > +			clock-latency-ns = <100000>;
-> > +			opp-level = <1>;
-> > +		};
-> > +
-> > +		opp-1200000000 {
-> > +			opp-hz = /bits/ 64 <1200000000>;
-> > +			opp-microvolt-speed0-pvs0-v0 = <1200000 1140000 1260000>;
-> > +			opp-microvolt-speed0-pvs1-v0 = <1125000 1068750 1181250>;
-> > +			opp-microvolt-speed0-pvs2-v0 = <1075000 1021250 1128750>;
-> > +			opp-microvolt-speed0-pvs3-v0 = <1000000 950000 1050000>;
-> > +			opp-supported-hw = <0x1>;
-> > +			clock-latency-ns = <100000>;
-> > +			opp-level = <2>;
-> > +		};
-> > +
-> > +		opp-1400000000 {
-> > +			opp-hz = /bits/ 64 <1400000000>;
-> > +			opp-microvolt-speed0-pvs0-v0 = <1250000 1187500 1312500>;
-> > +			opp-microvolt-speed0-pvs1-v0 = <1175000 1116250 1233750>;
-> > +			opp-microvolt-speed0-pvs2-v0 = <1125000 1068750 1181250>;
-> > +			opp-microvolt-speed0-pvs3-v0 = <1050000 997500 1102500>;
-> > +			opp-supported-hw = <0x1>;
-> > +			clock-latency-ns = <100000>;
-> > +			opp-level = <2>;
-> > +		};
-> > +	};
-> > +
-> >  	thermal-zones {
-> >  		sensor0-thermal {
-> >  			polling-delay-passive = <0>;
-> > -- 
-> > 2.34.1
-> > 
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Cc: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/msm_gpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index faf0c242874e..a82193f41ea2 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -15,6 +15,7 @@
+ #include <linux/string_helpers.h>
+ #include <linux/devcoredump.h>
+ #include <linux/sched/task.h>
++#include <trace/events/dma_fence.h>
+ 
+ /*
+  * Power Management:
+@@ -769,6 +770,7 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+ 	gpu->active_submits++;
+ 	mutex_unlock(&gpu->active_lock);
+ 
++	trace_dma_fence_emit(submit->hw_fence);
+ 	gpu->funcs->submit(gpu, submit);
+ 	gpu->cur_ctx_seqno = submit->queue->ctx->seqno;
+ 
 -- 
-	Ansuel
+2.35.1.1178.g4f1659d476-goog
+
