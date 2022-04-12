@@ -2,76 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43F634FE8FE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 21:41:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D80174FE908
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 21:42:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359043AbiDLTn2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 15:43:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55774 "EHLO
+        id S1343971AbiDLTpD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 15:45:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359100AbiDLTmY (ORCPT
+        with ESMTP id S241692AbiDLTop (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 15:42:24 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF1304D63A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 12:40:00 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id b21so5887680ljf.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 12:40:00 -0700 (PDT)
+        Tue, 12 Apr 2022 15:44:45 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BC9E2DFC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 12:40:41 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id e8-20020a17090a118800b001cb13402ea2so4140919pja.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 12:40:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=KdIHWvqojnl+hhQv1NddoZGquOpYAIy3tu+JSVXI7oI=;
-        b=QRgQW2WV/0W7v5dLXmjrbIlUVh6XkuCR1zF1c0yWfP/t9nfxB8sW4ENL0Foq571BPe
-         EoIEIQQIhySJI8EyUCd61wCY+i2c8pJLQ64ry7Y3qvvWw8V9M0pp42W1v9illgZ3Sy6m
-         oNbBmMQgX1JB/uptjuXdpr1V+Zi5bGF2v2t+XheV7wivdkb9xQ0aL+flmRtkBvaJA4Ab
-         ctQ+rKm2eTyZxC0PJnkSUeKDbnCrpSYeQKKHwpOWtr3QaMJZtX/1TtlNlMv6q+gFIFKJ
-         r9BCB4BuVBgmAKhdgwXoa1+Y1vpcteq8/VeRmCsWynv8YzpRmvfUaUVNkTBh01irPafe
-         gVFQ==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=KcAH7mF9eHpU+lzQ0ZOVf7kLghMZDIfYqzoC1pN6kTM=;
+        b=lvdmYsNPUPYWEsyu97OOGiswPuqEO5+U6hmLz19+U3z1EhfM40k+q3vdyFLwSVjxYq
+         HyuqZIKnAZNpXj1GgNiUIwAGq/wXIDrmKGdOeUgMmLGSLnsCIuw5tP/vgQDv+CVY5c9K
+         PdTW8Fc/CJKDbvFX7+TUPjQOlYkFKnMMGTVOk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=KdIHWvqojnl+hhQv1NddoZGquOpYAIy3tu+JSVXI7oI=;
-        b=sO9t1Ub/Mqm1rYQvQYPpZ//Iol9Wt9X8nRmCEudEHzz8k6IZvjyTkH6BOtwWDU/6Ix
-         dQ17C+a/exccMKetTR318TcsWUG73GJwS55NT8uFuudT++mYhnyNWh3gFseqqOvubEUW
-         oWV26nt32dFRHajonZGuCBZyL+uN6kycqsB1OEMkaafh1y5ZtjwZoD3NulbSayzWZ4TU
-         WYzVR1eyLxcpU3sLTLepnmox+YTC+W4d0UKyUDFunTQb5ahFMPxIV0TMkiRZgPzgvjBN
-         AWFTM5my/uNAi2ZA+WZkJ5BqUc9Abg3K8Zsd9y6/oukEgFLT24PXwMsBy0L0+tBcHFiX
-         +BGQ==
-X-Gm-Message-State: AOAM530WF5s8DUONzvgoiQb2Bv7+PldnQjDPXnfOzhflZyW8uyEUUIG1
-        vspwd9Mh3rlMoIXMsZDvCb948w==
-X-Google-Smtp-Source: ABdhPJyf1LhztmWShF/xkMubxhGcmYwTnnoY73R9m1whl3tKv8dN0dzQfprAv05/zdhUvdbRbB4sXg==
-X-Received: by 2002:a05:651c:992:b0:24b:99c:35c with SMTP id b18-20020a05651c099200b0024b099c035cmr24913059ljq.142.1649792399080;
-        Tue, 12 Apr 2022 12:39:59 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s9-20020a197709000000b0046bc30798aesm191382lfc.282.2022.04.12.12.39.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Apr 2022 12:39:58 -0700 (PDT)
-Message-ID: <c48f83a4-ef84-de25-e87c-539c4b0d1a0a@linaro.org>
-Date:   Tue, 12 Apr 2022 22:39:57 +0300
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=KcAH7mF9eHpU+lzQ0ZOVf7kLghMZDIfYqzoC1pN6kTM=;
+        b=yTle66w/rkisRyLk8/aDG99U4k7Od0J7Kz8W5Nztr17rOOjKLaJy3Pv1yUON6BbiGR
+         fzA/0ZctBqef2ff+C+2ycbZQW1dWBqc3FVWQrnaoYH/0+hVPOuFMVQ7fgIfPDizgd5Hu
+         VtOMSi3KVy8KMS1oYF5Bn+xAMTyy3JKUlgzSA1bF3KAm37OLVJ0TXNKRx73fqfEKZMb5
+         ixEP3uEKiRsF/SCTwa5SAB9vkXubRpBHfmMd+gKuF8kz+qK0lP/SIPf0Y8VsGL1TpQDM
+         vDkLBdTqjznbdixabyBnL2oZOXmW8dBQD5bic+BqWaSb6obSloNOSg+96uYH3MoVxryn
+         lbyQ==
+X-Gm-Message-State: AOAM531Fj2/OYYxytjXWQXQIbao7/h29+V9TOcm14J095xnVkrpphwJ0
+        MjX2aA6LO1Qosjzb0AiDyjaS+dq+Q8uveYgmxKfi5rLcBi7+RQ==
+X-Google-Smtp-Source: ABdhPJySFUINMJMixO8zjYrN5d3dPQurR2XuF6FeIqDtLCfyJ3PnvHW2g+hJC7Fln34M7qkAWjkWthog0cz8f1w8sAY=
+X-Received: by 2002:a17:903:1248:b0:151:9708:d586 with SMTP id
+ u8-20020a170903124800b001519708d586mr39321437plh.15.1649792440697; Tue, 12
+ Apr 2022 12:40:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm8450: Add thermal sensor
- controllers
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-References: <20220410234458.1739279-1-dmitry.baryshkov@linaro.org>
- <20220410234458.1739279-2-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220410234458.1739279-2-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+References: <20220408211230.601475-1-olvaffe@gmail.com> <fe1e583c-b942-0f33-55d1-435f0966b110@amd.com>
+In-Reply-To: <fe1e583c-b942-0f33-55d1-435f0966b110@amd.com>
+From:   Rob Clark <robdclark@chromium.org>
+Date:   Tue, 12 Apr 2022 12:41:40 -0700
+Message-ID: <CAJs_Fx6ehFu4Fzvo93XCN+7yufU0NQCshreDniRk37V4f6fmPA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: add trace_dma_fence_emit to msm_gpu_submit
+To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+Cc:     Chia-I Wu <olvaffe@gmail.com>, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,57 +68,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/04/2022 02:44, Dmitry Baryshkov wrote:
-> From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> 
-> The change adds description of two thermal sensor controllers found
-> on SM8450.
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+On Sat, Apr 9, 2022 at 7:33 AM Christian K=C3=B6nig <christian.koenig@amd.c=
+om> wrote:
+>
+> Am 08.04.22 um 23:12 schrieb Chia-I Wu:
+> > In practice, trace_dma_fence_init is good enough and almost no driver
+> > calls trace_dma_fence_emit.  But this is still more correct in theory.
+>
+> Well, the reason why basically no driver is calling this is because it
+> is pretty much deprecated.
+>
+> We do have a case in the GPU scheduler where it makes sense to distinct
+> between init and emit, but it doesn't really matter for drivers.
+>
+> So I'm not sure if it's a good idea to add that here.
 
-Of course:
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+visualization can't easily differentiate between drivers/timelines
+where the split matters and ones where it doesn't..  IMO it is better
+to just have the extra trace even in the cases where it comes at the
+same time as the init trace
 
+BR,
+-R
 
-> ---
->   arch/arm64/boot/dts/qcom/sm8450.dtsi | 22 ++++++++++++++++++++++
->   1 file changed, 22 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 934e29b9e153..b695ce824722 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -1021,6 +1021,28 @@ pdc: interrupt-controller@b220000 {
->   			interrupt-controller;
->   		};
->   
-> +		tsens0: thermal-sensor@c263000 {
-> +			compatible = "qcom,sm8450-tsens", "qcom,tsens-v2";
-> +			reg = <0 0x0c263000 0 0x1000>, /* TM */
-> +			      <0 0x0c222000 0 0x1000>; /* SROT */
-> +			#qcom,sensors = <16>;
-> +			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "uplow", "critical";
-> +			#thermal-sensor-cells = <1>;
-> +		};
-> +
-> +		tsens1: thermal-sensor@c265000 {
-> +			compatible = "qcom,sm8450-tsens", "qcom,tsens-v2";
-> +			reg = <0 0x0c265000 0 0x1000>, /* TM */
-> +			      <0 0x0c223000 0 0x1000>; /* SROT */
-> +			#qcom,sensors = <16>;
-> +			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "uplow", "critical";
-> +			#thermal-sensor-cells = <1>;
-> +		};
-> +
->   		aoss_qmp: power-controller@c300000 {
->   			compatible = "qcom,sm8450-aoss-qmp", "qcom,aoss-qmp";
->   			reg = <0 0x0c300000 0 0x400>;
-
-
--- 
-With best wishes
-Dmitry
+> Regards,
+> Christian.
+>
+> >
+> > Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+> > Cc: Rob Clark <robdclark@chromium.org>
+> > ---
+> >   drivers/gpu/drm/msm/msm_gpu.c | 2 ++
+> >   1 file changed, 2 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gp=
+u.c
+> > index faf0c242874e..a82193f41ea2 100644
+> > --- a/drivers/gpu/drm/msm/msm_gpu.c
+> > +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> > @@ -15,6 +15,7 @@
+> >   #include <linux/string_helpers.h>
+> >   #include <linux/devcoredump.h>
+> >   #include <linux/sched/task.h>
+> > +#include <trace/events/dma_fence.h>
+> >
+> >   /*
+> >    * Power Management:
+> > @@ -769,6 +770,7 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm=
+_gem_submit *submit)
+> >       gpu->active_submits++;
+> >       mutex_unlock(&gpu->active_lock);
+> >
+> > +     trace_dma_fence_emit(submit->hw_fence);
+> >       gpu->funcs->submit(gpu, submit);
+> >       gpu->cur_ctx_seqno =3D submit->queue->ctx->seqno;
+> >
+>
