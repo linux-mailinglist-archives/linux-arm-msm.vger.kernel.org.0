@@ -2,77 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52DD14FCC50
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 04:24:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 456C04FCC72
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 04:30:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232584AbiDLCXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 22:23:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56050 "EHLO
+        id S236712AbiDLC3T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 22:29:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231168AbiDLCXI (ORCPT
+        with ESMTP id S238530AbiDLC3S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 22:23:08 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07DE22DD60
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 19:20:52 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id y65so4224264iof.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 19:20:52 -0700 (PDT)
+        Mon, 11 Apr 2022 22:29:18 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB9A12E9D1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 19:26:59 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id q189so17655678oia.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 19:26:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=XhnTklp0fQG5pWOShkm/danr9fm3RkxrfyE711IIN7k=;
-        b=U+1PDjTuoCGYknyL7HpFT/+ttl3I5qlCt/8Mw0EsMBgbZbMJ6dY9XpX0AEDK/+ckiv
-         m+cjSCPj7jOrvat0rklcSnY5jOA/wzz/ufNzlNGRXlzcn4CsWC5NEicUGTo+Rwf6F8zd
-         FRdcufcaJ38zz9IMVSNqOof4U8mVxnENoHykvzkzePsZydnb1iBTQCQr2rK7KZ65sjgL
-         UOnhFDCDAGpGXtTc5bYEWnD6avl+i3GZ65Fgo+IV2hSMaiTF1lWtcuim7/yYPKP8Rhoa
-         1+CbeQ6uCFEVCaMYFfI9CbOjoH1R91hjUfE9+ZXYCzhQYurJoO+i6e/ALGqKb0WfKU1G
-         5q2w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=mK8JcrG8Qx2kyMEBNEpiV/VoNjnbjCx6vfxA6ZQWMKQ=;
+        b=rS0NZmTt44rjYAkBCsrNwXriu57BaIZUATZhgV6TKotVaRv3kECL/YGYu8wDiILrsd
+         iJ936GXx4PSHbW5R3y/RIa3UbuWCvPfAzETQwVo9Q/PI93RfPmwfyDF8H0+qd9GIbZWi
+         PAfR7CDPhb/VpqR/G1y4QOiZPYVYnf3dbEw3e5y/cy2cfIU0iSA9Ui2G9X1yFvp/0WLK
+         L741lCGtTRiiohYk/HqzoGjJhciuyf5aTr4wG7vcwqYI06dIyJB1Dob1NcHzGGByc4UB
+         aeXLfQckVVGFq3YWmnx9ynY99ho0pCrCOQDaBWdDpSkeEJ/iLXxUi6UDYCtqHZ8YQwQK
+         ni/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=XhnTklp0fQG5pWOShkm/danr9fm3RkxrfyE711IIN7k=;
-        b=rQMyBYqZk1Xu60l8z1/CjyjPpzplo7xFhn0PDIB1UwS0nHqWUSUheiB9eofVt/ZEU3
-         zE7vZ1BoTdRhQN8FSvCRo9m140B3AutimaWcHQo1sEoIMZrJ5p1EYtQ2GbjI3yXAMKhD
-         iG6RT/T7W4zo2CJUbKR8GO1qdSAcHEFjp6r5IWbVkDVJ6ThD70xx5mVN8wgm53VP+sgp
-         VwNMKMZ2Lei8AbntNmZuWtJM6vGj0kYO2PNU0C7ovWsQhf0x18L3UAix5aoHmt+AwGFt
-         ExNn1Dr76Cbm+z0xS2oHXIPS7WodRVEDFqHJ6FeuyQ0jMPx8PoTWkqx0bOiRnhl8lnwD
-         T4vA==
-X-Gm-Message-State: AOAM533Jqmb90DpR0yKF4etcbU1Q4LpRTQiZupGLdpp8FeBlCcgQTKfK
-        AdaQnmv42wSCXuVUOB/FkcOF8w==
-X-Google-Smtp-Source: ABdhPJzhpeEsiMfRJacURjg0vZNsByvJdMIjOgp3eU1Kxs8hl8gYMXtT8CDzZ9u90TPydF5CXiMnxQ==
-X-Received: by 2002:a05:6602:134f:b0:63c:a7ba:e8d with SMTP id i15-20020a056602134f00b0063ca7ba0e8dmr15081382iov.180.1649730051372;
-        Mon, 11 Apr 2022 19:20:51 -0700 (PDT)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id a5-20020a056e020e0500b002caca72891fsm654390ilk.27.2022.04.11.19.20.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Apr 2022 19:20:50 -0700 (PDT)
-Message-ID: <d39cc8a1-ca52-e902-e761-35e06a67aba9@linaro.org>
-Date:   Mon, 11 Apr 2022 21:20:49 -0500
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=mK8JcrG8Qx2kyMEBNEpiV/VoNjnbjCx6vfxA6ZQWMKQ=;
+        b=uzftXfJF+MuaNOMFhes24gsBZa4hWZSB2Mr94Z7kUEDo+S17OsNcO4zVzJyEs/VYvl
+         H888uB4mV4th18RsPqW+HH01eQ7CUhyGPiGg4uHocUKwNnvNVA3VU5Vwn7TBKlpvseFy
+         LwXHCv09zYnP5x5K3RyE3VuKam5UzcAASxO65BAWUJEBwraifD76d25UOGm3F3D4WXfR
+         Ig/qyT4XjZDm9d9pp3uw2b0DKP2MgOwWv7xz/ebmIGbB998KvRyDDQINyzTAABa6AgCQ
+         7DXP9ysEF+x4wH+BG2Smf70Wlcfr3NGBqNX7A6Wjx5SeMo8dQGtSwwjYZ+Env+pvTSGm
+         aWyg==
+X-Gm-Message-State: AOAM532dJqKPbzVygYspkQkHyWHLwkoKljtH68SqeVeF/uda7XgaS7p3
+        cUxU855NtmRfdap2f9TQP6m/yA==
+X-Google-Smtp-Source: ABdhPJwiPXSmxKWuhSyRkhkg/sD3E+kIyeohpDu6LQ6plE/QLEfcaNrVHANbTmxfzoYlkQ3d7p6H0A==
+X-Received: by 2002:a05:6808:1827:b0:2da:5085:2e78 with SMTP id bh39-20020a056808182700b002da50852e78mr868079oib.172.1649730419134;
+        Mon, 11 Apr 2022 19:26:59 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id g25-20020a544f99000000b002da70c710b8sm12286102oiy.54.2022.04.11.19.26.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Apr 2022 19:26:58 -0700 (PDT)
+Date:   Mon, 11 Apr 2022 21:26:56 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     soc@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Beno?t Cousson <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Andy Gross <agross@kernel.org>, linux-omap@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] ARM: dts: Fix more boolean properties with values
+Message-ID: <YlTjcNNM/22wtjSY@builder.lan>
+References: <20220407225107.2175958-1-robh@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v3] interconnect: qcom: icc-rpmh: Add BCMs to commit list
- in pre_aggregate
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, djakov@kernel.org,
-        okukatla@codeaurora.org, quic_mdtipton@quicinc.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Mike Tipton <mdtipton@codeaurora.org>, mka@chromium.org,
-        dianders@chromium.org
-References: <20211125174751.25317-1-djakov@kernel.org>
- <CAE-0n51xeigKFS9Zek44HZGD9cdc4Em91aQ5HHzuy7P1FBmfFg@mail.gmail.com>
- <a96a010d-9bd7-f760-3c03-d842feef41aa@linaro.org>
- <CAE-0n51-hpG_5O11FbGrHaMr_mN0ZAky8CVzZNmDj29aK8wGog@mail.gmail.com>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <CAE-0n51-hpG_5O11FbGrHaMr_mN0ZAky8CVzZNmDj29aK8wGog@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220407225107.2175958-1-robh@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,20 +85,126 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/11/22 2:06 PM, Stephen Boyd wrote:
->> I have a hunch about what might be happening here.  There is
->> some synchronization that must occur between the AP and modem
->> when IPA is starting up.  Until that synchronization step has
->> completed, we can't allow the IPA network device to be opened.
-> Is there a commit that implements this? Or how is the synchronization
-> done? I can debug more and see if that synchronization is happening.
+On Thu 07 Apr 17:51 CDT 2022, Rob Herring wrote:
 
-After testing today it seems maybe my hunch wasn't
-the root cause.  If you disagree and I'm missing
-something, say so.  I will take a look at that
-though--my hunch--to see if the thing I thought
-could be causing a problem can actually occur.
-If so, I'll figure out a fix.
+> Boolean properties in DT are present or not present and don't take a value.
+> A property such as 'foo = <0>;' evaluated to true. IOW, the value doesn't
+> matter.
+> 
+> It may have been intended that 0 values are false, but there is no change
+> in behavior with this patch.
+> 
+> Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
+> Cc: Nicolas Ferre <nicolas.ferre@microchip.com>
+> Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> Cc: Claudiu Beznea <claudiu.beznea@microchip.com>
+> Cc: Shawn Guo <shawnguo@kernel.org>
+> Cc: Sascha Hauer <s.hauer@pengutronix.de>
+> Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
+> Cc: Fabio Estevam <festevam@gmail.com>
+> Cc: NXP Linux Team <linux-imx@nxp.com>
+> Cc: "Benoît Cousson" <bcousson@baylibre.com>
+> Cc: Tony Lindgren <tony@atomide.com>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: linux-omap@vger.kernel.org
+> Cc: linux-arm-msm@vger.kernel.org
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>  arch/arm/boot/dts/at91-sam9_l9260.dts            | 2 +-
+>  arch/arm/boot/dts/imx28-ts4600.dts               | 2 +-
+>  arch/arm/boot/dts/logicpd-torpedo-baseboard.dtsi | 4 ++--
+>  arch/arm/boot/dts/qcom-ipq8064.dtsi              | 8 ++++----
 
-					-Alex
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+Regards,
+Bjorn
+
+>  4 files changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/arch/arm/boot/dts/at91-sam9_l9260.dts b/arch/arm/boot/dts/at91-sam9_l9260.dts
+> index 1e2a28c2f365..2fb51b9aca2a 100644
+> --- a/arch/arm/boot/dts/at91-sam9_l9260.dts
+> +++ b/arch/arm/boot/dts/at91-sam9_l9260.dts
+> @@ -101,7 +101,7 @@ pinctrl_board_mmc0: mmc0-board {
+>  		nand0: nand@40000000 {
+>  			nand-bus-width = <8>;
+>  			nand-ecc-mode = "soft";
+> -			nand-on-flash-bbt = <1>;
+> +			nand-on-flash-bbt;
+>  			status = "okay";
+>  		};
+>  
+> diff --git a/arch/arm/boot/dts/imx28-ts4600.dts b/arch/arm/boot/dts/imx28-ts4600.dts
+> index 097ec35c62d8..0d58da1c0cc5 100644
+> --- a/arch/arm/boot/dts/imx28-ts4600.dts
+> +++ b/arch/arm/boot/dts/imx28-ts4600.dts
+> @@ -26,7 +26,7 @@ ssp0: spi@80010000 {
+>  				pinctrl-0 = <&mmc0_4bit_pins_a
+>  					     &mmc0_sck_cfg
+>  					     &en_sd_pwr>;
+> -				broken-cd = <1>;
+> +				broken-cd;
+>  				bus-width = <4>;
+>  				vmmc-supply = <&reg_vddio_sd0>;
+>  				status = "okay";
+> diff --git a/arch/arm/boot/dts/logicpd-torpedo-baseboard.dtsi b/arch/arm/boot/dts/logicpd-torpedo-baseboard.dtsi
+> index b4664ab00256..d3da8b1b473b 100644
+> --- a/arch/arm/boot/dts/logicpd-torpedo-baseboard.dtsi
+> +++ b/arch/arm/boot/dts/logicpd-torpedo-baseboard.dtsi
+> @@ -118,8 +118,8 @@ usb@6,0 {
+>  		gpmc,device-width = <2>;
+>  		gpmc,wait-pin = <0>;
+>  		gpmc,burst-length = <4>;
+> -		gpmc,cycle2cycle-samecsen = <1>;
+> -		gpmc,cycle2cycle-diffcsen = <1>;
+> +		gpmc,cycle2cycle-samecsen;
+> +		gpmc,cycle2cycle-diffcsen;
+>  		gpmc,cs-on-ns = <0>;
+>  		gpmc,cs-rd-off-ns = <45>;
+>  		gpmc,cs-wr-off-ns = <45>;
+> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> index 996f4458d9fc..8cb04aa8ed2f 100644
+> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> @@ -972,7 +972,7 @@ gmac0: ethernet@37000000 {
+>  
+>  			snps,axi-config = <&stmmac_axi_setup>;
+>  			snps,pbl = <32>;
+> -			snps,aal = <1>;
+> +			snps,aal;
+>  
+>  			qcom,nss-common = <&nss_common>;
+>  			qcom,qsgmii-csr = <&qsgmii_csr>;
+> @@ -996,7 +996,7 @@ gmac1: ethernet@37200000 {
+>  
+>  			snps,axi-config = <&stmmac_axi_setup>;
+>  			snps,pbl = <32>;
+> -			snps,aal = <1>;
+> +			snps,aal;
+>  
+>  			qcom,nss-common = <&nss_common>;
+>  			qcom,qsgmii-csr = <&qsgmii_csr>;
+> @@ -1020,7 +1020,7 @@ gmac2: ethernet@37400000 {
+>  
+>  			snps,axi-config = <&stmmac_axi_setup>;
+>  			snps,pbl = <32>;
+> -			snps,aal = <1>;
+> +			snps,aal;
+>  
+>  			qcom,nss-common = <&nss_common>;
+>  			qcom,qsgmii-csr = <&qsgmii_csr>;
+> @@ -1044,7 +1044,7 @@ gmac3: ethernet@37600000 {
+>  
+>  			snps,axi-config = <&stmmac_axi_setup>;
+>  			snps,pbl = <32>;
+> -			snps,aal = <1>;
+> +			snps,aal;
+>  
+>  			qcom,nss-common = <&nss_common>;
+>  			qcom,qsgmii-csr = <&qsgmii_csr>;
+> -- 
+> 2.32.0
+> 
