@@ -2,70 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CC234FE409
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 16:43:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F36954FE446
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 17:01:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240766AbiDLOpb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 10:45:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33360 "EHLO
+        id S1351047AbiDLPD3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 11:03:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234174AbiDLOpa (ORCPT
+        with ESMTP id S1350726AbiDLPD2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 10:45:30 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F01A911155;
-        Tue, 12 Apr 2022 07:43:12 -0700 (PDT)
+        Tue, 12 Apr 2022 11:03:28 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F8764FC6F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 08:01:08 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 123-20020a1c1981000000b0038b3616a71aso1792903wmz.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 08:01:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649774593; x=1681310593;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=VU3GYKC59IivdJ9+i6NONjh2iSY8jUOMPiFKqTo6hzU=;
-  b=Rzvmeg95ykqg6JI5xHE6gsxCdYTwxAfi3BGBBugpEwAR7IQja0Vbi9+k
-   o8X7w6FJ93i15Z/5Rr3RAiBnqdpYI1869DSsD+sBKOHCcFHnPeWrvOXml
-   B0Y5fA2kjjxvaL36i2ch6LQnBK8g4mKQYgKbJxZkMQaA4Eo6NOQ8+rX/0
-   w=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 12 Apr 2022 07:43:12 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2022 07:43:12 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 12 Apr 2022 07:43:11 -0700
-Received: from [10.216.28.9] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 12 Apr
- 2022 07:43:08 -0700
-Message-ID: <50953847-3c7f-ce2e-3447-87ba1893a976@quicinc.com>
-Date:   Tue, 12 Apr 2022 20:13:04 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=7js1UH2M/H4XFdT/VYX4By9FNV4HBtwbQGAItNp0olE=;
+        b=Z2uChZtZEb6EjRK0LBefZZB3/73zZjLJyUy8NLxgtpVI8sZBEOsYczIsK4qz/vKXJ7
+         aIVS5OagmaNmz88LDX3kaGrIHNEFQIzGWFrXQGANXHDw4f+tpS1ZaMQODYuPNa4ydUvY
+         9sJgUVa+aiKi1IJRtNeUo/6XnEXk8MbKk4UBCqlppIa6VCzsUJ1whX2kDlya7CKYbWSJ
+         gLEMs2t5ZjVtEYCNI4r192x3vgHR4I0f+LaLnjL37RV6SsqR2ubRQfQvhRoeoD+gSqYA
+         AjZflTeIBr/wXKUKDnQGKNo4p57EA/cb2Wo55A7mbjr7WDk2yhtAlX/gKPqiMd8Kdela
+         RDUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=7js1UH2M/H4XFdT/VYX4By9FNV4HBtwbQGAItNp0olE=;
+        b=NkStD1pp7LQFkBiG/xlPM5fS2+s/ONdRjZ6oXv+Q3gHhuacA6lcvbN2gb9Pz8u/Fr6
+         xfCJjfRwPb0Dtt/+tClEQHNsy4Lgc8BLDPcFZTWjvdTPGNJ5IzaFp1yVHDmGs5TisRKc
+         Ajiig1F5Jjkh0Vy00g63gPPOOXRQGcfnn0HUjD03vv/4VzlZOgpmT4z8WVFWlNH5fe89
+         shVgPK5Tz9Tco4Jsx5bDME631ktQwK5vfAquDkMCd9a9a5NcBbeNOorSHXhnsHOLoEa3
+         ebVkCdf25YGfElfl8w1SbUEdh0MsVn2qkcubz0YbtNSAFKZ2399DCQrECPKFevpd8tJ7
+         Kkqw==
+X-Gm-Message-State: AOAM530uCCplrvJEY5fE2w46OO0meDF4f8WgC3deGHbS9MJ6GMqlyvBP
+        53SsiwafutVj2He+gta2ThZVfrvc/kLNVQ==
+X-Google-Smtp-Source: ABdhPJzTSHSfyrwau3xW+AehkcTP+X4MnzJII/oAmUKEdfBGnGP6TA25S/PTwJfKeSYbm/uhBORLsw==
+X-Received: by 2002:a1c:44c5:0:b0:38e:abd1:d894 with SMTP id r188-20020a1c44c5000000b0038eabd1d894mr4561539wma.40.1649775667018;
+        Tue, 12 Apr 2022 08:01:07 -0700 (PDT)
+Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id n23-20020a05600c3b9700b0038b7c4c0803sm3026900wms.30.2022.04.12.08.01.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Apr 2022 08:01:06 -0700 (PDT)
+Message-ID: <149e3140-1b9d-b864-c14c-4d2cb098ec9a@linaro.org>
+Date:   Tue, 12 Apr 2022 16:01:04 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v8 1/2] arm64: dts: qcom: sc7280: Add pinmux for I2S
- speaker and Headset
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] slimbus: qcom: fix error check return value of
+ platform_get_irq()
 Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     <agross@kernel.org>, <robh+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <dianders@chromium.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1649769281-12458-1-git-send-email-quic_srivasam@quicinc.com>
- <1649769281-12458-2-git-send-email-quic_srivasam@quicinc.com>
- <YlWNt7f5EUk7I4by@builder.lan>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <YlWNt7f5EUk7I4by@builder.lan>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     cgel.zte@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     gregkh@linuxfoundation.org, sdharia@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, Lv Ruyi <lv.ruyi@zte.com.cn>,
+        Zeal Robot <zealci@zte.com.cn>
+References: <20220412090259.2533316-1-lv.ruyi@zte.com.cn>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20220412090259.2533316-1-lv.ruyi@zte.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,129 +78,38 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 4/12/2022 8:03 PM, Bjorn Andersson wrote:
-Thanks for your time Bjorn!!!
-> On Tue 12 Apr 08:14 CDT 2022, Srinivasa Rao Mandadapu wrote:
->
->> Add pinmux nodes for primary and secondary I2S for SC7280 based platforms.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 14 +++++++++++
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi     | 40 ++++++++++++++++++++++++++++++++
->>   2 files changed, 54 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index ecbf2b8..1fc94b5 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -359,6 +359,20 @@
->>   	bias-disable;
->>   };
->>   
->> +&mi2s1_data0 {
->> +	drive-strength = <6>;
->> +	bias-disable;
->> +};
->> +
->> +&mi2s1_sclk {
->> +	drive-strength = <6>;
->> +	bias-disable;
->> +};
->> +
->> +&mi2s1_ws {
->> +	drive-strength = <6>;
->> +};
->> +
->>   &pm7325_gpios {
->>   	key_vol_up_default: key-vol-up-default {
->>   		pins = "gpio6";
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index f0b64be..6e6cfeda 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -3522,6 +3522,46 @@
->>   				function = "edp_hot";
->>   			};
->>   
->> +			mi2s0_data0: mi2s0-data0 {
-> Are these ever going to be selected individually, or could this be:
->
-> mi2s0_state: mi2s0-state {
-> 	data0 {
-> 		...;
-> 	};
->
-> 	data1 {
-> 		...;
-> 	};
->
-> 	mclk {
-> 		...;
-> 	};
->
-> 	etc
-> };
->
-> mi2s1-state {
-> 	...;
-> };
->
-> And then a single pinctrl-0 = <&mi2c0_state>;
->
-> Regards,
-> Bjorn
 
-We are not selecting individually. Actually we were following the same, 
-but Doug Anderson suggested this way of handling in 1st version of patches.
+On 12/04/2022 10:02, cgel.zte@gmail.com wrote:
+> From: Lv Ruyi <lv.ruyi@zte.com.cn>
+> 
+> platform_get_irq() return negative value on failure, so null check of
+> ctrl->irq is incorrect. Fix it by comparing whether it is less than zero.
+> 
+> Fixes: ad7fcbc308b0 ("slimbus: qcom: Add Qualcomm Slimbus controller driver")
+> Reported-by: Zeal Robot <zealci@zte.com.cn>
+> Signed-off-by: Lv Ruyi <lv.ruyi@zte.com.cn>
 
-So changed accordingly.
 
->
->> +				pins = "gpio98";
->> +				function = "mi2s0_data0";
->> +			};
->> +
->> +			mi2s0_data1: mi2s0-data1 {
->> +				pins = "gpio99";
->> +				function = "mi2s0_data1";
->> +			};
->> +
->> +			mi2s0_mclk: mi2s0-mclk {
->> +				pins = "gpio96";
->> +				function = "pri_mi2s";
->> +			};
->> +
->> +			mi2s0_sclk: mi2s0-sclk {
->> +				pins = "gpio97";
->> +				function = "mi2s0_sck";
->> +			};
->> +
->> +			mi2s0_ws: mi2s0-ws {
->> +				pins = "gpio100";
->> +				function = "mi2s0_ws";
->> +			};
->> +
->> +			mi2s1_data0: mi2s1-data0 {
->> +				pins = "gpio107";
->> +				function = "mi2s1_data0";
->> +			};
->> +
->> +			mi2s1_sclk: mi2s1-sclk {
->> +				pins = "gpio106";
->> +				function = "mi2s1_sck";
->> +			};
->> +
->> +			mi2s1_ws: mi2s1-ws {
->> +				pins = "gpio108";
->> +				function = "mi2s1_ws";
->> +			};
->> +
->>   			pcie1_clkreq_n: pcie1-clkreq-n {
->>   				pins = "gpio79";
->>   				function = "pcie1_clkreqn";
->> -- 
->> 2.7.4
->>
+There was already a patch posted to fix this
+
+ 
+https://git.kernel.org/pub/scm/linux/kernel/git/srini/slimbus.git/commit/?h=for-next&id=54bf672111eef18819fa6e562f68b2d6c449b05d
+
+--srini
+> ---
+>   drivers/slimbus/qcom-ctrl.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/slimbus/qcom-ctrl.c b/drivers/slimbus/qcom-ctrl.c
+> index f04b961b96cd..b2f01e155d77 100644
+> --- a/drivers/slimbus/qcom-ctrl.c
+> +++ b/drivers/slimbus/qcom-ctrl.c
+> @@ -510,7 +510,7 @@ static int qcom_slim_probe(struct platform_device *pdev)
+>   	}
+>   
+>   	ctrl->irq = platform_get_irq(pdev, 0);
+> -	if (!ctrl->irq) {
+> +	if (ctrl->irq < 0) {
+>   		dev_err(&pdev->dev, "no slimbus IRQ\n");
+>   		return -ENODEV;
+>   	}
