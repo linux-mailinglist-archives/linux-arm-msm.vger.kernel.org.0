@@ -2,79 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B0AE4FCC6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 04:24:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 758FD4FCC67
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 04:24:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243894AbiDLCSd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 22:18:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48122 "EHLO
+        id S236267AbiDLCU3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Apr 2022 22:20:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230271AbiDLCSc (ORCPT
+        with ESMTP id S239320AbiDLCU1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 22:18:32 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C052C33A3A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 19:16:16 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id z8so17681837oix.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 19:16:16 -0700 (PDT)
+        Mon, 11 Apr 2022 22:20:27 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B37433E34
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 19:18:10 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id g21so20800704iom.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 19:18:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=yJmVOiXHRC894zOY6mDb3Ms45ex+JV6XJHfYGj0ktxs=;
-        b=E6JCh905N2KkeZjfmODyDmP+/ngO2s+HrNbPj0kHEr5OD8GngGjgwFRimD1757vGxv
-         bP61qrph29/vElOkxw4LK++ubx4AL1eBwIUI91ZMH3c/3mhUYEzi2YS63ZJTdMShqu6/
-         kAa/GEjol69gGS6kd4vJeGhxEWSL4hP3Avt5xrxekisVNowe+D/Jbo6hQeilH1XY0Cno
-         muyMbKQWUpozGCX3N2pkdCuRqR+Bq/23CXn86SLCyeu1i/CrogR3C89efvTrV1aL3NoP
-         VzNoi1CldT9Q+uUm8uY0JU4pCMMpO6/FxZreLLlM5xjDvu9WNfQVBngSUiXjbP42rrRa
-         uTpw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=srFoickd1zlR+kJjOTObZ61tAEx/5+zynW0TfHZUqk4=;
+        b=gCKdLNuZBSmjfleHx7DWHk2dt/R22/YnwJEkeczkHmul3xFo7Avio96a80MTlR5FdW
+         kt/AKIj/b20OuGyMzwtRhr0kR8aUMwJjLbVeO0mlQg/T8O1ENVRgwu1GbqDr+KujeX5e
+         DcjRoRCndOzZw3olTMnGOfBqE8R/iJG0zGgyjyzKwoIUFYj7FuEBRa3ozrF8MM4kzP2A
+         4VNhLmwui6p2QqLKkNEpf7iSuPz9f3iTkGrOs6mEOLqurwiOTlNACnVV0eviSWrbYEDT
+         AnzkwfJGvBvAFyYhZ9Af8Lvl16MXcv6ozhiuQTZdNBgHwCtgWKA7I7SYDMW2iibmwbAz
+         1Yug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=yJmVOiXHRC894zOY6mDb3Ms45ex+JV6XJHfYGj0ktxs=;
-        b=MDQ9h8v97/u1qs29G7NZ3Q5eK24msHRbjd1SabHsNA2L/T7RMZZXEIl3FUxB+JkdFK
-         6rWdHwQSNDiUubeYTK6uVtERy0RMukYKXw9Bka8Cj7+gMN0EoHn5EfogkKaxB05emTWa
-         Gk1QVyYpc5syRAL0CHlju8Tqn6v21DPxoEqOhIJsCG/6T5BvSjCiXe6ky7d3XQgfYlj6
-         5gjiXuM4OpxIlKERZ9eIvNQQK1IIrSRcNOofcdawdSNC1UzUSojxqR2qWFV1KNnhGZns
-         VR1smhss+EjnRCxvwWJbs4mAammjTkNR97NXwvGFaS7jVIThT6y9tiE8ApX+AjxNimqb
-         x6dw==
-X-Gm-Message-State: AOAM533qzB2Js06oSek5hU+l/tx5HdNjTXJDDDgz8VmrixgosJNNoRD+
-        rR4+ODVs0x+5BRFw7fD/hdoW5AAbfy8GSseI
-X-Google-Smtp-Source: ABdhPJxY6gBcnJ4YDZAXXBG3oCLvf6MOEE4hm/uV2wxXCElES4lKfHVqqCKExbMQ4KU9/Uvhnb6TRg==
-X-Received: by 2002:a05:6808:1704:b0:2f9:bb17:21f6 with SMTP id bc4-20020a056808170400b002f9bb1721f6mr803262oib.23.1649729776015;
-        Mon, 11 Apr 2022 19:16:16 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id v3-20020a05683011c300b005e6e4a5bd35sm2164701otq.79.2022.04.11.19.16.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Apr 2022 19:16:15 -0700 (PDT)
-Date:   Mon, 11 Apr 2022 21:16:13 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: delete incorrect ufs
- interconnect fields
-Message-ID: <YlTg7QPkWMBP4HAb@builder.lan>
-References: <20220407172145.31903-1-jonathan@marek.ca>
- <e41c26c2-8aa4-cfd2-27b0-eb011f45eda0@linaro.org>
- <865ff6bc-95a2-8b39-5cf2-bb2d3f592c5a@linaro.org>
- <f1fb2d71-4adf-bcc7-76b3-c7102ab9f2e9@marek.ca>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=srFoickd1zlR+kJjOTObZ61tAEx/5+zynW0TfHZUqk4=;
+        b=KO1lKm/CC1tDu/pjOK571EhTV32Vmz3JOgzq62ohm5e4tZHSwNE37jJiTVqRcdsAhP
+         q+AWh2mngmMWqcCgR1DL4CM0P+8BIZMi+HW73EvvAhdOjm0OgREYi4xSGS9bsnWhsSG4
+         IydkvEPO9FcEhAOu4GuIF4L7lEN5PZCwrKUNEkqjcO8/U5Jdgfda7n3rCaJJ/BwH5OWi
+         DsTjorN0sNDwdLWj5eMANI3obF9GE+lwAEIM0l69SAg+fvx2lfihmq934IvEuqzq1gB8
+         yvPKXujWIOeD7td1fI4be0HZkv7MfziyT/g0HL1HPbIlmzOwMZWYK6iKqCnKSZ/yuzYm
+         snVA==
+X-Gm-Message-State: AOAM532pxrABK3fGFKLoLLW/5amHBTy3mo0VwGGXvk/k6Pf5QbSixChW
+        uaWib4fHWBXF3cassyLfxL/3Bw==
+X-Google-Smtp-Source: ABdhPJwjczDWnC2qj4dZ+FNQIhPqqnW+3k0v+lTZ1pAXsHhT5jYps11L6QGsnu5UIkyQF0cz4I3J+A==
+X-Received: by 2002:a05:6638:22c5:b0:326:2b3a:b08b with SMTP id j5-20020a05663822c500b003262b3ab08bmr5318649jat.250.1649729889994;
+        Mon, 11 Apr 2022 19:18:09 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id x186-20020a6bc7c3000000b00648deae6630sm21825052iof.54.2022.04.11.19.18.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Apr 2022 19:18:08 -0700 (PDT)
+Message-ID: <2412ec25-37bf-fa12-6cbf-7cd697b1cf05@linaro.org>
+Date:   Mon, 11 Apr 2022 21:18:07 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f1fb2d71-4adf-bcc7-76b3-c7102ab9f2e9@marek.ca>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v3] interconnect: qcom: icc-rpmh: Add BCMs to commit list
+ in pre_aggregate
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, djakov@kernel.org,
+        okukatla@codeaurora.org, quic_mdtipton@quicinc.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Mike Tipton <mdtipton@codeaurora.org>, mka@chromium.org,
+        dianders@chromium.org
+References: <20211125174751.25317-1-djakov@kernel.org>
+ <CAE-0n51xeigKFS9Zek44HZGD9cdc4Em91aQ5HHzuy7P1FBmfFg@mail.gmail.com>
+ <a96a010d-9bd7-f760-3c03-d842feef41aa@linaro.org>
+ <CAE-0n51-hpG_5O11FbGrHaMr_mN0ZAky8CVzZNmDj29aK8wGog@mail.gmail.com>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <CAE-0n51-hpG_5O11FbGrHaMr_mN0ZAky8CVzZNmDj29aK8wGog@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,60 +81,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 07 Apr 17:38 CDT 2022, Jonathan Marek wrote:
-
-> On 4/7/22 5:16 PM, Krzysztof Kozlowski wrote:
-> > On 07/04/2022 21:40, Vladimir Zapolskiy wrote:
-> > > On 4/7/22 20:21, Jonathan Marek wrote:
-> > > > Upstream sm8450.dtsi has #interconnect-cells = <2>; so these are wrong.
-> > > > Ignored and undocumented with upstream UFS driver so delete for now.
-> > 
-> > This is the upstream and they are documented here, although as pointed
-> > by Vladimir this was rather a reverse-documentation. The documentation
-> > might be incorrect, but then the bindings should be corrected instead of
-> > only modifying the DTS.
-> > 
-> > > 
-> > > Basically the description was added by a commit 462c5c0aa798 ("dt-bindings: ufs:
-> > > qcom,ufs: convert to dtschema").
-> > > 
-> > > It's questionable, if an example in the new yaml file is totally correct
-> > > in connection to the discussed issue.
-> > 
-> > To be honest - the example probably is not correct, because it was based
-> > on existing DTS without your patch. :)
-> > 
-> > Another question is whether the interconnect properties are here correct
-> > at all. I assumed that DTS is correct because it should describe the
-> > hardware, even if driver does not use it. However maybe that was a false
-> > assumption...
-> > 
-> 
-> writing-bindings.rst says it is OK to document even if it isn't used by the
-> driver (seems wrong to me, at least for interconnects which are a firmware
-> abstraction and not hardware).
+On 4/11/22 2:06 PM, Stephen Boyd wrote:
+>> The second problem you have is exhibited by the IPA driver if
+>> the "fix" commit (upstream b95b668eaaa2) is back-ported to the
+>> Linux 5.10.y LTS branch (along with some other prerequisite
+>> commits).  We can conclude that applying the above commit
+>> makes the bandwidth for an unused interconnect (or perhaps
+>> the rate for the IPA core clock) get set to zero.  And in that
+>> case, an attempt to access IPA hardware leads to the crash you
+>> observed.
+>>
+>> The IPA driver does not implement runtime power management
+>> until Linux v5.15.  You later said you thought enabling that
+>> might ensure the clock and interconnects were active when
+>> needed by the IPA driver, and I concur (but there could be a
+>> little more to it).
+> Is the runtime PM patch series necessary to enable the IPA clk and
+> interconnects? Things don't look good on 5.10.y and I'm not sure it will
+> be workable. Commit b1d681d8d324 ("interconnect: Add sync state
+> support") was introduced in v5.10 and that seems to be the commit that
+> broke suspend on Lazor.
 > 
 
-The devicetree, and hence the binding, should describe the hardware, so
-that an implementation can make use of the hardware. So there's no
-problem expressing the interconnect in the binding/dts even though the
-driver isn't using it.
+This isn't a response to your complete message but I'm going
+to respond to this part.
 
-I'm not sure if I'm misunderstanding you, the interconnect paths
-described here are a description of the hardware requirements for this
-device. (I.e. it need the buses between ufs and ddr, and cpu and ufs to
-operate).
+Before runtime PM was in place, the "IPA clock" (which was a
+logical notion representing the IPA core clock and all the
+interconnects it uses) was enabled before the IPA hardware
+was first touched.  It was disabled again when system suspend
+occurred, and re-enabled again on system resume.  At one time
+we did observe the XO clock turning off.
 
-> 462c5c0aa798 wasn't in my 5.17+ tree pulled after dts changes were merged (I
-> guess doc changes come later), so my commit message is incorrect, but I
-> think it makes more sense to have the documentation reflect the driver. Its
-> also not an important issue, so I'll let others sort it out.
-> 
+I'm not sure that answers your question.  But bottom line
+is that system suspend/resume were supported (and made
+IPA clock+interconnects get shut off and then on again),
+but not runtime PM.
 
-I believe that the correctness of the interconnect property will ensure
-that the interconnect provider doesn't hit sync_state until the ufs
-driver has probed - regardless of the driver actually implementing the
-interconnect voting. But perhaps I've misunderstood the magic involved?
-
-Regards,
-Bjorn
+					-Alex
