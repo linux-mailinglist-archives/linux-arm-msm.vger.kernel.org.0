@@ -2,74 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F36954FE446
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 17:01:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84FDA4FE471
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 17:16:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351047AbiDLPD3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 11:03:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41080 "EHLO
+        id S1356903AbiDLPSd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 11:18:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350726AbiDLPD2 (ORCPT
+        with ESMTP id S234713AbiDLPSc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 11:03:28 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F8764FC6F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 08:01:08 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 123-20020a1c1981000000b0038b3616a71aso1792903wmz.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 08:01:08 -0700 (PDT)
+        Tue, 12 Apr 2022 11:18:32 -0400
+Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 136BB5E755
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 08:16:14 -0700 (PDT)
+Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-dacc470e03so21063664fac.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 08:16:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=7js1UH2M/H4XFdT/VYX4By9FNV4HBtwbQGAItNp0olE=;
-        b=Z2uChZtZEb6EjRK0LBefZZB3/73zZjLJyUy8NLxgtpVI8sZBEOsYczIsK4qz/vKXJ7
-         aIVS5OagmaNmz88LDX3kaGrIHNEFQIzGWFrXQGANXHDw4f+tpS1ZaMQODYuPNa4ydUvY
-         9sJgUVa+aiKi1IJRtNeUo/6XnEXk8MbKk4UBCqlppIa6VCzsUJ1whX2kDlya7CKYbWSJ
-         gLEMs2t5ZjVtEYCNI4r192x3vgHR4I0f+LaLnjL37RV6SsqR2ubRQfQvhRoeoD+gSqYA
-         AjZflTeIBr/wXKUKDnQGKNo4p57EA/cb2Wo55A7mbjr7WDk2yhtAlX/gKPqiMd8Kdela
-         RDUg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Go9IvpDXSR7Gejk41sTME4/PVZMxW5LbmIPwH42ez3c=;
+        b=oB8XLCKEtXmigDeFjQNL0sJlBLv5iwNx5epuN9ygeoE616XfYi7Kw9lPPA7oNqzegL
+         Tc9QtYGbbMOktFi30wj2BH+QltPtIO8XxT/7iWGR/yZzeAwzP9ENRzoPxegYkw5ZQoyK
+         KQmeEYzcooeQmyv8TwVqqfr6DZaya0NOCz8o7ICwh1GK7NPKPSTpk5bJBBDwJeIEFt7x
+         YW+o9o5VENEHkc06/TlfvBGbYjIuFaWsHL0434BCsFbHj03V/oYorKQKXrh0LZInyWTk
+         a9PLafjcUEdXVVbnK7ufRzlEke41wAMRr4U1B83CL7tiMg9dDHbsLJJh3GqB3yqse+HL
+         +MPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=7js1UH2M/H4XFdT/VYX4By9FNV4HBtwbQGAItNp0olE=;
-        b=NkStD1pp7LQFkBiG/xlPM5fS2+s/ONdRjZ6oXv+Q3gHhuacA6lcvbN2gb9Pz8u/Fr6
-         xfCJjfRwPb0Dtt/+tClEQHNsy4Lgc8BLDPcFZTWjvdTPGNJ5IzaFp1yVHDmGs5TisRKc
-         Ajiig1F5Jjkh0Vy00g63gPPOOXRQGcfnn0HUjD03vv/4VzlZOgpmT4z8WVFWlNH5fe89
-         shVgPK5Tz9Tco4Jsx5bDME631ktQwK5vfAquDkMCd9a9a5NcBbeNOorSHXhnsHOLoEa3
-         ebVkCdf25YGfElfl8w1SbUEdh0MsVn2qkcubz0YbtNSAFKZ2399DCQrECPKFevpd8tJ7
-         Kkqw==
-X-Gm-Message-State: AOAM530uCCplrvJEY5fE2w46OO0meDF4f8WgC3deGHbS9MJ6GMqlyvBP
-        53SsiwafutVj2He+gta2ThZVfrvc/kLNVQ==
-X-Google-Smtp-Source: ABdhPJzTSHSfyrwau3xW+AehkcTP+X4MnzJII/oAmUKEdfBGnGP6TA25S/PTwJfKeSYbm/uhBORLsw==
-X-Received: by 2002:a1c:44c5:0:b0:38e:abd1:d894 with SMTP id r188-20020a1c44c5000000b0038eabd1d894mr4561539wma.40.1649775667018;
-        Tue, 12 Apr 2022 08:01:07 -0700 (PDT)
-Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id n23-20020a05600c3b9700b0038b7c4c0803sm3026900wms.30.2022.04.12.08.01.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Apr 2022 08:01:06 -0700 (PDT)
-Message-ID: <149e3140-1b9d-b864-c14c-4d2cb098ec9a@linaro.org>
-Date:   Tue, 12 Apr 2022 16:01:04 +0100
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Go9IvpDXSR7Gejk41sTME4/PVZMxW5LbmIPwH42ez3c=;
+        b=zZJfxOacbyKDIRPAP/ZO0NeEJL28oVj3/JK3dABrBiSDL0j5I2bQwS4OvP7TwKdngu
+         iKLCfc5rtvauv7yebj3aFuqkXR7MVLOqu8PIWVSCj0x0ZAHvFIJ1a5U44AD5NmOKenfg
+         sxlxX/zSsEFW470XMapePffY29cbqbwM/9yB1srJJSIoofWwLS6z2VkgbNsc6BBMATqz
+         nwn45oB+shPOm7Na+2dkPjkQzDAgxWa1Jaifu11wCONmZnFXpqcIqSro7jernD6+We4P
+         fbrT0DK72EyKFTlS2YZ3rmUQKCkbHEfoXu+Iw7E6xXZvp6w6tFuxQhBHyHgKx0PxZY0j
+         v83g==
+X-Gm-Message-State: AOAM531rIRIls/mxZRbJnjOwL+N6ZZFAmxqNWWJTDlgxV34dLrEVBKSd
+        8O3zmNUtAZ8hWyMDB+jvpvaUjQ==
+X-Google-Smtp-Source: ABdhPJxEP7GnS1O5iaSgUztxZ1RQViAVxjyIijKeQzEMMM0+b5vJiMuOKmwEAEZ01Bj66KpDFQmesg==
+X-Received: by 2002:a05:6870:232a:b0:db:360c:7f5a with SMTP id w42-20020a056870232a00b000db360c7f5amr2215026oao.230.1649776573359;
+        Tue, 12 Apr 2022 08:16:13 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id g8-20020a9d2d88000000b005b238f7551csm13319217otb.53.2022.04.12.08.16.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Apr 2022 08:16:12 -0700 (PDT)
+Date:   Tue, 12 Apr 2022 10:16:10 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [RESEND 2/2] soc: qcom: rpmhpd: add sc8280xp rpmh power-domains
+Message-ID: <YlWXuiHZQXHBXz6F@builder.lan>
+References: <20220225054345.2479565-1-bjorn.andersson@linaro.org>
+ <20220225054345.2479565-2-bjorn.andersson@linaro.org>
+ <YlQtfu5K9IeJLPcS@hovoldconsulting.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] slimbus: qcom: fix error check return value of
- platform_get_irq()
-Content-Language: en-US
-To:     cgel.zte@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     gregkh@linuxfoundation.org, sdharia@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, Lv Ruyi <lv.ruyi@zte.com.cn>,
-        Zeal Robot <zealci@zte.com.cn>
-References: <20220412090259.2533316-1-lv.ruyi@zte.com.cn>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20220412090259.2533316-1-lv.ruyi@zte.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YlQtfu5K9IeJLPcS@hovoldconsulting.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,39 +75,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon 11 Apr 08:30 CDT 2022, Johan Hovold wrote:
 
-
-On 12/04/2022 10:02, cgel.zte@gmail.com wrote:
-> From: Lv Ruyi <lv.ruyi@zte.com.cn>
+> On Thu, Feb 24, 2022 at 09:43:45PM -0800, Bjorn Andersson wrote:
+> > The Qualcomm sc8280xp platform has 8 power-domains. Add these, and their
+> > relevant active-only variants, to the RPMh power-domain driver.
 > 
-> platform_get_irq() return negative value on failure, so null check of
-> ctrl->irq is incorrect. Fix it by comparing whether it is less than zero.
+> As we discussed off-list, the sc8280xp apparently has 13 domains. Guess
+> the commit message should be updated even if you don't expose all of
+> these to Linux.
 > 
-> Fixes: ad7fcbc308b0 ("slimbus: qcom: Add Qualcomm Slimbus controller driver")
-> Reported-by: Zeal Robot <zealci@zte.com.cn>
-> Signed-off-by: Lv Ruyi <lv.ruyi@zte.com.cn>
 
+Thanks for spotting that, I will update the patch and rewrite the commit
+message accordingly.
 
-There was already a patch posted to fix this
-
- 
-https://git.kernel.org/pub/scm/linux/kernel/git/srini/slimbus.git/commit/?h=for-next&id=54bf672111eef18819fa6e562f68b2d6c449b05d
-
---srini
-> ---
->   drivers/slimbus/qcom-ctrl.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  drivers/soc/qcom/rpmhpd.c | 26 ++++++++++++++++++++++++++
+> >  1 file changed, 26 insertions(+)
+> > 
+> > diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+> > index 58f1dc9b9cb7..71602eb824f7 100644
+> > --- a/drivers/soc/qcom/rpmhpd.c
+> > +++ b/drivers/soc/qcom/rpmhpd.c
+> > @@ -180,6 +180,11 @@ static struct rpmhpd mxc_ao = {
+> >  	.res_name = "mxc.lvl",
+> >  };
+> >  
+> > +static struct rpmhpd nsp = {
+> > +	.pd = { .name = "nsp", },
+> > +	.res_name = "nsp.lvl",
+> > +};
+> > +
+> >  /* SDM845 RPMH powerdomains */
+> >  static struct rpmhpd *sdm845_rpmhpds[] = {
+> >  	[SDM845_CX] = &cx_w_mx_parent,
+> > @@ -363,10 +368,31 @@ static const struct rpmhpd_desc sc8180x_desc = {
+> >  	.num_pds = ARRAY_SIZE(sc8180x_rpmhpds),
+> >  };
+> >  
+> > +/* SC8280xp RPMH powerdomains */
+> > +static struct rpmhpd *sc8280xp_rpmhpds[] = {
+> > +	[SC8280XP_CX] = &cx,
+> > +	[SC8280XP_CX_AO] = &cx_ao,
+> > +	[SC8280XP_MX] = &mx,
+> > +	[SC8280XP_MX_AO] = &mx_ao,
+> > +	[SC8280XP_EBI] = &ebi,
+> > +	[SC8280XP_LCX] = &lcx,
+> > +	[SC8280XP_LMX] = &lmx,
+> > +	[SC8280XP_GFX] = &gfx,
+> > +	[SC8280XP_MMCX] = &mmcx,
+> > +	[SC8280XP_MMCX_AO] = &mmcx_ao,
+> > +	[SC8280XP_NSP] = &nsp,
+> > +};
 > 
-> diff --git a/drivers/slimbus/qcom-ctrl.c b/drivers/slimbus/qcom-ctrl.c
-> index f04b961b96cd..b2f01e155d77 100644
-> --- a/drivers/slimbus/qcom-ctrl.c
-> +++ b/drivers/slimbus/qcom-ctrl.c
-> @@ -510,7 +510,7 @@ static int qcom_slim_probe(struct platform_device *pdev)
->   	}
->   
->   	ctrl->irq = platform_get_irq(pdev, 0);
-> -	if (!ctrl->irq) {
-> +	if (ctrl->irq < 0) {
->   		dev_err(&pdev->dev, "no slimbus IRQ\n");
->   		return -ENODEV;
->   	}
+> Commit 90c74c1c2574 ("soc: qcom: rpmhpd: Sort power-domain definitions
+> and lists") recently sorted the other arrays. Sorting by address like
+> you've implicitly done here makes it easy to compare with the firmware
+> interface, but perhaps you want to sort alphabetically for consistency.
+> 
+
+I like consistency.
+
+> Since there apparently are no users for active-only domains in the tree,
+> perhaps they can also be added later.
+> 
+
+I'll take an extra look at this as well. Seems we do cx, mx and mmcx ao
+on the other platforms, but question is if that's only because we do it
+on previous platforms...
+
+Thanks for the review,
+Bjorn
+
+> > +
+> > +static const struct rpmhpd_desc sc8280xp_desc = {
+> > +	.rpmhpds = sc8280xp_rpmhpds,
+> > +	.num_pds = ARRAY_SIZE(sc8280xp_rpmhpds),
+> > +};
+> > +
+> >  static const struct of_device_id rpmhpd_match_table[] = {
+> >  	{ .compatible = "qcom,sc7180-rpmhpd", .data = &sc7180_desc },
+> >  	{ .compatible = "qcom,sc7280-rpmhpd", .data = &sc7280_desc },
+> >  	{ .compatible = "qcom,sc8180x-rpmhpd", .data = &sc8180x_desc },
+> > +	{ .compatible = "qcom,sc8280xp-rpmhpd", .data = &sc8280xp_desc },
+> >  	{ .compatible = "qcom,sdm845-rpmhpd", .data = &sdm845_desc },
+> >  	{ .compatible = "qcom,sdx55-rpmhpd", .data = &sdx55_desc},
+> >  	{ .compatible = "qcom,sm6350-rpmhpd", .data = &sm6350_desc },
+> 
+> Johan
