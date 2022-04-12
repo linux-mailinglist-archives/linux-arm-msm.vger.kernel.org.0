@@ -2,55 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A7E04FE846
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 20:56:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F0F84FE871
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 21:05:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235432AbiDLS7F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 14:59:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58894 "EHLO
+        id S1351174AbiDLTHv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 15:07:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235007AbiDLS7E (ORCPT
+        with ESMTP id S1359018AbiDLTHt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 14:59:04 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4043E19C2D;
-        Tue, 12 Apr 2022 11:56:45 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D0C6E61B60;
-        Tue, 12 Apr 2022 18:56:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EEC9C385A5;
-        Tue, 12 Apr 2022 18:56:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649789804;
-        bh=QZO61uAR+J5ahnsJ1BjgdII5wLkBSWqULlpcKIuOXLg=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=X1p2L8rfzOCvbll7wtimC+k8bW8msoW2cI9Fuw7SuQJgZJtvoalp0J8gnGduNFFpm
-         EglXrJ9DJOs82ihPwKL55H6ezDOuXjtP+mSCirwYEgC/GIbho1urCKQVVwHIk0ND4a
-         ii6e4w0Yd5Pj2X+O2UjS4m7F9HTTNLQQlRQmxs+evpo1dZY3A2TOOUpmZ5inHQszMX
-         ZUnDP0EUYkjVrOTKrOXnwfvdlHn2h2aGBnug8KATQPHohzMUdYub3TvewBQ9A473J3
-         +alrRFgtAGzxEglu7od6CJYDju8mYfDAqyuwA2jffGVYlaBYxU89iHgP8e+cuQbdAA
-         X8erxqWBR14ag==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220308040348.1340405-1-bjorn.andersson@linaro.org>
-References: <20220308040348.1340405-1-bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v2] clk: qcom: rcg2: Cache CFG register updates for parked RCGs
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Amit Nischal <quic_anischal@quicinc.com>,
+        Tue, 12 Apr 2022 15:07:49 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A43737ABB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 12:05:30 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id bg24so6950346pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 12:05:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=hbZ2JvpVm4V1NyD3oXLkLoSzcUMh/DghNlMtHwYuWgc=;
+        b=VG5B71axV5BvnxL7YMW3ZsV1ox6/RJt6t0NDvJYaqQ0WweCjsw/UHzmPLgH2O66fOq
+         x2CiiSEwap+vAQkscai+ycUbO419wl4OJ++ulJuOGR/NI9BKGa9VxRKpxhw9c4eI9fMp
+         7ZumwSpchDiL27xeYtFROYvxv59wm62BEIk+A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=hbZ2JvpVm4V1NyD3oXLkLoSzcUMh/DghNlMtHwYuWgc=;
+        b=kpLT2/AXM6Cd97lE1/1qX6Tk6at//ZCvgMjY4YhVuYj+Da3mjZkMfbBy7x7jfNdjS2
+         GatXhPZya7boWdOSRmafTQmssUS2wbFyW3wdbiuxchsGzUfjrk5Lktc8qU7erZ+zncNe
+         AHQdvx+K95Y0bymjQn07uksKXXvA5S+nuYctF9Djy0z6DoqvqjgQW1RSc8xRrzbdrtkc
+         6NKiblQc+5aKkAe6xtdJ+h1eRdOZ6/hiMa8kzwtuRihGrprG170pFjAPHzujCe79kPSF
+         UwMfircHYjXn1EU8wYG6sIp443rrRmYX+mAqXf/M+j6oVZHOF5xZwJcpeC8KSutD3UTx
+         Zc7Q==
+X-Gm-Message-State: AOAM533BvSyUOcf3Vz2ciX/EJOAhnU+1fzmfRl5+kXqehFonf0XiMTVE
+        9OH4j6owfpU6UE0XiLUyoAS2sA==
+X-Google-Smtp-Source: ABdhPJz4PCizcuwzk/1XpOu3RqwYj8RkPLr5CQdo3ml5nHIuAx/hHfrJxCdiVEWg3ujcS7D4q8TaZA==
+X-Received: by 2002:a17:902:ce87:b0:156:5c6e:b6e4 with SMTP id f7-20020a170902ce8700b001565c6eb6e4mr38650268plg.12.1649790329681;
+        Tue, 12 Apr 2022 12:05:29 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:3a41:5079:6f1b:397c])
+        by smtp.gmail.com with UTF8SMTPSA id bh3-20020a056a02020300b00378b62df320sm3494308pgb.73.2022.04.12.12.05.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Apr 2022 12:05:29 -0700 (PDT)
+Date:   Tue, 12 Apr 2022 12:05:27 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>
+Cc:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>
-Date:   Tue, 12 Apr 2022 11:56:42 -0700
-User-Agent: alot/0.10
-Message-Id: <20220412185644.2EEC9C385A5@smtp.kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_ppratap@quicinc.com, quic_kriskura@quicinc.com,
+        quic_vpulyala@quicinc.com
+Subject: Re: [PATCH v13 2/6] usb: dwc3: core: Host wake up support from
+ system suspend
+Message-ID: <YlXNd5YkAMW7cbYG@google.com>
+References: <1649704614-31518-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1649704614-31518-3-git-send-email-quic_c_sanm@quicinc.com>
+ <YlSVec5+SpdMZWCz@google.com>
+ <36d22ad7-7f11-2f63-cd68-5d564476161e@quicinc.com>
+ <20220412050018.GB2627@hu-pkondeti-hyd.qualcomm.com>
+ <259c9e87-a52e-c063-7901-2c6decd42675@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <259c9e87-a52e-c063-7901-2c6decd42675@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,326 +87,152 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I "quicified" the codeaurora emails, let's hope it worked.
+On Tue, Apr 12, 2022 at 12:08:02PM +0530, Sandeep Maheswaram (Temp) wrote:
+> Hi Pavan,
+> 
+> On 4/12/2022 10:30 AM, Pavan Kondeti wrote:
+> > Hi Sandeep,
+> > 
+> > On Tue, Apr 12, 2022 at 10:16:39AM +0530, Sandeep Maheswaram (Temp) wrote:
+> > > Hi Matthias,
+> > > 
+> > > On 4/12/2022 2:24 AM, Matthias Kaehlcke wrote:
+> > > > On Tue, Apr 12, 2022 at 12:46:50AM +0530, Sandeep Maheswaram wrote:
+> > > > > During suspend read the status of all port and set hs phy mode
+> > > > > based on current speed. Use this hs phy mode to configure wakeup
+> > > > > interrupts in qcom glue driver.
+> > > > > 
+> > > > > Check wakep-source property for dwc3 core node to set the
+> > > > s/wakep/wakeup/
+> > > Okay. Will update in next version.
+> > > > > wakeup capability. Drop the device_init_wakeup call from
+> > > > > runtime suspend and resume.
+> > > > > 
+> > > > > Also check during suspend if any wakeup capable devices are
+> > > > > connected to the controller (directly or through hubs), if there
+> > > > > are none set a flag to indicate that the PHY is powered
+> > > > > down during suspend.
+> > > > > 
+> > > > > Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> > > > > ---
+> > > > A per-patch change log would be really helpful for reviewers, even
+> > > > if it doesn't include older versions.
+> > > Okay. Will update in next version.
+> > > > >   drivers/usb/dwc3/core.c | 33 ++++++++++++++++++++-------------
+> > > > >   drivers/usb/dwc3/core.h |  4 ++++
+> > > > >   drivers/usb/dwc3/host.c | 25 +++++++++++++++++++++++++
+> > > > >   3 files changed, 49 insertions(+), 13 deletions(-)
+> > > > > 
+> > > > > diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> > > > > index 1170b80..effaa43 100644
+> > > > > --- a/drivers/usb/dwc3/core.c
+> > > > > +++ b/drivers/usb/dwc3/core.c
+> > > > > @@ -32,6 +32,7 @@
+> > > > >   #include <linux/usb/gadget.h>
+> > > > >   #include <linux/usb/of.h>
+> > > > >   #include <linux/usb/otg.h>
+> > > > > +#include <linux/usb/hcd.h>
+> > > > >   #include "core.h"
+> > > > >   #include "gadget.h"
+> > > > > @@ -1723,6 +1724,7 @@ static int dwc3_probe(struct platform_device *pdev)
+> > > > >   	platform_set_drvdata(pdev, dwc);
+> > > > >   	dwc3_cache_hwparams(dwc);
+> > > > > +	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
+> > > > >   	spin_lock_init(&dwc->lock);
+> > > > >   	mutex_init(&dwc->mutex);
+> > > > > @@ -1865,6 +1867,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> > > > >   {
+> > > > >   	unsigned long	flags;
+> > > > >   	u32 reg;
+> > > > > +	struct usb_hcd  *hcd = platform_get_drvdata(dwc->xhci);
+> > > > >   	switch (dwc->current_dr_role) {
+> > > > >   	case DWC3_GCTL_PRTCAP_DEVICE:
+> > > > > @@ -1877,10 +1880,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> > > > >   		dwc3_core_exit(dwc);
+> > > > >   		break;
+> > > > >   	case DWC3_GCTL_PRTCAP_HOST:
+> > > > > -		if (!PMSG_IS_AUTO(msg)) {
+> > > > > -			dwc3_core_exit(dwc);
+> > > > > -			break;
+> > > > > -		}
+> > > > > +		dwc3_check_phy_speed_mode(dwc);
+> > > > >   		/* Let controller to suspend HSPHY before PHY driver suspends */
+> > > > >   		if (dwc->dis_u2_susphy_quirk ||
+> > > > > @@ -1896,6 +1896,16 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> > > > >   		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
+> > > > >   		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
+> > > > > +
+> > > > > +		if (!PMSG_IS_AUTO(msg)) {
+> > > > > +			if (device_may_wakeup(dwc->dev) &&
+> > > > > +			    usb_wakeup_enabled_descendants(hcd->self.root_hub)) {
+> > > > You did not answer my question on v12, reposting it:
+> > > > 
+> > > >    Did you ever try whether you could use device_children_wakeup_capable() from
+> > > >    [1] instead of usb_wakeup_enabled_descendants()?
+> > > > 
+> > > >    [1] https://patchwork.kernel.org/project/linux-usb/patch/1635753224-23975-2-git-send-email-quic_c_sanm@quicinc.com/#24566065
+> > > Sorry ..I have replied in mail yesterday but it is not showing up in
+> > > patchwork link.
+> > > 
+> > > Tried with  device_children_wakeup_capable(dwc->dev) instead of
+> > > usb_wakeup_enabled_descendants and it always returns true even
+> > > 
+> > > when no devices are connected.
+> > > 
+> > What do you mean by when no devices are connected? There is always
+> > root hub connected and we should not power down the DWC3 here even
+> > when remote wakeup for root hub is enabled. Essentially
+> > usb_wakeup_enabled_descendants() returns true even without any
+> > physical devices connected.
+> > 
+> > What does device_children_wakeup_capable() do? Sorry, I could not
+> > find this function definition.
+> > 
+> > Thanks,
+> > Pavan
+> 
+> usb_wakeup_enabled_descendants() doesn't consider hubs. It only returns true if any devices
+> are connected with wakeup capability apart from hubs.
 
-Quoting Bjorn Andersson (2022-03-07 20:03:48)
-> As GDSCs are turned on and off some associated clocks are momentarily
-> enabled for house keeping purposes. For this, and similar, purposes the
-> "shared RCGs" will park the RCG on a source clock which is known to be
-> available.
-> When the RCG is parked, a safe clock source will be selected and
-> committed, then the original source would be written back and upon enable
-> the change back to the unparked source would be committed.
->=20
-> But starting with SM8350 this fails, as the value in CFG is committed by
-> the GDSC handshake and without a valid parent the GDSC enablement will
-> fail.
+Actually it considers hubs:
 
-Does this lead to boot problems? Or some driver failing to work? More
-details on severity here please.
+unsigned usb_wakeup_enabled_descendants(struct usb_device *udev)
+{
+	struct usb_hub *hub = usb_hub_to_struct_hub(udev);
 
->=20
-> To avoid this problem, the software needs to cache the CFG register
-> content while the shared RCG is parked.
->=20
-> Writes to M, N and D registers are committed as they are requested. New
-> helpers for get_parent() and recalc_rate() are extracted from their
-> previous implementations and __clk_rcg2_configure() is modified to allow
-> it to operate on the cached value.
->=20
-> Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as n=
-eeded")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
+	return udev->do_remote_wakeup +
+		(hub ? hub->wakeup_enabled_descendants : 0);
+}
 
-Minor nits mostly. Thanks for taking the cfg caching approach. I think
-we want to take this for clk-fixes if it is serious enough so I can
-merge the next version directly.
+'udev' may or may not be a hub, if 'do_remote_wakeup' is set then the
+device is considered a wakeup enabled descendant.
 
->=20
-> Changes since v1:
-> - Rather than caching the last requested freqnecy, cache and update the C=
-FG
->   register value while the shared RCG is disabled.
-> - Use/modify the cached RCG value in get_parent(), set_parent() and
->   recalc_rate() for parked shared RCGs as well.
-> - Rewrote the commit message.
->=20
->  drivers/clk/qcom/clk-rcg.h  |   2 +
->  drivers/clk/qcom/clk-rcg2.c | 134 +++++++++++++++++++++++++++---------
->  2 files changed, 104 insertions(+), 32 deletions(-)
->=20
-> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> index 99efcc7f8d88..7bcbda8e4f17 100644
-> --- a/drivers/clk/qcom/clk-rcg.h
-> +++ b/drivers/clk/qcom/clk-rcg.h
-> @@ -139,6 +139,7 @@ extern const struct clk_ops clk_dyn_rcg_ops;
->   * @freq_tbl: frequency table
->   * @clkr: regmap clock handle
->   * @cfg_off: defines the cfg register offset from the CMD_RCGR + CFG_REG
-> + * @parked_cfg: cached value of the CFG register for parked RCGs
->   */
->  struct clk_rcg2 {
->         u32                     cmd_rcgr;
-> @@ -149,6 +150,7 @@ struct clk_rcg2 {
->         const struct freq_tbl   *freq_tbl;
->         struct clk_regmap       clkr;
->         u8                      cfg_off;
-> +       u32                     parked_cfg;
->  };
-> =20
->  #define to_clk_rcg2(_hw) container_of(to_clk_regmap(_hw), struct clk_rcg=
-2, clkr)
-> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> index e1b1b426fae4..8e3aebb72191 100644
-> --- a/drivers/clk/qcom/clk-rcg2.c
-> +++ b/drivers/clk/qcom/clk-rcg2.c
-> @@ -73,16 +73,11 @@ static int clk_rcg2_is_enabled(struct clk_hw *hw)
->         return (cmd & CMD_ROOT_OFF) =3D=3D 0;
->  }
-> =20
-> -static u8 clk_rcg2_get_parent(struct clk_hw *hw)
-> +static u8 __clk_rcg2_get_parent(struct clk_hw *hw, u32 cfg)
->  {
->         struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
->         int num_parents =3D clk_hw_get_num_parents(hw);
-> -       u32 cfg;
-> -       int i, ret;
-> -
-> -       ret =3D regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
-> -       if (ret)
-> -               goto err;
-> +       int i;
-> =20
->         cfg &=3D CFG_SRC_SEL_MASK;
->         cfg >>=3D CFG_SRC_SEL_SHIFT;
-> @@ -91,12 +86,27 @@ static u8 clk_rcg2_get_parent(struct clk_hw *hw)
->                 if (cfg =3D=3D rcg->parent_map[i].cfg)
->                         return i;
-> =20
-> -err:
->         pr_debug("%s: Clock %s has invalid parent, using default.\n",
->                  __func__, clk_hw_get_name(hw));
->         return 0;
->  }
-> =20
-> +static u8 clk_rcg2_get_parent(struct clk_hw *hw)
-> +{
-> +       struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
-> +       u32 cfg;
-> +       int ret;
-> +
-> +       ret =3D regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
-> +       if (ret) {
-> +               pr_err("%s: Unable to read CFG register for %s\n",
+And for system suspebd 'do_remote_wakeup' is set based on the wakeup
+config of the device:
 
-This used to be the pr_debug() above. Can it still be a pr_debug()?
+static void choose_wakeup(struct usb_device *udev, pm_message_t msg)
+{
+	...
+	w = device_may_wakeup(&udev->dev);
+	...
+	udev->do_remote_wakeup = w;
+}
 
-> +                      __func__, clk_hw_get_name(hw));
-> +               return 0;
-> +       }
-> +
-> +       return __clk_rcg2_get_parent(hw, cfg);
-> +}
-> +
->  static int update_config(struct clk_rcg2 *rcg)
->  {
->         int count, ret;
-> @@ -163,12 +173,10 @@ calc_rate(unsigned long rate, u32 m, u32 n, u32 mod=
-e, u32 hid_div)
->  }
-> =20
->  static unsigned long
-> -clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-> +__clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate, u32=
- cfg)
->  {
->         struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
-> -       u32 cfg, hid_div, m =3D 0, n =3D 0, mode =3D 0, mask;
-> -
-> -       regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
-> +       u32 hid_div, m =3D 0, n =3D 0, mode =3D 0, mask;
-> =20
->         if (rcg->mnd_width) {
->                 mask =3D BIT(rcg->mnd_width) - 1;
-> @@ -189,6 +197,17 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned lon=
-g parent_rate)
->         return calc_rate(parent_rate, m, n, mode, hid_div);
->  }
-> =20
-> +static unsigned long
-> +clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-> +{
-> +       struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
-> +       u32 cfg;
-> +
-> +       regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
-> +
-> +       return __clk_rcg2_recalc_rate(hw, parent_rate, cfg);
-> +}
-> +
->  static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq=
-_tbl *f,
->                                     struct clk_rate_request *req,
->                                     enum freq_policy policy)
-> @@ -262,9 +281,10 @@ static int clk_rcg2_determine_floor_rate(struct clk_=
-hw *hw,
->         return _freq_tbl_determine_rate(hw, rcg->freq_tbl, req, FLOOR);
->  }
-> =20
-> -static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_=
-tbl *f)
-> +static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_=
-tbl *f,
-> +                               u32 *cfg)
->  {
-> -       u32 cfg, mask;
-> +       u32 mask;
->         struct clk_hw *hw =3D &rcg->clkr.hw;
->         int ret, index =3D qcom_find_src_index(hw, rcg->parent_map, f->sr=
-c);
-> =20
-> @@ -289,21 +309,31 @@ static int __clk_rcg2_configure(struct clk_rcg2 *rc=
-g, const struct freq_tbl *f)
->                         return ret;
->         }
-> =20
-> -       mask =3D BIT(rcg->hid_width) - 1;
-> -       mask |=3D CFG_SRC_SEL_MASK | CFG_MODE_MASK | CFG_HW_CLK_CTRL_MASK;
-> -       cfg =3D f->pre_div << CFG_SRC_DIV_SHIFT;
-> -       cfg |=3D rcg->parent_map[index].cfg << CFG_SRC_SEL_SHIFT;
-> +       *cfg &=3D ~GENMASK(rcg->hid_width - 1, 0);
+I checked on three systems with different Linux distributions, on all of
+the wakeup flag of a connected hub is 'disabled'. Wakeup still works, so
+apparently that flag doesn't really have an impact for child ports.
 
-I'd prefer to not change this in this patch. Name the parameter _cfg and
-then assign it at the end? I had to look closely here and things aren't
-the same.
+> If we consider hubs also dwc3 core exit and phy exit will never be called.
+> 
+> device_children_wakeup_capable() implementation was shared by Matthias in below thread
+> https://patchwork.kernel.org/project/linux-usb/patch/1635753224-23975-2-git-send-email-quic_c_sanm@quicinc.com/#24566065
+> 
+> Probably device_children_wakeup_capable() is returning true because it considers hubs also.
 
-> +       *cfg &=3D ~(CFG_SRC_SEL_MASK | CFG_MODE_MASK | CFG_HW_CLK_CTRL_MA=
-SK);
-> +
-> +       *cfg =3D f->pre_div << CFG_SRC_DIV_SHIFT;
-> +       *cfg |=3D rcg->parent_map[index].cfg << CFG_SRC_SEL_SHIFT;
->         if (rcg->mnd_width && f->n && (f->m !=3D f->n))
-> -               cfg |=3D CFG_MODE_DUAL_EDGE;
-> -       return regmap_update_bits(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg),
-> -                                       mask, cfg);
-> +               *cfg |=3D CFG_MODE_DUAL_EDGE;
-> +
+I thought I did a basic test when I sent the patch, I did another (?) one
+with v13 of your patch set. In this tests with a hub connected the
+function returns true when an HID device is connected, and false when
+nothing is connected. The wakeup flag of the hub is disabled (default).
 
-	*_cfg =3D cfg;
-
-> +       return 0;
->  }
-> =20
->  static int clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tb=
-l *f)
->  {
-> +       u32 cfg;
->         int ret;
-> =20
-> -       ret =3D __clk_rcg2_configure(rcg, f);
-> +       ret =3D regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
-> +       if (ret)
-> +               return ret;
-> +
-> +       ret =3D __clk_rcg2_configure(rcg, f, &cfg);
-> +       if (ret)
-> +               return ret;
-> +
-> +       ret =3D regmap_write(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), cfg);
->         if (ret)
->                 return ret;
-> =20
-> @@ -969,11 +999,12 @@ static int clk_rcg2_shared_set_rate(struct clk_hw *=
-hw, unsigned long rate,
->                 return -EINVAL;
-> =20
->         /*
-> -        * In case clock is disabled, update the CFG, M, N and D registers
-> -        * and don't hit the update bit of CMD register.
-> +        * In case clock is disabled, update the M, N and D registers and=
- cache
-> +        * the CFG value in parked_cfg.
-
-We still don't hit the update bit, right?
-
->          */
-> +
->         if (!__clk_is_enabled(hw->clk))
-> -               return __clk_rcg2_configure(rcg, f);
-> +               return __clk_rcg2_configure(rcg, f, &rcg->parked_cfg);
-> =20
->         return clk_rcg2_shared_force_enable_clear(hw, f);
->  }
-> @@ -997,6 +1028,11 @@ static int clk_rcg2_shared_enable(struct clk_hw *hw)
->         if (ret)
->                 return ret;
-> =20
-> +       /* Write back the stored configuration corresponding to current r=
-ate */
-> +       ret =3D regmap_write(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, r=
-cg->parked_cfg);
-> +       if (ret)
-> +               return ret;
-> +
->         ret =3D update_config(rcg);
->         if (ret)
->                 return ret;
-> @@ -1007,13 +1043,12 @@ static int clk_rcg2_shared_enable(struct clk_hw *=
-hw)
->  static void clk_rcg2_shared_disable(struct clk_hw *hw)
->  {
->         struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
-> -       u32 cfg;
-> =20
->         /*
->          * Store current configuration as switching to safe source would =
-clear
->          * the SRC and DIV of CFG register
->          */
-> -       regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &cfg);
-> +       regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &rcg->park=
-ed_cfg);
-> =20
->         /*
->          * Park the RCG at a safe configuration - sourced off of safe sou=
-rce.
-> @@ -1031,17 +1066,52 @@ static void clk_rcg2_shared_disable(struct clk_hw=
- *hw)
->         update_config(rcg);
-> =20
->         clk_rcg2_clear_force_enable(hw);
-> +}
-> =20
-> -       /* Write back the stored configuration corresponding to current r=
-ate */
-> -       regmap_write(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, cfg);
-> +static u8 clk_rcg2_shared_get_parent(struct clk_hw *hw)
-> +{
-> +       struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
-> +
-> +       /* If the shared rcg is parked used the cached cfg instead */
-> +       if (!__clk_is_enabled(hw->clk))
-> +               return __clk_rcg2_get_parent(hw, rcg->parked_cfg);
-> +
-> +       return clk_rcg2_get_parent(hw);
-> +}
-> +
-> +static int clk_rcg2_shared_set_parent(struct clk_hw *hw, u8 index)
-> +{
-> +       struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
-> +
-> +       /* If the shared rcg is parked only update the cached cfg */
-> +       if (!__clk_is_enabled(hw->clk)) {
-
-Use clk_hw_is_enabled() please
-
-> +               rcg->parked_cfg &=3D ~CFG_SRC_SEL_MASK;
-> +               rcg->parked_cfg |=3D rcg->parent_map[index].cfg << CFG_SR=
-C_SEL_SHIFT;
-> +
-> +               return 0;
-> +       }
-> +
-> +       return clk_rcg2_set_parent(hw, index);
-> +}
+Sandeep, are the wakeup flags of the child hub(s) set to 'enabled' on
+the system you tested on?
