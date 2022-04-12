@@ -2,75 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F2884FDFE7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 14:30:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E521B4FDFB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 14:29:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346503AbiDLMQT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 08:16:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42254 "EHLO
+        id S1352563AbiDLMU7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 08:20:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352950AbiDLMPw (ORCPT
+        with ESMTP id S1352613AbiDLMRR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 08:15:52 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AA8D8B6DC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 04:16:23 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id s18so14178337ejr.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 04:16:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=QftC8yM+rUi2GOJON22Vc2R4NpEgVxs6x2hJpLqwdnc=;
-        b=YiJgoYeBRq9Y21t33IryYjiuDLJTAioEQ2GbYTsR5cTeWCcL0+egkZjsFoKqqyqASX
-         mvHPFm3DGmrcyc2GLutxiyEiei0hcCNw0m7mJS/7wONYLuKhZJ41ReUF9bT9Rd5GQ46f
-         vA2PUVZkMTkeRSLxhIMy9Nz+STf5OG0321tjqe2J0RkqP/io4YuwP2teVrs8ff0xGHjl
-         TG1uklojBCOUxFJTYjSm5gPs6jrn2Ag62gYS5mGZQOXIKVe4HVGxWG8kwYCA3ObVgWC7
-         jEnFQGavM7LdDGKtyWjQVFSWmV7afJq/d/G1C+r4mNp7DUYpvJ30Z3P5LBI/eUFidqvd
-         dDHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=QftC8yM+rUi2GOJON22Vc2R4NpEgVxs6x2hJpLqwdnc=;
-        b=xJ7u2k8nsBImQMdv7v1ewS3Olvma5lYK2fmpKQw4VMxugmVUbaGak48SCjZ7kJ0JtN
-         G4UBtm9bETOCoRfKZ9di9wNRGUfZlHGg+LslVImjgYvMgzUYPSN5tPF1nIq0vYyGavjl
-         bhyDroU658j2QzteJAkYShYA38J1kbHkrGub7YKlGTK7A2Ml98eBAlf7Oion4nFYq+yV
-         l9DJiyodqciR3jzugT1E1oIAME2OnCCsb1/cW5VuqgeSzJ1LlGrsWzc9j9boIHp5bTky
-         zwS4D4f1cDrW/VOTdlLuMD4ccCXNuWhW+8zwTnb3ewqn1zETqRVYy7M9Z3qMUqt4OtdC
-         8roA==
-X-Gm-Message-State: AOAM532DPz+6NWoIAcHYaVQr4eBkC7t6ELdDRa2x10qILTp23+uC98A8
-        VulUMaxZL1W086Ezvh8lrxMW+w==
-X-Google-Smtp-Source: ABdhPJwTG/0ht3PfH8/lq8uPzYm/e2Ao+H/Xa4o6fo8AnoydrKmhd5cCF0GGtULh9uSw1g9jUUd7OA==
-X-Received: by 2002:a17:906:b107:b0:6e0:a25a:af6e with SMTP id u7-20020a170906b10700b006e0a25aaf6emr34159552ejy.359.1649762181893;
-        Tue, 12 Apr 2022 04:16:21 -0700 (PDT)
-Received: from [192.168.0.194] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id e19-20020a056402105300b004162d0b4cbbsm16534904edu.93.2022.04.12.04.16.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Apr 2022 04:16:21 -0700 (PDT)
-Message-ID: <d74cd447-ac2f-92d5-f845-ee62d48cbd3b@linaro.org>
-Date:   Tue, 12 Apr 2022 13:16:20 +0200
+        Tue, 12 Apr 2022 08:17:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3ED02497B;
+        Tue, 12 Apr 2022 04:17:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 43570619E9;
+        Tue, 12 Apr 2022 11:17:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FD5C385A6;
+        Tue, 12 Apr 2022 11:17:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649762267;
+        bh=I4iVPmcAWjsg42Hwd5bOIJBD6HNPJ3z8vTuvOj+JgeQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jF8uWrw0URfTq3+dOJIEQV1lekgIHU/0h6FAm7n1HP7Pw/eXzMn1Sh/7YE64fy4yI
+         S5Tgb2k6qt4lV4ASrZhkQbLL+/B6i7aXmHZxn21QIQfgZNCHY3aCeDIgK2d3DtFkfE
+         hUzX6K8a90MTIE40K8qCIscBhnlk7XGa5LeMcvq37NmeDhOyuSK9L9IYsAH7Mt8/Se
+         7EojRlf7iWoS9jZjqyj8w0dQd05zBkf5W0A26/cqGKQAQ/FkXiqosIXAd87tL08wHD
+         zZdt/A9Xip3vlncK/CVzNYzV45B/kgKiUS4htVwedCLjm6WKGQXWMWTe8eN/mxKPUS
+         xAveHvqUcmq+A==
+Date:   Tue, 12 Apr 2022 16:47:43 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: fix interconnects property of
+ UFS node
+Message-ID: <YlVf13E+AI4JAgkp@matsya>
+References: <20220310221934.1560729-1-vladimir.zapolskiy@linaro.org>
+ <dbe6d9c5-f717-785f-e65d-baa1328cea2b@linaro.org>
+ <Ykx6NWrcf4IA2Mam@ripper>
+ <CAA8EJpqrJr5RB8E6CQ+cAgp6bad4m_LSG6CPeMsf+Ws0jqFf1Q@mail.gmail.com>
+ <YlTlZa35A4lu02oI@builder.lan>
+ <2af9a8a7-0904-df31-7c1a-21705bcda8d6@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 2/2] interconnect: qcom: Add SDX65 interconnect provider
- driver
-Content-Language: en-US
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, djakov@kernel.org, robh+dt@kernel.org,
-        krzk+dt@kernel.org
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1649740053-14507-1-git-send-email-quic_rohiagar@quicinc.com>
- <1649740053-14507-3-git-send-email-quic_rohiagar@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1649740053-14507-3-git-send-email-quic_rohiagar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2af9a8a7-0904-df31-7c1a-21705bcda8d6@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,94 +63,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/04/2022 07:07, Rohit Agarwal wrote:
-> Add driver for the Qualcomm interconnect buses found in SDX65 based
-> platforms.
+On 12-04-22, 09:34, Vladimir Zapolskiy wrote:
+> Hi Bjorn,
+> 
+> On 4/12/22 05:35, Bjorn Andersson wrote:
+> > On Tue 05 Apr 12:38 CDT 2022, Dmitry Baryshkov wrote:
+> > 
+> > > On Tue, 5 Apr 2022 at 20:17, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+> > > > 
+> > > > On Tue 05 Apr 08:38 PDT 2022, Dmitry Baryshkov wrote:
+> > > > 
+> > > > > On 11/03/2022 01:19, Vladimir Zapolskiy wrote:
+> > > > > > All interconnect device tree nodes on sm8450 are 2-cells, however in
+> > > > > > UFS node they are handled as 1-cells, fix it.
+> > > > > > 
+> > > > > > Fixes: aa2d0bf04a3c ("arm64: dts: qcom: sm8450: add interconnect nodes")
+> > > > > > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> > > > > 
+> > > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > 
+> > > > > Bjorn, could you please this pick for the -rc kernel?
+> > > > > 
+> > > > 
+> > > > The change is obviously correct, but what difference does this change
+> > > > make with the current implementation?
+> > > 
+> > > it makes interconnect paths probe correctly. All NoC have
+> > > #interconnec-cells = <2> now.
+> > > 
+> > 
+> > But there's no code in the UFS driver that calls of_icc_get(), so what
+> > does this actually do? (Other than correcting the dtb for the day when
+> > we add that support to the driver).
+> 
+> FWIW the change also has a runtime effect, it fixes a parsing of the board dtb,
+> otherwise a warning in the kernel log appears:
+> 
+>   OF: /soc@0/ufshc@1d84000: could not get #interconnect-cells for /clocks/sleep-clk
+> 
+> Why /clocks/sleep-clk is mentioned here at all??
+> Its phandle value is 0x26, which is equal to SLAVE_UFS_MEM_CFG from the array.
 
-Thank you for your patch. There is something to discuss/improve.
+We should either apply this fix or a patch to drop this line from dts.
+Either would be apt and latter would make more sense..
 
-> +
-> +static struct qcom_icc_bcm *system_noc_bcms[] = {
-
-It can be array of const pointers, if you rebase on this:
-"interconnect: qcom: constify icc_node pointers"
-(I just sent it but I am not sure if it made it to the lists)
-
-> +	&bcm_ce0,
-> +	&bcm_pn0,
-> +	&bcm_pn1,
-> +	&bcm_pn2,
-> +	&bcm_pn3,
-> +	&bcm_pn4,
-> +	&bcm_sn0,
-> +	&bcm_sn1,
-> +	&bcm_sn2,
-> +	&bcm_sn3,
-> +	&bcm_sn5,
-> +	&bcm_sn6,
-> +	&bcm_sn7,
-> +	&bcm_sn8,
-> +	&bcm_sn9,
-> +	&bcm_sn10,
-> +};
-> +
-> +static struct qcom_icc_node *system_noc_nodes[] = {
-
-The same.
-
-
-> +	[MASTER_AUDIO] = &qhm_audio,
-> +	[MASTER_BLSP_1] = &qhm_blsp1,
-> +	[MASTER_QDSS_BAM] = &qhm_qdss_bam,
-> +	[MASTER_QPIC] = &qhm_qpic,
-> +	[MASTER_SNOC_CFG] = &qhm_snoc_cfg,
-> +	[MASTER_SPMI_FETCHER] = &qhm_spmi_fetcher1,
-> +	[MASTER_ANOC_SNOC] = &qnm_aggre_noc,
-> +	[MASTER_IPA] = &qnm_ipa,
-> +	[MASTER_MEM_NOC_SNOC] = &qnm_memnoc,
-> +	[MASTER_MEM_NOC_PCIE_SNOC] = &qnm_memnoc_pcie,
-> +	[MASTER_CRYPTO] = &qxm_crypto,
-> +	[MASTER_IPA_PCIE] = &xm_ipa2pcie_slv,
-> +	[MASTER_PCIE_0] = &xm_pcie,
-> +	[MASTER_QDSS_ETR] = &xm_qdss_etr,
-> +	[MASTER_SDCC_1] = &xm_sdc1,
-> +	[MASTER_USB3] = &xm_usb3,
-> +	[SLAVE_AOSS] = &qhs_aoss,
-> +	[SLAVE_APPSS] = &qhs_apss,
-> +	[SLAVE_AUDIO] = &qhs_audio,
-> +	[SLAVE_BLSP_1] = &qhs_blsp1,
-> +	[SLAVE_CLK_CTL] = &qhs_clk_ctl,
-> +	[SLAVE_CRYPTO_0_CFG] = &qhs_crypto0_cfg,
-> +	[SLAVE_CNOC_DDRSS] = &qhs_ddrss_cfg,
-> +	[SLAVE_ECC_CFG] = &qhs_ecc_cfg,
-> +	[SLAVE_IMEM_CFG] = &qhs_imem_cfg,
-> +	[SLAVE_IPA_CFG] = &qhs_ipa,
-> +	[SLAVE_CNOC_MSS] = &qhs_mss_cfg,
-> +	[SLAVE_PCIE_PARF] = &qhs_pcie_parf,
-> +	[SLAVE_PDM] = &qhs_pdm,
-> +	[SLAVE_PRNG] = &qhs_prng,
-> +	[SLAVE_QDSS_CFG] = &qhs_qdss_cfg,
-> +	[SLAVE_QPIC] = &qhs_qpic,
-> +	[SLAVE_SDCC_1] = &qhs_sdc1,
-> +	[SLAVE_SNOC_CFG] = &qhs_snoc_cfg,
-> +	[SLAVE_SPMI_FETCHER] = &qhs_spmi_fetcher,
-> +	[SLAVE_SPMI_VGI_COEX] = &qhs_spmi_vgi_coex,
-> +	[SLAVE_TCSR] = &qhs_tcsr,
-> +	[SLAVE_TLMM] = &qhs_tlmm,
-> +	[SLAVE_USB3] = &qhs_usb3,
-> +	[SLAVE_USB3_PHY_CFG] = &qhs_usb3_phy,
-> +	[SLAVE_ANOC_SNOC] = &qns_aggre_noc,
-> +	[SLAVE_SNOC_MEM_NOC_GC] = &qns_snoc_memnoc,
-> +	[SLAVE_IMEM] = &qxs_imem,
-> +	[SLAVE_SERVICE_SNOC] = &srvc_snoc,
-> +	[SLAVE_PCIE_0] = &xs_pcie,
-> +	[SLAVE_QDSS_STM] = &xs_qdss_stm,
-> +	[SLAVE_TCU] = &xs_sys_tcu_cfg,
-> +};
-> +
-> +static struct qcom_icc_desc sdx65_system_noc = {
-
-All these structures can be const.
-
-Best regards,
-Krzysztof
+-- 
+~Vinod
