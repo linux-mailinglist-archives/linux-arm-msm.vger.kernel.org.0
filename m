@@ -2,137 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 723D64FE9FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 23:32:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D56C4FE9F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 23:30:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229745AbiDLVeD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 17:34:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40110 "EHLO
+        id S229925AbiDLVcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 17:32:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229602AbiDLVeC (ORCPT
+        with ESMTP id S229908AbiDLVcL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 17:34:02 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1EC69286C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 14:12:58 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id b15so42955edn.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 14:12:58 -0700 (PDT)
+        Tue, 12 Apr 2022 17:32:11 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A9C1E2F73
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 14:10:44 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id e10so13185055qka.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 14:10:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=5MGAtg924xQO54iJ+qv/RwdxCFigZdsll8ZfNIcJPJc=;
-        b=IRqKqtapX/MHyA0kDhcmneShyhbP439lD8Z4ajJgKEEMZUq7Vj+sED/f2zG9UVnerm
-         jpzuGuKrJfonnDeOMuIf0vIONMOIwnyrV3mqp8hjXo3XRoLeZeoo5BR1yxZ0us5IGLCX
-         H9JVNJpKmIEhAUOLZsJ/ckHDfJizPDyhh1LzKV9AJtaDXTMi6VVYWGZyQloKrFqD7Mdn
-         9mlgMDkO81cme6GlAzsCleTj8LTu7ADAE1Mw8pFcgc04Vg340p+7NMYOHu9JOT4aQDus
-         /ERJHCjamQajYUIAoG0AWxsglQKtacsyg28H/ioh0WG/5bTnm3HRNiz9TzBHQCOjpLva
-         mUsQ==
+        d=marek-ca.20210112.gappssmtp.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=gBhTpRFFi4S1YoI6Y47NqVUBm/Z+66ScwXGZSk0rfic=;
+        b=T7Sy6FLDrgLsr08CJMXwUmg3ph+n2SbtlANeDVJRGcYPLZPNFdqkGA3rd9EyBtlS3H
+         kTjnzK8J7gmq/Ix5hk869IWHjRfyAZapgFeo9WcQo6acOPkngS7ZgD606xHdWRwdkcf4
+         uCNDsXroeiGCJ2dnoQVzb34/K2VNl7m6HbgnUp42Td7ihjuVDiePRgyor7tcwAF0jphx
+         dTPNgA/R3nPsTcwHOh8eDEn9xpE1Mq90riz3Mr6D8Z7h12iUd2IXjDQeAooIdIWVePAB
+         qgC8WMTKShtEFXeXyQDjMUSArChIukeGYjH3EdJ1+FacKEyrgQ1FlRi6Ir+VmO/dOMBJ
+         H7gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=5MGAtg924xQO54iJ+qv/RwdxCFigZdsll8ZfNIcJPJc=;
-        b=B2cZv6fGEwdlZh3K5Yx/TIaPbEdH8/2QI39Rl9abytNVKqoRdtekXfWm51EWYNfcLa
-         HDo9Iy4xBeS42UFWhrmb2rhsHFTLSCRNtkBrgEGhkt4WAk81yQJfY6nZ9atXQaK5kmLc
-         n2LsFVWgEeTEFqQUy+KpA7XnLiV8BLsOWjULQ/8iOOtFCPoGZ9VGHBYSTFEugnwZlk61
-         I5jLnGqarEm0u0sNO6H/3ebv/DLZsF1iHkiUbOHRYWcJfiNNlnI0s9Kwnd6VYptCzEop
-         aD3ukFEVARD7bpMvMGo6IKGhNNSrrj/rhwrMaYfhDGwxanYDB7LX2V2zPOR/WWHkwRE+
-         fbxw==
-X-Gm-Message-State: AOAM533TRMefjUsrxNMbpvW2TmlwTFGqQfL0qtNnZ6ZvfOjgP+uRiuug
-        TDFeSpKQexCfgExMXf97r4oIZKL5K2p8Aw==
-X-Google-Smtp-Source: ABdhPJxdvBgpOsgvYWc5ohlR+DrAhqAl4jpj9UN/qFwISEbPBxwK1JrxbDhyByhkPcvbEwT59vMZ5g==
-X-Received: by 2002:a2e:a585:0:b0:24b:70d2:249b with SMTP id m5-20020a2ea585000000b0024b70d2249bmr3482854ljp.78.1649797049159;
-        Tue, 12 Apr 2022 13:57:29 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p9-20020a2e93c9000000b0024b3c2ecc18sm1861940ljh.115.2022.04.12.13.57.27
+        bh=gBhTpRFFi4S1YoI6Y47NqVUBm/Z+66ScwXGZSk0rfic=;
+        b=4L7EAZ5I/njR7LCiSTxCR9fvujv8GoigpQrnu8gLF1eXnS1MeuOIJZ/uz9ehg4V4jT
+         If7iMv7zkCS00Qybms8kmMXgTD+GhignXixzGOQz7s5eooaYEZdsD4r3XTb0Xg4wXqPA
+         3MChp3gpWAOqBWqBukPVnHy1Fg6zAlmn9GP+ydrw1ZslS0jOl80FO1i9H6kOEIfXwje/
+         yIz1MQ0knWO/6LIXAJwhlzg3UMYyvvYFuQ6f/Q5jfeb7IM2FKiGMSoDys2q2s7cd8GMp
+         HDImH07ZjffX7iGXFYqJyPg1aKX5wiAoTEzVnj5YLIOIhMx1bJr+dgO4Q8jcVG24Emh7
+         AnXw==
+X-Gm-Message-State: AOAM530vTFz+yHunNxXGxyAZQ32q7tXlYshwE9dA66/44Rd22rck3B3z
+        FsmGuo6DVwaAIoMVh6FFcj16xg==
+X-Google-Smtp-Source: ABdhPJxG82CB33uGk+QRkThCYGAsp4gaOqXjPDvytyFIgAT/f1JvMa50XJo0MGciBKEXLs71MyqZMA==
+X-Received: by 2002:a05:620a:4310:b0:67e:8460:5a10 with SMTP id u16-20020a05620a431000b0067e84605a10mr4475122qko.636.1649797633718;
+        Tue, 12 Apr 2022 14:07:13 -0700 (PDT)
+Received: from [192.168.0.189] (modemcable134.222-177-173.mc.videotron.ca. [173.177.222.134])
+        by smtp.gmail.com with ESMTPSA id t10-20020a05620a034a00b0069c06c95bf7sm6104251qkm.14.2022.04.12.14.07.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Apr 2022 13:57:28 -0700 (PDT)
-Message-ID: <3c96b6f5-878f-ee90-657e-71e8de16e290@linaro.org>
-Date:   Tue, 12 Apr 2022 23:57:27 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v2 0/4] arm: qcom: qcom-apq8064: add separate device node
- for tsens
-Content-Language: en-GB
+        Tue, 12 Apr 2022 14:07:13 -0700 (PDT)
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: delete incorrect ufs
+ interconnect fields
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Amit Kucheria <amitk@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20220406002648.393486-1-dmitry.baryshkov@linaro.org>
- <20220406154028.EC897C385A3@smtp.kernel.org>
- <CAA8EJpod2cNOYr3g+DmdWo_2Ujv7-pW39fBKqcpCPvtVgP5-NQ@mail.gmail.com>
- <20220412184304.79012C385A8@smtp.kernel.org>
- <CAA8EJppha+V77S6LAZW9us6XiVu9vD9X=RF+RKd+5cvCz+NxEg@mail.gmail.com>
- <YlXcTNv4ex54G/ig@ripper>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YlXcTNv4ex54G/ig@ripper>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20220407172145.31903-1-jonathan@marek.ca>
+ <YlXmTbKwYtvLSjgp@builder.lan>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <b70f4ecf-93c6-49df-0d8d-a5899075ca63@marek.ca>
+Date:   Tue, 12 Apr 2022 17:07:13 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
+MIME-Version: 1.0
+In-Reply-To: <YlXmTbKwYtvLSjgp@builder.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/04/2022 23:08, Bjorn Andersson wrote:
-> On Tue 12 Apr 12:20 PDT 2022, Dmitry Baryshkov wrote:
+
+On 4/12/22 4:51 PM, Bjorn Andersson wrote:
+> On Thu 07 Apr 12:21 CDT 2022, Jonathan Marek wrote:
 > 
->> On Tue, 12 Apr 2022 at 21:43, Stephen Boyd <sboyd@kernel.org> wrote:
->>>
->>> Quoting Dmitry Baryshkov (2022-04-06 12:57:30)
->>>> On Wed, 6 Apr 2022 at 18:40, Stephen Boyd <sboyd@kernel.org> wrote:
->>>>>
->>>>> Quoting Dmitry Baryshkov (2022-04-05 17:26:44)
->>>>>> Currently gcc-msm8960 driver manually creates tsens device. Instantiate
->>>>>> the device using DT node instead. This follow the IPQ8064 device tree
->>>>>> schema.
->>>>>
->>>>> Why can't the schema be changed?
->>>>
->>>> But these commits change the schema. They make apq8064 follow more
->>>> logical scheme of ipq8064.
->>>>
->>>
->>> Sounds like ipq8064 and apq8064 follow different schemas. Is there any
->>> benefit to harmonizing the two vs. just leaving it as it is in the dts
->>> and making the schema match whatever the dts has?
->>
->> I'd prefer to harmonize them. It makes no sense to have two different
->> approaches for the single IP block (shared between ipq and apq/msm).
->> And having a separate device tree node for the tsens removes a
->> dependency from gcc on the nvmem/qfprom.
->> Note, upstream qcom-msm8960.dtsi doesn't describe tsens at all, so we
->> don't have to worry about it.
+>> Upstream sm8450.dtsi has #interconnect-cells = <2>; so these are wrong.
+>> Ignored and undocumented with upstream UFS driver so delete for now.
 >>
 > 
-> The apq8064 design was chosen in order to make the dts represent the GCC
-> being a single hardware block, and the fact that this is a clock and a
-> thermal driver in Linux is an implementation decision.
+> Just to clarify, the binding do document interconnects and the property
+> should be there in the end. v1 (why isn't this marked v2?) was correct.
 > 
-> Seems like we forgot about this decision when we introduce the
-> ipq8064...
+> What I asked for was a statement on why it should be picked up for
+> v5.18-rc (as Dmitry requested).
 > 
-> 
-> I'm not against harmonizing the two, but I don't see any changes to
-> Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml and the
-> clock patch describes what happens, but not why (i.e. if it's to
-> harmonize the implementations the commit message should say so).
 
-Nice catch. I forgot about the gcc-apq8064 schema. Will fix in the next 
-iteration.
+This isn't a v2, I sent this without seeing there was already patch for 
+the same "problem".
 
--- 
-With best wishes
-Dmitry
+A reason for picking it up is that if you have a patch adding the 
+interconnect support to the UFS driver in your tree, the incorrect dts 
+will prevent it from probing  (so the 5.18-rc1 dts could fail with newer 
+kernel eventually, not sure if upstream cares about that?)
+
+> Regards,
+> Bjorn
+> 
+>> Fixes: aa2d0bf04a3c ("arm64: dts: qcom: sm8450: add interconnect nodes")
+>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 3 ---
+>>   1 file changed, 3 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> index 2c18e1ef9e82d..90cdbec3cac99 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> @@ -1663,9 +1663,6 @@ ufs_mem_hc: ufshc@1d84000 {
+>>   
+>>   			iommus = <&apps_smmu 0xe0 0x0>;
+>>   
+>> -			interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
+>> -					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
+>> -			interconnect-names = "ufs-ddr", "cpu-ufs";
+>>   			clock-names =
+>>   				"core_clk",
+>>   				"bus_aggr_clk",
+>> -- 
+>> 2.26.1
+>>
