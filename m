@@ -2,79 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4103C4FD07C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 08:45:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 972D14FD117
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 08:55:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350283AbiDLGpj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 02:45:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38726 "EHLO
+        id S236613AbiDLG5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 02:57:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351360AbiDLGoj (ORCPT
+        with ESMTP id S1351772AbiDLGyW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 02:44:39 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 604273A5FA;
-        Mon, 11 Apr 2022 23:38:13 -0700 (PDT)
+        Tue, 12 Apr 2022 02:54:22 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42FDFBD3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 23:44:02 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id bv19so12278144ejb.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 23:44:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649745493; x=1681281493;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=BU97LDtNFkdy5o2r9MYpyTyoSWLxgm1ciBlLTEE/SzU=;
-  b=A/aAGiCUTkxLskdZP2OpNxYrOWGs0t76azkGB0qOPuqlV49kaxfOL+n1
-   8HjJOoAMsvjiIsyGwfkvefo0/aG01bhlKKgA1cnBfK2OxJwCa9lNqRjQ+
-   SwAn2REIX9mLWtgGD2QyoWztpKfsOLlKBHeHWT5HJS5Siln6+zlxQn4GN
-   8=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 11 Apr 2022 23:38:13 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Apr 2022 23:38:11 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 11 Apr 2022 23:38:11 -0700
-Received: from [10.216.54.112] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 11 Apr
- 2022 23:38:05 -0700
-Subject: Re: [PATCH v13 2/6] usb: dwc3: core: Host wake up support from system
- suspend
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
-CC:     Matthias Kaehlcke <mka@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=gdMXT9TzsyH4/nxmkBNQPgpVjR8VBr666pmrMpmTXZI=;
+        b=Sf9531F6U+Pwb0a1JtSz+UJf/7y7GtDmQlZZhYfSi+mfIvdBuA4l0w7/WatdjA9Ad6
+         TvV1/c+RE7sUGKS1/vUuU2MhBpzDMSR5e27v5CWt4Y1uEERO4rzy1WFE7UFOUTkys8y4
+         CrAZELDcitDaBEG070MG6AnwITJStO2p0wpebyOBC/F8c4E4tcDxGW0/DG5QxVW1sIpV
+         8p0pgBHVk3S74bwGfrfbc9v6owVXngqPs+TyhlqZ2FJ8kqVHCNvX0K4QrJKpDWlQQ4ZP
+         fgucKqXTCFSYrEFgMqiDfOIFe4mCpdCXVpFSuD1BRgEDhCuvS5dXmNhhvfMGmg+v/lcO
+         ESgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=gdMXT9TzsyH4/nxmkBNQPgpVjR8VBr666pmrMpmTXZI=;
+        b=l0aiTH0AUD/deMHhL5IJTKwcKibSQUQs4Xs9Ot9hoMFEiTNdzh/YgoOJg8Y9avXPGN
+         mQ+H0fclzWlAR71loekRYw6NII2tO08BIZMa0KWchD37/kcwTEt558zGoEpgbtmbAyxu
+         J2ScI+iaY1NlAytBEy+loRzLbHDEGt34n7oTZkfjplZZ+s2zEA704b6YTYZ7OKLO8Xo9
+         iSzLD9iimls/RYKNIBlTz1v7FuforFAXYzesuFfJ87oXiJ28faNeh2ss4wTl5Tlq8gBe
+         JsFb28VbAyJSBW3sGJmhhJ962HN0hiF67VxFOEiGK6mGsgnTsWIEtfoyaGAvkG2Cb7JZ
+         vVHQ==
+X-Gm-Message-State: AOAM530Hx9iOby8NfR5MZm7EeS0FUr1ySvRsBTfVL+oPFbX3T6LyE4Lf
+        Z64W6Z5Yk+T3TwKUn6EpsUUcqA==
+X-Google-Smtp-Source: ABdhPJzlMIXt07hedFNdXekcNnAvfM3k0nzYSnt57hMcEFauFmO4UC80WvnBdB/kePIRmAW6KtUX+g==
+X-Received: by 2002:a17:907:1b06:b0:6e7:f58a:9b91 with SMTP id mp6-20020a1709071b0600b006e7f58a9b91mr34377224ejc.291.1649745840798;
+        Mon, 11 Apr 2022 23:44:00 -0700 (PDT)
+Received: from [192.168.0.193] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id c1-20020a50cf01000000b0041cb7e02a5csm14566517edk.87.2022.04.11.23.43.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Apr 2022 23:44:00 -0700 (PDT)
+Message-ID: <8ff07720-3c52-99e6-8046-501f4ae28518@linaro.org>
+Date:   Tue, 12 Apr 2022 08:43:59 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 6/6] dt-bindings: dma: Convert Qualcomm BAM DMA binding
+ to json format
+Content-Language: en-US
+To:     Kuldeep Singh <singh.kuldeep87k@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_ppratap@quicinc.com>, <quic_kriskura@quicinc.com>,
-        <quic_vpulyala@quicinc.com>
-References: <1649704614-31518-1-git-send-email-quic_c_sanm@quicinc.com>
- <1649704614-31518-3-git-send-email-quic_c_sanm@quicinc.com>
- <YlSVec5+SpdMZWCz@google.com>
- <36d22ad7-7f11-2f63-cd68-5d564476161e@quicinc.com>
- <20220412050018.GB2627@hu-pkondeti-hyd.qualcomm.com>
-From:   "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>
-Message-ID: <259c9e87-a52e-c063-7901-2c6decd42675@quicinc.com>
-Date:   Tue, 12 Apr 2022 12:08:02 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.1
-MIME-Version: 1.0
-In-Reply-To: <20220412050018.GB2627@hu-pkondeti-hyd.qualcomm.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org
+References: <20220410175056.79330-1-singh.kuldeep87k@gmail.com>
+ <20220410175056.79330-7-singh.kuldeep87k@gmail.com>
+ <14ecb746-56f0-2d3b-2f93-1af9407de4b7@linaro.org>
+ <20220411105810.GB33220@9a2d8922b8f1>
+ <50defa36-3d91-80ea-e303-abaade1c1f7e@linaro.org>
+ <20220412061953.GA95928@9a2d8922b8f1>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220412061953.GA95928@9a2d8922b8f1>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,115 +86,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pavan,
-
-On 4/12/2022 10:30 AM, Pavan Kondeti wrote:
-> Hi Sandeep,
->
-> On Tue, Apr 12, 2022 at 10:16:39AM +0530, Sandeep Maheswaram (Temp) wrote:
->> Hi Matthias,
->>
->> On 4/12/2022 2:24 AM, Matthias Kaehlcke wrote:
->>> On Tue, Apr 12, 2022 at 12:46:50AM +0530, Sandeep Maheswaram wrote:
->>>> During suspend read the status of all port and set hs phy mode
->>>> based on current speed. Use this hs phy mode to configure wakeup
->>>> interrupts in qcom glue driver.
->>>>
->>>> Check wakep-source property for dwc3 core node to set the
->>> s/wakep/wakeup/
->> Okay. Will update in next version.
->>>> wakeup capability. Drop the device_init_wakeup call from
->>>> runtime suspend and resume.
->>>>
->>>> Also check during suspend if any wakeup capable devices are
->>>> connected to the controller (directly or through hubs), if there
->>>> are none set a flag to indicate that the PHY is powered
->>>> down during suspend.
->>>>
->>>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
->>>> ---
->>> A per-patch change log would be really helpful for reviewers, even
->>> if it doesn't include older versions.
->> Okay. Will update in next version.
->>>>   drivers/usb/dwc3/core.c | 33 ++++++++++++++++++++-------------
->>>>   drivers/usb/dwc3/core.h |  4 ++++
->>>>   drivers/usb/dwc3/host.c | 25 +++++++++++++++++++++++++
->>>>   3 files changed, 49 insertions(+), 13 deletions(-)
->>>>
->>>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
->>>> index 1170b80..effaa43 100644
->>>> --- a/drivers/usb/dwc3/core.c
->>>> +++ b/drivers/usb/dwc3/core.c
->>>> @@ -32,6 +32,7 @@
->>>>   #include <linux/usb/gadget.h>
->>>>   #include <linux/usb/of.h>
->>>>   #include <linux/usb/otg.h>
->>>> +#include <linux/usb/hcd.h>
->>>>   #include "core.h"
->>>>   #include "gadget.h"
->>>> @@ -1723,6 +1724,7 @@ static int dwc3_probe(struct platform_device *pdev)
->>>>   	platform_set_drvdata(pdev, dwc);
->>>>   	dwc3_cache_hwparams(dwc);
->>>> +	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
->>>>   	spin_lock_init(&dwc->lock);
->>>>   	mutex_init(&dwc->mutex);
->>>> @@ -1865,6 +1867,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->>>>   {
->>>>   	unsigned long	flags;
->>>>   	u32 reg;
->>>> +	struct usb_hcd  *hcd = platform_get_drvdata(dwc->xhci);
->>>>   	switch (dwc->current_dr_role) {
->>>>   	case DWC3_GCTL_PRTCAP_DEVICE:
->>>> @@ -1877,10 +1880,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->>>>   		dwc3_core_exit(dwc);
->>>>   		break;
->>>>   	case DWC3_GCTL_PRTCAP_HOST:
->>>> -		if (!PMSG_IS_AUTO(msg)) {
->>>> -			dwc3_core_exit(dwc);
->>>> -			break;
->>>> -		}
->>>> +		dwc3_check_phy_speed_mode(dwc);
->>>>   		/* Let controller to suspend HSPHY before PHY driver suspends */
->>>>   		if (dwc->dis_u2_susphy_quirk ||
->>>> @@ -1896,6 +1896,16 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->>>>   		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
->>>>   		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
->>>> +
->>>> +		if (!PMSG_IS_AUTO(msg)) {
->>>> +			if (device_may_wakeup(dwc->dev) &&
->>>> +			    usb_wakeup_enabled_descendants(hcd->self.root_hub)) {
->>> You did not answer my question on v12, reposting it:
+On 12/04/2022 08:19, Kuldeep Singh wrote:
+> On Mon, Apr 11, 2022 at 01:38:41PM +0200, Krzysztof Kozlowski wrote:
+>> On 11/04/2022 12:58, Kuldeep Singh wrote:
+>>>> This is something new and it seems only one SoC defines it (not even one
+>>>> BAM version). I wonder whether this is actually correct or this
+>>>> particular version of BAM is slightly different. Maybe someone could
+>>>> clarify it, but if no - looks ok.
 >>>
->>>    Did you ever try whether you could use device_children_wakeup_capable() from
->>>    [1] instead of usb_wakeup_enabled_descendants()?
+>>> Yes, sdm845.dtsi uses 4 entries and rest 1.
+>>
+>> Yes, I know. This does not solve my wonder.
+>>
 >>>
->>>    [1] https://patchwork.kernel.org/project/linux-usb/patch/1635753224-23975-2-git-send-email-quic_c_sanm@quicinc.com/#24566065
->> Sorry ..I have replied in mail yesterday but it is not showing up in
->> patchwork link.
+>>>>
+>>>>> +
+>>>>> +  num-channels:
+>>>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>>>> +    description:
+>>>>> +      Indicates supported number of DMA channels in a remotely controlled bam.
+>>>>> +
+>>>>> +  qcom,controlled-remotely:
+>>>>> +    $ref: /schemas/types.yaml#/definitions/flag
+>>>>
+>>>> type: boolean
+>>>
+>>> Boolean comes under flag in types.yaml
+>>>
+>>> definitions:
+>>>   flag:
+>>>     oneOf:
+>>>       - type: boolean
+>>>         const: true
+>>>       - type: 'null'
+>>>
+>>> I have seen other boolean properties(spi-cpol, spi-cpha and bunch of
+>>> others) using type flag. I think we should keep flag here.
 >>
->> Tried with  device_children_wakeup_capable(dwc->dev) instead of
->> usb_wakeup_enabled_descendants and it always returns true even
+>> type:boolean is just shorter and example-schema recommends it. If you
+>> want to base on something (as a template, pattern) then the
+>> example-schema is the source, the preferred one.
+> 
+> I had seen other spec using flag and that's why kept same here.
+
+I understand, you mentioned it before. However other spec is not the
+example-schema...
+
+> Which example schema are you talking about?
+
+There is only one example-schema.
+$ find ./linux -name 'example-schema*'
+
+>>>> clocks, clock-names, qcom-ee - these are required according to old bindings.
+>>>
+>>> I missed qcom,ee. Will add in v3.
+>>>
+>>> For clocks and clock-names , there are two platforms(msm8996.dtsi,
+>>> sdm845.dtsi) where these properties are missing. And I don't want to add
+>>> some random values. Shall I skip them here? and let board owners add
+>>> them later.
 >>
->> when no devices are connected.
->>
-> What do you mean by when no devices are connected? There is always
-> root hub connected and we should not power down the DWC3 here even
-> when remote wakeup for root hub is enabled. Essentially
-> usb_wakeup_enabled_descendants() returns true even without any
-> physical devices connected.
->
-> What does device_children_wakeup_capable() do? Sorry, I could not
-> find this function definition.
->
-> Thanks,
-> Pavan
+>> These are required, so the SoC DTSI should be fixed. Not with random
+>> clocks but something proper. :)
+> 
+> Yes absolutely :-)
+> I have kept Srinivas in copy, who sent initial support for both the
+> dtsi. Probably he can confirm provided his email doesn't bounce.
+> 
+> Anyway Krzysztof, can you confirm the same as you have been actively
+> contributing to Qcom peripherals. I will add credit in follow-up
+> submission.
 
-usb_wakeup_enabled_descendants() doesn't consider hubs. It only returns true if any devices
-are connected with wakeup capability apart from hubs. If we consider hubs also dwc3 core exit
-and phy exit will never be called.
+Honestly not now, because I don't have access to related datasheets (I
+am working on this). You can though try to look at original (vendor)
+sources:
+https://git.codelinaro.org/clo/la/kernel/msm-4.19 (sdm845)
+https://git.codelinaro.org/clo/la/kernel/msm-3.18 (msm8996)
 
-device_children_wakeup_capable() implementation was shared by Matthias in below thread
-https://patchwork.kernel.org/project/linux-usb/patch/1635753224-23975-2-git-send-email-quic_c_sanm@quicinc.com/#24566065
 
-Probably device_children_wakeup_capable() is returning true because it considers hubs also.
-
+Best regards,
+Krzysztof
