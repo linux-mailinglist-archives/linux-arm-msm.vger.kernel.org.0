@@ -2,66 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 446A54FF10C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 09:55:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDF954FF41A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 11:48:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233584AbiDMH5f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 03:57:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50154 "EHLO
+        id S234744AbiDMJt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 05:49:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233576AbiDMH5f (ORCPT
+        with ESMTP id S233720AbiDMJtj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 03:57:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4CB722BE4;
-        Wed, 13 Apr 2022 00:55:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 46C40616DE;
-        Wed, 13 Apr 2022 07:55:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3ACC385A4;
-        Wed, 13 Apr 2022 07:55:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649836513;
-        bh=1f4mcJkQt1lTjW13r8eX0mTCdHXvLFxIhJXVjQ6xG/Q=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gDzRpSw9RoegUV+FlhIx87nLVc9FcoPmGnlAyqNHhN7gCAgnWihbcoIgUXRxQ90NA
-         1a19XVozvZvi9wJ/DfNDpJLFtYBi4Xmfj/qoBMGXNXIgXWs5t4jblAlpVNxFCQ8oGy
-         cCWHNlMjgP4ASUkXyQaYdY63nsvl9vWYILROyR6cBU+rNbfZcUG3Vi6G7wUwNyOZIm
-         I60RyVaCWqttaLqAIoIujs0aGmWetneUfAUo55dN0GSDyoHHy+KlDIN0gwZgTUqK7I
-         wXLMW+kcnjVD9NJwauUmIbC/02OU+TFf0KVAbobftNnzLbhfSVIqnRn7qY0mflEttK
-         ZMYvzKzTYkY8w==
-Date:   Wed, 13 Apr 2022 13:25:09 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        robh+dt@kernel.org, krzk+dt@kernel.org,
-        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Add support for USB3 PHY on SDX65
-Message-ID: <YlaB3WBb8Dz3RLNC@matsya>
-References: <1649740652-17515-1-git-send-email-quic_rohiagar@quicinc.com>
+        Wed, 13 Apr 2022 05:49:39 -0400
+Received: from mail.growthmindset24.pl (mail.growthmindset24.pl [212.237.36.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 472BD580EE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 02:47:10 -0700 (PDT)
+Received: by mail.growthmindset24.pl (Postfix, from userid 1001)
+        id 0522286B66; Tue, 12 Apr 2022 08:56:42 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=growthmindset24.pl;
+        s=mail; t=1649750238;
+        bh=FDuFY3XQoq0gMX1b2gxgT7Py2p4Sxl0PJZYZ4NVaPho=;
+        h=Date:From:To:Subject:From;
+        b=XK4v8jQBZemmZ+hxipK+1uYaANoAzekEI+iiDYxRw4yWwGfFvixooZ1DA+Em1KoAK
+         cS8ndfis64PXNQBZdbjhDmPYvOOo0k52YtiyJ6szQAb7K3F74o4glr63LTAJD/P5Il
+         o2JIISMQbsW2Cmb8Cbmk4sT8uQNajrCdGaXYd7/PoCdSWelUlN3Um6ckGhltqcNGoq
+         OcUs4RVxmKTTXNwSAFbZoWQQNOzlKyqG2b+H64kK6+YZnwjptzfGV/GWUUqSgsAXZI
+         FAZ4bgqCocCZhUC+K+stvof/YXxEDsWR3UbHtwDMlnpShzaF+8EswN3coDvFTbHU+t
+         edarXoQ0dB+mw==
+Received: by mail.growthmindset24.pl for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 07:56:00 GMT
+Message-ID: <20220412073001-0.1.2w.d8p3.0.uyc8rq9qdm@growthmindset24.pl>
+Date:   Tue, 12 Apr 2022 07:56:00 GMT
+From:   =?UTF-8?Q? "Przemys=C5=82aw_Wr=C3=B3blewski" ?= 
+        <przemyslaw.wroblewski@growthmindset24.pl>
+To:     <linux-arm-msm@vger.kernel.org>
+Subject: Wycena paneli fotowoltaicznych
+X-Mailer: mail.growthmindset24.pl
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1649740652-17515-1-git-send-email-quic_rohiagar@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-04-22, 10:47, Rohit Agarwal wrote:
-> This series adds USB3 PHY support for SDX65 platform. The USB3 PHY is of
-> type QMP and revision 5.0.0.
+Dzie=C5=84 dobry,
 
-Applied, thanks
+dostrzegam mo=C5=BCliwo=C5=9B=C4=87 wsp=C3=B3=C5=82pracy z Pa=C5=84stwa f=
+irm=C4=85.
 
--- 
-~Vinod
+=C5=9Awiadczymy kompleksow=C4=85 obs=C5=82ug=C4=99 inwestycji w fotowolta=
+ik=C4=99, kt=C3=B3ra obni=C5=BCa koszty energii elektrycznej nawet o 90%.
+
+Czy s=C4=85 Pa=C5=84stwo zainteresowani weryfikacj=C4=85 wst=C4=99pnych p=
+ropozycji?
+
+
+Pozdrawiam,
+Przemys=C5=82aw Wr=C3=B3blewski
