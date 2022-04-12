@@ -2,141 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B5DE4FCC75
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 04:35:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03FEA4FCD71
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Apr 2022 06:04:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233008AbiDLChn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Apr 2022 22:37:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47882 "EHLO
+        id S238258AbiDLEGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 00:06:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229689AbiDLChk (ORCPT
+        with ESMTP id S229809AbiDLEGl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Apr 2022 22:37:40 -0400
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9FA419C35
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 19:35:20 -0700 (PDT)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-d39f741ba0so19393513fac.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 19:35:20 -0700 (PDT)
+        Tue, 12 Apr 2022 00:06:41 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05DEE2E9C7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 21:04:24 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id z19so18300975qtw.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Apr 2022 21:04:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=27t0/Qo4lvhMaM3TOiDm3Op0HQcIUZVxhkHZUsq/h+k=;
-        b=Tx/Tmmv9cHXeVpqxCWqj5GsiGQfPuyPwy4ZJMqCZoCmjSIUC2mrhsAqTGh697Gst1L
-         QFHWj6TLIKNnv8EJk8n/SO9zlOHUFgyrE3AOsDxCbR9fhedJk6tQYkJnoew1SfXL19IW
-         iJb7r8PL73g+YsrPSvfbkQyH0Ug3gUohwbGfcH+uEV5vxkngt2D9/qreYYvdETlrj2fz
-         tzpN451OGElP9tZrzg5+SE2DuAg3kiloaUDwSZSNxbvkbwOeF3N0y7bAWuW9ByPM2WC6
-         5H3rpSpxUBsmzS+pXakv/NZVpPCRpjDXT6ME0mbbGumtz4FVeQru8tPLQe832jmxBi+P
-         F3jQ==
+        d=marek-ca.20210112.gappssmtp.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=J+x3SPFdGypefdXDIqiyFTr8SFo5yaCISlCMQJFopck=;
+        b=x/IyGL9sWWNEgc+7aqpoOSGvBo3BrA/8tfHhrVWZlHv5Zqb6+sNfP+t1XNvlgELoyC
+         tL68P2ifPMWhTeUceZ//SyqhR6E0r1uOq0OBFPpwizKLpsUzafMr4ALbioXVlzzOhFgZ
+         CChwBJ24GWepEFfC1OvFF/RJE1oygWYYAUHIi4csnS3wtvBa5roOQcTi9gqU996Tn+Qx
+         OyJfWaHwHDnclIB0jaE34V4WIEJsPOLrjFSeXYFnm5lp7YB9CCE8N3+kxljOG9n7hjIE
+         35v78d2T8xqDg1VE1aDcRI+tlV11qeupdXuZ0L3cww33z8q0Vz+vU7C6JyY1RvDK6WOH
+         4s8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=27t0/Qo4lvhMaM3TOiDm3Op0HQcIUZVxhkHZUsq/h+k=;
-        b=vZ2Srl6LgELXZDE7CDTwCwPeZ7IPxQRrF3iou1U5KA7k/Xt4ucP+Eho82eEo9qlVJY
-         XXM/etsJXya5Xgk+ZJbqNuhZroG5dk3V9X2kf6pcRPJtSJhniMCmcpVrKhvLnyWpmzQw
-         KOMwR+ylJjsbyJTd/78lN8d4/oR6Y1bXFFBmq6+904lY5hrXaevY+QwJU4/6ZP8ujKPz
-         XhlOjhjIKnXSBoi5HLJ2PD9MR0z0Y/1yc6FFML4+GNhdsDJ/u4+8Ss3feC88XBQSHDse
-         ndSs1FA3asBdu517PQMkf59SBX9scr0q6Ezwlm0A4Tm5bzdcXGLXQlPEiITKUj/zsnSL
-         +OQQ==
-X-Gm-Message-State: AOAM531YSg0qaHunJQzTsgJJJL3s16dy8rU52MQsgoe9t3coXqQtRT+/
-        px6EPVdhRK4jl43z9DivZ6R/cA==
-X-Google-Smtp-Source: ABdhPJw/w+OlcERZQK/Rj6XF2LKTmJs8sqZLOUp33SNe35UFdg2B00DCfvuhLcn2uIV4Glaep/a58w==
-X-Received: by 2002:a05:6870:f104:b0:da:b3f:3248 with SMTP id k4-20020a056870f10400b000da0b3f3248mr1138491oac.248.1649730919742;
-        Mon, 11 Apr 2022 19:35:19 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id i28-20020a056870891c00b000de777f1a41sm12756872oao.46.2022.04.11.19.35.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Apr 2022 19:35:18 -0700 (PDT)
-Date:   Mon, 11 Apr 2022 21:35:17 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=J+x3SPFdGypefdXDIqiyFTr8SFo5yaCISlCMQJFopck=;
+        b=wuOa+GOhySIFxqfUAKmBGk58jbM2TODnYXibMhxfeNmhqE5IjpEqbnA0jyY73MBQGX
+         m2B/rpeOHfTxDVKhWI8ppocQ1c0nHNAEMN1clTQSswc9KhNWjabVDFML0VRplDMIZOhW
+         vx+ogX14nC3hYVjZ2lTrE7sFg570W/V9TLA6j40dM+S9+1lO9+zT0hpMkU6H5tEjarms
+         VQ1xh4GQAbA53Gu7gNeB77AFjJE8smI7iCXg6C10c8hjwLz5lGhTlizb7qsOGXuNSYCV
+         TvAqMvbDzc1IXvRWrIbMXQkvCNSUANy6CsVDDF3TK5aZo+D21udifv7Xl/4PlmJVFYGI
+         nbAQ==
+X-Gm-Message-State: AOAM531YZx9xFNB0qLrUMern1AwyqNzJpS5TaA5PWnTf9xW59LuwvXkG
+        PevGfxwEVoTdGvaJsNhD5NEpD8xm92RiFWff
+X-Google-Smtp-Source: ABdhPJwA2WVOHW3EXR6l/HiIz94aEB/WpqZC/ssR0ezUv3tSP+2pzRH/BbFwctn+X60WSZ9mNg2pag==
+X-Received: by 2002:a05:622a:138a:b0:2e1:ea16:4fd9 with SMTP id o10-20020a05622a138a00b002e1ea164fd9mr1927029qtk.527.1649736263011;
+        Mon, 11 Apr 2022 21:04:23 -0700 (PDT)
+Received: from [192.168.0.189] (modemcable134.222-177-173.mc.videotron.ca. [173.177.222.134])
+        by smtp.gmail.com with ESMTPSA id e15-20020a05622a110f00b002e1ed105652sm26677261qty.2.2022.04.11.21.04.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Apr 2022 21:04:22 -0700 (PDT)
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: delete incorrect ufs
+ interconnect fields
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: fix interconnects property of
- UFS node
-Message-ID: <YlTlZa35A4lu02oI@builder.lan>
-References: <20220310221934.1560729-1-vladimir.zapolskiy@linaro.org>
- <dbe6d9c5-f717-785f-e65d-baa1328cea2b@linaro.org>
- <Ykx6NWrcf4IA2Mam@ripper>
- <CAA8EJpqrJr5RB8E6CQ+cAgp6bad4m_LSG6CPeMsf+Ws0jqFf1Q@mail.gmail.com>
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+References: <20220407172145.31903-1-jonathan@marek.ca>
+ <e41c26c2-8aa4-cfd2-27b0-eb011f45eda0@linaro.org>
+ <865ff6bc-95a2-8b39-5cf2-bb2d3f592c5a@linaro.org>
+ <f1fb2d71-4adf-bcc7-76b3-c7102ab9f2e9@marek.ca>
+ <YlTg7QPkWMBP4HAb@builder.lan>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <20db508c-0ccf-e4a6-87a4-17c41871703c@marek.ca>
+Date:   Tue, 12 Apr 2022 00:04:23 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpqrJr5RB8E6CQ+cAgp6bad4m_LSG6CPeMsf+Ws0jqFf1Q@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+In-Reply-To: <YlTg7QPkWMBP4HAb@builder.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 05 Apr 12:38 CDT 2022, Dmitry Baryshkov wrote:
+On 4/11/22 10:16 PM, Bjorn Andersson wrote:
+> On Thu 07 Apr 17:38 CDT 2022, Jonathan Marek wrote:
+> 
+>> On 4/7/22 5:16 PM, Krzysztof Kozlowski wrote:
+>>> On 07/04/2022 21:40, Vladimir Zapolskiy wrote:
+>>>> On 4/7/22 20:21, Jonathan Marek wrote:
+>>>>> Upstream sm8450.dtsi has #interconnect-cells = <2>; so these are wrong.
+>>>>> Ignored and undocumented with upstream UFS driver so delete for now.
+>>>
+>>> This is the upstream and they are documented here, although as pointed
+>>> by Vladimir this was rather a reverse-documentation. The documentation
+>>> might be incorrect, but then the bindings should be corrected instead of
+>>> only modifying the DTS.
+>>>
+>>>>
+>>>> Basically the description was added by a commit 462c5c0aa798 ("dt-bindings: ufs:
+>>>> qcom,ufs: convert to dtschema").
+>>>>
+>>>> It's questionable, if an example in the new yaml file is totally correct
+>>>> in connection to the discussed issue.
+>>>
+>>> To be honest - the example probably is not correct, because it was based
+>>> on existing DTS without your patch. :)
+>>>
+>>> Another question is whether the interconnect properties are here correct
+>>> at all. I assumed that DTS is correct because it should describe the
+>>> hardware, even if driver does not use it. However maybe that was a false
+>>> assumption...
+>>>
+>>
+>> writing-bindings.rst says it is OK to document even if it isn't used by the
+>> driver (seems wrong to me, at least for interconnects which are a firmware
+>> abstraction and not hardware).
+>>
+> 
+> The devicetree, and hence the binding, should describe the hardware, so
+> that an implementation can make use of the hardware. So there's no
+> problem expressing the interconnect in the binding/dts even though the
+> driver isn't using it.
+> 
+> I'm not sure if I'm misunderstanding you, the interconnect paths
+> described here are a description of the hardware requirements for this
+> device. (I.e. it need the buses between ufs and ddr, and cpu and ufs to
+> operate).
+> 
 
-> On Tue, 5 Apr 2022 at 20:17, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Tue 05 Apr 08:38 PDT 2022, Dmitry Baryshkov wrote:
-> >
-> > > On 11/03/2022 01:19, Vladimir Zapolskiy wrote:
-> > > > All interconnect device tree nodes on sm8450 are 2-cells, however in
-> > > > UFS node they are handled as 1-cells, fix it.
-> > > >
-> > > > Fixes: aa2d0bf04a3c ("arm64: dts: qcom: sm8450: add interconnect nodes")
-> > > > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> > >
-> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > >
-> > > Bjorn, could you please this pick for the -rc kernel?
-> > >
-> >
-> > The change is obviously correct, but what difference does this change
-> > make with the current implementation?
+This is pedantic but what if my kernel lives in imem and not ddr. Or it 
+runs on adsp and not cpu? "ufs-ddr" and "cpu-ufs" are not necessarily 
+hardware requirements.
+
+(I was thinking of something else when I wrote that comment, but it 
+doesn't actually matter if its firmware/hardware if a driver can 
+implement the same functionality either way)
+
+>> 462c5c0aa798 wasn't in my 5.17+ tree pulled after dts changes were merged (I
+>> guess doc changes come later), so my commit message is incorrect, but I
+>> think it makes more sense to have the documentation reflect the driver. Its
+>> also not an important issue, so I'll let others sort it out.
+>>
 > 
-> it makes interconnect paths probe correctly. All NoC have
-> #interconnec-cells = <2> now.
+> I believe that the correctness of the interconnect property will ensure
+> that the interconnect provider doesn't hit sync_state until the ufs
+> driver has probed - regardless of the driver actually implementing the
+> interconnect voting. But perhaps I've misunderstood the magic involved?
 > 
 
-But there's no code in the UFS driver that calls of_icc_get(), so what
-does this actually do? (Other than correcting the dtb for the day when
-we add that support to the driver).
+AFAICT, if its not used by the driver it will be ignored completely, 
+unless you use OPP (which has some interconnect magic).
 
-Regards,
-Bjorn
-
-> >
-> > Regards,
-> > Bjorn
-> >
-> > > > ---
-> > > >   arch/arm64/boot/dts/qcom/sm8450.dtsi | 4 ++--
-> > > >   1 file changed, 2 insertions(+), 2 deletions(-)
-> > > >
-> > > > diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > > > index 0cd5af8c03bd..bbd38b55e976 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > > > +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > > > @@ -1376,8 +1376,8 @@ ufs_mem_hc: ufshc@1d84000 {
-> > > >                     iommus = <&apps_smmu 0xe0 0x0>;
-> > > > -                   interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
-> > > > -                                   <&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
-> > > > +                   interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
-> > > > +                                   <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
-> > > >                     interconnect-names = "ufs-ddr", "cpu-ufs";
-> > > >                     clock-names =
-> > > >                             "core_clk",
-> > >
-> > >
-> > > --
-> > > With best wishes
-> > > Dmitry
+> Regards,
+> Bjorn
 > 
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
