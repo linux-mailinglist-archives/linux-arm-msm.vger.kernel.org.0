@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 494654FEB0F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 01:47:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBF8D4FEAB6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 01:46:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229379AbiDLX0b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 19:26:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38248 "EHLO
+        id S230137AbiDLXbp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 19:31:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229864AbiDLX0V (ORCPT
+        with ESMTP id S230390AbiDLXbU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 19:26:21 -0400
-Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78A14E9950
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 15:40:15 -0700 (PDT)
-Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-dacc470e03so260881fac.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 15:40:15 -0700 (PDT)
+        Tue, 12 Apr 2022 19:31:20 -0400
+Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9B94160C35
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 15:28:37 -0700 (PDT)
+Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-e2fa360f6dso248133fac.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 15:28:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=5vBKcvDi6CIJKmNgGiKzG9IDKFs6HRQ+M0y0opPEzec=;
-        b=Li42pSPRBDwh9favf8mNAZvTLje+On/JwkP/+OkECysra18UerCG0iIB2XDh6JVqiU
-         jmHnNYDHsmopxQG1ludXIudO6v+BLLSBZ9w+vKH/sFMIk5kfzmhMMttwkI/S6X3RDm64
-         TP2UQiA73N3VGZyUsbZoJJ8Jt0tyxooZcC0qlOMLpOTtw3kFFMjX2PPey54G6xP1uXSn
-         Ah9hpaB6GC44trmgk9v0U9cq0/AT30l/UHc1hhTWiIyWYOVZJz7Q7D06hVV9Ihsy+9qS
-         58kiEa3SIjBP6ei0ry4olhrjFfkUGpVIVUNF7qlONjjjoHoQfOcY6b/8aqOLQBY3GYmz
-         SlmA==
+        bh=kt6hVezA4Ogh+PUM8JOZYwYjeiXqtSjEWHLo3rQRGl8=;
+        b=rsrmN9GV2IuXGuywIbghXo04lZLtLq4A5BKYi11L5WMpei/I566zW/OwMuSj8sIspk
+         h7JOTTAhevGgnMeH1vcnsGwCLaXOZGgt7nsmf2OKd6lhsmLkhUIPY98904dc1jZiNxTe
+         e6QH2lMeq7jk8bdiNjXZIje95okyFWz3TzE/jLCy/hIAiXVOTdxhGjF0QYYFWv4HqDjA
+         jtdkXHjQDKtWdF1buIm3Y9ezgu+i7x1PX1/Du2Rk67FNhzt+bujjUXvaq60d0Ep9QfO9
+         NLHm++jtQ5HBWjwRNL23gzouVMgDCfcWdWNS7QrKPZQvBG/IVjc45xK/ifjt7AcppnUs
+         LGQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=5vBKcvDi6CIJKmNgGiKzG9IDKFs6HRQ+M0y0opPEzec=;
-        b=pTij0UJKWNNKjIJfxtkQC7KGVpqVKhhaNcNSgW6BPwPpGA3KqMWjdOmOqzeYpKE0l0
-         kwHKyV27SKNccYO32ZcjHwCG5AGYV0a/5pwMQ/cQKZtupNtuGmwGBwT/pOJI6TYMU1KC
-         iHh4LmhEVEpHrTPUAspr4nrmfboJSyJM8hDhLGNAa8BPnmunJt3+Esz3tpAGattXX3Bp
-         Fz7S8++CA7aRwnN6FmonxPOPCtB0cFqOrUyaNiaebv4LozY82pejZfvixJhvOI7fj4Ok
-         ibbbChwJGKNIAxH9zbH70Gd15dh3o914gQc3qXJ+w8WkGpJjTGZnG7zaL+yfqwzNaTMU
-         j/GQ==
-X-Gm-Message-State: AOAM532OuoJqfnovZ4waNTJV5//pvNAAZAndzSHSiHq9dfEtIL9fu16s
-        7Xjh2CTNSIcFNxNT8LVieDUO/ZqMgp8Y0MRi
-X-Google-Smtp-Source: ABdhPJzMZS37Sds0GvVpxuJms6iJZvO26UMhJ/hWzaU1vUUqhCZLPnero3oTtvR+hPFtihCNtsI35A==
-X-Received: by 2002:a05:6870:b417:b0:d4:547c:7a76 with SMTP id x23-20020a056870b41700b000d4547c7a76mr3035145oap.65.1649798626829;
-        Tue, 12 Apr 2022 14:23:46 -0700 (PDT)
+        bh=kt6hVezA4Ogh+PUM8JOZYwYjeiXqtSjEWHLo3rQRGl8=;
+        b=TazRmXendezTKqw5CgCYho1SSBlcRrBw6H8xXk4DqULMRW+AkpYKkzT1fNjSVrKhEP
+         UWmwIQ5DKjF7wH1G8m0redd6wO/3x8mk+XfpuqtEswARrJGOwVrKsrCyRv1OH3YF80wN
+         l6c+Z58u1uDTOP6bF02gg8JBCiMB5eZ76E7Bb830vYdJEQLeo9TYLkxRXNp/usZphOy3
+         HcE69kzIyJawXSla4eOQ36xPfAZDscvSAUdyAoIaxsIwMvmcKzNiaoOUzKtTcODeKii8
+         VBQcWrsyKhl+Q3VVZjWVq1zoBRTyZMpa+H+gIfBxBY8cAYSBzuZfo5p6Wzpvp6L/oy9F
+         +LwA==
+X-Gm-Message-State: AOAM5332uHs/6dzqjTsExLn/Q+UTq3a8gAP2FAUa+ndltLSQDY5y0WES
+        ibgqqok0R3CVyu6b1x9B0IWSeWyaBdpCz1Bp
+X-Google-Smtp-Source: ABdhPJzDXnuMXj8lsWFh9MLTAE6t9BXfQ7i8D5Ywu7RnBrVjybChs3FdEk4GVHksS5/5SqXipery7g==
+X-Received: by 2002:a05:6871:1d4:b0:de:6122:2bbb with SMTP id q20-20020a05687101d400b000de61222bbbmr2978500oad.210.1649798865016;
+        Tue, 12 Apr 2022 14:27:45 -0700 (PDT)
 Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id i15-20020a056870a68f00b000e2f50df070sm1024747oam.36.2022.04.12.14.23.45
+        by smtp.gmail.com with ESMTPSA id r8-20020a05683001c800b005cdadc2a837sm13831278ota.70.2022.04.12.14.27.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 14:23:46 -0700 (PDT)
+        Tue, 12 Apr 2022 14:27:44 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] i2c: qcom-geni: Use dev_err_probe() for GPI DMA error
-Date:   Tue, 12 Apr 2022 14:26:01 -0700
-Message-Id: <20220412212601.2384274-1-bjorn.andersson@linaro.org>
+Subject: [PATCH] dmaengine: qcom: gpi: Add SM8350 support
+Date:   Tue, 12 Apr 2022 14:29:59 -0700
+Message-Id: <20220412212959.2385085-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -68,33 +68,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The GPI DMA engine driver can be compiled as a module, in which case the
-likely probe deferral "error" shows up in the kernel log. Switch to
-using dev_err_probe() to silence this warning and to ensure that
-"devices_deferred" in debugfs carries this information.
+The Qualcomm SM8350 platform does, like the SM8450, provide a set of GPI
+controllers with an ee-offset of 0x10000. Add this to the driver.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index fc1dcc19f2a1..5b920f0fc7dd 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -843,10 +843,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 		/* FIFO is disabled, so we can only use GPI DMA */
- 		gi2c->gpi_mode = true;
- 		ret = setup_gpi_dma(gi2c);
--		if (ret) {
--			dev_err(dev, "Failed to setup GPI DMA mode:%d ret\n", ret);
--			return ret;
--		}
-+		if (ret)
-+			return dev_err_probe(dev, ret, "Failed to setup GPI DMA mode\n");
- 
- 		dev_dbg(dev, "Using GPI DMA mode for I2C\n");
- 	} else {
+This depends on the ee-offset series previously posted by Vinod:
+https://lore.kernel.org/all/20220406132508.1029348-1-vkoul@kernel.org/
+
+ drivers/dma/qcom/gpi.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 0b402d923eae..d8fad6a77560 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -2289,6 +2289,7 @@ static const struct of_device_id gpi_of_match[] = {
+ 	{ .compatible = "qcom,sdm845-gpi-dma", .data = (void *)0x0 },
+ 	{ .compatible = "qcom,sm8150-gpi-dma", .data = (void *)0x0 },
+ 	{ .compatible = "qcom,sm8250-gpi-dma", .data = (void *)0x0 },
++	{ .compatible = "qcom,sm8350-gpi-dma", .data = (void *)0x10000 },
+ 	{ .compatible = "qcom,sm8450-gpi-dma", .data = (void *)0x10000 },
+ 	{ },
+ };
 -- 
 2.35.1
 
