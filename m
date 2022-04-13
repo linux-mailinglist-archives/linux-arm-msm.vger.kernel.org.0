@@ -2,63 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD0C04FFAC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 17:57:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ABF64FFB8B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 18:42:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236719AbiDMP7y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 11:59:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56774 "EHLO
+        id S235467AbiDMQoc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 12:44:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236715AbiDMP7w (ORCPT
+        with ESMTP id S233572AbiDMQob (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 11:59:52 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 157E26350D;
-        Wed, 13 Apr 2022 08:57:31 -0700 (PDT)
+        Wed, 13 Apr 2022 12:44:31 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 197456542C;
+        Wed, 13 Apr 2022 09:42:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649865451; x=1681401451;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=foVGuxN7+nmNTCR9xTdDaViL91F/VgCzWYShCQHvVMM=;
-  b=b8QMjbuv3RWiCZhlULEbBQTW7JMvCSBVL0+fmFoie3drLTSAwA9igL6c
-   IlzVKML1IJQYHZXx2+AIo/cx53jo35gDDRttgCv3XmoiRVWMgFbwmzje7
-   g7ZDY+rmxdmVEKOUxs9IQ8AmopXc8fsWbdcW6C/lM5hk1fKiSIJzQvHva
-   c=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 13 Apr 2022 08:57:29 -0700
+  t=1649868130; x=1681404130;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=gOJsbaOCa8KxicoNnh0loPS6xmr5k28s00irC47bW6o=;
+  b=mL1snkSGZGOlXPPJwCXhc2JRSfN0jv8g0B1gfN87giKNCdB7GDgAaeKu
+   jfr19BSSyr+3yQJqI4I97gN8OzSgM2RhEa1gmw/D+f8eA+hr76zcvmqA5
+   /cq4zfCGFmK8laGm+l74Y6Oq6vCICLofO5Cr171clfCHZFeIICJbgSwGW
+   s=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 13 Apr 2022 09:42:09 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 08:57:29 -0700
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 09:42:09 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 13 Apr 2022 08:57:16 -0700
+ 15.2.986.22; Wed, 13 Apr 2022 09:42:09 -0700
 Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 13 Apr 2022 08:57:15 -0700
+ 15.2.986.22; Wed, 13 Apr 2022 09:42:08 -0700
 From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <loic.poulain@linaro.org>, <mani@kernel.org>,
-        <quic_hemantk@quicinc.com>, <quic_bbhatt@quicinc.com>
+To:     <mani@kernel.org>, <quic_hemantk@quicinc.com>,
+        <quic_bbhatt@quicinc.com>
 CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
         Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH v3 2/2] bus: mhi: host: Optimize and update MMIO register write method
-Date:   Wed, 13 Apr 2022 09:56:46 -0600
-Message-ID: <1649865406-30198-3-git-send-email-quic_jhugo@quicinc.com>
+Subject: [PATCH v3] bus: mhi: host: Use cached values for calculating the shared write pointer
+Date:   Wed, 13 Apr 2022 10:41:53 -0600
+Message-ID: <1649868113-18826-1-git-send-email-quic_jhugo@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1649865406-30198-1-git-send-email-quic_jhugo@quicinc.com>
-References: <1649865406-30198-1-git-send-email-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -67,147 +64,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bhaumik Bhatt <bbhatt@codeaurora.org>
+mhi_recycle_ev_ring() computes the shared write pointer for the ring
+(ctxt_wp) using a read/modify/write pattern where the ctxt_wp value in the
+shared memory is read, incremented, and written back.  There are no checks
+on the read value, it is assumed that it is kept in sync with the locally
+cached value.  Per the MHI spec, this is correct.  The device should only
+read ctxt_wp, never write it.
 
-As of now, MMIO writes done after ready state transition use the
-mhi_write_reg_field() API even though the whole register is being
-written in most cases. Optimize this process by using mhi_write_reg()
-API instead for those writes and use the mhi_write_reg_field()
-API for MHI config registers only.
+However, there are devices in the wild that violate the spec, and can
+update the ctxt_wp in a specific scenario.  This can cause corruption, and
+violate the above assumption that the ctxt_wp is in sync with the cached
+value.
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+This can occur when the device has loaded firmware from the host, and is
+transitioning from the SBL EE to the AMSS EE.  As part of shutting down
+SBL, the SBL flushes it's local MHI context to the shared memory since
+the local context will not persist across an EE change.  In the case of
+the event ring, SBL will flush its entire context, not just the parts that
+it is allowed to update.  This means SBL will write to ctxt_wp, and
+possibly corrupt it.
+
+An example:
+
+Host				Device
+----				---
+Update ctxt_wp to 0x1f0
+				SBL observes 0x1f0
+Update ctxt_wp to 0x0
+				Starts transition to AMSS EE
+				Context flush, writes 0x1f0 to ctxt_wp
+Update ctxt_wp to 0x200
+Update ctxt_wp to 0x210
+				AMSS observes 0x210
+				0x210 exceeds ring size
+				AMSS signals syserr
+
+The reason the ctxt_wp goes off the end of the ring is that the rollover
+check is only performed on the cached wp, which is out of sync with
+ctxt_wp.
+
+Since the host is the authority of the value of ctxt_wp per the MHI spec,
+we can fix this issue by not reading ctxt_wp from the shared memory, and
+instead compute it based on the cached value.  If SBL corrupts ctxt_wp,
+the host won't observe it, and will correct the value at some point later.
+
 Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 ---
- drivers/bus/mhi/host/init.c | 62 ++++++++++++++++++++++-----------------------
- 1 file changed, 31 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-index 9ac93b7..04c409b 100644
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -425,74 +425,65 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
- 	struct {
- 		u32 offset;
--		u32 mask;
- 		u32 val;
- 	} reg_info[] = {
- 		{
--			CCABAP_HIGHER, U32_MAX,
-+			CCABAP_HIGHER,
- 			upper_32_bits(mhi_cntrl->mhi_ctxt->chan_ctxt_addr),
- 		},
- 		{
--			CCABAP_LOWER, U32_MAX,
-+			CCABAP_LOWER,
- 			lower_32_bits(mhi_cntrl->mhi_ctxt->chan_ctxt_addr),
- 		},
- 		{
--			ECABAP_HIGHER, U32_MAX,
-+			ECABAP_HIGHER,
- 			upper_32_bits(mhi_cntrl->mhi_ctxt->er_ctxt_addr),
- 		},
- 		{
--			ECABAP_LOWER, U32_MAX,
-+			ECABAP_LOWER,
- 			lower_32_bits(mhi_cntrl->mhi_ctxt->er_ctxt_addr),
- 		},
- 		{
--			CRCBAP_HIGHER, U32_MAX,
-+			CRCBAP_HIGHER,
- 			upper_32_bits(mhi_cntrl->mhi_ctxt->cmd_ctxt_addr),
- 		},
- 		{
--			CRCBAP_LOWER, U32_MAX,
-+			CRCBAP_LOWER,
- 			lower_32_bits(mhi_cntrl->mhi_ctxt->cmd_ctxt_addr),
- 		},
- 		{
--			MHICFG, MHICFG_NER_MASK,
--			mhi_cntrl->total_ev_rings,
--		},
--		{
--			MHICFG, MHICFG_NHWER_MASK,
--			mhi_cntrl->hw_ev_rings,
--		},
--		{
--			MHICTRLBASE_HIGHER, U32_MAX,
-+			MHICTRLBASE_HIGHER,
- 			upper_32_bits(mhi_cntrl->iova_start),
- 		},
- 		{
--			MHICTRLBASE_LOWER, U32_MAX,
-+			MHICTRLBASE_LOWER,
- 			lower_32_bits(mhi_cntrl->iova_start),
- 		},
- 		{
--			MHIDATABASE_HIGHER, U32_MAX,
-+			MHIDATABASE_HIGHER,
- 			upper_32_bits(mhi_cntrl->iova_start),
- 		},
- 		{
--			MHIDATABASE_LOWER, U32_MAX,
-+			MHIDATABASE_LOWER,
- 			lower_32_bits(mhi_cntrl->iova_start),
- 		},
- 		{
--			MHICTRLLIMIT_HIGHER, U32_MAX,
-+			MHICTRLLIMIT_HIGHER,
- 			upper_32_bits(mhi_cntrl->iova_stop),
- 		},
- 		{
--			MHICTRLLIMIT_LOWER, U32_MAX,
-+			MHICTRLLIMIT_LOWER,
- 			lower_32_bits(mhi_cntrl->iova_stop),
- 		},
- 		{
--			MHIDATALIMIT_HIGHER, U32_MAX,
-+			MHIDATALIMIT_HIGHER,
- 			upper_32_bits(mhi_cntrl->iova_stop),
- 		},
- 		{
--			MHIDATALIMIT_LOWER, U32_MAX,
-+			MHIDATALIMIT_LOWER,
- 			lower_32_bits(mhi_cntrl->iova_stop),
- 		},
--		{ 0, 0, 0 }
-+		{0, 0}
- 	};
+v3:
+Rebase to -next
+
+v2:
+Fix typo on the ring base
+
+ drivers/bus/mhi/host/main.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+index 142eea1..f3aef77a 100644
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -534,18 +534,13 @@ irqreturn_t mhi_intvec_handler(int irq_number, void *dev)
+ static void mhi_recycle_ev_ring_element(struct mhi_controller *mhi_cntrl,
+ 					struct mhi_ring *ring)
+ {
+-	dma_addr_t ctxt_wp;
+-
+ 	/* Update the WP */
+ 	ring->wp += ring->el_size;
+-	ctxt_wp = le64_to_cpu(*ring->ctxt_wp) + ring->el_size;
  
- 	dev_dbg(dev, "Initializing MHI registers\n");
-@@ -533,13 +524,22 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
- 	mhi_cntrl->mhi_cmd[PRIMARY_CMD_RING].ring.db_addr = base + CRDB_LOWER;
+-	if (ring->wp >= (ring->base + ring->len)) {
++	if (ring->wp >= (ring->base + ring->len))
+ 		ring->wp = ring->base;
+-		ctxt_wp = ring->iommu_base;
+-	}
  
- 	/* Write to MMIO registers */
--	for (i = 0; reg_info[i].offset; i++) {
--		ret = mhi_write_reg_field(mhi_cntrl, base, reg_info[i].offset,
--					  reg_info[i].mask, reg_info[i].val);
--		if (ret) {
--			dev_err(dev, "Unable to write to MMIO registers");
--			return ret;
--		}
-+	for (i = 0; reg_info[i].offset; i++)
-+		mhi_write_reg(mhi_cntrl, base, reg_info[i].offset,
-+			      reg_info[i].val);
-+
-+	ret = mhi_write_reg_field(mhi_cntrl, base, MHICFG, MHICFG_NER_MASK,
-+				  mhi_cntrl->total_ev_rings);
-+	if (ret) {
-+		dev_err(dev, "Unable to read MHICFG register\n");
-+		return ret;
-+	}
-+
-+	ret = mhi_write_reg_field(mhi_cntrl, base, MHICFG, MHICFG_NHWER_MASK,
-+				  mhi_cntrl->hw_ev_rings);
-+	if (ret) {
-+		dev_err(dev, "Unable to read MHICFG register\n");
-+		return ret;
- 	}
+-	*ring->ctxt_wp = cpu_to_le64(ctxt_wp);
++	*ring->ctxt_wp = cpu_to_le64(ring->iommu_base + (ring->wp - ring->base));
  
- 	return 0;
+ 	/* Update the RP */
+ 	ring->rp += ring->el_size;
 -- 
 2.7.4
 
