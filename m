@@ -2,75 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 495544FF2CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 10:56:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0ECF54FF2D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 11:00:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229709AbiDMI6p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 04:58:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39706 "EHLO
+        id S234163AbiDMJCX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 05:02:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232224AbiDMI6o (ORCPT
+        with ESMTP id S234167AbiDMJCV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 04:58:44 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB2FF4B85A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 01:56:23 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id r18so1399887ljp.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 01:56:23 -0700 (PDT)
+        Wed, 13 Apr 2022 05:02:21 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC908101F9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 02:00:00 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id bo5so1431536pfb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 02:00:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=pW/YXqDQlANPBYShRmBV2kdR37gC3CSOvx43OZDkAhE=;
-        b=qh42nCIWLGN1ZO8hf0HKW2TozddfXNaIBL9zBdN2j8n60oMeBN/ONPfQS1qzMtVYXb
-         HDixcST50N9KtLPWYqQxHI2Qyjva/qMxKOMgpJ7AAs8DMV4chKNTmaPrex/fFApFPGFY
-         aUsZCgsZBjlxrs6ob5iJX5Noga9W/z2l4AJfUsiokfmWZEl0XfR8IKthQQU8afNzrJQt
-         z0K6VqLO8h3TIQYl1NTbqD2J/PRdSJEoZBJqgvu0XThoT+Ptyd8NNfwfcoYPWpBbSgF2
-         NzzvcGl2G3XA5zDizGPbxtHgFGc1cd7gEI5BVBRTlD2eD5MZMu7cEbc3KKAk5sDV7r7S
-         qWsg==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=EDhS8xYSBd2n9NcaWEWx6PW2TjEIoAofJnoHWA7XnG8=;
+        b=O149Sk4abdAzjNa/FuuPlloSGGPPgYqriC+xrIg/TWImciJdOwE5u9tHyqdsYNzpNp
+         owIKDOxTfXRUUXW2CAr0WeoyQ7zbMqwJY0L2NKYCANdvk4jh7zfjzMzrbDXKVqbY+TSO
+         utfifiKG16sgBOGumS+6N1LFYgT10cdNxCVmqdr+zgw3niSv5RuZ05dmSAYAauvUzIiK
+         hkSdt6zK9Z9xWsRsv7cfSu6XAB1oCnKGWp/YPG/SimnAtW3vPUVLTWVveKdN7xHc2n56
+         WKtMhyIVv4ky+A5yC2cwh42X6Bjkdsjk5UhESz66JS91FxreEatR+QR5sO9x9yZQIUvJ
+         ZKjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=pW/YXqDQlANPBYShRmBV2kdR37gC3CSOvx43OZDkAhE=;
-        b=s20lgkVVLsOCmSZelBoalbl20C308xvsl5aTEwdJxF21i92qKePWkScuXKRlD1Z+xN
-         Ehu1fiCxE/7xhgsAccBtfcK3H74J3q66SE/0g0Q/0IZa7/cKHLQWrD34rPVOGGZTFqlw
-         OJgkebKOucEyzYmjkpRy+2yU5Lz35reUw1GsviJ+A9PZdsBwlNrDa7fHAGvG+RBU/snY
-         1O5xTejjA38meJ0gUVxrI/kVXiHcHV9eMR6VkQ8XQFWAg12qykEoijLwDGIjzfTFJuy8
-         QpAGUiLPHjR5bJtb6O+PyvAwP4PdW7ptPnxL5uQMHC/bZN7cC3/+M2tEJH+BahWACPDL
-         +byQ==
-X-Gm-Message-State: AOAM531IJzvlXZQT3MImHsQKSChr6qobJj3wTQnLnSquB83n/jHfX9Oe
-        G0zNpb0Tdbtiz01PbfDFVkukxg==
-X-Google-Smtp-Source: ABdhPJwNr3fF1U5cyt61pQkVfOd9PYDX8/VX7j47apbjMQcNns5dZH+kozuz5AHC6Jhsli2ImOC+SA==
-X-Received: by 2002:a05:651c:4d2:b0:24b:5de1:222 with SMTP id e18-20020a05651c04d200b0024b5de10222mr10509562lji.38.1649840182020;
-        Wed, 13 Apr 2022 01:56:22 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c3-20020a056512104300b0044a3582c9ecsm4034584lfb.219.2022.04.13.01.56.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Apr 2022 01:56:21 -0700 (PDT)
-Message-ID: <e0ab19b3-0ae4-efd4-4035-44c8a5aec443@linaro.org>
-Date:   Wed, 13 Apr 2022 11:56:21 +0300
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=EDhS8xYSBd2n9NcaWEWx6PW2TjEIoAofJnoHWA7XnG8=;
+        b=BLPz0ELtIH8TksysljfM6eVo1Qk9B4Z7VtfMLd5wuNXk+nT0hORdHhi163p6wS0Rzz
+         zMM2MuDZo2riF7btRGSvFXpJCW1QmzK2Ew/3UUBEg0zhpsuVjA8Ga7syN18keFVFfd0Q
+         7W5XkIZMJBxNK2Fyc3Rv1s1/TOWJu3HsxXhAug2Ik4D+X1Nzdt9pkwdvami49w2uG2CX
+         s5bcYaCi4yDVx8/bmkEK3B012+zceS6mzA5AAPEiNkGMen5/fL4Wfl/EIbupfFRk2AP4
+         Tp+0a9UnlzKx4/WNB2oaEurcXWuL0YQ3gQ7QU9T7Hk/yEGllZSRkEWUdMuprMm4WwZG3
+         DFEQ==
+X-Gm-Message-State: AOAM530JsKLlFgSaEIhf2lcVPX/XF1858+87HawOsOp/3iAM2+cFgfs7
+        ulIMkEtw9GicwZm8LOG34JSrTpyvXVqm
+X-Google-Smtp-Source: ABdhPJwO2iFFLhBkrptiK2TCZlzOfrLJcUVHx+2oFFdkyWiG9hCOm5NrUnrAD4xSViZlk/JVFd0Kgw==
+X-Received: by 2002:a63:195f:0:b0:399:1f0e:a21d with SMTP id 31-20020a63195f000000b003991f0ea21dmr33848070pgz.393.1649840399909;
+        Wed, 13 Apr 2022 01:59:59 -0700 (PDT)
+Received: from thinkpad ([117.207.28.99])
+        by smtp.gmail.com with ESMTPSA id k23-20020a17090a591700b001ca00b46cf9sm2172266pji.18.2022.04.13.01.59.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Apr 2022 01:59:59 -0700 (PDT)
+Date:   Wed, 13 Apr 2022 14:29:54 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     gregkh@linuxfoundation.org
+Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
+        quic_bbhatt@quicinc.com, loic.poulain@linaro.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [GIT PULL] MHI fixes for v5.18
+Message-ID: <20220413085954.GE2015@thinkpad>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v3 17/18] ARM: dts: qcom: add ipq8064-v2.0 dtsi
-Content-Language: en-GB
-To:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Jonathan McDowell <noodles@earth.li>
-References: <20220309190152.7998-1-ansuelsmth@gmail.com>
- <20220309190152.7998-18-ansuelsmth@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220309190152.7998-18-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,104 +68,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/03/2022 22:01, Ansuel Smith wrote:
-> Many devices are based on the v2.0 of the ipq8064 SoC. Main difference
-> is a change in the pci compatible and different way to configre the usb
-> phy.
-> 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> Tested-by: Jonathan McDowell <noodles@earth.li>
-> ---
->   arch/arm/boot/dts/qcom-ipq8064-v2.0.dtsi | 70 ++++++++++++++++++++++++
->   1 file changed, 70 insertions(+)
->   create mode 100644 arch/arm/boot/dts/qcom-ipq8064-v2.0.dtsi
-> 
-> diff --git a/arch/arm/boot/dts/qcom-ipq8064-v2.0.dtsi b/arch/arm/boot/dts/qcom-ipq8064-v2.0.dtsi
-> new file mode 100644
-> index 000000000000..c082c3cd1a19
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/qcom-ipq8064-v2.0.dtsi
-> @@ -0,0 +1,70 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +#include "qcom-ipq8064.dtsi"
-> +
-> +/ {
-> +	aliases {
-> +		serial0 = &gsbi4_serial;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
+The following changes since commit 3123109284176b1532874591f7c81f3837bbdc17:
 
-I'd expect that /aliases and /chosen should go to the board dts files.
-I see that ipq8064-v1.0.dtsi also is a mixture of SoC-specific nodes and 
-board details (gpio, leds, aliases, etc.). I think it should be split 
-into ipq8064-v1.0.dtsi and ipq8064-common.dtsi (or 
-ipq8064-v1.0-common.dtsi). This file also should contain just SoC 
-specifics, not the enablement of individual devices.
+  Linux 5.18-rc1 (2022-04-03 14:08:21 -0700)
 
-> +
-> +	reserved-memory {
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		ranges;
-> +
-> +		rsvd@41200000 {
-> +			reg = <0x41200000 0x300000>;
-> +			no-map;
-> +		};
-> +	};
-> +};
-> +
-> +&gsbi4 {
-> +	qcom,mode = <GSBI_PROT_I2C_UART>;
-> +	status = "okay";
-> +
-> +	serial@16340000 {
-> +		status = "okay";
-> +	};
-> +	/*
-> +	 * The i2c device on gsbi4 should not be enabled.
-> +	 * On ipq806x designs gsbi4 i2c is meant for exclusive
-> +	 * RPM usage. Turning this on in kernel manifests as
-> +	 * i2c failure for the RPM.
-> +	 */
-> +};
-> +
-> +&CPU_SPC {
-> +	status = "okay";
-> +};
-> +
-> +&pcie0 {
-> +	compatible = "qcom,pcie-ipq8064-v2";
-> +};
-> +
-> +&pcie1 {
-> +	compatible = "qcom,pcie-ipq8064-v2";
-> +};
-> +
-> +&pcie2 {
-> +	compatible = "qcom,pcie-ipq8064-v2";
-> +};
-> +
-> +&sata {
-> +	ports-implemented = <0x1>;
-> +};
-> +
-> +&ss_phy_0 {
-> +	qcom,rx-eq = <2>;
-> +	qcom,tx-deamp_3_5db = <32>;
-> +	qcom,mpll = <5>;
-> +};
-> +
-> +&ss_phy_1 {
-> +	qcom,rx-eq = <2>;
-> +	qcom,tx-deamp_3_5db = <32>;
-> +	qcom,mpll = <5>;
-> +};
+are available in the Git repository at:
 
+  git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git tags/mhi-fixes-v5.18
 
--- 
-With best wishes
-Dmitry
+for you to fetch changes up to c38f83bae4037023827c85e045841d0421f85034:
+
+  bus: mhi: host: pci_generic: Flush recovery worker during freeze (2022-04-13 13:11:19 +0530)
+
+----------------------------------------------------------------
+MHI fixes for v5.18
+
+Couple of patches fixing the hibernation issue seen on MHI endpoint devices like
+SDX65 modems:
+
+- During hibernation, the host puts the device into D3cold after thaw() stage.
+But at that time, the device would be in M0 state. So the device emits a
+warning (not visible to the host but to device firmware only) stating invalid
+transition. This is fixed by adding a poweroff() callback that puts the device
+into M3 before D3cold.
+
+- There is a possibility that the recovery worker might be running while trying
+to powerdown the device. So flush the recovery worker before that.
+
+----------------------------------------------------------------
+Manivannan Sadhasivam (2):
+      bus: mhi: host: pci_generic: Add missing poweroff() PM callback
+      bus: mhi: host: pci_generic: Flush recovery worker during freeze
+
+ drivers/bus/mhi/host/pci_generic.c | 2 ++
+ 1 file changed, 2 insertions(+)
