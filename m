@@ -2,145 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3352C4FEBB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 02:00:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FC714FEC17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 03:08:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229717AbiDMACS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Apr 2022 20:02:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57838 "EHLO
+        id S231296AbiDMBLK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Apr 2022 21:11:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbiDMACQ (ORCPT
+        with ESMTP id S231214AbiDMBLJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Apr 2022 20:02:16 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC2921A056
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 16:59:57 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id v12so470536plv.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 16:59:57 -0700 (PDT)
+        Tue, 12 Apr 2022 21:11:09 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D5BE255AB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 18:08:49 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id u3so460333wrg.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Apr 2022 18:08:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=zgyL7xcOAUjOypHELxtMCCquCqKsmj/HjRPoph8p7J0=;
-        b=N5j3xgvs/0AfivYhTg39kpBckh9L646vQgUaML9oftFV0OPdPSGk36ue9gvzz8sqkq
-         O8NvHN1w+U0ougebclqQgVeiH3WNrPPxJyYP5Hp9PyVwv1hIdQ1Xd4Ln7E4oUMYX4wix
-         x/2wgVUuNnY0kEz7jrQP0b5Prya3tG9LOnPcI=
+        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=VU5r7TQe+kzCpo6+x3wYOqueqHwLs3nbsTBlPuqzXFI=;
+        b=CKWJIotoLnybWW93eWtrAo8OqpApPdJpcRzz6y+IGecTh/hCsYeaM7rzwxb0/tmDef
+         81K8YVWx5kztndO7wbLj25byhhBTVxv2pmpSq943F5VHLbBI5ofeZMkLpbtmsvZIVg08
+         nCWLSFjESvEHJ8DMpSVL8gDg24aEqCdm5co2adilRsdRqkPPROS6d9lJoi1auHh97Lvs
+         Kp57sZEG3BNxB/dU7O3s+ueKocEyifUNUtx4rWXKzRJeLG8n9eKJ7F3IHHAQx5fHXdr6
+         cz5n6MrD4XbscQeLE+ymHTfjrOC4r/AXYeTk7SY/cV0PeThuFH0qkZNwZbfXezboAusp
+         DfvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=zgyL7xcOAUjOypHELxtMCCquCqKsmj/HjRPoph8p7J0=;
-        b=kRqhtxdDTUEYibBZn6gUFbvwcNUejsxG+I7+ozqhiytovphY3Y8Ajy1KBStEEy2r8o
-         pVQfGwhX4WingAwpgTrQV5a83tqQENHLHgA7mvL/ivqv0xZWiXT9Utg+NhwI5/thkrd1
-         2kvc6LWyyyOUkb73TTgF265+iau2vUzK/+AWEnR+U4+RGOAwG94q6EbHyNehLYB3gGAR
-         Z8B7m4tzNfL+0vI5Gg/E0SDD1aQy97urCM0moGo6fOZP4Noheewx/QmF4avcRKZPNIOA
-         1wjpbobwx719JvTKRu9ZO99JXTTuUlXgXKNnITcKi4X3joOw44Z2APYXIoFNzLci8fpJ
-         K1zg==
-X-Gm-Message-State: AOAM531MwrRcu/Cr5OA71hX2wiyxt4yDOBypyfumC3voXV6TyUCCczYa
-        XLtfdFMBWLPb8UWcv7DSwXAhUg==
-X-Google-Smtp-Source: ABdhPJzJVBY9h5aDtAUdCACo+XB5WzSYoVMi9TlrWZZ6uaibr8u7hRuCV0vpVGnCZRJe1mXw02WHXQ==
-X-Received: by 2002:a17:902:b696:b0:156:b63:6bed with SMTP id c22-20020a170902b69600b001560b636bedmr39940117pls.24.1649807997206;
-        Tue, 12 Apr 2022 16:59:57 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:3a41:5079:6f1b:397c])
-        by smtp.gmail.com with UTF8SMTPSA id j2-20020a17090a588200b001ca37c215aasm641975pji.2.2022.04.12.16.59.55
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=VU5r7TQe+kzCpo6+x3wYOqueqHwLs3nbsTBlPuqzXFI=;
+        b=DgVAYBGVDi0innR2jqt4e80qKHnTLmViwlePYIPr9H1bbPTtNolnBV7RtY8B5yVSk3
+         gRveI/4qtVVV7z6GAFQhUpBLXjw2ORW0heJix0M4fdX90B1ZF8g9OfByml97XfIPeQms
+         ykH3LE93rTaEgmQIp5RzW7Rf1i5oFR8n4UT+EMBU+PHUmSe3CdxPCYMFZT630UIr5DqH
+         bl7GN1P3FTbXL9y3Z1pmVMdZYVZqomZ+SaQNMlFAPJ8YxAc6W6oy3gvwnxJIvTLwjevD
+         SZjqLHMXGEOq/poliYASIUN4VGs5Ad1h0jrJsGGKIuaYzI7dbqWkFM79JK08XV5c9LZm
+         MjnA==
+X-Gm-Message-State: AOAM530WC4AfDo9N0yeZeQRVqxjKMH9ORCSUanvaUyK0KaDpwU9c4F8r
+        PONVwwzCYDjCZrTggDfmGeu87Q==
+X-Google-Smtp-Source: ABdhPJyjm21c680qbYcFuPavs+X5tinpqI/VfaemT4HDgSz6dCizfF5bj2lCdOjrX6rhgEH/6dx2oQ==
+X-Received: by 2002:a5d:6487:0:b0:207:b12f:2da8 with SMTP id o7-20020a5d6487000000b00207b12f2da8mr3356401wri.203.1649812127716;
+        Tue, 12 Apr 2022 18:08:47 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id ay41-20020a05600c1e2900b0038e75fda4edsm844654wmb.47.2022.04.12.18.08.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Apr 2022 16:59:56 -0700 (PDT)
-Date:   Tue, 12 Apr 2022 16:59:55 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: sc7280: add lpass lpi pin
- controller node
-Message-ID: <YlYSe5/wm06oTJej@google.com>
-References: <1649685184-8448-1-git-send-email-quic_srivasam@quicinc.com>
- <1649685184-8448-3-git-send-email-quic_srivasam@quicinc.com>
- <YlSCWC47tITuW/BZ@google.com>
- <9bacee6d-ab44-2975-c523-38164d016af5@quicinc.com>
- <be8c6dae-20b1-3ba1-db3f-119da1e4ebfe@quicinc.com>
+        Tue, 12 Apr 2022 18:08:47 -0700 (PDT)
+Message-ID: <0617782b-e24b-cd67-ffca-5cf95417ca21@nexus-software.ie>
+Date:   Wed, 13 Apr 2022 02:08:45 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <be8c6dae-20b1-3ba1-db3f-119da1e4ebfe@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8250: camss: Add CCI definitions
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        dmitry.baryshkov@linaro.org, jonathan@marek.ca, hfink@snap.com,
+        jgrahsl@snap.com
+References: <20220409164556.2832782-1-bryan.odonoghue@linaro.org>
+ <20220409164556.2832782-5-bryan.odonoghue@linaro.org>
+ <YlTeng8OcnvUnILZ@builder.lan>
+From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <YlTeng8OcnvUnILZ@builder.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 12, 2022 at 06:41:25PM +0530, Srinivasa Rao Mandadapu wrote:
+On 12/04/2022 03:06, Bjorn Andersson wrote:
+>> +			pinctrl-names = "default", "sleep";
+>> +			pinctrl-0 = <&cci0_default &cci1_default>;
+>> +			pinctrl-1 = <&cci0_sleep &cci1_sleep>;
+> I would prefer that you include these in the same patch.
 > 
-> On 4/12/2022 6:18 PM, Srinivasa Rao Mandadapu wrote:
-> > 
-> > On 4/12/2022 1:02 AM, Matthias Kaehlcke wrote:
-> > Thanks for your time Matthias!!!
-> > > On Mon, Apr 11, 2022 at 07:23:04PM +0530, Srinivasa Rao Mandadapu wrote:
-> > > > Add LPASS LPI pinctrl node required for Audio functionality on sc7280
-> > > > based platforms.
-> > > > 
-> > > > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> > > > Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> > > > Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> > > > ---
-> > > >   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi |  84
-> > > > ++++++++++++++++++++++++
-> > > >   arch/arm64/boot/dts/qcom/sc7280.dtsi     | 107
-> > > > +++++++++++++++++++++++++++++++
-> > > >   2 files changed, 191 insertions(+)
-> > > > 
-> > > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> > > > b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> > > > index 4ba2274..ea751dc 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> > > > +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> > > > @@ -238,6 +238,90 @@
-> > > >       modem-init;
-> > > >   };
-> > > >   +&dmic01 {
-> > > Shouldn't these nodes be in the PINCTRL section at their respective
-> > > positions in alphabetical order?
-> > 
-> > These are not part of tlmm pin control section. These are part of
-> > lpass_tlmm section.
-> > 
-> > In your previous comment you asked to remove &lpass_tlmm. Hence brought
-> > out.
-> > 
-> > > 
-> > > nit: since you are keeping the groups the group names are a bit
-> > > generic IMO.
-> > > e.g. it is fairly obvious that 'dmic01_clk' refers to a clock pin,
-> > > however
-> > > just 'dmic01' is a bit vague. You could consider adding the prefix
-> > > 'lpass_'
-> > > to the group names for more clarity.
-> > as dmic01 has both clk and data section, I don't think keeping clk is
-> > appropriate here.
-> 
-> As these nodes are part of SC7280, i.e. qcom specific chipset, I feel lpass_
-> is redundant.
 
-It helps to provide some context about the pins which might not be evident
-from their short names like 'dmic01' or 'rx_swr'. A nice side effect is that
-the pins/groups would grouped automatically together in alphabetic ordering.
+You mean the CCI definition and the pinmux for it
 
-In terms of 'redundancy' it is similar to 'qup_' prefix for the I2C/SPI/UART
-pins.
-
-> If we add lpass_ to all dmic nodes, some node names are too lengthy.
-
-The longest would be like 'lpass_dmic01_sleep' or 'lpass_rx_swr_sleep', which
-doesn't seem outrageous.
-
-In any case it's not super important. If it bothers someone enough later
-on they can always send a patch that changes it.
+OK, yes
