@@ -2,65 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0ECF54FF2D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 11:00:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D316D4FF2F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 11:07:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234163AbiDMJCX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 05:02:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42224 "EHLO
+        id S234221AbiDMJJo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 05:09:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234167AbiDMJCV (ORCPT
+        with ESMTP id S234227AbiDMJJm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 05:02:21 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC908101F9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 02:00:00 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id bo5so1431536pfb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 02:00:00 -0700 (PDT)
+        Wed, 13 Apr 2022 05:09:42 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFE8F4DF62
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 02:07:19 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 21so1601412edv.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 02:07:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=EDhS8xYSBd2n9NcaWEWx6PW2TjEIoAofJnoHWA7XnG8=;
-        b=O149Sk4abdAzjNa/FuuPlloSGGPPgYqriC+xrIg/TWImciJdOwE5u9tHyqdsYNzpNp
-         owIKDOxTfXRUUXW2CAr0WeoyQ7zbMqwJY0L2NKYCANdvk4jh7zfjzMzrbDXKVqbY+TSO
-         utfifiKG16sgBOGumS+6N1LFYgT10cdNxCVmqdr+zgw3niSv5RuZ05dmSAYAauvUzIiK
-         hkSdt6zK9Z9xWsRsv7cfSu6XAB1oCnKGWp/YPG/SimnAtW3vPUVLTWVveKdN7xHc2n56
-         WKtMhyIVv4ky+A5yC2cwh42X6Bjkdsjk5UhESz66JS91FxreEatR+QR5sO9x9yZQIUvJ
-         ZKjg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=z84tQ9PE482BMfOh0tGEWBbuxsfWf7PM713AXwUAt8U=;
+        b=FI4d7X6SsxtqQKnRO595Rrvz+y7TCy5uSYJ1E4ffWmuz2lWCdWKO43S4bMqsVkOxGp
+         ghHiStu6lESL6/iYdJXXxzZYobNuJsIrC1KdLa8PVUStA5DZKFsPrQT8BYrXyhomp21y
+         VSsGIkMvmt3feVHT8TrQzjGBp/5d4bX/0M29dI3FiNAKQmPUT7PD41ZHwWSaslZ/AxrY
+         B0ueTpkUhXjcKuyJ7AnqLgZ0c21j82tT1uVZEeG7Djp64Jfp9EVMsq7Kryz8I4jbiSH4
+         Uo7QMxUVhOzx9CgUOY4N5Tgb0whGI5vAc03PdQWoKlsLvIFHgQgv+V6nQeauHa4eT7Nr
+         tQ1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=EDhS8xYSBd2n9NcaWEWx6PW2TjEIoAofJnoHWA7XnG8=;
-        b=BLPz0ELtIH8TksysljfM6eVo1Qk9B4Z7VtfMLd5wuNXk+nT0hORdHhi163p6wS0Rzz
-         zMM2MuDZo2riF7btRGSvFXpJCW1QmzK2Ew/3UUBEg0zhpsuVjA8Ga7syN18keFVFfd0Q
-         7W5XkIZMJBxNK2Fyc3Rv1s1/TOWJu3HsxXhAug2Ik4D+X1Nzdt9pkwdvami49w2uG2CX
-         s5bcYaCi4yDVx8/bmkEK3B012+zceS6mzA5AAPEiNkGMen5/fL4Wfl/EIbupfFRk2AP4
-         Tp+0a9UnlzKx4/WNB2oaEurcXWuL0YQ3gQ7QU9T7Hk/yEGllZSRkEWUdMuprMm4WwZG3
-         DFEQ==
-X-Gm-Message-State: AOAM530JsKLlFgSaEIhf2lcVPX/XF1858+87HawOsOp/3iAM2+cFgfs7
-        ulIMkEtw9GicwZm8LOG34JSrTpyvXVqm
-X-Google-Smtp-Source: ABdhPJwO2iFFLhBkrptiK2TCZlzOfrLJcUVHx+2oFFdkyWiG9hCOm5NrUnrAD4xSViZlk/JVFd0Kgw==
-X-Received: by 2002:a63:195f:0:b0:399:1f0e:a21d with SMTP id 31-20020a63195f000000b003991f0ea21dmr33848070pgz.393.1649840399909;
-        Wed, 13 Apr 2022 01:59:59 -0700 (PDT)
-Received: from thinkpad ([117.207.28.99])
-        by smtp.gmail.com with ESMTPSA id k23-20020a17090a591700b001ca00b46cf9sm2172266pji.18.2022.04.13.01.59.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 01:59:59 -0700 (PDT)
-Date:   Wed, 13 Apr 2022 14:29:54 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     gregkh@linuxfoundation.org
-Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, loic.poulain@linaro.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [GIT PULL] MHI fixes for v5.18
-Message-ID: <20220413085954.GE2015@thinkpad>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=z84tQ9PE482BMfOh0tGEWBbuxsfWf7PM713AXwUAt8U=;
+        b=38YZBxZFkYHc27XxIVH/evSXx5INBVBOG1pdcarKd1HMsWsBYOzl7lr0D4XRIuiOhS
+         n9yscx/T4TiGqCBC2dX0KqACLYV/kCTcNgXMAhh/q2mhdeS/v6J2SDoblWfn0YEzfvjB
+         Z42m6tD7w/B6SNyEHL4hSRSEsPkoqPuTPgcwu6OwcsdHJYvwmbHsoBjyeIvGSsrDgTzK
+         nMmTwYCBidZR89SYzKik4HbMc64ZJiG/qDkXbWxwl+ceV4THXcFMdDOha6MMC6sCaGYr
+         2K3G6oeI/7zZqwEMKi4WWdfSK4qM/JjcrWPh3aALToCB+wjpk6g+jWcs+yoKYrpuRiko
+         WAxw==
+X-Gm-Message-State: AOAM5315babruuFi0CITicbbvpQ1+busq7aT9msf81YBh0lGDerdRekb
+        woo1DuHFBcpJpVoh6/Et3lpzsw==
+X-Google-Smtp-Source: ABdhPJybTYoB6hFzkTnGzb9M3CRBUVTSHcKTnFZfrgqbnaYoSiDSY2iH30hdSK5/Q287fVX6yfQFbQ==
+X-Received: by 2002:a50:d4d2:0:b0:410:9fa2:60d6 with SMTP id e18-20020a50d4d2000000b004109fa260d6mr43074728edj.35.1649840838413;
+        Wed, 13 Apr 2022 02:07:18 -0700 (PDT)
+Received: from [192.168.0.203] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id a22-20020a50ff16000000b00410d029ea5csm908162edu.96.2022.04.13.02.07.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 02:07:17 -0700 (PDT)
+Message-ID: <02fc797a-190f-3558-5ee1-c9c3320f3d57@linaro.org>
+Date:   Wed, 13 Apr 2022 11:07:16 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [RFC PATCH v2 4/6] PM: opp: allow control of multiple clocks
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
+References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
+ <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
+ <YlWztZknl4OBmekp@ripper>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <YlWztZknl4OBmekp@ripper>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,37 +89,157 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 3123109284176b1532874591f7c81f3837bbdc17:
+On 12/04/2022 19:15, Bjorn Andersson wrote:
+>>  
+>> +	opp_table->clks = kmalloc_array(1, sizeof(*opp_table->clks),
+>> +					GFP_KERNEL);
+> 
+> This seems to be 81 chars long, perhaps worth not line breaking?
 
-  Linux 5.18-rc1 (2022-04-03 14:08:21 -0700)
+I doubt that it will increase the readability:
 
-are available in the Git repository at:
+	opp_table->clks = kmalloc_array(1,
+					sizeof(*opp_table->clks),
+					GFP_KERNEL);
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git tags/mhi-fixes-v5.18
+80-character is not anymore that strict hard limit and in such case
+using 1-2 characters longer improves the code.
 
-for you to fetch changes up to c38f83bae4037023827c85e045841d0421f85034:
+> 
+>> +	if (!opp_table->clks)
+>> +		return ERR_PTR(-ENOMEM);
+>> +
+>>  	/* Find clk for the device */
+>> -	opp_table->clk = clk_get(dev, NULL);
+>> +	opp_table->clks[0] = clk_get(dev, NULL);
+>>  
+>> -	ret = PTR_ERR_OR_ZERO(opp_table->clk);
+>> -	if (!ret)
+>> +	ret = PTR_ERR_OR_ZERO(opp_table->clks[0]);
+>> +	if (!ret) {
+>> +		opp_table->clk_count = 1;
+>>  		return opp_table;
+>> +	}
+> [..]
+>> +struct opp_table *dev_pm_opp_set_clknames(struct device *dev,
+>> +					  const char * const names[],
+>> +					  unsigned int count)
+>>  {
+>>  	struct opp_table *opp_table;
+>> -	int ret;
+>> +	struct clk *clk;
+>> +	int ret, i;
+>>  
+>>  	opp_table = _add_opp_table(dev, false);
+>>  	if (IS_ERR(opp_table))
+>> @@ -2159,70 +2259,92 @@ struct opp_table *dev_pm_opp_set_clkname(struct device *dev, const char *name)
+>>  	}
+>>  
+>>  	/* clk shouldn't be initialized at this point */
+>> -	if (WARN_ON(opp_table->clk)) {
+>> +	if (WARN_ON(opp_table->clks)) {
+>>  		ret = -EBUSY;
+>>  		goto err;
+>>  	}
+>>  
+>> -	/* Find clk for the device */
+>> -	opp_table->clk = clk_get(dev, name);
+>> -	if (IS_ERR(opp_table->clk)) {
+>> -		ret = dev_err_probe(dev, PTR_ERR(opp_table->clk),
+>> -				    "%s: Couldn't find clock\n", __func__);
+>> +	opp_table->clks = kmalloc_array(count, sizeof(*opp_table->clks),
+>> +					GFP_KERNEL);
+>> +	if (!opp_table->clks) {
+>> +		ret = -ENOMEM;
+>>  		goto err;
+>>  	}
+>>  
+>> +	for (i = 0; i < count; i++) {
+>> +		clk = clk_get(dev, names[i]);
+>> +		if (IS_ERR(clk)) {
+>> +			ret =  dev_err_probe(dev, PTR_ERR(clk),
+>> +					     "%s: Couldn't find clock %s\n",
+>> +					     __func__, names[i]);
+>> +			goto free_clks;
+>> +		}
+>> +
+>> +		opp_table->clks[i] = clk;
+>> +	}
+> 
+> Wouldn't it be convenient to make clks a struct clk_bulk_data array
+> and use clk_bulk_get()/clk_bulk_put() instead?
 
-  bus: mhi: host: pci_generic: Flush recovery worker during freeze (2022-04-13 13:11:19 +0530)
+I was thinking about this but clk_bulk_get() requires struct
+clk_bulk_data, so the code in "get" is not actually smaller if function
+receives array of clock names.
 
-----------------------------------------------------------------
-MHI fixes for v5.18
+OTOH, usage of clk_bulk_get() would reduce code in: _put_clocks(). Rest
+of the code would be more-or-less the same, including all corner cases
+when clocks are missing.
 
-Couple of patches fixing the hibernation issue seen on MHI endpoint devices like
-SDX65 modems:
+> 
+>> +
+>> +	opp_table->clk_count = count;
+>> +
+>>  	return opp_table;
+>>  
+>> +free_clks:
+>> +	while (i != 0)
+>> +		clk_put(opp_table->clks[--i]);
+>> +
+>> +	kfree(opp_table->clks);
+>> +	opp_table->clks = NULL;
+>> +	opp_table->clk_count = -1;
+>>  err:
+>>  	dev_pm_opp_put_opp_table(opp_table);
+>>  
+>>  	return ERR_PTR(ret);
+>>  }
+>> -EXPORT_SYMBOL_GPL(dev_pm_opp_set_clkname);
+>> +EXPORT_SYMBOL_GPL(dev_pm_opp_set_clknames);
+> [..]
+>> +static int _read_clocks(struct dev_pm_opp *opp, struct opp_table *opp_table,
+>> +			struct device_node *np)
+>> +{
+>> +	int count, ret;
+>> +	u64 *freq;
+>> +
+>> +	count = of_property_count_u64_elems(np, "opp-hz");
+>> +	if (count < 0) {
+>> +		pr_err("%s: Invalid %s property (%d)\n",
+>> +			__func__, of_node_full_name(np), count);
+> 
+> Wouldn't %pOF be convenient to use here, seems like it becomes short
+> enough that you don't have to wrap this line then.
 
-- During hibernation, the host puts the device into D3cold after thaw() stage.
-But at that time, the device would be in M0 state. So the device emits a
-warning (not visible to the host but to device firmware only) stating invalid
-transition. This is fixed by adding a poweroff() callback that puts the device
-into M3 before D3cold.
+Yes, I forgot about %pOF.
 
-- There is a possibility that the recovery worker might be running while trying
-to powerdown the device. So flush the recovery worker before that.
+> 
+>> +		return count;
+>> +	}
+>> +
+>> +	if (count != opp_table->clk_count) {
+>> +		pr_err("%s: number of rates %d does not match number of clocks %d in %s\n",
+>> +		       __func__, count, opp_table->clk_count,
+>> +		       of_node_full_name(np));
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	freq = kmalloc_array(count, sizeof(*freq), GFP_KERNEL);
+>> +	if (!freq)
+>> +		return -ENOMEM;
+>> +
+>> +	ret = of_property_read_u64_array(np, "opp-hz", freq, count);
+>> +	if (ret) {
+>> +		pr_err("%s: error parsing %s: %d\n", __func__,
+>> +		       of_node_full_name(np), ret);
+>> +		ret = -EINVAL;
+>> +		goto free_freq;
+>> +	}
+> 
+> Regards,
+> Bjorn
 
-----------------------------------------------------------------
-Manivannan Sadhasivam (2):
-      bus: mhi: host: pci_generic: Add missing poweroff() PM callback
-      bus: mhi: host: pci_generic: Flush recovery worker during freeze
 
- drivers/bus/mhi/host/pci_generic.c | 2 ++
- 1 file changed, 2 insertions(+)
+Best regards,
+Krzysztof
