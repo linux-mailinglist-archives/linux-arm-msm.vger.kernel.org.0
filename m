@@ -2,42 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3F354FF93F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 16:44:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BD3C4FF9F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 17:21:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236251AbiDMOrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 10:47:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37116 "EHLO
+        id S234795AbiDMPYF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 11:24:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236249AbiDMOrB (ORCPT
+        with ESMTP id S232655AbiDMPYF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 10:47:01 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 658B05133B;
-        Wed, 13 Apr 2022 07:44:35 -0700 (PDT)
+        Wed, 13 Apr 2022 11:24:05 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29D3747566;
+        Wed, 13 Apr 2022 08:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649861075; x=1681397075;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=62WYanvFy+W9Ch+rMVnHjT/F6jZSf45IXkiBm1NbqbE=;
-  b=YaJk0jGlq/JvtyQzqeR2Qmsar5oDNqAMVetzTJPLtLUwSM8It35bL9pk
-   M9IbJ47VYKF5JnHMFP68BJ4K3IAitSzVE93GK8EaGzes0D8YijtVva6Or
-   RZ5/I/4qqUHUylZiQ3zQodsUoNbV7lP7dn0KWSH8551ursc5gsBIEwNd+
-   I=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Apr 2022 07:44:35 -0700
+  t=1649863303; x=1681399303;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=3N2kt1c2FPhVfb4mXhigLF/ssk+WM5dkEKEoJhIMsJk=;
+  b=KpRWTuy2qm2pw0a0glgoTU5L/EWqZ6iUjkyrXFu36Kf42jYF4ufF3H05
+   Ya0BsW71VWMI7jdhsT/1w09uyw4VCXjqLDX8EARm3J4fC62VeJk7BONih
+   e/UZk1s3Xg1KPJkVUXglU6gauFdjk9YANMokwZJxVMAu8HHGRxIUK8nq0
+   k=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 13 Apr 2022 08:21:43 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 07:44:34 -0700
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 08:21:42 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 13 Apr 2022 07:44:34 -0700
+ 15.2.986.22; Wed, 13 Apr 2022 08:21:42 -0700
 Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 13 Apr 2022 07:44:29 -0700
+ 15.2.986.22; Wed, 13 Apr 2022 08:21:37 -0700
 From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
         <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
@@ -45,21 +44,18 @@ To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
         <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
         <dianders@chromium.org>, <swboyd@chromium.org>,
         <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v9 2/2] arm64: dts: qcom: sc7280: add lpass lpi pin controller node
-Date:   Wed, 13 Apr 2022 20:14:07 +0530
-Message-ID: <1649861047-7811-3-git-send-email-quic_srivasam@quicinc.com>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v7 0/4] Add soundcard support for sc7280 based platforms.
+Date:   Wed, 13 Apr 2022 20:51:13 +0530
+Message-ID: <1649863277-31615-1-git-send-email-quic_srivasam@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1649861047-7811-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1649861047-7811-1-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -68,230 +64,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add LPASS LPI pinctrl node required for Audio functionality on sc7280
-based platforms.
+This patch set is to add bolero digital macros, WCD and maxim codecs nodes
+for audio on sc7280 based platforms.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi |  84 ++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7280.dtsi     | 107 +++++++++++++++++++++++++++++++
- 2 files changed, 191 insertions(+)
+This patch set depends on:
+    -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=631506
+    -- https://patchwork.kernel.org/project/linux-arm-msm/patch/20220202053207.14256-1-tdas@codeaurora.org/.
+    -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=601249
+    -- Clock reset control patches
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 1fc94b5..110d9e9 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -359,6 +359,90 @@
- 	bias-disable;
- };
- 
-+&lpass_dmic01 {
-+	clk {
-+		drive-strength = <8>;
-+	};
-+};
-+
-+&lpass_dmic01_sleep {
-+	clk {
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	data {
-+		pull-down;
-+	};
-+};
-+
-+&lpass_dmic23 {
-+	clk {
-+		drive-strength = <8>;
-+	};
-+};
-+
-+&lpass_dmic23_sleep {
-+	clk {
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	data {
-+		pull-down;
-+	};
-+};
-+
-+&lpass_rx_swr {
-+	clk {
-+		drive-strength = <2>;
-+		slew-rate = <1>;
-+		bias-disable;
-+	};
-+
-+	data {
-+		drive-strength = <2>;
-+		slew-rate = <1>;
-+		bias-bus-hold;
-+	};
-+};
-+
-+&lpass_rx_swr_sleep {
-+	clk {
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	data {
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+};
-+
-+&lpass_tx_swr {
-+	clk {
-+		drive-strength = <2>;
-+		slew-rate = <1>;
-+		bias-disable;
-+	};
-+
-+	data {
-+		slew-rate = <1>;
-+		bias-bus-hold;
-+	};
-+};
-+
-+&lpass_tx_swr_sleep {
-+	clk {
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	data {
-+		bias-bus-hold;
-+	};
-+};
-+
- &mi2s1_data0 {
- 	drive-strength = <6>;
- 	bias-disable;
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 6e6cfeda..50fea0e 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -1987,6 +1987,113 @@
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
-+		lpass_tlmm: pinctrl@33c0000 {
-+			compatible = "qcom,sc7280-lpass-lpi-pinctrl";
-+			reg = <0 0x033c0000 0x0 0x20000>,
-+				<0 0x03550000 0x0 0x10000>;
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			gpio-ranges = <&lpass_tlmm 0 0 15>;
-+
-+			#clock-cells = <1>;
-+
-+			lpass_dmic01: lpass-dmic01 {
-+				clk {
-+					pins = "gpio6";
-+					function = "dmic1_clk";
-+				};
-+
-+				data {
-+					pins = "gpio7";
-+					function = "dmic1_data";
-+				};
-+			};
-+
-+			lpass_dmic01_sleep: lpass-dmic01-sleep {
-+				clk {
-+					pins = "gpio6";
-+					function = "dmic1_clk";
-+				};
-+
-+				data {
-+					pins = "gpio7";
-+					function = "dmic1_data";
-+				};
-+			};
-+
-+			lpass_dmic23: lpass-dmic23 {
-+				clk {
-+					pins = "gpio8";
-+					function = "dmic2_clk";
-+				};
-+
-+				data {
-+					pins = "gpio9";
-+					function = "dmic2_data";
-+				};
-+			};
-+
-+			lpass_dmic23_sleep: lpass-dmic23-sleep {
-+				clk {
-+					pins = "gpio8";
-+					function = "dmic2_clk";
-+				};
-+
-+				data {
-+					pins = "gpio9";
-+					function = "dmic2_data";
-+				};
-+			};
-+
-+			lpass_rx_swr: lpass-rx-swr {
-+				clk {
-+					pins = "gpio3";
-+					function = "swr_rx_clk";
-+				};
-+
-+				data {
-+					pins = "gpio4", "gpio5";
-+					function = "swr_rx_data";
-+				};
-+			};
-+
-+			lpass_rx_swr_sleep: lpass-rx-swr-sleep {
-+				clk {
-+					pins = "gpio3";
-+					function = "swr_rx_clk";
-+				};
-+
-+				data {
-+					pins = "gpio4", "gpio5";
-+					function = "swr_rx_data";
-+				};
-+			};
-+
-+			lpass_tx_swr: lpass-tx-swr {
-+				clk {
-+					pins = "gpio0";
-+					function = "swr_tx_clk";
-+				};
-+
-+				data {
-+					pins = "gpio1", "gpio2", "gpio14";
-+					function = "swr_tx_data";
-+				};
-+			};
-+
-+			lpass_tx_swr_sleep: lpass-tx-swr-sleep {
-+				clk {
-+					pins = "gpio0";
-+					function = "swr_tx_clk";
-+				};
-+
-+				data {
-+					pins = "gpio1", "gpio2", "gpio14";
-+					function = "swr_tx_data";
-+				};
-+			};
-+		};
-+
- 		gpu: gpu@3d00000 {
- 			compatible = "qcom,adreno-635.0", "qcom,adreno";
- 			reg = <0 0x03d00000 0 0x40000>,
+Changes Since V6:
+    -- Modify link-names and audio routing in a sound node.
+    -- Move amp_en pin control node to appropriate consumer patch.
+    -- Split patches as per digital macro codecs and board specific codecs and sort it.
+    -- Modify label and node names to lpass specific.
+Changes Since V5:
+    -- Move soc specific bolero digital codec nodes to soc specific file.
+    -- Bring wcd938x codec reset pin control and US/EURO HS selection nodes from other series.
+    -- Change node name and remove redundant status property in sound node.
+Changes Since V4:
+    -- Update nodes in sorting order.
+    -- Update DTS node names as per dt-bindings.
+    -- Update Node properties in proper order.
+    -- Update missing pinctrl properties like US/EURO HS selection, wcd reset control.
+    -- Remove redundant labels.
+    -- Remove unused size cells and address cells in tx macro node.
+    -- Keep all same nodes at one place, which are defined in same file.
+    -- Add max98360a codec node to herobrine board specific targets.
+Changes Since V3:
+    -- Move digital codec macro nodes to board specific dtsi file.
+    -- Update pin controls in lpass cpu node.
+    -- Update dependency patch list.
+    -- Create patches on latest kernel.
+Changes Since V2:
+    -- Add power domains to digital codec macro nodes.
+    -- Change clock node usage in lpass cpu node.
+    -- Add codec mem clock to lpass cpu node.
+    -- Modify the node names to be generic.
+    -- Move sound and codec nodes to root node.
+    -- sort dai links as per reg.
+    -- Fix typo errors.
+Changes Since V1:
+    -- Update the commit message of cpu node patch.
+    -- Add gpio control property to support Euro headset in wcd938x node.
+    -- Fix clock properties in lpass cpu and digital codec macro node.
+
+Srinivasa Rao Mandadapu (4):
+  arm64: dts: qcom: sc7280: Add nodes for soundwire and va tx rx digital
+    macro codecs
+  arm64: dts: qcom: sc7280: Add nodes for wcd9385 and max98360a codec
+  arm64: dts: qcom: sc7280: Add lpass cpu node
+  arm64: dts: qcom: sc7280: Add dt nodes for sound card
+
+ arch/arm64/boot/dts/qcom/sc7280-crd.dts        |  29 ++++
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi |   8 +
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 215 +++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi           | 184 +++++++++++++++++++++
+ 4 files changed, 436 insertions(+)
+
 -- 
 2.7.4
 
