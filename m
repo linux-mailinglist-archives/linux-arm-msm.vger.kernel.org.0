@@ -2,105 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C142500063
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 22:56:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AF7F500078
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 23:00:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238722AbiDMU6f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 16:58:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41390 "EHLO
+        id S238031AbiDMVDF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 17:03:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237611AbiDMU6e (ORCPT
+        with ESMTP id S237823AbiDMVDE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 16:58:34 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79D8E71EF7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 13:56:12 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id bh17so6372555ejb.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 13:56:12 -0700 (PDT)
+        Wed, 13 Apr 2022 17:03:04 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FD2C6A02C;
+        Wed, 13 Apr 2022 14:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GGJeViK+7nvO370X+XWsM6u8Nu1Bs+YHak1Y1XG2ND4=;
-        b=Nmnntj/LVIwy3oeOLpeN9QoktVn4Gy5cYRHXFCyvkB7XueSKlPJszbhcdG9U78y2ad
-         u8YKGSNTvuIK1Qs6RbcqVntnhyfwD1HecmNzit4QEsVJrFYQOt1JO7DP2DBYKh7p/2KM
-         tIkfENteINhIIpwXj6yI7S3FGN7rNsZJLO5rI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GGJeViK+7nvO370X+XWsM6u8Nu1Bs+YHak1Y1XG2ND4=;
-        b=eKmTqchzRAZDJ3JlaRjlPKExUfuL0ThcapekJzX950+Ty6VLWEjAkX33GL/rcN0JGZ
-         yU3fgwsLv+ZfGWKbDfC8E+4hCtrta8bGk763z3hyLZpHc5s4rqo/X7YvEBpdNgNNeI+/
-         yJc2afN5o17k/AC+F3C8vW/+YEkmyP3mB4/FM0zWN9GjzppsOn3tD5snZRsdXx4bs8FX
-         XlIOPXb7WjGD2938cqkv6Q9d6zG1kOmI0rdfndOzKhUI/eNhnKd2pvn+OjTjTLkjOALa
-         aiF91WUZn6mXTz6MHKxIkELstIDx32Ku3ReaOO901U7x/CBuds0NOh+sOolE1arZMcCN
-         O+LA==
-X-Gm-Message-State: AOAM533yu7jT6lG4ZQH4rPpLmZuwgVJTazmyKOCx51kjNOU4lBHw/GtJ
-        DOgIidcD8WaqRUWY/QAqOTmXwIuJ5+LFoQ/K
-X-Google-Smtp-Source: ABdhPJyCHHTIbUI9hhmbzGHAv53z3ihM4197JWsPQeHByVgWOufkdRQtXDMiM/Xnnm+NVWFsro5Jcg==
-X-Received: by 2002:a17:907:a088:b0:6e4:dad7:1b1f with SMTP id hu8-20020a170907a08800b006e4dad71b1fmr39359551ejc.84.1649883370854;
-        Wed, 13 Apr 2022 13:56:10 -0700 (PDT)
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
-        by smtp.gmail.com with ESMTPSA id m3-20020a17090679c300b006cf9ce53354sm3415ejo.190.2022.04.13.13.56.09
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Apr 2022 13:56:09 -0700 (PDT)
-Received: by mail-wr1-f47.google.com with SMTP id e21so4316799wrc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 13:56:09 -0700 (PDT)
-X-Received: by 2002:a5d:64ce:0:b0:208:fff6:22cb with SMTP id
- f14-20020a5d64ce000000b00208fff622cbmr89950wri.301.1649883368489; Wed, 13 Apr
- 2022 13:56:08 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649883642; x=1681419642;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=TYcb4p1NHchumQzV88t1cTQVvmNzj45vyo9q6CrK+2Y=;
+  b=N/VNXYbN9uKEG2ePy71Dgn238WlTbfMFPV8k0j6iMc4AhPNIYuFkQ6A0
+   E2uDFSTwcqK/QnTf+5u7qSVKiCAULzu76hPn0cleHVF6GXq8OI8Ujpqbn
+   LrPZ7eiZ6f8/8pRfrvCiHxGMRPV8emQg/wRbt1xSNruHTSvgrNWJ2hJ1M
+   Q=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Apr 2022 14:00:42 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 14:00:41 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 13 Apr 2022 14:00:41 -0700
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 13 Apr 2022 14:00:40 -0700
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <mani@kernel.org>, <quic_hemantk@quicinc.com>,
+        <quic_bbhatt@quicinc.com>
+CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        "Jeffrey Hugo" <quic_jhugo@quicinc.com>
+Subject: [PATCH v2] bus: mhi: host: Add soc_reset sysfs
+Date:   Wed, 13 Apr 2022 15:00:19 -0600
+Message-ID: <1649883619-17609-1-git-send-email-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <20220412220033.1273607-1-swboyd@chromium.org> <20220412220033.1273607-2-swboyd@chromium.org>
-In-Reply-To: <20220412220033.1273607-2-swboyd@chromium.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 13 Apr 2022 13:55:56 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com>
-Message-ID: <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] interconnect: qcom: sc7180: Drop IP0 interconnects
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Georgi Djakov <djakov@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Alex Elder <elder@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+From: Jeffrey Hugo <jhugo@codeaurora.org>
 
-On Tue, Apr 12, 2022 at 4:20 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> @@ -519,8 +500,6 @@ static const struct of_device_id qnoc_of_match[] = {
->           .data = &sc7180_dc_noc},
->         { .compatible = "qcom,sc7180-gem-noc",
->           .data = &sc7180_gem_noc},
-> -       { .compatible = "qcom,sc7180-ipa-virt",
-> -         .data = &sc7180_ipa_virt},
->         { .compatible = "qcom,sc7180-mc-virt",
->           .data = &sc7180_mc_virt},
->         { .compatible = "qcom,sc7180-mmss-noc",
+The MHI bus supports a standardized hardware reset, which is known as the
+"SoC Reset".  This reset is similar to the reset sysfs for PCI devices -
+a hardware mechanism to reset the state back to square one.
 
-I have no objection to ${SUBJECT} change landing and based on all your
-research and Alex's review/testing I think it's good to go.
+The MHI SoC Reset is described in the spec as a reset of last resort.  If
+some unrecoverable error has occurred where other resets have failed, SoC
+Reset is the "big hammer" that ungracefully resets the device.  This is
+effectivly the same as yanking the power on the device, and reapplying it.
+However, depending on the nature of the particular issue, the underlying
+transport link may remain active and configured.  If the link remains up,
+the device will flag a MHI system error early in the boot process after
+the reset is executed, which allows the MHI bus to process a fatal error
+event, and clean up appropiately.
 
-However, now that you're removed the driver that cared about
-"qcom,sc7180-ipa-virt", should we also be removing it from the
-`bindings/interconnect/qcom,rpmh.yaml` file and the `sc7180.dtsi`
-file? I think that removing it from _either_ the driver (like your
-patch here does) _or_ the sc7180.dtsi file would fix the bug, right?
-...and then removing it from the yaml would just be cleanup...
+While the SoC Reset is generally intended as a means of recovery when all
+else has failed, it can be useful in non-error scenarios.  For example,
+if the device loads firmware from the host filesystem, the device may need
+to be fully rebooted inorder to pick up the new firmware.  In this
+scenario, the system administrator may use the soc_reset sysfs to cause
+the device to pick up the new firmware that the admin placed on the
+filesystem.
 
--Doug
+Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+---
+
+v2:
+Rebase
+
+ Documentation/ABI/stable/sysfs-bus-mhi | 11 +++++++++++
+ drivers/bus/mhi/host/init.c            | 14 ++++++++++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/Documentation/ABI/stable/sysfs-bus-mhi b/Documentation/ABI/stable/sysfs-bus-mhi
+index ecfe766..306f63e 100644
+--- a/Documentation/ABI/stable/sysfs-bus-mhi
++++ b/Documentation/ABI/stable/sysfs-bus-mhi
+@@ -19,3 +19,14 @@ Description:	The file holds the OEM PK Hash value of the endpoint device
+ 		read without having the device power on at least once, the file
+ 		will read all 0's.
+ Users:		Any userspace application or clients interested in device info.
++
++What:           /sys/bus/mhi/devices/.../soc_reset
++Date:           April 2022
++KernelVersion:  5.19
++Contact:        mhi@lists.linux.dev
++Description:	Initiates a SoC reset on the MHI controller.  A SoC reset is
++                a reset of last resort, and will require a complete re-init.
++                This can be useful as a method of recovery if the device is
++                non-responsive, or as a means of loading new firmware as a
++                system administration task.
++
+diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+index 04c409b..e12b210 100644
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -108,9 +108,23 @@ static ssize_t oem_pk_hash_show(struct device *dev,
+ }
+ static DEVICE_ATTR_RO(oem_pk_hash);
+ 
++static ssize_t soc_reset_store(struct device *dev,
++			       struct device_attribute *attr,
++			       const char *buf,
++			       size_t count)
++{
++	struct mhi_device *mhi_dev = to_mhi_device(dev);
++	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
++
++	mhi_soc_reset(mhi_cntrl);
++	return count;
++}
++static DEVICE_ATTR_WO(soc_reset);
++
+ static struct attribute *mhi_dev_attrs[] = {
+ 	&dev_attr_serial_number.attr,
+ 	&dev_attr_oem_pk_hash.attr,
++	&dev_attr_soc_reset.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(mhi_dev);
+-- 
+2.7.4
+
