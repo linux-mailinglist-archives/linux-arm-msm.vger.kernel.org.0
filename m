@@ -2,70 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B5934FFF63
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 21:35:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F1924FFF75
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 21:38:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231887AbiDMThz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 15:37:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44082 "EHLO
+        id S231553AbiDMTkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 15:40:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238427AbiDMThk (ORCPT
+        with ESMTP id S230223AbiDMTkt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 15:37:40 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC2E075C07
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 12:35:17 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id u2so2692861pgq.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 12:35:17 -0700 (PDT)
+        Wed, 13 Apr 2022 15:40:49 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E08007807C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 12:38:26 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id p10so5334755lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 12:38:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=4WH7f6JXFremjrBlmUML6pWVJn/974Z6+oDZ1BDIsM0=;
-        b=MxQuCgA+KjXz/suVqxz/KwPy9HtRl6Z4cNYXjCPujEu096i/Gk/uXd0eqR5bOgr6L/
-         sTIWuJ5DPUdMGazPE3msjwL6ZNZ53/DGVWnckKEjq2lWW+yMAFY5TqcP0Xo0yidPz/MY
-         DjQyvRlEGq5TxVA3/Ii13Uq3RijmPH1TBtzpE=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=aR8Rt8hLw+17zDYJV1rJ6/xUaIZhtu0FuyOPh+InD/o=;
+        b=trdN68tirmcolGrC4dC+u+t0wN/ATkiu5sg7tX6Tw2r3pbz85nwuaaWJZbt/RE5/1k
+         9moJGnLmcxYivWE1y58Iozb1DfQxChlHoYHwORYOWYJh+m7CIK7ivi5LVw8ofyc7jJm3
+         8aKmZZ9C5X0Dik7CJ1Qf9TGQrFLjBGYqPTB7IoEqkOrnG1wpuCJH3uq8h4rKAsRnrNM0
+         qXuM5MizfA54tYGcaXkppG6/RjMDf74pfCPISRg9CXQ8B9WcftlWGL9YnKAL6fHx6BuJ
+         UW6UznVtLP/gsp2lf9LFHF48LxHS1b0i7mQ8sp/QZ7iLHrE6Tp470hirkqqR27ikVunH
+         VGQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4WH7f6JXFremjrBlmUML6pWVJn/974Z6+oDZ1BDIsM0=;
-        b=nvcVwHWoxHvKyuClkuPNSl+vXXNKrQqosg9NY8WI+H/wytADhfU3mzv58cWAe+HC1b
-         LygyF8M2HHfnqAQAWOMftDf1hX90edV0p78lrLj5q0tLVLpW+6lDPWJYlMDRQziybz/8
-         Tz6YxXkuXBg1+wVP/60AtnRkZgqKtbPsqvEAzSUipf3lxTsKh87J45p5T8t42WbuXy2p
-         S73zP8a4eW6pw2ucXa7LAzV0mx9RB07mALhNEmJb7CrTk1XtgcP16t5WcSySdldBQmNp
-         dEVg1gQBf6iq31PXk3bkRrTvk3/scSWWKuADYWH05QmzW9ZOhMGj3IW/Ek3jxjrCHlVC
-         5agA==
-X-Gm-Message-State: AOAM530D9WbvLF+05sHBgZiElHfOQbmoGJI+S11vdE2ubc/ZVii6ksLW
-        eO5+sZ1U31TAsXtZ1pWc1Bozbg==
-X-Google-Smtp-Source: ABdhPJwTPfFuvyUpXywvV44/zNtujcJtz/ALWc7o9uQbDEcIrUDjnJ+bpl8M/uqMaWB/5K2VTCuubw==
-X-Received: by 2002:a05:6a00:2354:b0:505:c6c3:af87 with SMTP id j20-20020a056a00235400b00505c6c3af87mr367490pfj.78.1649878517206;
-        Wed, 13 Apr 2022 12:35:17 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:6a4f:9277:743f:c648])
-        by smtp.gmail.com with UTF8SMTPSA id z13-20020a17090a468d00b001c7db8e6ac7sm3728002pjf.40.2022.04.13.12.35.15
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=aR8Rt8hLw+17zDYJV1rJ6/xUaIZhtu0FuyOPh+InD/o=;
+        b=lxYX67jhHtGMbEetdPUQB4nxxYNzED7N90PXzEX8sFFAxYw7V5Ibdlj8rvLOOigi3u
+         +a1Y263nWym+tYQGpnwsNUYe74elBB1m5vc5p+o1PfnfexDHyfvsXB9IdrXIyOkrXQrr
+         7mo0Qr08WJ4z/7IHBHYTM3S4OMqMXe3q9kLZtstPceR62nmLViMtEeVJRHWN3pd7Wq1y
+         43U9Xu5XrBPXa8P2YEchasRzszFfceBpunuhhdiRuoON09tD80hH9n/L6XHSs2akTU7H
+         DroF0xAI50g1fc/d/7dNxCPN72lPJu8dFFAbiDl+7Oh1JHp51kGXjSM9ONiexzKC6rcS
+         tuiw==
+X-Gm-Message-State: AOAM5303u4USftCm0AcX86FsRFsd7xhnKZuxQYiPOYhBACaQjzctm30B
+        Uigp3qeqfHv328UmGs/bheKEaA==
+X-Google-Smtp-Source: ABdhPJzSU2SSXNjOZgIvsmcbrN8kworxnQzyaMmffS3HqmF+SaG2rwRHKKmcwqblMG5pCq5pVCWPIw==
+X-Received: by 2002:a05:6512:13a9:b0:448:9dd3:b84 with SMTP id p41-20020a05651213a900b004489dd30b84mr29223347lfa.556.1649878705175;
+        Wed, 13 Apr 2022 12:38:25 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id bq8-20020a056512150800b00448ab58bd53sm4245625lfb.40.2022.04.13.12.38.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Apr 2022 12:35:16 -0700 (PDT)
-Date:   Wed, 13 Apr 2022 12:35:15 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v7 2/4] arm64: dts: qcom: sc7280: Add nodes for wcd9385
- and max98360a codec
-Message-ID: <Ylcl830KnrzXHpSx@google.com>
-References: <1649863277-31615-1-git-send-email-quic_srivasam@quicinc.com>
- <1649863277-31615-3-git-send-email-quic_srivasam@quicinc.com>
+        Wed, 13 Apr 2022 12:38:24 -0700 (PDT)
+Message-ID: <a280732a-93c1-5d5e-07dd-7bd8790ec546@linaro.org>
+Date:   Wed, 13 Apr 2022 22:38:23 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1649863277-31615-3-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH v6 05/18] clk: qcom: kpss-xcc: convert to parent data API
+Content-Language: en-GB
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20220321231548.14276-1-ansuelsmth@gmail.com>
+ <20220321231548.14276-6-ansuelsmth@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220321231548.14276-6-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,220 +80,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 13, 2022 at 08:51:15PM +0530, Srinivasa Rao Mandadapu wrote:
-> Add wcd938x and  max98360a codecs for audio use case on
-> sc7280 based platforms.
-> Add tlmm gpio property in wcd938x node for switching CTIA/OMTP Headset.
-> Add amp_en node for  max98360a codec.
+On 22/03/2022 02:15, Ansuel Smith wrote:
+> Convert the driver to parent data API. From the Documentation pll8_vote
+> and pxo should be declared in the DTS so fw_name can be used instead of
+> parent_names. Name is still used to save regression on old definition.
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > ---
-
-Applicable to all you patches: a per-patch change log would be really
-nice for reviewers. It can help them to focus on the parts that have
-actually changed with respect to earlier revisions they might have
-already reviewed.
-
->  arch/arm64/boot/dts/qcom/sc7280-crd.dts        |  6 ++
->  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  8 +++
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 94 ++++++++++++++++++++++++++
->  3 files changed, 108 insertions(+)
+>   drivers/clk/qcom/kpss-xcc.c | 25 ++++++++-----------------
+>   1 file changed, 8 insertions(+), 17 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> index e2efbdd..b944366 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> diff --git a/drivers/clk/qcom/kpss-xcc.c b/drivers/clk/qcom/kpss-xcc.c
+> index 4fec1f9142b8..347f70e9f5fe 100644
+> --- a/drivers/clk/qcom/kpss-xcc.c
+> +++ b/drivers/clk/qcom/kpss-xcc.c
+> @@ -12,9 +12,9 @@
+>   #include <linux/clk.h>
+>   #include <linux/clk-provider.h>
+>   
+> -static const char *aux_parents[] = {
+> -	"pll8_vote",
+> -	"pxo",
+> +static const struct clk_parent_data aux_parents[] = {
+> +	{ .name = "pll8_vote", .fw_name = "pll8_vote" },
 
-Your branch needs a refresh, this file doesn't exist anymore.
+I'd just use "pll" here for the .fw_name.
 
-You'll want to change sc7280-crd-r3.dts for the CRD <= 2.x and
-sc7280-herobrine-crd.dts for the CRD >= 3.x
+> +	{ .name = "pxo", .fw_name = "pxo" },
+>   };
+>   
+>   static unsigned int aux_parent_map[] = {
+> @@ -32,8 +32,8 @@ MODULE_DEVICE_TABLE(of, kpss_xcc_match_table);
+>   static int kpss_xcc_driver_probe(struct platform_device *pdev)
+>   {
+>   	const struct of_device_id *id;
+> -	struct clk *clk;
+>   	void __iomem *base;
+> +	struct clk_hw *hw;
+>   	const char *name;
+>   
+>   	id = of_match_device(kpss_xcc_match_table, &pdev->dev);
+> @@ -55,24 +55,15 @@ static int kpss_xcc_driver_probe(struct platform_device *pdev)
+>   		base += 0x28;
+>   	}
+>   
+> -	clk = clk_register_mux_table(&pdev->dev, name, aux_parents,
+> -				     ARRAY_SIZE(aux_parents), 0, base, 0, 0x3,
+> -				     0, aux_parent_map, NULL);
+> +	hw = __devm_clk_hw_register_mux(&pdev->dev, NULL, name, ARRAY_SIZE(aux_parents),
+> +					NULL, NULL, aux_parents, 0, base, 0, 0x3,
+> +					0, aux_parent_map, NULL);
+>   
+> -	platform_set_drvdata(pdev, clk);
+> -
+> -	return PTR_ERR_OR_ZERO(clk);
+> -}
+> -
+> -static int kpss_xcc_driver_remove(struct platform_device *pdev)
+> -{
+> -	clk_unregister_mux(platform_get_drvdata(pdev));
+> -	return 0;
+> +	return PTR_ERR_OR_ZERO(hw);
+>   }
+>   
+>   static struct platform_driver kpss_xcc_driver = {
+>   	.probe = kpss_xcc_driver_probe,
+> -	.remove = kpss_xcc_driver_remove,
+>   	.driver = {
+>   		.name = "kpss-xcc",
+>   		.of_match_table = kpss_xcc_match_table,
 
-> @@ -84,6 +84,12 @@ ap_ts_pen_1v8: &i2c13 {
->  	pins = "gpio51";
->  };
->  
-> +&wcd938x {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&us_euro_hs_sel>;
-> +	us-euro-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
-> +};
-> +
->  &tlmm {
->  	tp_int_odl: tp-int-odl {
->  		pins = "gpio7";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> index dc17f20..8e4f822 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> @@ -20,6 +20,14 @@
->  #include "sc7280-chrome-common.dtsi"
->  
->  / {
-> +	max98360a: audio-codec-0 {
-> +		compatible = "maxim,max98360a";
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&amp_en>;
-> +		sdmode-gpios = <&tlmm 63 GPIO_ACTIVE_HIGH>;
-> +		#sound-dai-cells = <0>;
-> +	};
-> +
 
-I agreed earlier that sorting by node name is correct, but that wasn't
-entirely true. The nodes should be sorted by name within the 'device'
-section, i.e. after the comment "/* BOARD-SPECIFIC TOP LEVEL NODES */".
-
->  	chosen {
->  		stdout-path = "serial0:115200n8";
->  	};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index 110d9e9..6004c08 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -20,6 +20,41 @@
->  		serial1 = &uart7;
->  	};
->  
-> +	max98360a: audio-codec-0 {
-> +		compatible = "maxim,max98360a";
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&amp_en>;
-> +		sdmode-gpios = <&tlmm 63 GPIO_ACTIVE_HIGH>;
-> +		#sound-dai-cells = <0>;
-> +	};
-> +
-> +	wcd938x: audio-codec-1 {
-> +		compatible = "qcom,wcd9385-codec";
-> +		#sound-dai-cells = <1>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&wcd_reset_n>, <&wcd_reset_n_sleep>;
-
-Shouldn't this be:
-
-		pinctrl-names = "default", "sleep";
-		pinctrl-0 = <&wcd_reset_n>;
-		pinctrl-1 = <&wcd_reset_n_sleep>;
-
-?
-
-nit: make the ordering of properties (pinctrl, #sound-dai-cells) and
-spacing within the node consistent for max98360a and wcd938x? Not
-super-important, but since both are codecs and added by the same
-patch, why not :)
-
-> +		reset-gpios = <&tlmm 83 GPIO_ACTIVE_HIGH>;
-> +
-> +		qcom,rx-device = <&wcd_rx>;
-> +		qcom,tx-device = <&wcd_tx>;
-> +
-> +		vdd-rxtx-supply = <&vreg_l18b_1p8>;
-> +		vdd-io-supply = <&vreg_l18b_1p8>;
-> +		vdd-buck-supply = <&vreg_l17b_1p8>;
-> +		vdd-mic-bias-supply = <&vreg_bob>;
-> +
-> +		qcom,micbias1-microvolt = <1800000>;
-> +		qcom,micbias2-microvolt = <1800000>;
-> +		qcom,micbias3-microvolt = <1800000>;
-> +		qcom,micbias4-microvolt = <1800000>;
-> +
-> +		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000
-> +							  500000 500000 500000>;
-> +		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-> +		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-> +	};
-> +
->  	gpio-keys {
->  		compatible = "gpio-keys";
->  		label = "gpio-keys";
-> @@ -238,6 +273,19 @@
->  	modem-init;
->  };
->  
-> +&lpass_rx_macro {
-> +	status = "okay";
-> +};
-> +
-> +&lpass_tx_macro {
-> +	status = "okay";
-> +};
-> +
-> +&lpass_va_macro {
-> +	status = "okay";
-> +	vdd-micb-supply = <&vreg_bob>;
-> +};
-> +
->  &pcie1 {
->  	status = "okay";
->  	perst-gpio = <&tlmm 2 GPIO_ACTIVE_LOW>;
-> @@ -298,6 +346,24 @@
->  	cd-gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
->  };
->  
-> +&swr0 {
-> +	wcd_rx: codec@0,4 {
-> +		compatible = "sdw20217010d00";
-> +		reg = <0 4>;
-> +		#sound-dai-cells = <1>;
-> +		qcom,rx-port-mapping = <1 2 3 4 5>;
-> +	};
-> +};
-> +
-> +&swr1 {
-> +	wcd_tx: codec@0,3 {
-> +		compatible = "sdw20217010d00";
-> +		reg = <0 3>;
-> +		#sound-dai-cells = <1>;
-> +		qcom,tx-port-mapping = <1 2 3 4>;
-> +	};
-> +};
-> +
->  &uart5 {
->  	compatible = "qcom,geni-debug-uart";
->  	status = "okay";
-> @@ -561,6 +627,12 @@
->  };
->  
->  &tlmm {
-> +	amp_en: amp-en {
-> +		pins = "gpio63";
-> +		bias-pull-down;
-> +		drive-strength = <2>;
-> +	};
-> +
->  	bt_en: bt-en {
->  		pins = "gpio85";
->  		function = "gpio";
-> @@ -643,5 +715,27 @@
->  		function = "gpio";
->  		bias-pull-down;
->  	};
-> +
-> +	us_euro_hs_sel: us-euro-hs-sel {
-> +		pins = "gpio81";
-> +		function = "gpio";
-> +		bias-pull-down;
-> +		drive-strength = <2>;
-> +	};
-> +
-> +	wcd_reset_n: wcd-reset-n {
-> +		pins = "gpio83";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		output-high;
-> +	};
-> +
-> +	wcd_reset_n_sleep: wcd-reset-n-sleep {
-> +		pins = "gpio83";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-disable;
-> +		output-low;
-> +	};
->  };
->  
-> -- 
-> 2.7.4
-> 
+-- 
+With best wishes
+Dmitry
