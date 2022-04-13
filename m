@@ -2,70 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2CF74FFC1B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 19:10:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D3B54FFC41
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 19:19:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229792AbiDMRND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 13:13:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50538 "EHLO
+        id S237183AbiDMRVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 13:21:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237221AbiDMRM0 (ORCPT
+        with ESMTP id S237262AbiDMRVn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 13:12:26 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84C6B2495A;
-        Wed, 13 Apr 2022 10:10:03 -0700 (PDT)
+        Wed, 13 Apr 2022 13:21:43 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F783D96
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 10:19:21 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id t12so2504558pll.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 10:19:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649869804; x=1681405804;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=JOB+UVW8zbUV4QffJ7mmyRMUwWjpWnIftd5tTRSyqN4=;
-  b=sHlZEVDJ0KWdkEMGCDf+bt+xWUQstW5YWVXX6b1odHB6uW2ynk9339nC
-   NwmXGU1ncTLc6brFRXRtd/H6KvRMDWebfS8cZI1fz0Fh40VOLSYU1elhe
-   U5zviLVLe4Fqu5/tPyF4B5PCnVvH6fhvrq7Tl5t8KftIr97aXiix87CPm
-   U=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 13 Apr 2022 10:10:03 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 10:10:03 -0700
-Received: from [10.134.65.5] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 13 Apr
- 2022 10:10:02 -0700
-Message-ID: <fd8c702b-f433-0526-6945-3339a8de2f0a@quicinc.com>
-Date:   Wed, 13 Apr 2022 10:09:57 -0700
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=lME6SHAgnKlmWBOKOizWm8XVxJpddGvUH85Ld8tYptw=;
+        b=UTabBOIrMAwX7G926h1g/XxwxCNw+redFrANl5vrbvEVFXqf3dVOsfKbJlN/8qVd6b
+         9gZ/mx8JQZDJ2nW52LktmlO9klbmAm34eSmWShJ+HKBGgunwO3ZUW6fiHXwTKvXPPJwK
+         EjYmODPltiC3D/nlbGntEawXo1fKfBXxUO7ug=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=lME6SHAgnKlmWBOKOizWm8XVxJpddGvUH85Ld8tYptw=;
+        b=tIq8IvfSHqM2Z+y0fVEDN9A7FzuTInq/MS4vrr5UBpvoPDUMN3HHdRmEDlukIMWHrn
+         PZP6rGKaKMFqGQtzSJJ7mW2Uw3apgfX29ZaCbCmLFgNHzocyhmivlz5E5tn0bRyHey6t
+         1OYkeFq/DUrmLyusrQxDvWp5YUxnsV9AhzZ3dnwM7vcvoPMtJRs79ilvlfGPJzDcIdnh
+         BxC7Os07yn0gFbgu0l7m139Br1ld/j1nOCsyMMqvFrVzU0UqWzyHpZQIfKjTKKsZsdEQ
+         IALGzswNy7Ppied5cV0YFBG6sNQWZwcttbxXBqSKFBA7eo6/NB7DbxXC/VI8vSe+kw9q
+         fvdg==
+X-Gm-Message-State: AOAM531emv4gJRzVWMy621KKG5L9hzHy2cDi1xxf3wByLL8sF28mFdaO
+        8Grky65QiPVPFQJTgdxB+ugx1w==
+X-Google-Smtp-Source: ABdhPJz7ppfzbQ8wE0OtGonV82yO6sDyoE48BgV4umaaIEAVFFGDk/8CJYoUUK24mmhN04OGb0xKpg==
+X-Received: by 2002:a17:902:e74d:b0:156:9d3c:4271 with SMTP id p13-20020a170902e74d00b001569d3c4271mr43099858plf.79.1649870360761;
+        Wed, 13 Apr 2022 10:19:20 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:6a4f:9277:743f:c648])
+        by smtp.gmail.com with UTF8SMTPSA id b25-20020a637159000000b00381fda49d15sm6821133pgn.39.2022.04.13.10.19.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 10:19:20 -0700 (PDT)
+Date:   Wed, 13 Apr 2022 10:19:18 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+        srinivas.kandagatla@linaro.org, dianders@chromium.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v9 1/2] arm64: dts: qcom: sc7280: Add pinmux for I2S
+ speaker and Headset
+Message-ID: <YlcGFlFXhh+bHGko@google.com>
+References: <1649861047-7811-1-git-send-email-quic_srivasam@quicinc.com>
+ <1649861047-7811-2-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH 03/11] arm64: gunyah: Add Gunyah hypercalls ABI
-Content-Language: en-US
-To:     Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-kernel@vger.kernel.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>
-References: <20220223233729.1571114-1-quic_eberman@quicinc.com>
- <20220223233729.1571114-4-quic_eberman@quicinc.com>
- <YhdZen7MwdAIJMsu@lakrids> <874k4o4l39.wl-maz@kernel.org>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <874k4o4l39.wl-maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1649861047-7811-2-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,69 +73,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Apr 13, 2022 at 08:14:06PM +0530, Srinivasa Rao Mandadapu wrote:
+> Add pinmux nodes for primary and secondary I2S for SC7280 based platforms.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 
-
-On 2/24/2022 2:26 AM, Marc Zyngier wrote:
-> Thanks Mark for roping me in.
-> 
-> On Thu, 24 Feb 2022 10:10:02 +0000,
-> Mark Rutland <mark.rutland@arm.com> wrote:
->>
->> Hi,
->>
->> As a general thing, this is the *only* patch from this series which has
->> been Cc'd to linux-arm-kernel, which makes it practically impossible to
->> understand the context for this, which is somewhat frustrating.
->>
->> Looking on lore.kernel.org I see that the entire series was Cc'd to
->> linux-arm-msm, but most people don't subscribe to that list. If you send
->> one patch in a series to a list, please send the *entire* series there. >>>> On Wed, Feb 23, 2022 at 03:37:21PM -0800, Elliot Berman wrote:
->>> Add initial support to perform Gunyah hypercalls. The arm64 ABI for
->>> Gunyah hypercalls generally follows the AAPCS64, and can be summarized:
->>>   - Function identifier is passed through the imm operand
->>>   - [r0,r7] are parameter and result registers
->>>   - [r8-r18] are temporary and saved by the caller (VM)
->>>   - [r19-r31] are preserved and saved by the hypervisor
->>>
->>> The preprocessor macors for creating the necessary HVC instruction
->>> roughly follows the SMCCC 1.1 implementation in
->>> include/linux/arm-smccc.h.
->>
->> I've added the SMCCC maintainers (myself, Lorenzo, and SUdeep) to Cc,
->> and also Marc who was involvedi n prior discussions in this area. Please
->> Cc us on any future patches adding HVC or SMCC interfaces (SMCCC or
->> otherwise).
-> 
-> In general, please Cc all the interested parties with the whole
-> series. Random patches randomly cc'd out of context are pretty useless
-> and only lead to them being ignored.
-> 
-
-I'll do this in the future, thanks for the recommendation here.
-
->>
->> We've previously said NO to any new hypercall mechanisms which do not
->> follow SMCCC. There is no reason to fragment this space further; please
->> use SMCCC (which your hypervisor must already implement in part if it
->> exposes PSCI to a guest).
->>
->> NAK to this non-SMCCC interface.
-> 
-> Agreed. We pushed back on that for Hyper-V, and I don't see a reason
-> for changing tack on that.
-> 
-> The calling convention exists for a reason: portability. If this
-> hypervisor is to be "independent of any high-level OS kernel" (as it
-> is being advertised), then it must already implement SMCCC.
-> 
-> What is the issue with properly supporting SMCCC for all interactions
-> with the hypervisor and not reinventing a square wheel? >
-
-We had discussion on this and will implement SMCCC calls for Gunyah's 
-hypercalls. I'll share updated patches soon once we have update the 
-hypervisor.
-
-> Thanks,
-> 
-> 	M.
-> 
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
