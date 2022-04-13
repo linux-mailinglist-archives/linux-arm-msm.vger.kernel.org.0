@@ -2,67 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 297564FF0A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 09:35:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FD244FF0B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 09:37:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233376AbiDMHhe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 03:37:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49168 "EHLO
+        id S233422AbiDMHjp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 03:39:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233384AbiDMHh0 (ORCPT
+        with ESMTP id S233412AbiDMHjn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 03:37:26 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DE5D4D9E4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:35:03 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id k14so1073587pga.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:35:03 -0700 (PDT)
+        Wed, 13 Apr 2022 03:39:43 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C97984D9FB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:37:21 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id bg9so1030981pgb.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:37:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=4shEO0FDjWAPEb/iOkbhrTf4wcohhpVSh+KPI0icLZI=;
-        b=qets2QwMPoIS07bG1f+KyzSxy6S8KfID+zTuDtEKft9hUvDP7QZj5L+WzEREoAmiY/
-         XOrB4o04xL+0RYSOVEMDw3reHRpqsa51k5T4ihGVeqQBAk9Ho2mspk66Bl+l56Dr6PnA
-         OXMaSzqgFA6Cu3ryvS2nNYt+BMVcjYDJCeoyictMJ5uwYo8Q+jDXBNZtA56w09lyCRZe
-         YKuZbPQDp/Lmcn2qX0ZVrncFMbVbfr15nMmbXBHqjWfTdFcFYfj5OcOArO5W40hVsUn2
-         a51Mapulb8/S926Wh9qcxCXmC7IAcSSPS7a7UXSjHa0/8KiqsCCwgoA+O7nm6GKvATiM
-         mKVw==
+        bh=OvBmCpMD4WvNs2TV4Iwfm3Q6UCY8XLO8lhnqvUzlfmQ=;
+        b=ezJpMnFtqu6SYjGyO6z0ZdpbRiSRqktyw1m72XPH9PlGKSl2LprXy8/1Pz8PJz+y7J
+         55d+C6ovQycXEwAvRyl9Vxd/EsrGYh9T6fdGtMCYHMXNvGm+vWyY8mV6Yj2XaHvm7mb/
+         zYvZMw4rGxX1orG19Y+xpbJNUXgio3ar/LU7G9Dg9QUBXyiAl4U6a+yutd0vkGhqhzxR
+         0RFMnLfSle57raxIV9hsCpdJT0LQT6XwRz7Q19RsrZj5D1EftyyOA7VrWeVpXe/RKhGT
+         q4FdIr+UbG7Irm/62lul+P3uYR1kcx5lQUgskC5PrBxhevRft7dzpXAgl8OVTTAzW1M3
+         zZUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=4shEO0FDjWAPEb/iOkbhrTf4wcohhpVSh+KPI0icLZI=;
-        b=G9cuaxTNvo7cq2emLlYV/dyTsD9mArssiPVNriqJYp+a5QhnRdY/BROdYShYzm8X09
-         X5OCH/It8LXBFo81UrKoMStnThHXSVNTCMxOkwFLbEsy4kziEssXjxXvfohAqf9Xw/Z9
-         NVN9HHsmwgyYbrEycJzq2yY0Rd3WKQUv6Kn59z6uSpVJ7Zhlb1tEtT8xOZkcX07RKFIe
-         jB5hvpg5gjFQ4TbWQZTiTaT6Rlhn/D7DRGH4UAFTcNUNDI3vweJy4/JSxbBypDDmZRSB
-         xSt0J0EMGjbkcVBXpBenWKew4Zj0FAt7O/ryb6Ne5khzvP5gSNcDIFXH1eSGM6P8T/jW
-         rhVA==
-X-Gm-Message-State: AOAM530Kja+eGLcZ8MmY2UtXiKuXRipnQXNnLZSnTIjX8U/DDnihA2Dx
-        vOeQT1X68nv5qo7cMRGEv3bl
-X-Google-Smtp-Source: ABdhPJzMxUXE89aUhRoeF6JFh0xgIGr9S8og3SCLfG1L88EFRg2hK4A2qSzGupVw4T6UTu0MgphGLw==
-X-Received: by 2002:a63:780f:0:b0:386:5d6f:2153 with SMTP id t15-20020a63780f000000b003865d6f2153mr33053657pgc.555.1649835303345;
-        Wed, 13 Apr 2022 00:35:03 -0700 (PDT)
+        bh=OvBmCpMD4WvNs2TV4Iwfm3Q6UCY8XLO8lhnqvUzlfmQ=;
+        b=0VjMvynylerfM5lj+a2OHcqzvIEQZ51UqLGi4BngQwPEXllD1If8VVwujEsotpI6SD
+         x0DsMuFWsVs3lfrtD/eDE7MmH388gcZzVvU/Z8h8Nwu6fNmQWW/nq6TxdB1RtpLDaQPk
+         /u5PcYMabNxQB2kzTTiFV9EPPtoxbTcnGQp7AhmV8YZrda6XfCAcygPAdEIP84LO49+X
+         JZ6QwsSvuhPbII3VhEs3uGNvyzOaxHMz3YexfepjR0XDuohoHbGjl4m6y6Y7ykM5acZg
+         FYmNl7QPG+9d7oRJI0mzl0jiuOG00KVbPSEqMcylghlIQtIcncJHKerj/LeCJmFn3vUR
+         r1FA==
+X-Gm-Message-State: AOAM531WIlLjqmcyYYq68EZGvgDKKqiBQrlVp3fMhLTTkSfZXjoq9jx/
+        PGLlnQH83dot4pGIOn0MYqpQ
+X-Google-Smtp-Source: ABdhPJy1Grt5MukdtrnClnqOOCFNj2cd7iE0NgSPKDA6mAkOQjYH6907VLEA5DWJ0xydgaibP94ngA==
+X-Received: by 2002:a63:5710:0:b0:399:365e:5dde with SMTP id l16-20020a635710000000b00399365e5ddemr34937381pgb.192.1649835441312;
+        Wed, 13 Apr 2022 00:37:21 -0700 (PDT)
 Received: from thinkpad ([117.207.28.99])
-        by smtp.gmail.com with ESMTPSA id d8-20020a17090a114800b001cb95a92bd7sm1816639pje.13.2022.04.13.00.34.58
+        by smtp.gmail.com with ESMTPSA id pi2-20020a17090b1e4200b001c7b15928e0sm1977714pjb.23.2022.04.13.00.37.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 00:35:02 -0700 (PDT)
-Date:   Wed, 13 Apr 2022 13:04:56 +0530
+        Wed, 13 Apr 2022 00:37:20 -0700 (PDT)
+Date:   Wed, 13 Apr 2022 13:07:15 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        vkoul@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] phy: qcom-qmp: Add support for SDX65 QMP PHY
-Message-ID: <20220413073456.GC2015@thinkpad>
-References: <1649740652-17515-1-git-send-email-quic_rohiagar@quicinc.com>
- <1649740652-17515-3-git-send-email-quic_rohiagar@quicinc.com>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Georgi Djakov <djakov@kernel.org>, linux-kernel@vger.kernel.org,
+        patches@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, Alex Elder <elder@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+Subject: Re: [PATCH 2/2] interconnect: qcom: sdx55: Drop IP0 interconnects
+Message-ID: <20220413073715.GD2015@thinkpad>
+References: <20220412220033.1273607-1-swboyd@chromium.org>
+ <20220412220033.1273607-3-swboyd@chromium.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1649740652-17515-3-git-send-email-quic_rohiagar@quicinc.com>
+In-Reply-To: <20220412220033.1273607-3-swboyd@chromium.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -73,14 +75,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 12, 2022 at 10:47:32AM +0530, Rohit Agarwal wrote:
-> Add support for USB3 QMP PHY found in SDX65 platform. SDX65 uses
-> version 5.0.0 of the QMP PHY IP.
+On Tue, Apr 12, 2022 at 03:00:33PM -0700, Stephen Boyd wrote:
+> Similar to the sc7180 commit, let's drop the IP0 interconnects here
+> because the IP0 resource is also used in the clk-rpmh driver on sdx55.
+> It's bad to have the clk framework and interconnect framework control
+> the same RPMh resource without any coordination. The rpmh driver in the
+> kernel doesn't aggregate resources between clients either, so leaving
+> control to clk-rpmh avoids any issues with unused interconnects turning
+> off IP0 behind the back of the clk framework.
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-
-I don't have access to SDX65 downstream devicetree source but overall it looks
-good to me.
+> Cc: Alex Elder <elder@linaro.org>
+> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+> Fixes: b2150cab9a97 ("clk: qcom: rpmh: add support for SDX55 rpmh IPA clock")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
 Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
@@ -88,110 +98,69 @@ Thanks,
 Mani
 
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp.c | 76 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 76 insertions(+)
+>  drivers/interconnect/qcom/sdx55.c | 21 ---------------------
+>  1 file changed, 21 deletions(-)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> index 8ea87c6..58506b8 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> @@ -2535,6 +2535,50 @@ static const struct qmp_phy_init_tbl sdx55_qmp_pcie_pcs_misc_tbl[] = {
->  	QMP_PHY_INIT_CFG(QPHY_V4_20_PCS_LANE1_INSIG_MX_CTRL2, 0x00),
+> diff --git a/drivers/interconnect/qcom/sdx55.c b/drivers/interconnect/qcom/sdx55.c
+> index 03d604f84cc5..e3ac25a997b7 100644
+> --- a/drivers/interconnect/qcom/sdx55.c
+> +++ b/drivers/interconnect/qcom/sdx55.c
+> @@ -18,7 +18,6 @@
+>  #include "icc-rpmh.h"
+>  #include "sdx55.h"
+>  
+> -DEFINE_QNODE(ipa_core_master, SDX55_MASTER_IPA_CORE, 1, 8, SDX55_SLAVE_IPA_CORE);
+>  DEFINE_QNODE(llcc_mc, SDX55_MASTER_LLCC, 4, 4, SDX55_SLAVE_EBI_CH0);
+>  DEFINE_QNODE(acm_tcu, SDX55_MASTER_TCU_0, 1, 8, SDX55_SLAVE_LLCC, SDX55_SLAVE_MEM_NOC_SNOC, SDX55_SLAVE_MEM_NOC_PCIE_SNOC);
+>  DEFINE_QNODE(qnm_snoc_gc, SDX55_MASTER_SNOC_GC_MEM_NOC, 1, 8, SDX55_SLAVE_LLCC);
+> @@ -40,7 +39,6 @@ DEFINE_QNODE(xm_pcie, SDX55_MASTER_PCIE, 1, 8, SDX55_SLAVE_ANOC_SNOC);
+>  DEFINE_QNODE(xm_qdss_etr, SDX55_MASTER_QDSS_ETR, 1, 8, SDX55_SLAVE_SNOC_CFG, SDX55_SLAVE_EMAC_CFG, SDX55_SLAVE_USB3, SDX55_SLAVE_AOSS, SDX55_SLAVE_SPMI_FETCHER, SDX55_SLAVE_QDSS_CFG, SDX55_SLAVE_PDM, SDX55_SLAVE_SNOC_MEM_NOC_GC, SDX55_SLAVE_TCSR, SDX55_SLAVE_CNOC_DDRSS, SDX55_SLAVE_SPMI_VGI_COEX, SDX55_SLAVE_QPIC, SDX55_SLAVE_OCIMEM, SDX55_SLAVE_IPA_CFG, SDX55_SLAVE_USB3_PHY_CFG, SDX55_SLAVE_AOP, SDX55_SLAVE_BLSP_1, SDX55_SLAVE_SDCC_1, SDX55_SLAVE_CNOC_MSS, SDX55_SLAVE_PCIE_PARF, SDX55_SLAVE_ECC_CFG, SDX55_SLAVE_AUDIO, SDX55_SLAVE_AOSS, SDX55_SLAVE_PRNG, SDX55_SLAVE_CRYPTO_0_CFG, SDX55_SLAVE_TCU, SDX55_SLAVE_CLK_CTL, SDX55_SLAVE_IMEM_CFG);
+>  DEFINE_QNODE(xm_sdc1, SDX55_MASTER_SDCC_1, 1, 8, SDX55_SLAVE_AOSS, SDX55_SLAVE_IPA_CFG, SDX55_SLAVE_ANOC_SNOC, SDX55_SLAVE_AOP, SDX55_SLAVE_AUDIO);
+>  DEFINE_QNODE(xm_usb3, SDX55_MASTER_USB3, 1, 8, SDX55_SLAVE_ANOC_SNOC);
+> -DEFINE_QNODE(ipa_core_slave, SDX55_SLAVE_IPA_CORE, 1, 8);
+>  DEFINE_QNODE(ebi, SDX55_SLAVE_EBI_CH0, 1, 4);
+>  DEFINE_QNODE(qns_llcc, SDX55_SLAVE_LLCC, 1, 16, SDX55_SLAVE_EBI_CH0);
+>  DEFINE_QNODE(qns_memnoc_snoc, SDX55_SLAVE_MEM_NOC_SNOC, 1, 8, SDX55_MASTER_MEM_NOC_SNOC);
+> @@ -82,7 +80,6 @@ DEFINE_QNODE(xs_sys_tcu_cfg, SDX55_SLAVE_TCU, 1, 8);
+>  DEFINE_QBCM(bcm_mc0, "MC0", true, &ebi);
+>  DEFINE_QBCM(bcm_sh0, "SH0", true, &qns_llcc);
+>  DEFINE_QBCM(bcm_ce0, "CE0", false, &qxm_crypto);
+> -DEFINE_QBCM(bcm_ip0, "IP0", false, &ipa_core_slave);
+>  DEFINE_QBCM(bcm_pn0, "PN0", false, &qhm_snoc_cfg);
+>  DEFINE_QBCM(bcm_sh3, "SH3", false, &xm_apps_rdwr);
+>  DEFINE_QBCM(bcm_sh4, "SH4", false, &qns_memnoc_snoc, &qns_sys_pcie);
+> @@ -219,22 +216,6 @@ static const struct qcom_icc_desc sdx55_system_noc = {
+>  	.num_bcms = ARRAY_SIZE(system_noc_bcms),
 >  };
 >  
-> +static const struct qmp_phy_init_tbl sdx65_usb3_uniphy_tx_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0xa5),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_2, 0x82),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_3, 0x3f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_4, 0x3f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_PI_QEC_CTRL, 0x21),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_TX, 0x1f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_RX, 0x0b),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sdx65_usb3_uniphy_rx_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH4, 0xdb),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH3, 0xbd),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH2, 0xff),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH, 0x7f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_LOW, 0xff),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH4, 0xa9),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH3, 0x7b),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH2, 0xe4),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH, 0x24),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_LOW, 0x64),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_PI_CONTROLS, 0x99),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SB2_THRESH1, 0x08),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SB2_THRESH2, 0x08),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SB2_GAIN1, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SB2_GAIN2, 0x04),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FASTLOCK_FO_GAIN, 0x2f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FASTLOCK_COUNT_LOW, 0xff),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FASTLOCK_COUNT_HIGH, 0x0f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FO_GAIN, 0x0a),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_VGA_CAL_CNTRL1, 0x54),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_VGA_CAL_CNTRL2, 0x0f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_EQU_ADAPTOR_CNTRL2, 0x0f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_EQU_ADAPTOR_CNTRL4, 0x0a),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_EQ_OFFSET_ADAPTOR_CNTRL1, 0x47),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_OFFSET_ADAPTOR_CNTRL2, 0x80),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_SIGDET_CNTRL, 0x04),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_SIGDET_DEGLITCH_CNTRL, 0x0e),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_DFE_CTLE_POST_CAL_OFFSET, 0x38),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SO_GAIN, 0x05),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_GM_CAL, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_SIGDET_ENABLES, 0x00),
-> +};
-> +
->  static const struct qmp_phy_init_tbl sm8350_ufsphy_serdes_tbl[] = {
->  	QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_EN_SEL, 0xd9),
->  	QMP_PHY_INIT_CFG(QSERDES_V5_COM_HSCLK_SEL, 0x11),
-> @@ -4217,6 +4261,35 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
->  	.pwrdn_delay_max	= 1005,		/* us */
+> -static struct qcom_icc_bcm *ipa_virt_bcms[] = {
+> -	&bcm_ip0,
+> -};
+> -
+> -static struct qcom_icc_node *ipa_virt_nodes[] = {
+> -	[MASTER_IPA_CORE] = &ipa_core_master,
+> -	[SLAVE_IPA_CORE] = &ipa_core_slave,
+> -};
+> -
+> -static const struct qcom_icc_desc sdx55_ipa_virt = {
+> -	.nodes = ipa_virt_nodes,
+> -	.num_nodes = ARRAY_SIZE(ipa_virt_nodes),
+> -	.bcms = ipa_virt_bcms,
+> -	.num_bcms = ARRAY_SIZE(ipa_virt_bcms),
+> -};
+> -
+>  static const struct of_device_id qnoc_of_match[] = {
+>  	{ .compatible = "qcom,sdx55-mc-virt",
+>  	  .data = &sdx55_mc_virt},
+> @@ -242,8 +223,6 @@ static const struct of_device_id qnoc_of_match[] = {
+>  	  .data = &sdx55_mem_noc},
+>  	{ .compatible = "qcom,sdx55-system-noc",
+>  	  .data = &sdx55_system_noc},
+> -	{ .compatible = "qcom,sdx55-ipa-virt",
+> -	  .data = &sdx55_ipa_virt},
+>  	{ }
 >  };
->  
-> +static const struct qmp_phy_cfg sdx65_usb3_uniphy_cfg = {
-> +	.type			= PHY_TYPE_USB3,
-> +	.nlanes			= 1,
-> +
-> +	.serdes_tbl		= sm8150_usb3_uniphy_serdes_tbl,
-> +	.serdes_tbl_num		= ARRAY_SIZE(sm8150_usb3_uniphy_serdes_tbl),
-> +	.tx_tbl			= sdx65_usb3_uniphy_tx_tbl,
-> +	.tx_tbl_num		= ARRAY_SIZE(sdx65_usb3_uniphy_tx_tbl),
-> +	.rx_tbl			= sdx65_usb3_uniphy_rx_tbl,
-> +	.rx_tbl_num		= ARRAY_SIZE(sdx65_usb3_uniphy_rx_tbl),
-> +	.pcs_tbl		= sm8350_usb3_uniphy_pcs_tbl,
-> +	.pcs_tbl_num		= ARRAY_SIZE(sm8350_usb3_uniphy_pcs_tbl),
-> +	.clk_list		= qmp_v4_sdx55_usbphy_clk_l,
-> +	.num_clks		= ARRAY_SIZE(qmp_v4_sdx55_usbphy_clk_l),
-> +	.reset_list		= msm8996_usb3phy_reset_l,
-> +	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
-> +	.vreg_list		= qmp_phy_vreg_l,
-> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-> +	.regs			= sm8350_usb3_uniphy_regs_layout,
-> +
-> +	.start_ctrl		= SERDES_START | PCS_START,
-> +	.pwrdn_ctrl		= SW_PWRDN,
-> +	.phy_status		= PHYSTATUS,
-> +
-> +	.has_pwrdn_delay	= true,
-> +	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
-> +	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
-> +};
-> +
->  static const struct qmp_phy_cfg sm8350_ufsphy_cfg = {
->  	.type			= PHY_TYPE_UFS,
->  	.nlanes			= 2,
-> @@ -6044,6 +6117,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
->  		.compatible = "qcom,sdx55-qmp-usb3-uni-phy",
->  		.data = &sdx55_usb3_uniphy_cfg,
->  	}, {
-> +		.compatible = "qcom,sdx65-qmp-usb3-uni-phy",
-> +		.data = &sdx65_usb3_uniphy_cfg,
-> +	}, {
->  		.compatible = "qcom,sm8350-qmp-usb3-phy",
->  		.data = &sm8350_usb3phy_cfg,
->  	}, {
+>  MODULE_DEVICE_TABLE(of, qnoc_of_match);
 > -- 
-> 2.7.4
+> https://chromeos.dev
 > 
