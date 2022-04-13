@@ -2,82 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36F355001CF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 00:22:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2D0F500205
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 00:48:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235228AbiDMWYX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 18:24:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40562 "EHLO
+        id S236908AbiDMWuj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 18:50:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237920AbiDMWYP (ORCPT
+        with ESMTP id S232789AbiDMWui (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 18:24:15 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B96CA2612D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 15:21:32 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id p10so5953451lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 15:21:32 -0700 (PDT)
+        Wed, 13 Apr 2022 18:50:38 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 733E358387
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 15:48:15 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id u7so6062636lfs.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 15:48:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=J2ZiiX+Se2iGFk2CE7VRsbdwjF9gd6FgaTEan0NnU4Q=;
-        b=x533paaDKxbXhn83ziLLT8WALXpFGBSOjWFu4nOiUYTRngCyFVvQ+TZ5Ou2KuDy3tJ
-         gIhptZH0TQjLYtwzA/yyU6luQvLmX95oEZIeBRZYaQyceG1g3veO8W+OxplvD9KgKDTh
-         z0z63EbF0fFYS4wSVXkHaCs+bKAoCBgf0ZhPyMCn1KCc0zoOh0iGldcXQEuAeJBLNuCl
-         7j8XfHazfigSub7aXc70u13ECB+7lmSx01dKNDxGBh7gQWh9NdQsa0lIimwPuds1nNsN
-         la9e0ieu3G2IPB+Rk2z7YlidA+bdWY8qEB++CUW80uVjx14Ds2l+LaoewIvzpR+AWmQT
-         Z8cg==
+        bh=Rjljh0Ck2s5oy15NuHhlHI64zRd9D7mmJO/ww9jh6KI=;
+        b=JWPPH9IH9OWhM3mr2yzedKc+0F9KJv9p7R8apF2V7A2kjsZ2XZjLnG7U+Erq4JMcRx
+         j2aZMzjF3EF7sBHG7wuRccxwqgQNYhJG2OA0/8d2o+R2yGaG0xoo5pvUnEK1PZuSQQP/
+         AyW5hTUWVYZtAj7V484d8mdQ9j0uPbLOCvGahkS47sUhfOoFCGP3FqhrVEnL7JSRowIp
+         RtZnVrR/KSP5kqhTlXNlp/gsIzFfDR+pLFTCTcw8/UzMBDKm+T/mk7PcHJ7NiBZcINFb
+         3p0MHtLW7uU+S0GMER/TNzg6r4fSv9A/7HnaUwX8zWdgS0A+iIoaMMrWi+GkBc4jU2m+
+         ywbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=J2ZiiX+Se2iGFk2CE7VRsbdwjF9gd6FgaTEan0NnU4Q=;
-        b=oDOqIx91CZyMVNHrTqjrnLphngvduUU3NkneolSRQXPsWhmuO41uFN6yVxptkTeRmN
-         hlg0hQTmqpHyVzWOw8fi9bce7Kwyv07dVjdar6h5sGb4441P4JSuva5axH5+fTDtJuej
-         vj9FkeReICOp/BaRDb1cYEwQ4+x+PD3J2w6YZXLtzxjkC6ZL+xioyhTf+IcGHQmuO34F
-         c1cWelWeSYtGEZpSE77A4J+rNBdolLeHEbVMYHNBSx/lMkhI/x/IdzCKJR54Z0h0gSKs
-         PCRG+cyZSb5lTdrMMn7J0PiEnTAeFq6UDMYt7QTDPL1BBVNBIZQ6Mpydqovmn38EEHy9
-         UTJQ==
-X-Gm-Message-State: AOAM53339ClApWB4G7L7u2HQ60WTc6Tt9UGD104QofunI5pvvz9Mqcwe
-        COwhQetgLg0JwJ58ILDkhs7Fow==
-X-Google-Smtp-Source: ABdhPJzsJ2YZebEVr0v9IZVaxZ40eWC7SJ3gico4wisdoh9nIheDBB2RhRWSFELCE8RXxP9lqZzxvA==
-X-Received: by 2002:ac2:4bc1:0:b0:46b:b9f3:ce9 with SMTP id o1-20020ac24bc1000000b0046bb9f30ce9mr6641677lfq.159.1649888490904;
-        Wed, 13 Apr 2022 15:21:30 -0700 (PDT)
+        bh=Rjljh0Ck2s5oy15NuHhlHI64zRd9D7mmJO/ww9jh6KI=;
+        b=UWwqw+1c2/MPhoAlwakcV4D6vutshb6C97xSJVjPzRHOpftjGYVOkf37YHlEVISHUJ
+         R1iiB7S1SuvzGF6o0MrhRmvtZGhDpV8Afg0aff+qP6Jg45X92/d92Qs33ZyDUBiH5y0V
+         ZWGVXq/mM0rO8OLTcTG8JEXcjtLkvmRyqAjrOilY6dPtogRwhtWVd5DX6N5UleR4UZvV
+         92YR7qycwTuXw8Ib9k8P+yXRRGfe4CPqcQ/sCh6J0DD+Zg95+yFYJdUnOGTqvg5CXw4j
+         zKPQKpMAG1t6oXzVBCR6tVulWkBVZPXoxC9i2woYGyiJ2ZYHbSlXVebtxNHuYzHk3hx8
+         dWkw==
+X-Gm-Message-State: AOAM532uVHI2BF5jc8aJAQzxbX8sG9/c0KmGBEFECZw1CrN6/C/VL5VM
+        EtnOZ+kOyDomXQQbR2dJu6VdWQ==
+X-Google-Smtp-Source: ABdhPJwLGOXVgRQRnW/vis5ArNXs3GbeL5yfyHkCoVwhOuEEu/oGx5gTPf1dorzul0P6MeWE+j+AqQ==
+X-Received: by 2002:ac2:4c53:0:b0:44a:4357:c285 with SMTP id o19-20020ac24c53000000b0044a4357c285mr29062315lfk.99.1649890093755;
+        Wed, 13 Apr 2022 15:48:13 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u2-20020a197902000000b00448a4a7cfc3sm24573lfc.136.2022.04.13.15.21.29
+        by smtp.gmail.com with ESMTPSA id k16-20020a192d10000000b0046ba99878a6sm31873lfj.17.2022.04.13.15.48.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Apr 2022 15:21:30 -0700 (PDT)
-Message-ID: <82c6813c-fcff-5097-56e0-0cb7aac2eac2@linaro.org>
-Date:   Thu, 14 Apr 2022 01:21:29 +0300
+        Wed, 13 Apr 2022 15:48:13 -0700 (PDT)
+Message-ID: <d39dca75-4f0c-6a8a-8bb3-fb745116c6f8@linaro.org>
+Date:   Thu, 14 Apr 2022 01:48:12 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
-Subject: Re: [PATCH v2 1/5] clk: qcom: regmap-mux: add pipe clk implementation
+Subject: Re: [PATCH v8 1/2] drm/msm/disp/dpu1: add inline function to validate
+ format support
 Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-References: <20220412193839.2545814-1-dmitry.baryshkov@linaro.org>
- <20220412193839.2545814-2-dmitry.baryshkov@linaro.org>
- <YlaUtCuMZZL4bM2U@hovoldconsulting.com>
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, quic_kalyant@quicinc.com
+References: <1649695021-19132-1-git-send-email-quic_vpolimer@quicinc.com>
+ <1649695021-19132-2-git-send-email-quic_vpolimer@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YlaUtCuMZZL4bM2U@hovoldconsulting.com>
+In-Reply-To: <1649695021-19132-2-git-send-email-quic_vpolimer@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,191 +78,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/04/2022 12:15, Johan Hovold wrote:
-> On Tue, Apr 12, 2022 at 10:38:35PM +0300, Dmitry Baryshkov wrote:
->> On recent Qualcomm platforms the QMP PIPE clocks feed into a set of
->> muxes which must be parked to the "safe" source (bi_tcxo) when
->> corresponding GDSC is turned off and on again. Currently this is
->> handcoded in the PCIe driver by reparenting the gcc_pipe_N_clk_src
->> clock. However the same code sequence should be applied in the
->> pcie-qcom endpoint, USB3 and UFS drivers.
+On 11/04/2022 19:37, Vinod Polimera wrote:
+> Check if the dpu format is supported or not using dpu_find_format.
 > 
-> I'm starting to think this really belongs in the PHY driver which is the
-> provider of the pipe clock. Moving it there would also allow the code to
-> be shared between PCIe, USB, and UFS.
-> 
-> The PHY driver enables the pipe clock by starting the PHY and before
-> doing so there's no point in updating the mux. Similarly, the PHY driver
-> can restore the "safe" source after disabling the pipe clock.
-> 
-> That way there's no magic happening behind scenes, the clock framework
-> always reports the actual state of the tree, and the reason for all of
-> this can be documented in the QMP PHY driver once and for all.
-> 
-> The only change to the bindings compared to what this series proposes is
-> that the PHY driver also needs a reference to bi_tcxo.
-> 
-> Also note that updating the mux separately from starting the PHY as this
-> series allows for, doesn't really make the pipe clock any safer to use.
-> 
-> Either way, there are also some problems with this safe-mux
-> implementation that I point out below.
-> 
->> Rather than copying this sequence over and over again, follow the
->> example of clk_rcg2_shared_ops and implement this parking in the
->> enable() and disable() clock operations. As we are changing the parent
->> behind the back of the clock framework, also implement custom
->> set_parent() and get_parent() operations behaving accroding to the clock
->> framework expectations (cache the new parent if the clock is in disabled
->> state, return cached parent).
->>
->> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/clk/qcom/clk-regmap-mux.c | 78 +++++++++++++++++++++++++++++++
->>   drivers/clk/qcom/clk-regmap-mux.h |  3 ++
->>   2 files changed, 81 insertions(+)
->>
->> diff --git a/drivers/clk/qcom/clk-regmap-mux.c b/drivers/clk/qcom/clk-regmap-mux.c
->> index 45d9cca28064..c39ee783ee83 100644
->> --- a/drivers/clk/qcom/clk-regmap-mux.c
->> +++ b/drivers/clk/qcom/clk-regmap-mux.c
->> @@ -49,9 +49,87 @@ static int mux_set_parent(struct clk_hw *hw, u8 index)
->>   	return regmap_update_bits(clkr->regmap, mux->reg, mask, val);
->>   }
->>   
->> +static u8 mux_safe_get_parent(struct clk_hw *hw)
->> +{
->> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
->> +	unsigned int val;
->> +
->> +	if (clk_hw_is_enabled(hw))
->> +		return mux_get_parent(hw);
->> +
->> +	val = mux->stored_parent_cfg;
->> +
->> +	if (mux->parent_map)
->> +		return qcom_find_cfg_index(hw, mux->parent_map, val);
->> +
->> +	return val;
->> +}
->> +
->> +static int mux_safe_set_parent(struct clk_hw *hw, u8 index)
->> +{
->> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
->> +
->> +	if (clk_hw_is_enabled(hw))
->> +		return mux_set_parent(hw, index);
->> +
->> +	if (mux->parent_map)
->> +		index = mux->parent_map[index].cfg;
->> +
->> +	mux->stored_parent_cfg = index;
->> +
->> +	return 0;
->> +}
->> +
->> +static void mux_safe_disable(struct clk_hw *hw)
->> +{
->> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
->> +	struct clk_regmap *clkr = to_clk_regmap(hw);
->> +	unsigned int mask = GENMASK(mux->width + mux->shift - 1, mux->shift);
->> +	unsigned int val;
->> +
->> +	regmap_read(clkr->regmap, mux->reg, &val);
->> +
->> +	mux->stored_parent_cfg = (val & mask) >> mux->shift;
->> +
->> +	val = mux->safe_src_parent;
->> +	if (mux->parent_map) {
->> +		int index = qcom_find_src_index(hw, mux->parent_map, val);
->> +
->> +		if (WARN_ON(index < 0))
->> +			return;
->> +
->> +		val = mux->parent_map[index].cfg;
->> +	}
->> +	val <<= mux->shift;
->> +
->> +	regmap_update_bits(clkr->regmap, mux->reg, mask, val);
->> +}
->> +
->> +static int mux_safe_enable(struct clk_hw *hw)
->> +{
->> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
->> +	struct clk_regmap *clkr = to_clk_regmap(hw);
->> +	unsigned int mask = GENMASK(mux->width + mux->shift - 1, mux->shift);
->> +	unsigned int val;
->> +
->> +	val = mux->stored_parent_cfg;
->> +	val <<= mux->shift;
->> +
->> +	return regmap_update_bits(clkr->regmap, mux->reg, mask, val);
->> +}
-> 
-> The caching of the parent is broken since set_parent() is typically not
-> called before enabling the clock.
-> 
-> This means that the above code will set the mux to its zero-initialised
-> value, which currently only works by chance as the pipe clock config
-> value happens to be zero.
-> 
-> For this to work generally, you'd also need to define also the
-> (default/initial) non-safe parent for each mux. Handling handover from
-> the bootloader might also be tricky.
+> Co-developed-by: Kalyan Thota <quic_kalyant@quicinc.com>
+> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
 
-It's not tricky at all. We can set stored_parent_cfg from gcc probe from 
-function. Or set statically from the config. I'll probably do the latter.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> Furthermore, the current implementation appears to ignore locking and
-> doesn't handle the case where set_parent() races with enable(). The
-> former is protected by the prepare mutex and the latter by the enable
-> spinlock and a driver that needs to serialise the two needs to handle
-> that itself.
-
-Since I'm trying to remove pipe_clk usage from pcie driver itself, there 
-is just one user left - qmp phy. And while you are correct that there is 
-a race, I think we can neglect that for now. Or shift enable/disable ops 
-to prepare/unprepare, thus using the same mutex everywhere.
-
-
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h | 22 ++++++++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 10 +++-------
+>   2 files changed, 25 insertions(+), 7 deletions(-)
 > 
->> +
->>   const struct clk_ops clk_regmap_mux_closest_ops = {
->>   	.get_parent = mux_get_parent,
->>   	.set_parent = mux_set_parent,
->>   	.determine_rate = __clk_mux_determine_rate_closest,
->>   };
->>   EXPORT_SYMBOL_GPL(clk_regmap_mux_closest_ops);
->> +
->> +const struct clk_ops clk_regmap_mux_safe_ops = {
->> +	.enable = mux_safe_enable,
->> +	.disable = mux_safe_disable,
->> +	.get_parent = mux_safe_get_parent,
->> +	.set_parent = mux_safe_set_parent,
->> +	.determine_rate = __clk_mux_determine_rate_closest,
->> +};
->> +EXPORT_SYMBOL_GPL(clk_regmap_mux_safe_ops);
->> diff --git a/drivers/clk/qcom/clk-regmap-mux.h b/drivers/clk/qcom/clk-regmap-mux.h
->> index db6f4cdd9586..f86c674ce139 100644
->> --- a/drivers/clk/qcom/clk-regmap-mux.h
->> +++ b/drivers/clk/qcom/clk-regmap-mux.h
->> @@ -14,10 +14,13 @@ struct clk_regmap_mux {
->>   	u32			reg;
->>   	u32			shift;
->>   	u32			width;
->> +	u8			safe_src_parent;
->> +	u8			stored_parent_cfg;
->>   	const struct parent_map	*parent_map;
->>   	struct clk_regmap	clkr;
->>   };
->>   
->>   extern const struct clk_ops clk_regmap_mux_closest_ops;
->> +extern const struct clk_ops clk_regmap_mux_safe_ops;
->>   
->>   #endif
-> 
-> Johan
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h
+> index 418f5ae..84b8b32 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h
+> @@ -21,6 +21,28 @@ const struct dpu_format *dpu_get_dpu_format_ext(
+>   #define dpu_get_dpu_format(f) dpu_get_dpu_format_ext(f, 0)
+>   
+>   /**
+> + * dpu_find_format - validate if the pixel format is supported
+> + * @format:		dpu format
+> + * @supported_formats:	supported formats by dpu HW
+> + * @num_formatss:	total number of formats
+> + *
+> + * Return: false if not valid format, true on success
+> + */
+> +static inline bool dpu_find_format(u32 format, const u32 *supported_formats,
+> +					size_t num_formats)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < num_formats; i++) {
+> +		/* check for valid formats supported */
+> +		if (format == supported_formats[i])
+> +			return true;
+> +	}
+> +
+> +	return false;
+> +}
+> +
+> +/**
+>    * dpu_get_msm_format - get an dpu_format by its msm_format base
+>    *                     callback function registers with the msm_kms layer
+>    * @kms:             kms driver
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 6565682..3216cda 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -1411,13 +1411,9 @@ static bool dpu_plane_format_mod_supported(struct drm_plane *plane,
+>   	if (modifier == DRM_FORMAT_MOD_LINEAR)
+>   		return true;
+>   
+> -	if (modifier == DRM_FORMAT_MOD_QCOM_COMPRESSED) {
+> -		int i;
+> -		for (i = 0; i < ARRAY_SIZE(qcom_compressed_supported_formats); i++) {
+> -			if (format == qcom_compressed_supported_formats[i])
+> -				return true;
+> -		}
+> -	}
+> +	if (modifier == DRM_FORMAT_MOD_QCOM_COMPRESSED)
+> +		return dpu_find_format(format, qcom_compressed_supported_formats,
+> +				ARRAY_SIZE(qcom_compressed_supported_formats));
+>   
+>   	return false;
+>   }
 
 
 -- 
