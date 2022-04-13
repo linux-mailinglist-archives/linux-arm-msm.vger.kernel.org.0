@@ -2,274 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05E314FFFAB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 21:57:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B2D44FFFB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 22:01:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238391AbiDMT7e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 15:59:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36432 "EHLO
+        id S237114AbiDMUDs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 16:03:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232067AbiDMT7d (ORCPT
+        with ESMTP id S235744AbiDMUDr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 15:59:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C27B7628B;
-        Wed, 13 Apr 2022 12:57:09 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1195061E33;
-        Wed, 13 Apr 2022 19:57:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A960C385A4;
-        Wed, 13 Apr 2022 19:57:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649879828;
-        bh=QW4TS3+CmibhUThZppcuPGVHWwui1EY6C4HZSeus11M=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=iQopFFnTmL47IjLfeuij/23EMHNzQAOjNgRu2/FSadHgSGeGq8XL//Y1iXQSbJMol
-         4dgawxB2BHCL24xyfUIi3Mv2Ks1vMz5tV27Pi6h3CRUU2VPhgT5CWGu7y1m3iz38yi
-         pWm3GRWI8Bd/DuS/TM/6i+/Hk1Eiv2VSvHfXwWMRV+jrw9E2SvbFzUPA+46JCfm/94
-         of2Q4SL4zYnJqf5EjtcMNo2ZnD7HLreerzSv+uU6cQoRo1RFjqhgZh4zIunCJu0FlI
-         ABKOvih5sfyFFSpiDD0UMM7XlTEj5AymXnflMWGi343ib5g79qYk4ToHceC8jGe38N
-         hDzqp11wW1AgQ==
-Date:   Wed, 13 Apr 2022 14:57:06 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, Manivannan Sadhasivam <mani@kernel.org>
-Subject: Re: [PATCH 1/4] PCI: qcom: Handle MSI IRQs properly
-Message-ID: <20220413195706.GA686050@bhelgaas>
+        Wed, 13 Apr 2022 16:03:47 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5770376E37
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 13:01:25 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id h11so3550979ljb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 13:01:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=o4ItSd5UrGogzJFpfA7kpC8due1w5r/5uBtv2QX/BLA=;
+        b=OIkZDE44VwpphzPpHz0O8HDe7L6c+KBHk7RmH018RtD5xGY7mBwQY2HD6V1uOWWGY3
+         wNjbsEECS5Q2ybKvO2hGJ3sO0NhJPbx6SBQPBlFDwT2H71bJGjcBFWpWKqde7S2rdyS4
+         a04dZYNME0jBv0MPkaie4FAdUIZY2KeptL1d5rGUlyLrB0r7iVqO7EOFnEyaS6TzjW4w
+         D0ugaDvGt4fRq7XYBBfiXFqUldeJJKgzsJNOF+js5DHa8wXRlvPNVEwxKBGkCb9D4wfW
+         QX5UrhyAjVvWgSmjSUlTUseMMowwSmJulaYdYbQyo2qlQp+n9ndc57qhD3J1W7eGwRu9
+         r3lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=o4ItSd5UrGogzJFpfA7kpC8due1w5r/5uBtv2QX/BLA=;
+        b=XOLG08yZ3k51FhcJZvvlbkYxVE8pKT23xaPQTAiDvolitpnFCap43kd9lF6IugCXwW
+         gIC1ifQNstAGGbrk3xb8wWl4/kocM9JOY79qq5yk6V2vID44VVBLXXjPRzstMOipC17s
+         nDe6NQ8AWCAHURtYnXp2h4yhz+VYJIFx5VawYkBeB9QeVHdVmu4Qx2j1f6hoodS/Gqna
+         q9wAegQiBOylcxOiE8vLeYA6Pn6eBu+44Qlxl8PC6R09t+OpajeGnPsjfrJ5bf1SOvrd
+         Y8UKJTxn6QK53dTEA08wCJ5Zq8tXZh+azxMefKiRxIc1RBgzgO/xwL0rWbto3pkSWMXu
+         59HA==
+X-Gm-Message-State: AOAM533QsfKmeyKLYZRQdbPLtC7eXMHgWJk0pB5tfMsrJi5Z4QhpZ0mK
+        MvaflbvAVmLZT5tWSQVhQWj4eQ==
+X-Google-Smtp-Source: ABdhPJwXAaLErFKexvX4iFWk0qnObYT8DdEbCpdcsrr6MExU3f/k0Cld8hQVf3ZMfgwwwlnRlniI8Q==
+X-Received: by 2002:a05:651c:198c:b0:24c:8c34:d3cb with SMTP id bx12-20020a05651c198c00b0024c8c34d3cbmr1332145ljb.487.1649880083508;
+        Wed, 13 Apr 2022 13:01:23 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id e5-20020a2e8ec5000000b0024b6c2b5e58sm736197ljl.78.2022.04.13.13.01.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 13:01:23 -0700 (PDT)
+Message-ID: <3626cd91-4c94-5b7d-4f3a-b9dcf026e2c9@linaro.org>
+Date:   Wed, 13 Apr 2022 23:01:22 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220411114926.1975363-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH v6 03/18] clk: qcom: gcc-ipq806x: add PXO_SRC in clk table
+Content-Language: en-GB
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220321231548.14276-1-ansuelsmth@gmail.com>
+ <20220321231548.14276-4-ansuelsmth@gmail.com>
+ <20220325011037.03173C340EC@smtp.kernel.org>
+ <Yj0XTYgoMScoiUHP@Ansuel-xps.localdomain>
+ <20220325012231.899FBC340EC@smtp.kernel.org>
+ <62570197.1c69fb81.c3de2.7b70@mx.google.com>
+ <CAA8EJpp2uipTtV=gitiL0g-ywOirC=-UGrQ4tZMwc42jy2TK1Q@mail.gmail.com>
+ <62570e48.1c69fb81.49fb8.143b@mx.google.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <62570e48.1c69fb81.49fb8.143b@mx.google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,WEIRD_QUOTING
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 11, 2022 at 02:49:23PM +0300, Dmitry Baryshkov wrote:
-> On Qualcomm platforms each group of MSI interrupts is routed to the
-> separate GIC interrupt. Thus to receive higher MSI vectors properly,
-> we have to setup and chain more MSI interrupts. However to remain
-> compatible with existing DTS files, do not fail if the platform doesn't
-> provide all 8 MSI interrupts. Instead of that, limit the amount of
-> supported MSI vectors.
-
-It would be superb if the subject line included a hint about what the
-fix is.  Obviously previous work tried to handle MSI IRQs properly,
-too, so I think this patch is not just a bug fix but adds some extra
-functionality.
-
-Perhaps splitting this into 2-3 patches would allow the first patch to
-do the simple "convert msi_irq to msi_irq[MAX_MSI_CTRLS]" and the
-related mechanical changes to other drivers.
-
-Then a follow-on patch or two could add the "has_split_msi_irq"
-functionality and its use in qcom.  The commit log for this one could
-then mention the DT change needed to take advantage of it.
-
-> Fixes: 8ae0117418f3 ("PCI: qcom: Add support for handling MSIs from 8 endpoints")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/pci/controller/dwc/pci-dra7xx.c       |  2 +-
->  drivers/pci/controller/dwc/pci-exynos.c       |  2 +-
->  .../pci/controller/dwc/pcie-designware-host.c | 54 ++++++++++++++-----
->  drivers/pci/controller/dwc/pcie-designware.h  |  3 +-
->  drivers/pci/controller/dwc/pcie-keembay.c     |  2 +-
->  drivers/pci/controller/dwc/pcie-qcom.c        |  1 +
->  drivers/pci/controller/dwc/pcie-spear13xx.c   |  2 +-
->  drivers/pci/controller/dwc/pcie-tegra194.c    |  2 +-
->  8 files changed, 50 insertions(+), 18 deletions(-)
+On 13/04/2022 20:54, Ansuel Smith wrote:
+> On Wed, Apr 13, 2022 at 08:32:21PM +0300, Dmitry Baryshkov wrote:
+>> On Wed, 13 Apr 2022 at 20:00, Ansuel Smith <ansuelsmth@gmail.com> wrote:
+>>>
+>>> On Thu, Mar 24, 2022 at 06:22:29PM -0700, Stephen Boyd wrote:
+>>>> Quoting Ansuel Smith (2022-03-24 18:13:49)
+>>>>> On Thu, Mar 24, 2022 at 06:10:35PM -0700, Stephen Boyd wrote:
+>>>>>> Quoting Ansuel Smith (2022-03-21 16:15:33)
+>>>>>>> PXO_SRC is currently defined in the gcc include and referenced in the
+>>>>>>> ipq8064 DTSI. Correctly provide a clk after gcc probe to fix kernel
+>>>>>>> panic if a driver starts to actually use it.
+>>>>>>>
+>>>>>>> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+>>>>>>> ---
+>>>>>>
+>>>>>> What is this patch about? clk providers shouldn't be calling clk_get().
+>>>>>>
+>>>>>
+>>>>> If pxo is passed as a clock in dts and defined as a fixed clock, what
+>>>>> should be used?
+>>>>
+>>>> clk_parent_data
+>>>
+>>> Sorry but I'm not following you. No idea if you missed the cover letter
+>>> where i describe the problem with PXO_SRC.
+>>>
+>>> The problem here is that
+>>> - In DTS we have node that reference <&gcc PXO_SRC>
+>>> But
+>>> - gcc driver NEVER defined PXO_SRC
+>>> As
+>>> - PXO_SRC is actually pxo_board that should be defined as a fixed-clock
+>>>    in dts or is defined using qcom_cc_register_board_clk.
+>>>
+>>> So in theory we should just put in PXO_SRC the clk hw of the
+>>> fixed-clock. That is why I'm using clk_get(). I can use __clk_lookup()
+>>> as an alternative but I really can't find a way to get the clock defined
+>>> from DTS or qcom_cc_register_board_clk.
+>>>
+>>> (I have the same exact problem with the cpu qsb clock where is defined
+>>> using fixed-clock API but can also defined directly in DTS and I have to
+>>> use clk_get())
+>>>
+>>> I'm totally missing something so I would love some hint on how to solve
+>>> this.
+>>
+>> When we were doing such conversion for other  platforms, we pointed
+>> clock consumers to the board clocks directly. There is no need to go
+>> through the gcc to fetch pxo.
+>> Instead you can use a <&pxo_board> in the dts directly. Typically the
+>> sequence is the following:
+>> - Minor cleanup of the clock-controller driver
+>> (ARRAY_SIZE(parent_data), removal of unused clock sources, unused enum
+>> entries, etc)
+>> - update drivers to use both .name and  .fw_name in replacement of
+>> parent_names. Use parent_hws where possible.
+>> - update dtsi to reference clocks using clocks/clock-names properties.
+>> Pass board/rpmh/rpm clocks directly to their consumers without
+>> bandaids in the gcc driver.
+>> - (optionally) after several major releases drop parent_data.name
+>> completely. I think we mostly skipped this, since it provides no gain.
+>>
+>> This way you don't have to play around clk_get to return PXO_SRC from
+>> gcc clock-controller.
+>>
+>> -- 
+>> With best wishes
+>> Dmitry
 > 
-> diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
-> index dfcdeb432dc8..0919c96dcdbd 100644
-> --- a/drivers/pci/controller/dwc/pci-dra7xx.c
-> +++ b/drivers/pci/controller/dwc/pci-dra7xx.c
-> @@ -483,7 +483,7 @@ static int dra7xx_add_pcie_port(struct dra7xx_pcie *dra7xx,
->  		return pp->irq;
->  
->  	/* MSI IRQ is muxed */
-> -	pp->msi_irq = -ENODEV;
-> +	pp->msi_irq[0] = -ENODEV;
->  
->  	ret = dra7xx_pcie_init_irq_domain(pp);
->  	if (ret < 0)
-> diff --git a/drivers/pci/controller/dwc/pci-exynos.c b/drivers/pci/controller/dwc/pci-exynos.c
-> index 467c8d1cd7e4..4f2010bd9cd7 100644
-> --- a/drivers/pci/controller/dwc/pci-exynos.c
-> +++ b/drivers/pci/controller/dwc/pci-exynos.c
-> @@ -292,7 +292,7 @@ static int exynos_add_pcie_port(struct exynos_pcie *ep,
->  	}
->  
->  	pp->ops = &exynos_pcie_host_ops;
-> -	pp->msi_irq = -ENODEV;
-> +	pp->msi_irq[0] = -ENODEV;
->  
->  	ret = dw_pcie_host_init(pp);
->  	if (ret) {
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 2fa86f32d964..15e230d6606e 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -257,8 +257,11 @@ int dw_pcie_allocate_domains(struct pcie_port *pp)
->  
->  static void dw_pcie_free_msi(struct pcie_port *pp)
->  {
-> -	if (pp->msi_irq)
-> -		irq_set_chained_handler_and_data(pp->msi_irq, NULL, NULL);
-> +	u32 ctrl;
-> +
-> +	for (ctrl = 0; ctrl < MAX_MSI_CTRLS; ctrl++)
-> +		if (pp->msi_irq[ctrl])
-> +			irq_set_chained_handler_and_data(pp->msi_irq[ctrl], NULL, NULL);
->  
->  	irq_domain_remove(pp->msi_domain);
->  	irq_domain_remove(pp->irq_domain);
-> @@ -368,12 +371,37 @@ int dw_pcie_host_init(struct pcie_port *pp)
->  			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
->  				pp->irq_mask[ctrl] = ~0;
->  
-> -			if (!pp->msi_irq) {
-> -				pp->msi_irq = platform_get_irq_byname_optional(pdev, "msi");
-> -				if (pp->msi_irq < 0) {
-> -					pp->msi_irq = platform_get_irq(pdev, 0);
-> -					if (pp->msi_irq < 0)
-> -						return pp->msi_irq;
-> +			if (!pp->msi_irq[0]) {
-> +				int irq = platform_get_irq_byname_optional(pdev, "msi");
-> +
-> +				if (irq < 0) {
-> +					irq = platform_get_irq(pdev, 0);
-> +					if (irq < 0)
-> +						return irq;
-> +				}
-> +				pp->msi_irq[0] = irq;
-> +			}
-> +
-> +			if (pp->has_split_msi_irq) {
-> +				char irq_name[] = "msiXXX";
-> +				int irq;
-> +
-> +				for (ctrl = 1; ctrl < num_ctrls; ctrl++) {
-> +					if (pp->msi_irq[ctrl])
-> +						continue;
-> +
-> +					snprintf(irq_name, sizeof(irq_name), "msi%d", ctrl + 1);
-> +					irq = platform_get_irq_byname_optional(pdev, irq_name);
-> +					if (irq == -ENXIO) {
-> +						num_ctrls = ctrl;
-> +						pp->num_vectors = num_ctrls * MAX_MSI_IRQS_PER_CTRL;
-> +						dev_warn(dev, "Limiting amount of MSI irqs to %d\n", pp->num_vectors);
-> +						break;
-> +					}
-> +					if (irq < 0)
-> +						return irq;
-> +
-> +					pp->msi_irq[ctrl] = irq;
->  				}
->  			}
->  
-> @@ -383,10 +411,12 @@ int dw_pcie_host_init(struct pcie_port *pp)
->  			if (ret)
->  				return ret;
->  
-> -			if (pp->msi_irq > 0)
-> -				irq_set_chained_handler_and_data(pp->msi_irq,
-> -							    dw_chained_msi_isr,
-> -							    pp);
-> +			for (ctrl = 0; ctrl < num_ctrls; ctrl++) {
-> +				if (pp->msi_irq[ctrl] > 0)
-> +					irq_set_chained_handler_and_data(pp->msi_irq[ctrl],
-> +									 dw_chained_msi_isr,
-> +									 pp);
-> +			}
->  
->  			ret = dma_set_mask(pci->dev, DMA_BIT_MASK(32));
->  			if (ret)
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index aadb14159df7..e34076320632 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -179,6 +179,7 @@ struct dw_pcie_host_ops {
->  
->  struct pcie_port {
->  	bool			has_msi_ctrl:1;
-> +	bool			has_split_msi_irq:1;
->  	u64			cfg0_base;
->  	void __iomem		*va_cfg0_base;
->  	u32			cfg0_size;
-> @@ -187,7 +188,7 @@ struct pcie_port {
->  	u32			io_size;
->  	int			irq;
->  	const struct dw_pcie_host_ops *ops;
-> -	int			msi_irq;
-> +	int			msi_irq[MAX_MSI_CTRLS];
->  	struct irq_domain	*irq_domain;
->  	struct irq_domain	*msi_domain;
->  	u16			msi_msg;
-> diff --git a/drivers/pci/controller/dwc/pcie-keembay.c b/drivers/pci/controller/dwc/pcie-keembay.c
-> index 1ac29a6eef22..297e6e926c00 100644
-> --- a/drivers/pci/controller/dwc/pcie-keembay.c
-> +++ b/drivers/pci/controller/dwc/pcie-keembay.c
-> @@ -338,7 +338,7 @@ static int keembay_pcie_add_pcie_port(struct keembay_pcie *pcie,
->  	int ret;
->  
->  	pp->ops = &keembay_pcie_host_ops;
-> -	pp->msi_irq = -ENODEV;
-> +	pp->msi_irq[0] = -ENODEV;
->  
->  	ret = keembay_pcie_setup_msi_irq(pcie);
->  	if (ret)
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 6bb90003ed58..e33811aabc2a 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1534,6 +1534,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  	pci->ops = &dw_pcie_ops;
->  	pp = &pci->pp;
->  	pp->num_vectors = MAX_MSI_IRQS;
-> +	pp->has_split_msi_irq = true;
->  
->  	pcie->pci = pci;
->  
-> diff --git a/drivers/pci/controller/dwc/pcie-spear13xx.c b/drivers/pci/controller/dwc/pcie-spear13xx.c
-> index 1569e82b5568..cc7776833810 100644
-> --- a/drivers/pci/controller/dwc/pcie-spear13xx.c
-> +++ b/drivers/pci/controller/dwc/pcie-spear13xx.c
-> @@ -172,7 +172,7 @@ static int spear13xx_add_pcie_port(struct spear13xx_pcie *spear13xx_pcie,
->  	}
->  
->  	pp->ops = &spear13xx_pcie_host_ops;
-> -	pp->msi_irq = -ENODEV;
-> +	pp->msi_irq[0] = -ENODEV;
->  
->  	ret = dw_pcie_host_init(pp);
->  	if (ret) {
-> diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-> index b1b5f836a806..e75712db85b0 100644
-> --- a/drivers/pci/controller/dwc/pcie-tegra194.c
-> +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-> @@ -2271,7 +2271,7 @@ static void tegra194_pcie_shutdown(struct platform_device *pdev)
->  
->  	disable_irq(pcie->pci.pp.irq);
->  	if (IS_ENABLED(CONFIG_PCI_MSI))
-> -		disable_irq(pcie->pci.pp.msi_irq);
-> +		disable_irq(pcie->pci.pp.msi_irq[0]);
->  
->  	tegra194_pcie_pme_turnoff(pcie);
->  	tegra_pcie_unconfig_controller(pcie);
-> -- 
-> 2.35.1
-> 
+> Thanks for the list of steps to do this kind of cleanup.
+>  From what I'm reading this series is ""stuck"" in the sense that I first
+> have to fix the wrong PXO_SRC reference and then I can continue the
+> conversion work. A bit sad considering most of the time DTS proposal got
+> ignored :(
+
+Not really. You can leave "pxo" as is. Use { .fw_name = "pxo", .name = 
+"pxo_board" } as parent_data. Then pass <&pxo_board> as the "pxo" clock 
+to the consumers. Yes, you will still have the lingering "pxo" / "cxo" 
+clocks at this step. It's okay, they might be used by other drivers.
+
+After the whole conversion is finished, you can make "pxo"/"cxo" 
+registration conditional on !of_find_property("clocks") rather than 
+using clk_get.
+
+As a rule of thumb, you don't have to complete the whole thing in a 
+single commit. Having smaller commits might be better.
+
+[And yes, I'm looking forward to testing your cpufreq changes on my 
+apq8064 devices].
+
+-- 
+With best wishes
+Dmitry
