@@ -2,75 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61D684FFD42
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 19:58:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 506B84FFDB3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 20:24:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237530AbiDMSA6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 14:00:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55266 "EHLO
+        id S237243AbiDMS0x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 14:26:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237581AbiDMSAz (ORCPT
+        with ESMTP id S236248AbiDMS0w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 14:00:55 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BE806E4F8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 10:58:20 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 17so3179941lji.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 10:58:20 -0700 (PDT)
+        Wed, 13 Apr 2022 14:26:52 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3035D2409B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 11:24:29 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id bn33so3241589ljb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 11:24:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=dTR+7S76RuA6oTQbni5CCIGtj8BqCBtbBfvTNy8k/fs=;
-        b=jWkGCfmiAWXOQuM5EdLNd5c6wyS+rG663Y6QLR+L50867SApKx26kPk+vBmgoVaAon
-         yKwE3dXNVujfagbT24ao/lzz4GyplTnhIbwBB50dIdZNTESPyb5wEgMQXpj0xD+kV7xT
-         FSkcGpAlYmj7Zf01S3POTLZO8jgqDa/FkZczxb2HTYV6oOHViDU269XvSQ0jnQHeGY2o
-         0dNiUZ9U0S19IHJApmRJrlp+RoYSfwQAe/LpZgjPNopDUUx3xbfgrv/Vw2HEicTsQz1H
-         5bUen6xGjqbwHWuf2JmiLDUeNAWXjwKbeMO66P7//c88trJ33kKASx52j2Y7uS0XzjFE
-         JPPg==
+        bh=2a3wbWov4ja8bGu9EbYHU1Qhcuzm1jktvfc7w0skBC8=;
+        b=dOpaT0YDlzuuDrfVnCxhWnNIeMmJC//DHP7/D39zf2S0iawOpBL6kOFXwHX9uoOt7D
+         BvOYOrWH1NQTegsf23OOiQ9ioIFocQn8CwJvqojc9PpR1T08rZsxjLFjZSYuzkqwJr+n
+         DszhhEgCWM8YMJzPK/b435aROWPDjksQ2o75mRc5sWpQ44pLz9qTQH2pcFv7tG1kvCOY
+         ayQb2gJH3sxX2/H57xZG2Rh69W4/ZLbIc1tas/vrPMnom5RHPe4Xx3Un6zt/05Dq0xUu
+         oQJAmuUkQYhJTMB2C6425NLRaRA3DwyJ/P5C2PPKR3a4PkuyNpw/0I/AB2V4Bscwhe2Z
+         JOaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=dTR+7S76RuA6oTQbni5CCIGtj8BqCBtbBfvTNy8k/fs=;
-        b=7KseIHZzOVLSsMmVmdLaho5pVgu3UzFNHffFxQTVXd82ovSkatixZ5BdUaBZjKP/QV
-         1/qa+GM+pCRFtECoiHw4WhGI1e/AZHpqu+6SUAnkVGs5iBcQkPTNRCLBJ5e3lYZRbI4c
-         FXazXU7hd86iPi4ocN2X3fLQ6Esbw8SScEhf9f3H7/g+qI0zmzXh1b8H3o4AipXtkxhJ
-         ujawPyIWR1c/KRjj/qyydvokymRI5D4TRcO2ZEaRa0eksQvjfMLRoZpUPjDcVpBZGYyA
-         uKkMbgMo5aNr4xB4blW0JOBdy7tboPO7Vlga0B4Webpvwddj6w2WWlqFmOMsP8psgUgJ
-         ETyg==
-X-Gm-Message-State: AOAM533Bz+oiKhK9VpPdoBZksRIVpOg2xj5+fcPuVnPRLhlIfXBsa/El
-        IAVK1gS41h6cyLWUeffx7tUElw==
-X-Google-Smtp-Source: ABdhPJz4IQ/ceAohT8qpZgZgvEFG2TDcuQeYdbfAAaujgyAbnpLpWsXe6JsDVTI7X52l4pnHKDgncA==
-X-Received: by 2002:a2e:8099:0:b0:249:822e:1256 with SMTP id i25-20020a2e8099000000b00249822e1256mr27323864ljg.267.1649872698463;
-        Wed, 13 Apr 2022 10:58:18 -0700 (PDT)
+        bh=2a3wbWov4ja8bGu9EbYHU1Qhcuzm1jktvfc7w0skBC8=;
+        b=bKclfKei+b7Ygzq0syPXT6Wxa3Hx51vJjd5AgJBxMrC1TUNOHuUvOXuIVf5RfkJikj
+         MmYH5kNgSzCkiO1abFtUy+7oy6h3ZyuztypQyh8vxlPmHMTUFvDx5CW5CSXdZ/I8QnOJ
+         /z3MpQtZzsY+M2uZBgrxh6ovNmGvq5167dnsG2YyZ1MB5TyGxxDy3t4l6xer5cdxWEjg
+         En2mp34nksBUoOv5Stjys1yhh0F9TXlS/7+CkW9mazzfT+hCXuMoOX53LL/i3a8qzG7W
+         P23GU7s3UnQUOOHgck+CXeODl6JZSdAZi1qe8j1VPoWDespoEMRgGjyYlNfBA6A9FMK3
+         dGag==
+X-Gm-Message-State: AOAM530MSTj0tveXSEWa8ubNpBmjh6cRP14wNR3CjfCWhDFqzWxumAJo
+        80sv67dRct5ps4C4fKBamulVYA==
+X-Google-Smtp-Source: ABdhPJz4vXs9AouohzXFyqpmRdiZdSgntOpsBq/dFOabcBnbPW0Ohk7LjZA5IcL9bfQWgRSnqxbRUA==
+X-Received: by 2002:a05:651c:2121:b0:24b:5d31:fcd with SMTP id a33-20020a05651c212100b0024b5d310fcdmr12499350ljq.19.1649874267258;
+        Wed, 13 Apr 2022 11:24:27 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o7-20020a05651c050700b0024c7ebff04bsm484582ljp.79.2022.04.13.10.58.17
+        by smtp.gmail.com with ESMTPSA id k5-20020a2e9205000000b0024b5545acb2sm1622198ljg.80.2022.04.13.11.24.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Apr 2022 10:58:18 -0700 (PDT)
-Message-ID: <d63a8b9e-3c33-31d7-69a6-65052f024e74@linaro.org>
-Date:   Wed, 13 Apr 2022 20:58:17 +0300
+        Wed, 13 Apr 2022 11:24:26 -0700 (PDT)
+Message-ID: <cf95b1b4-194b-09c0-5bd4-80c962c18818@linaro.org>
+Date:   Wed, 13 Apr 2022 21:24:25 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
-Subject: Re: [PATCH v2 0/5] PCI: qcom: rework pipe_clk/pipe_clk_src handling
+Subject: Re: [PATCH v6 10/18] clk: qcom: krait-cc: drop hardcoded safe_sel
 Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-References: <20220412193839.2545814-1-dmitry.baryshkov@linaro.org>
- <YlaV2/AQJaQhytR8@hovoldconsulting.com>
+        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20220321231548.14276-1-ansuelsmth@gmail.com>
+ <20220321231548.14276-11-ansuelsmth@gmail.com>
+ <af104d82-34bc-2ab6-75bf-e54aafb3ae83@linaro.org>
+ <625709ca.1c69fb81.b4268.12bc@mx.google.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YlaV2/AQJaQhytR8@hovoldconsulting.com>
+In-Reply-To: <625709ca.1c69fb81.b4268.12bc@mx.google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,39 +82,161 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/04/2022 12:20, Johan Hovold wrote:
-> [ Dropping tdas@codeaurora.org, which bounces. ]
-> 
-> On Tue, Apr 12, 2022 at 10:38:34PM +0300, Dmitry Baryshkov wrote:
->> PCIe pipe clk (and some other clocks) must be parked to the "safe"
->> source (bi_tcxo) when corresponding GDSC is turned off and on again.
->> Currently this is handcoded in the PCIe driver by reparenting the
->> gcc_pipe_N_clk_src clock.
+On 13/04/2022 20:35, Ansuel Smith wrote:
+> On Wed, Apr 13, 2022 at 08:25:31PM +0300, Dmitry Baryshkov wrote:
+>> On 22/03/2022 02:15, Ansuel Smith wrote:
+>>> Drop hardcoded safe_sel definition and use helper to correctly calculate
+>>> it. We assume qsb clk is always present as it should be declared in DTS
+>>> per Documentation and in the absence of that, it's declared as a fixed
+>>> clk.
 >>
->> Instead of doing it manually, follow the approach used by
->> clk_rcg2_shared_ops and implement this parking in the enable() and
->> disable() clock operations for respective pipe clocks.
+>> Why? Can safe_sel (sec_mux index) change?
 >>
->> PCIe part depends on [1].
 > 
-> Looks like you forgot to add the link to the prerequisite patch:
+> No it can't but I think it would be better to have stuff that is based
+> on real defined data instead of wrong struct that works just because a
+> hardcoded value is used.
 > 
-> 	[1] https://lore.kernel.org/all/20220401133351.10113-1-johan+linaro@kernel.org/
+> Example for the reason of using this hardcoded value, nobody notice that
+> the mux list for the secondary mux was wrong. Now it didn't cause any
+> problem as we use the secondary mux just to source out of qsb and we
+> used the hardcoded value so the error was bypassed but as soon as the
+> value was actually parsed from the defined table, bam secondary mux was
+> sourcing out of pll8.
+> 
+> I honestly think that dropping the hardcoded value would make more clear
+> what the safe sel is and what is referring to.
 
-yes, thank you for the correction
+Can you define indices in the parents and use defined indice instead?
+
+I see your point, but in my opinion adding an API to determine a 
+compile-time constant value is a bit of overkill.
 
 > 
->> Changes since v1:
->>   - Rebased on top of [1].
->>   - Removed erroneous Fixes tag from the patch 4.
+>>>
+>>> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+>>> ---
+>>>    drivers/clk/qcom/krait-cc.c | 40 +++++++++++++++++++++++++------------
+>>>    1 file changed, 27 insertions(+), 13 deletions(-)
+>>>
+>>> diff --git a/drivers/clk/qcom/krait-cc.c b/drivers/clk/qcom/krait-cc.c
+>>> index e9508e3104ea..5f98ee1c3681 100644
+>>> --- a/drivers/clk/qcom/krait-cc.c
+>>> +++ b/drivers/clk/qcom/krait-cc.c
+>>> @@ -26,6 +26,17 @@ static unsigned int pri_mux_map[] = {
+>>>    	0,
+>>>    };
+>>> +static u8 krait_get_mux_sel(struct krait_mux_clk *mux, struct clk *safe_clk)
+>>> +{
+>>> +	struct clk_hw *safe_hw = __clk_get_hw(safe_clk);
+>>> +
+>>> +	/*
+>>> +	 * We can ignore errors from clk_hw_get_index_of_parent()
+>>> +	 * as we create these parents in this driver.
+>>> +	 */
+>>> +	return clk_hw_get_index_of_parent(&mux->hw, safe_hw);
+>>> +}
+>>> +
+>>>    /*
+>>>     * Notifier function for switching the muxes to safe parent
+>>>     * while the hfpll is getting reprogrammed.
+>>> @@ -116,8 +127,8 @@ krait_add_div(struct device *dev, int id, const char *s, unsigned int offset)
+>>>    }
+>>>    static struct clk *
+>>> -krait_add_sec_mux(struct device *dev, int id, const char *s,
+>>> -		  unsigned int offset, bool unique_aux)
+>>> +krait_add_sec_mux(struct device *dev, struct clk *qsb, int id,
+>>> +		  const char *s, unsigned int offset, bool unique_aux)
+>>>    {
+>>>    	int ret;
+>>>    	struct krait_mux_clk *mux;
+>>> @@ -144,7 +155,6 @@ krait_add_sec_mux(struct device *dev, int id, const char *s,
+>>>    	mux->shift = 2;
+>>>    	mux->parent_map = sec_mux_map;
+>>>    	mux->hw.init = &init;
+>>> -	mux->safe_sel = 0;
+>>>    	init.name = kasprintf(GFP_KERNEL, "krait%s_sec_mux", s);
+>>>    	if (!init.name)
+>>> @@ -166,6 +176,7 @@ krait_add_sec_mux(struct device *dev, int id, const char *s,
+>>>    	if (IS_ERR(clk))
+>>>    		goto err_clk;
+>>> +	mux->safe_sel = krait_get_mux_sel(mux, qsb);
+>>>    	ret = krait_notifier_register(dev, clk, mux);
+>>>    	if (ret)
+>>>    		clk = ERR_PTR(ret);
+>>> @@ -204,7 +215,6 @@ krait_add_pri_mux(struct device *dev, struct clk *hfpll_div, struct clk *sec_mux
+>>>    	mux->lpl = id >= 0;
+>>>    	mux->parent_map = pri_mux_map;
+>>>    	mux->hw.init = &init;
+>>> -	mux->safe_sel = 2;
+>>>    	init.name = kasprintf(GFP_KERNEL, "krait%s_pri_mux", s);
+>>>    	if (!init.name)
+>>> @@ -226,6 +236,7 @@ krait_add_pri_mux(struct device *dev, struct clk *hfpll_div, struct clk *sec_mux
+>>>    	if (IS_ERR(clk))
+>>>    		goto err_clk;
+>>> +	mux->safe_sel = krait_get_mux_sel(mux, sec_mux);
+>>>    	ret = krait_notifier_register(dev, clk, mux);
+>>>    	if (ret)
+>>>    		clk = ERR_PTR(ret);
+>>> @@ -238,7 +249,9 @@ krait_add_pri_mux(struct device *dev, struct clk *hfpll_div, struct clk *sec_mux
+>>>    }
+>>>    /* id < 0 for L2, otherwise id == physical CPU number */
+>>> -static struct clk *krait_add_clks(struct device *dev, int id, bool unique_aux)
+>>> +static struct clk *
+>>> +krait_add_clks(struct device *dev, struct clk *qsb, int id,
+>>> +	       bool unique_aux)
+>>>    {
+>>>    	unsigned int offset;
+>>>    	void *p = NULL;
+>>> @@ -261,7 +274,7 @@ static struct clk *krait_add_clks(struct device *dev, int id, bool unique_aux)
+>>>    		goto err;
+>>>    	}
+>>> -	sec_mux = krait_add_sec_mux(dev, id, s, offset, unique_aux);
+>>> +	sec_mux = krait_add_sec_mux(dev, qsb, id, s, offset, unique_aux);
+>>>    	if (IS_ERR(sec_mux)) {
+>>>    		clk = sec_mux;
+>>>    		goto err;
+>>> @@ -301,18 +314,19 @@ static int krait_cc_probe(struct platform_device *pdev)
+>>>    	int cpu;
+>>>    	struct clk *clk;
+>>>    	struct clk **clks;
+>>> -	struct clk *l2_pri_mux_clk;
+>>> +	struct clk *l2_pri_mux_clk, *qsb;
+>>>    	id = of_match_device(krait_cc_match_table, dev);
+>>>    	if (!id)
+>>>    		return -ENODEV;
+>>>    	/* Rate is 1 because 0 causes problems for __clk_mux_determine_rate */
+>>> -	if (IS_ERR(clk_get(dev, "qsb")))
+>>> -		clk = clk_register_fixed_rate(dev, "qsb", NULL, 0, 1);
+>>> +	qsb = clk_get(dev, "qsb");
+>>> +	if (IS_ERR(qsb))
+>>> +		qsb = clk_register_fixed_rate(dev, "qsb", NULL, 0, 1);
+>>> -	if (IS_ERR(clk))
+>>> -		return PTR_ERR(clk);
+>>> +	if (IS_ERR(qsb))
+>>> +		return PTR_ERR(qsb);
+>>>    	if (!id->data) {
+>>>    		clk = clk_register_fixed_factor(dev, "acpu_aux",
+>>> @@ -327,13 +341,13 @@ static int krait_cc_probe(struct platform_device *pdev)
+>>>    		return -ENOMEM;
+>>>    	for_each_possible_cpu(cpu) {
+>>> -		clk = krait_add_clks(dev, cpu, id->data);
+>>> +		clk = krait_add_clks(dev, qsb, cpu, id->data);
+>>>    		if (IS_ERR(clk))
+>>>    			return PTR_ERR(clk);
+>>>    		clks[cpu] = clk;
+>>>    	}
+>>> -	l2_pri_mux_clk = krait_add_clks(dev, -1, id->data);
+>>> +	l2_pri_mux_clk = krait_add_clks(dev, qsb, -1, id->data);
+>>>    	if (IS_ERR(l2_pri_mux_clk))
+>>>    		return PTR_ERR(l2_pri_mux_clk);
+>>>    	clks[4] = l2_pri_mux_clk;
 >>
->> Changes since RFC:
->>   - Rework clk-regmap-mux fields. Specify safe parent as P_* value rather
->>     than specifying the register value directly
->>   - Expand commit message to the first patch to specially mention that
->>     it is required only on newer generations of Qualcomm chipsets.
+>>
+>> -- 
+>> With best wishes
+>> Dmitry
 > 
-> Johan
 
 
 -- 
