@@ -2,72 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FD244FF0B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 09:37:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E29F34FF0B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 09:40:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233422AbiDMHjp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 03:39:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58504 "EHLO
+        id S233419AbiDMHmt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 03:42:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233412AbiDMHjn (ORCPT
+        with ESMTP id S232210AbiDMHmn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 03:39:43 -0400
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C97984D9FB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:37:21 -0700 (PDT)
-Received: by mail-pg1-x529.google.com with SMTP id bg9so1030981pgb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:37:21 -0700 (PDT)
+        Wed, 13 Apr 2022 03:42:43 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E53D61EC43
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:40:20 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id y32so1983526lfa.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OvBmCpMD4WvNs2TV4Iwfm3Q6UCY8XLO8lhnqvUzlfmQ=;
-        b=ezJpMnFtqu6SYjGyO6z0ZdpbRiSRqktyw1m72XPH9PlGKSl2LprXy8/1Pz8PJz+y7J
-         55d+C6ovQycXEwAvRyl9Vxd/EsrGYh9T6fdGtMCYHMXNvGm+vWyY8mV6Yj2XaHvm7mb/
-         zYvZMw4rGxX1orG19Y+xpbJNUXgio3ar/LU7G9Dg9QUBXyiAl4U6a+yutd0vkGhqhzxR
-         0RFMnLfSle57raxIV9hsCpdJT0LQT6XwRz7Q19RsrZj5D1EftyyOA7VrWeVpXe/RKhGT
-         q4FdIr+UbG7Irm/62lul+P3uYR1kcx5lQUgskC5PrBxhevRft7dzpXAgl8OVTTAzW1M3
-         zZUQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=DJLJUZ5W5QrQNorPuhVBZk31ozNDYTlIXuspQU8iTXA=;
+        b=lpbBMv0P981hAOP4gANFVsX43x8TW44Se82vUrOBqgL5z36JtJ8CNvu5vOZz5bqiFQ
+         WO/IUpslAiW5L1Dm49lyUsDhrGZGFgLh8EGT46ILedjwhwDFolRubfSBsuIUuuTzZCLW
+         YreS6pnwkg60z772Ovpg+sYUniUoak5squK0d2lS27l+95uI/YkzgQDLTknOExNC5ChY
+         a1AdbIIXjPT9wBkt+Et3uVbREvxs9Yq28nZMtpD/XlWA1dddvAmWPkHDdiMREcG6gG2+
+         X43htRTk9DIdy4Xitb5NpGnXv45quT+wa5VR+J5xPycFoiO1pz6q+7hi404+a16ULSN1
+         QG5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OvBmCpMD4WvNs2TV4Iwfm3Q6UCY8XLO8lhnqvUzlfmQ=;
-        b=0VjMvynylerfM5lj+a2OHcqzvIEQZ51UqLGi4BngQwPEXllD1If8VVwujEsotpI6SD
-         x0DsMuFWsVs3lfrtD/eDE7MmH388gcZzVvU/Z8h8Nwu6fNmQWW/nq6TxdB1RtpLDaQPk
-         /u5PcYMabNxQB2kzTTiFV9EPPtoxbTcnGQp7AhmV8YZrda6XfCAcygPAdEIP84LO49+X
-         JZ6QwsSvuhPbII3VhEs3uGNvyzOaxHMz3YexfepjR0XDuohoHbGjl4m6y6Y7ykM5acZg
-         FYmNl7QPG+9d7oRJI0mzl0jiuOG00KVbPSEqMcylghlIQtIcncJHKerj/LeCJmFn3vUR
-         r1FA==
-X-Gm-Message-State: AOAM531WIlLjqmcyYYq68EZGvgDKKqiBQrlVp3fMhLTTkSfZXjoq9jx/
-        PGLlnQH83dot4pGIOn0MYqpQ
-X-Google-Smtp-Source: ABdhPJy1Grt5MukdtrnClnqOOCFNj2cd7iE0NgSPKDA6mAkOQjYH6907VLEA5DWJ0xydgaibP94ngA==
-X-Received: by 2002:a63:5710:0:b0:399:365e:5dde with SMTP id l16-20020a635710000000b00399365e5ddemr34937381pgb.192.1649835441312;
-        Wed, 13 Apr 2022 00:37:21 -0700 (PDT)
-Received: from thinkpad ([117.207.28.99])
-        by smtp.gmail.com with ESMTPSA id pi2-20020a17090b1e4200b001c7b15928e0sm1977714pjb.23.2022.04.13.00.37.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 00:37:20 -0700 (PDT)
-Date:   Wed, 13 Apr 2022 13:07:15 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Georgi Djakov <djakov@kernel.org>, linux-kernel@vger.kernel.org,
-        patches@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, Alex Elder <elder@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-Subject: Re: [PATCH 2/2] interconnect: qcom: sdx55: Drop IP0 interconnects
-Message-ID: <20220413073715.GD2015@thinkpad>
-References: <20220412220033.1273607-1-swboyd@chromium.org>
- <20220412220033.1273607-3-swboyd@chromium.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=DJLJUZ5W5QrQNorPuhVBZk31ozNDYTlIXuspQU8iTXA=;
+        b=V4hUMfCO3k9WA+mOUc7GvNmLZ5IFpFnDu3yRk2A5//5mqiec98ovyj5uWdXJCDyu7L
+         eD6G/B/o9otYscbTTSmzLRouYGo0DRWs4l/6Zr+uuiDeDxGllMc3BT+WZFDsZWSBKMWE
+         lhSbp1/BXrWhBirdvEvoWi0xm6lPHYrc+z2dotmVHRZcsjB5NezyKjcHUTPEMDSu/Mev
+         SKgoZQhFLNpp4/Ymxp02JRM7RDJo3nauJjcrA2+tfUeDIR31xk42SBOyl8h/SMvv+/2G
+         sJiMKFOJI8+PEsNRlBh+8PrAUiMF0w4GOp7DuykTUbzu7L18Xv8aLGsNy8IWZva8ezUU
+         6OoQ==
+X-Gm-Message-State: AOAM53034wiO3IiX5V7x5eciaf8pQc5yZDYul4hK7osTubTpXNzvHHyY
+        zwLzv6NoRzv8IIV5hzRs8qNCAw==
+X-Google-Smtp-Source: ABdhPJyHYuYoE8j30RTzyjwkaVAvL/uPJ0wNi72TAqvVSPv18ZSqs7v78jwe5jwWyIItaFk1NmH7Mw==
+X-Received: by 2002:a05:6512:262a:b0:45d:b42d:3e46 with SMTP id bt42-20020a056512262a00b0045db42d3e46mr27259650lfb.22.1649835619138;
+        Wed, 13 Apr 2022 00:40:19 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id y37-20020a0565123f2500b0044a1e1c6b37sm4010722lfa.53.2022.04.13.00.40.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 00:40:18 -0700 (PDT)
+Message-ID: <32df5270-9df8-c5be-a9d2-9764409a2711@linaro.org>
+Date:   Wed, 13 Apr 2022 10:40:16 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220412220033.1273607-3-swboyd@chromium.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v3 06/18] ARM: dts: qcom: enable usb phy by default for
+ ipq8064
+Content-Language: en-GB
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Jonathan McDowell <noodles@earth.li>
+References: <20220309190152.7998-1-ansuelsmth@gmail.com>
+ <20220309190152.7998-7-ansuelsmth@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220309190152.7998-7-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,92 +80,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 12, 2022 at 03:00:33PM -0700, Stephen Boyd wrote:
-> Similar to the sc7180 commit, let's drop the IP0 interconnects here
-> because the IP0 resource is also used in the clk-rpmh driver on sdx55.
-> It's bad to have the clk framework and interconnect framework control
-> the same RPMh resource without any coordination. The rpmh driver in the
-> kernel doesn't aggregate resources between clients either, so leaving
-> control to clk-rpmh avoids any issues with unused interconnects turning
-> off IP0 behind the back of the clk framework.
+On 09/03/2022 22:01, Ansuel Smith wrote:
+> Enable usb phy by default. When the usb phy were pushed, half of them
+> were flagged as disabled by mistake. Fix this to correctly init dwc3
+> node on any ipq8064 based SoC.
+
+Typically they would be disabled in the platform dtsi file and would be 
+enabled one-by-one in the board dts file. So, if half of usb phys are 
+enabled by default, I'd kindly ask to perform the opposite change: 
+disable all of them by default and enable in board dts files.
+
 > 
-> Cc: Alex Elder <elder@linaro.org>
-> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Taniya Das <quic_tdas@quicinc.com>
-> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
-> Fixes: b2150cab9a97 ("clk: qcom: rpmh: add support for SDX55 rpmh IPA clock")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Tested-by: Jonathan McDowell <noodles@earth.li>
 > ---
->  drivers/interconnect/qcom/sdx55.c | 21 ---------------------
->  1 file changed, 21 deletions(-)
+>   arch/arm/boot/dts/qcom-ipq8064.dtsi | 4 ----
+>   1 file changed, 4 deletions(-)
 > 
-> diff --git a/drivers/interconnect/qcom/sdx55.c b/drivers/interconnect/qcom/sdx55.c
-> index 03d604f84cc5..e3ac25a997b7 100644
-> --- a/drivers/interconnect/qcom/sdx55.c
-> +++ b/drivers/interconnect/qcom/sdx55.c
-> @@ -18,7 +18,6 @@
->  #include "icc-rpmh.h"
->  #include "sdx55.h"
->  
-> -DEFINE_QNODE(ipa_core_master, SDX55_MASTER_IPA_CORE, 1, 8, SDX55_SLAVE_IPA_CORE);
->  DEFINE_QNODE(llcc_mc, SDX55_MASTER_LLCC, 4, 4, SDX55_SLAVE_EBI_CH0);
->  DEFINE_QNODE(acm_tcu, SDX55_MASTER_TCU_0, 1, 8, SDX55_SLAVE_LLCC, SDX55_SLAVE_MEM_NOC_SNOC, SDX55_SLAVE_MEM_NOC_PCIE_SNOC);
->  DEFINE_QNODE(qnm_snoc_gc, SDX55_MASTER_SNOC_GC_MEM_NOC, 1, 8, SDX55_SLAVE_LLCC);
-> @@ -40,7 +39,6 @@ DEFINE_QNODE(xm_pcie, SDX55_MASTER_PCIE, 1, 8, SDX55_SLAVE_ANOC_SNOC);
->  DEFINE_QNODE(xm_qdss_etr, SDX55_MASTER_QDSS_ETR, 1, 8, SDX55_SLAVE_SNOC_CFG, SDX55_SLAVE_EMAC_CFG, SDX55_SLAVE_USB3, SDX55_SLAVE_AOSS, SDX55_SLAVE_SPMI_FETCHER, SDX55_SLAVE_QDSS_CFG, SDX55_SLAVE_PDM, SDX55_SLAVE_SNOC_MEM_NOC_GC, SDX55_SLAVE_TCSR, SDX55_SLAVE_CNOC_DDRSS, SDX55_SLAVE_SPMI_VGI_COEX, SDX55_SLAVE_QPIC, SDX55_SLAVE_OCIMEM, SDX55_SLAVE_IPA_CFG, SDX55_SLAVE_USB3_PHY_CFG, SDX55_SLAVE_AOP, SDX55_SLAVE_BLSP_1, SDX55_SLAVE_SDCC_1, SDX55_SLAVE_CNOC_MSS, SDX55_SLAVE_PCIE_PARF, SDX55_SLAVE_ECC_CFG, SDX55_SLAVE_AUDIO, SDX55_SLAVE_AOSS, SDX55_SLAVE_PRNG, SDX55_SLAVE_CRYPTO_0_CFG, SDX55_SLAVE_TCU, SDX55_SLAVE_CLK_CTL, SDX55_SLAVE_IMEM_CFG);
->  DEFINE_QNODE(xm_sdc1, SDX55_MASTER_SDCC_1, 1, 8, SDX55_SLAVE_AOSS, SDX55_SLAVE_IPA_CFG, SDX55_SLAVE_ANOC_SNOC, SDX55_SLAVE_AOP, SDX55_SLAVE_AUDIO);
->  DEFINE_QNODE(xm_usb3, SDX55_MASTER_USB3, 1, 8, SDX55_SLAVE_ANOC_SNOC);
-> -DEFINE_QNODE(ipa_core_slave, SDX55_SLAVE_IPA_CORE, 1, 8);
->  DEFINE_QNODE(ebi, SDX55_SLAVE_EBI_CH0, 1, 4);
->  DEFINE_QNODE(qns_llcc, SDX55_SLAVE_LLCC, 1, 16, SDX55_SLAVE_EBI_CH0);
->  DEFINE_QNODE(qns_memnoc_snoc, SDX55_SLAVE_MEM_NOC_SNOC, 1, 8, SDX55_MASTER_MEM_NOC_SNOC);
-> @@ -82,7 +80,6 @@ DEFINE_QNODE(xs_sys_tcu_cfg, SDX55_SLAVE_TCU, 1, 8);
->  DEFINE_QBCM(bcm_mc0, "MC0", true, &ebi);
->  DEFINE_QBCM(bcm_sh0, "SH0", true, &qns_llcc);
->  DEFINE_QBCM(bcm_ce0, "CE0", false, &qxm_crypto);
-> -DEFINE_QBCM(bcm_ip0, "IP0", false, &ipa_core_slave);
->  DEFINE_QBCM(bcm_pn0, "PN0", false, &qhm_snoc_cfg);
->  DEFINE_QBCM(bcm_sh3, "SH3", false, &xm_apps_rdwr);
->  DEFINE_QBCM(bcm_sh4, "SH4", false, &qns_memnoc_snoc, &qns_sys_pcie);
-> @@ -219,22 +216,6 @@ static const struct qcom_icc_desc sdx55_system_noc = {
->  	.num_bcms = ARRAY_SIZE(system_noc_bcms),
->  };
->  
-> -static struct qcom_icc_bcm *ipa_virt_bcms[] = {
-> -	&bcm_ip0,
-> -};
+> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> index 9d658fcc1f12..e247bf51df01 100644
+> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> @@ -1175,8 +1175,6 @@ hs_phy_0: phy@100f8800 {
+>   			clocks = <&gcc USB30_0_UTMI_CLK>;
+>   			clock-names = "ref";
+>   			#phy-cells = <0>;
 > -
-> -static struct qcom_icc_node *ipa_virt_nodes[] = {
-> -	[MASTER_IPA_CORE] = &ipa_core_master,
-> -	[SLAVE_IPA_CORE] = &ipa_core_slave,
-> -};
+> -			status = "disabled";
+>   		};
+>   
+>   		ss_phy_0: phy@100f8830 {
+> @@ -1185,8 +1183,6 @@ ss_phy_0: phy@100f8830 {
+>   			clocks = <&gcc USB30_0_MASTER_CLK>;
+>   			clock-names = "ref";
+>   			#phy-cells = <0>;
 > -
-> -static const struct qcom_icc_desc sdx55_ipa_virt = {
-> -	.nodes = ipa_virt_nodes,
-> -	.num_nodes = ARRAY_SIZE(ipa_virt_nodes),
-> -	.bcms = ipa_virt_bcms,
-> -	.num_bcms = ARRAY_SIZE(ipa_virt_bcms),
-> -};
-> -
->  static const struct of_device_id qnoc_of_match[] = {
->  	{ .compatible = "qcom,sdx55-mc-virt",
->  	  .data = &sdx55_mc_virt},
-> @@ -242,8 +223,6 @@ static const struct of_device_id qnoc_of_match[] = {
->  	  .data = &sdx55_mem_noc},
->  	{ .compatible = "qcom,sdx55-system-noc",
->  	  .data = &sdx55_system_noc},
-> -	{ .compatible = "qcom,sdx55-ipa-virt",
-> -	  .data = &sdx55_ipa_virt},
->  	{ }
->  };
->  MODULE_DEVICE_TABLE(of, qnoc_of_match);
-> -- 
-> https://chromeos.dev
-> 
+> -			status = "disabled";
+>   		};
+>   
+>   		usb3_0: usb3@100f8800 {
+
+
+-- 
+With best wishes
+Dmitry
