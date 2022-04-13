@@ -2,64 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E30BB500228
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 00:56:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 968B750025F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 01:14:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238658AbiDMW5U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 18:57:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52048 "EHLO
+        id S239141AbiDMXQa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 19:16:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238050AbiDMW5U (ORCPT
+        with ESMTP id S239133AbiDMXQ3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 18:57:20 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBD303B299;
-        Wed, 13 Apr 2022 15:54:57 -0700 (PDT)
+        Wed, 13 Apr 2022 19:16:29 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AD2425C6A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 16:14:05 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id q129so3673978oif.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 16:14:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649890497; x=1681426497;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=m9Tzk5iuVsfm3l6Vm0LArjqnKY1ATrD/yP8P02JitlM=;
-  b=A6FORCrhBrIgM9aJORJW1uv6Y+ortK+7QD1mFjJflG4/uhD7TCTfrzzc
-   BoZvTnX074nhR7/m+sfplKUbyNv1AU7GJPwLjvUm6/qbBshtoUZ+dMmVc
-   oSfb6boKA79Sh2/3NoPmt/TegE4YLB2jFZNwzoxe/bYaYOlkaTanAkLTI
-   Q=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Apr 2022 15:54:57 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 15:54:57 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 13 Apr 2022 15:54:56 -0700
-Received: from [10.110.74.164] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 13 Apr
- 2022 15:54:55 -0700
-Message-ID: <d6ae3572-58db-5264-c26a-9f75de6292a7@quicinc.com>
-Date:   Wed, 13 Apr 2022 15:54:55 -0700
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=dorfVU/xJSabHsQtVBWrq/Iqc9CAJtp4oOExMJgEUDQ=;
+        b=m+OmSD/e4we/K+vygGa6butFRkA8E+g/p2ckEiZ/uW+cVdyspvoJRGw+9FyyXam5cq
+         tKUR+8UFC5n7VmwCQP8rHi/+hQ5PDk//cvhjT5HtpMvvW9ER33VqwEDQkbDEFxhsM7hb
+         z5Yse8JE+ZpUXuCYKRHbRXAPEJQEZ0GE9T76A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=dorfVU/xJSabHsQtVBWrq/Iqc9CAJtp4oOExMJgEUDQ=;
+        b=vM1uDNUuydKiRBMWcpmHgr8AJtISkGkY/F4LmzTgmM0dkIXw3ezdvWSPdzr7VGdIz9
+         qRlRQUnjdFnbcDa/fmm2+2AHUoQrKXGwGfz+x+tang77gLNQTT4XAvSxnPY9J7IaTzj4
+         xRuPHjeWe5MKrwR8QO/Q1Dnvq7NZG07gpAoDJDZobStPrv+WogiR1mF5dQnJMUlWK2oN
+         Zhhwe1EofihmjdSXpVwBOvO6jfYFgk8cPl97UhXKuRO0CJCm05yIJea5NrIUg4/SQ2O5
+         buWvh98ylipLKun7p6y9k2ctBLU7Z51Js1ZpoJXajigV9zJl2L8vintXdKA30mJuc/tD
+         19Ow==
+X-Gm-Message-State: AOAM532MxkNZQP1BGIdjtAHc8MaI8BaoZ0H/E8Y/WwZxg/RXK3clr93R
+        0XLscVITuiqkXtpodDpcevLmBYTj/b5o3mJEwyangg==
+X-Google-Smtp-Source: ABdhPJy/y7cGBki5XtEew+aPGYslTH0aAHoZeAOee7B/n9e30cebHJofLtYmhLy+51DqypLaLc+k7XKo3IKWa8yDq70=
+X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
+ n62-20020acabd41000000b002ecff42814fmr195472oif.63.1649891644404; Wed, 13 Apr
+ 2022 16:14:04 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 13 Apr 2022 16:14:02 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2] bus: mhi: host: Add soc_reset sysfs
-Content-Language: en-US
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, <mani@kernel.org>,
-        <quic_hemantk@quicinc.com>
-CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Jeffrey Hugo <jhugo@codeaurora.org>
-References: <1649883619-17609-1-git-send-email-quic_jhugo@quicinc.com>
-From:   Bhaumik Vasav Bhatt <quic_bbhatt@quicinc.com>
-In-Reply-To: <1649883619-17609-1-git-send-email-quic_jhugo@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <d80ece40-fdd7-f304-3989-47ae152d5ac9@linaro.org>
+References: <20220412220033.1273607-1-swboyd@chromium.org> <20220412220033.1273607-2-swboyd@chromium.org>
+ <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com> <d80ece40-fdd7-f304-3989-47ae152d5ac9@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 13 Apr 2022 16:14:02 -0700
+Message-ID: <CAE-0n53kebRHTogSkiAOcA4tMpA+EcXQHtNX0Zzut-xE2vCkpw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] interconnect: qcom: sc7180: Drop IP0 interconnects
+To:     Alex Elder <elder@linaro.org>,
+        Doug Anderson <dianders@chromium.org>
+Cc:     Georgi Djakov <djakov@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,87 +73,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Alex Elder (2022-04-13 14:02:00)
+> On 4/13/22 3:55 PM, Doug Anderson wrote:
+> > Hi,
+> >
+> > On Tue, Apr 12, 2022 at 4:20 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >>
+> >> @@ -519,8 +500,6 @@ static const struct of_device_id qnoc_of_match[] = {
+> >>            .data = &sc7180_dc_noc},
+> >>          { .compatible = "qcom,sc7180-gem-noc",
+> >>            .data = &sc7180_gem_noc},
+> >> -       { .compatible = "qcom,sc7180-ipa-virt",
+> >> -         .data = &sc7180_ipa_virt},
+> >>          { .compatible = "qcom,sc7180-mc-virt",
+> >>            .data = &sc7180_mc_virt},
+> >>          { .compatible = "qcom,sc7180-mmss-noc",
+> >
+> > I have no objection to ${SUBJECT} change landing and based on all your
+> > research and Alex's review/testing I think it's good to go.
+> >
+> > However, now that you're removed the driver that cared about
+> > "qcom,sc7180-ipa-virt", should we also be removing it from the
+> > `bindings/interconnect/qcom,rpmh.yaml` file and the `sc7180.dtsi`
+> > file? I think that removing it from _either_ the driver (like your
+> > patch here does) _or_ the sc7180.dtsi file would fix the bug, right?
+> > ...and then removing it from the yaml would just be cleanup...
 
-On 4/13/2022 2:00 PM, Jeffrey Hugo wrote:
-> From: Jeffrey Hugo <jhugo@codeaurora.org>
+Yes, but that's mostly a cleanup. I didn't include it in this series
+because DTB is supposed to be "stable" and thus backporting a fix to the
+kernel by removing something from DT is sort of wrong. I don't know or
+expect that the kernel DTS files will be used from the stable kernels.
+It's better to fix the kernel C code. We can of course remove the
+binding, but there's a part of me that would prefer that we put the IPA
+clk back into the interconnect driver, so leaving the binding is another
+motivator for me to hopefully excise the IPA clk from the rpmh-clk
+driver in the future.
+
+Anyway, I'm happy to remove the compatible string from the binding if
+folks want that. Having the DT node is wasteful because the kernel makes
+a device so we can certainly remove that as well. I'll send another
+patch for that if this patch is accepted by Georgi.
+
 >
-> The MHI bus supports a standardized hardware reset, which is known as the
-> "SoC Reset".  This reset is similar to the reset sysfs for PCI devices -
-> a hardware mechanism to reset the state back to square one.
+> That's a good point, I hadn't thought about that but you're right.
 >
-> The MHI SoC Reset is described in the spec as a reset of last resort.  If
-> some unrecoverable error has occurred where other resets have failed, SoC
-> Reset is the "big hammer" that ungracefully resets the device.  This is
-> effectivly the same as yanking the power on the device, and reapplying it.
-> However, depending on the nature of the particular issue, the underlying
-> transport link may remain active and configured.  If the link remains up,
-> the device will flag a MHI system error early in the boot process after
-> the reset is executed, which allows the MHI bus to process a fatal error
-> event, and clean up appropiately.
+> I think we were too pleased about identifying the problem and
+> proving it could happen (and cause a crash), so we didn't think
+> hard enough about this other piece.
 >
-> While the SoC Reset is generally intended as a means of recovery when all
-> else has failed, it can be useful in non-error scenarios.  For example,
-> if the device loads firmware from the host filesystem, the device may need
-> to be fully rebooted inorder to pick up the new firmware.  In this
-> scenario, the system administrator may use the soc_reset sysfs to cause
-> the device to pick up the new firmware that the admin placed on the
-> filesystem.
+> Stephen, I think you should re-spin the series and add the
+> proper change to the binding.  You can keep the tags I gave
+> before.
+
+I will not combine the removal of the binding from this patch. This
+patch is good as is and fixes the problem while ignoring the DT binding
+and that larger discussion.
+
 >
-> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> ---
-Reviewed-by: Bhaumik Bhatt <quic_bbhatt@quicinc.com>
-> v2:
-> Rebase
->
->   Documentation/ABI/stable/sysfs-bus-mhi | 11 +++++++++++
->   drivers/bus/mhi/host/init.c            | 14 ++++++++++++++
->   2 files changed, 25 insertions(+)
->
-> diff --git a/Documentation/ABI/stable/sysfs-bus-mhi b/Documentation/ABI/stable/sysfs-bus-mhi
-> index ecfe766..306f63e 100644
-> --- a/Documentation/ABI/stable/sysfs-bus-mhi
-> +++ b/Documentation/ABI/stable/sysfs-bus-mhi
-> @@ -19,3 +19,14 @@ Description:	The file holds the OEM PK Hash value of the endpoint device
->   		read without having the device power on at least once, the file
->   		will read all 0's.
->   Users:		Any userspace application or clients interested in device info.
-> +
-> +What:           /sys/bus/mhi/devices/.../soc_reset
-> +Date:           April 2022
-> +KernelVersion:  5.19
-> +Contact:        mhi@lists.linux.dev
-> +Description:	Initiates a SoC reset on the MHI controller.  A SoC reset is
-> +                a reset of last resort, and will require a complete re-init.
-> +                This can be useful as a method of recovery if the device is
-> +                non-responsive, or as a means of loading new firmware as a
-> +                system administration task.
-> +
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index 04c409b..e12b210 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -108,9 +108,23 @@ static ssize_t oem_pk_hash_show(struct device *dev,
->   }
->   static DEVICE_ATTR_RO(oem_pk_hash);
->   
-> +static ssize_t soc_reset_store(struct device *dev,
-> +			       struct device_attribute *attr,
-> +			       const char *buf,
-> +			       size_t count)
-> +{
-> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
-> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> +
-> +	mhi_soc_reset(mhi_cntrl);
-> +	return count;
-> +}
-> +static DEVICE_ATTR_WO(soc_reset);
-> +
->   static struct attribute *mhi_dev_attrs[] = {
->   	&dev_attr_serial_number.attr,
->   	&dev_attr_oem_pk_hash.attr,
-> +	&dev_attr_soc_reset.attr,
->   	NULL,
->   };
->   ATTRIBUTE_GROUPS(mhi_dev);
+> I've got a note to follow up with similar changes to other
+> platforms where the interconnect driver includes resource "IP0"
+> and will plan to do what Doug suggests there too.
