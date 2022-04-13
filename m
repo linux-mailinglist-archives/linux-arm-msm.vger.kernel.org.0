@@ -2,111 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CFC24FF779
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 15:13:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF77C4FF784
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 15:19:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233645AbiDMNP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 09:15:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56166 "EHLO
+        id S233587AbiDMNWH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 09:22:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230502AbiDMNP6 (ORCPT
+        with ESMTP id S233027AbiDMNWH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 09:15:58 -0400
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E573955BC2;
-        Wed, 13 Apr 2022 06:13:33 -0700 (PDT)
-Received: from fraeml711-chm.china.huawei.com (unknown [172.18.147.206])
-        by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Kdjdy4qjrz6842y;
-        Wed, 13 Apr 2022 21:11:18 +0800 (CST)
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- fraeml711-chm.china.huawei.com (10.206.15.60) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Wed, 13 Apr 2022 15:13:31 +0200
-Received: from localhost (10.81.205.148) by lhreml710-chm.china.huawei.com
- (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Wed, 13 Apr
- 2022 14:13:30 +0100
-Date:   Wed, 13 Apr 2022 14:13:26 +0100
-From:   Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Jonathan Cameron <jic23@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, <linux-iio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <sumit.semwal@linaro.org>, <amit.pundir@linaro.org>,
-        <john.stultz@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Subject: Re: [PATCH v13 5/9] iio: adc: qcom-spmi-rradc: introduce round
- robin adc
-Message-ID: <20220413141326.000018af@Huawei.com>
-In-Reply-To: <YlY+k4FcWoT/jEkJ@ripper>
-References: <20220323162820.110806-1-caleb@connolly.tech>
-        <20220323162820.110806-6-caleb@connolly.tech>
-        <20220327160329.6a3866d7@jic23-huawei>
-        <YlY+k4FcWoT/jEkJ@ripper>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; i686-w64-mingw32)
+        Wed, 13 Apr 2022 09:22:07 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AFB23DDFE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 06:19:45 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id bn33so2165433ljb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 06:19:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=3LBRuZb5uu3ZIEt+yWh62ZstAhcWkAqOgd3pMTdJv88=;
+        b=c2Z/9H39XFJOV3Ivr96x3l/HmSQO4zrhQy5MSbbXQCo4sm8ZUpPfuTQMdEMGflllGi
+         RyWCcmUs4La5wTRkt8BQZ/1w/o19bIdBqZKjelAHwmT5h+lL6EZ7o9gfFCbaN/xT+cTm
+         KoCJGRjk4wAs1ABTYcFrULrw1d+dHoh1+U0I9eppz7QR6GXXBZA/js1rdjKEdHIV0u7X
+         kbvHdlv1vxj4lBaUUAWZDzRXWz9mBzJOEdqF9ISKh7nJqfPLuT16CoLH9ckL79/j4jH+
+         Cl4XJ9FPOumU1zRqvegAyJuKGz+PnDsD0yyzySKscMjCew7j8srosXtS0y/oFZ9QT5wa
+         Co0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=3LBRuZb5uu3ZIEt+yWh62ZstAhcWkAqOgd3pMTdJv88=;
+        b=kSph4kb6k/Kw65YgQzEIMMDmWEUYiLaQ7IPCuhnCm8SfLbPeXIWbCuu4ZKWCmkW52Z
+         TuUIV4jmwOeakvi/pvcpnNpJ7BeIZ5dV89TJx9JF8xjssvKqECX6lsgEp1REdP1kzwxN
+         thIrC55yj8/AmetZYa+C5LDwhgJQeEj1zxeVR9D6oHSM1Xs+Ggf5KoEG5H9hu9auIaNM
+         R21fO2r34XfBxgDDyYSB3f+CArnCJ0jgwZYDRKnxScf7KFDLhcgtCN7tLXBQFnCi6Sah
+         FCcJ/l0gTcykNJklZ69PTUzk/6KWpZxc7lxn+uFO7UW+BgQYdRvVWWHE0t8gqiCbDXrg
+         Ml2w==
+X-Gm-Message-State: AOAM533gKowSG6xudxhAW1Wegm9KYfgDGMr4VkwNiVJDL4HWc3Z7blhk
+        xtU9k0KOyqLpVpYPvNidmgrcEzW5mvMVbw==
+X-Google-Smtp-Source: ABdhPJwt2HigftKkyhamoZpFU09tbiL+/OXvnhWN+PVPcSPolFXKvpaL96RJri+lVbkzCsAlZPkxXQ==
+X-Received: by 2002:a2e:8696:0:b0:24b:6682:57e0 with SMTP id l22-20020a2e8696000000b0024b668257e0mr8222454lji.443.1649855983813;
+        Wed, 13 Apr 2022 06:19:43 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id c3-20020a056512104300b0044a3582c9ecsm4129340lfb.219.2022.04.13.06.19.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 06:19:43 -0700 (PDT)
+Message-ID: <a7034b5e-24de-ef17-ae93-c626beb35a41@linaro.org>
+Date:   Wed, 13 Apr 2022 16:19:42 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v3 07/18] ARM: dts: qcom: reduce pci IO size to 64K for
+ ipq8064
+Content-Language: en-GB
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Jonathan McDowell <noodles@earth.li>
+References: <20220309190152.7998-1-ansuelsmth@gmail.com>
+ <20220309190152.7998-8-ansuelsmth@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220309190152.7998-8-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.81.205.148]
-X-ClientProxiedBy: lhreml743-chm.china.huawei.com (10.201.108.193) To
- lhreml710-chm.china.huawei.com (10.201.108.61)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 12 Apr 2022 20:08:03 -0700
-Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+On 09/03/2022 22:01, Ansuel Smith wrote:
+> The current value for pci IO is problematic for ath10k wifi card
+> commonly connected to ipq8064 SoC.
+> The current value is probably a typo and is actually uncommon to find
+> 1MB IO space even on a x86 arch.
 
-> On Sun 27 Mar 08:03 PDT 2022, Jonathan Cameron wrote:
+I checked other Qualcomm platforms (including downstream apq8084.dtsi). 
+All of them list 1MB region as IO space.
+
+Interesting enough I couldn't get PCI to work on my IFC6410 (apq8064). 
+It has an ethernet adapter AR8151 sitting on the PCIe bus. The driver 
+probes, transmits packets successfully, but receives only garbage. I'm 
+not sure if it is the hardware or a software problem. Same adapter works 
+fine on db820c.
+
+> Also with recent changes to the pci
+> driver, pci1 and pci2 now fails to function as any connected device
+> fails any reg read/write. Reduce this to 64K as it should be more than
+> enough and 3 * 64K of total IO space doesn't exceed the IO_SPACE_LIMIT
+> hardcoded for the ARM arch.
 > 
-> > On Wed, 23 Mar 2022 16:28:16 +0000
-> > Caleb Connolly <caleb.connolly@linaro.org> wrote:
-> >   
-> > > From: Caleb Connolly <caleb.connolly@linaro.org>
-> > > 
-> > > The Round Robin ADC is responsible for reading data about the rate of
-> > > charge from the USB or DC input ports, it can also read the battery
-> > > ID (resistence), skin temperature and the die temperature of the pmic.
-> > > It is found on the PMI8998 and PM660 Qualcomm PMICs.
-> > > 
-> > > Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>  
-> > Whilst I said this patch was fine a few versions ago I didn't add a tag
-> > on basis I would probably end up picking it up.
-> > 
-> > To make things more flexible, I'll add one and either Lee or I can
-> > do the immutable branch once Lee has had a chance to take a look and
-> > is happy with the mfd parts.
-> > 
-> > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> >   
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Tested-by: Jonathan McDowell <noodles@earth.li>
+> ---
+>   arch/arm/boot/dts/qcom-ipq8064.dtsi | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> Are either of you planning to pick up the driver changes?
-> 
-> The dts changes can be merged independently, so I would prefer to pick
-> those through my tree. But I would like to know that the binding and
-> implementation is agreed upon before doing so.
+> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> index e247bf51df01..36bdfc8db3f0 100644
+> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> @@ -918,7 +918,7 @@ pcie0: pci@1b500000 {
+>   			#address-cells = <3>;
+>   			#size-cells = <2>;
+>   
+> -			ranges = <0x81000000 0 0x0fe00000 0x0fe00000 0 0x00100000   /* downstream I/O */
+> +			ranges = <0x81000000 0 0x0fe00000 0x0fe00000 0 0x00010000   /* downstream I/O */
+>   				  0x82000000 0 0x08000000 0x08000000 0 0x07e00000>; /* non-prefetchable memory */
+>   
+>   			interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> @@ -969,7 +969,7 @@ pcie1: pci@1b700000 {
+>   			#address-cells = <3>;
+>   			#size-cells = <2>;
+>   
+> -			ranges = <0x81000000 0 0x31e00000 0x31e00000 0 0x00100000   /* downstream I/O */
+> +			ranges = <0x81000000 0 0x31e00000 0x31e00000 0 0x00010000   /* downstream I/O */
+>   				  0x82000000 0 0x2e000000 0x2e000000 0 0x03e00000>; /* non-prefetchable memory */
+>   
+>   			interrupts = <GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>;
+> @@ -1020,7 +1020,7 @@ pcie2: pci@1b900000 {
+>   			#address-cells = <3>;
+>   			#size-cells = <2>;
+>   
+> -			ranges = <0x81000000 0 0x35e00000 0x35e00000 0 0x00100000   /* downstream I/O */
+> +			ranges = <0x81000000 0 0x35e00000 0x35e00000 0 0x00010000   /* downstream I/O */
+>   				  0x82000000 0 0x32000000 0x32000000 0 0x03e00000>; /* non-prefetchable memory */
+>   
+>   			interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
 
-I need an Ack from Lee for the mfd changes and ideally Stephen for the SPMI
-patch.
 
-Lee, guessing you are busy, but if you have a chance to check this set over
-that would be great.
-
-Jonathan
-
-> 
-> Thanks,
-> Bjorn
-
+-- 
+With best wishes
+Dmitry
