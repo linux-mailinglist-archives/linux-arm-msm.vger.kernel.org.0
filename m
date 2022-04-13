@@ -2,63 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 320EE4FF6BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 14:26:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFDB74FF732
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 14:54:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235490AbiDMM2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 08:28:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34722 "EHLO
+        id S235667AbiDMM4f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 08:56:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232891AbiDMM2L (ORCPT
+        with ESMTP id S235649AbiDMM43 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 08:28:11 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E35D5B3D2;
-        Wed, 13 Apr 2022 05:25:51 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 17426B82406;
-        Wed, 13 Apr 2022 12:25:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23084C385A6;
-        Wed, 13 Apr 2022 12:25:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649852748;
-        bh=4pdtM6MKZnZCbZBKhFwlTVYlJE5fb6eW9XeeuJpkcyo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=F6pwVrG9dVzyBf7HJZlUVLv2KT5+/IJGJ+4kX1tWVTPeRLBWZg13/6vXatDQR8kGh
-         +IMmfExV2uIwWsnUXspMys6qUsjqqpPBXG+QkWPDSfl+CS1hLw/VOo9AbaAHQKSjq7
-         NN16IwX8txPWcMj2liSVVPUNdeU3Sfrs1XEbl4AqrCdcYxMcTu6MOvtUqG//8RsAwm
-         B393KyNNJUxx8bkVp5owo3SM58GlvJX9EWMTIHVr7Fb/1JF5tJORGV4VvBCT+kcxO1
-         2O1vcn7uz6f2BTsllqCHgrjssZRoRHF8/6oLyB6O2D+H+J1OQFtGtxV1TlkDJB6rjb
-         76z8D6yZWYD2A==
-Date:   Wed, 13 Apr 2022 17:55:44 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: qcom: gpi: Add SM8350 support
-Message-ID: <YlbBSDEHD4Qw+v6W@matsya>
-References: <20220412212959.2385085-1-bjorn.andersson@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220412212959.2385085-1-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 13 Apr 2022 08:56:29 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E81053B4C;
+        Wed, 13 Apr 2022 05:54:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649854448; x=1681390448;
+  h=from:to:cc:subject:date:message-id;
+  bh=5xRQ8goNdbg3PNC/HfjumOMnpeRAm6Z/VpX0ULTu4M4=;
+  b=eek9xqWVrKjt6YOIxYzczxQpGBp71a9cP8v4qIQExTKGP0dhRCjCECB5
+   W9yn/U+1DRGU+xDCTDIwqfj2arl2zKlWjfDuvRxUsDJdg9Ycbx1pDQOyu
+   gZhj9veMuBLiY31OiOQWI1nWiR9bh+00nKJRrXh/RwakhFGeKRjr0xsu9
+   U=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 13 Apr 2022 05:54:08 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 13 Apr 2022 05:54:06 -0700
+X-QCInternal: smtphost
+Received: from hu-rohiagar-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.106.138])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 13 Apr 2022 18:23:49 +0530
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id A583E3AC2; Wed, 13 Apr 2022 18:23:47 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, djakov@kernel.org,
+        robh+dt@kernel.org, krzk+dt@kernel.org
+Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v2 0/2] Add interconnect driver for SDX65
+Date:   Wed, 13 Apr 2022 18:23:33 +0530
+Message-Id: <1649854415-11174-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-04-22, 14:29, Bjorn Andersson wrote:
-> The Qualcomm SM8350 platform does, like the SM8450, provide a set of GPI
-> controllers with an ee-offset of 0x10000. Add this to the driver.
+Hello,
 
-Applied, thanks
+This series adds interconnect driver support for SDX65 
+platform for scaling the bandwidth requirements over RPMh.
+
+Changes from v1:
+ - Addressed Krzysztof's comments and made necessary changes.
+
+Thanks,
+Rohit.
+
+
+Rohit Agarwal (2):
+  dt-bindings: interconnect: Add Qualcomm SDX65 DT bindings
+  interconnect: qcom: Add SDX65 interconnect provider driver
+
+ .../bindings/interconnect/qcom,rpmh.yaml           |   3 +
+ drivers/interconnect/qcom/Kconfig                  |   9 +
+ drivers/interconnect/qcom/Makefile                 |   2 +
+ drivers/interconnect/qcom/sdx65.c                  | 231 +++++++++++++++++++++
+ drivers/interconnect/qcom/sdx65.h                  |  65 ++++++
+ include/dt-bindings/interconnect/qcom,sdx65.h      |  67 ++++++
+ 6 files changed, 377 insertions(+)
+ create mode 100644 drivers/interconnect/qcom/sdx65.c
+ create mode 100644 drivers/interconnect/qcom/sdx65.h
+ create mode 100644 include/dt-bindings/interconnect/qcom,sdx65.h
 
 -- 
-~Vinod
+2.7.4
+
