@@ -2,159 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54F4C4FFDD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 20:30:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9DD34FFE31
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 20:52:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236294AbiDMScV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 14:32:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49908 "EHLO
+        id S236481AbiDMSzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 14:55:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237713AbiDMScU (ORCPT
+        with ESMTP id S230176AbiDMSzI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 14:32:20 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFD6954F9B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 11:29:57 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id o16so3275352ljp.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 11:29:57 -0700 (PDT)
+        Wed, 13 Apr 2022 14:55:08 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF51F3C493;
+        Wed, 13 Apr 2022 11:52:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=5v2yWjtsq2yE0AMVSJiuBUQWC1Qu+AF7xA3OEwCIDv8=;
-        b=xrnaFkyIM9Y8sdzRSP8L1zVvkPzlRgmMiNIBITDP+nN1I76/e7wOvhqH0+w84X8dHl
-         uHC8c1aDfdwk5/pskaflGmZq1ouRuQeYDsQemoJw1b9qoXSZFcCe0Qme8y1ysAyiI7HF
-         vDp4XVEmcBExfH30rFxECd3/K0Svpi1Jq8c4LQrrx9wclPpE3TmjCBddQ61iwvDkFx7R
-         fIXoEz5WvQEl483ccx9fu2nI58M9nRnrXU8t/QVxkn1Y56Y9h9ecjnXM1qYe03f/uMVO
-         yMl7ImLoKyrcuIkP520IeIk+JW2yGEM5WHMjgA+rT85vkH9h6558b/2mSdvE9+9JOlos
-         8tKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=5v2yWjtsq2yE0AMVSJiuBUQWC1Qu+AF7xA3OEwCIDv8=;
-        b=Z/pUDliRrhC8pBLIyCrtjm3VbOHM4ndobXd85YxPbRMJAf++gvH2Y0n6UlBRLNhRbS
-         MIdzgjqUKFaDqYr/mNTvbCgCtIP45/ZW4IcQbgObbv0NXXNRJEdw8R+JEluzjVp/kUXA
-         qoo+9s82LoMElIjxbCedjm2Ou2Eyb287kFwAg4JNQ6JwoNOvFexh3wxxHvXqv9pWD4Mf
-         9APamy6cbCrCSFyZHcNSD+KYFutQ2KgC5HMkle6nmiaYvuWyT2o0lKWu1zxzBkxy//v5
-         cIGSPjbx3GaGKuQLjHDSN0Hm7Pl5P6z/p6XEgSPdFJScoI52gHtldNQ+SmZo+CsIVwnf
-         VGow==
-X-Gm-Message-State: AOAM530nEY8F+XtYF9Oo9BsAtLubxekuNNZ4WMNeJAowwluKC+v8dbi4
-        k8iuC63uziO3B9gusfGBmRYi/A==
-X-Google-Smtp-Source: ABdhPJyb61UnhRI5EkaMY9lwwwGMDWvZTuImWapdXaD5jELavgJlOP+lmvFNEEQQsLEhuFNozH12BQ==
-X-Received: by 2002:a2e:9ed1:0:b0:249:3cc7:2d56 with SMTP id h17-20020a2e9ed1000000b002493cc72d56mr25778404ljk.244.1649874596002;
-        Wed, 13 Apr 2022 11:29:56 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id n16-20020a19ef10000000b0046ba4a33d6fsm1334552lfh.203.2022.04.13.11.29.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Apr 2022 11:29:55 -0700 (PDT)
-Message-ID: <474baf12-9907-4ab4-140c-08832ce36d12@linaro.org>
-Date:   Wed, 13 Apr 2022 21:29:53 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649875964; x=1681411964;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=3kIdWbaHtEU0x9HW6lYv/3aJs5QjFHoVlujqamdmcyc=;
+  b=AXfVHdMqLIdOuk2XVpxhtiZLKOP0BGhBxy0n7qbJbKGanEDwZldC1qcg
+   h9NKxfe1G6zkKKBwi37n2U3ngcg7+kUarLCWFQ/btRPQfi5hW/fIUtob7
+   yH0pxRqI4y4pCxZEihVts3dVbFwO0/H4ALHf146tpEEIs3DP9x4tjNN4a
+   4=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 13 Apr 2022 11:52:43 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 11:52:43 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 13 Apr 2022 11:52:42 -0700
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 13 Apr 2022 11:52:41 -0700
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <mani@kernel.org>, <quic_hemantk@quicinc.com>,
+        <quic_bbhatt@quicinc.com>
+CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        "Jeffrey Hugo" <quic_jhugo@quicinc.com>
+Subject: [PATCH v3] bus: mhi: host: Wait for ready state after reset
+Date:   Wed, 13 Apr 2022 12:52:26 -0600
+Message-ID: <1649875946-32516-1-git-send-email-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v3 07/18] ARM: dts: qcom: reduce pci IO size to 64K for
- ipq8064
-Content-Language: en-GB
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jonathan McDowell <noodles@earth.li>
-References: <20220309190152.7998-1-ansuelsmth@gmail.com>
- <20220309190152.7998-8-ansuelsmth@gmail.com>
- <a7034b5e-24de-ef17-ae93-c626beb35a41@linaro.org>
- <6256cf8e.1c69fb81.b313c.dd8b@mx.google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <6256cf8e.1c69fb81.b313c.dd8b@mx.google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/04/2022 16:21, Ansuel Smith wrote:
-> On Wed, Apr 13, 2022 at 04:19:42PM +0300, Dmitry Baryshkov wrote:
->> On 09/03/2022 22:01, Ansuel Smith wrote:
->>> The current value for pci IO is problematic for ath10k wifi card
->>> commonly connected to ipq8064 SoC.
->>> The current value is probably a typo and is actually uncommon to find
->>> 1MB IO space even on a x86 arch.
->>
->> I checked other Qualcomm platforms (including downstream apq8084.dtsi). All
->> of them list 1MB region as IO space.
->>
->> Interesting enough I couldn't get PCI to work on my IFC6410 (apq8064). It
->> has an ethernet adapter AR8151 sitting on the PCIe bus. The driver probes,
->> transmits packets successfully, but receives only garbage. I'm not sure if
->> it is the hardware or a software problem. Same adapter works fine on db820c.
->>
-> 
-> I didn't understand if device works correctly without this change.
-> The alternative to this, is to change the io space globally for every arm
-> target and it was pointed out that it was a strange change to do. 99%
-> the 1mb region present on every qcom platform is a copy past error but
-> still a region that big worked before some kernel version just because
-> the kernel didn't check them.
-> So it's both reduce IO in dtsi or extend IO_SPACE_LIMIT for every arm
-> target.
+From: Jeffrey Hugo <jhugo@codeaurora.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+After the device has signaled the end of reset by clearing the reset bit,
+it will automatically reinit MHI and the internal device structures.  Once
+That is done, the device will signal it has entered the ready state.
 
-> 
->>> Also with recent changes to the pci
->>> driver, pci1 and pci2 now fails to function as any connected device
->>> fails any reg read/write. Reduce this to 64K as it should be more than
->>> enough and 3 * 64K of total IO space doesn't exceed the IO_SPACE_LIMIT
->>> hardcoded for the ARM arch.
->>>
->>> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
->>> Tested-by: Jonathan McDowell <noodles@earth.li>
->>> ---
->>>    arch/arm/boot/dts/qcom-ipq8064.dtsi | 6 +++---
->>>    1 file changed, 3 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
->>> index e247bf51df01..36bdfc8db3f0 100644
->>> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
->>> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
->>> @@ -918,7 +918,7 @@ pcie0: pci@1b500000 {
->>>    			#address-cells = <3>;
->>>    			#size-cells = <2>;
->>> -			ranges = <0x81000000 0 0x0fe00000 0x0fe00000 0 0x00100000   /* downstream I/O */
->>> +			ranges = <0x81000000 0 0x0fe00000 0x0fe00000 0 0x00010000   /* downstream I/O */
->>>    				  0x82000000 0 0x08000000 0x08000000 0 0x07e00000>; /* non-prefetchable memory */
->>>    			interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
->>> @@ -969,7 +969,7 @@ pcie1: pci@1b700000 {
->>>    			#address-cells = <3>;
->>>    			#size-cells = <2>;
->>> -			ranges = <0x81000000 0 0x31e00000 0x31e00000 0 0x00100000   /* downstream I/O */
->>> +			ranges = <0x81000000 0 0x31e00000 0x31e00000 0 0x00010000   /* downstream I/O */
->>>    				  0x82000000 0 0x2e000000 0x2e000000 0 0x03e00000>; /* non-prefetchable memory */
->>>    			interrupts = <GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>;
->>> @@ -1020,7 +1020,7 @@ pcie2: pci@1b900000 {
->>>    			#address-cells = <3>;
->>>    			#size-cells = <2>;
->>> -			ranges = <0x81000000 0 0x35e00000 0x35e00000 0 0x00100000   /* downstream I/O */
->>> +			ranges = <0x81000000 0 0x35e00000 0x35e00000 0 0x00010000   /* downstream I/O */
->>>    				  0x82000000 0 0x32000000 0x32000000 0 0x03e00000>; /* non-prefetchable memory */
->>>    			interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
->>
->>
->> -- 
->> With best wishes
->> Dmitry
-> 
+Signaling the ready state involves sending an interrupt (MSI) to the host
+which might cause IOMMU faults if it occurs at the wrong time.
 
+If the controller is being powered down, and possibly removed, then the
+reset flow would only wait for the end of reset.  At which point, the host
+and device would start a race.  The host may complete its reset work, and
+remove the interrupt handler, which would cause the interrupt to be
+disabled in the IOMMU.  If that occurs before the device signals the ready
+state, then the IOMMU will fault since it blocked an interrupt.  While
+harmless, the fault would appear like a serious issue has occurred so let's
+silence it by making sure the device hits the ready state before the host
+completes its reset processing.
 
+Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+---
+
+v3:
+Rebase and use dev_err over dev_warn
+
+v2: 
+Fix subject and remove use of cur_state
+
+ drivers/bus/mhi/host/pm.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+index a0e91bd..f46158e 100644
+--- a/drivers/bus/mhi/host/pm.c
++++ b/drivers/bus/mhi/host/pm.c
+@@ -483,6 +483,15 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
+ 		 * hence re-program it
+ 		 */
+ 		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
++
++		if (!MHI_IN_PBL(mhi_get_exec_env(mhi_cntrl))) {
++			/* wait for ready to be set */
++			ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs,
++						 MHISTATUS,
++						 MHISTATUS_READY_MASK, 1, 25000);
++			if (ret)
++				dev_err(dev, "Device failed to enter READY state\n");
++		}
+ 	}
+ 
+ 	dev_dbg(dev,
 -- 
-With best wishes
-Dmitry
+2.7.4
+
