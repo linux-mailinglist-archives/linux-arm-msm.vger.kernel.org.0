@@ -2,75 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C1A94FF092
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 09:29:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 297564FF0A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 09:35:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231985AbiDMHb5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 03:31:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35176 "EHLO
+        id S233376AbiDMHhe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 03:37:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229718AbiDMHb4 (ORCPT
+        with ESMTP id S233384AbiDMHh0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 03:31:56 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 326C43DDE5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:29:35 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id y32so1940978lfa.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:29:35 -0700 (PDT)
+        Wed, 13 Apr 2022 03:37:26 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DE5D4D9E4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:35:03 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id k14so1073587pga.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:35:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=rY7vyMdlEpNIsttCtPLzQ1mgAimhBwJO1tKyaimvoG4=;
-        b=ZWc5DRzC+yYGA1khhGAvv1AqdIyxTwikHCFAXQM4OxtxDTY2v3BeAhwwpvImOk9ezA
-         EctsSxENGFGFFkZkrZpcoGTkmulLyh3rWeFn62oqrKKF2H+NyzGhKX/r91YF+1/BF6m2
-         vFcc4LtRO7sKJdj6lSbM+ZTycfN5B9+dX6+jTsoIvYcfHSO/qqNa8+3jhWrXMmYX1oxD
-         bZnx6bEd8kVaJFEaYO3+WR//lF+gjNomOzHAsFaXrGLlIJXwoCO8aU3mqq3vhxwn5Vzv
-         mOrtDqrmLOA+Gt+nyz/GP2LGtK52C1H26npq3xk+otWIXph+hmF8yZtC+rj2ghfKm5Ql
-         z6Lg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=4shEO0FDjWAPEb/iOkbhrTf4wcohhpVSh+KPI0icLZI=;
+        b=qets2QwMPoIS07bG1f+KyzSxy6S8KfID+zTuDtEKft9hUvDP7QZj5L+WzEREoAmiY/
+         XOrB4o04xL+0RYSOVEMDw3reHRpqsa51k5T4ihGVeqQBAk9Ho2mspk66Bl+l56Dr6PnA
+         OXMaSzqgFA6Cu3ryvS2nNYt+BMVcjYDJCeoyictMJ5uwYo8Q+jDXBNZtA56w09lyCRZe
+         YKuZbPQDp/Lmcn2qX0ZVrncFMbVbfr15nMmbXBHqjWfTdFcFYfj5OcOArO5W40hVsUn2
+         a51Mapulb8/S926Wh9qcxCXmC7IAcSSPS7a7UXSjHa0/8KiqsCCwgoA+O7nm6GKvATiM
+         mKVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=rY7vyMdlEpNIsttCtPLzQ1mgAimhBwJO1tKyaimvoG4=;
-        b=le4tnr0hTq/M1yqgiyE1RO+vGICCMQ2fY2B3hHPXO8WjKox/8TaJYxK6foFW8BnyZH
-         sFX41av6uXWc7rOcm8MyztlmTTsaxEIFetfgw0ey8WWbnFdTMlQFoROaUYS4KcJD/QHy
-         EEjCZe0PqsFoxepGvdwTWKM1frN0oTfIHesKYD+VktGRfym2C9PfGSrwFmrxzC8kz+PR
-         D2BsQYfXYRIkXVlDHalx+SojFaq5px+lurOWGm/GVyLXMQHIJxxgZtwWyQ9BAzB4QLO0
-         2Ls2kIY8vqkFdQpXBfR+LsnaA2Sh1IdEb9IDEqUd+9vpl1D8I0JKsqWbW2GnlWCrf6xr
-         r2jw==
-X-Gm-Message-State: AOAM533lqJz/LLuEmCzMdVtHitVPxyoGXJaYwovNGsCS9qiBtZb2Ecle
-        PB61LcutKe4b/BItpYfFeMoqZQ==
-X-Google-Smtp-Source: ABdhPJxbpXxaRtGS8rUTdc137nOix+yIIq1RTO6cjqs8ic6+IBNmp3CSmSmUgUfzcJu8+ky5RX0Pyg==
-X-Received: by 2002:a05:6512:308d:b0:464:f074:68cb with SMTP id z13-20020a056512308d00b00464f07468cbmr21784787lfd.482.1649834973445;
-        Wed, 13 Apr 2022 00:29:33 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p21-20020a056512139500b00447c9b87945sm4012100lfa.172.2022.04.13.00.29.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Apr 2022 00:29:32 -0700 (PDT)
-Message-ID: <fc3214b7-8bc2-3c9f-7ea6-231c4c57a8e4@linaro.org>
-Date:   Wed, 13 Apr 2022 10:29:32 +0300
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=4shEO0FDjWAPEb/iOkbhrTf4wcohhpVSh+KPI0icLZI=;
+        b=G9cuaxTNvo7cq2emLlYV/dyTsD9mArssiPVNriqJYp+a5QhnRdY/BROdYShYzm8X09
+         X5OCH/It8LXBFo81UrKoMStnThHXSVNTCMxOkwFLbEsy4kziEssXjxXvfohAqf9Xw/Z9
+         NVN9HHsmwgyYbrEycJzq2yY0Rd3WKQUv6Kn59z6uSpVJ7Zhlb1tEtT8xOZkcX07RKFIe
+         jB5hvpg5gjFQ4TbWQZTiTaT6Rlhn/D7DRGH4UAFTcNUNDI3vweJy4/JSxbBypDDmZRSB
+         xSt0J0EMGjbkcVBXpBenWKew4Zj0FAt7O/ryb6Ne5khzvP5gSNcDIFXH1eSGM6P8T/jW
+         rhVA==
+X-Gm-Message-State: AOAM530Kja+eGLcZ8MmY2UtXiKuXRipnQXNnLZSnTIjX8U/DDnihA2Dx
+        vOeQT1X68nv5qo7cMRGEv3bl
+X-Google-Smtp-Source: ABdhPJzMxUXE89aUhRoeF6JFh0xgIGr9S8og3SCLfG1L88EFRg2hK4A2qSzGupVw4T6UTu0MgphGLw==
+X-Received: by 2002:a63:780f:0:b0:386:5d6f:2153 with SMTP id t15-20020a63780f000000b003865d6f2153mr33053657pgc.555.1649835303345;
+        Wed, 13 Apr 2022 00:35:03 -0700 (PDT)
+Received: from thinkpad ([117.207.28.99])
+        by smtp.gmail.com with ESMTPSA id d8-20020a17090a114800b001cb95a92bd7sm1816639pje.13.2022.04.13.00.34.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Apr 2022 00:35:02 -0700 (PDT)
+Date:   Wed, 13 Apr 2022 13:04:56 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        vkoul@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] phy: qcom-qmp: Add support for SDX65 QMP PHY
+Message-ID: <20220413073456.GC2015@thinkpad>
+References: <1649740652-17515-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1649740652-17515-3-git-send-email-quic_rohiagar@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v4 1/2] dt-bindings: phy: qcom,qmp: Add SM8150 PCIe PHY
- bindings
-Content-Language: en-GB
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-phy@lists.infradead.org
-Cc:     bhupesh.linux@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, vkoul@kernel.org,
-        bjorn.andersson@linaro.org, Rob Herring <robh@kernel.org>
-References: <20220325222130.1783242-1-bhupesh.sharma@linaro.org>
- <20220325222130.1783242-2-bhupesh.sharma@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220325222130.1783242-2-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1649740652-17515-3-git-send-email-quic_rohiagar@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,47 +73,125 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/03/2022 01:21, Bhupesh Sharma wrote:
-> Add the following two PCIe PHYs found on SM8150, to the QMP binding:
+On Tue, Apr 12, 2022 at 10:47:32AM +0530, Rohit Agarwal wrote:
+> Add support for USB3 QMP PHY found in SDX65 platform. SDX65 uses
+> version 5.0.0 of the QMP PHY IP.
 > 
-> QMP GEN3x1 PHY - 1 lane
-> QMP GEN3x2 PHY - 2 lanes
-> 
-> Acked-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+
+I don't have access to SDX65 downstream devicetree source but overall it looks
+good to me.
+
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+Thanks,
+Mani
+
 > ---
->   Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 4 ++++
->   1 file changed, 4 insertions(+)
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 76 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 76 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> index e20d9b087bb8..1e08acb8a59a 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> @@ -39,6 +39,8 @@ properties:
->         - qcom,sdm845-qmp-usb3-phy
->         - qcom,sdm845-qmp-usb3-uni-phy
->         - qcom,sm6115-qmp-ufs-phy
-> +      - qcom,sm8150-qmp-gen3x1-pcie-phy
-> +      - qcom,sm8150-qmp-gen3x2-pcie-phy
->         - qcom,sm8150-qmp-ufs-phy
->         - qcom,sm8150-qmp-usb3-phy
->         - qcom,sm8150-qmp-usb3-uni-phy
-> @@ -336,6 +338,8 @@ allOf:
->                 - qcom,sdm845-qhp-pcie-phy
->                 - qcom,sdm845-qmp-pcie-phy
->                 - qcom,sdx55-qmp-pcie-phy
-> +              - qcom,sm8150-qmp-gen3x1-pcie-phy
-> +              - qcom,sm8150-qmp-gen3x2-pcie-phy
-
-If you add your compatible strings to this block, it means that the dtsi 
-will provide 4 clocks (aux, cfg_ahb, ref and refgen). However judging 
-from the patch 2 it looks like you don't want to provide ref clock?
-
->                 - qcom,sm8250-qmp-gen3x1-pcie-phy
->                 - qcom,sm8250-qmp-gen3x2-pcie-phy
->                 - qcom,sm8250-qmp-modem-pcie-phy
-
-
--- 
-With best wishes
-Dmitry
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> index 8ea87c6..58506b8 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> @@ -2535,6 +2535,50 @@ static const struct qmp_phy_init_tbl sdx55_qmp_pcie_pcs_misc_tbl[] = {
+>  	QMP_PHY_INIT_CFG(QPHY_V4_20_PCS_LANE1_INSIG_MX_CTRL2, 0x00),
+>  };
+>  
+> +static const struct qmp_phy_init_tbl sdx65_usb3_uniphy_tx_tbl[] = {
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0xa5),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_2, 0x82),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_3, 0x3f),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_4, 0x3f),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_PI_QEC_CTRL, 0x21),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_TX, 0x1f),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_RX, 0x0b),
+> +};
+> +
+> +static const struct qmp_phy_init_tbl sdx65_usb3_uniphy_rx_tbl[] = {
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH4, 0xdb),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH3, 0xbd),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH2, 0xff),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH, 0x7f),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_LOW, 0xff),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH4, 0xa9),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH3, 0x7b),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH2, 0xe4),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH, 0x24),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_LOW, 0x64),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_PI_CONTROLS, 0x99),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SB2_THRESH1, 0x08),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SB2_THRESH2, 0x08),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SB2_GAIN1, 0x00),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SB2_GAIN2, 0x04),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FASTLOCK_FO_GAIN, 0x2f),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FASTLOCK_COUNT_LOW, 0xff),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FASTLOCK_COUNT_HIGH, 0x0f),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FO_GAIN, 0x0a),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_VGA_CAL_CNTRL1, 0x54),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_VGA_CAL_CNTRL2, 0x0f),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_EQU_ADAPTOR_CNTRL2, 0x0f),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_EQU_ADAPTOR_CNTRL4, 0x0a),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_EQ_OFFSET_ADAPTOR_CNTRL1, 0x47),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_OFFSET_ADAPTOR_CNTRL2, 0x80),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_SIGDET_CNTRL, 0x04),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_SIGDET_DEGLITCH_CNTRL, 0x0e),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_DFE_CTLE_POST_CAL_OFFSET, 0x38),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SO_GAIN, 0x05),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_GM_CAL, 0x00),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_RX_SIGDET_ENABLES, 0x00),
+> +};
+> +
+>  static const struct qmp_phy_init_tbl sm8350_ufsphy_serdes_tbl[] = {
+>  	QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_EN_SEL, 0xd9),
+>  	QMP_PHY_INIT_CFG(QSERDES_V5_COM_HSCLK_SEL, 0x11),
+> @@ -4217,6 +4261,35 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
+>  	.pwrdn_delay_max	= 1005,		/* us */
+>  };
+>  
+> +static const struct qmp_phy_cfg sdx65_usb3_uniphy_cfg = {
+> +	.type			= PHY_TYPE_USB3,
+> +	.nlanes			= 1,
+> +
+> +	.serdes_tbl		= sm8150_usb3_uniphy_serdes_tbl,
+> +	.serdes_tbl_num		= ARRAY_SIZE(sm8150_usb3_uniphy_serdes_tbl),
+> +	.tx_tbl			= sdx65_usb3_uniphy_tx_tbl,
+> +	.tx_tbl_num		= ARRAY_SIZE(sdx65_usb3_uniphy_tx_tbl),
+> +	.rx_tbl			= sdx65_usb3_uniphy_rx_tbl,
+> +	.rx_tbl_num		= ARRAY_SIZE(sdx65_usb3_uniphy_rx_tbl),
+> +	.pcs_tbl		= sm8350_usb3_uniphy_pcs_tbl,
+> +	.pcs_tbl_num		= ARRAY_SIZE(sm8350_usb3_uniphy_pcs_tbl),
+> +	.clk_list		= qmp_v4_sdx55_usbphy_clk_l,
+> +	.num_clks		= ARRAY_SIZE(qmp_v4_sdx55_usbphy_clk_l),
+> +	.reset_list		= msm8996_usb3phy_reset_l,
+> +	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+> +	.vreg_list		= qmp_phy_vreg_l,
+> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> +	.regs			= sm8350_usb3_uniphy_regs_layout,
+> +
+> +	.start_ctrl		= SERDES_START | PCS_START,
+> +	.pwrdn_ctrl		= SW_PWRDN,
+> +	.phy_status		= PHYSTATUS,
+> +
+> +	.has_pwrdn_delay	= true,
+> +	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+> +	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+> +};
+> +
+>  static const struct qmp_phy_cfg sm8350_ufsphy_cfg = {
+>  	.type			= PHY_TYPE_UFS,
+>  	.nlanes			= 2,
+> @@ -6044,6 +6117,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
+>  		.compatible = "qcom,sdx55-qmp-usb3-uni-phy",
+>  		.data = &sdx55_usb3_uniphy_cfg,
+>  	}, {
+> +		.compatible = "qcom,sdx65-qmp-usb3-uni-phy",
+> +		.data = &sdx65_usb3_uniphy_cfg,
+> +	}, {
+>  		.compatible = "qcom,sm8350-qmp-usb3-phy",
+>  		.data = &sm8350_usb3phy_cfg,
+>  	}, {
+> -- 
+> 2.7.4
+> 
