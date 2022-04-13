@@ -2,61 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 098CB4FF04C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 09:04:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 299914FF056
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 09:06:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230332AbiDMHGd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 03:06:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50934 "EHLO
+        id S233210AbiDMHIO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 03:08:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229689AbiDMHGb (ORCPT
+        with ESMTP id S232134AbiDMHIN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 03:06:31 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 052122DAA7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:04:12 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id c1so962652qvl.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:04:11 -0700 (PDT)
+        Wed, 13 Apr 2022 03:08:13 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13E12ED64
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:05:52 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id 125so962114pgc.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:05:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BU+xGeDrL0dqggaTnsKhPbMe9pU5gcDq8YBrXIQqSms=;
-        b=j25nlSHuu/5tzcW2TTcBM051LooSj8CFdP6VXZvKujMRwCsr6WOMmza1414SdddWK4
-         ITM8/meETeUGEg2jjKjC3xQWHklU8EBitC+30UJ1WUF35PU2+qsxhMbKthp8bhDdnI9K
-         DvBdt8UmUBk7nWwwEH3sCV5m3PKTEOAKeWKq1va10J0aj6scBkPcUs4OfcIM6p4d3zrn
-         RIXeFaw0+9N+GVmNFOa63ZNE0QrtlhK5V1jeoazUCOkgyB70hjVSQRoHrnmdg2lpLOJ2
-         U2+dPF20AWH7jIsbJZe7FAZJNEFEGY3p/BxSy1vuuaxdp75C87hGfLxspCT2xccr1Eyt
-         1YHA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wA/XhN+liF7FNQdYD63xlSjmBiv/wnn45LKu56yG8aw=;
+        b=AreLMy3LsZ/2P+aighUoU5gjlgpeBV8R7aO4E6ZmNrH9sPFlHDYfXCQ9dsaQSKUUDZ
+         jV695MA6AjTW9RaVAKwYYDjPOSnx5VhKZBhY+t+VOpMmHsvuvmUO3uevsu7U4SoQZX/Q
+         hKY670Ht3+qDXUL6ihxfD4vmxjl3ro3ScX1SDiJ3bn9yNvTvyI5Jk5d9mYgm8hoPX7qr
+         1+qPrlrepeFD1qFKz+Inw4HQwj7zVmeaIa1RIZvKj+dElNrFnhxT76DSr9HnuNU6qNNj
+         CDAr/V+AXPW6hm65wKobzJCFQHpgmZ/HCfP68ZL1bibg1imj6sYE0SrrHqGdYcyfLpKZ
+         /IFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BU+xGeDrL0dqggaTnsKhPbMe9pU5gcDq8YBrXIQqSms=;
-        b=Pcik/owBZHD/jNiamPmacWBDiQXI99bCJYQASDNGfMLdml20BUGhRS7WlYHnqf+gGZ
-         XjLAboK8DECCpJJtvbrQtGf1MzC2fJz/ROXnSz3V0unwN+Zg8wZR/Uebhi2l4luGOEnd
-         b20SPNu16+fETlOPYm6e0XIcE9lQH1iESjJA6Z2lOkti66fU5sZ0WH6sqDpwEOdrbWgw
-         dAHDjGNAkxMuwMOjM2dKYlWsuTth+vBm/IVZSqKMFO4EJ2MfHJtmdk5HC4XqI1RYc7VG
-         Qet7OQvyweiHM72ApnG3NWAAWo1SjQgRS9AjdJ/DLiKfZQ3rImw2GVaNqRhZWVwDwZKa
-         G+Jg==
-X-Gm-Message-State: AOAM531WlANyiONM/xhphqfb6PVnHLGgNcPvIgzxT3krwilxC/k258tC
-        S/igTVtHbPdU6DCSLKRuZ5kRKmX2lvKD/LaZXJMhog==
-X-Google-Smtp-Source: ABdhPJzuIHESbnHURnzZxCFN8adjB+/3Hl2djJNXF6wvoqTVn5r4Dwl2bGvdrjsJ3UemVSogR2tIaz+E2GKr0lJnoLE=
-X-Received: by 2002:a05:6214:921:b0:443:ce3d:577b with SMTP id
- dk1-20020a056214092100b00443ce3d577bmr34905670qvb.122.1649833451148; Wed, 13
- Apr 2022 00:04:11 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wA/XhN+liF7FNQdYD63xlSjmBiv/wnn45LKu56yG8aw=;
+        b=h7v2eieTXjvZuGVq6FZH970tOQHsZDzoHFMdqLlM2T8+hEeWIxdlUrsdJBOXqrFAD6
+         vL65eVrbAr6V30Iv48OSd1SHsfVY6IwYEaD0yB1ToUxlIiAJgyr2Ets/1KsMMoBqK6IQ
+         6LMzWaOQMgJG0ndZOs5waOQ0U/NfdP18woR8lYNsYyXo3UQ/26/qMesINBSTOIabX5vt
+         GEZSQb4uRoAKZBJWkYNyP8OB4vrQBm5eWU/Ls1dk69i8bOcizDxVAMt03Q8tYDVnUJU8
+         HeUgcESUbN0TGmHb56D98Imheh2VhOi96ZQiDZKjbEJ3keNemqU9zjdFrtWXQ3Yg1odi
+         nSvQ==
+X-Gm-Message-State: AOAM532XedXzsuiW0Yxm2qoL4EfkXXhXe93b/aj3HcOEKZCy6hWXxpeC
+        Xqkadq/COHnG0lTJO2ak+K0v
+X-Google-Smtp-Source: ABdhPJzozXDajJ1TNHGEamoE5ZZSxjlxIF5/046swX9Uyn7xnV9vkvwlcsjXH3KBZ12ieR4vKeneWw==
+X-Received: by 2002:a05:6a00:10cc:b0:505:ada6:e03e with SMTP id d12-20020a056a0010cc00b00505ada6e03emr17405824pfu.45.1649833552212;
+        Wed, 13 Apr 2022 00:05:52 -0700 (PDT)
+Received: from thinkpad ([117.207.28.99])
+        by smtp.gmail.com with ESMTPSA id t15-20020a63b70f000000b00381510608e9sm5035307pgf.14.2022.04.13.00.05.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Apr 2022 00:05:51 -0700 (PDT)
+Date:   Wed, 13 Apr 2022 12:35:42 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Kalle Valo <kvalo@kernel.org>,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        rajatja@google.com, refactormyself@gmail.com,
+        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        swboyd@chromium.org, linux-wireless@vger.kernel.org,
+        ath11k@lists.infradead.org
+Subject: Re: [PATCH v4] PCI: qcom: Add system PM support
+Message-ID: <20220413070542.GB2015@thinkpad>
+References: <1646679306-4768-1-git-send-email-quic_pmaliset@quicinc.com>
+ <20220412060144.GA41348@thinkpad>
+ <87k0buoa9j.fsf@kernel.org>
+ <20220413054904.GA2015@thinkpad>
+ <CAA8EJprcQtVFvjL_WsMoDxvPSAqaRMS90ZuTsD_cDuujtr83Xw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20220310220723.3772-1-ansuelsmth@gmail.com> <YlY3rPpYvclK8L3z@builder.lan>
-In-Reply-To: <YlY3rPpYvclK8L3z@builder.lan>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 13 Apr 2022 10:03:59 +0300
-Message-ID: <CAA8EJprEYgWTp5KJ1TSGC8EKbuw1XP+jz7D5BaCP0rEsEPVsuQ@mail.gmail.com>
-Subject: Re: [PATCH] firmware: qcom_scm: Add compatible for ipq806x
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJprcQtVFvjL_WsMoDxvPSAqaRMS90ZuTsD_cDuujtr83Xw@mail.gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -67,56 +82,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 13 Apr 2022 at 05:38, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Thu 10 Mar 16:07 CST 2022, Ansuel Smith wrote:
->
-> > Add compatible for ipq806x. Just like ipq4019, ipq806x doesn't require
-> > Core, Iface or Bus clock.
+On Wed, Apr 13, 2022 at 09:36:30AM +0300, Dmitry Baryshkov wrote:
+> On Wed, 13 Apr 2022 at 08:49, Manivannan Sadhasivam
+> <manivannan.sadhasivam@linaro.org> wrote:
 > >
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > ---
-> >  drivers/firmware/qcom_scm.c | 1 +
-> >  1 file changed, 1 insertion(+)
+> > On Tue, Apr 12, 2022 at 01:40:08PM +0300, Kalle Valo wrote:
+> > > + ath11k
+> > >
+> > > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+> > >
+> > > > +Kalle, linux-wireless
+> > > >
+> > > > On Tue, Mar 08, 2022 at 12:25:06AM +0530, Prasad Malisetty wrote:
+> > > >> Add suspend_noirq and resume_noirq callbacks to handle
+> > > >> system suspend and resume in dwc PCIe controller driver.
+> > > >>
+> > > >> When system suspends, send PME turnoff message to enter
+> > > >> link into L2 state. Along with powerdown the PHY, disable
+> > > >> pipe clock, switch gcc_pcie_1_pipe_clk_src to XO if mux is
+> > > >> supported and disable the pcie clocks, regulators.
+> > > >>
+> > > >
+> > > > Kalle, is this behaviour appropriate for WLAN devices as well? The devices
+> > > > will be put into poweroff state (assuming no Vaux provided in D3cold) during
+> > > > system suspend.
+> > >
+> > > ath11k leaves the firmware running during suspend. I don't fully
+> > > understand what the patch is doing, but if it cuts the power from the
+> > > WLAN chip during suspend that will break ath11k.
+> > >
 > >
-> > diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> > index 7db8066b19fd..7348c5894821 100644
-> > --- a/drivers/firmware/qcom_scm.c
-> > +++ b/drivers/firmware/qcom_scm.c
-> > @@ -1338,6 +1338,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
-> >                                                            SCM_HAS_IFACE_CLK |
-> >                                                            SCM_HAS_BUS_CLK)
-> >       },
-> > +     { .compatible = "qcom,scm-ipq806x" },
->
-> If you in your dt do:
->
->         compatible = "qcom,scm-ipq806x", "qcom,scm";
->
-> Then we don't need to update the driver for each platform, only the DT
-> binding.
->
-> And if we some day need to quirk something off qcom,scm-ipq806x we have
-> that option.
+> > Thanks Kalle for the confirmation. Yes the device will be put into D3cold state
+> > and that will most likely equal to poweroff state.
+> 
+> Just to remind that ath11k on Qualcomm boards has a separate power
+> supply, not directly tied to the PCIe power supply.
+> 
 
-I suppose that ipq806x might need SCM_HAS_CORE_CLK. Or, more likely,
-an interconnect vote, once we have interconnect drivers for
-ipq/apq8064 platforms.
+It may change in the future or on a different OEM setup. Irrespective of that,
+this patch sends the PME_Turn_Off event to the ep devices. The devices in turn
+will shutdown the internal resources for poweroff/refclk removal. Therefore the
+device state shall be lost.
 
->
-> Thanks,
-> Bjorn
->
-> >       { .compatible = "qcom,scm-ipq4019" },
-> >       { .compatible = "qcom,scm-mdm9607", .data = (void *)(SCM_HAS_CORE_CLK |
-> >                                                            SCM_HAS_IFACE_CLK |
-> > --
-> > 2.34.1
-> >
+Thanks,
+Mani
 
-
-
--- 
-With best wishes
-Dmitry
+> > Prasad, you should try to just turn off the host resources like clocks and
+> > regulators (not refclk) and let the device be in the default state
+> > (D3hot/L{0/1}?) during suspend.
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
