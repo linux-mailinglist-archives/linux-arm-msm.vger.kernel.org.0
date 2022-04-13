@@ -2,128 +2,232 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C38EF4FFCAB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 19:28:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A08D4FFCCC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 19:31:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235815AbiDMRam (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 13:30:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36954 "EHLO
+        id S237361AbiDMRd5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 13:33:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235798AbiDMRam (ORCPT
+        with ESMTP id S237286AbiDMRd4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 13:30:42 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C3F86C1EB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 10:28:19 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id t1so3640557wra.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 10:28:19 -0700 (PDT)
+        Wed, 13 Apr 2022 13:33:56 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DCD8657A5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 10:31:34 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id bn33so3077329ljb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 10:31:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=wmTTJc7cl6oOaGuqAfmrOjx/4kHHCDLsI0qGb1ByPRU=;
-        b=Gv0EL/ZxgM6nD/QdcZ5kwRGNHJ/sBQhPXzudfQnBcFAvkiSRamLbDDwEAKzysR8fZi
-         mphBn6flOXPHW3LAXs+Zd7s8O6qADVOFbZuBCNbn2gtGKkEymkN7XVYhG5DDDlAOWzOs
-         utVWGr4rUfXkLa1DITlFJhpDRVozlE8qDeGyew1EEQNZA7eFCTEk6OI5rooUkOn6p++C
-         APPgG08rQY1IRAV84oExr/vkG4PDnweWiJMBqkfM0CP9jT/jSpJtkEXo1thptFAYRnji
-         oWb/VLM2mdQ30uAjW4CXZlO78guqimS2qA4OgPDAU8xJVc1JEWf1a/+qrr4bfQCW3i1a
-         MPGw==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=ZSkkiX2l2IaW7bhqeNPG13mopQdSjssIldNwTvycvck=;
+        b=CPOXl+WyG9/ZJLu0KTfU8PC5z7Be12tuDbF2hl+bVuUh5JO53r12N/61vhL1VgkMIp
+         /3sznzpoShoavN7DB7iiAsUg9PwE1/QlP+OrLBfUBjTri2Uyed1xSLzvZ+ZBNR7xcg77
+         x9jEXuf2NJG+G2+63wKW4uxJ6K2oi7w10dZlqx1guFTio2/k0EZSwAozgxN8dxg7+37r
+         WL1A1/I56sGTUF99/x5bbux8usqxkgRrMlB20jgF4d6lJ0uqPCK2DpsIzxEkrcih4V5u
+         InkmgJHqq9PPZu6gJ5xfPfxiaXepqFE+LdMPc5Gtb3HFoZJK1J5GClpe/W7gexeWcXjv
+         JmCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=wmTTJc7cl6oOaGuqAfmrOjx/4kHHCDLsI0qGb1ByPRU=;
-        b=fiaT4DOgYCLXJNBmmxK6vB9Wgtk1BFDhhtsUalF7/Wopl5WstVMCjHCi4cOZHu4c54
-         /JD9pThq+/T67stp5+mTmhLQ3QNuLjsmpk4tGBhkRh5EfWj2ZuMdMa75bOoZVYwNuV8y
-         OUkP7CPZN26L2LGn/SH60Xy+v2nNrVu78F7tJQWeqRuZ3pmHdu1rBrw6HkSxdtQ7BKT8
-         OnMoezr5nYphG3CL+O55rPzM2xBCYXWblgyQNGnsbEIVrq9anNvn9FX+GyN1A0uxjlfU
-         pyOoMSLWD/nCnhYoYd/uitml3jbe99NfjKLR29cX0gIv3jBk1Uc+MClpAKvvCBetV14S
-         itfw==
-X-Gm-Message-State: AOAM530jhzpYEq14gkVgpmpRVizZm85DFb3FUJM1/7yWcpkBRkRquoGn
-        SDTKHPbuSbmbRWlGej+wcWA36JwDb5ktbnD/Buw=
-X-Google-Smtp-Source: ABdhPJyZ1BaUvX4fdp9fHfEfMZEDBiKMqmJvGwIR/qqtcLJHzy6ocEtB/UGcnZkibsi6xA0n8HSz3NR+93CMmZd70x0=
-X-Received: by 2002:adf:9111:0:b0:206:c9b:ce0d with SMTP id
- j17-20020adf9111000000b002060c9bce0dmr33934513wrj.418.1649870897772; Wed, 13
- Apr 2022 10:28:17 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ZSkkiX2l2IaW7bhqeNPG13mopQdSjssIldNwTvycvck=;
+        b=GoJWOQmM0EIXJFBH6dA2JYtqq779rI5tSvlrB8ASY4P/eNRl0CRUpOt7xcwM/z7Wxn
+         MMShL3KMfMJm5aqfhZz1cSjhQKR/lry+NfUkACTkIW4kdA0DtS3AuvlRA6nUO2WORU0P
+         eVG6IeM4lzFW9zAW4BD7IqWyxnR29i4AfcN4EmzSElF8yhjSfeXJfghlwlVCDrWEIItV
+         1OlMf+vVJQ7WzyNVliVm+5aoGaIF2eCXvwoQtM9/7eMpIWiFMa5vuvMzSYd+5EVmKQXC
+         goux8uEZ4fW84zyNH89RNUQtR2HhqHeHBM4TMyoWlIEq/dNkG5XYBw39yW5kd5+sOXPi
+         Ctng==
+X-Gm-Message-State: AOAM5326rA/dvhIZpKU8AymIUgByLCzTv3pG404HUdLOa22jKkDNrdMm
+        BVFg5ETH4RPZDS5eJEbwGAt0Mg==
+X-Google-Smtp-Source: ABdhPJxEnHmKa8qvzDBl7x3aaaYd1nbYS7kguJNtQFX/AcBo3M73o+DYwzM/1qST05viZ6ZnbvuqVw==
+X-Received: by 2002:a2e:91cf:0:b0:24b:5ade:acbb with SMTP id u15-20020a2e91cf000000b0024b5adeacbbmr13430773ljg.473.1649871092329;
+        Wed, 13 Apr 2022 10:31:32 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a26-20020a19fc1a000000b0046ba3b78b86sm1349297lfi.41.2022.04.13.10.31.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 10:31:31 -0700 (PDT)
+Message-ID: <c5af6c12-961d-43e2-31ea-cbda9ac347cf@linaro.org>
+Date:   Wed, 13 Apr 2022 20:31:31 +0300
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 13 Apr 2022 10:29:20 -0700
-Message-ID: <CAF6AEGvuTwx09MKwK68KWXqi4o7LxDGMUz1=Z7xOS+i=OV84Ug@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-fixes-2022-04-13 for v5.18
-To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH v6 00/18] Modernize rest of the krait drivers
+Content-Language: en-GB
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20220321231548.14276-1-ansuelsmth@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220321231548.14276-1-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave & Daniel,
+On 22/03/2022 02:15, Ansuel Smith wrote:
+> This is a follow-up to the ipq806x gcc modernize series. Manu cleanup
+> changes and also some discoveries of wrong definition notice only with
+> all these conversions.
 
-A few fixes for v5.18.
+General comment regarding this patch series. It contains fixes, clock 
+conversion for several drivers, dts fixes, etc. It's, for example, not 
+straightforwardly obvious if Bjorn can pickup patches 04 or 06 without 
+picking up other patches.
 
-The following changes since commit 05afd57f4d34602a652fdaf58e0a2756b3c20fd4:
+If would be best if you can split this series or at least pull fixes to 
+be the first patches in the pile.
 
-  drm/msm/gpu: Fix crash on devices without devfreq support (v2)
-(2022-03-08 13:55:23 -0800)
+Patch 01 is only used by patch 10, they can stay close.
 
-are available in the Git repository at:
+In some of the commit messages you describe what do they do, but you 
+completely omit the reason for the change, why is the change necessary.
+(Yes, I spot that because I also too often skip that).
 
-  https://gitlab.freedesktop.org/drm/msm.git drm-msm-fixes-2022-04-13
+> 
+> The first patch is an improvement of the clk_hw_get_parent_index. The
+> original idea of clk_hw_get_parent_index was to give a way to access the
+> parent index but for some reason the final version limited it to the
+> current index. We change it to give the current parent if is not
+> provided and to give the requested parent if provided. Any user of this
+> function is updated to follow the new implementation.
+> 
+> The patch 2 and 3 are some additional fixes for gcc.
+> The first one is a fix that register the pxo and cxo fixed clock only if
+> they are not defined in DTS.
+> The patch 3 require some explaination. In short is a big HACK to prevent
+> kernel panic with this series.
+> 
+> The kpss-xcc driver is a mess.
+> The Documentation declare that the clocks should be provided but for some
+> reason it was never followed.
+> In fact in the ipq8064 DTSI only the clocks for l2cc are declared but
+> for cpu0 and cpu1 the clocks are not defined.
+> The kpss-xcc driver use parent_names so the clks are ignored and never
+> used so till now it wasn't a problem (ignoring the fact that they
+> doesn't follow documentation at all)
+> On top of that, the l2cc node declare the pxo clock in a really strange
+> way. It's declared using the PXO_SRC gcc clock that is never defined in
+> the gcc ipq8064 clock table. (the correct way was to declare a fixed
+> clock in dts and reference that)
+> To prevent any kind of problem we use the patch 3 and provide the clk
+> for PXO_SRC in the gcc clock table. We manually provide the clk after
+> gcc probe.
+> 
+> Patch 4 is just a minor cleanup where we use the poll macro
+> 
+> Patch 5 is the actually kpss-xcc conversion to parent data
+> 
+> Patch 6-7 should be a fixup of a real conver case
+> 
+> Patch 8 converts the krait-cc to parent_data
+> Patch 9 give some love to the code with some minor fixup
+> Patch 10 drop the hardcoded safe sel and use the new
+> clk_hw_get_parent_index to get the safe parent index.
+> (also I discovered that the parent order was wrong)
+> 
+> Patch 11 is an additional fixup to force the reset of the muxes even
+> more.
+> 
+> Patch 12-13 are some additiona taken from the qsdk that were missing in
+> the upstream driver
+> 
+> Patch 14 converts krait-cc to yaml
+> 
+> Patch 15 add to krait-cc Documentation the L2 clocks
+> 
+> Patch 16 converts the kpss-acc driver to yaml and fix some Documentation
+> error
+> 
+> Patch 17 convets the kpss-gcc driver to yaml
+> 
+> Patch 18 finally adds all this stuff to the ipq8064 dtsi (and fix the
+> stupid PXO_SRC phandle)
+> 
+> I tested this series on a ipq8064 SoC by running a cache benchmark test
+> to make sure the changes are correct and we don't silently cause
+> regressions. Also I compared the output of the clk_summary every time
+> and we finally have a sane output where the mux are correctly placed in
+> the correct parent. (till now we had the cpu aux clock all over the
+> place, probably never cause problems but who knows.)
+> 
+> v6:
+> - Move dts patch as last patch
+> - Address commencts from Rob
+> - Fix warning from make dtbs_check
+> v5:
+> - Address comments from Krzysztof
+> v4:
+> - Fix more dt-bindings bog errors
+> v3:
+> - Split Documentation files for kpss and krait-cc
+> v2:
+> - introduce new API instead of fixing the existing one
+> - do not reorganize variables in krait-cc
+> - fix some comments error and improve it
+> - return better error for patch 7
+> - fix missing new line on patch 16
+> 
+> Ansuel Smith (18):
+>    clk: introduce clk_hw_get_index_of_parent new API
+>    clk: qcom: gcc-ipq806x: skip pxo/cxo fixed clk if already present
+>    clk: qcom: gcc-ipq806x: add PXO_SRC in clk table
+>    clk: qcom: clk-hfpll: use poll_timeout macro
+>    clk: qcom: kpss-xcc: convert to parent data API
+>    clk: qcom: clk-krait: unlock spin after mux completion
+>    clk: qcom: clk-krait: add hw_parent check for div2_round_rate
+>    clk: qcom: krait-cc: convert to parent_data API
+>    clk: qcom: krait-cc: drop pr_info and register qsb only if needed
+>    clk: qcom: krait-cc: drop hardcoded safe_sel
+>    clk: qcom: krait-cc: force sec_mux to QSB
+>    clk: qcom: clk-krait: add apq/ipq8064 errata workaround
+>    clk: qcom: clk-krait: add enable disable ops
+>    dt-bindings: clock: Convert qcom,krait-cc to yaml
+>    dt-bindings: clock: Add L2 clocks to qcom,krait-cc Documentation
+>    dt-bindings: arm: msm: Convert kpss-acc driver Documentation to yaml
+>    dt-bindings: arm: msm: Convert kpss-gcc driver Documentation to yaml
+>    ARM: dts: qcom: qcom-ipq8064: add missing krait-cc compatible and
+>      clocks
+> 
+>   .../bindings/arm/msm/qcom,kpss-acc.txt        |  49 -----
+>   .../bindings/arm/msm/qcom,kpss-acc.yaml       |  94 +++++++++
+>   .../bindings/arm/msm/qcom,kpss-gcc.txt        |  44 -----
+>   .../bindings/arm/msm/qcom,kpss-gcc.yaml       |  69 +++++++
+>   .../bindings/clock/qcom,krait-cc.txt          |  34 ----
+>   .../bindings/clock/qcom,krait-cc.yaml         |  65 ++++++
+>   arch/arm/boot/dts/qcom-ipq8064.dtsi           |  24 ++-
+>   drivers/clk/clk.c                             |  14 ++
+>   drivers/clk/qcom/clk-hfpll.c                  |  13 +-
+>   drivers/clk/qcom/clk-krait.c                  |  44 ++++-
+>   drivers/clk/qcom/clk-krait.h                  |   1 +
+>   drivers/clk/qcom/gcc-ipq806x.c                |  27 ++-
+>   drivers/clk/qcom/kpss-xcc.c                   |  25 +--
+>   drivers/clk/qcom/krait-cc.c                   | 186 ++++++++++--------
+>   include/linux/clk-provider.h                  |   1 +
+>   15 files changed, 453 insertions(+), 237 deletions(-)
+>   delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
+>   create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
+>   delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
+>   create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
+>   delete mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.txt
+>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.yaml
+> 
 
-for you to fetch changes up to 390d645877ffd6dcb55f162d618045b2779217b3:
 
-  drm/msm/gpu: Avoid -Wunused-function with !CONFIG_PM_SLEEP
-(2022-04-11 18:35:31 -0700)
-
-----------------------------------------------------------------
-Dmitry Baryshkov (1):
-      dt-bindings: display/msm: another fix for the dpu-qcm2290 example
-
-Kuogee Hsieh (1):
-      drm/msm/dp: add fail safe mode outside of event_mutex context
-
-Marijn Suijten (1):
-      drm/msm/dpu: Use indexed array initializer to prevent mismatches
-
-Nathan Chancellor (1):
-      drm/msm/gpu: Avoid -Wunused-function with !CONFIG_PM_SLEEP
-
-Rob Clark (5):
-      drm/msm/gpu: Rename runtime suspend/resume functions
-      drm/msm/gpu: Park scheduler threads for system suspend
-      drm/msm/gpu: Remove mutex from wait_event condition
-      drm/msm: Add missing put_task_struct() in debugfs path
-      drm/msm: Fix range size vs end confusion
-
-Robin Murphy (1):
-      drm/msm: Stop using iommu_present()
-
-Stephen Boyd (1):
-      drm/msm/dsi: Use connector directly in msm_dsi_manager_connector_init()
-
-Xiaoke Wang (2):
-      drm/msm/disp: check the return value of kzalloc()
-      drm/msm/mdp5: check the return of kzalloc()
-
- .../bindings/display/msm/dpu-qcm2290.yaml          |  4 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  2 +-
- drivers/gpu/drm/msm/adreno/adreno_device.c         | 80 +++++++++++++++++-----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c  | 34 ++++-----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c         |  3 +
- drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c  |  2 +
- drivers/gpu/drm/msm/dp/dp_display.c                |  6 ++
- drivers/gpu/drm/msm/dp/dp_panel.c                  | 20 +++---
- drivers/gpu/drm/msm/dp/dp_panel.h                  |  1 +
- drivers/gpu/drm/msm/dsi/dsi_manager.c              |  2 +-
- drivers/gpu/drm/msm/msm_drv.c                      |  2 +-
- drivers/gpu/drm/msm/msm_gem.c                      |  1 +
- 12 files changed, 109 insertions(+), 48 deletions(-)
+-- 
+With best wishes
+Dmitry
