@@ -2,70 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 968B750025F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 01:14:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7998500269
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 01:17:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239141AbiDMXQa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 19:16:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34408 "EHLO
+        id S238082AbiDMXUI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 19:20:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239133AbiDMXQ3 (ORCPT
+        with ESMTP id S238107AbiDMXUG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 19:16:29 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AD2425C6A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 16:14:05 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id q129so3673978oif.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 16:14:05 -0700 (PDT)
+        Wed, 13 Apr 2022 19:20:06 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B3FE25E89
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 16:17:43 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id k22so4686479wrd.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 16:17:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=dorfVU/xJSabHsQtVBWrq/Iqc9CAJtp4oOExMJgEUDQ=;
-        b=m+OmSD/e4we/K+vygGa6butFRkA8E+g/p2ckEiZ/uW+cVdyspvoJRGw+9FyyXam5cq
-         tKUR+8UFC5n7VmwCQP8rHi/+hQ5PDk//cvhjT5HtpMvvW9ER33VqwEDQkbDEFxhsM7hb
-         z5Yse8JE+ZpUXuCYKRHbRXAPEJQEZ0GE9T76A=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FtEiq6V4Qf6K8w6u8ULm+qXCUm/m9qWMOF4cHC4ZNeY=;
+        b=noAzADUqXt66SR9+PQGD+9nDCP2jjuS8UHfackVbD1IRP9S9tVP3yJucAriMGSoUU4
+         4M1XC1WJ37Dr/X4WGicLhtWoE9VZmWEFK5rF2bw3rLMjHz4XBtrRFTSHOPf07H9G/ax/
+         0u9rxdhZ+8sK8113MRNUi5AJK53jgSgckPcbw/3SgjyolWAV5lIWacGivoXRKfAMeTxX
+         KUp7O8zJuiKNcNoAfoof1PG7+9DVGicUg9AU/Bx+dnD/NeNrjZn1FQbdUjrh4XDrSRjQ
+         TXVANFdIVtOoNHdQ7+xlOzFX3FQbyrDrsx+uLNdQCM1oKlwWHqUyjUZWqKAz/OLYEie/
+         3fSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=dorfVU/xJSabHsQtVBWrq/Iqc9CAJtp4oOExMJgEUDQ=;
-        b=vM1uDNUuydKiRBMWcpmHgr8AJtISkGkY/F4LmzTgmM0dkIXw3ezdvWSPdzr7VGdIz9
-         qRlRQUnjdFnbcDa/fmm2+2AHUoQrKXGwGfz+x+tang77gLNQTT4XAvSxnPY9J7IaTzj4
-         xRuPHjeWe5MKrwR8QO/Q1Dnvq7NZG07gpAoDJDZobStPrv+WogiR1mF5dQnJMUlWK2oN
-         Zhhwe1EofihmjdSXpVwBOvO6jfYFgk8cPl97UhXKuRO0CJCm05yIJea5NrIUg4/SQ2O5
-         buWvh98ylipLKun7p6y9k2ctBLU7Z51Js1ZpoJXajigV9zJl2L8vintXdKA30mJuc/tD
-         19Ow==
-X-Gm-Message-State: AOAM532MxkNZQP1BGIdjtAHc8MaI8BaoZ0H/E8Y/WwZxg/RXK3clr93R
-        0XLscVITuiqkXtpodDpcevLmBYTj/b5o3mJEwyangg==
-X-Google-Smtp-Source: ABdhPJy/y7cGBki5XtEew+aPGYslTH0aAHoZeAOee7B/n9e30cebHJofLtYmhLy+51DqypLaLc+k7XKo3IKWa8yDq70=
-X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
- n62-20020acabd41000000b002ecff42814fmr195472oif.63.1649891644404; Wed, 13 Apr
- 2022 16:14:04 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 13 Apr 2022 16:14:02 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FtEiq6V4Qf6K8w6u8ULm+qXCUm/m9qWMOF4cHC4ZNeY=;
+        b=bqQWHV6MmmsEP4em2wkrESS/NUGvc37lP9eH0Bo+FKVD5xq9vTiB44gwbHV8TwsEO7
+         XzMGDqcbz7YDwJL06ZgVI8+amX5giztSHBzgGHKg7iONxv6PyOt9T1gQRx6FNssFPKR6
+         62zP8rayktvxQoGmxTbZnVGw9DsEB151idx9LK9HIzN+VMPSnzP1USrP5nfE1Incu14U
+         JhK3lN+chbPbn1FGcBl3JHmxhCVrUiPVij6jfqEYWgMOr1S7jGezNiBF+b1TU/DzGyAp
+         El4LPp9dFwBd1PATj59Y/HfAGT83sFd21DHKWYBGiuW0YFDdTLw5Ca20gydKq5p2hyd9
+         HkAw==
+X-Gm-Message-State: AOAM531dy0TuQMUJaDTc85yxNnrnQE+sHnKs9bYiIsMmeZLOBS23hD5X
+        kGPwlp8zEKa8FpBL4jC5wXcljw==
+X-Google-Smtp-Source: ABdhPJxa/fsCZ6PNEtUyrIX/yEI5YTtYrkxg1SEP6HzmiJCpVBZpvgKkmvDLJ0sika/1ffa4oSwKJQ==
+X-Received: by 2002:a5d:47ae:0:b0:207:a629:9845 with SMTP id 14-20020a5d47ae000000b00207a6299845mr750233wrb.125.1649891862008;
+        Wed, 13 Apr 2022 16:17:42 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id c12-20020a05600c0a4c00b00381141f4967sm205184wmq.35.2022.04.13.16.17.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Apr 2022 16:17:41 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     dmitry.baryshkov@linaro.org, jonathan@marek.ca, hfink@snap.com,
+        jgrahsl@snap.com, bryan.odonoghue@linaro.org
+Subject: [PATCH v2 0/3] Add camss to SM8250 dtsi 
+Date:   Thu, 14 Apr 2022 00:17:33 +0100
+Message-Id: <20220413231736.991368-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-In-Reply-To: <d80ece40-fdd7-f304-3989-47ae152d5ac9@linaro.org>
-References: <20220412220033.1273607-1-swboyd@chromium.org> <20220412220033.1273607-2-swboyd@chromium.org>
- <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com> <d80ece40-fdd7-f304-3989-47ae152d5ac9@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 13 Apr 2022 16:14:02 -0700
-Message-ID: <CAE-0n53kebRHTogSkiAOcA4tMpA+EcXQHtNX0Zzut-xE2vCkpw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] interconnect: qcom: sc7180: Drop IP0 interconnects
-To:     Alex Elder <elder@linaro.org>,
-        Doug Anderson <dianders@chromium.org>
-Cc:     Georgi Djakov <djakov@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,63 +70,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Alex Elder (2022-04-13 14:02:00)
-> On 4/13/22 3:55 PM, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Tue, Apr 12, 2022 at 4:20 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >>
-> >> @@ -519,8 +500,6 @@ static const struct of_device_id qnoc_of_match[] = {
-> >>            .data = &sc7180_dc_noc},
-> >>          { .compatible = "qcom,sc7180-gem-noc",
-> >>            .data = &sc7180_gem_noc},
-> >> -       { .compatible = "qcom,sc7180-ipa-virt",
-> >> -         .data = &sc7180_ipa_virt},
-> >>          { .compatible = "qcom,sc7180-mc-virt",
-> >>            .data = &sc7180_mc_virt},
-> >>          { .compatible = "qcom,sc7180-mmss-noc",
-> >
-> > I have no objection to ${SUBJECT} change landing and based on all your
-> > research and Alex's review/testing I think it's good to go.
-> >
-> > However, now that you're removed the driver that cared about
-> > "qcom,sc7180-ipa-virt", should we also be removing it from the
-> > `bindings/interconnect/qcom,rpmh.yaml` file and the `sc7180.dtsi`
-> > file? I think that removing it from _either_ the driver (like your
-> > patch here does) _or_ the sc7180.dtsi file would fix the bug, right?
-> > ...and then removing it from the yaml would just be cleanup...
+V2:
+- Change 0xHEX to 0xhex - Bjorn
+- Merge CCI and CCI pin definitions into one patch - Bjorn
+- Future pinctrl dropped, moved into dts file for board
+  which appears more consistent with sdm845-db845 &tlmm{} section - Bjorn, Bryan
+- Renamed cci0_i2c0/cci0_i2c1 and cci1_ic20/cci1_i2c1 - Bjorn
+- Grouped CCI pins into cci0_default, cci0_sleep, etc - Bryan
 
-Yes, but that's mostly a cleanup. I didn't include it in this series
-because DTB is supposed to be "stable" and thus backporting a fix to the
-kernel by removing something from DT is sort of wrong. I don't know or
-expect that the kernel DTS files will be used from the stable kernels.
-It's better to fix the kernel C code. We can of course remove the
-binding, but there's a part of me that would prefer that we put the IPA
-clk back into the interconnect driver, so leaving the binding is another
-motivator for me to hopefully excise the IPA clk from the rpmh-clk
-driver in the future.
+V1:
+Add in necessary CAMSS, pin and CCI definitions to the SM8250 dtsi.
 
-Anyway, I'm happy to remove the compatible string from the binding if
-folks want that. Having the DT node is wasteful because the kernel makes
-a device so we can certainly remove that as well. I'll send another
-patch for that if this patch is accepted by Georgi.
+This is the SoC specific stuff, the platform enablement will be done in a
+separate drop later.
 
->
-> That's a good point, I hadn't thought about that but you're right.
->
-> I think we were too pleased about identifying the problem and
-> proving it could happen (and cause a crash), so we didn't think
-> hard enough about this other piece.
->
-> Stephen, I think you should re-spin the series and add the
-> proper change to the binding.  You can keep the tags I gave
-> before.
+On the RB5 platform we have validated ~ 30 FPS @ 4K using the SRGGB10P
+pixel format provided by a Sony IMX577 sensor.
 
-I will not combine the removal of the binding from this patch. This
-patch is good as is and fixes the problem while ignoring the DT binding
-and that larger discussion.
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=br-v5.19b%2brb5-dts%2bsensors
 
->
-> I've got a note to follow up with similar changes to other
-> platforms where the interconnect driver includes resource "IP0"
-> and will plan to do what Doug suggests there too.
+Bryan O'Donoghue (3):
+  arm64: dts: qcom: sm8250: Add camcc DT node
+  arm64: dts: qcom: sm8250: camss: Add CAMSS block definition
+  arm64: dts: qcom: sm8250: camss: Add CCI definitions
+
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 330 +++++++++++++++++++++++++++
+ 1 file changed, 330 insertions(+)
+
+-- 
+2.35.1
+
