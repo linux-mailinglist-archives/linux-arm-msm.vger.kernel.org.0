@@ -2,66 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8D0E50000D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 22:37:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C142500063
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 22:56:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233061AbiDMUjk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 16:39:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54930 "EHLO
+        id S238722AbiDMU6f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 16:58:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233331AbiDMUji (ORCPT
+        with ESMTP id S237611AbiDMU6e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 16:39:38 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4099F4CD68
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 13:37:16 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id p10so2922277plf.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 13:37:16 -0700 (PDT)
+        Wed, 13 Apr 2022 16:58:34 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79D8E71EF7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 13:56:12 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id bh17so6372555ejb.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 13:56:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=561d3TuyxJYJX7jFDENACAIZB9UHFv2jKUtYOnNdzJ4=;
-        b=oPjHfRmAUcTkgs3S/vhHe/NXTBQmMsN9zz5JgSjKDYozfGoNBLUV/gjOx01FaHjdvG
-         ntLT9uab+PHEbd/g+NDXdx3BwDf3OmH8YesnWLiPc/4Cqn9cGDr3JvzOIdx1bH6/QCWe
-         mO9LwMxm92L+k1bxGIBgg/DVnnQD3b//KFCjg=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GGJeViK+7nvO370X+XWsM6u8Nu1Bs+YHak1Y1XG2ND4=;
+        b=Nmnntj/LVIwy3oeOLpeN9QoktVn4Gy5cYRHXFCyvkB7XueSKlPJszbhcdG9U78y2ad
+         u8YKGSNTvuIK1Qs6RbcqVntnhyfwD1HecmNzit4QEsVJrFYQOt1JO7DP2DBYKh7p/2KM
+         tIkfENteINhIIpwXj6yI7S3FGN7rNsZJLO5rI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=561d3TuyxJYJX7jFDENACAIZB9UHFv2jKUtYOnNdzJ4=;
-        b=IxIpdntS68jJ3b11+fMe9ouyrHjxkGMRvuVDaKf2g/aUOszlQDAB3SMpexqiAdqeF/
-         zuQPJ3ID1bcM8zB8fCIyrkfL2nLD+3Z2kkJRQenqJa7aymhypvxF6lzP9A03FnVXCPRX
-         rX86JNEQLE+OaLeYp/DXFkeJ+VbfQmUYUthOpI8Rx4Jkr/caGIzWbJf3u7ewfyEKazif
-         xTjRGTmHulvCW2OXKeTR1xUnWCB0pdLjtxqSyRqSXELVhEHhAElKa7j5bA+NJtrSNonx
-         BRsc/NMID+k4iFimPFjHjVZezSfIUSqdzzmyMGiE7dlzMcccpdXq7p//Uo9AtSi1kZeW
-         Lv0Q==
-X-Gm-Message-State: AOAM530Fzq6HuDQ7bl1pQj8UYha/KQ8Ftx+xDpUKcj0PHpipIYVfkUfP
-        PA0jjSZLICBfh0eoU1R7iXEp5SpDJkaJJQ==
-X-Google-Smtp-Source: ABdhPJxlS6V+yaBYXnD7Ck6dhm8oz9vcrEy+zm2UNOOBnri1Nu+76MZmLzBqdBHOJi+YIOix36X8cQ==
-X-Received: by 2002:a17:902:d051:b0:158:5910:d67a with SMTP id l17-20020a170902d05100b001585910d67amr18105963pll.15.1649882235801;
-        Wed, 13 Apr 2022 13:37:15 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:6a4f:9277:743f:c648])
-        by smtp.gmail.com with UTF8SMTPSA id n20-20020a634d54000000b0039d18bf7864sm6666996pgl.20.2022.04.13.13.37.14
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GGJeViK+7nvO370X+XWsM6u8Nu1Bs+YHak1Y1XG2ND4=;
+        b=eKmTqchzRAZDJ3JlaRjlPKExUfuL0ThcapekJzX950+Ty6VLWEjAkX33GL/rcN0JGZ
+         yU3fgwsLv+ZfGWKbDfC8E+4hCtrta8bGk763z3hyLZpHc5s4rqo/X7YvEBpdNgNNeI+/
+         yJc2afN5o17k/AC+F3C8vW/+YEkmyP3mB4/FM0zWN9GjzppsOn3tD5snZRsdXx4bs8FX
+         XlIOPXb7WjGD2938cqkv6Q9d6zG1kOmI0rdfndOzKhUI/eNhnKd2pvn+OjTjTLkjOALa
+         aiF91WUZn6mXTz6MHKxIkELstIDx32Ku3ReaOO901U7x/CBuds0NOh+sOolE1arZMcCN
+         O+LA==
+X-Gm-Message-State: AOAM533yu7jT6lG4ZQH4rPpLmZuwgVJTazmyKOCx51kjNOU4lBHw/GtJ
+        DOgIidcD8WaqRUWY/QAqOTmXwIuJ5+LFoQ/K
+X-Google-Smtp-Source: ABdhPJyCHHTIbUI9hhmbzGHAv53z3ihM4197JWsPQeHByVgWOufkdRQtXDMiM/Xnnm+NVWFsro5Jcg==
+X-Received: by 2002:a17:907:a088:b0:6e4:dad7:1b1f with SMTP id hu8-20020a170907a08800b006e4dad71b1fmr39359551ejc.84.1649883370854;
+        Wed, 13 Apr 2022 13:56:10 -0700 (PDT)
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
+        by smtp.gmail.com with ESMTPSA id m3-20020a17090679c300b006cf9ce53354sm3415ejo.190.2022.04.13.13.56.09
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Apr 2022 13:37:14 -0700 (PDT)
-Date:   Wed, 13 Apr 2022 13:37:13 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v7 3/4] arm64: dts: qcom: sc7280: Add lpass cpu node
-Message-ID: <Ylc0eYIXnLZMybp6@google.com>
-References: <1649863277-31615-1-git-send-email-quic_srivasam@quicinc.com>
- <1649863277-31615-4-git-send-email-quic_srivasam@quicinc.com>
+        Wed, 13 Apr 2022 13:56:09 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id e21so4316799wrc.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 13:56:09 -0700 (PDT)
+X-Received: by 2002:a5d:64ce:0:b0:208:fff6:22cb with SMTP id
+ f14-20020a5d64ce000000b00208fff622cbmr89950wri.301.1649883368489; Wed, 13 Apr
+ 2022 13:56:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1649863277-31615-4-git-send-email-quic_srivasam@quicinc.com>
+References: <20220412220033.1273607-1-swboyd@chromium.org> <20220412220033.1273607-2-swboyd@chromium.org>
+In-Reply-To: <20220412220033.1273607-2-swboyd@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 13 Apr 2022 13:55:56 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com>
+Message-ID: <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] interconnect: qcom: sc7180: Drop IP0 interconnects
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Georgi Djakov <djakov@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Alex Elder <elder@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -72,11 +79,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 13, 2022 at 08:51:16PM +0530, Srinivasa Rao Mandadapu wrote:
-> Add lpass cpu node for audio on sc7280 based platforms.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Hi,
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+On Tue, Apr 12, 2022 at 4:20 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> @@ -519,8 +500,6 @@ static const struct of_device_id qnoc_of_match[] = {
+>           .data = &sc7180_dc_noc},
+>         { .compatible = "qcom,sc7180-gem-noc",
+>           .data = &sc7180_gem_noc},
+> -       { .compatible = "qcom,sc7180-ipa-virt",
+> -         .data = &sc7180_ipa_virt},
+>         { .compatible = "qcom,sc7180-mc-virt",
+>           .data = &sc7180_mc_virt},
+>         { .compatible = "qcom,sc7180-mmss-noc",
+
+I have no objection to ${SUBJECT} change landing and based on all your
+research and Alex's review/testing I think it's good to go.
+
+However, now that you're removed the driver that cared about
+"qcom,sc7180-ipa-virt", should we also be removing it from the
+`bindings/interconnect/qcom,rpmh.yaml` file and the `sc7180.dtsi`
+file? I think that removing it from _either_ the driver (like your
+patch here does) _or_ the sc7180.dtsi file would fix the bug, right?
+...and then removing it from the yaml would just be cleanup...
+
+-Doug
