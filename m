@@ -2,70 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CF96500122
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 23:24:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C5CD50015F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 23:49:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236213AbiDMV0U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 17:26:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55342 "EHLO
+        id S234127AbiDMVvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 17:51:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235528AbiDMV0T (ORCPT
+        with ESMTP id S234010AbiDMVvf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 17:26:19 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B6307B545
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 14:23:56 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id h5so2931772pgc.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 14:23:56 -0700 (PDT)
+        Wed, 13 Apr 2022 17:51:35 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 938F94665C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 14:49:13 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id bv19so6589204ejb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 14:49:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=tZYBLnf1WvbjqU84GZINNxkL///8AUQJyyFh7egPwwQ=;
-        b=BDAAniCHhvMIwNEfFsQCYnUD7lEkEzbHYvYYKqavUmsChSe48h5JdRlA5rGnpaHSs1
-         eQlv9fluXoOY/S3xRW7Bva4x5+0IcxVBEiOUv/lBDahj0olbbFyoRRgIC6M4PdmB+tkf
-         LN2H2d+YQHOfmYf/8gujChRJzgasYWkQw9d44=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gMs2rmBWWmIoOW18P1m2w3YjRnMa95bN+gWj8N2yU/k=;
+        b=lR2kiAbTOIdBj36E6Dy3mUbmR3oIHehaxz1cxShoZAzI4SPRU42Lbk1A2VS8PzepLj
+         rHTlIFE9fqY5EXevEnSfLxM9WrqG6wbvR/j6kKHiQ8Nl2zxWPc+w1cTDj+eSK3O+9TbO
+         Qo8+zpSh7Zt9GI07IFP4eK7xk+76Xmxnto0b8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=tZYBLnf1WvbjqU84GZINNxkL///8AUQJyyFh7egPwwQ=;
-        b=Hwt7sKQAMBfe98VqFaF0LcGxZ87LjOH8nlRKYVFWwRa82h3fE8VJgd9UxKZ44Vckie
-         KMPOwYrWCOEBEyWZ9QUXUcGMVvF29lGXlDToKu6z9/G6o9UEkhsIy+VBOn0a2XvqxOkB
-         UySTF4ozCSSVQGxSiM/IhanRkiKEA7mRPVUqqXfH2GvsPWeI4pbNyAZBVrPpxKznRBu8
-         cBF9rEDFknSnGCYLW9saHAzxQTN5QYNLp6RVxwoKP64AenhyX0X5izbXAC92Sdu1p6Fp
-         Vdt7CvHJiCOgq6m4cx1oyvB5QKbJGZK8fV+zqJLLxGaIHeK05DtmfCaLiuVLjOEEYNFq
-         1hug==
-X-Gm-Message-State: AOAM530k7HxVLpkJQxBMnSspYKLXqgiuJBaF75PKvqSWPWuxW3p/ZSZh
-        apJLMej2RM1YU2V85DIOS8/VbQ==
-X-Google-Smtp-Source: ABdhPJzsV5/KTZqWBS0floNBXZNysp8R605YR+M4xOUEjukOwuFVPkcg9ni3tqIwcmw1j2Om86Xe1A==
-X-Received: by 2002:a63:6e43:0:b0:386:4801:13a6 with SMTP id j64-20020a636e43000000b00386480113a6mr36718914pgc.403.1649885036170;
-        Wed, 13 Apr 2022 14:23:56 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:6a4f:9277:743f:c648])
-        by smtp.gmail.com with UTF8SMTPSA id b80-20020a621b53000000b005059f5d7587sm20536pfb.60.2022.04.13.14.23.54
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gMs2rmBWWmIoOW18P1m2w3YjRnMa95bN+gWj8N2yU/k=;
+        b=EKE+6O0+5zxQKSYMc5HL/qO0zSUDb8EOqBa7xEtuYrOm4OFtOfS5YMg3zlLWSbjOvY
+         xmiIzLg6U9y/TNznZ+qkvB3t1vvr0l4tGgQD399xXrnz/lfucarhkc5n8nEEzjClxDm0
+         t5Be0LNsWpDtxeHS7lebSVV1gmmnff4tDlczj+eo/E+de42ZWJlKkyAQwYbJCrWnl43J
+         7rUXg3Xq1W5fXMF1ty2tYFrzFNLZygULA3S4DKJOTQLmRvDDzioGn6BW1ZVZ+csHDru6
+         xwhAHnLA7TraU33qOv9gCvaAdZ4angwieLRngooVJIBnTM8woCdFJ6Paf7yASGi6iesL
+         fhyA==
+X-Gm-Message-State: AOAM533iz6BiCcBTsMM9jkEJ/7keIXSoDMWnNsqym6UrKqYgl5JS0UvW
+        U3qkdbn9OjkAStRCsaPiUaTBq04kNJS68ngK
+X-Google-Smtp-Source: ABdhPJzdq56OhtuF/ijlBGuJPIbQayQsvMbodGCwPM1h+/W/9sP5J1BIpYHJGd9m7mL1e1YF7LBJ1g==
+X-Received: by 2002:a17:906:a2c5:b0:6e7:f44d:ed7d with SMTP id by5-20020a170906a2c500b006e7f44ded7dmr40560041ejb.329.1649886551838;
+        Wed, 13 Apr 2022 14:49:11 -0700 (PDT)
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com. [209.85.128.41])
+        by smtp.gmail.com with ESMTPSA id eq7-20020a056402298700b00419d8d46a8asm61535edb.39.2022.04.13.14.49.11
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Apr 2022 14:23:55 -0700 (PDT)
-Date:   Wed, 13 Apr 2022 14:23:53 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v7 4/4] arm64: dts: qcom: sc7280: Add dt nodes for sound
- card
-Message-ID: <Ylc/aR0hUGa6OKBO@google.com>
-References: <1649863277-31615-1-git-send-email-quic_srivasam@quicinc.com>
- <1649863277-31615-5-git-send-email-quic_srivasam@quicinc.com>
+        Wed, 13 Apr 2022 14:49:11 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id l9-20020a05600c4f0900b0038ccd1b8642so3609078wmq.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 14:49:11 -0700 (PDT)
+X-Received: by 2002:a05:600c:3ca4:b0:38e:54d0:406d with SMTP id
+ bg36-20020a05600c3ca400b0038e54d0406dmr119391wmb.199.1649886550796; Wed, 13
+ Apr 2022 14:49:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1649863277-31615-5-git-send-email-quic_srivasam@quicinc.com>
+References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
+ <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org>
+In-Reply-To: <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 13 Apr 2022 14:48:57 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
+Message-ID: <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
+Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,173 +80,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 13, 2022 at 08:51:17PM +0530, Srinivasa Rao Mandadapu wrote:
-> Add dt nodes for sound card support, which is using WCD938x headset
-> playback, capture, I2S speaker playback and DMICs via VA macro.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-crd.dts  | 23 ++++++++
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 93 ++++++++++++++++++++++++++++++++
->  2 files changed, 116 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> index b944366..1e16854 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+Hi,
 
-You need to refresh your tree, this file has been renamed to
-sc7280-crd-r3.dts. That DT is for the CRD <= 2.x, newer versions
-use sc7280-herobrine-crd.dts.
+On Wed, Mar 30, 2022 at 10:25 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 30/03/2022 11:09, Mars Chen wrote:
+> > Initial attempt at Gelarshie device tree.
+> >
+> > BUG=b:225756600
+> > TEST=emerge-strongbad chromeos-kernel-5_4
+> >
+> > Signed-off-by: Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+> >  .../dts/qcom/sc7180-trogdor-gelarshie-r0.dts  |  15 +
+> >  .../dts/qcom/sc7180-trogdor-gelarshie.dtsi    | 304 ++++++++++++++++++
+> >  3 files changed, 320 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index f9e6343acd03..cf8f88b065c3 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -57,6 +57,7 @@ dtb-$(CONFIG_ARCH_QCOM)     += sc7180-trogdor-coachz-r1.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7180-trogdor-coachz-r1-lte.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7180-trogdor-coachz-r3.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7180-trogdor-coachz-r3-lte.dtb
+> > +dtb-$(CONFIG_ARCH_QCOM)      += sc7180-trogdor-gelarshie-r0.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7180-trogdor-homestar-r2.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7180-trogdor-homestar-r3.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7180-trogdor-homestar-r4.dtb
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
+> > new file mode 100644
+> > index 000000000000..027d6d563a5f
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
+> > @@ -0,0 +1,15 @@
+> > +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> > +/*
+> > + * Google Gelarshie board device tree source
+> > + *
+> > + * Copyright 2022 Google LLC.
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include "sc7180-trogdor-gelarshie.dtsi"
+> > +
+> > +/ {
+> > +     model = "Google Gelarshie (rev0+)";
+> > +     compatible = "google,gelarshie", "qcom,sc7180";
+>
+> Missing bindings. Please document the compatible.
 
-> @@ -90,6 +90,29 @@ ap_ts_pen_1v8: &i2c13 {
->  	us-euro-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
->  };
->  
-> +&sound {
-> +	audio-routing =
-> +		"IN1_HPHL", "HPHL_OUT",
-> +		"IN2_HPHR", "HPHR_OUT",
-> +		"AMIC1", "MIC BIAS1",
-> +		"AMIC2", "MIC BIAS2",
-> +		"VA DMIC0", "MIC BIAS1",
-> +		"VA DMIC1", "MIC BIAS1",
-> +		"VA DMIC2", "MIC BIAS3",
-> +		"VA DMIC3", "MIC BIAS3",
-> +		"TX SWR_ADC0", "ADC1_OUTPUT",
-> +		"TX SWR_ADC1", "ADC2_OUTPUT",
-> +		"TX SWR_ADC2", "ADC3_OUTPUT",
-> +		"TX SWR_DMIC0", "DMIC1_OUTPUT",
-> +		"TX SWR_DMIC1", "DMIC2_OUTPUT",
-> +		"TX SWR_DMIC2", "DMIC3_OUTPUT",
-> +		"TX SWR_DMIC3", "DMIC4_OUTPUT",
-> +		"TX SWR_DMIC4", "DMIC5_OUTPUT",
-> +		"TX SWR_DMIC5", "DMIC6_OUTPUT",
-> +		"TX SWR_DMIC6", "DMIC7_OUTPUT",
-> +		"TX SWR_DMIC7", "DMIC8_OUTPUT";
-> +};
-> +
->  &tlmm {
->  	tp_int_odl: tp-int-odl {
->  		pins = "gpio7";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index cf62d06..a7c884a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -84,6 +84,99 @@
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&nvme_pwren>;
->  	};
-> +
-> +	sound: sound {
-> +		compatible = "google,sc7280-herobrine";
-> +		model = "sc7280-wcd938x-max98360a-1mic";
-> +
-> +		audio-routing =
-> +			"IN1_HPHL", "HPHL_OUT",
-> +			"IN2_HPHR", "HPHR_OUT",
-> +			"AMIC1", "MIC BIAS1",
-> +			"AMIC2", "MIC BIAS2",
-> +			"VA DMIC0", "MIC BIAS3",
-> +			"VA DMIC1", "MIC BIAS3",
-> +			"VA DMIC2", "MIC BIAS1",
-> +			"VA DMIC3", "MIC BIAS1",
-> +			"TX SWR_ADC0", "ADC1_OUTPUT",
-> +			"TX SWR_ADC1", "ADC2_OUTPUT",
-> +			"TX SWR_ADC2", "ADC3_OUTPUT",
-> +			"TX SWR_DMIC0", "DMIC1_OUTPUT",
-> +			"TX SWR_DMIC1", "DMIC2_OUTPUT",
-> +			"TX SWR_DMIC2", "DMIC3_OUTPUT",
-> +			"TX SWR_DMIC3", "DMIC4_OUTPUT",
-> +			"TX SWR_DMIC4", "DMIC5_OUTPUT",
-> +			"TX SWR_DMIC5", "DMIC6_OUTPUT",
-> +			"TX SWR_DMIC6", "DMIC7_OUTPUT",
-> +			"TX SWR_DMIC7", "DMIC8_OUTPUT";
-> +
-> +		qcom,msm-mbhc-hphl-swh = <1>;
-> +		qcom,msm-mbhc-gnd-swh = <1>;
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		#sound-dai-cells = <0>;
-> +
-> +		dai-link@1 {
-> +			link-name = "MAX98360A";
-> +			reg = <MI2S_SECONDARY>;
+I'm actually kinda curious: is there really a good reason for this? I
+know I haven't been adding things to
+`Documentation/devicetree/bindings/arm/qcom.yaml` for Qualcomm
+Chromebooks.  Ironically, it turns out that the script I typically use
+to invoke checkpatch happens to have "--no-tree" as an argument and
+that seems to disable this check. Doh!
 
-Dumb question: is this value actually used? A quick glance through
-qcom_snd_parse_of() suggests it isn't. And the CPU DAI id is already
-specified in the 'sound-dai' property below.
+That being said, though, I do wonder a little bit about the value of
+enumerating the top-level compatible like this in a yaml file.
+Certainly the yaml schema validation in general can be quite useful,
+but this top-level listing seems pure overhead. I guess it makes some
+tools happy, but other than that it seems to provide very little
+value...
 
-In a quick test I replaced the corresponding 'reg' values in
-sc7180-trogdor.dtsi with 'random' values and audio playback on
-my coachz (sc7180-trogdor-coachz-r3.dts) still works ...
-
-> +			cpu {
-> +				sound-dai = <&lpass_cpu MI2S_SECONDARY>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&max98360a>;
-> +			};
-> +		};
-> +
-> +		dai-link@5 {
-> +			link-name = "DisplayPort";
-> +			reg = <LPASS_DP_RX>;
-
-nit: add an empty line (in all links) to separate the properties from the node
-
-> +			cpu {
-> +				sound-dai = <&lpass_cpu LPASS_DP_RX>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&mdss_dp>;
-> +			};
-> +		};
-> +
-> +		dai-link@6 {
-> +			link-name = "WCD9385 Playback";
-> +			reg = <LPASS_CDC_DMA_RX0>;
-> +			cpu {
-> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_RX0>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&wcd938x 0>, <&swr0 0>, <&lpass_rx_macro 0>;
-> +			};
-> +		};
-> +
-> +		dai-link@19 {
-> +			link-name = "WCD9385 Capture";
-> +			reg = <LPASS_CDC_DMA_TX3>;
-> +			cpu {
-> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_TX3>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&wcd938x 1>, <&swr1 0>, <&lpass_tx_macro 0>;
-> +			};
-> +		};
-> +
-> +		dai-link@25 {
-> +			link-name = "DMIC";
-> +			reg = <LPASS_CDC_DMA_VA_TX0>;
-> +			cpu {
-> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_VA_TX0>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&lpass_va_macro 0>;
-> +			};
-> +		};
-> +	};
->  };
->  
->  &apps_rsc {
-> -- 
-> 2.7.4
-> 
+-Doug
