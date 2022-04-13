@@ -2,151 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AF7F500078
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 23:00:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B612650007E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 23:02:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238031AbiDMVDF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 17:03:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44728 "EHLO
+        id S238765AbiDMVE1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 17:04:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237823AbiDMVDE (ORCPT
+        with ESMTP id S235009AbiDMVE0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 17:03:04 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FD2C6A02C;
-        Wed, 13 Apr 2022 14:00:42 -0700 (PDT)
+        Wed, 13 Apr 2022 17:04:26 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB1374EF79
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 14:02:02 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id x4so3303454iop.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 14:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649883642; x=1681419642;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=TYcb4p1NHchumQzV88t1cTQVvmNzj45vyo9q6CrK+2Y=;
-  b=N/VNXYbN9uKEG2ePy71Dgn238WlTbfMFPV8k0j6iMc4AhPNIYuFkQ6A0
-   E2uDFSTwcqK/QnTf+5u7qSVKiCAULzu76hPn0cleHVF6GXq8OI8Ujpqbn
-   LrPZ7eiZ6f8/8pRfrvCiHxGMRPV8emQg/wRbt1xSNruHTSvgrNWJ2hJ1M
-   Q=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Apr 2022 14:00:42 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 14:00:41 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 13 Apr 2022 14:00:41 -0700
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 13 Apr 2022 14:00:40 -0700
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <mani@kernel.org>, <quic_hemantk@quicinc.com>,
-        <quic_bbhatt@quicinc.com>
-CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        "Jeffrey Hugo" <quic_jhugo@quicinc.com>
-Subject: [PATCH v2] bus: mhi: host: Add soc_reset sysfs
-Date:   Wed, 13 Apr 2022 15:00:19 -0600
-Message-ID: <1649883619-17609-1-git-send-email-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=/qUIJWUYp0OgGPrDZUu+q7DE+3dlNWkqw9Br15Nf3Qo=;
+        b=OFkr8OF7baDSWlxCIRyQaETk6E21TEaTMW5FVY+5KHmdECRnIAsakMkZ/xCkZXz4ac
+         PdZqm6T77fdP7wYKyifi5RY9/SKqzc9ibPhBZrX838SKGG22M6CycSrHR9Ju/Op7WzvQ
+         QwZNjVRy6QjsZ59/TF2V3TjHUZ7PfedKp5pDfUZDzX9qKsYuyjQkbbgQP79z5ZV1tFdO
+         vTpckEpdgg4UwHcW2gktfOivWYC86kxRnF50FdeNeCrMtNsqb/kDTmVJh3bh8F+mnam9
+         tSxzUURicv6wWp9KxpmEx71w2UA03ns+iN3HUGcsuiXiK0xbt9C7+tasx/OuDNLNR19x
+         1lOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=/qUIJWUYp0OgGPrDZUu+q7DE+3dlNWkqw9Br15Nf3Qo=;
+        b=xVURrKQ9swOiT05Cjittov8RIBzz58gu1Ax130FykjOEoxGJqdqzTOoQS/bs6Z0b0H
+         a4K/DbpwC49m2d8LvxpqM3pd2yv93ILjsrcklUeaJMf/xvSFV2KkddN5p3LS2YRJ7+s5
+         zMQ9mDwPDqt4ozBd9++qJvXxao+gfK37cyDIbxbTrFgSkXDup4DvEvADEY0klu0QcZDV
+         gorCxiBGm3PKxbgub0HdurH6pRGgtCgN5AQsC5rkrjALWKagKT7g56oYedmKhSiTYULX
+         UYKhaDtrUlCDOVe7fSkS51KFLWpIvlW0+HiTo/jUvbQlaeCJ3Or02cgiThCWBs5qVg2O
+         I5nA==
+X-Gm-Message-State: AOAM533SQ4LpLgOZvVXhaK82N12lEpbvHoa7SjzEAk34DgeMsy7bSc17
+        8D2ub4/lMajReZs64A2jrBPrpg==
+X-Google-Smtp-Source: ABdhPJxBqzKWs5v+J9djfCdod9R40p3p0DgaokqZxmyWAB6vqPwMBob/hkA2/LTw8bOWzbrl4sSpQQ==
+X-Received: by 2002:a05:6638:25c2:b0:326:223d:4494 with SMTP id u2-20020a05663825c200b00326223d4494mr9784815jat.162.1649883722145;
+        Wed, 13 Apr 2022 14:02:02 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id i5-20020a6bf405000000b00645be60c31csm21576iog.23.2022.04.13.14.02.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 14:02:01 -0700 (PDT)
+Message-ID: <d80ece40-fdd7-f304-3989-47ae152d5ac9@linaro.org>
+Date:   Wed, 13 Apr 2022 16:02:00 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 1/2] interconnect: qcom: sc7180: Drop IP0 interconnects
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     Georgi Djakov <djakov@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+References: <20220412220033.1273607-1-swboyd@chromium.org>
+ <20220412220033.1273607-2-swboyd@chromium.org>
+ <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jeffrey Hugo <jhugo@codeaurora.org>
+On 4/13/22 3:55 PM, Doug Anderson wrote:
+> Hi,
+> 
+> On Tue, Apr 12, 2022 at 4:20 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>>
+>> @@ -519,8 +500,6 @@ static const struct of_device_id qnoc_of_match[] = {
+>>            .data = &sc7180_dc_noc},
+>>          { .compatible = "qcom,sc7180-gem-noc",
+>>            .data = &sc7180_gem_noc},
+>> -       { .compatible = "qcom,sc7180-ipa-virt",
+>> -         .data = &sc7180_ipa_virt},
+>>          { .compatible = "qcom,sc7180-mc-virt",
+>>            .data = &sc7180_mc_virt},
+>>          { .compatible = "qcom,sc7180-mmss-noc",
+> 
+> I have no objection to ${SUBJECT} change landing and based on all your
+> research and Alex's review/testing I think it's good to go.
+> 
+> However, now that you're removed the driver that cared about
+> "qcom,sc7180-ipa-virt", should we also be removing it from the
+> `bindings/interconnect/qcom,rpmh.yaml` file and the `sc7180.dtsi`
+> file? I think that removing it from _either_ the driver (like your
+> patch here does) _or_ the sc7180.dtsi file would fix the bug, right?
+> ...and then removing it from the yaml would just be cleanup...
 
-The MHI bus supports a standardized hardware reset, which is known as the
-"SoC Reset".  This reset is similar to the reset sysfs for PCI devices -
-a hardware mechanism to reset the state back to square one.
+That's a good point, I hadn't thought about that but you're right.
 
-The MHI SoC Reset is described in the spec as a reset of last resort.  If
-some unrecoverable error has occurred where other resets have failed, SoC
-Reset is the "big hammer" that ungracefully resets the device.  This is
-effectivly the same as yanking the power on the device, and reapplying it.
-However, depending on the nature of the particular issue, the underlying
-transport link may remain active and configured.  If the link remains up,
-the device will flag a MHI system error early in the boot process after
-the reset is executed, which allows the MHI bus to process a fatal error
-event, and clean up appropiately.
+I think we were too pleased about identifying the problem and
+proving it could happen (and cause a crash), so we didn't think
+hard enough about this other piece.
 
-While the SoC Reset is generally intended as a means of recovery when all
-else has failed, it can be useful in non-error scenarios.  For example,
-if the device loads firmware from the host filesystem, the device may need
-to be fully rebooted inorder to pick up the new firmware.  In this
-scenario, the system administrator may use the soc_reset sysfs to cause
-the device to pick up the new firmware that the admin placed on the
-filesystem.
+Stephen, I think you should re-spin the series and add the
+proper change to the binding.  You can keep the tags I gave
+before.
 
-Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
+I've got a note to follow up with similar changes to other
+platforms where the interconnect driver includes resource "IP0"
+and will plan to do what Doug suggests there too.
 
-v2:
-Rebase
+					-Alex
 
- Documentation/ABI/stable/sysfs-bus-mhi | 11 +++++++++++
- drivers/bus/mhi/host/init.c            | 14 ++++++++++++++
- 2 files changed, 25 insertions(+)
-
-diff --git a/Documentation/ABI/stable/sysfs-bus-mhi b/Documentation/ABI/stable/sysfs-bus-mhi
-index ecfe766..306f63e 100644
---- a/Documentation/ABI/stable/sysfs-bus-mhi
-+++ b/Documentation/ABI/stable/sysfs-bus-mhi
-@@ -19,3 +19,14 @@ Description:	The file holds the OEM PK Hash value of the endpoint device
- 		read without having the device power on at least once, the file
- 		will read all 0's.
- Users:		Any userspace application or clients interested in device info.
-+
-+What:           /sys/bus/mhi/devices/.../soc_reset
-+Date:           April 2022
-+KernelVersion:  5.19
-+Contact:        mhi@lists.linux.dev
-+Description:	Initiates a SoC reset on the MHI controller.  A SoC reset is
-+                a reset of last resort, and will require a complete re-init.
-+                This can be useful as a method of recovery if the device is
-+                non-responsive, or as a means of loading new firmware as a
-+                system administration task.
-+
-diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-index 04c409b..e12b210 100644
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -108,9 +108,23 @@ static ssize_t oem_pk_hash_show(struct device *dev,
- }
- static DEVICE_ATTR_RO(oem_pk_hash);
- 
-+static ssize_t soc_reset_store(struct device *dev,
-+			       struct device_attribute *attr,
-+			       const char *buf,
-+			       size_t count)
-+{
-+	struct mhi_device *mhi_dev = to_mhi_device(dev);
-+	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-+
-+	mhi_soc_reset(mhi_cntrl);
-+	return count;
-+}
-+static DEVICE_ATTR_WO(soc_reset);
-+
- static struct attribute *mhi_dev_attrs[] = {
- 	&dev_attr_serial_number.attr,
- 	&dev_attr_oem_pk_hash.attr,
-+	&dev_attr_soc_reset.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(mhi_dev);
--- 
-2.7.4
+> -Doug
 
