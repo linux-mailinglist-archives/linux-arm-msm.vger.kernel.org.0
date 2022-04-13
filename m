@@ -2,158 +2,285 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95AF44FFD2A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 19:54:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3ACD44FFD3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 19:58:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236080AbiDMR4l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 13:56:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44240 "EHLO
+        id S230002AbiDMSAz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 14:00:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236058AbiDMR4k (ORCPT
+        with ESMTP id S237551AbiDMSAN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 13:56:40 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5421238C;
-        Wed, 13 Apr 2022 10:54:18 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id bh17so5498949ejb.8;
-        Wed, 13 Apr 2022 10:54:18 -0700 (PDT)
+        Wed, 13 Apr 2022 14:00:13 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 524646D960
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 10:57:50 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id b21so4937147lfb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 10:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=i2RJ6d/8BCF+jmN6yU2UbVKxMZnB1UcfgAmDeMXHyrY=;
-        b=Nr+TvYGhvsu0zAmYKHlg7d+xkwdz+xwrtMU4Y4Pl5KJSBmTraEoZjNqtwKwgmyRhsm
-         fNgbvGSSN41ADSF6G5rMmAS9GOdq54ZEwNr5BpHzicHLSJqV+NlhEumTIPfMqytbdUTY
-         px1hRcvaXZliFOaJeALkZxxwUck4vlfLL9D/PnZUhXDpMKqt+GRDpF1P7vhNQeodyT15
-         ixoZj5hGMlP5rY2798Bo02lOpumHgHRjzTQqZ39JzjV8I7XEn5Bf+kZaj/itIcN6tdZh
-         zBJjk27KMRo3wDzzoYwh0NmfShdcCEqn7Bwr4hIw8cUP5S501Yxh/kutel5SVMicCUch
-         IuWQ==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=DgNBNeaxdT3o36Zsbh9wOad1UIMZYrzaXuzC5eKUUtI=;
+        b=gTLrthLQ/yvaEJnz2bm+XqNrxBh8VDG8rWa1b4AHnttyULJDgCDSlbfdtyMzk/b9vq
+         XyPlOMAMgteD31EA4QZNjwZT4mOFGgoQ0DbZ+kLG94Hbj4Zrv5EMaAEp8kMMceC6mbBT
+         7KSoelCFk46J7bNqPL/hZlgZqNl4hyPC6KNnZ8Pdnsk0RnQLMlVmWPJTdYUsPPggrLwp
+         oWjxEUdf0CIQXSDJOulimFE0IGY6yCmerwGDuRdyAQHJLZRO3JEh0a7NTnGjPmQVmZa1
+         PFMEzCthCYpHnL3FfWsxz567FRNr5EkwGcxyf9YC6AnptgnllJydn9ozbgCl05YP5lVA
+         Fisw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=i2RJ6d/8BCF+jmN6yU2UbVKxMZnB1UcfgAmDeMXHyrY=;
-        b=5Cxj1ZhsuUS4pr/aT3tt+9laTe48fMkg8uNNQob1Vc+5OYAXnSfbVl68lhEUF3wGGP
-         ItWZ3DhoM+3COg4GrBwxaWFx4cI6//VrRDgCfNKJ6r/YZDHGilNzssbIVJESEXPRDSLp
-         8tbWgvgq+0XfTNoDsqYJBm1Ezc9TiW/hdlBznsz7/d0QCylFQiSL8QLw4fGXOiuxgfMA
-         1+QOyHhhHquh7sThVAJtpDQqqgycEqAKbgv6xzzkNH9aIWBmVn7s+HNws6xghmTFkecz
-         itYoVnDRYbdPmHZR/F63eL6zc21OfCsyF5+Lw4hF+COxd4IAo4G2ek6KUASz5a4QQB5m
-         C7ug==
-X-Gm-Message-State: AOAM532yVnVW8mQNwlPlM2AFREvKJioig6282pVkBBDsVbMQBEDwILld
-        sVoGT0pJOigoHKtwkBaOCBA=
-X-Google-Smtp-Source: ABdhPJyPE4vLRs3CuC3UtwYKUKXEMTbt7e2CpdF/ZDz7U9ASsekxlQE2QSRn6NqmPoNw0evi9K1jcg==
-X-Received: by 2002:a17:907:1c0c:b0:6e0:9b15:29d5 with SMTP id nc12-20020a1709071c0c00b006e09b1529d5mr40538344ejc.416.1649872456728;
-        Wed, 13 Apr 2022 10:54:16 -0700 (PDT)
-Received: from Ansuel-xps. (host-80-182-176-248.retail.telecomitalia.it. [80.182.176.248])
-        by smtp.gmail.com with ESMTPSA id o5-20020a170906974500b006dfc781498dsm215308ejy.37.2022.04.13.10.54.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 10:54:16 -0700 (PDT)
-Message-ID: <62570e48.1c69fb81.49fb8.143b@mx.google.com>
-X-Google-Original-Message-ID: <YlcOR5+FbKSJ8/uU@Ansuel-xps.>
-Date:   Wed, 13 Apr 2022 19:54:15 +0200
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 03/18] clk: qcom: gcc-ipq806x: add PXO_SRC in clk table
-References: <20220321231548.14276-1-ansuelsmth@gmail.com>
- <20220321231548.14276-4-ansuelsmth@gmail.com>
- <20220325011037.03173C340EC@smtp.kernel.org>
- <Yj0XTYgoMScoiUHP@Ansuel-xps.localdomain>
- <20220325012231.899FBC340EC@smtp.kernel.org>
- <62570197.1c69fb81.c3de2.7b70@mx.google.com>
- <CAA8EJpp2uipTtV=gitiL0g-ywOirC=-UGrQ4tZMwc42jy2TK1Q@mail.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=DgNBNeaxdT3o36Zsbh9wOad1UIMZYrzaXuzC5eKUUtI=;
+        b=ZPIGyCYhjKZVWoyFEqGG5qurssFAbme4AbF+9G370WpjzHVZGsarXDXTLU/MzT9Yaq
+         ogNCU1VaT9oS+T7BEM8fpIZe21UB0zfFfyfLQTfbNyNRV60eC773uDddq+pc8AbIq8fm
+         RaAtd0pS7zRKf5S1gSyUK2lGTDxz8glV+iXrd4OSUZIxFL1Nc8BF1NAnJSpS6rg178Tz
+         TraX5sQjVanzMfohZh7d2uw2XZ+2NXg9kVBkOYKhSGTMNZExqRGKjK+XX48QAm+92jxG
+         dDwIa7kPZu0EJtkWgo5Jt92SLeE8zb9Ph5bXJGqPt6PjStrYj3J41LYXUcBnxVkiGHnE
+         9A7A==
+X-Gm-Message-State: AOAM530JRwZ72cjDdyf0UhTG3XmNZPsChCUOH+Bttev7wb66LPOI1NMR
+        bXe1ywNSdSdUYVUQXAZBMPETRA==
+X-Google-Smtp-Source: ABdhPJx5gki33X9a+3cyqusr83PTfh+COSat4zzRTG6jPDRUE782f0rHYDxJpSWxyjXkGJGeYhbpsQ==
+X-Received: by 2002:a05:6512:6d6:b0:46b:a67b:29ed with SMTP id u22-20020a05651206d600b0046ba67b29edmr11057787lff.101.1649872668524;
+        Wed, 13 Apr 2022 10:57:48 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id o23-20020ac24357000000b0044adb34b68csm4163740lfl.32.2022.04.13.10.57.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 10:57:48 -0700 (PDT)
+Message-ID: <bbf1386f-0902-75ff-bb61-f4ebbc82f174@linaro.org>
+Date:   Wed, 13 Apr 2022 20:57:47 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpp2uipTtV=gitiL0g-ywOirC=-UGrQ4tZMwc42jy2TK1Q@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        WEIRD_QUOTING autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH v2 1/5] clk: qcom: regmap-mux: add pipe clk implementation
+Content-Language: en-GB
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pci@vger.kernel.org
+References: <20220412193839.2545814-1-dmitry.baryshkov@linaro.org>
+ <20220412193839.2545814-2-dmitry.baryshkov@linaro.org>
+ <YlaUtCuMZZL4bM2U@hovoldconsulting.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YlaUtCuMZZL4bM2U@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 13, 2022 at 08:32:21PM +0300, Dmitry Baryshkov wrote:
-> On Wed, 13 Apr 2022 at 20:00, Ansuel Smith <ansuelsmth@gmail.com> wrote:
-> >
-> > On Thu, Mar 24, 2022 at 06:22:29PM -0700, Stephen Boyd wrote:
-> > > Quoting Ansuel Smith (2022-03-24 18:13:49)
-> > > > On Thu, Mar 24, 2022 at 06:10:35PM -0700, Stephen Boyd wrote:
-> > > > > Quoting Ansuel Smith (2022-03-21 16:15:33)
-> > > > > > PXO_SRC is currently defined in the gcc include and referenced in the
-> > > > > > ipq8064 DTSI. Correctly provide a clk after gcc probe to fix kernel
-> > > > > > panic if a driver starts to actually use it.
-> > > > > >
-> > > > > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > > > > > ---
-> > > > >
-> > > > > What is this patch about? clk providers shouldn't be calling clk_get().
-> > > > >
-> > > >
-> > > > If pxo is passed as a clock in dts and defined as a fixed clock, what
-> > > > should be used?
-> > >
-> > > clk_parent_data
-> >
-> > Sorry but I'm not following you. No idea if you missed the cover letter
-> > where i describe the problem with PXO_SRC.
-> >
-> > The problem here is that
-> > - In DTS we have node that reference <&gcc PXO_SRC>
-> > But
-> > - gcc driver NEVER defined PXO_SRC
-> > As
-> > - PXO_SRC is actually pxo_board that should be defined as a fixed-clock
-> >   in dts or is defined using qcom_cc_register_board_clk.
-> >
-> > So in theory we should just put in PXO_SRC the clk hw of the
-> > fixed-clock. That is why I'm using clk_get(). I can use __clk_lookup()
-> > as an alternative but I really can't find a way to get the clock defined
-> > from DTS or qcom_cc_register_board_clk.
-> >
-> > (I have the same exact problem with the cpu qsb clock where is defined
-> > using fixed-clock API but can also defined directly in DTS and I have to
-> > use clk_get())
-> >
-> > I'm totally missing something so I would love some hint on how to solve
-> > this.
+On 13/04/2022 12:15, Johan Hovold wrote:
+> On Tue, Apr 12, 2022 at 10:38:35PM +0300, Dmitry Baryshkov wrote:
+>> On recent Qualcomm platforms the QMP PIPE clocks feed into a set of
+>> muxes which must be parked to the "safe" source (bi_tcxo) when
+>> corresponding GDSC is turned off and on again. Currently this is
+>> handcoded in the PCIe driver by reparenting the gcc_pipe_N_clk_src
+>> clock. However the same code sequence should be applied in the
+>> pcie-qcom endpoint, USB3 and UFS drivers.
 > 
-> When we were doing such conversion for other  platforms, we pointed
-> clock consumers to the board clocks directly. There is no need to go
-> through the gcc to fetch pxo.
-> Instead you can use a <&pxo_board> in the dts directly. Typically the
-> sequence is the following:
-> - Minor cleanup of the clock-controller driver
-> (ARRAY_SIZE(parent_data), removal of unused clock sources, unused enum
-> entries, etc)
-> - update drivers to use both .name and  .fw_name in replacement of
-> parent_names. Use parent_hws where possible.
-> - update dtsi to reference clocks using clocks/clock-names properties.
-> Pass board/rpmh/rpm clocks directly to their consumers without
-> bandaids in the gcc driver.
-> - (optionally) after several major releases drop parent_data.name
-> completely. I think we mostly skipped this, since it provides no gain.
+> I'm starting to think this really belongs in the PHY driver which is the
+> provider of the pipe clock. Moving it there would also allow the code to
+> be shared between PCIe, USB, and UFS.
 > 
-> This way you don't have to play around clk_get to return PXO_SRC from
-> gcc clock-controller.
-> 
-> -- 
-> With best wishes
-> Dmitry
+> The PHY driver enables the pipe clock by starting the PHY and before
+> doing so there's no point in updating the mux. Similarly, the PHY driver
+> can restore the "safe" source after disabling the pipe clock.
 
-Thanks for the list of steps to do this kind of cleanup.
-From what I'm reading this series is ""stuck"" in the sense that I first
-have to fix the wrong PXO_SRC reference and then I can continue the
-conversion work. A bit sad considering most of the time DTS proposal got
-ignored :(
+
+I thought about this at some point. However it would still mean that the 
+driver does the dance manually: disable pipe_clock, switch parent, 
+sleep, switch the parent back, enable pipe clock. Switching parents is 
+tied to disabling pipe_clock, so enforcing this link seems like a better 
+option to me.
+
+No to mention that it would complicate already overcomplicated QMP driver.
+
+> That way there's no magic happening behind scenes, the clock framework
+> always reports the actual state of the tree, and the reason for all of
+> this can be documented in the QMP PHY driver once and for all.
+
+We already have such 'magic' for the RCG2 (clk_rcg2_shared_ops), with 
+the very practical reason. If the clock is running from the tcxo, it is 
+as good as disabled from the practical purpose.
+
+> The only change to the bindings compared to what this series proposes is
+> that the PHY driver also needs a reference to bi_tcxo.
+
+And this looks as bad, as providing bi_tcxo to the PCI device. From the 
+schematics/silicon point of view neither of them actually uses these 
+parents. Neither of them uses the pipe_clock_src. What do they need is 
+just the pipe_clock. The rest should be in the programming API.
+
+> 
+> Also note that updating the mux separately from starting the PHY as this
+> series allows for, doesn't really make the pipe clock any safer to use.
+> 
+> Either way, there are also some problems with this safe-mux
+> implementation that I point out below.
+> 
+>> Rather than copying this sequence over and over again, follow the
+>> example of clk_rcg2_shared_ops and implement this parking in the
+>> enable() and disable() clock operations. As we are changing the parent
+>> behind the back of the clock framework, also implement custom
+>> set_parent() and get_parent() operations behaving accroding to the clock
+>> framework expectations (cache the new parent if the clock is in disabled
+>> state, return cached parent).
+>>
+>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/clk/qcom/clk-regmap-mux.c | 78 +++++++++++++++++++++++++++++++
+>>   drivers/clk/qcom/clk-regmap-mux.h |  3 ++
+>>   2 files changed, 81 insertions(+)
+>>
+>> diff --git a/drivers/clk/qcom/clk-regmap-mux.c b/drivers/clk/qcom/clk-regmap-mux.c
+>> index 45d9cca28064..c39ee783ee83 100644
+>> --- a/drivers/clk/qcom/clk-regmap-mux.c
+>> +++ b/drivers/clk/qcom/clk-regmap-mux.c
+>> @@ -49,9 +49,87 @@ static int mux_set_parent(struct clk_hw *hw, u8 index)
+>>   	return regmap_update_bits(clkr->regmap, mux->reg, mask, val);
+>>   }
+>>   
+>> +static u8 mux_safe_get_parent(struct clk_hw *hw)
+>> +{
+>> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
+>> +	unsigned int val;
+>> +
+>> +	if (clk_hw_is_enabled(hw))
+>> +		return mux_get_parent(hw);
+>> +
+>> +	val = mux->stored_parent_cfg;
+>> +
+>> +	if (mux->parent_map)
+>> +		return qcom_find_cfg_index(hw, mux->parent_map, val);
+>> +
+>> +	return val;
+>> +}
+>> +
+>> +static int mux_safe_set_parent(struct clk_hw *hw, u8 index)
+>> +{
+>> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
+>> +
+>> +	if (clk_hw_is_enabled(hw))
+>> +		return mux_set_parent(hw, index);
+>> +
+>> +	if (mux->parent_map)
+>> +		index = mux->parent_map[index].cfg;
+>> +
+>> +	mux->stored_parent_cfg = index;
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static void mux_safe_disable(struct clk_hw *hw)
+>> +{
+>> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
+>> +	struct clk_regmap *clkr = to_clk_regmap(hw);
+>> +	unsigned int mask = GENMASK(mux->width + mux->shift - 1, mux->shift);
+>> +	unsigned int val;
+>> +
+>> +	regmap_read(clkr->regmap, mux->reg, &val);
+>> +
+>> +	mux->stored_parent_cfg = (val & mask) >> mux->shift;
+>> +
+>> +	val = mux->safe_src_parent;
+>> +	if (mux->parent_map) {
+>> +		int index = qcom_find_src_index(hw, mux->parent_map, val);
+>> +
+>> +		if (WARN_ON(index < 0))
+>> +			return;
+>> +
+>> +		val = mux->parent_map[index].cfg;
+>> +	}
+>> +	val <<= mux->shift;
+>> +
+>> +	regmap_update_bits(clkr->regmap, mux->reg, mask, val);
+>> +}
+>> +
+>> +static int mux_safe_enable(struct clk_hw *hw)
+>> +{
+>> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
+>> +	struct clk_regmap *clkr = to_clk_regmap(hw);
+>> +	unsigned int mask = GENMASK(mux->width + mux->shift - 1, mux->shift);
+>> +	unsigned int val;
+>> +
+>> +	val = mux->stored_parent_cfg;
+>> +	val <<= mux->shift;
+>> +
+>> +	return regmap_update_bits(clkr->regmap, mux->reg, mask, val);
+>> +}
+> 
+> The caching of the parent is broken since set_parent() is typically not
+> called before enabling the clock.
+> 
+> This means that the above code will set the mux to its zero-initialised
+> value, which currently only works by chance as the pipe clock config
+> value happens to be zero.
+> 
+> For this to work generally, you'd also need to define also the
+> (default/initial) non-safe parent for each mux. Handling handover from
+> the bootloader might also be tricky.
+> 
+> Furthermore, the current implementation appears to ignore locking and
+> doesn't handle the case where set_parent() races with enable(). The
+> former is protected by the prepare mutex and the latter by the enable
+> spinlock and a driver that needs to serialise the two needs to handle
+> that itself.
+> 
+>> +
+>>   const struct clk_ops clk_regmap_mux_closest_ops = {
+>>   	.get_parent = mux_get_parent,
+>>   	.set_parent = mux_set_parent,
+>>   	.determine_rate = __clk_mux_determine_rate_closest,
+>>   };
+>>   EXPORT_SYMBOL_GPL(clk_regmap_mux_closest_ops);
+>> +
+>> +const struct clk_ops clk_regmap_mux_safe_ops = {
+>> +	.enable = mux_safe_enable,
+>> +	.disable = mux_safe_disable,
+>> +	.get_parent = mux_safe_get_parent,
+>> +	.set_parent = mux_safe_set_parent,
+>> +	.determine_rate = __clk_mux_determine_rate_closest,
+>> +};
+>> +EXPORT_SYMBOL_GPL(clk_regmap_mux_safe_ops);
+>> diff --git a/drivers/clk/qcom/clk-regmap-mux.h b/drivers/clk/qcom/clk-regmap-mux.h
+>> index db6f4cdd9586..f86c674ce139 100644
+>> --- a/drivers/clk/qcom/clk-regmap-mux.h
+>> +++ b/drivers/clk/qcom/clk-regmap-mux.h
+>> @@ -14,10 +14,13 @@ struct clk_regmap_mux {
+>>   	u32			reg;
+>>   	u32			shift;
+>>   	u32			width;
+>> +	u8			safe_src_parent;
+>> +	u8			stored_parent_cfg;
+>>   	const struct parent_map	*parent_map;
+>>   	struct clk_regmap	clkr;
+>>   };
+>>   
+>>   extern const struct clk_ops clk_regmap_mux_closest_ops;
+>> +extern const struct clk_ops clk_regmap_mux_safe_ops;
+>>   
+>>   #endif
+> 
+> Johan
+
 
 -- 
-	Ansuel
+With best wishes
+Dmitry
