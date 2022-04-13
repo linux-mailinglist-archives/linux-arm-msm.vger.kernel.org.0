@@ -2,52 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE6784FF8F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 16:30:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AEFB4FF92E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 16:42:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231278AbiDMOcq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 10:32:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58382 "EHLO
+        id S233697AbiDMOou (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 10:44:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235866AbiDMOcn (ORCPT
+        with ESMTP id S236055AbiDMOou (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 10:32:43 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFF344160A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 07:30:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6285361C0C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 14:30:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C045DC385A8;
-        Wed, 13 Apr 2022 14:30:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649860220;
-        bh=n8SDngpkfZAsBoILm8n5WhBh265AqdwxCEoxSO1aWTo=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=bU1YpC9J3YkvjzpWAX/IeLmUriCF484tA3X4nqvMxLd2gea1+94UDN5xkDtHMpsU5
-         Yw+5UiC2Z/6C8/nibBovowSNv1yPBUHt5eSwiNEVjlDGQNg/07ryEplUEYrYT+C6ti
-         c+hiie5l+X/VIYNEYrYwcxmkdh39bFJGZLN8SoP2Ll2bDsDFtamG5xDv268S2gcvoN
-         cqjacVTBs0XA4p5vRQMUjKLtqzyPls7fee9xIMle9t6DnjQYphJDDJzSFlZNFvSFlI
-         95ruUDxank1iDSgsxLHaPtkyXAx5ReLvYy2WaR0ED3TJhGSgC++7iymdmxCYRZ/6mR
-         fg2iXPavu80FA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 9DA08E8DD69;
-        Wed, 13 Apr 2022 14:30:20 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 13 Apr 2022 10:44:50 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B823862BE5;
+        Wed, 13 Apr 2022 07:42:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649860949; x=1681396949;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=/WQofjNq2TS+ZBTx8OaoW/RzTpZcHfSOiBcFEhOVikw=;
+  b=Y0aa5jQWBLkQn6hDxuOKnV4lLfoYoog1Wd8s/wYYS8rMyBAXWjVmqBIy
+   69ZeVj+t1peM50ieLkX2vqCjx2Q9ixszjORxZhPMh4Phr7Uo53DTyrJQS
+   LFWsyg0pDsC4g1D4UUxkrPJan+7+KlTkuzMGMCguaKCmNxk0A/DcKCKVf
+   c=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 13 Apr 2022 07:42:28 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 07:42:28 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 13 Apr 2022 07:42:27 -0700
+Received: from [10.216.55.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 13 Apr
+ 2022 07:42:23 -0700
+Message-ID: <478125e6-7b8f-a69d-4ffb-00344611229d@quicinc.com>
+Date:   Wed, 13 Apr 2022 20:12:20 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: sc7280: add lpass lpi pin
+ controller node
+Content-Language: en-US
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1649685184-8448-1-git-send-email-quic_srivasam@quicinc.com>
+ <1649685184-8448-3-git-send-email-quic_srivasam@quicinc.com>
+ <YlSCWC47tITuW/BZ@google.com>
+ <9bacee6d-ab44-2975-c523-38164d016af5@quicinc.com>
+ <be8c6dae-20b1-3ba1-db3f-119da1e4ebfe@quicinc.com>
+ <YlYSe5/wm06oTJej@google.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <YlYSe5/wm06oTJej@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 0/5] PCI: qcom: rework pipe_clk/pipe_clk_src handling
-From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <164986022064.5431.6951097451871658645.git-patchwork-notify@kernel.org>
-Date:   Wed, 13 Apr 2022 14:30:20 +0000
-References: <20220412193839.2545814-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220412193839.2545814-1-dmitry.baryshkov@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -56,38 +78,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
 
-This series was applied to qcom/linux.git (for-next)
-by Bjorn Andersson <bjorn.andersson@linaro.org>:
-
-On Tue, 12 Apr 2022 22:38:34 +0300 you wrote:
-> PCIe pipe clk (and some other clocks) must be parked to the "safe"
-> source (bi_tcxo) when corresponding GDSC is turned off and on again.
-> Currently this is handcoded in the PCIe driver by reparenting the
-> gcc_pipe_N_clk_src clock.
-> 
-> Instead of doing it manually, follow the approach used by
-> clk_rcg2_shared_ops and implement this parking in the enable() and
-> disable() clock operations for respective pipe clocks.
-> 
-> [...]
-
-Here is the summary with links:
-  - [v2,1/5] clk: qcom: regmap-mux: add pipe clk implementation
-    https://git.kernel.org/qcom/c/e9a4c7f667ed
-  - [v2,2/5] clk: qcom: gcc-sm8450: use new clk_regmap_mux_safe_ops for PCIe pipe clocks
-    https://git.kernel.org/qcom/c/fa5ad5c51706
-  - [v2,3/5] clk: qcom: gcc-sc7280: use new clk_regmap_mux_safe_ops for PCIe pipe clocks
-    https://git.kernel.org/qcom/c/a9ed9e2bf794
-  - [v2,4/5] PCI: qcom: Remove unnecessary pipe_clk handling
-    (no matching commit)
-  - [v2,5/5] PCI: qcom: Drop manual pipe_clk_src handling
-    (no matching commit)
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+On 4/13/2022 5:29 AM, Matthias Kaehlcke wrote:
+Thanks for your time and valuable suggestions Matthias!!!
+> On Tue, Apr 12, 2022 at 06:41:25PM +0530, Srinivasa Rao Mandadapu wrote:
+>> On 4/12/2022 6:18 PM, Srinivasa Rao Mandadapu wrote:
+>>> On 4/12/2022 1:02 AM, Matthias Kaehlcke wrote:
+>>> Thanks for your time Matthias!!!
+>>>> On Mon, Apr 11, 2022 at 07:23:04PM +0530, Srinivasa Rao Mandadapu wrote:
+>>>>> Add LPASS LPI pinctrl node required for Audio functionality on sc7280
+>>>>> based platforms.
+>>>>>
+>>>>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>>>>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>>>>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>>>>> ---
+>>>>>    arch/arm64/boot/dts/qcom/sc7280-idp.dtsi |  84
+>>>>> ++++++++++++++++++++++++
+>>>>>    arch/arm64/boot/dts/qcom/sc7280.dtsi     | 107
+>>>>> +++++++++++++++++++++++++++++++
+>>>>>    2 files changed, 191 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>>>>> b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>>>>> index 4ba2274..ea751dc 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>>>>> @@ -238,6 +238,90 @@
+>>>>>        modem-init;
+>>>>>    };
+>>>>>    +&dmic01 {
+>>>> Shouldn't these nodes be in the PINCTRL section at their respective
+>>>> positions in alphabetical order?
+>>> These are not part of tlmm pin control section. These are part of
+>>> lpass_tlmm section.
+>>>
+>>> In your previous comment you asked to remove &lpass_tlmm. Hence brought
+>>> out.
+>>>
+>>>> nit: since you are keeping the groups the group names are a bit
+>>>> generic IMO.
+>>>> e.g. it is fairly obvious that 'dmic01_clk' refers to a clock pin,
+>>>> however
+>>>> just 'dmic01' is a bit vague. You could consider adding the prefix
+>>>> 'lpass_'
+>>>> to the group names for more clarity.
+>>> as dmic01 has both clk and data section, I don't think keeping clk is
+>>> appropriate here.
+>> As these nodes are part of SC7280, i.e. qcom specific chipset, I feel lpass_
+>> is redundant.
+> It helps to provide some context about the pins which might not be evident
+> from their short names like 'dmic01' or 'rx_swr'. A nice side effect is that
+> the pins/groups would grouped automatically together in alphabetic ordering.
+>
+> In terms of 'redundancy' it is similar to 'qup_' prefix for the I2C/SPI/UART
+> pins.
+Agree. Will change accordingly. similarly will append lpass_ torx/tx/va 
+mcro device node names.
+>
+>> If we add lpass_ to all dmic nodes, some node names are too lengthy.
+> The longest would be like 'lpass_dmic01_sleep' or 'lpass_rx_swr_sleep', which
+> doesn't seem outrageous.
+>
+> In any case it's not super important. If it bothers someone enough later
+> on they can always send a patch that changes it.
+Okay.
