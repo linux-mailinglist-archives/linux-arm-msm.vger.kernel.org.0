@@ -2,79 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 299914FF056
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 09:06:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 087A94FF088
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 09:27:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233210AbiDMHIO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 03:08:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53396 "EHLO
+        id S233348AbiDMH3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 03:29:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232134AbiDMHIN (ORCPT
+        with ESMTP id S233333AbiDMH3n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 03:08:13 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13E12ED64
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:05:52 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id 125so962114pgc.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:05:52 -0700 (PDT)
+        Wed, 13 Apr 2022 03:29:43 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AB9218E0C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:27:23 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id k5so1922284lfg.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 00:27:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=wA/XhN+liF7FNQdYD63xlSjmBiv/wnn45LKu56yG8aw=;
-        b=AreLMy3LsZ/2P+aighUoU5gjlgpeBV8R7aO4E6ZmNrH9sPFlHDYfXCQ9dsaQSKUUDZ
-         jV695MA6AjTW9RaVAKwYYDjPOSnx5VhKZBhY+t+VOpMmHsvuvmUO3uevsu7U4SoQZX/Q
-         hKY670Ht3+qDXUL6ihxfD4vmxjl3ro3ScX1SDiJ3bn9yNvTvyI5Jk5d9mYgm8hoPX7qr
-         1+qPrlrepeFD1qFKz+Inw4HQwj7zVmeaIa1RIZvKj+dElNrFnhxT76DSr9HnuNU6qNNj
-         CDAr/V+AXPW6hm65wKobzJCFQHpgmZ/HCfP68ZL1bibg1imj6sYE0SrrHqGdYcyfLpKZ
-         /IFQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=QARgvmkpr8VVbyyV9NCF/ci4KYaV871c1Ej+b6nyl0E=;
+        b=aSERqlI6AgOSiUivPNKdqIbmT5M9Xv2yCQJxrGNk7ZF/XMJYXIkpoKgA/YEvUsje1y
+         090G2iyN7TJFvJqgRn2IQVPedZ7bIlDdZgkwACxORsQ2x47GASAOJ574hsEiNHtY+A6M
+         QP6guAS99tnF4hG5Mez/T74bgZbcRgageIJ5cDoirD1/URyjKP1zHU40n4Cv+Ry8dGq7
+         N6QvyW1QExYFHxrk7cBYKxObhUqiVaswFg+dbdwgDhVkVaeqZdK15cui+TR1pSjhdCTm
+         Xfl2vUq4bJROYc6z7yV+MR5BYUpJxIpxzNHJNDdb4PeudOFx44liJBr9QkHa+xzMXNn5
+         wonQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wA/XhN+liF7FNQdYD63xlSjmBiv/wnn45LKu56yG8aw=;
-        b=h7v2eieTXjvZuGVq6FZH970tOQHsZDzoHFMdqLlM2T8+hEeWIxdlUrsdJBOXqrFAD6
-         vL65eVrbAr6V30Iv48OSd1SHsfVY6IwYEaD0yB1ToUxlIiAJgyr2Ets/1KsMMoBqK6IQ
-         6LMzWaOQMgJG0ndZOs5waOQ0U/NfdP18woR8lYNsYyXo3UQ/26/qMesINBSTOIabX5vt
-         GEZSQb4uRoAKZBJWkYNyP8OB4vrQBm5eWU/Ls1dk69i8bOcizDxVAMt03Q8tYDVnUJU8
-         HeUgcESUbN0TGmHb56D98Imheh2VhOi96ZQiDZKjbEJ3keNemqU9zjdFrtWXQ3Yg1odi
-         nSvQ==
-X-Gm-Message-State: AOAM532XedXzsuiW0Yxm2qoL4EfkXXhXe93b/aj3HcOEKZCy6hWXxpeC
-        Xqkadq/COHnG0lTJO2ak+K0v
-X-Google-Smtp-Source: ABdhPJzozXDajJ1TNHGEamoE5ZZSxjlxIF5/046swX9Uyn7xnV9vkvwlcsjXH3KBZ12ieR4vKeneWw==
-X-Received: by 2002:a05:6a00:10cc:b0:505:ada6:e03e with SMTP id d12-20020a056a0010cc00b00505ada6e03emr17405824pfu.45.1649833552212;
-        Wed, 13 Apr 2022 00:05:52 -0700 (PDT)
-Received: from thinkpad ([117.207.28.99])
-        by smtp.gmail.com with ESMTPSA id t15-20020a63b70f000000b00381510608e9sm5035307pgf.14.2022.04.13.00.05.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 00:05:51 -0700 (PDT)
-Date:   Wed, 13 Apr 2022 12:35:42 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Kalle Valo <kvalo@kernel.org>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        rajatja@google.com, refactormyself@gmail.com,
-        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-        swboyd@chromium.org, linux-wireless@vger.kernel.org,
-        ath11k@lists.infradead.org
-Subject: Re: [PATCH v4] PCI: qcom: Add system PM support
-Message-ID: <20220413070542.GB2015@thinkpad>
-References: <1646679306-4768-1-git-send-email-quic_pmaliset@quicinc.com>
- <20220412060144.GA41348@thinkpad>
- <87k0buoa9j.fsf@kernel.org>
- <20220413054904.GA2015@thinkpad>
- <CAA8EJprcQtVFvjL_WsMoDxvPSAqaRMS90ZuTsD_cDuujtr83Xw@mail.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QARgvmkpr8VVbyyV9NCF/ci4KYaV871c1Ej+b6nyl0E=;
+        b=p1qljGwVYZ4yxRUIxtP2QkE4TIno2SsBfHKRyJtlBqeny6AyYeFvr+DQavYinWMMdK
+         4UpNJoIhVJxJDMW9hHqLrGfIbd+KXVVFUdfI/OBCaDgQiPEQbXd5cIi51f5OagEgXiJr
+         LyQ8nnTaWwW0NPLU3PbfwIO0A3SbWFBsG5iHOHcETNr0brFfUwtt7PLfr8/qh397QnRl
+         xvVX4/tTyIR5QaStxdkJdBFE7SOIrGA7vkouf/SMWWUqfPntzwbI7rVmVemM6anBY5Ey
+         avfkfVtsRUXpFvpZz1qcS6NAht0vmDJ0nsReAYwPRGStf7PNj9J/dBJlGKbwYut640Zy
+         gHJg==
+X-Gm-Message-State: AOAM531AmefGQT3BzwpNs4a5oFxOcNC6ah0vSv8lJP83yWO4hw53ALf7
+        ZaukSdrCR+WawRmxNQQm7kyF4A==
+X-Google-Smtp-Source: ABdhPJyCMeaEoNC8ctpBkTlLeoBr7h/Q6l6by9SEIGLzZHnngd0lYcZwtTOD4kceei/TXW5O2Cm12Q==
+X-Received: by 2002:a05:6512:1526:b0:45d:cd2b:912d with SMTP id bq38-20020a056512152600b0045dcd2b912dmr28578677lfb.409.1649834841264;
+        Wed, 13 Apr 2022 00:27:21 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id b6-20020a2ebc06000000b0024b5c9e91c4sm1125356ljf.63.2022.04.13.00.27.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 00:27:20 -0700 (PDT)
+Message-ID: <bad40b1b-73af-a1f3-d0df-b59e4a599015@linaro.org>
+Date:   Wed, 13 Apr 2022 10:27:19 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJprcQtVFvjL_WsMoDxvPSAqaRMS90ZuTsD_cDuujtr83Xw@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v4 2/2] phy: qcom-qmp: Add SM8150 PCIe QMP PHYs
+Content-Language: en-GB
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-phy@lists.infradead.org
+Cc:     bhupesh.linux@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, vkoul@kernel.org,
+        bjorn.andersson@linaro.org
+References: <20220325222130.1783242-1-bhupesh.sharma@linaro.org>
+ <20220325222130.1783242-3-bhupesh.sharma@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220325222130.1783242-3-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,56 +77,143 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 13, 2022 at 09:36:30AM +0300, Dmitry Baryshkov wrote:
-> On Wed, 13 Apr 2022 at 08:49, Manivannan Sadhasivam
-> <manivannan.sadhasivam@linaro.org> wrote:
-> >
-> > On Tue, Apr 12, 2022 at 01:40:08PM +0300, Kalle Valo wrote:
-> > > + ath11k
-> > >
-> > > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
-> > >
-> > > > +Kalle, linux-wireless
-> > > >
-> > > > On Tue, Mar 08, 2022 at 12:25:06AM +0530, Prasad Malisetty wrote:
-> > > >> Add suspend_noirq and resume_noirq callbacks to handle
-> > > >> system suspend and resume in dwc PCIe controller driver.
-> > > >>
-> > > >> When system suspends, send PME turnoff message to enter
-> > > >> link into L2 state. Along with powerdown the PHY, disable
-> > > >> pipe clock, switch gcc_pcie_1_pipe_clk_src to XO if mux is
-> > > >> supported and disable the pcie clocks, regulators.
-> > > >>
-> > > >
-> > > > Kalle, is this behaviour appropriate for WLAN devices as well? The devices
-> > > > will be put into poweroff state (assuming no Vaux provided in D3cold) during
-> > > > system suspend.
-> > >
-> > > ath11k leaves the firmware running during suspend. I don't fully
-> > > understand what the patch is doing, but if it cuts the power from the
-> > > WLAN chip during suspend that will break ath11k.
-> > >
-> >
-> > Thanks Kalle for the confirmation. Yes the device will be put into D3cold state
-> > and that will most likely equal to poweroff state.
+On 26/03/2022 01:21, Bhupesh Sharma wrote:
+> SM8150 has multiple (different) PHY versions:
+> QMP GEN3x1 PHY - 1 lane
+> QMP GEN3x2 PHY - 2 lanes
 > 
-> Just to remind that ath11k on Qualcomm boards has a separate power
-> supply, not directly tied to the PCIe power supply.
+> Add support for these with relevant init sequence.
 > 
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp.c | 90 +++++++++++++++++++++++++++++
+>   1 file changed, 90 insertions(+)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> index b144ae1f729a..8e928b9619b6 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> @@ -3294,6 +3294,11 @@ static const char * const sdm845_pciephy_clk_l[] = {
+>   	"aux", "cfg_ahb", "ref", "refgen",
+>   };
+>   
+> +/* the pcie phy on sm8150 doesn't have a ref clock */
+> +static const char * const sm8150_pciephy_clk_l[] = {
+> +	"aux", "cfg_ahb", "refgen",
 
-It may change in the future or on a different OEM setup. Irrespective of that,
-this patch sends the PME_Turn_Off event to the ep devices. The devices in turn
-will shutdown the internal resources for poweroff/refclk removal. Therefore the
-device state shall be lost.
+On sm8250 we use GCC_WIFI/WIGIG/MDM_CLKREF_EN clocks as "ref". 
+Downstream dts lists them as "pcie_X_ldo". sm8150 also has these clocks 
+(GCC_PCIE_n_CLKREF_CLK). Is there any reason why we use CLKREF clocks on 
+sm8250, but ommit them on sm8150?
 
-Thanks,
-Mani
+> +};
+> +
+>   static const char * const qmp_v4_phy_clk_l[] = {
+>   	"aux", "ref_clk_src", "ref", "com_aux",
+>   };
+> @@ -3583,6 +3588,85 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
+>   	.pwrdn_delay_max	= 1005,		/* us */
+>   };
+>   
+> +static const struct qmp_phy_cfg sm8150_qmp_gen3x1_pciephy_cfg = {
+> +	.type = PHY_TYPE_PCIE,
+> +	.nlanes = 1,
+> +
+> +	.serdes_tbl		= sm8250_qmp_pcie_serdes_tbl,
+> +	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_serdes_tbl),
+> +	.serdes_tbl_sec		= sm8250_qmp_gen3x1_pcie_serdes_tbl,
+> +	.serdes_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_serdes_tbl),
+> +	.tx_tbl			= sm8250_qmp_pcie_tx_tbl,
+> +	.tx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_tx_tbl),
+> +	.rx_tbl			= sm8250_qmp_pcie_rx_tbl,
+> +	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_rx_tbl),
+> +	.rx_tbl_sec		= sm8250_qmp_gen3x1_pcie_rx_tbl,
+> +	.rx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_rx_tbl),
+> +	.pcs_tbl		= sm8250_qmp_pcie_pcs_tbl,
+> +	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_pcs_tbl),
+> +	.pcs_tbl_sec		= sm8250_qmp_gen3x1_pcie_pcs_tbl,
+> +	.pcs_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_tbl),
+> +	.pcs_misc_tbl		= sm8250_qmp_pcie_pcs_misc_tbl,
+> +	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_pcie_pcs_misc_tbl),
+> +	.pcs_misc_tbl_sec		= sm8250_qmp_gen3x1_pcie_pcs_misc_tbl,
+> +	.pcs_misc_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_misc_tbl),
+> +	.clk_list		= sm8150_pciephy_clk_l,
+> +	.num_clks		= ARRAY_SIZE(sm8150_pciephy_clk_l),
+> +	.reset_list		= sdm845_pciephy_reset_l,
+> +	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
+> +	.vreg_list		= qmp_phy_vreg_l,
+> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> +	.regs			= sm8250_pcie_regs_layout,
+> +
+> +	.start_ctrl		= PCS_START | SERDES_START,
+> +	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> +	.phy_status		= PHYSTATUS,
+> +
+> +	.has_pwrdn_delay	= true,
+> +	.pwrdn_delay_min	= 995,		/* us */
+> +	.pwrdn_delay_max	= 1005,		/* us */
+> +};
+> +
+> +static const struct qmp_phy_cfg sm8150_qmp_gen3x2_pciephy_cfg = {
+> +	.type = PHY_TYPE_PCIE,
+> +	.nlanes = 2,
+> +
+> +	.serdes_tbl		= sm8250_qmp_pcie_serdes_tbl,
+> +	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_serdes_tbl),
+> +	.tx_tbl			= sm8250_qmp_pcie_tx_tbl,
+> +	.tx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_tx_tbl),
+> +	.tx_tbl_sec		= sm8250_qmp_gen3x2_pcie_tx_tbl,
+> +	.tx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_tx_tbl),
+> +	.rx_tbl			= sm8250_qmp_pcie_rx_tbl,
+> +	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_rx_tbl),
+> +	.rx_tbl_sec		= sm8250_qmp_gen3x2_pcie_rx_tbl,
+> +	.rx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_rx_tbl),
+> +	.pcs_tbl		= sm8250_qmp_pcie_pcs_tbl,
+> +	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_pcs_tbl),
+> +	.pcs_tbl_sec		= sm8250_qmp_gen3x2_pcie_pcs_tbl,
+> +	.pcs_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_pcs_tbl),
+> +	.pcs_misc_tbl		= sm8250_qmp_pcie_pcs_misc_tbl,
+> +	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_pcie_pcs_misc_tbl),
+> +	.pcs_misc_tbl_sec		= sm8250_qmp_gen3x2_pcie_pcs_misc_tbl,
+> +	.pcs_misc_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_pcs_misc_tbl),
+> +	.clk_list		= sm8150_pciephy_clk_l,
+> +	.num_clks		= ARRAY_SIZE(sm8150_pciephy_clk_l),
+> +	.reset_list		= sdm845_pciephy_reset_l,
+> +	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
+> +	.vreg_list		= qmp_phy_vreg_l,
+> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> +	.regs			= sm8250_pcie_regs_layout,
+> +
+> +	.start_ctrl		= PCS_START | SERDES_START,
+> +	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> +	.phy_status		= PHYSTATUS,
+> +
+> +	.is_dual_lane_phy	= true,
+> +	.has_pwrdn_delay	= true,
+> +	.pwrdn_delay_min	= 995,		/* us */
+> +	.pwrdn_delay_max	= 1005,		/* us */
+> +};
+> +
+>   static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
+>   	.type = PHY_TYPE_PCIE,
+>   	.nlanes = 1,
+> @@ -6007,6 +6091,12 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
+>   	}, {
+>   		.compatible = "qcom,sm6115-qmp-ufs-phy",
+>   		.data = &sm6115_ufsphy_cfg,
+> +	}, {
+> +		.compatible = "qcom,sm8150-qmp-gen3x1-pcie-phy",
+> +		.data = &sm8150_qmp_gen3x1_pciephy_cfg,
+> +	}, {
+> +		.compatible = "qcom,sm8150-qmp-gen3x2-pcie-phy",
+> +		.data = &sm8150_qmp_gen3x2_pciephy_cfg,
+>   	}, {
+>   		.compatible = "qcom,sm8150-qmp-ufs-phy",
+>   		.data = &sm8150_ufsphy_cfg,
 
-> > Prasad, you should try to just turn off the host resources like clocks and
-> > regulators (not refclk) and let the device be in the default state
-> > (D3hot/L{0/1}?) during suspend.
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
+
+-- 
+With best wishes
+Dmitry
