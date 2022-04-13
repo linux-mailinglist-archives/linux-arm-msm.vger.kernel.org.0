@@ -2,65 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19C365000A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 23:08:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CF96500122
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 23:24:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238910AbiDMVI1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 17:08:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49542 "EHLO
+        id S236213AbiDMV0U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 17:26:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238880AbiDMVIT (ORCPT
+        with ESMTP id S235528AbiDMV0T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 17:08:19 -0400
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E57CA8567F;
-        Wed, 13 Apr 2022 14:05:45 -0700 (PDT)
-Received: by mail-oi1-f175.google.com with SMTP id e4so3408707oif.2;
-        Wed, 13 Apr 2022 14:05:45 -0700 (PDT)
+        Wed, 13 Apr 2022 17:26:19 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B6307B545
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 14:23:56 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id h5so2931772pgc.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 14:23:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=tZYBLnf1WvbjqU84GZINNxkL///8AUQJyyFh7egPwwQ=;
+        b=BDAAniCHhvMIwNEfFsQCYnUD7lEkEzbHYvYYKqavUmsChSe48h5JdRlA5rGnpaHSs1
+         eQlv9fluXoOY/S3xRW7Bva4x5+0IcxVBEiOUv/lBDahj0olbbFyoRRgIC6M4PdmB+tkf
+         LN2H2d+YQHOfmYf/8gujChRJzgasYWkQw9d44=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=gFOeEZI4pNvyN/LTAgs9rmC19q7UkYUYT1AJpJxfpdI=;
-        b=CLMygoQkFZgsg9JIYleQ/To94LdtInmzdM0RwpZCpzVvzNCyqjeHcuZwVNW2eqGrgo
-         h6XsG/emJnvdlU1e+R4GyW1vj0HUgrEJlzXoFJGiOtD+ug7MPOL1MdRV3o7O6nVEWvbH
-         92Ka1+EXAp1BofddkFnvJidBQ7A/pnqUFojJtJ7Ix2j+3tME1dE5xtYvlrGECdoKivpW
-         chHUfy5HIe4layMfrRk122/b45OvX8l6LBmQ4bEqUqKzsYf+0PeGw8b4QcaBcBT5ysCr
-         zO9nPeDYSarqdUyr+yKsUvqrXsYWdXP46aiaNElAT4CRBfV7Wl1O0AH0JRfEquSlaRRt
-         38qw==
-X-Gm-Message-State: AOAM532qyjP+jGApTg6EWXS6jw174s5pWl/ZUBp91oAnNQB7L4IFzq/r
-        aeGMLegu6sZkVQHzNpQZCA==
-X-Google-Smtp-Source: ABdhPJx5RFeYJLnhl//6T0M97AfdmhJRF0naPw/lnbT5EgrjjTgh8f2EadEd00qJESa3eceTDi9c0w==
-X-Received: by 2002:a05:6808:1a26:b0:2da:1bae:5186 with SMTP id bk38-20020a0568081a2600b002da1bae5186mr22287oib.144.1649883945133;
-        Wed, 13 Apr 2022 14:05:45 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id o7-20020a056871078700b000e29ff467dcsm44358oap.50.2022.04.13.14.05.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 14:05:44 -0700 (PDT)
-Received: (nullmailer pid 3917373 invoked by uid 1000);
-        Wed, 13 Apr 2022 21:05:44 -0000
-Date:   Wed, 13 Apr 2022 16:05:44 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: clock: Add Qualcomm SC8280XP GCC
- bindings
-Message-ID: <Ylc7KJBXPXNML7UM@robh.at.kernel.org>
-References: <20220408224321.627126-1-bjorn.andersson@linaro.org>
- <0eb126b3-b323-9614-361a-22c2762b590a@linaro.org>
+        bh=tZYBLnf1WvbjqU84GZINNxkL///8AUQJyyFh7egPwwQ=;
+        b=Hwt7sKQAMBfe98VqFaF0LcGxZ87LjOH8nlRKYVFWwRa82h3fE8VJgd9UxKZ44Vckie
+         KMPOwYrWCOEBEyWZ9QUXUcGMVvF29lGXlDToKu6z9/G6o9UEkhsIy+VBOn0a2XvqxOkB
+         UySTF4ozCSSVQGxSiM/IhanRkiKEA7mRPVUqqXfH2GvsPWeI4pbNyAZBVrPpxKznRBu8
+         cBF9rEDFknSnGCYLW9saHAzxQTN5QYNLp6RVxwoKP64AenhyX0X5izbXAC92Sdu1p6Fp
+         Vdt7CvHJiCOgq6m4cx1oyvB5QKbJGZK8fV+zqJLLxGaIHeK05DtmfCaLiuVLjOEEYNFq
+         1hug==
+X-Gm-Message-State: AOAM530k7HxVLpkJQxBMnSspYKLXqgiuJBaF75PKvqSWPWuxW3p/ZSZh
+        apJLMej2RM1YU2V85DIOS8/VbQ==
+X-Google-Smtp-Source: ABdhPJzsV5/KTZqWBS0floNBXZNysp8R605YR+M4xOUEjukOwuFVPkcg9ni3tqIwcmw1j2Om86Xe1A==
+X-Received: by 2002:a63:6e43:0:b0:386:4801:13a6 with SMTP id j64-20020a636e43000000b00386480113a6mr36718914pgc.403.1649885036170;
+        Wed, 13 Apr 2022 14:23:56 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:6a4f:9277:743f:c648])
+        by smtp.gmail.com with UTF8SMTPSA id b80-20020a621b53000000b005059f5d7587sm20536pfb.60.2022.04.13.14.23.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 14:23:55 -0700 (PDT)
+Date:   Wed, 13 Apr 2022 14:23:53 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+        srinivas.kandagatla@linaro.org, dianders@chromium.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v7 4/4] arm64: dts: qcom: sc7280: Add dt nodes for sound
+ card
+Message-ID: <Ylc/aR0hUGa6OKBO@google.com>
+References: <1649863277-31615-1-git-send-email-quic_srivasam@quicinc.com>
+ <1649863277-31615-5-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0eb126b3-b323-9614-361a-22c2762b590a@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+In-Reply-To: <1649863277-31615-5-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,68 +73,173 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Apr 09, 2022 at 06:41:25PM +0200, Krzysztof Kozlowski wrote:
-> On 09/04/2022 00:43, Bjorn Andersson wrote:
-> > Add binding for the Qualcomm SC8280XP Global Clock controller.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >  .../bindings/clock/qcom,gcc-sc8280xp.yaml     | 199 +++++++
-> >  include/dt-bindings/clock/qcom,gcc-sc8280xp.h | 496 ++++++++++++++++++
-> >  2 files changed, 695 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-> >  create mode 100644 include/dt-bindings/clock/qcom,gcc-sc8280xp.h
-> > 
-> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-> > new file mode 100644
-> > index 000000000000..44e5f0d0a795
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-> > @@ -0,0 +1,199 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/clock/qcom,gcc-sc8280xp.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Global Clock & Reset Controller Binding for SC8280xp
-> > +
-> > +maintainers:
-> > +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> > +
-> > +description: |
-> > +  Qualcomm global clock control module which supports the clocks, resets and
-> > +  power domains on SC8280xp.
-> > +
-> > +  See also:
-> > +  - dt-bindings/clock/qcom,gcc-sc8280xp.h
+On Wed, Apr 13, 2022 at 08:51:17PM +0530, Srinivasa Rao Mandadapu wrote:
+> Add dt nodes for sound card support, which is using WCD938x headset
+> playback, capture, I2S speaker playback and DMICs via VA macro.
 > 
-> include/dt-bindings/...
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-crd.dts  | 23 ++++++++
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 93 ++++++++++++++++++++++++++++++++
+>  2 files changed, 116 insertions(+)
 > 
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: qcom,gcc-sc8280xp
-> > +
-> 
-> (...)
-> 
-> > +
-> > +  '#power-domain-cells':
-> > +    const: 1
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  protected-clocks:
-> > +    description:
-> > +      Protected clock specifier list as per common clock binding.
-> 
-> There is still no schema with protected-clocks, so you need a type,
-> unless someoone is working on adding this to schema?
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> index b944366..1e16854 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
 
-The 16th addition always gets caught...
+You need to refresh your tree, this file has been renamed to
+sc7280-crd-r3.dts. That DT is for the CRD <= 2.x, newer versions
+use sc7280-herobrine-crd.dts.
 
-I've just added one to dtschema.
+> @@ -90,6 +90,29 @@ ap_ts_pen_1v8: &i2c13 {
+>  	us-euro-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
+>  };
+>  
+> +&sound {
+> +	audio-routing =
+> +		"IN1_HPHL", "HPHL_OUT",
+> +		"IN2_HPHR", "HPHR_OUT",
+> +		"AMIC1", "MIC BIAS1",
+> +		"AMIC2", "MIC BIAS2",
+> +		"VA DMIC0", "MIC BIAS1",
+> +		"VA DMIC1", "MIC BIAS1",
+> +		"VA DMIC2", "MIC BIAS3",
+> +		"VA DMIC3", "MIC BIAS3",
+> +		"TX SWR_ADC0", "ADC1_OUTPUT",
+> +		"TX SWR_ADC1", "ADC2_OUTPUT",
+> +		"TX SWR_ADC2", "ADC3_OUTPUT",
+> +		"TX SWR_DMIC0", "DMIC1_OUTPUT",
+> +		"TX SWR_DMIC1", "DMIC2_OUTPUT",
+> +		"TX SWR_DMIC2", "DMIC3_OUTPUT",
+> +		"TX SWR_DMIC3", "DMIC4_OUTPUT",
+> +		"TX SWR_DMIC4", "DMIC5_OUTPUT",
+> +		"TX SWR_DMIC5", "DMIC6_OUTPUT",
+> +		"TX SWR_DMIC6", "DMIC7_OUTPUT",
+> +		"TX SWR_DMIC7", "DMIC8_OUTPUT";
+> +};
+> +
+>  &tlmm {
+>  	tp_int_odl: tp-int-odl {
+>  		pins = "gpio7";
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> index cf62d06..a7c884a 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> @@ -84,6 +84,99 @@
+>  		pinctrl-names = "default";
+>  		pinctrl-0 = <&nvme_pwren>;
+>  	};
+> +
+> +	sound: sound {
+> +		compatible = "google,sc7280-herobrine";
+> +		model = "sc7280-wcd938x-max98360a-1mic";
+> +
+> +		audio-routing =
+> +			"IN1_HPHL", "HPHL_OUT",
+> +			"IN2_HPHR", "HPHR_OUT",
+> +			"AMIC1", "MIC BIAS1",
+> +			"AMIC2", "MIC BIAS2",
+> +			"VA DMIC0", "MIC BIAS3",
+> +			"VA DMIC1", "MIC BIAS3",
+> +			"VA DMIC2", "MIC BIAS1",
+> +			"VA DMIC3", "MIC BIAS1",
+> +			"TX SWR_ADC0", "ADC1_OUTPUT",
+> +			"TX SWR_ADC1", "ADC2_OUTPUT",
+> +			"TX SWR_ADC2", "ADC3_OUTPUT",
+> +			"TX SWR_DMIC0", "DMIC1_OUTPUT",
+> +			"TX SWR_DMIC1", "DMIC2_OUTPUT",
+> +			"TX SWR_DMIC2", "DMIC3_OUTPUT",
+> +			"TX SWR_DMIC3", "DMIC4_OUTPUT",
+> +			"TX SWR_DMIC4", "DMIC5_OUTPUT",
+> +			"TX SWR_DMIC5", "DMIC6_OUTPUT",
+> +			"TX SWR_DMIC6", "DMIC7_OUTPUT",
+> +			"TX SWR_DMIC7", "DMIC8_OUTPUT";
+> +
+> +		qcom,msm-mbhc-hphl-swh = <1>;
+> +		qcom,msm-mbhc-gnd-swh = <1>;
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		#sound-dai-cells = <0>;
+> +
+> +		dai-link@1 {
+> +			link-name = "MAX98360A";
+> +			reg = <MI2S_SECONDARY>;
 
-Rob
+Dumb question: is this value actually used? A quick glance through
+qcom_snd_parse_of() suggests it isn't. And the CPU DAI id is already
+specified in the 'sound-dai' property below.
+
+In a quick test I replaced the corresponding 'reg' values in
+sc7180-trogdor.dtsi with 'random' values and audio playback on
+my coachz (sc7180-trogdor-coachz-r3.dts) still works ...
+
+> +			cpu {
+> +				sound-dai = <&lpass_cpu MI2S_SECONDARY>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&max98360a>;
+> +			};
+> +		};
+> +
+> +		dai-link@5 {
+> +			link-name = "DisplayPort";
+> +			reg = <LPASS_DP_RX>;
+
+nit: add an empty line (in all links) to separate the properties from the node
+
+> +			cpu {
+> +				sound-dai = <&lpass_cpu LPASS_DP_RX>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&mdss_dp>;
+> +			};
+> +		};
+> +
+> +		dai-link@6 {
+> +			link-name = "WCD9385 Playback";
+> +			reg = <LPASS_CDC_DMA_RX0>;
+> +			cpu {
+> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_RX0>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&wcd938x 0>, <&swr0 0>, <&lpass_rx_macro 0>;
+> +			};
+> +		};
+> +
+> +		dai-link@19 {
+> +			link-name = "WCD9385 Capture";
+> +			reg = <LPASS_CDC_DMA_TX3>;
+> +			cpu {
+> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_TX3>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&wcd938x 1>, <&swr1 0>, <&lpass_tx_macro 0>;
+> +			};
+> +		};
+> +
+> +		dai-link@25 {
+> +			link-name = "DMIC";
+> +			reg = <LPASS_CDC_DMA_VA_TX0>;
+> +			cpu {
+> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_VA_TX0>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&lpass_va_macro 0>;
+> +			};
+> +		};
+> +	};
+>  };
+>  
+>  &apps_rsc {
+> -- 
+> 2.7.4
+> 
