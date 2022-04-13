@@ -2,81 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4867C4FF2FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 11:08:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 538344FF332
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 11:16:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233591AbiDMJLK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 05:11:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49676 "EHLO
+        id S234327AbiDMJSB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 05:18:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234262AbiDMJLH (ORCPT
+        with ESMTP id S234324AbiDMJSA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 05:11:07 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A32A527E8;
-        Wed, 13 Apr 2022 02:08:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649840923; x=1681376923;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=+YA29YZhcDAQNiqZ2SepI8k+n2MV8/k87giI4s9WskI=;
-  b=ctD6+LX3fQ1aWm/+XnHOhVL9eNtATrDn029bQc4fVFIjbcR52d7xcYAY
-   p4QmFWINd6kI10andDqIbvelwfhsfQfzUcguRHeMmvsBHL7SGzCMibPxo
-   j+BJx5M6/e4NUwNQ9PI/mUYLok8/fvUVVqnyV5qoAEhkiyRWF9skJMbx0
-   U=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 13 Apr 2022 02:08:42 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 02:08:42 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 13 Apr 2022 02:08:42 -0700
-Received: from [10.216.14.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 13 Apr
- 2022 02:08:36 -0700
-Subject: Re: [PATCH v13 2/6] usb: dwc3: core: Host wake up support from system
- suspend
-To:     Matthias Kaehlcke <mka@chromium.org>
-CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 13 Apr 2022 05:18:00 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD971245B6;
+        Wed, 13 Apr 2022 02:15:39 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3721861B65;
+        Wed, 13 Apr 2022 09:15:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF9CC385AD;
+        Wed, 13 Apr 2022 09:15:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649841338;
+        bh=7gv8n9sZbHEBMpYf/WaXUD9WERbNzyDJPUSPAwT/RuM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jzdcG2M40kGlN6MyPAc/+Z2k5q7V4Ox8Dgk8+YiEHGyNoUfl3Hmvb4o2HSDwEa+Fr
+         AiYAFgzGOrbR/8SIauuOJk7jAq8G/oQswgzqElT+bZdMylkL2epIsxZn+6RKG6Ht51
+         1sa6AoIuFsXanpYF5Pc9hOADkuXODTs/hx5O8nsDeBpNeyxxpMoh+PgqdYcMSa5H6H
+         rxqPRcy1wVDgk2gEXYShBkqLLES0U4xv/RKd2QORF9kZ8aDhYTV6+9hLa/c2/D69O4
+         VBplZT373Yts54JLo73Uu7JZDkRo8/8XJGVrVANPDlhCDc9IxDU29ZoHJJbh05qKs3
+         jYXpuNgfm3T6g==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1neZ64-0005OB-CF; Wed, 13 Apr 2022 11:15:33 +0200
+Date:   Wed, 13 Apr 2022 11:15:32 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
         Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_ppratap@quicinc.com>, <quic_kriskura@quicinc.com>,
-        <quic_vpulyala@quicinc.com>
-References: <1649704614-31518-1-git-send-email-quic_c_sanm@quicinc.com>
- <1649704614-31518-3-git-send-email-quic_c_sanm@quicinc.com>
- <YlSVec5+SpdMZWCz@google.com>
- <36d22ad7-7f11-2f63-cd68-5d564476161e@quicinc.com>
- <20220412050018.GB2627@hu-pkondeti-hyd.qualcomm.com>
- <259c9e87-a52e-c063-7901-2c6decd42675@quicinc.com>
- <YlXNd5YkAMW7cbYG@google.com>
-From:   "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>
-Message-ID: <ee38105f-e2f4-4e40-3c89-224301f1eb12@quicinc.com>
-Date:   Wed, 13 Apr 2022 14:38:33 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.1
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 1/5] clk: qcom: regmap-mux: add pipe clk implementation
+Message-ID: <YlaUtCuMZZL4bM2U@hovoldconsulting.com>
+References: <20220412193839.2545814-1-dmitry.baryshkov@linaro.org>
+ <20220412193839.2545814-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <YlXNd5YkAMW7cbYG@google.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220412193839.2545814-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,162 +67,177 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+On Tue, Apr 12, 2022 at 10:38:35PM +0300, Dmitry Baryshkov wrote:
+> On recent Qualcomm platforms the QMP PIPE clocks feed into a set of
+> muxes which must be parked to the "safe" source (bi_tcxo) when
+> corresponding GDSC is turned off and on again. Currently this is
+> handcoded in the PCIe driver by reparenting the gcc_pipe_N_clk_src
+> clock. However the same code sequence should be applied in the
+> pcie-qcom endpoint, USB3 and UFS drivers.
 
-On 4/13/2022 12:35 AM, Matthias Kaehlcke wrote:
-> On Tue, Apr 12, 2022 at 12:08:02PM +0530, Sandeep Maheswaram (Temp) wrote:
->> Hi Pavan,
->>
->> On 4/12/2022 10:30 AM, Pavan Kondeti wrote:
->>> Hi Sandeep,
->>>
->>> On Tue, Apr 12, 2022 at 10:16:39AM +0530, Sandeep Maheswaram (Temp) wrote:
->>>> Hi Matthias,
->>>>
->>>> On 4/12/2022 2:24 AM, Matthias Kaehlcke wrote:
->>>>> On Tue, Apr 12, 2022 at 12:46:50AM +0530, Sandeep Maheswaram wrote:
->>>>>> During suspend read the status of all port and set hs phy mode
->>>>>> based on current speed. Use this hs phy mode to configure wakeup
->>>>>> interrupts in qcom glue driver.
->>>>>>
->>>>>> Check wakep-source property for dwc3 core node to set the
->>>>> s/wakep/wakeup/
->>>> Okay. Will update in next version.
->>>>>> wakeup capability. Drop the device_init_wakeup call from
->>>>>> runtime suspend and resume.
->>>>>>
->>>>>> Also check during suspend if any wakeup capable devices are
->>>>>> connected to the controller (directly or through hubs), if there
->>>>>> are none set a flag to indicate that the PHY is powered
->>>>>> down during suspend.
->>>>>>
->>>>>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
->>>>>> ---
->>>>> A per-patch change log would be really helpful for reviewers, even
->>>>> if it doesn't include older versions.
->>>> Okay. Will update in next version.
->>>>>>    drivers/usb/dwc3/core.c | 33 ++++++++++++++++++++-------------
->>>>>>    drivers/usb/dwc3/core.h |  4 ++++
->>>>>>    drivers/usb/dwc3/host.c | 25 +++++++++++++++++++++++++
->>>>>>    3 files changed, 49 insertions(+), 13 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
->>>>>> index 1170b80..effaa43 100644
->>>>>> --- a/drivers/usb/dwc3/core.c
->>>>>> +++ b/drivers/usb/dwc3/core.c
->>>>>> @@ -32,6 +32,7 @@
->>>>>>    #include <linux/usb/gadget.h>
->>>>>>    #include <linux/usb/of.h>
->>>>>>    #include <linux/usb/otg.h>
->>>>>> +#include <linux/usb/hcd.h>
->>>>>>    #include "core.h"
->>>>>>    #include "gadget.h"
->>>>>> @@ -1723,6 +1724,7 @@ static int dwc3_probe(struct platform_device *pdev)
->>>>>>    	platform_set_drvdata(pdev, dwc);
->>>>>>    	dwc3_cache_hwparams(dwc);
->>>>>> +	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
->>>>>>    	spin_lock_init(&dwc->lock);
->>>>>>    	mutex_init(&dwc->mutex);
->>>>>> @@ -1865,6 +1867,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->>>>>>    {
->>>>>>    	unsigned long	flags;
->>>>>>    	u32 reg;
->>>>>> +	struct usb_hcd  *hcd = platform_get_drvdata(dwc->xhci);
->>>>>>    	switch (dwc->current_dr_role) {
->>>>>>    	case DWC3_GCTL_PRTCAP_DEVICE:
->>>>>> @@ -1877,10 +1880,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->>>>>>    		dwc3_core_exit(dwc);
->>>>>>    		break;
->>>>>>    	case DWC3_GCTL_PRTCAP_HOST:
->>>>>> -		if (!PMSG_IS_AUTO(msg)) {
->>>>>> -			dwc3_core_exit(dwc);
->>>>>> -			break;
->>>>>> -		}
->>>>>> +		dwc3_check_phy_speed_mode(dwc);
->>>>>>    		/* Let controller to suspend HSPHY before PHY driver suspends */
->>>>>>    		if (dwc->dis_u2_susphy_quirk ||
->>>>>> @@ -1896,6 +1896,16 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->>>>>>    		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
->>>>>>    		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
->>>>>> +
->>>>>> +		if (!PMSG_IS_AUTO(msg)) {
->>>>>> +			if (device_may_wakeup(dwc->dev) &&
->>>>>> +			    usb_wakeup_enabled_descendants(hcd->self.root_hub)) {
->>>>> You did not answer my question on v12, reposting it:
->>>>>
->>>>>     Did you ever try whether you could use device_children_wakeup_capable() from
->>>>>     [1] instead of usb_wakeup_enabled_descendants()?
->>>>>
->>>>>     [1] https://patchwork.kernel.org/project/linux-usb/patch/1635753224-23975-2-git-send-email-quic_c_sanm@quicinc.com/#24566065
->>>> Sorry ..I have replied in mail yesterday but it is not showing up in
->>>> patchwork link.
->>>>
->>>> Tried with  device_children_wakeup_capable(dwc->dev) instead of
->>>> usb_wakeup_enabled_descendants and it always returns true even
->>>>
->>>> when no devices are connected.
->>>>
->>> What do you mean by when no devices are connected? There is always
->>> root hub connected and we should not power down the DWC3 here even
->>> when remote wakeup for root hub is enabled. Essentially
->>> usb_wakeup_enabled_descendants() returns true even without any
->>> physical devices connected.
->>>
->>> What does device_children_wakeup_capable() do? Sorry, I could not
->>> find this function definition.
->>>
->>> Thanks,
->>> Pavan
->> usb_wakeup_enabled_descendants() doesn't consider hubs. It only returns true if any devices
->> are connected with wakeup capability apart from hubs.
-> Actually it considers hubs:
->
-> unsigned usb_wakeup_enabled_descendants(struct usb_device *udev)
-> {
-> 	struct usb_hub *hub = usb_hub_to_struct_hub(udev);
->
-> 	return udev->do_remote_wakeup +
-> 		(hub ? hub->wakeup_enabled_descendants : 0);
-> }
->
-> 'udev' may or may not be a hub, if 'do_remote_wakeup' is set then the
-> device is considered a wakeup enabled descendant.
->
-> And for system suspebd 'do_remote_wakeup' is set based on the wakeup
-> config of the device:
->
-> static void choose_wakeup(struct usb_device *udev, pm_message_t msg)
-> {
-> 	...
-> 	w = device_may_wakeup(&udev->dev);
-> 	...
-> 	udev->do_remote_wakeup = w;
-> }
->
-> I checked on three systems with different Linux distributions, on all of
-> the wakeup flag of a connected hub is 'disabled'. Wakeup still works, so
-> apparently that flag doesn't really have an impact for child ports.
->
->> If we consider hubs also dwc3 core exit and phy exit will never be called.
->>
->> device_children_wakeup_capable() implementation was shared by Matthias in below thread
->> https://patchwork.kernel.org/project/linux-usb/patch/1635753224-23975-2-git-send-email-quic_c_sanm@quicinc.com/#24566065
->>
->> Probably device_children_wakeup_capable() is returning true because it considers hubs also.
-> I thought I did a basic test when I sent the patch, I did another (?) one
-> with v13 of your patch set. In this tests with a hub connected the
-> function returns true when an HID device is connected, and false when
-> nothing is connected. The wakeup flag of the hub is disabled (default).
->
-> Sandeep, are the wakeup flags of the child hub(s) set to 'enabled' on
-> the system you tested on?
+I'm starting to think this really belongs in the PHY driver which is the
+provider of the pipe clock. Moving it there would also allow the code to
+be shared between PCIe, USB, and UFS.
 
-The wakeup flags of hub is 'disabled' on system I tested.
+The PHY driver enables the pipe clock by starting the PHY and before
+doing so there's no point in updating the mux. Similarly, the PHY driver
+can restore the "safe" source after disabling the pipe clock.
 
-What is the input param you are giving to device_children_wakeup_capable() function ?
+That way there's no magic happening behind scenes, the clock framework
+always reports the actual state of the tree, and the reason for all of
+this can be documented in the QMP PHY driver once and for all.
 
-I was passing the dwc->dev like this device_children_wakeup_capable(dwc->dev) .Is it right?
+The only change to the bindings compared to what this series proposes is
+that the PHY driver also needs a reference to bi_tcxo.
 
-Regards
-Sandeep
+Also note that updating the mux separately from starting the PHY as this
+series allows for, doesn't really make the pipe clock any safer to use.
 
+Either way, there are also some problems with this safe-mux
+implementation that I point out below.
+
+> Rather than copying this sequence over and over again, follow the
+> example of clk_rcg2_shared_ops and implement this parking in the
+> enable() and disable() clock operations. As we are changing the parent
+> behind the back of the clock framework, also implement custom
+> set_parent() and get_parent() operations behaving accroding to the clock
+> framework expectations (cache the new parent if the clock is in disabled
+> state, return cached parent).
+>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/clk/qcom/clk-regmap-mux.c | 78 +++++++++++++++++++++++++++++++
+>  drivers/clk/qcom/clk-regmap-mux.h |  3 ++
+>  2 files changed, 81 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/clk-regmap-mux.c b/drivers/clk/qcom/clk-regmap-mux.c
+> index 45d9cca28064..c39ee783ee83 100644
+> --- a/drivers/clk/qcom/clk-regmap-mux.c
+> +++ b/drivers/clk/qcom/clk-regmap-mux.c
+> @@ -49,9 +49,87 @@ static int mux_set_parent(struct clk_hw *hw, u8 index)
+>  	return regmap_update_bits(clkr->regmap, mux->reg, mask, val);
+>  }
+>  
+> +static u8 mux_safe_get_parent(struct clk_hw *hw)
+> +{
+> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
+> +	unsigned int val;
+> +
+> +	if (clk_hw_is_enabled(hw))
+> +		return mux_get_parent(hw);
+> +
+> +	val = mux->stored_parent_cfg;
+> +
+> +	if (mux->parent_map)
+> +		return qcom_find_cfg_index(hw, mux->parent_map, val);
+> +
+> +	return val;
+> +}
+> +
+> +static int mux_safe_set_parent(struct clk_hw *hw, u8 index)
+> +{
+> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
+> +
+> +	if (clk_hw_is_enabled(hw))
+> +		return mux_set_parent(hw, index);
+> +
+> +	if (mux->parent_map)
+> +		index = mux->parent_map[index].cfg;
+> +
+> +	mux->stored_parent_cfg = index;
+> +
+> +	return 0;
+> +}
+> +
+> +static void mux_safe_disable(struct clk_hw *hw)
+> +{
+> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
+> +	struct clk_regmap *clkr = to_clk_regmap(hw);
+> +	unsigned int mask = GENMASK(mux->width + mux->shift - 1, mux->shift);
+> +	unsigned int val;
+> +
+> +	regmap_read(clkr->regmap, mux->reg, &val);
+> +
+> +	mux->stored_parent_cfg = (val & mask) >> mux->shift;
+> +
+> +	val = mux->safe_src_parent;
+> +	if (mux->parent_map) {
+> +		int index = qcom_find_src_index(hw, mux->parent_map, val);
+> +
+> +		if (WARN_ON(index < 0))
+> +			return;
+> +
+> +		val = mux->parent_map[index].cfg;
+> +	}
+> +	val <<= mux->shift;
+> +
+> +	regmap_update_bits(clkr->regmap, mux->reg, mask, val);
+> +}
+> +
+> +static int mux_safe_enable(struct clk_hw *hw)
+> +{
+> +	struct clk_regmap_mux *mux = to_clk_regmap_mux(hw);
+> +	struct clk_regmap *clkr = to_clk_regmap(hw);
+> +	unsigned int mask = GENMASK(mux->width + mux->shift - 1, mux->shift);
+> +	unsigned int val;
+> +
+> +	val = mux->stored_parent_cfg;
+> +	val <<= mux->shift;
+> +
+> +	return regmap_update_bits(clkr->regmap, mux->reg, mask, val);
+> +}
+
+The caching of the parent is broken since set_parent() is typically not
+called before enabling the clock.
+
+This means that the above code will set the mux to its zero-initialised
+value, which currently only works by chance as the pipe clock config
+value happens to be zero.
+
+For this to work generally, you'd also need to define also the
+(default/initial) non-safe parent for each mux. Handling handover from
+the bootloader might also be tricky.
+
+Furthermore, the current implementation appears to ignore locking and
+doesn't handle the case where set_parent() races with enable(). The
+former is protected by the prepare mutex and the latter by the enable
+spinlock and a driver that needs to serialise the two needs to handle
+that itself.
+
+> +
+>  const struct clk_ops clk_regmap_mux_closest_ops = {
+>  	.get_parent = mux_get_parent,
+>  	.set_parent = mux_set_parent,
+>  	.determine_rate = __clk_mux_determine_rate_closest,
+>  };
+>  EXPORT_SYMBOL_GPL(clk_regmap_mux_closest_ops);
+> +
+> +const struct clk_ops clk_regmap_mux_safe_ops = {
+> +	.enable = mux_safe_enable,
+> +	.disable = mux_safe_disable,
+> +	.get_parent = mux_safe_get_parent,
+> +	.set_parent = mux_safe_set_parent,
+> +	.determine_rate = __clk_mux_determine_rate_closest,
+> +};
+> +EXPORT_SYMBOL_GPL(clk_regmap_mux_safe_ops);
+> diff --git a/drivers/clk/qcom/clk-regmap-mux.h b/drivers/clk/qcom/clk-regmap-mux.h
+> index db6f4cdd9586..f86c674ce139 100644
+> --- a/drivers/clk/qcom/clk-regmap-mux.h
+> +++ b/drivers/clk/qcom/clk-regmap-mux.h
+> @@ -14,10 +14,13 @@ struct clk_regmap_mux {
+>  	u32			reg;
+>  	u32			shift;
+>  	u32			width;
+> +	u8			safe_src_parent;
+> +	u8			stored_parent_cfg;
+>  	const struct parent_map	*parent_map;
+>  	struct clk_regmap	clkr;
+>  };
+>  
+>  extern const struct clk_ops clk_regmap_mux_closest_ops;
+> +extern const struct clk_ops clk_regmap_mux_safe_ops;
+>  
+>  #endif
+
+Johan
