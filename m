@@ -2,46 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F2A04FF54E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 12:57:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E3C14FF689
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Apr 2022 14:14:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233855AbiDMK7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 06:59:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41452 "EHLO
+        id S232147AbiDMMRE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 08:17:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232020AbiDMK7Z (ORCPT
+        with ESMTP id S230219AbiDMMRD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 06:59:25 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 86D1C5A163;
-        Wed, 13 Apr 2022 03:57:04 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 527B51595;
-        Wed, 13 Apr 2022 03:57:04 -0700 (PDT)
-Received: from e123427-lin.home (unknown [172.31.20.19])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C11093F73B;
-        Wed, 13 Apr 2022 03:57:02 -0700 (PDT)
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v2] PCI: qcom: Fix pipe clock imbalance
-Date:   Wed, 13 Apr 2022 11:57:01 +0100
-Message-Id: <164984714583.9020.940270907096326400.b4-ty@arm.com>
-X-Mailer: git-send-email 2.31.0
-In-Reply-To: <20220401133351.10113-1-johan+linaro@kernel.org>
-References: <20220401133351.10113-1-johan+linaro@kernel.org>
+        Wed, 13 Apr 2022 08:17:03 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F56B4D61B;
+        Wed, 13 Apr 2022 05:14:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649852082; x=1681388082;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=9icaeqllc5WOZxo1IWUOcXOZy9t8n+P5WoIyYE67iU8=;
+  b=kT2KsjmYFrcNg/e2LY4eZrjCwjT0pKkY328HM89vAuyRXc+RFmjQaSAa
+   +fNPS5eKR8R75HIStXOSuAO6NJdBW/Q2etQMUiMzh6OILsYUss1+yDNTO
+   PVnXMpU3SlntzzK3PvohWJ7QseXwo3BtdajOCuCoMlgRGWzMjTWZll0jN
+   Q=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 13 Apr 2022 05:14:42 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 05:14:41 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 13 Apr 2022 05:14:41 -0700
+Received: from [10.216.28.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 13 Apr
+ 2022 05:14:37 -0700
+Message-ID: <9704adae-54f0-f8f4-1584-aefc2b1de402@quicinc.com>
+Date:   Wed, 13 Apr 2022 17:44:34 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: Add Qualcomm SDX65 DT
+ bindings
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <djakov@kernel.org>, <robh+dt@kernel.org>, <krzk+dt@kernel.org>
+CC:     <manivannan.sadhasivam@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1649740053-14507-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1649740053-14507-2-git-send-email-quic_rohiagar@quicinc.com>
+ <7e1e6c10-c02a-c8da-44c0-ba3abef1950e@linaro.org>
+ <99e49c61-4a6a-69c6-810c-581ee0ce5008@quicinc.com>
+ <89ad9e08-e0b2-d163-b089-c96ce70509b3@linaro.org>
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+In-Reply-To: <89ad9e08-e0b2-d163-b089-c96ce70509b3@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -50,21 +74,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 1 Apr 2022 15:33:51 +0200, Johan Hovold wrote:
-> Commit ed8cc3b1fc84 ("PCI: qcom: Add support for SDM845 PCIe
-> controller") introduced a clock imbalance by enabling the pipe clock
-> both in init() and in post_init() but only disabling in post_deinit().
-> 
-> Note that the pipe clock was also never disabled in the init() error
-> paths and that enabling the clock before powering up the PHY looks
-> questionable.
-> 
-> [...]
 
-Applied to pci/qcom, thanks!
+On 4/13/2022 12:03 PM, Krzysztof Kozlowski wrote:
+> On 13/04/2022 08:29, Rohit Agarwal wrote:
+>> On 4/12/2022 2:52 PM, Krzysztof Kozlowski wrote:
+>>> On 12/04/2022 07:07, Rohit Agarwal wrote:
+>>>> Add interconnect IDs for Qualcomm SDX65 platform.
+>>>>
+>>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>>> (...)
+>>>
+>>>> diff --git a/include/dt-bindings/interconnect/qcom,sdx65.h b/include/dt-bindings/interconnect/qcom,sdx65.h
+>>>> new file mode 100644
+>>>> index 0000000..8d02c79
+>>>> --- /dev/null
+>>>> +++ b/include/dt-bindings/interconnect/qcom,sdx65.h
+>>>> @@ -0,0 +1,67 @@
+>>>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>>> Is it possible to license it the same as bindings (GPL-2.0 OR BSD-2-Clause)?
+>> The qcom related code are marked as GPL 2.0 license
+> This I see here, unless you meant some other qcom related code?
 
-[1/1] PCI: qcom: Fix pipe clock imbalance
-      https://git.kernel.org/lpieralisi/pci/c/dcd9011f59
+Yes, I meant the other codes as well because most of them I see (for eg. 
+sdx55) have added only GPL 2.0.
 
 Thanks,
-Lorenzo
+Rohit
+
+>
+> Best regards,
+> Krzysztof
