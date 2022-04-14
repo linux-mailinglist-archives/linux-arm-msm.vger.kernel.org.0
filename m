@@ -2,64 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 839685002C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 01:48:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C0A95002E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 02:03:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234232AbiDMXvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 19:51:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49790 "EHLO
+        id S235876AbiDNAFT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 20:05:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiDMXvO (ORCPT
+        with ESMTP id S229787AbiDNAFS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 19:51:14 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ABE1496BD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 16:48:48 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id b21so4086608ljf.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 16:48:48 -0700 (PDT)
+        Wed, 13 Apr 2022 20:05:18 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A7073700C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 17:02:55 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id a19so3768013oie.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 17:02:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ORBNSb55HLrQXXkE7Gee3v6upYJe8NBlLeoTQT4L488=;
-        b=qVr99L287eaB0tbftUfAAeP/Uy4c/WBia3R1tOnTUUEPfTnI0+o3JZuJZKwXKtC79t
-         1OMEUeHlZNJWLtfdVT4LWmFdg6nrk64/zPVhH/RsAuLh/7hl1ov0eiWarg9wLqxSkgc8
-         TXvKAXHijgPFcqfUf6N5iuQQAs8cfB7SsOYfm9bLMwgjISDEn0WrgQuhOS8+NWaoNfUM
-         nOJe951Pyo4ZmOe+gnXXHq1RjFgTkuZpy0ZJljMCtz2pKNBKMh2MlDccpCRCeNcfR+R8
-         CQwTTo9DBgtL3nW5+KGFAN9vVCVkFWPahVdFHFJt3LpeotpviOcIfFithdw9OO8Rf+bX
-         S6gw==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=C7D4i18WnxrgBXf4shxFqYln81+Lfr4ATkdTNtqU2ck=;
+        b=W/ZABInJ4czkJM0vDyGAwz3yEFAMCEvHtVtCMDXOfyAgDwS2wBCaP2hw7blb+saGYC
+         k2L9RxkO1rbutRE9dOvAdtQOz46YmvYGCkUHPJp2yfGN9HPkVKSrcMZpIFFhahvFsC0j
+         1g9Ny3Ibq+nxS9D+C4zgzsbe4tqNZ8PgNwzUg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ORBNSb55HLrQXXkE7Gee3v6upYJe8NBlLeoTQT4L488=;
-        b=04clCrYV9J7/pI2aNALFtQpLlWArcKXHvm9mBpmLCaQuuWoLrmlOFqYGwzjD2mDuZH
-         MdtU1c1c626iabL7WHmT3VD0thMzijEWKdibE9V/XyEHRkTP0HkDXi0qtPPE7UdAmYkI
-         zPg7jhYxGqBDtn5BPDBZ4ZqbG7gyyvA3NAfN55bQxD9Apw8HcGs8AJHW6gt220ueus0X
-         FHw4fRVvEWhimiRYHUMkoeGIJ0/f5TXnuW3P9lzC6Nr//UpuZPeApate3kXfD0BP/PlE
-         CZ6kZ5eb9+ySThQcrgozYDAETFBZUGDZQhenHzKCIdxkezhoix1UPBjby+uhQVWuSugQ
-         np4w==
-X-Gm-Message-State: AOAM533GjdBHBOI+wJYCsLcD9jLpql0W6yKPcGjD8d5vVZqHC+n80L8u
-        OXeT1/HvjrZ+Or3aYPedAprV7wpoorejZA==
-X-Google-Smtp-Source: ABdhPJwBaiLZCv1bv96pZqmIezsxQUGweUw4jgihNGi3bblfXt8xxbHpETMPKm0FIDy9S57g3rf68A==
-X-Received: by 2002:a2e:9241:0:b0:24b:63e8:1cd with SMTP id v1-20020a2e9241000000b0024b63e801cdmr68170ljg.390.1649893726644;
-        Wed, 13 Apr 2022 16:48:46 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id l20-20020a056512111400b0044aba8206ccsm41901lfg.253.2022.04.13.16.48.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 16:48:46 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     linux-firmware@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PULL] qcom: add firmware for APQ8096 SoC
-Date:   Thu, 14 Apr 2022 02:48:45 +0300
-Message-Id: <20220413234845.276726-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=C7D4i18WnxrgBXf4shxFqYln81+Lfr4ATkdTNtqU2ck=;
+        b=wlIt5dNbIkpkldmUOccZ2YFyNoRph+ygbaC6ZeEPReqYcBNuW4YhayLG+QKmp6RcHh
+         eEMkb7ajZ7FSBONAl1j8KCdBXIwdxSqcG3s/3JWoaLg3HncuwD0rKoYeFf+yMhzjasYZ
+         26l7mGKJzudGNhd8lWCVpnIBjmU8sMDydALm12uoQAYJwFHD3iwNwU2cqf3I6r80KJOx
+         +C2mKKXBbzSJmBQxMSG5eN7KUczQiiXb231I1JoZ9BqLdMsfz8uLwoB/2qCgYfxBXV/O
+         4WtQcRFTMHGE5BthvPDEH4NBInk1y5OPtA60JT6cpSorHvPMJ8DHoErk5CyIo1ckkX62
+         fEFw==
+X-Gm-Message-State: AOAM533NsuVbd9DATRsd4wSEUbDN1y/fgxKA3hTMz+NRhrcqObzD1no9
+        MVxutF8+uNealDvv9oiJJJeJqahm/5FIyhKnZ48VVQ==
+X-Google-Smtp-Source: ABdhPJzp2cTMSMi7Tz42NyDd50anioDt8Jea6q6Rz9Ad1fmvO4ymY/ZP6diGOQmXMoE+vv2JGFKQrFhNXF1AbVQ6YkY=
+X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
+ n62-20020acabd41000000b002ecff42814fmr265612oif.63.1649894574930; Wed, 13 Apr
+ 2022 17:02:54 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 13 Apr 2022 17:02:54 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <1649280493-4393-1-git-send-email-quic_khsieh@quicinc.com>
+References: <1649280493-4393-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 13 Apr 2022 17:02:54 -0700
+Message-ID: <CAE-0n511nbPrRCMx3E2De-htmR79vZr4ezSj13Gm1PbTGasC4A@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/dp: enhance both connect and disconnect
+ pending_timeout handle
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
+        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
+        dmitry.baryshkov@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -68,43 +72,144 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi linux-firmware maintainers,
+The subject is still misleading. It is fixing something. It may be
+enhancing it as well but it is clearly fixing it first.
 
-Please pull the audio and modem DSP firmware for the Qualcomm APQ8096 platform.
-The firmware files come from Dragonboard 820c BSP available at [1] or directly
-from Qualcomm at [2] (registration is required).
+Quoting Kuogee Hsieh (2022-04-06 14:28:13)
+> dp_hpd_plug_handle() is responsible for setting up main link and send
+> uevent to notify user space framework to start video stream. Similarly,
+> dp_hdp_unplug_handle is responsible to send uevent to notify user space
+> framework to stop video stream and then tear down main link.
+> However there are rare cases, such as in the middle of system suspending,
+> that uevent could not be delivered to user space framework. Therefore
+> some kind of recover mechanism armed by timer need to be in place in the
+> case of user space framework does not respond to uevent.
+>
+> This patch have both dp_conenct_pending_timeout and
+> dp_disconnect_pending_timeout are used to stop video stream and tear down
+> main link and eventually restore DP driver state to known default
+> DISCONNECTED state in the case of timer fired due to framework does not
+> respond to uevent so that DP driver can recover itself gracefully at next
+> dongle unplug followed by plugin event.
+>
+> Changes in v2:
+> -- replace dp_display_usbpd_disconnect_cb with dp_display_notify_disconnect
 
-[1] http://releases.linaro.org/96boards/dragonboard820c/qualcomm/firmware/linux-board-support-package-r01700.1.zip
-[2] https://developer.qualcomm.com/download/db820c/linux-board-support-package-r01700.1.zip
+I'd prefer this part to be a different patch. It can come after the fix
+to ease backporting.
 
-The following changes since commit 8a2d811764e7fcc9e2862549f91487770b70563b:
+Also, is there any response to Dmitry's question yet? I haven't seen
+anything.
 
-  rtl_bt: Add firmware and config files for RTL8852C (2022-04-13 07:10:23 -0400)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> index 2433edb..ffafe17 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> @@ -22,6 +22,7 @@ struct dp_ctrl {
+>  int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
+>  int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
+>  int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
+> +int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
+>  int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
+>  void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
+>  void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 178b774..a6200a5 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -451,11 +451,14 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
+>
+>  static int dp_display_usbpd_disconnect_cb(struct device *dev)
 
-are available in the Git repository at:
+We shouldn't need to keep around an empty function.
 
-  https://github.com/lumag/linux-firmware apq8096
+>  {
+> +       return 0;
+> +}
+> +
+> +static void dp_display_notify_disconnect(struct device *dev)
+> +{
+>         struct dp_display_private *dp = dev_get_dp_display_private(dev);
+>
+>         dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+> -
+> -       return 0;
+>  }
+>
+>  static void dp_display_handle_video_request(struct dp_display_private *dp)
+> @@ -593,10 +596,16 @@ static int dp_connect_pending_timeout(struct dp_display_private *dp, u32 data)
+>
+>         mutex_lock(&dp->event_mutex);
+>
+> +       /*
+> +        * main link had been setup but video is not ready yet
+> +        * only tear down main link
+> +        */
+>         state = dp->hpd_state;
+>         if (state == ST_CONNECT_PENDING) {
+> -               dp->hpd_state = ST_CONNECTED;
+>                 DRM_DEBUG_DP("type=%d\n", dp->dp_display.connector_type);
+> +               dp_ctrl_off_link(dp->ctrl);
+> +               dp_display_host_phy_exit(dp);
+> +               dp->hpd_state = ST_DISCONNECTED;
+>         }
+>
+>         mutex_unlock(&dp->event_mutex);
+> @@ -645,6 +654,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+>                 if (dp->link->sink_count == 0) {
+>                         dp_display_host_phy_exit(dp);
+>                 }
+> +               dp_display_notify_disconnect(&dp->pdev->dev);
+>                 mutex_unlock(&dp->event_mutex);
+>                 return 0;
+>         }
+> @@ -661,19 +671,22 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+>                 return 0;
+>         }
+>
+> -       dp->hpd_state = ST_DISCONNECT_PENDING;
+> -
+>         /* disable HPD plug interrupts */
+>         dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
+>
+>         /*
+>          * We don't need separate work for disconnect as
+>          * connect/attention interrupts are disabled
+> -        */
+> -       dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
+> +       */
 
-for you to fetch changes up to afc44bb26f7656e4bda1b63e530f787ffefb7609:
+This comment end is wrong. It should be unchanged.
 
-  qcom: apq8096: add modem firmware (2022-04-14 02:34:16 +0300)
-
-----------------------------------------------------------------
-Dmitry Baryshkov (2):
-      qcom: apq8096: add aDSP firmware
-      qcom: apq8096: add modem firmware
-
- WHENCE                  |   6 ++++++
- qcom/apq8096/adsp.mbn   | Bin 0 -> 10533521 bytes
- qcom/apq8096/adspr.jsn  |  21 +++++++++++++++++++++
- qcom/apq8096/adspua.jsn |  21 +++++++++++++++++++++
- qcom/apq8096/mba.mbn    | Bin 0 -> 213888 bytes
- qcom/apq8096/modem.mbn  | Bin 0 -> 7434352 bytes
- qcom/apq8096/modemr.jsn |  21 +++++++++++++++++++++
- 7 files changed, 69 insertions(+)
- create mode 100644 qcom/apq8096/adsp.mbn
- create mode 100644 qcom/apq8096/adspr.jsn
- create mode 100644 qcom/apq8096/adspua.jsn
- create mode 100644 qcom/apq8096/mba.mbn
- create mode 100644 qcom/apq8096/modem.mbn
- create mode 100644 qcom/apq8096/modemr.jsn
+> +       dp_display_notify_disconnect(&dp->pdev->dev);
+>
+> -       /* start sentinel checking in case of missing uevent */
+> -       dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
+> +       if (state == ST_DISPLAY_OFF) {
+> +               dp->hpd_state = ST_DISCONNECTED;
+> +       } else {
+> +               /* start sentinel checking in case of missing uevent */
+> +               dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
+> +               dp->hpd_state = ST_DISCONNECT_PENDING;
+> +       }
+>
+>         /* signal the disconnect event early to ensure proper teardown */
+>         dp_display_handle_plugged_change(&dp->dp_display, false);
+> @@ -695,10 +708,16 @@ static int dp_disconnect_pending_timeout(struct dp_display_private *dp, u32 data
+>
+>         mutex_lock(&dp->event_mutex);
+>
+> +       /*
+> +        * main link had been set up and video is ready
+> +        * tear down main link, video stream and phy
+> +        */
+>         state =  dp->hpd_state;
+>         if (state == ST_DISCONNECT_PENDING) {
+> -               dp->hpd_state = ST_DISCONNECTED;
+>                 DRM_DEBUG_DP("type=%d\n", dp->dp_display.connector_type);
+> +               dp_ctrl_off(dp->ctrl);
+> +               dp_display_host_phy_exit(dp);
+> +               dp->hpd_state = ST_DISCONNECTED;
+>         }
+>
+>         mutex_unlock(&dp->event_mutex);
