@@ -2,283 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09D1C50078D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 09:49:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C7D0500813
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 10:15:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238430AbiDNHwB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 03:52:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50972 "EHLO
+        id S239876AbiDNISA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 04:18:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237388AbiDNHwA (ORCPT
+        with ESMTP id S240968AbiDNIRu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 03:52:00 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3080FD2B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 00:49:35 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id u19so7674123lff.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 00:49:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=olsqjnfTW1Sapn7IlWji5fIBaB42c1CouCJ9BQCXslw=;
-        b=pGwrytT8OWlmqDi7DCgWX76E/vuXFMW+0bGki7yD/NtDJYbt1y9CgBM8HD9ZitvBGh
-         mNpUcXt/g6ymKqKdm62uqpGdzj1zHtVLEJymPhWe2pl8j1F6x6PFOdRMX9p1/XYrnI38
-         MSKQ9NBD4DW9JRmnpyIPYwz7VMOWtaf0DIzTUcay07FhMqEY+HubSpWShNxLJBUKSVEL
-         ansgT/AaNlL5JOeOLRoAMxvi8zLyPTBK7/5+Q4oO2mHzeTX9Lke8+4rF7DTommLoHTmg
-         giqEaN6K9WPRvT03DjEWmu6p/dnCnbuTLdIn0n4smOxPk7zZ/OPYzdBl8BiHMax8djeC
-         QJXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=olsqjnfTW1Sapn7IlWji5fIBaB42c1CouCJ9BQCXslw=;
-        b=3ssxeW+eDPTiKj72uxGDhwQgOkFKzuZS9bo4+oT2ck8USxECHps9C6jfG6i42LAGld
-         s4Dh6bOKRp+MrU/qvsw7AHnFtdmUnBQT2XM4Fvr2dHAxwP67wsteueY1aEDV1d61KOy4
-         /rcy2/XIBo8j9E3kdRaywIAKh8GpYniKbvz40MKU02kGjTOsScy+8cXHI4xXC8vTSuP/
-         4MUrnyo6PqGgMzdZ8Pj+xmo0hUuVoHkrHvbhABlrV2fsIqpmVVo9j0rVSE/6JoGMlOCX
-         PLqAld6UGIakyOP+XYCv7tnXLh80LmqcS4cGjmnSgYHSFbap3KbRPH2FVpel7Px/4Glu
-         jTdw==
-X-Gm-Message-State: AOAM531huIW8qJBGzzlbClVMli65JzwCjJsgxe3W7GzLNef91zKAm8I8
-        w3a4Xakp8JFckpsoHwdR7UPAuw==
-X-Google-Smtp-Source: ABdhPJz1d7r5W2/bnuL98bp+994FEgPdnuMBcjh1vqKEgavft7oGZ9DkOT94ljJL59tC7BZkqttzCg==
-X-Received: by 2002:a05:6512:3995:b0:44a:e5c8:e696 with SMTP id j21-20020a056512399500b0044ae5c8e696mr1111511lfu.539.1649922574202;
-        Thu, 14 Apr 2022 00:49:34 -0700 (PDT)
-Received: from [192.168.1.102] (88-113-46-102.elisa-laajakaista.fi. [88.113.46.102])
-        by smtp.gmail.com with ESMTPSA id 6-20020ac24d46000000b0046bb728b873sm151672lfp.252.2022.04.14.00.49.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Apr 2022 00:49:33 -0700 (PDT)
-Message-ID: <d6d49398-2b9e-863c-f343-d95580540151@linaro.org>
-Date:   Thu, 14 Apr 2022 10:49:33 +0300
+        Thu, 14 Apr 2022 04:17:50 -0400
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1682547398
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 01:15:24 -0700 (PDT)
+Received: (Authenticated sender: miquel.raynal@bootlin.com)
+        by mail.gandi.net (Postfix) with ESMTPSA id CB6C1FF816;
+        Thu, 14 Apr 2022 08:15:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1649924120;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=nWm9bZunBtm2q1dNTg2vdZaOIRSEGlUFwF3f06as1a8=;
+        b=Jgwn6TbX910FliwV1PHbs5lOv5Ghiyr41L5OupnYamnqmBbGbFvnCVCD2WZB0AHnXJiWhx
+        cHybwrETldtG0BJG6BlqgfP57Ue3CwehdTARFOh777K7sPWnJ7uagMlX14YcBIG/EzOh8C
+        /9c8NuMOHW6xSutXQ87Bou6L2tdk8HE0C1Tb1OlhimWosPi4buyeAkpvywQmHy06eMfGdc
+        p0UKKz0Lk+77VbE4rMWHJdyzsbJVREsOLh5dby4YrMVE+cBvehztPZA3snCVVS3BRxYB85
+        lcq9EVNxhWS1pNFUp54zjxlH+5oWljKw+UQqVZr6R3yXNKlghJuWCfnClkrMHw==
+Date:   Thu, 14 Apr 2022 10:15:17 +0200
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc:     mani@kernel.org, richard@nod.at, vigneshr@ti.com,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        quic_srichara@quicinc.com
+Subject: Re: [PATCH] mtd: rawnand: qcom: fix memory corruption that causes
+ panic
+Message-ID: <20220414101517.7bbc5e9d@xps13>
+In-Reply-To: <1649914773-22434-1-git-send-email-quic_mdalam@quicinc.com>
+References: <1649914773-22434-1-git-send-email-quic_mdalam@quicinc.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 3.17.7 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sm8250: camss: Add CCI
- definitions
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     dmitry.baryshkov@linaro.org, jonathan@marek.ca, hfink@snap.com,
-        jgrahsl@snap.com
-References: <20220413231736.991368-1-bryan.odonoghue@linaro.org>
- <20220413231736.991368-4-bryan.odonoghue@linaro.org>
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20220413231736.991368-4-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bryan,
+Hi Md,
 
-On 4/14/22 02:17, Bryan O'Donoghue wrote:
-> sm8250 has two CCI busses with two I2C busses apiece.
-> 
-> Co-developed-by: Julian Grahsl <jgrahsl@snap.com>
-> Signed-off-by: Julian Grahsl <jgrahsl@snap.com>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+quic_mdalam@quicinc.com wrote on Thu, 14 Apr 2022 11:09:33 +0530:
+
+> This patch fixes a memory corruption that occurred in the
+> nand_scan() path for Hynix nand device.
+>=20
+> On boot, for Hynix nand device will panic at a weird place:
+> | Unable to handle kernel NULL pointer dereference at virtual
+>   address 00000070
+> | [00000070] *pgd=3D00000000
+> | Internal error: Oops: 5 [#1] PREEMPT SMP ARM
+> | Modules linked in:
+> | CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.17.0-01473-g13ae1769cfb0
+>   #38
+> | Hardware name: Generic DT based system
+> | PC is at nandc_set_reg+0x8/0x1c
+> | LR is at qcom_nandc_command+0x20c/0x5d0
+> | pc : [<c088b74c>]    lr : [<c088d9c8>]    psr: 00000113
+> | sp : c14adc50  ip : c14ee208  fp : c0cc970c
+> | r10: 000000a3  r9 : 00000000  r8 : 00000040
+> | r7 : c16f6a00  r6 : 00000090  r5 : 00000004  r4 :c14ee040
+> | r3 : 00000000  r2 : 0000000b  r1 : 00000000  r0 :c14ee040
+> | Flags: nzcv  IRQs on  FIQs on  Mode SVC_32  ISA ARM Segment none
+> | Control: 10c5387d  Table: 8020406a  DAC: 00000051
+> | Register r0 information: slab kmalloc-2k start c14ee000 pointer offset
+>   64 size 2048
+> | Process swapper/0 (pid: 1, stack limit =3D 0x(ptrval))
+> | nandc_set_reg from qcom_nandc_command+0x20c/0x5d0
+> | qcom_nandc_command from nand_readid_op+0x198/0x1e8
+> | nand_readid_op from hynix_nand_has_valid_jedecid+0x30/0x78
+> | hynix_nand_has_valid_jedecid from hynix_nand_init+0xb8/0x454
+> | hynix_nand_init from nand_scan_with_ids+0xa30/0x14a8
+> | nand_scan_with_ids from qcom_nandc_probe+0x648/0x7b0
+> | qcom_nandc_probe from platform_probe+0x58/0xac
+>=20
+> The problem is that the nand_scan()'s qcom_nand_attach_chip callback
+> is updating the nandc->max_cwperpage from 1 to 4.This causes the
+> sg_init_table of clear_bam_transaction() in the driver's
+> qcom_nandc_command() to memset much more than what was initially
+> allocated by alloc_bam_transaction().
+
+Thanks for investigating!
+
+> This patch will update nandc->max_cwperpage 1 to 4 after nand_scan()
+> returns, and remove updating nandc->max_cwperpage from
+> qcom_nand_attach_chip call back.
+
+The fix does not look right, as far as I understand, this should be
+properly handled during the attach phase. That is where we have all
+information about the chip and do the configuration for this chip.
+
+If you update max_cwperpage there you should probably update other
+internal variables that depend on it as well.
+
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
 > ---
->   arch/arm64/boot/dts/qcom/sm8250.dtsi | 162 +++++++++++++++++++++++++++
->   1 file changed, 162 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index c69a8a88657a..a05ad923bcab 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -3150,6 +3150,88 @@ videocc: clock-controller@abf0000 {
->   			#power-domain-cells = <1>;
->   		};
->   
-> +		cci0: cci@ac4f000 {
-> +			compatible = "qcom,sm8250-cci";
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			reg = <0 0x0ac4f000 0 0x1000>;
-> +			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
-> +			power-domains = <&camcc TITAN_TOP_GDSC>;
-> +
-> +			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-> +				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
-> +				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +				 <&camcc CAM_CC_CCI_0_CLK>,
-> +				 <&camcc CAM_CC_CCI_0_CLK_SRC>;
-> +			clock-names = "camnoc_axi",
-> +				      "slow_ahb_src",
-> +				      "cpas_ahb",
-> +				      "cci",
-> +				      "cci_src";
-> +
-> +			pinctrl-names = "default", "sleep";
-> +			pinctrl-0 = <&cci0_default>;
-> +			pinctrl-1 = <&cci0_sleep>;
-> +
+>  drivers/mtd/nand/raw/qcom_nandc.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qco=
+m_nandc.c
+> index 1a77542..aa3ec45 100644
+> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> @@ -2652,9 +2652,6 @@ static int qcom_nand_attach_chip(struct nand_chip *=
+chip)
+> =20
+>  	mtd_set_ooblayout(mtd, &qcom_nand_ooblayout_ops);
+> =20
+> -	nandc->max_cwperpage =3D max_t(unsigned int, nandc->max_cwperpage,
+> -				     cwperpage);
+> -
+>  	/*
+>  	 * DATA_UD_BYTES varies based on whether the read/write command protects
+>  	 * spare data with ECC too. We protect spare data by default, so we set
+> @@ -2909,7 +2906,7 @@ static int qcom_nand_host_init_and_register(struct =
+qcom_nand_controller *nandc,
+>  	struct nand_chip *chip =3D &host->chip;
+>  	struct mtd_info *mtd =3D nand_to_mtd(chip);
+>  	struct device *dev =3D nandc->dev;
+> -	int ret;
+> +	int ret, cwperpage;
+> =20
+>  	ret =3D of_property_read_u32(dn, "reg", &host->cs);
+>  	if (ret) {
+> @@ -2955,6 +2952,9 @@ static int qcom_nand_host_init_and_register(struct =
+qcom_nand_controller *nandc,
+>  	if (ret)
+>  		return ret;
+> =20
+> +	cwperpage =3D mtd->writesize / NANDC_STEP_SIZE;
+> +	nandc->max_cwperpage =3D max_t(unsigned int, nandc->max_cwperpage,
+> +				     cwperpage);
+>  	if (nandc->props->is_bam) {
+>  		free_bam_transaction(nandc);
+>  		nandc->bam_txn =3D alloc_bam_transaction(nandc);
 
-like as anywhere else it might be better to place 'pinctrl-names' after the
-'pinctrl-*' properties.
 
-> +			status = "disabled";
-> +
-> +			cci0_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			cci0_i2c1: i2c-bus@1 {
-> +				reg = <1>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +		};
-> +
-> +		cci1: cci@ac50000 {
-> +			compatible = "qcom,sm8250-cci";
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			reg = <0 0x0ac50000 0 0x1000>;
-> +			interrupts = <GIC_SPI 271 IRQ_TYPE_EDGE_RISING>;
-> +			power-domains = <&camcc TITAN_TOP_GDSC>;
-> +
-> +			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-> +				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
-> +				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +				 <&camcc CAM_CC_CCI_1_CLK>,
-> +				 <&camcc CAM_CC_CCI_1_CLK_SRC>;
-> +			clock-names = "camnoc_axi",
-> +				      "slow_ahb_src",
-> +				      "cpas_ahb",
-> +				      "cci",
-> +				      "cci_src";
-> +
-> +			pinctrl-names = "default", "sleep";
-> +			pinctrl-0 = <&cci1_default>;
-> +			pinctrl-1 = <&cci1_sleep>;
-> +
-> +			status = "disabled";
-> +
-> +			cci1_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			cci1_i2c1: i2c-bus@1 {
-> +				reg = <1>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +		};
-> +
->   		camss: camss@ac6a000 {
->   			compatible = "qcom,sm8250-camss";
->   			status = "disabled";
-> @@ -3687,6 +3769,86 @@ tlmm: pinctrl@f100000 {
->   			gpio-ranges = <&tlmm 0 0 181>;
->   			wakeup-parent = <&pdc>;
->   
-> +			cci0_default: cci0-default {
-> +				cci0_i2c0_default: cci0-i2c0-default {
-> +					/* SDA, SCL */
-> +					pins = "gpio101", "gpio102";
-> +					function = "cci_i2c";
-> +
-> +					bias-pull-up;
-> +					drive-strength = <2>; /* 2 mA */
-> +				};
-> +
-> +				cci0_i2c1_default: cci0-i2c1-default {
-> +					/* SDA, SCL */
-> +					pins = "gpio103", "gpio104";
-> +					function = "cci_i2c";
-> +
-> +					bias-pull-up;
-> +					drive-strength = <2>; /* 2 mA */
-> +				};
-> +			};
-> +
-> +			cci0_sleep: cci0-sleep {
-> +				cci0_i2c0_sleep: cci0-i2c0-sleep {
-> +					/* SDA, SCL */
-> +					pins = "gpio101", "gpio102";
-> +					function = "cci_i2c";
-> +
-> +					drive-strength = <2>; /* 2 mA */
-> +					bias-pull-down;
-> +				};
-> +
-> +				cci0_i2c1_sleep: cci0-i2c1-sleep {
-> +					/* SDA, SCL */
-> +					pins = "gpio103", "gpio104";
-> +					function = "cci_i2c";
-> +
-> +					drive-strength = <2>; /* 2 mA */
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cci1_default: cci1-default {
-> +				cci1_i2c0_default: cci1-i2c0-default {
-> +					/* SDA, SCL */
-> +					pins = "gpio105","gpio106";
-> +					function = "cci_i2c";
-> +
-> +					bias-pull-up;
-> +					drive-strength = <2>; /* 2 mA */
-> +				};
-> +
-> +				cci1_i2c1_default: cci1-i2c1-default {
-> +					/* SDA, SCL */
-> +					pins = "gpio107","gpio108";
-> +					function = "cci_i2c";
-> +
-> +					bias-pull-up;
-> +					drive-strength = <2>; /* 2 mA */
-> +				};
-> +			};
-> +
-> +			cci1_sleep: cci1-sleep {
-> +				cci1_i2c0_sleep: cci1-i2c0-sleep {
-> +					/* SDA, SCL */
-> +					pins = "gpio105","gpio106";
-> +					function = "cci_i2c";
-> +
-> +					bias-pull-down;
-> +					drive-strength = <2>; /* 2 mA */
-> +				};
-> +
-> +				cci1_i2c1_sleep: cci1-i2c1-sleep {
-> +					/* SDA, SCL */
-> +					pins = "gpio107","gpio108";
-> +					function = "cci_i2c";
-> +
-> +					bias-pull-down;
-> +					drive-strength = <2>; /* 2 mA */
-> +				};
-> +			};
-> +
->   			pri_mi2s_active: pri-mi2s-active {
->   				sclk {
->   					pins = "gpio138";
-
-Please feel free to add my
-
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-
---
-Best wishes,
-Vladimir
+Thanks,
+Miqu=C3=A8l
