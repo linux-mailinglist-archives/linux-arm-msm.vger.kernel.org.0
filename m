@@ -2,73 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C5D79501C83
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 22:18:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 439CE501C89
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 22:20:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346211AbiDNUUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 16:20:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33540 "EHLO
+        id S1346260AbiDNUWi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 16:22:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346215AbiDNUUm (ORCPT
+        with ESMTP id S235885AbiDNUW0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 16:20:42 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96304EB0A0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 13:18:16 -0700 (PDT)
+        Thu, 14 Apr 2022 16:22:26 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2AD51D333;
+        Thu, 14 Apr 2022 13:20:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649967497; x=1681503497;
+  t=1649967601; x=1681503601;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=LYiczBUvca7nP1JdJGf6chvwICO7T39arORF4srp+U0=;
-  b=xvqferxQi3FDokC6Dx8Q54n+MPvmhvL2ggL1OitE5lBw7xduRUCApgo8
-   7XamSusHXNcfOytBFuVCgdUgXSbHqdHVSHBn++KEOsm5BUpXxsL7xqo7D
-   sXWlysQXpR9V6BwYHvVo57lbLKuX+4Wh1kZsdaUahsoAFwDK5Nw20WXid
-   s=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 14 Apr 2022 13:18:16 -0700
+  bh=+LAoQviRNLnlwQB4h/lb76YpBQpaA/h1DBJj/ghol/Y=;
+  b=ixsPLM89Q4PPM6tfAuo0C0USfvm/TeO3/GCBMGo1o9GAia9KyfOgr436
+   2/t3oW+jFoxVl/Y+ipwP3FSCh450/m7bvt1BqbEkI0M17bWV+ldsm1M8P
+   azwSKGeRuBwMS+2VI0znzISIPYV5bE/RpXl2WmzkP3Ewigby0N3lXY6+w
+   4=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 14 Apr 2022 13:20:00 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2022 13:18:15 -0700
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2022 13:19:59 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 14 Apr 2022 13:17:55 -0700
+ 15.2.986.22; Thu, 14 Apr 2022 13:19:59 -0700
 Received: from [10.111.169.145] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 14 Apr
- 2022 13:17:52 -0700
-Message-ID: <a8605125-6fad-2600-ea4f-49e0b2760a5e@quicinc.com>
-Date:   Thu, 14 Apr 2022 13:17:50 -0700
+ 2022 13:19:55 -0700
+Message-ID: <bc3a3162-b34d-bff3-2109-e2fd0bc65bb4@quicinc.com>
+Date:   Thu, 14 Apr 2022 13:19:53 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.2
-Subject: Re: [RFC PATCH v2 4/5] drm/msm/dp: replace dp_connector with
- drm_bridge_connector
+Subject: Re: [Freedreno] [PATCH v7 0/4] Add support for the eDP panel over
+ aux_bus
 Content-Language: en-US
-To:     "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>
-CC:     "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "sean@poorly.run" <sean@poorly.run>,
-        "airlied@linux.ie" <airlied@linux.ie>,
-        "daniel@ffwll.ch" <daniel@ffwll.ch>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
-References: <552d9809-0499-23b5-e437-a77c893b96c2@quicinc.com>
- <64a5ae1a-df65-b0a5-5d0d-cfb1d4da3bf7@quicinc.com>
- <MW4PR02MB7186CC4C92091EF914082C08E1119@MW4PR02MB7186.namprd02.prod.outlook.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "Sankeerth Billakanti" <quic_sbillaka@quicinc.com>
+CC:     quic_kalyant <quic_kalyant@quicinc.com>,
+        <devicetree@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        quic_vproddut <quic_vproddut@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        "Steev Klimaszewski" <steev@kali.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "Aravind Venkateswaran" <quic_aravindh@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <1649938766-6768-1-git-send-email-quic_sbillaka@quicinc.com>
+ <CAD=FV=Ui6BAsnTaJ2_TMh1Tnjtaw7FR92aWoUysS+UT=c0qB3Q@mail.gmail.com>
+ <20afcd97-4b8d-f770-151a-268b893b7c5a@linaro.org>
+ <CAE-0n51fc-b-8VF7XP29=o8Xi86HQALGB-1u8n3b_3NjVyyJYw@mail.gmail.com>
+ <e3154f3b-aea4-6961-b409-6b20ff8bf18e@quicinc.com>
+ <2fd4a157-a9de-ca0e-7a47-7bb85199ae91@linaro.org>
 From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <MW4PR02MB7186CC4C92091EF914082C08E1119@MW4PR02MB7186.namprd02.prod.outlook.com>
+In-Reply-To: <2fd4a157-a9de-ca0e-7a47-7bb85199ae91@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,62 +90,63 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 3/16/2022 9:45 AM, Sankeerth Billakanti (QUIC) wrote:
->> Subject: Re: [RFC PATCH v2 4/5] drm/msm/dp: replace dp_connector with
->> drm_bridge_connector
->> Date: Wed, 23 Feb 2022 16:40:56 -0800
->> From: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> To: Stephen Boyd <swboyd@chromium.org>, Dmitry Baryshkov
->> <dmitry.baryshkov@linaro.org>
->> CC: Abhinav Kumar <quic_abhinavk@quicinc.com>, Bjorn Andersson
->> <bjorn.andersson@linaro.org>, Rob Clark <robdclark@gmail.com>, Sean Paul
->> <sean@poorly.run>, David Airlie <airlied@linux.ie>, Daniel Vetter
->> <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-
->> devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+On 4/14/2022 1:03 PM, Dmitry Baryshkov wrote:
+> On 14/04/2022 23:00, Abhinav Kumar wrote:
+>> Hi Dmitry
 >>
->>
->> On 2/23/2022 1:33 PM, Stephen Boyd wrote:
->>> Quoting Kuogee Hsieh (2022-02-23 10:27:26)
->>>> On 2/23/2022 10:22 AM, Dmitry Baryshkov wrote:
->>>>> On 23/02/2022 20:21, Kuogee Hsieh wrote:
+>> On 4/14/2022 12:43 PM, Stephen Boyd wrote:
+>>> Quoting Dmitry Baryshkov (2022-04-14 12:20:31)
+>>>> On 14/04/2022 19:40, Doug Anderson wrote:
+>>>>> Hi,
 >>>>>
->>>>> In the panel device node.
+>>>>> On Thu, Apr 14, 2022 at 5:19 AM Sankeerth Billakanti
+>>>>> <quic_sbillaka@quicinc.com> wrote:
+>>>>>>
+>>>>>> This series adds support for generic eDP panel over aux_bus.
+>>>>>>
+>>>>>> These changes are dependent on the following series:
+>>>>>> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=613654&state=* 
+>>>>>>
 >>>>>
->>>>> Can you please share it too?
+>>>>> You're basically depending on the last two patches of that series.
+>>>>> What's the plan there? In patchwork they're marked as "Not
+>>>>> Applicable". If they're good to go, maybe we should land them? If not,
+>>>>> maybe you should include them (with Dmitry as the author, of course)
+>>>>> at the beginning of your series?
 >>>>
->>>> &soc {
->>>>            edp_power_supply: edp_power {
->>>>                    compatible = "regulator-fixed";
->>>>                    regulator-name = "edp_backlight_power";
+>>>> No, please do not resend patches. The patches in question are marked as
+>>>> 'Not applicable' as they are really not applicable to Bjorn's tree.
+>>>> It would be better to point to the correct patchwork:
 >>>>
->>>>                    regulator-always-on;
->>>>                    regulator-boot-on;
->>>>            };
+>>>> https://patchwork.freedesktop.org/series/98585/
 >>>>
->>>>            edp_backlight: edp_backlight {
->>>>                    compatible = "pwm-backlight";
+>>>> Note those patches still lack the R-B tag. I can include them anyway,
+>>>> basing on Sankeerth's Tested-by tag, but the formal R-B would also 
+>>>> be good.
 >>>>
->>>>                    pwms = <&pm8350c_pwm 3 65535>;
->>>>                    power-supply = <&edp_power_supply>;
->>>>                    enable-gpio = <&pm8350c_gpios 7 GPIO_ACTIVE_HIGH>;
->>>>
->>>>                    pinctrl-names = "default";
->>>>                    pinctrl-0 = <&backlight_pwm_default>;
->>>>            };
->>>>
->>>>            edp_panel: edp_panel {
->>>>                    compatible = "sharp_lq140m1jw46";
->>> Is that supposed to be sharp,lq140m1jw46 with a comma instead of an
->>> underscore?
+>>>
+>>> Can you resend those as not RFC?
 >>
->> Stephen,
+>> Yes, please resend these, I can ack them.
 >>
->> This is our internal branch which does not have patches up to date yet.
+>> Previously I held off my ack, as kuogee ran into some issues testing 
+>> them which was later concluded to be a mismatch in QC internal trees 
+>> due to different versions of the changes.( another reason why we 
+>> should get these landed ).
 >>
->> I will cherry-pick newer edp related patches which are under review now to
->> re test it.
+>> Now, that Sankeerth has tested these, if you can remove RFC and post 
+>> them, I can ack the.
 > 
-> Tested-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Well, you can ack those patches without them being resent. You have 
+> already added your Reviewed-by to first three patches (which were merged 
+> during last window).
 > 
-> Detect returned eDP not connected because the panel power was not on and mode_valid was failing because the DP mode_valid is different from eDP
+I thought you might have to rebase them :) that way you could have 
+resent the rebased patch with the RFC tag removed.
+
+If you dont, you now have my R-b.
+
+Thanks
+
+Abhinav
+> 
