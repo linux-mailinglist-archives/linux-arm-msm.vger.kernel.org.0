@@ -2,78 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 265BF501B28
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 20:36:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2A04501B30
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 20:45:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344688AbiDNSiT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 14:38:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32848 "EHLO
+        id S233382AbiDNSrj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 14:47:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344679AbiDNSiR (ORCPT
+        with ESMTP id S241652AbiDNSrh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 14:38:17 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37DA7D3AED
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 11:35:52 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id c15so7120781ljr.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 11:35:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ub6If+332buCinL/3BXFdLheY3JvRpim3Rm/PFZigx8=;
-        b=VW0aRD7T+wcgoxrACJ+GbC5nEhZz3dZ7wQQS9PmN3Yp3GTV6Jk4ywSz15b+DZBMoQb
-         wMzZ1VCWy91Ms7DQr4LkBc2a+7wil12P0S0jXGGGLcSW4d0uS+sOrz1FZ8FFtLchnu0y
-         UEf1kqhXcfjYqj/buCV535ziHLyFkIEbJT+SYJeA5bZ69QGJMAYQ4SO0fCj/TyxJ9bCu
-         Dtu/MBUfpOjbqseGSIww986b2BrQC95y5la7c06t3yD1N+a18s7s3ueSYrakxZCkQSWT
-         I47aMFIM23p0MECgsnCvo6iKhCjXMWw0tf4aghtgqfS/q/vu3zlBNsmXdvZWwnwcd3+u
-         U9Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=ub6If+332buCinL/3BXFdLheY3JvRpim3Rm/PFZigx8=;
-        b=n9nPLILDR2+Kp8hseisbPreRZOKW419x5t7L0ro1115MIC1DhPhRShhPaVPDLyQH2O
-         rxN9T7KxOzNwKGiMM4YQBHBYcFaAjlwnVGhAY2P61LLNfdY+dJLpzWvAZxsGKXFXCtni
-         ODfWBnQR+rZUEMs+jvSWimQi1ITmTudh3Lm/Vcbr+5GmaMxZVz0CcYduj/Jy/FdEujD6
-         atIc/luPTmWjJX+VN+NE+cBHcxAboCF6tz50OPCjKH8ZyAqbDjPTaMO7H3ETIlXib+1t
-         PYj+z5LiFJt1Tk/ZlEDLrPx5CV/053mSunH2lc4XGKcy75TehQ4rsViFFeVtRUncpvng
-         jeTA==
-X-Gm-Message-State: AOAM530onMZPND/z88p8xrMD2bizKVFwJ57lXTH6/noHkdJevBhd+SDh
-        rfmuysgbveNDlwzKk4deef+Snw==
-X-Google-Smtp-Source: ABdhPJwnBrxe1rilJp4LSDGlMmGx8LSGayKb/qSUyY7bJqK7KoNxlLsSnCtEArQ2G1HSu4DTCDZzNQ==
-X-Received: by 2002:a2e:141e:0:b0:24b:6256:3898 with SMTP id u30-20020a2e141e000000b0024b62563898mr2265515ljd.436.1649961350505;
-        Thu, 14 Apr 2022 11:35:50 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s1-20020ac24641000000b0046d10a0bba2sm71865lfo.176.2022.04.14.11.35.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Apr 2022 11:35:50 -0700 (PDT)
-Message-ID: <27e4cc57-bdfe-42b6-d3eb-0d447ab6c6ca@linaro.org>
-Date:   Thu, 14 Apr 2022 21:35:49 +0300
+        Thu, 14 Apr 2022 14:47:37 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC054DB2E4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 11:45:10 -0700 (PDT)
+Received: from localhost.localdomain (abxj52.neoplus.adsl.tpnet.pl [83.9.3.52])
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 2059C3F768;
+        Thu, 14 Apr 2022 20:45:07 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Emma Anholt <emma@anholt.net>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/3] drm/msm/adreno: Add A619 support
+Date:   Thu, 14 Apr 2022 20:44:33 +0200
+Message-Id: <20220414184442.375113-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.35.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: delete incorrect ufs
- interconnect fields
-Content-Language: en-GB
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220407172145.31903-1-jonathan@marek.ca>
- <YlXmTbKwYtvLSjgp@builder.lan>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YlXmTbKwYtvLSjgp@builder.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,57 +57,316 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/04/2022 23:51, Bjorn Andersson wrote:
-> On Thu 07 Apr 12:21 CDT 2022, Jonathan Marek wrote:
-> 
->> Upstream sm8450.dtsi has #interconnect-cells = <2>; so these are wrong.
->> Ignored and undocumented with upstream UFS driver so delete for now.
->>
-> 
-> Just to clarify, the binding do document interconnects and the property
-> should be there in the end. v1 (why isn't this marked v2?) was correct.
-> 
-> What I asked for was a statement on why it should be picked up for
-> v5.18-rc (as Dmitry requested).
+Add support for the Adreno 619 GPU, as found in Snapdragon 690 (SM6350),
+480 (SM4350) and 750G (SM7225).
 
-I have a slight preference for fixing the icc rather than dropping it.
-
-However I'm fine with either of the patches.
-
-The ufs/qcom,ufs.yaml describes these interconnects (basing on the 
-sm8450 if I understand correctly). Thus if decide to drop interconnect 
-properties, we should also update the binding.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+Changes in v2:
+- Don't reserve icache/dcache regions on legacy GMUs, as that
+is apparently not necessary and simply a downstream leftover.
 
 
-> 
-> Regards,
-> Bjorn
-> 
->> Fixes: aa2d0bf04a3c ("arm64: dts: qcom: sm8450: add interconnect nodes")
->> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 3 ---
->>   1 file changed, 3 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> index 2c18e1ef9e82d..90cdbec3cac99 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> @@ -1663,9 +1663,6 @@ ufs_mem_hc: ufshc@1d84000 {
->>   
->>   			iommus = <&apps_smmu 0xe0 0x0>;
->>   
->> -			interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
->> -					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
->> -			interconnect-names = "ufs-ddr", "cpu-ufs";
->>   			clock-names =
->>   				"core_clk",
->>   				"bus_aggr_clk",
->> -- 
->> 2.26.1
->>
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c      | 11 ++--
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 70 +++++++++++++++++++++-
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c      | 66 +++++++++++++++++++-
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 14 +++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h    | 13 +++-
+ 5 files changed, 166 insertions(+), 8 deletions(-)
 
-
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 3e325e2a2b1b..e8d4cca6cd46 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -527,6 +527,8 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+ 		pdc_in_aop = true;
+ 	else if (adreno_is_a618(adreno_gpu) || adreno_is_a640_family(adreno_gpu))
+ 		pdc_address_offset = 0x30090;
++	else if (adreno_is_a619(adreno_gpu))
++		pdc_address_offset = 0x300a0;
+ 	else
+ 		pdc_address_offset = 0x30080;
+ 
+@@ -601,7 +603,8 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+ 
+ 	pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_MSGID + 4, 0x10108);
+ 	pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_ADDR + 4, 0x30000);
+-	if (adreno_is_a618(adreno_gpu) || adreno_is_a650_family(adreno_gpu))
++	if (adreno_is_a618(adreno_gpu) || adreno_is_a619(adreno_gpu) ||
++			adreno_is_a650_family(adreno_gpu))
+ 		pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_DATA + 4, 0x2);
+ 	else
+ 		pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_DATA + 4, 0x3);
+@@ -1537,7 +1540,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 			SZ_16M - SZ_16K, 0x04000, "icache");
+ 		if (ret)
+ 			goto err_memory;
+-	} else if (adreno_is_a640_family(adreno_gpu)) {
++	} else {
+ 		ret = a6xx_gmu_memory_alloc(gmu, &gmu->icache,
+ 			SZ_256K - SZ_16K, 0x04000, "icache");
+ 		if (ret)
+@@ -1547,9 +1550,9 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 			SZ_256K - SZ_16K, 0x44000, "dcache");
+ 		if (ret)
+ 			goto err_memory;
+-	} else {
+-		BUG_ON(adreno_is_a660_family(adreno_gpu));
++	}
+ 
++	if (adreno_is_a630(adreno_gpu) || adreno_is_a615_family(adreno_gpu)) {
+ 		/* HFI v1, has sptprac */
+ 		gmu->legacy = true;
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 83c31b2ad865..ddeb04a77662 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -252,6 +252,74 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+ 	a6xx_flush(gpu, ring);
+ }
+ 
++/* For a615 family (a615, a616, a618 and a619) */
++const struct adreno_reglist a615_hwcg[] = {
++	{REG_A6XX_RBBM_CLOCK_CNTL_SP0,  0x02222222},
++	{REG_A6XX_RBBM_CLOCK_CNTL2_SP0, 0x02222220},
++	{REG_A6XX_RBBM_CLOCK_DELAY_SP0, 0x00000080},
++	{REG_A6XX_RBBM_CLOCK_HYST_SP0,  0x0000F3CF},
++	{REG_A6XX_RBBM_CLOCK_CNTL_TP0,  0x02222222},
++	{REG_A6XX_RBBM_CLOCK_CNTL_TP1,  0x02222222},
++	{REG_A6XX_RBBM_CLOCK_CNTL2_TP0, 0x22222222},
++	{REG_A6XX_RBBM_CLOCK_CNTL2_TP1, 0x22222222},
++	{REG_A6XX_RBBM_CLOCK_CNTL3_TP0, 0x22222222},
++	{REG_A6XX_RBBM_CLOCK_CNTL3_TP1, 0x22222222},
++	{REG_A6XX_RBBM_CLOCK_CNTL4_TP0, 0x00022222},
++	{REG_A6XX_RBBM_CLOCK_CNTL4_TP1, 0x00022222},
++	{REG_A6XX_RBBM_CLOCK_HYST_TP0,  0x77777777},
++	{REG_A6XX_RBBM_CLOCK_HYST_TP1,  0x77777777},
++	{REG_A6XX_RBBM_CLOCK_HYST2_TP0, 0x77777777},
++	{REG_A6XX_RBBM_CLOCK_HYST2_TP1, 0x77777777},
++	{REG_A6XX_RBBM_CLOCK_HYST3_TP0, 0x77777777},
++	{REG_A6XX_RBBM_CLOCK_HYST3_TP1, 0x77777777},
++	{REG_A6XX_RBBM_CLOCK_HYST4_TP0, 0x00077777},
++	{REG_A6XX_RBBM_CLOCK_HYST4_TP1, 0x00077777},
++	{REG_A6XX_RBBM_CLOCK_DELAY_TP0, 0x11111111},
++	{REG_A6XX_RBBM_CLOCK_DELAY_TP1, 0x11111111},
++	{REG_A6XX_RBBM_CLOCK_DELAY2_TP0, 0x11111111},
++	{REG_A6XX_RBBM_CLOCK_DELAY2_TP1, 0x11111111},
++	{REG_A6XX_RBBM_CLOCK_DELAY3_TP0, 0x11111111},
++	{REG_A6XX_RBBM_CLOCK_DELAY3_TP1, 0x11111111},
++	{REG_A6XX_RBBM_CLOCK_DELAY4_TP0, 0x00011111},
++	{REG_A6XX_RBBM_CLOCK_DELAY4_TP1, 0x00011111},
++	{REG_A6XX_RBBM_CLOCK_CNTL_UCHE,  0x22222222},
++	{REG_A6XX_RBBM_CLOCK_CNTL2_UCHE, 0x22222222},
++	{REG_A6XX_RBBM_CLOCK_CNTL3_UCHE, 0x22222222},
++	{REG_A6XX_RBBM_CLOCK_CNTL4_UCHE, 0x00222222},
++	{REG_A6XX_RBBM_CLOCK_HYST_UCHE,  0x00000004},
++	{REG_A6XX_RBBM_CLOCK_DELAY_UCHE, 0x00000002},
++	{REG_A6XX_RBBM_CLOCK_CNTL_RB0, 0x22222222},
++	{REG_A6XX_RBBM_CLOCK_CNTL2_RB0, 0x00002222},
++	{REG_A6XX_RBBM_CLOCK_CNTL_CCU0, 0x00002020},
++	{REG_A6XX_RBBM_CLOCK_CNTL_CCU1, 0x00002220},
++	{REG_A6XX_RBBM_CLOCK_CNTL_CCU2, 0x00002220},
++	{REG_A6XX_RBBM_CLOCK_CNTL_CCU3, 0x00002220},
++	{REG_A6XX_RBBM_CLOCK_HYST_RB_CCU0, 0x00040F00},
++	{REG_A6XX_RBBM_CLOCK_HYST_RB_CCU1, 0x00040F00},
++	{REG_A6XX_RBBM_CLOCK_HYST_RB_CCU2, 0x00040F00},
++	{REG_A6XX_RBBM_CLOCK_HYST_RB_CCU3, 0x00040F00},
++	{REG_A6XX_RBBM_CLOCK_CNTL_RAC, 0x05022022},
++	{REG_A6XX_RBBM_CLOCK_CNTL2_RAC, 0x00005555},
++	{REG_A6XX_RBBM_CLOCK_DELAY_RAC, 0x00000011},
++	{REG_A6XX_RBBM_CLOCK_HYST_RAC, 0x00445044},
++	{REG_A6XX_RBBM_CLOCK_CNTL_TSE_RAS_RBBM, 0x04222222},
++	{REG_A6XX_RBBM_CLOCK_MODE_GPC, 0x00222222},
++	{REG_A6XX_RBBM_CLOCK_MODE_VFD, 0x00002222},
++	{REG_A6XX_RBBM_CLOCK_HYST_TSE_RAS_RBBM, 0x00000000},
++	{REG_A6XX_RBBM_CLOCK_HYST_GPC, 0x04104004},
++	{REG_A6XX_RBBM_CLOCK_HYST_VFD, 0x00000000},
++	{REG_A6XX_RBBM_CLOCK_DELAY_HLSQ, 0x00000000},
++	{REG_A6XX_RBBM_CLOCK_DELAY_TSE_RAS_RBBM, 0x00004000},
++	{REG_A6XX_RBBM_CLOCK_DELAY_GPC, 0x00000200},
++	{REG_A6XX_RBBM_CLOCK_DELAY_VFD, 0x00002222},
++	{REG_A6XX_RBBM_CLOCK_DELAY_HLSQ_2, 0x00000002},
++	{REG_A6XX_RBBM_CLOCK_MODE_HLSQ, 0x00002222},
++	{REG_A6XX_RBBM_CLOCK_CNTL_GMU_GX, 0x00000222},
++	{REG_A6XX_RBBM_CLOCK_DELAY_GMU_GX, 0x00000111},
++	{REG_A6XX_RBBM_CLOCK_HYST_GMU_GX, 0x00000555},
++	{},
++};
++
+ const struct adreno_reglist a630_hwcg[] = {
+ 	{REG_A6XX_RBBM_CLOCK_CNTL_SP0, 0x22222222},
+ 	{REG_A6XX_RBBM_CLOCK_CNTL_SP1, 0x22222222},
+@@ -555,7 +623,7 @@ static void a6xx_set_hwcg(struct msm_gpu *gpu, bool state)
+ 	gpu_write(gpu, REG_A6XX_RBBM_CLOCK_CNTL, state ? clock_cntl_on : 0);
+ }
+ 
+-/* For a615, a616, a618, A619, a630, a640 and a680 */
++/* For a615, a616, a618, a619, a630, a640 and a680 */
+ static const u32 a6xx_protect[] = {
+ 	A6XX_PROTECT_RDONLY(0x00000, 0x04ff),
+ 	A6XX_PROTECT_RDONLY(0x00501, 0x0005),
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+index d73fce5fdf1f..db88fa6122d2 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+@@ -205,8 +205,8 @@ static int a6xx_hfi_get_fw_version(struct a6xx_gmu *gmu, u32 *version)
+ {
+ 	struct a6xx_hfi_msg_fw_version msg = { 0 };
+ 
+-	/* Currently supporting version 1.1 */
+-	msg.supported_version = (1 << 28) | (1 << 16);
++	/* Currently supporting version 1.10 */
++	msg.supported_version = (1 << 28) | (1 << 19) | (1 << 17);
+ 
+ 	return a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_FW_VERSION, &msg, sizeof(msg),
+ 		version, sizeof(*version));
+@@ -285,6 +285,66 @@ static void a618_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ 	msg->cnoc_cmds_data[1][0] =  0x60000001;
+ }
+ 
++static void a619_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
++{
++	msg->bw_level_num = 13;
++
++	msg->ddr_cmds_num = 1;
++	msg->ddr_wait_bitmask = 0x0;
++
++	msg->ddr_cmds_addrs[0] = 0x50000;
++	msg->ddr_cmds_addrs[1] = 0x50004;
++	msg->ddr_cmds_addrs[2] = 0x50080;
++
++	msg->ddr_cmds_data[0][0]  = 0x40000000;
++	msg->ddr_cmds_data[0][1]  = 0x40000000;
++	msg->ddr_cmds_data[0][2]  = 0x40000000;
++	msg->ddr_cmds_data[1][0]  = 0x6000030c;
++	msg->ddr_cmds_data[1][1]  = 0x600000db;
++	msg->ddr_cmds_data[1][2]  = 0x60000008;
++	msg->ddr_cmds_data[2][0]  = 0x60000618;
++	msg->ddr_cmds_data[2][1]  = 0x600001b6;
++	msg->ddr_cmds_data[2][2]  = 0x60000008;
++	msg->ddr_cmds_data[3][0]  = 0x60000925;
++	msg->ddr_cmds_data[3][1]  = 0x60000291;
++	msg->ddr_cmds_data[3][2]  = 0x60000008;
++	msg->ddr_cmds_data[4][0]  = 0x60000dc1;
++	msg->ddr_cmds_data[4][1]  = 0x600003dc;
++	msg->ddr_cmds_data[4][2]  = 0x60000008;
++	msg->ddr_cmds_data[5][0]  = 0x600010ad;
++	msg->ddr_cmds_data[5][1]  = 0x600004ae;
++	msg->ddr_cmds_data[5][2]  = 0x60000008;
++	msg->ddr_cmds_data[6][0]  = 0x600014c3;
++	msg->ddr_cmds_data[6][1]  = 0x600005d4;
++	msg->ddr_cmds_data[6][2]  = 0x60000008;
++	msg->ddr_cmds_data[7][0]  = 0x6000176a;
++	msg->ddr_cmds_data[7][1]  = 0x60000693;
++	msg->ddr_cmds_data[7][2]  = 0x60000008;
++	msg->ddr_cmds_data[8][0]  = 0x60001f01;
++	msg->ddr_cmds_data[8][1]  = 0x600008b5;
++	msg->ddr_cmds_data[8][2]  = 0x60000008;
++	msg->ddr_cmds_data[9][0]  = 0x60002940;
++	msg->ddr_cmds_data[9][1]  = 0x60000b95;
++	msg->ddr_cmds_data[9][2]  = 0x60000008;
++	msg->ddr_cmds_data[10][0] = 0x60002f68;
++	msg->ddr_cmds_data[10][1] = 0x60000d50;
++	msg->ddr_cmds_data[10][2] = 0x60000008;
++	msg->ddr_cmds_data[11][0] = 0x60003700;
++	msg->ddr_cmds_data[11][1] = 0x60000f71;
++	msg->ddr_cmds_data[11][2] = 0x60000008;
++	msg->ddr_cmds_data[12][0] = 0x60003fce;
++	msg->ddr_cmds_data[12][1] = 0x600011ea;
++	msg->ddr_cmds_data[12][2] = 0x60000008;
++
++	msg->cnoc_cmds_num = 3;
++	msg->cnoc_wait_bitmask = 0x0;
++
++	msg->cnoc_cmds_addrs[0] = 0x50054;
++
++	msg->cnoc_cmds_data[0][0] =  0x40000000;
++	msg->cnoc_cmds_data[1][0] =  0x60000001;
++}
++
+ static void a640_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ {
+ 	/*
+@@ -462,6 +522,8 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+ 
+ 	if (adreno_is_a618(adreno_gpu))
+ 		a618_build_bw_table(&msg);
++	else if (adreno_is_a619(adreno_gpu))
++		a619_build_bw_table(&msg);
+ 	else if (adreno_is_a640_family(adreno_gpu))
+ 		a640_build_bw_table(&msg);
+ 	else if (adreno_is_a650(adreno_gpu))
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index 89cfd84760d7..83a0625adb91 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -264,6 +264,19 @@ static const struct adreno_info gpulist[] = {
+ 		.gmem = SZ_512K,
+ 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+ 		.init = a6xx_gpu_init,
++	}, {
++		.rev = ADRENO_REV(6, 1, 9, ANY_ID),
++		.revn = 619,
++		.name = "A619",
++		.fw = {
++			[ADRENO_FW_SQE] = "a630_sqe.fw",
++			[ADRENO_FW_GMU] = "a619_gmu.bin",
++		},
++		.gmem = SZ_512K,
++		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
++		.init = a6xx_gpu_init,
++		.zapfw = "a615_zap.mdt",
++		.hwcg = a615_hwcg,
+ 	}, {
+ 		.rev = ADRENO_REV(6, 3, 0, ANY_ID),
+ 		.revn = 630,
+@@ -355,6 +368,7 @@ MODULE_FIRMWARE("qcom/a530_zap.mdt");
+ MODULE_FIRMWARE("qcom/a530_zap.b00");
+ MODULE_FIRMWARE("qcom/a530_zap.b01");
+ MODULE_FIRMWARE("qcom/a530_zap.b02");
++MODULE_FIRMWARE("qcom/a619_gmu.bin");
+ MODULE_FIRMWARE("qcom/a630_sqe.fw");
+ MODULE_FIRMWARE("qcom/a630_gmu.bin");
+ MODULE_FIRMWARE("qcom/a630_zap.mbn");
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index 0490c5fbb780..a13a3e5a294b 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -57,7 +57,7 @@ struct adreno_reglist {
+ 	u32 value;
+ };
+ 
+-extern const struct adreno_reglist a630_hwcg[], a640_hwcg[], a650_hwcg[], a660_hwcg[];
++extern const struct adreno_reglist a615_hwcg[], a630_hwcg[], a640_hwcg[], a650_hwcg[], a660_hwcg[];
+ 
+ struct adreno_info {
+ 	struct adreno_rev rev;
+@@ -242,6 +242,11 @@ static inline int adreno_is_a618(struct adreno_gpu *gpu)
+        return gpu->revn == 618;
+ }
+ 
++static inline int adreno_is_a619(struct adreno_gpu *gpu)
++{
++	return gpu->revn == 619;
++}
++
+ static inline int adreno_is_a630(struct adreno_gpu *gpu)
+ {
+        return gpu->revn == 630;
+@@ -268,6 +273,12 @@ static inline int adreno_is_a660(struct adreno_gpu *gpu)
+        return gpu->revn == 660;
+ }
+ 
++/* check for a615, a616, a618, a619 or any derivatives */
++static inline int adreno_is_a615_family(struct adreno_gpu *gpu)
++{
++	return gpu->revn == 615 || gpu->revn == 616 || gpu->revn == 618 || gpu->revn == 619;
++}
++
+ static inline int adreno_is_a660_family(struct adreno_gpu *gpu)
+ {
+        return adreno_is_a660(gpu) || adreno_is_7c3(gpu);
 -- 
-With best wishes
-Dmitry
+2.35.2
+
