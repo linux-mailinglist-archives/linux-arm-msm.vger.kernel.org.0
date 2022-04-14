@@ -2,75 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E120D500C53
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 13:45:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D24AE500CE4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 14:17:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242754AbiDNLrY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 07:47:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55064 "EHLO
+        id S241513AbiDNMTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 08:19:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231785AbiDNLrX (ORCPT
+        with ESMTP id S231996AbiDNMTj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 07:47:23 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BB593B3E0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 04:44:58 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 21so6037276edv.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 04:44:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=zx0fCIbKblbyaHSD8kB0xZUv7itAhP6P0FADRJhSr/k=;
-        b=SJxJ6GD0fYnPbXn2N7hL3uJALox98ts/6qgKxJmGny5r7fLefAfzlrvSFV081uRwkh
-         igkYes+yS4TN/C/KyYcXWz+qm5g2tJfqgCCLh3VHgSobaNs0/kfZGA6Rhwfsj3g68Deb
-         1Vt9zhQDQYwj5YuWqJ3ucVCYj6T73P2SA32pCk2WCTwTfx7K+UvhDdpb/qlG/MnY3QNx
-         BuEAbyq67D2e0kqsIiPA3c10YI/zauzJhYoleZNgJ2PhbZ7aiNVGxDUzYaLx+roguxKw
-         kT6iSbJceueLTywTbw3xD8//cC8ulehh5mSshPRLg1E8iS2ZVchp90UifjeRoZh8flQx
-         w3zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=zx0fCIbKblbyaHSD8kB0xZUv7itAhP6P0FADRJhSr/k=;
-        b=gBpM+HSjlE3Ef9G/yYZSVXRKpxNdasf+0Mn8oyQa1YYQ6a81Q9wsPHkkON/P+NRbK+
-         yH/G9a5kIkmaO3l+JrNI4p3vYx93rnjp3mV8RU+yUy98y9y4BgKmBf+dd0Rzz9yr9ZhC
-         rvD4soZSmdQS7dyg6TzG/jIi0ZAbIL0Ot9/Wo9E3V4Ke1s8dp7btrMA7oOtehreoc8/1
-         RLNioktYbutFtrMbbTCT8ZOxFU85/4eJShcLNQy1uV4YVv4tPVYwQS7cUKlL6oCldzRA
-         fr+v9WUJOeISYtnL7uqZWDQN0gMoYIlnISBdF8KTdJDbGj+IWwlKaxk25Q8vLHAWJvzv
-         3Uuw==
-X-Gm-Message-State: AOAM532F99CXrmsJZte6tt0oO0gd27lK5ty8gyGE/maUAY+DgpCiSIoW
-        c5jz692Q4zGIVykm0LF3kOS42vBnilJ/ssuc
-X-Google-Smtp-Source: ABdhPJyJE+BERDLwaYd0zLhEJkQhTKTg9UHFI3rbNm0KybcLkz4RcpahDLrS/C2g4PN1uwKcG5Ydsw==
-X-Received: by 2002:a05:6402:d0a:b0:421:10e6:2ecc with SMTP id eb10-20020a0564020d0a00b0042110e62eccmr2087217edb.329.1649936697069;
-        Thu, 14 Apr 2022 04:44:57 -0700 (PDT)
-Received: from [192.168.0.210] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id h22-20020a056402281600b004206bd9d0c6sm917388ede.8.2022.04.14.04.44.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Apr 2022 04:44:56 -0700 (PDT)
-Message-ID: <9d35e76e-5d98-b2d8-a22c-293adcbaadf0@linaro.org>
-Date:   Thu, 14 Apr 2022 13:44:55 +0200
+        Thu, 14 Apr 2022 08:19:39 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDCF95F8F0;
+        Thu, 14 Apr 2022 05:17:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6B36161ED4;
+        Thu, 14 Apr 2022 12:17:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCCFC385A5;
+        Thu, 14 Apr 2022 12:17:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649938633;
+        bh=qmbesC0/Icw9+qiYiA7mFVyYz0+S7SQX+MroNisSWkE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=uXX9tSRGzz1beJZ8yex9mmqV4YesXnyLh+DB7Jjmr1W4J/dH/ssQOoq7x5wdiNoeY
+         q0/Tne4i2dibfZ7F42CXHJcLT/2hygd4qZ0g+rW8DgcvBkdLxAtvyxoAI9w9vl+TWt
+         qdKV0uANJl5pivFnsr7ymEHwo6JVkrt2DpI5eggxlxVTUSDJmthOegs1WcaRP6c+56
+         mDFxc5t8xKXJpFA4dRfaIvkgcf96rwB/AA5QunOuHDRonkw2iLsGwib9nK8ShJYfcV
+         NqjetuYa5cBpZiLL3cjx7ox2IEcGwy8NOnTVwpb576iQTb5nzCnav1ic3YaWBKuNil
+         R6IaNiPDc4B0g==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1neyPO-0006BB-Cw; Thu, 14 Apr 2022 14:17:10 +0200
+Date:   Thu, 14 Apr 2022 14:17:10 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 1/5] clk: qcom: regmap-mux: add pipe clk implementation
+Message-ID: <YlgQxrKNOMcvy4cd@hovoldconsulting.com>
+References: <20220412193839.2545814-1-dmitry.baryshkov@linaro.org>
+ <20220412193839.2545814-2-dmitry.baryshkov@linaro.org>
+ <YlaUtCuMZZL4bM2U@hovoldconsulting.com>
+ <bbf1386f-0902-75ff-bb61-f4ebbc82f174@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] dt-bindings: dmaengine: qcom: gpi: Add minItems for
- interrupts
-Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220414064235.1182195-1-vkoul@kernel.org>
- <0598d1bb-cd7c-1414-910c-ae6bedc8295d@linaro.org> <Ylf2gsJ+Ks0wz6i3@matsya>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Ylf2gsJ+Ks0wz6i3@matsya>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bbf1386f-0902-75ff-bb61-f4ebbc82f174@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,22 +69,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/04/2022 12:25, Vinod Koul wrote:
->>>        Interrupt lines for each GPI instance
->>> +    minItems: 1
->>
->> This should be some real case minimum, not just 1. Unless really only
->> one interrupt is also possible in existing variations?
+[ Please trim your replies. ]
+
+On Wed, Apr 13, 2022 at 08:57:47PM +0300, Dmitry Baryshkov wrote:
+> On 13/04/2022 12:15, Johan Hovold wrote:
+> > On Tue, Apr 12, 2022 at 10:38:35PM +0300, Dmitry Baryshkov wrote:
+> >> On recent Qualcomm platforms the QMP PIPE clocks feed into a set of
+> >> muxes which must be parked to the "safe" source (bi_tcxo) when
+> >> corresponding GDSC is turned off and on again. Currently this is
+> >> handcoded in the PCIe driver by reparenting the gcc_pipe_N_clk_src
+> >> clock. However the same code sequence should be applied in the
+> >> pcie-qcom endpoint, USB3 and UFS drivers.
+> > 
+> > I'm starting to think this really belongs in the PHY driver which is the
+> > provider of the pipe clock. Moving it there would also allow the code to
+> > be shared between PCIe, USB, and UFS.
+> > 
+> > The PHY driver enables the pipe clock by starting the PHY and before
+> > doing so there's no point in updating the mux. Similarly, the PHY driver
+> > can restore the "safe" source after disabling the pipe clock.
 > 
-> So that depends on the channels available to use which can be worst case
-> of 1. Maximum is 13.. Most of the controllers are between 12-13, but we
-> dont want to change binding in future if controller has lesser channels
-> right?
+> I thought about this at some point. However it would still mean that the 
+> driver does the dance manually: disable pipe_clock, switch parent, 
+> sleep, switch the parent back, enable pipe clock. Switching parents is 
+> tied to disabling pipe_clock, so enforcing this link seems like a better 
+> option to me.
 
-If the choice is per SoC-controller, then the best would be to limit in
-allOf:if:then. However maybe the number of channels depends also on
-other factor (e.g. secure world configuration)?
+No, that's precisely my point. It is not tied to disabling (gating) the
+pipe clock, it is tied to powering down the PHY (i.e. disabling the pipe
+clock source). And that is under the control of the PHY driver.
 
+In practise, once we've cleaned up the other users of the pipe clock,
+tying it to pipe clock disabling will work, but it doesn't prevent
+anyone from shooting themselves in the foot as the "safe-mux" name
+suggests (i.e. it is still possibly to enable the pipe clock while its
+source is disabled).
 
-Best regards,
-Krzysztof
+> No to mention that it would complicate already overcomplicated QMP driver.
+
+That driver sure could use some love, but that's not a valid argument
+against adding things were they belong.
+
+And regarding complexity, I have a working prototype implementation here
+which is smaller than what you're proposing and very straight forward.
+
+> > That way there's no magic happening behind scenes, the clock framework
+> > always reports the actual state of the tree, and the reason for all of
+> > this can be documented in the QMP PHY driver once and for all.
+> 
+> We already have such 'magic' for the RCG2 (clk_rcg2_shared_ops), with 
+> the very practical reason. If the clock is running from the tcxo, it is 
+> as good as disabled from the practical purpose.
+
+That implementation doesn't try to implement the caching you're
+proposing and hence doesn't suffer from the associated implementation
+issues.
+ 
+> > The only change to the bindings compared to what this series proposes is
+> > that the PHY driver also needs a reference to bi_tcxo.
+> 
+> And this looks as bad, as providing bi_tcxo to the PCI device. From the 
+> schematics/silicon point of view neither of them actually uses these 
+> parents. Neither of them uses the pipe_clock_src. What do they need is 
+> just the pipe_clock. The rest should be in the programming API.
+
+No, the PHY driver is both the provider of the source clock for the
+pipe clock and the consumer of the latter.
+
+That it may need to handle any muxes in between the two only makes
+sense.
+
+Hiding this away and spreading the implementation out over multiple
+clock drivers (i.e. every mux definition for each platform + the
+regmap-mux hack) only obscures things.
+
+Johan
