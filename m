@@ -2,66 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70535500D57
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 14:28:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47A03500D74
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 14:31:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243276AbiDNMaM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 08:30:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41162 "EHLO
+        id S238280AbiDNMcJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 08:32:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243348AbiDNM3W (ORCPT
+        with ESMTP id S236845AbiDNMcJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 08:29:22 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7B428D69A;
-        Thu, 14 Apr 2022 05:26:57 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8E958B82938;
-        Thu, 14 Apr 2022 12:26:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D033C385A1;
-        Thu, 14 Apr 2022 12:26:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649939215;
-        bh=Bm7Q2ZnByE6GSEUiZhqmxSzL/BKHsqE5oxAj9ul5+wo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZMwU4DE3YXocQcCgSia+UsHiXnrwjYJYgwMnuIBAp+K+WBbtipcU2L5g+Siej6Kxn
-         X7LofKt9QOyjnegvTaiY7/y53qp0tvUAGoiq2XQrYFVrKOdxI6HkMqjeOYgVbJEWz+
-         hdwe+nDMp4MXEqbRYYU3oZtMbhBMsBxfaBCZE3RGamOQ5qCDBjkYyOdOeFlyTZcXqZ
-         ub6uhlrGxEU7O7C480uM1DU851I8xYMfbgK/3WNwb46fuOleWBQ2wSA5YqS0FmgA3E
-         apmerTJ5rlH96vO2KBC/7IG1ZtfrZ5IUwyPFaB2ULabHW5uvkX/1GsmodWY7pypASk
-         w3XfZaa8NEL7Q==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1neyYl-0006Fo-3g; Thu, 14 Apr 2022 14:26:51 +0200
-Date:   Thu, 14 Apr 2022 14:26:51 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: Re: [PATCH v2 1/5] clk: qcom: regmap-mux: add pipe clk implementation
-Message-ID: <YlgTC5RdDXC3abrI@hovoldconsulting.com>
-References: <20220412193839.2545814-1-dmitry.baryshkov@linaro.org>
- <20220412193839.2545814-2-dmitry.baryshkov@linaro.org>
- <YlaUtCuMZZL4bM2U@hovoldconsulting.com>
- <82c6813c-fcff-5097-56e0-0cb7aac2eac2@linaro.org>
+        Thu, 14 Apr 2022 08:32:09 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72E7E275E9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 05:29:44 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id md4so4961452pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 05:29:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xt0D8PdwDkcpebCcx1HPl0Q4KbEoC2UsIEHF3n/1xF4=;
+        b=U1i+AZ4UoiBlr7K35aX5pVCHCozsIYfNUDRqlBviSF968nyqNPfIuFDpVIxJ2WgTcr
+         XuxTVHG6CRpn6Ohx4H1ey7/dMkNxDQdokmIRFa4vA3l2jurPR8bMf7mgB8+w9mjFULhr
+         6jI4Crw6aKfweg+qwbrtkYbCn1wySV58/cjfKbLQ2txc0U2bKT6c6y4mNJBPvlVPcrc7
+         ukAkOu/qzEVbwK1LoaLmVN+3d3ezfVKl+92pcNSpE1to9UH+lWXFDn68OwceOUCRBvNY
+         HTJlN3rHRsDu+7+1VP8unpjHzx2lYF+/5Z0BfX58ZPLvL4KMawf+35vUrhB9BW5Yjrgq
+         d8KQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xt0D8PdwDkcpebCcx1HPl0Q4KbEoC2UsIEHF3n/1xF4=;
+        b=x6su3JtCZBDXNnsPtFxotbRWtJo5u+SMAH1OCq4a410r0lPIR3CCsnPu5Srkenhan9
+         /wS8xjwIHBK30y/d+as/1/gFd2yCRQB3+Qdh+pQKAAdJcX7YErqVuOqWM68xifk3MZ85
+         7ec4SJ4tzT9qDxSxloXCfQKAT2vaJ8F3+HVA7wvBXM8pMV+B4aiz0AofhaoASVfixZAF
+         LCgUZUiXpL/qqMSDASfGtFjrfGCkdsqHyWNECj/57JfIMbTs74f+ghOCr9GJnzkeq8ix
+         MjcOjMQ11eRESKbHehzUbPgsSS2/LgqCHWi3X6E7V/E8zZ6+w+MywbRsek8BFgdSQdX1
+         S/9A==
+X-Gm-Message-State: AOAM530X2mU8FviYWgB+NlE7WtDjcoUb8regOM+eWbIaCsvVUmZQqv5k
+        DXpuI1RfJ8a4vW10z4AIaFJbmVt0uTogOA==
+X-Google-Smtp-Source: ABdhPJz7HIQYNtub3MkdZQX3FLU8Pitga8GUCfvfRLFDPiIUuBHzZVlCQXa4D4Rw4haSCcZ+awqAoQ==
+X-Received: by 2002:a17:90a:e7c8:b0:1cb:a81b:19a1 with SMTP id kb8-20020a17090ae7c800b001cba81b19a1mr3474635pjb.25.1649939383666;
+        Thu, 14 Apr 2022 05:29:43 -0700 (PDT)
+Received: from localhost.localdomain ([223.233.64.97])
+        by smtp.gmail.com with ESMTPSA id fv7-20020a17090b0e8700b001ce18c551dcsm1681894pjb.19.2022.04.14.05.29.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Apr 2022 05:29:43 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh+dt@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 1/1] arm64: dts: qcom: sm8350-sagami: UFS phy - add 'vdda-pll-supply' & 'vdda-phy-supply'
+Date:   Thu, 14 Apr 2022 17:59:28 +0530
+Message-Id: <20220414122928.349126-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <82c6813c-fcff-5097-56e0-0cb7aac2eac2@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,51 +71,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 14, 2022 at 01:21:29AM +0300, Dmitry Baryshkov wrote:
-> On 13/04/2022 12:15, Johan Hovold wrote:
-> > On Tue, Apr 12, 2022 at 10:38:35PM +0300, Dmitry Baryshkov wrote:
-> >> On recent Qualcomm platforms the QMP PIPE clocks feed into a set of
-> >> muxes which must be parked to the "safe" source (bi_tcxo) when
-> >> corresponding GDSC is turned off and on again. Currently this is
-> >> handcoded in the PCIe driver by reparenting the gcc_pipe_N_clk_src
-> >> clock. However the same code sequence should be applied in the
-> >> pcie-qcom endpoint, USB3 and UFS drivers.
+As suggested by Bjorn during review of [1], the vdda-pll-supply' &
+'vdda-phy-supply' supplies denote the power for the bus and the
+clock of the UFS PHY.
 
-> > The caching of the parent is broken since set_parent() is typically not
-> > called before enabling the clock.
-> > 
-> > This means that the above code will set the mux to its zero-initialised
-> > value, which currently only works by chance as the pipe clock config
-> > value happens to be zero.
-> > 
-> > For this to work generally, you'd also need to define also the
-> > (default/initial) non-safe parent for each mux. Handling handover from
-> > the bootloader might also be tricky.
-> 
-> It's not tricky at all. We can set stored_parent_cfg from gcc probe from 
-> function. Or set statically from the config. I'll probably do the latter.
+For pdx215 to have a functional UFS, these two supplies seem mandatory.
+So, its safe to assume that the two regulators are the same as on
+the MTP. So let's wire them up in the same way as the MTP.
 
-That means you're just ignoring the problem. How is hard coding the
-initial mux configuration in any way dealing with bootloader handover?
+In absence of the same 'make dtbs_check' leads to following warnings:
+
+arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml:
+ phy-wrapper@88e9000: 'vdda-phy-supply' is a required property
+
+arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml:
+ phy-wrapper@88e9000: 'vdda-pll-supply' is a required property
+
+[1]. https://lore.kernel.org/lkml/20220228123019.382037-9-bhupesh.sharma@linaro.org/
+
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: konrad.dybcio@somainline.org
+Cc: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 25 +++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+index 90b13cbe2fa6..238ac9380ca2 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
+  */
  
-> > Furthermore, the current implementation appears to ignore locking and
-> > doesn't handle the case where set_parent() races with enable(). The
-> > former is protected by the prepare mutex and the latter by the enable
-> > spinlock and a driver that needs to serialise the two needs to handle
-> > that itself.
-> 
-> Since I'm trying to remove pipe_clk usage from pcie driver itself, there 
-> is just one user left - qmp phy. And while you are correct that there is 
-> a race, I think we can neglect that for now. Or shift enable/disable ops 
-> to prepare/unprepare, thus using the same mutex everywhere.
++#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sm8350.dtsi"
+ #include "pm8350.dtsi"
+ #include "pm8350b.dtsi"
+@@ -75,6 +76,27 @@ ramoops@ffc00000 {
+ 	};
+ };
+ 
++&apps_rsc {
++	pm8350-rpmh-regulators {
++		compatible = "qcom,pm8350-rpmh-regulators";
++		qcom,pmic-id = "b";
++
++		vreg_l1b_0p88: ldo1 {
++			regulator-name = "vreg_l1b_0p88";
++			regulator-min-microvolt = <912000>;
++			regulator-max-microvolt = <920000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l6b_1p2: ldo6 {
++			regulator-name = "vreg_l6b_1p2";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1208000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++};
++
+ &adsp {
+ 	status = "okay";
+ 	firmware-name = "qcom/adsp.mbn";
+@@ -256,4 +278,7 @@ &usb_1_hsphy {
+ 
+ &usb_1_qmpphy {
+ 	status = "okay";
++
++	vdda-phy-supply = <&vreg_l6b_1p2>;
++	vdda-pll-supply = <&vreg_l1b_0p88>;
+ };
+-- 
+2.35.1
 
-Let's not add known broken code. Correctness first.
-
-Handling the muxing the prepare/unprepare might work. I even considered
-using those callbacks to let CCF know about the reparenting so that for
-example debugfs continues to reflect the actual state of things.
-
-But I'm still leaning towards this being a misguided endeavour as I've
-explained elsewhere.
-
-Johan
