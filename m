@@ -2,69 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C0A95002E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 02:03:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59C9550034F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 02:59:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235876AbiDNAFT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Apr 2022 20:05:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53930 "EHLO
+        id S236884AbiDNBCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Apr 2022 21:02:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229787AbiDNAFS (ORCPT
+        with ESMTP id S231294AbiDNBCE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Apr 2022 20:05:18 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A7073700C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 17:02:55 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id a19so3768013oie.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 17:02:55 -0700 (PDT)
+        Wed, 13 Apr 2022 21:02:04 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C06C35858
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 17:59:40 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id e22so3800813ioe.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Apr 2022 17:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=C7D4i18WnxrgBXf4shxFqYln81+Lfr4ATkdTNtqU2ck=;
-        b=W/ZABInJ4czkJM0vDyGAwz3yEFAMCEvHtVtCMDXOfyAgDwS2wBCaP2hw7blb+saGYC
-         k2L9RxkO1rbutRE9dOvAdtQOz46YmvYGCkUHPJp2yfGN9HPkVKSrcMZpIFFhahvFsC0j
-         1g9Ny3Ibq+nxS9D+C4zgzsbe4tqNZ8PgNwzUg=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=zgsbBJZkETT0T4G/ueHuTUOQ6+Pb56JNHVRc8ZA6wiM=;
+        b=h6aCTyM6FGlhXQAJtWqJNW6VuJC9v8fnE/94b/W0u7BOpJ8xSgcPjb+fuQbJV+H8P5
+         MT85ReN9aTHg+Tan++dYOGLjSIrwYqRhkQJmiRPVnAdjzP33iMqQ6KpRPzHioaBeNcmB
+         01QX2PYvCsZ1RzbLi6XMlaCemVqFXN4vcGhRJ1+5zznv0I83UG8yYPmNxn8z+GSzCwdk
+         zKaWtf4dq9jSZiY117kwXuZpzf5u7nPWDg11sDx9jtpZyD5fUxikL5f76oJP3uURVurU
+         GPcSQdwFsKmc+awmlSADWgW9DYd/szfOzAtV780aCu31YjPdQQ3FRUoMm2l0upAHzFxy
+         ghrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=C7D4i18WnxrgBXf4shxFqYln81+Lfr4ATkdTNtqU2ck=;
-        b=wlIt5dNbIkpkldmUOccZ2YFyNoRph+ygbaC6ZeEPReqYcBNuW4YhayLG+QKmp6RcHh
-         eEMkb7ajZ7FSBONAl1j8KCdBXIwdxSqcG3s/3JWoaLg3HncuwD0rKoYeFf+yMhzjasYZ
-         26l7mGKJzudGNhd8lWCVpnIBjmU8sMDydALm12uoQAYJwFHD3iwNwU2cqf3I6r80KJOx
-         +C2mKKXBbzSJmBQxMSG5eN7KUczQiiXb231I1JoZ9BqLdMsfz8uLwoB/2qCgYfxBXV/O
-         4WtQcRFTMHGE5BthvPDEH4NBInk1y5OPtA60JT6cpSorHvPMJ8DHoErk5CyIo1ckkX62
-         fEFw==
-X-Gm-Message-State: AOAM533NsuVbd9DATRsd4wSEUbDN1y/fgxKA3hTMz+NRhrcqObzD1no9
-        MVxutF8+uNealDvv9oiJJJeJqahm/5FIyhKnZ48VVQ==
-X-Google-Smtp-Source: ABdhPJzp2cTMSMi7Tz42NyDd50anioDt8Jea6q6Rz9Ad1fmvO4ymY/ZP6diGOQmXMoE+vv2JGFKQrFhNXF1AbVQ6YkY=
-X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
- n62-20020acabd41000000b002ecff42814fmr265612oif.63.1649894574930; Wed, 13 Apr
- 2022 17:02:54 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 13 Apr 2022 17:02:54 -0700
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=zgsbBJZkETT0T4G/ueHuTUOQ6+Pb56JNHVRc8ZA6wiM=;
+        b=wiiZ8IJBbtJI2mXyP8TpluCZjOdLdygF/5c6ghG+Ir8jUBOlVhZJ6yWKEqJShTuHEm
+         9CsWyuz8drTXEL3qNXVI+qVM3CS4xsB0BfTRKTOJ1cg9y050cVq/e2pl37C0GGdi5h3o
+         x3poYF18QZf52SsG7ixeiEw6d0KXXTOc9ncrSUJVnf9B7XeyfOdKmmFNjDesQkBq+7ie
+         rFoqduUrI9C7j+aqUQ46+uv2JBbwrvmwK0x1THnlU9YiY6FqJsAt9SoS50KMn+EEmA3H
+         FJ5W/cLfdGXL80xsYk29PPGUF/knUFlNvcPkc/uOpsYci4q4/N82Wxl1bae1wm2FRvXX
+         +iTQ==
+X-Gm-Message-State: AOAM530vk0oxuIUJFcIx1gcAHRIr94AWQD/SvA7Ap0xkYCNTEMOx3133
+        tEgkpSiMROcmxPZJk1qi/Y+gGA==
+X-Google-Smtp-Source: ABdhPJyWahwxvucjjkEGSAhpTl3vClrpDhozag1zQo9Of9HtltZCGt9GdEiRwIkIBr2xIVICUJu/bQ==
+X-Received: by 2002:a05:6602:1409:b0:5e7:487:133c with SMTP id t9-20020a056602140900b005e70487133cmr159722iov.196.1649897979377;
+        Wed, 13 Apr 2022 17:59:39 -0700 (PDT)
+Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id n12-20020a92dd0c000000b002cac22690b6sm284770ilm.0.2022.04.13.17.59.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 17:59:38 -0700 (PDT)
+Message-ID: <a293481e-3454-74fd-7183-973a9b80acc0@linaro.org>
+Date:   Wed, 13 Apr 2022 19:59:37 -0500
 MIME-Version: 1.0
-In-Reply-To: <1649280493-4393-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1649280493-4393-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 13 Apr 2022 17:02:54 -0700
-Message-ID: <CAE-0n511nbPrRCMx3E2De-htmR79vZr4ezSj13Gm1PbTGasC4A@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/dp: enhance both connect and disconnect
- pending_timeout handle
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, robdclark@gmail.com, sean@poorly.run,
-        vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 1/2] interconnect: qcom: sc7180: Drop IP0 interconnects
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>
+Cc:     Georgi Djakov <djakov@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+References: <20220412220033.1273607-1-swboyd@chromium.org>
+ <20220412220033.1273607-2-swboyd@chromium.org>
+ <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com>
+ <d80ece40-fdd7-f304-3989-47ae152d5ac9@linaro.org>
+ <CAE-0n53kebRHTogSkiAOcA4tMpA+EcXQHtNX0Zzut-xE2vCkpw@mail.gmail.com>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <CAE-0n53kebRHTogSkiAOcA4tMpA+EcXQHtNX0Zzut-xE2vCkpw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,144 +84,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The subject is still misleading. It is fixing something. It may be
-enhancing it as well but it is clearly fixing it first.
+On 4/13/22 6:14 PM, Stephen Boyd wrote:
+>> Stephen, I think you should re-spin the series and add the
+>> proper change to the binding.  You can keep the tags I gave
+>> before.
+> I will not combine the removal of the binding from this patch. This
+> patch is good as is and fixes the problem while ignoring the DT binding
+> and that larger discussion.
 
-Quoting Kuogee Hsieh (2022-04-06 14:28:13)
-> dp_hpd_plug_handle() is responsible for setting up main link and send
-> uevent to notify user space framework to start video stream. Similarly,
-> dp_hdp_unplug_handle is responsible to send uevent to notify user space
-> framework to stop video stream and then tear down main link.
-> However there are rare cases, such as in the middle of system suspending,
-> that uevent could not be delivered to user space framework. Therefore
-> some kind of recover mechanism armed by timer need to be in place in the
-> case of user space framework does not respond to uevent.
->
-> This patch have both dp_conenct_pending_timeout and
-> dp_disconnect_pending_timeout are used to stop video stream and tear down
-> main link and eventually restore DP driver state to known default
-> DISCONNECTED state in the case of timer fired due to framework does not
-> respond to uevent so that DP driver can recover itself gracefully at next
-> dongle unplug followed by plugin event.
->
-> Changes in v2:
-> -- replace dp_display_usbpd_disconnect_cb with dp_display_notify_disconnect
+OK, and I concur it's better to make the change in the kernel only,
+without changing the DTB.  It doesn't hurt to permit (define) those
+other definitions in the binding, even if we agree to never use them.
 
-I'd prefer this part to be a different patch. It can come after the fix
-to ease backporting.
+					-Alex
 
-Also, is there any response to Dmitry's question yet? I haven't seen
-anything.
 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> index 2433edb..ffafe17 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> @@ -22,6 +22,7 @@ struct dp_ctrl {
->  int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
->  int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
->  int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
-> +int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
->  int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
->  void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
->  void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 178b774..a6200a5 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -451,11 +451,14 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
->
->  static int dp_display_usbpd_disconnect_cb(struct device *dev)
 
-We shouldn't need to keep around an empty function.
-
->  {
-> +       return 0;
-> +}
-> +
-> +static void dp_display_notify_disconnect(struct device *dev)
-> +{
->         struct dp_display_private *dp = dev_get_dp_display_private(dev);
->
->         dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
-> -
-> -       return 0;
->  }
->
->  static void dp_display_handle_video_request(struct dp_display_private *dp)
-> @@ -593,10 +596,16 @@ static int dp_connect_pending_timeout(struct dp_display_private *dp, u32 data)
->
->         mutex_lock(&dp->event_mutex);
->
-> +       /*
-> +        * main link had been setup but video is not ready yet
-> +        * only tear down main link
-> +        */
->         state = dp->hpd_state;
->         if (state == ST_CONNECT_PENDING) {
-> -               dp->hpd_state = ST_CONNECTED;
->                 DRM_DEBUG_DP("type=%d\n", dp->dp_display.connector_type);
-> +               dp_ctrl_off_link(dp->ctrl);
-> +               dp_display_host_phy_exit(dp);
-> +               dp->hpd_state = ST_DISCONNECTED;
->         }
->
->         mutex_unlock(&dp->event_mutex);
-> @@ -645,6 +654,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
->                 if (dp->link->sink_count == 0) {
->                         dp_display_host_phy_exit(dp);
->                 }
-> +               dp_display_notify_disconnect(&dp->pdev->dev);
->                 mutex_unlock(&dp->event_mutex);
->                 return 0;
->         }
-> @@ -661,19 +671,22 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
->                 return 0;
->         }
->
-> -       dp->hpd_state = ST_DISCONNECT_PENDING;
-> -
->         /* disable HPD plug interrupts */
->         dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
->
->         /*
->          * We don't need separate work for disconnect as
->          * connect/attention interrupts are disabled
-> -        */
-> -       dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
-> +       */
-
-This comment end is wrong. It should be unchanged.
-
-> +       dp_display_notify_disconnect(&dp->pdev->dev);
->
-> -       /* start sentinel checking in case of missing uevent */
-> -       dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
-> +       if (state == ST_DISPLAY_OFF) {
-> +               dp->hpd_state = ST_DISCONNECTED;
-> +       } else {
-> +               /* start sentinel checking in case of missing uevent */
-> +               dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
-> +               dp->hpd_state = ST_DISCONNECT_PENDING;
-> +       }
->
->         /* signal the disconnect event early to ensure proper teardown */
->         dp_display_handle_plugged_change(&dp->dp_display, false);
-> @@ -695,10 +708,16 @@ static int dp_disconnect_pending_timeout(struct dp_display_private *dp, u32 data
->
->         mutex_lock(&dp->event_mutex);
->
-> +       /*
-> +        * main link had been set up and video is ready
-> +        * tear down main link, video stream and phy
-> +        */
->         state =  dp->hpd_state;
->         if (state == ST_DISCONNECT_PENDING) {
-> -               dp->hpd_state = ST_DISCONNECTED;
->                 DRM_DEBUG_DP("type=%d\n", dp->dp_display.connector_type);
-> +               dp_ctrl_off(dp->ctrl);
-> +               dp_display_host_phy_exit(dp);
-> +               dp->hpd_state = ST_DISCONNECTED;
->         }
->
->         mutex_unlock(&dp->event_mutex);
