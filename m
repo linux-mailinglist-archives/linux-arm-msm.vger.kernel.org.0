@@ -2,65 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE6B8501051
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 16:44:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C784B501697
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 17:50:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347506AbiDNORc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 10:17:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49034 "EHLO
+        id S234827AbiDNPID (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 11:08:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245389AbiDNOIW (ORCPT
+        with ESMTP id S1349432AbiDNOUJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 10:08:22 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0003716C6;
-        Thu, 14 Apr 2022 07:01:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649944860; x=1681480860;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=tNU060HTTuLf0mJY7JOsVykHb780yIyZ9qWlNy+GV3s=;
-  b=l65iRbkL0biQhzSD27zXQOG1jziteoVSrgSBJ75upNtLe7I4nJ9v3SjE
-   Tb3puzo4P1l+a9hwLX2dYialIzO6rSdEy7mH7D2FHw3LQRxKag8ZrT4vp
-   KYX+3/rQTYR9Op/QaEWpW6gS6okh0eB9C5Twe7NBdefLFd2NYEMlrT9Wp
-   A=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 14 Apr 2022 07:01:00 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2022 07:01:00 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 14 Apr 2022 07:00:59 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 14 Apr 2022 07:00:55 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v10 2/2] arm64: dts: qcom: sc7280: add lpass lpi pin controller node
-Date:   Thu, 14 Apr 2022 19:30:27 +0530
-Message-ID: <1649944827-6455-3-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1649944827-6455-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1649944827-6455-1-git-send-email-quic_srivasam@quicinc.com>
+        Thu, 14 Apr 2022 10:20:09 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC899BBAC;
+        Thu, 14 Apr 2022 07:11:12 -0700 (PDT)
+Received: from SoMainline.org (D57D4C6E.static.ziggozakelijk.nl [213.125.76.110])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A5B533EEFB;
+        Thu, 14 Apr 2022 16:11:09 +0200 (CEST)
+Date:   Thu, 14 Apr 2022 16:11:07 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh+dt@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        Vinod Koul <vkoul@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: sm8350-sagami: UFS phy - add
+ 'vdda-pll-supply' & 'vdda-phy-supply'
+Message-ID: <20220414141107.sazz72sl6giehpjx@SoMainline.org>
+References: <20220414122928.349126-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220414122928.349126-1-bhupesh.sharma@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,230 +49,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add LPASS LPI pinctrl node required for Audio functionality on sc7280
-based platforms.
+On 2022-04-14 17:59:28, Bhupesh Sharma wrote:
+> As suggested by Bjorn during review of [1], the vdda-pll-supply' &
+> 'vdda-phy-supply' supplies denote the power for the bus and the
+> clock of the UFS PHY.
+> 
+> For pdx215 to have a functional UFS [..] safe to assume [..]
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi |  84 ++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7280.dtsi     | 107 +++++++++++++++++++++++++++++++
- 2 files changed, 191 insertions(+)
+By "functional" you are referring to sending a certain UFS command that
+accidentally wipes the bootloader [1] [2], turning the device into a
+_very_ expensive (+$1000) paperweight?
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index fb1f4ca..2f863c0 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -359,6 +359,90 @@
- 	bias-disable;
- };
- 
-+&lpass_dmic01 {
-+	clk {
-+		drive-strength = <8>;
-+	};
-+};
-+
-+&lpass_dmic01_sleep {
-+	clk {
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	data {
-+		pull-down;
-+	};
-+};
-+
-+&lpass_dmic23 {
-+	clk {
-+		drive-strength = <8>;
-+	};
-+};
-+
-+&lpass_dmic23_sleep {
-+	clk {
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	data {
-+		pull-down;
-+	};
-+};
-+
-+&lpass_rx_swr {
-+	clk {
-+		drive-strength = <2>;
-+		slew-rate = <1>;
-+		bias-disable;
-+	};
-+
-+	data {
-+		drive-strength = <2>;
-+		slew-rate = <1>;
-+		bias-bus-hold;
-+	};
-+};
-+
-+&lpass_rx_swr_sleep {
-+	clk {
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	data {
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+};
-+
-+&lpass_tx_swr {
-+	clk {
-+		drive-strength = <2>;
-+		slew-rate = <1>;
-+		bias-disable;
-+	};
-+
-+	data {
-+		slew-rate = <1>;
-+		bias-bus-hold;
-+	};
-+};
-+
-+&lpass_tx_swr_sleep {
-+	clk {
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	data {
-+		bias-bus-hold;
-+	};
-+};
-+
- &mi2s1_data0 {
- 	drive-strength = <6>;
- 	bias-disable;
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index ccecf26e..ca54eb1 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2033,6 +2033,113 @@
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
-+		lpass_tlmm: pinctrl@33c0000 {
-+			compatible = "qcom,sc7280-lpass-lpi-pinctrl";
-+			reg = <0 0x033c0000 0x0 0x20000>,
-+				<0 0x03550000 0x0 0x10000>;
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			gpio-ranges = <&lpass_tlmm 0 0 15>;
-+
-+			#clock-cells = <1>;
-+
-+			lpass_dmic01: dmic01 {
-+				clk {
-+					pins = "gpio6";
-+					function = "dmic1_clk";
-+				};
-+
-+				data {
-+					pins = "gpio7";
-+					function = "dmic1_data";
-+				};
-+			};
-+
-+			lpass_dmic01_sleep: dmic01-sleep {
-+				clk {
-+					pins = "gpio6";
-+					function = "dmic1_clk";
-+				};
-+
-+				data {
-+					pins = "gpio7";
-+					function = "dmic1_data";
-+				};
-+			};
-+
-+			lpass_dmic23: dmic23 {
-+				clk {
-+					pins = "gpio8";
-+					function = "dmic2_clk";
-+				};
-+
-+				data {
-+					pins = "gpio9";
-+					function = "dmic2_data";
-+				};
-+			};
-+
-+			lpass_dmic23_sleep: dmic23-sleep {
-+				clk {
-+					pins = "gpio8";
-+					function = "dmic2_clk";
-+				};
-+
-+				data {
-+					pins = "gpio9";
-+					function = "dmic2_data";
-+				};
-+			};
-+
-+			lpass_rx_swr: rx-swr {
-+				clk {
-+					pins = "gpio3";
-+					function = "swr_rx_clk";
-+				};
-+
-+				data {
-+					pins = "gpio4", "gpio5";
-+					function = "swr_rx_data";
-+				};
-+			};
-+
-+			lpass_rx_swr_sleep: rx-swr-sleep {
-+				clk {
-+					pins = "gpio3";
-+					function = "swr_rx_clk";
-+				};
-+
-+				data {
-+					pins = "gpio4", "gpio5";
-+					function = "swr_rx_data";
-+				};
-+			};
-+
-+			lpass_tx_swr: tx-swr {
-+				clk {
-+					pins = "gpio0";
-+					function = "swr_tx_clk";
-+				};
-+
-+				data {
-+					pins = "gpio1", "gpio2", "gpio14";
-+					function = "swr_tx_data";
-+				};
-+			};
-+
-+			lpass_tx_swr_sleep: tx-swr-sleep {
-+				clk {
-+					pins = "gpio0";
-+					function = "swr_tx_clk";
-+				};
-+
-+				data {
-+					pins = "gpio1", "gpio2", "gpio14";
-+					function = "swr_tx_data";
-+				};
-+			};
-+		};
-+
- 		gpu: gpu@3d00000 {
- 			compatible = "qcom,adreno-635.0", "qcom,adreno";
- 			reg = <0 0x03d00000 0 0x40000>,
--- 
-2.7.4
+[1]: https://lore.kernel.org/lkml/20211111184630.605035-1-konrad.dybcio@somainline.org/
+[2]: https://github.com/kholk/kernel/commit/2e7a9ee1c91a016baa0b826a7752ec45663a0561
 
+> In absence of the same 'make dtbs_check' leads to following warnings:
+> 
+> arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml:
+>  phy-wrapper@88e9000: 'vdda-phy-supply' is a required property
+> 
+> arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml:
+>  phy-wrapper@88e9000: 'vdda-pll-supply' is a required property
+> 
+> [1]. https://lore.kernel.org/lkml/20220228123019.382037-9-bhupesh.sharma@linaro.org/
+> 
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: konrad.dybcio@somainline.org
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 25 +++++++++++++++++++
+>  1 file changed, 25 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> index 90b13cbe2fa6..238ac9380ca2 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> @@ -3,6 +3,7 @@
+>   * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
+>   */
+>  
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  #include "sm8350.dtsi"
+>  #include "pm8350.dtsi"
+>  #include "pm8350b.dtsi"
+> @@ -75,6 +76,27 @@ ramoops@ffc00000 {
+>  	};
+>  };
+>  
+> +&apps_rsc {
+> +	pm8350-rpmh-regulators {
+> +		compatible = "qcom,pm8350-rpmh-regulators";
+> +		qcom,pmic-id = "b";
+> +
+> +		vreg_l1b_0p88: ldo1 {
+> +			regulator-name = "vreg_l1b_0p88";
+> +			regulator-min-microvolt = <912000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l6b_1p2: ldo6 {
+> +			regulator-name = "vreg_l6b_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1208000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +};
+> +
+>  &adsp {
+>  	status = "okay";
+>  	firmware-name = "qcom/adsp.mbn";
+> @@ -256,4 +278,7 @@ &usb_1_hsphy {
+>  
+>  &usb_1_qmpphy {
+>  	status = "okay";
+> +
+> +	vdda-phy-supply = <&vreg_l6b_1p2>;
+> +	vdda-pll-supply = <&vreg_l1b_0p88>;
+
+I'm probably understanding your patch wrong, but this is the USB phy,
+not the UFS phy?  The warning from dtbs_check on `phy-wrapper@88e9000`
+is also the `qmp-usb3-phy`, not the `qmp-ufs-phy` - seems this patch has
+little to do with UFS after all?
+
+>  };
+> -- 
+> 2.35.1
+> 
