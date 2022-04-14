@@ -2,87 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BFD8501BBF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 21:21:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0ACFA501C05
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 21:36:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345553AbiDNTXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 15:23:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53838 "EHLO
+        id S1343922AbiDNTi3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 15:38:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345202AbiDNTXA (ORCPT
+        with ESMTP id S245647AbiDNTi2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 15:23:00 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AEDBAAB5A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 12:20:34 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id u7so10760124lfs.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 12:20:34 -0700 (PDT)
+        Thu, 14 Apr 2022 15:38:28 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5358EBB8D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 12:36:01 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id g16-20020a9d6b10000000b00601ded2a06fso1011987otp.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 12:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=vp0QTlQ+Ul12qwBiTeo6WQhXUXb0oDOX5cKNXB8aPjA=;
-        b=vtTVHj80EGxNxKDlWGtszG3FwMg4Ey5uQHChZ2COAtQ3UUZTlIFf0z5PGKPiraBznp
-         nlnwtsO3/u7tW7hBz/zuev7xxyVez2a1UV4nWJzEA+tbDF+toFxvgf3oS+Ph+MAcVJqx
-         6pLvnc9UJe5jn4SBNdLYPN5Qax2ShWH+dQdCyYir+zNtxeCkS/MloXri0Byr1k6CWrQn
-         DIvXAWCR+AUnhw9m8COyU5g0yWa8VV81TuALFXgSzmLsSb/ODZY/kz9XdUipaRxtpkJK
-         cqtoJaVQNx9rfchIoRjAhYaGI2BQb5x1lxq0/4EC3hHEbQsLJBz8UJhBvQ6QjuJxevF5
-         4v5A==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=vrx4+YHpwTNJHX0W7SZLGfsxXelpnrIdbXIV1qMsRYA=;
+        b=FNCvhrKZ1koxe+nJvUVWxBru/9GyuOY9b8E8r0hf3n6ON6kfTimDW8le8lByjEtFtf
+         +iSMxE37vrLmZovEZthCxMCxydpaBLkCjsaL7Gg9n5h4kHGhvCdV5f90FAXSNkJztpKL
+         hY2D9Ka5RScPq6D3NXh9Y6FzeYd3l7H1w8mKY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=vp0QTlQ+Ul12qwBiTeo6WQhXUXb0oDOX5cKNXB8aPjA=;
-        b=d9hx4auFYt2qJrhlM1NGUzsg1Zi3EduIapEzew9d1EyencYYq3TT8/dTwG6RG8k2BO
-         V/djgDaJIWgOyUMjH3T4nMPXu/mFzgp2rGti6/0h7VeXaS3MoR9YaLXrWy3D9KdkGYcy
-         uSN2LUWCAJSYRoQUqbCUaUVhKzdtikM4smfedt6a/g8g4DDp7tMULhesh0tgTh4i6f/u
-         KWk1AhLa8sJuFEcY3CpS8eYbM2HWLbpRQb/scbOST/qHgpnifxjdRfCGYsc+gyVs8zCq
-         8fjOOlxrtmC6/0L9PUlbDvdzht3zgeX1I47e0vi/6pw9YjBVgvW+miOnUcHf7v+Upp7t
-         cOdQ==
-X-Gm-Message-State: AOAM530tHpoytzAqt6F9IX3B9vzmXkvrwIO3/ZV3t2Oya7bgLhmN96oF
-        NCl4KYciRBMMFU3mnbirM11aMlniUeTSJQ==
-X-Google-Smtp-Source: ABdhPJxo5MHFE963Dq+Wyme7Ct5D7t+GPbOhgBQl/OVd4GpTcR+TbNjtlAMv2Dy5gtjdWO+O9T8iPA==
-X-Received: by 2002:a05:6512:4024:b0:46b:fc7e:a455 with SMTP id br36-20020a056512402400b0046bfc7ea455mr2937396lfb.156.1649964032785;
-        Thu, 14 Apr 2022 12:20:32 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id t1-20020a19dc01000000b0046ba600f866sm83561lfg.180.2022.04.14.12.20.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Apr 2022 12:20:32 -0700 (PDT)
-Message-ID: <20afcd97-4b8d-f770-151a-268b893b7c5a@linaro.org>
-Date:   Thu, 14 Apr 2022 22:20:31 +0300
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=vrx4+YHpwTNJHX0W7SZLGfsxXelpnrIdbXIV1qMsRYA=;
+        b=fWSktRzJ0Yho4KZDlNwWqkukmSp7at3kSfJhOI3AFL14u4PK8fV5YzO/Zk0t/e9WiA
+         qKYRw1VXmwZj58PHRBLPmAGbxGj8AQvE0fhJyQi7tvd5e41mOIu6H17Zd+dNFxui4Br2
+         Zk2KI8jJM4KheL8ENbY/vnPaVJvtoxQ5/r7uRXSFwIuO5MV5fYZSItuXtJXUqVPUYGgp
+         SG0dwarD5iMORYv2vTLJLzf8/rA4RoBdfQuqFmEWu1SKBRGJPfv5ptDIoNQtoDOALDTu
+         cI3S7zeW5bzwgnaqPIg+QxsKOpmh/+cV//1l7560EfP1K++0wT6T9QzTBGuLY3qRGK3I
+         klCg==
+X-Gm-Message-State: AOAM532FGBMkCMbjXhIEaQtg5nUOCIvVO/OutwKigeAFgbR+P49kcAXI
+        HcZmf0lxnm++xTI6ue8uc+t83kpV8igAqYqCrFbg9g==
+X-Google-Smtp-Source: ABdhPJzt7HXp3rGjm2KOxE4dqJ4CxfML+6PKKFDBEfBgmm0z0ihv0HjSSno3vFpnFtInHjukfDeWcWRfYkmMAkW928k=
+X-Received: by 2002:a9d:20a1:0:b0:5e8:d2b6:f63f with SMTP id
+ x30-20020a9d20a1000000b005e8d2b6f63fmr1451061ota.159.1649964961126; Thu, 14
+ Apr 2022 12:36:01 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 14 Apr 2022 12:36:00 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v7 0/4] Add support for the eDP panel over aux_bus
-Content-Language: en-GB
-To:     Doug Anderson <dianders@chromium.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        quic_kalyant <quic_kalyant@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        quic_vproddut <quic_vproddut@quicinc.com>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        Steev Klimaszewski <steev@kali.org>
-References: <1649938766-6768-1-git-send-email-quic_sbillaka@quicinc.com>
- <CAD=FV=Ui6BAsnTaJ2_TMh1Tnjtaw7FR92aWoUysS+UT=c0qB3Q@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAD=FV=Ui6BAsnTaJ2_TMh1Tnjtaw7FR92aWoUysS+UT=c0qB3Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <0d8a0716-c8b8-a4f6-3e9a-924245dd97fc@quicinc.com>
+References: <1649280493-4393-1-git-send-email-quic_khsieh@quicinc.com>
+ <CAE-0n511nbPrRCMx3E2De-htmR79vZr4ezSj13Gm1PbTGasC4A@mail.gmail.com> <0d8a0716-c8b8-a4f6-3e9a-924245dd97fc@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Thu, 14 Apr 2022 12:36:00 -0700
+Message-ID: <CAE-0n53UZf1sOjegMOSC_m-DiGtDxC-m=w1=9ZbW++J8zK9Omw@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/dp: enhance both connect and disconnect
+ pending_timeout handle
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
+        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
+        dmitry.baryshkov@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -91,48 +73,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/04/2022 19:40, Doug Anderson wrote:
-> Hi,
-> 
-> On Thu, Apr 14, 2022 at 5:19 AM Sankeerth Billakanti
-> <quic_sbillaka@quicinc.com> wrote:
->>
->> This series adds support for generic eDP panel over aux_bus.
->>
->> These changes are dependent on the following series:
->> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=613654&state=*
-> 
-> You're basically depending on the last two patches of that series.
-> What's the plan there? In patchwork they're marked as "Not
-> Applicable". If they're good to go, maybe we should land them? If not,
-> maybe you should include them (with Dmitry as the author, of course)
-> at the beginning of your series?
+Quoting Kuogee Hsieh (2022-04-14 09:34:55)
+>
+> On 4/13/2022 5:02 PM, Stephen Boyd wrote:
+> > The subject is still misleading. It is fixing something. It may be
+> > enhancing it as well but it is clearly fixing it first.
+> >
+[...]
+> > I'd prefer this part to be a different patch. It can come after the fix
+> > to ease backporting.
+> >
+> > Also, is there any response to Dmitry's question yet? I haven't seen
+> > anything.
+>
+> Sorry, since our internal review does not like this approach.
 
-No, please do not resend patches. The patches in question are marked as 
-'Not applicable' as they are really not applicable to Bjorn's tree.
-It would be better to point to the correct patchwork:
-
-https://patchwork.freedesktop.org/series/98585/
-
-Note those patches still lack the R-B tag. I can include them anyway, 
-basing on Sankeerth's Tested-by tag, but the formal R-B would also be good.
-
-
-> 
-> 
->> Sankeerth Billakanti (4):
->>    drm/msm/dp: Add eDP support via aux_bus
->>    drm/msm/dp: Support only IRQ_HPD and REPLUG interrupts for eDP
->>    drm/msm/dp: wait for hpd high before aux transaction
->>    Support the eDP modes given by panel
-> 
-> One of these things is not like the others. One of these things just
-> doesn't belong. Can you spot which patch is missing the prefix by
-> looking at the subject line of all 4 patches? ;-)
-
-:-)
-
-
--- 
-With best wishes
-Dmitry
+The internal review shouldn't prevent you from responding to code review
+on the mailing list.
