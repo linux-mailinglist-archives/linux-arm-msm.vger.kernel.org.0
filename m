@@ -2,69 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A66F4501D75
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 23:30:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6B13501D79
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 23:31:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344205AbiDNVdF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 17:33:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51624 "EHLO
+        id S1346102AbiDNVeS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 17:34:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229943AbiDNVdE (ORCPT
+        with ESMTP id S1345625AbiDNVeR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 17:33:04 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 809ED765B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 14:30:38 -0700 (PDT)
+        Thu, 14 Apr 2022 17:34:17 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 959042E682
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 14:31:51 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id c12so5750112plr.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 14:31:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649971839; x=1681507839;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=DV+cZXGND3WDBmk0sP4DWMDXkIiqAfRdh+1pfcSwE8U=;
-  b=CZgqJhq38xf/pr6ZMKBusd9n4fJKVhegvrWGxmm9h/2hd2HmeMwd9MmI
-   qGpJ7FQSMX5/fUyM3eGdPabAGxqUEODfogoEd7qwyZ1p3ZiShvZ4LzBRe
-   MCfOXSKmtV1JuKE5D6I6pwsYis2qtoJtNQu9HiYfFJ5qEoOm6A+AO3PIk
-   4=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 14 Apr 2022 14:30:38 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2022 14:30:38 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 14 Apr 2022 14:30:17 -0700
-Received: from [10.111.169.145] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 14 Apr
- 2022 14:30:14 -0700
-Message-ID: <1e318f0a-9468-29bb-999a-0032614c81f3@quicinc.com>
-Date:   Thu, 14 Apr 2022 14:30:13 -0700
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tgK86hMG//HjfRr9J5TwzgXURgYX1s8RvV8/jTvjJYw=;
+        b=YN3OVTQL8wtJWgsUgLD1/s3/NtlwJPIYw5qezMLHAXOyRjBYCcewUPYCgLhO7alpbP
+         AOtcg8+0Pqksl8l8ezIrKM8G6UyaJ/Aogz8EYeSOZbX1sfQIDaCnCPLInwX9+F0OnXS3
+         A3Mn7KodlK3jPPdJon2blcRiw7xfl9E86Lczx5dvlod2ueoHLUSi0UzVGLrI/F6KKGBt
+         buoC8oui8cD86jyJQJvI1EjnqZPMwxsgNCo88hYFptVqUEZJNozyaMPhfHQCggK4K67g
+         lXUit/i3AOyy/UvGb6GWNo/nTqxBahLOPr7bLeT3YbLLiM32D9Q34D1Q7Ax1lFBXGS6v
+         F0PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tgK86hMG//HjfRr9J5TwzgXURgYX1s8RvV8/jTvjJYw=;
+        b=6SHYGNGk2ugGTeXUNpetrnS8mlDcwTAjauorVOyKVyGkRH/fdq7RKceEQgraF1MCZt
+         oPhX7WG0GNOqA/YjVnaKvbOmJ5YtYrBxvfpgd0UzMp2P5IUEYo6o4CfN+Q6VSUje9hAr
+         wzaW6ooMlX/BmHZwLctAYTq6jZi47dC2Rhsg25Wf4K5uhTqfVbkaR01HEUtiloFlDwjL
+         pZ/ZycX8BsxjXsIF1QTN+9CjWF7IhZADVqd+rzIGGb28CsiNrWrgpHJUX4qaJ57L9FUT
+         ZuLNwLYo20ue8l2H/Q2Sc7Wnw9CqxaAF1zLnAdzpFG5IN7SEQnnv8FGxOrGBqRZfzkC9
+         1hug==
+X-Gm-Message-State: AOAM531zxEgf1hIygOVKRVXOuaC8ff8vr4FSsayEeqYyxiZfNJltuT96
+        kFG/PRCTgKOVx0JoWOf9whiH0v17jx9v3w==
+X-Google-Smtp-Source: ABdhPJxJlElCuqPlYrpiKX7K8Z+B9LpesYf90WrnsrpSabzgcIMmc2ZEW/cyieCHqlD4vlTe0A7+Dw==
+X-Received: by 2002:a17:90a:e7cf:b0:1cd:3eb9:ce79 with SMTP id kb15-20020a17090ae7cf00b001cd3eb9ce79mr589946pjb.88.1649971910824;
+        Thu, 14 Apr 2022 14:31:50 -0700 (PDT)
+Received: from localhost.localdomain ([223.233.64.97])
+        by smtp.gmail.com with ESMTPSA id 5-20020a631045000000b0039d942d18f0sm2673706pgq.48.2022.04.14.14.31.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Apr 2022 14:31:50 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh+dt@kernel.org,
+        bjorn.andersson@linaro.org, Rob Herring <robh@kernel.org>
+Subject: [PATCH v2 0/2] arm64: dts/qcom: Enable uSD card support for SA8155p-ADP board
+Date:   Fri, 15 Apr 2022 03:01:37 +0530
+Message-Id: <20220414213139.476240-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 03/12] drm/msm/dpu: add writeback blocks to DPU RM
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <dri-devel@lists.freedesktop.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <nganji@codeaurora.org>,
-        <aravindh@codeaurora.org>, <daniel@ffwll.ch>,
-        <markyacoub@chromium.org>, <quic_jesszhan@quicinc.com>
-References: <1644009445-17320-1-git-send-email-quic_abhinavk@quicinc.com>
- <1644009445-17320-4-git-send-email-quic_abhinavk@quicinc.com>
- <64ced3f1-5656-d5e1-28bf-eb84cfae8021@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <64ced3f1-5656-d5e1-28bf-eb84cfae8021@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,227 +70,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Changes since v1:
+-----------------
+- v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20220403144151.92572-1-bhupesh.sharma@linaro.org/
+- Fixed the IOMMU sid value, to ensure that no ADMA error is observed
+  when the microSD card is detected on the board.
 
+This patchset enables the microSD card support for SA8155p-ADP board
+via the SDHC2 controller found on the SoC.
 
-On 2/4/2022 3:43 PM, Dmitry Baryshkov wrote:
-> On 05/02/2022 00:17, Abhinav Kumar wrote:
->> Add writeback blocks to DPU resource manager so that
->> writeback encoders can request for writeback hardware blocks
->> through RM and their usage can be tracked.
->>
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> 
-> [please excuse me for the duplicate, I've sent the email without the 
-> proper distribution list]
-> 
-> We have WB blocks being allocated manually. Could you please consider 
-> following the ideas from 
-> https://patchwork.freedesktop.org/patch/470394/?series=99175&rev=1 ?
-> 
-> I think it simplifies the code and shows exact correspondence between WB 
-> and dpu_encoder.
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Rob Herring <robh@kernel.org>
 
-Yes, will rebase on the latest msm-next which i think already has this 
-change and refactor this.
+Bhupesh Sharma (2):
+  arm64: dts: qcom: sm8150: Add support for SDC2
+  arm64: dts: qcom: sa8155p-adp: Add support for uSD card
 
-> 
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  3 ++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  2 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 71 
->> +++++++++++++++++++++++++++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  2 +
->>   4 files changed, 78 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> index e241914..cc10436 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->> @@ -1,5 +1,6 @@
->>   /* SPDX-License-Identifier: GPL-2.0-only */
->>   /*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->>    * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>    * Copyright (C) 2013 Red Hat
->>    * Author: Rob Clark <robdclark@gmail.com>
->> @@ -21,9 +22,11 @@
->>   /**
->>    * Encoder functions and data types
->>    * @intfs:    Interfaces this encoder is using, INTF_MODE_NONE if 
->> unused
->> + * @wbs:    Writeback blocks this encoder is using
->>    */
->>   struct dpu_encoder_hw_resources {
->>       enum dpu_intf_mode intfs[INTF_MAX];
->> +    enum dpu_intf_mode wbs[WB_MAX];
->>   };
->>   /**
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> index 2d385b4..1e00804 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> @@ -1,5 +1,6 @@
->>   /* SPDX-License-Identifier: GPL-2.0-only */
->>   /*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->>    * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>    * Copyright (C) 2013 Red Hat
->>    * Author: Rob Clark <robdclark@gmail.com>
->> @@ -146,6 +147,7 @@ struct dpu_global_state {
->>       uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
->>       uint32_t intf_to_enc_id[INTF_MAX - INTF_0];
->>       uint32_t dspp_to_enc_id[DSPP_MAX - DSPP_0];
->> +    uint32_t wb_to_enc_id[WB_MAX - WB_0];
->>   };
->>   struct dpu_global_state
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->> index f9c83d6..edd0b7a 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->> @@ -1,5 +1,6 @@
->>   // SPDX-License-Identifier: GPL-2.0-only
->>   /*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->>    * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
->>    */
->> @@ -9,6 +10,7 @@
->>   #include "dpu_hw_ctl.h"
->>   #include "dpu_hw_pingpong.h"
->>   #include "dpu_hw_intf.h"
->> +#include "dpu_hw_wb.h"
->>   #include "dpu_hw_dspp.h"
->>   #include "dpu_hw_merge3d.h"
->>   #include "dpu_encoder.h"
->> @@ -75,6 +77,14 @@ int dpu_rm_destroy(struct dpu_rm *rm)
->>               dpu_hw_intf_destroy(hw);
->>           }
->>       }
->> +    for (i = 0; i < ARRAY_SIZE(rm->wb_blks); i++) {
->> +        struct dpu_hw_wb *hw;
->> +
->> +        if (rm->wb_blks[i]) {
->> +            hw = to_dpu_hw_wb(rm->wb_blks[i]);
->> +            dpu_hw_wb_destroy(hw);
->> +        }
->> +    }
->>       return 0;
->>   }
->> @@ -187,6 +197,24 @@ int dpu_rm_init(struct dpu_rm *rm,
->>           rm->intf_blks[intf->id - INTF_0] = &hw->base;
->>       }
->> +    for (i = 0; i < cat->wb_count; i++) {
->> +        struct dpu_hw_wb *hw;
->> +        const struct dpu_wb_cfg *wb = &cat->wb[i];
->> +
->> +        if (wb->id < WB_0 || wb->id >= WB_MAX) {
->> +            DPU_ERROR("skip intf %d with invalid id\n", wb->id);
->> +            continue;
->> +        }
->> +
->> +        hw = dpu_hw_wb_init(wb->id, mmio, cat);
->> +        if (IS_ERR_OR_NULL(hw)) {
->> +            rc = PTR_ERR(hw);
->> +            DPU_ERROR("failed wb object creation: err %d\n", rc);
->> +            goto fail;
->> +        }
->> +        rm->wb_blks[wb->id - WB_0] = &hw->base;
->> +    }
->> +
->>       for (i = 0; i < cat->ctl_count; i++) {
->>           struct dpu_hw_ctl *hw;
->>           const struct dpu_ctl_cfg *ctl = &cat->ctl[i];
->> @@ -479,6 +507,33 @@ static int _dpu_rm_reserve_intf(
->>       return 0;
->>   }
->> +static int _dpu_rm_reserve_wb(
->> +        struct dpu_rm *rm,
->> +        struct dpu_global_state *global_state,
->> +        uint32_t enc_id,
->> +        uint32_t id)
->> +{
->> +    int idx = id - WB_0;
->> +
->> +    if (idx < 0 || idx >= ARRAY_SIZE(rm->wb_blks)) {
->> +        DPU_ERROR("invalid intf id: %d", id);
->> +        return -EINVAL;
->> +    }
->> +
->> +    if (!rm->wb_blks[idx]) {
->> +        DPU_ERROR("couldn't find wb id %d\n", id);
->> +        return -EINVAL;
->> +    }
->> +
->> +    if (reserved_by_other(global_state->wb_to_enc_id, idx, enc_id)) {
->> +        DPU_ERROR("intf id %d already reserved\n", id);
->> +        return -ENAVAIL;
->> +    }
->> +
->> +    global_state->wb_to_enc_id[idx] = enc_id;
->> +    return 0;
->> +}
->> +
->>   static int _dpu_rm_reserve_intf_related_hw(
->>           struct dpu_rm *rm,
->>           struct dpu_global_state *global_state,
->> @@ -497,6 +552,15 @@ static int _dpu_rm_reserve_intf_related_hw(
->>               return ret;
->>       }
->> +    for (i = 0; i < ARRAY_SIZE(hw_res->wbs); i++) {
->> +        if (hw_res->wbs[i] == INTF_MODE_NONE)
->> +            continue;
->> +        id = i + WB_0;
->> +        ret = _dpu_rm_reserve_wb(rm, global_state, enc_id, id);
->> +        if (ret)
->> +            return ret;
->> +    }
->> +
->>       return ret;
->>   }
->> @@ -567,6 +631,8 @@ void dpu_rm_release(struct dpu_global_state 
->> *global_state,
->>           ARRAY_SIZE(global_state->ctl_to_enc_id), enc->base.id);
->>       _dpu_rm_clear_mapping(global_state->intf_to_enc_id,
->>           ARRAY_SIZE(global_state->intf_to_enc_id), enc->base.id);
->> +    _dpu_rm_clear_mapping(global_state->wb_to_enc_id,
->> +        ARRAY_SIZE(global_state->wb_to_enc_id), enc->base.id);
->>   }
->>   int dpu_rm_reserve(
->> @@ -635,6 +701,11 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
->>           hw_to_enc_id = global_state->intf_to_enc_id;
->>           max_blks = ARRAY_SIZE(rm->intf_blks);
->>           break;
->> +    case DPU_HW_BLK_WB:
->> +        hw_blks = rm->wb_blks;
->> +        hw_to_enc_id = global_state->wb_to_enc_id;
->> +        max_blks = ARRAY_SIZE(rm->wb_blks);
->> +        break;
->>       case DPU_HW_BLK_DSPP:
->>           hw_blks = rm->dspp_blks;
->>           hw_to_enc_id = global_state->dspp_to_enc_id;
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
->> index 1f12c8d..a021409 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
->> @@ -1,5 +1,6 @@
->>   /* SPDX-License-Identifier: GPL-2.0-only */
->>   /*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->>    * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
->>    */
->> @@ -30,6 +31,7 @@ struct dpu_rm {
->>       struct dpu_hw_blk *intf_blks[INTF_MAX - INTF_0];
->>       struct dpu_hw_blk *dspp_blks[DSPP_MAX - DSPP_0];
->>       struct dpu_hw_blk *merge_3d_blks[MERGE_3D_MAX - MERGE_3D_0];
->> +    struct dpu_hw_blk *wb_blks[WB_MAX - WB_0];
->>       uint32_t lm_max_width;
->>   };
-> 
-> 
+ arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 68 ++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi     | 45 ++++++++++++++++
+ 2 files changed, 113 insertions(+)
+
+-- 
+2.35.1
+
