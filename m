@@ -2,70 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0ACFA501C05
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 21:36:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 966FB501C13
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 21:42:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343922AbiDNTi3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 15:38:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58714 "EHLO
+        id S1345713AbiDNTnA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 15:43:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245647AbiDNTi2 (ORCPT
+        with ESMTP id S1345889AbiDNTm4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 15:38:28 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5358EBB8D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 12:36:01 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id g16-20020a9d6b10000000b00601ded2a06fso1011987otp.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 12:36:01 -0700 (PDT)
+        Thu, 14 Apr 2022 15:42:56 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A9BC4A3F6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 12:40:31 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id g17-20020a9d6191000000b005e8d8583c36so4085532otk.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 12:40:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=vrx4+YHpwTNJHX0W7SZLGfsxXelpnrIdbXIV1qMsRYA=;
-        b=FNCvhrKZ1koxe+nJvUVWxBru/9GyuOY9b8E8r0hf3n6ON6kfTimDW8le8lByjEtFtf
-         +iSMxE37vrLmZovEZthCxMCxydpaBLkCjsaL7Gg9n5h4kHGhvCdV5f90FAXSNkJztpKL
-         hY2D9Ka5RScPq6D3NXh9Y6FzeYd3l7H1w8mKY=
+        bh=IZs+lSCZqoVK/AKlAjq1EPKE7N59AQDgaVEofEcz/4k=;
+        b=ETgEm9IDuhcJCpRZjCKvwitdHctDrYi29lxjTbWawEHjmBCyLjRt4MYCErwWxyIiIU
+         9oGWk2XpMi1dM7n5ZXoIhJ0xbZW+2UzdP/epWdGbxtw72AUKBsEqN300BmeuFGb6JktJ
+         WiZk4JZpzp/44sQgTfDviIGsknHKZQ6/7y4R4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=vrx4+YHpwTNJHX0W7SZLGfsxXelpnrIdbXIV1qMsRYA=;
-        b=fWSktRzJ0Yho4KZDlNwWqkukmSp7at3kSfJhOI3AFL14u4PK8fV5YzO/Zk0t/e9WiA
-         qKYRw1VXmwZj58PHRBLPmAGbxGj8AQvE0fhJyQi7tvd5e41mOIu6H17Zd+dNFxui4Br2
-         Zk2KI8jJM4KheL8ENbY/vnPaVJvtoxQ5/r7uRXSFwIuO5MV5fYZSItuXtJXUqVPUYGgp
-         SG0dwarD5iMORYv2vTLJLzf8/rA4RoBdfQuqFmEWu1SKBRGJPfv5ptDIoNQtoDOALDTu
-         cI3S7zeW5bzwgnaqPIg+QxsKOpmh/+cV//1l7560EfP1K++0wT6T9QzTBGuLY3qRGK3I
-         klCg==
-X-Gm-Message-State: AOAM532FGBMkCMbjXhIEaQtg5nUOCIvVO/OutwKigeAFgbR+P49kcAXI
-        HcZmf0lxnm++xTI6ue8uc+t83kpV8igAqYqCrFbg9g==
-X-Google-Smtp-Source: ABdhPJzt7HXp3rGjm2KOxE4dqJ4CxfML+6PKKFDBEfBgmm0z0ihv0HjSSno3vFpnFtInHjukfDeWcWRfYkmMAkW928k=
+        bh=IZs+lSCZqoVK/AKlAjq1EPKE7N59AQDgaVEofEcz/4k=;
+        b=fXiQc44qTMbHRXvucIE1PAvdOuXILRqx0m12PhwrYJUrEDn/QyGNz+be57Vitl7Pw7
+         q0DyjeZr3G7t3A8B++K8tfqKGeaJ3yEMu2wQoH5dhD6gHvkKgIGTeDR+eGUUsLNC4Ep2
+         +1ed64bNfM5TWvX0uiC2GY2jCywlFfXkLNHywUnZKA+dvTmhBqKNUOIsx58n41f+Ujh6
+         LnRLkNAGgQNIfUbwf1tvlje3eSD/pNJlCUCyG4EBnLcxwAh30xTEy41a3vADywD8K/aJ
+         9RrQ7J8s2oEvugvXgBPkGx8g1VcXCrA2Oxv8MgJqkDYy/17igZUaC8c8SUJbwh9IV7JF
+         sH1w==
+X-Gm-Message-State: AOAM532DYhhtquI/Gdr2xgQXOYbTlEVQDSrUBL7Gja4FNUqhicki8xlE
+        X9Y22+xGblIDxum4+amvCGM5qxws164QVu0tsKWXtA==
+X-Google-Smtp-Source: ABdhPJzlgZCJ3S0otpiIbEsDjjXXeYSCOZF8aExMi2XEL/qGTFsnoTp0g7uybuwoqYnKkMyfeBWPcXWlvFAuimKyVBc=
 X-Received: by 2002:a9d:20a1:0:b0:5e8:d2b6:f63f with SMTP id
- x30-20020a9d20a1000000b005e8d2b6f63fmr1451061ota.159.1649964961126; Thu, 14
- Apr 2022 12:36:01 -0700 (PDT)
+ x30-20020a9d20a1000000b005e8d2b6f63fmr1455625ota.159.1649965230478; Thu, 14
+ Apr 2022 12:40:30 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 14 Apr 2022 12:36:00 -0700
+ HTTPREST; Thu, 14 Apr 2022 12:40:29 -0700
 MIME-Version: 1.0
-In-Reply-To: <0d8a0716-c8b8-a4f6-3e9a-924245dd97fc@quicinc.com>
-References: <1649280493-4393-1-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n511nbPrRCMx3E2De-htmR79vZr4ezSj13Gm1PbTGasC4A@mail.gmail.com> <0d8a0716-c8b8-a4f6-3e9a-924245dd97fc@quicinc.com>
+In-Reply-To: <81c3a9fb-4c92-6969-c715-ca085322f9c6@linaro.org>
+References: <1649938766-6768-1-git-send-email-quic_sbillaka@quicinc.com>
+ <1649938766-6768-2-git-send-email-quic_sbillaka@quicinc.com>
+ <CAD=FV=Wmiv2WGhFCLYmXbWESNOh5FfobjNme85aU6YtN1SLVDA@mail.gmail.com> <81c3a9fb-4c92-6969-c715-ca085322f9c6@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Thu, 14 Apr 2022 12:36:00 -0700
-Message-ID: <CAE-0n53UZf1sOjegMOSC_m-DiGtDxC-m=w1=9ZbW++J8zK9Omw@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/dp: enhance both connect and disconnect
- pending_timeout handle
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, robdclark@gmail.com, sean@poorly.run,
-        vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+Date:   Thu, 14 Apr 2022 12:40:29 -0700
+Message-ID: <CAE-0n50obe_aqzwQY-X1yH4emjjOErOJ_wj9sQe=HoWEZ3vjTw@mail.gmail.com>
+Subject: Re: [PATCH v7 1/4] drm/msm/dp: Add eDP support via aux_bus
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>, devicetree@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        quic_kalyant <quic_kalyant@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        quic_vproddut <quic_vproddut@quicinc.com>,
+        Aravind Venkateswaran <quic_aravindh@quicinc.com>,
+        Steev Klimaszewski <steev@kali.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,20 +83,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-04-14 09:34:55)
+Quoting Dmitry Baryshkov (2022-04-14 12:16:14)
 >
-> On 4/13/2022 5:02 PM, Stephen Boyd wrote:
-> > The subject is still misleading. It is fixing something. It may be
-> > enhancing it as well but it is clearly fixing it first.
-> >
-[...]
-> > I'd prefer this part to be a different patch. It can come after the fix
-> > to ease backporting.
-> >
-> > Also, is there any response to Dmitry's question yet? I haven't seen
-> > anything.
+> I think it's too verbose and a bit incorrect.
+> This is a bit saner:
+> /*
+>   * These ops do not make sense for eDP, since they are provided
+>   * by the panel-bridge corresponding to the attached eDP panel.
+>   */
 >
-> Sorry, since our internal review does not like this approach.
+> My question was whether we really need to disable them for eDP since for
+> eDP the detect and and get_modes will be overridden anyway.
 
-The internal review shouldn't prevent you from responding to code review
-on the mailing list.
+And to go further, I'd expect that a bridge should expose the
+functionality that it supports, regardless of what is connected down the
+chain. Otherwise we won't be able to mix and match bridges because the
+code is brittle, making assumptions about what is connected.
