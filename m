@@ -2,77 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67F5E501A15
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 19:37:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 265BF501B28
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 20:36:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241377AbiDNRjZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 13:39:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59458 "EHLO
+        id S1344688AbiDNSiT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 14:38:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231521AbiDNRjY (ORCPT
+        with ESMTP id S1344679AbiDNSiR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 13:39:24 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC2F8DE905
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 10:36:57 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id s25so6802468edi.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 10:36:57 -0700 (PDT)
+        Thu, 14 Apr 2022 14:38:17 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37DA7D3AED
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 11:35:52 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id c15so7120781ljr.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 11:35:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=a6LSgL+JLYAGp+l4yu2Nh28fCa+u8RFJE0TZw9Q53wk=;
-        b=G/Eg3nOk8HCQBnHwrmCrnvNukQ4tgDIdrs+WKLqgpcaN5KWFZ6WMG9a8AKDRCCiTiE
-         hewSUK1FQR5+TTha+likMiMzDv8u/xGc6E2LqSvKUpCnwtH5uANmfEjtzw44+29Ow2Ji
-         Z3o9c5cVrMAov8BEnyodAN3o6+5o9wmuMxCNQ=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ub6If+332buCinL/3BXFdLheY3JvRpim3Rm/PFZigx8=;
+        b=VW0aRD7T+wcgoxrACJ+GbC5nEhZz3dZ7wQQS9PmN3Yp3GTV6Jk4ywSz15b+DZBMoQb
+         wMzZ1VCWy91Ms7DQr4LkBc2a+7wil12P0S0jXGGGLcSW4d0uS+sOrz1FZ8FFtLchnu0y
+         UEf1kqhXcfjYqj/buCV535ziHLyFkIEbJT+SYJeA5bZ69QGJMAYQ4SO0fCj/TyxJ9bCu
+         Dtu/MBUfpOjbqseGSIww986b2BrQC95y5la7c06t3yD1N+a18s7s3ueSYrakxZCkQSWT
+         I47aMFIM23p0MECgsnCvo6iKhCjXMWw0tf4aghtgqfS/q/vu3zlBNsmXdvZWwnwcd3+u
+         U9Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a6LSgL+JLYAGp+l4yu2Nh28fCa+u8RFJE0TZw9Q53wk=;
-        b=lWoHZoO4xA/49fXlvEDhNp2j0N6L2dghK3kCSb3SOwXHcf9v8AbBfQqr1jTA6BLxC0
-         ryPt1HjNAqcwFn6Ho59p1S0lbaTmLZfYYzuX/uMVaM70oJNwm8LoLWFqoMnNgDfBZSvi
-         t9341A1y7tVwIA9MzJSKAeJ721K4mOE2q7mqcKqHd3MPFpF2UeXjG4h6gtsisLpHmMIm
-         ZtVt1s6EB306gyczIIWwsHFauCcTwg15SdSQKVmn0OA9Lh4iOaP2cINuJu4fS2Fo8LVH
-         x/k8BWYKICbSn3g8t+wtv3Sd8c0PArOy68Oz4wzOjAQRCPryJfskdRo6JT6SzGpHjA0M
-         df6A==
-X-Gm-Message-State: AOAM53121x4SHJskvFeNo3SFppBzEjHWrwdq7Od5tXORlM4yDbuXNtf6
-        CPYEdqpC2luZqp93QkPPKyO40puYRrcGacnP3C4=
-X-Google-Smtp-Source: ABdhPJz/j6FflGX8T3e/SPmkCkXnKOpdPGEsZvW9kzB9/ZHq6mxhKjZAHpybFuXdf+q6JMSfbK6q6g==
-X-Received: by 2002:a05:6402:354b:b0:419:4af8:c5c9 with SMTP id f11-20020a056402354b00b004194af8c5c9mr4283435edd.91.1649957815926;
-        Thu, 14 Apr 2022 10:36:55 -0700 (PDT)
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com. [209.85.221.52])
-        by smtp.gmail.com with ESMTPSA id q9-20020a170906770900b006d20acf7e2bsm817849ejm.200.2022.04.14.10.36.54
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ub6If+332buCinL/3BXFdLheY3JvRpim3Rm/PFZigx8=;
+        b=n9nPLILDR2+Kp8hseisbPreRZOKW419x5t7L0ro1115MIC1DhPhRShhPaVPDLyQH2O
+         rxN9T7KxOzNwKGiMM4YQBHBYcFaAjlwnVGhAY2P61LLNfdY+dJLpzWvAZxsGKXFXCtni
+         ODfWBnQR+rZUEMs+jvSWimQi1ITmTudh3Lm/Vcbr+5GmaMxZVz0CcYduj/Jy/FdEujD6
+         atIc/luPTmWjJX+VN+NE+cBHcxAboCF6tz50OPCjKH8ZyAqbDjPTaMO7H3ETIlXib+1t
+         PYj+z5LiFJt1Tk/ZlEDLrPx5CV/053mSunH2lc4XGKcy75TehQ4rsViFFeVtRUncpvng
+         jeTA==
+X-Gm-Message-State: AOAM530onMZPND/z88p8xrMD2bizKVFwJ57lXTH6/noHkdJevBhd+SDh
+        rfmuysgbveNDlwzKk4deef+Snw==
+X-Google-Smtp-Source: ABdhPJwnBrxe1rilJp4LSDGlMmGx8LSGayKb/qSUyY7bJqK7KoNxlLsSnCtEArQ2G1HSu4DTCDZzNQ==
+X-Received: by 2002:a2e:141e:0:b0:24b:6256:3898 with SMTP id u30-20020a2e141e000000b0024b62563898mr2265515ljd.436.1649961350505;
+        Thu, 14 Apr 2022 11:35:50 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id s1-20020ac24641000000b0046d10a0bba2sm71865lfo.176.2022.04.14.11.35.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Apr 2022 10:36:54 -0700 (PDT)
-Received: by mail-wr1-f52.google.com with SMTP id t1so7906982wra.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 10:36:54 -0700 (PDT)
-X-Received: by 2002:a05:6000:1c15:b0:207:849a:648b with SMTP id
- ba21-20020a0560001c1500b00207849a648bmr2776001wrb.513.1649957814133; Thu, 14
- Apr 2022 10:36:54 -0700 (PDT)
+        Thu, 14 Apr 2022 11:35:50 -0700 (PDT)
+Message-ID: <27e4cc57-bdfe-42b6-d3eb-0d447ab6c6ca@linaro.org>
+Date:   Thu, 14 Apr 2022 21:35:49 +0300
 MIME-Version: 1.0
-References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
- <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org> <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
- <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org>
-In-Reply-To: <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 14 Apr 2022 10:36:41 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
-Message-ID: <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
-Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: delete incorrect ufs
+ interconnect fields
+Content-Language: en-GB
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20220407172145.31903-1-jonathan@marek.ca>
+ <YlXmTbKwYtvLSjgp@builder.lan>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YlXmTbKwYtvLSjgp@builder.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,109 +82,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 12/04/2022 23:51, Bjorn Andersson wrote:
+> On Thu 07 Apr 12:21 CDT 2022, Jonathan Marek wrote:
+> 
+>> Upstream sm8450.dtsi has #interconnect-cells = <2>; so these are wrong.
+>> Ignored and undocumented with upstream UFS driver so delete for now.
+>>
+> 
+> Just to clarify, the binding do document interconnects and the property
+> should be there in the end. v1 (why isn't this marked v2?) was correct.
+> 
+> What I asked for was a statement on why it should be picked up for
+> v5.18-rc (as Dmitry requested).
 
-On Thu, Apr 14, 2022 at 12:10 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 13/04/2022 23:48, Doug Anderson wrote:
-> > I'm actually kinda curious: is there really a good reason for this? I
-> > know I haven't been adding things to
-> > `Documentation/devicetree/bindings/arm/qcom.yaml` for Qualcomm
-> > Chromebooks.  Ironically, it turns out that the script I typically use
-> > to invoke checkpatch happens to have "--no-tree" as an argument and
-> > that seems to disable this check. Doh!
-> >
-> > That being said, though, I do wonder a little bit about the value of
-> > enumerating the top-level compatible like this in a yaml file.
-> > Certainly the yaml schema validation in general can be quite useful,
-> > but this top-level listing seems pure overhead. I guess it makes some
-> > tools happy, but other than that it seems to provide very little
-> > value...
->
-> If compatible is not part of ABI, it is allowed to change in whatever
-> shape one wishes. In such case, how can anyone (e.g. user-space)
-> identify the board? Model name? Also not part of ABI (not documented)...
+I have a slight preference for fixing the icc rather than dropping it.
 
-Hmm, it is a good question. I guess one issue is that the way
-Chromebooks interact with the bootloader it's not trivially easy to
-enumerate what exactly the compatible will be in this hardcoded list.
-It all has to do with the whole "revision" and "sku" scheme the
-bootloader on ARM Chromebooks uses. For example, on one Chromebook I
-have the bootloader prints out:
+However I'm fine with either of the patches.
 
-Compat preference: google,lazor-rev5-sku6 google,lazor-rev5
-google,lazor-sku6 google,lazor
+The ufs/qcom,ufs.yaml describes these interconnects (basing on the 
+sm8450 if I understand correctly). Thus if decide to drop interconnect 
+properties, we should also update the binding.
 
-What that means is that:
 
-1. The bootloader will first look for 'google,lazor-rev5-sku6'. If it
-finds a dts with that compatible it will pick it.
+> 
+> Regards,
+> Bjorn
+> 
+>> Fixes: aa2d0bf04a3c ("arm64: dts: qcom: sm8450: add interconnect nodes")
+>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 3 ---
+>>   1 file changed, 3 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> index 2c18e1ef9e82d..90cdbec3cac99 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> @@ -1663,9 +1663,6 @@ ufs_mem_hc: ufshc@1d84000 {
+>>   
+>>   			iommus = <&apps_smmu 0xe0 0x0>;
+>>   
+>> -			interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
+>> -					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
+>> -			interconnect-names = "ufs-ddr", "cpu-ufs";
+>>   			clock-names =
+>>   				"core_clk",
+>>   				"bus_aggr_clk",
+>> -- 
+>> 2.26.1
+>>
 
-2. The bootloader will then look for 'google,lazor-rev5'. If it finds
-a dts with that compatible it will pick it.
 
-3. The bootloader will then look for 'google,lazor-sku6'. If it finds
-a dts with that compatible it will pick it.
-
-4. Finally, the bootloader will look for 'google,lazor'.
-
-There's a method to the madness. Among other things, this allows
-revving the board revision for a change to the board even if it
-_should_ be invisible to software. The rule is always that the
-"newest" device tree that's in Linux is always listed _without_ a
-board revision number. An example might help.
-
-a) Assume '-rev5' is the newest revision available. In Linux this
-would be the only dts that advertises "google,lazor" (with no -rev).
-Previous dts file would advertise "-rev3" or "-rev4" or whatever.
-
-b) We need to spin the board for something that should be invisible to
-software. Just in case, HW guys change the board strappings to -rev6.
-This works _seamlessly_ because the newest dts file always advertises
-just "google,lazor"
-
-c) We spin the board for something that's _not_ invisible. It will be
-"-rev7". Now, we go back and add "-rev5" and "-rev6" to the old board
-dts file and remove the advertisement for "google,lazor". We create a
-new dts file for -rev7 that advertises "google,lazor".
-
-Now we can certainly argue back and forth above the above scheme and
-how it's terrible and/or great, but it definitely works pretty well
-and it's what we've been doing for a while now. Before that we used to
-proactively add a whole bunch of "future" revisions "just in case".
-That was definitely worse and had the same problem that we'd have to
-shuffle compatibles. See, for instance `rk3288-veyron-jerry.dts`.
-
-One thing we _definitely_ don't want to do is to give HW _any_
-incentive to make board spins _without_ changing the revision. HW
-sometimes makes spins without first involving software and if it
-doesn't boot because they updated the board ID then someone in China
-will just put the old ID in and ship it off. That's bad.
-
---
-
-But I guess this doesn't answer your question: how can userspace
-identify what board this is running? I don't have an answer to that,
-but I guess I'd say that the top-level "compatible" isn't really it.
-If nothing else, I think just from the definition it's not guaranteed
-to be right, is it? From the spec: "Specifies a list of platform
-architectures with which this platform is compatible." The key thing
-is "a list". If this can be a list of things then how can you use it
-to uniquely identify what one board you're on? If all of the things
-that are different between two boards are things that are probable
-(eDP panels, USB devices, PCIe devices) then two very different boards
-could have the exact same device tree, right? ...and you could have
-one device tree that lists the compatible of both boards?
-
-That all being said, I think that on Chrome OS the userspace tools
-_do_ some amount of parsing of the compatible strings here. For
-Chromebooks they leverage the fact that they understand the above
-scheme and thus can figure things out. I think they also use things
-like `/proc/device-tree/firmware/coreboot/board-id` and
-`/proc/device-tree/firmware/coreboot/sku-id`. That doesn't seem to be
-documented, though. :(
-
-I guess the question is, though, why do you need to know what board you're on?
-
--Doug
+-- 
+With best wishes
+Dmitry
