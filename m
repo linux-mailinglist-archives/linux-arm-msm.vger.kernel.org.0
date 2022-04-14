@@ -2,55 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 564A25018A7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 18:28:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9D3B50195A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 18:59:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234358AbiDNQPJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 12:15:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40300 "EHLO
+        id S241830AbiDNRBd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 13:01:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347432AbiDNQJ5 (ORCPT
+        with ESMTP id S242227AbiDNRBW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 12:09:57 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52719FA20A;
-        Thu, 14 Apr 2022 08:53:30 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 10C8BB82A61;
-        Thu, 14 Apr 2022 15:53:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98755C385A1;
-        Thu, 14 Apr 2022 15:53:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649951607;
-        bh=vXueds4VuC74iLCMybsPZmL3wsTpJ6AYZXEWJtsFltc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gVlrHrq9iS0fvnwKbYeUOEnnL9wxjnCbN3bSgvsuN9aJYKMx77j/5W27OQZ9xYl/e
-         g7yIjWea4TGP9Rs9l7bSoBH3mf0TcuEQeqTbKbbNZUnGAkGDoKKWuqE0jxNP8hJcRi
-         u3viLk71BcM/9sstR79aHyKX8ng6N77guDgz/wLrVN+bY2+YzZdcsezJ+gatRX72r0
-         kU6le2F7BlDoRbjf6580EeI8KyuaDXGJJn252kb62h5id5pzPy09f+ZIaxrhn5doAe
-         zqcDtY6rEycMwDCi3UXSn7Dl9ApANob09OGNu4YZpqrC3dd6Brgft1X4QgNNw/pVAo
-         6tvGAgnqoFg8A==
-Date:   Thu, 14 Apr 2022 21:23:19 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Miquel Raynal <miquel.raynal@bootlin.com>
-Cc:     Md Sadre Alam <quic_mdalam@quicinc.com>, richard@nod.at,
-        vigneshr@ti.com, linux-mtd@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        konrad.dybcio@somainline.org, quic_srichara@quicinc.com
-Subject: Re: [PATCH V2] mtd: rawnand: qcom: fix memory corruption that causes
- panic
-Message-ID: <20220414155319.GB20493@thinkpad>
-References: <1649950217-32272-1-git-send-email-quic_mdalam@quicinc.com>
- <20220414173642.56baedf5@xps13>
+        Thu, 14 Apr 2022 13:01:22 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 468C8191;
+        Thu, 14 Apr 2022 09:35:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649954123; x=1681490123;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=xSXPlBzZTv6+R+sI6EzS6LbvpQWfbv+dUZziSIPXPjs=;
+  b=dfZix8l3Uf4DmBU3HFK37cz1VOJXK3cJb0MNitgy4MjdJ9i2m0/Tpt9h
+   BNenD7QaJFTd97YkJuI9HF6XdjU30IXI6qj1ekM0FtZpU/04XIW9oBnGL
+   0rPKyMAPNng7v/rC1CVLmdFqQW59Ti15CywqugaidhFUQRti5QAkcg9XV
+   o=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 14 Apr 2022 09:35:23 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2022 09:35:22 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 14 Apr 2022 09:35:21 -0700
+Received: from [10.110.43.239] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 14 Apr
+ 2022 09:35:20 -0700
+Message-ID: <0d8a0716-c8b8-a4f6-3e9a-924245dd97fc@quicinc.com>
+Date:   Thu, 14 Apr 2022 09:34:55 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220414173642.56baedf5@xps13>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2] drm/msm/dp: enhance both connect and disconnect
+ pending_timeout handle
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
+        <daniel@ffwll.ch>, <dmitry.baryshkov@linaro.org>,
+        <robdclark@gmail.com>, <sean@poorly.run>, <vkoul@kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1649280493-4393-1-git-send-email-quic_khsieh@quicinc.com>
+ <CAE-0n511nbPrRCMx3E2De-htmR79vZr4ezSj13Gm1PbTGasC4A@mail.gmail.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAE-0n511nbPrRCMx3E2De-htmR79vZr4ezSj13Gm1PbTGasC4A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -59,68 +73,147 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 14, 2022 at 05:36:42PM +0200, Miquel Raynal wrote:
-> Hi Md,
-> 
-> quic_mdalam@quicinc.com wrote on Thu, 14 Apr 2022 21:00:17 +0530:
-> 
-> > This patch fixes a memory corruption that occurred in the
-> > nand_scan() path for Hynix nand device.
-> > 
-> > On boot, for Hynix nand device will panic at a weird place:
-> > | Unable to handle kernel NULL pointer dereference at virtual
-> >   address 00000070
-> > | [00000070] *pgd=00000000
-> > | Internal error: Oops: 5 [#1] PREEMPT SMP ARM
-> > | Modules linked in:
-> > | CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.17.0-01473-g13ae1769cfb0
-> >   #38
-> > | Hardware name: Generic DT based system
-> > | PC is at nandc_set_reg+0x8/0x1c
-> > | LR is at qcom_nandc_command+0x20c/0x5d0
-> > | pc : [<c088b74c>]    lr : [<c088d9c8>]    psr: 00000113
-> > | sp : c14adc50  ip : c14ee208  fp : c0cc970c
-> > | r10: 000000a3  r9 : 00000000  r8 : 00000040
-> > | r7 : c16f6a00  r6 : 00000090  r5 : 00000004  r4 :c14ee040
-> > | r3 : 00000000  r2 : 0000000b  r1 : 00000000  r0 :c14ee040
-> > | Flags: nzcv  IRQs on  FIQs on  Mode SVC_32  ISA ARM Segment none
-> > | Control: 10c5387d  Table: 8020406a  DAC: 00000051
-> > | Register r0 information: slab kmalloc-2k start c14ee000 pointer offset
-> >   64 size 2048
-> > | Process swapper/0 (pid: 1, stack limit = 0x(ptrval))
-> > | nandc_set_reg from qcom_nandc_command+0x20c/0x5d0
-> > | qcom_nandc_command from nand_readid_op+0x198/0x1e8
-> > | nand_readid_op from hynix_nand_has_valid_jedecid+0x30/0x78
-> > | hynix_nand_has_valid_jedecid from hynix_nand_init+0xb8/0x454
-> > | hynix_nand_init from nand_scan_with_ids+0xa30/0x14a8
-> > | nand_scan_with_ids from qcom_nandc_probe+0x648/0x7b0
-> > | qcom_nandc_probe from platform_probe+0x58/0xac
-> > 
-> > The problem is that the nand_scan()'s qcom_nand_attach_chip callback
-> > is updating the nandc->max_cwperpage from 1 to 4.This causes the
-> > sg_init_table of clear_bam_transaction() in the driver's
-> > qcom_nandc_command() to memset much more than what was initially
-> > allocated by alloc_bam_transaction().
-> > 
-> > This patch will update nandc->max_cwperpage 1 to 4 after nand_scan()
-> > returns, and remove updating nandc->max_cwperpage from
-> > qcom_nand_attach_chip call back.
-> 
-> Please update also the commit log.
-> 
-> Fixes: ?
-> Cc: stable ?
 
-Also please add Reported-by to credit Konrad.
+On 4/13/2022 5:02 PM, Stephen Boyd wrote:
+> The subject is still misleading. It is fixing something. It may be
+> enhancing it as well but it is clearly fixing it first.
+>
+> Quoting Kuogee Hsieh (2022-04-06 14:28:13)
+>> dp_hpd_plug_handle() is responsible for setting up main link and send
+>> uevent to notify user space framework to start video stream. Similarly,
+>> dp_hdp_unplug_handle is responsible to send uevent to notify user space
+>> framework to stop video stream and then tear down main link.
+>> However there are rare cases, such as in the middle of system suspending,
+>> that uevent could not be delivered to user space framework. Therefore
+>> some kind of recover mechanism armed by timer need to be in place in the
+>> case of user space framework does not respond to uevent.
+>>
+>> This patch have both dp_conenct_pending_timeout and
+>> dp_disconnect_pending_timeout are used to stop video stream and tear down
+>> main link and eventually restore DP driver state to known default
+>> DISCONNECTED state in the case of timer fired due to framework does not
+>> respond to uevent so that DP driver can recover itself gracefully at next
+>> dongle unplug followed by plugin event.
+>>
+>> Changes in v2:
+>> -- replace dp_display_usbpd_disconnect_cb with dp_display_notify_disconnect
+> I'd prefer this part to be a different patch. It can come after the fix
+> to ease backporting.
+>
+> Also, is there any response to Dmitry's question yet? I haven't seen
+> anything.
 
-Thanks,
-Mani
+Sorry, since our internal review does not like this approach.
 
-> 
-> > Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> > Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
-> > ---
-> > [V2]
-> 
-> Thanks,
-> Miquèl
+I will upload new patch for review soon.
+
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+>> index 2433edb..ffafe17 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
+>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+>> @@ -22,6 +22,7 @@ struct dp_ctrl {
+>>   int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
+>>   int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
+>>   int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
+>> +int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
+>>   int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
+>>   void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
+>>   void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 178b774..a6200a5 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -451,11 +451,14 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
+>>
+>>   static int dp_display_usbpd_disconnect_cb(struct device *dev)
+> We shouldn't need to keep around an empty function.
+>
+>>   {
+>> +       return 0;
+>> +}
+>> +
+>> +static void dp_display_notify_disconnect(struct device *dev)
+>> +{
+>>          struct dp_display_private *dp = dev_get_dp_display_private(dev);
+>>
+>>          dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+>> -
+>> -       return 0;
+>>   }
+>>
+>>   static void dp_display_handle_video_request(struct dp_display_private *dp)
+>> @@ -593,10 +596,16 @@ static int dp_connect_pending_timeout(struct dp_display_private *dp, u32 data)
+>>
+>>          mutex_lock(&dp->event_mutex);
+>>
+>> +       /*
+>> +        * main link had been setup but video is not ready yet
+>> +        * only tear down main link
+>> +        */
+>>          state = dp->hpd_state;
+>>          if (state == ST_CONNECT_PENDING) {
+>> -               dp->hpd_state = ST_CONNECTED;
+>>                  DRM_DEBUG_DP("type=%d\n", dp->dp_display.connector_type);
+>> +               dp_ctrl_off_link(dp->ctrl);
+>> +               dp_display_host_phy_exit(dp);
+>> +               dp->hpd_state = ST_DISCONNECTED;
+>>          }
+>>
+>>          mutex_unlock(&dp->event_mutex);
+>> @@ -645,6 +654,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+>>                  if (dp->link->sink_count == 0) {
+>>                          dp_display_host_phy_exit(dp);
+>>                  }
+>> +               dp_display_notify_disconnect(&dp->pdev->dev);
+>>                  mutex_unlock(&dp->event_mutex);
+>>                  return 0;
+>>          }
+>> @@ -661,19 +671,22 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+>>                  return 0;
+>>          }
+>>
+>> -       dp->hpd_state = ST_DISCONNECT_PENDING;
+>> -
+>>          /* disable HPD plug interrupts */
+>>          dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
+>>
+>>          /*
+>>           * We don't need separate work for disconnect as
+>>           * connect/attention interrupts are disabled
+>> -        */
+>> -       dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
+>> +       */
+> This comment end is wrong. It should be unchanged.
+>
+>> +       dp_display_notify_disconnect(&dp->pdev->dev);
+>>
+>> -       /* start sentinel checking in case of missing uevent */
+>> -       dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
+>> +       if (state == ST_DISPLAY_OFF) {
+>> +               dp->hpd_state = ST_DISCONNECTED;
+>> +       } else {
+>> +               /* start sentinel checking in case of missing uevent */
+>> +               dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
+>> +               dp->hpd_state = ST_DISCONNECT_PENDING;
+>> +       }
+>>
+>>          /* signal the disconnect event early to ensure proper teardown */
+>>          dp_display_handle_plugged_change(&dp->dp_display, false);
+>> @@ -695,10 +708,16 @@ static int dp_disconnect_pending_timeout(struct dp_display_private *dp, u32 data
+>>
+>>          mutex_lock(&dp->event_mutex);
+>>
+>> +       /*
+>> +        * main link had been set up and video is ready
+>> +        * tear down main link, video stream and phy
+>> +        */
+>>          state =  dp->hpd_state;
+>>          if (state == ST_DISCONNECT_PENDING) {
+>> -               dp->hpd_state = ST_DISCONNECTED;
+>>                  DRM_DEBUG_DP("type=%d\n", dp->dp_display.connector_type);
+>> +               dp_ctrl_off(dp->ctrl);
+>> +               dp_display_host_phy_exit(dp);
+>> +               dp->hpd_state = ST_DISCONNECTED;
+>>          }
+>>
+>>          mutex_unlock(&dp->event_mutex);
