@@ -2,164 +2,368 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E21CB501C96
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 22:22:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE907501D0B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 23:04:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346246AbiDNUXc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 16:23:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36256 "EHLO
+        id S1343813AbiDNVGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 17:06:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346230AbiDNUXb (ORCPT
+        with ESMTP id S1346748AbiDNVGT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 16:23:31 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2988FC4E2E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 13:21:05 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id n17so2513743ljc.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 13:21:05 -0700 (PDT)
+        Thu, 14 Apr 2022 17:06:19 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BC28D8F46;
+        Thu, 14 Apr 2022 14:03:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=W3Tk74L2ir68zakq4v8zlWdg5BrR7HZyOAvpDgySkc4=;
-        b=ABYSQIEkXuWiJt6eDgMBaIhFrF6vy5f62wq+5X9uwXzBujfUD/V+Frqyu4X5V62jSS
-         TXd3MAa0wYWVU/7nqaJE+DHSyQovq/bDUk+COAF1qJp8Om9bT+2iPdrzkVmO6Ad/FfAI
-         kDWkkcR97WyhvBhJTIZZxBIPpqAFGsWM5bn1Sx0tHFPg7VIRmRu68yu7i1Ms3Q2z1aqD
-         XGXuFd3V7EL1qBt/mkun8X3lEX3paECWJ+FVAOcs+BNcohR21jvuLTxNCpALXSQZeWpK
-         qnG8cxwAslWb77Qy1NHvpoCwHnWaqUtXM+1fHb6R4BT0z9OHQdmHHqFW6xDPo/FrACb7
-         Scsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=W3Tk74L2ir68zakq4v8zlWdg5BrR7HZyOAvpDgySkc4=;
-        b=RllaM4LHLLCUN2NYOTfrb2knIrWzPr8jl2V20lYVRUkDUEpu1nBjkgt1H6a+v9vYha
-         4aqIz6B1pS9QxVxgrwwwcF7+YraWg1svTpug72DcbztiMVhrU4Rq7X1/CJjZcOi/hLKd
-         E+fGBWMo1K6Swk8f+n5d+8IXZiv8T0a959L7xcO4R/p+Flbe0bgRGBHltI+GVdftSm5y
-         JGGM0PeFObPGJE+0nskBIX2N6bJbYZguVmEOmbE7ueBIki0aUrtRR8BwKGovJwj92+7P
-         4ixW5ARssTnbxg4X8DNnQLmWGpnj5mbcxtqvZh0d/80u6nnozL3B61ssB3/P8xgtVMp4
-         B8Ww==
-X-Gm-Message-State: AOAM530hTQ9tSZXsbS3RqKj2vMq403dKkUZK3W5950f5j3NfC+m8mVrv
-        1kBg5YVcQfmTjqFS97S+FgEP3eImBDD++g==
-X-Google-Smtp-Source: ABdhPJwq6E9Dm9JeRvDM83qfLCCNL3VKPy7UV1MWmncbBh5UHeTupvI8MtlR29m8KOd7amcA61BLDA==
-X-Received: by 2002:a2e:97d2:0:b0:24b:5802:9ebc with SMTP id m18-20020a2e97d2000000b0024b58029ebcmr2544323ljj.521.1649967663374;
-        Thu, 14 Apr 2022 13:21:03 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id k40-20020a0565123da800b0044aa117f1aasm99577lfv.119.2022.04.14.13.21.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Apr 2022 13:21:03 -0700 (PDT)
-Message-ID: <71582688-d26a-04f0-350b-38a4fcaf86c2@linaro.org>
-Date:   Thu, 14 Apr 2022 23:21:02 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649970234; x=1681506234;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=DOVj14wIPmghHmdwcXtsqpmn1bFSllglRoHEVNyMhK8=;
+  b=nlkzXG2BFxB8/kRSYLIWZ5PBCt3z1p4n1w7ubWDS37/CsXBpGOXq4lXC
+   ZbS6O1ZHhe6nB0BMOQ5Ud531UgeHu3Ff1W7m6LBCjnJY3xf8BXU+hDgCb
+   pV/8QV9x5kFEblaXXA8AGJVHvJqNtA/cYh37AYyiYvEn+uzOYWVkzQQAc
+   0=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 14 Apr 2022 14:03:53 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2022 14:03:52 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 14 Apr 2022 14:03:52 -0700
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 14 Apr 2022 14:03:51 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH] drm/msm/dp: tear down main link at unplug handle immediately
+Date:   Thu, 14 Apr 2022 14:03:43 -0700
+Message-ID: <1649970223-9522-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [Freedreno] [PATCH v7 0/4] Add support for the eDP panel over
- aux_bus
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-Cc:     quic_kalyant <quic_kalyant@quicinc.com>,
-        devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        quic_vproddut <quic_vproddut@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Aravind Venkateswaran <quic_aravindh@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        freedreno <freedreno@lists.freedesktop.org>
-References: <1649938766-6768-1-git-send-email-quic_sbillaka@quicinc.com>
- <CAD=FV=Ui6BAsnTaJ2_TMh1Tnjtaw7FR92aWoUysS+UT=c0qB3Q@mail.gmail.com>
- <20afcd97-4b8d-f770-151a-268b893b7c5a@linaro.org>
- <CAE-0n51fc-b-8VF7XP29=o8Xi86HQALGB-1u8n3b_3NjVyyJYw@mail.gmail.com>
- <e3154f3b-aea4-6961-b409-6b20ff8bf18e@quicinc.com>
- <2fd4a157-a9de-ca0e-7a47-7bb85199ae91@linaro.org>
- <bc3a3162-b34d-bff3-2109-e2fd0bc65bb4@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <bc3a3162-b34d-bff3-2109-e2fd0bc65bb4@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/04/2022 23:19, Abhinav Kumar wrote:
-> 
-> 
-> On 4/14/2022 1:03 PM, Dmitry Baryshkov wrote:
->> On 14/04/2022 23:00, Abhinav Kumar wrote:
->>> Hi Dmitry
->>>
->>> On 4/14/2022 12:43 PM, Stephen Boyd wrote:
->>>> Quoting Dmitry Baryshkov (2022-04-14 12:20:31)
->>>>> On 14/04/2022 19:40, Doug Anderson wrote:
->>>>>> Hi,
->>>>>>
->>>>>> On Thu, Apr 14, 2022 at 5:19 AM Sankeerth Billakanti
->>>>>> <quic_sbillaka@quicinc.com> wrote:
->>>>>>>
->>>>>>> This series adds support for generic eDP panel over aux_bus.
->>>>>>>
->>>>>>> These changes are dependent on the following series:
->>>>>>> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=613654&state=* 
->>>>>>>
->>>>>>
->>>>>> You're basically depending on the last two patches of that series.
->>>>>> What's the plan there? In patchwork they're marked as "Not
->>>>>> Applicable". If they're good to go, maybe we should land them? If 
->>>>>> not,
->>>>>> maybe you should include them (with Dmitry as the author, of course)
->>>>>> at the beginning of your series?
->>>>>
->>>>> No, please do not resend patches. The patches in question are 
->>>>> marked as
->>>>> 'Not applicable' as they are really not applicable to Bjorn's tree.
->>>>> It would be better to point to the correct patchwork:
->>>>>
->>>>> https://patchwork.freedesktop.org/series/98585/
->>>>>
->>>>> Note those patches still lack the R-B tag. I can include them anyway,
->>>>> basing on Sankeerth's Tested-by tag, but the formal R-B would also 
->>>>> be good.
->>>>>
->>>>
->>>> Can you resend those as not RFC?
->>>
->>> Yes, please resend these, I can ack them.
->>>
->>> Previously I held off my ack, as kuogee ran into some issues testing 
->>> them which was later concluded to be a mismatch in QC internal trees 
->>> due to different versions of the changes.( another reason why we 
->>> should get these landed ).
->>>
->>> Now, that Sankeerth has tested these, if you can remove RFC and post 
->>> them, I can ack the.
->>
->> Well, you can ack those patches without them being resent. You have 
->> already added your Reviewed-by to first three patches (which were 
->> merged during last window).
->>
-> I thought you might have to rebase them :) that way you could have 
-> resent the rebased patch with the RFC tag removed.
-> 
-> If you dont, you now have my R-b.
+Two stages are required to setup up main link to be ready to transmit
+video stream.
+Stage 1: dp_hpd_plug_handle() perform link training to set up main link
+stage 2: user space framework (msm_dp_display_enable()) to enable pixel
+clock and transfer main link to video ready state.
 
-Thank you!
+At current implementation, when dongle unplugged dp_hdp_unplug_handle()
+has to wait until stage 2 completed before it can send link down uevent
+to user space framework to disable pixel clock followed by tearing down
+main link.  This introduce unnecessary latency if dongle unplugged happen
+after stage 1 and before stage 2. It also has possibility leave main link
+stay at ready state after dongle unplugged if framework does not response
+to link down uevent notification. This will prevent next dongle plug in
+from working. This scenario could possibly happen when dongle unplug while
+system in the middle of suspending.
 
+This patch allow unplug handle to tear down main link and notify
+framework link down immediately if dongle unplugged happen after
+stage 1 and before stage 2. With this approach, dp driver is much
+more resilient to any different scenarios. Also redundant both
+dp_connect_pending_timeout() and dp_disconnect_pending_timeout()
+are removed to reduce logic complexity.
+
+Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_ctrl.c    |  29 +++++++++++
+ drivers/gpu/drm/msm/dp/dp_ctrl.h    |   1 +
+ drivers/gpu/drm/msm/dp/dp_display.c | 101 +++++++++++-------------------------
+ 3 files changed, 59 insertions(+), 72 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 1a13e50..c2d060d 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1891,6 +1891,35 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
+ 	return ret;
+ }
+ 
++int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl)
++{
++	struct dp_ctrl_private *ctrl;
++	struct dp_io *dp_io;
++	struct phy *phy;
++	int ret;
++
++	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
++	dp_io = &ctrl->parser->io;
++	phy = dp_io->phy;
++
++	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
++
++	ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, false);
++	if (ret) {
++		DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
++	}
++
++	DRM_DEBUG_DP("Before, phy=%p init_count=%d power_on=%d\n",
++		phy, phy->init_count, phy->power_count);
++
++	phy_power_off(phy);
++
++	DRM_DEBUG_DP("After, phy=%p init_count=%d power_on=%d\n",
++		phy, phy->init_count, phy->power_count);
++
++	return ret;
++}
++
+ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
+ {
+ 	struct dp_ctrl_private *ctrl;
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+index 2433edb..ffafe17 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+@@ -22,6 +22,7 @@ struct dp_ctrl {
+ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
+ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
+ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
++int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
+ int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
+ void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
+ void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 01453db..f5bd8f5 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -57,14 +57,11 @@ enum {
+ 	EV_IRQ_HPD_INT,
+ 	EV_HPD_UNPLUG_INT,
+ 	EV_USER_NOTIFICATION,
+-	EV_CONNECT_PENDING_TIMEOUT,
+-	EV_DISCONNECT_PENDING_TIMEOUT,
+ };
+ 
+ #define EVENT_TIMEOUT	(HZ/10)	/* 100ms */
+ #define DP_EVENT_Q_MAX	8
+ 
+-#define DP_TIMEOUT_5_SECOND	(5000/EVENT_TIMEOUT)
+ #define DP_TIMEOUT_NONE		0
+ 
+ #define WAIT_FOR_RESUME_TIMEOUT_JIFFIES (HZ / 2)
+@@ -430,6 +427,11 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
+ 
+ static int dp_display_usbpd_disconnect_cb(struct device *dev)
+ {
++	return 0;
++}
++
++static int dp_display_notify_disconnect(struct device *dev)
++{
+ 	struct dp_display_private *dp = dev_get_dp_display_private(dev);
+ 
+ 	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+@@ -512,7 +514,6 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+ {
+ 	struct dp_usbpd *hpd = dp->usbpd;
+ 	u32 state;
+-	u32 tout = DP_TIMEOUT_5_SECOND;
+ 	int ret;
+ 
+ 	if (!hpd)
+@@ -539,14 +540,11 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+ 		return 0;
+ 	}
+ 
+-	dp->hpd_state = ST_CONNECT_PENDING;
+-
+ 	ret = dp_display_usbpd_configure_cb(&dp->pdev->dev);
+ 	if (ret) {	/* link train failed */
+ 		dp->hpd_state = ST_DISCONNECTED;
+ 	} else {
+-		/* start sentinel checking in case of missing uevent */
+-		dp_add_event(dp, EV_CONNECT_PENDING_TIMEOUT, 0, tout);
++		dp->hpd_state = ST_CONNECT_PENDING;
+ 	}
+ 
+ 	/* enable HDP irq_hpd/replug interrupt */
+@@ -562,21 +560,6 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+ static int dp_display_enable(struct dp_display_private *dp, u32 data);
+ static int dp_display_disable(struct dp_display_private *dp, u32 data);
+ 
+-static int dp_connect_pending_timeout(struct dp_display_private *dp, u32 data)
+-{
+-	u32 state;
+-
+-	mutex_lock(&dp->event_mutex);
+-
+-	state = dp->hpd_state;
+-	if (state == ST_CONNECT_PENDING)
+-		dp->hpd_state = ST_CONNECTED;
+-
+-	mutex_unlock(&dp->event_mutex);
+-
+-	return 0;
+-}
+-
+ static void dp_display_handle_plugged_change(struct msm_dp *dp_display,
+ 		bool plugged)
+ {
+@@ -615,24 +598,21 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ 		if (dp->link->sink_count == 0) {
+ 			dp_display_host_phy_exit(dp);
+ 		}
++		dp_display_notify_disconnect(&dp->pdev->dev);
+ 		mutex_unlock(&dp->event_mutex);
+ 		return 0;
+-	}
+-
+-	if (state == ST_DISCONNECT_PENDING) {
++	} else if (state == ST_DISCONNECT_PENDING) {
+ 		mutex_unlock(&dp->event_mutex);
+ 		return 0;
+-	}
+-
+-	if (state == ST_CONNECT_PENDING) {
+-		/* wait until CONNECTED */
+-		dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 1); /* delay = 1 */
++	} else if (state == ST_CONNECT_PENDING) {
++		dp_ctrl_off_link(dp->ctrl);
++		dp_display_host_phy_exit(dp);
++		dp->hpd_state = ST_DISCONNECTED;
++		dp_display_notify_disconnect(&dp->pdev->dev);
+ 		mutex_unlock(&dp->event_mutex);
+ 		return 0;
+ 	}
+ 
+-	dp->hpd_state = ST_DISCONNECT_PENDING;
+-
+ 	/* disable HPD plug interrupts */
+ 	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
+ 
+@@ -640,10 +620,13 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ 	 * We don't need separate work for disconnect as
+ 	 * connect/attention interrupts are disabled
+ 	 */
+-	dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
++	dp_display_notify_disconnect(&dp->pdev->dev);
+ 
+-	/* start sentinel checking in case of missing uevent */
+-	dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
++	if (state == ST_DISPLAY_OFF) {
++		dp->hpd_state = ST_DISCONNECTED;
++	} else {
++		dp->hpd_state = ST_DISCONNECT_PENDING;
++	}
+ 
+ 	DRM_DEBUG_DP("hpd_state=%d\n", state);
+ 	/* signal the disconnect event early to ensure proper teardown */
+@@ -657,21 +640,6 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ 	return 0;
+ }
+ 
+-static int dp_disconnect_pending_timeout(struct dp_display_private *dp, u32 data)
+-{
+-	u32 state;
+-
+-	mutex_lock(&dp->event_mutex);
+-
+-	state =  dp->hpd_state;
+-	if (state == ST_DISCONNECT_PENDING)
+-		dp->hpd_state = ST_DISCONNECTED;
+-
+-	mutex_unlock(&dp->event_mutex);
+-
+-	return 0;
+-}
+-
+ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
+ {
+ 	u32 state;
+@@ -685,13 +653,6 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
+ 		return 0;
+ 	}
+ 
+-	if (state == ST_CONNECT_PENDING) {
+-		/* wait until ST_CONNECTED */
+-		dp_add_event(dp, EV_IRQ_HPD_INT, 0, 1); /* delay = 1 */
+-		mutex_unlock(&dp->event_mutex);
+-		return 0;
+-	}
+-
+ 	if (state == ST_CONNECT_PENDING || state == ST_DISCONNECT_PENDING) {
+ 		/* wait until ST_CONNECTED */
+ 		dp_add_event(dp, EV_IRQ_HPD_INT, 0, 1); /* delay = 1 */
+@@ -1116,14 +1077,6 @@ static int hpd_event_thread(void *data)
+ 			dp_display_send_hpd_notification(dp_priv,
+ 						todo->data);
+ 			break;
+-		case EV_CONNECT_PENDING_TIMEOUT:
+-			dp_connect_pending_timeout(dp_priv,
+-						todo->data);
+-			break;
+-		case EV_DISCONNECT_PENDING_TIMEOUT:
+-			dp_disconnect_pending_timeout(dp_priv,
+-						todo->data);
+-			break;
+ 		default:
+ 			break;
+ 		}
+@@ -1160,8 +1113,6 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
+ 			dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
+ 
+ 		if (hpd_isr_status & DP_DP_IRQ_HPD_INT_MASK) {
+-			/* stop sentinel connect pending checking */
+-			dp_del_event(dp, EV_CONNECT_PENDING_TIMEOUT);
+ 			dp_add_event(dp, EV_IRQ_HPD_INT, 0, 0);
+ 		}
+ 
+@@ -1529,8 +1480,11 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 
+ 	mutex_lock(&dp_display->event_mutex);
+ 
+-	/* stop sentinel checking */
+-	dp_del_event(dp_display, EV_CONNECT_PENDING_TIMEOUT);
++	state = dp_display->hpd_state;
++	if (state != ST_DISPLAY_OFF && state != ST_CONNECT_PENDING) {
++		mutex_unlock(&dp_display->event_mutex);
++		return rc;
++	}
+ 
+ 	rc = dp_display_set_mode(dp, &dp_display->dp_mode);
+ 	if (rc) {
+@@ -1593,8 +1547,11 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 
+ 	mutex_lock(&dp_display->event_mutex);
+ 
+-	/* stop sentinel checking */
+-	dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
++	state = dp_display->hpd_state;
++	if (state != ST_DISCONNECT_PENDING && state != ST_CONNECTED) {
++		mutex_unlock(&dp_display->event_mutex);
++		return rc;
++	}
+ 
+ 	dp_display_disable(dp_display, 0);
+ 
 -- 
-With best wishes
-Dmitry
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
