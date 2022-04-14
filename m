@@ -2,380 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 828405017E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 18:04:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0B8A5017EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 18:05:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244882AbiDNPvp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 11:51:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37110 "EHLO
+        id S245259AbiDNPwG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 11:52:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343870AbiDNPM6 (ORCPT
+        with ESMTP id S1350431AbiDNPQd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 11:12:58 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94BF8B18B8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 07:53:14 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id t1so7274950wra.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 07:53:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QI8lD7XbQk1BfveDDmKDIM0YNm1W3OSAHogkwLnpMQU=;
-        b=EMUEZKxmHdzg4BJgKlszWLPR+Neo6BXumorjAZTczAnbAShqVdhSyG8CszhVE5NiuB
-         ilp7AyG8cc1Zv8cxgln1N4PqF1k958y9TXlFf/XeBRopTgtD+zZXtZpz6XiD0RInIZ9E
-         3hZhKUHlU/80qNoSOOSnAHbrJRABVnOR1OZpSPmdSnVFx3wJlpA7EEJUtAUkjvyZf7N0
-         NhKTcBxilrTfmM+rrnVflkPC4ARhdy2oLNxLr2zgLksl4XS0qXCIgj557caEunQX+Ppy
-         W7GxpYj5iGLv0+W+7IMQe+Vm/dZQGUZ0X3vsNB3+4V1cM0kt60BSIa0/LlqZ5/fgu8eh
-         NDVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QI8lD7XbQk1BfveDDmKDIM0YNm1W3OSAHogkwLnpMQU=;
-        b=tsYiEe47ug0F7HHx+COdQCaxaVyt/78i2FyAPuseB38ykkZOP5j+dRF0jMDl9icT4N
-         qeNEFFTH8mfW9QUtUU9xmLNEYcFw4Sybc5M/M6v7k0mEB6fOPASdUmWrJcfxzzHWK3Hw
-         xFJMcR+uJZ1rbARTYHnNkqGbHu3Zi82iW2op+vCufDLgwoc4HnsEQP14zTarc2H0LVOu
-         YXF2E4Fj7qiJjOH2cFAzTUkaxiRgbF7SyFFGHcQj943sBKo+Z34DP53TVy90eSfqqC+C
-         DnEPOktEo/UVSj/T6O7c7oqjjDAMCWNvOLvL5opJypJrgjIbW7kTYSIWV4Rfcji3h58M
-         8Ncw==
-X-Gm-Message-State: AOAM533dEPKaZ33gBqFzsN5sXNMzd1cw2nvUszKQrw7ToP9Um3kUujHw
-        xDeu2zEEoac0erIbww5wlnOvfMYAXksif1TT7g/r1Q==
-X-Google-Smtp-Source: ABdhPJz4XnDor898w0IMTEXyJPfrIZWgND6L+p6n6wYtRU+XZqv2HA09vg7AQfgI0AM2HpoVhUwE8FiDDNpHakUu3ec=
-X-Received: by 2002:adf:cd87:0:b0:207:b0ad:6d8 with SMTP id
- q7-20020adfcd87000000b00207b0ad06d8mr2395716wrj.111.1649947992773; Thu, 14
- Apr 2022 07:53:12 -0700 (PDT)
+        Thu, 14 Apr 2022 11:16:33 -0400
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::228])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E017DFFBE;
+        Thu, 14 Apr 2022 07:59:15 -0700 (PDT)
+Received: (Authenticated sender: miquel.raynal@bootlin.com)
+        by mail.gandi.net (Postfix) with ESMTPSA id 1EDD31BF206;
+        Thu, 14 Apr 2022 14:59:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1649948353;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=FAf8yLi3lQ6imgrUHohSJNasrVq7HVgTeNQSDWU87gs=;
+        b=lEnYzDaWqAHzINN5jDYX7d7Mfkuiz7OUjP//NPHNqOqSmv5dr81IDkm5DKEELYlo4EWrjs
+        Aee598u3irhAsKOiSlyPJapwDYZ7iQkNM1ViK5rvwLoNFNEzTSq3XAIJElcvofC/Lz459k
+        TOsDc/Tjgx/qSKVoeNriDf3NubHCUx1AmNYGp+xn8pMXCtmuBfiLBBu7n3pwzi1/gi7cYq
+        2iwqNlK+diZNt+VmC6zzBTmnNEAgTr7G2hVOlxqN6inxqqjDlVLAE+/OAO28Oo/GmyovGG
+        ORnjovIcReNJ3Gn0dYc94m/YrJQOhA15j4PNcQaRI0ux2yrcHT7A7szjE0JAKw==
+Date:   Thu, 14 Apr 2022 16:59:09 +0200
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Md Sadre Alam <quic_mdalam@quicinc.com>, richard@nod.at,
+        vigneshr@ti.com, linux-mtd@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, quic_srichara@quicinc.com
+Subject: Re: [PATCH] mtd: rawnand: qcom: fix memory corruption that causes
+ panic
+Message-ID: <20220414165909.249c2325@xps13>
+In-Reply-To: <20220414143907.GA20493@thinkpad>
+References: <1649914773-22434-1-git-send-email-quic_mdalam@quicinc.com>
+        <20220414101517.7bbc5e9d@xps13>
+        <DM6PR02MB580382FA47C4884AFC1A98D0FAEF9@DM6PR02MB5803.namprd02.prod.outlook.com>
+        <2697e757-f446-9cdb-95e0-ea01a642e6d4@quicinc.com>
+        <20220414144236.4ea54e20@xps13>
+        <20220414143907.GA20493@thinkpad>
+Organization: Bootlin
+X-Mailer: Claws Mail 3.17.7 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20220412125035.40312-1-quic_jinlmao@quicinc.com> <20220412125035.40312-3-quic_jinlmao@quicinc.com>
-In-Reply-To: <20220412125035.40312-3-quic_jinlmao@quicinc.com>
-From:   Mike Leach <mike.leach@linaro.org>
-Date:   Thu, 14 Apr 2022 15:53:01 +0100
-Message-ID: <CAJ9a7ViS+waaw+wAVVYvisM4ObfsMZCG6+DGJBNX92+PJ9MHug@mail.gmail.com>
-Subject: Re: [PATCH v5 02/10] Coresight: Add coresight TPDM source driver
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Manivannan,
 
-On Tue, 12 Apr 2022 at 13:51, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
->
-> Add driver to support Coresight device TPDM (Trace, Profiling and
-> Diagnostics Monitor). TPDM is a monitor to collect data from
-> different datasets. This change is to add probe/enable/disable
-> functions for tpdm source.
->
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  drivers/hwtracing/coresight/Kconfig          |  13 ++
->  drivers/hwtracing/coresight/Makefile         |   1 +
->  drivers/hwtracing/coresight/coresight-core.c |   5 +-
->  drivers/hwtracing/coresight/coresight-tpdm.c | 145 +++++++++++++++++++
->  drivers/hwtracing/coresight/coresight-tpdm.h |  26 ++++
->  include/linux/coresight.h                    |   1 +
->  6 files changed, 190 insertions(+), 1 deletion(-)
->  create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
->  create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
->
-> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
-> index 514a9b8086e3..5c506a1cd08f 100644
-> --- a/drivers/hwtracing/coresight/Kconfig
-> +++ b/drivers/hwtracing/coresight/Kconfig
-> @@ -201,4 +201,17 @@ config CORESIGHT_TRBE
->
->           To compile this driver as a module, choose M here: the module will be
->           called coresight-trbe.
+mani@kernel.org wrote on Thu, 14 Apr 2022 20:09:07 +0530:
+
+> On Thu, Apr 14, 2022 at 02:42:36PM +0200, Miquel Raynal wrote:
+> > Hi Md,
+> >=20
+> > quic_mdalam@quicinc.com wrote on Thu, 14 Apr 2022 17:50:48 +0530:
+> >  =20
+> > > > Hi Md,
+> > > >
+> > > > quic_mdalam@quicinc.com wrote on Thu, 14 Apr 2022 11:09:33 +0530:
+> > > >   =20
+> > > >> This patch fixes a memory corruption that occurred in the
+> > > >> nand_scan() path for Hynix nand device.
+> > > >>
+> > > >> On boot, for Hynix nand device will panic at a weird place:
+> > > >> | Unable to handle kernel NULL pointer dereference at virtual
+> > > >>    address 00000070
+> > > >> | [00000070] *pgd=3D00000000
+> > > >> | Internal error: Oops: 5 [#1] PREEMPT SMP ARM Modules linked in:
+> > > >> | CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.17.0-01473-g13ae1769=
+cfb0
+> > > >>    #38
+> > > >> | Hardware name: Generic DT based system PC is at
+> > > >> | nandc_set_reg+0x8/0x1c LR is at qcom_nandc_command+0x20c/0x5d0
+> > > >> | pc : [<c088b74c>]    lr : [<c088d9c8>]    psr: 00000113
+> > > >> | sp : c14adc50  ip : c14ee208  fp : c0cc970c
+> > > >> | r10: 000000a3  r9 : 00000000  r8 : 00000040
+> > > >> | r7 : c16f6a00  r6 : 00000090  r5 : 00000004  r4 :c14ee040
+> > > >> | r3 : 00000000  r2 : 0000000b  r1 : 00000000  r0 :c14ee040
+> > > >> | Flags: nzcv  IRQs on  FIQs on  Mode SVC_32  ISA ARM Segment none
+> > > >> | Control: 10c5387d  Table: 8020406a  DAC: 00000051 Register r0
+> > > >> | information: slab kmalloc-2k start c14ee000 pointer offset
+> > > >>    64 size 2048
+> > > >> | Process swapper/0 (pid: 1, stack limit =3D 0x(ptrval)) nandc_set=
+_reg
+> > > >> | from qcom_nandc_command+0x20c/0x5d0 qcom_nandc_command from
+> > > >> | nand_readid_op+0x198/0x1e8 nand_readid_op from
+> > > >> | hynix_nand_has_valid_jedecid+0x30/0x78
+> > > >> | hynix_nand_has_valid_jedecid from hynix_nand_init+0xb8/0x454
+> > > >> | hynix_nand_init from nand_scan_with_ids+0xa30/0x14a8
+> > > >> | nand_scan_with_ids from qcom_nandc_probe+0x648/0x7b0
+> > > >> | qcom_nandc_probe from platform_probe+0x58/0xac
+> > > >>
+> > > >> The problem is that the nand_scan()'s qcom_nand_attach_chip callba=
+ck
+> > > >> is updating the nandc->max_cwperpage from 1 to 4.This causes the
+> > > >> sg_init_table of clear_bam_transaction() in the driver's
+> > > >> qcom_nandc_command() to memset much more than what was initially
+> > > >> allocated by alloc_bam_transaction().   =20
+> > > > Thanks for investigating!
+> > > >   =20
+> > > >> This patch will update nandc->max_cwperpage 1 to 4 after nand_scan=
+()
+> > > >> returns, and remove updating nandc->max_cwperpage from
+> > > >> qcom_nand_attach_chip call back.   =20
+> > > > The fix does not look right, as far as I understand, this should be=
+ properly handled during the attach phase. That is where we have all inform=
+ation about the chip and do the configuration for this chip.
+> > > >
+> > > > If you update max_cwperpage there you should probably update other =
+internal variables that depend on it as well.   =20
+> > >=20
+> > >  =C2=A0=C2=A0 Currently we are updating max_cwperpage=C2=A0 in qcom_n=
+and_attach_chip(), but we are seeing issue for Hynix nand device since nand=
+_scan_tail() is getting called after nand_attach() and in nand_attach() we =
+are updating max_cwperpage to 4 or 8 based on page size.
+> > >=20
+> > >  =C2=A0=C2=A0=C2=A0 From nand_scan_tail() there is a call for nand_ma=
+nufacturer_init() , specific to Hynix nand read_id is getting called that's=
+ why we are seeing this issue only for Hynix nand device. Read id sequence =
+as below
+> > >=20
+> > >  =C2=A0=C2=A0 hynix_nand_has_valid_jedecid()
+> > >=20
+> > >  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 |
+> > >=20
+> > >  =C2=A0=C2=A0 nand_readid_op()
+> > >=20
+> > >  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 |
+> > >=20
+> > >  =C2=A0qcom_nandc_command()
+> > >=20
+> > >  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |
+> > >=20
+> > > pre_command()
+> > >=20
+> > >  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |
+> > >=20
+> > > clear_bam_transaction()=C2=A0=C2=A0 --> In this call we are doing sg_=
+init_table() which is calling memset() based on max_cwperpage.Since initial=
+ly we have allocated bam transaction as per max_cwperpage =3D1 and , since =
+nand_chip_attach() updated max_cwperpage,=C2=A0 now we are doing memset as =
+per max_cwperpage =3D 4 or 8.
+> > >=20
+> > >=20
+> > > So anyway we have to updated max_cwperpage after nand_scan() call onl=
+y.=C2=A0 Since there is no other dependency on max_cwperpage in nand_attach=
+_chip() and we are using this in bam_alloc() and bam_clear(). =20
+> >=20
+> > Why don't you update the sg table after increasing max_cwperpage?
+> >  =20
+>=20
+> Or we could move the bam reallocation inside qcom_nand_attach_chip() as b=
+elow?
+
+Much better approach, yes.
+
+>=20
+> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qco=
+m_nandc.c
+> index 7c6efa3b6255..58c16054630f 100644
+> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> @@ -2653,9 +2653,23 @@ static int qcom_nand_attach_chip(struct nand_chip =
+*chip)
+> =20
+>         mtd_set_ooblayout(mtd, &qcom_nand_ooblayout_ops);
+> =20
+> +       /* Free the initially allocated BAM transaction for reading the O=
+NFI params */
+> +       if (nandc->props->is_bam)
+> +               free_bam_transaction(nandc);
 > +
-> +config CORESIGHT_TPDM
-> +       tristate "CoreSight Trace, Profiling & Diagnostics Monitor driver"
-> +       select CORESIGHT_LINKS_AND_SINKS
-> +       help
-> +         This driver provides support for configuring monitor. Monitors are
-> +         primarily responsible for data set collection and support the
-> +         ability to collect any permutation of data set types. Monitors are
-> +         also responsible for interaction with system cross triggering.
-> +
-> +         To compile this driver as a module, choose M here: the module will be
-> +         called coresight-tpdm.
-> +
->  endif
-> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/coresight/Makefile
-> index 329a0c704b87..6bb9b1746bc7 100644
-> --- a/drivers/hwtracing/coresight/Makefile
-> +++ b/drivers/hwtracing/coresight/Makefile
-> @@ -25,5 +25,6 @@ obj-$(CONFIG_CORESIGHT_CPU_DEBUG) += coresight-cpu-debug.o
->  obj-$(CONFIG_CORESIGHT_CATU) += coresight-catu.o
->  obj-$(CONFIG_CORESIGHT_CTI) += coresight-cti.o
->  obj-$(CONFIG_CORESIGHT_TRBE) += coresight-trbe.o
-> +obj-$(CONFIG_CORESIGHT_TPDM) += coresight-tpdm.o
->  coresight-cti-y := coresight-cti-core.o        coresight-cti-platform.o \
->                    coresight-cti-sysfs.o
-> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-> index 23ab16dd9b5d..75fe1781df20 100644
-> --- a/drivers/hwtracing/coresight/coresight-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-core.c
-> @@ -1047,7 +1047,8 @@ static int coresight_validate_source(struct coresight_device *csdev,
->         }
->
->         if (subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_PROC &&
-> -           subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE) {
-> +           subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE &&
-> +           subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY) {
->                 dev_err(&csdev->dev, "wrong device subtype in %s\n", function);
->                 return -EINVAL;
->         }
-> @@ -1116,6 +1117,7 @@ int coresight_enable(struct coresight_device *csdev)
->                 per_cpu(tracer_path, cpu) = path;
->                 break;
->         case CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE:
-> +       case CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY:
->                 /*
->                  * Use the hash of source's device name as ID
->                  * and map the ID to the pointer of the path.
-> @@ -1165,6 +1167,7 @@ void coresight_disable(struct coresight_device *csdev)
->                 per_cpu(tracer_path, cpu) = NULL;
->                 break;
->         case CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE:
-> +       case CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY:
->                 hash = hashlen_hash(hashlen_string(NULL, dev_name(&csdev->dev)));
->                 /* Find the path by the hash. */
->                 path = idr_find(&path_idr, hash);
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> new file mode 100644
-> index 000000000000..3900ae50670a
-> --- /dev/null
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -0,0 +1,145 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/amba/bus.h>
-> +#include <linux/bitmap.h>
-> +#include <linux/coresight.h>
-> +#include <linux/coresight-pmu.h>
-> +#include <linux/device.h>
-> +#include <linux/err.h>
-> +#include <linux/fs.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +
-> +#include "coresight-priv.h"
-> +#include "coresight-tpdm.h"
-> +
-> +DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
-> +
-> +/* TPDM enable operations */
-> +static int tpdm_enable(struct coresight_device *csdev,
-> +                      struct perf_event *event, u32 mode)
-> +{
-> +       struct tpdm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-> +
-> +       mutex_lock(&drvdata->lock);
-> +       if (drvdata->enable) {
-> +               mutex_unlock(&drvdata->lock);
-> +               return -EBUSY;
+>         nandc->max_cwperpage =3D max_t(unsigned int, nandc->max_cwperpage,
+>                                      cwperpage);
+> =20
+> +       /* Now allocate the BAM transaction based on updated max_cwperpag=
+e */
+> +       if (nandc->props->is_bam) {
+> +               nandc->bam_txn =3D alloc_bam_transaction(nandc);
+> +               if (!nandc->bam_txn) {
+> +                       dev_err(nandc->dev,
+> +                               "failed to allocate bam transaction\n");
+> +                       return -ENOMEM;
+> +               }
 > +       }
 > +
-> +       drvdata->enable = true;
-> +       mutex_unlock(&drvdata->lock);
-> +
-> +       dev_info(drvdata->dev, "TPDM tracing enabled\n");
-> +       return 0;
-> +}
-> +
-> +/* TPDM disable operations */
-> +static void tpdm_disable(struct coresight_device *csdev,
-> +                        struct perf_event *event)
-> +{
-> +       struct tpdm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-> +
-> +       mutex_lock(&drvdata->lock);
-> +       if (!drvdata->enable) {
-> +               mutex_unlock(&drvdata->lock);
-> +               return;
-> +       }
-> +
-> +       drvdata->enable = false;
-> +       mutex_unlock(&drvdata->lock);
-> +
-> +       dev_info(drvdata->dev, "TPDM tracing disabled\n");
-> +}
-> +
-> +static const struct coresight_ops_source tpdm_source_ops = {
-> +       .enable         = tpdm_enable,
-> +       .disable        = tpdm_disable,
-> +};
-> +
-> +static const struct coresight_ops tpdm_cs_ops = {
-> +       .source_ops     = &tpdm_source_ops,
-> +};
-> +
-> +static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
-> +{
-> +       struct device *dev = &adev->dev;
-> +       struct coresight_platform_data *pdata;
-> +       struct tpdm_drvdata *drvdata;
-> +       struct coresight_desc desc = { 0 };
-> +
-> +       pdata = coresight_get_platform_data(dev);
-> +       if (IS_ERR(pdata))
-> +               return PTR_ERR(pdata);
-> +       adev->dev.platform_data = pdata;
-> +
-> +       /* driver data*/
-> +       drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
-> +       if (!drvdata)
-> +               return -ENOMEM;
-> +       drvdata->dev = &adev->dev;
-> +       dev_set_drvdata(dev, drvdata);
-> +
-> +       drvdata->base = devm_ioremap_resource(dev, &adev->res);
-> +       if (!drvdata->base)
-> +               return -ENOMEM;
-> +
-> +       mutex_init(&drvdata->lock);
-> +
-> +       /* Set up coresight component description */
-> +       desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
-> +       if (!desc.name)
-> +               return -ENOMEM;
-> +       desc.type = CORESIGHT_DEV_TYPE_SOURCE;
-> +       desc.subtype.source_subtype = CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY;
-> +       desc.ops = &tpdm_cs_ops;
-> +       desc.pdata = adev->dev.platform_data;
-> +       desc.dev = &adev->dev;
-> +       drvdata->csdev = coresight_register(&desc);
-> +       if (IS_ERR(drvdata->csdev))
-> +               return PTR_ERR(drvdata->csdev);
-> +
-> +       /* Decrease pm refcount when probe is done.*/
-> +       pm_runtime_put(&adev->dev);
-> +
-> +       return 0;
-> +}
-> +
-> +static void __exit tpdm_remove(struct amba_device *adev)
-> +{
-> +       struct tpdm_drvdata *drvdata = dev_get_drvdata(&adev->dev);
-> +
-> +       coresight_unregister(drvdata->csdev);
-> +}
-
-How is this function called? The other coresight devices set the
-.remove function pointer in the amba_driver structure.
+>         /*
+>          * DATA_UD_BYTES varies based on whether the read/write command p=
+rotects
+>          * spare data with ECC too. We protect spare data by default, so =
+we set
+> @@ -2956,17 +2970,6 @@ static int qcom_nand_host_init_and_register(struct=
+ qcom_nand_controller *nandc,
+>         if (ret)
+>                 return ret;
+> =20
+> -       if (nandc->props->is_bam) {
+> -               free_bam_transaction(nandc);
+> -               nandc->bam_txn =3D alloc_bam_transaction(nandc);
+> -               if (!nandc->bam_txn) {
+> -                       dev_err(nandc->dev,
+> -                               "failed to allocate bam transaction\n");
+> -                       nand_cleanup(chip);
+> -                       return -ENOMEM;
+> -               }
+> -       }
+> -
+>         ret =3D mtd_device_parse_register(mtd, probes, NULL, NULL, 0);
+>         if (ret)
+>                 nand_cleanup(chip);
+>=20
+> Thanks,
+> Mani
 
 
-> +/*
-> + * Different TPDM has different periph id.
-> + * The difference is 0-7 bits' value. So ignore 0-7 bits.
-> + */
-> +static struct amba_id tpdm_ids[] = {
-> +       {
-> +               .id = 0x000f0e00,
-> +               .mask = 0x000fff00,
-> +       },
-> +       { 0, 0},
-> +};
-> +
-> +static struct amba_driver tpdm_driver = {
-> +       .drv = {
-> +               .name   = "coresight-tpdm",
-> +               .owner  = THIS_MODULE,
-> +               .suppress_bind_attrs = true,
-> +       },
-> +       .probe          = tpdm_probe,
-
-Do you need:-
-       .remove = tpdm_remove;
-in here?
-
-Regards
-
-Mike
-
-> +       .id_table       = tpdm_ids,
-> +};
-> +
-> +module_amba_driver(tpdm_driver);
-> +
-> +MODULE_LICENSE("GPL v2");
-> +MODULE_DESCRIPTION("Trace, Profiling & Diagnostic Monitor driver");
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-> new file mode 100644
-> index 000000000000..94a7748a5426
-> --- /dev/null
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-> @@ -0,0 +1,26 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _CORESIGHT_CORESIGHT_TPDM_H
-> +#define _CORESIGHT_CORESIGHT_TPDM_H
-> +
-> +/**
-> + * struct tpdm_drvdata - specifics associated to an TPDM component
-> + * @base:       memory mapped base address for this component.
-> + * @dev:        The device entity associated to this component.
-> + * @csdev:      component vitals needed by the framework.
-> + * @lock:       lock for the enable value.
-> + * @enable:     enable status of the component.
-> + */
-> +
-> +struct tpdm_drvdata {
-> +       void __iomem            *base;
-> +       struct device           *dev;
-> +       struct coresight_device *csdev;
-> +       struct mutex            lock;
-> +       bool                    enable;
-> +};
-> +
-> +#endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
-> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
-> index 247147c11231..a9efac55029d 100644
-> --- a/include/linux/coresight.h
-> +++ b/include/linux/coresight.h
-> @@ -61,6 +61,7 @@ enum coresight_dev_subtype_source {
->         CORESIGHT_DEV_SUBTYPE_SOURCE_PROC,
->         CORESIGHT_DEV_SUBTYPE_SOURCE_BUS,
->         CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE,
-> +       CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY,
->  };
->
->  enum coresight_dev_subtype_helper {
-> --
-> 2.17.1
->
-
-
--- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+Thanks,
+Miqu=C3=A8l
