@@ -2,78 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E507501F03
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Apr 2022 01:25:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C30A501F26
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Apr 2022 01:35:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229991AbiDNX2G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 19:28:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56700 "EHLO
+        id S1347667AbiDNXgy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 19:36:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229902AbiDNX2E (ORCPT
+        with ESMTP id S1343870AbiDNXgw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 19:28:04 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC76E3BFB8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 16:25:36 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id bj36so1972409ljb.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 16:25:36 -0700 (PDT)
+        Thu, 14 Apr 2022 19:36:52 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AEE4BE11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 16:34:23 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id h11so7876238ljb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Apr 2022 16:34:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=9ZvEYU0vxJvz9uqzPh/tUGMPI5vXR1B+mizjBt8OEwU=;
-        b=aTG+OjHs7hU3a4mId+AywvEJ9TqkL63HP0t9dF9uJIcSUDa4kBnNz3PRt3ix1h+T7I
-         SAVbZybJhBHUvfyVFehDsErfd5/LSE90PIX1Kukh08aKicqHN2NFA9MBKQQ+/Vt/F83n
-         dFi3Pwu/lFZsJrcX35dfaJsFWm2i+r6TFamLyKLkAq8iqXdXBP+rNn6Ztq9fgrfAZOns
-         aUvIfGsW8jcy4k2ml3jQ60LEZdFAAiS1pVwkCi1zK9xTRIBuBxh0LJidXdgCStY1yeMq
-         HIh7JadCZp/asi6WUDt3jSNjXbJGmFkXUaWkbznSLoulM3BWAIISeyZHLIaouV0Wc40X
-         G8JA==
+        bh=Iui9A+eLQEY/nX+0oDEarv6ntwSJTGA8ToTL+L3pSEo=;
+        b=tPx3lgri1J4tM045vBZculeqPJ22HKITNe27W1ZxTmMg3yUfKNn+TV2PX9786JrPSM
+         hkQy2xsKJnKixL0NBGE8/p+LrGOb2S5tTuQ+q8ucsxWw2tDvT5PkE4S2ouT1GszK0k5C
+         9R9tEFvRgDMIqGGRZEO1sW2b16jHX6+GTxKJ7uRN/bAsIUnTRFyC8iueFCw4b18Spnto
+         hvrBogLeJiSc+5K+OZ0NaHIvaL5DwN0Ph5G2+tNpdrhJNIkh/ffjWrzA+QWeIPxx9YJv
+         /drw2SkZ4YFuzMUtnPBAKAdWWQzLiSUZ7S8d+s3ReoZLWG605WBm5czCpZDIYv68Mwks
+         /lSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=9ZvEYU0vxJvz9uqzPh/tUGMPI5vXR1B+mizjBt8OEwU=;
-        b=TX66B+o7N7ksNx1VX46zHyPb9Gf8o0NT32fuiRXfiwvbjEBFNNL657qz2doPK4ZoFT
-         xZ18qnAl0ZbHq7XqUEVuMccjOhhg9+gQNmpL0JS3WbX+ivqu0ctmBnSGIpq03acgkS0m
-         6aSDlofjK/y2Vcpm0+fg+l16Gq2A1jiiN3oquf6buSAbpcbw0R+zTo2y+y/KO4bJvBav
-         IFGRi8TaArw1ssRbliirx24p56XtJcDGNtpauTYcQG22wo99ofa+kiobRL7+x3pi8Dox
-         Eu1kThAhv02bV88vBFMW7k22cXwkTQkKdj2Fw72H9Di2tr9oqEwm23sf/nmzOsm3Pura
-         9FNQ==
-X-Gm-Message-State: AOAM530YPnX2TR9d0+ZaB55ayLLYOA7RkZGy2QcNTH74tiK/+ZHvYb06
-        5eEzY1DapMt/vEcNvdHDXg+uWg==
-X-Google-Smtp-Source: ABdhPJwX85Wrfw1tJKe72qGT6n+Boplsm2TRWwotdryjFFiMXURn8WKtYe6tUIMcpRMOCX/8VL/SbA==
-X-Received: by 2002:a2e:9e10:0:b0:24b:5cb5:867c with SMTP id e16-20020a2e9e10000000b0024b5cb5867cmr2980675ljk.401.1649978735042;
-        Thu, 14 Apr 2022 16:25:35 -0700 (PDT)
+        bh=Iui9A+eLQEY/nX+0oDEarv6ntwSJTGA8ToTL+L3pSEo=;
+        b=FHLsST1v1V5URA0dbOuCuQXzaNd/xaCXd3QJM0PokNJ2I3D/oHrqVLmPmmymtYPpav
+         eJHCTFvU8KhmXTkFeY4jJ6A5ErSQ31qKa9BJpcOPx2fRYty8wdCY14JHVBvK//DInbg9
+         3LxYfYe6+hyUzgtgrxM117sXrMXUDZOrFrtPkRNOrSXVXi8kyFYLFGm6s9Fvg6O26aih
+         DNjAedeChmP3PSRrl8dFPU/9l7GOsNUTrbinh6h3RBu65bOwdiyelysEKi9HJUaHXph8
+         wC2kuVP0dJlYWOsfJ0wcXoRTHi9GMITkcSSaMg9x3NHd2Znqis5ZcritCAqFrqi/nJp0
+         DPvA==
+X-Gm-Message-State: AOAM530tg1h/GirEuZ0x0f6pU8slUFrDdIIBss8rAHgfHBv3qq4I3ais
+        Wdlzrcsz1U9udPxsz/xt9A1MtnzOdQC9VQ==
+X-Google-Smtp-Source: ABdhPJzU0/5iGIGtQknfdNITwXnU5YI4i91HNLcKDS61fNRoBC8iasXpudVYzEAXrHuLyFTN5P8h4w==
+X-Received: by 2002:a2e:5cc1:0:b0:24b:112f:9b36 with SMTP id q184-20020a2e5cc1000000b0024b112f9b36mr2938326ljb.337.1649979261871;
+        Thu, 14 Apr 2022 16:34:21 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id g16-20020a0565123b9000b0044aa30cb30bsm137605lfv.285.2022.04.14.16.25.34
+        by smtp.gmail.com with ESMTPSA id y37-20020a0565123f2500b0044a1e1c6b37sm142795lfa.53.2022.04.14.16.34.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Apr 2022 16:25:34 -0700 (PDT)
-Message-ID: <3ab5d831-29d1-9ea8-27d7-877cf6411227@linaro.org>
-Date:   Fri, 15 Apr 2022 02:25:33 +0300
+        Thu, 14 Apr 2022 16:34:21 -0700 (PDT)
+Message-ID: <27bb2732-b322-75b0-3883-773e6eb4b1b9@linaro.org>
+Date:   Fri, 15 Apr 2022 02:34:19 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
-Subject: Re: [PATCH 04/12] drm/msm/dpu: add changes to support writeback in
- hw_ctl
+Subject: Re: [PATCH v2] drm/msm/dp: enhance both connect and disconnect
+ pending_timeout handle
 Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        nganji@codeaurora.org, aravindh@codeaurora.org, daniel@ffwll.ch,
-        markyacoub@chromium.org, quic_jesszhan@quicinc.com
-References: <1644009445-17320-1-git-send-email-quic_abhinavk@quicinc.com>
- <1644009445-17320-5-git-send-email-quic_abhinavk@quicinc.com>
- <7743d896-7727-3e27-d436-9212a247961f@linaro.org>
- <9448c67f-efd2-ea61-a4aa-35073359d8f2@quicinc.com>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1649280493-4393-1-git-send-email-quic_khsieh@quicinc.com>
+ <625ce8a0-4e25-5513-5599-c1cdebf5a3a5@linaro.org>
+ <09fd563f-4a2c-f670-51c2-0e5ff023816d@quicinc.com>
+ <CAA8EJpqzucFGf8ndDi2LZqtKiOt_w=_h1oPAUNVCdmUyh_3+zA@mail.gmail.com>
+ <2039ef97-4fdb-bffe-1e02-18ae79c18be4@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <9448c67f-efd2-ea61-a4aa-35073359d8f2@quicinc.com>
+In-Reply-To: <2039ef97-4fdb-bffe-1e02-18ae79c18be4@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,369 +84,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/04/2022 00:50, Abhinav Kumar wrote:
+On 15/04/2022 01:06, Kuogee Hsieh wrote:
 > 
-> 
-> On 2/4/2022 2:19 PM, Dmitry Baryshkov wrote:
->> On 05/02/2022 00:17, Abhinav Kumar wrote:
->>> Add changes to support writeback module in the dpu_hw_ctl
->>> interface. In addition inroduce a reset_intf_cfg op to reset
->>> the interface bits for the currently active interfaces in
->>> the ctl path.
+> On 4/8/2022 4:59 PM, Dmitry Baryshkov wrote:
+>> On Fri, 8 Apr 2022 at 23:30, Kuogee Hsieh <quic_khsieh@quicinc.com> 
+>> wrote:
 >>>
->>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>> ---
->>>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |  3 +-
->>>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  6 +-
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         | 65 
->>> ++++++++++++++++++++--
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         | 27 ++++++++-
->>>   4 files changed, 91 insertions(+), 10 deletions(-)
+>>> On 4/8/2022 5:27 AM, Dmitry Baryshkov wrote:
+>>>> On 07/04/2022 00:28, Kuogee Hsieh wrote:
+>>>>> dp_hpd_plug_handle() is responsible for setting up main link and send
+>>>>> uevent to notify user space framework to start video stream. 
+>>>>> Similarly,
+>>>>> dp_hdp_unplug_handle is responsible to send uevent to notify user 
+>>>>> space
+>>>>> framework to stop video stream and then tear down main link.
+>>>>> However there are rare cases, such as in the middle of system
+>>>>> suspending,
+>>>>> that uevent could not be delivered to user space framework. Therefore
+>>>>> some kind of recover mechanism armed by timer need to be in place 
+>>>>> in the
+>>>>> case of user space framework does not respond to uevent.
+>>>> Hmm, how does userpsace 'respond' to the uevent? The driver should
+>>>> send hotplug notifications to userspace, but it must not expect any
+>>>> particular reaction. The userspace might be as simple, as fbdev
+>>>> emulation, but the driver still should function correctly.
+>>> yes, driver is function correctly by setting up main link. but it does
+>>> not know which resolution to display.
 >>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> index 34a6940..4cb72fa 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> @@ -1,5 +1,6 @@
->>>   // SPDX-License-Identifier: GPL-2.0-only
->>>   /*
->>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
->>> reserved.
->>>    * Copyright (c) 2015-2018, 2020-2021 The Linux Foundation. All 
->>> rights reserved.
->>>    */
->>> @@ -70,7 +71,7 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
->>>       intf_cfg.intf_mode_sel = DPU_CTL_MODE_SEL_CMD;
->>>       intf_cfg.stream_sel = cmd_enc->stream_sel;
->>>       intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
->>> -    ctl->ops.setup_intf_cfg(ctl, &intf_cfg);
->>> +    ctl->ops.setup_intf_cfg(ctl, &intf_cfg, false);
->>>   }
->>>   static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int 
->>> irq_idx)
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>> index ddd9d89..950fcd6 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>> @@ -1,5 +1,7 @@
->>>   // SPDX-License-Identifier: GPL-2.0-only
->>> -/* Copyright (c) 2015-2018, 2020-2021 The Linux Foundation. All 
->>> rights reserved.
->>> +/*
->>> + *  Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
->>> reserved.
->>> + *  Copyright (c) 2015-2018, 2020-2021 The Linux Foundation. All 
->>> rights reserved.
->>>    */
->>>   #define pr_fmt(fmt)    "[drm:%s:%d] " fmt, __func__, __LINE__
->>> @@ -290,7 +292,7 @@ static void 
->>> dpu_encoder_phys_vid_setup_timing_engine(
->>>       spin_lock_irqsave(phys_enc->enc_spinlock, lock_flags);
->>>       phys_enc->hw_intf->ops.setup_timing_gen(phys_enc->hw_intf,
->>>               &timing_params, fmt);
->>> -    phys_enc->hw_ctl->ops.setup_intf_cfg(phys_enc->hw_ctl, &intf_cfg);
->>> +    phys_enc->hw_ctl->ops.setup_intf_cfg(phys_enc->hw_ctl, 
->>> &intf_cfg, false);
->>>       /* setup which pp blk will connect to this intf */
->>>       if (phys_enc->hw_intf->ops.bind_pingpong_blk)
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
->>> index 02da9ec..a2069af 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
->>> @@ -1,5 +1,6 @@
->>>   // SPDX-License-Identifier: GPL-2.0-only
->>> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>> +/* Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
->>> reserved.
->>> + * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>>    */
->>>   #include <linux/delay.h>
->>> @@ -23,8 +24,10 @@
->>>   #define   CTL_SW_RESET                  0x030
->>>   #define   CTL_LAYER_EXTN_OFFSET         0x40
->>>   #define   CTL_MERGE_3D_ACTIVE           0x0E4
->>> +#define   CTL_WB_ACTIVE                 0x0EC
->>>   #define   CTL_INTF_ACTIVE               0x0F4
->>>   #define   CTL_MERGE_3D_FLUSH            0x100
->>> +#define   CTL_WB_FLUSH                  0x108
->>>   #define   CTL_INTF_FLUSH                0x110
->>>   #define   CTL_INTF_MASTER               0x134
->>>   #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
->>> @@ -35,6 +38,7 @@
->>>   #define DPU_REG_RESET_TIMEOUT_US        2000
->>>   #define  MERGE_3D_IDX   23
->>>   #define  INTF_IDX       31
->>> +#define WB_IDX          16
->>>   #define CTL_INVALID_BIT                 0xffff
->>>   #define CTL_DEFAULT_GROUP_ID        0xf
->>> @@ -128,6 +132,9 @@ static inline void 
->>> dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
->>>       if (ctx->pending_flush_mask & BIT(INTF_IDX))
->>>           DPU_REG_WRITE(&ctx->hw, CTL_INTF_FLUSH,
->>>                   ctx->pending_intf_flush_mask);
->>> +    if (ctx->pending_flush_mask & BIT(WB_IDX))
->>> +        DPU_REG_WRITE(&ctx->hw, CTL_WB_FLUSH,
->>> +                ctx->pending_wb_flush_mask);
->>>       DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
->>>   }
->>> @@ -248,6 +255,13 @@ static void 
->>> dpu_hw_ctl_update_pending_flush_intf(struct dpu_hw_ctl *ctx,
->>>       }
->>>   }
->>> +static void dpu_hw_ctl_update_pending_flush_wb_v1(struct dpu_hw_ctl 
->>> *ctx,
->>> +        enum dpu_wb wb)
->>> +{
->>> +    ctx->pending_wb_flush_mask |= BIT(wb - WB_0);
->>> +    ctx->pending_flush_mask |= BIT(WB_IDX);
->>> +}
->>> +
->>>   static void dpu_hw_ctl_update_pending_flush_intf_v1(struct 
->>> dpu_hw_ctl *ctx,
->>>           enum dpu_intf intf)
->>>   {
->>> @@ -493,10 +507,11 @@ static void dpu_hw_ctl_setup_blendstage(struct 
->>> dpu_hw_ctl *ctx,
->>>   static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
->>> -        struct dpu_hw_intf_cfg *cfg)
->>> +        struct dpu_hw_intf_cfg *cfg, bool is_wb)
->>>   {
->>>       struct dpu_hw_blk_reg_map *c = &ctx->hw;
->>>       u32 intf_active = 0;
->>> +    u32 wb_active = 0;
->>>       u32 mode_sel = 0;
->>>       /* CTL_TOP[31:28] carries group_id to collate CTL paths
->>> @@ -509,18 +524,25 @@ static void dpu_hw_ctl_intf_cfg_v1(struct 
->>> dpu_hw_ctl *ctx,
->>>       if (cfg->intf_mode_sel == DPU_CTL_MODE_SEL_CMD)
->>>           mode_sel |= BIT(17);
->>> -    intf_active = DPU_REG_READ(c, CTL_INTF_ACTIVE);
->>> -    intf_active |= BIT(cfg->intf - INTF_0);
->>> +    if (!is_wb) {
->>
->> I think we can judge if it is an INTF of WB by checking the cfg->intf 
->> and cfg->wb, thus the is_wb argument is not needed.
+>>> It send hotplug notification through uevent to framework after main link
+>>> is ready.
+>>>
+>>> Framework  is responsible to set up MDP timing engine to start video 
+>>> stream.
+>>>
+>>>
+>>> However it does not know which
+>> It's of no concern to the driver. It is completely the userspace
+>> problem. After resuming, it should reread available video output
+>> properties. The display could have been changed while the system is
+>> suspended.
+>>  From your description I still do not understand why you need the
+>> 'recovery' mechanism.
 > 
-> cfg->intf and cfg->wb are enums storing what is the index of the current 
-> WB being used.
+> I mean "recovery" means  dp driver may leave stay at link ready 
+> mistakenly after dongle unplugged due to missing framework action to 
+> tear down main link so that next dongle plug in will not work.
 > 
-> If both intf and wb are used (which is possible) and if both have been 
-> configured before calling this function cfg->intf and cfg->wb will be 
-> valid so we cannot distinguish for which one we called this function for 
-> and can end up programming both.
+> Currently it was armed with timeout function and it will fired if 
+> framework did not call msm_dp_display_disable() after 5 second.
 
-First of all, I think cloning CRTCs is not supported by the msm driver 
-at this moment (yet), so it's not possible to share the same crtc (and 
-so the same ctl) between INTF and WB.
+framework = userspace?
 
-Next, for each encoder the cfg is recreated from the empty struct. Thus 
-INTF's encoder will pass a struct with only cfg->intf being set and WB's 
-encoder will pass a struct with cfg->wb being set.
+Is my understanding correct? Currently DP driver sends a notification to 
+userspace that DP is unplugged, waits for userspace to disable DP 
+output, and only after that it will shutdown the link. Is this a correct 
+description?
+
+If so, then yes, your change is correct. I mean that the kernel 
+shouldn't wait for clients to stop using video pipeline if the sink gets 
+unplugged. Instead it should tear the video stream down and let the DRM 
+client cope with that.
+
+I'm not sure how should the driver react if the client doesn't disable 
+the output, but then the sink gets reattached?
+And a bit more interesting question: how should the driver behave if the 
+new sink is not compatible with the existing video stream.
 
 > 
-> intf calls its own dpu_hw_ctl_intf_cfg_v1 and wb calls its own.
+> Anyway, we think this approach is not good. therefore it is replaced 
+> with  below patch.
 > 
-> So i thought its better to check who is the caller of this before 
-> configuring the block for the caller.
-> 
-> Let me know if now it makes sense to have a "is_wb" or this can be 
-> covered differently.
-> 
->>
->>> +        intf_active = DPU_REG_READ(c, CTL_INTF_ACTIVE);
->>> +        intf_active |= BIT(cfg->intf - INTF_0) > +    } else {
->>> +        wb_active = DPU_REG_READ(c, CTL_WB_ACTIVE);
->>> +        wb_active = BIT(cfg->wb - WB_0);
->>
->> wb_active |= BIT(...) ?
-> ack
->>
->>> +    }
->>>       DPU_REG_WRITE(c, CTL_TOP, mode_sel);
->>>       DPU_REG_WRITE(c, CTL_INTF_ACTIVE, intf_active);
->>> +    DPU_REG_WRITE(c, CTL_WB_ACTIVE, wb_active);
->>> +
->>>       if (cfg->merge_3d)
->>>           DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
->>>                     BIT(cfg->merge_3d - MERGE_3D_0));
->>>   }
->>>   static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
->>> -        struct dpu_hw_intf_cfg *cfg)
->>> +        struct dpu_hw_intf_cfg *cfg, bool is_wb)
->>>   {
->>>       struct dpu_hw_blk_reg_map *c = &ctx->hw;
->>>       u32 intf_cfg = 0;
->>> @@ -532,6 +554,9 @@ static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl 
->>> *ctx,
->>>           intf_cfg |= (cfg->mode_3d - 0x1) << 20;
->>>       }
->>> +    if (is_wb)
->>> +        intf_cfg |= (cfg->wb & 0x3) + 2;
->>> +
->>>       switch (cfg->intf_mode_sel) {
->>>       case DPU_CTL_MODE_SEL_VID:
->>>           intf_cfg &= ~BIT(17);
->>> @@ -549,6 +574,34 @@ static void dpu_hw_ctl_intf_cfg(struct 
->>> dpu_hw_ctl *ctx,
->>>       DPU_REG_WRITE(c, CTL_TOP, intf_cfg);
->>>   }
->>> +static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
->>> +    struct dpu_hw_intf_cfg *cfg, bool is_wb)
->>
->> Could you please be more specific here (or in the documentation 
->> comment bellow), what exactly is reset? For example the merge3d config 
->> is left intact.
-> 
-> Looks like I have made some mistake in the reset logic. we should have 
-> reset the merge_3d block. The goal is the reset the WB related pipeline.
-> Let me fix this code in the next version and it will be more clear.
-> Will update the doc too.
-> 
->>
->>> +{
->>> +    struct dpu_hw_blk_reg_map *c = &ctx->hw;
->>> +    u32 intf_active = 0;
->>> +    u32 wb_active = 0;
->>> +    u32 merge3d_active = 0;
->>> +
->>> +    if (cfg->merge_3d) {
->>> +        merge3d_active = DPU_REG_READ(c, CTL_MERGE_3D_ACTIVE);
->>> +        DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
->>> +                  BIT(cfg->merge_3d - MERGE_3D_0));
->>> +    }
->>> +
->>> +    dpu_hw_ctl_clear_all_blendstages(ctx);
->>> +
->>> +    if (!is_wb) {
->>> +        intf_active = DPU_REG_READ(c, CTL_INTF_ACTIVE);
->>> +        intf_active &= ~BIT(cfg->intf - INTF_0);
->>> +        DPU_REG_WRITE(c, CTL_INTF_ACTIVE, intf_active);
->>> +    } else {
->>> +        wb_active = DPU_REG_READ(c, CTL_WB_ACTIVE);
->>> +        wb_active &= ~BIT(cfg->wb - WB_0);
->>> +        DPU_REG_WRITE(c, CTL_WB_ACTIVE, wb_active);
->>> +    }
->>
->> The same comment as for the setup_intf_cfg(). Also can we just write 
->> both CTL_INTF_ACTIVE and CTL_WB_ACTIVE to 0?
-> 
-> We want to clear only the INTF OR WB for which this cfg was called with.
-> So we should only clear that bit.
-
-Then it would be better to call this function "disable" rather than 
-reset. Because I'd assume that reset_ would reset the whole CTL 
-configuration.
-
-And last, but not least, I think you should also clear INTF_MASTER if it 
-is set to be equal to the cfg->intf.
-
-
-> 
->>
->>> +}
->>> +
->>> +
->>>   static void dpu_hw_ctl_set_fetch_pipe_active(struct dpu_hw_ctl *ctx,
->>>       unsigned long *fetch_active)
->>>   {
->>> @@ -572,10 +625,12 @@ static void _setup_ctl_ops(struct 
->>> dpu_hw_ctl_ops *ops,
->>>       if (cap & BIT(DPU_CTL_ACTIVE_CFG)) {
->>>           ops->trigger_flush = dpu_hw_ctl_trigger_flush_v1;
->>>           ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg_v1;
->>> +        ops->reset_intf_cfg = dpu_hw_ctl_reset_intf_cfg_v1;
->>>           ops->update_pending_flush_intf =
->>>               dpu_hw_ctl_update_pending_flush_intf_v1;
->>>           ops->update_pending_flush_merge_3d =
->>>               dpu_hw_ctl_update_pending_flush_merge_3d_v1;
->>> +        ops->update_pending_flush_wb = 
->>> dpu_hw_ctl_update_pending_flush_wb_v1;
->>>       } else {
-
-Do we also need to provide reset_intf_cfg for non-active CTLs?
-
-I think the whole reset_intf_cfg warrants a separate commit (or series 
-of commits). Then this patch would have just the "add a touch of WB" to 
-existing function.
-
->>>           ops->trigger_flush = dpu_hw_ctl_trigger_flush;
->>>           ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg;
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
->>> index 806c171..fb4baca 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
->>> @@ -1,5 +1,6 @@
->>>   /* SPDX-License-Identifier: GPL-2.0-only */
->>> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>> +/* Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
->>> reserved.
->>> + * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->>>    */
->>>   #ifndef _DPU_HW_CTL_H
->>> @@ -43,6 +44,7 @@ struct dpu_hw_stage_cfg {
->>>    */
->>>   struct dpu_hw_intf_cfg {
->>>       enum dpu_intf intf;
->>> +    enum dpu_wb wb;
->>>       enum dpu_3d_blend_mode mode_3d;
->>>       enum dpu_merge_3d merge_3d;
->>>       enum dpu_ctl_mode_sel intf_mode_sel;
->>> @@ -93,6 +95,15 @@ struct dpu_hw_ctl_ops {
->>>           u32 flushbits);
->>>       /**
->>> +     * OR in the given flushbits to the cached pending_(wb_)flush_mask
->>> +     * No effect on hardware
->>> +     * @ctx       : ctl path ctx pointer
->>> +     * @blk       : writeback block index
->>> +     */
->>> +    void (*update_pending_flush_wb)(struct dpu_hw_ctl *ctx,
->>> +        enum dpu_wb blk);
->>> +
->>> +    /**
->>>        * OR in the given flushbits to the cached 
->>> pending_(intf_)flush_mask
->>>        * No effect on hardware
->>>        * @ctx       : ctl path ctx pointer
->>> @@ -127,9 +138,19 @@ struct dpu_hw_ctl_ops {
->>>        * Setup ctl_path interface config
->>>        * @ctx
->>>        * @cfg    : interface config structure pointer
->>> +     * @is_wb  : to indicate wb mode for programming the ctl path
->>>        */
->>>       void (*setup_intf_cfg)(struct dpu_hw_ctl *ctx,
->>> -        struct dpu_hw_intf_cfg *cfg);
->>> +        struct dpu_hw_intf_cfg *cfg, bool is_wb);
->>> +
->>> +    /**
->>> +     * reset ctl_path interface config
->>> +     * @ctx
->>> +     * @cfg    : interface config structure pointer
->>> +     * @is_wb  : to indicate wb mode for programming the ctl path
->>> +     */
->>> +    void (*reset_intf_cfg)(struct dpu_hw_ctl *ctx,
->>> +        struct dpu_hw_intf_cfg *cfg, bool is_wb);
->>>       int (*reset)(struct dpu_hw_ctl *c);
->>> @@ -182,6 +203,7 @@ struct dpu_hw_ctl_ops {
->>>    * @mixer_hw_caps: mixer hardware capabilities
->>>    * @pending_flush_mask: storage for pending ctl_flush managed via ops
->>>    * @pending_intf_flush_mask: pending INTF flush
->>> + * @pending_wb_flush_mask: pending WB flush
->>>    * @ops: operation list
->>>    */
->>>   struct dpu_hw_ctl {
->>> @@ -195,6 +217,7 @@ struct dpu_hw_ctl {
->>>       const struct dpu_lm_cfg *mixer_hw_caps;
->>>       u32 pending_flush_mask;
->>>       u32 pending_intf_flush_mask;
->>> +    u32 pending_wb_flush_mask;
->>>       u32 pending_merge_3d_flush_mask;
->>>       /* ops */
->>
->>
+> drm/msm/dp: tear down main link at unplug handle immediately
 
 
 -- 
