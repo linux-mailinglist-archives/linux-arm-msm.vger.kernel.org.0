@@ -2,50 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E24B500AF1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 12:18:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05D7C500B09
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Apr 2022 12:25:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242144AbiDNKTi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Apr 2022 06:19:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60618 "EHLO
+        id S230245AbiDNK2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Apr 2022 06:28:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242221AbiDNKT2 (ORCPT
+        with ESMTP id S242268AbiDNK1j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Apr 2022 06:19:28 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B5E675614;
-        Thu, 14 Apr 2022 03:17:01 -0700 (PDT)
+        Thu, 14 Apr 2022 06:27:39 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52BFC6C94D;
+        Thu, 14 Apr 2022 03:25:14 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A1DB661E6D;
-        Thu, 14 Apr 2022 10:17:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9D6C385AD;
-        Thu, 14 Apr 2022 10:16:57 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 12164B82893;
+        Thu, 14 Apr 2022 10:25:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1574BC385A5;
+        Thu, 14 Apr 2022 10:25:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649931420;
-        bh=L/NB4rzDeYZP76iJZTy6KlNtSXg0xl8lH/8ohgfvkKs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=u5L13H5/m1NvdvUOF3hB9aUimAOQOoBPHea7cI/AXUdggD2uIVGTtgEKlT1LHFzDk
-         9uDFeqB60bJQyI9fNUgoiK78YuyoSZjazmVWuoxdasOm5U7uVQrtF0VeVPQFmp0oYI
-         ozJLUA8nplc9DmwreRPzOcZobemWM3uHD4kn2vBcQfzVKIAO8ihpn6V4R44GyieXC+
-         ip8M/F8MmE5Rcb75/G/ugg9bpoKzYy1vgNe5WwIMHsi4pWgXT7qhLMulZ6+txq5Xiz
-         I5cIDHUW9mP7u1+ESQ5JOxwhSSNW+69SWTNbTe1Nf4ieKkyfIcjPVLzHHxMXkR6rJI
-         LThYNJjzv8tyQ==
+        s=k20201202; t=1649931911;
+        bh=ng1Q70SgjCwX1SpN3Nel10OKN/RIdygk7E6v7+91XKY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XoDrMFCmgB05vL1RkeyygBoyUreaPJaBwTlXdODyGe2QGsgJDWxXGhBRZIZbZM9Qx
+         +WwGjIluBjWWNsqUwiS+nf7cyYL9DkF5MZUuACtOR5BcsILqBbjyfXdQj4zjXuNZfX
+         l3aUGNs+xU7Ep94iluERMqtRD24mP24FtPbaozFO70n5TSQwU0y6B+DlTS8NeRMwaa
+         spgUHMF0xDRhcRE34JLtogtxV98EMsJFWMPogYWWfvQO01nmyIX8ivQX0afxjv2e0F
+         plj2S9BpDf9Xxtwndv6HnkTQaVZ4RNq1Pz8Uz+FetcHU3G8UNoO8zmWwz7N7NCU60B
+         d/Zc5bI06YIAw==
+Date:   Thu, 14 Apr 2022 15:55:06 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 7/7] arm64: dts: qcom: sm8450-qrd: Enable spi and i2c nodes
-Date:   Thu, 14 Apr 2022 15:46:30 +0530
-Message-Id: <20220414101630.1189052-8-vkoul@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220414101630.1189052-1-vkoul@kernel.org>
-References: <20220414101630.1189052-1-vkoul@kernel.org>
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: dmaengine: qcom: gpi: Add minItems for
+ interrupts
+Message-ID: <Ylf2gsJ+Ks0wz6i3@matsya>
+References: <20220414064235.1182195-1-vkoul@kernel.org>
+ <0598d1bb-cd7c-1414-910c-ae6bedc8295d@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0598d1bb-cd7c-1414-910c-ae6bedc8295d@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -56,60 +59,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the i2c5, spi4, spi18 and spi19 nodes which were tested on qrd
-board along with related qup nodes and gpi_dma0
+On 14-04-22, 09:36, Krzysztof Kozlowski wrote:
+> On 14/04/2022 08:42, Vinod Koul wrote:
+> > Add the minItems for interrupts property as well. In the absence of
+> > this, we get warning if interrupts are less than 13
+> > 
+> > arch/arm64/boot/dts/qcom/qrb5165-rb5.dtb:
+> > dma-controller@800000: interrupts: [[0, 588, 4], [0, 589, 4], [0, 590,
+> > 4], [0, 591, 4], [0, 592, 4], [0, 593, 4], [0, 594, 4], [0, 595, 4], [0,
+> >   596, 4], [0, 597, 4]] is too short
+> > 
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > ---
+> >  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+> > index 8a790ffbdaac..7d2fc4eb5530 100644
+> > --- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+> > +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+> > @@ -32,6 +32,7 @@ properties:
+> >    interrupts:
+> >      description:
+> >        Interrupt lines for each GPI instance
+> > +    minItems: 1
+> 
+> This should be some real case minimum, not just 1. Unless really only
+> one interrupt is also possible in existing variations?
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- arch/arm64/boot/dts/qcom/sm8450-qrd.dts | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+So that depends on the channels available to use which can be worst case
+of 1. Maximum is 13.. Most of the controllers are between 12-13, but we
+dont want to change binding in future if controller has lesser channels
+right?
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-qrd.dts b/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-index 9526632d4029..1e87a083816e 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-@@ -342,10 +342,22 @@ vreg_l6e_1p2: ldo6 {
- 	};
- };
- 
-+&gpi_dma0 {
-+	status = "okay";
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
- 
-+&qupv3_id_2 {
-+	status = "okay";
-+};
-+
- &remoteproc_adsp {
- 	status = "okay";
- 	firmware-name = "qcom/sm8450/adsp.mbn";
-@@ -366,6 +378,18 @@ &remoteproc_slpi {
- 	firmware-name = "qcom/sm8450/slpi.mbn";
- };
- 
-+&spi4 {
-+	status = "okay";
-+};
-+
-+&spi18 {
-+	status = "okay";
-+};
-+
-+&spi19 {
-+	status = "okay";
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <28 4>, <36 4>;
- };
 -- 
-2.34.1
-
+~Vinod
