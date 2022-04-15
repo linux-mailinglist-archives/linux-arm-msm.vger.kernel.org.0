@@ -2,68 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D2185031D3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 01:10:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE61C503370
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 07:48:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356439AbiDOXMo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Apr 2022 19:12:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37954 "EHLO
+        id S233944AbiDOXRS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Apr 2022 19:17:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234365AbiDOXMn (ORCPT
+        with ESMTP id S232085AbiDOXRR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Apr 2022 19:12:43 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2D263669B;
-        Fri, 15 Apr 2022 16:10:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650064212; x=1681600212;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Qi1FQqfAcjjUuNmVCwF7c0gD3J+aR/jDgdWuepyjcI8=;
-  b=L0OAZFgrmbD9dwUnUuHNJxScR3xKVKH7ddpJw3kubvKlliIHL9Mwh4Qo
-   z7z4Cwwyzt0TQBcfC9igrWySd/NUP2X6gsDfehgMaeTT282Mqzfnb8/nI
-   42mDdvFCCVJbolMhdGhelpIThXaqfppJ/Z98rOQjenOqGiI52E+jlXSLh
-   Y=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 15 Apr 2022 16:10:12 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Apr 2022 16:10:12 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 15 Apr 2022 16:10:11 -0700
-Received: from [10.110.19.13] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 15 Apr
- 2022 16:10:10 -0700
-Message-ID: <f4bc072f-9ec6-d57e-28de-e3f7aba21cd7@quicinc.com>
-Date:   Fri, 15 Apr 2022 16:10:09 -0700
+        Fri, 15 Apr 2022 19:17:17 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 444EE1C127
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Apr 2022 16:14:44 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E1F7B3F78D;
+        Sat, 16 Apr 2022 01:14:42 +0200 (CEST)
+Date:   Sat, 16 Apr 2022 01:14:41 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        dri-devel@lists.freedesktop.org, swboyd@chromium.org,
+        robdclark@gmail.com, nganji@codeaurora.org, seanpaul@chromium.org,
+        daniel@ffwll.ch, markyacoub@chromium.org,
+        dmitry.baryshkov@linaro.org, quic_jesszhan@quicinc.com,
+        aravindh@codeaurora.org, freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH 06/12] drm/msm/dpu: make changes to
+ dpu_encoder to support virtual encoder
+Message-ID: <20220415231441.dd2cyrl7sfz5fvy3@SoMainline.org>
+References: <1644009445-17320-1-git-send-email-quic_abhinavk@quicinc.com>
+ <1644009445-17320-7-git-send-email-quic_abhinavk@quicinc.com>
+ <20220414222642.f7wy3wdbsgmrqrxj@SoMainline.org>
+ <1af827f1-b9b5-ed43-7bd8-8af6206eabaa@quicinc.com>
+ <227cb6b8-c4c5-aa24-a91e-ccbd29260b29@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v7] drm/msm/dp: stop event kernel thread when DP unbind
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1650062064-11838-1-git-send-email-quic_khsieh@quicinc.com>
- <CAA8EJpopw4rh0ZkFd5F4zHVJQw6GUNq=+HKVycOx0bXd5OWizQ@mail.gmail.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAA8EJpopw4rh0ZkFd5F4zHVJQw6GUNq=+HKVycOx0bXd5OWizQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <227cb6b8-c4c5-aa24-a91e-ccbd29260b29@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,147 +55,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Abhinav,
 
-On 4/15/2022 3:48 PM, Dmitry Baryshkov wrote:
-> On Sat, 16 Apr 2022 at 01:34, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->> Current DP driver implementation, event thread is kept running
->> after DP display is unbind. This patch fix this problem by disabling
->> DP irq and stop event thread to exit gracefully at dp_display_unbind().
->>
->> Changes in v2:
->> -- start event thread at dp_display_bind()
->>
->> Changes in v3:
->> -- disable all HDP interrupts at unbind
->> -- replace dp_hpd_event_setup() with dp_hpd_event_thread_start()
->> -- replace dp_hpd_event_stop() with dp_hpd_event_thread_stop()
->> -- move init_waitqueue_head(&dp->event_q) to probe()
->> -- move spin_lock_init(&dp->event_lock) to probe()
->>
->> Changes in v4:
->> -- relocate both dp_display_bind() and dp_display_unbind() to bottom of file
->>
->> Changes in v5:
->> -- cancel relocation of both dp_display_bind() and dp_display_unbind()
->>
->> Changes in v6:
->> -- move empty event q to dp_event_thread_start()
->>
->> Changes in v7:
->> -- call ktheread_stop() directly instead of dp_hpd_event_thread_stop() function
->>
->> Fixes: e91e3065a806 ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
->> ---
->>   drivers/gpu/drm/msm/dp/dp_display.c | 31 ++++++++++++++++++++++++-------
->>   1 file changed, 24 insertions(+), 7 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 01453db..680e500 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -113,6 +113,7 @@ struct dp_display_private {
->>          u32 hpd_state;
->>          u32 event_pndx;
->>          u32 event_gndx;
->> +       struct task_struct *ev_tsk;
->>          struct dp_event event_list[DP_EVENT_Q_MAX];
->>          spinlock_t event_lock;
->>
->> @@ -230,6 +231,8 @@ void dp_display_signal_audio_complete(struct msm_dp *dp_display)
->>          complete_all(&dp->audio_comp);
->>   }
->>
->> +static int dp_hpd_event_thread_start(struct dp_display_private *dp_priv);
->> +
->>   static int dp_display_bind(struct device *dev, struct device *master,
->>                             void *data)
->>   {
->> @@ -269,6 +272,7 @@ static int dp_display_bind(struct device *dev, struct device *master,
->>          if (rc)
->>                  DRM_ERROR("Audio registration Dp failed\n");
-> I think I asked it in v3 and didn't get an answer:
-> Isn't 'goto end' missing here?
-I did follow you suggestion at v3 and made changes at 
-dp_hpd_event_thread_start()
->> +       rc = dp_hpd_event_thread_start(dp);
-> if (rc) { DRM_ERROR(....); goto end; }
-> return 0;
->
-> Please.
-This is at dp_display_bind(),  "end" is the next statement why goto needed?
->>   end:
->>          return rc;
->>   }
->> @@ -280,6 +284,11 @@ static void dp_display_unbind(struct device *dev, struct device *master,
->>          struct drm_device *drm = dev_get_drvdata(master);
->>          struct msm_drm_private *priv = drm->dev_private;
->>
->> +       /* disable all HPD interrupts */
->> +       dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, false);
->> +
->> +       kthread_stop(dp->ev_tsk);
->> +
->>          dp_power_client_deinit(dp->power);
->>          dp_aux_unregister(dp->aux);
->>          priv->dp[dp->id] = NULL;
->> @@ -1054,7 +1063,7 @@ static int hpd_event_thread(void *data)
->>
->>          dp_priv = (struct dp_display_private *)data;
->>
->> -       while (1) {
->> +       while (!kthread_should_stop()) {
->>                  if (timeout_mode) {
->>                          wait_event_timeout(dp_priv->event_q,
->>                                  (dp_priv->event_pndx == dp_priv->event_gndx),
->> @@ -1132,12 +1141,19 @@ static int hpd_event_thread(void *data)
->>          return 0;
->>   }
->>
->> -static void dp_hpd_event_setup(struct dp_display_private *dp_priv)
->> +static int dp_hpd_event_thread_start(struct dp_display_private *dp_priv)
->>   {
->> -       init_waitqueue_head(&dp_priv->event_q);
->> -       spin_lock_init(&dp_priv->event_lock);
->> +       /* set event q to empty */
->> +       dp_priv->event_gndx = 0;
->> +       dp_priv->event_pndx = 0;
->> +
->> +       dp_priv->ev_tsk = kthread_run(hpd_event_thread, dp_priv, "dp_hpd_handler");
->> +       if (IS_ERR(dp_priv->ev_tsk)) {
->> +               DRM_ERROR("failed to create DP event thread\n");
->> +               return PTR_ERR(dp_priv->ev_tsk);
->> +       }
->>
->> -       kthread_run(hpd_event_thread, dp_priv, "dp_hpd_handler");
->> +       return 0;
->>   }
->>
->>   static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
->> @@ -1266,7 +1282,10 @@ static int dp_display_probe(struct platform_device *pdev)
->>                  return -EPROBE_DEFER;
->>          }
->>
->> +       /* setup event q */
->>          mutex_init(&dp->event_mutex);
->> +       init_waitqueue_head(&dp->event_q);
->> +       spin_lock_init(&dp->event_lock);
->>
->>          /* Store DP audio handle inside DP display */
->>          dp->dp_display.dp_audio = dp->audio;
->> @@ -1441,8 +1460,6 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
->>
->>          dp = container_of(dp_display, struct dp_display_private, dp_display);
->>
->> -       dp_hpd_event_setup(dp);
->> -
->>          dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
->>   }
->>
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
->
+On 2022-04-15 12:25:55, Abhinav Kumar wrote:
+> Hi Marijn
+> 
+> Looking at msm-next tip, this code has already been refactored in
+> 
+> https://gitlab.freedesktop.org/drm/msm/-/commit/ef58e0ad34365e2c8274b74e6e745b8c180ff0d3
+> 
+> So, I will just rebase my changes on msm-next tip and it should address 
+> below comments as well.
+
+That's actually great, I love patches that remove a whole lot of
+(especially bug-containing) lines, awesome Dmitry!
+
+Looking forward to the next revision, spotted some minor nits in this
+revision but it probably makes little sense to point them out here
+presuming they might have already been addressed on your end or removed
+altogether.
+
+- Marijn
