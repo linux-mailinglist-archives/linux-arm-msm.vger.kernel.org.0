@@ -2,55 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D34D503064
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 01:08:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 331F350309B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 01:09:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353728AbiDOVWx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Apr 2022 17:22:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39476 "EHLO
+        id S1356207AbiDOVng (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Apr 2022 17:43:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354560AbiDOVWt (ORCPT
+        with ESMTP id S1353698AbiDOVmY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Apr 2022 17:22:49 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D341939AC;
-        Fri, 15 Apr 2022 14:20:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 11B37B82E3F;
-        Fri, 15 Apr 2022 21:20:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8955C385A4;
-        Fri, 15 Apr 2022 21:20:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650057616;
-        bh=l2ZVDxltKOnnpwoAj210vzCJVoPCYcAtL2GWUQC4cj4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RnjJ5AjuKUPX1wRtxl+3BVj4UkbCIrdib1v5NY1rBC74VkZOMwsi85R7jyzu5YU5c
-         p2PdOnsi3Zbzp8xmmxQuKT/gzSqTDpne8HPUY2L+KS6zDZBE7kB53hyROLvaxznOyJ
-         EVgwjihJz7OBD8m5ltnhBUwAPQhuMJQlH8Biq2ae040sMURV9oBWtAFFGnsSq9JyS+
-         zWhggHGjmwVyGqZ7KF95qTMg+C1ZOLqoRibKd2YCQxTa7xI9aTgtxqnwGxKec8A6qR
-         mz6bnCeZX0n8qsjrakw0NFg2+8XgR8S1OerzKYagpq9LKwELDXouL3tFwRfkNx4ALi
-         delCa2KV3VeUQ==
-Date:   Fri, 15 Apr 2022 23:20:12 +0200
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] i2c: qcom-geni: Use dev_err_probe() for GPI DMA error
-Message-ID: <YlnhjDeL28/BqRsB@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220412212601.2384274-1-bjorn.andersson@linaro.org>
+        Fri, 15 Apr 2022 17:42:24 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2DA212633
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Apr 2022 14:39:54 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id mp16-20020a17090b191000b001cb5efbcab6so12645449pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Apr 2022 14:39:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=pnnhVnGjhESFSvN5AIAUxQOTXkNGysYpxD5X0481Phs=;
+        b=Mr7FDGOCaG90Xqb9CkSUPuMLdgZLTpRANkq0G9fniO9sl7RuxMhwa4pMV7r5aAPtzr
+         WmI0puD3f3vvRKTbriacpoZCx07mwNv4Q8uGwKJ58b15UjhjHbYdIdBK34DjlTTZpRkX
+         YqcK6dt1qkBadKHIxzvtlkwWFYo49k1qxyF2M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pnnhVnGjhESFSvN5AIAUxQOTXkNGysYpxD5X0481Phs=;
+        b=UOaJlRuAlDOHdYrK32DhTSrwa1slQS2t0EaFxPIShk9Yoge+0N8XY5XnM9Lm9wnyW9
+         wkXi2zvzKveOuo2/t7FzH9m+WG3/d7R6phCFclGFgE6h/lwZRzAAQX9yL+79PlfsFQy2
+         iawVKUKk5f5rIZlPtm1t7Zv6F2qO/I/cfEgAopGA+eTyjwpLJoSbxK0TCn7gExpP4SDJ
+         s1iUxdHdQOsZacsbLXUP0sghYbN1Ozy6/BcICzv1U/n5Qbvb00NrUqhUSmXTWfryBTeu
+         nq5d8AAPZgJqHYAT3BPAA4tfCaJIDuMoujVzVy9ZPnBNeDoZEiXXpJDwDsmJv1AAWr0I
+         ixFA==
+X-Gm-Message-State: AOAM533T+CRUEwF94h3YbqO3uY2RhLC3/Mz1URyrMIKNonZ0Ag+/iee4
+        ft2HenaWOckHCRoLs/a5pa77uw==
+X-Google-Smtp-Source: ABdhPJzezmjazjpZOJiGsT/T33Plq2/us4Na0I8/Us86rxlwMws1XdK7SKgVBfiOxbVNW1v+4cbJfw==
+X-Received: by 2002:a17:90b:3b8f:b0:1c7:b62e:8e87 with SMTP id pc15-20020a17090b3b8f00b001c7b62e8e87mr6192674pjb.156.1650058794221;
+        Fri, 15 Apr 2022 14:39:54 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:b27a:b3e7:2e3e:e4be])
+        by smtp.gmail.com with UTF8SMTPSA id w9-20020a056a0014c900b004fb2ca5f6d7sm3707308pfu.136.2022.04.15.14.39.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Apr 2022 14:39:53 -0700 (PDT)
+Date:   Fri, 15 Apr 2022 14:39:51 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-gpio@vger.kernel.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v12 5/7] pinctrl: qcom: Extract chip specific LPASS LPI
+ code
+Message-ID: <YlnmJz/wjxfkZFua@google.com>
+References: <1647447426-23425-1-git-send-email-quic_srivasam@quicinc.com>
+ <1647447426-23425-6-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="OV+uEBO8NXGeJuvr"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220412212601.2384274-1-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <1647447426-23425-6-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -59,41 +77,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Mar 16, 2022 at 09:47:04PM +0530, Srinivasa Rao Mandadapu wrote:
+> Extract the chip specific SM8250 data from the LPASS LPI pinctrl driver
+> to allow reusing the common code in the addition of subsequent
+> platforms.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 
---OV+uEBO8NXGeJuvr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>
+> ...
+>
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
+> new file mode 100644
+> index 0000000..8c95d0f
+> --- /dev/null
+> +++ b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
 
-On Tue, Apr 12, 2022 at 02:26:01PM -0700, Bjorn Andersson wrote:
-> The GPI DMA engine driver can be compiled as a module, in which case the
-> likely probe deferral "error" shows up in the kernel log. Switch to
-> using dev_err_probe() to silence this warning and to ensure that
-> "devices_deferred" in debugfs carries this information.
->=20
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+...
 
-Applied to for-current, thanks!
+> +
+> +/* sm8250 variant specific data */
 
+nit: the comment seems a bit redundant since this is now the sm8250
+pinctrl driver.
 
---OV+uEBO8NXGeJuvr
-Content-Type: application/pgp-signature; name="signature.asc"
+> +static const struct pinctrl_pin_desc sm8250_lpi_pins[] = {
+> +	PINCTRL_PIN(0, "gpio0"),
+> +	PINCTRL_PIN(1, "gpio1"),
+> +	PINCTRL_PIN(2, "gpio2"),
+> +	PINCTRL_PIN(3, "gpio3"),
+> +	PINCTRL_PIN(4, "gpio4"),
+> +	PINCTRL_PIN(5, "gpio5"),
+> +	PINCTRL_PIN(6, "gpio6"),
+> +	PINCTRL_PIN(7, "gpio7"),
+> +	PINCTRL_PIN(8, "gpio8"),
+> +	PINCTRL_PIN(9, "gpio9"),
+> +	PINCTRL_PIN(10, "gpio10"),
+> +	PINCTRL_PIN(11, "gpio11"),
+> +	PINCTRL_PIN(12, "gpio12"),
+> +	PINCTRL_PIN(13, "gpio13"),
+> +};
+>
+> ...
 
------BEGIN PGP SIGNATURE-----
+The nit is just a nit and otherwise this looks good to me, so:
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmJZ4YwACgkQFA3kzBSg
-KbYwtg//aA/fMooSYp4Jb9nM70vfuH8wDAmD4x77SDbcLIgucludzPYo4cMVl7BG
-iYhEi79oOe9IKPxF3sL1QiKYhdje6iv3mSjILqq5i7dzVn1XMOaYc77PqQcHdmjn
-KBF+//H0xMzs0pPzla/BRi0SSgzb1QzK67xAtCPwh5BFYGCaGvcVQiy1dpI3twx5
-lBfIouFl1TN9qIEIXfdKCbjlSpEhWnv+GeG4Td8wOdd9qqqw6CupdaPyRZiJeBgk
-SQMYjxRcB5nehyfGMRNb+PRksfQLKAuINjfFoKEIYG9NzpaX5U99FVw73RQ6meyR
-2ik8f8LO9lOCFYqI+TmvOcdwLpXT2C1aYU9cgsm+PhDNeLnzGIVzNeXxrjdhlf8c
-GFt796I+HcKKRuvtuxiYaVnXhiB4jH9SSYjFtxlG2Mnp1+KnuM8Wy3ADi3xS8htV
-M2zqLgZ7SzTXlHZfSRmnJXmv6h2qmWEFBBNcdPtWGc/r97+aH1r92Gdwer9mS8tn
-QN1XbxY0sbCGRZ6/lH0tl1MMKyVibtsSqGj2nBR6YfguhnbLd9an+MuYNYfMqkyz
-ZdoaiqiF+vRC4HUBfhDF+FIN/f3wTnp7e60isyVlv+04ZIUdi92zIb5/rb/MxBic
-IuLOimNA+Yx3lExK0jaucdj+z9Atn7EqgzE6cbn+9mV2AGJ5gn4=
-=mUvB
------END PGP SIGNATURE-----
-
---OV+uEBO8NXGeJuvr--
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
