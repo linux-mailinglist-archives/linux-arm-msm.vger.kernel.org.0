@@ -2,68 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2B40502FBF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Apr 2022 22:24:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37564503186
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 01:10:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351984AbiDOU0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Apr 2022 16:26:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39090 "EHLO
+        id S1348243AbiDOVNK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Apr 2022 17:13:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352496AbiDOU0H (ORCPT
+        with ESMTP id S1353213AbiDOVNC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Apr 2022 16:26:07 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9F45DCAB6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Apr 2022 13:23:37 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id 12so9241619oix.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Apr 2022 13:23:37 -0700 (PDT)
+        Fri, 15 Apr 2022 17:13:02 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E9FF5EBDE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Apr 2022 14:10:27 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id h5so8563237pgc.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Apr 2022 14:10:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=eRleA2ofzoX2IeccF8Nd0DI1ypt5SFTqVlhM+d2F6FM=;
-        b=XnjjU3BEIFNFHO4V5/9HYSGf34YL0Ta6fBTy7JezgNXWtbJozrn2X+kKN3COKD/6Mw
-         0g3S/LZNC18iO903GQVANxofB3P2gEIFPUCr2SkDRQv7jDmkOctENUSmNJHkL21OK4vn
-         9KkZgrVxopxtNkwv/xa6n24eck21wdBeHGGoM=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=A2AI4pplq8y+1V8AY4LoXu1zsRUo+0KPIG/r7h38Ai8=;
+        b=d6Lcp1mmb5lvSHabXdMUO6rgO/E+hm6yhgZvoJHHJIeHRkbBWh3B5xvc4E6cjHoHyl
+         Xh7/6eSJP9teC05Ct8XOAMu5ZRAUj4zf24sa8KJ5runxH3awMzhVvMeVKC3qogi6tg2Q
+         Cl5hKQlt4CwXvDHkxaP11XFuVemS0ftRvUX78=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=eRleA2ofzoX2IeccF8Nd0DI1ypt5SFTqVlhM+d2F6FM=;
-        b=vF6fymkgu06AEAGYVbRYjlVQ+c4rEukIqsng1NEBXiqBk4tFv8qHkFMRNqHSUGM801
-         lwsJmWo8GkR+kaaPD90biyDP960NVuN73hKogdzDrIKGtVmdmXoJ+fmAXyh3j+CVaP8m
-         j41T6ocz2wA35mr4ZzhHOUXpi+cteN5K6Sf7nTP4eeX8G/Se9kZSuW6vvm1gpk+KAERt
-         vfRQns0xktZHLyk5d/vZMFPoa8GC9y5gvcmFn5wP1m0IWB/ZEQIUWVDU1qhHvamsjLpz
-         /b+qgfI6tPubSPh1Hj2Rth3g4KRTmEX69YRs780EfwLJNlf8wVIkFOYP61JzZP09CJHG
-         vlqg==
-X-Gm-Message-State: AOAM532794gAHkmFHZTCBJ9UTeCqNAL1JMdug52rVtiLkNy9nvWtV5au
-        sl6GANJszYGzPzh1pWvgA22S5CqEydwNuuunOtJYGQbSL28=
-X-Google-Smtp-Source: ABdhPJwl3Y2g621FA23XrMTwjotGB1KiG0Bug1QLCnjYGEe0Y+cwQI4zgqrP1VtkPaj+lMHht+J7CylHQEwxOjQVKCo=
-X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
- n62-20020acabd41000000b002ecff42814fmr290395oif.63.1650054217338; Fri, 15 Apr
- 2022 13:23:37 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 15 Apr 2022 13:23:36 -0700
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=A2AI4pplq8y+1V8AY4LoXu1zsRUo+0KPIG/r7h38Ai8=;
+        b=xsFMPV1O0nLr0AcMskB+hH8YfkSkEEqk2sjmrH8bZ8U1ZZe/nHKFfEmPMFcvdmhV8B
+         ar3CxqK0wOI7dgBAencvOE9W0Y5YwXd3a+uMk1saRbF8/br7kvpQNDCPSUqRC+bL44cC
+         +O7H3Ez2zUel4JAhp1c9GY87TLn/qNismIpZKG/fK0d9CsE6b5v1Hw+J72p/2pwH4WM+
+         jy08/L2xeh34hug2CSa4i94v+ghees7d6L8Svo6/dK576dOSA5GiO375KenVwC+6GAQC
+         Uy5wM33r6fqKNrWlDxD4gML24ghmGu/ZlEuNEO2VNrktsyMhIXfjonb7EHOlBptr6ISK
+         cHkA==
+X-Gm-Message-State: AOAM532S/C0ZJKDVUy6AO6TaT2UgDuEd+eofuG3UfWiCYDvzs1l5KCpG
+        nmglCISUgGQA+idgKVWn8+e9xw==
+X-Google-Smtp-Source: ABdhPJxYscLYKrQD1yLUGKWWVL2nrGynAlczX+I4wLahU1toXz5oJh3uy7J0GhdDCpqbcPSKF+N/1w==
+X-Received: by 2002:a63:dc44:0:b0:381:5720:88a5 with SMTP id f4-20020a63dc44000000b00381572088a5mr665257pgj.219.1650057026602;
+        Fri, 15 Apr 2022 14:10:26 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:b27a:b3e7:2e3e:e4be])
+        by smtp.gmail.com with UTF8SMTPSA id x6-20020a17090a294600b001cba3274bd0sm9350819pjf.28.2022.04.15.14.10.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Apr 2022 14:10:26 -0700 (PDT)
+Date:   Fri, 15 Apr 2022 14:10:23 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-gpio@vger.kernel.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v12 4/7] pinctrl: qcom: Update lpi pin group custiom
+ functions with framework generic functions
+Message-ID: <YlnfPzGQDVlUnRqX@google.com>
+References: <1647447426-23425-1-git-send-email-quic_srivasam@quicinc.com>
+ <1647447426-23425-5-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-In-Reply-To: <20220202053207.14256-1-tdas@codeaurora.org>
-References: <20220202053207.14256-1-tdas@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Fri, 15 Apr 2022 13:23:36 -0700
-Message-ID: <CAE-0n52T9Z+LS3KMVeSBsad=Em3e27J=rEzHTB0WS-b5M=owFQ@mail.gmail.com>
-Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio
- clock controllers
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1647447426-23425-5-git-send-email-quic_srivasam@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,47 +77,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2022-02-01 21:32:07)
-> Add the low pass audio clock controller device nodes.
->
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
->  * Fix unwanted extra spaces in reg property.
->  * Fix lpass_aon node clock phandle <&lpasscc> to <&lpasscore>
->
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 43 ++++++++++++++++++++++++++++
->  1 file changed, 43 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 937c2e0e93eb..0d8a0d9d0f89 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -1744,6 +1746,47 @@
->                         #clock-cells = <1>;
->                 };
->
-> +               lpass_audiocc: clock-controller@3300000 {
-> +                       compatible = "qcom,sc7280-lpassaudiocc";
-> +                       reg = <0 0x03300000 0 0x30000>;
-> +                       clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +                              <&lpass_aon LPASS_AON_CC_MAIN_RCG_CLK_SRC>;
-> +                       clock-names = "bi_tcxo", "lpass_aon_cc_main_rcg_clk_src";
-> +                       power-domains = <&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
-> +                       #clock-cells = <1>;
-> +                       #power-domain-cells = <1>;
-> +               };
-> +
-> +               lpass_aon: clock-controller@3380000 {
-> +                       compatible = "qcom,sc7280-lpassaoncc";
-> +                       reg = <0 0x03380000 0 0x30000>;
+On Wed, Mar 16, 2022 at 09:47:03PM +0530, Srinivasa Rao Mandadapu wrote:
+> Update custom pin group structure members with framework generic
+> group_desc structure and replace the driver's custom pinctrl_ops
+> with framework provided generic pin control group functions to avoid
+> redundant code written in lpass lpi driver.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 
-I see that this region overlaps with the third region of lpasscc@3000000
-in this file. That means the driver for this clk controller doesn't
-probe. I don't know what the correct fix is, but it's either remove this
-node and move the driver contents to lpasscc or remove the region from
-lpasscc and provide those clks from this node.
-
-> +                       clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +                              <&rpmhcc RPMH_CXO_CLK_A>,
-> +                              <&lpasscore LPASS_CORE_CC_CORE_CLK>;
-> +                       clock-names = "bi_tcxo", "bi_tcxo_ao", "iface";
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
