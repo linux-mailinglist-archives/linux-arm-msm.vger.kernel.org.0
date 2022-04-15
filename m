@@ -2,43 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ABAFB502938
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Apr 2022 13:59:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8430C502D3C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Apr 2022 17:44:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352964AbiDOMBH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Apr 2022 08:01:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33632 "EHLO
+        id S239553AbiDOPn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Apr 2022 11:43:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344977AbiDOMAF (ORCPT
+        with ESMTP id S1350085AbiDOPny (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Apr 2022 08:00:05 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28036A94D7;
-        Fri, 15 Apr 2022 04:57:20 -0700 (PDT)
-Received: from localhost.localdomain (abxj52.neoplus.adsl.tpnet.pl [83.9.3.52])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 8FB703F73B;
-        Fri, 15 Apr 2022 13:57:18 +0200 (CEST)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 23/23] ARM: dts: qcom-msm8974*: Remove unnecessary include
-Date:   Fri, 15 Apr 2022 13:56:33 +0200
-Message-Id: <20220415115633.575010-24-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.35.2
-In-Reply-To: <20220415115633.575010-1-konrad.dybcio@somainline.org>
-References: <20220415115633.575010-1-konrad.dybcio@somainline.org>
+        Fri, 15 Apr 2022 11:43:54 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE29E985B5;
+        Fri, 15 Apr 2022 08:41:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650037286; x=1681573286;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=vQmRn16K4xA0u142eDU+ulgweLDbuAZ9x7nuLXhsVcE=;
+  b=g4FESIKGlPDqRJFAWKHIi1BcUvn/lo6thijZFmpi9wPnjR8GuhytISiP
+   WJhX/PPFnMMYRcAQqQWe2OL5mTc+tIBDpfaaMEtZ7hJRL79HBuM4thn+W
+   Cg6DI37zNu5JCSdpEVCXxTxavQpiod6Y3VsaqHzSiKngXJoPgUes5gM0c
+   c=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 15 Apr 2022 08:41:25 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Apr 2022 08:41:25 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 15 Apr 2022 08:41:24 -0700
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 15 Apr 2022 08:41:23 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v6] drm/msm/dp: stop event kernel thread when DP unbind
+Date:   Fri, 15 Apr 2022 08:41:16 -0700
+Message-ID: <1650037276-27812-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -47,77 +66,136 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-gpio.h is already included in the SoC DTSI. Don't include it again.
+Current DP driver implementation, event thread is kept running
+after DP display is unbind. This patch fix this problem by disabling
+DP irq and stop event thread to exit gracefully at dp_display_unbind().
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Changes in v2:
+-- start event thread at dp_display_bind()
+
+Changes in v3:
+-- disable all HDP interrupts at unbind
+-- replace dp_hpd_event_setup() with dp_hpd_event_thread_start()
+-- replace dp_hpd_event_stop() with dp_hpd_event_thread_stop()
+-- move init_waitqueue_head(&dp->event_q) to probe()
+-- move spin_lock_init(&dp->event_lock) to probe()
+
+Changes in v4:
+-- relocate both dp_display_bind() and dp_display_unbind() to bottom of file
+
+Changes in v5:
+-- cancel relocation of both dp_display_bind() and dp_display_unbind()
+
+Changes in v5:
+-- move empty event q to dp_event_thread_start()
+
+Fixes: e91e3065a806 ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 ---
- arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts                 | 1 -
- arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts         | 1 -
- arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi            | 1 -
- arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts               | 1 -
- arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts | 1 -
- 5 files changed, 5 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 35 ++++++++++++++++++++++++++++-------
+ 1 file changed, 28 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts
-index 7ae0b15e50f9..2b9c5a87b014 100644
---- a/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts
-@@ -1,7 +1,6 @@
- #include "qcom-msm8974.dtsi"
- #include "qcom-pm8841.dtsi"
- #include "qcom-pm8941.dtsi"
--#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 01453db..92c9819 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -113,6 +113,7 @@ struct dp_display_private {
+ 	u32 hpd_state;
+ 	u32 event_pndx;
+ 	u32 event_gndx;
++	struct task_struct *ev_tsk;
+ 	struct dp_event event_list[DP_EVENT_Q_MAX];
+ 	spinlock_t event_lock;
  
-diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-index 52b3f055e834..9493886a5c0d 100644
---- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-@@ -2,7 +2,6 @@
- #include "qcom-msm8974.dtsi"
- #include "qcom-pm8841.dtsi"
- #include "qcom-pm8941.dtsi"
--#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+@@ -230,6 +231,14 @@ void dp_display_signal_audio_complete(struct msm_dp *dp_display)
+ 	complete_all(&dp->audio_comp);
+ }
  
-diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-index 91082d31f3c6..1d21de46f85c 100644
---- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-@@ -2,7 +2,6 @@
- #include "qcom-msm8974.dtsi"
- #include "qcom-pm8841.dtsi"
- #include "qcom-pm8941.dtsi"
--#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
++static void dp_hpd_event_thread_stop(struct dp_display_private *dp_priv)
++{
++	kthread_stop(dp_priv->ev_tsk);
++
++}
++
++static int dp_hpd_event_thread_start(struct dp_display_private *dp_priv);
++
+ static int dp_display_bind(struct device *dev, struct device *master,
+ 			   void *data)
+ {
+@@ -269,6 +278,7 @@ static int dp_display_bind(struct device *dev, struct device *master,
+ 	if (rc)
+ 		DRM_ERROR("Audio registration Dp failed\n");
  
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-index 7c7ad9e7baa6..312bb6989682 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-@@ -1,7 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include "qcom-msm8974pro.dtsi"
- #include "qcom-pma8084.dtsi"
--#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/leds/common.h>
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-index 465d01da9d69..34aed41856a6 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-@@ -1,7 +1,6 @@
- #include "qcom-msm8974pro.dtsi"
- #include "qcom-pm8841.dtsi"
- #include "qcom-pm8941.dtsi"
--#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
++	rc = dp_hpd_event_thread_start(dp);
+ end:
+ 	return rc;
+ }
+@@ -280,6 +290,9 @@ static void dp_display_unbind(struct device *dev, struct device *master,
+ 	struct drm_device *drm = dev_get_drvdata(master);
+ 	struct msm_drm_private *priv = drm->dev_private;
+ 
++	/* disable all HPD interrupts */
++	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, false);
++	dp_hpd_event_thread_stop(dp);
+ 	dp_power_client_deinit(dp->power);
+ 	dp_aux_unregister(dp->aux);
+ 	priv->dp[dp->id] = NULL;
+@@ -1054,7 +1067,7 @@ static int hpd_event_thread(void *data)
+ 
+ 	dp_priv = (struct dp_display_private *)data;
+ 
+-	while (1) {
++	while (!kthread_should_stop()) {
+ 		if (timeout_mode) {
+ 			wait_event_timeout(dp_priv->event_q,
+ 				(dp_priv->event_pndx == dp_priv->event_gndx),
+@@ -1132,12 +1145,19 @@ static int hpd_event_thread(void *data)
+ 	return 0;
+ }
+ 
+-static void dp_hpd_event_setup(struct dp_display_private *dp_priv)
++static int dp_hpd_event_thread_start(struct dp_display_private *dp_priv)
+ {
+-	init_waitqueue_head(&dp_priv->event_q);
+-	spin_lock_init(&dp_priv->event_lock);
++	/* set event q to empty */
++	dp_priv->event_gndx = 0;
++	dp_priv->event_pndx = 0;
++
++	dp_priv->ev_tsk = kthread_run(hpd_event_thread, dp_priv, "dp_hpd_handler");
++	if (IS_ERR(dp_priv->ev_tsk)) {
++		DRM_ERROR("failed to create DP event thread\n");
++		return PTR_ERR(dp_priv->ev_tsk);
++	}
+ 
+-	kthread_run(hpd_event_thread, dp_priv, "dp_hpd_handler");
++	return 0;
+ }
+ 
+ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
+@@ -1266,7 +1286,10 @@ static int dp_display_probe(struct platform_device *pdev)
+ 		return -EPROBE_DEFER;
+ 	}
+ 
++	/* setup event q */
+ 	mutex_init(&dp->event_mutex);
++	init_waitqueue_head(&dp->event_q);
++	spin_lock_init(&dp->event_lock);
+ 
+ 	/* Store DP audio handle inside DP display */
+ 	dp->dp_display.dp_audio = dp->audio;
+@@ -1441,8 +1464,6 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+ 
+ 	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 
+-	dp_hpd_event_setup(dp);
+-
+ 	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
+ }
  
 -- 
-2.35.2
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
