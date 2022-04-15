@@ -2,45 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0793950290B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Apr 2022 13:57:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EB4C502919
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Apr 2022 13:57:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352908AbiDOL7o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Apr 2022 07:59:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33636 "EHLO
+        id S1352826AbiDOL7q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Apr 2022 07:59:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352852AbiDOL7l (ORCPT
+        with ESMTP id S1352817AbiDOL7l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 15 Apr 2022 07:59:41 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0B1DA94D8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Apr 2022 04:57:06 -0700 (PDT)
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B392EB6D36
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Apr 2022 04:57:08 -0700 (PDT)
 Received: from localhost.localdomain (abxj52.neoplus.adsl.tpnet.pl [83.9.3.52])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id D75053F642;
-        Fri, 15 Apr 2022 13:57:03 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id B55953F639;
+        Fri, 15 Apr 2022 13:57:05 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
         angelogioacchino.delregno@somainline.org,
         marijn.suijten@somainline.org, jamipkettunen@somainline.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 15/23] ARM: dts: qcom-msm8974pro-*: Use the 8974pro name in DT filenames
-Date:   Fri, 15 Apr 2022 13:56:25 +0200
-Message-Id: <20220415115633.575010-16-konrad.dybcio@somainline.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 16/23] ARM: dts: qcom-msm8974: Convert ADSP to a MMIO device
+Date:   Fri, 15 Apr 2022 13:56:26 +0200
+Message-Id: <20220415115633.575010-17-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.35.2
 In-Reply-To: <20220415115633.575010-1-konrad.dybcio@somainline.org>
 References: <20220415115633.575010-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -48,44 +47,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the 'pro' part to the filenames of DTs of devices that are based on
-this SoC to make in easier to differentiate between Snapdragon 800- and
-801-based platforms.
+The cx-supply has been removed as it's supposed to be set on a
+per-board basis.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm/boot/dts/Makefile                                    | 4 ++--
- ...8974-samsung-klte.dts => qcom-msm8974pro-samsung-klte.dts} | 0
- ...tor.dts => qcom-msm8974pro-sony-xperia-shinano-castor.dts} | 0
- 3 files changed, 2 insertions(+), 2 deletions(-)
- rename arch/arm/boot/dts/{qcom-msm8974-samsung-klte.dts => qcom-msm8974pro-samsung-klte.dts} (100%)
- rename arch/arm/boot/dts/{qcom-msm8974-sony-xperia-shinano-castor.dts => qcom-msm8974pro-sony-xperia-shinano-castor.dts} (100%)
+ arch/arm/boot/dts/qcom-msm8974.dtsi | 60 ++++++++++++++---------------
+ 1 file changed, 30 insertions(+), 30 deletions(-)
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 91f630f4dbfd..51d72dcd1f45 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1009,10 +1009,10 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-msm8960-cdp.dtb \
- 	qcom-msm8974-fairphone-fp2.dtb \
- 	qcom-msm8974-lge-nexus5-hammerhead.dtb \
--	qcom-msm8974-samsung-klte.dtb \
- 	qcom-msm8974-sony-xperia-rhine-amami.dtb \
- 	qcom-msm8974-sony-xperia-rhine-honami.dtb \
--	qcom-msm8974-sony-xperia-shinano-castor.dtb \
-+	qcom-msm8974pro-samsung-klte.dtb \
-+	qcom-msm8974pro-sony-xperia-shinano-castor.dtb \
- 	qcom-mdm9615-wp8548-mangoh-green.dtb \
- 	qcom-sdx55-mtp.dtb \
- 	qcom-sdx55-t55.dtb \
-diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-similarity index 100%
-rename from arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-rename to arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-similarity index 100%
-rename from arch/arm/boot/dts/qcom-msm8974-sony-xperia-shinano-castor.dts
-rename to arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
+diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+index 3370d48e9ad9..32938cdd5497 100644
+--- a/arch/arm/boot/dts/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+@@ -339,36 +339,6 @@ timer {
+ 		clock-frequency = <19200000>;
+ 	};
+ 
+-	remoteproc_adsp: adsp-pil {
+-		compatible = "qcom,msm8974-adsp-pil";
+-
+-		interrupts-extended = <&intc GIC_SPI 162 IRQ_TYPE_EDGE_RISING>,
+-				      <&adsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+-				      <&adsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+-				      <&adsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+-				      <&adsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
+-		interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
+-
+-		cx-supply = <&pm8841_s2>;
+-
+-		clocks = <&xo_board>;
+-		clock-names = "xo";
+-
+-		memory-region = <&adsp_region>;
+-
+-		qcom,smem-states = <&adsp_smp2p_out 0>;
+-		qcom,smem-state-names = "stop";
+-
+-		smd-edge {
+-			interrupts = <GIC_SPI 156 IRQ_TYPE_EDGE_RISING>;
+-
+-			qcom,ipc = <&apcs 8 8>;
+-			qcom,smd-edge = <1>;
+-
+-			label = "lpass";
+-		};
+-	};
+-
+ 	smem {
+ 		compatible = "qcom,smem";
+ 
+@@ -1590,6 +1560,36 @@ dsi0_phy: dsi-phy@fd922a00 {
+ 			};
+ 		};
+ 
++		remoteproc_adsp: remoteproc@fe200000 {
++			compatible = "qcom,msm8974-adsp-pil";
++			reg = <0xfe200000 0x100>;
++
++			interrupts-extended = <&intc GIC_SPI 162 IRQ_TYPE_EDGE_RISING>,
++					       <&adsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					       <&adsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++					       <&adsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++					       <&adsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
++
++			clocks = <&xo_board>;
++			clock-names = "xo";
++
++			memory-region = <&adsp_region>;
++
++			qcom,smem-states = <&adsp_smp2p_out 0>;
++			qcom,smem-state-names = "stop";
++
++			smd-edge {
++				interrupts = <GIC_SPI 156 IRQ_TYPE_EDGE_RISING>;
++
++				qcom,ipc = <&apcs 8 8>;
++				qcom,smd-edge = <1>;
++				label = "lpass";
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
+ 		imem: imem@fe805000 {
+ 			status = "disabled";
+ 			compatible = "syscon", "simple-mfd";
 -- 
 2.35.2
 
