@@ -2,252 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DFEC5027AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Apr 2022 11:56:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52BFE502802
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Apr 2022 12:12:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348693AbiDOJ6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Apr 2022 05:58:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60436 "EHLO
+        id S244518AbiDOKOi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Apr 2022 06:14:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344507AbiDOJ6r (ORCPT
+        with ESMTP id S244407AbiDOKOi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Apr 2022 05:58:47 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5321641F8B;
-        Fri, 15 Apr 2022 02:56:19 -0700 (PDT)
+        Fri, 15 Apr 2022 06:14:38 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6729C64716;
+        Fri, 15 Apr 2022 03:12:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650016579; x=1681552579;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=VrpavvN2et/QbhRDrwGN8VySKZUqco0Hd4HKgd+WwoA=;
-  b=GGjArlmbOWcTwfpRMxMoyk/MYW4H+J4tdZluFSzsiXMnVBaa+85m5/Hn
-   hCZUI3mzY/9O6NCtbaDZjXSydtDWVXJIdcnpuhT6p0QQcuL4FSHvAIrYh
-   2cTTu6Bnk5jxQMolHcWsCN6cN7OtEJ2MOD/okCOP7fdXU8meYRX9HgEja
-   E=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 15 Apr 2022 02:56:19 -0700
+  t=1650017523; x=1681553523;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=5pXdM01tJL1u5tKNrKunaMj5efkzIJxLv+umr8WDHag=;
+  b=gdrAkGiPUPXmzMVxrNTgQbsR8NZjZXOP5GM9/njOt2Uqnef7igTfDN/G
+   3eWsNWKyrfjVtBmIJ5JTFNd/DXfy+ejcW9NAzR+IBPBhFlbeyNutY5GKR
+   4GrquoWBJikVyM59orO/aTYwKppqzanaNavC07pD6SZwdlA+1GxTmh+YL
+   I=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 15 Apr 2022 03:12:03 -0700
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Apr 2022 02:56:19 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Apr 2022 03:12:02 -0700
+Received: from zijuhu-gv.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 15 Apr 2022 02:56:18 -0700
-Received: from [10.239.133.9] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 15 Apr
- 2022 02:56:15 -0700
-Message-ID: <81aaa184-65f1-427a-5db8-da051f413845@quicinc.com>
-Date:   Fri, 15 Apr 2022 17:56:12 +0800
+ 15.2.986.22; Fri, 15 Apr 2022 03:12:00 -0700
+From:   Zijun Hu <quic_zijuhu@quicinc.com>
+To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>,
+        <luiz.dentz@gmail.com>
+CC:     <linux-kernel@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, Zijun Hu <quic_zijuhu@quicinc.com>
+Subject: [PATCH v2] Bluetooth: btusb: add support for Qualcomm WCN785x
+Date:   Fri, 15 Apr 2022 18:11:56 +0800
+Message-ID: <1650017516-28912-1-git-send-email-quic_zijuhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH v5 03/10] dt-bindings: arm: Adds CoreSight TPDM hardware
- definitions
-Content-Language: en-US
-To:     Mike Leach <mike.leach@linaro.org>
-CC:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20220412125035.40312-1-quic_jinlmao@quicinc.com>
- <20220412125035.40312-4-quic_jinlmao@quicinc.com>
- <CAJ9a7VjZiYN6g+gPZRgc4fJQCJYcSXrdzRfT+kAiK0cwRfm+iA@mail.gmail.com>
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <CAJ9a7VjZiYN6g+gPZRgc4fJQCJYcSXrdzRfT+kAiK0cwRfm+iA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mike,
+Qualcomm WCN785x has PID/VID 0cf3/e700 as shown by
+/sys/kernel/debug/usb/devices:
 
-On 4/14/2022 11:22 PM, Mike Leach wrote:
-> Hi,
->
-> On Tue, 12 Apr 2022 at 13:51, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
->> Adds new coresight-tpdm.yaml file describing the bindings required
->> to define tpdm in the device trees.
->>
->> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->> ---
->>   .../bindings/arm/coresight-tpdm.yaml          | 99 +++++++++++++++++++
->>   .../devicetree/bindings/arm/coresight.txt     |  7 ++
->>   MAINTAINERS                                   |  1 +
->>   3 files changed, 107 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml b/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
->> new file mode 100644
->> index 000000000000..05210e0fc262
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
->> @@ -0,0 +1,99 @@
->> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
->> +# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/arm/coresight-tpdm.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Trace, Profiling and Diagnostics Monitor - TPDM
->> +
->> +description: |
->> +  The TPDM or Monitor serves as data collection component for various dataset
->> +  types specified in the QPMDA spec. It covers Implementation defined ((ImplDef),
->> +  Basic Counts (BC), Tenure Counts (TC), Continuous Multi-Bit (CMB), and Discrete
->> +  Single Bit (DSB). It performs data collection in the data producing clock
->> +  domain and transfers it to the data collection time domain, generally ATB
->> +  clock domain.
->> +
->> +  The primary use case of the TPDM is to collect data from different data
->> +  sources and send it to a TPDA for packetization, timestamping, and funneling.
->> +
->> +maintainers:
->> +  - Suzuki K Poulose <suzuki.poulose@arm.com>
->> +  - Mathieu Poirier <mathieu.poirier@linaro.org>
->> +
-> These should be e-mail addresses of maintainers for this binding, not
-> the coresight sub-system.
-> See writing-schema.rst
-I will update.
->
->> +properties:
->> +  $nodename:
->> +    pattern: "^tpdm(@[0-9a-f]+)$"
->> +  compatible:
->> +    items:
->> +      - const: qcom,coresight-tpdm
->> +      - const: arm,primecell
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  clocks:
->> +    maxItems: 1
->> +
->> +  clock-names:
->> +   items:
->> +     - const: apb_pclk
->> +
->> +  out-ports:
->> +    description: |
->> +      Output connections from the TPDM to coresight funnle/tpda.
->> +    $ref: /schemas/graph.yaml#/properties/ports
->> +    properties:
->> +      port:
->> +        description: Output connection from the TPDM to coresight
->> +            funnel/tpda.
->> +        $ref: /schemas/graph.yaml#/properties/port
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - clocks
->> +  - clock-names
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  # minimum TPDM definition. TPDM connect to coresight funnel.
->> +  - |
->> +    tpdm@6980000 {
->> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
->> +      reg = <0x6980000 0x1000>;
->> +
->> +      clocks = <&aoss_qmp>;
->> +      clock-names = "apb_pclk";
->> +
->> +      out-ports {
->> +        port {
->> +          tpdm_turing_out_funnel_turing: endpoint {
->> +            remote-endpoint =
->> +              <&funnel_turing_in_tpdm_turing>;
->> +          };
->> +        };
->> +      };
->> +    };
->> +  # minimum TPDM definition. TPDM connect to coresight TPDA.
->> +  - |
->> +    tpdm@684c000 {
->> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
->> +      reg = <0x684c000 0x1000>;
->> +
->> +      clocks = <&aoss_qmp>;
->> +      clock-names = "apb_pclk";
->> +
->> +      out-ports {
->> +        port {
->> +          tpdm_prng_out_tpda_qdss: endpoint {
->> +            remote-endpoint =
->> +              <&tpda_qdss_in_tpdm_prng>;
->> +          };
->> +        };
->> +      };
->> +    };
->> +
->> +...
->> diff --git a/Documentation/devicetree/bindings/arm/coresight.txt b/Documentation/devicetree/bindings/arm/coresight.txt
->> index c68d93a35b6c..f7ce8af48574 100644
->> --- a/Documentation/devicetree/bindings/arm/coresight.txt
->> +++ b/Documentation/devicetree/bindings/arm/coresight.txt
->> @@ -52,6 +52,10 @@ its hardware characteristcs.
->>                          "arm,coresight-cti", "arm,primecell";
->>                          See coresight-cti.yaml for full CTI definitions.
->>
->> +               - Trace, Profiling and Diagnostics Monitor (TPDM):
->> +                       "qcom,coresight-tpdm", "arm,primecell";
->> +                       See coresight-tpdm.yaml for full TPDM definitions.
->> +
->>          * reg: physical base address and length of the register
->>            set(s) of the component.
->>
->> @@ -82,6 +86,9 @@ its hardware characteristcs.
->>   * Required properties for Coresight Cross Trigger Interface (CTI)
->>          See coresight-cti.yaml for full CTI definitions.
->>
->> +* Required properties for Trace, Profiling and Diagnostics Monitor (TPDM)
->> +       See coresight-tpdm.yaml for full TPDM definitions.
->> +
->>   * Required properties for devices that don't show up on the AMBA bus, such as
->>     non-configurable replicators and non-configurable funnels:
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 61d9f114c37f..0d39bb37935d 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -1977,6 +1977,7 @@ T:        git git://git.kernel.org/pub/scm/linux/kernel/git/coresight/linux.git
->>   F:     Documentation/ABI/testing/sysfs-bus-coresight-devices-*
->>   F:     Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
->>   F:     Documentation/devicetree/bindings/arm/coresight-cti.yaml
->> +F:     Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
->>   F:     Documentation/devicetree/bindings/arm/coresight.txt
->>   F:     Documentation/devicetree/bindings/arm/ete.yaml
->>   F:     Documentation/devicetree/bindings/arm/trbe.yaml
->> --
->> 2.17.1
->>
-> With the above:
-> Reviewed by: Mike Leach <mike.leach@linaro.org>
+T:  Bus=02 Lev=02 Prnt=02 Port=01 Cnt=02 Dev#=  8 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0cf3 ProdID=e700 Rev= 0.01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+---
+ drivers/bluetooth/btusb.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 06a854a2507e..67a6a84a6f61 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -317,6 +317,11 @@ static const struct usb_device_id blacklist_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH |
+ 						     BTUSB_VALID_LE_STATES },
+ 
++	/* QCA WCN785x chipset */
++	{ USB_DEVICE(0x0cf3, 0xe700), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH |
++						     BTUSB_VALID_LE_STATES },
++
+ 	/* Broadcom BCM2035 */
+ 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
+ 	{ USB_DEVICE(0x0a5c, 0x200a), .driver_info = BTUSB_WRONG_SCO_MTU },
+@@ -3037,6 +3042,7 @@ static const struct qca_device_info qca_devices_table[] = {
+ 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
+ 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
+ 	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
++	{ 0x00190200, 40, 4, 16 }, /* WCN785x 2.0 */
+ };
+ 
+ static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+@@ -3327,11 +3333,11 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+ 		if (err < 0)
+ 			return err;
+ 
+-		/* WCN6855 2.1 will reset to apply firmware downloaded here, so
++		/* WCN6855 2.1 and later will reset to apply firmware downloaded here, so
+ 		 * wait ~100ms for reset Done then go ahead, otherwise, it maybe
+ 		 * cause potential enable failure.
+ 		 */
+-		if (info->rom_version == 0x00130201)
++		if ((info->rom_version == 0x00130201) || (info->rom_version == 0x00190200))
+ 			msleep(QCA_BT_RESET_WAIT_MS);
+ 	}
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+
