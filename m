@@ -2,107 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E323A5034CA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 09:49:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29ABC503591
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 11:12:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230149AbiDPHwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Apr 2022 03:52:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43288 "EHLO
+        id S229845AbiDPJPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Apr 2022 05:15:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230160AbiDPHwB (ORCPT
+        with ESMTP id S229837AbiDPJPG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Apr 2022 03:52:01 -0400
-Received: from mail-il1-x144.google.com (mail-il1-x144.google.com [IPv6:2607:f8b0:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADAAFFFF86
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 00:49:27 -0700 (PDT)
-Received: by mail-il1-x144.google.com with SMTP id h4so5893426ilq.8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 00:49:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=KeMi8W+p20zdR41YZoRj2EapY7imNsLYkAgQIQsIzqY=;
-        b=bJd2DIgtyK+bZCVQpMa9XLiI7bVnFQgVFeGzbZ6bXamjrEFIUCNaIDR9YpvR5iTRQC
-         EoRjHn2hxdGgHpTmUXoJLhLdkz8kw8CpdMkf+RjOM2yxgJf0M2w5tnzpw0NiczM9cGQm
-         aTRY2J48j2+AVBVM6ZplapTERLwB7sqpQHn0KTPy+GATyEE1HlWbU25nZewZyTln9PiO
-         eb2iuPe3VcoLkYjZ6tmC44EeIcF1BzRiek/y+/+gg720T1wEvd/5m2iOgdTIUS3isI5Z
-         q2z1OdX/gYACU6OexrbNcXzEKBC+MKUq0Bm7V68HpmeyS3D5tFhEEP1iOfnkPKJo7x6w
-         XtNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=KeMi8W+p20zdR41YZoRj2EapY7imNsLYkAgQIQsIzqY=;
-        b=Y81HHhieipOd+9qJ1SLdrpQbjoMsLgtH7Z0NRXwS0aTMt/Co0t4+rtb5CLBtTNmzKk
-         bayCl9pM6myctLaHmsgheq3SVND3Kdld34TAGikpsLqqXvY7y0HqfmntAA1fLH4zgSnC
-         QNVgH05rWKygepmXMM77IwvzeuRVGCAqAUTKHyZJsuv8NHX0wXnnekmQ2cDZZ2zPByeN
-         Bc8EzADmFPgLK56F/4hqFKRb3M5G6T3o+MJM4Fg2WzC9bb6g6vXxhA44/5gZADX798nr
-         wXczhQzVXJa0LLDeOJBcNDadpYnwVYIV7cSiHHoXxZ3IasUcyXCQJ741VD/Skztyl44W
-         7dCg==
-X-Gm-Message-State: AOAM5325EDK0LnLZnfPKbDcvhFEXsDcBfP81k5ehhllF2latgSCoBbbB
-        9iiOhNKEtemZYCniztQyb3XPBIU9tRa7dKCSpGU=
-X-Google-Smtp-Source: ABdhPJzPQ782jxaaybf4v05kBQtFRTzv0MMrux20NcZ4Q10XmGrK6dnUIabFDBNBmBOv8fFyQY5zqzYAgf4Cnc3KaCc=
-X-Received: by 2002:a92:508:0:b0:2cb:ebd8:a76b with SMTP id
- q8-20020a920508000000b002cbebd8a76bmr1009500ile.156.1650095366830; Sat, 16
- Apr 2022 00:49:26 -0700 (PDT)
+        Sat, 16 Apr 2022 05:15:06 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EB245F5A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 02:12:34 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 4F2AC3F66F;
+        Sat, 16 Apr 2022 11:12:31 +0200 (CEST)
+Date:   Sat, 16 Apr 2022 11:12:29 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org,
+        Dan Carpenter <dan.carpenter@oracle.com>
+Subject: Re: drm/msm/dsi: fix error checks and return values for DSI xmit
+ functions
+Message-ID: <20220416091229.pwek4wblroaabhio@SoMainline.org>
+References: <20220401231104.967193-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Received: by 2002:a05:6638:1309:0:0:0:0 with HTTP; Sat, 16 Apr 2022 00:49:26
- -0700 (PDT)
-Reply-To: daniel.seyba@yahoo.com
-From:   Seyba Daniel <royhalton13@gmail.com>
-Date:   Sat, 16 Apr 2022 09:49:26 +0200
-Message-ID: <CALSxb2w9zQYotuLcRSCPns53ksvT9UrEMVx-1Cp1f8RE7er3cA@mail.gmail.com>
-Subject: Hello,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:144 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5001]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [royhalton13[at]gmail.com]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [royhalton13[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.7 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220401231104.967193-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+Hi Dmitry,
 
-I am so sorry contacting you in this means especially when we have never
-met before. I urgently seek your service to represent me in investing in
-your region / country and you will be rewarded for your service without
-affecting your present job with very little time invested in it.
+On 2022-04-02 02:11:04, Dmitry Baryshkov wrote:
+> As noticed by Dan ([1] an the followup thread) there are multiple issues
+> with the return values for MSM DSI command transmission callback. In
+> the error case it can easily return a positive value when it should
+> have returned a proper error code.
+> 
+> This commits attempts to fix these issues both in TX and in RX paths.
+> 
+> [1]: https://lore.kernel.org/linux-arm-msm/20211001123617.GH2283@kili/
+> 
+> Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
+> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-My interest is in buying real estate, private schools or companies with
-potentials for rapid growth in long terms.
+Thank you for your patience waiting for the requested tests; this patch
+seems to have no adverse effect on our cmdmode panels.
 
-So please confirm interest by responding back.
+Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-My dearest regards
+On the following devices:
+- Sony Xperia X (Loire Suzu, MSM8976), on Linux 5.17;
+- Sony Xperia 10 II (Seine PDX201, SM6125), on -next 20220318;
+- Sony Xperia XA2 Ultra (Nile Discovery, SDM630), on Linux 5.16.
 
-Seyba Daniel
+Apologies for the older kernel versions, that's what happens when having
+too many patches to dig through and too little hobby time to send them.
+Let me know if there's a patch dependency that you like to be included.
+
+- Marijn
+
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 21 ++++++++++++++-------
+>  1 file changed, 14 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index d51e70fab93d..8925f60fd9ec 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -1341,10 +1341,10 @@ static int dsi_cmds2buf_tx(struct msm_dsi_host *msm_host,
+>  			dsi_get_bpp(msm_host->format) / 8;
+>  
+>  	len = dsi_cmd_dma_add(msm_host, msg);
+> -	if (!len) {
+> +	if (len < 0) {
+>  		pr_err("%s: failed to add cmd type = 0x%x\n",
+>  			__func__,  msg->type);
+> -		return -EINVAL;
+> +		return len;
+>  	}
+>  
+>  	/* for video mode, do not send cmds more than
+> @@ -1363,10 +1363,14 @@ static int dsi_cmds2buf_tx(struct msm_dsi_host *msm_host,
+>  	}
+>  
+>  	ret = dsi_cmd_dma_tx(msm_host, len);
+> -	if (ret < len) {
+> -		pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, len=%d\n",
+> -			__func__, msg->type, (*(u8 *)(msg->tx_buf)), len);
+> -		return -ECOMM;
+> +	if (ret < 0) {
+> +		pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, len=%d, ret=%d\n",
+> +			__func__, msg->type, (*(u8 *)(msg->tx_buf)), len, ret);
+> +		return ret;
+> +	} else if (ret < len) {
+> +		pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, ret=%d len=%d\n",
+> +			__func__, msg->type, (*(u8 *)(msg->tx_buf)), ret, len);
+> +		return -EIO;
+>  	}
+>  
+>  	return len;
+> @@ -2092,9 +2096,12 @@ int msm_dsi_host_cmd_rx(struct mipi_dsi_host *host,
+>  		}
+>  
+>  		ret = dsi_cmds2buf_tx(msm_host, msg);
+> -		if (ret < msg->tx_len) {
+> +		if (ret < 0) {
+>  			pr_err("%s: Read cmd Tx failed, %d\n", __func__, ret);
+>  			return ret;
+> +		} else if (ret < msg->tx_len) {
+> +			pr_err("%s: Read cmd Tx failed, too short: %d\n", __func__, ret);
+> +			return -ECOMM;
+>  		}
+>  
+>  		/*
