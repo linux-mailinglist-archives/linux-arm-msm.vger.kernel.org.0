@@ -2,138 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29ABC503591
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 11:12:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6356A503752
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 17:40:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229845AbiDPJPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Apr 2022 05:15:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36514 "EHLO
+        id S232425AbiDPPnA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Apr 2022 11:43:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229837AbiDPJPG (ORCPT
+        with ESMTP id S229891AbiDPPm7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Apr 2022 05:15:06 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EB245F5A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 02:12:34 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 4F2AC3F66F;
-        Sat, 16 Apr 2022 11:12:31 +0200 (CEST)
-Date:   Sat, 16 Apr 2022 11:12:29 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org,
-        Dan Carpenter <dan.carpenter@oracle.com>
-Subject: Re: drm/msm/dsi: fix error checks and return values for DSI xmit
- functions
-Message-ID: <20220416091229.pwek4wblroaabhio@SoMainline.org>
-References: <20220401231104.967193-1-dmitry.baryshkov@linaro.org>
+        Sat, 16 Apr 2022 11:42:59 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0986D4349C
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 08:40:27 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id t13so11259123pgn.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 08:40:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rmGiO08X0yEC4elXRkAdRalPc23L32HC464CcWqkvSQ=;
+        b=zU5WUq0XkuFzWaKAEZsCe9l09Fz1VCPVZgtigC0cBIhdxUqT1ZyNquREemeMXkT1v8
+         DwZvodCv8lIcWjL4dJZPatmR7Bb+qboehmyV6rPuCRecVHwio7ySS4b37BA8YHHI49uz
+         vZ83/4Qwfga+E4XfXfEDmWzV9JoHaB4y3svjtyuUrLDKm0Nhb61OG2RKs1KEmy40VXTY
+         J21rGFfiCaXi0Uh20/XVKjYN5cleV+czjVTEc98+lWF8sTL3Yu6VyUNI9brPvEEYiqgt
+         8IKvKKebzjL4a4g/VJifxJ30VyJ3WrBg43LV42Rb2/ngzfz7n7PORIRpsm24XMhI1aKH
+         Ezkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rmGiO08X0yEC4elXRkAdRalPc23L32HC464CcWqkvSQ=;
+        b=aR7d7BV6XBWoxojK2zmn9NXDGI3ClHCqZocuKfkTiahZwxo1wuvuHL5G4PPqMqhK7w
+         INFU4ymyNppy0d6rTGuRBr7/WYDCTWIaLglmqEpgXsvRMsB4WmZgG5IztOORofI5S3dh
+         xXbE2Pn+a0vyeLBCnnPkLcRi71vS1DNTzLB90aH3znFQNDPLGSqvmdK2x7b8FMs73yhQ
+         4sruOiwuyDFLn9dThyyNjwsn9hiWoGmxUjosTLHyRPW7lQiNBbfn/g4uMX//xrMeovxh
+         7Q86SwEOSv4OI/K07moPmwiuYQn7ueNCmEkMKsPJ8i/LycVwzSKypQs6NGxIlpzohBbH
+         Q66A==
+X-Gm-Message-State: AOAM531JAmswdjlnsi3gmBK7ONrcWCleiNeSdL1AoeCZvT0wLqSThoK7
+        Qg1wgg8LYlx106GpetKo7V1ejw==
+X-Google-Smtp-Source: ABdhPJwBAYLkiJ8r9Q6T/TfFVkAQPtSFDLa1AMnXZTVuLrztSziUCHqQSmOJ/9AYgib7OM/xqfcvsQ==
+X-Received: by 2002:a65:568b:0:b0:378:86b8:9426 with SMTP id v11-20020a65568b000000b0037886b89426mr3322626pgs.70.1650123626385;
+        Sat, 16 Apr 2022 08:40:26 -0700 (PDT)
+Received: from localhost.localdomain ([134.195.101.46])
+        by smtp.gmail.com with ESMTPSA id z16-20020a056a00241000b004f3a647ae89sm6358681pfh.174.2022.04.16.08.40.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 16 Apr 2022 08:40:25 -0700 (PDT)
+From:   Leo Yan <leo.yan@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Leo Yan <leo.yan@linaro.org>
+Subject: [PATCH v1 0/5] interconnect: qcom: icc-rpm: Support voting bucket
+Date:   Sat, 16 Apr 2022 23:40:08 +0800
+Message-Id: <20220416154013.1357444-1-leo.yan@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220401231104.967193-1-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_BL_SPAMCOP_NET,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+This patch set is to support bucket in icc-rpm driver, so it implements
+the similar mechanism in the icc-rpmh driver.
 
-On 2022-04-02 02:11:04, Dmitry Baryshkov wrote:
-> As noticed by Dan ([1] an the followup thread) there are multiple issues
-> with the return values for MSM DSI command transmission callback. In
-> the error case it can easily return a positive value when it should
-> have returned a proper error code.
-> 
-> This commits attempts to fix these issues both in TX and in RX paths.
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/20211001123617.GH2283@kili/
-> 
-> Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
-> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+We can use interconnect path tag to indicate the bandwidth voting is for
+which buckets, and there have three kinds of buckets: AWC, wake and
+sleep, finally the wake and sleep bucket values are used to set the
+corresponding clock (active and sleep clocks).  So far, we keep the AWC
+bucket but doesn't really use it.
 
-Thank you for your patience waiting for the requested tests; this patch
-seems to have no adverse effect on our cmdmode panels.
+Patches 01, 02, 03 enable interconnect path tag and update the DT
+binding document; patches 04 and 05 support bucket and use bucket values
+to set the bandwidth and clock rates.
 
-Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
+This patch set is dependent on another patch set "interconnect: qcom:
+icc-rpm: Fix setting clock rate" [1], and it has been tested on QCOM
+msm8939 platform.
 
-On the following devices:
-- Sony Xperia X (Loire Suzu, MSM8976), on Linux 5.17;
-- Sony Xperia 10 II (Seine PDX201, SM6125), on -next 20220318;
-- Sony Xperia XA2 Ultra (Nile Discovery, SDM630), on Linux 5.16.
+[1] https://lore.kernel.org/lkml/20220416031029.693211-1-leo.yan@linaro.org/
 
-Apologies for the older kernel versions, that's what happens when having
-too many patches to dig through and too little hobby time to send them.
-Let me know if there's a patch dependency that you like to be included.
 
-- Marijn
+Leo Yan (5):
+  dt-bindings: interconnect: Update property for icc-rpm path tag
+  interconnect: qcom: Move qcom_icc_xlate_extended() to a common file
+  interconnect: qcom: icc-rpm: Change to use qcom_icc_xlate_extended()
+  interconnect: qcom: icc-rpm: Support multiple buckets
+  interconnect: qcom: icc-rpm: Set bandwidth and clock for bucket values
 
-> ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 21 ++++++++++++++-------
->  1 file changed, 14 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index d51e70fab93d..8925f60fd9ec 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -1341,10 +1341,10 @@ static int dsi_cmds2buf_tx(struct msm_dsi_host *msm_host,
->  			dsi_get_bpp(msm_host->format) / 8;
->  
->  	len = dsi_cmd_dma_add(msm_host, msg);
-> -	if (!len) {
-> +	if (len < 0) {
->  		pr_err("%s: failed to add cmd type = 0x%x\n",
->  			__func__,  msg->type);
-> -		return -EINVAL;
-> +		return len;
->  	}
->  
->  	/* for video mode, do not send cmds more than
-> @@ -1363,10 +1363,14 @@ static int dsi_cmds2buf_tx(struct msm_dsi_host *msm_host,
->  	}
->  
->  	ret = dsi_cmd_dma_tx(msm_host, len);
-> -	if (ret < len) {
-> -		pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, len=%d\n",
-> -			__func__, msg->type, (*(u8 *)(msg->tx_buf)), len);
-> -		return -ECOMM;
-> +	if (ret < 0) {
-> +		pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, len=%d, ret=%d\n",
-> +			__func__, msg->type, (*(u8 *)(msg->tx_buf)), len, ret);
-> +		return ret;
-> +	} else if (ret < len) {
-> +		pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, ret=%d len=%d\n",
-> +			__func__, msg->type, (*(u8 *)(msg->tx_buf)), ret, len);
-> +		return -EIO;
->  	}
->  
->  	return len;
-> @@ -2092,9 +2096,12 @@ int msm_dsi_host_cmd_rx(struct mipi_dsi_host *host,
->  		}
->  
->  		ret = dsi_cmds2buf_tx(msm_host, msg);
-> -		if (ret < msg->tx_len) {
-> +		if (ret < 0) {
->  			pr_err("%s: Read cmd Tx failed, %d\n", __func__, ret);
->  			return ret;
-> +		} else if (ret < msg->tx_len) {
-> +			pr_err("%s: Read cmd Tx failed, too short: %d\n", __func__, ret);
-> +			return -ECOMM;
->  		}
->  
->  		/*
+ .../bindings/interconnect/qcom,rpm.yaml       |   2 +-
+ drivers/interconnect/qcom/Makefile            |   3 +
+ drivers/interconnect/qcom/icc-common.c        |  34 +++++
+ drivers/interconnect/qcom/icc-common.h        |  13 ++
+ drivers/interconnect/qcom/icc-rpm.c           | 134 ++++++++++++++++--
+ drivers/interconnect/qcom/icc-rpm.h           |   6 +
+ drivers/interconnect/qcom/icc-rpmh.c          |  26 +---
+ drivers/interconnect/qcom/icc-rpmh.h          |   1 -
+ drivers/interconnect/qcom/sm8450.c            |   1 +
+ 9 files changed, 178 insertions(+), 42 deletions(-)
+ create mode 100644 drivers/interconnect/qcom/icc-common.c
+ create mode 100644 drivers/interconnect/qcom/icc-common.h
+
+-- 
+2.25.1
+
