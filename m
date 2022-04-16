@@ -2,146 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A7C48503369
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 07:48:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E323A5034CA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 09:49:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229946AbiDPDNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Apr 2022 23:13:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54494 "EHLO
+        id S230149AbiDPHwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Apr 2022 03:52:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229967AbiDPDNS (ORCPT
+        with ESMTP id S230160AbiDPHwB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Apr 2022 23:13:18 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6BDC11BE74
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Apr 2022 20:10:46 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id i24-20020a17090adc1800b001cd5529465aso8364197pjv.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Apr 2022 20:10:46 -0700 (PDT)
+        Sat, 16 Apr 2022 03:52:01 -0400
+Received: from mail-il1-x144.google.com (mail-il1-x144.google.com [IPv6:2607:f8b0:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADAAFFFF86
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 00:49:27 -0700 (PDT)
+Received: by mail-il1-x144.google.com with SMTP id h4so5893426ilq.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 00:49:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ifMOAfHLNN7DfaZZqh9MgNejy76ce9ngnv0s3Ahi1Mg=;
-        b=ggfdvgfSjlld23cULp92DrBodIrBWoYraPLq+y0nf51pyOxV23MK6HA7k5KLqVjHAP
-         1gzmHtMPYeMczmgRqby0gDpH5lF3PAz8JPHRsoomma1Ky3zqd9eZPikkyfAr2nTarEg9
-         nc1/8HoiQ4pjnGisNsqivEqysPJ9wsW1KpUa1cbS+q2LM47CAaODl2A7NIQIobEhO/vt
-         eBXhr67bSojdbdKfwVwKfTWS4g9la8y3nvex8LJ1VGVZXjXCRzl4Jh0ZoVUpkYoUQbE9
-         LJP9hfLwdADTNt+gqBb6ovzSJuLRxX/tsKh44dVugIRf89D9jNrYTygA2GqcUc9whaN0
-         97Dg==
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=KeMi8W+p20zdR41YZoRj2EapY7imNsLYkAgQIQsIzqY=;
+        b=bJd2DIgtyK+bZCVQpMa9XLiI7bVnFQgVFeGzbZ6bXamjrEFIUCNaIDR9YpvR5iTRQC
+         EoRjHn2hxdGgHpTmUXoJLhLdkz8kw8CpdMkf+RjOM2yxgJf0M2w5tnzpw0NiczM9cGQm
+         aTRY2J48j2+AVBVM6ZplapTERLwB7sqpQHn0KTPy+GATyEE1HlWbU25nZewZyTln9PiO
+         eb2iuPe3VcoLkYjZ6tmC44EeIcF1BzRiek/y+/+gg720T1wEvd/5m2iOgdTIUS3isI5Z
+         q2z1OdX/gYACU6OexrbNcXzEKBC+MKUq0Bm7V68HpmeyS3D5tFhEEP1iOfnkPKJo7x6w
+         XtNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ifMOAfHLNN7DfaZZqh9MgNejy76ce9ngnv0s3Ahi1Mg=;
-        b=B9FFl0UvUlAVLB62ZncDZGTpVnEuPhh2nYFCxU+V7AjgSxXPzGWHfytKmehDoopqN0
-         PnLjHk5Hfygo5WaylgbjNSVxMglJY7qJEs3oqe1ff/FnqrAyHyCXAmw1TwuKO5J1ltpv
-         7IkkZ84qOAlkT9JzAgQ3F5QzGv8Uqu+hisvrfIVRyjPp2wKMWPvImLkiyEVVBD0qLRze
-         ttgj8coYP6aK7XslYLK2qG26oc7zv2U0P/o/ifJgbEAOQIE5hXMaMcXEjGjzDrApNBBW
-         FHTOfIc4R/mskLk62kb2+nmYTTQKfTJaajngmdN75nbtA6pRnsjs7Uy95IhgvoWDT/V1
-         Pw5A==
-X-Gm-Message-State: AOAM531wjWSCKL0C72vay8kceLi2xwiFm62VgthVdnePfuYhmYKOOt1M
-        V/LfjgcnnTfcgNMBJMuIzF3lHA==
-X-Google-Smtp-Source: ABdhPJzNYBTinusU0OgY+Velu6hlMRdEzPZKTz9Hw5w+nSmt9+1pZS1W+li8ZfZzaqFPQxNZwKU8cQ==
-X-Received: by 2002:a17:902:8347:b0:158:9224:1a80 with SMTP id z7-20020a170902834700b0015892241a80mr1919291pln.23.1650078646345;
-        Fri, 15 Apr 2022 20:10:46 -0700 (PDT)
-Received: from localhost.localdomain ([134.195.101.46])
-        by smtp.gmail.com with ESMTPSA id f33-20020a631021000000b0039dbae3fce0sm5719120pgl.43.2022.04.15.20.10.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Apr 2022 20:10:45 -0700 (PDT)
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Leo Yan <leo.yan@linaro.org>
-Subject: [PATCH v1 2/2] interconnect: qcom: icc-rpm: Cache every clock rate
-Date:   Sat, 16 Apr 2022 11:10:29 +0800
-Message-Id: <20220416031029.693211-3-leo.yan@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220416031029.693211-1-leo.yan@linaro.org>
-References: <20220416031029.693211-1-leo.yan@linaro.org>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=KeMi8W+p20zdR41YZoRj2EapY7imNsLYkAgQIQsIzqY=;
+        b=Y81HHhieipOd+9qJ1SLdrpQbjoMsLgtH7Z0NRXwS0aTMt/Co0t4+rtb5CLBtTNmzKk
+         bayCl9pM6myctLaHmsgheq3SVND3Kdld34TAGikpsLqqXvY7y0HqfmntAA1fLH4zgSnC
+         QNVgH05rWKygepmXMM77IwvzeuRVGCAqAUTKHyZJsuv8NHX0wXnnekmQ2cDZZ2zPByeN
+         Bc8EzADmFPgLK56F/4hqFKRb3M5G6T3o+MJM4Fg2WzC9bb6g6vXxhA44/5gZADX798nr
+         wXczhQzVXJa0LLDeOJBcNDadpYnwVYIV7cSiHHoXxZ3IasUcyXCQJ741VD/Skztyl44W
+         7dCg==
+X-Gm-Message-State: AOAM5325EDK0LnLZnfPKbDcvhFEXsDcBfP81k5ehhllF2latgSCoBbbB
+        9iiOhNKEtemZYCniztQyb3XPBIU9tRa7dKCSpGU=
+X-Google-Smtp-Source: ABdhPJzPQ782jxaaybf4v05kBQtFRTzv0MMrux20NcZ4Q10XmGrK6dnUIabFDBNBmBOv8fFyQY5zqzYAgf4Cnc3KaCc=
+X-Received: by 2002:a92:508:0:b0:2cb:ebd8:a76b with SMTP id
+ q8-20020a920508000000b002cbebd8a76bmr1009500ile.156.1650095366830; Sat, 16
+ Apr 2022 00:49:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Received: by 2002:a05:6638:1309:0:0:0:0 with HTTP; Sat, 16 Apr 2022 00:49:26
+ -0700 (PDT)
+Reply-To: daniel.seyba@yahoo.com
+From:   Seyba Daniel <royhalton13@gmail.com>
+Date:   Sat, 16 Apr 2022 09:49:26 +0200
+Message-ID: <CALSxb2w9zQYotuLcRSCPns53ksvT9UrEMVx-1Cp1f8RE7er3cA@mail.gmail.com>
+Subject: Hello,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:144 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5001]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [royhalton13[at]gmail.com]
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [royhalton13[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.7 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The cached clock rate is used for all bus clocks, thus it has the
-assumption that all interconnect clock rates are always same, this
-causes trouble if we want to set different clock rates separately.
+Hello,
 
-This patch is to allocate a clock rate array to cache every clock
-rate.
+I am so sorry contacting you in this means especially when we have never
+met before. I urgently seek your service to represent me in investing in
+your region / country and you will be rewarded for your service without
+affecting your present job with very little time invested in it.
 
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
----
- drivers/interconnect/qcom/icc-rpm.c | 14 +++++++++-----
- drivers/interconnect/qcom/icc-rpm.h |  2 +-
- 2 files changed, 10 insertions(+), 6 deletions(-)
+My interest is in buying real estate, private schools or companies with
+potentials for rapid growth in long terms.
 
-diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-index e0309e246523..45d23aaeabf6 100644
---- a/drivers/interconnect/qcom/icc-rpm.c
-+++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -274,20 +274,19 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 	do_div(rate, qn->buswidth);
- 	rate = min_t(u64, rate, LONG_MAX);
- 
--	if (qp->bus_clk_rate == rate)
--		return 0;
--
- 	for (i = 0; i < qp->num_clks; i++) {
-+		if (qp->bus_clk_rate[i] == rate)
-+			continue;
-+
- 		ret = clk_set_rate(qp->bus_clks[i].clk, rate);
- 		if (ret) {
- 			pr_err("%s clk_set_rate error: %d\n",
- 			       qp->bus_clks[i].id, ret);
- 			return ret;
- 		}
-+		qp->bus_clk_rate[i] = rate;
- 	}
- 
--	qp->bus_clk_rate = rate;
--
- 	return 0;
- }
- 
-@@ -332,6 +331,11 @@ int qnoc_probe(struct platform_device *pdev)
- 	if (!qp)
- 		return -ENOMEM;
- 
-+	qp->bus_clk_rate = devm_kcalloc(dev, cd_num, sizeof(*qp->bus_clk_rate),
-+					GFP_KERNEL);
-+	if (!qp->bus_clk_rate)
-+		return -ENOMEM;
-+
- 	data = devm_kzalloc(dev, struct_size(data, nodes, num_nodes),
- 			    GFP_KERNEL);
- 	if (!data)
-diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
-index 4457fcc5b84c..f6c4ac960102 100644
---- a/drivers/interconnect/qcom/icc-rpm.h
-+++ b/drivers/interconnect/qcom/icc-rpm.h
-@@ -34,7 +34,7 @@ struct qcom_icc_provider {
- 	enum qcom_icc_type type;
- 	struct regmap *regmap;
- 	unsigned int qos_offset;
--	u64 bus_clk_rate;
-+	u64 *bus_clk_rate;
- 	struct clk_bulk_data bus_clks[];
- };
- 
--- 
-2.25.1
+So please confirm interest by responding back.
 
+My dearest regards
+
+Seyba Daniel
