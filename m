@@ -2,212 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6B1A503761
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 17:41:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86DFC5037D0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 20:10:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232484AbiDPPn0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Apr 2022 11:43:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47054 "EHLO
+        id S232742AbiDPSNL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Apr 2022 14:13:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232490AbiDPPnY (ORCPT
+        with ESMTP id S230302AbiDPSNK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Apr 2022 11:43:24 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D460F43AEA
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 08:40:49 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id 125so11258252pgc.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 08:40:49 -0700 (PDT)
+        Sat, 16 Apr 2022 14:13:10 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 494365E74A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 11:10:38 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-2edbd522c21so108292917b3.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 11:10:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=U5d0zYZ5+/Tkvm61fQS6okbc7Mh/5Bl30pRUEHW+V10=;
-        b=oSFmSrkpPKvO9fbkYCk3UdWDdX/mtlRloZeotCBLoIWSWfHiAKegibFwinUMtfz1qB
-         shDnTy0WmJClr2IOacTGrFkl022+olnKdy18nMYZlMalZLe3Oc8l8pk/f9uAzbjvNTRO
-         53ZMPSQ/efIO3yZ+V4WJjzFpZZOymdo2Ysx5IydbOC5xMTGVamcpVsWK2uZEtyBz8DEQ
-         GOP7ukqmu93EdT2IHOKwXF+vgB5Hlgboy4sHZuzXiKnNEE666nd6ny/pUhh4bgDxior0
-         QDGhSUhrQrxl41zX0OtLomtHsQD5n0wS9SC9EtL/P1Zcv7UfNBcwfPhVcH5MQflsa6no
-         VWDA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TQyXa5N+5U7AWUvtU85FavtGdfF9qIW7BLvXU5Z3KBE=;
+        b=Vc0OiWKy7tLZQQEjqbdvpH5yJuYoNbTVn4rHHJX6BWbtkR5qJ2IxK8UY4IqUdmX1li
+         K2CrzBj7y+L0HRRFaRekYP4oQdmuHvLXGvTFpIrLF+rIkTYnRVePa4pDPwSbuTblt7/Z
+         n0RVgnNoKDU67iRf6gzyq9jVQfk1NlH7xBp/wHf2JoMqWu1fv3vZUiMESmBDaeq2yBFz
+         V6bADInIXHmEBA/49EfFyl5hQ2zUv60d7RNIfZpnezBwykBLgjEIBqOWGTjmSI5cKjrj
+         MVPw2EKPOjX4hjvAa9kneqMm+gIcR/JbO199SotXZ3pyJbrDkwtWFLx3WyR+Mbo+JDfa
+         J+VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=U5d0zYZ5+/Tkvm61fQS6okbc7Mh/5Bl30pRUEHW+V10=;
-        b=uPDenQLknL9XexDsXGfuyZDZNXT99aDRYCC/3fnIDu0wSTZQlAJ9BbrO392Tlalued
-         8Q/r2r6PKbd8UzEt/LfaDvfL94zO9Ag64lOLIPu2e4XpswNbz9gUiPOnrXnjManq7xqs
-         mGNI3VfE1MA2Bg9eEn1V7soKbUC7Tv4qUpiC+xJ8dz3cZNjGwCffPXJ5mgkoRiqK7EK3
-         db/KyqnCLGJu3fYntRTvB0RLUp5G2khz9Sl18Z6SHgtbcM7lRA9GY7dmGr9qsEq3NbsB
-         Q4uCNcxHgmxxO7ZJwQGP5u5P5rb5jByoI/v+1L8tEm/tifWUwjWjFiNPXm2KZ4x9tVOW
-         5MOQ==
-X-Gm-Message-State: AOAM532sHlq+YrKNo5DYsnH7jWmjQaanRTKSlQ6cIXkkj6+vGKlWHPZ0
-        FzsjXgnGg/lC5oidA9tqrJvwzXwWa3tMxztiS5wp+g==
-X-Google-Smtp-Source: ABdhPJwD7nKEqOCPfjWoGBGIhtOXB1UHAVlIYGzQsWeQMBVdVCX96tWC47BU4QdMtgGQ8SsoCLDI4Q==
-X-Received: by 2002:aa7:9afc:0:b0:50a:4b33:a1d6 with SMTP id y28-20020aa79afc000000b0050a4b33a1d6mr3895374pfp.30.1650123649231;
-        Sat, 16 Apr 2022 08:40:49 -0700 (PDT)
-Received: from localhost.localdomain ([134.195.101.46])
-        by smtp.gmail.com with ESMTPSA id z16-20020a056a00241000b004f3a647ae89sm6358681pfh.174.2022.04.16.08.40.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Apr 2022 08:40:48 -0700 (PDT)
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Leo Yan <leo.yan@linaro.org>
-Subject: [PATCH v1 5/5] interconnect: qcom: icc-rpm: Set bandwidth and clock for bucket values
-Date:   Sat, 16 Apr 2022 23:40:13 +0800
-Message-Id: <20220416154013.1357444-6-leo.yan@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220416154013.1357444-1-leo.yan@linaro.org>
-References: <20220416154013.1357444-1-leo.yan@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TQyXa5N+5U7AWUvtU85FavtGdfF9qIW7BLvXU5Z3KBE=;
+        b=pmYgfleOlObOFEZQKCpRLuLjY+LWhR62gDhNBe1Xq9xIqA4GwfQVGzCGbHWecp6KR/
+         MJ/TlG0vElHrQT/1pgLfnSUzJ4y34Pdb2fma1dwDszsHAcVXbYnaA7l5dQTyOb7XFHlL
+         IxS6j4w+c/uorB4Z4irK388bGzu1aqMEAQ9izpd6M4HPr8Gi6Qc2HbRV605bKWIIwDhr
+         vLNjAQHBq5uSFrxU6eFAfTbKy3eB9B/OMtp2OUsQFi7jCn2FUU8rEC/5AAhCw7dTj+++
+         5Nfwpq87+YASOBbUl8VHCM/fZmja97PNF/XBb8t3HFWOMu8dPBekNN8QPL2tdGhIF5Dh
+         xdiQ==
+X-Gm-Message-State: AOAM53001ces+CSkEDEeAbbtTwbC7kmSPnPZrCP76/oD5K24xUFZ2k5k
+        /XkFe7XVoO77rVohKtMx1QSIuShIVam893jsLBR4ZQ==
+X-Google-Smtp-Source: ABdhPJybbVGgDfVnqisaD6M45UdoMxT+mQttilTSKM57Uc1TnQMRMbmQhcdR5SYx5a4IYj/gzzmBTZMLmOrYhUXccF0=
+X-Received: by 2002:a81:753:0:b0:2eb:ebe9:ff4f with SMTP id
+ 80-20020a810753000000b002ebebe9ff4fmr3644787ywh.255.1650132636893; Sat, 16
+ Apr 2022 11:10:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_BL_SPAMCOP_NET,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+References: <20220401231104.967193-1-dmitry.baryshkov@linaro.org> <20220416091229.pwek4wblroaabhio@SoMainline.org>
+In-Reply-To: <20220416091229.pwek4wblroaabhio@SoMainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 16 Apr 2022 21:10:25 +0300
+Message-ID: <CAA8EJppnMesPJrqv=FxEQzuvNM0Xyk_aSg-FUh-smfWcO=Tr2g@mail.gmail.com>
+Subject: Re: drm/msm/dsi: fix error checks and return values for DSI xmit functions
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org,
+        Dan Carpenter <dan.carpenter@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch changes to use bucket value to set bandwidth and clock rates.
+On Sat, 16 Apr 2022 at 12:12, Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> Hi Dmitry,
+>
+> On 2022-04-02 02:11:04, Dmitry Baryshkov wrote:
+> > As noticed by Dan ([1] an the followup thread) there are multiple issues
+> > with the return values for MSM DSI command transmission callback. In
+> > the error case it can easily return a positive value when it should
+> > have returned a proper error code.
+> >
+> > This commits attempts to fix these issues both in TX and in RX paths.
+> >
+> > [1]: https://lore.kernel.org/linux-arm-msm/20211001123617.GH2283@kili/
+> >
+> > Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
+> > Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>
+> Thank you for your patience waiting for the requested tests; this patch
+> seems to have no adverse effect on our cmdmode panels.
+>
+> Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
+>
+> On the following devices:
+> - Sony Xperia X (Loire Suzu, MSM8976), on Linux 5.17;
+> - Sony Xperia 10 II (Seine PDX201, SM6125), on -next 20220318;
+> - Sony Xperia XA2 Ultra (Nile Discovery, SDM630), on Linux 5.16.
+>
+> Apologies for the older kernel versions, that's what happens when having
+> too many patches to dig through and too little hobby time to send them.
+> Let me know if there's a patch dependency that you like to be included.
 
-This patch introduces function qcom_icc_bus_aggregate() to calculate the
-aggregate average and peak bandwidths for every bucket, and also it
-calculates the maximum aggregate values across all buckets.
+Thank you for the confirmation! No, no hidden dependencies.
 
-The maximum aggregate values are used to calculate the final bandwidth
-requests.  And we can set the clock rate per bucket, we use SLEEP bucket
-as default bucket if a platform doesn't enable the interconnect path
-tags in DT binding; otherwise, we use WAKE bucket to set active clock
-and use SLEEP bucket for other clocks.  So far we don't use AMC bucket.
+>
+> - Marijn
+>
+> > ---
+> >  drivers/gpu/drm/msm/dsi/dsi_host.c | 21 ++++++++++++++-------
+> >  1 file changed, 14 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > index d51e70fab93d..8925f60fd9ec 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > @@ -1341,10 +1341,10 @@ static int dsi_cmds2buf_tx(struct msm_dsi_host *msm_host,
+> >                       dsi_get_bpp(msm_host->format) / 8;
+> >
+> >       len = dsi_cmd_dma_add(msm_host, msg);
+> > -     if (!len) {
+> > +     if (len < 0) {
+> >               pr_err("%s: failed to add cmd type = 0x%x\n",
+> >                       __func__,  msg->type);
+> > -             return -EINVAL;
+> > +             return len;
+> >       }
+> >
+> >       /* for video mode, do not send cmds more than
+> > @@ -1363,10 +1363,14 @@ static int dsi_cmds2buf_tx(struct msm_dsi_host *msm_host,
+> >       }
+> >
+> >       ret = dsi_cmd_dma_tx(msm_host, len);
+> > -     if (ret < len) {
+> > -             pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, len=%d\n",
+> > -                     __func__, msg->type, (*(u8 *)(msg->tx_buf)), len);
+> > -             return -ECOMM;
+> > +     if (ret < 0) {
+> > +             pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, len=%d, ret=%d\n",
+> > +                     __func__, msg->type, (*(u8 *)(msg->tx_buf)), len, ret);
+> > +             return ret;
+> > +     } else if (ret < len) {
+> > +             pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, ret=%d len=%d\n",
+> > +                     __func__, msg->type, (*(u8 *)(msg->tx_buf)), ret, len);
+> > +             return -EIO;
+> >       }
+> >
+> >       return len;
+> > @@ -2092,9 +2096,12 @@ int msm_dsi_host_cmd_rx(struct mipi_dsi_host *host,
+> >               }
+> >
+> >               ret = dsi_cmds2buf_tx(msm_host, msg);
+> > -             if (ret < msg->tx_len) {
+> > +             if (ret < 0) {
+> >                       pr_err("%s: Read cmd Tx failed, %d\n", __func__, ret);
+> >                       return ret;
+> > +             } else if (ret < msg->tx_len) {
+> > +                     pr_err("%s: Read cmd Tx failed, too short: %d\n", __func__, ret);
+> > +                     return -ECOMM;
+> >               }
+> >
+> >               /*
 
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
----
- drivers/interconnect/qcom/icc-rpm.c | 80 ++++++++++++++++++++++++-----
- 1 file changed, 67 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-index 41c108a96ea7..c1705b6a6b15 100644
---- a/drivers/interconnect/qcom/icc-rpm.c
-+++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -282,29 +282,72 @@ static int qcom_icc_bw_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
- 	return 0;
- }
- 
-+/**
-+ * qcom_icc_bus_aggregate - aggregate bandwidth by traversing all nodes
-+ * @provider: generic interconnect provider
-+ * @agg_avg: an array for aggregated average bandwidth of buckets
-+ * @agg_peak: an array for aggregated peak bandwidth of buckets
-+ * @max_agg_avg: pointer to max value of aggregated average bandwidth
-+ * @max_agg_peak: pointer to max value of aggregated peak bandwidth
-+ */
-+static void qcom_icc_bus_aggregate(struct icc_provider *provider,
-+				   u64 *agg_avg, u64 *agg_peak,
-+				   u64 *max_agg_avg, u64 *max_agg_peak)
-+{
-+	struct icc_node *node;
-+	struct qcom_icc_node *qn;
-+	int i;
-+
-+	/* Initialise aggregate values */
-+	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
-+		agg_avg[i] = 0;
-+		agg_peak[i] = 0;
-+	}
-+
-+	*max_agg_avg = 0;
-+	*max_agg_peak = 0;
-+
-+	/*
-+	 * Iterate nodes on the interconnect and aggregate bandwidth
-+	 * requests for every bucket.
-+	 */
-+	list_for_each_entry(node, &provider->nodes, node_list) {
-+		qn = node->data;
-+		for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
-+			agg_avg[i] += qn->sum_avg[i];
-+			agg_peak[i] = max_t(u64, agg_peak[i], qn->max_peak[i]);
-+		}
-+	}
-+
-+	/* Find maximum values across all buckets */
-+	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
-+		*max_agg_avg = max_t(u64, *max_agg_avg, agg_avg[i]);
-+		*max_agg_peak = max_t(u64, *max_agg_peak, agg_peak[i]);
-+	}
-+}
-+
- static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- {
- 	struct qcom_icc_provider *qp;
- 	struct qcom_icc_node *qn;
- 	struct icc_provider *provider;
--	struct icc_node *n;
- 	u64 sum_bw;
- 	u64 max_peak_bw;
- 	u64 rate;
--	u32 agg_avg = 0;
--	u32 agg_peak = 0;
-+	u64 agg_avg[QCOM_ICC_NUM_BUCKETS], agg_peak[QCOM_ICC_NUM_BUCKETS];
-+	u64 max_agg_avg, max_agg_peak;
- 	int ret, i;
-+	int bucket;
- 
- 	qn = src->data;
- 	provider = src->provider;
- 	qp = to_qcom_provider(provider);
- 
--	list_for_each_entry(n, &provider->nodes, node_list)
--		provider->aggregate(n, 0, n->avg_bw, n->peak_bw,
--				    &agg_avg, &agg_peak);
-+	qcom_icc_bus_aggregate(provider, agg_avg, agg_peak, &max_agg_avg,
-+			       &max_agg_peak);
- 
--	sum_bw = icc_units_to_bps(agg_avg);
--	max_peak_bw = icc_units_to_bps(agg_peak);
-+	sum_bw = icc_units_to_bps(max_agg_avg);
-+	max_peak_bw = icc_units_to_bps(max_agg_peak);
- 
- 	if (!qn->qos.ap_owned) {
- 		/* send bandwidth request message to the RPM processor */
-@@ -318,12 +361,23 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 			return ret;
- 	}
- 
--	rate = max(sum_bw, max_peak_bw);
--
--	do_div(rate, qn->buswidth);
--	rate = min_t(u64, rate, LONG_MAX);
--
- 	for (i = 0; i < qp->num_clks; i++) {
-+		/*
-+		 * Use WAKE bucket for active clock, otherwise, use SLEEP bucket
-+		 * for other clocks.  If a platform doesn't set interconnect
-+		 * path tags, by default use sleep bucket for all clocks.
-+		 *
-+		 * Note, AMC bucket is not supported yet.
-+		 */
-+		if (!strcmp(qp->bus_clks[i].id, "bus_a"))
-+			bucket = QCOM_ICC_BUCKET_WAKE;
-+		else
-+			bucket = QCOM_ICC_BUCKET_SLEEP;
-+
-+		rate = icc_units_to_bps(max(agg_avg[bucket], agg_peak[bucket]));
-+		do_div(rate, qn->buswidth);
-+		rate = min_t(u64, rate, LONG_MAX);
-+
- 		if (qp->bus_clk_rate[i] == rate)
- 			continue;
- 
+
 -- 
-2.25.1
-
+With best wishes
+Dmitry
