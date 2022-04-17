@@ -2,78 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2CAC5046C7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Apr 2022 07:50:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44F6C50483F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Apr 2022 17:57:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233445AbiDQFxP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Apr 2022 01:53:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59996 "EHLO
+        id S234347AbiDQQAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Apr 2022 12:00:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233425AbiDQFxO (ORCPT
+        with ESMTP id S230246AbiDQQAJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Apr 2022 01:53:14 -0400
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBE843C4AE;
-        Sat, 16 Apr 2022 22:50:39 -0700 (PDT)
-Received: by mail-pg1-x52a.google.com with SMTP id k29so13503421pgm.12;
-        Sat, 16 Apr 2022 22:50:39 -0700 (PDT)
+        Sun, 17 Apr 2022 12:00:09 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45379BD3;
+        Sun, 17 Apr 2022 08:57:33 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id l7so23273683ejn.2;
+        Sun, 17 Apr 2022 08:57:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
+        h=message-id:date:from:to:cc:subject:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ANBS//8WVUkFdZYNute605O0D9+yj3/Rsd4Oj818tJU=;
-        b=Ysyrw934fpEnn74orPBZkTjJ2in0m6jwsT8YQ+IM4DB1g0I6UKcUSqgGfjwtMyOo8C
-         3wjwgVQbOE7Y9BDY4CkpMRpY1EyUPwjqP70OsP3hXxjuyAfYlNp+lM78wI1tla35giui
-         z+QkloIkraBycKldvAszRE4YgU/kfWs0vHVaVevLI/PAETnujTg+p/vHLsi3ienzziNS
-         nMZH8BUTpEcEl3S7W37jT4HfUVuvo4TsdeU7ZpaAieP4kxtV80rRJ9+Ld+J6DE8Hf6p8
-         O+PT4QXBGyHb+LdQusbODkP8Ycn6bg/ACKO5/g59aiivMttwsZDafrq4vIw+Ml1zN4U3
-         8XXg==
+        bh=DTckEI0XXLZk8YJEhUNyTatla2R+tAttZnnlIuQZrQQ=;
+        b=DB34APFKfHqrfYeZOq5SKQdwfANosF7qA4kvAgYS0qrLY3OGtaPp7Osrf6/BfDl6+n
+         iYZJNnc+AC0mMqMibcjCoAM5IYAEKQcqfUw95lOMQdEDYrFdwzUa2Mj5VpubYz7nXcqG
+         E05A1v5xt04AbAy/20VzA/QZhBRjOQLCtmXLB1Ez4iLXQpx4o8/2xX8PefA+FngebQRA
+         ix77I/Zis1+6g+25L1FxJyOFD3XpZh3dUkTDQL8OPD4CLkBlSFOAsBkL0GITu/YQ3Eda
+         JplJbn1+vugy1RSf7XcEGFKegawyVuBwbXPeIMr4XfZVr67CNheG0iis9tTUjUbSGfjQ
+         OxBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ANBS//8WVUkFdZYNute605O0D9+yj3/Rsd4Oj818tJU=;
-        b=AYbveZpdC+oiIOCoMvPJQ/czf3k0WmFPd1+mpfERpuDBjM0yIor+zllF3AvMvBaCKK
-         zYAANwArz0n9jdVnd7oGowLTR72PWffPZnYq2L292jjN2SPv3fN852Dlc+GuJ9vG0R3E
-         KmRG3Exq+JHeQusPyd4mYjPSwv+x2wnFA8rllUrJioLZc/7yOgccGyDhRWXcVVl32H1A
-         oeuk6TlkIdiq3FIG7WLaiw+Dx6EddYWh5CfQVDui3NtebIV41Z/jU/FJ6xZYBtYHZga2
-         ugQL+BaaRIqvnX1j/eFcZMbaXkjcV1HohbPrD7zii9i4LgeGPqA+WOk0aBt/90TnvaWG
-         VMpQ==
-X-Gm-Message-State: AOAM532tvAcPGsLvqtvEkqZhpoiizuv5ftoH2uUN+iGdrK95EFY1/yK0
-        dFmCT+epUcf98d52wS07AR4=
-X-Google-Smtp-Source: ABdhPJy/HQgzkjVGMVXmDl9i86lUl7iEjxJtfywNUTFL96YCm2o7Xftcs4DPRzmkBb3WW5K78zeL7Q==
-X-Received: by 2002:a05:6a00:1701:b0:505:c49b:d2ed with SMTP id h1-20020a056a00170100b00505c49bd2edmr6330373pfc.56.1650174639180;
-        Sat, 16 Apr 2022 22:50:39 -0700 (PDT)
-Received: from 9a2d8922b8f1 ([122.161.51.18])
-        by smtp.gmail.com with ESMTPSA id g14-20020a63200e000000b0039d9816238fsm8877784pgg.81.2022.04.16.22.50.34
+        bh=DTckEI0XXLZk8YJEhUNyTatla2R+tAttZnnlIuQZrQQ=;
+        b=j9OduULLUI4Ij1heEi84mMjLQ/Jz59tJWwCrYunR2JfU6oWBpXK/tCi2wipumH7QHD
+         XYZ60/3XUISVO/VvxUNy2qKtj4ix+dYAxwWPo/m6c/3hb1mKLxpknRyixar4LQEKAFUp
+         r3JuVTw9MwY/mFv+NJl8x+w0r+3yOjhaBmqvPmdT7BwF0Mk9VUZVnyoROH/1E03+sLOs
+         t1z5ZOOFZMWdKHnGL5osa9ZlOQg0BqOuBwJ5zeNUkWBhIRtc0VJnwjixnR/fbD0k+hBU
+         b0wTJG2RFbLHz2cbrpb1N/zMWhFA/f6Pju/NkZ3F0Yg3CRgvfeiHBB/XCssULLs4cUmH
+         DIIQ==
+X-Gm-Message-State: AOAM530Ka9PZDFbFAiTJvPaMHJZ4NnsOOcfEB9SmqDqONp4KmUHsGFmk
+        OyTAwFx0DNPcAgsbbIoK709y076CZEo=
+X-Google-Smtp-Source: ABdhPJwCMZ86yNoeG9zUTtuMMitkZMrRqEz0y9FVo2WJQ9JnEqeFHU9C5JzDF6G4Zp8SgYyMijkFQQ==
+X-Received: by 2002:a17:906:3a55:b0:6ce:c2ee:3e10 with SMTP id a21-20020a1709063a5500b006cec2ee3e10mr5788200ejf.210.1650211051443;
+        Sun, 17 Apr 2022 08:57:31 -0700 (PDT)
+Received: from Ansuel-xps. (host-79-33-253-62.retail.telecomitalia.it. [79.33.253.62])
+        by smtp.gmail.com with ESMTPSA id o15-20020a50fd8f000000b0041f95b8a90dsm5676635edt.69.2022.04.17.08.57.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Apr 2022 22:50:38 -0700 (PDT)
-Date:   Sun, 17 Apr 2022 11:20:32 +0530
-From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org
-Subject: Re: [PATCH v2 6/6] dt-bindings: dma: Convert Qualcomm BAM DMA
- binding to json format
-Message-ID: <20220417055032.GA41948@9a2d8922b8f1>
-References: <20220410175056.79330-1-singh.kuldeep87k@gmail.com>
- <20220410175056.79330-7-singh.kuldeep87k@gmail.com>
- <14ecb746-56f0-2d3b-2f93-1af9407de4b7@linaro.org>
- <20220411105810.GB33220@9a2d8922b8f1>
- <50defa36-3d91-80ea-e303-abaade1c1f7e@linaro.org>
- <20220412061953.GA95928@9a2d8922b8f1>
- <8ff07720-3c52-99e6-8046-501f4ae28518@linaro.org>
- <20220412180159.GA29479@9a2d8922b8f1>
+        Sun, 17 Apr 2022 08:57:30 -0700 (PDT)
+Message-ID: <625c38ea.1c69fb81.17696.b763@mx.google.com>
+X-Google-Original-Message-ID: <Ylw46Gg8wOwzSkxp@Ansuel-xps.>
+Date:   Sun, 17 Apr 2022 17:57:28 +0200
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] firmware: qcom_scm: Add compatible for ipq806x
+References: <20220310220723.3772-1-ansuelsmth@gmail.com>
+ <YlY3rPpYvclK8L3z@builder.lan>
+ <CAA8EJprEYgWTp5KJ1TSGC8EKbuw1XP+jz7D5BaCP0rEsEPVsuQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220412180159.GA29479@9a2d8922b8f1>
+In-Reply-To: <CAA8EJprEYgWTp5KJ1TSGC8EKbuw1XP+jz7D5BaCP0rEsEPVsuQ@mail.gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -84,14 +74,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> > You can though try to look at original (vendor) sources:
-> > https://git.codelinaro.org/clo/la/kernel/msm-4.19 (sdm845)
-> > https://git.codelinaro.org/clo/la/kernel/msm-3.18 (msm8996)
+On Wed, Apr 13, 2022 at 10:03:59AM +0300, Dmitry Baryshkov wrote:
+> On Wed, 13 Apr 2022 at 05:38, Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Thu 10 Mar 16:07 CST 2022, Ansuel Smith wrote:
+> >
+> > > Add compatible for ipq806x. Just like ipq4019, ipq806x doesn't require
+> > > Core, Iface or Bus clock.
+> > >
+> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > > ---
+> > >  drivers/firmware/qcom_scm.c | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > >
+> > > diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> > > index 7db8066b19fd..7348c5894821 100644
+> > > --- a/drivers/firmware/qcom_scm.c
+> > > +++ b/drivers/firmware/qcom_scm.c
+> > > @@ -1338,6 +1338,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
+> > >                                                            SCM_HAS_IFACE_CLK |
+> > >                                                            SCM_HAS_BUS_CLK)
+> > >       },
+> > > +     { .compatible = "qcom,scm-ipq806x" },
+> >
+> > If you in your dt do:
+> >
+> >         compatible = "qcom,scm-ipq806x", "qcom,scm";
+> >
+> > Then we don't need to update the driver for each platform, only the DT
+> > binding.
+> >
+> > And if we some day need to quirk something off qcom,scm-ipq806x we have
+> > that option.
+> 
+> I suppose that ipq806x might need SCM_HAS_CORE_CLK. Or, more likely,
+> an interconnect vote, once we have interconnect drivers for
+> ipq/apq8064 platforms.
+> 
 
-I gave a look at this and couldn't find much info related to these
-platforms. And waited for sometime to get reply from Srinivas and other
-co.
+From an old source I found that scm core clock comes from dfab_clk
+(DAYTONA_FABRIC). I notice there is an interconnect driver for rpm (bw
+is handled by rpm on ipq/apq8064) but why this should be related to scm
+core clk? To handle the clock voter stuff? (I assume a voter logic is
+not supported upstream)
 
-I don't think it's viable to wait just for this particular thing and
-also doesn't make much sense either. I will send next version as per
-your current comments. Thanks!
+But it does seems an interesting project adding interconnect support for
+ipq8064 also considering I have a fab scaling driver present from ages
+that I hane no idea how to handle.
+
+> >
+> > Thanks,
+> > Bjorn
+> >
+> > >       { .compatible = "qcom,scm-ipq4019" },
+> > >       { .compatible = "qcom,scm-mdm9607", .data = (void *)(SCM_HAS_CORE_CLK |
+> > >                                                            SCM_HAS_IFACE_CLK |
+> > > --
+> > > 2.34.1
+> > >
+> 
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
+
+-- 
+	Ansuel
