@@ -2,173 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 86DFC5037D0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Apr 2022 20:10:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2CAC5046C7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Apr 2022 07:50:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232742AbiDPSNL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Apr 2022 14:13:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57660 "EHLO
+        id S233445AbiDQFxP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Apr 2022 01:53:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230302AbiDPSNK (ORCPT
+        with ESMTP id S233425AbiDQFxO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Apr 2022 14:13:10 -0400
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 494365E74A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 11:10:38 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-2edbd522c21so108292917b3.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Apr 2022 11:10:38 -0700 (PDT)
+        Sun, 17 Apr 2022 01:53:14 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBE843C4AE;
+        Sat, 16 Apr 2022 22:50:39 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id k29so13503421pgm.12;
+        Sat, 16 Apr 2022 22:50:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TQyXa5N+5U7AWUvtU85FavtGdfF9qIW7BLvXU5Z3KBE=;
-        b=Vc0OiWKy7tLZQQEjqbdvpH5yJuYoNbTVn4rHHJX6BWbtkR5qJ2IxK8UY4IqUdmX1li
-         K2CrzBj7y+L0HRRFaRekYP4oQdmuHvLXGvTFpIrLF+rIkTYnRVePa4pDPwSbuTblt7/Z
-         n0RVgnNoKDU67iRf6gzyq9jVQfk1NlH7xBp/wHf2JoMqWu1fv3vZUiMESmBDaeq2yBFz
-         V6bADInIXHmEBA/49EfFyl5hQ2zUv60d7RNIfZpnezBwykBLgjEIBqOWGTjmSI5cKjrj
-         MVPw2EKPOjX4hjvAa9kneqMm+gIcR/JbO199SotXZ3pyJbrDkwtWFLx3WyR+Mbo+JDfa
-         J+VQ==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ANBS//8WVUkFdZYNute605O0D9+yj3/Rsd4Oj818tJU=;
+        b=Ysyrw934fpEnn74orPBZkTjJ2in0m6jwsT8YQ+IM4DB1g0I6UKcUSqgGfjwtMyOo8C
+         3wjwgVQbOE7Y9BDY4CkpMRpY1EyUPwjqP70OsP3hXxjuyAfYlNp+lM78wI1tla35giui
+         z+QkloIkraBycKldvAszRE4YgU/kfWs0vHVaVevLI/PAETnujTg+p/vHLsi3ienzziNS
+         nMZH8BUTpEcEl3S7W37jT4HfUVuvo4TsdeU7ZpaAieP4kxtV80rRJ9+Ld+J6DE8Hf6p8
+         O+PT4QXBGyHb+LdQusbODkP8Ycn6bg/ACKO5/g59aiivMttwsZDafrq4vIw+Ml1zN4U3
+         8XXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TQyXa5N+5U7AWUvtU85FavtGdfF9qIW7BLvXU5Z3KBE=;
-        b=pmYgfleOlObOFEZQKCpRLuLjY+LWhR62gDhNBe1Xq9xIqA4GwfQVGzCGbHWecp6KR/
-         MJ/TlG0vElHrQT/1pgLfnSUzJ4y34Pdb2fma1dwDszsHAcVXbYnaA7l5dQTyOb7XFHlL
-         IxS6j4w+c/uorB4Z4irK388bGzu1aqMEAQ9izpd6M4HPr8Gi6Qc2HbRV605bKWIIwDhr
-         vLNjAQHBq5uSFrxU6eFAfTbKy3eB9B/OMtp2OUsQFi7jCn2FUU8rEC/5AAhCw7dTj+++
-         5Nfwpq87+YASOBbUl8VHCM/fZmja97PNF/XBb8t3HFWOMu8dPBekNN8QPL2tdGhIF5Dh
-         xdiQ==
-X-Gm-Message-State: AOAM53001ces+CSkEDEeAbbtTwbC7kmSPnPZrCP76/oD5K24xUFZ2k5k
-        /XkFe7XVoO77rVohKtMx1QSIuShIVam893jsLBR4ZQ==
-X-Google-Smtp-Source: ABdhPJybbVGgDfVnqisaD6M45UdoMxT+mQttilTSKM57Uc1TnQMRMbmQhcdR5SYx5a4IYj/gzzmBTZMLmOrYhUXccF0=
-X-Received: by 2002:a81:753:0:b0:2eb:ebe9:ff4f with SMTP id
- 80-20020a810753000000b002ebebe9ff4fmr3644787ywh.255.1650132636893; Sat, 16
- Apr 2022 11:10:36 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ANBS//8WVUkFdZYNute605O0D9+yj3/Rsd4Oj818tJU=;
+        b=AYbveZpdC+oiIOCoMvPJQ/czf3k0WmFPd1+mpfERpuDBjM0yIor+zllF3AvMvBaCKK
+         zYAANwArz0n9jdVnd7oGowLTR72PWffPZnYq2L292jjN2SPv3fN852Dlc+GuJ9vG0R3E
+         KmRG3Exq+JHeQusPyd4mYjPSwv+x2wnFA8rllUrJioLZc/7yOgccGyDhRWXcVVl32H1A
+         oeuk6TlkIdiq3FIG7WLaiw+Dx6EddYWh5CfQVDui3NtebIV41Z/jU/FJ6xZYBtYHZga2
+         ugQL+BaaRIqvnX1j/eFcZMbaXkjcV1HohbPrD7zii9i4LgeGPqA+WOk0aBt/90TnvaWG
+         VMpQ==
+X-Gm-Message-State: AOAM532tvAcPGsLvqtvEkqZhpoiizuv5ftoH2uUN+iGdrK95EFY1/yK0
+        dFmCT+epUcf98d52wS07AR4=
+X-Google-Smtp-Source: ABdhPJy/HQgzkjVGMVXmDl9i86lUl7iEjxJtfywNUTFL96YCm2o7Xftcs4DPRzmkBb3WW5K78zeL7Q==
+X-Received: by 2002:a05:6a00:1701:b0:505:c49b:d2ed with SMTP id h1-20020a056a00170100b00505c49bd2edmr6330373pfc.56.1650174639180;
+        Sat, 16 Apr 2022 22:50:39 -0700 (PDT)
+Received: from 9a2d8922b8f1 ([122.161.51.18])
+        by smtp.gmail.com with ESMTPSA id g14-20020a63200e000000b0039d9816238fsm8877784pgg.81.2022.04.16.22.50.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 16 Apr 2022 22:50:38 -0700 (PDT)
+Date:   Sun, 17 Apr 2022 11:20:32 +0530
+From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org
+Subject: Re: [PATCH v2 6/6] dt-bindings: dma: Convert Qualcomm BAM DMA
+ binding to json format
+Message-ID: <20220417055032.GA41948@9a2d8922b8f1>
+References: <20220410175056.79330-1-singh.kuldeep87k@gmail.com>
+ <20220410175056.79330-7-singh.kuldeep87k@gmail.com>
+ <14ecb746-56f0-2d3b-2f93-1af9407de4b7@linaro.org>
+ <20220411105810.GB33220@9a2d8922b8f1>
+ <50defa36-3d91-80ea-e303-abaade1c1f7e@linaro.org>
+ <20220412061953.GA95928@9a2d8922b8f1>
+ <8ff07720-3c52-99e6-8046-501f4ae28518@linaro.org>
+ <20220412180159.GA29479@9a2d8922b8f1>
 MIME-Version: 1.0
-References: <20220401231104.967193-1-dmitry.baryshkov@linaro.org> <20220416091229.pwek4wblroaabhio@SoMainline.org>
-In-Reply-To: <20220416091229.pwek4wblroaabhio@SoMainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 16 Apr 2022 21:10:25 +0300
-Message-ID: <CAA8EJppnMesPJrqv=FxEQzuvNM0Xyk_aSg-FUh-smfWcO=Tr2g@mail.gmail.com>
-Subject: Re: drm/msm/dsi: fix error checks and return values for DSI xmit functions
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org,
-        Dan Carpenter <dan.carpenter@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220412180159.GA29479@9a2d8922b8f1>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 16 Apr 2022 at 12:12, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> Hi Dmitry,
->
-> On 2022-04-02 02:11:04, Dmitry Baryshkov wrote:
-> > As noticed by Dan ([1] an the followup thread) there are multiple issues
-> > with the return values for MSM DSI command transmission callback. In
-> > the error case it can easily return a positive value when it should
-> > have returned a proper error code.
-> >
-> > This commits attempts to fix these issues both in TX and in RX paths.
-> >
-> > [1]: https://lore.kernel.org/linux-arm-msm/20211001123617.GH2283@kili/
-> >
-> > Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
-> > Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->
-> Thank you for your patience waiting for the requested tests; this patch
-> seems to have no adverse effect on our cmdmode panels.
->
-> Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
->
-> On the following devices:
-> - Sony Xperia X (Loire Suzu, MSM8976), on Linux 5.17;
-> - Sony Xperia 10 II (Seine PDX201, SM6125), on -next 20220318;
-> - Sony Xperia XA2 Ultra (Nile Discovery, SDM630), on Linux 5.16.
->
-> Apologies for the older kernel versions, that's what happens when having
-> too many patches to dig through and too little hobby time to send them.
-> Let me know if there's a patch dependency that you like to be included.
+> > You can though try to look at original (vendor) sources:
+> > https://git.codelinaro.org/clo/la/kernel/msm-4.19 (sdm845)
+> > https://git.codelinaro.org/clo/la/kernel/msm-3.18 (msm8996)
 
-Thank you for the confirmation! No, no hidden dependencies.
+I gave a look at this and couldn't find much info related to these
+platforms. And waited for sometime to get reply from Srinivas and other
+co.
 
->
-> - Marijn
->
-> > ---
-> >  drivers/gpu/drm/msm/dsi/dsi_host.c | 21 ++++++++++++++-------
-> >  1 file changed, 14 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > index d51e70fab93d..8925f60fd9ec 100644
-> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > @@ -1341,10 +1341,10 @@ static int dsi_cmds2buf_tx(struct msm_dsi_host *msm_host,
-> >                       dsi_get_bpp(msm_host->format) / 8;
-> >
-> >       len = dsi_cmd_dma_add(msm_host, msg);
-> > -     if (!len) {
-> > +     if (len < 0) {
-> >               pr_err("%s: failed to add cmd type = 0x%x\n",
-> >                       __func__,  msg->type);
-> > -             return -EINVAL;
-> > +             return len;
-> >       }
-> >
-> >       /* for video mode, do not send cmds more than
-> > @@ -1363,10 +1363,14 @@ static int dsi_cmds2buf_tx(struct msm_dsi_host *msm_host,
-> >       }
-> >
-> >       ret = dsi_cmd_dma_tx(msm_host, len);
-> > -     if (ret < len) {
-> > -             pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, len=%d\n",
-> > -                     __func__, msg->type, (*(u8 *)(msg->tx_buf)), len);
-> > -             return -ECOMM;
-> > +     if (ret < 0) {
-> > +             pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, len=%d, ret=%d\n",
-> > +                     __func__, msg->type, (*(u8 *)(msg->tx_buf)), len, ret);
-> > +             return ret;
-> > +     } else if (ret < len) {
-> > +             pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, ret=%d len=%d\n",
-> > +                     __func__, msg->type, (*(u8 *)(msg->tx_buf)), ret, len);
-> > +             return -EIO;
-> >       }
-> >
-> >       return len;
-> > @@ -2092,9 +2096,12 @@ int msm_dsi_host_cmd_rx(struct mipi_dsi_host *host,
-> >               }
-> >
-> >               ret = dsi_cmds2buf_tx(msm_host, msg);
-> > -             if (ret < msg->tx_len) {
-> > +             if (ret < 0) {
-> >                       pr_err("%s: Read cmd Tx failed, %d\n", __func__, ret);
-> >                       return ret;
-> > +             } else if (ret < msg->tx_len) {
-> > +                     pr_err("%s: Read cmd Tx failed, too short: %d\n", __func__, ret);
-> > +                     return -ECOMM;
-> >               }
-> >
-> >               /*
-
-
-
--- 
-With best wishes
-Dmitry
+I don't think it's viable to wait just for this particular thing and
+also doesn't make much sense either. I will send next version as per
+your current comments. Thanks!
