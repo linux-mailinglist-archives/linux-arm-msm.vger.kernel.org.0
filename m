@@ -2,49 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE7025056BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 15:38:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 192BF505A4F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 16:51:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242998AbiDRNjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 09:39:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57226 "EHLO
+        id S1344895AbiDROyH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 10:54:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244265AbiDRNjK (ORCPT
+        with ESMTP id S232684AbiDROx4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 09:39:10 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC98C28E0A;
-        Mon, 18 Apr 2022 05:58:54 -0700 (PDT)
+        Mon, 18 Apr 2022 10:53:56 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DC8225FF;
+        Mon, 18 Apr 2022 06:42:49 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 14397B80E59;
-        Mon, 18 Apr 2022 12:58:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF03C385A9;
-        Mon, 18 Apr 2022 12:58:48 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 272866123E;
+        Mon, 18 Apr 2022 13:42:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C7CC385A1;
+        Mon, 18 Apr 2022 13:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650286730;
-        bh=/y6aPwFRVj92zxx7fmjocLx4rsewxwFGQqqv1VcWFBg=;
-        h=From:To:Cc:Subject:Date:From;
-        b=G6wJ9AoUXGFupilLRiI8AiOPumLH4HP1T2wyvciBTwH4/94EOUpLYrwUvIzDXnmpI
-         kd5ebXBK5qDBPD1X3LokSUYanSma7cCO/vk0dSFMYg3dhU/Q+p5E9nRSB2tQ56ztaC
-         foHtDysLn9ijB2Bv9n0YRdgI0SYjcu/P3vz3W1HFN6LifO3sjy4J1OBir8Ug69I7GU
-         1E3w/0rYzekmHPdJ2jGTs+OQeSXrAscGGdtOjIB/lmSE5+WR2SC2bbMZMK9g+cu1bh
-         fmboFJ4q/HXmAAS/uoFISd5ilTTg8pdvuDGaySPAF+bxQVvxMVC9q3oHISrvcngi4h
-         e8Iip/Tu4cFOA==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        s=k20201202; t=1650289368;
+        bh=bqGZ1kGzyUYlvq41yPIPnL6lghliWJl9al76Y6Ostu0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EG4G8cSPEIjpvBEh3QKd83QugJPpMcYsstxGLCukXXwMri6KydxLAwqGdhAAborIZ
+         /JWcOA0MLN9QVbRgDxbmOY30mwEP83Zhix5Fl0X5gblHoCuPk5Hbg+7t19GzzzMDQm
+         6ZjywOk5cjEkAeE/w3Je6HlWK/H1MjEV8v37e3zEvku9VYjKACEL4kGHDxlEr7UP6r
+         6XjUXuiLR2kbNMCOmdny1RbAEGvWmmvxVM+8uCQngUlXBO8ZiiFdZoW09pgBpWP4/l
+         47KD63l8ON6Oyf765MNc3/HWuWhs8Wf5necNkSV6jLBlY1SJhuuctmaHG0PKqcuu1M
+         vYF21C1QUparg==
+Date:   Mon, 18 Apr 2022 19:12:41 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH] arm64: dts: qcom: db845c: Add support for MCP2517FD
-Date:   Mon, 18 Apr 2022 18:28:41 +0530
-Message-Id: <20220418125841.1409738-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.34.1
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: db845c: Add support for MCP2517FD
+Message-ID: <20220418134241.GA161722@thinkpad>
+References: <20220418125841.1409738-1-vkoul@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220418125841.1409738-1-vkoul@kernel.org>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -55,55 +56,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for onboard MCP2517FD SPI CAN transceiver attached to
-SPI0 of RB3.
+On Mon, Apr 18, 2022 at 06:28:41PM +0530, Vinod Koul wrote:
+> Add support for onboard MCP2517FD SPI CAN transceiver attached to
+> SPI0 of RB3.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 23 ++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> index 28fe45c5d516..5179f8ddb060 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> @@ -28,6 +28,13 @@ chosen {
+>  		stdout-path = "serial0:115200n8";
+>  	};
+>  
+> +	/* Fixed crystal oscillator dedicated to MCP2517FD */
+> +	clk40M: can_clock {
+> +		compatible = "fixed-clock";
+> +		#clock-cells = <0>;
+> +		clock-frequency = <40000000>;
+> +	};
+> +
+>  	dc12v: dc12v-regulator {
+>  		compatible = "regulator-fixed";
+>  		regulator-name = "DC12V";
+> @@ -746,6 +753,22 @@ codec {
+>  	};
+>  };
+>  
+> +&spi0 {
+> +	/* On Low speed expansion */
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 23 ++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+Only SPI2 is exposed on the LS header. This one is dedicated to CAN controller.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 28fe45c5d516..5179f8ddb060 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -28,6 +28,13 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	/* Fixed crystal oscillator dedicated to MCP2517FD */
-+	clk40M: can_clock {
-+		compatible = "fixed-clock";
-+		#clock-cells = <0>;
-+		clock-frequency = <40000000>;
-+	};
-+
- 	dc12v: dc12v-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "DC12V";
-@@ -746,6 +753,22 @@ codec {
- 	};
- };
- 
-+&spi0 {
-+	/* On Low speed expansion */
-+	status = "okay";
-+
-+	can@0 {
-+		compatible = "microchip,mcp2517fd";
-+		reg = <0>;
-+		clocks = <&clk40M>;
-+		interrupts-extended = <&tlmm 104 IRQ_TYPE_LEVEL_LOW>;
-+		spi-max-frequency = <10000000>;
-+		vdd-supply = <&vdc_5v>;
-+		xceiver-supply = <&vdc_5v>;
-+		status = "okay";
-+	};
-+};
-+
- &spi2 {
- 	/* On Low speed expansion */
- 	label = "LS-SPI0";
--- 
-2.34.1
+> +	status = "okay";
 
+No chip select? Since CAN controller may operate at higher frequencies, it
+makes sense to increase the drive strength of the pins.
+
+Thanks,
+Mani
+
+> +
+> +	can@0 {
+> +		compatible = "microchip,mcp2517fd";
+> +		reg = <0>;
+> +		clocks = <&clk40M>;
+> +		interrupts-extended = <&tlmm 104 IRQ_TYPE_LEVEL_LOW>;
+> +		spi-max-frequency = <10000000>;
+> +		vdd-supply = <&vdc_5v>;
+> +		xceiver-supply = <&vdc_5v>;
+> +		status = "okay";
+> +	};
+> +};
+> +
+>  &spi2 {
+>  	/* On Low speed expansion */
+>  	label = "LS-SPI0";
+> -- 
+> 2.34.1
+> 
