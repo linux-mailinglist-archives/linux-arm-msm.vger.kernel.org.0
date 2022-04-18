@@ -2,82 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A5CF505B94
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 17:42:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0E31505BEF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 17:49:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345485AbiDRPpQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 11:45:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59272 "EHLO
+        id S245226AbiDRPwK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 11:52:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345471AbiDRPoo (ORCPT
+        with ESMTP id S1345790AbiDRPwB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 11:44:44 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04EAB4507C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 08:10:31 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id lc2so27309598ejb.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 08:10:30 -0700 (PDT)
+        Mon, 18 Apr 2022 11:52:01 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74D3D1D31C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 08:31:48 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id o5so13314532pjr.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 08:31:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=8eEBlJjFdUmWzuzGoXrrvhfqXeGbJkQSJU2hZzKNYCI=;
-        b=EHozyYSTs+5oPjLpwLz6skDmf0dsTBEPko7/7suTBa+gI2A+zwXn00kXLAUzuBr1RO
-         PT7F4dLcn6sndBN6fDlyRtkvYfxO8npN+n5jlUMfg7js3R6iRy1tNlyDmkv2JhIN7kNp
-         Iw8ZSPVRUnBR8fNsdil1SonXyqmdwdwelG6+ZJbIezoWBe4rj3dVxvpJHHo9zsaZHWZ5
-         xGYgtzzP44UQzZrFlnYjWdJM5O6z+fuiBzOCiR1L8fp/uJLxk7RkjuGSfcUFoFjcfV0M
-         kvnx2pnC2ncF18255EmrLtRCeToBxxMWBlzJSrP6Bi+nMGjR37L7xJmIgD6MbHl8EuLL
-         vtRw==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=LtMMRF4JcWs/Onf4a3Y3tlIdji7WoSU9k4+P0Hcpjbc=;
+        b=hE0KBI9KwKkNqK+Xv2o8tsioJRsnAaFJ1eB+X2QNyQ99MfbSVlUxQCxCZEvC+IM/my
+         bYEURWsF0lHBi4/PKzpg/bpURMLdcgDvFus+NSJivkPCdzyMjRUFAmnDpeysop2l0FXl
+         48JcA53FUXsLakhyZWhH2QzWikVPyhBok6KcU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=8eEBlJjFdUmWzuzGoXrrvhfqXeGbJkQSJU2hZzKNYCI=;
-        b=lJNYZuIAZx6DdL8xx40p27WhsF+yJbLIq2N01rz+iy58YOZNzn5mj0foxSiD8qnSaG
-         UpNBCzHDmt/3kzH1xWe71ABZIComzLl9LRuHCEGah3Rr8rEkTd4sEMfjCjigAza3/yRW
-         tbsriTbJJzA+9vvC/9AdyxDwBPyRBfyc5gtmA1NYtJIMsthxeaRgnO4IuhtZ/BJU1LCv
-         RbCgknvN+GQZ+MOFmyILLmxaBDf3I8+5K3+Uhz8awtcQkjmX97JmT8FMOEsVlhdDg0uu
-         EHR0+9VtGrV1xo+Q/HWOixsmyjb0TqDTEU2dyRUr7cL3+OuP3Xb2SS22rPGv+1EFcMDG
-         bGPw==
-X-Gm-Message-State: AOAM532YCZ/lI3EiLRNTWVIZhWWW6EVdk4OmFoLsd01ER5bNKgQhk1ou
-        BfeuwnzVc9NuVY+p1HWj28g76g==
-X-Google-Smtp-Source: ABdhPJwNJnrCTL6Ja5pljID2zs7UqXpsSz+qhAsvZEoVY7eD0haejH7NWyA6OB7wc0H3iRkKr7oU0Q==
-X-Received: by 2002:a17:906:301a:b0:6e8:a0b2:340a with SMTP id 26-20020a170906301a00b006e8a0b2340amr9345551ejz.248.1650294629608;
-        Mon, 18 Apr 2022 08:10:29 -0700 (PDT)
-Received: from [192.168.0.217] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id u6-20020a170906124600b006e843964f9asm4640720eja.55.2022.04.18.08.10.28
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=LtMMRF4JcWs/Onf4a3Y3tlIdji7WoSU9k4+P0Hcpjbc=;
+        b=BIUQPiK+TFAnX7mzv4gPwjBdwoObuQ7jfuB5FVx8S/ddWWIS69swNEFozmv+pHikYQ
+         Obf2VdW2/Z8I0f/dlyCbpg9DWYGmO059ljINoomdIvm5f5DaNKet3vR28BH8+AOnuWJd
+         aqSbK9Bvi+SVF+TKXxyThq2uE4oYGhWsV0o6yzourFwuV2s//cfM6gHKZIMhnI89rhYI
+         SXAfSAl5WJ3He9ElfmU51O+xA/oMYIlH0XlPMsakHMossRIdVAtr0lk5jR2xG1F3J9xZ
+         pmJPg5bJvJfU9cUALWbhEaH39yi5gwCZKXbCNfn9L57SB1Y7GjrnmeHsdWyDD8zESWJW
+         5OBQ==
+X-Gm-Message-State: AOAM530D1+Q12TnBGCJ/56nrCFaeB1iHV0JZAnHaBtK1eLsUaVZMiWG3
+        siMkoi0sH5CD9Onx4ogbEDvSRQ==
+X-Google-Smtp-Source: ABdhPJzdL3yAngu9mDayKXsveGQ3aVDfr4Jr1rlnzREStGhXw+y1x2674SLwT528JlAC51feQLysSw==
+X-Received: by 2002:a17:90b:1c86:b0:1bf:2a7e:5c75 with SMTP id oo6-20020a17090b1c8600b001bf2a7e5c75mr13585777pjb.145.1650295907897;
+        Mon, 18 Apr 2022 08:31:47 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:6b32:a0a5:ec32:c287])
+        by smtp.gmail.com with UTF8SMTPSA id z5-20020a056a00240500b004e15d39f15fsm13525530pfh.83.2022.04.18.08.31.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Apr 2022 08:10:28 -0700 (PDT)
-Message-ID: <d68442c5-f1ed-d502-aae5-2770f9653c81@linaro.org>
-Date:   Mon, 18 Apr 2022 17:10:27 +0200
+        Mon, 18 Apr 2022 08:31:47 -0700 (PDT)
+Date:   Mon, 18 Apr 2022 08:31:44 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+        srinivas.kandagatla@linaro.org, dianders@chromium.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v7 4/4] arm64: dts: qcom: sc7280: Add dt nodes for sound
+ card
+Message-ID: <Yl2EYIdMdz7Lnk26@google.com>
+References: <1649863277-31615-1-git-send-email-quic_srivasam@quicinc.com>
+ <1649863277-31615-5-git-send-email-quic_srivasam@quicinc.com>
+ <Ylc/aR0hUGa6OKBO@google.com>
+ <78b1e04c-e7d0-a81d-799e-5c570c2bf106@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 06/10] ARM: dts: qcom: msm8974: override nodes by label
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-References: <20220401201035.189106-1-krzysztof.kozlowski@linaro.org>
- <20220401201035.189106-7-krzysztof.kozlowski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220401201035.189106-7-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <78b1e04c-e7d0-a81d-799e-5c570c2bf106@quicinc.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,37 +77,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/04/2022 22:10, Krzysztof Kozlowski wrote:
-> Using node paths to extend or override a device tree node is error
-> prone.  If there was a typo error, a new node will be created instead of
-> extending the existing node.  This will lead to run-time errors that
-> could be hard to detect.
+On Mon, Apr 18, 2022 at 07:39:44PM +0530, Srinivasa Rao Mandadapu wrote:
 > 
-> A mistyped label on the other hand, will cause a dtc compile error
-> (during build time).  This also reduces the indentation making the code
-> easier to read.
+> On 4/14/2022 2:53 AM, Matthias Kaehlcke wrote:
+> Thanks for your time Matthias!!!
+> > On Wed, Apr 13, 2022 at 08:51:17PM +0530, Srinivasa Rao Mandadapu wrote:
+> > > Add dt nodes for sound card support, which is using WCD938x headset
+> > > playback, capture, I2S speaker playback and DMICs via VA macro.
+> > > 
+> > > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> > > Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> > > Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/sc7280-crd.dts  | 23 ++++++++
+> > >   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 93 ++++++++++++++++++++++++++++++++
+> > >   2 files changed, 116 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> > > index b944366..1e16854 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> > You need to refresh your tree, this file has been renamed to
+> > sc7280-crd-r3.dts. That DT is for the CRD <= 2.x, newer versions
+> > use sc7280-herobrine-crd.dts.
+> Okay. will update accordingly.
+> > 
+> > > @@ -90,6 +90,29 @@ ap_ts_pen_1v8: &i2c13 {
+> > >   	us-euro-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
+> > >   };
+> > > +&sound {
+> > > +	audio-routing =
+> > > +		"IN1_HPHL", "HPHL_OUT",
+> > > +		"IN2_HPHR", "HPHR_OUT",
+> > > +		"AMIC1", "MIC BIAS1",
+> > > +		"AMIC2", "MIC BIAS2",
+> > > +		"VA DMIC0", "MIC BIAS1",
+> > > +		"VA DMIC1", "MIC BIAS1",
+> > > +		"VA DMIC2", "MIC BIAS3",
+> > > +		"VA DMIC3", "MIC BIAS3",
+> > > +		"TX SWR_ADC0", "ADC1_OUTPUT",
+> > > +		"TX SWR_ADC1", "ADC2_OUTPUT",
+> > > +		"TX SWR_ADC2", "ADC3_OUTPUT",
+> > > +		"TX SWR_DMIC0", "DMIC1_OUTPUT",
+> > > +		"TX SWR_DMIC1", "DMIC2_OUTPUT",
+> > > +		"TX SWR_DMIC2", "DMIC3_OUTPUT",
+> > > +		"TX SWR_DMIC3", "DMIC4_OUTPUT",
+> > > +		"TX SWR_DMIC4", "DMIC5_OUTPUT",
+> > > +		"TX SWR_DMIC5", "DMIC6_OUTPUT",
+> > > +		"TX SWR_DMIC6", "DMIC7_OUTPUT",
+> > > +		"TX SWR_DMIC7", "DMIC8_OUTPUT";
+> > > +};
+> > > +
+> > >   &tlmm {
+> > >   	tp_int_odl: tp-int-odl {
+> > >   		pins = "gpio7";
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> > > index cf62d06..a7c884a 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> > > @@ -84,6 +84,99 @@
+> > >   		pinctrl-names = "default";
+> > >   		pinctrl-0 = <&nvme_pwren>;
+> > >   	};
+> > > +
+> > > +	sound: sound {
+> > > +		compatible = "google,sc7280-herobrine";
+> > > +		model = "sc7280-wcd938x-max98360a-1mic";
+> > > +
+> > > +		audio-routing =
+> > > +			"IN1_HPHL", "HPHL_OUT",
+> > > +			"IN2_HPHR", "HPHR_OUT",
+> > > +			"AMIC1", "MIC BIAS1",
+> > > +			"AMIC2", "MIC BIAS2",
+> > > +			"VA DMIC0", "MIC BIAS3",
+> > > +			"VA DMIC1", "MIC BIAS3",
+> > > +			"VA DMIC2", "MIC BIAS1",
+> > > +			"VA DMIC3", "MIC BIAS1",
+> > > +			"TX SWR_ADC0", "ADC1_OUTPUT",
+> > > +			"TX SWR_ADC1", "ADC2_OUTPUT",
+> > > +			"TX SWR_ADC2", "ADC3_OUTPUT",
+> > > +			"TX SWR_DMIC0", "DMIC1_OUTPUT",
+> > > +			"TX SWR_DMIC1", "DMIC2_OUTPUT",
+> > > +			"TX SWR_DMIC2", "DMIC3_OUTPUT",
+> > > +			"TX SWR_DMIC3", "DMIC4_OUTPUT",
+> > > +			"TX SWR_DMIC4", "DMIC5_OUTPUT",
+> > > +			"TX SWR_DMIC5", "DMIC6_OUTPUT",
+> > > +			"TX SWR_DMIC6", "DMIC7_OUTPUT",
+> > > +			"TX SWR_DMIC7", "DMIC8_OUTPUT";
+> > > +
+> > > +		qcom,msm-mbhc-hphl-swh = <1>;
+> > > +		qcom,msm-mbhc-gnd-swh = <1>;
+> > > +
+> > > +		#address-cells = <1>;
+> > > +		#size-cells = <0>;
+> > > +		#sound-dai-cells = <0>;
+> > > +
+> > > +		dai-link@1 {
+> > > +			link-name = "MAX98360A";
+> > > +			reg = <MI2S_SECONDARY>;
+> > Dumb question: is this value actually used? A quick glance through
+> > qcom_snd_parse_of() suggests it isn't. And the CPU DAI id is already
+> > specified in the 'sound-dai' property below.
+> > 
+> > In a quick test I replaced the corresponding 'reg' values in
+> > sc7180-trogdor.dtsi with 'random' values and audio playback on
+> > my coachz (sc7180-trogdor-coachz-r3.dts) still works ...
 > 
-> Re-order the overrides by label name.  The pre/post DTBS are the same.
+> Yes. agree that it's not being used. But i am not sure of general syntax
+> followed.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../arm/boot/dts/qcom-apq8074-dragonboard.dts |  614 +++++-----
->  .../boot/dts/qcom-msm8974-fairphone-fp2.dts   |  581 +++++----
->  .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 1075 ++++++++--------
->  .../boot/dts/qcom-msm8974-samsung-klte.dts    | 1083 ++++++++---------
->  .../dts/qcom-msm8974-sony-xperia-amami.dts    |  569 +++++----
->  .../dts/qcom-msm8974-sony-xperia-castor.dts   |  908 +++++++-------
->  .../dts/qcom-msm8974-sony-xperia-honami.dts   |  636 +++++-----
->  arch/arm/boot/dts/qcom-msm8974.dtsi           |   16 +-
->  8 files changed, 2730 insertions(+), 2752 deletions(-)
-> 
+> for now  will delete it.
 
-Hi Bjorn,
+The binding requires it though. I think the correct thing would be to remove it
+from the binding and from all device trees currently using it. But that might be
+beyond the scope of this series.
 
-I see you applied other arm-dts patches from this set, except this one.
-Any comments here? This is quite a big one, so maybe it had trouble
-making through the discussion lists?
+Maybe a two step approach would be the best: add 'reg' in this series, get it
+landed and then send another series that changes the binding and deletes all
+'reg' entries (and adjusts the 'address' in the node name).
 
-
-Best regards,
-Krzysztof
+I don't think the CPU DAI id should be in the node name either. It isn't even
+necessarily a unique identifier if I understand correctly. A SoC could have
+multiple IP blocks with audio buses, each with their own enumeration of DAIs.
+I suggest to just enumerate the nodes (and 'reg' while it's there) linearly
+starting with 0, or maybe even change the node name in the binding (in a
+second step) to dai-link-N.
