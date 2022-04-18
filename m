@@ -2,52 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21F44504C74
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 08:08:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CCFD504C86
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 08:18:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230057AbiDRGLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 02:11:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55082 "EHLO
+        id S236731AbiDRGVQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 02:21:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236713AbiDRGLF (ORCPT
+        with ESMTP id S236728AbiDRGVO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 02:11:05 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA4CB17AB7;
-        Sun, 17 Apr 2022 23:08:27 -0700 (PDT)
+        Mon, 18 Apr 2022 02:21:14 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F29517E23;
+        Sun, 17 Apr 2022 23:18:35 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 932CDB80E40;
-        Mon, 18 Apr 2022 06:08:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECABC385AC;
-        Mon, 18 Apr 2022 06:08:21 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 272A0B80D86;
+        Mon, 18 Apr 2022 06:18:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FCFC385A1;
+        Mon, 18 Apr 2022 06:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650262105;
-        bh=XNZr/IKeGY/pGlzCIWto86GY7XWEV0Np1gDcwopi1Xg=;
+        s=k20201202; t=1650262712;
+        bh=9oskifXqIiYjZvZC5tbGoi3TIlLus0DwcumHm6gcSfg=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Lysp/owBXLrObu8oZX/jv3OR7J3MTz+Ji1yeSgbxa5CiTMoYhoVEEb192Qt+8nf4g
-         /QP7VfXAVglQTvXMG1AQMBOx8gv5wizHkAwJNJAsr7tgf4jS21aGQ4EFTAXoB2khbv
-         YWiZEL7BPukNyb9GLBGI9bWJ3s+cCYqyW+5EKRW7WsHTunAUBXN6Q7syxOYKsAlXbr
-         E5tFGUQh3h76fZQf0Z78KweCQgj0QGptZNhBsWXZE4784Hpu22ElUuRIBuoC13PstZ
-         EGHU9oi2v4/uxKrfVuFpPUzG1p2zvuORhsX5wXXSFJRspcMfdW24xZabXZpS9SUD72
-         yI69d+S5vZhUA==
-Date:   Mon, 18 Apr 2022 11:38:18 +0530
+        b=mzVDsw3TrQBkM0ByTgc5Kl02nqK+9z398XeRQjJTr0q+o74gIPN+RpcEwF6jKcsCo
+         V2yPf96oub1Rho5UPg7G4QLHAPtevsKTJaE+5lxkYWnANdNfbKPq0yc7RtBRZ0EInN
+         kKyOFtPaC7k1txPLmeWzGZvRonN3ENVvfXSqRrq+3FdttfY6vkgtTymwCnYQce2Ftv
+         S5aMJFfYk+05xeLaBQSwBFcPo3Isad9gzRos6qdGPD+7Y+pIHFQmgwKVxm29eSnCVd
+         sJImHyPzt3j84VrIGTxUmTX/TxdFmVTH6xrFLChDvlBlBBbjHCISQ13iG2jiaa3uej
+         26oxJNEIHNKLA==
+Date:   Mon, 18 Apr 2022 11:48:24 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     loic.poulain@linaro.org, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: Re: [PATCH v3 2/2] bus: mhi: host: Optimize and update MMIO register
- write method
-Message-ID: <20220418060818.GF7431@thinkpad>
-References: <1649865406-30198-1-git-send-email-quic_jhugo@quicinc.com>
- <1649865406-30198-3-git-send-email-quic_jhugo@quicinc.com>
+To:     konrad.dybcio@somainline.org
+Cc:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_srichara@quicinc.com,
+        stable@vger.kernel.org, quic_mdalam@quicinc.com
+Subject: Re: [PATCH V3] mtd: rawnand: qcom: fix memory corruption that causes
+ panic
+Message-ID: <20220418061824.GG7431@thinkpad>
+References: <1650259141-20923-1-git-send-email-quic_mdalam@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1649865406-30198-3-git-send-email-quic_jhugo@quicinc.com>
+In-Reply-To: <1650259141-20923-1-git-send-email-quic_mdalam@quicinc.com>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -58,157 +57,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 13, 2022 at 09:56:46AM -0600, Jeffrey Hugo wrote:
-> From: Bhaumik Bhatt <bbhatt@codeaurora.org>
+On Mon, Apr 18, 2022 at 10:49:01AM +0530, Md Sadre Alam wrote:
+> This patch fixes a memory corruption that occurred in the
+> nand_scan() path for Hynix nand device.
 > 
-> As of now, MMIO writes done after ready state transition use the
-> mhi_write_reg_field() API even though the whole register is being
-> written in most cases. Optimize this process by using mhi_write_reg()
-> API instead for those writes and use the mhi_write_reg_field()
-> API for MHI config registers only.
+> On boot, for Hynix nand device will panic at a weird place:
+> | Unable to handle kernel NULL pointer dereference at virtual
+>   address 00000070
+> | [00000070] *pgd=00000000
+> | Internal error: Oops: 5 [#1] PREEMPT SMP ARM
+> | Modules linked in:
+> | CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.17.0-01473-g13ae1769cfb0
+>   #38
+> | Hardware name: Generic DT based system
+> | PC is at nandc_set_reg+0x8/0x1c
+> | LR is at qcom_nandc_command+0x20c/0x5d0
+> | pc : [<c088b74c>]    lr : [<c088d9c8>]    psr: 00000113
+> | sp : c14adc50  ip : c14ee208  fp : c0cc970c
+> | r10: 000000a3  r9 : 00000000  r8 : 00000040
+> | r7 : c16f6a00  r6 : 00000090  r5 : 00000004  r4 :c14ee040
+> | r3 : 00000000  r2 : 0000000b  r1 : 00000000  r0 :c14ee040
+> | Flags: nzcv  IRQs on  FIQs on  Mode SVC_32  ISA ARM Segment none
+> | Control: 10c5387d  Table: 8020406a  DAC: 00000051
+> | Register r0 information: slab kmalloc-2k start c14ee000 pointer offset
+>   64 size 2048
+> | Process swapper/0 (pid: 1, stack limit = 0x(ptrval))
+> | nandc_set_reg from qcom_nandc_command+0x20c/0x5d0
+> | qcom_nandc_command from nand_readid_op+0x198/0x1e8
+> | nand_readid_op from hynix_nand_has_valid_jedecid+0x30/0x78
+> | hynix_nand_has_valid_jedecid from hynix_nand_init+0xb8/0x454
+> | hynix_nand_init from nand_scan_with_ids+0xa30/0x14a8
+> | nand_scan_with_ids from qcom_nandc_probe+0x648/0x7b0
+> | qcom_nandc_probe from platform_probe+0x58/0xac
 > 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> ---
->  drivers/bus/mhi/host/init.c | 62 ++++++++++++++++++++++-----------------------
->  1 file changed, 31 insertions(+), 31 deletions(-)
+> The problem is that the nand_scan()'s qcom_nand_attach_chip callback
+> is updating the nandc->max_cwperpage from 1 to 4.This causes the
+> sg_init_table of clear_bam_transaction() in the driver's
+> qcom_nandc_command() to memset much more than what was initially
+> allocated by alloc_bam_transaction().
 > 
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index 9ac93b7..04c409b 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -425,74 +425,65 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->  	struct {
->  		u32 offset;
-> -		u32 mask;
->  		u32 val;
->  	} reg_info[] = {
->  		{
-> -			CCABAP_HIGHER, U32_MAX,
-> +			CCABAP_HIGHER,
->  			upper_32_bits(mhi_cntrl->mhi_ctxt->chan_ctxt_addr),
->  		},
->  		{
-> -			CCABAP_LOWER, U32_MAX,
-> +			CCABAP_LOWER,
->  			lower_32_bits(mhi_cntrl->mhi_ctxt->chan_ctxt_addr),
->  		},
->  		{
-> -			ECABAP_HIGHER, U32_MAX,
-> +			ECABAP_HIGHER,
->  			upper_32_bits(mhi_cntrl->mhi_ctxt->er_ctxt_addr),
->  		},
->  		{
-> -			ECABAP_LOWER, U32_MAX,
-> +			ECABAP_LOWER,
->  			lower_32_bits(mhi_cntrl->mhi_ctxt->er_ctxt_addr),
->  		},
->  		{
-> -			CRCBAP_HIGHER, U32_MAX,
-> +			CRCBAP_HIGHER,
->  			upper_32_bits(mhi_cntrl->mhi_ctxt->cmd_ctxt_addr),
->  		},
->  		{
-> -			CRCBAP_LOWER, U32_MAX,
-> +			CRCBAP_LOWER,
->  			lower_32_bits(mhi_cntrl->mhi_ctxt->cmd_ctxt_addr),
->  		},
->  		{
-> -			MHICFG, MHICFG_NER_MASK,
-> -			mhi_cntrl->total_ev_rings,
-> -		},
-> -		{
-> -			MHICFG, MHICFG_NHWER_MASK,
-> -			mhi_cntrl->hw_ev_rings,
-> -		},
-> -		{
-> -			MHICTRLBASE_HIGHER, U32_MAX,
-> +			MHICTRLBASE_HIGHER,
->  			upper_32_bits(mhi_cntrl->iova_start),
->  		},
->  		{
-> -			MHICTRLBASE_LOWER, U32_MAX,
-> +			MHICTRLBASE_LOWER,
->  			lower_32_bits(mhi_cntrl->iova_start),
->  		},
->  		{
-> -			MHIDATABASE_HIGHER, U32_MAX,
-> +			MHIDATABASE_HIGHER,
->  			upper_32_bits(mhi_cntrl->iova_start),
->  		},
->  		{
-> -			MHIDATABASE_LOWER, U32_MAX,
-> +			MHIDATABASE_LOWER,
->  			lower_32_bits(mhi_cntrl->iova_start),
->  		},
->  		{
-> -			MHICTRLLIMIT_HIGHER, U32_MAX,
-> +			MHICTRLLIMIT_HIGHER,
->  			upper_32_bits(mhi_cntrl->iova_stop),
->  		},
->  		{
-> -			MHICTRLLIMIT_LOWER, U32_MAX,
-> +			MHICTRLLIMIT_LOWER,
->  			lower_32_bits(mhi_cntrl->iova_stop),
->  		},
->  		{
-> -			MHIDATALIMIT_HIGHER, U32_MAX,
-> +			MHIDATALIMIT_HIGHER,
->  			upper_32_bits(mhi_cntrl->iova_stop),
->  		},
->  		{
-> -			MHIDATALIMIT_LOWER, U32_MAX,
-> +			MHIDATALIMIT_LOWER,
->  			lower_32_bits(mhi_cntrl->iova_stop),
->  		},
-> -		{ 0, 0, 0 }
-> +		{0, 0}
->  	};
->  
->  	dev_dbg(dev, "Initializing MHI registers\n");
-> @@ -533,13 +524,22 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
->  	mhi_cntrl->mhi_cmd[PRIMARY_CMD_RING].ring.db_addr = base + CRDB_LOWER;
->  
->  	/* Write to MMIO registers */
-> -	for (i = 0; reg_info[i].offset; i++) {
-> -		ret = mhi_write_reg_field(mhi_cntrl, base, reg_info[i].offset,
-> -					  reg_info[i].mask, reg_info[i].val);
-> -		if (ret) {
-> -			dev_err(dev, "Unable to write to MMIO registers");
-> -			return ret;
-> -		}
-> +	for (i = 0; reg_info[i].offset; i++)
-> +		mhi_write_reg(mhi_cntrl, base, reg_info[i].offset,
-> +			      reg_info[i].val);
-> +
-> +	ret = mhi_write_reg_field(mhi_cntrl, base, MHICFG, MHICFG_NER_MASK,
-> +				  mhi_cntrl->total_ev_rings);
-> +	if (ret) {
-> +		dev_err(dev, "Unable to read MHICFG register\n");
+> This patch will update nandc->max_cwperpage 1 to 4 after nand_scan()
+> returns, and remove updating nandc->max_cwperpage from
+> qcom_nand_attach_chip call back.
+> 
 
-"Unable to write"?
-
-> +		return ret;
-> +	}
-> +
-> +	ret = mhi_write_reg_field(mhi_cntrl, base, MHICFG, MHICFG_NHWER_MASK,
-> +				  mhi_cntrl->hw_ev_rings);
-> +	if (ret) {
-> +		dev_err(dev, "Unable to read MHICFG register\n");
-
-Same here.
+Konrad, can you please verify if this patch fixes the crash on your device?
+Similar crash was seen on SDX65 and this patch fixes the issue.
 
 Thanks,
 Mani
 
-> +		return ret;
->  	}
+> Cc: stable@vger.kernel.org
+> Fixes: 6a3cec64f18c ("mtd: rawnand: qcom: convert driver to nand_scan()")
+> Reported-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+> ---
+> [V3]
+>  * Updated commit message Fixes, Cc, Reported-by
+> 
+>  drivers/mtd/nand/raw/qcom_nandc.c | 24 +++++++++++++-----------
+>  1 file changed, 13 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+> index 1a77542..048b255 100644
+> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> @@ -2651,10 +2651,23 @@ static int qcom_nand_attach_chip(struct nand_chip *chip)
+>  	ecc->engine_type = NAND_ECC_ENGINE_TYPE_ON_HOST;
 >  
->  	return 0;
+>  	mtd_set_ooblayout(mtd, &qcom_nand_ooblayout_ops);
+> +	/* Free the initially allocated BAM transaction for reading the ONFI params */
+> +	if (nandc->props->is_bam)
+> +		free_bam_transaction(nandc);
+>  
+>  	nandc->max_cwperpage = max_t(unsigned int, nandc->max_cwperpage,
+>  				     cwperpage);
+>  
+> +	/* Now allocate the BAM transaction based on updated max_cwperpage */
+> +	if (nandc->props->is_bam) {
+> +		nandc->bam_txn = alloc_bam_transaction(nandc);
+> +		if (!nandc->bam_txn) {
+> +			dev_err(nandc->dev,
+> +				"failed to allocate bam transaction\n");
+> +			return -ENOMEM;
+> +		}
+> +	}
+> +
+>  	/*
+>  	 * DATA_UD_BYTES varies based on whether the read/write command protects
+>  	 * spare data with ECC too. We protect spare data by default, so we set
+> @@ -2955,17 +2968,6 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
+>  	if (ret)
+>  		return ret;
+>  
+> -	if (nandc->props->is_bam) {
+> -		free_bam_transaction(nandc);
+> -		nandc->bam_txn = alloc_bam_transaction(nandc);
+> -		if (!nandc->bam_txn) {
+> -			dev_err(nandc->dev,
+> -				"failed to allocate bam transaction\n");
+> -			nand_cleanup(chip);
+> -			return -ENOMEM;
+> -		}
+> -	}
+> -
+>  	ret = mtd_device_parse_register(mtd, probes, NULL, NULL, 0);
+>  	if (ret)
+>  		nand_cleanup(chip);
 > -- 
 > 2.7.4
 > 
