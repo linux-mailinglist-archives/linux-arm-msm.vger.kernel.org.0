@@ -2,62 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FE6A504C98
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 08:25:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29D73504C9D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 08:27:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236357AbiDRG1H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 02:27:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36396 "EHLO
+        id S231579AbiDRG3d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 02:29:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234301AbiDRG1F (ORCPT
+        with ESMTP id S230360AbiDRG3c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 02:27:05 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7058818B2F;
-        Sun, 17 Apr 2022 23:24:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650263067; x=1681799067;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=tNRYDpEsRiA6xjeaEbDZJT5OooHO5zK9cBV4KUdNxW0=;
-  b=O6phgXL/MRy0XiU9NTopaTd8SEYvlrpUKlXH8nMrl+FWXd3jZC/3U1dx
-   ITHtmW9/kK1fOr3kwGQ85ZOvxtd9F+IDrdfqxDGpyRijkzZ8i1O2JEuqz
-   UYb7ZhnpvhJGr6TjeSF5M3GyecQKTaxuncFkNLQmPIl9OdNL+F2tXmB+U
-   0=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 17 Apr 2022 23:24:27 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2022 23:24:26 -0700
-Received: from [10.201.2.159] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Sun, 17 Apr
- 2022 23:24:22 -0700
-Message-ID: <b45374be-117c-1da8-1cfc-3a505e5cf167@quicinc.com>
-Date:   Mon, 18 Apr 2022 11:54:19 +0530
+        Mon, 18 Apr 2022 02:29:32 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E29D41834E;
+        Sun, 17 Apr 2022 23:26:54 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 408EFCE0F09;
+        Mon, 18 Apr 2022 06:26:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC30C385A7;
+        Mon, 18 Apr 2022 06:26:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650263211;
+        bh=EsGNBU+sg7NMQeCrmziT8Zc9i2e1ClCCLAxrjPCfMy0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aqPmGnI1+Iu4R3IluEubsmJlov0GF9yhR//+LPqfnmTr4RW5CduKqNpQurgi89ZHA
+         5EJsh2gf3XZKnv9CHlx2GQQmGf+blouY3h1tbDcTehWgGo6rPuBr22v8hikY5YEdyT
+         qwk/t29cFrXl2bosUSUodopPalVEm4wUeYAEy1SbbKlo1Wxj4JKV4lAdiJDI30LNSD
+         AFB7exqu08WJrwUpCdptyZjQAcb82cg/8o6/fgpNG5Hk5KpQuqOR5HUbujPjuVG4I1
+         8QQ5/po5HEwhGzJBnXyd65KBJ9yTxwvDXAnmPgqROchE3Tdr6EafIkfblDErB7YmkM
+         O7fC4S3rT7uQw==
+Date:   Mon, 18 Apr 2022 11:56:45 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jeffrey Hugo <jhugo@codeaurora.org>
+Subject: Re: [PATCH v3] bus: mhi: host: Wait for ready state after reset
+Message-ID: <20220418062645.GI7431@thinkpad>
+References: <1649875946-32516-1-git-send-email-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH V3] mtd: rawnand: qcom: fix memory corruption that causes
- panic
-Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <konrad.dybcio@somainline.org>,
-        <quic_srichara@quicinc.com>, <stable@vger.kernel.org>
-References: <1650259141-20923-1-git-send-email-quic_mdalam@quicinc.com>
- <20220418053024.GA7431@thinkpad>
-From:   Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <20220418053024.GA7431@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1649875946-32516-1-git-send-email-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -66,119 +55,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Apr 13, 2022 at 12:52:26PM -0600, Jeffrey Hugo wrote:
+> From: Jeffrey Hugo <jhugo@codeaurora.org>
+> 
+> After the device has signaled the end of reset by clearing the reset bit,
+> it will automatically reinit MHI and the internal device structures.  Once
+> That is done, the device will signal it has entered the ready state.
+> 
+> Signaling the ready state involves sending an interrupt (MSI) to the host
+> which might cause IOMMU faults if it occurs at the wrong time.
+> 
+> If the controller is being powered down, and possibly removed, then the
+> reset flow would only wait for the end of reset.  At which point, the host
+> and device would start a race.  The host may complete its reset work, and
+> remove the interrupt handler, which would cause the interrupt to be
+> disabled in the IOMMU.  If that occurs before the device signals the ready
+> state, then the IOMMU will fault since it blocked an interrupt.  While
+> harmless, the fault would appear like a serious issue has occurred so let's
+> silence it by making sure the device hits the ready state before the host
+> completes its reset processing.
+> 
+> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-On 4/18/2022 11:00 AM, Manivannan Sadhasivam wrote:
-> On Mon, Apr 18, 2022 at 10:49:01AM +0530, Md Sadre Alam wrote:
->> This patch fixes a memory corruption that occurred in the
->> nand_scan() path for Hynix nand device.
->>
->> On boot, for Hynix nand device will panic at a weird place:
->> | Unable to handle kernel NULL pointer dereference at virtual
->>    address 00000070
->> | [00000070] *pgd=00000000
->> | Internal error: Oops: 5 [#1] PREEMPT SMP ARM
->> | Modules linked in:
->> | CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.17.0-01473-g13ae1769cfb0
->>    #38
->> | Hardware name: Generic DT based system
->> | PC is at nandc_set_reg+0x8/0x1c
->> | LR is at qcom_nandc_command+0x20c/0x5d0
->> | pc : [<c088b74c>]    lr : [<c088d9c8>]    psr: 00000113
->> | sp : c14adc50  ip : c14ee208  fp : c0cc970c
->> | r10: 000000a3  r9 : 00000000  r8 : 00000040
->> | r7 : c16f6a00  r6 : 00000090  r5 : 00000004  r4 :c14ee040
->> | r3 : 00000000  r2 : 0000000b  r1 : 00000000  r0 :c14ee040
->> | Flags: nzcv  IRQs on  FIQs on  Mode SVC_32  ISA ARM Segment none
->> | Control: 10c5387d  Table: 8020406a  DAC: 00000051
->> | Register r0 information: slab kmalloc-2k start c14ee000 pointer offset
->>    64 size 2048
->> | Process swapper/0 (pid: 1, stack limit = 0x(ptrval))
->> | nandc_set_reg from qcom_nandc_command+0x20c/0x5d0
->> | qcom_nandc_command from nand_readid_op+0x198/0x1e8
->> | nand_readid_op from hynix_nand_has_valid_jedecid+0x30/0x78
->> | hynix_nand_has_valid_jedecid from hynix_nand_init+0xb8/0x454
->> | hynix_nand_init from nand_scan_with_ids+0xa30/0x14a8
->> | nand_scan_with_ids from qcom_nandc_probe+0x648/0x7b0
->> | qcom_nandc_probe from platform_probe+0x58/0xac
->>
->> The problem is that the nand_scan()'s qcom_nand_attach_chip callback
->> is updating the nandc->max_cwperpage from 1 to 4.This causes the
->> sg_init_table of clear_bam_transaction() in the driver's
->> qcom_nandc_command() to memset much more than what was initially
->> allocated by alloc_bam_transaction().
->>
->> This patch will update nandc->max_cwperpage 1 to 4 after nand_scan()
->> returns, and remove updating nandc->max_cwperpage from
->> qcom_nand_attach_chip call back.
-> The above statement is still wrong.
-    Updated in V4 patch.
->
->> Cc: stable@vger.kernel.org
->> Fixes: 6a3cec64f18c ("mtd: rawnand: qcom: convert driver to nand_scan()")
->> Reported-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
->> ---
->> [V3]
->>   * Updated commit message Fixes, Cc, Reported-by
-> Missing the previous changelogs.
+I was about to apply this patch but wanted to check with you on using the
+double signed-off by tags. If the patch get's handed over between multiple
+developers then multiple signed-off by's make sense. But since it is you that
+handled the earlier patch also, I think one tag is enough with your new domain.
 
+One more thing is, using codeaurora domain will bounce now. So, please use the
+quicinc domain for Hemant also.
 
-   Updated in V4 patch.
+Thanks,
+Mani
 
->
-> Thanks,
-> Mani
->
->>   drivers/mtd/nand/raw/qcom_nandc.c | 24 +++++++++++++-----------
->>   1 file changed, 13 insertions(+), 11 deletions(-)
->>
->> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
->> index 1a77542..048b255 100644
->> --- a/drivers/mtd/nand/raw/qcom_nandc.c
->> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
->> @@ -2651,10 +2651,23 @@ static int qcom_nand_attach_chip(struct nand_chip *chip)
->>   	ecc->engine_type = NAND_ECC_ENGINE_TYPE_ON_HOST;
->>   
->>   	mtd_set_ooblayout(mtd, &qcom_nand_ooblayout_ops);
->> +	/* Free the initially allocated BAM transaction for reading the ONFI params */
->> +	if (nandc->props->is_bam)
->> +		free_bam_transaction(nandc);
->>   
->>   	nandc->max_cwperpage = max_t(unsigned int, nandc->max_cwperpage,
->>   				     cwperpage);
->>   
->> +	/* Now allocate the BAM transaction based on updated max_cwperpage */
->> +	if (nandc->props->is_bam) {
->> +		nandc->bam_txn = alloc_bam_transaction(nandc);
->> +		if (!nandc->bam_txn) {
->> +			dev_err(nandc->dev,
->> +				"failed to allocate bam transaction\n");
->> +			return -ENOMEM;
->> +		}
->> +	}
->> +
->>   	/*
->>   	 * DATA_UD_BYTES varies based on whether the read/write command protects
->>   	 * spare data with ECC too. We protect spare data by default, so we set
->> @@ -2955,17 +2968,6 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
->>   	if (ret)
->>   		return ret;
->>   
->> -	if (nandc->props->is_bam) {
->> -		free_bam_transaction(nandc);
->> -		nandc->bam_txn = alloc_bam_transaction(nandc);
->> -		if (!nandc->bam_txn) {
->> -			dev_err(nandc->dev,
->> -				"failed to allocate bam transaction\n");
->> -			nand_cleanup(chip);
->> -			return -ENOMEM;
->> -		}
->> -	}
->> -
->>   	ret = mtd_device_parse_register(mtd, probes, NULL, NULL, 0);
->>   	if (ret)
->>   		nand_cleanup(chip);
->> -- 
->> 2.7.4
->>
+> ---
+> 
+> v3:
+> Rebase and use dev_err over dev_warn
+> 
+> v2: 
+> Fix subject and remove use of cur_state
+> 
+>  drivers/bus/mhi/host/pm.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> index a0e91bd..f46158e 100644
+> --- a/drivers/bus/mhi/host/pm.c
+> +++ b/drivers/bus/mhi/host/pm.c
+> @@ -483,6 +483,15 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
+>  		 * hence re-program it
+>  		 */
+>  		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
+> +
+> +		if (!MHI_IN_PBL(mhi_get_exec_env(mhi_cntrl))) {
+> +			/* wait for ready to be set */
+> +			ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs,
+> +						 MHISTATUS,
+> +						 MHISTATUS_READY_MASK, 1, 25000);
+> +			if (ret)
+> +				dev_err(dev, "Device failed to enter READY state\n");
+> +		}
+>  	}
+>  
+>  	dev_dbg(dev,
+> -- 
+> 2.7.4
+> 
