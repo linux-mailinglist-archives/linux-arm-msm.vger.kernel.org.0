@@ -2,53 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AC44505AB4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 17:13:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF606505ACB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 17:15:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344719AbiDRPQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 11:16:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54396 "EHLO
+        id S237931AbiDRPSd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 11:18:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345307AbiDRPPx (ORCPT
+        with ESMTP id S1345396AbiDRPRj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 11:15:53 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD099BB08B;
-        Mon, 18 Apr 2022 07:12:55 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6964960BC5;
-        Mon, 18 Apr 2022 14:12:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716DBC385A8;
-        Mon, 18 Apr 2022 14:12:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650291174;
-        bh=IVDZmECCaRmoAtMDnJhVFNl6perUjNM7sTyxh9m4brg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lKdS9WmOwcflzN1Th5Ni8eFpXF1nMyP4ivl5hdxkwJn7O3SoazMmyTYgc/mLhe1tX
-         QPMCy5Ds1XUKjXCFD8iAIQK6lFbPeJv7dYEj7ZCoB5U99ZmARohYUcz+irAbyvU+DM
-         pmPcjervlnxx2s3reHgBZrqCyNYRZqRasSguWaT2DqIZggRJA+e/KdCDV5nQUh7v0T
-         gqc6hI6R/Jyvnif51h5bhtIZF1WxVHpuDc2OER4x44ZfHXG7MCzY2vGF86ZGJt+Q2p
-         zTfwuyOsPYrXbkEuItOmAvutmCiwPkRsCgRAITS8GYVQok2vZmSzPRK86CPnAk1+1v
-         8rXvY/gvs5yBA==
-Date:   Mon, 18 Apr 2022 19:42:48 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] bus: mhi: host: Wait for ready state after reset
-Message-ID: <20220418141248.GC161722@thinkpad>
-References: <1649875946-32516-1-git-send-email-quic_jhugo@quicinc.com>
- <20220418062645.GI7431@thinkpad>
- <eff55b55-cef0-2931-c8e5-95a9230c9d27@quicinc.com>
+        Mon, 18 Apr 2022 11:17:39 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8442DC12CB;
+        Mon, 18 Apr 2022 07:14:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650291271; x=1681827271;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=d/TCJeWn01oK1kgjjeXq/8QwVs8Q8YEjJikEqXwx9CE=;
+  b=rh3+Ru/Y4wJJ6i8jb0KIc7l91555wPO+xELQ9+OsAc8eMVWKNjy5P3vk
+   O2J+8u+VPV8mTshnj1bNLre/QdMRFd10JO2WECBrPpllr3wdo7w+2VTWe
+   zjXLP+vekKQU6vWwxHQdGLruPoB1pZvhzd1N07FckIaiXY5WEVcg4Iwml
+   o=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 18 Apr 2022 07:14:31 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Apr 2022 07:14:30 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 18 Apr 2022 07:14:29 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 18 Apr 2022 07:14:26 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v8 0/4] Add soundcard support for sc7280 based platforms.
+Date:   Mon, 18 Apr 2022 19:44:08 +0530
+Message-ID: <1650291252-30398-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <eff55b55-cef0-2931-c8e5-95a9230c9d27@quicinc.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,49 +64,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 18, 2022 at 07:53:24AM -0600, Jeffrey Hugo wrote:
-> On 4/18/2022 12:26 AM, Manivannan Sadhasivam wrote:
-> > On Wed, Apr 13, 2022 at 12:52:26PM -0600, Jeffrey Hugo wrote:
-> > > From: Jeffrey Hugo <jhugo@codeaurora.org>
-> > > 
-> > > After the device has signaled the end of reset by clearing the reset bit,
-> > > it will automatically reinit MHI and the internal device structures.  Once
-> > > That is done, the device will signal it has entered the ready state.
-> > > 
-> > > Signaling the ready state involves sending an interrupt (MSI) to the host
-> > > which might cause IOMMU faults if it occurs at the wrong time.
-> > > 
-> > > If the controller is being powered down, and possibly removed, then the
-> > > reset flow would only wait for the end of reset.  At which point, the host
-> > > and device would start a race.  The host may complete its reset work, and
-> > > remove the interrupt handler, which would cause the interrupt to be
-> > > disabled in the IOMMU.  If that occurs before the device signals the ready
-> > > state, then the IOMMU will fault since it blocked an interrupt.  While
-> > > harmless, the fault would appear like a serious issue has occurred so let's
-> > > silence it by making sure the device hits the ready state before the host
-> > > completes its reset processing.
-> > > 
-> > > Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> > > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-> > > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> > 
-> > I was about to apply this patch but wanted to check with you on using the
-> > double signed-off by tags. If the patch get's handed over between multiple
-> > developers then multiple signed-off by's make sense. But since it is you that
-> > handled the earlier patch also, I think one tag is enough with your new domain.
-> > 
-> > One more thing is, using codeaurora domain will bounce now. So, please use the
-> > quicinc domain for Hemant also.
-> 
-> I'm aware of the bouncing.  Git send-email however is not, and its default
-> behavior can be a bit annoying in this edge case.
-> 
-> I've seen the dual SoB by the same developer elsewhere in the community, but
-> if you want things "cleaned up" to the new quic ids, I'll do that.
+This patch set is to add bolero digital macros, WCD and maxim codecs nodes
+for audio on sc7280 based platforms.
 
-Double s-o-b's are common but in this case you handled the patch all the way and
-you are still employed by the same employer. Only thing that changed is your
-domain, so this makes me feel that single s-o-b is enough.
+This patch set depends on:
+    -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=631506
+    -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=601249
+    -- Clock reset control patches
 
-Thanks,
-Mani
+Changes Since V7:
+    -- Remove redundant interrupt names in soundwire node.
+    -- Fix typo errors.
+    -- Remove redundant reg property in sound node.
+    -- Rebased on top of latest kernel tip.
+Changes Since V6:
+    -- Modify link-names and audio routing in a sound node.
+    -- Move amp_en pin control node to appropriate consumer patch.
+    -- Split patches as per digital macro codecs and board specific codecs and sort it.
+    -- Modify label and node names to lpass specific.
+Changes Since V5:
+    -- Move soc specific bolero digital codec nodes to soc specific file.
+    -- Bring wcd938x codec reset pin control and US/EURO HS selection nodes from other series.
+    -- Change node name and remove redundant status property in sound node.
+Changes Since V4:
+    -- Update nodes in sorting order.
+    -- Update DTS node names as per dt-bindings.
+    -- Update Node properties in proper order.
+    -- Update missing pinctrl properties like US/EURO HS selection, wcd reset control.
+    -- Remove redundant labels.
+    -- Remove unused size cells and address cells in tx macro node.
+    -- Keep all same nodes at one place, which are defined in same file.
+    -- Add max98360a codec node to herobrine board specific targets.
+Changes Since V3:
+    -- Move digital codec macro nodes to board specific dtsi file.
+    -- Update pin controls in lpass cpu node.
+    -- Update dependency patch list.
+    -- Create patches on latest kernel.
+Changes Since V2:
+    -- Add power domains to digital codec macro nodes.
+    -- Change clock node usage in lpass cpu node.
+    -- Add codec mem clock to lpass cpu node.
+    -- Modify the node names to be generic.
+    -- Move sound and codec nodes to root node.
+    -- sort dai links as per reg.
+    -- Fix typo errors.
+Changes Since V1:
+    -- Update the commit message of cpu node patch.
+    -- Add gpio control property to support Euro headset in wcd938x node.
+    -- Fix clock properties in lpass cpu and digital codec macro node.
+
+Srinivasa Rao Mandadapu (4):
+  arm64: dts: qcom: sc7280: Add nodes for soundwire and va tx rx digital
+    macro codecs
+  arm64: dts: qcom: sc7280: Add nodes for wcd9385 and max98360a codec
+  arm64: dts: qcom: sc7280: Add lpass cpu node
+  arm64: dts: qcom: sc7280: Add dt nodes for sound card
+
+ arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts     |  29 ++++
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi |   8 +
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 218 +++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi           | 190 +++++++++++++++++++++
+ 4 files changed, 445 insertions(+)
+
+-- 
+2.7.4
+
