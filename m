@@ -2,147 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC851505E47
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 21:14:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB7AE505E57
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 21:19:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347586AbiDRTRO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 15:17:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58856 "EHLO
+        id S1347619AbiDRTVr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 15:21:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238177AbiDRTRN (ORCPT
+        with ESMTP id S1347612AbiDRTVq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 15:17:13 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1EF932EEB;
-        Mon, 18 Apr 2022 12:14:32 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 21so18568997edv.1;
-        Mon, 18 Apr 2022 12:14:32 -0700 (PDT)
+        Mon, 18 Apr 2022 15:21:46 -0400
+Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 776CF35275
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 12:19:06 -0700 (PDT)
+Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-e2442907a1so15160028fac.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 12:19:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:subject:to:cc:message-id:in-reply-to:references
-         :mime-version;
-        bh=8vjH6cZOjMPKmMYM8U9yyT827f2QaB+PvuhuwLr3Xlk=;
-        b=lQut0xtvDeVyqYFPNTUqB22vY5AIURHZF+Fe0MzIHbLB827ZUpJlIGKgfE7xtIjJjx
-         Jgm8uySI+v0v3rL/dRX4/9A8Rv99A53Iey5zDd6KsgRsbKx6P6N9CC+Oaz+rY9zlRjUz
-         e8edov02aG07IciohsEZ3TGk7AmOKKC8ylg2s+iuD8IMccbF0jTZFREN4klRVT6Zgt7W
-         eVWCrafZJEP7Zm64CBJu9mRf++JU3PEbEVJTsZswm+5+ho7oRuqLlFRJhSO+6/n2HdBH
-         iC0cR7ZHrpFqa8qwexHoLPDIG40j6aqXk5sDAOaEMu5i3AeyKnllppZpjOGmuMuKz+0e
-         XZfQ==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=i5wl56LotTiojun33tWHx/7uuv8PC5pAOqdx69tKaaM=;
+        b=IrBO3HYKrCyj8BpxZJPl52AA7PNRk7cYMbyJAbdSWuQXLHzjL7QbrMJB94/Dn+xCWs
+         M77uDtGevI5J2vY1vpOwBTPztIAZM4Pp6g5la85cZxmhCyck9gTUr6otIWl7HQb0mMHY
+         SXrPPX1NWp97pWRQ38S8Do2rWKfx1C7R9VFnM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:subject:to:cc:message-id:in-reply-to
-         :references:mime-version;
-        bh=8vjH6cZOjMPKmMYM8U9yyT827f2QaB+PvuhuwLr3Xlk=;
-        b=iQGUBPjzdUqBbKp4cVpthytRMfNhxfrZ6kcUBCCnikPSHnZ+HNgDG5EQbLy/ikFBpk
-         azrToOexID6iIVOcP8DtCXUdOE8qh7phoWJbT4M/2fO3M1ozyAfU93l03ZGGbjirb/G/
-         CvWLt4rd9jCeU5OLz+1ji2cZcpj4mZla/P9xcBHxqChrq6KPMkh984apBORcJy3G4gyn
-         ZulqhIp8wRuoyAz1QjiiAcyR9HXzclznAilPLSDrdgaTkFz0gDSGP4TfzERKNf1TxE7Z
-         Io1Od58Z+nZiu5t9baYZNc7eDCSs2l+TTuOAyQHIjSbrphCNjSRLHNd7+SteJUhitEZd
-         pxMw==
-X-Gm-Message-State: AOAM531RnGeQD+y3NYc5/R6ZRRPIT1s8tDMnQQTZL6XS84q+28a81ZOL
-        JgCzDxxsEug4p4OBJ/kY+yg=
-X-Google-Smtp-Source: ABdhPJwev6wR4b0ex38BXGBB7t3VDqhLP5+ZMFkH/K4ICKFNkbcCGUKBkCym9mkKwf/H1vSzl6s9qA==
-X-Received: by 2002:a05:6402:515b:b0:41d:82c2:2749 with SMTP id n27-20020a056402515b00b0041d82c22749mr13806249edd.38.1650309271494;
-        Mon, 18 Apr 2022 12:14:31 -0700 (PDT)
-Received: from [192.168.11.247] (190-2-132-198.hosted-by-worldstream.net. [190.2.132.198])
-        by smtp.gmail.com with ESMTPSA id mx14-20020a1709065a0e00b006e8bc3ce121sm4841045ejc.6.2022.04.18.12.14.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Apr 2022 12:14:31 -0700 (PDT)
-Date:   Mon, 18 Apr 2022 23:12:31 +0400
-From:   Yassine Oudjana <yassine.oudjana@gmail.com>
-Subject: Re: [PATCH RESEND v2 1/9] dt-bindings: clk: qcom: msm8996-apcc: Add
- CBF
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Rob Herring <robh@kernel.org>
-Message-Id: <VOUJAR.IJKRF5T1P4ZE@gmail.com>
-In-Reply-To: <813f4a3d-255b-0ec1-cc3e-a1280e4d74ae@linaro.org>
-References: <20220416025637.83484-1-y.oudjana@protonmail.com>
-        <20220416025637.83484-2-y.oudjana@protonmail.com>
-        <813f4a3d-255b-0ec1-cc3e-a1280e4d74ae@linaro.org>
-X-Mailer: geary/40.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=i5wl56LotTiojun33tWHx/7uuv8PC5pAOqdx69tKaaM=;
+        b=3zsRmbBhHKUp0kLqnNHpYLL/S9CquKUQj5AWyb9luwVfFtT0BaTd2qdSYqt4IyOOz2
+         s+WmFdzLk4ursS25wuuZ0jOCZI08GGrTGAJ/Tf1P086lESAKQGsNhi5gKt0Jx0cbFAsP
+         aduToBKNDSA2lwuz1XMU7mFlh3orJnhhcGqPSjFAV2H4XBVBgMYVecTOlAZJCmzTG11O
+         6YXa+0CcTmjA9NP1okhPx46ncFoOB1oA0D6hlfuXCRNywozN5sCVK97BoYRd25tloesE
+         Qau6MRAPgh9bb4JnuD+SKgRiovh12dXRJkzS4CNc28DAI0Yzd7dNOwQT97AQjytETByC
+         x14w==
+X-Gm-Message-State: AOAM530AMau8xQMig8zvPlBAxRGCvG+OrGihImFTKInOuc+ekqTMTY96
+        eAVCS/wJ39zfw3XB/8sGGqWThBv9DD1WNTU2J/hBGA==
+X-Google-Smtp-Source: ABdhPJy36I60SuKJQk1lAs2Wj4Aw91ozGFrNZzaJBTHE9jWCmMfEyKPfI8GyfHWmpkDQ6UzS6OnJiPVDUMtglnY/4Os=
+X-Received: by 2002:a05:6870:3907:b0:e5:a6fd:4047 with SMTP id
+ b7-20020a056870390700b000e5a6fd4047mr4740339oap.193.1650309545749; Mon, 18
+ Apr 2022 12:19:05 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 18 Apr 2022 12:19:05 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <1650066445-18186-1-git-send-email-quic_khsieh@quicinc.com>
+References: <1650066445-18186-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Mon, 18 Apr 2022 12:19:05 -0700
+Message-ID: <CAE-0n505HQEu0Wmt17Y_AfTG+arD76kL7wpEFgeJKz6RRcQBxw@mail.gmail.com>
+Subject: Re: [PATCH v9] drm/msm/dp: stop event kernel thread when DP unbind
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
+        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
+        dmitry.baryshkov@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Kuogee Hsieh (2022-04-15 16:47:25)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 01453db..5b289b9 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -266,9 +269,18 @@ static int dp_display_bind(struct device *dev, struct device *master,
+>         }
+>
+>         rc = dp_register_audio_driver(dev, dp->audio);
+> -       if (rc)
+> +       if (rc) {
+>                 DRM_ERROR("Audio registration Dp failed\n");
+> +               goto end;
+> +       }
+>
+> +       rc = dp_hpd_event_thread_start(dp);
+> +       if (rc) {
+> +               DRM_ERROR("Event thread create failed\n");
 
-On Mon, Apr 18 2022 at 18:04:08 +0200, Krzysztof Kozlowski 
-<krzysztof.kozlowski@linaro.org> wrote:
-> On 16/04/2022 04:56, Yassine Oudjana wrote:
->>  Add CBF clock and reg.
->> 
->>  Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
->>  Acked-by: Rob Herring <robh@kernel.org>
->>  ---
->>   .../devicetree/bindings/clock/qcom,msm8996-apcc.yaml   | 10 
->> ++++++----
->>   1 file changed, 6 insertions(+), 4 deletions(-)
->> 
->>  diff --git 
->> a/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml 
->> b/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
->>  index a20cb10636dd..325f8aef53b2 100644
->>  --- a/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
->>  +++ b/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
->>  @@ -10,8 +10,8 @@ maintainers:
->>     - Loic Poulain <loic.poulain@linaro.org>
->> 
->>   description: |
->>  -  Qualcomm CPU clock controller for MSM8996 CPUs, clock 0 is for 
->> Power cluster
->>  -  and clock 1 is for Perf cluster.
->>  +  Qualcomm CPU clock controller for MSM8996 CPUs, clock 0 is for 
->> Power cluster,
->>  +  clock 1 is for Perf cluster, and clock 2 is for Coherent bus 
->> fabric (CBF).
->> 
->>   properties:
->>     compatible:
->>  @@ -19,7 +19,9 @@ properties:
->>         - qcom,msm8996-apcc
->> 
->>     reg:
->>  -    maxItems: 1
->>  +    items:
->>  +      - description: Cluster clock registers
->>  +      - description: CBF clock registers
-> 
-> This breaks the ABI (which might be okay or might be not, but was not
-> mentioned in the commit) and breaks existing DTSes. Please fix them
-> before this patch.
+One thread DRM_ERROR()
 
-This is only documenting changes made in an earlier patch[1] this
-series depends on, and the DTSes are fixed in another patch[2] that
-is also listed as a dependency in the cover letter (both patches
-aren't applied yet). Shouldn't the ABI changes should be mentioned in
-those patches instead?
+> +               goto end;
+> +       }
+> +
+> +       return 0;
+>  end:
+>         return rc;
+>  }
+> @@ -1132,12 +1149,19 @@ static int hpd_event_thread(void *data)
+>         return 0;
+>  }
+>
+> -static void dp_hpd_event_setup(struct dp_display_private *dp_priv)
+> +static int dp_hpd_event_thread_start(struct dp_display_private *dp_priv)
+>  {
+> -       init_waitqueue_head(&dp_priv->event_q);
+> -       spin_lock_init(&dp_priv->event_lock);
+> +       /* set event q to empty */
+> +       dp_priv->event_gndx = 0;
+> +       dp_priv->event_pndx = 0;
+> +
+> +       dp_priv->ev_tsk = kthread_run(hpd_event_thread, dp_priv, "dp_hpd_handler");
+> +       if (IS_ERR(dp_priv->ev_tsk)) {
+> +               DRM_ERROR("failed to create DP event thread\n");
 
-[1] 
-https://lore.kernel.org/linux-arm-msm/20210528192541.1120703-1-konrad.dybcio@somainline.org/
-[2] 
-https://lore.kernel.org/linux-arm-msm/20210528192541.1120703-2-konrad.dybcio@somainline.org/
+And another thread creation DRM_ERROR(). Can we just have one please
+instead of two lines for something that probably never happens?
 
-
+> +               return PTR_ERR(dp_priv->ev_tsk);
+> +       }
+>
+> -       kthread_run(hpd_event_thread, dp_priv, "dp_hpd_handler");
+> +       return 0;
+>  }
+>
+>  static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
