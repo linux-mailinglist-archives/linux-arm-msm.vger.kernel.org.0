@@ -2,71 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB65D505A70
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 17:02:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30E37505A96
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 17:06:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236196AbiDRPEl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 11:04:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36688 "EHLO
+        id S235843AbiDRPJN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 11:09:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245435AbiDRPEI (ORCPT
+        with ESMTP id S244225AbiDRPI4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 11:04:08 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894A864FC;
-        Mon, 18 Apr 2022 06:54:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650290071; x=1681826071;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=acwXphJFeX2V8q+QY3YwXSKjv1k9OMNV8xD3S9oFEMo=;
-  b=MMr3hV5tR69ce/zdTVcn/K7UnEp1KxRcQDD0IYIkEb3CH/zVPY8wFwHf
-   TamVdx8atjyQZ3Mrcyp+7+VYY87LfhYKeIaBFwNHDHqwz5rSkCYRrljnF
-   jqQD0N7LAS0NE0RTuVNpY2ocYHesO8+SZ9MYkxMf8QmwaF8Kj2ImcrCFb
-   o=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 18 Apr 2022 06:54:30 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Apr 2022 06:54:30 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 18 Apr 2022 06:54:29 -0700
-Received: from [10.216.27.177] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 18 Apr
- 2022 06:54:25 -0700
-Message-ID: <39ad1f0a-fb34-c81a-82c3-d14f0b830ee2@quicinc.com>
-Date:   Mon, 18 Apr 2022 19:24:22 +0530
+        Mon, 18 Apr 2022 11:08:56 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72D58CEB;
+        Mon, 18 Apr 2022 07:01:01 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CEAFE612B1;
+        Mon, 18 Apr 2022 14:01:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7EAFC385A1;
+        Mon, 18 Apr 2022 14:00:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650290460;
+        bh=t87kTP2ANlN2kxQbIJv5pHweOFSoXgwk/LXZka654+E=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EA5vOwPbhjFFZ1nx+L1Ezu86daVyQ8GUzOk0G5mh3/VA7csw1eeXv63QnuYK62Q4m
+         oXCCLsJhU0rv+quy4Ofa2T+vNYZAqK6e7fVM6VlTalRWNJA07eIIZoz7MSPT75Hf4T
+         1n1s+5U78hCKKtUE5l9Gu6hh5BhxR6KMG5ZX4o6SEh+J7dJbCmyERuFvmiIj3phm+k
+         bI++9L8aJsZ2NS+EjjEACSOC6YcQGxw1fIb2/FnbzfqzB4IeitrlipS95zIN5H1vHF
+         1V2560VTepO6t+GJqmgeylX/Voa6okmbRNviM4x4rC7HkoVWnh6p9nBv74GGOZl76F
+         d95bf+CZPDMCw==
+Date:   Mon, 18 Apr 2022 19:30:53 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] bus: mhi: host: Add soc_reset sysfs
+Message-ID: <20220418140053.GB161722@thinkpad>
+References: <1649883619-17609-1-git-send-email-quic_jhugo@quicinc.com>
+ <20220418054649.GB7431@thinkpad>
+ <2c776c00-5742-516f-06e3-80db9f572cb4@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v7 1/4] arm64: dts: qcom: sc7280: Add nodes for soundwire
- and va tx rx digital macro codecs
-Content-Language: en-US
-To:     Matthias Kaehlcke <mka@chromium.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1649863277-31615-1-git-send-email-quic_srivasam@quicinc.com>
- <1649863277-31615-2-git-send-email-quic_srivasam@quicinc.com>
- <YlccZmu8T1Puu9Vt@google.com>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <YlccZmu8T1Puu9Vt@google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2c776c00-5742-516f-06e3-80db9f572cb4@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,185 +57,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Apr 18, 2022 at 07:45:06AM -0600, Jeffrey Hugo wrote:
+> On 4/17/2022 11:46 PM, Manivannan Sadhasivam wrote:
+> > On Wed, Apr 13, 2022 at 03:00:19PM -0600, Jeffrey Hugo wrote:
+> > > From: Jeffrey Hugo <jhugo@codeaurora.org>
+> > > 
+> > > The MHI bus supports a standardized hardware reset, which is known as the
+> > > "SoC Reset".  This reset is similar to the reset sysfs for PCI devices -
+> > > a hardware mechanism to reset the state back to square one.
+> > > 
+> > > The MHI SoC Reset is described in the spec as a reset of last resort.  If
+> > > some unrecoverable error has occurred where other resets have failed, SoC
+> > > Reset is the "big hammer" that ungracefully resets the device.  This is
+> > > effectivly the same as yanking the power on the device, and reapplying it.
+> > > However, depending on the nature of the particular issue, the underlying
+> > > transport link may remain active and configured.  If the link remains up,
+> > > the device will flag a MHI system error early in the boot process after
+> > > the reset is executed, which allows the MHI bus to process a fatal error
+> > > event, and clean up appropiately.
+> > > 
+> > > While the SoC Reset is generally intended as a means of recovery when all
+> > > else has failed, it can be useful in non-error scenarios.  For example,
+> > > if the device loads firmware from the host filesystem, the device may need
+> > > to be fully rebooted inorder to pick up the new firmware.  In this
+> > > scenario, the system administrator may use the soc_reset sysfs to cause
+> > > the device to pick up the new firmware that the admin placed on the
+> > > filesystem.
+> > > 
+> > > Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> > > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> > 
+> > Do you need double signed-off because of change in domain?
+> > 
+> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> That seems to be the convention that I see in the community.  As I
+> understand it, the SoB is linked to the Developers Certificate of Origin.
+> This version of the change is coming from "quic_jhugo@quicinc.com" and that
+> entity needs to certify they can share the code under the Cert of Origin.
+> 
+> In theory, I could have avoided this by sending this version under the
+> codeaurora address.  The problem is that the codeaurora domain no longer
+> exists, so sending/receiving email from that id is not possible.
+> 
+> If I'm not understanding things correctly, please educate me.
 
-On 4/14/2022 12:24 AM, Matthias Kaehlcke wrote:
-Thanks for your time Matthias!!!
-> On Wed, Apr 13, 2022 at 08:51:14PM +0530, Srinivasa Rao Mandadapu wrote:
->> SC7280 has VA, TX and RX macros with SoundWire Controllers to attach with
->> external codecs using soundwire masters. Add these nodes for sc7280 based
->> platforms audio use case.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 122 +++++++++++++++++++++++++++++++++++
->>   1 file changed, 122 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 50fea0e..c0f127f 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -1980,6 +1980,128 @@
->>   			#clock-cells = <1>;
->>   		};
->>   
->> +		lpass_rx_macro: codec@3200000 {
->> +			compatible = "qcom,sc7280-lpass-rx-macro";
->> +			reg = <0 0x03200000 0 0x1000>;
->> +
->> +			status = "disabled";
-> nit: this is easily missed here inmidst of the other stuff, best place
-> it at the end of the node as many other nodes do.
-Okay. will place accordingly.
->
->> +			pinctrl-names = "default";
->> +			pinctrl-0 = <&lpass_rx_swr>;
->> +
->> +			clocks = <&lpass_aon LPASS_AON_CC_TX_MCLK_CLK>,
->> +				 <&lpass_aon LPASS_AON_CC_TX_MCLK_2X_CLK>,
->> +				 <&lpass_va_macro>;
->> +			clock-names = "mclk", "npl", "fsgen";
->> +
->> +			power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>,p
->> +					<&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
->> +			power-domain-names ="macro", "dcodec";
-> add space after '='.
-Okay.
->
->> +
->> +			#clock-cells = <0>;
->> +			#sound-dai-cells = <1>;
->> +		};
->> +
->> +		swr0: soundwire@3210000 {
->> +			compatible = "qcom,soundwire-v1.6.0";
->> +			reg = <0 0x03210000 0 0x2000>;
->> +
->> +			interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
->> +			clocks = <&lpass_rx_macro>;
->> +			clock-names = "iface";
->> +
->> +			qcom,din-ports = <0>;
->> +			qcom,dout-ports = <5>;
->> +
->> +			resets = <&lpass_audiocc LPASS_AUDIO_SWR_RX_CGCR>;
->> +			reset-names = "swr_audio_cgcr";
-> The resets aren't mentioned in the binding, should they be added?
-Yes. They are to be added. Mentioned same in the cover letter dependencies.
->
->> +
->> +			qcom,ports-word-length =	/bits/ 8 <0x01 0x07 0x04 0xff 0xff>;
->> +			qcom,ports-sinterval-low =	/bits/ 8 <0x03 0x3f 0x1f 0x03 0x03>;
->> +			qcom,ports-offset1 =		/bits/ 8 <0x00 0x00 0x0b 0x01 0x01>;
->> +			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x0b 0x00 0x00>;
->> +			qcom,ports-lane-control =	/bits/ 8 <0x01 0x00 0x00 0x00 0x00>;
->> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0x00 0x01 0xff 0xff>;
->> +			qcom,ports-hstart =		/bits/ 8 <0xff 0x03 0xff 0xff 0xff>;
->> +			qcom,ports-hstop =		/bits/ 8 <0xff 0x06 0xff 0xff 0xff>;
->> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0x00>;
->> +
->> +			#sound-dai-cells = <1>;
->> +			#address-cells = <2>;
->> +			#size-cells = <0>;
-> in difference to the other nodes the soundwire ones don't have
-> 'status = "disabled"', should they be disabled by default?
-Okay. will add accordingly.
->
->> +		};
->> +
->> +		lpass_tx_macro: codec@3220000 {
->> +			compatible = "qcom,sc7280-lpass-tx-macro";
->> +			reg = <0 0x03220000 0 0x1000>;
->> +
->> +			status = "disabled";
->> +			pinctrl-names = "default";
->> +			pinctrl-0 = <&lpass_tx_swr>;
->> +
->> +			clocks = <&lpass_aon LPASS_AON_CC_TX_MCLK_CLK>,
->> +				 <&lpass_aon LPASS_AON_CC_TX_MCLK_2X_CLK>,
->> +				 <&lpass_va_macro>;
->> +			clock-names = "mclk", "npl", "fsgen";
->> +
->> +			power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>,
->> +					<&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
->> +			power-domain-names ="macro", "dcodec";
-> add space after '='
-Okay.
->
->> +
->> +			#clock-cells = <0>;
->> +			#sound-dai-cells = <1>;
->> +		};
->> +
->> +		swr1: soundwire@3230000 {
->> +			compatible = "qcom,soundwire-v1.6.0";
->> +			reg = <0 0x03230000 0 0x2000>;
->> +
->> +			interrupts-extended = <&intc GIC_SPI 496 IRQ_TYPE_LEVEL_HIGH>,
->> +					      <&pdc 130 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "swr_master_irq", "swr_wake_irq";
->  From the binding
->
->    - interrupt-names:
->          Usage: Optional
->          Value type: boolean
->          Value type: <stringlist>
->          Definition: should be "core" for core and "wakeup" for wake interrupt.
->
-> Does the binding need an update?
-Here interrupt names are not being used. Will remove here.
->
->> +			clocks = <&lpass_tx_macro>;
->> +			clock-names = "iface";
->> +
->> +			qcom,din-ports = <3>;
->> +			qcom,dout-ports = <0>;
->> +
->> +			resets = <&lpass_audiocc LPASS_AUDIO_SWR_TX_CGCR>;
->> +			reset-names = "swr_audio_cgcr";
->> +
->> +			qcom,ports-sinterval-low =	/bits/ 8 <0x01 0x03 0x03>;
->> +			qcom,ports-offset1 =		/bits/ 8 <0x01 0x00 0x02>;
->> +			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x00>;
->> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff>;
->> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff>;
->> +			qcom,ports-word-length =	/bits/ 8 <0xff 0x00 0xff>;
->> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0xff>;
->> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff>;
->> +			qcom,ports-lane-control =	/bits/ 8 <0x00 0x01 0x00>;
->> +			qcom,port-offset = <1>;
->> +
->> +			#sound-dai-cells = <1>;
->> +			#address-cells = <2>;
->> +			#size-cells = <0>;
->> +		};
->> +
->> +		lpass_va_macro: codec@3370000 {
->> +			compatible = "qcom,sc7280-lpass-va-macro";
->> +			reg = <0 0x03370000 0 0x1000>;
->> +
->> +			status = "disabled";
->> +			pinctrl-0 = <&lpass_dmic01>;
->> +			pinctrl-names = "default";
->> +
->> +			clocks = <&lpass_aon LPASS_AON_CC_TX_MCLK_CLK>;
->> +			clock-names = "mclk";
->> +
->> +			power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>,
->> +					<&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
->> +			power-domain-names ="macro", "dcodec";
-> add space after '='.
-Okay.
->
->> +
->> +			#clock-cells = <0>;
->> +			#sound-dai-cells = <1>;
->> +		};
->> +
->>   		lpass_ag_noc: interconnect@3c40000 {
->>   			reg = <0 0x03c40000 0 0xf080>;
->>   			compatible = "qcom,sc7280-lpass-ag-noc";
->> -- 
->> 2.7.4
->>
+IANAL, but since you are the sole developer (and with the same employer) I think
+it is fine to change the DCO. Moreover, if codeaurora is used, it will get CCed
+and will bounce.
+
+But if you have a strong desire to keep the two tags, please let me know.
+
+Thanks,
+Mani
