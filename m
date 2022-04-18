@@ -2,188 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBDAD505E7F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 21:23:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A12B505E87
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 21:27:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347698AbiDRT0E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 15:26:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46078 "EHLO
+        id S1347714AbiDRTaI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 15:30:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345658AbiDRT0D (ORCPT
+        with ESMTP id S237761AbiDRTaH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 15:26:03 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98F7235A91
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 12:23:21 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id r85so10610805oie.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 12:23:21 -0700 (PDT)
+        Mon, 18 Apr 2022 15:30:07 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EE141176;
+        Mon, 18 Apr 2022 12:27:28 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id bx5so13790710pjb.3;
+        Mon, 18 Apr 2022 12:27:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=J5VKMl1cvAIwPg4fAVg1Q4A/RxUGJ8H51zsx9Q2lBt4=;
-        b=WvYEgGnk/sJhDgLo0lWOK645qv0z6oTqW7lO9b85Aa4kLxrM4WDKMHjNWKY22ovEWw
-         qRsUP2qeTaE09k+PHrnNhdGI47SMhAPEYDGKnBQ4pcs+uEzw5oTojVyWtzHQVpcXAEbc
-         CW/JWVpykMgPdX5WP1hxxdceSxAju+PjvudqA=
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=F+OdSGTAnIEJSUgGpzlltUFmc6PQAZrJed35GOZ5DHc=;
+        b=YByHTPdpVJZcPEAovX0IgWXavcHP7vm/vlzK9+Z4V63SwNzsIxJRSJVv4dTwsHww2s
+         WgEJkMUVWN61zoxfmSlQcX2ZvJm3qJaS5iYgd/X1N7fNz7gDgMNu26cM7orUuhGyenuM
+         6zbg73hTlpIwJDAGBp7qsOHjSPEQtqYxIYAppNOhBtdh6azSYa9pHn78SoLLbWJsk54C
+         qUFC4BZPi0BgZl5avF3oZZegwCMI6mWq/iEuUrOlOr7BYjwSHT1xctEBSET7ujmyY5ox
+         QR08B95TIQyIlWvgZF+Mb0CILNjYi2rm4bXMNRD9a/UVcc9s/8tpBykhWnSFrDzXoGLT
+         F5rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=J5VKMl1cvAIwPg4fAVg1Q4A/RxUGJ8H51zsx9Q2lBt4=;
-        b=oZs6YIdDDog1ryQ+HoU4TbC70wSFdbZEwmY1unu0Ox0HFoBuIkDIYmuBU8YNmT6taY
-         0Yl7bsyVx6wMO7VqXR6l9L2aVUih9lXG3zdTZ0DF8LXmwTcLRUoXcn+Vax2hysYscsk5
-         O3Ns91k6+cMAukwMMRD1nAxpCnNlgMoHrzlrBeslZEfxcbvjvE//UPNBAOXKwggCZsTn
-         8Eg3zsIZK645itsmF4rhG6i4FT0PsUvOc2jriY9aRrU4IY42zpG8wPaKyX3ePP9r0j43
-         EiqUFA+KE/OCjkinBvNmLsw8c2Y70abq0QQYlnnUvHLekTDdhw8gmn94QeEPm3zKLFI+
-         rfcA==
-X-Gm-Message-State: AOAM5305Pqwc7ffTnAQLSM1KKAehPf2bqXGSOZDrza7q2NxzFqsJWrkd
-        Dtc2FhDNjDbjtKYYsMJoFCnd+61a0kA0HH/Akrzcmg==
-X-Google-Smtp-Source: ABdhPJyGuqdNWZRtu63elfPPUCwDxiBGQ+puRr4s0Q7l2qESZCwmFeVCxznChn10xHJIJ2ssqNLJ0xHQhrSeu3T+SOk=
-X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
- n62-20020acabd41000000b002ecff42814fmr5806846oif.63.1650309800928; Mon, 18
- Apr 2022 12:23:20 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 18 Apr 2022 12:23:20 -0700
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=F+OdSGTAnIEJSUgGpzlltUFmc6PQAZrJed35GOZ5DHc=;
+        b=iMorcdt2lvgd2qZ0EdviVhfqsIMfywb4tSOrKGIFDuCW4/YYeflXDJe3u4JyMzunAI
+         MCO11WgIvEgNRN3PkG+wm9pEJp4+ksOzif+B6bnlldfFQ3IxHjSGs9stS37qg/CXWpqY
+         S1RHuqUrSMevH9InSbI1MWgEdHD4CBGCNLrtHSlHbvnlrfk2iGSQJqOkQnp+POi0Ix3k
+         gqcvbRVhCAGMbuzM0WEXPuqERUoP3yGcOQkqTRuYTAL557kaLMQaoLVY5DzNWjnA30Xy
+         bmdBLN0UN/sWJ0j0LmVBzrUYnnVTxnYXEdd3GXAqpAYXGnK+1VN3nRN98NytKrpkPGb8
+         T0Tg==
+X-Gm-Message-State: AOAM5338NR347KirlzOiUVvj2BeDgROxe3NNjU+hF5JrZazBOBNUjoWX
+        lcqpTSNVCumGvoHN8OBf8Iox2kg8hR8=
+X-Google-Smtp-Source: ABdhPJzyexcTwHx6iBvzCp/0ZitXIcYa+5GQJvNZamARcMIbWb2DthFC/wWxEOO0myRdgowOB+WvpQ==
+X-Received: by 2002:a17:902:6506:b0:158:251b:cb61 with SMTP id b6-20020a170902650600b00158251bcb61mr12227840plk.157.1650310047629;
+        Mon, 18 Apr 2022 12:27:27 -0700 (PDT)
+Received: from 9a2d8922b8f1 ([122.161.51.18])
+        by smtp.gmail.com with ESMTPSA id v65-20020a626144000000b0050a839e490bsm2902710pfb.185.2022.04.18.12.27.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Apr 2022 12:27:27 -0700 (PDT)
+Date:   Tue, 19 Apr 2022 00:57:21 +0530
+From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 3/6] arm64: dts: qcom: msm8996: User generic node name
+ for DMA
+Message-ID: <20220418192721.GA6884@9a2d8922b8f1>
+References: <20220417210436.6203-1-singh.kuldeep87k@gmail.com>
+ <20220417210436.6203-4-singh.kuldeep87k@gmail.com>
+ <CAH=2Nty6gTX-u1LZZ_g3FZfpkX2CaV3Gh+R8DJODuh4489nCyw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <9d8543e1-4aa8-f430-322a-83d110586152@quicinc.com>
-References: <1649939418-19861-1-git-send-email-quic_c_skakit@quicinc.com>
- <1649939418-19861-6-git-send-email-quic_c_skakit@quicinc.com>
- <CAE-0n531GVMuuR6HM2ezjOPJCg7S-rD3eaEKWzrYsnM-jwQHKw@mail.gmail.com> <9d8543e1-4aa8-f430-322a-83d110586152@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Mon, 18 Apr 2022 12:23:20 -0700
-Message-ID: <CAE-0n51Bs=87+LpDFHBJXqM7VwR4nBtBkG5iasnCKKw4CRdRZg@mail.gmail.com>
-Subject: Re: [PATCH V10 5/9] mfd: pm8008: Use i2c_new_dummy_device() API
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Satya Priya Kakitapalli <quic_c_skakit@quicinc.com>
-Cc:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
-        quic_jprakash@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH=2Nty6gTX-u1LZZ_g3FZfpkX2CaV3Gh+R8DJODuh4489nCyw@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya Kakitapalli (Temp) (2022-04-18 08:08:33)
->
-> On 4/15/2022 5:51 AM, Stephen Boyd wrote:
-> > Quoting Satya Priya (2022-04-14 05:30:14)
-> >> Use i2c_new_dummy_device() to register clients along with
-> >> the main mfd device.
-> > Why?
->
->
-> As discussed on V9 of this series, I've done these changes.
->
-> By using this API we can register other clients at different address
-> space without having separate DT node.
->
-> This avoids calling the probe twice for the same chip, once for each
-> address space 0x8 and 0x9. I'll add this description in commit text.
->
+On Mon, Apr 18, 2022 at 11:02:11AM +0530, Bhupesh Sharma wrote:
+> This is already fixed with in-flight patch
+> <https://lore.kernel.org/lkml/20220211214941.f55q5yksittut3ep@amazon.com/T/#mb84230b9b8e06544859ccf5e16a7651fac79c933>
 
-Perfect, thanks.
-
->
-> >> @@ -221,19 +236,38 @@ static int pm8008_probe_irq_peripherals(struct p=
-m8008_data *chip,
-> >>
-> >>   static int pm8008_probe(struct i2c_client *client)
-> >>   {
-> >> -       int rc;
-> >> +       int rc, i;
-> >>          struct pm8008_data *chip;
-> >> +       struct device_node *node =3D client->dev.of_node;
-> >>
-> >>          chip =3D devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL=
-);
-> >>          if (!chip)
-> >>                  return -ENOMEM;
-> >>
-> >>          chip->dev =3D &client->dev;
-> >> -       chip->regmap =3D devm_regmap_init_i2c(client, &qcom_mfd_regmap=
-_cfg);
-> >> -       if (!chip->regmap)
-> >> -               return -ENODEV;
-> >>
-> >> -       i2c_set_clientdata(client, chip);
-> >> +       for (i =3D 0; i < PM8008_NUM_CLIENTS; i++) {
-> > This is 2. Why do we have a loop? Just register the i2c client for
-> > pm8008_infra first and then make a dummy for the second address without
-> > the loop and the indentation. Are there going to be more i2c clients?
->
->
-> There wont be more than 2 clients, I can remove the loop, but then we
-> will have repetitive code.. something like below
-
-Repetitive code can be refactored into a subroutine.
-
->
->  =C2=A0=C2=A0=C2=A0=C2=A0 chip->dev =3D &client->dev;
->  =C2=A0=C2=A0=C2=A0=C2=A0 i2c_set_clientdata(client, chip);
->
->  =C2=A0=C2=A0=C2=A0=C2=A0 regmap =3D devm_regmap_init_i2c(client, &qcom_m=
-fd_regmap_cfg[0]);
->  =C2=A0=C2=A0=C2=A0=C2=A0 if (!regmap)
->  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -ENODEV;
->
->
->  =C2=A0=C2=A0=C2=A0=C2=A0 pm8008_client =3D i2c_new_dummy_device(client->=
-adapter,
->  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 client->addr + 1);
->  =C2=A0=C2=A0=C2=A0=C2=A0 if (IS_ERR(pm8008_client)) {
->  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dev_err(&pm8008_client-=
->dev, "can't attach client\n");
->  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return PTR_ERR(pm8008_c=
-lient);
->  =C2=A0=C2=A0=C2=A0=C2=A0 }
->  =C2=A0=C2=A0=C2=A0=C2=A0 pm8008_client->dev.of_node =3D of_node_get(clie=
-nt->dev.of_node);
->  =C2=A0=C2=A0=C2=A0=C2=A0 i2c_set_clientdata(pm8008_client, chip);
->
->  =C2=A0=C2=A0=C2=A0=C2=A0 regulators_regmap =3D devm_regmap_init_i2c(pm80=
-08_client,
-> &qcom_mfd_regmap_cfg[1]);
->  =C2=A0=C2=A0=C2=A0=C2=A0 if (!regmap)
->  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -ENODEV;
->
-> >> diff --git a/include/linux/mfd/qcom_pm8008.h b/include/linux/mfd/qcom_=
-pm8008.h
-> >> new file mode 100644
-> >> index 0000000..bc64f01
-> >> --- /dev/null
-> >> +++ b/include/linux/mfd/qcom_pm8008.h
-> >> @@ -0,0 +1,13 @@
-> >> +/* SPDX-License-Identifier: GPL-2.0 */
-> >> +#ifndef __QCOM_PM8008_H__
-> >> +#define __QCOM_PM8008_H__
-> >> +
-> >> +#define PM8008_INFRA_SID       0
-> >> +#define PM8008_REGULATORS_SID  1
-> >> +
-> >> +#define PM8008_NUM_CLIENTS     2
-> >> +
-> >> +struct pm8008_data;
-> >> +struct regmap *pm8008_get_regmap(struct pm8008_data *chip, u8 sid);
-> > Could this be avoided if the regulator driver used
-> > dev_get_regmap(&pdev->dev.parent, "regulator") to find the regmap named
-> > "regulator" of the parent device, i.e. pm8008-infra.
->
-> I gave it a try, it didn't work. I could not get the regmap for
-> regulators using pm8008-infra i.e., 0x8 device pointer.
-
-Did it not work because the regmap config for the regulator config
-didn't have a name?
+Your change is currently not accepted/merged and don't think it's in
+maintainer's queue as well. So, probably it's not in-flight patch as of
+now.
