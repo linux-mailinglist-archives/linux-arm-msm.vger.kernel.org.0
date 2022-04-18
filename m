@@ -2,69 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC8D5505EB3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 21:48:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C357505F02
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 22:55:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243419AbiDRTvC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 15:51:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40586 "EHLO
+        id S1347832AbiDRU6F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 16:58:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347785AbiDRTu6 (ORCPT
+        with ESMTP id S1347833AbiDRU6B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 15:50:58 -0400
-Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4463029CB0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 12:48:09 -0700 (PDT)
-Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-e2442907a1so15242366fac.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 12:48:09 -0700 (PDT)
+        Mon, 18 Apr 2022 16:58:01 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B24515709
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 13:55:20 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id j71so7494733pge.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 13:55:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=R8MVyQVH63UKDlO5ebK94G5i5p2wDyYsAtV0teKaE/s=;
-        b=ZhCqVdEkoLVNEjcGJlt+Orq1svQI51yFjZ5yzspPDulfEmlo4fFK77Zj/fvsCzAmzt
-         0PiusX7wSluCRHHd/8c0/S5RUDr6NxLnpuvBYmGj1wnGgX4lUKcRNl3DDiy3uQvqz/jj
-         ITwRwDMHccDzMO0LQuZiVYK7ZyYb3YYtHJEXE=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fwdHbI+gWr2kmO8oEf6EWMg+aRRNzFtsHXg6Ha4SC3c=;
+        b=A9jx7UXl6zDK1LCgkYAt80Edgyydum7V4aNbBembSJJYjRHv1DtODpn/2CV+aG9dDG
+         d8f5Tj95SAIyNWRjcOvW8R5e4FBRh5GzwzH1ljxGgMoKuWRTYEMHoFmTNw77kH87LmhU
+         roSIyZd6rJ13uMswmXWUru4WEW8A+Hx2RjW0bBjTWDDQ604XHpIJRu/tEC/4stLEeETj
+         BqwClnkRWU4NY7I6N+s2s1ezuKLPiLbFJKH7F8E28KOemWiv8RNAFBQCRU3OdWWeDX7D
+         +9bLSESOQmr0xv3OLuSaZNUv+X6Bjc0OEJ8whUjgLxHyGMXL3OvRtBO1FHL/5NKBKJwR
+         ur8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=R8MVyQVH63UKDlO5ebK94G5i5p2wDyYsAtV0teKaE/s=;
-        b=TKwuHlC0W/FoGnqOl9KwbAvTqf1kVpm9ONkQmmB13r4HhsSPIAoLTmOL8Ewq0e9CtV
-         WnFOBBEYnyVFE1+6ILKEPFo+nQYHOuici2pvxjJZz/WIv6EwO46hwhRM/DJiOSwiYjd+
-         CmPpTEH5FbVAXDB0BXxDlvslx2dPyZ5TkeVLUstEcoLHMqj26gFeWZ4Uq8B9FsQk+vpb
-         xW86w3lACAT1Pl4wkysLirs4b0m8nSNtew3055NDysDzqk2b25QB2h2JlLvASe0NQXts
-         HE6WcsoeoCQoR36CqA6xTeJawxsKLRuqknRyH6sDuMzJ+e1hjfNDILxahuaAkkn/zTSM
-         KIVw==
-X-Gm-Message-State: AOAM533XDqa1ehQqSVoy1XdR3b+XLiTOoTnuYW7TMsSArAHhVMW+mM8F
-        5uo9vSHyqKg7t51XjdlvQ8LLaOe8ZwdJFeAu3ZtNCQ==
-X-Google-Smtp-Source: ABdhPJxNTgtzk/Xz7kcv1RUxdYb0jMn0kKe1rbAUme2rCqK9BQTcKgtEnt+Xs0lHTfuvKTMKV0qsQkfn2jAOY12S3mE=
-X-Received: by 2002:a05:6870:3907:b0:e5:a6fd:4047 with SMTP id
- b7-20020a056870390700b000e5a6fd4047mr4779741oap.193.1650311288551; Mon, 18
- Apr 2022 12:48:08 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 18 Apr 2022 12:48:08 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fwdHbI+gWr2kmO8oEf6EWMg+aRRNzFtsHXg6Ha4SC3c=;
+        b=rbskfebFKihEW7jARRA6v0r5Qo8qlInxTtSPRsvY/YMug7q3fPLtUNFsqFefOwQsGo
+         D9CBmWQxUNG8w7sYw6emauOFjeSZ4ri73SFOPRDpLUQej2yEfzbYnnyJ+sV9uDt57G2P
+         D/qW9mRuCspmlZIS6Y9vXUx6oXfV6u7aiHy6iAfT2ai/3CnIJyNfvk5IK4fvxBX3OMLz
+         yLWXXv0i1HbUTXkaIfE9mvKVBTwbVt447c6eJQK10I5H3v5NTFnJLug2ggxwlT0nQgFf
+         ES3o7aTJlaVbM/6s4I90G+mtMxm/dOa5z94DZ+liAoOSsCOhGHykn8Gsc4ZAAAcnaJUi
+         nlRQ==
+X-Gm-Message-State: AOAM530CEjWcRjEyp8OGGjSs4gSUod5nN3PUebZz5x4anWkB9afwZww9
+        dWRkDp8ZTLa5MO14HVRZOKs9Mg2pCEAIiQ==
+X-Google-Smtp-Source: ABdhPJyQZdPawrK73wiDulg+k+oaaLLE5yDW1YuFAoP7VE1sQd6zLtPQoQYkLwO2yowwMnwzAJ9rsw==
+X-Received: by 2002:a65:6216:0:b0:39d:5e6c:7578 with SMTP id d22-20020a656216000000b0039d5e6c7578mr11367085pgv.114.1650315319568;
+        Mon, 18 Apr 2022 13:55:19 -0700 (PDT)
+Received: from localhost.localdomain ([223.233.64.97])
+        by smtp.gmail.com with ESMTPSA id q60-20020a17090a17c200b001cd567fecaesm13498859pja.26.2022.04.18.13.55.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Apr 2022 13:55:19 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh+dt@kernel.org, vkoul@kernel.org,
+        bjorn.andersson@linaro.org, Rob Herring <robh@kernel.org>
+Subject: [PATCH v3 0/4] Fix  dtbs_check warning(s) for Qualcomm QMP PHY
+Date:   Tue, 19 Apr 2022 02:25:05 +0530
+Message-Id: <20220418205509.1102109-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-In-Reply-To: <d32fc9f8-65cd-a30f-cdf2-f019bbe7cd69@linaro.org>
-References: <20220412220033.1273607-1-swboyd@chromium.org> <20220415005828.1980055-1-swboyd@chromium.org>
- <20220415005828.1980055-3-swboyd@chromium.org> <d32fc9f8-65cd-a30f-cdf2-f019bbe7cd69@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Mon, 18 Apr 2022 12:48:08 -0700
-Message-ID: <CAE-0n53yggqX+mNcRQ+_iVHZhZgw-cCBVSC+ka++vwprpKMaGQ@mail.gmail.com>
-Subject: Re: [PATCH 5/2] dt-bindings: interconnect: Remove sc7180/sdx55 ipa compatibles
-To:     Alex Elder <elder@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,56 +70,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Alex Elder (2022-04-15 13:15:21)
-> On 4/14/22 7:58 PM, Stephen Boyd wrote:
-> > These interconnects are modeled as clks, not interconnects, therefore
-> > remove the compatibles from the binding as they're unused.
-> >
-> > Cc: Alex Elder <elder@linaro.org>
-> > Cc: Taniya Das <quic_tdas@quicinc.com>
-> > Cc: Mike Tipton <quic_mdtipton@quicinc.com>
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->
-> What's the proper thing to do for properties that stop being
-> used?  Do we delete them, like this, or deprecate them somehow?
-> Old DTBs might define the values that are deleted here.
+Changes since v2:
+-----------------
+- v2 can be found here: https://lore.kernel.org/linux-arm-msm/20220228123019.382037-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Rob and Shawn.
+- Collected ACK from Rob on [PATCH 2/4].
+- Since, Bjorn accepted 4 patches from v2 already, drop them for this series.
+- This series is rebased on linux-next/master.
 
-I think we leave them around until the last dts user stops using them.
+Changes since v1:
+-----------------
+- v1 can be found here: https://www.spinics.net/lists/linux-arm-msm/msg104871.html
+- Addressed review comments from Dmitry.
+- Addressed the remaining dtbs_check warnings rasied by Rob's bot on v1.
 
->
-> Shouldn't devicetree@vger.kernel.org
->   be copied on this and
-> the other DTS patches?
+Shawn Guo recently fixed a large number of 'dtbs_check' warnings
+on Qualcomm DTS files for qmp phys. However a few warnings are still left
+(possibly due to new dts files being added over time).
 
-Sure. I added it now. Thanks.
+So, I decided to clean them up.
+After this series, '$ make dtbs_check' leads to no warning for QCOM
+QMP PHY.
 
->
-> > ---
-> >
-> > I don't know who should apply this. Probably whoever takes the dtsi
-> > patches, Bjorn?, because otherwise dt_bindings_check will fail.
-> >
-> >   Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml | 2 --
-> >   1 file changed, 2 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-> > index 5a911be0c2ea..ab859150c7f7 100644
-> > --- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-> > +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-> > @@ -31,7 +31,6 @@ properties:
-> >         - qcom,sc7180-config-noc
-> >         - qcom,sc7180-dc-noc
-> >         - qcom,sc7180-gem-noc
-> > -      - qcom,sc7180-ipa-virt
-> >         - qcom,sc7180-mc-virt
-> >         - qcom,sc7180-mmss-noc
-> >         - qcom,sc7180-npu-noc
-> > @@ -68,7 +67,6 @@ properties:
-> >         - qcom,sdm845-mem-noc
-> >         - qcom,sdm845-mmss-noc
-> >         - qcom,sdm845-system-noc
-> > -      - qcom,sdx55-ipa-virt
-> >         - qcom,sdx55-mc-virt
-> >         - qcom,sdx55-mem-noc
-> >         - qcom,sdx55-system-noc
->
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Rob Herring <robh@kernel.org>
+
+Bhupesh Sharma (4):
+  dt-bindings: phy: qcom,qmp: Mark '#clock-cells' as a 'optional'
+    property
+  dt-bindings: phy: qcom,qmp: Describe 'vdda-max-microamp' &
+    'vdda-pll-max-microamp' properties
+  dt-bindings: phy: qcom,qmp: Describe phy@ subnode properly
+  arm64: dts: qcom: sm8450: Fix qmp phy node (use phy@ instead of
+    lanes@)
+
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml | 29 +++++++++++++++----
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |  4 +--
+ 2 files changed, 26 insertions(+), 7 deletions(-)
+
+-- 
+2.35.1
+
