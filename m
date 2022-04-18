@@ -2,110 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F663505F09
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 22:55:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5E78505F85
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 23:57:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347863AbiDRU6a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 16:58:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38908 "EHLO
+        id S229971AbiDRV7Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 17:59:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347866AbiDRU6S (ORCPT
+        with ESMTP id S229667AbiDRV7S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 16:58:18 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BED926102
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 13:55:38 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id j70so219354pgd.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 13:55:38 -0700 (PDT)
+        Mon, 18 Apr 2022 17:59:18 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 997E31EC70;
+        Mon, 18 Apr 2022 14:56:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=X5lGqMUBSdh+IsaWIFm9V2j3b3mWZ6jlDPDrC88fnn8=;
-        b=hiE5I/10WBJRaFjNB6D/rRDZwXT/xuzJ2mj/Av1hWwh/BVRDmp1J0lAnKOcKKQPx9w
-         UTmzlIqdsx1fJILGPHYKP0DquFNZbHnpRp/YbBhsAE0yJEK4vpsvzPyO7V8yil8s7pNU
-         TYMDFqWOE05ZLRriNXZJ2jZB3O/5poojPUspgV8VYgWVlExnPm0VQ3F4YoimVaGlYn7l
-         rJseCXn2+iETxSxUVtsx+nlGqHn1TNOzitqBya4KU1V3DklWGBaLEUnCNjbt8zwVB1tP
-         qth61vRmVDVBPf4XjSG26Qt393j5w3aMQfTAvEQaDlpGH0GBRAEyCDYg4uLbEGh34Lde
-         yLzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=X5lGqMUBSdh+IsaWIFm9V2j3b3mWZ6jlDPDrC88fnn8=;
-        b=B4awKQP/fcvrM1Osh4ZfeXjIZ1H6D+9TyRtCe/rlHcCNHNnu879RUvID4pKajNHBDM
-         qgUKf/7gewgEafZjETHPUR2VmJ9A3a8oaQcZjMQnwArdHNGyXHiQX8i4BMTVlCdrIkBK
-         IlG8OuyLVXfoLh0MaM8lZhflGvzTiCYimrdca/PxonrDPCgn4wt4fHDxXeNlaaDKUic8
-         jrx2lpFDhgZXxmkD8cf8ioAt7Mgs+q05PzFIm+NsOWVcKRnO5wdPk9mCYcuqcmxnUvsl
-         7OcUnyehmFpw9YHS5LlBBMDaetdSDKHbLDNmqds0I/WiCwrJTE4KfYDmkc0WP2393Noh
-         06wg==
-X-Gm-Message-State: AOAM531wNVNjsyVwLVVLefb1apQhzNnEs8cn5QzP5CgDCmHtOX8V6U3m
-        bUkveihWOzs01nJ4JKHg1+6fwUBPE03Zkw==
-X-Google-Smtp-Source: ABdhPJz0GZ8rmXR8DQp/WwKaRGivzMhug8KVXDar9yqo3iYmc/+XHEC2EuSLHiOZul7woMMVqAgFIQ==
-X-Received: by 2002:aa7:8049:0:b0:4fd:bfde:45eb with SMTP id y9-20020aa78049000000b004fdbfde45ebmr14262857pfm.76.1650315337740;
-        Mon, 18 Apr 2022 13:55:37 -0700 (PDT)
-Received: from localhost.localdomain ([223.233.64.97])
-        by smtp.gmail.com with ESMTPSA id q60-20020a17090a17c200b001cd567fecaesm13498859pja.26.2022.04.18.13.55.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Apr 2022 13:55:37 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org, vkoul@kernel.org,
-        bjorn.andersson@linaro.org, Rob Herring <robh@kernel.org>
-Subject: [PATCH v3 4/4] arm64: dts: qcom: sm8450: Fix qmp phy node (use phy@ instead of lanes@)
-Date:   Tue, 19 Apr 2022 02:25:09 +0530
-Message-Id: <20220418205509.1102109-5-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220418205509.1102109-1-bhupesh.sharma@linaro.org>
-References: <20220418205509.1102109-1-bhupesh.sharma@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650318998; x=1681854998;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=g+8b9txo5waRsbA0cyCyq+0DMmyqR2c+BKkrlbxlDik=;
+  b=KkgUn1JuzqMUMJMt7ha+uT3EaQJbuKbW50zd7s8dCtFvO0EWNbjgvArr
+   B9w032KSly3Z2HHFLGocLNX4q+QrMWROsNJH0OPbvVmqd5yJ93y+JyP1m
+   9TclIdpueo06Qbpl+DeXMJYJfVDnqr2qcWgZmmMqE11fGZVXPvPbGVdCJ
+   Y=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 18 Apr 2022 14:56:38 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Apr 2022 14:56:37 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 18 Apr 2022 14:56:36 -0700
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 18 Apr 2022 14:56:36 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v10] drm/msm/dp: stop event kernel thread when DP unbind
+Date:   Mon, 18 Apr 2022 14:56:28 -0700
+Message-ID: <1650318988-17580-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the following 'make dtbs_check' warning(s) by
-using phy@ instead of lanes@:
-arch/arm64/boot/dts/qcom/sm8450-hdk.dtb: phy@1c0f000: 'lanes@1c0e000'
-  does not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
+Current DP driver implementation, event thread is kept running
+after DP display is unbind. This patch fix this problem by disabling
+DP irq and stop event thread to exit gracefully at dp_display_unbind().
 
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Rob Herring <robh@kernel.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Changes in v2:
+-- start event thread at dp_display_bind()
+
+Changes in v3:
+-- disable all HDP interrupts at unbind
+-- replace dp_hpd_event_setup() with dp_hpd_event_thread_start()
+-- replace dp_hpd_event_stop() with dp_hpd_event_thread_stop()
+-- move init_waitqueue_head(&dp->event_q) to probe()
+-- move spin_lock_init(&dp->event_lock) to probe()
+
+Changes in v4:
+-- relocate both dp_display_bind() and dp_display_unbind() to bottom of file
+
+Changes in v5:
+-- cancel relocation of both dp_display_bind() and dp_display_unbind()
+
+Changes in v6:
+-- move empty event q to dp_event_thread_start()
+
+Changes in v7:
+-- call ktheread_stop() directly instead of dp_hpd_event_thread_stop() function
+
+Changes in v8:
+-- return error immediately if audio registration failed.
+
+Changes in v9:
+-- return error immediately if event thread create failed.
+
+Changes in v10:
+-- delete extra  DRM_ERROR("failed to create DP event thread\n");
+
+Fixes: e91e3065a806 ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 39 +++++++++++++++++++++++++++++--------
+ 1 file changed, 31 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 2cfc67b75259..721bd9495eb6 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -851,7 +851,7 @@ pcie0_phy: phy@1c06000 {
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 01453db..4dc0758 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -113,6 +113,7 @@ struct dp_display_private {
+ 	u32 hpd_state;
+ 	u32 event_pndx;
+ 	u32 event_gndx;
++	struct task_struct *ev_tsk;
+ 	struct dp_event event_list[DP_EVENT_Q_MAX];
+ 	spinlock_t event_lock;
  
- 			status = "disabled";
+@@ -230,6 +231,8 @@ void dp_display_signal_audio_complete(struct msm_dp *dp_display)
+ 	complete_all(&dp->audio_comp);
+ }
  
--			pcie0_lane: lanes@1c06200 {
-+			pcie0_lane: phy@1c06200 {
- 				reg = <0 0x1c06e00 0 0x200>, /* tx */
- 				      <0 0x1c07000 0 0x200>, /* rx */
- 				      <0 0x1c06200 0 0x200>, /* pcs */
-@@ -958,7 +958,7 @@ pcie1_phy: phy@1c0f000 {
++static int dp_hpd_event_thread_start(struct dp_display_private *dp_priv);
++
+ static int dp_display_bind(struct device *dev, struct device *master,
+ 			   void *data)
+ {
+@@ -266,9 +269,18 @@ static int dp_display_bind(struct device *dev, struct device *master,
+ 	}
  
- 			status = "disabled";
+ 	rc = dp_register_audio_driver(dev, dp->audio);
+-	if (rc)
++	if (rc) {
+ 		DRM_ERROR("Audio registration Dp failed\n");
++		goto end;
++	}
  
--			pcie1_lane: lanes@1c0e000 {
-+			pcie1_lane: phy@1c0e000 {
- 				reg = <0 0x1c0e000 0 0x200>, /* tx */
- 				      <0 0x1c0e200 0 0x300>, /* rx */
- 				      <0 0x1c0f200 0 0x200>, /* pcs */
++	rc = dp_hpd_event_thread_start(dp);
++	if (rc) {
++		DRM_ERROR("Event thread create failed\n");
++		goto end;
++	}
++
++	return 0;
+ end:
+ 	return rc;
+ }
+@@ -280,6 +292,11 @@ static void dp_display_unbind(struct device *dev, struct device *master,
+ 	struct drm_device *drm = dev_get_drvdata(master);
+ 	struct msm_drm_private *priv = drm->dev_private;
+ 
++	/* disable all HPD interrupts */
++	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, false);
++
++	kthread_stop(dp->ev_tsk);
++
+ 	dp_power_client_deinit(dp->power);
+ 	dp_aux_unregister(dp->aux);
+ 	priv->dp[dp->id] = NULL;
+@@ -1054,7 +1071,7 @@ static int hpd_event_thread(void *data)
+ 
+ 	dp_priv = (struct dp_display_private *)data;
+ 
+-	while (1) {
++	while (!kthread_should_stop()) {
+ 		if (timeout_mode) {
+ 			wait_event_timeout(dp_priv->event_q,
+ 				(dp_priv->event_pndx == dp_priv->event_gndx),
+@@ -1132,12 +1149,17 @@ static int hpd_event_thread(void *data)
+ 	return 0;
+ }
+ 
+-static void dp_hpd_event_setup(struct dp_display_private *dp_priv)
++static int dp_hpd_event_thread_start(struct dp_display_private *dp_priv)
+ {
+-	init_waitqueue_head(&dp_priv->event_q);
+-	spin_lock_init(&dp_priv->event_lock);
++	/* set event q to empty */
++	dp_priv->event_gndx = 0;
++	dp_priv->event_pndx = 0;
+ 
+-	kthread_run(hpd_event_thread, dp_priv, "dp_hpd_handler");
++	dp_priv->ev_tsk = kthread_run(hpd_event_thread, dp_priv, "dp_hpd_handler");
++	if (IS_ERR(dp_priv->ev_tsk))
++		return PTR_ERR(dp_priv->ev_tsk);
++
++	return 0;
+ }
+ 
+ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
+@@ -1266,7 +1288,10 @@ static int dp_display_probe(struct platform_device *pdev)
+ 		return -EPROBE_DEFER;
+ 	}
+ 
++	/* setup event q */
+ 	mutex_init(&dp->event_mutex);
++	init_waitqueue_head(&dp->event_q);
++	spin_lock_init(&dp->event_lock);
+ 
+ 	/* Store DP audio handle inside DP display */
+ 	dp->dp_display.dp_audio = dp->audio;
+@@ -1441,8 +1466,6 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+ 
+ 	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 
+-	dp_hpd_event_setup(dp);
+-
+ 	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
+ }
+ 
 -- 
-2.35.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
