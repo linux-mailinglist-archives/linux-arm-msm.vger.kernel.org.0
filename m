@@ -2,71 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD2AE505AAB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 17:12:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AC44505AB4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Apr 2022 17:13:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345088AbiDRPO7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 11:14:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54392 "EHLO
+        id S1344719AbiDRPQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 11:16:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345308AbiDRPOh (ORCPT
+        with ESMTP id S1345307AbiDRPPx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 11:14:37 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D68692F39A;
-        Mon, 18 Apr 2022 07:09:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650290992; x=1681826992;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=wo7n7i7NcFwEADL9B4t8WYMscex9ezkkM2mITVauwjY=;
-  b=UEUslPdvpCwEU4GVoJ6HVUcA5JVplu7d9kuQiquJ4yYPozk0PYDqYLRq
-   W1SSBawNtYAGWl59FtPPdzs5x9gQDBiRLrglSsLw3L2hLITys4lV2EB8X
-   fhPtBfozunbrtedDpSpnQnCDPLKTynZQW5Ozz6U6rhnnYFKBO/vxK966V
-   0=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 18 Apr 2022 07:09:52 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Apr 2022 07:09:51 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 18 Apr 2022 07:09:51 -0700
-Received: from [10.216.27.177] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 18 Apr
- 2022 07:09:46 -0700
-Message-ID: <78b1e04c-e7d0-a81d-799e-5c570c2bf106@quicinc.com>
-Date:   Mon, 18 Apr 2022 19:39:44 +0530
+        Mon, 18 Apr 2022 11:15:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD099BB08B;
+        Mon, 18 Apr 2022 07:12:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6964960BC5;
+        Mon, 18 Apr 2022 14:12:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716DBC385A8;
+        Mon, 18 Apr 2022 14:12:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650291174;
+        bh=IVDZmECCaRmoAtMDnJhVFNl6perUjNM7sTyxh9m4brg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=lKdS9WmOwcflzN1Th5Ni8eFpXF1nMyP4ivl5hdxkwJn7O3SoazMmyTYgc/mLhe1tX
+         QPMCy5Ds1XUKjXCFD8iAIQK6lFbPeJv7dYEj7ZCoB5U99ZmARohYUcz+irAbyvU+DM
+         pmPcjervlnxx2s3reHgBZrqCyNYRZqRasSguWaT2DqIZggRJA+e/KdCDV5nQUh7v0T
+         gqc6hI6R/Jyvnif51h5bhtIZF1WxVHpuDc2OER4x44ZfHXG7MCzY2vGF86ZGJt+Q2p
+         zTfwuyOsPYrXbkEuItOmAvutmCiwPkRsCgRAITS8GYVQok2vZmSzPRK86CPnAk1+1v
+         8rXvY/gvs5yBA==
+Date:   Mon, 18 Apr 2022 19:42:48 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] bus: mhi: host: Wait for ready state after reset
+Message-ID: <20220418141248.GC161722@thinkpad>
+References: <1649875946-32516-1-git-send-email-quic_jhugo@quicinc.com>
+ <20220418062645.GI7431@thinkpad>
+ <eff55b55-cef0-2931-c8e5-95a9230c9d27@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v7 4/4] arm64: dts: qcom: sc7280: Add dt nodes for sound
- card
-Content-Language: en-US
-To:     Matthias Kaehlcke <mka@chromium.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1649863277-31615-1-git-send-email-quic_srivasam@quicinc.com>
- <1649863277-31615-5-git-send-email-quic_srivasam@quicinc.com>
- <Ylc/aR0hUGa6OKBO@google.com>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <Ylc/aR0hUGa6OKBO@google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <eff55b55-cef0-2931-c8e5-95a9230c9d27@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,181 +57,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Apr 18, 2022 at 07:53:24AM -0600, Jeffrey Hugo wrote:
+> On 4/18/2022 12:26 AM, Manivannan Sadhasivam wrote:
+> > On Wed, Apr 13, 2022 at 12:52:26PM -0600, Jeffrey Hugo wrote:
+> > > From: Jeffrey Hugo <jhugo@codeaurora.org>
+> > > 
+> > > After the device has signaled the end of reset by clearing the reset bit,
+> > > it will automatically reinit MHI and the internal device structures.  Once
+> > > That is done, the device will signal it has entered the ready state.
+> > > 
+> > > Signaling the ready state involves sending an interrupt (MSI) to the host
+> > > which might cause IOMMU faults if it occurs at the wrong time.
+> > > 
+> > > If the controller is being powered down, and possibly removed, then the
+> > > reset flow would only wait for the end of reset.  At which point, the host
+> > > and device would start a race.  The host may complete its reset work, and
+> > > remove the interrupt handler, which would cause the interrupt to be
+> > > disabled in the IOMMU.  If that occurs before the device signals the ready
+> > > state, then the IOMMU will fault since it blocked an interrupt.  While
+> > > harmless, the fault would appear like a serious issue has occurred so let's
+> > > silence it by making sure the device hits the ready state before the host
+> > > completes its reset processing.
+> > > 
+> > > Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> > > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> > > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> > 
+> > I was about to apply this patch but wanted to check with you on using the
+> > double signed-off by tags. If the patch get's handed over between multiple
+> > developers then multiple signed-off by's make sense. But since it is you that
+> > handled the earlier patch also, I think one tag is enough with your new domain.
+> > 
+> > One more thing is, using codeaurora domain will bounce now. So, please use the
+> > quicinc domain for Hemant also.
+> 
+> I'm aware of the bouncing.  Git send-email however is not, and its default
+> behavior can be a bit annoying in this edge case.
+> 
+> I've seen the dual SoB by the same developer elsewhere in the community, but
+> if you want things "cleaned up" to the new quic ids, I'll do that.
 
-On 4/14/2022 2:53 AM, Matthias Kaehlcke wrote:
-Thanks for your time Matthias!!!
-> On Wed, Apr 13, 2022 at 08:51:17PM +0530, Srinivasa Rao Mandadapu wrote:
->> Add dt nodes for sound card support, which is using WCD938x headset
->> playback, capture, I2S speaker playback and DMICs via VA macro.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280-crd.dts  | 23 ++++++++
->>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 93 ++++++++++++++++++++++++++++++++
->>   2 files changed, 116 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
->> index b944366..1e16854 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> You need to refresh your tree, this file has been renamed to
-> sc7280-crd-r3.dts. That DT is for the CRD <= 2.x, newer versions
-> use sc7280-herobrine-crd.dts.
-Okay. will update accordingly.
->
->> @@ -90,6 +90,29 @@ ap_ts_pen_1v8: &i2c13 {
->>   	us-euro-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
->>   };
->>   
->> +&sound {
->> +	audio-routing =
->> +		"IN1_HPHL", "HPHL_OUT",
->> +		"IN2_HPHR", "HPHR_OUT",
->> +		"AMIC1", "MIC BIAS1",
->> +		"AMIC2", "MIC BIAS2",
->> +		"VA DMIC0", "MIC BIAS1",
->> +		"VA DMIC1", "MIC BIAS1",
->> +		"VA DMIC2", "MIC BIAS3",
->> +		"VA DMIC3", "MIC BIAS3",
->> +		"TX SWR_ADC0", "ADC1_OUTPUT",
->> +		"TX SWR_ADC1", "ADC2_OUTPUT",
->> +		"TX SWR_ADC2", "ADC3_OUTPUT",
->> +		"TX SWR_DMIC0", "DMIC1_OUTPUT",
->> +		"TX SWR_DMIC1", "DMIC2_OUTPUT",
->> +		"TX SWR_DMIC2", "DMIC3_OUTPUT",
->> +		"TX SWR_DMIC3", "DMIC4_OUTPUT",
->> +		"TX SWR_DMIC4", "DMIC5_OUTPUT",
->> +		"TX SWR_DMIC5", "DMIC6_OUTPUT",
->> +		"TX SWR_DMIC6", "DMIC7_OUTPUT",
->> +		"TX SWR_DMIC7", "DMIC8_OUTPUT";
->> +};
->> +
->>   &tlmm {
->>   	tp_int_odl: tp-int-odl {
->>   		pins = "gpio7";
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index cf62d06..a7c884a 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -84,6 +84,99 @@
->>   		pinctrl-names = "default";
->>   		pinctrl-0 = <&nvme_pwren>;
->>   	};
->> +
->> +	sound: sound {
->> +		compatible = "google,sc7280-herobrine";
->> +		model = "sc7280-wcd938x-max98360a-1mic";
->> +
->> +		audio-routing =
->> +			"IN1_HPHL", "HPHL_OUT",
->> +			"IN2_HPHR", "HPHR_OUT",
->> +			"AMIC1", "MIC BIAS1",
->> +			"AMIC2", "MIC BIAS2",
->> +			"VA DMIC0", "MIC BIAS3",
->> +			"VA DMIC1", "MIC BIAS3",
->> +			"VA DMIC2", "MIC BIAS1",
->> +			"VA DMIC3", "MIC BIAS1",
->> +			"TX SWR_ADC0", "ADC1_OUTPUT",
->> +			"TX SWR_ADC1", "ADC2_OUTPUT",
->> +			"TX SWR_ADC2", "ADC3_OUTPUT",
->> +			"TX SWR_DMIC0", "DMIC1_OUTPUT",
->> +			"TX SWR_DMIC1", "DMIC2_OUTPUT",
->> +			"TX SWR_DMIC2", "DMIC3_OUTPUT",
->> +			"TX SWR_DMIC3", "DMIC4_OUTPUT",
->> +			"TX SWR_DMIC4", "DMIC5_OUTPUT",
->> +			"TX SWR_DMIC5", "DMIC6_OUTPUT",
->> +			"TX SWR_DMIC6", "DMIC7_OUTPUT",
->> +			"TX SWR_DMIC7", "DMIC8_OUTPUT";
->> +
->> +		qcom,msm-mbhc-hphl-swh = <1>;
->> +		qcom,msm-mbhc-gnd-swh = <1>;
->> +
->> +		#address-cells = <1>;
->> +		#size-cells = <0>;
->> +		#sound-dai-cells = <0>;
->> +
->> +		dai-link@1 {
->> +			link-name = "MAX98360A";
->> +			reg = <MI2S_SECONDARY>;
-> Dumb question: is this value actually used? A quick glance through
-> qcom_snd_parse_of() suggests it isn't. And the CPU DAI id is already
-> specified in the 'sound-dai' property below.
->
-> In a quick test I replaced the corresponding 'reg' values in
-> sc7180-trogdor.dtsi with 'random' values and audio playback on
-> my coachz (sc7180-trogdor-coachz-r3.dts) still works ...
+Double s-o-b's are common but in this case you handled the patch all the way and
+you are still employed by the same employer. Only thing that changed is your
+domain, so this makes me feel that single s-o-b is enough.
 
-Yes. agree that it's not being used. But i am not sure of general syntax 
-followed.
-
-for now  will delete it.
-
->
->> +			cpu {
->> +				sound-dai = <&lpass_cpu MI2S_SECONDARY>;
->> +			};
->> +
->> +			codec {
->> +				sound-dai = <&max98360a>;
->> +			};
->> +		};
->> +
->> +		dai-link@5 {
->> +			link-name = "DisplayPort";
->> +			reg = <LPASS_DP_RX>;
-> nit: add an empty line (in all links) to separate the properties from the node
-Okay.
->
->> +			cpu {
->> +				sound-dai = <&lpass_cpu LPASS_DP_RX>;
->> +			};
->> +
->> +			codec {
->> +				sound-dai = <&mdss_dp>;
->> +			};
->> +		};
->> +
->> +		dai-link@6 {
->> +			link-name = "WCD9385 Playback";
->> +			reg = <LPASS_CDC_DMA_RX0>;
->> +			cpu {
->> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_RX0>;
->> +			};
->> +
->> +			codec {
->> +				sound-dai = <&wcd938x 0>, <&swr0 0>, <&lpass_rx_macro 0>;
->> +			};
->> +		};
->> +
->> +		dai-link@19 {
->> +			link-name = "WCD9385 Capture";
->> +			reg = <LPASS_CDC_DMA_TX3>;
->> +			cpu {
->> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_TX3>;
->> +			};
->> +
->> +			codec {
->> +				sound-dai = <&wcd938x 1>, <&swr1 0>, <&lpass_tx_macro 0>;
->> +			};
->> +		};
->> +
->> +		dai-link@25 {
->> +			link-name = "DMIC";
->> +			reg = <LPASS_CDC_DMA_VA_TX0>;
->> +			cpu {
->> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_VA_TX0>;
->> +			};
->> +
->> +			codec {
->> +				sound-dai = <&lpass_va_macro 0>;
->> +			};
->> +		};
->> +	};
->>   };
->>   
->>   &apps_rsc {
->> -- 
->> 2.7.4
->>
+Thanks,
+Mani
