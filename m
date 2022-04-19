@@ -2,81 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B61550721A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 17:48:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9633507248
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 17:54:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238617AbiDSPun (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 11:50:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50762 "EHLO
+        id S244915AbiDSP4j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 11:56:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354017AbiDSPuj (ORCPT
+        with ESMTP id S240599AbiDSP4j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 11:50:39 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B44B81DA6A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 08:47:55 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id ks6so33850229ejb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 08:47:55 -0700 (PDT)
+        Tue, 19 Apr 2022 11:56:39 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00FEA1EC68
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 08:53:48 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id y32so30161901lfa.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 08:53:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=rywWV/1Z8bflEpBPWvvVmEX4jfvsS4lw1rTLuCBMv+U=;
-        b=yyJYA18i5CR/Ldqx3sEAPjqEpMWAZMqJGwjEfDFdUb2wHw8b7W4PewFQaVqH8r7d8M
-         4VzCbyroFDLt1Vak20r4wAvKZrNDkCQYcDu3xco9cX1mm2Xt0jGQAUwt4iX0HlegBuLv
-         g4qTkbb/1VPsEPsv1tVwZUPQkgP5WL00o5PdE7Cz6x2c5JWkM0JaLOSnS0RxkO1D/cn7
-         XYIiJ4HXZpoLTS1mMxeqzCrCu99gXdKS2lL5f6necH1DD80uSL29exI1RcWUOi3irQXW
-         iGARYJE2vZWyV2u1GHkxupev7hA143MgpumBM/KR62nt5Qg9mgD3gGhtGkZULAXNFkrr
-         eVRA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FIfb+gmCtEt5H98vB8ohAIXclb9xmDCzfNmIFKE2t9I=;
+        b=nUK0AjVJS5kb23t0P9yms6lOOOyCCFFf1w+fJiJrSGS1HknkpDLXh5IkvGOPC++L4b
+         PYNPaM88pEEvaDjuS6G0TIwuD1sEewsW+GOrelR0yrTLJaBUZGrvfPbYMdZagY6cO6dn
+         7nduz2u9QHk8G/OMGMDzgGoepAZSnZTnAKIRNfksFbi0PgngAvChUn24EKGoHJqDOfby
+         cBTbRdS6zYRIDeiX2tB6TQ407bE7SVBDN9XEshiNF5roX4280q0nbAN3+nHFsGQ48iz9
+         rdpD9vVOsIooVdTAEW2/UIegwViu8265LYUluCdpCYRaTZ30M56Epzms4pqowoNU/Rdm
+         QBVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=rywWV/1Z8bflEpBPWvvVmEX4jfvsS4lw1rTLuCBMv+U=;
-        b=bXvPfbg5m2b4TVIi47sHS4MgxNQi+PoGUzgf0FAT3P6J3ncxTNKwo/nHbcc81vwrdS
-         ch52/S77DZ4CVUFCLA5UCK69MMl1ZrCeVOcRfe69zmUP2rF3vozwRvTVu6+pJYsoL5EM
-         LO+gcNUbcr3rBCaIX7Tjr4rEW+U+uK5za36ONBPnTcvFcFeEGKZIOjRg72RXVXfQrdWw
-         EBuCiOwkxus+Zwe27E7xhh3K7M1N4ujsdX++03YEYWt4oSiWll3ODAwyREow2jG9kskH
-         NfbJY+V9DWEFCqjesmNjvzaNpVApzZve6eMh0sA8+nyMK5v04GNCkcOVGbcaPIodwcKP
-         p/RQ==
-X-Gm-Message-State: AOAM5334iQI/9UDTbCP5WmODbSnxLINsbMIdjOOVS4zq8eFjLsmVnkMX
-        2i6uRduPjPuUMeWmKRfCNJgbwg==
-X-Google-Smtp-Source: ABdhPJy87hiOiQgRoK0mL7fyRVNX2TPUGk8hoRdfc8hv4EulKC4CHVhnwEIzEbGto5FL+m/hWyHJAQ==
-X-Received: by 2002:a17:907:9868:b0:6e8:7ae3:7f42 with SMTP id ko8-20020a170907986800b006e87ae37f42mr14321317ejc.224.1650383273992;
-        Tue, 19 Apr 2022 08:47:53 -0700 (PDT)
-Received: from [192.168.0.220] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id kk23-20020a170907767700b006e8a6e53a7bsm5779313ejc.139.2022.04.19.08.47.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Apr 2022 08:47:53 -0700 (PDT)
-Message-ID: <606cc762-a0c2-49a4-3e5d-d2dbd4595bc7@linaro.org>
-Date:   Tue, 19 Apr 2022 17:47:52 +0200
+        bh=FIfb+gmCtEt5H98vB8ohAIXclb9xmDCzfNmIFKE2t9I=;
+        b=dOMlY045UW7CyrsQHe3H86h8U6lJLJD4qKeYRwQejYqkuBC8dDlyp9xbZun60qyA9V
+         SBlF8SV5TmWcnb9/99tevHIxe6zvsfsxiHSsKbRtAq8ZjfWSaMK2for4VOOPHqZR+TB9
+         l/O1nZ1C7jDlV7HoMf9Xksy27G/QSGS+Ght5OcXOVxQidfQPF7UfbgjsWm5R5lzPMDL8
+         RrWqeiFDn0fe2fvDEa4GtIWrhzllDfH0/kzzH3Ihx+OoSlHOQeUu4C8nxEKmcNMzWR/t
+         JRMkHykjDG+I+Ot/fqW2xVNNCTb3ZNmdAqgnl26XGlxyS9KgB0r+hcKY1RxJtW3Wo3i0
+         YMtw==
+X-Gm-Message-State: AOAM5330Yok8rriU/KLjPS0gK1nE+e6wtDhHDGN7mvQzPYxu3m/AckfJ
+        niygS4KDT9P+WbAguhORptPBIQ==
+X-Google-Smtp-Source: ABdhPJyd8FXgAg9xYtals42a2pylwxV1oZc/1iFaACU3eVNjANG7LKJG3MIS7WB02aYDM4ODBSnWCw==
+X-Received: by 2002:a19:8c4a:0:b0:46b:abba:2409 with SMTP id i10-20020a198c4a000000b0046babba2409mr11920802lfj.88.1650383627193;
+        Tue, 19 Apr 2022 08:53:47 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id r25-20020ac25f99000000b00471a439838esm313911lfe.145.2022.04.19.08.53.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Apr 2022 08:53:46 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v5 0/6] drm/msm: rework MDSS drivers
+Date:   Tue, 19 Apr 2022 18:53:40 +0300
+Message-Id: <20220419155346.1272627-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
-Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
- <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org>
- <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
- <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org>
- <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,146 +72,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/04/2022 19:36, Doug Anderson wrote:
-> Hi,
-> 
-> On Thu, Apr 14, 2022 at 12:10 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 13/04/2022 23:48, Doug Anderson wrote:
->>> I'm actually kinda curious: is there really a good reason for this? I
->>> know I haven't been adding things to
->>> `Documentation/devicetree/bindings/arm/qcom.yaml` for Qualcomm
->>> Chromebooks.  Ironically, it turns out that the script I typically use
->>> to invoke checkpatch happens to have "--no-tree" as an argument and
->>> that seems to disable this check. Doh!
->>>
->>> That being said, though, I do wonder a little bit about the value of
->>> enumerating the top-level compatible like this in a yaml file.
->>> Certainly the yaml schema validation in general can be quite useful,
->>> but this top-level listing seems pure overhead. I guess it makes some
->>> tools happy, but other than that it seems to provide very little
->>> value...
->>
->> If compatible is not part of ABI, it is allowed to change in whatever
->> shape one wishes. In such case, how can anyone (e.g. user-space)
->> identify the board? Model name? Also not part of ABI (not documented)...
-> 
-> Hmm, it is a good question. I guess one issue is that the way
-> Chromebooks interact with the bootloader it's not trivially easy to
-> enumerate what exactly the compatible will be in this hardcoded list.
-> It all has to do with the whole "revision" and "sku" scheme the
-> bootloader on ARM Chromebooks uses. For example, on one Chromebook I
-> have the bootloader prints out:
-> 
-> Compat preference: google,lazor-rev5-sku6 google,lazor-rev5
-> google,lazor-sku6 google,lazor
-> 
-> What that means is that:
-> 
-> 1. The bootloader will first look for 'google,lazor-rev5-sku6'. If it
-> finds a dts with that compatible it will pick it.
-> 
-> 2. The bootloader will then look for 'google,lazor-rev5'. If it finds
-> a dts with that compatible it will pick it.
-> 
-> 3. The bootloader will then look for 'google,lazor-sku6'. If it finds
-> a dts with that compatible it will pick it.
-> 
-> 4. Finally, the bootloader will look for 'google,lazor'.
-> 
-> There's a method to the madness. Among other things, this allows
-> revving the board revision for a change to the board even if it
-> _should_ be invisible to software. The rule is always that the
-> "newest" device tree that's in Linux is always listed _without_ a
-> board revision number. An example might help.
-> 
-> a) Assume '-rev5' is the newest revision available. In Linux this
-> would be the only dts that advertises "google,lazor" (with no -rev).
-> Previous dts file would advertise "-rev3" or "-rev4" or whatever.
-> 
-> b) We need to spin the board for something that should be invisible to
-> software. Just in case, HW guys change the board strappings to -rev6.
-> This works _seamlessly_ because the newest dts file always advertises
-> just "google,lazor"
-> 
-> c) We spin the board for something that's _not_ invisible. It will be
-> "-rev7". Now, we go back and add "-rev5" and "-rev6" to the old board
-> dts file and remove the advertisement for "google,lazor". We create a
-> new dts file for -rev7 that advertises "google,lazor".
+These patches coninue work started by AngeloGioacchino Del Regno in the
+previous cycle by further decoupling and dissecting MDSS and MDP drivers
+probe/binding paths.
 
-Except shuffling the compatibles in bindings, you are changing the
-meaning of final "google,lazor" compatible. The bootloader works as
-expected - from most specific (rev5-sku6) to most generic compatible
-(google,lazor) but why do you need to advertise the latest rev as
-"google,lazor"? Why the bootloader on latest rev (e.g. rev7) cannot bind
-to rev7 compatible?
+This removes code duplication between MDP5 and DPU1 MDSS drivers, by
+merging them and moving to the top level.
 
-> Now we can certainly argue back and forth above the above scheme and
-> how it's terrible and/or great, but it definitely works pretty well
-> and it's what we've been doing for a while now. Before that we used to
-> proactively add a whole bunch of "future" revisions "just in case".
-> That was definitely worse and had the same problem that we'd have to
-> shuffle compatibles. See, for instance `rk3288-veyron-jerry.dts`.
-> 
-> One thing we _definitely_ don't want to do is to give HW _any_
-> incentive to make board spins _without_ changing the revision. HW
-> sometimes makes spins without first involving software and if it
-> doesn't boot because they updated the board ID then someone in China
-> will just put the old ID in and ship it off. That's bad.
-> 
-> --
-> 
-> But I guess this doesn't answer your question: how can userspace
-> identify what board this is running? I don't have an answer to that,
-> but I guess I'd say that the top-level "compatible" isn't really it.
+Changes since v5:
+ - Fixed the issue with HW_REV access on MDP5 platforms
+ - Moved "mdss"/"mdss_phys" distinction from second patch to the first
+   one
 
-It can, the same as bootloader, by looking at the most specific
-compatible (rev7).
+Changes since v4:
+ - Fixed the issue with MODULE_DEVICE_TABLE reported by robot
+ - Fixed the comments accoring to suggestions of Stephen
+ - Removed extra goto (Stephen's suggestion)
+ - Break long kms->dev->dev->parent chains into cleaner dpu_dev/mdp_dev
+   and mdss_dev to document device tree bindings. Add related comments.
+   (Stephen's suggestion)
 
-> If nothing else, I think just from the definition it's not guaranteed
-> to be right, is it? From the spec: "Specifies a list of platform
-> architectures with which this platform is compatible." The key thing
-> is "a list". If this can be a list of things then how can you use it
-> to uniquely identify what one board you're on? 
+Changes since v3:
+ - Rebased on top of current msm/msm-next
+ - Fixed issue with enabling/disabling MDP4/MDP5 vs DSI driver (per
+   Stephen's suggestion)
+ - Reworked mdss_probe to remove extra platform_set_drvdata calls (per
+   Stephen's suggestion)
+ - Fixed a typo in the Kconfig (noted by Rob)
+ - Added a patch to move component mastership from mdss to mdp5/dpu1
+   devices
 
-The most specific compatible identifies or, like recently Rob confirmed
-in case of Renesas, the list of compatibles:
-https://lore.kernel.org/linux-devicetree/Yk2%2F0Jf151gLuCGz@robh.at.kernel.org/
+Changes since v2:
+ - Rebased on top of current msm/msm-next(-staging)
+ - Allow disabling MDP4/MDP5/DPU/HDMI components (like we do for DP and
+   DSI)
+ - Made mdp5_mdss_parse_clock() static
+ - Changed mdp5 to is_mdp5 argument in several functions
+ - Dropped boolean device data from the mdss driver
+ - Reworked error handling in msm_pdev_probe()
+ - Removed unused header inclusion
+ - Dropped __init/__exit from function prototypes
 
-> If all of the things
-> that are different between two boards are things that are probable
-> (eDP panels, USB devices, PCIe devices) then two very different boards
-> could have the exact same device tree, right? ...and you could have
-> one device tree that lists the compatible of both boards?
+Changes since v1:
+ - Rebased on top of [2] and [1]
 
-What is the question here?
+[1] https://patchwork.freedesktop.org/series/99066/
+[2] https://patchwork.freedesktop.org/series/98521/
 
-> 
-> That all being said, I think that on Chrome OS the userspace tools
-> _do_ some amount of parsing of the compatible strings here. For
-> Chromebooks they leverage the fact that they understand the above
-> scheme and thus can figure things out. I think they also use things
-> like `/proc/device-tree/firmware/coreboot/board-id` and
-> `/proc/device-tree/firmware/coreboot/sku-id`. That doesn't seem to be
-> documented, though. :(
-> 
-> I guess the question is, though, why do you need to know what board you're on?
 
-You might have (and I had in some previous job) single user-space
-application working on different HW and responding slightly differently,
-depending on the hardware it runs. Exactly the same as kernel behaves
-differently, depending on DTB. The differences for example might be in
-GPIOs or some other interfaces managed via user-space drivers, not in
-presence of devices. Another example are system tests behaving
-differently depending on the DUT, where again you run the tests in a
-generic way so the DUT is autodetected based on board.
+Dmitry Baryshkov (6):
+  drm/msm: unify MDSS drivers
+  drm/msm: remove extra indirection for msm_mdss
+  drm/msm: split the main platform driver
+  drm/msm: stop using device's match data pointer
+  drm/msm: allow compile time selection of driver components
+  drm/msm: make mdp5/dpu devices master components
 
-Of course you could say: different hardware, has different DTB, so
-user-space should check entire tree, to figure out how to operate that
-hardware. Yeah, that's one way, very complex and actually duplicating
-kernel's work. Embedded apps are specialized, so it is much easier for
-them to check board compatible and make assumptions on that.
+ drivers/gpu/drm/msm/Kconfig                   |  50 ++-
+ drivers/gpu/drm/msm/Makefile                  |  25 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  86 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c      | 260 ------------
+ .../gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c  |   3 +
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c      |  54 ++-
+ .../gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c  |   3 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      |  57 ++-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c     | 252 ------------
+ drivers/gpu/drm/msm/msm_drv.c                 | 261 ++----------
+ drivers/gpu/drm/msm/msm_drv.h                 |  61 ++-
+ drivers/gpu/drm/msm/msm_kms.h                 |  21 -
+ drivers/gpu/drm/msm/msm_mdss.c                | 384 ++++++++++++++++++
+ 13 files changed, 661 insertions(+), 856 deletions(-)
+ delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+ delete mode 100644 drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+ create mode 100644 drivers/gpu/drm/msm/msm_mdss.c
 
-Best regards,
-Krzysztof
+-- 
+2.35.1
+
