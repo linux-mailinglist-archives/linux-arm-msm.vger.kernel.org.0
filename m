@@ -2,109 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBB105076DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 19:55:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4395B5076ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 19:59:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245757AbiDSR6Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 13:58:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36568 "EHLO
+        id S1351070AbiDSSAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 14:00:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242597AbiDSR6Z (ORCPT
+        with ESMTP id S1356107AbiDSSAM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 13:58:25 -0400
-Received: from mail-40141.protonmail.ch (mail-40141.protonmail.ch [185.70.40.141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 130E1AE40;
-        Tue, 19 Apr 2022 10:55:40 -0700 (PDT)
-Date:   Tue, 19 Apr 2022 17:55:33 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1650390938;
-        bh=PPJ08Z7LC0SXHf4H31iWdRBqP0exCCppE446+ZFQcHE=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
-         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
-         Feedback-ID:Message-ID;
-        b=tQ4pSJmcBk/k3762L94PTahcCu6Kr6yb0gzV8BvTnAQqIjaUp2oDDUWF0IGC0/qt1
-         CnHBmxfVAYIB3r7mb0/EZRmiKCyPXGgJj3xsk0CaPXKJewDwXaBHWZCQZ2SrHgVN0F
-         iJqhAzLvjcEizBsRrfKqqOmrGAXm90+7gJ+JZUQFAeI1xPSBk7Tt2hR14go7Bd/fZ6
-         J7AUn5sObYWYOI0VwAugi0smzqYSRSqqUBJoXlSeH60tuQ476/ELo9fU7Hsb/mhvfz
-         WTuAL1b1TjK81qjBLEe3WfR+FLnAQYevaLh67xiI6UfLl/TiEquNzvo9us2Kn+nrhw
-         O3Md95y+s0loA==
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: Re: [PATCH v2 3/9] clk: qcom: msm8996-cpu: Add MSM8996 Pro CBF support
-Message-ID: <sld5QpXz-AMurBB0RoYLgMHsEcUsgubB_V3YQO8HP8vFxjd7RwALrHFYBJSiv09SMsXuy4nnWDy2ZQ8IRlEnTl1zXb4EXqPT19y_n-GMd9Q=@protonmail.com>
-In-Reply-To: <Yl72EFQbntGUi2tm@builder.lan>
-References: <kXrAkKv7RZct22X0wivLWqOAiLKpFuDCAY1KY_KSx649kn7BNmJ2IFFMrsYPAyDlcxIjbQCQ1PHb5KaNFawm9IGIXUbch-DI9OI_l73BAaM=@protonmail.com> <Yl72EFQbntGUi2tm@builder.lan>
-Feedback-ID: 6882736:user:proton
+        Tue, 19 Apr 2022 14:00:12 -0400
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AADFA12AAE;
+        Tue, 19 Apr 2022 10:57:25 -0700 (PDT)
+Received: by mail-ot1-f45.google.com with SMTP id t6-20020a056830224600b00605491a5cd7so5215492otd.13;
+        Tue, 19 Apr 2022 10:57:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=GPaAOiRU2sZJkdz+TPQsTeJ4PT3ekwE1x4w/NUDI8Fs=;
+        b=WB3HX+mvX9gV51fe6zVfBTtdGUq0eJZehZCYEvf044A2ZFZsrM4amBw3k0wQ7D3sJc
+         WxVHbIoEsIN0e1gmcfud2G3Du2mP43QpJp77BzWl3ZoM9SjZPgkNSEpAXf7VXKnRQnRZ
+         /91Vcb9TQa2CW12maaTZP4zAJRlxzPBu9pefuscW8+EwblYaomf+Qlmb4sHZnoRcgXSP
+         QXyIcr73JrYJUZ32xRH/zmUGm13FD4cmFdjefhVywhPXLQ3tQmnfT8eWrld6UzuAU24s
+         +pOjEy0++dz7r3twVLk7rEfdc1XE1CzwlHtY0k/lKQEg5MWoGMdCaAYUo1IFSWBEe5+a
+         EKwA==
+X-Gm-Message-State: AOAM532ftVcdiIxcQVtDfZnbLrKXH8vcOyqjQj4UEuUiXgCejD2mMCTg
+        5WPjE7VAeXE4PN5kaYIKeA==
+X-Google-Smtp-Source: ABdhPJxEWVC3kzkDRMXbExF1R9up59MpJ/NNaXh5s23dZOks4H/YEE144xrpxhxJ39CUfiie5FzjIA==
+X-Received: by 2002:a9d:7e87:0:b0:605:559a:9cdd with SMTP id m7-20020a9d7e87000000b00605559a9cddmr1432908otp.61.1650391044965;
+        Tue, 19 Apr 2022 10:57:24 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id ay5-20020a056820150500b00320f8a179d0sm5875192oob.30.2022.04.19.10.57.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Apr 2022 10:57:24 -0700 (PDT)
+Received: (nullmailer pid 3055313 invoked by uid 1000);
+        Tue, 19 Apr 2022 17:57:23 -0000
+Date:   Tue, 19 Apr 2022 12:57:23 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Satya Priya <quic_c_skakit@quicinc.com>
+Cc:     Mark Brown <broonie@kernel.org>, devicetree@vger.kernel.org,
+        swboyd@chromium.org, quic_subbaram@quicinc.com,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        quic_collinsd@quicinc.com, Lee Jones <lee.jones@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org, quic_jprakash@quicinc.com
+Subject: Re: [PATCH V10 2/9] dt-bindings: regulator: pm8008: Add pm8008
+ regulator bindings
+Message-ID: <Yl74A1cljv86CqaX@robh.at.kernel.org>
+References: <1649939418-19861-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1649939418-19861-3-git-send-email-quic_c_skakit@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_MSPIKE_H4,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1649939418-19861-3-git-send-email-quic_c_skakit@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tuesday, April 19th, 2022 at 9:49 PM, Bjorn Andersson <bjorn.andersson@l=
-inaro.org> wrote:
-> On Fri 08 Apr 23:16 CDT 2022, Yassine Oudjana wrote:
->
-> > MSM8996 Pro (MSM8996SG) has a /4 divisor on the CBF clock
-> > instead of /2. This allows it to reach a lower minimum frequency
-> > of 192000000Hz compared to 307200000Hz on regular MSM8996.
-> > Add support for setting the CBF clock divisor to /4 for MSM8996 Pro.
-> >
-> > Signed-off-by: Yassine Oudjana y.oudjana@protonmail.com
-> > Reviewed-by: Konrad Dybcio konrad.dybcio@somainline.org
-> > ---
-> > drivers/clk/qcom/clk-cpu-8996.c | 61 +++++++++++++++++++++------------
-> > 1 file changed, 40 insertions(+), 21 deletions(-)
-> >
-> > diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu=
--8996.c
-> > index 8afc271f92d0..231d8224fa16 100644
-> > --- a/drivers/clk/qcom/clk-cpu-8996.c
-> > +++ b/drivers/clk/qcom/clk-cpu-8996.c
-> > @@ -70,11 +70,11 @@ enum _pmux_input {
-> >
-> > enum {
-> > CBF_PLL_INDEX =3D 1,
-> > - CBF_DIV_2_INDEX,
-> > + CBF_DIV_INDEX,
-> > CBF_SAFE_INDEX
-> > };
->
->
-> I don't have this enum in my tree. Could you please double check that
-> this works on linux-next?
+On Thu, 14 Apr 2022 18:00:11 +0530, Satya Priya wrote:
+> Add bindings for pm8008 regulators.
+> 
+> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+> ---
+> Changes in V8:
+>  - This is split from pm8008.yaml binding.
+> 
+> Changes in V9:
+>   - Remove description for reg and drop unused phandle from example.
+> 
+> Changes in V10:
+>  - Regulators are added as a part of pm8008@8 device. Change bindings doc
+>    accordingly.
+> 
+>  .../bindings/regulator/qcom,pm8008-regulators.yaml | 40 ++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/regulator/qcom,pm8008-regulators.yaml
+> 
 
-It's added in a patch[1] that isn't applied yet. The patch is mentioned
-in the cover letter, which you had trouble finding unfortunately.
-
-> And can you please send the next revision using git send-email with a
-> cover-letter, so that the patches are related in my inbox.
-
-Sorry about that. I've already resent the series properly. You should
-find [PATCH RESEND v2 */9] in your inbox, otherwise here[2] is a link.
-
-[1] https://lore.kernel.org/linux-arm-msm/20210528192541.1120703-1-konrad.d=
-ybcio@somainline.org/
-[2] https://lore.kernel.org/linux-arm-msm/20220416025637.83484-1-y.oudjana@=
-protonmail.com/T/#t
+Reviewed-by: Rob Herring <robh@kernel.org>
