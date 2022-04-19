@@ -2,83 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6C5B5076EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 19:59:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B99350770E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 20:07:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352379AbiDSSA0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 14:00:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38684 "EHLO
+        id S1356189AbiDSSJ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 14:09:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352234AbiDSSA0 (ORCPT
+        with ESMTP id S1347040AbiDSSJZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 14:00:26 -0400
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18A7911A02;
-        Tue, 19 Apr 2022 10:57:43 -0700 (PDT)
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-e5ca5c580fso8010320fac.3;
-        Tue, 19 Apr 2022 10:57:43 -0700 (PDT)
+        Tue, 19 Apr 2022 14:09:25 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F2CC3CA48
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 11:06:39 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-2eafabbc80aso181107047b3.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 11:06:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LEwAzLgdo/J0IOG1epW97Y3lbB4M4tnpZ0RnWfy4qe8=;
+        b=aU24999xmL9jwFsyEgwMlT40a4Hj8UX0RRYOB9wmdIGrDMThR0Y/Aj4y1r99YzgJto
+         69ELrvTHJNUj5OSp5epUXdfPXgXSrW+ZoHZ/+jR3GV4EJSRsM+3obSlQisxNQPljSLxn
+         pmmNQzu+pt2ZoMWkRSNsQWGDnLsUcdat4L2Ols9OAWccvA/70g5n7T5dvkgu50R2aTwd
+         MR3CuqjK0NFffdchRl77AvWn7KAw16rtSj/AMKPMUVXGJCtxIHDf5r0PL7uzqHa6xviB
+         mumlA1Q+QmKRJnV1YVwaYKm5JEy1BVPzjEG5bY9qo+IodXgTjLE1j2pUNJo7fHnt4Ld1
+         q48A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NfUXxRHK+LHQXnrnwFjeCWXpamoPwBgn6NmFsR4/ZvI=;
-        b=2yRRWsh0YBOe56qXd3Pj4bklLaoUsTIIXWr3Cthb06QUITelSOvs4AgR8oqO7bZh0P
-         YxeDDxhvgUXOKn9n+IZhoFMWaobGjzhWoLLLdHzWcn3AN+w2BFrsFsfAi+IYmhhFA5wl
-         UKdnnncmUhwkjht/zXEAtF2IJJeP+3PDyVLvZvID6ofmCM3IhX9LPZ6ipkIt9WLcEBwd
-         exJf9bD/dcjaNvTbMrzhxswGRGADazxVkf168s7n/iIhqTLixGglV9xRRl0Kkltb17i/
-         b2M/hDxtwB7SrRQr8sRQTN+n5fhdEiLAv1DY81PDFhkPO4nAuI6ekk/mJ3KwQO/dzk5V
-         H53Q==
-X-Gm-Message-State: AOAM532zLrfHfziZtd3mWCLxHbVMtKXBbSv+VMgICMDTUaVfMZAIM9l8
-        YUDDayyeniKVW+RjtywgjXzrIfHorw==
-X-Google-Smtp-Source: ABdhPJygNRTnJdU4Xqcp1n+1TT3+wj2KW47+auy5sHfFy/Hc/DTV5MF50y1ElCyY0wNbKkiPOxBFVg==
-X-Received: by 2002:a05:6870:ec90:b0:e5:aaf5:ca7 with SMTP id eo16-20020a056870ec9000b000e5aaf50ca7mr6607837oab.249.1650391062346;
-        Tue, 19 Apr 2022 10:57:42 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id o19-20020a4a9593000000b0032176119e65sm5662202ooi.34.2022.04.19.10.57.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 10:57:41 -0700 (PDT)
-Received: (nullmailer pid 3055840 invoked by uid 1000);
-        Tue, 19 Apr 2022 17:57:41 -0000
-Date:   Tue, 19 Apr 2022 12:57:41 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Satya Priya <quic_c_skakit@quicinc.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, quic_collinsd@quicinc.com,
-        quic_subbaram@quicinc.com, linux-arm-msm@vger.kernel.org,
-        quic_jprakash@quicinc.com, Lee Jones <lee.jones@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        swboyd@chromium.org
-Subject: Re: [PATCH V10 3/9] dt-bindings: mfd: pm8008: Add regulators
-Message-ID: <Yl74FSBHt2ECMUsJ@robh.at.kernel.org>
-References: <1649939418-19861-1-git-send-email-quic_c_skakit@quicinc.com>
- <1649939418-19861-4-git-send-email-quic_c_skakit@quicinc.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LEwAzLgdo/J0IOG1epW97Y3lbB4M4tnpZ0RnWfy4qe8=;
+        b=hBSub7H6iUiu1I1HQqpYNW6IsSuPwc2GmMLeRD/8/QtvTwpzZAFV+5XjVqpQFfcA4N
+         l5rZGVY3VdjoswgUaVW2sgJzHAPM76ofObRULf4K542MQzLVMCvlfhXQaPfp7spHS2hk
+         s9yAT6OTuAOh7leKXiz4Ow4TAIfQN+svpN5nFiVpKQsynHVrhJ7HMLfdlwkC/Z+qk7nG
+         kVF1i2JFyQ+X++lsSapy+tH19UPpGKdMoeXvqJzp+9Vq377Xolz82gGfqjCwz9CaE2lo
+         xTl0HgdcEUoehn5SyaEQKdyvHDmsoLfhld88MwupqFq/40EZu/9uaK+NSOvSB6J2joPx
+         jelQ==
+X-Gm-Message-State: AOAM5300pO3fTsgsRTD9iYbSm1xobzgV14Q6tR5s3W+t77Co++NhYV+0
+        M/8u9QMiSOuzVV42BWCT1lVRQdrHf29gaEKQ0bINnA==
+X-Google-Smtp-Source: ABdhPJy2MwoJhfJr2k71xTKAb1/QHb+m9Vt2pB0jt5uPZYsnwfUxO7eQefOdpcrbNS8yXY51GGPpHmeHyGx+tCM29cE=
+X-Received: by 2002:a81:324e:0:b0:2f1:d8f4:40df with SMTP id
+ y75-20020a81324e000000b002f1d8f440dfmr2846060ywy.289.1650391598774; Tue, 19
+ Apr 2022 11:06:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1649939418-19861-4-git-send-email-quic_c_skakit@quicinc.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+References: <20220331013415.592748-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20220331013415.592748-1-bjorn.andersson@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 19 Apr 2022 21:06:27 +0300
+Message-ID: <CAA8EJpr9TvWHY8uMXzdmQbf8ynbkEJLKq0b4iEpp2Ji5nBXYzQ@mail.gmail.com>
+Subject: Re: [PATCH] PCI: qcom: Remove ddrss_sf_tbu clock from sc8180x
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 14 Apr 2022 18:00:12 +0530, Satya Priya wrote:
-> Add regulators for pm8008 with example.
-> 
-> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
-> ---
-> Changes in V10:
->  - Add regulators under main mfd node as in DT.
-> 
->  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
+On Thu, 31 Mar 2022 at 04:31, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> The Qualcomm SC8180X platform was piggy backing on the SM8250
+> qcom_pcie_cfg, but the platform doesn't have the ddrss_sf_tbu clock, so
+> it now fails to probe due to the missing clock.
+>
+> Give SC8180X its own qcom_pcie_cfg, without the ddrss_sf_tbu flag set.
+>
+> Fixes: 0614f98bbb9f ("PCI: qcom: Add ddrss_sf_tbu flag")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 6ab90891801d..816028c0f6ed 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1550,6 +1550,11 @@ static const struct qcom_pcie_cfg sc7280_cfg = {
+>         .pipe_clk_need_muxing = true,
+>  };
+>
+> +static const struct qcom_pcie_cfg sc8180x_cfg = {
+> +       .ops = &ops_1_9_0,
+> +       .has_tbu_clk = true,
+> +};
+> +
+>  static const struct dw_pcie_ops dw_pcie_ops = {
+>         .link_up = qcom_pcie_link_up,
+>         .start_link = qcom_pcie_start_link,
+> @@ -1656,7 +1661,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>         { .compatible = "qcom,pcie-qcs404", .data = &ipq4019_cfg },
+>         { .compatible = "qcom,pcie-sdm845", .data = &sdm845_cfg },
+>         { .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
+> -       { .compatible = "qcom,pcie-sc8180x", .data = &sm8250_cfg },
+> +       { .compatible = "qcom,pcie-sc8180x", .data = &sc8180x_cfg },
+>         { .compatible = "qcom,pcie-sm8450-pcie0", .data = &sm8450_pcie0_cfg },
+>         { .compatible = "qcom,pcie-sm8450-pcie1", .data = &sm8450_pcie1_cfg },
+>         { .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
+> --
+> 2.35.1
+>
+
+
+-- 
+With best wishes
+Dmitry
