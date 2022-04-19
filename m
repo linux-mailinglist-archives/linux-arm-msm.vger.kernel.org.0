@@ -2,74 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA4145067A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 11:25:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E2105067DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 11:39:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230061AbiDSJ2Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 05:28:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59770 "EHLO
+        id S1348205AbiDSJmP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 05:42:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241375AbiDSJ2Y (ORCPT
+        with ESMTP id S239650AbiDSJmO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 05:28:24 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44810289A6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 02:25:42 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id q3so20937417wrj.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 02:25:42 -0700 (PDT)
+        Tue, 19 Apr 2022 05:42:14 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A8411F639;
+        Tue, 19 Apr 2022 02:39:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bVmGu64HyeyAZzKuzIehzK+dbcp+uasGY7c7tKrsK6Q=;
-        b=loDeX0yVrkg3GluWrjP7aZ7M3FT9n22j6L1qrs9YsQTltHHvJJCc3y56KmhBl3sqe8
-         1LKe5YEzPqftEuYMRf4RiH/f53uwFsmqW82h8kbkRJUnBsQX6m6cZ1VnrzK7kt/eogUe
-         HQi+s1ZlhtyPtqgNaJFM4vdbicAEfgW1CBJb7vR9+DQm3mlP+FQ+cjMhfK+gWEyE0f65
-         SD1Cc52YV8G/wx5ssRH4+cI6fVudIpSubBFVKZ7cxin/BYx2afWDUi6/irEjS0sgfAT+
-         oxMBua1lMOBRSQ1hK/38tE4EKKZGX746oo/4dza5QRfaFbXu0uzjiKIw5xYnbcnHvOt4
-         kpDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bVmGu64HyeyAZzKuzIehzK+dbcp+uasGY7c7tKrsK6Q=;
-        b=Yb+n9ymmeuxZCoL9vuEib/k8O38salb0O1+7Wssg06WH8o3j9asUjcQ/X/tDus30bU
-         94QsTxwqG7ZuDqcJmazfPhW6mgqAoil6P8JTSqrjfXtJ9H/2yUBIwuPkViJmcxTOTpLh
-         CLEIvj/1tT/rgcLNF+CTBX8J50copJFXUHe45YkSlZQKWEDO/rw2RcThj4okewt7O8VC
-         xODjKwOZBiOi5p9ZzrKApFomovKQNI0dDZBebQnGyKxuJuQpQDgFgpasBepIiZNjMspQ
-         zSDO5pBAeRKaambefFjz4yahm4FOg4k++CLSYo9W6inAm/kKCFBsoTmAWs3Z3JLXiJJK
-         wiNA==
-X-Gm-Message-State: AOAM532ytM9SyTm2QUfMJ/AQ1ToBsCTg5cDmaXjH+/MxOI30JpahhELr
-        gSpcqhsHczt3QUhkUVBPIGqv+v/mzCCEn7Y6PkvS7Q==
-X-Google-Smtp-Source: ABdhPJy4LMvCOsIcHOlbW8mjefXgM4G+1U2IhqdZHfwseqUoR7C9D/OvU5jpEERqI1ZhVeYS+IGjUmTZu2Dq7hPIn8g=
-X-Received: by 2002:adf:e108:0:b0:1ef:97ad:5372 with SMTP id
- t8-20020adfe108000000b001ef97ad5372mr10746333wrz.658.1650360340796; Tue, 19
- Apr 2022 02:25:40 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650361172; x=1681897172;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=wVJ9UhjrH0Z/VNjIO0QK3Ri+9clE9QiJj3Vxp/R+xgg=;
+  b=Mqv6cJsRPjHxIPjFGkcvLdgJFeJDeqnMKtdYhXf8KGIPG7w8H0cAUKOI
+   IxegYVFJnjiJfFxH2pZ3O4gEqhlSuTL8xhfVDWi1fKpcLaiIPbjGSmXIX
+   5fJ/CbbcqrN/AGADupCW8xzTmpJMtvRrCXmVPgLYbrcPnPmONAyhtuC/L
+   o=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 19 Apr 2022 02:39:32 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 02:39:21 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 19 Apr 2022 02:39:19 -0700
+Received: from [10.216.20.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 19 Apr
+ 2022 02:39:13 -0700
+Message-ID: <de6581e4-f894-6833-bb39-f5830013f7b6@quicinc.com>
+Date:   Tue, 19 Apr 2022 15:09:10 +0530
 MIME-Version: 1.0
-References: <20220412125035.40312-1-quic_jinlmao@quicinc.com> <20220412125035.40312-7-quic_jinlmao@quicinc.com>
-In-Reply-To: <20220412125035.40312-7-quic_jinlmao@quicinc.com>
-From:   Mike Leach <mike.leach@linaro.org>
-Date:   Tue, 19 Apr 2022 10:25:39 +0100
-Message-ID: <CAJ9a7VjL_EPLGubKVjCyng=yhHOfa4TToMtCk3JN6fNJTnsK_g@mail.gmail.com>
-Subject: Re: [PATCH v5 06/10] docs: sysfs: coresight: Add sysfs ABI
- documentation for TPDM
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH] ASoC: qcom: SC7280: Update machine driver startup,
+ shutdown callbacks
+Content-Language: en-US
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <quic_rohkumar@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>
+CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1650352619-17370-1-git-send-email-quic_srivasam@quicinc.com>
+ <102ad140-dc26-d266-a716-4e22003ec601@linaro.org>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <102ad140-dc26-d266-a716-4e22003ec601@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,47 +75,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
 
-On Tue, 12 Apr 2022 at 13:51, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
+On 4/19/2022 2:49 PM, Srinivas Kandagatla wrote:
+Thanks for your time Srini!!
 >
-> Add API usage document for sysfs API in TPDM driver.
 >
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  .../ABI/testing/sysfs-bus-coresight-devices-tpdm    | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
->  create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> On 19/04/2022 08:16, Srinivasa Rao Mandadapu wrote:
+>> Update machine driver startup, shutdown callback functions to support
+>> codec DMA paths. Without this change, platforms with WCD codec is 
+>> failing
+>> to register sound card.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> ---
+>>   sound/soc/qcom/sc7280.c | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>>
+>> diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
+>> index 4ef4034..d64df11 100644
+>> --- a/sound/soc/qcom/sc7280.c
+>> +++ b/sound/soc/qcom/sc7280.c
+>> @@ -295,6 +295,10 @@ static void sc7280_snd_shutdown(struct 
+>> snd_pcm_substream *substream)
+>>           break;
+>>       case LPASS_DP_RX:
+>>           break;
+>> +    case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
+>> +    case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
+>> +    case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
+>> +        break;
+>>       default:
+>>           dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
+>>               cpu_dai->id);
 >
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> new file mode 100644
-> index 000000000000..d70ba429f38d
-> --- /dev/null
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> @@ -0,0 +1,13 @@
-> +What:          /sys/bus/coresight/devices/<tpdm-name>/integration_test
-> +Date:          April 2022
-> +KernelVersion  5.18
-> +Contact:       Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +               (Write) Run integration test for tpdm. Integration test
-> +               will generate test data for tpdm. It can help to make
-> +               sure that the trace path is enabled and the link configurations
-> +               are fine.
-> +
-> +               value to this sysfs node:
-> +               1 : Genreate 64 bits data
-s/Genreate/Generate
-
-> +               2 : Generate 32 bits data
-> --
-> 2.17.1
+> Why not just make sc7280_snd_startup code like this:
 >
+> static int sc7280_snd_startup(struct snd_pcm_substream *substream)
+> {
+>     struct snd_soc_pcm_runtime *rtd = substream->private_data;
+>     struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+>     int ret = 0;
+>
+>     switch (cpu_dai->id) {
+>     case MI2S_PRIMARY:
+>         ret = sc7280_rt5682_init(rtd);
+>         break;
+>     default:
+>         break;
+>     }
+>     return ret;
+> }
+>
+> and sc7280_snd_shutdown with something similar
 
-Reviewed by: Mike Leach <mike.leach@linaro.org>
+Yes. we can do as you suggested. Then Shall I do it as fix to a commit?
 
+i.e. c5198db ASoC: qcom: Add driver support for ALC5682I-VS
 
--- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+>
+> --srini
+>> @@ -316,6 +320,10 @@ static int sc7280_snd_startup(struct 
+>> snd_pcm_substream *substream)
+>>           break;
+>>       case LPASS_DP_RX:
+>>           break;
+>> +    case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
+>> +    case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
+>> +    case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
+>> +        break;
+>>       default:
+>>           dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
+>>               cpu_dai->id);
