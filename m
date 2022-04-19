@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C963F507063
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 16:28:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C63E507055
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 16:28:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238268AbiDSOao (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 10:30:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46070 "EHLO
+        id S1353282AbiDSObI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 10:31:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232482AbiDSOan (ORCPT
+        with ESMTP id S1350775AbiDSObH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 10:30:43 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C2D0E0CF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 07:28:01 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id v15so21456151edb.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 07:28:01 -0700 (PDT)
+        Tue, 19 Apr 2022 10:31:07 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74D3BE0CF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 07:28:25 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id v4so21494614edl.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 07:28:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Nj2bwCdNC7HwvELjhLY4xYS1yLs5HxcxFqDH74I+UnY=;
-        b=B3SiqcstytlQ82E04Waa6/M3nW29rmiBNUkLFmC9WM7jnffgpNy6IjRFV0crd0hF7R
-         kcF8m9ktNN+w8ii5kTtxi7D8LCi3jl+5QjVAHw3yc5CQBdM3VTFLDGas2ytvluL/OURr
-         GHEZ7O/R/ENukYVhf76eBTjEKHNirDS9hihnk=
+        bh=5snmPtDHGIGoFLwIYFGnYkPTgTDRFy3yrXSk8RuXhBw=;
+        b=RyaK5z0senBGYKHrGTylo+K2ugRhGTPqMnF4qLnrgyVkDI+tdjmEz5eOzR0Y1AW6QU
+         y1zPZmrNqRLvm0vTSqh+xmmubISocvwjC4qL1JKLlSIvglE/JhI/7doQ6ENEmXj3Clrj
+         zYxT/lkQ+Dzv5Oo+hLcoDdnTp0p5Kfr/Kplng=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Nj2bwCdNC7HwvELjhLY4xYS1yLs5HxcxFqDH74I+UnY=;
-        b=pXx+2ZKDSTTZiNBVV9xOh7lP/eoCO0L8ZuhQWpawUNpDsp6S0cymFhFjprIPDBOmfE
-         AI8SwZK3lY1f3BoX7BF2qvoEXnkY28KWzHU0De1T9lH4LUNJqLsYEVaI6L8yBHDSKOUB
-         aa5M3ACAwDl8r0KxSThGfVxzY449MyPwk/IwT8eHcyEu32teYL6REG6N1tFN+GlpMHey
-         Jt36HjqMI4ka7Y/QNWMmldxKsvYIcNx4OfUF/zBdNT93vX3DXbuuUjjBsBYOQPzUzTr9
-         iz4/kyjTWg45Woj6eT9SiJotRoEbBLJ5V1wf6H8/CYvMidOXUqTuViaePCzVGbm1yzPI
-         hlVA==
-X-Gm-Message-State: AOAM532NSR0KS3VYPA/xXb7RZqdb5RJUR72p+Trzr9RWUElxMKaRmhGy
-        8EpYmL7/7dX5Cq3or6VxLAgZiJc1T4YOh1v5
-X-Google-Smtp-Source: ABdhPJyeqv4FTLvElj3FvgJfWg/tlJgkgv2YEXPQZFUz+ek5paluX/tG25n+QGsfuPjRz+RsK1mSTw==
-X-Received: by 2002:a05:6402:1a44:b0:41d:8969:e4c9 with SMTP id bf4-20020a0564021a4400b0041d8969e4c9mr17947307edb.299.1650378479518;
-        Tue, 19 Apr 2022 07:27:59 -0700 (PDT)
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com. [209.85.221.50])
-        by smtp.gmail.com with ESMTPSA id nd31-20020a170907629f00b006dff863d41asm5734499ejc.156.2022.04.19.07.27.58
+        bh=5snmPtDHGIGoFLwIYFGnYkPTgTDRFy3yrXSk8RuXhBw=;
+        b=DTxkXCi2DaMjnG39YPM+9yFSWJLP6mFQuwdW4AyOvcQOSMkLtJIZUe+qIHHY3kxuyC
+         B1d/ADQxfMlGaoi2R0zsO0ka9in/Pn56E2nORH+xUULwW0xRLvoTmwuRTd6shb/IfLvx
+         7KAW5NQr2Ny10uUV46qgodm0iDv/JdXrwwQJ/Ij/7uQ0Ts3qc7VtLn5ZHWw0ocFOyvi2
+         VhE6i8NE5GEluhNkGXz52dJWmFIn7QCSnYlvgCvpjfj4JVm/tnSFNU1BlEAmVf4Nue0O
+         BnO3ew8VZ3BYgeXOvfFS9Z6nXsIZmAEb+mIE7WyodPujdSS2OnLq8nL1no/0Nm9EYQln
+         945Q==
+X-Gm-Message-State: AOAM532OXsgifAw2X5fE5NkGXjAn9rNXWLWzrl5xU1ZVEVcDA7ikQVRG
+        DzYUXjCY8g/W8yoj44mdvr5F6IFl+cCa2F75
+X-Google-Smtp-Source: ABdhPJxeGInYR6jRIHTSoNBz828ky6zpxFkW2SLdV1euihA4SEpnVw6Lh7Pu9zya81CXVAxqHxFVZQ==
+X-Received: by 2002:a05:6402:e85:b0:41d:121b:f436 with SMTP id h5-20020a0564020e8500b0041d121bf436mr17811625eda.121.1650378503731;
+        Tue, 19 Apr 2022 07:28:23 -0700 (PDT)
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com. [209.85.128.50])
+        by smtp.gmail.com with ESMTPSA id k15-20020a50ce4f000000b00420119333c1sm8722479edj.62.2022.04.19.07.28.22
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Apr 2022 07:27:58 -0700 (PDT)
-Received: by mail-wr1-f50.google.com with SMTP id x18so14833079wrc.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 07:27:58 -0700 (PDT)
-X-Received: by 2002:a05:6000:1105:b0:20a:80b4:bcaf with SMTP id
- z5-20020a056000110500b0020a80b4bcafmr11868665wrw.679.1650378478239; Tue, 19
- Apr 2022 07:27:58 -0700 (PDT)
+        Tue, 19 Apr 2022 07:28:22 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id x3so10778237wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 07:28:22 -0700 (PDT)
+X-Received: by 2002:a05:600c:210b:b0:38e:c62a:398b with SMTP id
+ u11-20020a05600c210b00b0038ec62a398bmr20157535wml.118.1650378502020; Tue, 19
+ Apr 2022 07:28:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <1650349697-13540-1-git-send-email-quic_vnivarth@quicinc.com> <1650349697-13540-3-git-send-email-quic_vnivarth@quicinc.com>
-In-Reply-To: <1650349697-13540-3-git-send-email-quic_vnivarth@quicinc.com>
+References: <1650349697-13540-1-git-send-email-quic_vnivarth@quicinc.com> <1650349697-13540-2-git-send-email-quic_vnivarth@quicinc.com>
+In-Reply-To: <1650349697-13540-2-git-send-email-quic_vnivarth@quicinc.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 19 Apr 2022 07:27:46 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=W6R9iPt1aCDpq4BRBfZ+KFUsOAUKCOhY2KQo_GpMhoiQ@mail.gmail.com>
-Message-ID: <CAD=FV=W6R9iPt1aCDpq4BRBfZ+KFUsOAUKCOhY2KQo_GpMhoiQ@mail.gmail.com>
-Subject: Re: [V4 2/2] arch: arm64: dts: qcom: sc7280-qcard: Configure cts
+Date:   Tue, 19 Apr 2022 07:28:09 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XYduCsrzKYRUR18y+OfJCrjdbDErSPEtz0bYF_VXbMPA@mail.gmail.com>
+Message-ID: <CAD=FV=XYduCsrzKYRUR18y+OfJCrjdbDErSPEtz0bYF_VXbMPA@mail.gmail.com>
+Subject: Re: [V4 1/2] arch: arm64: dts: qcom: sc7280-idp: Configure cts
  pinctrl to bias-bus-hold
 To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -72,7 +72,7 @@ Cc:     Andy Gross <agross@kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -95,8 +95,8 @@ On Mon, Apr 18, 2022 at 11:28 PM Vijaya Krishna Nivarthi
 > v2: used bias-bus-hold as per review comments
 > v1: intial patch used bias-disable for sleep pinctrl in sc7280-idp only
 > ---
->  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 
 You should have carried my tag forward. In any case:
 
