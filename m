@@ -2,106 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DABB506471
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 08:29:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F87950647A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 08:30:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348813AbiDSGb0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 02:31:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42568 "EHLO
+        id S234545AbiDSGdU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 02:33:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348792AbiDSGbV (ORCPT
+        with ESMTP id S232856AbiDSGdT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 02:31:21 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CDDF23BFC;
-        Mon, 18 Apr 2022 23:28:39 -0700 (PDT)
+        Tue, 19 Apr 2022 02:33:19 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20685140C8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 23:30:37 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id t13so23118016pgn.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 23:30:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650349719; x=1681885719;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=cG1Yzcr9fSJjQUXPjwcFfaw2bSuVoeeQVhgzvUMyjTE=;
-  b=wB6VR4O8Ff8peR0KF1PpVT2SWBz6EvNPpT92doFvSeKiaF7ZKLIv0d9U
-   qQSu1T+awJ4gUv4ghmg4ZGEmDLQqb1k+TUMUd8s7iJHCvJYiHi+xBWtco
-   4BfzVeV4clOxLwZ01cFcbQDXfbI56M4QIgbNOUfNyOCx0ej4wCQcxi0Ct
-   A=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 18 Apr 2022 23:28:39 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 18 Apr 2022 23:28:37 -0700
-X-QCInternal: smtphost
-Received: from hu-vnivarth-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.111.166])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 19 Apr 2022 11:58:28 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
-        id 854473C01; Tue, 19 Apr 2022 11:58:26 +0530 (+0530)
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: [V4 2/2] arch: arm64: dts: qcom: sc7280-qcard: Configure cts pinctrl to bias-bus-hold
-Date:   Tue, 19 Apr 2022 11:58:17 +0530
-Message-Id: <1650349697-13540-3-git-send-email-quic_vnivarth@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1650349697-13540-1-git-send-email-quic_vnivarth@quicinc.com>
-References: <1650349697-13540-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IGmYqg606kAg3pvf8xUnL9K7oIiJlnNVadVtLgVbgco=;
+        b=RWkdh0fWRj03OC2HBnrauhCncJUjSGJ0AeHUpDr5r/cb7UVOAeXm8EQztSLv93EFEL
+         D00g3C3lKxXGUGhNdXhnatXICWxg7LPef+A6Cx/445cmyUV/U40i9vfzpDbbbhTxVuby
+         tJ/TZ618PcIYJVvFBrQcn/KAAAqZbf4iXF99U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IGmYqg606kAg3pvf8xUnL9K7oIiJlnNVadVtLgVbgco=;
+        b=GbOX6v6EzezvuY9QI0dHROhE216ZjKH0eCh5lnV24LS/QvkyB8YUDoQtQNbgSZlLBA
+         QyMxJyx5cEvH5ZiMMhQulMMCfkdmU1zbVn2LNl2NF+pcLA3skw/2WmFVLKxiP98HjTjS
+         XiVsllkpmqv8KiPRDRpG5FvzPHFlnAh+EIZfZ3+jepGBcoo7PTTGyQ+bvsgOaPaAO7q5
+         asOb1vjIifrG7ZpMp9dSAzYm6rBq919T5lYoyRQ2cUBjFhQ7Xl5eziglgxKVeowMcale
+         0aK9evSS6yBIZ/PZ8ct9W2tahlYB3Je5RNAmf+heZ9U+/8QeTS6DLiMzH+0lxklpXU6M
+         TAfQ==
+X-Gm-Message-State: AOAM5325xsCMB4OT5JUeAab1+Q/8Sxwok7dSUC1qJnWM2AnijaMdQpGh
+        R6qQLQObQAGr7LbsIP3kMYANqg==
+X-Google-Smtp-Source: ABdhPJy7pNWUWctP7Lv46n/YF3SODEnZqNA23wE38kIGlBCogjWCsgKW/AUcTAlCjeXacJM37KLXkw==
+X-Received: by 2002:a05:6a00:2392:b0:4fa:dcd2:5bc1 with SMTP id f18-20020a056a00239200b004fadcd25bc1mr16242411pfc.8.1650349836670;
+        Mon, 18 Apr 2022 23:30:36 -0700 (PDT)
+Received: from judyhsiao-p920.tpe.corp.google.com ([2401:fa00:1:17:ff0b:b586:d329:c4f4])
+        by smtp.gmail.com with ESMTPSA id n14-20020a17090a394e00b001c670d67b8esm15037041pjf.32.2022.04.18.23.30.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Apr 2022 23:30:36 -0700 (PDT)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     broonie@kernel.org
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, dianders@chromium.org,
+        cychiang@google.com, yuhsuan@chromium.org, judyhsiao@google.com,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, Judy Hsiao <judyhsiao@chromium.org>
+Subject: [v1] ASoC: qcom: Use MCLK as RT5682I-VS sysclk source
+Date:   Tue, 19 Apr 2022 14:29:52 +0800
+Message-Id: <20220419062952.356017-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.36.0.rc0.470.gd361397f0d-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-WLAN rail was leaking power during RBSC/sleep even after turning BT off.
-Change sleep pinctrl configuration to handle same.
+Both MCLK and BCLK can be the clock source of sysclk via PLL
+according to its datasheet.
+This patch sets MCLK as the clock source as we use MCLK in the
+previous projects.
 
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Fixes: c5198db82d4c ("ASoC: qcom: Add driver support for ALC5682I-VS")
+Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
 ---
-v4: modify subject of patch to indicate file it is applying to
-v3: apply same change to active state and other sc7280*.dts* as well
-v2: used bias-bus-hold as per review comments
-v1: intial patch used bias-disable for sleep pinctrl in sc7280-idp only
----
- arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ sound/soc/qcom/sc7280.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-index b833ba1..602ebd4 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-@@ -398,8 +398,11 @@ mos_bt_uart: &uart7 {
+diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
+index 4ef4034ba6ee..dfcb7ed44331 100644
+--- a/sound/soc/qcom/sc7280.c
++++ b/sound/soc/qcom/sc7280.c
+@@ -21,7 +21,7 @@
+ #include "lpass.h"
  
- /* For mos_bt_uart */
- &qup_uart7_cts {
--	/* Configure a pull-down on CTS to match the pull of the Bluetooth module. */
--	bias-pull-down;
-+	/*
-+	 * Configure a bias-bus-hold on CTS to lower power usage
-+	 * when BT is turned off.
-+	 */
-+	bias-bus-hold;
- };
+ #define DEFAULT_MCLK_RATE              19200000
+-#define RT5682_PLL1_FREQ (48000 * 512)
++#define RT5682_PLL_FREQ (48000 * 512)
  
- /* For mos_bt_uart */
-@@ -490,10 +493,10 @@ mos_bt_uart: &uart7 {
- 		pins = "gpio28";
- 		function = "gpio";
- 		/*
--		 * Configure a pull-down on CTS to match the pull of
--		 * the Bluetooth module.
-+		 * Configure a bias-bus-hold on CTS to lower power usage
-+		 * when BT is turned off.
- 		 */
--		bias-pull-down;
-+		bias-bus-hold;
- 	};
+ struct sc7280_snd_data {
+ 	struct snd_soc_card card;
+@@ -137,15 +137,15 @@ static int sc7280_rt5682_init(struct snd_soc_pcm_runtime *rtd)
+ 				SND_SOC_DAIFMT_NB_NF |
+ 				SND_SOC_DAIFMT_I2S);
  
- 	/* For mos_bt_uart */
+-	ret = snd_soc_dai_set_pll(codec_dai, RT5682S_PLL1, RT5682S_PLL_S_BCLK1,
+-					1536000, RT5682_PLL1_FREQ);
++	ret = snd_soc_dai_set_pll(codec_dai, RT5682S_PLL2, RT5682S_PLL_S_MCLK,
++					DEFAULT_MCLK_RATE, RT5682_PLL_FREQ);
+ 	if (ret) {
+ 		dev_err(rtd->dev, "can't set codec pll: %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-	ret = snd_soc_dai_set_sysclk(codec_dai, RT5682S_SCLK_S_PLL1,
+-					RT5682_PLL1_FREQ,
++	ret = snd_soc_dai_set_sysclk(codec_dai, RT5682S_SCLK_S_PLL2,
++					RT5682_PLL_FREQ,
+ 					SND_SOC_CLOCK_IN);
+ 
+ 	if (ret) {
 -- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
+2.36.0.rc0.470.gd361397f0d-goog
 
