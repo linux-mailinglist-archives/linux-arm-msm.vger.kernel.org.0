@@ -2,387 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2B13507659
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 19:16:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EAF6350768A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 19:31:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244740AbiDSRT1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 13:19:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43020 "EHLO
+        id S237099AbiDSReX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 13:34:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243200AbiDSRTZ (ORCPT
+        with ESMTP id S232206AbiDSReV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 13:19:25 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5541A35DEC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 10:16:42 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-e5ca5c580fso7885831fac.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 10:16:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Hh2D5T9O1nXJSpyowbHfBZ/qDBEIO6Yb28qotohzW6M=;
-        b=PF5p5rMhgy6pOrHUjITOkzIIX/nu4CrsUEAI+OBpKM/fAcN184LtuvQhGc7XWvwWFE
-         QDev0y1bfAYpdtra2JSbiWBHdcQ1/jItqtGzgN38KQ1T+WkpasC22m3z/6Dvs4eVnwot
-         dxdm7PwEXo96wJMV2xgHNXY/xiYgN78E8Ks1BJ8l6AN5KHRlVxY/dNgK5LLtZqqEobg3
-         tD422XHJlvCy9K5VxFCKDdjs29GEwsnG/pqC73i/Ph5gebgUYf59ePs1UPWF6bj8LNjH
-         uBkNJCZJrNuQNYRBK98Y5sVJj+nKUFOsE6CX6BocknUrg9+PozAJ37nuZXJLWu2Kretm
-         +M/w==
+        Tue, 19 Apr 2022 13:34:21 -0400
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6D1C381B4;
+        Tue, 19 Apr 2022 10:31:38 -0700 (PDT)
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-de3eda6b5dso18296279fac.0;
+        Tue, 19 Apr 2022 10:31:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Hh2D5T9O1nXJSpyowbHfBZ/qDBEIO6Yb28qotohzW6M=;
-        b=rPA2bJ6tc5a4DZ8opzK22M+svaqy9tNbsmpap37w716MePwtVxvosS8Q5Y/EWo0TOh
-         0MNW2fEFWjPx7gLA2a6FuSCsb9Mm2rrA04Nubmb0HUKURLA71MjawfdSbNkSjtBRSW47
-         mmz6olB+YrFWbKw+QooffPTn95vShcVQ445rshrOoLaHJKvAMq4MPI8zQooOFJErl7+E
-         1IzSEP3zqSY0Qf3a+9bUaTxJb8iye3OU6dkwaTZigtIIL48pDLC1xEitK9fORZ8QBBGo
-         drqnO//yhx33rAincSVmTL9jo5OrlNjcRw8ATGKbOUTIXA8V043K43aWS3tQzFowOqdA
-         xGRg==
-X-Gm-Message-State: AOAM533B8B0cKzpFaB/HWEK4gVriEJolNHiyv0muUT/PW7C3zXXCWCv1
-        b/TWndzvRAVBTo/Q63FK+F6u6w==
-X-Google-Smtp-Source: ABdhPJwIEiPzWUmSnN/IgWCCz0AcpbNlwnqSyMLhTp4TCVTK0JlV1SdRxsJYUGOJKt5i6RKDh4hTxw==
-X-Received: by 2002:a05:6870:d68e:b0:e2:861:8b15 with SMTP id z14-20020a056870d68e00b000e208618b15mr8941436oap.156.1650388601641;
-        Tue, 19 Apr 2022 10:16:41 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id j72-20020a9d17ce000000b005e6b89f9f54sm5589996otj.32.2022.04.19.10.16.40
+        bh=vsh1+N3AHFl1INtReH0W0OLxuEQj6Zw6DbwHLNwXacE=;
+        b=zIGF5NXkktJYBrV8alm5bE97t02hw14nhHqbhTojGUFT0ltIxC1DmUi5XsvgF78o8p
+         hOi9UF03hEbiWguwzOPVWkW35JaHzs0ukqlc51Q/LvfVu8P1/2xezSxnpJoDFVc7EUHG
+         9xvsS03XL8cT7J5qVslxtbDeqO0TDVWt0l09VwRSKYfrTTNQs60T1tXnTENfEuDF67W1
+         doMnHDqRekLZ3KayXjtomuvKhThTbiKr3mIO7XPpw6KdZgkwTyIUnLyBYoDSaOSU1Fe8
+         B2F1DHguyH1Ncrs8Tc2+4zXpeTOMx7ZDKJOA+GS6x9EJ2JLp8monLP3B9bHLTZydJ2h2
+         J7sQ==
+X-Gm-Message-State: AOAM531ctP27o2S9BUUkHxwFYfJenDXlhrStvAxVB8tA4iJqKhtJgaqW
+        MdRA1fin/9PVLBz370excQ==
+X-Google-Smtp-Source: ABdhPJwZ4amMBF78Uj2HwtGidHVXq6uMihB5xsWXnDCbEN1qgpu+cOZ/oO2Kjw0LPTDblGdXyLBBYA==
+X-Received: by 2002:a05:6870:eaa5:b0:da:b3f:2b45 with SMTP id s37-20020a056870eaa500b000da0b3f2b45mr9151148oap.228.1650389498029;
+        Tue, 19 Apr 2022 10:31:38 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id v20-20020a056870e29400b000da4a0089c9sm5298243oad.27.2022.04.19.10.31.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 10:16:40 -0700 (PDT)
-Date:   Tue, 19 Apr 2022 12:16:39 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm8450: add cooling-maps to CPU
- trip points
-Message-ID: <Yl7udxBtyL0OeJUu@builder.lan>
-References: <20220410234458.1739279-1-dmitry.baryshkov@linaro.org>
- <20220410234458.1739279-4-dmitry.baryshkov@linaro.org>
+        Tue, 19 Apr 2022 10:31:37 -0700 (PDT)
+Received: (nullmailer pid 3011512 invoked by uid 1000);
+        Tue, 19 Apr 2022 17:31:36 -0000
+Date:   Tue, 19 Apr 2022 12:31:36 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] regulator: dt-bindings: qcom,rpmh: document
+ supplies per variant
+Message-ID: <Yl7x+LG9vdL3mcpC@robh.at.kernel.org>
+References: <20220412073123.27229-1-krzysztof.kozlowski@linaro.org>
+ <20220412073123.27229-2-krzysztof.kozlowski@linaro.org>
+ <YlhC5B+ZaNn9wUuB@robh.at.kernel.org>
+ <39b68e91-93cc-ad74-d064-a29ff01d60a6@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220410234458.1739279-4-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <39b68e91-93cc-ad74-d064-a29ff01d60a6@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 10 Apr 18:44 CDT 2022, Dmitry Baryshkov wrote:
-
-> Follow the lead of other Qualcomm platforms and add cooling maps for CPU
-> trip points. Handle three clusters separately, cooling cores 0-3 for
-> cpu0-3 trip points, cores 4-6 for cpu4-6 trip points and only cpu7 for
-> cpu7 trip points.
+On Tue, Apr 19, 2022 at 08:44:48AM +0200, Krzysztof Kozlowski wrote:
+> On 14/04/2022 17:51, Rob Herring wrote:
+> > On Tue, Apr 12, 2022 at 09:31:22AM +0200, Krzysztof Kozlowski wrote:
+> >> The RPMH regulator binding covers several devices with different
+> >> regulator supplies, so it uses patterns matching broad range of these
+> >> supplies.  This works fine but is not specific and might miss actual
+> >> mistakes when a wrong supply property is used for given variant.
+> >>
+> >> Describe the supplies depending on the compatible, using a defs-allOf
+> >> method.
+> >>
+> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >> ---
+> >>  .../regulator/qcom,rpmh-regulator.yaml        | 290 +++++++++++++++++-
+> >>  1 file changed, 276 insertions(+), 14 deletions(-)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+> >> index 842ccef691b8..773536fe37c7 100644
+> >> --- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+> >> +++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+> >> @@ -95,35 +95,297 @@ properties:
+> >>    vdd-rgb-supply:
+> >>      description: Input supply phandle of rgb.
+> >>  
+> >> -  vin-lvs-1-2-supply:
+> >> -    description: Input supply phandle of one or more regulators.
+> >> -
+> >> -  vdd-bob-supply:
+> >> -    description: BOB regulator parent supply phandle.
+> >> -
+> >>    bob:
+> >>      type: object
+> >>      $ref: "regulator.yaml#"
+> >>      description: BOB regulator node.
+> >>  
+> >>  patternProperties:
+> >> -  "^vdd-s([0-9]+)-supply$":
+> >> -    description: Input supply phandle(s) of one or more regulators.
+> >> -
+> >> -  "^vdd-(l[0-9]+[-]){1,5}supply$":
+> >> -    description: Input supply phandle(s) of one or more regulators.
+> >> -
+> >>    "^(smps|ldo|lvs)[0-9]+$":
+> >>      type: object
+> >>      $ref: "regulator.yaml#"
+> >>      description: smps/ldo regulator nodes(s).
+> >>  
+> >> -additionalProperties: false
+> >> -
+> >>  required:
+> >>    - compatible
+> >>    - qcom,pmic-id
+> >>  
+> >> +allOf:
+> >> +  - $ref: "#/$defs/pm6150"
+> >> +  - $ref: "#/$defs/pm6150l"
+> >> +  - $ref: "#/$defs/pm7325"
+> >> +  - $ref: "#/$defs/pm8005"
+> >> +  - $ref: "#/$defs/pm8009"
+> >> +  - $ref: "#/$defs/pm8150"
+> >> +  - $ref: "#/$defs/pm8150l"
+> >> +  - $ref: "#/$defs/pm8350"
+> >> +  - $ref: "#/$defs/pm8350c"
+> >> +  - $ref: "#/$defs/pm8450"
+> >> +  - $ref: "#/$defs/pm8998"
+> >> +  - $ref: "#/$defs/pmg1110"
+> >> +  - $ref: "#/$defs/pmi8998"
+> >> +  - $ref: "#/$defs/pmr735a"
+> >> +  - $ref: "#/$defs/pmx55"
+> >> +  - $ref: "#/$defs/pmx65"
+> >> +
+> >> +unevaluatedProperties: false
+> >> +
+> >> +$defs:
+> > 
+> > I'm not following on why you need $defs here rather than putting the 
+> > if/then schemas under the 'allOf'. $defs should primarily only be used 
+> > where it saves duplicating a schema 2 or more times. That could be the 
+> > case here if there's a case that's a subset of another case.
 > 
-
-In line with 52e3b2ca6f9d ("arm64: dts: qcom: sdm845: Remove cpufreq
-cooling devices for CPU thermal zones") I don't think we should have
-cooling-maps for platforms where LMh is already thermal throttling the
-CPU clusters.
-
-Picking the other two patches.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 191 +++++++++++++++++++++++++++
->  1 file changed, 191 insertions(+)
+> The allOf+defs is a workaround for schema behavior. The entire approach
+> if defining properties in "if:then:" works only with
+> unevaluatedProperties, not with additionalProperties. However
+> unevaluatedProperties require to reference other schema, which I do not
+> do here. I don't have other schema.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 4f3c7e7d2855..dd8ef4438fd0 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -1651,6 +1651,21 @@ cpu4_top_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu4_top_alert0>;
-> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu4_top_alert1>;
-> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		cpu4-bottom-thermal {
-> @@ -1677,6 +1692,21 @@ cpu4_bottom_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu4_bottom_alert0>;
-> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu4_bottom_alert1>;
-> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		cpu5-top-thermal {
-> @@ -1703,6 +1733,21 @@ cpu5_top_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu5_top_alert0>;
-> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu5_top_alert1>;
-> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		cpu5-bottom-thermal {
-> @@ -1729,6 +1774,21 @@ cpu5_bottom_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu5_bottom_alert0>;
-> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu5_bottom_alert1>;
-> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		cpu6-top-thermal {
-> @@ -1755,6 +1815,21 @@ cpu6_top_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu6_top_alert0>;
-> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu6_top_alert1>;
-> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		cpu6-bottom-thermal {
-> @@ -1781,6 +1856,21 @@ cpu6_bottom_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu6_bottom_alert0>;
-> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu6_bottom_alert1>;
-> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		cpu7-top-thermal {
-> @@ -1807,6 +1897,17 @@ cpu7_top_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu7_top_alert0>;
-> +					cooling-device = <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu7_top_alert1>;
-> +					cooling-device = <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		cpu7-middle-thermal {
-> @@ -1833,6 +1934,17 @@ cpu7_middle_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu7_middle_alert0>;
-> +					cooling-device = <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu7_middle_alert1>;
-> +					cooling-device = <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		cpu7-bottom-thermal {
-> @@ -1859,6 +1971,17 @@ cpu7_bottom_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu7_bottom_alert0>;
-> +					cooling-device = <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu7_bottom_alert1>;
-> +					cooling-device = <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		gpu-top-thermal {
-> @@ -1969,6 +2092,23 @@ cpu0_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu0_alert0>;
-> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu0_alert1>;
-> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		cpu1-thermal {
-> @@ -1995,6 +2135,23 @@ cpu1_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu1_alert0>;
-> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu1_alert1>;
-> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		cpu2-thermal {
-> @@ -2021,6 +2178,23 @@ cpu2_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu2_alert0>;
-> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu2_alert1>;
-> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		cpu3-thermal {
-> @@ -2047,6 +2221,23 @@ cpu3_crit: cpu_crit {
->  					type = "critical";
->  				};
->  			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&cpu3_alert0>;
-> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +				map1 {
-> +					trip = <&cpu3_alert1>;
-> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> +				};
-> +			};
->  		};
->  
->  		cdsp0-thermal {
-> -- 
-> 2.35.1
-> 
+> allOf+def has references tricking schema to accept unevaluatedProperties.
+
+I'm going to relax the meta-schema instead.
+
+Rob
