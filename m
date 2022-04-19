@@ -2,57 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF436507CD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 00:49:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F102F507D66
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 01:55:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347075AbiDSWv4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 18:51:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45500 "EHLO
+        id S1358541AbiDSX5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 19:57:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231893AbiDSWvz (ORCPT
+        with ESMTP id S1357843AbiDSX5f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 18:51:55 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 408632F3AB;
-        Tue, 19 Apr 2022 15:49:12 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id EEFF8B81CAD;
-        Tue, 19 Apr 2022 22:49:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC806C385A5;
-        Tue, 19 Apr 2022 22:49:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650408549;
-        bh=ov3PvKKki13/1eLwKdiLOM8jKV1zr/37HvkGq3CI5lc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jB7NESt8bRIOjqQiiyPv3VQ3QgrjLwswpciitEyrfWoW76xgkQuXDab5icLPt65nT
-         6K4B20FDkS+JcmiuD5uwLjez6OPBgutP7OMWqpPtLvdEPCeWuOQn/o8P0WR0IxvYyS
-         g3XQDyUNjHTn0wulppFb1hUS1i19ZfAHLmQ7l8G5l0eu6dn4Gue6tPUfEikgeQuYeb
-         QP7C9/dM/46rNMSBWy82BJIFXkoK3egu0/QU6jbr1QtVIUUOVz+FKaOXGHCXJKY315
-         +xz/YiB5X3z2ZcH+RI+me9KAPkV7t9kjJmJH2P3l6J8BiSrxoNorb5qOyLM6jNpHWz
-         i3jYmWJlr/Dtw==
-Date:   Tue, 19 Apr 2022 23:49:04 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 19 Apr 2022 19:57:35 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63CF5E24
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 16:54:50 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id x17so32104055lfa.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 16:54:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bvNMSN3pjje8DO8VKt+U/tOaBPxKcUXo89mN7XSq4VA=;
+        b=nWz2J/9FyHAu9c4LAOFJi56mLrG3hncYMeMG7WQmK9BCcR48yGQnhsD7fmJsGOSF2+
+         Z/91Q1S5n+B9GILgoq1zRZZkO2ZNEolOvDS1XWOx5nPGoYaGpHZgppET/Mt5pjLExr1V
+         h+CvRplZpiGqBAtFiXPT4WhhBcDCj/PwbKpMb25AwQhBIvYhvB7GhawJEATPnszn0pWu
+         DmtB7PI5umXOsFnGgvTAtPoQ5IPBqwdR2S1FwsNag9INcST/lgFInL/xDqzdfdRBWlCF
+         zqRs6hVI9E7U/YQakjfz93ExlevzIU/mQb6SGe8gVTsHWUnDPNQxB5YymcgcrvFKCMvq
+         VwrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bvNMSN3pjje8DO8VKt+U/tOaBPxKcUXo89mN7XSq4VA=;
+        b=7ZZzJOxUMeWDxUl2vqpRl4r+FiRxr3XJFyBNx9SIjHcC2DKF1Q6mTbe5Rt/Byk9OrA
+         xSoeIj9SM8WnMWvGBU4BMyIKLkEA+8MADme4Oo5/vW974B5cEjXQnz4Hsj4UPnP12bpL
+         5fT74p4LmNrwXF8aPUh5Pj7Hd0oLH0C59yiNfxbPLlTiOlS95MrJuGvuvivmEa2Xj0B/
+         sobnf2XUywJT9j8p27+pMQNPQBCXaiVmhaTID8B3W3O/BuLAOpn68e8VsHf/QZ++VszO
+         mt3OkF0ZcE5eUGbyaPphOA6m7D233Ck4mIcgqAYRVJhRh1+Y7nQz45vJWdqSHsMdIFdu
+         tz7A==
+X-Gm-Message-State: AOAM533CTXlejAIkFjSH0/qbccaIfdJlsaS2ptUSaR0PCUyIX/MRaS4m
+        Ae1M36gPgo8WBqdK7k2nP7Pds/UzMdSQUA==
+X-Google-Smtp-Source: ABdhPJx7XT4j1TOlMM92aT+5eWOjZGo3AhiUgM2QzsVkznUoE4H9dn+nAStfZOGFuIvdIa0nYUngsA==
+X-Received: by 2002:a05:6512:e87:b0:44a:5117:2b2b with SMTP id bi7-20020a0565120e8700b0044a51172b2bmr13043804lfb.275.1650412488676;
+        Tue, 19 Apr 2022 16:54:48 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id v9-20020a2e7a09000000b0024dbdd8e297sm647725ljc.19.2022.04.19.16.54.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Apr 2022 16:54:48 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH] regulator: dt-bindings: qcom,rpmh: update maintainers
-Message-ID: <Yl88YM+a2atNcbPH@sirena.org.uk>
-References: <20220411110253.231745-1-krzysztof.kozlowski@linaro.org>
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        freedreno@lists.freedesktop.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: [PATCH] clk: qcom: clk-rcg2: fix gfx3d frequency calculation
+Date:   Wed, 20 Apr 2022 02:54:47 +0300
+Message-Id: <20220419235447.1586192-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="TUNYajfTzsbIEEGv"
-Content-Disposition: inline
-In-Reply-To: <20220411110253.231745-1-krzysztof.kozlowski@linaro.org>
-X-Cookie: That's what she said.
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -61,33 +74,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Since the commit 948fb0969eae ("clk: Always clamp the rounded rate"),
+the clk_core_determine_round_nolock() would clamp the requested rate
+between min and max rates from the rate request. Normally these fields
+would be filled by clk_core_get_boundaries() called from
+clk_round_rate().
 
---TUNYajfTzsbIEEGv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+However clk_gfx3d_determine_rate() uses a manually crafted rate request,
+which did not have these fields filled. Thus the requested frequency
+would be clamped to 0, resulting in weird frequencies being requested
+from the hardware.
 
-On Mon, Apr 11, 2022 at 01:02:53PM +0200, Krzysztof Kozlowski wrote:
+Fix this by filling min_rate and max_rate to the values valid for the
+respective PLLs (0 and ULONG_MAX).
 
->  maintainers:
-> -  - David Collins <collinsd@codeaurora.org>
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 948fb0969eae ("clk: Always clamp the rounded rate")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/clk/qcom/clk-rcg2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Bjorn, is this OK for you?
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index f675fd969c4d..e9c357309fd9 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -818,7 +818,7 @@ EXPORT_SYMBOL_GPL(clk_pixel_ops);
+ static int clk_gfx3d_determine_rate(struct clk_hw *hw,
+ 				    struct clk_rate_request *req)
+ {
+-	struct clk_rate_request parent_req = { };
++	struct clk_rate_request parent_req = { .min_rate = 0, .max_rate = ULONG_MAX };
+ 	struct clk_rcg2_gfx3d *cgfx = to_clk_rcg2_gfx3d(hw);
+ 	struct clk_hw *xo, *p0, *p1, *p2;
+ 	unsigned long p0_rate;
+-- 
+2.35.1
 
---TUNYajfTzsbIEEGv
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmJfPF8ACgkQJNaLcl1U
-h9CTSAf/W7DFE1FxCRuSyZJvjTGWX07rpEcY35GPS9uQdbl64+xHBiCYGDVUhpY5
-CGey2Uh443T2YIOpjJbspIIoidcO7xj7SiHmuYu8u+eEqg4cvWALCNuJQ+QVNBrm
-yLGrp211kbnlce2rfQEqym8+LdmiftyBZVT6j9Qs6rIuRhG40FcgTecs9wDk2d35
-3G6Wg3rfK4fhoxXGY7hwTMGsz1AZlgnKbmFNuHHhZT72ASgNOv31t+m7R5fnakCA
-I6HwtQFJW3QWDIdytpTdSPuHBlbQzDyLwqAy6YBl00P/7HL5iWWZ3E145i2ktt4P
-/AAWJuFTjcB8qduil3b/oq8ASnv41w==
-=Mjhi
------END PGP SIGNATURE-----
-
---TUNYajfTzsbIEEGv--
