@@ -2,67 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E63C506D24
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 15:09:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DC92506D56
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 15:19:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351597AbiDSNHI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 09:07:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60936 "EHLO
+        id S1343783AbiDSNVw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 09:21:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351021AbiDSNHH (ORCPT
+        with ESMTP id S238617AbiDSNVv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 09:07:07 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EF42377F3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 06:04:25 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id r18so20476476ljp.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 06:04:25 -0700 (PDT)
+        Tue, 19 Apr 2022 09:21:51 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80391344FC;
+        Tue, 19 Apr 2022 06:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=51y0snB2GUgkqHni5/VdYz/z1Uks4JZTasXp07lWCwc=;
-        b=krgPmScwiYNT2fnOQoG+U/F5ZqZHDi1ZExMVupJiEUYyWrTMOMLk95Idi1CaQ+m8Vl
-         Cq6zd8hZJK+ilNjf5+y7WNiaJL5G7dHbxn8eWRnmOi9VLfDEWvTeb28BPd+x5sOHtkqt
-         MxksRdXGrrcsZd1ZJ0l23jw0M0uFjB09G2SSTdYA7OvnviTy3Gybljymww0kwr/gM4WT
-         BP5VccwpA9oB3qzvRuia5DxEz6Ca4GMKJRU1voaGuaI91fK/xXYW72MaYXnbJTzlOI18
-         UznWHujLlK+5f4Gw5g3xV9gbIWiVCucOyEGIATMJ0ofhcvgAeXsS/yfxFcJ8SsgCWnP5
-         OjGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=51y0snB2GUgkqHni5/VdYz/z1Uks4JZTasXp07lWCwc=;
-        b=XsHUghtuhwwgDdxrwRDF9bnv1w/2NBzYnOcLnbiVEpVJwK/kuF0to0mjwJbehONoHq
-         LaUbYudxc7s3PUNsg/fiNrkSQiLWEY3XBmNPr8LNLbqGxtOxN8opCsMbk/yTOc/bkRVB
-         H6JP1nY2AVFjfp4FeUyR7XTAAeE3vD8cvTfxx07KpZjRT011HXPMKa9kJ44NvXyzdP30
-         57WqMxXe42akjQdporWXK2QyJHtLG/NToDMJYazDI3vHKWmfpWHpHz/dMoAuBGjep7vj
-         M1hH0Ke9uhm04wc9BJw7rg7jpC8ln2a46b7LOQ6n38krkbHCIkL7mCHUs5zYiswzLe2/
-         P7kg==
-X-Gm-Message-State: AOAM532nJVHSO5Ir48rRjV5Ouykpr4azIt2FMXC6+Q/5TF8NRUwkuqxS
-        YNSMoo76xmxSHoC1Dr/O1AcwPg==
-X-Google-Smtp-Source: ABdhPJxvXRNA7D4IGqYmR84etmLXxAFjgH3awFAVSeFJZs7nF3oksNfIfkvKk0MYPRquOpK9ov50xw==
-X-Received: by 2002:a05:651c:103a:b0:24d:b8b1:b333 with SMTP id w26-20020a05651c103a00b0024db8b1b333mr6957160ljm.460.1650373463640;
-        Tue, 19 Apr 2022 06:04:23 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h28-20020a056512055c00b0046bb80943a9sm1508810lfl.277.2022.04.19.06.04.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 06:04:23 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Robin Murphy <robin.murphy@arm.com>
-Subject: [PATCH] drm/msm: Revert "drm/msm: Stop using iommu_present()"
-Date:   Tue, 19 Apr 2022 16:04:22 +0300
-Message-Id: <20220419130422.1033699-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650374349; x=1681910349;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=FEwok1lzjt/HO93wIkHzSCWrGpT3TbisaBs2ZCCYLc0=;
+  b=x67D8AFHMemndeCBOdJuHzopTptr1WH+fOyvUfBDiIGp946j27+aQ6x5
+   IPlny3LTJoGREEhCXlz8IsxAeeH3pYeh9TAc1wIC9fs5m1GuZu8r19TaY
+   IaqXitwyP5AZ3Zc92X45pvAk9ZSTXjz82Vsd4vck9Hrrhy5HEfHBmyL1z
+   k=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 19 Apr 2022 06:19:08 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 06:19:07 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 19 Apr 2022 06:19:07 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 19 Apr 2022 06:19:01 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
+Subject: [PATCH v2] ASoC: qcom: SC7280: Update machine driver startup, shutdown callbacks
+Date:   Tue, 19 Apr 2022 18:48:49 +0530
+Message-ID: <1650374329-7279-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -73,50 +66,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This reverts commit e2a88eabb02410267519b838fb9b79f5206769be. The commit
-in question makes msm_use_mmu() check whether the DRM 'component master'
-device is translated by the IOMMU. At this moment it is the 'mdss'
-device.
-However on platforms using the MDP5 driver (e.g. MSM8916/APQ8016,
-MSM8996/APQ8096) it's the mdp5 device, which has the iommus property
-(and thus is "translated by the IOMMU"). This results in these devices
-being broken with the following lines in the dmesg.
+Update machine driver startup, shutdown callback functions to avoid
+sound card registration failure on other platforms.
+Without this change, platforms with WCD codec is failing to register
+sound card.
 
-[drm] Initialized msm 1.9.0 20130625 for 1a00000.mdss on minor 0
-msm 1a00000.mdss: [drm:adreno_request_fw] loaded qcom/a300_pm4.fw from new location
-msm 1a00000.mdss: [drm:adreno_request_fw] loaded qcom/a300_pfp.fw from new location
-msm 1a00000.mdss: [drm:get_pages] *ERROR* could not get pages: -28
-msm 1a00000.mdss: could not allocate stolen bo
-msm 1a00000.mdss: [drm:get_pages] *ERROR* could not get pages: -28
-msm 1a00000.mdss: [drm:msm_alloc_stolen_fb] *ERROR* failed to allocate buffer object
-msm 1a00000.mdss: [drm:msm_fbdev_create] *ERROR* failed to allocate fb
+Fixes: c5198db82d4c ("ASoC: qcom: Add driver support for ALC5682I-VS")
 
-Getting the mdp5 device pointer from this function is not that easy at
-this moment. Thus this patch is reverted till the MDSS rework [1] lands.
-It will make the mdp5/dpu1 device component master and the check will be
-legit.
-
-[1] https://patchwork.freedesktop.org/series/98525/
-
-Fixes: e2a88eabb024 ("drm/msm: Stop using iommu_present()")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 ---
- drivers/gpu/drm/msm/msm_drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes Since V1:
+   -- Update swith case in startup, shutdown callbacks for handling all dai id's
+   -- Update commit message and add Fixes tag
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index b6702b0fafcb..e2b5307b2360 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -263,7 +263,7 @@ bool msm_use_mmu(struct drm_device *dev)
- 	struct msm_drm_private *priv = dev->dev_private;
- 
- 	/* a2xx comes with its own MMU */
--	return priv->is_a2xx || device_iommu_mapped(dev->dev);
-+	return priv->is_a2xx || iommu_present(&platform_bus_type);
+ sound/soc/qcom/sc7280.c | 14 +-------------
+ 1 file changed, 1 insertion(+), 13 deletions(-)
+
+diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
+index 4ef4034..834c081 100644
+--- a/sound/soc/qcom/sc7280.c
++++ b/sound/soc/qcom/sc7280.c
+@@ -291,13 +291,7 @@ static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
+ 					       SNDRV_PCM_STREAM_PLAYBACK);
+ 		}
+ 		break;
+-	case MI2S_SECONDARY:
+-		break;
+-	case LPASS_DP_RX:
+-		break;
+ 	default:
+-		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
+-			cpu_dai->id);
+ 		break;
+ 	}
  }
- 
- static int msm_init_vram(struct drm_device *dev)
+@@ -312,14 +306,8 @@ static int sc7280_snd_startup(struct snd_pcm_substream *substream)
+ 	case MI2S_PRIMARY:
+ 		ret = sc7280_rt5682_init(rtd);
+ 		break;
+-	case MI2S_SECONDARY:
+-		break;
+-	case LPASS_DP_RX:
+-		break;
+ 	default:
+-		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
+-			cpu_dai->id);
+-		return -EINVAL;
++		break;
+ 	}
+ 	return ret;
+ }
 -- 
-2.35.1
+2.7.4
 
