@@ -2,74 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 846D85066FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 10:32:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EA5D506718
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 10:44:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350028AbiDSIfY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 04:35:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35736 "EHLO
+        id S233019AbiDSIrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 04:47:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350029AbiDSIfX (ORCPT
+        with ESMTP id S1344465AbiDSIrK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 04:35:23 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 657B113D2C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 01:32:40 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id ay36-20020a05600c1e2400b0038ebc885115so621648wmb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 01:32:40 -0700 (PDT)
+        Tue, 19 Apr 2022 04:47:10 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 849E421250
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 01:44:26 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id bv19so31427855ejb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 01:44:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MHvs75OIdBcW18yBO72Em+wYmTcQRlmIYGoMfGShO9k=;
-        b=e8aQaurBWDlSp7s0M5kfav7M7rW8d1x5lxD7JtvOOy55WVtz56crt8Oudr7I+Zp/AM
-         X7WvU2brUonFdV3xHXtlSE6Twe9EnbX2q/p1YPArL+VDrTs+0/sJPYAuJRZug07jBU5U
-         dRGnIu6Xrq7v7J1O/Rku506iKJbcXD07p1k25KF9hItPzS9AGk+HDhLB3ELsOjflHnyJ
-         uDLpD3Lp5FyTGXpPUPjTTbG5rl+hEwxQTV4kTOoLsuRfln8VMAlNjoIVwar4zyViPhH3
-         XCOQRl7IM2CEl8iTmKUl0+BkH49WkYZ60gYLXQImQ1jcWz+j7yTmQbO63d9mJCGpN9k7
-         1OMA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=HrN9VciOvo2sc5NJIuqyZBPpfFZgYTc0TLFG16RyFkM=;
+        b=IElnTneLI0bfJg3GlhBDl03tsabIYpTQ1rdHHYDzm+y9X+cW9vZsvI1+9AEy/xmm45
+         0LGL1Mbp5MHXoR36lTew7pOWcnkfYRzC6j4fl4Nhnmq7ewCyDoUB81hmq4zcTNZOsZfm
+         ucZ5nvME2xR9YO/YzfJIypZ8gj1Thq7FjiqjiZIRwhxDrSDumDV+XrV+xq4e29j2xvzM
+         vAPj8K9yGzd4IuuPySK9CC12JCLspYDQvVGF370rqEU0yqhQ256wd3te8SRHIlQZCo21
+         hb6MvCR0yorZNqbZkHP6SO9YVS/OHf6HHhJibWeauwxtTDVeMfALpopTCM66UTdORSXi
+         a2mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MHvs75OIdBcW18yBO72Em+wYmTcQRlmIYGoMfGShO9k=;
-        b=WTTy41BgbO22HQD7uXOJX8UvI2d9kY7Dl17agjB+Zv8E8LM4+3Lmhy5EW1sQI/3rSF
-         d09vRu4fB4N5UqWUeFIj8TCu/CmLlP3Nbtaogld1J+bkRk64fRkdp5Qi5PsgF0VPLMq2
-         BKRXbKgqSCCKtSoLcQvId6seaRTiP84ZaJrZsDHYNCyFtca60VZcNleOpm9USw+qfkLu
-         j9MZQMrvimxgFX/BJUc1CVZZ7/7WLLi0iYDKQizdHzCyDKzjMdJHA0zRefYIfEygiodJ
-         HxrQSD2d8iZi7KaBOXTR9p2fFiv9vNzgDQlta2AXPMkRY771TEvMc4cBuQmRtagBhZ6C
-         CQYg==
-X-Gm-Message-State: AOAM530UO00Vz1Xg3b35Vvx7KN6Twcm1kKHtARPMVisMF48D0DbBHrC5
-        q6ZYPmZSGb7S+fOst73jP5EkIgSIVur7CHAyb518Yg==
-X-Google-Smtp-Source: ABdhPJzQhWxnwUMFOcpQPCWc/3KSDPEv7os9QOAeC3syMn4xsJmdbG24HL6lPci1vlSXnS5HChzrZVbdum1QfhR1nXU=
-X-Received: by 2002:a7b:cc13:0:b0:38e:67e3:db47 with SMTP id
- f19-20020a7bcc13000000b0038e67e3db47mr19059920wmh.133.1650357158957; Tue, 19
- Apr 2022 01:32:38 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=HrN9VciOvo2sc5NJIuqyZBPpfFZgYTc0TLFG16RyFkM=;
+        b=RBNhpZXhirbZAB2Tf2QV9o18fq+B5RFrZ9AmrcYxnacNX/NggTJaZyvqrEoQrzx/Au
+         9olZ/mELvuIhiIK65LNM3exduB6LgdyMWdipBy3g7CcFdhrdNB2aPAlMy1XmxT9qG0Xl
+         vqq7p5R4mx3v0xpWqolM01Fz6V1fMgQt7sBrcjDFktgRDPn9wkxGl5n9rpb3iQls04YN
+         H9A74POVMKEg9P7mVqOHZu9lbn4cMmxazLR/SD+4+wLw9hyLlHOHFw1huTXVJMyWNLxt
+         YiMT4xWz77jmkwBISOt0hDJ75y+nPeIMoyOhnL4V+K322ndmMlRuyGqTQr228c1N/Tvz
+         l/yg==
+X-Gm-Message-State: AOAM531mRz1KIaZaAHZuDfwaYa9033aJXzMYfnF1aA+adTZl2H6CD9lg
+        6+UVyJtifl+FaSFpHTSDLkX7hg==
+X-Google-Smtp-Source: ABdhPJwkDYHLrEVt9DCzHMZ8WzRAlgm3uabio32FY7R2bwJv+YypvefSQnDPWeKnwNalpiz531d4KQ==
+X-Received: by 2002:a17:907:9713:b0:6ef:a8a7:14ce with SMTP id jg19-20020a170907971300b006efa8a714cemr8137060ejc.534.1650357865036;
+        Tue, 19 Apr 2022 01:44:25 -0700 (PDT)
+Received: from [192.168.0.217] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id g15-20020a170906520f00b006cd07ba40absm5410044ejm.160.2022.04.19.01.44.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Apr 2022 01:44:24 -0700 (PDT)
+Message-ID: <c7db1dcd-19df-eb94-a49c-4ab75abcf4af@linaro.org>
+Date:   Tue, 19 Apr 2022 10:44:23 +0200
 MIME-Version: 1.0
-References: <20220412125035.40312-1-quic_jinlmao@quicinc.com> <20220412125035.40312-9-quic_jinlmao@quicinc.com>
-In-Reply-To: <20220412125035.40312-9-quic_jinlmao@quicinc.com>
-From:   Mike Leach <mike.leach@linaro.org>
-Date:   Tue, 19 Apr 2022 09:32:37 +0100
-Message-ID: <CAJ9a7VjgHwPcLFZdApPcLdsOZ_s=nkRXar5hqrFtDscrc0CqBw@mail.gmail.com>
-Subject: Re: [PATCH v5 08/10] dt-bindings: arm: Adds CoreSight TPDA hardware definitions
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v1 2/4] arm64: dts: Add msm8939 SoC
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org, krzk+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     shawn.guo@linaro.org, jun.nie@linaro.org, benl@squareup.com,
+        jwillcox@squareup.com, jgates@squareup.com, mchen@squareup.com,
+        zac@squareup.com, Leo Yan <leo.yan@linaro.org>
+References: <20220419010903.3109514-1-bryan.odonoghue@linaro.org>
+ <20220419010903.3109514-3-bryan.odonoghue@linaro.org>
+ <737d44a9-56ba-846e-24ad-36b2da52d2d7@linaro.org>
+ <f3d50cd9-6b41-a5df-0ccb-b4d02ae5c66a@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <f3d50cd9-6b41-a5df-0ccb-b4d02ae5c66a@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,161 +80,110 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+On 19/04/2022 10:30, Bryan O'Donoghue wrote:
+> On 19/04/2022 08:33, Krzysztof Kozlowski wrote:
+>> tx/rx. Please rebase on recent linux-next and run `make dtbs_check` and
+>> fix all the errors.
+> 
+> I did do that, it didn't throw up any errors.
+> 
+> Must have done it wrong
+> 
+> Thanks for the review
 
-On Tue, 12 Apr 2022 at 13:51, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
->
-> Adds new coresight-tpda.yaml file describing the bindings required
-> to define tpda in the device trees.
->
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  .../bindings/arm/coresight-tpda.yaml          | 119 ++++++++++++++++++
->  1 file changed, 119 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/coresight-tpda.yaml
->
-> diff --git a/Documentation/devicetree/bindings/arm/coresight-tpda.yaml b/Documentation/devicetree/bindings/arm/coresight-tpda.yaml
-> new file mode 100644
-> index 000000000000..2c79de0a7928
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/coresight-tpda.yaml
-> @@ -0,0 +1,119 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/coresight-tpda.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Trace, Profiling and Diagnostics Aggregator - TPDA
-> +
-> +description: |
-> +  TPDAs are responsible for packetization and timestamping of data sets
-> +  utilizing the MIPI STPv2 packet protocol. Pulling data sets from one or
-> +  more attached TPDM and pushing the resultant (packetized) data out a
-> +  master ATB interface. Performing an arbitrated ATB interleaving (funneling)
-> +  task for free-flowing data from TPDM (i.e. CMB and DSB data set flows).
-> +
-> +maintainers:
-> +  - Suzuki K Poulose <suzuki.poulose@arm.com>
-> +  - Mathieu Poirier <mathieu.poirier@linaro.org>
-> +
 
-as mentioned in patch 03 - these should be bindings maintainers.
+There are many, many issues:
 
-with the above change
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: cpu@100: compatible:
+['arm,cortex-a53', 'arm,armv8'] is too long
 
-Reviewed by: Mike Leach <mike.leach@linaro.org>
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: idle-states: 'spc' does not
+match any of the regexes: '^(cpu|cluster)-', 'pinctrl-[0-9]+'
+
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: gpu-opp-table: $nodename:0:
+'gpu-opp-table' does not match '^opp-table(-[a-z0-9]+)?$'
 
 
 
-
-> +properties:
-> +  $nodename:
-> +    pattern: "^tpda(@[0-9a-f]+)$"
-> +  compatible:
-> +    items:
-> +      - const: qcom,coresight-tpda
-> +      - const: arm,primecell
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    items:
-> +      - const: apb_pclk
-> +
-> +  in-ports:
-> +    type: object
-> +    description: |
-> +      Input connections from TPDM to TPDA
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +
-> +    properties:
-> +      '#address-cells':
-> +        const: 1
-> +
-> +      '#size-cells':
-> +        const: 0
-> +
-> +    patternProperties:
-> +      "^port@[0-9a-f]+$":
-> +        type: object
-> +        required:
-> +          - reg
-> +
-> +    required:
-> +      - '#size-cells'
-> +      - '#address-cells'
-> +
-> +  out-ports:
-> +    type: object
-> +    description: |
-> +      Output connections from the TPDA to legacy CoreSight trace bus.
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +
-> +    properties:
-> +     port:
-> +       description:
-> +         Output connection from the TPDA to legacy CoreSight Trace bus.
-> +       $ref: /schemas/graph.yaml#/properties/port
-> +
-> +required:
-> +    - compatible
-> +    - reg
-> +    - clocks
-> +    - clock-names
-> +    - in-ports
-> +    - out-ports
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  # minimum tpda definition.
-> +  - |
-> +    tpda@6004000 {
-> +       compatible = "qcom,coresight-tpda", "arm,primecell";
-> +       reg = <0x6004000 0x1000>;
-> +
-> +       qcom,tpda-atid = <65>;
-> +
-> +       clocks = <&aoss_qmp>;
-> +       clock-names = "apb_pclk";
-> +
-> +       in-ports {
-> +         #address-cells = <1>;
-> +         #size-cells = <0>;
-> +
-> +        port@0 {
-> +          reg = <0>;
-> +          tpda_qdss_0_in_tpdm_dcc: endpoint {
-> +            remote-endpoint =
-> +              <&tpdm_dcc_out_tpda_qdss_0>;
-> +            };
-> +        };
-> +      };
-> +
-> +       out-ports {
-> +         port {
-> +                 tpda_qdss_out_funnel_in0: endpoint {
-> +                    remote-endpoint =
-> +                    <&funnel_in0_in_tpda_qdss>;
-> +                  };
-> +          };
-> +       };
-> +    };
-> +
-> +...
-> --
-> 2.17.1
->
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: thermal-zones:
+'venus_camera-thermal' does not match any of the regexes:
+'^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$', 'pinctrl-[0-9]+'
 
 
---
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: soc: hwlock: {'compatible':
+['qcom,tcsr-mutex'], 'syscon': [[53, 0, 4096]], '#hwlock-cells': [[1]],
+'phandle': [[48]]} should not be valid under {'type': 'object'}
+
+
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: soc: codec: {'compatible':
+['qcom,msm8916-wcd-digital-codec'], 'reg': [[124895232, 1024]],
+'clocks': [[49, 154], [49, 159]], 'clock-names': ['ahbix-clk', 'mclk'],
+'#sound-dai-cells': [[1]]} should not be valid under {'type': 'object'}
+
+
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: qfprom_cpr@58000: compatible:
+['qcom,qfprom'] is too short
+
+
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: power-controller@b1b9000:
+'#power-domain-cells' is a required property
+
+
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb:0:0: /soc/syscon@1937000: failed
+to match any schema with compatible: ['qcom,tcsr-msm8916', 'syscon']
+
+
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: hwlock: 'reg' is a required
+property
+
+
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: memory@60000: $nodename:0:
+'memory@60000' does not match '^sram(@.*)?'
+
+
+
+And finally:
+
+
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: serial@78af000: dma-names:0:
+'tx' was expected
+
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/serial/qcom,msm-uartdm.yaml
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: serial@78af000: dma-names:1:
+'rx' was expected
+
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/serial/qcom,msm-uartdm.yaml
+
+
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: spi@78b5000: dma-names:0: 'tx'
+was expected
+
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/spi/qcom,spi-qup.yaml
+
+arch/arm64/boot/dts/qcom/apq8039-t2.dtb: spi@78b5000: dma-names:1: 'rx'
+was expected
+
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/spi/qcom,spi-qup.yaml
+
+
+I did not list here all needing fixes. Some might be skipped, but most
+should be fixed.
+
+Best regards,
+Krzysztof
