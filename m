@@ -2,69 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5421F507C0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 23:45:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD863507C2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 23:51:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235831AbiDSVsc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 17:48:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41538 "EHLO
+        id S1355017AbiDSVye (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 17:54:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230186AbiDSVsc (ORCPT
+        with ESMTP id S1350809AbiDSVyd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 17:48:32 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A6193FD8F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 14:45:43 -0700 (PDT)
+        Tue, 19 Apr 2022 17:54:33 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DDD53C49B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 14:51:49 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id t15so76252oie.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 14:51:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650404743; x=1681940743;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=gw0iGZByL3fO5YsgmcD1S3iUEmEvHtG6m+MeOjmAdsQ=;
-  b=mneHLBIOxazGRC0zTt8c+qP8o79hrSeSZ1sim6LcsYVBF9KxBngB4JVk
-   BYRYnZPbDljejQyi1mLPnHqGptdKJkj1NZZSfSyEn8UJdJFTkcSwmy2t3
-   /X+LMr3fWbXtQw8FOZvE9hhKPggfPWQ9qgL9coYylzLz/5d+1Tmjpc7PO
-   w=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 19 Apr 2022 14:45:43 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 14:45:42 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 19 Apr 2022 14:45:42 -0700
-Received: from [10.111.175.117] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 19 Apr
- 2022 14:45:40 -0700
-Message-ID: <609d2dd1-ec25-c0ce-6396-856c4d2660b2@quicinc.com>
-Date:   Tue, 19 Apr 2022 14:45:37 -0700
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=W+ceGgRR9zvwWmU1mtTfUVYRnyt1qpRV5SmsSw2sDBA=;
+        b=Q+af+xzsDFwSor0xAYNzh9AJT88R/P1yQNazf6uwd1Rtl+HJJbQeOLC9jGFQrPCJZG
+         n5U1DYLFx8ndTzauAH4LmADNrnE2/Az3wycBp1mpPLXjijpLDwy5yUtp9Mz+iQZ95NIN
+         P12R8uSbkkL2T7C+Gy0IkdwPksu/cRceKU+ir0fez65bOBXqJN9EfTqgYzAOu/ePwxjP
+         hzK+m4GDtnODkU9N2Kc3aWq6jUtSyYPMIMgTdcNmvea36uJz8ibcYbJpaszRuaaSgcrf
+         07JJP4ibUqoCdFleXmJIKt45auXCzpXv9yfx3GThrhPH5MlWhU3pv4ZRIRWFxT9F6v1K
+         hbDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=W+ceGgRR9zvwWmU1mtTfUVYRnyt1qpRV5SmsSw2sDBA=;
+        b=cCDPTmXWKP+YiVf1+5mwQ6aQRrU0oHop/Twl2j+iMiCJhO+QaFr9V6ynwMaW/ZsCcS
+         xM6yGc9y0yTRBFY/zskEGTRtW3rO+FSjWbyI2rhIXYA4uOKinJoSiPU/I4Gm3Uq0RJIo
+         DSrRIJpN89VctKap3InIgM1wa/k+yYzVbvMlto6mfWFosYAw8z7e2XmDo7tm69Sxa5km
+         ovdZAYeQA9VYUmuDACDSpcV9Ojbt7NRgVgcF/m17eiqR8YwV8yta1Q0akfjt6CGIsdtd
+         YCS6OrWsTmzeT/eDNw2FUpQy2OaiFBIPrwNJvNPTvMJq0/9aYF1kJ9tsI8vlbg7xCz9J
+         T+4A==
+X-Gm-Message-State: AOAM530PvmRU1t7ZG+iSBkXQcfts45owPET0xYj84/QKL4P8jFsuQG3z
+        6yHDBnaGyDV5mj0c/Rz1ZWm0TQPnlUjMmt8k
+X-Google-Smtp-Source: ABdhPJzvvmK1GDuA2/E6+cgyylCSq27IUoOJiC38CXVKFktMRKfPV/+nEQLAFY6j7CSQISgw0z5esA==
+X-Received: by 2002:a05:6808:13d2:b0:322:73bd:400e with SMTP id d18-20020a05680813d200b0032273bd400emr291467oiw.97.1650405108711;
+        Tue, 19 Apr 2022 14:51:48 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id pi9-20020a0568704c8900b000e58cd8146csm4929408oab.34.2022.04.19.14.51.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Apr 2022 14:51:48 -0700 (PDT)
+Date:   Tue, 19 Apr 2022 16:51:46 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        shawn.guo@linaro.org, jun.nie@linaro.org, benl@squareup.com,
+        jwillcox@squareup.com, jgates@squareup.com, mchen@squareup.com,
+        zac@squareup.com
+Subject: Re: [PATCH v1 4/4] arm64: dts: Add msm8939 Sony Xperia M4 Aqua
+Message-ID: <Yl8u8v0QOk2rfNwE@builder.lan>
+References: <20220419010903.3109514-1-bryan.odonoghue@linaro.org>
+ <20220419010903.3109514-5-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm/dsi: fixup DSC support for the cases when there
- is no pannel attached
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, "Vinod Koul" <vkoul@kernel.org>
-References: <20220419213706.1452361-1-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220419213706.1452361-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220419010903.3109514-5-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,95 +74,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-typo in the subject
+On Mon 18 Apr 20:09 CDT 2022, Bryan O'Donoghue wrote:
 
-pannel --> panel
-
-Otherwise,
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-On 4/19/2022 2:37 PM, Dmitry Baryshkov wrote:
-> Unable to handle kernel paging request at virtual address fffffffffffffe2b
-> Mem abort info:
->    ESR = 0x96000004
->    EC = 0x25: DABT (current EL), IL = 32 bits
->    SET = 0, FnV = 0
->    EA = 0, S1PTW = 0
->    FSC = 0x04: level 0 translation fault
-> Data abort info:
->    ISV = 0, ISS = 0x00000004
->    CM = 0, WnR = 0
-> swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000a1a39000
-> [fffffffffffffe2b] pgd=0000000000000000, p4d=0000000000000000
-> Internal error: Oops: 96000004 [#1] SMP
-> Modules linked in:
-> CPU: 7 PID: 8 Comm: kworker/u16:0 Not tainted 5.18.0-rc3-00055-g3120774492e8 #672
-> Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
-> Workqueue: events_unbound deferred_probe_work_func
-> pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> pc : msm_dsi_host_modeset_init+0x30/0xcc
-> lr : msm_dsi_host_modeset_init+0x28/0xcc
-> sp : ffff800008093640
-> x29: ffff800008093640 x28: ffff0757131ef080 x27: 0000000000000000
-> x26: ffffa1d966bca440 x25: 0000000000000000 x24: 0000000000000001
-> x23: ffff0757131e6880 x22: ffff075700dc9c00 x21: ffffa1d965d40f60
-> x20: fffffffffffffdfb x19: ffff0757131ea480 x18: ffffffffffffffff
-> x17: ffffa1d966c51b10 x16: 00000000000003e8 x15: ffff075713989287
-> x14: ffffffffffffffff x13: ffff075713989284 x12: ffff07587effaf90
-> x11: ffff07587effaf70 x10: 00000000000b4220 x9 : 0000000000000003
-> x8 : 0101010101010101 x7 : 0000000000000003 x6 : 1d150c11f5f38080
-> x5 : 0000000000000000 x4 : ffff0757001f63c0 x3 : ffffa1d966bc02b8
-> x2 : 0000000000000000 x1 : ffff0757001f63c0 x0 : fffffffffffffdfb
-> Call trace:
->   msm_dsi_host_modeset_init+0x30/0xcc
->   msm_dsi_modeset_init+0x40/0x1e4
->   _dpu_kms_drm_obj_init.isra.0+0xdc/0x5c0
->   dpu_kms_hw_init+0x338/0x590
->   msm_drm_bind+0x1d8/0x5f0
->   try_to_bring_up_aggregate_device+0x164/0x1d0
->   __component_add+0xa4/0x170
->   component_add+0x14/0x20
->   dsi_dev_attach+0x20/0x30
->   dsi_host_attach+0x94/0x150
->   devm_mipi_dsi_attach+0x34/0xb0
->   lt9611uxc_attach_dsi.isra.0+0x84/0x100
->   lt9611uxc_probe+0x538/0x5e0
->   i2c_device_probe+0x2ac/0x2f0
->   really_probe.part.0+0x9c/0x28c
->   __driver_probe_device+0x98/0x144
->   driver_probe_device+0x40/0x140
->   __device_attach_driver+0xb4/0x120
->   bus_for_each_drv+0x78/0xd0
->   __device_attach+0xdc/0x184
->   device_initial_probe+0x14/0x20
->   bus_probe_device+0x9c/0xa4
->   deferred_probe_work_func+0x88/0xc0
->   process_one_work+0x1ec/0x444
->   worker_thread+0x294/0x4dc
->   kthread+0xfc/0x100
->   ret_from_fork+0x10/0x20
-> Code: f940e675 97fdc7ba b40000c0 aa0003f4 (f9401800)
+> Add a basic booting DTS for the Sony Xperia M4 Aqua aka "tulip".
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Tulip is paired with:
+> 
+> - wcn3660
+> - smb1360 battery charger
+> - 720p Truly NT35521 Panel
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../qcom/msm8939-sony-xperia-kanuti-tulip.dts | 489 ++++++++++++++++++
+>  2 files changed, 490 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
 > 
-> Note: I'm going to squash this fix into the respective patch from the
-> DSC series
-> 
-> ---
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 03921649bd28..c983698d1384 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -2167,7 +2167,7 @@ int msm_dsi_host_modeset_init(struct mipi_dsi_host *host,
->   	msm_host->dev = dev;
->   	panel = msm_dsi_host_get_panel(&msm_host->base);
->   
-> -	if (panel && panel->dsc) {
-> +	if (!IS_ERR(panel) && panel->dsc) {
->   		struct msm_display_dsc_config *dsc = msm_host->dsc;
->   
->   		if (!dsc) {
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 5b8a0eb34733..3ac7f6876c09 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -19,6 +19,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a5u-eur.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-j5.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-10.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-101.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-msft-lumia-octagon-talkman.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts b/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
+> new file mode 100644
+> index 000000000000..336969f16bc9
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
+> @@ -0,0 +1,489 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022, Bryan O'Donoghue.
+> + *
+
+Same comments as the other baord dts; please drop the GPL license text
+here, don't use underscore in node names and please sort the labels
+alphabetically.
+
+Thanks,
+Bjorn
