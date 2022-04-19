@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D961E506186
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 03:09:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30E1E506187
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 03:09:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241999AbiDSBLt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 21:11:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46266 "EHLO
+        id S242102AbiDSBLu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 21:11:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234301AbiDSBLs (ORCPT
+        with ESMTP id S237506AbiDSBLt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 21:11:48 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DED2DAAD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 18:09:07 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id e21so20399930wrc.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 18:09:07 -0700 (PDT)
+        Mon, 18 Apr 2022 21:11:49 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D21CC2E08A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 18:09:08 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id q20so9699076wmq.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 18:09:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GmpnlnXiabbCuL2JoS5FmYSX790/z1KDUW433qN4L/M=;
-        b=fdAedFAf8l7TrsOUMuMQYhCGPg+pBU4OoZiW7fp/zeRrltbjEJHQVHA7pHmbYrDDHo
-         hK8/ORVIc5DvTolSDQ6OW4jiIJRWpl+JITkv9nkrksuwidQa7wmHKh8VlJomfrPaoNZE
-         sfhtPM+9Lkzj6uycGfnwRb+tNMiSHU7VW4qzR6Abx3gMZ8DcCCMjY/pu3aFzT2l61NHY
-         FAAdCV4NYFbqR7qaDt2vNOyQ1LmiH554LV55/T3x6gR36+NQPzPDPM0F+77yIDcXfKjS
-         /J3HkNuOVh/eYwrdgZT8HKIBHAxqMw3TMOuYATEyPKOINRzgV8YIJdOvjKgIWF7g5Tto
-         k67A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=N91S+3Lx29YcpKx5EXjkYYYdKqWltK0JIghcRmIP70o=;
+        b=SEKVfhyeP7WTx64Uvp5RreA9aYOrFNzAxUF9WquL++UJcQgb8aVh5OFo9QHH/gBRhD
+         BSLKMXU2kWotAlPi/dEFqoMPACvuPtg24Fu7WviiQK0oga73YEsL4VvxG2At7mCKTPtt
+         s9zAzMi9XwfcO8X93Pzy9PhAcO/3krkKcBb6DEiUlETLlL1KzJabBR/8526xLGd48KFZ
+         1FVoqwYgUNrUxks9ikk8X2ehNuxjMX7ZDbX6P0Hj9wzjKhdAQa4HXZhSA1ukLMhmGkkX
+         WwWpSNOftqGg5PhcMdTWttaePE9kndpCH4WFTaWmTBEkK7lqT7gsePko588Sci5bBCrm
+         0XtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GmpnlnXiabbCuL2JoS5FmYSX790/z1KDUW433qN4L/M=;
-        b=riaZTq5DqvWuJGqSWUhIX+D8DPEZX+OXvHXszorKMeKS/UY443lOP+cd4Wxmdk+ezA
-         78xSyZXNyFJxNgVv9JfIiKaI30YWHjtaNg8lmgDJ756FXq9oa+0FNKXxctguJnmKnLHw
-         ReOoH1aqClJ9EDE2WGUw/mdVcTV6dZwKiigY+CYEJgySKhgputmieEgEzVEWjpoWCtt/
-         pX9dJBOOUox0dBR6DgDIHJpbeDQNpCZccH3vBnWXptUDln6h20KxVXXrW7XbjXEk5vTB
-         t9n/ucTcExNYU6ZsWvDtK/ikAGpRTYoleLoic5c8DmpET4uEEbM0z6PTDDH7YM9h9DIT
-         Lhlw==
-X-Gm-Message-State: AOAM532/JOaWNJMaHKXkeK8Ahge82t9td/LKqgNQhStBWqjacw8x3Tky
-        FBtLeSaWCTz+zfa4BMsWHy1UGQ==
-X-Google-Smtp-Source: ABdhPJyOdMsCA96qSG6IZg3f81A/9UzUeKL68iykatPIWDRT2BMxb0rEYjPhr3Pv0MdzX3yeBYDh5g==
-X-Received: by 2002:a5d:654a:0:b0:20a:8d85:abd9 with SMTP id z10-20020a5d654a000000b0020a8d85abd9mr7525928wrv.419.1650330545994;
-        Mon, 18 Apr 2022 18:09:05 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=N91S+3Lx29YcpKx5EXjkYYYdKqWltK0JIghcRmIP70o=;
+        b=rTynYT8U4NVpTim6V/hVA99SuIz4oy0doDsHeoRtEN11iVBKQk34gCnYFxgWKhpZu+
+         tj30erqiWw2Pyj9ZS2J6FaIiOsF8Mv35d23/O8ZSpPCDh6qGC26TOgpIyr+EVeuLh1+1
+         TTUirP6XQnmGNjDXupYoAEudyMTg+DHrXbM/q9EsVVvPw7HZGKda70Y7z65TbTiJS1kp
+         y3a/WNrdpbWzeGjaaEfHIVJgPshhrJ0UgIlzafcacfod2MzBrvN4CPsnedTLLrWZ1Wn0
+         GTQ2e13YYDiVXeI8nsNqGYTpxek4msPoMfki4NHLYPLIMg7NUFjSszrFqCR2pYvEC5Pn
+         U6Nw==
+X-Gm-Message-State: AOAM5327Ur6zP1uNi7ny89M0DkQoDO3ej5/EDtXq6OokRshP0FgF95kS
+        vBC/xWZShG/MZd2IX2X7/zF5uA==
+X-Google-Smtp-Source: ABdhPJwaq1kHZjdQL7JZbq/mlrzlLzY4xinA0CQrYNK9bi0emRtCGfpQVd1vnnFNpBgr7Z3ZPi0EHA==
+X-Received: by 2002:a05:600c:4ecb:b0:392:88ed:1ef9 with SMTP id g11-20020a05600c4ecb00b0039288ed1ef9mr13401917wmq.68.1650330547425;
+        Mon, 18 Apr 2022 18:09:07 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id m6-20020a05600c4f4600b003918d69b334sm12030732wmq.42.2022.04.18.18.09.05
+        by smtp.gmail.com with ESMTPSA id m6-20020a05600c4f4600b003918d69b334sm12030732wmq.42.2022.04.18.18.09.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Apr 2022 18:09:05 -0700 (PDT)
+        Mon, 18 Apr 2022 18:09:06 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
@@ -55,10 +55,12 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
 Cc:     shawn.guo@linaro.org, jun.nie@linaro.org, benl@squareup.com,
         jwillcox@squareup.com, jgates@squareup.com, mchen@squareup.com,
         zac@squareup.com, bryan.odonoghue@linaro.org
-Subject: [PATCH v1 0/4] Add MSM8939 SoC support with two devices
-Date:   Tue, 19 Apr 2022 02:08:59 +0100
-Message-Id: <20220419010903.3109514-1-bryan.odonoghue@linaro.org>
+Subject: [PATCH v1 1/4] dt-bindings: arm: qcom: Document MSM8939 SoC binding
+Date:   Tue, 19 Apr 2022 02:09:00 +0100
+Message-Id: <20220419010903.3109514-2-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220419010903.3109514-1-bryan.odonoghue@linaro.org>
+References: <20220419010903.3109514-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -71,83 +73,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds in MSM8939 SoC support with two supported devices.
+Document the MSM8939 and supported boards in upstream Sony "Tulip" M4 Aqua
+and Square APQ8039 T2.
 
-- CPU
-  MSM8939 is a non-PSCI compliant device. As such in the downstreaming
-  shipped image custom code is used to bring non-boot cores out of reset.
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-  This drop specifies the boot-method as spin-table instead and is
-  completely standard. To accomplish this, we rely on lk2nd.
-
-  https://github.com/msm8916-mainline/lk2nd/pull/142
-
-- Serial
-- i2c
-- USB
-- eMMC
-- MDP/DSI
-- WiFi
-- Bluetooth
-
-What's not included 
-
-- CPR
-  We have CPR working in a 4.19 kernel quite well but for now it feels like
-  putting the cart before the horse to gate the SoC and boards on CPR.
-
-- Venus
-  I've been told this works but I haven't tried it myself and right now
-  consider it maybe working but probably not 100%.
-
-- Sound
-  We have a copy-exactly from the 4.19 kernel here in the DTS.
-  I haven't run the sound through any sort of reasonable test.
-  Vincent Knecht has some PostmarketOS kernels which use a 5.17 version of
-  this DTS to get sound up so, I think sound is in good shape.
-
-- CAMSS
-  There are slight differences between msm8916 and msm8939 for CAMSS. It
-  doesn't feel like tons of work but, right now it is work we haven't even
-  started.
-
-- Devices
-  I've booted on the Square device obviously and this is my regular
-  hardware for upstream development. I've also booted on the Sony Xperia M4
-  Aqua including mutli-core bring-up, WiFi and ADB.
-
-Dependencies for this drop:
-
-qcom-cpufreq-nvmem: Add msm8939 with some fixups
-link: https://lore.kernel.org/linux-arm-msm/20220418162226.2983117-1-bryan.odonoghue@linaro.org/T/#t
-
-Fix apq8016 compat string
-link: https://lore.kernel.org/linux-arm-msm/20220418230956.3059563-1-bryan.odonoghue@linaro.org/T/#t
-
-dt-bindings: soc: qcom: smd-rpm: Fix missing MSM8936 compatible
-link: https://lore.kernel.org/linux-arm-msm/20220418231857.3061053-1-bryan.odonoghue@linaro.org/T/#u
-
-Bootable tree here:
-https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=v5.18-rc2%2bapq8039-without-cpr
-
-Bryan O'Donoghue (4):
-  dt-bindings: arm: qcom: Document MSM8939 SoC binding
-  arm64: dts: Add msm8939 SoC
-  arm64: dts: Add aqp8039-t2 board
-  arm64: dts: Add msm8939 Sony Xperia M4 Aqua
-
- .../devicetree/bindings/arm/qcom.yaml         |    7 +
- arch/arm64/boot/dts/qcom/Makefile             |    3 +
- .../boot/dts/qcom/apq8039-t2-pinctl.dtsi      |  277 +++
- arch/arm64/boot/dts/qcom/apq8039-t2.dts       |  326 +++
- .../qcom/msm8939-sony-xperia-kanuti-tulip.dts |  489 ++++
- arch/arm64/boot/dts/qcom/msm8939.dtsi         | 2017 +++++++++++++++++
- 6 files changed, 3119 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/apq8039-t2-pinctl.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/apq8039-t2.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8939.dtsi
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 129cdd246223..0e4f3a4d1a58 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -34,6 +34,7 @@ description: |
+         mdm9615
+         msm8226
+         msm8916
++	msm8939
+         msm8974
+         msm8992
+         msm8994
+@@ -133,6 +134,12 @@ properties:
+               - samsung,s3ve3g
+           - const: qcom,msm8226
+ 
++    - items:
++          - enum:
++              - square,apq8039-t2
++              - sony,kanuti-tulip
++          - const: qcom,msm8939
++
+       - items:
+           - enum:
+               - qcom,msm8960-cdp
 -- 
 2.35.1
 
