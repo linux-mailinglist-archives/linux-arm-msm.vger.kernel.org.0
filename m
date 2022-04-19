@@ -2,74 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 803EA50680F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 11:51:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B815506871
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 12:12:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350426AbiDSJya (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 05:54:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52298 "EHLO
+        id S1350554AbiDSKPQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 06:15:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243535AbiDSJy3 (ORCPT
+        with ESMTP id S1348537AbiDSKPN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 05:54:29 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CC4720BFC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 02:51:47 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id l3-20020a05600c1d0300b0038ff89c938bso883384wms.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 02:51:47 -0700 (PDT)
+        Tue, 19 Apr 2022 06:15:13 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F66025C57
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 03:12:31 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id v4so20581745edl.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 03:12:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=c+rRC4RNXk3CumUJf1SdyqarjaZ9t1ONUVkpkPZMQHI=;
-        b=G3NCT+6rU7ncTFHbsJrnBX5Pqf/JNJn6KhVI1fPq0jvPbTMaXyssXdI+z8sJI+E5XB
-         pWTYfetbZsFUbvZ4/44emrNHAPNZaSO0Rtfjwq5qAYXYn35vi/gA9PSIv7dsfVtPrZxW
-         h0kllJBzxy0HkO6ZpMIrTCNoLFZRUnZ2AdFcQ/m2odQT2pSM8glvu421hImswwvK4we0
-         NBAdISGmwxQJnphOXQH5dmFGqpLlW4Y+X9L4+fSUwJZUwJmDgrtdlk1LUq800jEADfOW
-         t0UAvhGZeuIB5b0Za1u+yetmcVQTW/Nt800vNjZEUNRmQ5t0potZfAvD4pPzYgnP22yJ
-         TGew==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=6YIh3HDPztean2NUp4hEk/5KOUaDqmdwW5sVxL2kVTo=;
+        b=rBaRAPk3AqWA19QNZAYo+MvnfyKVAXmMzDjvfxy3awdYBFUjJDIWchT/uoTa2lA/MB
+         t3li31ngEqo03wKDbvw8LAOv1yBoOBt6+QholcPsrxhmjRiJy/BNE6Pz81qIWA2uowW9
+         yyDTHs9EyS+BhjseTzNCJgcEdeWnf3Oqqh/f/4UJQz1uGRvSIB57/76S5PQ00R7BmicR
+         YJ+wXaEppdTpEJhnUBj6rjf5ex2MOlpNzvWV2tgfhxJ02lP58q+4+BgHjqnR+zyb6PA+
+         TJo1dnPANE4XQltS95X9dsjNYDJZQCP2ejYEQeCTCv0C8WBzc4J6pS5gkLHjooVGE72q
+         B4OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=c+rRC4RNXk3CumUJf1SdyqarjaZ9t1ONUVkpkPZMQHI=;
-        b=WtVgQAXshcdy8z5210mbvjDDjRFs+VyO4LunQZKz8U9vn+CfSa9/TOHdCwoHumr6ft
-         upVmiwBRr+4dNgj4Eig00YA5Hm1pxJdZVg0vVsnq/0xx+zfJOde4Mg4ClYyOPgB4yW0d
-         AlJ+dGC1z5w0dF5hAeGhsRSAzCCvskNv/EBEOnuz6XFeU1vxZjYTreJckogMC4iqgjeQ
-         9dSChnCBYcGaAPv1+OX0SNdxqJ+7PptZ46lGUggSU4+9/Cyb2dBD/XZby2TjY5Cm8bpz
-         ypGG1D9hqzBKmfOxFfnoSJbJmLMODsARU6JZe1Aa81Z499hB4RhjptIdCaz5YjfYNvGN
-         rktw==
-X-Gm-Message-State: AOAM533o2CNDC43Oims8mVb/s/NMwb9RsepVVJuT/Oyv3RIEmqReN73h
-        DF5vEePjWFB+ZNs3hBGLhdeD/93R8uuh6p9RNdpASQ==
-X-Google-Smtp-Source: ABdhPJyLg0RMz4rKFNI9BBtqAOwxpcFN64M8VGIx/2xEWbg3NhT7PCIaUIIjXeE6tbSh/Tc/vCvUv3PB16jbwDjxEKo=
-X-Received: by 2002:a05:600c:1c91:b0:392:6f01:5069 with SMTP id
- k17-20020a05600c1c9100b003926f015069mr15704868wms.199.1650361905692; Tue, 19
- Apr 2022 02:51:45 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=6YIh3HDPztean2NUp4hEk/5KOUaDqmdwW5sVxL2kVTo=;
+        b=gKld5nxTHbFfDyEqA3Kscaoqpz2tcH9gwLN8Zw0n8ExulwA2HyxVUO5XrUJmp3FeQP
+         VVmdDV+6Af2JkGAmJ6PzZY7vfvpPpgMOsEB58zZ6jA0EH19a7Hc63RpIWu4Vbw71egp8
+         k4xnOpCQIAPculFFzpygTj9nlMNOQVB1DJR3wPVT2m+TO+8wely0H6Gzt5Huk8K4KMCr
+         qn9WosprmByAqQEn2yc0DbGOwIxkW77Ge7JPCjTsD7r5LMjORkLtEcTZbg2bJrtNCNhD
+         TWOM7BTwKZkYmFmxqAI+loab+6ZyCzO4j3hQewwGMThrTnU8a+rRVkIz+jpINKSeaRUy
+         mqPA==
+X-Gm-Message-State: AOAM533q+0tvh/LEDeLW0SPFaS5rZTvAWDaHTNx+DxZnFWdkpXAW80y1
+        2A3QmpBxnAR3lDUOlmF68b1wpw==
+X-Google-Smtp-Source: ABdhPJzzS0g9hBuwjfOsu4N4YsswKBvUI+7x79YPwkoHM+EZQ0AKr3/TO+o5s/RZeAxjY2G/d8x7DA==
+X-Received: by 2002:a05:6402:350d:b0:419:547f:134a with SMTP id b13-20020a056402350d00b00419547f134amr16773920edd.405.1650363149990;
+        Tue, 19 Apr 2022 03:12:29 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id v21-20020a1709064e9500b006e8973a14d0sm5581177eju.174.2022.04.19.03.12.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Apr 2022 03:12:29 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>, chrome-platform@lists.linux.dev,
+        linux-kernel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        Benson Leung <bleung@chromium.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Guenter Roeck <groeck@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>, devicetree@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-pwm@vger.kernel.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [PATCH 2/4] arm64: dts: mt8183: align Google CROS EC PWM node name with dtschema
+Date:   Tue, 19 Apr 2022 12:12:25 +0200
+Message-Id: <165036314213.180327.2519068046721343173.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20220214081916.162014-3-krzysztof.kozlowski@canonical.com>
+References: <20220214081916.162014-1-krzysztof.kozlowski@canonical.com> <20220214081916.162014-3-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
-References: <20220412125035.40312-1-quic_jinlmao@quicinc.com> <20220412125035.40312-8-quic_jinlmao@quicinc.com>
-In-Reply-To: <20220412125035.40312-8-quic_jinlmao@quicinc.com>
-From:   Mike Leach <mike.leach@linaro.org>
-Date:   Tue, 19 Apr 2022 10:51:34 +0100
-Message-ID: <CAJ9a7VjL2JioFUJVF_z5+R3rdBw6ptcc3ufed+=GM5MH_0PLZg@mail.gmail.com>
-Subject: Re: [PATCH v5 07/10] Coresight: Add TPDA link driver
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,334 +86,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+On Mon, 14 Feb 2022 09:19:14 +0100, Krzysztof Kozlowski wrote:
+> dtschema expects PWM node name to be a generic "pwm".  This also matches
+> Devicetree specification requirements about generic node names.
+> 
+> 
 
-On Tue, 12 Apr 2022 at 13:51, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
->
-> TPDA(Trace, Profiling and Diagnostics Aggregator) is
-> to provide packetization, funneling and timestamping of
-> TPDM data. Multiple monitors are connected to different
-> input ports of TPDA.This change is to add tpda
-> enable/disable/probe functions for coresight tpda driver.
->
->  - - - -         - - - -        - - - -
-> | TPDM 0|      | TPDM 1 |     | TPDM 2|
->  - - - -         - - - -        - - - -
->     |               |             |
->     |_ _ _ _ _ _    |     _ _ _ _ |
->                 |   |    |
->                 |   |    |
->            ------------------
->           |        TPDA      |
->            ------------------
->
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  drivers/hwtracing/coresight/Kconfig          |  11 ++
->  drivers/hwtracing/coresight/Makefile         |   1 +
->  drivers/hwtracing/coresight/coresight-tpda.c | 192 +++++++++++++++++++
->  drivers/hwtracing/coresight/coresight-tpda.h |  32 ++++
->  4 files changed, 236 insertions(+)
->  create mode 100644 drivers/hwtracing/coresight/coresight-tpda.c
->  create mode 100644 drivers/hwtracing/coresight/coresight-tpda.h
->
-> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
-> index 60248fef4089..317c5e7f4819 100644
-> --- a/drivers/hwtracing/coresight/Kconfig
-> +++ b/drivers/hwtracing/coresight/Kconfig
-> @@ -223,4 +223,15 @@ config CORESIGHT_TPDM_INTEGRATION_TEST
->           operation to facilitate integration testing and software bringup
->           and/or to instrument topology discovery. The TPDM utilizes integration
->           mode to accomplish integration testing and software bringup.
-> +
-> +config CORESIGHT_TPDA
-> +       tristate "CoreSight Trace, Profiling & Diagnostics Aggregator driver"
-> +       help
-> +         This driver provides support for configuring aggregator. This is
-> +         primarily useful for pulling the data sets from one or more
-> +         attached monitors and pushing the resultant data out. Multiple
-> +         monitors are connected on different input ports of TPDA.
-> +
-> +         To compile this driver as a module, choose M here: the module will be
-> +         called coresight-tpda.
->  endif
+Applied, thanks!
 
-TDPA / TDPM are functionally linked - it does not make sense to
-configure one without the other.
-Kernel configuration should reflect this - as a minimum TDPM
-configuration should select TDPA.
+[2/4] arm64: dts: mt8183: align Google CROS EC PWM node name with dtschema
+      commit: 559d2104bff0c9a6379db652136d30836859252e
 
-
-
-> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/coresight/Makefile
-> index 6bb9b1746bc7..1712d82e7260 100644
-> --- a/drivers/hwtracing/coresight/Makefile
-> +++ b/drivers/hwtracing/coresight/Makefile
-> @@ -26,5 +26,6 @@ obj-$(CONFIG_CORESIGHT_CATU) += coresight-catu.o
->  obj-$(CONFIG_CORESIGHT_CTI) += coresight-cti.o
->  obj-$(CONFIG_CORESIGHT_TRBE) += coresight-trbe.o
->  obj-$(CONFIG_CORESIGHT_TPDM) += coresight-tpdm.o
-> +obj-$(CONFIG_CORESIGHT_TPDA) += coresight-tpda.o
->  coresight-cti-y := coresight-cti-core.o        coresight-cti-platform.o \
->                    coresight-cti-sysfs.o
-> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
-> new file mode 100644
-> index 000000000000..9519990c68e2
-> --- /dev/null
-> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
-> @@ -0,0 +1,192 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/amba/bus.h>
-> +#include <linux/bitmap.h>
-> +#include <linux/coresight.h>
-> +#include <linux/device.h>
-> +#include <linux/err.h>
-> +#include <linux/fs.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +
-> +#include "coresight-priv.h"
-> +#include "coresight-tpda.h"
-> +#include "coresight-trace-id.h"
-> +
-> +DEFINE_CORESIGHT_DEVLIST(tpda_devs, "tpda");
-> +
-> +/* Settings pre enabling port control register */
-> +static void tpda_enable_pre_port(struct tpda_drvdata *drvdata)
-> +{
-> +       u32 val;
-> +
-> +       val = readl_relaxed(drvdata->base + TPDA_CR);
-> +       val |= (drvdata->atid << 6);
-> +       writel_relaxed(val, drvdata->base + TPDA_CR);
-> +}
-> +
-> +static void tpda_enable_port(struct tpda_drvdata *drvdata, int port)
-> +{
-> +       u32 val;
-> +
-> +       val = readl_relaxed(drvdata->base + TPDA_Pn_CR(port));
-> +       /* Enable the port */
-> +       val = val | BIT(0);
-
-#define a constant in the header to use here.
-
-> +       writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
-> +}
-> +
-> +static void _tpda_enable(struct tpda_drvdata *drvdata, int port)
-> +{
-> +       CS_UNLOCK(drvdata->base);
-> +
-> +       if (!drvdata->enable)
-> +               tpda_enable_pre_port(drvdata);
-> +
-> +       tpda_enable_port(drvdata, port);
-> +
-> +       CS_LOCK(drvdata->base);
-> +}
-> +
-> +static int tpda_enable(struct coresight_device *csdev, int inport, int outport)
-> +{
-> +       struct tpda_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-> +
-> +       mutex_lock(&drvdata->lock);
-> +       _tpda_enable(drvdata, inport);
-> +       drvdata->enable = true;
-> +       mutex_unlock(&drvdata->lock);
-> +
-> +       dev_info(drvdata->dev, "TPDA inport %d enabled\n", inport);
-> +       return 0;
-> +}
-> +
-> +static void _tpda_disable(struct tpda_drvdata *drvdata, int port)
-> +{
-> +       u32 val;
-> +
-> +       CS_UNLOCK(drvdata->base);
-> +
-> +       val = readl_relaxed(drvdata->base + TPDA_Pn_CR(port));
-> +       val = val & ~BIT(0);
-
-use a #defined constant.
-
-> +       writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
-> +
-> +       CS_LOCK(drvdata->base);
-> +}
-> +
-> +static void tpda_disable(struct coresight_device *csdev, int inport,
-> +                          int outport)
-> +{
-> +       struct tpda_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-> +
-> +       mutex_lock(&drvdata->lock);
-> +       _tpda_disable(drvdata, inport);
-> +       drvdata->enable = false;
-> +       mutex_unlock(&drvdata->lock);
-> +
-> +       dev_info(drvdata->dev, "TPDA inport %d disabled\n", inport);
-> +}
-> +
-> +static const struct coresight_ops_link tpda_link_ops = {
-> +       .enable         = tpda_enable,
-> +       .disable        = tpda_disable,
-> +};
-> +
-> +static const struct coresight_ops tpda_cs_ops = {
-> +       .link_ops       = &tpda_link_ops,
-> +};
-> +
-> +static int tpda_init_default_data(struct tpda_drvdata *drvdata)
-> +{
-> +       int atid;
-> +       /*
-> +        * TPDA must has a unique atid. This atid can uniquely
-> +        * identify the TPDM trace source connect to the TPDA.
-> +        */
-> +       atid = coresight_trace_id_get_system_id(coresight_get_trace_id_map());
-> +       if (atid < 0)
-> +               return atid;
-> +
-> +       drvdata->atid = atid;
-> +       return 0;
-> +}
-> +
-> +static int tpda_probe(struct amba_device *adev, const struct amba_id *id)
-> +{
-> +       int ret;
-> +       struct device *dev = &adev->dev;
-> +       struct coresight_platform_data *pdata;
-> +       struct tpda_drvdata *drvdata;
-> +       struct coresight_desc desc = { 0 };
-> +
-> +       pdata = coresight_get_platform_data(dev);
-> +       if (IS_ERR(pdata))
-> +               return PTR_ERR(pdata);
-> +       adev->dev.platform_data = pdata;
-> +
-> +       drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
-> +       if (!drvdata)
-> +               return -ENOMEM;
-> +
-> +       drvdata->dev = &adev->dev;
-> +       dev_set_drvdata(dev, drvdata);
-> +
-> +       drvdata->base = devm_ioremap_resource(dev, &adev->res);
-> +       if (!drvdata->base)
-> +               return -ENOMEM;
-> +
-> +       mutex_init(&drvdata->lock);
-> +
-> +       ret = tpda_init_default_data(drvdata);
-> +       if (ret)
-> +               return ret;
-> +
-> +       desc.name = coresight_alloc_device_name(&tpda_devs, dev);
-> +       if (!desc.name)
-> +               return -ENOMEM;
-> +       desc.type = CORESIGHT_DEV_TYPE_LINK;
-> +       desc.subtype.link_subtype = CORESIGHT_DEV_SUBTYPE_LINK_MERG;
-> +       desc.ops = &tpda_cs_ops;
-> +       desc.pdata = adev->dev.platform_data;
-> +       desc.dev = &adev->dev;
-> +       drvdata->csdev = coresight_register(&desc);
-> +       if (IS_ERR(drvdata->csdev))
-> +               return PTR_ERR(drvdata->csdev);
-> +
-> +       pm_runtime_put(&adev->dev);
-> +
-> +       dev_dbg(drvdata->dev, "TPDA initialized\n");
-> +       return 0;
-> +}
-> +
-> +/*
-> + * Different TPDA has different periph id.
-> + * The difference is 0-7 bits' value. So ignore 0-7 bits.
-> + */
-> +static struct amba_id tpda_ids[] = {
-> +       {
-> +               .id     = 0x000f0f00,
-> +               .mask   = 0x000fff00,
-> +       },
-> +       { 0, 0},
-> +};
-> +
-> +static struct amba_driver tpda_driver = {
-> +       .drv = {
-> +               .name   = "coresight-tpda",
-> +               .owner  = THIS_MODULE,
-> +               .suppress_bind_attrs = true,
-> +       },
-> +       .probe          = tpda_probe,
-> +       .id_table       = tpda_ids,
-> +};
-> +
-
-There is no code to release resources when this module is unloaded.
-You need a .remove function, that as a minimum calls
-coresight_unregister().
-
-Regards
-
-Mike
-
-> +module_amba_driver(tpda_driver);
-> +
-> +MODULE_LICENSE("GPL v2");
-> +MODULE_DESCRIPTION("Trace, Profiling & Diagnostic Aggregator driver");
-> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h b/drivers/hwtracing/coresight/coresight-tpda.h
-> new file mode 100644
-> index 000000000000..6ac33b9c1ea4
-> --- /dev/null
-> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
-> @@ -0,0 +1,32 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _CORESIGHT_CORESIGHT_TPDA_H
-> +#define _CORESIGHT_CORESIGHT_TPDA_H
-> +
-> +#define TPDA_CR                        (0x000)
-> +#define TPDA_Pn_CR(n)          (0x004 + (n * 4))
-> +
-> +#define TPDA_MAX_INPORTS       32
-> +
-> +/**
-> + * struct tpda_drvdata - specifics associated to an TPDA component
-> + * @base:       memory mapped base address for this component.
-> + * @dev:        The device entity associated to this component.
-> + * @csdev:      component vitals needed by the framework.
-> + * @lock:       lock for the enable value.
-> + * @enable:     enable status of the component.
-> + * @traceid:    trace source identification for the data packet by TPDA.
-> + */
-> +struct tpda_drvdata {
-> +       void __iomem            *base;
-> +       struct device           *dev;
-> +       struct coresight_device *csdev;
-> +       struct mutex            lock;
-> +       bool                    enable;
-> +       u32                     atid;
-> +};
-> +
-> +#endif  /* _CORESIGHT_CORESIGHT_TPDA_H */
-> --
-> 2.17.1
->
-
-
---
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
