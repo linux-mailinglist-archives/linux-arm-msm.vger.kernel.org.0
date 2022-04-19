@@ -2,78 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 130DE506793
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 11:20:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9549A50679D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 11:22:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241866AbiDSJWj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 05:22:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48030 "EHLO
+        id S1350332AbiDSJZZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 05:25:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350326AbiDSJWc (ORCPT
+        with ESMTP id S236434AbiDSJZY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 05:22:32 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24B811130
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 02:19:49 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id o20-20020a05600c511400b0038ebbbb2ad8so1076577wms.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 02:19:49 -0700 (PDT)
+        Tue, 19 Apr 2022 05:25:24 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2BF32A27C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 02:22:41 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id u3so21584492wrg.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 02:22:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=AfuD0adMHdVdGBphmISzdkHuokPa7yMy38/SGYT3mOg=;
-        b=ItWrtcCoxUOYpMXnC+OMSnDOHEWg2fruvwm9KfP91sOMKDuseMDDfBTUC0h3GVseB6
-         iFJbjKWOOYqLwUo6oIEImV2ToiTAaaB1xls+faQO1R7dMgEsgM5KqfHfUNILYaaq7H1s
-         g/ri7FmiNrxRVwU2V0n0NWW/q5w+i4Uvun5tdabAa4kTCDI4PRch90yE21P4RGmoT0Ki
-         uLTwkVlM3+KvuWrqXMQqBIgf2pROKy4OrmCyjF+g4YaNqq+ursjTUA+S8IAolrkR0AJU
-         D2CT3YBjgnwoJDQaKVRLFf1ChF35VA5Iz35V/ZQpbfVWw/NUAngBf03VTCsvYthgJ8Qb
-         3SYg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=p8P6IeNR1TwtrMg6RsrKfdY4Yo5Rygb5DfiPVUoKhK8=;
+        b=by0FVyX6p0zMcvlQP3Y+c8K8TzgSgvcE5pyCF1vetrjvKiBQtCgOwo2ZZWote70zYk
+         o9LMkdzdoRmlCNb2amRWJGhf1KdRzvw+TmHMwSj3jdMJksgGdAr/RMXpGiMyCbL3wax2
+         91qaPs2u8lB9l4uXPjOarOfRvJX+DT5UFJGrw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=AfuD0adMHdVdGBphmISzdkHuokPa7yMy38/SGYT3mOg=;
-        b=RphYFZUPoD0J1H9b/PNHVk0faZChUbCIWgS0FWJRwu5UwfEGM9AstckB/tGLI8wtir
-         WFCNr11uC2qFUMjACplxAyjJ7MKPzRRh6cSgnxSu+Ra3+N7Lxj0E9CUp7sU+cI7FUJ27
-         dLi5G95Ea527sMbbccQhJ9cTuppLAyWvU+tEhE257SXU2t702cSA4NKVgh/TOhaY177X
-         CkeXA0+Ky+g23ydn32O7RMtZpOXL4ApUKGzrRxjVlr1EcpegCmx8qQmawZu/ZIVcK9ul
-         dXbbwcc57tp9aGprkYCGF/B6fPTc7wHUOljmfyjJQjxuxeCUczlK+Q9QJWwaN47f00a0
-         ilpQ==
-X-Gm-Message-State: AOAM531Y7G1TdjJSZA8hAJSvfCR5MKAxdti2i7X1mLNKqL3FFoDEGM2a
-        prh6mw69bHbzDbxOCawNXR55Qg==
-X-Google-Smtp-Source: ABdhPJxMtEy5OVKBvXQyiQaQLB+1ZlgvXxNp1br3PfkLvMXCyl08/iacL8tlG4PyVh53cioM9VNxhw==
-X-Received: by 2002:a7b:c844:0:b0:38e:7c92:a9e3 with SMTP id c4-20020a7bc844000000b0038e7c92a9e3mr14569718wml.140.1650359987755;
-        Tue, 19 Apr 2022 02:19:47 -0700 (PDT)
-Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id o13-20020a05600c4fcd00b00392951086efsm6400282wmq.34.2022.04.19.02.19.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Apr 2022 02:19:47 -0700 (PDT)
-Message-ID: <102ad140-dc26-d266-a716-4e22003ec601@linaro.org>
-Date:   Tue, 19 Apr 2022 10:19:45 +0100
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=p8P6IeNR1TwtrMg6RsrKfdY4Yo5Rygb5DfiPVUoKhK8=;
+        b=6LH8eyOXyehArCVvZJDvyQESYcCWVUFdyJD+WE0MOIxnnf4C+FLGRZ7Yg9pzxsthxX
+         9ex6+RafBjBO+UahHScZ5Pacbfw4phzIaE080jDNiKvcesyl6kG6JwOPDsqNBjvqHvJE
+         FSP9IZN6aooDSwjI7ViRkfM3ZzNfGA5nZ3+jl3y926d/XtD/hIrDP/FTQoBf+H0TC9Hq
+         RDJMogvtagxFbyrwuO9XiYYzhk2cSqEiXI/boIhIm/gihxOC3ohjxneKSqlxe7zBCgL5
+         jQkoDouFoZN7tvccHzU8WwZmoZRlVOyQ/rRLAwRl0/PJpYuM4xxngiOqdjkvd/D2Obmg
+         O0TQ==
+X-Gm-Message-State: AOAM531WR81aheTU1Xt3h2FyY51cvaZQe0CGqCldntdOPhe6+p+qknAI
+        c8jYOpOy9izbizwwBuxNMyHGbUwlrUB+O1BtH763Hw==
+X-Google-Smtp-Source: ABdhPJzFGn7LU0fqJ7O61lsvDaAZ/2DWIaGN8GbhlNMmxqCmPG3XLkxvdSi+ys256zE0obhK3F0PwBs+L0/P7lP7rrk=
+X-Received: by 2002:a05:6000:18c1:b0:207:87dc:94b2 with SMTP id
+ w1-20020a05600018c100b0020787dc94b2mr10927908wrq.437.1650360160433; Tue, 19
+ Apr 2022 02:22:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] ASoC: qcom: SC7280: Update machine driver startup,
- shutdown callbacks
-Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+References: <1649844596-5264-1-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1649844596-5264-1-git-send-email-quic_srivasam@quicinc.com>
+From:   Judy Hsiao <judyhsiao@chromium.org>
+Date:   Tue, 19 Apr 2022 17:22:29 +0800
+Message-ID: <CAJXt+b9EKzJ6V2OxYwMiexw2sFhwc0U28XuerC7829ZuHAvghg@mail.gmail.com>
+Subject: Re: [PATCH] ASoC: qcom: lpass-platform: Update memremap flag to MEMREMAP_WC
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
         broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
-        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
-        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1650352619-17370-1-git-send-email-quic_srivasam@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1650352619-17370-1-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,65 +69,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 19/04/2022 08:16, Srinivasa Rao Mandadapu wrote:
-> Update machine driver startup, shutdown callback functions to support
-> codec DMA paths. Without this change, platforms with WCD codec is failing
-> to register sound card.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> ---
->   sound/soc/qcom/sc7280.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
-> index 4ef4034..d64df11 100644
-> --- a/sound/soc/qcom/sc7280.c
-> +++ b/sound/soc/qcom/sc7280.c
-> @@ -295,6 +295,10 @@ static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
->   		break;
->   	case LPASS_DP_RX:
->   		break;
-> +	case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
-> +	case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
-> +	case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
-> +		break;
->   	default:
->   		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
->   			cpu_dai->id);
-
-Why not just make sc7280_snd_startup code like this:
-
-static int sc7280_snd_startup(struct snd_pcm_substream *substream)
-{
-	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-	int ret = 0;
-
-	switch (cpu_dai->id) {
-	case MI2S_PRIMARY:
-		ret = sc7280_rt5682_init(rtd);
-		break;
-	default:
-		break;
-	}
-	return ret;
-}
-
-and sc7280_snd_shutdown with something similar
-
---srini
-> @@ -316,6 +320,10 @@ static int sc7280_snd_startup(struct snd_pcm_substream *substream)
->   		break;
->   	case LPASS_DP_RX:
->   		break;
-> +	case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
-> +	case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
-> +	case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
-> +		break;
->   	default:
->   		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
->   			cpu_dai->id);
+> -       buf->area = (unsigned char * __force)memremap(buf->addr, buf->bytes, MEMREMAP_WT);
+> +       buf->area = (unsigned char * __force)memremap(buf->addr, buf->bytes, MEMREMAP_WC);
+Should we replace the memremap() with other standard DMA buffer
+allocation API like: snd_pcm_set_managed_buffer() ?
+Thanks!
+>
+>         return 0;
+>  }
+> --
+> 2.7.4
+>
