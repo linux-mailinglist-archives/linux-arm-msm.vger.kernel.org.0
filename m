@@ -2,126 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F725506C0B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 14:14:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01662506C17
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 14:14:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242888AbiDSMQI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 08:16:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34876 "EHLO
+        id S236328AbiDSMQH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 08:16:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352199AbiDSMP4 (ORCPT
+        with ESMTP id S1352067AbiDSMP4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 19 Apr 2022 08:15:56 -0400
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CB6B20BFF;
-        Tue, 19 Apr 2022 05:12:53 -0700 (PDT)
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-e5bdd14b59so7703532fac.11;
-        Tue, 19 Apr 2022 05:12:53 -0700 (PDT)
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89C16205C6;
+        Tue, 19 Apr 2022 05:12:45 -0700 (PDT)
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-e2442907a1so17204642fac.8;
+        Tue, 19 Apr 2022 05:12:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=j1rFkwOvIXBO+3tCwlNTqd0pjl7npLIdFzpaL7V+7n0=;
-        b=1/WEyvX7aOy9r0Qwh/1wevCsdA3PXUh9kizXIkiMq4gWQPuP8kj2YZI/NeFax19TYj
-         hUbrjfIeBUxBmWtEbowlqCrEcXbp+v8NeL/AbOk5XCQNxasAFsDzoM26jhjnwUIeOu4D
-         13aFHWWK/exuOwKmgvMixSgNumHTaj1JHYiqmpXE+XpfqB4F6CJkzPPVstAWTKgvZ6Z2
-         ua0DU95YKw4aSaZKJMd+Yz5MXXhP2lIINHdit1s9pcJ8VUEEY8Ag6JKplSxT4MucMqMi
-         ZTW+19dTLX7t3ltot3hF2pCaBS4NC98+evKzO7rzxXD7aBjNCF6H2o4G0YUPtfWo8XOo
-         JfTg==
-X-Gm-Message-State: AOAM531DhQRcroqGrjQ3lU54fJE35e7sBXAM0+4+h/fHn61HssmTjOfC
-        rsfSnFzhcvn5dJU8SZaZTQ==
-X-Google-Smtp-Source: ABdhPJw8+O8iy7OvXQDZqJ9fQ+HdQxBCCcLs+j8+1ctB3j5c9rN8Bw97hQrBsEse2DgYT7wYOAAbyQ==
-X-Received: by 2002:a05:6870:2310:b0:da:b3f:2b76 with SMTP id w16-20020a056870231000b000da0b3f2b76mr8021407oao.277.1650370369925;
-        Tue, 19 Apr 2022 05:12:49 -0700 (PDT)
+        bh=VXmHngvtUNu5eflY1U61e24oRozhrPUFJTNzovpIsX8=;
+        b=rdpYrGIYX5AIUDhj7rGkE/uwyqBxnP1Qu9xqXUB1q48/7LkZ1aIxg0rlp5ZmgZewqL
+         xO+uB+sUMps5sl79qVIzdDdY0XxaikHmcm35wTfGYVJiKSu4ucNpQGbKaHm+PPywk15I
+         usdwCY4cvGqDil3pZHQ6cq9amsbbouWq38qte39ek3E67XPONl4Q9aKvCsxqffCEa7Ue
+         KTpSy24xuBC1VFIGu2CjySK064mVHx/5s9vY0I22t+3++QpuZ2BO9fJmhWSj3DDQyNjr
+         /cqD3XyeBcVEt210hcq6xi9IP3clGkdlp0AY8KXTHtkhi+gQD3NZ0JeK626uj/6uJqYT
+         9z4g==
+X-Gm-Message-State: AOAM533B9dROGFbOBjhca54eFU2Ujybzu1jTMfoTaLGDRfCjNzvSzO/G
+        zh5lv03daZ00kVkFW/IPTg==
+X-Google-Smtp-Source: ABdhPJzZAxioIvN5lx5R0aO1Ov01x4UQccfPiROqrHGPhS5fTnwkpumUl7WXGGMmhzbzqmSL9jr9PQ==
+X-Received: by 2002:a05:6870:d683:b0:de:eaa2:3550 with SMTP id z3-20020a056870d68300b000deeaa23550mr6390390oap.253.1650370364721;
+        Tue, 19 Apr 2022 05:12:44 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id ay9-20020a056808300900b0032272231c25sm2994238oib.40.2022.04.19.05.12.49
+        by smtp.gmail.com with ESMTPSA id e22-20020a056870239600b000e2f0c69849sm5000358oap.11.2022.04.19.05.12.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 05:12:49 -0700 (PDT)
-Received: (nullmailer pid 1977874 invoked by uid 1000);
+        Tue, 19 Apr 2022 05:12:44 -0700 (PDT)
+Received: (nullmailer pid 1977862 invoked by uid 1000);
         Tue, 19 Apr 2022 12:12:43 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     robh+dt@kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, vkoul@kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        bhupesh.linux@gmail.com, bjorn.andersson@linaro.org,
-        agross@kernel.org
-In-Reply-To: <20220418205509.1102109-2-bhupesh.sharma@linaro.org>
-References: <20220418205509.1102109-1-bhupesh.sharma@linaro.org> <20220418205509.1102109-2-bhupesh.sharma@linaro.org>
-Subject: Re: [PATCH v3 1/4] dt-bindings: phy: qcom,qmp: Mark '#clock-cells' as a 'optional' property
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     devicetree@vger.kernel.org, zac@squareup.com, krzk+dt@kernel.org,
+        jun.nie@linaro.org, linux-arm-msm@vger.kernel.org,
+        benl@squareup.com, robh+dt@kernel.org, bjorn.andersson@linaro.org,
+        shawn.guo@linaro.org, jgates@squareup.com, mchen@squareup.com,
+        jwillcox@squareup.com, agross@kernel.org
+In-Reply-To: <20220419010903.3109514-2-bryan.odonoghue@linaro.org>
+References: <20220419010903.3109514-1-bryan.odonoghue@linaro.org> <20220419010903.3109514-2-bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v1 1/4] dt-bindings: arm: qcom: Document MSM8939 SoC binding
 Date:   Tue, 19 Apr 2022 07:12:43 -0500
-Message-Id: <1650370363.629686.1977873.nullmailer@robh.at.kernel.org>
+Message-Id: <1650370363.502202.1977861.nullmailer@robh.at.kernel.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 19 Apr 2022 02:25:06 +0530, Bhupesh Sharma wrote:
-> '#clock-cells' is not a required property for qmp-phy(s) in the
-> '/' node, but it should be is used in 'phy@' subnode (where it is
-> actually a 'required' property). Fix the same.
+On Tue, 19 Apr 2022 02:09:00 +0100, Bryan O'Donoghue wrote:
+> Document the MSM8939 and supported boards in upstream Sony "Tulip" M4 Aqua
+> and Square APQ8039 T2.
 > 
-> This also fixes the following 'make dtbs_check' warning(s):
-> 
-> sm8350-microsoft-surface-duo2.dt.yaml: phy@1d87000:
->   '#clock-cells' is a required property
-> 
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
+>  1 file changed, 7 insertions(+)
 > 
 
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/arm/qcom.yaml:37:1: [error] syntax error: found character '\t' that cannot start any token (syntax)
 
-Full log is available here: https://patchwork.ozlabs.org/patch/
+dtschema/dtc warnings/errors:
+make[1]: *** Deleting file 'Documentation/devicetree/bindings/arm/qcom.example.dts'
+Traceback (most recent call last):
+  File "/usr/local/bin/dt-extract-example", line 52, in <module>
+    binding = yaml.load(open(args.yamlfile, encoding='utf-8').read())
+  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/main.py", line 434, in load
+    return constructor.get_single_data()
+  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/constructor.py", line 119, in get_single_data
+    node = self.composer.get_single_node()
+  File "_ruamel_yaml.pyx", line 706, in _ruamel_yaml.CParser.get_single_node
+  File "_ruamel_yaml.pyx", line 724, in _ruamel_yaml.CParser._compose_document
+  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
+  File "_ruamel_yaml.pyx", line 731, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 904, in _ruamel_yaml.CParser._parse_next_event
+ruamel.yaml.scanner.ScannerError: while scanning a block scalar
+  in "<unicode string>", line 12, column 14
+found a tab character where an indentation space is expected
+  in "<unicode string>", line 37, column 1
+make[1]: *** [Documentation/devicetree/bindings/Makefile:26: Documentation/devicetree/bindings/arm/qcom.example.dts] Error 1
+make[1]: *** Waiting for unfinished jobs....
+./Documentation/devicetree/bindings/arm/qcom.yaml:  while scanning a block scalar
+  in "<unicode string>", line 12, column 14
+found a tab character where an indentation space is expected
+  in "<unicode string>", line 37, column 1
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom.yaml: ignoring, error parsing file
+make: *** [Makefile:1401: dt_binding_check] Error 2
 
+doc reference errors (make refcheckdocs):
 
-phy@1c07000: 'lanes@1c06000' does not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-	arch/arm/boot/dts/qcom-sdx55-mtp.dtb
-	arch/arm/boot/dts/qcom-sdx55-t55.dtb
-	arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dtb
+See https://patchwork.ozlabs.org/patch/
 
-phy@1c0e000: 'lanes@1c0e200' does not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/sc7280-crd.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb
-	arch/arm64/boot/dts/qcom/sc7280-idp2.dtb
-	arch/arm64/boot/dts/qcom/sc7280-idp.dtb
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
-phy@1d87000: 'lanes@1d87400', 'vdda-max-microamp', 'vdda-pll-max-microamp' do not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/sm8450-hdk.dtb
-	arch/arm64/boot/dts/qcom/sm8450-qrd.dtb
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-phy@1d87000: 'vdda-max-microamp', 'vdda-pll-max-microamp' do not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dtb
+pip3 install dtschema --upgrade
 
-phy@627000: 'vdda-phy-max-microamp', 'vdda-pll-max-microamp', 'vddp-ref-clk-always-on', 'vddp-ref-clk-max-microamp' do not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-	arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dtb
-
-phy-wrapper@88e9000: 'vdda-phy-supply' is a required property
-	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dtb
-	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dtb
-
-phy-wrapper@88e9000: 'vdda-pll-supply' is a required property
-	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dtb
-	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dtb
-
-ssphy@78000: '#clock-cells', 'lane@78200' do not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb
+Please check and re-submit.
 
