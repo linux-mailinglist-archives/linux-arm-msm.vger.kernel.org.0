@@ -2,74 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9503E507257
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 17:58:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9843F5072E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 18:21:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354143AbiDSP74 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 11:59:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59958 "EHLO
+        id S1354565AbiDSQXS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 12:23:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354136AbiDSP7z (ORCPT
+        with ESMTP id S239383AbiDSQXQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 11:59:55 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FA2323BC4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 08:57:12 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id t25so30173933lfg.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 08:57:12 -0700 (PDT)
+        Tue, 19 Apr 2022 12:23:16 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC99528E0A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 09:20:33 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id o16so21175051ljp.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 09:20:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=aBBlrcuINY/huqI+pmNpt7ezjRhcp+EsZeDz0RlBbYA=;
-        b=oYSRwbUAXncHSazO9/um5GURByFyEv/d1wSyWc52WIGTl0Dn2fBv7EVe8HLgBQaop2
-         q6XNg7gZCRjdwhctLljfU9EYI4JWF+aT2nXZ7JUtsuoqr1ldsayYtbNq56JtkDP+uHhs
-         EVISorbf2Qb+HvhQlrkODKLDY9lirkhtgzJ/Xp9UwuUAGHYsX3P8i3LoMKg1jBinFkGc
-         8HpiDB+f+HYE+kRpEVCBQ5xYc8vGQWEVWZ3OwLaKUsKNSxOqcOQU93sfMiGB5Tj652i/
-         OfdAjRhzNoYxolGuewaXMjdRf8rgOo8zH/3YFgHzOnlP6v0Sq3248bwvXIKypJcU/bSv
-         YUOw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AwPSlRbjlhsy8XFCXSj+BcLSd4AXUjJASAh7ilneiRU=;
+        b=LxdPW1NK9aTlMMY3y8zztnSiSCdrno4Eg3+/on48i8bx8yZqlbJseBoHRliPiJI0ZV
+         VHndrv3Xj34dfQs+LxcvozbhSgSJGkl1K1Qnf8uEMqlwRt4pLuFDoXMBMwhN9se4LfJ8
+         1EGIAmY0tL83XbcYW1+9/peYz/LJS4Ibwwjsxt4QppAD7E9fK9Q838nI27zmVoo3MytN
+         6eFqjnpFPlOJ1KP8SBJyJSVYLXpgYBzSYBK8IZHYLZb6GQ2H3D0labkpwmtfdVCPpgHu
+         6VDx6Z5EK4UYuysge6MZX9fLp2n/tlo+FuHPTtX6/Z8RBpXsEgT/bIEf5ieYF82PExm6
+         97sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=aBBlrcuINY/huqI+pmNpt7ezjRhcp+EsZeDz0RlBbYA=;
-        b=3iHbxxvwyLaG90wmO3C7q55mfRsE1g4x2iVArDg8qPIyXOtagRjJo+Rp67kcU0T56N
-         ShvmOtgn2JM38KRhXAAJIPC2hAcowRLcddyx4hxIXhC0DfEGXnUnK3dFPzY8WbLh5VbO
-         Ust2NirdjV1F7TmkImYD4ZIHpt32y68GHgAzRXANMnJ9aRwIr76HoO4hdxcGDwdjO/t8
-         uzF3VNJU6zWp8K+/YXMpnjRHyVGr3jhKX71s9+A3Nu+RYrWM51U0SLBwJS+LjbCxMkwO
-         0eMz3tAYBr9x0sXtJtW+C46UtrjRIGwmoNxTfjLvb5203XHokW6nFKPs8CSZf08ugn6l
-         KB4w==
-X-Gm-Message-State: AOAM5328yc8/dVouBn6gDmw3FKd0Dpe4wsFM1N1h+RqqdRvIe/fpjIFn
-        6NmPDQBUXTlSRtdzSa9391gH/A==
-X-Google-Smtp-Source: ABdhPJxIyRpDkdE3DsvHCugAEECr9Cihw3eu2sWWZa6oOoYWQV5BWYcP0qZa3q08lMbeYZwFMdbP3Q==
-X-Received: by 2002:ac2:4306:0:b0:46b:c41c:1478 with SMTP id l6-20020ac24306000000b0046bc41c1478mr11760488lfh.559.1650383830827;
-        Tue, 19 Apr 2022 08:57:10 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id f20-20020a056512229400b0044a6ac1af69sm1546934lfu.181.2022.04.19.08.57.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Apr 2022 08:57:10 -0700 (PDT)
-Message-ID: <aadad18c-5a55-ae30-6158-f6c584c59fae@linaro.org>
-Date:   Tue, 19 Apr 2022 18:57:09 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH] drm/msm/mdp5: Eliminate useless code
-Content-Language: en-GB
-To:     Haowen Bai <baihaowen@meizu.com>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <1650348980-19050-1-git-send-email-baihaowen@meizu.com>
+        bh=AwPSlRbjlhsy8XFCXSj+BcLSd4AXUjJASAh7ilneiRU=;
+        b=bosjmoKl53I2+lxsxnVqECfjTawMdGQ8kA5cw7Nad65Z+utwSWCu4YvIydhKdX0MBt
+         oyuuL+7KBqSCsQRDAHD7UoPEw8HuvUHkGw6nF86z8QuQ1cn0hlgAJGQ2HA0JtOKSQ86q
+         HgECZT481ke2kNA+K4ziChBUPbldZJVW46Mz+SObAkCJwXy78lL2lXtViDSW303+cpis
+         UGxdXHT3HqjpdvVgceAl8pPMTfZ6ILgtrSkCjOqVxGSf5k/9DVosv39uZe9pvMD4aRuO
+         diSjqFbncRtsYSGBvakLnSFqh7rKo67xtAlVXnDvjTxdfRCflHye7OXHq8TqUqccKmf3
+         GpjQ==
+X-Gm-Message-State: AOAM5312/No/W08wUDEOoY/XwI1Gl+ePY5e8Tr6ideys9XlYx4s1MSNw
+        G6yStSFUW9gqsvQxnw34tmEOhw==
+X-Google-Smtp-Source: ABdhPJxJ360RfODzF6vg6Cq8E0E3Qkq7x42CwaLCqbDfnV3nE8JOv6m9pA1PpS3y5AMLEGK6od8/2A==
+X-Received: by 2002:a2e:bc05:0:b0:24b:212d:7521 with SMTP id b5-20020a2ebc05000000b0024b212d7521mr10295661ljf.243.1650385232033;
+        Tue, 19 Apr 2022 09:20:32 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id k15-20020a2e92cf000000b002493cc687f3sm1495153ljh.45.2022.04.19.09.20.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Apr 2022 09:20:31 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1650348980-19050-1-git-send-email-baihaowen@meizu.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v2 0/3] Simplify VBIF handling
+Date:   Tue, 19 Apr 2022 19:20:27 +0300
+Message-Id: <20220419162030.1287562-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,33 +72,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/04/2022 09:16, Haowen Bai wrote:
-> Since mdp5_state is initialized twice at the same time, so
-> we make code simple and easy to understand by delete one.
-> 
-> Signed-off-by: Haowen Bai <baihaowen@meizu.com>
+As suggested by Abhinav, rework VBIF handling, simplifying the code.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Changes since v1:
+ - Fix array index comparison in patch 1 (as noted by Abhinav)
 
-> ---
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 2 --
->   1 file changed, 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> index 428f88b786f9..406c34e9f3f8 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> @@ -386,8 +386,6 @@ static int mdp5_plane_atomic_async_check(struct drm_plane *plane,
->   	if (!crtc_state->active)
->   		return -EINVAL;
->   
-> -	mdp5_state = to_mdp5_plane_state(new_plane_state);
-> -
->   	/* don't use fast path if we don't have a hwpipe allocated yet */
->   	if (!mdp5_state->hwpipe)
->   		return -EINVAL;
+Dmitry Baryshkov (3):
+  drm/msm/dpu: index dpu_kms->hw_vbif using vbif_idx
+  drm/msm/dpu: fix error handling around dpu_hw_vbif_init
+  drm/msm/dpu: drop VBIF indices
 
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  6 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 14 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c      | 65 +++++++++++--------
+ 4 files changed, 46 insertions(+), 43 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.35.1
+
