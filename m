@@ -2,121 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01662506C17
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 14:14:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E63C506D24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 15:09:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236328AbiDSMQH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 08:16:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34878 "EHLO
+        id S1351597AbiDSNHI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 09:07:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352067AbiDSMP4 (ORCPT
+        with ESMTP id S1351021AbiDSNHH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 08:15:56 -0400
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89C16205C6;
-        Tue, 19 Apr 2022 05:12:45 -0700 (PDT)
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-e2442907a1so17204642fac.8;
-        Tue, 19 Apr 2022 05:12:45 -0700 (PDT)
+        Tue, 19 Apr 2022 09:07:07 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EF42377F3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 06:04:25 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id r18so20476476ljp.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 06:04:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=51y0snB2GUgkqHni5/VdYz/z1Uks4JZTasXp07lWCwc=;
+        b=krgPmScwiYNT2fnOQoG+U/F5ZqZHDi1ZExMVupJiEUYyWrTMOMLk95Idi1CaQ+m8Vl
+         Cq6zd8hZJK+ilNjf5+y7WNiaJL5G7dHbxn8eWRnmOi9VLfDEWvTeb28BPd+x5sOHtkqt
+         MxksRdXGrrcsZd1ZJ0l23jw0M0uFjB09G2SSTdYA7OvnviTy3Gybljymww0kwr/gM4WT
+         BP5VccwpA9oB3qzvRuia5DxEz6Ca4GMKJRU1voaGuaI91fK/xXYW72MaYXnbJTzlOI18
+         UznWHujLlK+5f4Gw5g3xV9gbIWiVCucOyEGIATMJ0ofhcvgAeXsS/yfxFcJ8SsgCWnP5
+         OjGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=VXmHngvtUNu5eflY1U61e24oRozhrPUFJTNzovpIsX8=;
-        b=rdpYrGIYX5AIUDhj7rGkE/uwyqBxnP1Qu9xqXUB1q48/7LkZ1aIxg0rlp5ZmgZewqL
-         xO+uB+sUMps5sl79qVIzdDdY0XxaikHmcm35wTfGYVJiKSu4ucNpQGbKaHm+PPywk15I
-         usdwCY4cvGqDil3pZHQ6cq9amsbbouWq38qte39ek3E67XPONl4Q9aKvCsxqffCEa7Ue
-         KTpSy24xuBC1VFIGu2CjySK064mVHx/5s9vY0I22t+3++QpuZ2BO9fJmhWSj3DDQyNjr
-         /cqD3XyeBcVEt210hcq6xi9IP3clGkdlp0AY8KXTHtkhi+gQD3NZ0JeK626uj/6uJqYT
-         9z4g==
-X-Gm-Message-State: AOAM533B9dROGFbOBjhca54eFU2Ujybzu1jTMfoTaLGDRfCjNzvSzO/G
-        zh5lv03daZ00kVkFW/IPTg==
-X-Google-Smtp-Source: ABdhPJzZAxioIvN5lx5R0aO1Ov01x4UQccfPiROqrHGPhS5fTnwkpumUl7WXGGMmhzbzqmSL9jr9PQ==
-X-Received: by 2002:a05:6870:d683:b0:de:eaa2:3550 with SMTP id z3-20020a056870d68300b000deeaa23550mr6390390oap.253.1650370364721;
-        Tue, 19 Apr 2022 05:12:44 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id e22-20020a056870239600b000e2f0c69849sm5000358oap.11.2022.04.19.05.12.43
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=51y0snB2GUgkqHni5/VdYz/z1Uks4JZTasXp07lWCwc=;
+        b=XsHUghtuhwwgDdxrwRDF9bnv1w/2NBzYnOcLnbiVEpVJwK/kuF0to0mjwJbehONoHq
+         LaUbYudxc7s3PUNsg/fiNrkSQiLWEY3XBmNPr8LNLbqGxtOxN8opCsMbk/yTOc/bkRVB
+         H6JP1nY2AVFjfp4FeUyR7XTAAeE3vD8cvTfxx07KpZjRT011HXPMKa9kJ44NvXyzdP30
+         57WqMxXe42akjQdporWXK2QyJHtLG/NToDMJYazDI3vHKWmfpWHpHz/dMoAuBGjep7vj
+         M1hH0Ke9uhm04wc9BJw7rg7jpC8ln2a46b7LOQ6n38krkbHCIkL7mCHUs5zYiswzLe2/
+         P7kg==
+X-Gm-Message-State: AOAM532nJVHSO5Ir48rRjV5Ouykpr4azIt2FMXC6+Q/5TF8NRUwkuqxS
+        YNSMoo76xmxSHoC1Dr/O1AcwPg==
+X-Google-Smtp-Source: ABdhPJxvXRNA7D4IGqYmR84etmLXxAFjgH3awFAVSeFJZs7nF3oksNfIfkvKk0MYPRquOpK9ov50xw==
+X-Received: by 2002:a05:651c:103a:b0:24d:b8b1:b333 with SMTP id w26-20020a05651c103a00b0024db8b1b333mr6957160ljm.460.1650373463640;
+        Tue, 19 Apr 2022 06:04:23 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id h28-20020a056512055c00b0046bb80943a9sm1508810lfl.277.2022.04.19.06.04.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 05:12:44 -0700 (PDT)
-Received: (nullmailer pid 1977862 invoked by uid 1000);
-        Tue, 19 Apr 2022 12:12:43 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     devicetree@vger.kernel.org, zac@squareup.com, krzk+dt@kernel.org,
-        jun.nie@linaro.org, linux-arm-msm@vger.kernel.org,
-        benl@squareup.com, robh+dt@kernel.org, bjorn.andersson@linaro.org,
-        shawn.guo@linaro.org, jgates@squareup.com, mchen@squareup.com,
-        jwillcox@squareup.com, agross@kernel.org
-In-Reply-To: <20220419010903.3109514-2-bryan.odonoghue@linaro.org>
-References: <20220419010903.3109514-1-bryan.odonoghue@linaro.org> <20220419010903.3109514-2-bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH v1 1/4] dt-bindings: arm: qcom: Document MSM8939 SoC binding
-Date:   Tue, 19 Apr 2022 07:12:43 -0500
-Message-Id: <1650370363.502202.1977861.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+        Tue, 19 Apr 2022 06:04:23 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Robin Murphy <robin.murphy@arm.com>
+Subject: [PATCH] drm/msm: Revert "drm/msm: Stop using iommu_present()"
+Date:   Tue, 19 Apr 2022 16:04:22 +0300
+Message-Id: <20220419130422.1033699-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 19 Apr 2022 02:09:00 +0100, Bryan O'Donoghue wrote:
-> Document the MSM8939 and supported boards in upstream Sony "Tulip" M4 Aqua
-> and Square APQ8039 T2.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
+This reverts commit e2a88eabb02410267519b838fb9b79f5206769be. The commit
+in question makes msm_use_mmu() check whether the DRM 'component master'
+device is translated by the IOMMU. At this moment it is the 'mdss'
+device.
+However on platforms using the MDP5 driver (e.g. MSM8916/APQ8016,
+MSM8996/APQ8096) it's the mdp5 device, which has the iommus property
+(and thus is "translated by the IOMMU"). This results in these devices
+being broken with the following lines in the dmesg.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+[drm] Initialized msm 1.9.0 20130625 for 1a00000.mdss on minor 0
+msm 1a00000.mdss: [drm:adreno_request_fw] loaded qcom/a300_pm4.fw from new location
+msm 1a00000.mdss: [drm:adreno_request_fw] loaded qcom/a300_pfp.fw from new location
+msm 1a00000.mdss: [drm:get_pages] *ERROR* could not get pages: -28
+msm 1a00000.mdss: could not allocate stolen bo
+msm 1a00000.mdss: [drm:get_pages] *ERROR* could not get pages: -28
+msm 1a00000.mdss: [drm:msm_alloc_stolen_fb] *ERROR* failed to allocate buffer object
+msm 1a00000.mdss: [drm:msm_fbdev_create] *ERROR* failed to allocate fb
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/arm/qcom.yaml:37:1: [error] syntax error: found character '\t' that cannot start any token (syntax)
+Getting the mdp5 device pointer from this function is not that easy at
+this moment. Thus this patch is reverted till the MDSS rework [1] lands.
+It will make the mdp5/dpu1 device component master and the check will be
+legit.
 
-dtschema/dtc warnings/errors:
-make[1]: *** Deleting file 'Documentation/devicetree/bindings/arm/qcom.example.dts'
-Traceback (most recent call last):
-  File "/usr/local/bin/dt-extract-example", line 52, in <module>
-    binding = yaml.load(open(args.yamlfile, encoding='utf-8').read())
-  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/main.py", line 434, in load
-    return constructor.get_single_data()
-  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/constructor.py", line 119, in get_single_data
-    node = self.composer.get_single_node()
-  File "_ruamel_yaml.pyx", line 706, in _ruamel_yaml.CParser.get_single_node
-  File "_ruamel_yaml.pyx", line 724, in _ruamel_yaml.CParser._compose_document
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 731, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 904, in _ruamel_yaml.CParser._parse_next_event
-ruamel.yaml.scanner.ScannerError: while scanning a block scalar
-  in "<unicode string>", line 12, column 14
-found a tab character where an indentation space is expected
-  in "<unicode string>", line 37, column 1
-make[1]: *** [Documentation/devicetree/bindings/Makefile:26: Documentation/devicetree/bindings/arm/qcom.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-./Documentation/devicetree/bindings/arm/qcom.yaml:  while scanning a block scalar
-  in "<unicode string>", line 12, column 14
-found a tab character where an indentation space is expected
-  in "<unicode string>", line 37, column 1
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom.yaml: ignoring, error parsing file
-make: *** [Makefile:1401: dt_binding_check] Error 2
+[1] https://patchwork.freedesktop.org/series/98525/
 
-doc reference errors (make refcheckdocs):
+Fixes: e2a88eabb024 ("drm/msm: Stop using iommu_present()")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/msm_drv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index b6702b0fafcb..e2b5307b2360 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -263,7 +263,7 @@ bool msm_use_mmu(struct drm_device *dev)
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 
+ 	/* a2xx comes with its own MMU */
+-	return priv->is_a2xx || device_iommu_mapped(dev->dev);
++	return priv->is_a2xx || iommu_present(&platform_bus_type);
+ }
+ 
+ static int msm_init_vram(struct drm_device *dev)
+-- 
+2.35.1
 
