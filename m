@@ -2,163 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAF6350768A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 19:31:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 777D85076A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 19:34:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237099AbiDSReX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 13:34:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41122 "EHLO
+        id S244488AbiDSRhN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 13:37:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232206AbiDSReV (ORCPT
+        with ESMTP id S244015AbiDSRhM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 13:34:21 -0400
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6D1C381B4;
-        Tue, 19 Apr 2022 10:31:38 -0700 (PDT)
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-de3eda6b5dso18296279fac.0;
-        Tue, 19 Apr 2022 10:31:38 -0700 (PDT)
+        Tue, 19 Apr 2022 13:37:12 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 935CB393F1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 10:34:29 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id k29-20020a056830243d00b006040caa0988so8053488ots.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 10:34:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Z8TLbLfReqVjU1V5RrGBLrzOEWti2/YJj/Lmqyr2mRU=;
+        b=Hk+iDwE1BufloZNfXKAGw2Ex8g+O5qMpaFlcLwy7lMnBGvBbeyHcv6YyI9A/yoF/Hz
+         tzSm93Mp4JnWGN+jHrQfZwVziNpvWdkvdnSzyjIbXBRDcApl2RjnMOr6a7btYuQalkU4
+         p3bWggEEkwyqpnDWE2D9rDlmkdFMJqAL47Sacfc+ZFjLHVekjOqC6e5C4zw2nZVYfuf2
+         oXyBQ4haAPKsFkjPRICUNflaBI0kKDL5NX6oGq1+BOMOHPYCoNFgfWS92PFbruPmwisi
+         ExkmahVCiJKCRCgNkvjyLuXFnlWPouGoZiwmulZodWFE4muoSz3JfTh+WPO25E71i2pf
+         1FNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=vsh1+N3AHFl1INtReH0W0OLxuEQj6Zw6DbwHLNwXacE=;
-        b=zIGF5NXkktJYBrV8alm5bE97t02hw14nhHqbhTojGUFT0ltIxC1DmUi5XsvgF78o8p
-         hOi9UF03hEbiWguwzOPVWkW35JaHzs0ukqlc51Q/LvfVu8P1/2xezSxnpJoDFVc7EUHG
-         9xvsS03XL8cT7J5qVslxtbDeqO0TDVWt0l09VwRSKYfrTTNQs60T1tXnTENfEuDF67W1
-         doMnHDqRekLZ3KayXjtomuvKhThTbiKr3mIO7XPpw6KdZgkwTyIUnLyBYoDSaOSU1Fe8
-         B2F1DHguyH1Ncrs8Tc2+4zXpeTOMx7ZDKJOA+GS6x9EJ2JLp8monLP3B9bHLTZydJ2h2
-         J7sQ==
-X-Gm-Message-State: AOAM531ctP27o2S9BUUkHxwFYfJenDXlhrStvAxVB8tA4iJqKhtJgaqW
-        MdRA1fin/9PVLBz370excQ==
-X-Google-Smtp-Source: ABdhPJwZ4amMBF78Uj2HwtGidHVXq6uMihB5xsWXnDCbEN1qgpu+cOZ/oO2Kjw0LPTDblGdXyLBBYA==
-X-Received: by 2002:a05:6870:eaa5:b0:da:b3f:2b45 with SMTP id s37-20020a056870eaa500b000da0b3f2b45mr9151148oap.228.1650389498029;
-        Tue, 19 Apr 2022 10:31:38 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id v20-20020a056870e29400b000da4a0089c9sm5298243oad.27.2022.04.19.10.31.37
+        bh=Z8TLbLfReqVjU1V5RrGBLrzOEWti2/YJj/Lmqyr2mRU=;
+        b=46GoyXDFA099Q5g6WCy5soFWKUFnUjtSMbuyUhL8FTBuqdcrtRT5LwRot94VrFIFcJ
+         0bjbO61TKe00kOjiFY9OsTl/eyKF/rFxtL+OYOO32AXVLE1crjCP4aM4TiQ7rMwQwQW+
+         Dtv3nRYIiWIN3dxr7D7rYzpr5W5R2OiCPTi0AR1hJlmtlv0eU4M9ucOtmHaxeU3s6fi9
+         6NAyG3qrNld+xhVwoz/ypbnQ6WFiet5gxyvRJcaqeT1xSLvlmvyexuVFYPf2ju+CK9Ay
+         YNHJhIkJZTuYH7/5eYXA1jGsWm1ON35xIfUsLpMPEn/UUIxy8VrSuZnERflVUsegw1un
+         1Hng==
+X-Gm-Message-State: AOAM530Srnj3QkuPvD1aQ13UXs7IWjht7ecDFa0G8lMpqPo1BnFX952B
+        KCqNZ17SeV7vaEz7KS2gsicSnw==
+X-Google-Smtp-Source: ABdhPJzUw+TTAb6KW1iJVpbiTOwCdonhSAHLyMz/zOK1GLEoh/HQG+xVHf4N8LQfopb2pa42vkW4jg==
+X-Received: by 2002:a05:6830:4b6:b0:605:47ba:2310 with SMTP id l22-20020a05683004b600b0060547ba2310mr5267772otd.301.1650389668886;
+        Tue, 19 Apr 2022 10:34:28 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id m187-20020aca58c4000000b002ef721352easm5369685oib.14.2022.04.19.10.34.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 10:31:37 -0700 (PDT)
-Received: (nullmailer pid 3011512 invoked by uid 1000);
-        Tue, 19 Apr 2022 17:31:36 -0000
-Date:   Tue, 19 Apr 2022 12:31:36 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] regulator: dt-bindings: qcom,rpmh: document
- supplies per variant
-Message-ID: <Yl7x+LG9vdL3mcpC@robh.at.kernel.org>
-References: <20220412073123.27229-1-krzysztof.kozlowski@linaro.org>
- <20220412073123.27229-2-krzysztof.kozlowski@linaro.org>
- <YlhC5B+ZaNn9wUuB@robh.at.kernel.org>
- <39b68e91-93cc-ad74-d064-a29ff01d60a6@linaro.org>
+        Tue, 19 Apr 2022 10:34:28 -0700 (PDT)
+Date:   Tue, 19 Apr 2022 12:34:26 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm8450: Add thermal sensor
+ controllers
+Message-ID: <Yl7yol4wdf04zOy/@builder.lan>
+References: <20220410234458.1739279-1-dmitry.baryshkov@linaro.org>
+ <20220410234458.1739279-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <39b68e91-93cc-ad74-d064-a29ff01d60a6@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <20220410234458.1739279-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 19, 2022 at 08:44:48AM +0200, Krzysztof Kozlowski wrote:
-> On 14/04/2022 17:51, Rob Herring wrote:
-> > On Tue, Apr 12, 2022 at 09:31:22AM +0200, Krzysztof Kozlowski wrote:
-> >> The RPMH regulator binding covers several devices with different
-> >> regulator supplies, so it uses patterns matching broad range of these
-> >> supplies.  This works fine but is not specific and might miss actual
-> >> mistakes when a wrong supply property is used for given variant.
-> >>
-> >> Describe the supplies depending on the compatible, using a defs-allOf
-> >> method.
-> >>
-> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >> ---
-> >>  .../regulator/qcom,rpmh-regulator.yaml        | 290 +++++++++++++++++-
-> >>  1 file changed, 276 insertions(+), 14 deletions(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
-> >> index 842ccef691b8..773536fe37c7 100644
-> >> --- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
-> >> +++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
-> >> @@ -95,35 +95,297 @@ properties:
-> >>    vdd-rgb-supply:
-> >>      description: Input supply phandle of rgb.
-> >>  
-> >> -  vin-lvs-1-2-supply:
-> >> -    description: Input supply phandle of one or more regulators.
-> >> -
-> >> -  vdd-bob-supply:
-> >> -    description: BOB regulator parent supply phandle.
-> >> -
-> >>    bob:
-> >>      type: object
-> >>      $ref: "regulator.yaml#"
-> >>      description: BOB regulator node.
-> >>  
-> >>  patternProperties:
-> >> -  "^vdd-s([0-9]+)-supply$":
-> >> -    description: Input supply phandle(s) of one or more regulators.
-> >> -
-> >> -  "^vdd-(l[0-9]+[-]){1,5}supply$":
-> >> -    description: Input supply phandle(s) of one or more regulators.
-> >> -
-> >>    "^(smps|ldo|lvs)[0-9]+$":
-> >>      type: object
-> >>      $ref: "regulator.yaml#"
-> >>      description: smps/ldo regulator nodes(s).
-> >>  
-> >> -additionalProperties: false
-> >> -
-> >>  required:
-> >>    - compatible
-> >>    - qcom,pmic-id
-> >>  
-> >> +allOf:
-> >> +  - $ref: "#/$defs/pm6150"
-> >> +  - $ref: "#/$defs/pm6150l"
-> >> +  - $ref: "#/$defs/pm7325"
-> >> +  - $ref: "#/$defs/pm8005"
-> >> +  - $ref: "#/$defs/pm8009"
-> >> +  - $ref: "#/$defs/pm8150"
-> >> +  - $ref: "#/$defs/pm8150l"
-> >> +  - $ref: "#/$defs/pm8350"
-> >> +  - $ref: "#/$defs/pm8350c"
-> >> +  - $ref: "#/$defs/pm8450"
-> >> +  - $ref: "#/$defs/pm8998"
-> >> +  - $ref: "#/$defs/pmg1110"
-> >> +  - $ref: "#/$defs/pmi8998"
-> >> +  - $ref: "#/$defs/pmr735a"
-> >> +  - $ref: "#/$defs/pmx55"
-> >> +  - $ref: "#/$defs/pmx65"
-> >> +
-> >> +unevaluatedProperties: false
-> >> +
-> >> +$defs:
-> > 
-> > I'm not following on why you need $defs here rather than putting the 
-> > if/then schemas under the 'allOf'. $defs should primarily only be used 
-> > where it saves duplicating a schema 2 or more times. That could be the 
-> > case here if there's a case that's a subset of another case.
-> 
-> The allOf+defs is a workaround for schema behavior. The entire approach
-> if defining properties in "if:then:" works only with
-> unevaluatedProperties, not with additionalProperties. However
-> unevaluatedProperties require to reference other schema, which I do not
-> do here. I don't have other schema.
-> 
-> allOf+def has references tricking schema to accept unevaluatedProperties.
+On Sun 10 Apr 18:44 CDT 2022, Dmitry Baryshkov wrote:
 
-I'm going to relax the meta-schema instead.
+> From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> 
+> The change adds description of two thermal sensor controllers found
+> on SM8450.
+> 
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 934e29b9e153..b695ce824722 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -1021,6 +1021,28 @@ pdc: interrupt-controller@b220000 {
+>  			interrupt-controller;
+>  		};
+>  
+> +		tsens0: thermal-sensor@c263000 {
+> +			compatible = "qcom,sm8450-tsens", "qcom,tsens-v2";
 
-Rob
+Please don't forget to add qcom,sm8450-tsens to the DT binding
+documentation.
+
+Thanks,
+Bjorn
+
+> +			reg = <0 0x0c263000 0 0x1000>, /* TM */
+> +			      <0 0x0c222000 0 0x1000>; /* SROT */
+> +			#qcom,sensors = <16>;
+> +			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow", "critical";
+> +			#thermal-sensor-cells = <1>;
+> +		};
+> +
+> +		tsens1: thermal-sensor@c265000 {
+> +			compatible = "qcom,sm8450-tsens", "qcom,tsens-v2";
+> +			reg = <0 0x0c265000 0 0x1000>, /* TM */
+> +			      <0 0x0c223000 0 0x1000>; /* SROT */
+> +			#qcom,sensors = <16>;
+> +			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow", "critical";
+> +			#thermal-sensor-cells = <1>;
+> +		};
+> +
+>  		aoss_qmp: power-controller@c300000 {
+>  			compatible = "qcom,sm8450-aoss-qmp", "qcom,aoss-qmp";
+>  			reg = <0 0x0c300000 0 0x400>;
+> -- 
+> 2.35.1
+> 
