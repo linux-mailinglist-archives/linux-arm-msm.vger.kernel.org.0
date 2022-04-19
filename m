@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DB56507C9B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 00:34:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CE0D507CAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 00:43:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356358AbiDSWhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 18:37:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33074 "EHLO
+        id S1358034AbiDSWpq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 18:45:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234498AbiDSWhC (ORCPT
+        with ESMTP id S1347902AbiDSWpp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 18:37:02 -0400
+        Tue, 19 Apr 2022 18:45:45 -0400
 Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A1B42C669;
-        Tue, 19 Apr 2022 15:34:18 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02B1E1E3EE;
+        Tue, 19 Apr 2022 15:43:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650407658; x=1681943658;
+  t=1650408181; x=1681944181;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version;
-  bh=vmDxfZNz6aG7ngdmDvO628iJtp0H5B/RiNUqVclA0CE=;
-  b=DbntXf5PMFtUaEmNeFTTKcyYTcTqRDvj01abP5M4U501hqgnfV1PWUOs
-   qM9TNtuIrtNXmE1YsCx+GbnlH0e1Qi9rVti95paRlrKqJQrH5hYsyY1TD
-   jio+zjl5cx9QAJFOsoEkDlQPT5u4OShFxb7JmDqWV5fVnhac1C67vU3//
-   8=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 19 Apr 2022 15:34:18 -0700
+  bh=ezivpwo8e+MV8fNPdU02SOBEsQq4VFtgWGffC6YO01o=;
+  b=wlxVGgFCzNByBECfHTrEMPwRxv0l1PmJNfXMhPz85F1PFewN4ptx7DXn
+   N3d8LsxkTsNbKb/uc0UiYf4hcF9UnLQnXjGJtJfF558k6ckIh6ovhO1BZ
+   RN2dFHh6c8BxqvQ9gwQgFePjFsY0SWqYxi1b1FEzHBjXIld0qEv60M7ft
+   g=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 19 Apr 2022 15:43:01 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 15:34:18 -0700
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 15:43:00 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 19 Apr 2022 15:34:17 -0700
+ 15.2.986.22; Tue, 19 Apr 2022 15:43:00 -0700
 Received: from hu-subbaram-lv.qualcomm.com (10.49.16.6) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 19 Apr 2022 15:34:17 -0700
+ 15.2.986.22; Tue, 19 Apr 2022 15:43:00 -0700
 From:   Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
-To:     <quic_fenglinw@quicinc.com>
-CC:     <quic_collinsd@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <maz@kernel.org>,
-        <sboyd@kernel.org>, <quic_subbaram@quicinc.com>,
-        <tglx@linutronix.de>
-Subject: [PATCH v6 00/10] A bunch of fix and optimization patches in spmi-pmic-arb.c
-Date:   Tue, 19 Apr 2022 15:34:11 -0700
-Message-ID: <1650407651-10571-1-git-send-email-quic_subbaram@quicinc.com>
+To:     <vkoul@kernel.org>, <sboyd@kernel.org>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>, <david@ixit.cz>,
+        <devicetree@vger.kernel.org>, <lee.jones@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <robh+dt@kernel.org>, <~okias/devicetree@lists.sr.ht>
+Subject: Re: [PATCH v3] dt-bindings: spmi: convert QCOM PMIC SPMI bindings to yaml
+Date:   Tue, 19 Apr 2022 15:42:55 -0700
+Message-ID: <1650408175-12973-1-git-send-email-quic_subbaram@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1647497535-32151-1-git-send-email-quic_fenglinw@quicinc.com>
-References: <1647497535-32151-1-git-send-email-quic_fenglinw@quicinc.com>
+In-Reply-To: <YfjJOQIuGJvedFmJ@matsya>
+References: <YfjJOQIuGJvedFmJ@matsya>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.49.16.6]
@@ -65,13 +65,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Changes in v6:
->   Rebased [v5 08/10] on 
->     https://lore.kernel.org/linux-arm-msm/20211227170151.73116-1-david@ixit.cz/#t
+>> Convert Qualcomm PMIC SPMI binding to yaml format.
 
-Hi Stephen,
-Can this patch series be reviewed? It would be good to know if something is
-missing to keep this pending for a while.
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
-Thanks,
-Subbaraman
+> Steve, Can this be picked up please. I will rebase my v7 update based on
+> this...
+
+Can this DT bindings conversion patch be picked up please?
+
