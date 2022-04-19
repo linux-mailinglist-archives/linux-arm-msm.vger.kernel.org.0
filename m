@@ -2,208 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47514507A1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 21:20:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3989507A3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 21:27:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355520AbiDSTXL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 15:23:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40250 "EHLO
+        id S1345374AbiDSTab (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 15:30:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346734AbiDSTXI (ORCPT
+        with ESMTP id S1345095AbiDSTaa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 15:23:08 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.83])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 321E011C08;
-        Tue, 19 Apr 2022 12:20:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1650396013;
+        Tue, 19 Apr 2022 15:30:30 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A6D84092C;
+        Tue, 19 Apr 2022 12:27:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1650396463;
     s=strato-dkim-0002; d=gerhold.net;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=/S7QQNXSIodjS291auN45CN/uRH39zC/cKPVcmR9cQw=;
-    b=iqA5s4xJ0Gdw+lqdEAk13JM/YZsO9TUujYw48QAUMy9JiqOKoM2kKiyMxr+aLg4aJ8
-    UmQwB0EV6GYZR7OH9wtmyGad33+3lreA6jSmDQx1Ix1CSILoTTNN6Px9H0gs9aGRwnNR
-    PeYr9C/BIdD1XkSjignq7vDx57zsDVP3XiQxKQwowx5wv9XKVOyGOoFckYRK3gAnLRpL
-    9WcZdgpKGwPF9TCAVcPg7jC0S7vLwdhzzz0CoA/QgJCdnmkABMwJM1cpCEAnNY1Pc9/D
-    AY1kgEowibDwrsCNIFj/VbIBLxvLZRSmMkazdcv2RPGFKJLz7QAkRMnr8/Z0xvLaHlPe
-    CwZQ==
+    bh=01EJ35R/0l9Atrk/aEq1LlLlljMz21tL7DytWIf/66o=;
+    b=ZQNWFsTY/dTw/MrMOiFeEpjIn+tb4691c4c9ZNx/56GuCYpEfTIMmJyXdpsgazZvic
+    SFyTj0PuzmRoB9PdOWjSBaUfeOL9i+laRzOpVN7fp+YlcBxSOR0y4qzbbFCKKK2FowB+
+    i7NCMq28dgc9kSJQZlciamsOl3Msb2W7sLVKZyWdeRpxv1CYLWj2uFY/t+MwbtpIAass
+    O7c3rUR9hNFFrqfkAZxKvczOXZxjd5z5qHom2yW//ICI+2tL+eoiUVEjf1pTCLufrC9Z
+    b1XSno2k76AwJ5s8n1L1qG9+lO7OHGJdM3g6YGJiqkJ+6WP7Y0sNjRFRMn8/juZVJoHK
+    MW1g==
 Authentication-Results: strato.com;
     dkim=none
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrK88/6Y="
 X-RZG-CLASS-ID: mo00
 Received: from gerhold.net
     by smtp.strato.de (RZmta 47.42.2 AUTH)
-    with ESMTPSA id u05e50y3JJKCuUX
+    with ESMTPSA id u05e50y3JJRhuVD
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Tue, 19 Apr 2022 21:20:12 +0200 (CEST)
-Date:   Tue, 19 Apr 2022 21:20:11 +0200
+    Tue, 19 Apr 2022 21:27:43 +0200 (CEST)
+Date:   Tue, 19 Apr 2022 21:27:42 +0200
 From:   Stephan Gerhold <stephan@gerhold.net>
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, shawn.guo@linaro.org,
         jun.nie@linaro.org, benl@squareup.com, jwillcox@squareup.com,
-        jgates@squareup.com, mchen@squareup.com, zac@squareup.com,
-        Leo Yan <leo.yan@linaro.org>
-Subject: Re: [PATCH v1 3/4] arm64: dts: Add aqp8039-t2 board
-Message-ID: <Yl8La/pFbQJNUQTy@gerhold.net>
+        jgates@squareup.com, mchen@squareup.com, zac@squareup.com
+Subject: Re: [PATCH v1 4/4] arm64: dts: Add msm8939 Sony Xperia M4 Aqua
+Message-ID: <Yl8NLldCWaecisH5@gerhold.net>
 References: <20220419010903.3109514-1-bryan.odonoghue@linaro.org>
- <20220419010903.3109514-4-bryan.odonoghue@linaro.org>
+ <20220419010903.3109514-5-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220419010903.3109514-4-bryan.odonoghue@linaro.org>
+In-Reply-To: <20220419010903.3109514-5-bryan.odonoghue@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 19, 2022 at 02:09:02AM +0100, Bryan O'Donoghue wrote:
-> The apq8039-t2 is an apq8039/msm8939 based board paired with a wcn3680b
-> WiFi chipset.
->
-> [...]
+On Tue, Apr 19, 2022 at 02:09:03AM +0100, Bryan O'Donoghue wrote:
+> Add a basic booting DTS for the Sony Xperia M4 Aqua aka "tulip".
+> 
+> Tulip is paired with:
+> 
+> - wcn3660
+> - smb1360 battery charger
+> - 720p Truly NT35521 Panel
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
 >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/apq8039-t2-pinctl.dtsi      | 277 +++++++++++++++
->  arch/arm64/boot/dts/qcom/apq8039-t2.dts       | 326 ++++++++++++++++++
->  3 files changed, 604 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/apq8039-t2-pinctl.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/apq8039-t2.dts
+>  .../qcom/msm8939-sony-xperia-kanuti-tulip.dts | 489 ++++++++++++++++++
+>  2 files changed, 490 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index f9e6343acd03..5b8a0eb34733 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -1,5 +1,6 @@
->  # SPDX-License-Identifier: GPL-2.0
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= apq8039-t2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/apq8039-t2-pinctl.dtsi b/arch/arm64/boot/dts/qcom/apq8039-t2-pinctl.dtsi
-> new file mode 100644
-> index 000000000000..60adb3da826a
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/apq8039-t2-pinctl.dtsi
-
-We stopped separating the pinctrl in an extra .dtsi. Please just put it
-at the end of the apq8039-t2.dts or sorted with the other nodes.
-(I put them at the end for all the msm8916 device trees, but on newer
- SoCs it's usually just put normally in alphebetical order.)
-
 > [...]
-> @@ -0,0 +1,277 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> +
-> +/*
-> + * Line names are taken from the schematic of T2, Ver X03.
-> + * July 14, 2018. Page 4 in particular.
-> + */
-> +
-> +&msmgpio {
-> + [...]
-> +	typec_pins: typec_pins {
-> +		pinmux_irqz {
-> +			function = "gpio";
-> +			pins = "gpio107";
-> +		};
-> +		pinconf_irqz {
-> +			pins = "gpio107";
-> +			bias-pull-up;
-> +			input-enable;
-> +		};
-> +	};
-
-You can write this like:
-
-typec_pins: typec_pins {
-	pins = "gpio107";
-	function = "gpio";
-
-	bias-pull-up;
-	input-enable;
-};
-
-The separation and separate "pinmux" etc nodes shouldn't be needed. Also
-see commit 6554a295042f7 ("arm64: dts: qcom: msm8916: Simplify pinctrl
-configuration").
-
-> + [...]
-> +};
-> + [...]
-> diff --git a/arch/arm64/boot/dts/qcom/apq8039-t2.dts b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
+> diff --git a/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts b/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
 > new file mode 100644
-> index 000000000000..558f37945d94
+> index 000000000000..336969f16bc9
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
-> @@ -0,0 +1,326 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022, Linaro Ltd.
-> + *
-> + * This program is free software; you can redistribute it and/or modify
-> + * it under the terms of the GNU General Public License version 2 and
-> + * only version 2 as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> + * GNU General Public License for more details.
-
-SPDX should be enough. :)
-
-> + */
-> + [...]
-> +};
+> +++ b/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
+> @@ -0,0 +1,489 @@
+> [...]
 > +&otg {
 > +	status = "okay";
 > +	usb-role-switch;
-> +
-> +	pinctrl-names = "default", "host", "device";
-> +	pinctrl-0 = <&pinctrl_otg_default>;
-> +	pinctrl-1 = <&pinctrl_otg_host>;
-> +	pinctrl-2 = <&pinctrl_otg_device>;
-> +	pin-switch-delay-us = <100000>;
 > +
 > +	ulpi {
 > +		usb_hs_phy: phy {
 > +			qcom,enable-vbus-pullup;
 
-Hm, what handles the USB detection on this port? The tps6598x?
-Can it provide an extcon so that you don't need to keep the USB PHY
-powered permanently?
+tulip seems to have qcom,usbid-gpio = <&msm_gpio 110 0>; downstream.
+Have you tried setting it up using linux,extcon-usb-gpio?
+See e.g. msm8916-longcheer-l8910, it has a similar setup (it also uses
+smb1360 for charging actually).
 
-> + [...]
-> +&pronto {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&wcnss_pin_a &wcnss_pin_antennae>;
-> +	status = "okay";
-> +
-> +	iris {
-> +		compatible = "qcom,wcn3680";
-> +	};
-> +
-> +	smd-edge {
-> +		wcnss {
-> +			bt {
-> +				local-bd-address = [ 55 44 33 22 11 00 ];
-
-Is this really needed?
-
-The DB410c LK and U-Boot port (and also lk2nd) automatically generate a
-WiFi/BT address based on the eMMC serial number. That's probably a
-better solution than a fixed MAC address specified here.
+The advantage is that you don't need the manual role switching using
+"usb-role-switch", USB OTG adapters should be detected automatically.
 
 Thanks,
 Stephan
