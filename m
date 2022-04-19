@@ -2,85 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D02DC50647C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 08:31:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A78C35064D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 08:46:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348821AbiDSGds (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 02:33:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45470 "EHLO
+        id S1349045AbiDSGrn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 02:47:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236895AbiDSGdr (ORCPT
+        with ESMTP id S1349029AbiDSGrf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 02:33:47 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CA3B245BE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 23:31:05 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id bv19so30823745ejb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 23:31:05 -0700 (PDT)
+        Tue, 19 Apr 2022 02:47:35 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4680BBC33
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 23:44:51 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id u15so30816477ejf.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Apr 2022 23:44:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=/rrLKvmQMfKWM71Vt4ACdmZv7rtrzaFdefyFe3yrPL0=;
-        b=TxQpED75D37zNwWP0eZ4Dppk/q0LBcVqFM6ORmD7xS3vp6VttRdoUTzqm+XP5vOFB0
-         Ctlm47B6Emw1ElvrpbN9QjQq7etONKq0Fbe+h2PELH5bpevYVaHc0zL4bcpO5Qu1e8ng
-         VBoBvyM85yJHIOcjSeDLAlGnhqt81eY9ktqQssIFMEbOujGk25Tjs0P1764K49T1dInS
-         gq25ZkM3ab/TjSjwESqF2E+Q65bRBe48H/wOBG8hMorzLyEUchddko3rhab4wIHEZ4u2
-         Ed518cl9OebJFYVdZjYw+ib48Z0+1HgqZLZwbpyFngfqIxORmv7aMQjvtzynGBzn8m9q
-         UGQw==
+        bh=WDQdMsSQtFeONfrPWRQrEMWsmK9TYCXo9oQyKgCX1d4=;
+        b=W+DEw3OjhbAorYeQvkZAGbdpHDkjISIw2sWe7zSQRBSDh3kasiZwD3BvHX9g6DsaeF
+         Z1zeOIp/nCjpP4LNqhDwh2Bl39liGxKTC2D2N1TbhkAOpaEsRLf6zRK+OAfWbHawGpVb
+         dDc1ONAw+G1uVAm4MZnn/jw7CWyH7TD/VjyM9sfIHDdI+ENh9f2zRasrOFLafKxDS1h5
+         47lMDtfkJGU/nuspJfIvREbR+WZYQM6sy8m0HMbdeOjVLvGYLAcFsTJpMqz4qaYpbj6C
+         dwjMD3EC04lWTJeBRG1AqBD4X/cUvQ6+LjCk4SyMnRfaXQ0CEKvVtcRE2Ns0E+U1I3+k
+         ZeXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=/rrLKvmQMfKWM71Vt4ACdmZv7rtrzaFdefyFe3yrPL0=;
-        b=d0pKytxX32AnInV14a2HE6p/vqOso3RSDYaJtgw9bgHw6rOqMeLYG4wW88zqmjuSRd
-         X7e3ClijiujTTrLL3KBj3EeLwrDhCpKhss5WXfCxXT44YjN+Ps9AHOynFTQ6zvieHRzG
-         iJupt4eKKZrGnM4vF0euH6rZxd+J5r5GOFUksHicC7FtLYy8/EFUghH7DBifXfoFO+Rb
-         flMzUiVlikW880F+UfE5DRkHcbrOWNdDMb5Wt/d/UJ+pHI+SSKlU9Mqc1WOmA15/c0gP
-         qb5SlFE5qpkgG+6ksYGmM1vjuq9OiXaYGRjGj4Y4tGzNrNDYx0cZlvQGYoN0skxoeDCp
-         6TDQ==
-X-Gm-Message-State: AOAM531mobqVE4mOKVtqhRl9nXvEmk0P7cWCCo9/kZr34wGSxh58opTr
-        UtCo7yUgyuhvvt5xYIUdkj76nbnJzlc0ug==
-X-Google-Smtp-Source: ABdhPJzYgvXLYpatm5Bb1YZMvzLwkeUp5lptQM5SS++47h8EOa4UubW5sk4ag3uCpQcwEUHKYqtY7A==
-X-Received: by 2002:a17:907:1c9b:b0:6ef:5e62:fd62 with SMTP id nb27-20020a1709071c9b00b006ef5e62fd62mr10556403ejc.686.1650349863942;
-        Mon, 18 Apr 2022 23:31:03 -0700 (PDT)
+        bh=WDQdMsSQtFeONfrPWRQrEMWsmK9TYCXo9oQyKgCX1d4=;
+        b=YCZhQFVoGzCU4afpe3yZOFAVw1/0aw/VhHZfLOGzdM0ZNh5M7cMzk2OmMuGHyUkA/T
+         G3wJC33TnlSUbe7SlW8uve3z/Va6DpLwUKLoYzlvdO/B12mHvJUqTdSv8hHG26br5BlS
+         Q2196cWS8tsNbesKW4Csi6a4I7W3RijmHI0itHtdSeZ7sNHP2qKkXfVUdwL//l2BPv9C
+         bDOn/O2kOS/LHkrlkxYjEzcsyjORo61Be8QOwTodzk6qwWD+Yn2rUSsn0JsSXe2uJh0o
+         zYLfmIWDgFGJU5Flw3eeoS91KyZTocc46DCywE4rinFqsXIhO3xtX5+jzQnNgpRy17eH
+         ugQA==
+X-Gm-Message-State: AOAM533xTNdT8yjNRy/G+H3cHct4+QymibzWc8P0lVPrjSjq0nUYc11Q
+        P/ytUEovgg9uGgFXYe5F9qmU4Q==
+X-Google-Smtp-Source: ABdhPJxZvaWhIZoWqA8l9E3QzXXqm8pjAwVmspK/s+lgWoyTFUJy55XOrlYTGTP6SvstEVOAaHiuEQ==
+X-Received: by 2002:a17:907:6095:b0:6e7:cc3f:c33d with SMTP id ht21-20020a170907609500b006e7cc3fc33dmr12375812ejc.570.1650350689890;
+        Mon, 18 Apr 2022 23:44:49 -0700 (PDT)
 Received: from [192.168.0.217] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id j2-20020a056402238200b0041f351a8b83sm7940834eda.43.2022.04.18.23.31.02
+        by smtp.gmail.com with ESMTPSA id eq7-20020a056402298700b00419d8d46a8asm7693260edb.39.2022.04.18.23.44.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Apr 2022 23:31:03 -0700 (PDT)
-Message-ID: <aa54cc23-e479-688c-6a3c-b9c73babd9b4@linaro.org>
-Date:   Tue, 19 Apr 2022 08:31:02 +0200
+        Mon, 18 Apr 2022 23:44:49 -0700 (PDT)
+Message-ID: <39b68e91-93cc-ad74-d064-a29ff01d60a6@linaro.org>
+Date:   Tue, 19 Apr 2022 08:44:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH RESEND v2 1/9] dt-bindings: clk: qcom: msm8996-apcc: Add
- CBF
+Subject: Re: [PATCH v2 1/2] regulator: dt-bindings: qcom,rpmh: document
+ supplies per variant
 Content-Language: en-US
-To:     Yassine Oudjana <yassine.oudjana@gmail.com>
+To:     Rob Herring <robh@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Rob Herring <robh@kernel.org>
-References: <20220416025637.83484-1-y.oudjana@protonmail.com>
- <20220416025637.83484-2-y.oudjana@protonmail.com>
- <813f4a3d-255b-0ec1-cc3e-a1280e4d74ae@linaro.org>
- <VOUJAR.IJKRF5T1P4ZE@gmail.com>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220412073123.27229-1-krzysztof.kozlowski@linaro.org>
+ <20220412073123.27229-2-krzysztof.kozlowski@linaro.org>
+ <YlhC5B+ZaNn9wUuB@robh.at.kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <VOUJAR.IJKRF5T1P4ZE@gmail.com>
+In-Reply-To: <YlhC5B+ZaNn9wUuB@robh.at.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -93,66 +82,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/04/2022 21:12, Yassine Oudjana wrote:
-> 
-> On Mon, Apr 18 2022 at 18:04:08 +0200, Krzysztof Kozlowski 
-> <krzysztof.kozlowski@linaro.org> wrote:
->> On 16/04/2022 04:56, Yassine Oudjana wrote:
->>>  Add CBF clock and reg.
->>>
->>>  Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
->>>  Acked-by: Rob Herring <robh@kernel.org>
->>>  ---
->>>   .../devicetree/bindings/clock/qcom,msm8996-apcc.yaml   | 10 
->>> ++++++----
->>>   1 file changed, 6 insertions(+), 4 deletions(-)
->>>
->>>  diff --git 
->>> a/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml 
->>> b/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
->>>  index a20cb10636dd..325f8aef53b2 100644
->>>  --- a/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
->>>  +++ b/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
->>>  @@ -10,8 +10,8 @@ maintainers:
->>>     - Loic Poulain <loic.poulain@linaro.org>
->>>
->>>   description: |
->>>  -  Qualcomm CPU clock controller for MSM8996 CPUs, clock 0 is for 
->>> Power cluster
->>>  -  and clock 1 is for Perf cluster.
->>>  +  Qualcomm CPU clock controller for MSM8996 CPUs, clock 0 is for 
->>> Power cluster,
->>>  +  clock 1 is for Perf cluster, and clock 2 is for Coherent bus 
->>> fabric (CBF).
->>>
->>>   properties:
->>>     compatible:
->>>  @@ -19,7 +19,9 @@ properties:
->>>         - qcom,msm8996-apcc
->>>
->>>     reg:
->>>  -    maxItems: 1
->>>  +    items:
->>>  +      - description: Cluster clock registers
->>>  +      - description: CBF clock registers
+On 14/04/2022 17:51, Rob Herring wrote:
+> On Tue, Apr 12, 2022 at 09:31:22AM +0200, Krzysztof Kozlowski wrote:
+>> The RPMH regulator binding covers several devices with different
+>> regulator supplies, so it uses patterns matching broad range of these
+>> supplies.  This works fine but is not specific and might miss actual
+>> mistakes when a wrong supply property is used for given variant.
 >>
->> This breaks the ABI (which might be okay or might be not, but was not
->> mentioned in the commit) and breaks existing DTSes. Please fix them
->> before this patch.
+>> Describe the supplies depending on the compatible, using a defs-allOf
+>> method.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../regulator/qcom,rpmh-regulator.yaml        | 290 +++++++++++++++++-
+>>  1 file changed, 276 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+>> index 842ccef691b8..773536fe37c7 100644
+>> --- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+>> +++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+>> @@ -95,35 +95,297 @@ properties:
+>>    vdd-rgb-supply:
+>>      description: Input supply phandle of rgb.
+>>  
+>> -  vin-lvs-1-2-supply:
+>> -    description: Input supply phandle of one or more regulators.
+>> -
+>> -  vdd-bob-supply:
+>> -    description: BOB regulator parent supply phandle.
+>> -
+>>    bob:
+>>      type: object
+>>      $ref: "regulator.yaml#"
+>>      description: BOB regulator node.
+>>  
+>>  patternProperties:
+>> -  "^vdd-s([0-9]+)-supply$":
+>> -    description: Input supply phandle(s) of one or more regulators.
+>> -
+>> -  "^vdd-(l[0-9]+[-]){1,5}supply$":
+>> -    description: Input supply phandle(s) of one or more regulators.
+>> -
+>>    "^(smps|ldo|lvs)[0-9]+$":
+>>      type: object
+>>      $ref: "regulator.yaml#"
+>>      description: smps/ldo regulator nodes(s).
+>>  
+>> -additionalProperties: false
+>> -
+>>  required:
+>>    - compatible
+>>    - qcom,pmic-id
+>>  
+>> +allOf:
+>> +  - $ref: "#/$defs/pm6150"
+>> +  - $ref: "#/$defs/pm6150l"
+>> +  - $ref: "#/$defs/pm7325"
+>> +  - $ref: "#/$defs/pm8005"
+>> +  - $ref: "#/$defs/pm8009"
+>> +  - $ref: "#/$defs/pm8150"
+>> +  - $ref: "#/$defs/pm8150l"
+>> +  - $ref: "#/$defs/pm8350"
+>> +  - $ref: "#/$defs/pm8350c"
+>> +  - $ref: "#/$defs/pm8450"
+>> +  - $ref: "#/$defs/pm8998"
+>> +  - $ref: "#/$defs/pmg1110"
+>> +  - $ref: "#/$defs/pmi8998"
+>> +  - $ref: "#/$defs/pmr735a"
+>> +  - $ref: "#/$defs/pmx55"
+>> +  - $ref: "#/$defs/pmx65"
+>> +
+>> +unevaluatedProperties: false
+>> +
+>> +$defs:
 > 
-> This is only documenting changes made in an earlier patch[1] this
-> series depends on,
+> I'm not following on why you need $defs here rather than putting the 
+> if/then schemas under the 'allOf'. $defs should primarily only be used 
+> where it saves duplicating a schema 2 or more times. That could be the 
+> case here if there's a case that's a subset of another case.
 
-So this other patch breaks the ABI. Was it accepted? The patch you wrote
-here should go together with the clock change.
+The allOf+defs is a workaround for schema behavior. The entire approach
+if defining properties in "if:then:" works only with
+unevaluatedProperties, not with additionalProperties. However
+unevaluatedProperties require to reference other schema, which I do not
+do here. I don't have other schema.
 
->  and the DTSes are fixed in another patch[2] that
-> is also listed as a dependency in the cover letter (both patches
-> aren't applied yet). Shouldn't the ABI changes should be mentioned in
-> those patches instead?
+allOf+def has references tricking schema to accept unevaluatedProperties.
 
-They should be mentioned in the clock driver or here, because usually
-they come together. :)
 
 Best regards,
 Krzysztof
