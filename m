@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C98D506A3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 13:26:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D570506A62
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 13:29:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235423AbiDSL2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 07:28:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60488 "EHLO
+        id S1348383AbiDSLbF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 07:31:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351340AbiDSL1k (ORCPT
+        with ESMTP id S244434AbiDSLbE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 07:27:40 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FB6AA18B;
-        Tue, 19 Apr 2022 04:24:58 -0700 (PDT)
+        Tue, 19 Apr 2022 07:31:04 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2DAE2612D;
+        Tue, 19 Apr 2022 04:28:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650367498; x=1681903498;
+  t=1650367701; x=1681903701;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=w7LPbHdBtF19813RNb9Io8T1jfXZuxIKBngxZzsH7HM=;
-  b=oMdfT8LBfhedBB5MDjUlX8CG7g9qRfMGIPsniRj3k+8kjdVhTAb5uRlB
-   vwBwGNpcxvTYbwxTietHuLeyECrV9ilizuQE7wGbLBUt+BL2fm9IQ7mMs
-   ssCQaOytoN0dbf6/SbYFLOwagNozBETsquUzMIKDle5I8gDuSVuM1Qn7B
-   E=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 19 Apr 2022 04:24:57 -0700
+  bh=7x3TYXYbot5GgNgc0jGFA3hupHhRC7kRkRPyHXOsERA=;
+  b=cquVnqjsPZZ1F788jn23y44nLYt9HmtZhk9oP1Z2lsyJYTDzCbGB/mlu
+   BkRTTzkDjxll3x++o4yepS5X8DVNUD5ujgOIWfMsCPB1oSpFcoq4gzzTU
+   fjCspbh1srKWFuGrovMLhoSgBCH0ZxdjZqb9M9IpDiGaBYwwdnTLtmJw3
+   Y=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 19 Apr 2022 04:28:20 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 04:24:57 -0700
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 04:28:19 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 19 Apr 2022 04:24:57 -0700
+ 15.2.986.22; Tue, 19 Apr 2022 04:28:19 -0700
 Received: from [10.216.20.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 19 Apr
- 2022 04:24:52 -0700
-Message-ID: <5ac149ac-4862-e8c9-185c-524c4b111961@quicinc.com>
-Date:   Tue, 19 Apr 2022 16:54:49 +0530
+ 2022 04:28:15 -0700
+Message-ID: <c9124bdc-397a-8c1a-1133-1f85a0d37538@quicinc.com>
+Date:   Tue, 19 Apr 2022 16:58:12 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [PATCH v8 2/4] arm64: dts: qcom: sc7280: Add nodes for wcd9385
- and max98360a codec
+Subject: Re: [PATCH v8 4/4] arm64: dts: qcom: sc7280: Add dt nodes for sound
+ card
 Content-Language: en-US
 To:     Matthias Kaehlcke <mka@chromium.org>
 CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
@@ -55,18 +55,18 @@ CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
         <judyhsiao@chromium.org>,
         Venkata Prasad Potturu <quic_potturu@quicinc.com>
 References: <1650291252-30398-1-git-send-email-quic_srivasam@quicinc.com>
- <1650291252-30398-3-git-send-email-quic_srivasam@quicinc.com>
- <Yl2VmW18QAJl9v+m@google.com>
+ <1650291252-30398-5-git-send-email-quic_srivasam@quicinc.com>
+ <Yl2nuxzH0mcPa94B@google.com>
 From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 Organization: Qualcomm
-In-Reply-To: <Yl2VmW18QAJl9v+m@google.com>
+In-Reply-To: <Yl2nuxzH0mcPa94B@google.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,247 +76,179 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 4/18/2022 10:15 PM, Matthias Kaehlcke wrote:
-Thanks for your time and valuable inputs Matthias!!!
-> On Mon, Apr 18, 2022 at 07:44:10PM +0530, Srinivasa Rao Mandadapu wrote:
->> Add wcd938x and  max98360a codecs for audio use case on
->> sc7280 based platforms.
->> Add tlmm gpio property in wcd938x node for switching CTIA/OMTP Headset.
->> Add amp_en node for  max98360a codec.
-> General note: I don't think it's a good practice to add stuff like this to
-> multiple boards in a single patch. Why?
->
-> First the subject of such a patch tends to be vague ("arm64: dts: qcom:
-> sc7280: Add nodes for wcd9385 and max98360a codec"), in this case it gives
-> no hint about the boards. If someone was interested in picking changes
-> for a given board they can't easily identify from the subject that the
-> change is relevant for them.
->
-> Changes touching multiple boards are more likely to cause conflicts when
-> being picked (or reverted), both upstream and in downstream trees (which
-> unfortunately have to exist for product development). Downstream trees
-> might only pick changes for the board(s) they target, patches that touch
-> mutiple boards often cause conflicts due to context deltas in the
-> 'irrelevant' boards.
->
-> Lastly it's usually easier to get a patch reviewed (in the sense of
-> getting a 'Reviewed-by' tag) and landed that does a single thing.
-
-Yes, agree to your opinion. In a nutshell, we will include board 
-name(ex: herobrine)
-
-in commit message and split the patches per external codec.
-
-Actually, in Initial herobrine boards, EVT and IDP, has both maxim 
-speaker and WCD codec,
-
-hence we included in same patch.
-
+On 4/18/2022 11:32 PM, Matthias Kaehlcke wrote:
+Thanks for your time Matthias!!!
+> On Mon, Apr 18, 2022 at 07:44:12PM +0530, Srinivasa Rao Mandadapu wrote:
+>> Add dt nodes for sound card support, which is using WCD938x headset
+>> playback, capture, I2S speaker playback and DMICs via VA macro.
+>>
 >> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 >> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 >> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 >> ---
->>   arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts     |  6 ++
->>   arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  8 +++
->>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 97 ++++++++++++++++++++++++++
->>   3 files changed, 111 insertions(+)
+>>   arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts | 23 ++++++++
+>>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi   | 93 ++++++++++++++++++++++++++++++
+>>   2 files changed, 116 insertions(+)
 >>
 >> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
->> index 344338a..aa0bf6e2 100644
+>> index aa0bf6e2..bf15bbe 100644
 >> --- a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
 >> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
->> @@ -87,6 +87,12 @@ ap_ts_pen_1v8: &i2c13 {
+>> @@ -87,6 +87,29 @@ ap_ts_pen_1v8: &i2c13 {
 >>   	pins = "gpio51";
 >>   };
 >>   
->> +&wcd938x {
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&us_euro_hs_sel>;
->> +	us-euro-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
+>> +&sound {
+>> +	audio-routing =
+>> +		"IN1_HPHL", "HPHL_OUT",
+>> +		"IN2_HPHR", "HPHR_OUT",
+>> +		"AMIC1", "MIC BIAS1",
+>> +		"AMIC2", "MIC BIAS2",
+>> +		"VA DMIC0", "MIC BIAS1",
+>> +		"VA DMIC1", "MIC BIAS1",
+>> +		"VA DMIC2", "MIC BIAS3",
+>> +		"VA DMIC3", "MIC BIAS3",
+>> +		"TX SWR_ADC0", "ADC1_OUTPUT",
+>> +		"TX SWR_ADC1", "ADC2_OUTPUT",
+>> +		"TX SWR_ADC2", "ADC3_OUTPUT",
+>> +		"TX SWR_DMIC0", "DMIC1_OUTPUT",
+>> +		"TX SWR_DMIC1", "DMIC2_OUTPUT",
+>> +		"TX SWR_DMIC2", "DMIC3_OUTPUT",
+>> +		"TX SWR_DMIC3", "DMIC4_OUTPUT",
+>> +		"TX SWR_DMIC4", "DMIC5_OUTPUT",
+>> +		"TX SWR_DMIC5", "DMIC6_OUTPUT",
+>> +		"TX SWR_DMIC6", "DMIC7_OUTPUT",
+>> +		"TX SWR_DMIC7", "DMIC8_OUTPUT";
 >> +};
-> Since this is added for the CRD rev3 it probably should also be added to
-> sc7280-herobrine-crd.dts
-Okay. Will add in corresponding latest herobrine CRD dts file also.
+> Should this also be added to sc7280-herobrine-crd.dts?
+Okay. Will add it corresponding dts file.
 >
 >> +
->>   &tlmm {
->>   	tp_int_odl: tp-int-odl {
->>   		pins = "gpio7";
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
->> index d58045d..f247403 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
->> @@ -20,6 +20,14 @@
->>   #include "sc7280-chrome-common.dtsi"
->>   
->>   / {
->> +	max98360a: audio-codec-0 {
->> +		compatible = "maxim,max98360a";
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&amp_en>;
->> +		sdmode-gpios = <&tlmm 63 GPIO_ACTIVE_HIGH>;
->> +		#sound-dai-cells = <0>;
->> +	};
->> +
->>   	chosen {
->>   		stdout-path = "serial0:115200n8";
->>   	};
+>>   &wcd938x {
+>>   	pinctrl-names = "default";
+>>   	pinctrl-0 = <&us_euro_hs_sel>;
 >> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index 2f863c0..8dad599 100644
+>> index e880837..640b1338 100644
 >> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
 >> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -20,6 +20,42 @@
->>   		serial1 = &uart7;
+>> @@ -85,6 +85,99 @@
+>>   		pinctrl-names = "default";
+>>   		pinctrl-0 = <&nvme_pwren>;
 >>   	};
->>   
->> +	max98360a: audio-codec-0 {
->> +		compatible = "maxim,max98360a";
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&amp_en>;
->> +		sdmode-gpios = <&tlmm 63 GPIO_ACTIVE_HIGH>;
+>> +
+>> +	sound: sound {
+>> +		compatible = "google,sc7280-herobrine";
+>> +		model = "sc7280-wcd938x-max98360a-1mic";
+>> +
+>> +		audio-routing =
+>> +			"IN1_HPHL", "HPHL_OUT",
+>> +			"IN2_HPHR", "HPHR_OUT",
+>> +			"AMIC1", "MIC BIAS1",
+>> +			"AMIC2", "MIC BIAS2",
+>> +			"VA DMIC0", "MIC BIAS3",
+>> +			"VA DMIC1", "MIC BIAS3",
+>> +			"VA DMIC2", "MIC BIAS1",
+>> +			"VA DMIC3", "MIC BIAS1",
+>> +			"TX SWR_ADC0", "ADC1_OUTPUT",
+>> +			"TX SWR_ADC1", "ADC2_OUTPUT",
+>> +			"TX SWR_ADC2", "ADC3_OUTPUT",
+>> +			"TX SWR_DMIC0", "DMIC1_OUTPUT",
+>> +			"TX SWR_DMIC1", "DMIC2_OUTPUT",
+>> +			"TX SWR_DMIC2", "DMIC3_OUTPUT",
+>> +			"TX SWR_DMIC3", "DMIC4_OUTPUT",
+>> +			"TX SWR_DMIC4", "DMIC5_OUTPUT",
+>> +			"TX SWR_DMIC5", "DMIC6_OUTPUT",
+>> +			"TX SWR_DMIC6", "DMIC7_OUTPUT",
+>> +			"TX SWR_DMIC7", "DMIC8_OUTPUT";
+>> +
+>> +		qcom,msm-mbhc-hphl-swh = <1>;
+>> +		qcom,msm-mbhc-gnd-swh = <1>;
+>> +
+>> +		#address-cells = <1>;
+>> +		#size-cells = <0>;
 >> +		#sound-dai-cells = <0>;
->> +	};
 >> +
->> +	wcd938x: audio-codec-1 {
-> Why 'wcd938x' and not 'wcd9385'?
-
-Actually same driver is used for both wcd9380 and wcd9385. Here we can 
-use specific name as per board.
-
-Will change accordingly.
-
+>> +		dai-link@1 {
+> The '@1' is the address of the lpass CPU DAI, which doesn't seem correct
+> here. As I brought up on v7 [1] I think this value isn't even necessarily
+> unique, a SoC could have multiple IP blocks with audio buses, each with
+> their own DAI address space. The binding (currently) requires an
+> 'address'/id, rather than using the CPU DAI id I suggest to enumerate the
+> links linearly, starting with 0.
+Okay. Will update accordingly.
 >
->> +		compatible = "qcom,wcd9385-codec";
->> +		pinctrl-names = "default", "sleep";
->> +		pinctrl-0 = <&wcd_reset_n>;
->> +		pinctrl-1 = <&wcd_reset_n_sleep>;
->> +
->> +		reset-gpios = <&tlmm 83 GPIO_ACTIVE_HIGH>;
->> +
->> +		qcom,rx-device = <&wcd_rx>;
->> +		qcom,tx-device = <&wcd_tx>;
->> +
->> +		vdd-rxtx-supply = <&vreg_l18b_1p8>;
->> +		vdd-io-supply = <&vreg_l18b_1p8>;
->> +		vdd-buck-supply = <&vreg_l17b_1p8>;
->> +		vdd-mic-bias-supply = <&vreg_bob>;
->> +
->> +		qcom,micbias1-microvolt = <1800000>;
->> +		qcom,micbias2-microvolt = <1800000>;
->> +		qcom,micbias3-microvolt = <1800000>;
->> +		qcom,micbias4-microvolt = <1800000>;
->> +
->> +		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000
->> +							  500000 500000 500000>;
->> +		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
->> +		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
->> +		#sound-dai-cells = <1>;
->> +	};
-> Also add this node to sc7280-herobrine-crd.dts?
-Okay. will do accordingly.
+> [1] https://patchwork.kernel.org/project/linux-arm-msm/patch/1649863277-31615-5-git-send-email-quic_srivasam@quicinc.com/
+>
+>> +			link-name = "MAX98360A";
+> The binding requires a 'reg' property, even though it isn't used (also
+> discussed on v7). I think the 'reg' property should be removed from the
+> binding and the DTs that use it, but maybe that should be done in a
+> separate series. In the meantime the value should match that of the
+> node.
+Okay. for now will revert this change. and will take care your 
+suggestion in a separate patch set.
 >
 >> +
->>   	gpio-keys {
->>   		compatible = "gpio-keys";
->>   		label = "gpio-keys";
->> @@ -238,6 +274,19 @@
->>   	modem-init;
+>> +			cpu {
+>> +				sound-dai = <&lpass_cpu MI2S_SECONDARY>;
+>> +			};
+>> +
+>> +			codec {
+>> +				sound-dai = <&max98360a>;
+>> +			};
+>> +		};
+>> +
+>> +		dai-link@5 {
+>> +			link-name = "DisplayPort";
+>> +
+>> +			cpu {
+>> +				sound-dai = <&lpass_cpu LPASS_DP_RX>;
+>> +			};
+>> +
+>> +			codec {
+>> +				sound-dai = <&mdss_dp>;
+>> +			};
+>> +		};
+>> +
+>> +		dai-link@6 {
+>> +			link-name = "WCD9385 Playback";
+>> +
+>> +			cpu {
+>> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_RX0>;
+>> +			};
+>> +
+>> +			codec {
+>> +				sound-dai = <&wcd938x 0>, <&swr0 0>, <&lpass_rx_macro 0>;
+>> +			};
+>> +		};
+>> +
+>> +		dai-link@19 {
+>> +			link-name = "WCD9385 Capture";
+>> +
+>> +			cpu {
+>> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_TX3>;
+>> +			};
+>> +
+>> +			codec {
+>> +				sound-dai = <&wcd938x 1>, <&swr1 0>, <&lpass_tx_macro 0>;
+>> +			};
+>> +		};
+>> +
+>> +		dai-link@25 {
+>> +			link-name = "DMIC";
+>> +
+>> +			cpu {
+>> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_VA_TX0>;
+>> +			};
+>> +
+>> +			codec {
+>> +				sound-dai = <&lpass_va_macro 0>;
+>> +			};
+>> +		};
+>> +	};
 >>   };
 >>   
->> +&lpass_rx_macro {
->> +	status = "okay";
->> +};
->> +
->> +&lpass_tx_macro {
->> +	status = "okay";
->> +};
->> +
->> +&lpass_va_macro {
->> +	status = "okay";
->> +	vdd-micb-supply = <&vreg_bob>;
->> +};
-> Enable these also in sc7280-herobrine.dtsi if other nodes are added to
-> sc7280-herobrine-crd.dts.
-Okay.
->
->> +
->>   &pcie1 {
->>   	status = "okay";
->>   	perst-gpio = <&tlmm 2 GPIO_ACTIVE_LOW>;
->> @@ -298,6 +347,26 @@
->>   	cd-gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
->>   };
->>   
->> +&swr0 {
->> +	status = "okay";
-> nit: add an empty line between properties and nodes
-Okay.
->
->> +	wcd_rx: codec@0,4 {
->> +		compatible = "sdw20217010d00";
->> +		reg = <0 4>;
->> +		#sound-dai-cells = <1>;
->> +		qcom,rx-port-mapping = <1 2 3 4 5>;
->> +	};
->> +};
->> +
->> +&swr1 {
->> +	status = "okay";
-> ditto
-Okay.
->
->> +	wcd_tx: codec@0,3 {
->> +		compatible = "sdw20217010d00";
->> +		reg = <0 3>;
->> +		#sound-dai-cells = <1>;
->> +		qcom,tx-port-mapping = <1 2 3 4>;
->> +	};
->> +};
-> Also add these to sc7280-herobrine-crd.dts?
-Okay.
->
->> +
->>   &uart5 {
->>   	compatible = "qcom,geni-debug-uart";
->>   	status = "okay";
->> @@ -561,6 +630,12 @@
->>   };
->>   
->>   &tlmm {
->> +	amp_en: amp-en {
->> +		pins = "gpio63";
->> +		bias-pull-down;
->> +		drive-strength = <2>;
->> +	};
->> +
->>   	bt_en: bt-en {
->>   		pins = "gpio85";
->>   		function = "gpio";
->> @@ -643,6 +718,28 @@
->>   		function = "gpio";
->>   		bias-pull-down;
->>   	};
->> +
->> +	us_euro_hs_sel: us-euro-hs-sel {
->> +		pins = "gpio81";
->> +		function = "gpio";
->> +		bias-pull-down;
->> +		drive-strength = <2>;
->> +	};
->> +
->> +	wcd_reset_n: wcd-reset-n {
->> +		pins = "gpio83";
->> +		function = "gpio";
->> +		drive-strength = <8>;
->> +		output-high;
->> +	};
->> +
->> +	wcd_reset_n_sleep: wcd-reset-n-sleep {
->> +		pins = "gpio83";
->> +		function = "gpio";
->> +		drive-strength = <8>;
->> +		bias-disable;
->> +		output-low;
->> +	};
-> Also add to sc7280-herobrine-crd.dts if the other nodes are added.
-Okay.
+>>   &apps_rsc {
+>> -- 
+>> 2.7.4
+>>
