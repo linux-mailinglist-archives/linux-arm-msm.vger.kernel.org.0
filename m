@@ -2,68 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 777D85076A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 19:34:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 974975076C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 19:49:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244488AbiDSRhN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 13:37:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42870 "EHLO
+        id S1356037AbiDSRvx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 13:51:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244015AbiDSRhM (ORCPT
+        with ESMTP id S1354461AbiDSRvv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 13:37:12 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 935CB393F1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 10:34:29 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id k29-20020a056830243d00b006040caa0988so8053488ots.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 10:34:29 -0700 (PDT)
+        Tue, 19 Apr 2022 13:51:51 -0400
+Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FB9711A25
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 10:49:07 -0700 (PDT)
+Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-e5bdd14b59so8793274fac.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 10:49:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Z8TLbLfReqVjU1V5RrGBLrzOEWti2/YJj/Lmqyr2mRU=;
-        b=Hk+iDwE1BufloZNfXKAGw2Ex8g+O5qMpaFlcLwy7lMnBGvBbeyHcv6YyI9A/yoF/Hz
-         tzSm93Mp4JnWGN+jHrQfZwVziNpvWdkvdnSzyjIbXBRDcApl2RjnMOr6a7btYuQalkU4
-         p3bWggEEkwyqpnDWE2D9rDlmkdFMJqAL47Sacfc+ZFjLHVekjOqC6e5C4zw2nZVYfuf2
-         oXyBQ4haAPKsFkjPRICUNflaBI0kKDL5NX6oGq1+BOMOHPYCoNFgfWS92PFbruPmwisi
-         ExkmahVCiJKCRCgNkvjyLuXFnlWPouGoZiwmulZodWFE4muoSz3JfTh+WPO25E71i2pf
-         1FNg==
+        bh=v0Lgvd+pxbfJ2W3ZxRXaPCr1PNTgOZ2EXZjCi/26sfE=;
+        b=HZ24tsFgTS0UneQxy/kJndTWpEV6TY/9sL3Ls4gEv6Z/xQJrtYc+EAVFY9m5xD285H
+         jK9Fdya2MWf9M/zifs91uMFst8nMzD5+JNkC50O382u4rqEgzAYnbIUl+kLc4TwSc+CQ
+         fca28DaLXvTMUstMgYKQOXdEEmvRhtJskkrxNSVofqbbNflnrpQhGCNeNGRWDyAIt9He
+         SKcRVBcYn8xpK+sn0O+GZIf8YIMqrsKSzrLyHnNHFyA618WyCTgZqyV7f0hr+CVzd8Sy
+         6qZnVNJrlQGOldsoFpDb76F35hQkdUpLIAJrpwsxtKzKZ8CWG2QrzGpG+e1ADanK3gAY
+         rHxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Z8TLbLfReqVjU1V5RrGBLrzOEWti2/YJj/Lmqyr2mRU=;
-        b=46GoyXDFA099Q5g6WCy5soFWKUFnUjtSMbuyUhL8FTBuqdcrtRT5LwRot94VrFIFcJ
-         0bjbO61TKe00kOjiFY9OsTl/eyKF/rFxtL+OYOO32AXVLE1crjCP4aM4TiQ7rMwQwQW+
-         Dtv3nRYIiWIN3dxr7D7rYzpr5W5R2OiCPTi0AR1hJlmtlv0eU4M9ucOtmHaxeU3s6fi9
-         6NAyG3qrNld+xhVwoz/ypbnQ6WFiet5gxyvRJcaqeT1xSLvlmvyexuVFYPf2ju+CK9Ay
-         YNHJhIkJZTuYH7/5eYXA1jGsWm1ON35xIfUsLpMPEn/UUIxy8VrSuZnERflVUsegw1un
-         1Hng==
-X-Gm-Message-State: AOAM530Srnj3QkuPvD1aQ13UXs7IWjht7ecDFa0G8lMpqPo1BnFX952B
-        KCqNZ17SeV7vaEz7KS2gsicSnw==
-X-Google-Smtp-Source: ABdhPJzUw+TTAb6KW1iJVpbiTOwCdonhSAHLyMz/zOK1GLEoh/HQG+xVHf4N8LQfopb2pa42vkW4jg==
-X-Received: by 2002:a05:6830:4b6:b0:605:47ba:2310 with SMTP id l22-20020a05683004b600b0060547ba2310mr5267772otd.301.1650389668886;
-        Tue, 19 Apr 2022 10:34:28 -0700 (PDT)
+        bh=v0Lgvd+pxbfJ2W3ZxRXaPCr1PNTgOZ2EXZjCi/26sfE=;
+        b=VGF+NbXZ8UDh+GSBmDV5JivIHu86tzQowaiLnLd4vRDG8WX+ZyWew5xqNjWr9bfJaw
+         I7Cf6DOr68vkDen8jkVSkdU/Ka1QWsdRzle8027obkpLzso1EyXnBKp4VlfeaniSwyRS
+         f60TW7+m1NfNA5UsMYO93JXgX7Fq4S0/AjmRy2EGC0+lAn13yn9euPE5GZgn6C/F3qad
+         gNvyRn0Ke7427Z8P2jY703wrHxZ/MRoxJcJcxDQr4Oh1vAapX5Yc9a2bxbNSKrTESZfd
+         mWneZNi4OzuVPdNlvYwF9M/l8bamQRvNncM64zhhoip3d3A1jgjCCaftsETMkKM8/AiR
+         jN3Q==
+X-Gm-Message-State: AOAM530PVjfkQzj1Un/bFrLP3+GupaquFZ2MUW0NOAQeHd3rAdKuRLKc
+        UkBgRfEyzZIjJbjnwpMAOEUAjQ==
+X-Google-Smtp-Source: ABdhPJxKMEvgdGQ9s2QWLdj0NvPXza+GmM2oiG9jDhMtaY06uZWgp4xyPNG00nQX0j7wUUwmUSNHuQ==
+X-Received: by 2002:a05:6870:6098:b0:e1:cb99:9c47 with SMTP id t24-20020a056870609800b000e1cb999c47mr8588508oae.59.1650390546755;
+        Tue, 19 Apr 2022 10:49:06 -0700 (PDT)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id m187-20020aca58c4000000b002ef721352easm5369685oib.14.2022.04.19.10.34.28
+        by smtp.gmail.com with ESMTPSA id u3-20020a4a9703000000b0033336ab4909sm5668955ooi.7.2022.04.19.10.49.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 10:34:28 -0700 (PDT)
-Date:   Tue, 19 Apr 2022 12:34:26 -0500
+        Tue, 19 Apr 2022 10:49:06 -0700 (PDT)
+Date:   Tue, 19 Apr 2022 12:49:04 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Yassine Oudjana <y.oudjana@protonmail.com>
 Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm8450: Add thermal sensor
- controllers
-Message-ID: <Yl7yol4wdf04zOy/@builder.lan>
-References: <20220410234458.1739279-1-dmitry.baryshkov@linaro.org>
- <20220410234458.1739279-2-dmitry.baryshkov@linaro.org>
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH v2 3/9] clk: qcom: msm8996-cpu: Add MSM8996 Pro CBF
+ support
+Message-ID: <Yl72EFQbntGUi2tm@builder.lan>
+References: <kXrAkKv7RZct22X0wivLWqOAiLKpFuDCAY1KY_KSx649kn7BNmJ2IFFMrsYPAyDlcxIjbQCQ1PHb5KaNFawm9IGIXUbch-DI9OI_l73BAaM=@protonmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220410234458.1739279-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <kXrAkKv7RZct22X0wivLWqOAiLKpFuDCAY1KY_KSx649kn7BNmJ2IFFMrsYPAyDlcxIjbQCQ1PHb5KaNFawm9IGIXUbch-DI9OI_l73BAaM=@protonmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -74,58 +82,179 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 10 Apr 18:44 CDT 2022, Dmitry Baryshkov wrote:
+On Fri 08 Apr 23:16 CDT 2022, Yassine Oudjana wrote:
 
-> From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> MSM8996 Pro (MSM8996SG) has a /4 divisor on the CBF clock
+> instead of /2. This allows it to reach a lower minimum frequency
+> of 192000000Hz compared to 307200000Hz on regular MSM8996.
+> Add support for setting the CBF clock divisor to /4 for MSM8996 Pro.
 > 
-> The change adds description of two thermal sensor controllers found
-> on SM8450.
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
+>  drivers/clk/qcom/clk-cpu-8996.c | 61 +++++++++++++++++++++------------
+>  1 file changed, 40 insertions(+), 21 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 934e29b9e153..b695ce824722 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -1021,6 +1021,28 @@ pdc: interrupt-controller@b220000 {
->  			interrupt-controller;
->  		};
->  
-> +		tsens0: thermal-sensor@c263000 {
-> +			compatible = "qcom,sm8450-tsens", "qcom,tsens-v2";
+> diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
+> index 8afc271f92d0..231d8224fa16 100644
+> --- a/drivers/clk/qcom/clk-cpu-8996.c
+> +++ b/drivers/clk/qcom/clk-cpu-8996.c
+> @@ -70,11 +70,11 @@ enum _pmux_input {
+> 
+>  enum {
+>  	CBF_PLL_INDEX = 1,
+> -	CBF_DIV_2_INDEX,
+> +	CBF_DIV_INDEX,
+>  	CBF_SAFE_INDEX
+>  };
 
-Please don't forget to add qcom,sm8450-tsens to the DT binding
-documentation.
+I don't have this enum in my tree. Could you please double check that
+this works on linux-next?
+
+And can you please send the next revision using git send-email with a
+cover-letter, so that the patches are related in my inbox.
 
 Thanks,
 Bjorn
 
-> +			reg = <0 0x0c263000 0 0x1000>, /* TM */
-> +			      <0 0x0c222000 0 0x1000>; /* SROT */
-> +			#qcom,sensors = <16>;
-> +			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "uplow", "critical";
-> +			#thermal-sensor-cells = <1>;
-> +		};
+> 
+> -#define DIV_2_THRESHOLD		600000000
+> +#define DIV_THRESHOLD		600000000
+>  #define PWRCL_REG_OFFSET 0x0
+>  #define PERFCL_REG_OFFSET 0x80000
+>  #define MUX_OFFSET	0x40
+> @@ -142,6 +142,17 @@ static const struct alpha_pll_config cbfpll_config = {
+>  	.early_output_mask = BIT(3),
+>  };
+> 
+> +static const struct alpha_pll_config cbfpll_config_pro = {
+> +	.l = 72,
+> +	.config_ctl_val = 0x200d4aa8,
+> +	.config_ctl_hi_val = 0x006,
+> +	.pre_div_mask = BIT(12),
+> +	.post_div_mask = 0x3 << 8,
+> +	.post_div_val = 0x3 << 8,
+> +	.main_output_mask = BIT(0),
+> +	.early_output_mask = BIT(3),
+> +};
 > +
-> +		tsens1: thermal-sensor@c265000 {
-> +			compatible = "qcom,sm8450-tsens", "qcom,tsens-v2";
-> +			reg = <0 0x0c265000 0 0x1000>, /* TM */
-> +			      <0 0x0c223000 0 0x1000>; /* SROT */
-> +			#qcom,sensors = <16>;
-> +			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "uplow", "critical";
-> +			#thermal-sensor-cells = <1>;
-> +		};
+>  static struct clk_alpha_pll perfcl_pll = {
+>  	.offset = PERFCL_REG_OFFSET,
+>  	.regs = prim_pll_regs,
+> @@ -230,7 +241,8 @@ struct clk_cpu_8996_mux {
+>  	u8	width;
+>  	struct notifier_block nb;
+>  	struct clk_hw	*pll;
+> -	struct clk_hw	*pll_div_2;
+> +	struct clk_hw	*pll_div;
+> +	u8 div;
+>  	struct clk_regmap clkr;
+>  };
+> 
+> @@ -280,11 +292,11 @@ static int clk_cpu_8996_mux_determine_rate(struct clk_hw *hw,
+>  	struct clk_cpu_8996_mux *cpuclk = to_clk_cpu_8996_mux_hw(hw);
+>  	struct clk_hw *parent = cpuclk->pll;
+> 
+> -	if (cpuclk->pll_div_2 && req->rate < DIV_2_THRESHOLD) {
+> -		if (req->rate < (DIV_2_THRESHOLD / 2))
+> +	if (cpuclk->pll_div && req->rate < DIV_THRESHOLD) {
+> +		if (req->rate < (DIV_THRESHOLD / cpuclk->div))
+>  			return -EINVAL;
+> 
+> -		parent = cpuclk->pll_div_2;
+> +		parent = cpuclk->pll_div;
+>  	}
+> 
+>  	req->best_parent_rate = clk_hw_round_rate(parent, req->rate);
+> @@ -336,7 +348,8 @@ static struct clk_cpu_8996_mux pwrcl_pmux = {
+>  	.shift = 0,
+>  	.width = 2,
+>  	.pll = &pwrcl_pll.clkr.hw,
+> -	.pll_div_2 = &pwrcl_smux.clkr.hw,
+> +	.pll_div = &pwrcl_smux.clkr.hw,
+> +	.div = 2,
+>  	.nb.notifier_call = cpu_clk_notifier_cb,
+>  	.clkr.hw.init = &(struct clk_init_data) {
+>  		.name = "pwrcl_pmux",
+> @@ -358,7 +371,8 @@ static struct clk_cpu_8996_mux perfcl_pmux = {
+>  	.shift = 0,
+>  	.width = 2,
+>  	.pll = &perfcl_pll.clkr.hw,
+> -	.pll_div_2 = &perfcl_smux.clkr.hw,
+> +	.pll_div = &perfcl_smux.clkr.hw,
+> +	.div = 2,
+>  	.nb.notifier_call = cpu_clk_notifier_cb,
+>  	.clkr.hw.init = &(struct clk_init_data) {
+>  		.name = "perfcl_pmux",
+> @@ -481,19 +495,23 @@ static int qcom_cbf_clk_msm8996_register_clks(struct device *dev,
+>  					      struct regmap *regmap)
+>  {
+>  	int ret;
+> +	bool is_pro = of_device_is_compatible(dev->of_node, "qcom,msm8996pro-apcc");
+> 
+> -	cbf_mux.pll_div_2 = clk_hw_register_fixed_factor(dev, "cbf_pll_main",
+> -						      "cbf_pll", CLK_SET_RATE_PARENT,
+> -						      1, 2);
+> -	if (IS_ERR(cbf_mux.pll_div_2)) {
+> +	cbf_mux.div = is_pro ? 4 : 2;
+> +	cbf_mux.pll_div = clk_hw_register_fixed_factor(dev, "cbf_pll_main",
+> +						       "cbf_pll", CLK_SET_RATE_PARENT,
+> +						       1, cbf_mux.div);
 > +
->  		aoss_qmp: power-controller@c300000 {
->  			compatible = "qcom,sm8450-aoss-qmp", "qcom,aoss-qmp";
->  			reg = <0 0x0c300000 0 0x400>;
-> -- 
+> +	if (IS_ERR(cbf_mux.pll_div)) {
+>  		dev_err(dev, "Failed to initialize cbf_pll_main\n");
+> -		return PTR_ERR(cbf_mux.pll_div_2);
+> +		return PTR_ERR(cbf_mux.pll_div);
+>  	}
+> 
+>  	ret = devm_clk_register_regmap(dev, cbf_msm8996_clks[0]);
+>  	ret = devm_clk_register_regmap(dev, cbf_msm8996_clks[1]);
+> 
+> -	clk_alpha_pll_configure(&cbf_pll, regmap, &cbfpll_config);
+> +	clk_alpha_pll_configure(&cbf_pll, regmap, is_pro ?
+> +				&cbfpll_config_pro : &cbfpll_config);
+>  	clk_set_rate(cbf_pll.clkr.hw.clk, 614400000);
+>  	clk_prepare_enable(cbf_pll.clkr.hw.clk);
+>  	clk_notifier_register(cbf_mux.clkr.hw.clk, &cbf_mux.nb);
+> @@ -575,7 +593,7 @@ static int cpu_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
+>  		qcom_cpu_clk_msm8996_acd_init(base);
+>  		break;
+>  	case POST_RATE_CHANGE:
+> -		if (cnd->new_rate < DIV_2_THRESHOLD)
+> +		if (cnd->new_rate < DIV_THRESHOLD)
+>  			ret = clk_cpu_8996_mux_set_parent(&cpuclk->clkr.hw,
+>  							  DIV_2_INDEX);
+>  		else
+> @@ -600,15 +618,15 @@ static int cbf_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
+> 
+>  	switch (event) {
+>  	case PRE_RATE_CHANGE:
+> -		parent = clk_hw_get_parent_by_index(&cbfclk->clkr.hw, CBF_DIV_2_INDEX);
+> -		ret = clk_cpu_8996_mux_set_parent(&cbfclk->clkr.hw, CBF_DIV_2_INDEX);
+> +		parent = clk_hw_get_parent_by_index(&cbfclk->clkr.hw, CBF_DIV_INDEX);
+> +		ret = clk_cpu_8996_mux_set_parent(&cbfclk->clkr.hw, CBF_DIV_INDEX);
+> 
+> -		if (cnd->old_rate > DIV_2_THRESHOLD && cnd->new_rate < DIV_2_THRESHOLD)
+> -			ret = clk_set_rate(parent->clk, cnd->old_rate / 2);
+> +		if (cnd->old_rate > DIV_THRESHOLD && cnd->new_rate < DIV_THRESHOLD)
+> +			ret = clk_set_rate(parent->clk, cnd->old_rate / cbfclk->div);
+>  		break;
+>  	case POST_RATE_CHANGE:
+> -		if (cnd->new_rate < DIV_2_THRESHOLD)
+> -			ret = clk_cpu_8996_mux_set_parent(&cbfclk->clkr.hw, CBF_DIV_2_INDEX);
+> +		if (cnd->new_rate < DIV_THRESHOLD)
+> +			ret = clk_cpu_8996_mux_set_parent(&cbfclk->clkr.hw, CBF_DIV_INDEX);
+>  		else {
+>  			parent = clk_hw_get_parent_by_index(&cbfclk->clkr.hw, CBF_PLL_INDEX);
+>  			ret = clk_set_rate(parent->clk, cnd->new_rate);
+> @@ -676,6 +694,7 @@ static int qcom_cpu_clk_msm8996_driver_remove(struct platform_device *pdev)
+> 
+>  static const struct of_device_id qcom_cpu_clk_msm8996_match_table[] = {
+>  	{ .compatible = "qcom,msm8996-apcc" },
+> +	{ .compatible = "qcom,msm8996pro-apcc" },
+>  	{}
+>  };
+>  MODULE_DEVICE_TABLE(of, qcom_cpu_clk_msm8996_match_table);
+> --
 > 2.35.1
 > 
