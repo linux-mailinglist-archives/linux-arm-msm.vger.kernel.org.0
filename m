@@ -2,68 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B99350770E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 20:07:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E16850771E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 20:11:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356189AbiDSSJ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 14:09:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47342 "EHLO
+        id S236728AbiDSSNx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 14:13:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347040AbiDSSJZ (ORCPT
+        with ESMTP id S232701AbiDSSNx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 14:09:25 -0400
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F2CC3CA48
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 11:06:39 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-2eafabbc80aso181107047b3.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 11:06:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LEwAzLgdo/J0IOG1epW97Y3lbB4M4tnpZ0RnWfy4qe8=;
-        b=aU24999xmL9jwFsyEgwMlT40a4Hj8UX0RRYOB9wmdIGrDMThR0Y/Aj4y1r99YzgJto
-         69ELrvTHJNUj5OSp5epUXdfPXgXSrW+ZoHZ/+jR3GV4EJSRsM+3obSlQisxNQPljSLxn
-         pmmNQzu+pt2ZoMWkRSNsQWGDnLsUcdat4L2Ols9OAWccvA/70g5n7T5dvkgu50R2aTwd
-         MR3CuqjK0NFffdchRl77AvWn7KAw16rtSj/AMKPMUVXGJCtxIHDf5r0PL7uzqHa6xviB
-         mumlA1Q+QmKRJnV1YVwaYKm5JEy1BVPzjEG5bY9qo+IodXgTjLE1j2pUNJo7fHnt4Ld1
-         q48A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LEwAzLgdo/J0IOG1epW97Y3lbB4M4tnpZ0RnWfy4qe8=;
-        b=hBSub7H6iUiu1I1HQqpYNW6IsSuPwc2GmMLeRD/8/QtvTwpzZAFV+5XjVqpQFfcA4N
-         l5rZGVY3VdjoswgUaVW2sgJzHAPM76ofObRULf4K542MQzLVMCvlfhXQaPfp7spHS2hk
-         s9yAT6OTuAOh7leKXiz4Ow4TAIfQN+svpN5nFiVpKQsynHVrhJ7HMLfdlwkC/Z+qk7nG
-         kVF1i2JFyQ+X++lsSapy+tH19UPpGKdMoeXvqJzp+9Vq377Xolz82gGfqjCwz9CaE2lo
-         xTl0HgdcEUoehn5SyaEQKdyvHDmsoLfhld88MwupqFq/40EZu/9uaK+NSOvSB6J2joPx
-         jelQ==
-X-Gm-Message-State: AOAM5300pO3fTsgsRTD9iYbSm1xobzgV14Q6tR5s3W+t77Co++NhYV+0
-        M/8u9QMiSOuzVV42BWCT1lVRQdrHf29gaEKQ0bINnA==
-X-Google-Smtp-Source: ABdhPJy2MwoJhfJr2k71xTKAb1/QHb+m9Vt2pB0jt5uPZYsnwfUxO7eQefOdpcrbNS8yXY51GGPpHmeHyGx+tCM29cE=
-X-Received: by 2002:a81:324e:0:b0:2f1:d8f4:40df with SMTP id
- y75-20020a81324e000000b002f1d8f440dfmr2846060ywy.289.1650391598774; Tue, 19
- Apr 2022 11:06:38 -0700 (PDT)
+        Tue, 19 Apr 2022 14:13:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 153F311A11;
+        Tue, 19 Apr 2022 11:11:10 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A331960C34;
+        Tue, 19 Apr 2022 18:11:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90ADC385A5;
+        Tue, 19 Apr 2022 18:11:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650391869;
+        bh=6JIV9bAl3AlhOIFiWtU+aC2MWdNmcLlPqJm+dbFnVFU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=s8kF+pghm1cBam+/lZcRDPVj2LBEEqGcOfk/4adNOM1KeBoju4pHJmwXz3kR/AW7M
+         oB//ImPKLth4hNqnSLG8FyAzrlP2g2tTOm+t6QiwnaDXgYfAXvCIT493lZ2cb6YSJF
+         UJkKUJPozMdKVhcLqktKUOsfuR1T8a3a+KPfCLsotRC6oG88CZf2ACay7GKlql2WJ5
+         XLy/bdjq5p8NkhB0/ROMA7lPTOVFOVdAhMezG0TGRakFTFXFjTjQ2S0MS9klPBuOQV
+         Oon2zDGsZqe7jefEhQ+f0zpE5Yd3JN2kvxOqM7NhBgeQvOL3q3ErNguyszwRR0t0jS
+         zOU0QfS1GoVRw==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Sasha Levin <sashal@kernel.org>, robdclark@gmail.com,
+        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        quic_akhilpo@quicinc.com, angelogioacchino.delregno@collabora.com,
+        bjorn.andersson@linaro.org, jonathan@marek.ca, nathan@kernel.org,
+        vladimir.lypak@gmail.com, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 5.17 01/34] drm/msm/gpu: Rename runtime suspend/resume functions
+Date:   Tue, 19 Apr 2022 14:10:28 -0400
+Message-Id: <20220419181104.484667-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-References: <20220331013415.592748-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20220331013415.592748-1-bjorn.andersson@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 19 Apr 2022 21:06:27 +0300
-Message-ID: <CAA8EJpr9TvWHY8uMXzdmQbf8ynbkEJLKq0b4iEpp2Ji5nBXYzQ@mail.gmail.com>
-Subject: Re: [PATCH] PCI: qcom: Remove ddrss_sf_tbu clock from sc8180x
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,54 +59,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 31 Mar 2022 at 04:31, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> The Qualcomm SC8180X platform was piggy backing on the SM8250
-> qcom_pcie_cfg, but the platform doesn't have the ddrss_sf_tbu clock, so
-> it now fails to probe due to the missing clock.
->
-> Give SC8180X its own qcom_pcie_cfg, without the ddrss_sf_tbu flag set.
->
-> Fixes: 0614f98bbb9f ("PCI: qcom: Add ddrss_sf_tbu flag")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+From: Rob Clark <robdclark@chromium.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+[ Upstream commit f7eab1ddb9f8bc99206e3efa8d34ca1d2faca209 ]
 
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 6ab90891801d..816028c0f6ed 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1550,6 +1550,11 @@ static const struct qcom_pcie_cfg sc7280_cfg = {
->         .pipe_clk_need_muxing = true,
->  };
->
-> +static const struct qcom_pcie_cfg sc8180x_cfg = {
-> +       .ops = &ops_1_9_0,
-> +       .has_tbu_clk = true,
-> +};
-> +
->  static const struct dw_pcie_ops dw_pcie_ops = {
->         .link_up = qcom_pcie_link_up,
->         .start_link = qcom_pcie_start_link,
-> @@ -1656,7 +1661,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->         { .compatible = "qcom,pcie-qcs404", .data = &ipq4019_cfg },
->         { .compatible = "qcom,pcie-sdm845", .data = &sdm845_cfg },
->         { .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
-> -       { .compatible = "qcom,pcie-sc8180x", .data = &sm8250_cfg },
-> +       { .compatible = "qcom,pcie-sc8180x", .data = &sc8180x_cfg },
->         { .compatible = "qcom,pcie-sm8450-pcie0", .data = &sm8450_pcie0_cfg },
->         { .compatible = "qcom,pcie-sm8450-pcie1", .data = &sm8450_pcie1_cfg },
->         { .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
-> --
-> 2.35.1
->
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Link: https://lore.kernel.org/r/20220310234611.424743-2-robdclark@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index fb261930ad1c..b93de79000e1 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -601,7 +601,7 @@ static const struct of_device_id dt_match[] = {
+ };
+ 
+ #ifdef CONFIG_PM
+-static int adreno_resume(struct device *dev)
++static int adreno_runtime_resume(struct device *dev)
+ {
+ 	struct msm_gpu *gpu = dev_to_gpu(dev);
+ 
+@@ -617,7 +617,7 @@ static int active_submits(struct msm_gpu *gpu)
+ 	return active_submits;
+ }
+ 
+-static int adreno_suspend(struct device *dev)
++static int adreno_runtime_suspend(struct device *dev)
+ {
+ 	struct msm_gpu *gpu = dev_to_gpu(dev);
+ 	int remaining;
+@@ -636,7 +636,7 @@ static int adreno_suspend(struct device *dev)
+ 
+ static const struct dev_pm_ops adreno_pm_ops = {
+ 	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, pm_runtime_force_resume)
+-	SET_RUNTIME_PM_OPS(adreno_suspend, adreno_resume, NULL)
++	SET_RUNTIME_PM_OPS(adreno_runtime_suspend, adreno_runtime_resume, NULL)
+ };
+ 
+ static struct platform_driver adreno_driver = {
 -- 
-With best wishes
-Dmitry
+2.35.1
+
