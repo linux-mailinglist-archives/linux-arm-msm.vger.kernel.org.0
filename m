@@ -2,101 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C5A25061B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 03:37:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A20B5062DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 05:37:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245483AbiDSBkE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Apr 2022 21:40:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47162 "EHLO
+        id S1347750AbiDSDih (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Apr 2022 23:38:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235649AbiDSBkC (ORCPT
+        with ESMTP id S1348122AbiDSDiY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Apr 2022 21:40:02 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C392201BE;
-        Mon, 18 Apr 2022 18:37:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650332242; x=1681868242;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=tmgwZkvCV2R6IyuCglak7yhL3N9zBgqGkPbpA6ubX9c=;
-  b=JzyHl3yLWykIOmzk0BxiSjdnYx+7WcT9SiV2Kdbx6jxZw+xeOK+xqAIf
-   5kBqdoVLVqtg8BXEDaWKlLSY3XOPCsVsU2rpyQkr4NAWnasRnG0yRmoj1
-   X0q2LCUdkFymsrm5Hu3fT3RXoZ00ePQMNrL7k1cb0i4/o3pucDb3A2umO
-   A=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 18 Apr 2022 18:37:21 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Apr 2022 18:37:21 -0700
-Received: from stor-berry.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 18 Apr 2022 18:37:20 -0700
-From:   "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
-To:     <quic_cang@quicinc.com>, <quic_asutoshd@quicinc.com>,
-        <martin.petersen@oracle.com>, <linux-scsi@vger.kernel.org>
-CC:     "Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "Avri Altman" <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Bean Huo <beanhuo@micron.com>,
-        "Daejun Park" <daejun7.park@samsung.com>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "Can Guo" <cang@codeaurora.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: [PATCH v1 1/1] scsi: ufs: Increase the UIC command timeout to 5 seconds
-Date:   Mon, 18 Apr 2022 18:36:05 -0700
-Message-ID: <55bd9cf4216e80e73e63cf25c042d60e67592b44.1650331167.git.quic_nguyenb@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Mon, 18 Apr 2022 23:38:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 426CE2FE4C;
+        Mon, 18 Apr 2022 20:35:28 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E3B9260FFD;
+        Tue, 19 Apr 2022 03:35:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A92C385A7;
+        Tue, 19 Apr 2022 03:35:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650339327;
+        bh=+F9JGD4KqeeqwH+a4MzUoyXOvCmNj1M1S3c5szbFd60=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FApLXCw3BbnBSnpQXwxVaG4JtP5YRm2Zevz6ttb/RBbaMHuQ6AuPNQo57wdzXjYrE
+         wjReCl8T9rsgLIO/yon+ErKM7ewGmMrsh97Su67P1OIlFFcbz4xsOWcoRJxOJg+DLJ
+         4HwqdhHZiiN1a8tS0i0Lhs2DGyFYtg4eFzznta2K0Srn4CXiKpax4iUfabQ/VEtBkS
+         u7ANXrvfKn/Wzah28eb624O+I3ltEIioCO2wR8koSxTDfXWDs1AiA5r0Eu21dt901r
+         YZ0dNne2et31zRDB09dIHQJcm+XHYTeS8D05gsKUukTM44Jo/ThvMJ06ohIIe315Yo
+         U94omlkbRR6rw==
+Date:   Tue, 19 Apr 2022 09:05:22 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: db845c: Add support for MCP2517FD
+Message-ID: <Yl4t+gaIvPvL2O0/@matsya>
+References: <20220418125841.1409738-1-vkoul@kernel.org>
+ <20220418134241.GA161722@thinkpad>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220418134241.GA161722@thinkpad>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Increase the UIC command timeout to avoid false and unnecessary
-UFS errors printout. There are increasing number of false UIC command
-timeout error events where the actual cause of the issues is interrupt
-starvation. When looking into these issues closely, it was clear that
-the UIC command completed successfully, but the CPUs were hogged by other
-subsystems for more than 500ms, causing a false UIC command timeout.
+On 18-04-22, 19:12, Manivannan Sadhasivam wrote:
+> On Mon, Apr 18, 2022 at 06:28:41PM +0530, Vinod Koul wrote:
+> > Add support for onboard MCP2517FD SPI CAN transceiver attached to
+> > SPI0 of RB3.
+> > 
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 23 ++++++++++++++++++++++
+> >  1 file changed, 23 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> > index 28fe45c5d516..5179f8ddb060 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> > @@ -28,6 +28,13 @@ chosen {
+> >  		stdout-path = "serial0:115200n8";
+> >  	};
+> >  
+> > +	/* Fixed crystal oscillator dedicated to MCP2517FD */
+> > +	clk40M: can_clock {
+> > +		compatible = "fixed-clock";
+> > +		#clock-cells = <0>;
+> > +		clock-frequency = <40000000>;
+> > +	};
+> > +
+> >  	dc12v: dc12v-regulator {
+> >  		compatible = "regulator-fixed";
+> >  		regulator-name = "DC12V";
+> > @@ -746,6 +753,22 @@ codec {
+> >  	};
+> >  };
+> >  
+> > +&spi0 {
+> > +	/* On Low speed expansion */
+> 
+> Only SPI2 is exposed on the LS header. This one is dedicated to CAN controller.
 
-Increase the UIC command timeout to 5 seconds to avoid false and
-time consuming support calls so that we can shift the focus to where
-the real issue would be.
+ok
 
-Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
----
- drivers/scsi/ufs/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> > +	status = "okay";
+> 
+> No chip select? Since CAN controller may operate at higher frequencies, it
+> makes sense to increase the drive strength of the pins.
 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index 3f9caaf..806acf4 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -35,7 +35,7 @@
- 				 UTP_TASK_REQ_COMPL |\
- 				 UFSHCD_ERROR_MASK)
- /* UIC command timeout, unit: ms */
--#define UIC_CMD_TIMEOUT	500
-+#define UIC_CMD_TIMEOUT	5000
- 
- /* NOP OUT retries waiting for NOP IN response */
- #define NOP_OUT_RETRIES    10
+Okay will add and send v2
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+~Vinod
