@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E0B5507881
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 20:27:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2D4F507845
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 20:26:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356968AbiDSSYz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 14:24:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38758 "EHLO
+        id S1356997AbiDSSY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 14:24:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357354AbiDSSXL (ORCPT
+        with ESMTP id S1357462AbiDSSXX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 14:23:11 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 646AC434B3;
-        Tue, 19 Apr 2022 11:15:55 -0700 (PDT)
+        Tue, 19 Apr 2022 14:23:23 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CA803EF15;
+        Tue, 19 Apr 2022 11:16:22 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 297DDB819B6;
-        Tue, 19 Apr 2022 18:15:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53858C385A5;
-        Tue, 19 Apr 2022 18:15:50 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 73E6E6142E;
+        Tue, 19 Apr 2022 18:16:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5266CC385A5;
+        Tue, 19 Apr 2022 18:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650392151;
-        bh=XEncWXOOTgqkk9+t/TZHK1gvF3HW9nBti41MaEMdk0s=;
+        s=k20201202; t=1650392178;
+        bh=EX1IsrkM0zF2k65NZtSJkyhfT+wuZZjuxtcTS721YU0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NtmV/WBMB4naKmpI+rhATPQWAJs6hovsOBoXWmDvX53LkXzKvPxLt8+natVEZFo+P
-         0QMLszaO3ChCgnomYZbFnEdVhQCvqd28bse45Rmnv0CrPxIT8MOzRbuLzi9l663t1p
-         vmuShnq1Kgm+rlAlYDjsPYTT8AtD4crjKxFOYqZ7eHTHM4YOnxoJdE9QJfwNEl5BVd
-         qJQ3v7SKhp7rb5nUVEARrBXiAu8k/Pe+IXg2rRR5eddekAJq+aMCthlAPgwKrzU2PE
-         q9ZUG0uByDCO+Yc1hwJeUWYYSihRzHhvD0EM7sjn3tPinVIZOmcv9klICNV1T3/ABr
-         Gf9w1kwvxrOvw==
+        b=m3AUGc9qragY8s3JERL6P5a6GO18RGuQyYCVgUOPzEa4UT65Ra0RkeTX+m8lu5qa7
+         ls8M10petEtAjn6wexQi7tOpmgicsppQzYt0FkVAgFkYx6GcELrUV9JanS35Yijkft
+         3d8xv3tcK1VOqWg5CJawgstVY5pWexwYQhTrmDlk1O3el0tWywmeoSP+ineuoDDhAJ
+         jbBO9bbfZB3w1zuF0Sa4wRzO3G/KcJ9bC5kCbvuWaUY3xpAg/BpjmyIJYTbMUSgDDC
+         ZiCQv4Vg/f8T5wEEvHkzaQyHkNcn1yDPCQ5X4uGxSqZ+Gp4emIgxUWOKQjCraFvT+F
+         tbs41vI6PxAyQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Xiaoke Wang <xkernel.wang@foxmail.com>,
@@ -39,14 +39,14 @@ Cc:     Xiaoke Wang <xkernel.wang@foxmail.com>,
         Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>, robdclark@gmail.com,
         sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        maxime@cerno.tech, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.19 10/12] drm/msm/mdp5: check the return of kzalloc()
-Date:   Tue, 19 Apr 2022 14:15:23 -0400
-Message-Id: <20220419181525.486166-10-sashal@kernel.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 4.14 7/9] drm/msm/mdp5: check the return of kzalloc()
+Date:   Tue, 19 Apr 2022 14:15:55 -0400
+Message-Id: <20220419181557.486336-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220419181525.486166-1-sashal@kernel.org>
-References: <20220419181525.486166-1-sashal@kernel.org>
+In-Reply-To: <20220419181557.486336-1-sashal@kernel.org>
+References: <20220419181557.486336-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -80,14 +80,14 @@ Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 3 +++
+ drivers/gpu/drm/msm/mdp/mdp5/mdp5_plane.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-index 1ddf07514de6..3d8eaa25bea0 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-@@ -188,7 +188,10 @@ static void mdp5_plane_reset(struct drm_plane *plane)
+diff --git a/drivers/gpu/drm/msm/mdp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/mdp/mdp5/mdp5_plane.c
+index 4b22ac3413a1..1f9e3c5ea47d 100644
+--- a/drivers/gpu/drm/msm/mdp/mdp5/mdp5_plane.c
++++ b/drivers/gpu/drm/msm/mdp/mdp5/mdp5_plane.c
+@@ -197,7 +197,10 @@ static void mdp5_plane_reset(struct drm_plane *plane)
  		drm_framebuffer_unreference(plane->state->fb);
  
  	kfree(to_mdp5_plane_state(plane->state));
