@@ -2,64 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BABC750658C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 09:17:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7697F5065A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 09:22:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349243AbiDSHUP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 03:20:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41104 "EHLO
+        id S240878AbiDSHZC convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 03:25:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349245AbiDSHUN (ORCPT
+        with ESMTP id S1349283AbiDSHZB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 03:20:13 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4850331DF6;
-        Tue, 19 Apr 2022 00:17:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650352650; x=1681888650;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=O7ltANC2Z4ZUrUzcxO7rd/MTdeXiJHIdWVuveYrHpkE=;
-  b=NofznVY3Uuur+OS6FW+cwtVBkL6tF+HrgKPjwUZ0SWLlaskWI+KqVZtN
-   4qKcYypaIvZGWAg2JEPKBEMVyGVIyxXolEAzeJ2hN3Badk6c+KOnWLoB0
-   /Z58GU6cu1SW6tROaianGfOmLnFFDYbUdhQQ/t9nAmdBh/giAyRdm1tmc
-   Q=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 19 Apr 2022 00:17:29 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 00:17:28 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 19 Apr 2022 00:17:27 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 19 Apr 2022 00:17:21 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH] ASoC: qcom: SC7280: Update machine driver startup, shutdown callbacks
-Date:   Tue, 19 Apr 2022 12:46:59 +0530
-Message-ID: <1650352619-17370-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Tue, 19 Apr 2022 03:25:01 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49CFF3206B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 00:22:19 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <p.zabel@pengutronix.de>)
+        id 1ngiBc-0003vQ-Qk; Tue, 19 Apr 2022 09:22:08 +0200
+Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <p.zabel@pengutronix.de>)
+        id 1ngiBa-003vWW-6p; Tue, 19 Apr 2022 09:22:04 +0200
+Received: from pza by lupine with local (Exim 4.94.2)
+        (envelope-from <p.zabel@pengutronix.de>)
+        id 1ngiBY-000440-4c; Tue, 19 Apr 2022 09:22:04 +0200
+Message-ID: <dc2252f03db5881dbb17006c910dfca54c7d2fee.camel@pengutronix.de>
+Subject: Re: [PATCH V4] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
+From:   Philipp Zabel <p.zabel@pengutronix.de>
+To:     "Sajida Bhanu (Temp)" <quic_c_sbhanu@quicinc.com>,
+        adrian.hunter@intel.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
+        chris@printf.net, venkatg@codeaurora.org, gdjakov@mm-sol.com,
+        quic_asutoshd@quicinc.com
+Cc:     linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rampraka@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com
+Date:   Tue, 19 Apr 2022 09:22:04 +0200
+In-Reply-To: <1943a5fb-cf6c-f358-9e27-408792a458ce@quicinc.com>
+References: <1649759983-22035-1-git-send-email-quic_c_sbhanu@quicinc.com>
+         <1ee3b0619ee976eaf88e7207318770d441418c94.camel@pengutronix.de>
+         <1943a5fb-cf6c-f358-9e27-408792a458ce@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+User-Agent: Evolution 3.38.3-1 
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,43 +62,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update machine driver startup, shutdown callback functions to support
-codec DMA paths. Without this change, platforms with WCD codec is failing
-to register sound card.
+Hi Sajida,
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- sound/soc/qcom/sc7280.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+On Di, 2022-04-19 at 11:46 +0530, Sajida Bhanu (Temp) wrote:
+[...]
+> > > +static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
+> > > +{
+> > > +	struct reset_control *reset;
+> > > +	int ret = 0;
+> > No need to initialize ret.
+> > 
+> > > +
+> > > +	reset = reset_control_get_optional_exclusive(dev, NULL);
+> > > +	if (IS_ERR(reset))
+> > > +		return dev_err_probe(dev, PTR_ERR(reset),
+> > > +				"unable to acquire core_reset\n");
+> > > +
+> > > +	if (!reset)
+> > > +		return ret;
+> Here we are returning ret directly if reset is NULL , so ret 
+> initialization is required.
 
-diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
-index 4ef4034..d64df11 100644
---- a/sound/soc/qcom/sc7280.c
-+++ b/sound/soc/qcom/sc7280.c
-@@ -295,6 +295,10 @@ static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
- 		break;
- 	case LPASS_DP_RX:
- 		break;
-+	case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
-+	case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
-+	case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
-+		break;
- 	default:
- 		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
- 			cpu_dai->id);
-@@ -316,6 +320,10 @@ static int sc7280_snd_startup(struct snd_pcm_substream *substream)
- 		break;
- 	case LPASS_DP_RX:
- 		break;
-+	case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
-+	case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
-+	case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
-+		break;
- 	default:
- 		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
- 			cpu_dai->id);
--- 
-2.7.4
+You are right. I would just "return 0;" here, but this is correct as
+is.
 
+> > > +
+> > > +	ret = reset_control_assert(reset);
+> > > +	if (ret)
+> > > +		return dev_err_probe(dev, ret, "core_reset assert failed\n");
+> > Missing reset_control_put(reset) in the error path.
+> Sure will add
+> > 
+> > > +
+> > > +	/*
+> > > +	 * The hardware requirement for delay between assert/deassert
+> > > +	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
+> > > +	 * ~125us (4/32768). To be on the safe side add 200us delay.
+> > > +	 */
+> > > +	usleep_range(200, 210);
+> > > +
+> > > +	ret = reset_control_deassert(reset);
+> > > +	if (ret)
+> > > +		return dev_err_probe(dev, ret, "core_reset deassert failed\n");
+> > Same as above. Maybe make both ret = dev_err_probe() and goto ...
+> In both cases error message is different so I think goto not good idea here.
+
+You could goto after the error message. Either way is fine.
+
+regards
+Philipp
