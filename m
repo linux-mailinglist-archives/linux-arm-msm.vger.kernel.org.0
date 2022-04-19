@@ -2,71 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A755850720F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 17:45:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B61550721A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 17:48:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346432AbiDSPsc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 11:48:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49582 "EHLO
+        id S238617AbiDSPun (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 11:50:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240262AbiDSPsc (ORCPT
+        with ESMTP id S1354017AbiDSPuj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 11:48:32 -0400
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F30B1EA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 08:45:48 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-e2442907a1so17913109fac.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 08:45:48 -0700 (PDT)
+        Tue, 19 Apr 2022 11:50:39 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B44B81DA6A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 08:47:55 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id ks6so33850229ejb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 08:47:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=k80igm9bNYeo0/PuGUmVJIFnE85OFqPLleVrR/GfhOI=;
-        b=A+7wUP963dS6aGhmek9wwRA/GDmHbWws04i5dh9LdMjVk5cV3jP9YeQwl+QFX2HzL2
-         x6DqMrRlcX2wd5vLhkSRv+w1u9zmBNW/ZOb9wP38+SjnUbP2IktJq4yKXYSB2VaP+8MO
-         xcVitCJ4zLm9g/CHNyNdmeakGh3rr9tuojwwI=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=rywWV/1Z8bflEpBPWvvVmEX4jfvsS4lw1rTLuCBMv+U=;
+        b=yyJYA18i5CR/Ldqx3sEAPjqEpMWAZMqJGwjEfDFdUb2wHw8b7W4PewFQaVqH8r7d8M
+         4VzCbyroFDLt1Vak20r4wAvKZrNDkCQYcDu3xco9cX1mm2Xt0jGQAUwt4iX0HlegBuLv
+         g4qTkbb/1VPsEPsv1tVwZUPQkgP5WL00o5PdE7Cz6x2c5JWkM0JaLOSnS0RxkO1D/cn7
+         XYIiJ4HXZpoLTS1mMxeqzCrCu99gXdKS2lL5f6necH1DD80uSL29exI1RcWUOi3irQXW
+         iGARYJE2vZWyV2u1GHkxupev7hA143MgpumBM/KR62nt5Qg9mgD3gGhtGkZULAXNFkrr
+         eVRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=k80igm9bNYeo0/PuGUmVJIFnE85OFqPLleVrR/GfhOI=;
-        b=CwceW98t3Kwlvg9kUyXStWpd9fVGq7hO48Aib13YJyRMEVJyP/EESXAAJLAEEQ2S4Y
-         qfmO7bmmdpA9mIO/JsXNqntTQB+f8gek1ul1f4LQxkwPpqkxEuJ3yIguuGLnSxJEsz7j
-         S3giviGpDpX0hs+YiJ/KGbtiBU2dSpR51jiLlfEreiDOe74SWQjqmz2n8vzBcLRJNlwK
-         WnBQi2WiIhwhAe9stBlZ3UldcAP2kH+UjTlyOoUr3CKaZ7vythZu8uNX2+J+9HZBPmnS
-         Lnv2kj/Z0cFTprcJrC9bRNO4s+n2Jn5ZHVUO5A0NS7STBRM/LuRi/MXFGOIXpPOccoSi
-         XLzw==
-X-Gm-Message-State: AOAM5323WapmYftj5Djmh9fMmV2irYiCmnHS9RWFgxjG8OG4rMd6+WbI
-        RUMkVTv8y87ez27tBOGeqPAgNMPdxO2KNeKvoqA+Gg==
-X-Google-Smtp-Source: ABdhPJzk6+Q51TifhGU0xY14VkV/+mpM+40heyVecZrtV+q3RQACke7WNgpOzd0DTutcDoqHSMARdxnCqmfsiltD298=
-X-Received: by 2002:a05:6870:3907:b0:e5:a6fd:4047 with SMTP id
- b7-20020a056870390700b000e5a6fd4047mr6541720oap.193.1650383148187; Tue, 19
- Apr 2022 08:45:48 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 19 Apr 2022 08:45:47 -0700
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=rywWV/1Z8bflEpBPWvvVmEX4jfvsS4lw1rTLuCBMv+U=;
+        b=bXvPfbg5m2b4TVIi47sHS4MgxNQi+PoGUzgf0FAT3P6J3ncxTNKwo/nHbcc81vwrdS
+         ch52/S77DZ4CVUFCLA5UCK69MMl1ZrCeVOcRfe69zmUP2rF3vozwRvTVu6+pJYsoL5EM
+         LO+gcNUbcr3rBCaIX7Tjr4rEW+U+uK5za36ONBPnTcvFcFeEGKZIOjRg72RXVXfQrdWw
+         EBuCiOwkxus+Zwe27E7xhh3K7M1N4ujsdX++03YEYWt4oSiWll3ODAwyREow2jG9kskH
+         NfbJY+V9DWEFCqjesmNjvzaNpVApzZve6eMh0sA8+nyMK5v04GNCkcOVGbcaPIodwcKP
+         p/RQ==
+X-Gm-Message-State: AOAM5334iQI/9UDTbCP5WmODbSnxLINsbMIdjOOVS4zq8eFjLsmVnkMX
+        2i6uRduPjPuUMeWmKRfCNJgbwg==
+X-Google-Smtp-Source: ABdhPJy87hiOiQgRoK0mL7fyRVNX2TPUGk8hoRdfc8hv4EulKC4CHVhnwEIzEbGto5FL+m/hWyHJAQ==
+X-Received: by 2002:a17:907:9868:b0:6e8:7ae3:7f42 with SMTP id ko8-20020a170907986800b006e87ae37f42mr14321317ejc.224.1650383273992;
+        Tue, 19 Apr 2022 08:47:53 -0700 (PDT)
+Received: from [192.168.0.220] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id kk23-20020a170907767700b006e8a6e53a7bsm5779313ejc.139.2022.04.19.08.47.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Apr 2022 08:47:53 -0700 (PDT)
+Message-ID: <606cc762-a0c2-49a4-3e5d-d2dbd4595bc7@linaro.org>
+Date:   Tue, 19 Apr 2022 17:47:52 +0200
 MIME-Version: 1.0
-In-Reply-To: <Yl7Nb0mNjt7kV3uV@sirena.org.uk>
-References: <1649939418-19861-1-git-send-email-quic_c_skakit@quicinc.com>
- <1649939418-19861-8-git-send-email-quic_c_skakit@quicinc.com>
- <CAE-0n533obTi995x_rJG_ihUUquF3MQLJt6VMf7=oxyzMUL5DQ@mail.gmail.com> <Yl7Nb0mNjt7kV3uV@sirena.org.uk>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 19 Apr 2022 08:45:47 -0700
-Message-ID: <CAE-0n53zWdrT7S6MKM_aktnj=AwjUKH0XKySwSkfkX8vTv2w9w@mail.gmail.com>
-Subject: Re: [PATCH V10 7/9] regulator: Add a regulator driver for the PM8008 PMIC
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
-        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
+ <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org>
+ <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
+ <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org>
+ <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,138 +84,146 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Mark Brown (2022-04-19 07:55:43)
-> On Thu, Apr 14, 2022 at 05:25:49PM -0700, Stephen Boyd wrote:
-> > Quoting Satya Priya (2022-04-14 05:30:16)
->
-> > > +static struct platform_driver pm8008_regulator_driver = {
-> > > +       .driver = {
-> > > +               .name           = "qcom-pm8008-regulator",
->
-> > I'd prefer to use an of_device_id table here. That would let us populate
-> > a "qcom,pm8008-regulators" node that had the ldo nodes as children and
-> > avoid mfd cells.
->
-> That's encoding the current Linux way of splitting up drivers into the
-> DT rather than describing the hardware.
+On 14/04/2022 19:36, Doug Anderson wrote:
+> Hi,
+> 
+> On Thu, Apr 14, 2022 at 12:10 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 13/04/2022 23:48, Doug Anderson wrote:
+>>> I'm actually kinda curious: is there really a good reason for this? I
+>>> know I haven't been adding things to
+>>> `Documentation/devicetree/bindings/arm/qcom.yaml` for Qualcomm
+>>> Chromebooks.  Ironically, it turns out that the script I typically use
+>>> to invoke checkpatch happens to have "--no-tree" as an argument and
+>>> that seems to disable this check. Doh!
+>>>
+>>> That being said, though, I do wonder a little bit about the value of
+>>> enumerating the top-level compatible like this in a yaml file.
+>>> Certainly the yaml schema validation in general can be quite useful,
+>>> but this top-level listing seems pure overhead. I guess it makes some
+>>> tools happy, but other than that it seems to provide very little
+>>> value...
+>>
+>> If compatible is not part of ABI, it is allowed to change in whatever
+>> shape one wishes. In such case, how can anyone (e.g. user-space)
+>> identify the board? Model name? Also not part of ABI (not documented)...
+> 
+> Hmm, it is a good question. I guess one issue is that the way
+> Chromebooks interact with the bootloader it's not trivially easy to
+> enumerate what exactly the compatible will be in this hardcoded list.
+> It all has to do with the whole "revision" and "sku" scheme the
+> bootloader on ARM Chromebooks uses. For example, on one Chromebook I
+> have the bootloader prints out:
+> 
+> Compat preference: google,lazor-rev5-sku6 google,lazor-rev5
+> google,lazor-sku6 google,lazor
+> 
+> What that means is that:
+> 
+> 1. The bootloader will first look for 'google,lazor-rev5-sku6'. If it
+> finds a dts with that compatible it will pick it.
+> 
+> 2. The bootloader will then look for 'google,lazor-rev5'. If it finds
+> a dts with that compatible it will pick it.
+> 
+> 3. The bootloader will then look for 'google,lazor-sku6'. If it finds
+> a dts with that compatible it will pick it.
+> 
+> 4. Finally, the bootloader will look for 'google,lazor'.
+> 
+> There's a method to the madness. Among other things, this allows
+> revving the board revision for a change to the board even if it
+> _should_ be invisible to software. The rule is always that the
+> "newest" device tree that's in Linux is always listed _without_ a
+> board revision number. An example might help.
+> 
+> a) Assume '-rev5' is the newest revision available. In Linux this
+> would be the only dts that advertises "google,lazor" (with no -rev).
+> Previous dts file would advertise "-rev3" or "-rev4" or whatever.
+> 
+> b) We need to spin the board for something that should be invisible to
+> software. Just in case, HW guys change the board strappings to -rev6.
+> This works _seamlessly_ because the newest dts file always advertises
+> just "google,lazor"
+> 
+> c) We spin the board for something that's _not_ invisible. It will be
+> "-rev7". Now, we go back and add "-rev5" and "-rev6" to the old board
+> dts file and remove the advertisement for "google,lazor". We create a
+> new dts file for -rev7 that advertises "google,lazor".
 
-The DT binding has a subnode of the pm8008@8 node for 'regulators'.
-There's also a subnode for gpios (see qcom,pm8008-gpio). The gpio node
-has a reg property, so I'm confused how we can even have the regulators
-container node at the same level as the gpio node with a reg property.
-Every node that's a child of pm8008@8 either needs to have a reg
-property or not.
+Except shuffling the compatibles in bindings, you are changing the
+meaning of final "google,lazor" compatible. The bootloader works as
+expected - from most specific (rev5-sku6) to most generic compatible
+(google,lazor) but why do you need to advertise the latest rev as
+"google,lazor"? Why the bootloader on latest rev (e.g. rev7) cannot bind
+to rev7 compatible?
 
-What benefit does it have to not describe secondary i2c addresses as
-nodes in DT? I think it's necessary because the reset gpio needs to be
-deasserted before i2c read/write to either address, 8 or 9, will work.
-Otherwise I don't understand. Having the reset puts us into a small bind
-though because child nodes sometimes have a reg property and other times
-don't.
+> Now we can certainly argue back and forth above the above scheme and
+> how it's terrible and/or great, but it definitely works pretty well
+> and it's what we've been doing for a while now. Before that we used to
+> proactively add a whole bunch of "future" revisions "just in case".
+> That was definitely worse and had the same problem that we'd have to
+> shuffle compatibles. See, for instance `rk3288-veyron-jerry.dts`.
+> 
+> One thing we _definitely_ don't want to do is to give HW _any_
+> incentive to make board spins _without_ changing the revision. HW
+> sometimes makes spins without first involving software and if it
+> doesn't boot because they updated the board ID then someone in China
+> will just put the old ID in and ship it off. That's bad.
+> 
+> --
+> 
+> But I guess this doesn't answer your question: how can userspace
+> identify what board this is running? I don't have an answer to that,
+> but I guess I'd say that the top-level "compatible" isn't really it.
 
-This is the current example
+It can, the same as bootloader, by looking at the most specific
+compatible (rev7).
 
-	i2c {
-	  pm8008@8 {
-	    compatible = "qcom,pm8008";
-	    #address-cells = <1>;
-	    #size-cells = <0>;
-	    reset-gpios = <&tlmm 23 GPIO_ACTIVE_HIGH>;
-	    gpios {
-	      compatible = "qcom,pm8008-gpio", "qcom,spmi-gpio";
-	      reg = <0xc000>;
-	      ...
+> If nothing else, I think just from the definition it's not guaranteed
+> to be right, is it? From the spec: "Specifies a list of platform
+> architectures with which this platform is compatible." The key thing
+> is "a list". If this can be a list of things then how can you use it
+> to uniquely identify what one board you're on? 
 
-	    };
+The most specific compatible identifies or, like recently Rob confirmed
+in case of Renesas, the list of compatibles:
+https://lore.kernel.org/linux-devicetree/Yk2%2F0Jf151gLuCGz@robh.at.kernel.org/
 
-	    regulators {
-	      vdd_l1_l2-supply = <&vreg_s8b_1p2>;
-	
-	      ldo1 {
-	        regulator-name = "pm8008_l1";
-	      };
-	      ldo2 {
-	        regulator-name = "pm8008_l2";
-	      };
-	    };
-	  };
-	};
+> If all of the things
+> that are different between two boards are things that are probable
+> (eDP panels, USB devices, PCIe devices) then two very different boards
+> could have the exact same device tree, right? ...and you could have
+> one device tree that lists the compatible of both boards?
 
-What should the final result be? Dropping the regulators node would end
-up with the same problem where ldo1 has no reg property. Adding a reg
-property to ldo1 might work, but it would be a register offset inside
-i2c address 9 while the binding makes it look like a register offset
-within 9. The binding for the container node could get two address
-cells, so that the first cell describes the i2c address offset?
+What is the question here?
 
-	i2c {
-	  pm8008@8 {
-	    compatible = "qcom,pm8008";
-	    #address-cells = <2>;
-	    #size-cells = <0>;
-	    reset-gpios = <&tlmm 23 GPIO_ACTIVE_HIGH>;
+> 
+> That all being said, I think that on Chrome OS the userspace tools
+> _do_ some amount of parsing of the compatible strings here. For
+> Chromebooks they leverage the fact that they understand the above
+> scheme and thus can figure things out. I think they also use things
+> like `/proc/device-tree/firmware/coreboot/board-id` and
+> `/proc/device-tree/firmware/coreboot/sku-id`. That doesn't seem to be
+> documented, though. :(
+> 
+> I guess the question is, though, why do you need to know what board you're on?
 
-	    vdd_l1_l2-supply = <&vreg_s8b_1p2>;
+You might have (and I had in some previous job) single user-space
+application working on different HW and responding slightly differently,
+depending on the hardware it runs. Exactly the same as kernel behaves
+differently, depending on DTB. The differences for example might be in
+GPIOs or some other interfaces managed via user-space drivers, not in
+presence of devices. Another example are system tests behaving
+differently depending on the DUT, where again you run the tests in a
+generic way so the DUT is autodetected based on board.
 
-	    gpios@0,c000 {
-	      compatible = "qcom,pm8008-gpio", "qcom,spmi-gpio";
-	      reg = <0x0 0xc000>;
-	      ...
+Of course you could say: different hardware, has different DTB, so
+user-space should check entire tree, to figure out how to operate that
+hardware. Yeah, that's one way, very complex and actually duplicating
+kernel's work. Embedded apps are specialized, so it is much easier for
+them to check board compatible and make assumptions on that.
 
-	    };
-
-	    ldo1@1,30 {
-	      compatible = "qcom,pm8008-regulator";
-	      reg = <0x1 0x30>;
-	      regulator-name = "pm8008_l1";
-	    };
-	    ldo2@1,40 {
-	      compatible = "qcom,pm8008-regulator";
-	      reg = <0x1 0x40>;
-	      regulator-name = "pm8008_l2";
-	    };
-	  };
-	};
-
-We don't make a node for each gpio so I don't know why we would make a
-node for each regulator. The above could be changed to have the
-regulators node and a reg property like this
-
-	i2c {
-	  pm8008@8 {
-	    compatible = "qcom,pm8008";
-	    #address-cells = <2>;
-	    #size-cells = <0>;
-	    reset-gpios = <&tlmm 23 GPIO_ACTIVE_HIGH>;
-
-	    gpios@0,c000 {
-	      compatible = "qcom,pm8008-gpio", "qcom,spmi-gpio";
-	      reg = <0x0 0xc000>;
-	      ...
-
-	    };
-
-	    regulators@1,0 {
-	      compatible = "qcom,pm8008-regulators";
-	      vdd_l1_l2-supply = <&vreg_s8b_1p2>;
-
-	      reg = <0x1 0x0>;
-	      ldo1 {
-	      regulator-name = "pm8008_l1";
-	      };
-	      ldo2 {
-	        regulator-name = "pm8008_l2";
-	      };
-	    };
-	  };
-	};
-
-I wonder if there's a mapping table property like i2c-ranges or
-something like that which could be used to map the i2c dummy to the
-first reg property. That would be super awesome so that when the
-platform bus is populated we could match up the regmap for the i2c
-device to the platform device automatically.
-
-By the way, Is there any document on "best practices" for i2c devicetree
-bindings?  We should add details to the document to describe this
-situation so this can be conveyed faster next time.
+Best regards,
+Krzysztof
