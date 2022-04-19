@@ -2,77 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EA5D506718
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 10:44:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C886506720
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Apr 2022 10:47:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233019AbiDSIrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 04:47:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45378 "EHLO
+        id S1345185AbiDSIu2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 04:50:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344465AbiDSIrK (ORCPT
+        with ESMTP id S240652AbiDSIu2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 04:47:10 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 849E421250
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 01:44:26 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id bv19so31427855ejb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 01:44:26 -0700 (PDT)
+        Tue, 19 Apr 2022 04:50:28 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7576B22B0D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 01:47:45 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id g18so21401695wrb.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 01:47:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=HrN9VciOvo2sc5NJIuqyZBPpfFZgYTc0TLFG16RyFkM=;
-        b=IElnTneLI0bfJg3GlhBDl03tsabIYpTQ1rdHHYDzm+y9X+cW9vZsvI1+9AEy/xmm45
-         0LGL1Mbp5MHXoR36lTew7pOWcnkfYRzC6j4fl4Nhnmq7ewCyDoUB81hmq4zcTNZOsZfm
-         ucZ5nvME2xR9YO/YzfJIypZ8gj1Thq7FjiqjiZIRwhxDrSDumDV+XrV+xq4e29j2xvzM
-         vAPj8K9yGzd4IuuPySK9CC12JCLspYDQvVGF370rqEU0yqhQ256wd3te8SRHIlQZCo21
-         hb6MvCR0yorZNqbZkHP6SO9YVS/OHf6HHhJibWeauwxtTDVeMfALpopTCM66UTdORSXi
-         a2mg==
+        bh=3zfxgfhhkGrdZQPttYFIyDKGOpAjycnaX8YYYe3nvMs=;
+        b=QMuKTTF4XAeRFnDlBJHu27U50iu6XBNoG05MeKFeLU7LsVVjUcV3ejaRRo+hmzy4HE
+         8RGR84YLIk71QD5AQiyRP+u8oMQokSNGjOV2GeZzTXIeNHMYrl62RYagKfoW7/4BX+KF
+         C9hVR3VkHU0ESauWkgoubLwV7f0N8V8CxKFQOSGTKkkgEfNubRFW8kfT801AsfBDEl8X
+         broAjmmh0Unod0xRCJh7b138tc2H80Cnl9U7AdllLIwQddcei+hpFnZERUtovQtlRIg6
+         YAxxTykq5evBHh9fJaw2Sx8sp2Rao0lkkWMBCyOUCVh/qrBePzCPZAAaTK7uhf4Xw479
+         BJ9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=HrN9VciOvo2sc5NJIuqyZBPpfFZgYTc0TLFG16RyFkM=;
-        b=RBNhpZXhirbZAB2Tf2QV9o18fq+B5RFrZ9AmrcYxnacNX/NggTJaZyvqrEoQrzx/Au
-         9olZ/mELvuIhiIK65LNM3exduB6LgdyMWdipBy3g7CcFdhrdNB2aPAlMy1XmxT9qG0Xl
-         vqq7p5R4mx3v0xpWqolM01Fz6V1fMgQt7sBrcjDFktgRDPn9wkxGl5n9rpb3iQls04YN
-         H9A74POVMKEg9P7mVqOHZu9lbn4cMmxazLR/SD+4+wLw9hyLlHOHFw1huTXVJMyWNLxt
-         YiMT4xWz77jmkwBISOt0hDJ75y+nPeIMoyOhnL4V+K322ndmMlRuyGqTQr228c1N/Tvz
-         l/yg==
-X-Gm-Message-State: AOAM531mRz1KIaZaAHZuDfwaYa9033aJXzMYfnF1aA+adTZl2H6CD9lg
-        6+UVyJtifl+FaSFpHTSDLkX7hg==
-X-Google-Smtp-Source: ABdhPJwkDYHLrEVt9DCzHMZ8WzRAlgm3uabio32FY7R2bwJv+YypvefSQnDPWeKnwNalpiz531d4KQ==
-X-Received: by 2002:a17:907:9713:b0:6ef:a8a7:14ce with SMTP id jg19-20020a170907971300b006efa8a714cemr8137060ejc.534.1650357865036;
-        Tue, 19 Apr 2022 01:44:25 -0700 (PDT)
-Received: from [192.168.0.217] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id g15-20020a170906520f00b006cd07ba40absm5410044ejm.160.2022.04.19.01.44.23
+        bh=3zfxgfhhkGrdZQPttYFIyDKGOpAjycnaX8YYYe3nvMs=;
+        b=rpB7DASVV76DEyYnDlLaCWCscW0Y7MVMMNCqSacbMov+0j+pyXEUxEOXhVI3xITQTS
+         73+ybzHvbuIJv6GIt6Cj8WUWAxxE2yznUXjuz/j3yPXDHmoMG3ClrRRdHZpG1evZJBlE
+         +MggjvFOzpiq9wtknBh9W5s8Zb3eS1hOTexDJUa1jZ2Uwxsyg/X+M0fz1nUjdPeacN7I
+         Xz5BjEyzupR1zBkA5lyfnDlwuuIHplXe4DDboIP8pjxxAWWO8Px0qlW0FZ4g1M9VnML0
+         OySnxcpi+zQql+Nw9+pT2PCDy2GHZwi3AIFJQjiLa4dqLwCGrikYRotYyau/CmduteHz
+         CvaA==
+X-Gm-Message-State: AOAM532Vxm+/q0JvEx7Htu1KLXVDoOOU9juPmlM6GeyJzRxjTYBerVAS
+        mRVImWT+2d/dUGvFgEnamfZG8Q==
+X-Google-Smtp-Source: ABdhPJyGYvopwBZKM+g01h8Kn+VxX+cUxfwLusUKA6MiYSG6VWvCuPXWxSd3hPj8JfuBmWdc2LElng==
+X-Received: by 2002:adf:dd8a:0:b0:207:9e5f:fd0a with SMTP id x10-20020adfdd8a000000b002079e5ffd0amr10553750wrl.94.1650358064065;
+        Tue, 19 Apr 2022 01:47:44 -0700 (PDT)
+Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id g8-20020a5d4888000000b00207a49fa6a1sm14168011wrq.81.2022.04.19.01.47.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Apr 2022 01:44:24 -0700 (PDT)
-Message-ID: <c7db1dcd-19df-eb94-a49c-4ab75abcf4af@linaro.org>
-Date:   Tue, 19 Apr 2022 10:44:23 +0200
+        Tue, 19 Apr 2022 01:47:43 -0700 (PDT)
+Message-ID: <e48a9b3a-4a9f-3fa7-2bd2-edac34328c37@linaro.org>
+Date:   Tue, 19 Apr 2022 09:47:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH v1 2/4] arm64: dts: Add msm8939 SoC
+Subject: Re: [PATCH -next] slimbus: qcom: Remove unnecessary print function
+ dev_err()
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     shawn.guo@linaro.org, jun.nie@linaro.org, benl@squareup.com,
-        jwillcox@squareup.com, jgates@squareup.com, mchen@squareup.com,
-        zac@squareup.com, Leo Yan <leo.yan@linaro.org>
-References: <20220419010903.3109514-1-bryan.odonoghue@linaro.org>
- <20220419010903.3109514-3-bryan.odonoghue@linaro.org>
- <737d44a9-56ba-846e-24ad-36b2da52d2d7@linaro.org>
- <f3d50cd9-6b41-a5df-0ccb-b4d02ae5c66a@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <f3d50cd9-6b41-a5df-0ccb-b4d02ae5c66a@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Yang Li <yang.lee@linux.alibaba.com>, agross@kernel.org
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
+        Abaci Robot <abaci@linux.alibaba.com>
+References: <20220414014430.19051-1-yang.lee@linux.alibaba.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20220414014430.19051-1-yang.lee@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,110 +76,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/04/2022 10:30, Bryan O'Donoghue wrote:
-> On 19/04/2022 08:33, Krzysztof Kozlowski wrote:
->> tx/rx. Please rebase on recent linux-next and run `make dtbs_check` and
->> fix all the errors.
+
+
+On 14/04/2022 02:44, Yang Li wrote:
+> The print function dev_err() is redundant because
+> platform_get_irq_byname() already prints an error.
 > 
-> I did do that, it didn't throw up any errors.
+> Eliminate the follow coccicheck warning:
+> ./drivers/slimbus/qcom-ctrl.c:514:2-9: line 514 is redundant because
+> platform_get_irq() already prints an error
 > 
-> Must have done it wrong
+> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+> Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+
+
+Applied thanks,
+
+--srini
+> ---
+>   drivers/slimbus/qcom-ctrl.c | 4 +---
+>   1 file changed, 1 insertion(+), 3 deletions(-)
 > 
-> Thanks for the review
-
-
-There are many, many issues:
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: cpu@100: compatible:
-['arm,cortex-a53', 'arm,armv8'] is too long
-
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: idle-states: 'spc' does not
-match any of the regexes: '^(cpu|cluster)-', 'pinctrl-[0-9]+'
-
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: gpu-opp-table: $nodename:0:
-'gpu-opp-table' does not match '^opp-table(-[a-z0-9]+)?$'
-
-
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: thermal-zones:
-'venus_camera-thermal' does not match any of the regexes:
-'^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$', 'pinctrl-[0-9]+'
-
-
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: soc: hwlock: {'compatible':
-['qcom,tcsr-mutex'], 'syscon': [[53, 0, 4096]], '#hwlock-cells': [[1]],
-'phandle': [[48]]} should not be valid under {'type': 'object'}
-
-
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: soc: codec: {'compatible':
-['qcom,msm8916-wcd-digital-codec'], 'reg': [[124895232, 1024]],
-'clocks': [[49, 154], [49, 159]], 'clock-names': ['ahbix-clk', 'mclk'],
-'#sound-dai-cells': [[1]]} should not be valid under {'type': 'object'}
-
-
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: qfprom_cpr@58000: compatible:
-['qcom,qfprom'] is too short
-
-
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: power-controller@b1b9000:
-'#power-domain-cells' is a required property
-
-
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb:0:0: /soc/syscon@1937000: failed
-to match any schema with compatible: ['qcom,tcsr-msm8916', 'syscon']
-
-
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: hwlock: 'reg' is a required
-property
-
-
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: memory@60000: $nodename:0:
-'memory@60000' does not match '^sram(@.*)?'
-
-
-
-And finally:
-
-
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: serial@78af000: dma-names:0:
-'tx' was expected
-
-	From schema:
-/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/serial/qcom,msm-uartdm.yaml
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: serial@78af000: dma-names:1:
-'rx' was expected
-
-	From schema:
-/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/serial/qcom,msm-uartdm.yaml
-
-
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: spi@78b5000: dma-names:0: 'tx'
-was expected
-
-	From schema:
-/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/spi/qcom,spi-qup.yaml
-
-arch/arm64/boot/dts/qcom/apq8039-t2.dtb: spi@78b5000: dma-names:1: 'rx'
-was expected
-
-	From schema:
-/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/spi/qcom,spi-qup.yaml
-
-
-I did not list here all needing fixes. Some might be skipped, but most
-should be fixed.
-
-Best regards,
-Krzysztof
+> diff --git a/drivers/slimbus/qcom-ctrl.c b/drivers/slimbus/qcom-ctrl.c
+> index ec58091fc948..c0c4f895d76e 100644
+> --- a/drivers/slimbus/qcom-ctrl.c
+> +++ b/drivers/slimbus/qcom-ctrl.c
+> @@ -510,10 +510,8 @@ static int qcom_slim_probe(struct platform_device *pdev)
+>   	}
+>   
+>   	ctrl->irq = platform_get_irq(pdev, 0);
+> -	if (ctrl->irq < 0) {
+> -		dev_err(&pdev->dev, "no slimbus IRQ\n");
+> +	if (ctrl->irq < 0)
+>   		return ctrl->irq;
+> -	}
+>   
+>   	sctrl = &ctrl->ctrl;
+>   	sctrl->dev = &pdev->dev;
