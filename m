@@ -2,113 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 379A6508561
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 12:01:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C420350856E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 12:04:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377465AbiDTKDq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Apr 2022 06:03:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37454 "EHLO
+        id S1377448AbiDTKHK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Apr 2022 06:07:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359210AbiDTKDe (ORCPT
+        with ESMTP id S1377431AbiDTKHJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Apr 2022 06:03:34 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A4D83ED30
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 03:00:48 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id l9-20020a056830268900b006054381dd35so768758otu.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 03:00:48 -0700 (PDT)
+        Wed, 20 Apr 2022 06:07:09 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CADD3ED24
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 03:04:23 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id c64so1573757edf.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 03:04:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8JtaQ1pue+8sFHmxc4Knv9XbBREmqsMrzMrBQgT5CNc=;
-        b=lo9mEJqy0BDD/zBNtWkye9QrbEN3+dCG67elnm/8Uexr21WAe7v6GqsPmD599RziAo
-         pwgie+daElB4CDINXRC5U/GxzxNo81N2t76h1tqbdUNlsHu1zwSMkVMNjtB0mGa47sHN
-         gdy6ZJg3h/R2AjBDqvcjZGYWJPtbGBoNKPkvsH8G000O5lMvVuIsjVvi3abfBAGFMhLA
-         E81fmU8+rrpdhV79X8afiDQ31nsvtsU0glt8KCHPymO13YkpWcM7gaQk2/rXvi1TIXGQ
-         IFIfkpyNh0xvDGaEMx2DesEVrx3ovpg4JIC9d8xaMseFNiVy9/L1ixhzpVzDKbz188gL
-         PX8w==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=O/+Bq4GD0i1aeDJZB6KF270FrYsDWC9ZLK3WKl7pvtw=;
+        b=iQg0xYNVkHIZo0BFivFUh7zcofwerY9qIBuS1eg1pq1Wa+PK0moNksnXr2ibxPi8Nt
+         U4lJJn9AKf4k/TObba/Cc6oO4TsZpgIvDsGSOI4d+MrBlA6kaCK7lviv+aa2F++37KgR
+         N/r+QzoV+OnRGchrRwCncCZWkuUNshBr9/El/cp2eZVL39X0sLxwhSLBbrR2SosL706Q
+         QGwTbqgSZE0x2tcPBwFlyXbQQGpGtE5ZbEhr9iglUhXQg2XhGbPhvxh1iQ7sSxD8Ekyp
+         pSwmybpiz//I9XHylVbYKw8D03YZv3IELSfETGs8FfNIZ0DB7WpSpuQJKb7nPEVuVJ9w
+         vvUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8JtaQ1pue+8sFHmxc4Knv9XbBREmqsMrzMrBQgT5CNc=;
-        b=6eMywVN+zLqIJFs7XsxsEhte1IyQ9huyG1r1jQasApbvUYXQk2eXC5RhX4PE8NKA7v
-         0eD9QOKPNpUxgUpWzcab4cMWeqqcHgHpR8RmTPjFqs7DUeupfxFAOGaDpfwse1ZdLqEf
-         TW2hf8hrCHJuMmpX+xRSBRQAJTb3jD+2neqmwDWJ4eoDZUKftSVwNTj+61FaVJJ5n/Hx
-         nlVCZkTslR8DIu0j3SXPqBzpgCZLcfw5vxfYIFSHN63YU29orMbokwqB3G8K7e6V38aT
-         cUFHpFjfhwBPrsDZy0YrM9QVUC1EpgleiyGJdqZZCs3tDpUyur/ZEQ4hv3eigGTQxvSW
-         wYFw==
-X-Gm-Message-State: AOAM530bIm6harbE7zoni8IE5rlsueUj38shrOPvncSrXlFsvuun4+Ts
-        Q/KlqF/G1BvyXIytJA/u7ZTPvjQSKwI0Fa2A6jdh5Q==
-X-Google-Smtp-Source: ABdhPJzcJdBcjNTGYlbBgosfnSB5j34lXnm5wXFPbGVIIYHLxzjdaEQRdhuTH94cPAIiACAl9GOomm2ePAotGvtEjv4=
-X-Received: by 2002:a9d:5913:0:b0:5cd:a050:8f55 with SMTP id
- t19-20020a9d5913000000b005cda0508f55mr7320316oth.44.1650448847968; Wed, 20
- Apr 2022 03:00:47 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=O/+Bq4GD0i1aeDJZB6KF270FrYsDWC9ZLK3WKl7pvtw=;
+        b=dpqlK/ouc7x7Iumkz4HngK4vIiFIJWI8L4iPt+lHA8dDBAoGOBDQVWweU3XhYTsZgh
+         RoxKY1XG1DVSI/36ieQaNNgTufl4GvEw+YgBl0iCclgpPLdz71Xdtfa+olq7kNXiLAxK
+         lrpD96kl/3tnrgjNPQHnUV29nP2kinGsk9eUINkkhHGMxpwTH6eWR3i/dn1fCwMMfUOL
+         6Ks7/mcQkEJCRd9B+3bqSwvFYsCOXUBO5wnTCBm1aXlZxn4SIiEu0lQSqYfuWNyrao2b
+         Q1nwkMbyjSuaRS8SXZ4rQ708LJO5N9f+i4MjV85rytqEmQskzdBHUXA6JaZp5+oZa7lU
+         qK3A==
+X-Gm-Message-State: AOAM530OLLoU/9wb9PKGMmuoNOlyy/uuq9Ic7yRlzOIAKCwWoEzGGKaO
+        ALfDb17ZDu0pw0Ya8ZRHryo/Hg==
+X-Google-Smtp-Source: ABdhPJzL1lJX7sEUE2x5amjeU9v9hVjpMQnJ3qC7rbHT6pjZahpCdoZq2EmtCY7VhfWQbkBr/EYySQ==
+X-Received: by 2002:a05:6402:31ee:b0:41d:7038:c04a with SMTP id dy14-20020a05640231ee00b0041d7038c04amr22411161edb.142.1650449061949;
+        Wed, 20 Apr 2022 03:04:21 -0700 (PDT)
+Received: from [192.168.0.224] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id kw5-20020a170907770500b006db075e5358sm6599740ejc.66.2022.04.20.03.04.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Apr 2022 03:04:21 -0700 (PDT)
+Message-ID: <6dc5e28b-e84d-95c3-3967-476b2126314e@linaro.org>
+Date:   Wed, 20 Apr 2022 12:04:20 +0200
 MIME-Version: 1.0
-References: <20220419010903.3109514-1-bryan.odonoghue@linaro.org>
- <20220419010903.3109514-3-bryan.odonoghue@linaro.org> <737d44a9-56ba-846e-24ad-36b2da52d2d7@linaro.org>
- <CABymUCOAKvZXZKYtvunjn=K9mpZmAd4x3WTXH571k5BsBH6CEA@mail.gmail.com>
- <0cb490f4-3df8-7fc8-277f-070e0133f5db@linaro.org> <CABymUCN_N_yKuuF0zdwZ_jfd-UsfSt-HY5O4PjZ_sNmYGQ2UJw@mail.gmail.com>
-In-Reply-To: <CABymUCN_N_yKuuF0zdwZ_jfd-UsfSt-HY5O4PjZ_sNmYGQ2UJw@mail.gmail.com>
-From:   Jun Nie <jun.nie@linaro.org>
-Date:   Wed, 20 Apr 2022 18:00:35 +0800
-Message-ID: <CABymUCMxOTxmKP07A4HMz4iMyJHhwsh5PE9hskazGck_eRFt9A@mail.gmail.com>
-Subject: Re: [PATCH v1 2/4] arm64: dts: Add msm8939 SoC
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        shawn.guo@linaro.org, benl@squareup.com, jwillcox@squareup.com,
-        jgates@squareup.com, mchen@squareup.com, zac@squareup.com,
-        Leo Yan <leo.yan@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [RFC PATCH v2 5/6] ufs: use PM OPP when scaling gears
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
+References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
+ <20220411154347.491396-6-krzysztof.kozlowski@linaro.org>
+ <20220419170149.GB8699@thinkpad>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220419170149.GB8699@thinkpad>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Jun Nie <jun.nie@linaro.org> =E4=BA=8E2022=E5=B9=B44=E6=9C=8820=E6=97=A5=E5=
-=91=A8=E4=B8=89 17:57=E5=86=99=E9=81=93=EF=BC=9A
->
-> > >>
-> > >> Generic node names, no underscores in node names. This applies every=
-where.
-> > >>
-> > >>> +                     compatible =3D "qcom,qfprom";
-> > >>> +                     reg =3D <0x00058000 0x1000>;
-> > >>> +                     #address-cells =3D <1>;
-> > >>> +                     #size-cells =3D <1>;
-> > >>> +                     cpr_efuse_init_voltage1: ivoltage1@dc {
-> > >>
-> > >> s/ivoltageX/voltage/
-> > >
-> > > How about cpr_efuse_init_voltage_dc? There are 3
-> > > cpr_efuse_init_voltage* node here.
-> >
-> > The node names should be generic, so this should be maybe even just
-> > "efuse"? Feel free to add some prefix to it, so "init-voltage-efuse",
-> > but no underscores and no suffixes in such case (but "init-voltage2-efu=
-se").
->
-> The nodes are referenced by other node, such as below case. So I have
-> to name them,
-> underscore is the best separator. While I have 3 init_voltage related
-> nodes to name.
-> What's the name you suggest for them?
->
-> arch/arm/boot/dts/qcom-apq8084.dtsi: nvmem-cells =3D <&tsens_calib>,
-> <&tsens_backup>;
->
-Maybe it should like this?
+On 19/04/2022 19:01, Manivannan Sadhasivam wrote:
+> On Mon, Apr 11, 2022 at 05:43:46PM +0200, Krzysztof Kozlowski wrote:
+>> Scaling gears requires not only scaling clocks, but also voltage levels,
+>> e.g. via performance states.
+>>
+>> Use the provided OPP table, to set proper OPP frequency which through
+>> required-opps will trigger performance state change.  This deprecates
+>> the old freq-table-hz Devicetree property and old clock scaling method
+>> in favor of PM core code.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  drivers/scsi/ufs/ufshcd-pltfrm.c |  69 +++++++++++++++++++
+>>  drivers/scsi/ufs/ufshcd.c        | 115 +++++++++++++++++++++++--------
+>>  drivers/scsi/ufs/ufshcd.h        |   4 ++
+>>  3 files changed, 158 insertions(+), 30 deletions(-)
+>>
+>> diff --git a/drivers/scsi/ufs/ufshcd-pltfrm.c b/drivers/scsi/ufs/ufshcd-pltfrm.c
+>> index c1d8b6f46868..edba585db0c1 100644
+>> --- a/drivers/scsi/ufs/ufshcd-pltfrm.c
+>> +++ b/drivers/scsi/ufs/ufshcd-pltfrm.c
+>> @@ -107,6 +107,69 @@ static int ufshcd_parse_clock_info(struct ufs_hba *hba)
+>>  	return ret;
+>>  }
+>>  
+>> +static int ufshcd_parse_operating_points(struct ufs_hba *hba)
+>> +{
+>> +	struct device *dev = hba->dev;
+>> +	struct device_node *np = dev->of_node;
+>> +	struct ufs_clk_info *clki;
+>> +	const char *names[16];
+>> +	bool clocks_done;
+> 
+> Maybe freq_table?
 
-cpr_efuse_init_voltage1: efuse {
+ok
 
-> Regards,
-> Jun
+> 
+>> +	int cnt, i, ret;
+>> +
+>> +	if (!of_find_property(dev->of_node, "operating-points-v2", NULL))
+>> +		return 0;
+>> +
+>> +	cnt = of_property_count_strings(np, "clock-names");
+>> +	if (cnt <= 0) {
+>> +		dev_warn(dev, "%s: Missing clock-names\n",
+>> +			 __func__);
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	if (cnt > ARRAY_SIZE(names)) {
+>> +		dev_info(dev, "%s: Too many clock-names\n",  __func__);
+>> +		return -EINVAL;
+>> +	}
+> 
+> How did you come up with 16 as the max clock count? Is this check necessary?
+
+16 was an arbitrary choice, also mentioned in the bindings:
+https://lore.kernel.org/all/20220411154347.491396-3-krzysztof.kozlowski@linaro.org/
+
+The check is necessary from current code point of view - array is
+locally allocated with fixed size. Since bindings do not allow more than
+16, I am not sure if there is a point to make the code flexible now...
+but if this is something you wish, I can change.
+
+> 
+>> +
+>> +	/* clocks parsed by ufshcd_parse_clock_info() */
+>> +	clocks_done = !!of_find_property(np, "freq-table-hz", NULL);
+> 
+> freq-table-hz and opp-table are mutually exclusive, isn't it?
+
+You're right, this should be an exit.
+
+(...)
+
+>>  	ufshcd_init_lanes_per_dir(hba);
+>>  
+>>  	err = ufshcd_init(hba, mmio_base, irq);
+>> diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+>> index 5bfa62fa288a..aec7da18a550 100644
+>> --- a/drivers/scsi/ufs/ufshcd.c
+>> +++ b/drivers/scsi/ufs/ufshcd.c
+>> @@ -1022,6 +1022,9 @@ static int ufshcd_scale_clks(struct ufs_hba *hba, bool scale_up)
+>>  	int ret = 0;
+>>  	ktime_t start = ktime_get();
+>>  
+>> +	if (hba->use_pm_opp)
+>> +		return 0;
+>> +
+> 
+> So you don't need pre and post clock changes below?
+
+That's tricky. The UFS HCD core does not need it, but of course the
+question is about the drivers actually using ufshcd_vops_clk_scale_notify().
+
+Only QCOM UFS driver implements it and actually we might need it. Qcom
+driver changes DME_VS_CORE_CLK_CTRL, so maybe this should be done here
+as well. I don't know yet how to incorporate it into PM-opp framework,
+because now changing frequencies and voltage is atomic from the UFS
+driver perspective. Before it was not - for example first clock (with
+these pre/post changes) and then voltage.
+
+I will need to solve it somehow...
+
+
+Best regards,
+Krzysztof
