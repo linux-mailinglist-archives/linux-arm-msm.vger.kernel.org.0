@@ -2,68 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F102F507D66
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 01:55:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7A44507EED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 04:36:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358541AbiDSX5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 19:57:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44890 "EHLO
+        id S1358978AbiDTCjJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 22:39:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357843AbiDSX5f (ORCPT
+        with ESMTP id S1358985AbiDTCjH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 19:57:35 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63CF5E24
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 16:54:50 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id x17so32104055lfa.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 16:54:50 -0700 (PDT)
+        Tue, 19 Apr 2022 22:39:07 -0400
+Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3334F37AA8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 19:36:20 -0700 (PDT)
+Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-deb9295679so597030fac.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 19:36:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bvNMSN3pjje8DO8VKt+U/tOaBPxKcUXo89mN7XSq4VA=;
-        b=nWz2J/9FyHAu9c4LAOFJi56mLrG3hncYMeMG7WQmK9BCcR48yGQnhsD7fmJsGOSF2+
-         Z/91Q1S5n+B9GILgoq1zRZZkO2ZNEolOvDS1XWOx5nPGoYaGpHZgppET/Mt5pjLExr1V
-         h+CvRplZpiGqBAtFiXPT4WhhBcDCj/PwbKpMb25AwQhBIvYhvB7GhawJEATPnszn0pWu
-         DmtB7PI5umXOsFnGgvTAtPoQ5IPBqwdR2S1FwsNag9INcST/lgFInL/xDqzdfdRBWlCF
-         zqRs6hVI9E7U/YQakjfz93ExlevzIU/mQb6SGe8gVTsHWUnDPNQxB5YymcgcrvFKCMvq
-         VwrA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=uPpeQw/Svxec6EB5vDEdkM6+QwQAh4U7mOcWgKqa4Vo=;
+        b=zLR210LIyC5pG3HErtCaJG3Swm3AE6TefCzVOjS9CFMDRXbeJiI1F3wBEMUNfzTJW5
+         UIFvh4TubzbwaoBeJqLobgpOtWdaXkxQ00XPyq93bjlc6bNBF7tRmSpbGJhn0/iqNBkU
+         AARav9d7tGA5hGF7FTfhGHS5ZND3IZsLa0cxtwnuaGv5HzVm51wXonnlZ7rIvpkcWCF2
+         BdXj6l9SLH4+isw/LqD6YvlOWOmFqxL63EG26MdrvgEp2Hnbjc8toReO/+ZAL0pyqPat
+         gOKWn8ABpZAbUzk8jrWL8ZmGYoqSqg0qVu9rvwGZrZxwTk4yX/YZIpO4tOkRrGu3BKus
+         /crQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bvNMSN3pjje8DO8VKt+U/tOaBPxKcUXo89mN7XSq4VA=;
-        b=7ZZzJOxUMeWDxUl2vqpRl4r+FiRxr3XJFyBNx9SIjHcC2DKF1Q6mTbe5Rt/Byk9OrA
-         xSoeIj9SM8WnMWvGBU4BMyIKLkEA+8MADme4Oo5/vW974B5cEjXQnz4Hsj4UPnP12bpL
-         5fT74p4LmNrwXF8aPUh5Pj7Hd0oLH0C59yiNfxbPLlTiOlS95MrJuGvuvivmEa2Xj0B/
-         sobnf2XUywJT9j8p27+pMQNPQBCXaiVmhaTID8B3W3O/BuLAOpn68e8VsHf/QZ++VszO
-         mt3OkF0ZcE5eUGbyaPphOA6m7D233Ck4mIcgqAYRVJhRh1+Y7nQz45vJWdqSHsMdIFdu
-         tz7A==
-X-Gm-Message-State: AOAM533CTXlejAIkFjSH0/qbccaIfdJlsaS2ptUSaR0PCUyIX/MRaS4m
-        Ae1M36gPgo8WBqdK7k2nP7Pds/UzMdSQUA==
-X-Google-Smtp-Source: ABdhPJx7XT4j1TOlMM92aT+5eWOjZGo3AhiUgM2QzsVkznUoE4H9dn+nAStfZOGFuIvdIa0nYUngsA==
-X-Received: by 2002:a05:6512:e87:b0:44a:5117:2b2b with SMTP id bi7-20020a0565120e8700b0044a51172b2bmr13043804lfb.275.1650412488676;
-        Tue, 19 Apr 2022 16:54:48 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v9-20020a2e7a09000000b0024dbdd8e297sm647725ljc.19.2022.04.19.16.54.47
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=uPpeQw/Svxec6EB5vDEdkM6+QwQAh4U7mOcWgKqa4Vo=;
+        b=31sxcaB5aa+Ziz2fKQxbIkipdE1RIVWk9/BXGc6nFL9a2a5asDKW4AYTVoVhZnKkhp
+         tZ8zVDc6LNMHgP9NjwiDbAeKLJU/i8lOdfAM+6ODrEyCAQHKHDHoBf78UJyRZmDqaEh7
+         rgAnwJJ402qbo5SxsGMWBW0CnZLBx2q9A/+/Tr4KdOilOEQhjN0zmcui59qcYzQu9d26
+         pd1SitWQ8qQ1kwpn4Yj1Ap9/ZxK77vcEBHEmZzsoY5TokQUemqGLdwDIn5+bWvJniPUT
+         Ag/2Hccx8hQCcFDVkQr3eMObQYqu9y0fndm6dq3T5oQ3+m/o8qbDk8dDPNqWeEnYO42r
+         79ow==
+X-Gm-Message-State: AOAM531chNdxU2QGK50dGqGwF0F1w01ysIu+IvMVDuPWuo+zV6Yy03O/
+        4o9ULfI77ZFPKmIGyZsCflbUBg==
+X-Google-Smtp-Source: ABdhPJyKHPVDEDnzZkxF9L9vrMd3VNFmgySs4pbsIaO2GrjCdMyTc6jlRLdrA0XgQHO0pa/l8eLpvg==
+X-Received: by 2002:a05:6870:632a:b0:e5:a05d:3c29 with SMTP id s42-20020a056870632a00b000e5a05d3c29mr653638oao.293.1650422179516;
+        Tue, 19 Apr 2022 19:36:19 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id y22-20020a4aea36000000b0033914f661a2sm5077728ood.33.2022.04.19.19.36.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 16:54:48 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        freedreno@lists.freedesktop.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: [PATCH] clk: qcom: clk-rcg2: fix gfx3d frequency calculation
-Date:   Wed, 20 Apr 2022 02:54:47 +0300
-Message-Id: <20220419235447.1586192-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+        Tue, 19 Apr 2022 19:36:18 -0700 (PDT)
+Date:   Tue, 19 Apr 2022 21:36:17 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     agross@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_msavaliy@quicinc.com, dianders@chromium.org
+Subject: Re: [V4 1/2] arch: arm64: dts: qcom: sc7280-idp: Configure cts
+ pinctrl to bias-bus-hold
+Message-ID: <Yl9xoYo8z7z4gSTT@builder.lan>
+References: <1650349697-13540-1-git-send-email-quic_vnivarth@quicinc.com>
+ <1650349697-13540-2-git-send-email-quic_vnivarth@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1650349697-13540-2-git-send-email-quic_vnivarth@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -74,39 +74,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since the commit 948fb0969eae ("clk: Always clamp the rounded rate"),
-the clk_core_determine_round_nolock() would clamp the requested rate
-between min and max rates from the rate request. Normally these fields
-would be filled by clk_core_get_boundaries() called from
-clk_round_rate().
+On Tue 19 Apr 01:28 CDT 2022, Vijaya Krishna Nivarthi wrote:
 
-However clk_gfx3d_determine_rate() uses a manually crafted rate request,
-which did not have these fields filled. Thus the requested frequency
-would be clamped to 0, resulting in weird frequencies being requested
-from the hardware.
+> WLAN rail was leaking power during RBSC/sleep even after turning BT off.
+> Change sleep pinctrl configuration to handle same.
+> 
 
-Fix this by filling min_rate and max_rate to the values valid for the
-respective PLLs (0 and ULONG_MAX).
+As I said before, I would like the subject to contain the word
+"bluetooth" (or possibly BT if bluetooth doesn't fit).
 
-Fixes: 948fb0969eae ("clk: Always clamp the rounded rate")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/clk/qcom/clk-rcg2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+And drop "arch: " from the subject prefix. If you're uncertain what to
+put there, run below command and follow what everyone else does:
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index f675fd969c4d..e9c357309fd9 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -818,7 +818,7 @@ EXPORT_SYMBOL_GPL(clk_pixel_ops);
- static int clk_gfx3d_determine_rate(struct clk_hw *hw,
- 				    struct clk_rate_request *req)
- {
--	struct clk_rate_request parent_req = { };
-+	struct clk_rate_request parent_req = { .min_rate = 0, .max_rate = ULONG_MAX };
- 	struct clk_rcg2_gfx3d *cgfx = to_clk_rcg2_gfx3d(hw);
- 	struct clk_hw *xo, *p0, *p1, *p2;
- 	unsigned long p0_rate;
--- 
-2.35.1
+  git log --oneline -- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
 
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+> v4: modify subject of patch to indicate file it is applying to
+> v3: apply same change to active state and other sc7280*.dts* as well
+> v2: used bias-bus-hold as per review comments
+> v1: intial patch used bias-disable for sleep pinctrl in sc7280-idp only
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> index 015a347..85e7467 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> @@ -400,10 +400,10 @@
+>  
+>  &qup_uart7_cts {
+>  	/*
+> -	 * Configure a pull-down on CTS to match the pull of
+> -	 * the Bluetooth module.
+> +	 * Configure a bias-bus-hold on CTS to lower power usage
+> +	 * when BT is turned off.
+
+This comment would just leave a future reader with the question about
+_why_ does this lower the power usage...
+
+This problem you're seeing is likely to come back in the next platform
+and your successor (or even yourself) will have no use of this comment
+to figure out what bias to configure on these pins.
+
+Thanks,
+Bjorn
+
+>  	 */
+> -	bias-pull-down;
+> +	bias-bus-hold;
+>  };
+>  
+>  &qup_uart7_rts {
+> @@ -495,10 +495,10 @@
+>  		pins = "gpio28";
+>  		function = "gpio";
+>  		/*
+> -		 * Configure a pull-down on CTS to match the pull of
+> -		 * the Bluetooth module.
+> +		 * Configure a bias-bus-hold on CTS to lower power usage
+> +		 * when BT is turned off.
+>  		 */
+> -		bias-pull-down;
+> +		bias-bus-hold;
+>  	};
+>  
+>  	qup_uart7_sleep_rts: qup-uart7-sleep-rts {
+> -- 
+> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
+> 
