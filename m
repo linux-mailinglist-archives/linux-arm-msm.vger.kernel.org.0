@@ -2,46 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 858435090A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 21:45:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E6D9509113
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 22:06:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381755AbiDTTsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Apr 2022 15:48:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33832 "EHLO
+        id S1381910AbiDTUJ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Apr 2022 16:09:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381711AbiDTTsX (ORCPT
+        with ESMTP id S1381909AbiDTUJ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Apr 2022 15:48:23 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A76D1C91D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 12:45:35 -0700 (PDT)
-Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5FB233F8BD;
-        Wed, 20 Apr 2022 21:45:33 +0200 (CEST)
-Message-ID: <eb54c810-8121-7de1-e2cf-008bd59552ce@somainline.org>
-Date:   Wed, 20 Apr 2022 21:45:32 +0200
+        Wed, 20 Apr 2022 16:09:28 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FAFF45AD7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 13:06:41 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id n126-20020a1c2784000000b0038e8af3e788so1976410wmn.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 13:06:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=nWM6fd421Z4mKGkR1OIW70pm4ctWscYqXgFoO0lKsdE=;
+        b=WCxCuoNchmrc/oA4EswPMRVUrXUqZW5DzagrGczH8EpL1ShlI9Ip0lE+2P3fIR/8A3
+         nSZGQha3A+hSniBiMQCMlbyLHwpXrS2x0d+ge86bMgUrr6oX+1HhgNoHXe/w/PU9p4oA
+         R/BtqXmIqBn4I65qfZbX1zGjs/SgNLf+gGLNrsS/t9iEWhMKhOaKy3eogScToO68HwBw
+         G3NbNRCkLLGFHA7lmLusnIp3P1DBmACX45+MSbJ1zLPzpKtohTM+EGlI8uorwTHH3uFo
+         PD0SC+OuHL+qEdbcUs+Wg554dfoRPduXe6y2TWERqZmFsCMyYMM35tlkoJwvYNJcP5jW
+         1dpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=nWM6fd421Z4mKGkR1OIW70pm4ctWscYqXgFoO0lKsdE=;
+        b=6sxGD5Kzsw+D1BJH7IMGS2ubH8QZojVt8E9dRq+PgTLU70lx2Myj+QiwajiOZXwYFb
+         csli3lybjO08yJCkluG0g6csHSsngLAGw1Jy8FLwYqrouoO50YsNS7fpYh9WBPsWSBNZ
+         HHwAQEzE5jFqGcGRW5bqQipL3GfoS2tFz7LAih0ocumIu/NJKuuqNDZEyDTcDIzG5Tcm
+         o8O6gPV4NaU37l9fo5O4NaxgSxXPIUib9OitQ1//GdiJZNl15ZOWot1LkhH+00DCGTlG
+         6WPPebOpukSWJEU+BQuUSpL7vvMhPVF3OO3H8g+2FMIF8O5Wo5nD2xi8NSt/x5FiG95g
+         UCWQ==
+X-Gm-Message-State: AOAM531rKfz17LQMqODmYznIVnqy9A3GoL0QZyeqYO7crD6yy0XMpX9y
+        IXzZLLIU4/rfJlbv8jGMpVLXcpJSUGEa3eCG0r0=
+X-Google-Smtp-Source: ABdhPJwa5LiP99fr6eQduCzYo4KsoL4ArGW9pdCWo3BZH9Cuso01h+ojF/xAPij16lY7vWBDIcBCEEykjJktJXqpG4k=
+X-Received: by 2002:a05:600c:1f17:b0:392:5c1a:5ed9 with SMTP id
+ bd23-20020a05600c1f1700b003925c1a5ed9mr5492570wmb.148.1650485199416; Wed, 20
+ Apr 2022 13:06:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.8.0
-Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: sm8350-sagami: usb qmp phy node
- - add 'vdda-pll-supply' & 'vdda-phy-supply'
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        vkoul@kernel.org, bjorn.andersson@linaro.org,
-        Marijn Suijten <marijn.suijten@somainline.org>
-References: <20220419205854.1269922-1-bhupesh.sharma@linaro.org>
- <997f91b9-c22e-41f0-300b-92559bc7896e@somainline.org>
- <CAH=2Ntw7Zy8nyDwNEnYQ=j=+25hjZsw3TGUW2TmT3+FvrLNu=A@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <CAH=2Ntw7Zy8nyDwNEnYQ=j=+25hjZsw3TGUW2TmT3+FvrLNu=A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS autolearn=ham
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 20 Apr 2022 13:07:44 -0700
+Message-ID: <CAF6AEGtvPo4xD2peAztDMPP2n4utb7d9WQboMFwsba9E8U2rCw@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-fixes-2022-04-20 for v5.18
+To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -49,155 +65,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Dave & Daniel,
 
-On 20/04/2022 21:33, Bhupesh Sharma wrote:
-> Hi Konrad,
->
-> Thanks for your comments. Please see my comments below:
->
-> On Wed, 20 Apr 2022 at 22:30, Konrad Dybcio
-> <konrad.dybcio@somainline.org> wrote:
->>
->> On 19/04/2022 22:58, Bhupesh Sharma wrote:
->>> As suggested by Bjorn during review of [1], the 'vdda-pll-supply' &
->>> 'vdda-phy-supply' supplies denote the power for the bus and the
->>> clock of the usb qmp phy and are used by the qcom qmp phy driver.
->>>
->>> So, its safe to assume that the two regulators are the same as on
->>> the MTP. So let's wire them up in the same way as the MTP.
->>>
->>> In absence of the same 'make dtbs_check' leads to following warnings:
->>>
->>> arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml:
->>>    phy-wrapper@88e9000: 'vdda-phy-supply' is a required property
->>>
->>> arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml:
->>>    phy-wrapper@88e9000: 'vdda-pll-supply' is a required property
->>>
->>> [1]. https://lore.kernel.org/lkml/20220228123019.382037-9-bhupesh.sharma@linaro.org/
->>>
->>> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
->>> Cc: konrad.dybcio@somainline.org
->>> Cc: Vinod Koul <vkoul@kernel.org>
->>> Cc: Marijn Suijten <marijn.suijten@somainline.org>
->>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>> ---
->>> Changes since v1:
->>> -----------------
->>> - v1 can be found here: https://www.spinics.net/lists/linux-arm-msm/msg108467.html
->>> - Fixed the commit message to read usb qmp phy instead of ufs phy (which
->>>     was introduced erroraneously in the commit log).
->>>
->>>    .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 25 +++++++++++++++++++
->>>    1 file changed, 25 insertions(+)
->> Hi, I actually threw together a patch with [almost] all RPMh regulators
->> on Sagami quite a while ago (if thunderbird doesn't explode, you should
->> find it as an attachment to this message), but I haven't sent it, as
->> pm8350c_l3 and pmr735a_s3 are broken on the .c driver side (the step
->> numbers and/or values are not correct), but Qualcomm in their infinite
->> Qualcommery will not let us, mere mortals, access the PDFs that contain
->> the correct specifications, so I have to wait for somebody with access
->> to them to pick them up. That said, the values you supplied seem correct
->> (say for lack of allow-set-load which will bite when (if?) UFS is ever
->> functional upstream on this piece of Japanese engineering), but adding
->> the configuration of all regulators at once just seems more complete to me..
-> The complete set of regulator enablement was something on my mind and
-> which I tried before sending out the smaller (only relevant to USB)
-> patch.
->
-> My main concern was leaving the upstream kernel on the board in an
-> unbootable form, as I don't have the sagami board to test the changes
-> on.
+One more fix for v5.18.. actually a revert to fix iommu breakage on
+older devices
 
-Yeah, messing with power rails on somebody else's device is stressful in 
-general, especially with downstream kernels #including 9999 other DTs, 
-it's really easy to make a mistake.. Personally, I sometimes even dump 
-the regulator settings from syfs on a running device just to be ultra sure.
+The following changes since commit 390d645877ffd6dcb55f162d618045b2779217b3:
 
+  drm/msm/gpu: Avoid -Wunused-function with !CONFIG_PM_SLEEP
+(2022-04-11 18:35:31 -0700)
 
->
-> That said, if you intend to send the complete regulator enablement
-> patch for the sagami board, it would be probably better in the longer
-> run (as currently any change to the common binding, dts or driver
-> files is held up by "make dtbs_check" warnings during upstream
-> review).
->
->> On a note, USB - among other more or less necessary peripherals - along
->> with its supplies, is brought up in XBL (or bootrom if you jump to EDL),
->> so not setting these supplies in Linux does not bite in any way, shape
->> or form other than "make dtbs_check" screaming.
-> I agree. If you want, you can include my simple patch as the followup
-> (just enabling the right regulators for the usb qmp phy), to your big
-> patch (which enables the complete regulator support). It should be
-> fine as well, as we eventually want to use the regulators defined in
-> the 'big' patch for some 'real' peripheral nodes like the usb qmp phy.
->
-> Please let me know your views.
->
-> Regards,
-> Bhupesh
+are available in the Git repository at:
 
-I will send this patch (of course rebased) along with the 
-add-all-regulators one, once the .c driver is fixed then.
+  https://gitlab.freedesktop.org/drm/msm.git drm-msm-fixes-2022-04-20
 
+for you to fetch changes up to 0371870b96907bf560ecf7dc3fadc238fadf7845:
 
-Thanks,
+  drm/msm: Revert "drm/msm: Stop using iommu_present()" (2022-04-19
+10:33:07 -0700)
 
-Konrad
+----------------------------------------------------------------
+Dmitry Baryshkov (1):
+      drm/msm: Revert "drm/msm: Stop using iommu_present()"
 
->> I'm not against this patch, but once again, even though this point may
->> not sound very convincing to you all, I think it would be "nice" to
->> configure all regulators in one go.
->>
->>
->> Konrad
->>
->>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
->>> index 90b13cbe2fa6..238ac9380ca2 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
->>> @@ -3,6 +3,7 @@
->>>     * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
->>>     */
->>>
->>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->>>    #include "sm8350.dtsi"
->>>    #include "pm8350.dtsi"
->>>    #include "pm8350b.dtsi"
->>> @@ -75,6 +76,27 @@ ramoops@ffc00000 {
->>>        };
->>>    };
->>>
->>> +&apps_rsc {
->>> +     pm8350-rpmh-regulators {
->>> +             compatible = "qcom,pm8350-rpmh-regulators";
->>> +             qcom,pmic-id = "b";
->>> +
->>> +             vreg_l1b_0p88: ldo1 {
->>> +                     regulator-name = "vreg_l1b_0p88";
->>> +                     regulator-min-microvolt = <912000>;
->>> +                     regulator-max-microvolt = <920000>;
->>> +                     regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->>> +             };
->>> +
->>> +             vreg_l6b_1p2: ldo6 {
->>> +                     regulator-name = "vreg_l6b_1p2";
->>> +                     regulator-min-microvolt = <1200000>;
->>> +                     regulator-max-microvolt = <1208000>;
->>> +                     regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->>> +             };
->>> +     };
->>> +};
->>> +
->>>    &adsp {
->>>        status = "okay";
->>>        firmware-name = "qcom/adsp.mbn";
->>> @@ -256,4 +278,7 @@ &usb_1_hsphy {
->>>
->>>    &usb_1_qmpphy {
->>>        status = "okay";
->>> +
->>> +     vdda-phy-supply = <&vreg_l6b_1p2>;
->>> +     vdda-pll-supply = <&vreg_l1b_0p88>;
->>>    };
+ drivers/gpu/drm/msm/msm_drv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
