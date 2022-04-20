@@ -2,151 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CD10507F3F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 04:57:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F22FD507F5A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 05:06:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241184AbiDTC7e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Apr 2022 22:59:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58342 "EHLO
+        id S241443AbiDTDJI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Apr 2022 23:09:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234258AbiDTC7d (ORCPT
+        with ESMTP id S1359167AbiDTDIr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Apr 2022 22:59:33 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 560B7387A7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 19:56:49 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-e2afb80550so656118fac.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 19:56:49 -0700 (PDT)
+        Tue, 19 Apr 2022 23:08:47 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4411C2AFE;
+        Tue, 19 Apr 2022 20:05:51 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id e128so361183qkd.7;
+        Tue, 19 Apr 2022 20:05:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Bpdl3onC2L+yuDtcrh15IbOpDqZIMLfc1uBqp1f+cK8=;
-        b=gr9rbqbPFrPKF6qrn9PR00iutEKQ4qGhvKekLBdKxT+fCdsoHCkixQhZar2+85UiBC
-         6nbTGsbcQIjw7NNhbr36TGDAVwu1F0FlgNdextRhKwZhHYWEoXdedE0Kto+iGP41JbyB
-         LxH01oDyC7N4sFgkl+0+eest9ZdFTUCYsRAwat8qu8yM/3BjOXYmHsFMgnH0kY4w/uOe
-         FTgQrz4nrB1CWbLxzNDyuQCfaG9cWo83OWTuaSnROQGrzAGsy/SSXOfMhjtbQAg73daa
-         3ADzEiMsTRcl18Fk1anuBjcVaKn7BqjhsoXS3hVgy+pxmBCCXv2cC9pAjN9/ulIt5h59
-         I8cQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jXVd4JyYt+RLNj/hac0Knj+pNB+a1zaGjepppWkJ+bY=;
+        b=ZFxLZ3jbqwA5VN/V3U/Sorl04NGsIMy+K76HC0ts1VMujTqraPtXgbpy5j38Vr9y25
+         P03eTzrb5j+T55kQJmLGL0oTfrJhhIKMehj4M43TrxjbvCUE5i2lnBnXedwhUB0Hrg8T
+         Km317NMpdTpDEDCNWEwmM0UIdwDiGLeChlukAexTd1u+qP0rZqP16/WcVoKDON3/vYwq
+         i7vFxRBZmRhliRki+IgBDiztCxmLGNoxw7Zgao2S8BI1opGRiguZJh9M5gUsCVwo9kNR
+         f9HEzFx1zQc5GciqiPzoiVb8snwF2//GFjEDjuvFlX95ZL3WxdzAKWNBqKf/cpmMIev2
+         lQyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Bpdl3onC2L+yuDtcrh15IbOpDqZIMLfc1uBqp1f+cK8=;
-        b=SDyzuqwTXN0HZGYyOpC/EjNOz+1QCWNzvPmaEmMNKu7IPr9wQmsAeF2xbwXK+F4Y+K
-         De9YrTQVc3j0UZO9+PMKF64h0p1EThS258Fx5HrEPPhvV68fsc3eahiAlKLF7Ber83t8
-         rP3kKoLSRWyMdRZgZU4wo3/hbs1/R9TI/rTHKR2Hla5zJv2+kE9T9lDRBvmEpAO5fiIE
-         cc8ra9x+MYZU5SMR2ukYxcD86MPlMDZzWPsS3byGz5Y+0fhc65dZz9x2JEIho7rUJtQ/
-         /31ahJRRO+w/rlz9rWoIgln+uOxg2kmJHB5mXEiyd9DtNhlzVABlwipEdjb8Rlm1xz8d
-         OhmA==
-X-Gm-Message-State: AOAM531nzqr0wfJYvYL3bCt3W4ij+Fh8bHGOyQVLgDj0sPBhcZhkOh6k
-        7P/hoB9AXnaRwdFu/aJUrM6nng==
-X-Google-Smtp-Source: ABdhPJz1r1HbhjstrYl2H7CsBk3Ua1ucqJR7Lb2QJhnvesT98prMjuWrzu/us0Ykm/iAhf04AjAsSQ==
-X-Received: by 2002:a05:6870:f697:b0:d7:5679:8fc8 with SMTP id el23-20020a056870f69700b000d756798fc8mr721436oab.172.1650423408693;
-        Tue, 19 Apr 2022 19:56:48 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id c14-20020a4ad20e000000b0033a371fa815sm3549603oos.37.2022.04.19.19.56.47
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jXVd4JyYt+RLNj/hac0Knj+pNB+a1zaGjepppWkJ+bY=;
+        b=8Eljv12YMj5RIK5MCsL1cuuuqrB/L6iIRM5Y0KR9Uf7ju+5cdfSmLRQVie6OlEb8At
+         SKJIr2eGfJHL0QaLQwl+2MiLFWKcHomakDggYnfLvX0O9zqRu9BVKxQpze71BVoigkby
+         9x2EeKMlmMkMiCoWI3OL1bUyCRRmJWHu+PThMRrAtapczbxv+XY9H2FSFzhaTfEFDUQB
+         G1rIOtoBOjtR8j1s87U9jXL/zfOJDOzpMF5dKxoeoBEfi16BX4wN6R+dtT4E+RKYi8Nc
+         +vuPfPrtr2gCTW3G98j5D4u5FbFTBKIOBVtQ9GEHy7pxdpQU/had2vNUSvVr/M15tWV6
+         NfVA==
+X-Gm-Message-State: AOAM530iiGOZNPxlxqcCj15y0rMiDhHrMRKR5cVKfMCVuDg5PAlapLRi
+        YLVb2w90ZRRkE0AXTMErGAM=
+X-Google-Smtp-Source: ABdhPJzL0eDkXCbFY6rkISzDtHZ8674iDU2OWn1mphdzKQERD2iJuHbptDQuf4Brr0rJp8/htPELXg==
+X-Received: by 2002:a37:b502:0:b0:69a:ca1:298 with SMTP id e2-20020a37b502000000b0069a0ca10298mr11469168qkf.133.1650423950492;
+        Tue, 19 Apr 2022 20:05:50 -0700 (PDT)
+Received: from localhost.localdomain ([193.203.214.57])
+        by smtp.gmail.com with ESMTPSA id s16-20020ac85cd0000000b002e1ed82f1e5sm1157252qta.75.2022.04.19.20.05.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 19:56:48 -0700 (PDT)
-Date:   Tue, 19 Apr 2022 21:56:46 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sm8150: Add support for SDC2
-Message-ID: <Yl92blX6FaCMU48p@builder.lan>
-References: <20220414213139.476240-1-bhupesh.sharma@linaro.org>
- <20220414213139.476240-2-bhupesh.sharma@linaro.org>
+        Tue, 19 Apr 2022 20:05:50 -0700 (PDT)
+From:   cgel.zte@gmail.com
+X-Google-Original-From: chi.minghao@zte.com.cn
+To:     agross@kernel.org
+Cc:     bjorn.andersson@linaro.org, mathieu.poirier@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Minghao Chi <chi.minghao@zte.com.cn>,
+        Zeal Robot <zealci@zte.com.cn>
+Subject: [PATCH] remoteproc: qcom: using pm_runtime_resume_and_get to simplify the code
+Date:   Wed, 20 Apr 2022 03:05:11 +0000
+Message-Id: <20220420030511.2575880-1-chi.minghao@zte.com.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220414213139.476240-2-bhupesh.sharma@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 14 Apr 16:31 CDT 2022, Bhupesh Sharma wrote:
+From: Minghao Chi <chi.minghao@zte.com.cn>
 
-> Add support for SDC2 which can be used to interface uSD card.
-> 
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rob Herring <robh@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Using pm_runtime_resume_and_get() to replace pm_runtime_get_sync and
+pm_runtime_put_noidle. This change is just to simplify the code, no
+actual functional changes.
 
-Thanks for the patch Bhupesh. I have already applied v1 though. Can you
-please double check linux-next to confirm that things are in order?
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Minghao Chi <chi.minghao@zte.com.cn>
+---
+ drivers/remoteproc/qcom_wcnss.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-Thanks,
-Bjorn
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index 9a223d394087..2c471c763b5b 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -228,11 +228,9 @@ static int wcnss_start(struct rproc *rproc)
+ 
+ 	for (i = 0; i < wcnss->num_pds; i++) {
+ 		dev_pm_genpd_set_performance_state(wcnss->pds[i], INT_MAX);
+-		ret = pm_runtime_get_sync(wcnss->pds[i]);
+-		if (ret < 0) {
+-			pm_runtime_put_noidle(wcnss->pds[i]);
++		ret = pm_runtime_resume_and_get(wcnss->pds[i]);
++		if (ret < 0)
+ 			goto disable_pds;
+-		}
+ 	}
+ 
+ 	ret = regulator_bulk_enable(wcnss->num_vregs, wcnss->vregs);
+-- 
+2.25.1
 
-> ---
->  arch/arm64/boot/dts/qcom/sm8150.dtsi | 45 ++++++++++++++++++++++++++++
->  1 file changed, 45 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index 15f3bf2e7ea0..0fecebf0a473 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -3270,6 +3270,51 @@ usb_2_ssphy: phy@88eb200 {
->  			};
->  		};
->  
-> +		sdhc_2: sdhci@8804000 {
-> +			compatible = "qcom,sm8150-sdhci", "qcom,sdhci-msm-v5";
-> +			reg = <0 0x08804000 0 0x1000>;
-> +
-> +			interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hc_irq", "pwr_irq";
-> +
-> +			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-> +				 <&gcc GCC_SDCC2_APPS_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>;
-> +			clock-names = "iface", "core", "xo";
-> +			iommus = <&apps_smmu 0x6a0 0x0>;
-> +			qcom,dll-config = <0x0007642c>;
-> +			qcom,ddr-config = <0x80040868>;
-> +			power-domains = <&rpmhpd 0>;
-> +			operating-points-v2 = <&sdhc2_opp_table>;
-> +
-> +			status = "disabled";
-> +
-> +			sdhc2_opp_table: sdhc2-opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-19200000 {
-> +					opp-hz = /bits/ 64 <19200000>;
-> +					required-opps = <&rpmhpd_opp_min_svs>;
-> +				};
-> +
-> +				opp-50000000 {
-> +					opp-hz = /bits/ 64 <50000000>;
-> +					required-opps = <&rpmhpd_opp_low_svs>;
-> +				};
-> +
-> +				opp-100000000 {
-> +					opp-hz = /bits/ 64 <100000000>;
-> +					required-opps = <&rpmhpd_opp_svs>;
-> +				};
-> +
-> +				opp-202000000 {
-> +					opp-hz = /bits/ 64 <202000000>;
-> +					required-opps = <&rpmhpd_opp_svs_l1>;
-> +				};
-> +			};
-> +		};
-> +
->  		dc_noc: interconnect@9160000 {
->  			compatible = "qcom,sm8150-dc-noc";
->  			reg = <0 0x09160000 0 0x3200>;
-> -- 
-> 2.35.1
-> 
+
