@@ -2,88 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B0BE508C48
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 17:37:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 889DF508CAA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 17:59:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380303AbiDTPjt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Apr 2022 11:39:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43580 "EHLO
+        id S1355254AbiDTQCZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Apr 2022 12:02:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241579AbiDTPjs (ORCPT
+        with ESMTP id S1355289AbiDTQCX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Apr 2022 11:39:48 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D487244A2E;
-        Wed, 20 Apr 2022 08:37:01 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7038761935;
-        Wed, 20 Apr 2022 15:37:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E28C385A1;
-        Wed, 20 Apr 2022 15:37:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1650469020;
-        bh=JwmBf4+7OEAn/XREoeP03puiOCgIPDxxr8CYYqQk6K8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=dZWoShivWdHJD6Gn5Dj+zmaHwZwr7inX3+MHcdZwqNo/+UkBxxyUe0qZbpSaz4j39
-         FSYF33AHIlxdBppUKE0aDjTy2UbcrdSmsNr9ZaEf21Vm4UsVlVbJNUHGwxyyadBJ4I
-         JNrD3s9lgpHEDWkH1XToesxcy7k9ZvgRj0ehb3PM=
-Date:   Wed, 20 Apr 2022 17:36:57 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_kriskura@quicinc.com,
-        quic_vpulyala@quicinc.com
-Subject: Re: [PATCH v3 1/2] usb: host: xhci-plat: Add device property to set
- XHCI_SKIP_PHY_INIT quirk
-Message-ID: <YmAomYeH181GGSZc@kroah.com>
-References: <1649323888-12420-1-git-send-email-quic_c_sanm@quicinc.com>
- <1649323888-12420-2-git-send-email-quic_c_sanm@quicinc.com>
+        Wed, 20 Apr 2022 12:02:23 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C219443FF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 08:59:37 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id v15so2855532edb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 08:59:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YGFlvUF+6fFWy1fX1MYp4Kv8VavogLHQZ1swJRkagR4=;
+        b=VrGhL5UriOqITgYWid/yHAnlnzX/ygVds9FFW9oUPAy99QMw4Z8dDJZytWmZzwf2Ww
+         OWB7+EYY6KulPcWe7U5xX0b47etDOjTYHT+jG9wyOAQF4hXjDukNLZuNdYLbadf7D6Oy
+         sYrAmLi0Lwj4VofOM8/nN78y8+yJ2Hf5WPYJI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YGFlvUF+6fFWy1fX1MYp4Kv8VavogLHQZ1swJRkagR4=;
+        b=QYwPpGgPTlEzq75W32a/tdTQQAUNT06IYrA5Btu9fvuD3F42AexfsoTtQA4XZWRujl
+         vqGoIu/2w1VrbzpRyVbpe66HC7PBZYN8nqjqzduzF+1tn3sTtIba/Cku0nNVo+l1VOt8
+         zvfmXB4LxoHSyJ6ezr07Rz+aRrnaK6i5KiZce9UWILV7o6wMSkuf2n2dDI+hPLDItkyC
+         HxpJhH0cYGGbEhZ0qZxYIBrULQMVVo3nQ7qmhDBMzcA8Qjl1THYQvRoatlttcgTDTNxw
+         R0j65XIYgdwT5TVU7sR3BUawGRmdYhZeF/96US14vp9v3yVn9Zgo1GvlKGsM0qG5IKnN
+         iJXw==
+X-Gm-Message-State: AOAM530kqDK2qGGqLcFedEOtAqZFfOkyY6yN7ei8psZ0FklmYD4oawxz
+        pq1yxd/sBNcMq8vlYPLIWfFIrL1OdN5HWQDV
+X-Google-Smtp-Source: ABdhPJxJfXDCeprq1c1tGDYku1/xc6QCvsaxm+B1JZpB9H+FfDTSPy1TW4GhTnFQnf+HCEzbG7eOsg==
+X-Received: by 2002:a50:ee89:0:b0:41d:70eb:eb36 with SMTP id f9-20020a50ee89000000b0041d70ebeb36mr18386837edr.24.1650470375663;
+        Wed, 20 Apr 2022 08:59:35 -0700 (PDT)
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com. [209.85.221.50])
+        by smtp.gmail.com with ESMTPSA id t12-20020a1709067c0c00b006e86db76851sm6804026ejo.193.2022.04.20.08.59.33
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Apr 2022 08:59:33 -0700 (PDT)
+Received: by mail-wr1-f50.google.com with SMTP id x18so2928843wrc.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 08:59:33 -0700 (PDT)
+X-Received: by 2002:a05:6000:1acb:b0:20a:a4b0:dbc8 with SMTP id
+ i11-20020a0560001acb00b0020aa4b0dbc8mr7616987wry.513.1650470372923; Wed, 20
+ Apr 2022 08:59:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1649323888-12420-2-git-send-email-quic_c_sanm@quicinc.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <1650439639-28428-1-git-send-email-quic_vnivarth@quicinc.com>
+In-Reply-To: <1650439639-28428-1-git-send-email-quic_vnivarth@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 20 Apr 2022 08:59:21 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XZjstRUd7tP=2ZhFMFDYtsKkzY3D5-L=UU2wD5KHXGmQ@mail.gmail.com>
+Message-ID: <CAD=FV=XZjstRUd7tP=2ZhFMFDYtsKkzY3D5-L=UU2wD5KHXGmQ@mail.gmail.com>
+Subject: Re: [V5 0/2] arm64: dts: qcom: Configure CTS pin to bias-bus-hold for bluetooth
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        quic_msavaliy@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 07, 2022 at 03:01:27PM +0530, Sandeep Maheswaram wrote:
-> Add device property usb-skip-phy-init to check and set XHCI_SKIP_PHY_INIT
-> quirk.
-> Runtime suspend of phy drivers was failing from DWC3 driver as
-> runtime usage value is 2 because the phy is initialized from
-> DWC3 core and HCD core.
-> Some controllers like DWC3 and CDNS3 manage phy in their core drivers.
-> This property can be set to avoid phy initialization in HCD core.
-> 
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> ---
->  drivers/usb/host/xhci-plat.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-> index 649ffd8..7624ed9 100644
-> --- a/drivers/usb/host/xhci-plat.c
-> +++ b/drivers/usb/host/xhci-plat.c
-> @@ -305,6 +305,9 @@ static int xhci_plat_probe(struct platform_device *pdev)
->  		if (device_property_read_bool(tmpdev, "quirk-broken-port-ped"))
->  			xhci->quirks |= XHCI_BROKEN_PORT_PED;
->  
-> +		if (device_property_read_bool(tmpdev, "usb-skip-phy-init"))
-> +			xhci->quirks |= XHCI_SKIP_PHY_INIT;
+Hi,
 
-You forgot to document this new property.  Without that, we can not
-accept this :(
+On Wed, Apr 20, 2022 at 12:27 AM Vijaya Krishna Nivarthi
+<quic_vnivarth@quicinc.com> wrote:
+>
+> WLAN rail was leaking power during RBSC/sleep even after turning BT off.
+> Change pinctrl configuration to handle same.
+>
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
+Just as a note for future patches, you don't need tags on the cover
+letter. If I respond to the cover letter and add tags it means that
+they should be added to all the patches in the series but you don't
+need to carry them forward on the cover letter itself.
