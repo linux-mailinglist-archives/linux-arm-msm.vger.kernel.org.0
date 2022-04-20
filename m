@@ -2,157 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FEC8508799
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 14:01:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 876B65087B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 14:06:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378326AbiDTMDq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Apr 2022 08:03:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40794 "EHLO
+        id S1378399AbiDTMJl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Apr 2022 08:09:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343673AbiDTMDp (ORCPT
+        with ESMTP id S1378390AbiDTMJk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Apr 2022 08:03:45 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B90234664
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 05:01:00 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id b7so1586547plh.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 05:01:00 -0700 (PDT)
+        Wed, 20 Apr 2022 08:09:40 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B614C377DA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 05:06:53 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id y20so3067070eju.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 05:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4x/nniN9E8m90PRyLnC3qrpb7kQ+WEP5ChtBH2U8kMo=;
-        b=NYeiRC2npjsNr6wW0oCHDEAk57Gr1EgLIjXIF7B2/IkPWxBQCCldrcvfye9l1Rs/QB
-         xTzq4yDECNZR6F31YdPLiuauGJCPxcV8CXCODyn23WYkX4gNGOlV1sbQKVLcfTulCYrg
-         GxsQiBryjYXK2Pk2zRdm5xy5hkvaDf4/hnFURCz0rGvVgqPXFrUcVQMG2hpHQII675dZ
-         O4XbNdcoXtESEToGDpl2VizCqQ+olRZ15UZeTA5IXeKJQbbWyfdP+JIeluO3JRTVXu8F
-         RVax/i8LmZ77GeUsaioHhzU/EvGyb40vbsFei3dzhllKAihllcump0Em2aFb5KWwih7x
-         8nMg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=vhp+0ndE0ICnySnfQWzK5OgPfXzG7nhddvg7N0bvrR8=;
+        b=h+i/gphVwsRQj1NIlLc2qh40jf4VTap2KZa744ixBxWBjLZ1srE+bOYbGB7feV1/Jy
+         3eEDy6S+dlFr/5lukmRPSNNfJV+XkCZCSzVPG+u0t3emjhewWpCP7ptz7yj8UH4rZ4A9
+         5DhkyEVRQ7I+b18FQcPBdlyaHfiFkpbkGgtAuH7KG29jy2I0ofG3H+CC/1OfVzstuiFr
+         QVyqBmgkeGGtQrxmqOzNrfeSYas98s13obTBwPcjOaml7EZ7/km+edYAeywPxR1bf64S
+         ppFSrVZlGYru0BGJQWbDX6lUwkjrkg7b2kglbGdnDTsXBKi74SCX20dXmTYO05G6NfYw
+         6oZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4x/nniN9E8m90PRyLnC3qrpb7kQ+WEP5ChtBH2U8kMo=;
-        b=o6p7OfHs0bbdkNo7h+MsBF8K3YRm7A4px1qN/BAP8wNkfIGqTnoioPDuCw8rLu579m
-         XEhNSdNINTdNuMSLgl84Tvwtpg66RwIRgXcMCG7oOqFbrbgat3NHn/4rNOfB+xQal7vD
-         aiSC7UC5CeVvIjr7YjpL3Su9W3cBb/sYaDxZmBE2vlsqXDmRpkLlpwDz08fstJ7zQePa
-         fXx3dIz0YWedFBQ2fImEdxhz6rUIae63S3DELTG8HYkesZoox1va+ZGymzRkIUswPMrG
-         1yPUEkMwOv4pp/T6mBuvQZ3md0Q9orxozOeI4XNliK6d6l+acuMVcPxxATW1y8eyYLPG
-         pdzA==
-X-Gm-Message-State: AOAM5333v99GE06xc8c9brQTgGcsnYxm9RSYaJnJAcZKT0JikdIir50n
-        GyaR6klXpNzg6BWyRHRVD2dlUbu51UyQjPdME9BzXw==
-X-Google-Smtp-Source: ABdhPJzDAk+ptW68T/TwHLLdT+qVLohzJyd35bV7s8fKq9voji+ToXFJ/JYFGS5BENSO/fLBfptF2O+Ll8ewYtScQFM=
-X-Received: by 2002:a17:90a:e7c7:b0:1d2:6ee8:63ed with SMTP id
- kb7-20020a17090ae7c700b001d26ee863edmr3969267pjb.209.1650456059505; Wed, 20
- Apr 2022 05:00:59 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=vhp+0ndE0ICnySnfQWzK5OgPfXzG7nhddvg7N0bvrR8=;
+        b=B43h1fnT2LKt5qRIbq94bLdjhE8Ix3TVPs5kdGCaaPn2Ln/Hp8Q5PzsYsR9sGLQ2KM
+         YRoxF6xzRa/99NwWy0gN+Vk+F9k1SPugRLazdNPs7RKmHzsNlFYHanJXLNJbkUTY2liy
+         7jevm2MOMqd3WDXYBHFIJWfMIObecAwPP/26TCNMi/5z3esal/R/zzzjWedDhZDllXlP
+         73zFGET4OOoFkBtM8ES1BVCYtxrqVUzjns7NZyqq+rP/poe4MW1Qekct+9oTOvEXdoqY
+         YPrmJo9d2SEqDvqYTcW0qeCSDjzTyYv8Hs786iRKGiFHezj0Opb9X8fKhhL0LrQsqyj9
+         ikrw==
+X-Gm-Message-State: AOAM531Vu39d04Sc75tPPaxSmbeg06eteEjywjP6hL8gdlwnV9orL6MN
+        WZooARQZ6cwJ1NQLh5mp9MYzjQ==
+X-Google-Smtp-Source: ABdhPJzs23eyNGxDvDwrPElsXgTnQ4q6A2KbzftDpjqRnuzUC6s46rNyLRvz68VDexw8sqw2dBTC5A==
+X-Received: by 2002:a17:906:7945:b0:6e0:19:5f7c with SMTP id l5-20020a170906794500b006e000195f7cmr18800900ejo.458.1650456412297;
+        Wed, 20 Apr 2022 05:06:52 -0700 (PDT)
+Received: from [192.168.0.225] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id k14-20020a170906128e00b006e4b67514a1sm6749071ejb.179.2022.04.20.05.06.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Apr 2022 05:06:51 -0700 (PDT)
+Message-ID: <d81262d7-9624-7d85-cfcb-e675d32bf86f@linaro.org>
+Date:   Wed, 20 Apr 2022 14:06:51 +0200
 MIME-Version: 1.0
-References: <20220420102811.3157-1-slark_xiao@163.com>
-In-Reply-To: <20220420102811.3157-1-slark_xiao@163.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Wed, 20 Apr 2022 14:00:23 +0200
-Message-ID: <CAMZdPi9WJsz5nyzQB39q=Jhy8_q2=N8VAucYMUYKUf_faL5csQ@mail.gmail.com>
-Subject: Re: [PATCH] bus: mhi: host: Add support for Cinterion MV32-WA/MV32-WB
-To:     Slark Xiao <slark_xiao@163.com>
-Cc:     mani@kernel.org, quic_hemantk@quicinc.com,
-        gregkh@linuxfoundation.org, bbhatt@codeaurora.org,
-        christophe.jaillet@wanadoo.fr, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] dt-bindings: dmaengine: qcom: gpi: Add minItems for
+ interrupts
+Content-Language: en-US
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220414064235.1182195-1-vkoul@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220414064235.1182195-1-vkoul@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Slark,
-
-On Wed, 20 Apr 2022 at 12:28, Slark Xiao <slark_xiao@163.com> wrote:
->
-> MV32-WA is designed based on Qualcomm SDX62, and
-> MV32-WB is designed based on QUalcomm SDX65. Both
-> products' enumeration would align with previous
-> product MV31-W.
-> Add some new items for mv32 to separate it from
-> mv31-w, in case we need to do any changes in
-> future.
-
-On the contrary, do not overly clone the structures, and re-use the
-mv31 ones if they apply. You can rename them to mv3x if you really
-want to.
-
-Regards,
-Loic
+On 14/04/2022 08:42, Vinod Koul wrote:
+> Add the minItems for interrupts property as well. In the absence of
+> this, we get warning if interrupts are less than 13
+> 
+> arch/arm64/boot/dts/qcom/qrb5165-rb5.dtb:
+> dma-controller@800000: interrupts: [[0, 588, 4], [0, 589, 4], [0, 590,
+> 4], [0, 591, 4], [0, 592, 4], [0, 593, 4], [0, 594, 4], [0, 595, 4], [0,
+>   596, 4], [0, 597, 4]] is too short
+> 
 
 
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
->
-> Signed-off-by: Slark Xiao <slark_xiao@163.com>
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 41 ++++++++++++++++++++++++++++++
->  1 file changed, 41 insertions(+)
->
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 541ced27d941..a2da40340df7 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -406,6 +406,41 @@ static const struct mhi_pci_dev_info mhi_mv31_info = {
->         .mru_default = 32768,
->  };
->
-> +static const struct mhi_channel_config mhi_mv32_channels[] = {
-> +       MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 64, 0),
-> +       MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 64, 0),
-> +       /* MBIM Control Channel */
-> +       MHI_CHANNEL_CONFIG_UL(12, "MBIM", 64, 0),
-> +       MHI_CHANNEL_CONFIG_DL(13, "MBIM", 64, 0),
-> +       /* MBIM Data Channel */
-> +       MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 512, 2),
-> +       MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 512, 3),
-> +};
-> +
-> +static struct mhi_event_config mhi_mv32_events[] = {
-> +       MHI_EVENT_CONFIG_CTRL(0, 256),
-> +       MHI_EVENT_CONFIG_DATA(1, 256),
-> +       MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> +       MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101),
-> +};
-> +
-> +static const struct mhi_controller_config modem_mv32_config = {
-> +       .max_channels = 128,
-> +       .timeout_ms = 20000,
-> +       .num_channels = ARRAY_SIZE(mhi_mv32_channels),
-> +       .ch_cfg = mhi_mv32_channels,
-> +       .num_events = ARRAY_SIZE(mhi_mv32_events),
-> +       .event_cfg = mhi_mv32_events,
-> +};
-> +
-> +static const struct mhi_pci_dev_info mhi_mv32_info = {
-> +       .name = "cinterion-mv32",
-> +       .config = &modem_mv32_config,
-> +       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +       .dma_data_width = 32,
-> +       .mru_default = 32768,
-> +};
-> +
->  static const struct mhi_channel_config mhi_sierra_em919x_channels[] = {
->         MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
->         MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 256, 0),
-> @@ -475,6 +510,12 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->         /* MV31-W (Cinterion) */
->         { PCI_DEVICE(0x1269, 0x00b3),
->                 .driver_data = (kernel_ulong_t) &mhi_mv31_info },
-> +       /* MV32-WA (Cinterion) */
-> +       { PCI_DEVICE(0x1269, 0x00ba),
-> +               .driver_data = (kernel_ulong_t) &mhi_mv32_info },
-> +       /* MV32-WB (Cinterion) */
-> +       { PCI_DEVICE(0x1269, 0x00bb),
-> +               .driver_data = (kernel_ulong_t) &mhi_mv32_info },
->         {  }
->  };
->  MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
-> --
-> 2.25.1
->
+
+Best regards,
+Krzysztof
