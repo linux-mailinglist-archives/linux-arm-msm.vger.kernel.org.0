@@ -2,75 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D92F1508960
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 15:30:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC648508AAF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 16:23:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379102AbiDTNcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Apr 2022 09:32:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51158 "EHLO
+        id S1352439AbiDTOZr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Apr 2022 10:25:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352554AbiDTNct (ORCPT
+        with ESMTP id S241491AbiDTOZr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Apr 2022 09:32:49 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB3505599;
-        Wed, 20 Apr 2022 06:30:02 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id u5-20020a17090a6a8500b001d0b95031ebso2017806pjj.3;
-        Wed, 20 Apr 2022 06:30:02 -0700 (PDT)
+        Wed, 20 Apr 2022 10:25:47 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDCC4443CB;
+        Wed, 20 Apr 2022 07:23:00 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id k23so3921229ejd.3;
+        Wed, 20 Apr 2022 07:23:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mgFfD34U6duNBCmHvZvCFQvmst2xAUzZbkoGYyf+ORc=;
-        b=DtQ+tW28eb8PgOL2Hpm8ABjHDME2cm/YAl2A1MIZFJuPDg1qbu+6CHSWZTEIeyX0c+
-         Vz5KaDabBo7tz5shkyJFIzSIs7SCk4ao+3Ph6jMpnjmkhqE7HIvl5NSWFPLzJBKKmATB
-         0KJIerinMrV0xUU1+nooA8tW4zmqpUQuMLlmZK7qpVIsVUeiKdz+bDjgxZ13vrU4ycZk
-         7oVeHqxUqN71ODUJ8HNtDlRzGNjOM2BkpDa508Rz9cRbY93hjJ6aKrQJcORWxgUbVFn/
-         juvZw/wtcyaYIc5q+ye4UwFJ1FHqaCAdPhDBPkZOWR3qdmwh2YSvzhbvy2GzALWgdG0y
-         Bwxw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0CmqVSEyr5oxQFOzuYLQLKaW8kImH7fUNHhx+P1KJE8=;
+        b=dQnEOcVbqA90ofiORko3dhR8FewYKP28J782X1pM6JW8ENFUzFO4OgW0Ga02BXNXeB
+         xwBcgUpJWs9j5+iyiUQPpr2o3z/ZqpbWHZhIWPKCnk5EgaIc5q2Xmy7eBrBiKR71Z+pS
+         6YvAUeH9CEKuEZ19x7udQghHuKP98VAPIMdFR4+xnGv4UwmwUd89ugTp+qQ1bOmOGU+o
+         arOw8hXZpxMaFYcHklfekrsexgBDcAfDBmtZBfaNaFAYMXkE07crG9nNcwDp3c6LnDLD
+         HvJIzOh3f2uBVjBKEumJazd2zzwmkiFISfTKPHegu4FWPK6g+sZzYhNWGXf9Pcz/C4cy
+         jmVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mgFfD34U6duNBCmHvZvCFQvmst2xAUzZbkoGYyf+ORc=;
-        b=HSHhtscBimbgE3UXMt3GpwwyNAGgLmGEdYvMLyepno7hF+SaAQahwD9a92NgNmgc/p
-         wd90klbYoc0tf3UkjhB8uRecAnr/UZlOgiCfgguR+jCsXrrpEGlcJhC8aV1Wf46Vp8CZ
-         NiIzL7xTnKRhpUXE6pZUOp55T4voQlZCd683w9Po9/6OvsqhGCBcasMFmE5ieZU87pWH
-         ZFCwi2UWYKcQk46kgAqDeJEUTPOHiZ5HxEH6VKbg10LMuhlgtXHVJ8XFVVY7OcWHZeHU
-         3zcS7gtgCRO1QFVd3h8imIdWp76OEOHrAoHnN/YyYydq+giDqiDDD6mLD3sY0mkFiw3h
-         HaRw==
-X-Gm-Message-State: AOAM533XQohDpKh3ZwyYtyk3IJLrqz++VgXTJ2VOGRP7zbjjyndS4XOK
-        NX+6+1PAdpD40w0WSGW3SF6pu/0tu5c=
-X-Google-Smtp-Source: ABdhPJxRHplix3wdqGSuW2rzXQ5J/enrYXhmwQu+cbpWkr3h6BGvqp6E4kqBd5hIXHELvHjGdQ16/w==
-X-Received: by 2002:a17:902:ec8f:b0:159:bce:bafd with SMTP id x15-20020a170902ec8f00b001590bcebafdmr11008479plg.21.1650461402435;
-        Wed, 20 Apr 2022 06:30:02 -0700 (PDT)
-Received: from 9a2d8922b8f1 ([122.161.51.18])
-        by smtp.gmail.com with ESMTPSA id s190-20020a625ec7000000b005061c17c111sm20354857pfb.71.2022.04.20.06.29.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Apr 2022 06:30:02 -0700 (PDT)
-Date:   Wed, 20 Apr 2022 18:59:55 +0530
-From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org
-Subject: Re: [PATCH v2 6/6] dt-bindings: dma: Convert Qualcomm BAM DMA
- binding to json format
-Message-ID: <20220420132955.GA63070@9a2d8922b8f1>
-References: <20220410175056.79330-1-singh.kuldeep87k@gmail.com>
- <20220410175056.79330-7-singh.kuldeep87k@gmail.com>
- <CAH=2Ntx1D8C6xu+RysO0o5OkG5kPMMJ-Xr+B-udLtizY+4HiaQ@mail.gmail.com>
- <20220418192012.GA6868@9a2d8922b8f1>
- <1965ed9f-0258-cd28-f1c3-ef87272f6c03@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0CmqVSEyr5oxQFOzuYLQLKaW8kImH7fUNHhx+P1KJE8=;
+        b=FfctC4Lz7hLGoh4FFXCAkQsZtq+Pxp5LHQ0p4jAkGtThXo2d9H7Bu5g4hrrESI14LO
+         lItBvA9S6k9QOJb/xvVl4bZYje/5Bv9H/KlLK+NFbfT2YX8Vws1mj67HvlhMglgPd1PD
+         XzfGb2YxZta676aos276SLayBuWQJGmLoaBdpk20nlk5Mcf0y0DbQRLQL1/v+NHlBW6B
+         F4j7zZTNIvEJrBUXSDcFTCQJt6tAgJwZLor3/lU9uhgVa1oi1bkjIs3Htq4ZhCAfk3pm
+         ngsayfttBNMYAcyzFi3JXVO6yvuLlOt8tR2Cd1OxOSoOsOqdAVOBwXZPUgWxN2gOuQTX
+         QqXw==
+X-Gm-Message-State: AOAM530R+wDQdrjQAKmntoh4nw8tqvX6aFmlVmVT+O2ZCX3nrI9e8d4G
+        bIPk0DAPCiixx/IGeZHPhG4MWnB/e0vrRUD9BrEghH4q
+X-Google-Smtp-Source: ABdhPJzHVZq9a1q9EtLrfdpycVRT4qJFO6PlqcbQ0dYoutDFb5PAe59znOIGP9nW2ueZ6mifemMr2vboCf4TAyqyoUM=
+X-Received: by 2002:a17:906:68c2:b0:6b4:9f26:c099 with SMTP id
+ y2-20020a17090668c200b006b49f26c099mr19118939ejr.41.1650464579188; Wed, 20
+ Apr 2022 07:22:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1965ed9f-0258-cd28-f1c3-ef87272f6c03@linaro.org>
+References: <20220402155551.16509-1-krzysztof.kozlowski@linaro.org> <a3edf0e1-644a-38b2-b23d-30cc01005786@linaro.org>
+In-Reply-To: <a3edf0e1-644a-38b2-b23d-30cc01005786@linaro.org>
+From:   Jassi Brar <jassisinghbrar@gmail.com>
+Date:   Wed, 20 Apr 2022 09:22:47 -0500
+Message-ID: <CABb+yY3uRxKdQ_Q-yvWipmOqLNbJXmJ141oYJnq1di_Yu66T_Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: mailbox: qcom-ipcc: simplify the example
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Devicetree List <devicetree@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        "<netdev@vger.kernel.org>" <netdev@vger.kernel.org>,
+        Rob Herring <robh@kernel.org>, Alex Elder <elder@kernel.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -81,16 +77,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> I appreciate your work Kuldeep, it is important and valuable
-> contribution. It is sad to see duplicated effort, I don't like it for my
-> own patches either. In general, I believe the FIFO approach should be
-> applied, so in this case Bhupesh patches.
+On Wed, Apr 20, 2022 at 3:42 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 02/04/2022 17:55, Krzysztof Kozlowski wrote:
+> > Consumer examples in the bindings of resource providers are trivial,
+> > useless and duplicating code.  Additionally the incomplete qcom,smp2p
+> > example triggers DT schema warnings.
+> >
+> > Cleanup the example by removing the consumer part and fixing the
+> > indentation to DT schema convention.
+> >
+> > Reported-by: Rob Herring <robh@kernel.org>
+> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> Jassi,
+> Do you plan to pick this mailbox patch?
+>
+Yes, I do.  I am ok too, if you want it through some other tree as a
+part of some bigger patchset.
 
-Yep, I also agree with FIFO approach w.r.t contributions. But one thing
-daunts me here is the waiting time with latest revision, it's too high.
-
-Anyway, Bhupesh had more than BAM changes and was already on v5, I can
-give benefit of doubt to him and won't argue much here.
-
-Bhupesh, feel free to include my armv7 based dts patches in your series
-otherwise you might stumble DT checks warnings.
+thanks.
