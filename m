@@ -2,365 +2,802 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82EE9508DDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 19:00:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 775A2508E07
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 19:08:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237032AbiDTRDb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Apr 2022 13:03:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52008 "EHLO
+        id S1356021AbiDTRKn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Apr 2022 13:10:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231803AbiDTRDb (ORCPT
+        with ESMTP id S1380890AbiDTRKm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Apr 2022 13:03:31 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BC1B20BC9;
-        Wed, 20 Apr 2022 10:00:42 -0700 (PDT)
+        Wed, 20 Apr 2022 13:10:42 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D25A7183BC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 10:07:52 -0700 (PDT)
 Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 44C2F3F805;
-        Wed, 20 Apr 2022 19:00:39 +0200 (CEST)
-Content-Type: multipart/mixed; boundary="------------WPJK0mzTbAcohIQgdAMyc7W3"
-Message-ID: <997f91b9-c22e-41f0-300b-92559bc7896e@somainline.org>
-Date:   Wed, 20 Apr 2022 19:00:37 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5C5423F7E6;
+        Wed, 20 Apr 2022 19:07:50 +0200 (CEST)
+Message-ID: <3d72faf6-e574-63af-e0e0-3d7035dc56a0@somainline.org>
+Date:   Wed, 20 Apr 2022 19:07:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.8.0
-Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: sm8350-sagami: usb qmp phy node
- - add 'vdda-pll-supply' & 'vdda-phy-supply'
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Cc:     bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        vkoul@kernel.org, bjorn.andersson@linaro.org,
-        Marijn Suijten <marijn.suijten@somainline.org>
-References: <20220419205854.1269922-1-bhupesh.sharma@linaro.org>
+Subject: Re: [PATCH v5 09/10] ARM: dts: msm: Add coresight components for
+ SM8250
+To:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Mike Leach <mike.leach@linaro.org>
+Cc:     Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20220412125035.40312-1-quic_jinlmao@quicinc.com>
+ <20220412125035.40312-10-quic_jinlmao@quicinc.com>
+ <f8c758a0-8e6d-85e6-3af2-640b33a92ce9@gmail.com>
+ <4464bd92-c104-3c3c-d077-d1b8ced76410@quicinc.com>
+ <CAJ9a7VhxPiA_arCg2LRki8eqx-OyipTxLp7TbiVfe2Dajm3wig@mail.gmail.com>
+ <68f40eec-6398-2340-7ed2-ba904fa587a6@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220419205854.1269922-1-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <68f40eec-6398-2340-7ed2-ba904fa587a6@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------WPJK0mzTbAcohIQgdAMyc7W3
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+
+On 15/04/2022 11:53, Jinlong Mao wrote:
+> Hi Mike & Konrad,
+>
+>
+> On 4/14/2022 9:40 PM, Mike Leach wrote:
+>> Hi
+>>
+>> On Wed, 13 Apr 2022 at 17:45, Jinlong Mao <quic_jinlmao@quicinc.com> 
+>> wrote:
+>>> Hi Konrad,
+>>>
+>>> Thank you for the review.
+>>>
+>>> On 4/13/2022 5:58 PM, Konrad Dybcio wrote:
+>>>> Hi,
+>>>>
+>>>>
+>>>> I added Bjorn, the linux-arm-msm maintainer to CC as he was missing
+>>>> for some reason.
+>>>>
+>>>>
+>>>> On 12/04/2022 14:50, Mao Jinlong wrote:
+>>>>> Add coresight device tree for sm8250. STM/ETM are added.
+>>>>>
+>>>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>>>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>>>>> ---
+>>>>>    .../arm64/boot/dts/qcom/sm8250-coresight.dtsi | 526 
+>>>>> ++++++++++++++++++
+>>>>>    arch/arm64/boot/dts/qcom/sm8250.dtsi          |   2 +
+>>>>>    2 files changed, 528 insertions(+)
+>>>>>    create mode 100644 arch/arm64/boot/dts/qcom/sm8250-coresight.dtsi
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8250-coresight.dtsi
+>>>>> b/arch/arm64/boot/dts/qcom/sm8250-coresight.dtsi
+>>>>> new file mode 100644
+>>>>> index 000000000000..1de42fd39248
+>>>>> --- /dev/null
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8250-coresight.dtsi
+>>>>> @@ -0,0 +1,526 @@
+>>>>> +// SPDX-License-Identifier: GPL-2.0
+>>>> sm8250.dtsi is BSD-3-Clause. Please consider relicensing.
+>>>>
+>>>>
+>>>>> +/*
+>>>>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights
+>>>>> reserved.
+>>>>> + */
+>>>>> +
+>>>>> +&soc {
+>>>>> +
+>>>>> +    stm@6002000 {
+>>>>> +        compatible = "arm,coresight-stm", "arm,primecell";
+>>>>> +        reg = <0 0x06002000 0 0x1000>,
+>>>> You don't need to break the line at so few characters.
+>>>>
+>>>>
+>>>>> +              <0 0x16280000 0 0x180000>;
+>>>>> +        reg-names = "stm-base", "stm-stimulus-base";
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                stm_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&funnel0_in7>;
+>>>> Same here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    funnel@6041000 {
+>>>>> +        compatible = "arm,coresight-dynamic-funnel", 
+>>>>> "arm,primecell";
+>>>>> +        reg = <0 0x06041000 0 0x1000>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                funnel0_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&merge_funnel_in0>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +
+>>>>> +        in-ports {
+>>>>> +            #address-cells = <1>;
+>>>>> +            #size-cells = <0>;
+>>>>> +
+>>>>> +            port@7 {
+>>>>> +                reg = <7>;
+>>>>> +                funnel0_in7: endpoint {
+>>>>> +                    remote-endpoint = <&stm_out>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    funnel@6042000 {
+>>>>> +        compatible = "arm,coresight-dynamic-funnel", 
+>>>>> "arm,primecell";
+>>>>> +        reg = <0 0x06042000 0 0x1000>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                funnel2_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&merge_funnel_in2>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +
+>>>>> +        in-ports {
+>>>>> +            #address-cells = <1>;
+>>>>> +            #size-cells = <0>;
+>>>>> +
+>>>>> +            port@2 {
+>>>>> +                reg = <4>;
+>>>>> +                funnel2_in5: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&apss_merge_funnel_out>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    funnel@6b04000 {
+>>>>> +        compatible = "arm,coresight-dynamic-funnel", 
+>>>>> "arm,primecell";
+>>>>> +        arm,primecell-periphid = <0x000bb908>;
+>>>>> +
+>>>>> +        reg = <0 0x6b04000 0 0x1000>;
+>>>>> +        reg-names = "funnel-base";
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                merge_funnel_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                        <&etf_in>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +
+>>>>> +        in-ports {
+>>>>> +            #address-cells = <1>;
+>>>>> +            #size-cells = <0>;
+>>>>> +
+>>>>> +            port@7 {
+>>>>> +                reg = <7>;
+>>>>> +                funnel_swao_in_funnel_merg: endpoint {
+>>>>> +                    remote-endpoint=
+>>>> And here.
+>>>>
+>>>>
+>>>>> + <&funnel_merg_out_funnel_swao>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +
+>>>>> +    };
+>>>>> +
+>>>>> +    funnel@6045000 {
+>>>> The nodes are not sorted properly (by address). Please fix that.
+>>>>
+>>>>
+>>>>> +        compatible = "arm,coresight-dynamic-funnel", 
+>>>>> "arm,primecell";
+>>>>> +        reg = <0 0x06045000 0 0x1000>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                funnel_merg_out_funnel_swao: endpoint {
+>>>>> +                    remote-endpoint = <&funnel_swao_in_funnel_merg>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +
+>>>>> +        in-ports {
+>>>>> +            #address-cells = <1>;
+>>>>> +            #size-cells = <0>;
+>>>>> +
+>>>>> +            port@1 {
+>>>>> +                reg = <0>;
+>>>>> +                merge_funnel_in0: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&funnel0_out>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +
+>>>>> +            port@2 {
+>>>>> +                reg = <1>;
+>>>>> +                merge_funnel_in2: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&funnel2_out>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    replicator@6046000 {
+>>>>> +        compatible = "arm,coresight-dynamic-replicator",
+>>>>> "arm,primecell";
+>>>>> +        reg = <0 0x06046000 0 0x1000>;
+>>>>> +
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                replicator_out: endpoint {
+>>>>> +                    remote-endpoint = <&etr_in>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +
+>>>>> +        in-ports {
+>>>>> +            port {
+>>>>> +                replicator_cx_in_swao_out: endpoint {
+>>>>> +                    remote-endpoint = <&replicator_swao_out_cx_in>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    replicator@6b06000 {
+>>>>> +        compatible = "arm,coresight-dynamic-replicator",
+>>>>> "arm,primecell";
+>>>>> +        reg = <0 0x06b06000 0 0x1000>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                replicator_swao_out_cx_in: endpoint {
+>>>>> +                    remote-endpoint = <&replicator_cx_in_swao_out>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +
+>>>>> +        in-ports {
+>>>>> +            port {
+>>>>> +                replicator_in: endpoint {
+>>>>> +                    remote-endpoint = <&etf_out>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    etf@6b05000 {
+>>>>> +        compatible = "arm,coresight-tmc", "arm,primecell";
+>>>>> +        reg = <0 0x6b05000 0 0x1000>;
+>>>> Please pad the address to 8 chars.
+>>>>
+>>>>
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                etf_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&replicator_in>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +
+>>>>> +        in-ports {
+>>>>> +            #address-cells = <1>;
+>>>>> +            #size-cells = <0>;
+>>>>> +
+>>>>> +            port@1 {
+>>>>> +                reg = <0>;
+>>>>> +                etf_in: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&merge_funnel_out>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    etr@6048000 {
+>>>>> +        compatible = "arm,coresight-tmc", "arm,primecell";
+>>>>> +        reg = <0 0x06048000 0 0x1000>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +        arm,scatter-gather;
+>>>>> +
+>>>>> +        in-ports {
+>>>>> +            port {
+>>>>> +                etr_in: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&replicator_out>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    etm@7040000 {
+>>>>> +        compatible = "arm,coresight-etm4x", "arm,primecell";
+>>>>> +        reg = <0 0x07040000 0 0x1000>;
+>>>>> +
+>>>>> +        cpu = <&CPU0>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +        arm,coresight-loses-context-with-cpu;
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                etm0_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&apss_funnel_in0>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    etm@7140000 {
+>>>>> +        compatible = "arm,coresight-etm4x", "arm,primecell";
+>>>>> +        reg = <0 0x07140000 0 0x1000>;
+>>>>> +
+>>>>> +        cpu = <&CPU1>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +        arm,coresight-loses-context-with-cpu;
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                etm1_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&apss_funnel_in1>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    etm@7240000 {
+>>>>> +        compatible = "arm,coresight-etm4x", "arm,primecell";
+>>>>> +        reg = <0 0x07240000 0 0x1000>;
+>>>>> +
+>>>>> +        cpu = <&CPU2>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +        arm,coresight-loses-context-with-cpu;
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                etm2_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&apss_funnel_in2>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    etm@7340000 {
+>>>>> +        compatible = "arm,coresight-etm4x", "arm,primecell";
+>>>>> +        reg = <0 0x07340000 0 0x1000>;
+>>>>> +
+>>>>> +        cpu = <&CPU3>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +        arm,coresight-loses-context-with-cpu;
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                etm3_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&apss_funnel_in3>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    etm@7440000 {
+>>>>> +        compatible = "arm,coresight-etm4x", "arm,primecell";
+>>>>> +        reg = <0 0x07440000 0 0x1000>;
+>>>>> +
+>>>>> +        cpu = <&CPU4>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +        arm,coresight-loses-context-with-cpu;
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                etm4_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&apss_funnel_in4>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    etm@7540000 {
+>>>>> +        compatible = "arm,coresight-etm4x", "arm,primecell";
+>>>>> +        reg = <0 0x07540000 0 0x1000>;
+>>>>> +
+>>>>> +        cpu = <&CPU5>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +        arm,coresight-loses-context-with-cpu;
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                etm5_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&apss_funnel_in5>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    etm@7640000 {
+>>>>> +        compatible = "arm,coresight-etm4x", "arm,primecell";
+>>>>> +        reg = <0 0x07640000 0 0x1000>;
+>>>>> +
+>>>>> +        cpu = <&CPU6>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +        arm,coresight-loses-context-with-cpu;
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                etm6_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&apss_funnel_in6>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    etm@7740000 {
+>>>>> +        compatible = "arm,coresight-etm4x", "arm,primecell";
+>>>>> +        reg = <0 0x07740000 0 0x1000>;
+>>>>> +
+>>>>> +        cpu = <&CPU7>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +        arm,coresight-loses-context-with-cpu;
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                etm7_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&apss_funnel_in7>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    funnel@7800000 {
+>>>>> +        compatible = "arm,coresight-dynamic-funnel", 
+>>>>> "arm,primecell";
+>>>>> +        reg = <0 0x07800000 0 0x1000>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                apss_funnel_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&apss_merge_funnel_in>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +
+>>>>> +        in-ports {
+>>>>> +            #address-cells = <1>;
+>>>>> +            #size-cells = <0>;
+>>>>> +
+>>>>> +            port@0 {
+>>>>> +                reg = <0>;
+>>>>> +                apss_funnel_in0: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&etm0_out>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +
+>>>>> +            port@1 {
+>>>>> +                reg = <1>;
+>>>>> +                apss_funnel_in1: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&etm1_out>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +
+>>>>> +            port@2 {
+>>>>> +                reg = <2>;
+>>>>> +                apss_funnel_in2: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&etm2_out>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +
+>>>>> +            port@3 {
+>>>>> +                reg = <3>;
+>>>>> +                apss_funnel_in3: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&etm3_out>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +
+>>>>> +            port@4 {
+>>>>> +                reg = <4>;
+>>>>> +                apss_funnel_in4: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&etm4_out>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +
+>>>>> +            port@5 {
+>>>>> +                reg = <5>;
+>>>>> +                apss_funnel_in5: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&etm5_out>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +
+>>>>> +            port@6 {
+>>>>> +                reg = <6>;
+>>>>> +                apss_funnel_in6: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&etm6_out>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +
+>>>>> +            port@7 {
+>>>>> +                reg = <7>;
+>>>>> +                apss_funnel_in7: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&etm7_out>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +
+>>>>> +    funnel@7810000 {
+>>>>> +        compatible = "arm,coresight-dynamic-funnel", 
+>>>>> "arm,primecell";
+>>>>> +        reg = <0 0x07810000 0 0x1000>;
+>>>>> +
+>>>>> +        clocks = <&aoss_qmp>;
+>>>>> +        clock-names = "apb_pclk";
+>>>>> +
+>>>>> +        out-ports {
+>>>>> +            port {
+>>>>> +                apss_merge_funnel_out: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&funnel2_in5>;
+>>>> And here.
+>>>>
+>>>>
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +
+>>>>> +        in-ports {
+>>>>> +            port@1 {
+>>>>> +                reg = <0>;
+>>>>> +                apss_merge_funnel_in: endpoint {
+>>>>> +                    remote-endpoint =
+>>>>> +                      <&apss_funnel_out>;
+>>>>> +                };
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>> +};
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>>>>> b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>>>>> index af8f22636436..115623392183 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>>>>> @@ -5434,3 +5434,5 @@
+>>>>>            };
+>>>>>        };
+>>>>>    };
+>>>>> +
+>>>>> +#include "sm8250-coresight.dtsi"
+>>>> Why should everybody want coresight? It's not enabled on (most)
+>>>> production devices and may cause a platform crash when you try to use
+>>>> it on such ones.
+>>>>
+>>>>
+>>>> These nodes should probably be added to sm8250.dtsi, all with status =
+>>>> "disabled" by default, so that they don't break the devices that do
+>>>> not support it due to fuse configuration.
+>>>>
+>>> I will address your comments above.
+>>> I create coresight dtsi because of that there are dozens of coresight
+>>> nodes for qualcomm HW.
+>>> Add all the nodes in a separate file is easy to maintain.
+>>> For disabling all the nodes by default, i will check internally and get
+>>> back to you.
+>>>
+>> If the nodes are "disabled", then the base .dts files for platforms
+>> that do include coresight would have to be updated to enable all those
+>> nodes - which leaves potential for errors if nodes are accidentally
+>> omitted.
+>>
+>> Because sm8250-coresight.dtsi contains only Coresight devices, would
+>> it not be better to include this directly in the base .dts file for
+>> platforms that do have Coresight, and omit it from those that do not.
+>>
+>> Regards
+>>
+>> Mike
+>>
+> I checked internally. These coresight nodes are tested on our secure 
+> device.
+
+I had an opportunity to confirm this, sorry for spreading unnecessary 
+FUD, but this used to be an issue on some older boards.
 
 
-On 19/04/2022 22:58, Bhupesh Sharma wrote:
-> As suggested by Bjorn during review of [1], the 'vdda-pll-supply' &
-> 'vdda-phy-supply' supplies denote the power for the bus and the
-> clock of the usb qmp phy and are used by the qcom qmp phy driver.
->
-> So, its safe to assume that the two regulators are the same as on
-> the MTP. So let's wire them up in the same way as the MTP.
->
-> In absence of the same 'make dtbs_check' leads to following warnings:
->
-> arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml:
->   phy-wrapper@88e9000: 'vdda-phy-supply' is a required property
->
-> arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml:
->   phy-wrapper@88e9000: 'vdda-pll-supply' is a required property
->
-> [1]. https://lore.kernel.org/lkml/20220228123019.382037-9-bhupesh.sharma@linaro.org/
->
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: konrad.dybcio@somainline.org
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
-> Changes since v1:
-> -----------------
-> - v1 can be found here: https://www.spinics.net/lists/linux-arm-msm/msg108467.html
-> - Fixed the commit message to read usb qmp phy instead of ufs phy (which
->    was introduced erroraneously in the commit log).
->
->   .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 25 +++++++++++++++++++
->   1 file changed, 25 insertions(+)
+> They won't cause any crash issue on secure device with fuse blown.
+> If any platform doesn't need to coresight support, it can control by 
+> the coresight kernel configs.
 
-Hi, I actually threw together a patch with [almost] all RPMh regulators 
-on Sagami quite a while ago (if thunderbird doesn't explode, you should 
-find it as an attachment to this message), but I haven't sent it, as 
-pm8350c_l3 and pmr735a_s3 are broken on the .c driver side (the step 
-numbers and/or values are not correct), but Qualcomm in their infinite 
-Qualcommery will not let us, mere mortals, access the PDFs that contain 
-the correct specifications, so I have to wait for somebody with access 
-to them to pick them up. That said, the values you supplied seem correct 
-(say for lack of allow-set-load which will bite when (if?) UFS is ever 
-functional upstream on this piece of Japanese engineering), but adding 
-the configuration of all regulators at once just seems more complete to me..
+No, the arm64 kernel is supposed to run on hundreds if not thousands of 
+boards with a common config (just like on x86/_64 machines). Our job is 
+to make it fully functional with the arm64 defconfig, and that's what 
+the status property is effectively for in device trees. You don't get to 
+decide what is enabled or not in the config based on individual device 
+capabilities.
 
 
-On a note, USB - among other more or less necessary peripherals - along 
-with its supplies, is brought up in XBL (or bootrom if you jump to EDL), 
-so not setting these supplies in Linux does not bite in any way, shape 
-or form other than "make dtbs_check" screaming.
-
-
-I'm not against this patch, but once again, even though this point may 
-not sound very convincing to you all, I think it would be "nice" to 
-configure all regulators in one go.
+Since we've established that Coresight doesn't break secure devices, I 
+take back that status = "disabled" comment, it's not necessary. Please 
+move all the nodes to the SoC dtsi though, as they are specific only to 
+sm8250 and won't be included anywhere else.
 
 
 Konrad
 
-
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-> index 90b13cbe2fa6..238ac9380ca2 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-> @@ -3,6 +3,7 @@
->    * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
->    */
->   
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->   #include "sm8350.dtsi"
->   #include "pm8350.dtsi"
->   #include "pm8350b.dtsi"
-> @@ -75,6 +76,27 @@ ramoops@ffc00000 {
->   	};
->   };
->   
-> +&apps_rsc {
-> +	pm8350-rpmh-regulators {
-> +		compatible = "qcom,pm8350-rpmh-regulators";
-> +		qcom,pmic-id = "b";
-> +
-> +		vreg_l1b_0p88: ldo1 {
-> +			regulator-name = "vreg_l1b_0p88";
-> +			regulator-min-microvolt = <912000>;
-> +			regulator-max-microvolt = <920000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l6b_1p2: ldo6 {
-> +			regulator-name = "vreg_l6b_1p2";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1208000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +};
-> +
->   &adsp {
->   	status = "okay";
->   	firmware-name = "qcom/adsp.mbn";
-> @@ -256,4 +278,7 @@ &usb_1_hsphy {
->   
->   &usb_1_qmpphy {
->   	status = "okay";
-> +
-> +	vdda-phy-supply = <&vreg_l6b_1p2>;
-> +	vdda-pll-supply = <&vreg_l1b_0p88>;
->   };
---------------WPJK0mzTbAcohIQgdAMyc7W3
-Content-Type: text/plain; charset=UTF-8; name="sagami_regulators.patch"
-Content-Disposition: attachment; filename="sagami_regulators.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBkYTIwYzJhZmEyYzA3MTVlZjc4MTM2Y2Q2NzBlZTljMWRiM2FkZjZjIE1vbiBTZXAg
-MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBLb25yYWQgRHliY2lvIDxrb25yYWQuZHliY2lvQHNv
-bWFpbmxpbmUub3JnPgpEYXRlOiBTYXQsIDUgTWFyIDIwMjIgMTc6MDg6NTggKzAxMDAKU3Vi
-amVjdDogW1BBVENIXSBhcm02NDogZHRzOiBxY29tOiBzbTgzNTAtc2FnYW1pOiBBZGQgbW9z
-dCBSUE1oIHJlZ3VsYXRvcnMKCkNvbmZpZ3VyZSBtb3N0IFJQTWgtY29udHJvbGxlZCByZWd1
-bGF0b3JzIG9uIFNvTUMgU2FnYW1pLiBUaGUgbWlzc2luZwpvbmVzIChvbiBwbTgzNTBiIGFu
-ZCBwbTgwMDhbaWpdKSB3aWxsIGJlIGNvbmZpZ3VyZWQgd2hlbiBkcml2ZXIgc3VwcG9ydApp
-cyBhZGRlZC4gVGhhbmtmdWxseSwgaXQgbG9va3MgbGlrZSBQRFgyMTUgYW5kIFBEWDIxNCBk
-b24ndCBoYXZlIGFueQpkaWZmZXJlbmNlcyB3aGVuIGl0IGNvbWVzIHRvIFBNODM1MC9QTTgz
-NTBDL1BNUjczNWEuCgpTaWduZWQtb2ZmLWJ5OiBLb25yYWQgRHliY2lvIDxrb25yYWQuZHli
-Y2lvQHNvbWFpbmxpbmUub3JnPgotLS0KIC4uLi9kdHMvcWNvbS9zbTgzNTAtc29ueS14cGVy
-aWEtc2FnYW1pLmR0c2kgICB8IDM1MCArKysrKysrKysrKysrKysrKysKIDEgZmlsZSBjaGFu
-Z2VkLCAzNTAgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL2FyY2gvYXJtNjQvYm9vdC9k
-dHMvcWNvbS9zbTgzNTAtc29ueS14cGVyaWEtc2FnYW1pLmR0c2kgYi9hcmNoL2FybTY0L2Jv
-b3QvZHRzL3Fjb20vc204MzUwLXNvbnkteHBlcmlhLXNhZ2FtaS5kdHNpCmluZGV4IDkwYjEz
-Y2JlMmZhNjMuLjgxMzYzZjM2N2Q0NTIgMTAwNjQ0Ci0tLSBhL2FyY2gvYXJtNjQvYm9vdC9k
-dHMvcWNvbS9zbTgzNTAtc29ueS14cGVyaWEtc2FnYW1pLmR0c2kKKysrIGIvYXJjaC9hcm02
-NC9ib290L2R0cy9xY29tL3NtODM1MC1zb255LXhwZXJpYS1zYWdhbWkuZHRzaQpAQCAtMyw2
-ICszLDcgQEAKICAqIENvcHlyaWdodCAoYykgMjAyMSwgS29ucmFkIER5YmNpbyA8a29ucmFk
-LmR5YmNpb0Bzb21haW5saW5lLm9yZz4KICAqLwogCisjaW5jbHVkZSA8ZHQtYmluZGluZ3Mv
-cmVndWxhdG9yL3Fjb20scnBtaC1yZWd1bGF0b3IuaD4KICNpbmNsdWRlICJzbTgzNTAuZHRz
-aSIKICNpbmNsdWRlICJwbTgzNTAuZHRzaSIKICNpbmNsdWRlICJwbTgzNTBiLmR0c2kiCkBA
-IC03Myw2ICs3NCwxNiBAQAogCQkJbm8tbWFwOwogCQl9OwogCX07CisKKwl2cGhfcHdyOiB2
-cGgtcHdyLXJlZ3VsYXRvciB7CisJCWNvbXBhdGlibGUgPSAicmVndWxhdG9yLWZpeGVkIjsK
-KwkJcmVndWxhdG9yLW5hbWUgPSAidnBoX3B3ciI7CisJCXJlZ3VsYXRvci1taW4tbWljcm92
-b2x0ID0gPDM3MDAwMDA+OworCQlyZWd1bGF0b3ItbWF4LW1pY3Jvdm9sdCA9IDwzNzAwMDAw
-PjsKKworCQlyZWd1bGF0b3ItYWx3YXlzLW9uOworCQlyZWd1bGF0b3ItYm9vdC1vbjsKKwl9
-OwogfTsKIAogJmFkc3AgewpAQCAtODAsNiArOTEsMzQ1IEBACiAJZmlybXdhcmUtbmFtZSA9
-ICJxY29tL2Fkc3AubWJuIjsKIH07CiAKKyZhcHBzX3JzYyB7CisJcG04MzUwLXJwbWgtcmVn
-dWxhdG9ycyB7CisJCWNvbXBhdGlibGUgPSAicWNvbSxwbTgzNTAtcnBtaC1yZWd1bGF0b3Jz
-IjsKKwkJcWNvbSxwbWljLWlkID0gImIiOworCisJCXZkZC1zMS1zdXBwbHkgPSA8JnZwaF9w
-d3I+OworCQl2ZGQtczItc3VwcGx5ID0gPCZ2cGhfcHdyPjsKKwkJdmRkLXMzLXN1cHBseSA9
-IDwmdnBoX3B3cj47CisJCXZkZC1zNC1zdXBwbHkgPSA8JnZwaF9wd3I+OworCQl2ZGQtczUt
-c3VwcGx5ID0gPCZ2cGhfcHdyPjsKKwkJdmRkLXM2LXN1cHBseSA9IDwmdnBoX3B3cj47CisJ
-CXZkZC1zNy1zdXBwbHkgPSA8JnZwaF9wd3I+OworCQl2ZGQtczgtc3VwcGx5ID0gPCZ2cGhf
-cHdyPjsKKwkJdmRkLXM5LXN1cHBseSA9IDwmdnBoX3B3cj47CisJCXZkZC1zMTAtc3VwcGx5
-ID0gPCZ2cGhfcHdyPjsKKwkJdmRkLXMxMS1zdXBwbHkgPSA8JnZwaF9wd3I+OworCQl2ZGQt
-czEyLXN1cHBseSA9IDwmdnBoX3B3cj47CisKKwkJdmRkLWwxLWw0LXN1cHBseSA9IDwmcG04
-MzUwX3MxMT47CisJCXZkZC1sMi1sNy1zdXBwbHkgPSA8JnZyZWdfYm9iPjsKKwkJdmRkLWwz
-LWw1LXN1cHBseSA9IDwmdnJlZ19ib2I+OworCQl2ZGQtbDYtbDktbDEwLXN1cHBseSA9IDwm
-cG04MzUwX3MxMT47CisKKwkJLyoKKwkJICogQVJDIHJlZ3VsYXRvcnM6CisJCSAqIFM1IC0g
-bXgubHZsCisJCSAqIFM2IC0gZ2Z4Lmx2bAorCQkgKiBTOSAtIG14Yy5sdmwKKwkJICovCisK
-KwkJcG04MzUwX3MxMDogc21wczEwIHsKKwkJCXJlZ3VsYXRvci1uYW1lID0gInBtODM1MF9z
-MTAiOworCQkJcmVndWxhdG9yLW1pbi1taWNyb3ZvbHQgPSA8MTgwMDAwMD47CisJCQlyZWd1
-bGF0b3ItbWF4LW1pY3Jvdm9sdCA9IDwxODAwMDAwPjsKKwkJCXJlZ3VsYXRvci1pbml0aWFs
-LW1vZGUgPSA8UlBNSF9SRUdVTEFUT1JfTU9ERV9IUE0+OworCQl9OworCisJCXBtODM1MF9z
-MTE6IHNtcHMxMSB7CisJCQlyZWd1bGF0b3ItbmFtZSA9ICJwbTgzNTBfczExIjsKKwkJCXJl
-Z3VsYXRvci1taW4tbWljcm92b2x0ID0gPDc1MjAwMD47CisJCQlyZWd1bGF0b3ItbWF4LW1p
-Y3Jvdm9sdCA9IDwxMDAwMDAwPjsKKwkJCXJlZ3VsYXRvci1pbml0aWFsLW1vZGUgPSA8UlBN
-SF9SRUdVTEFUT1JfTU9ERV9IUE0+OworCQl9OworCisJCXBtODM1MF9zMTI6IHNtcHMxMiB7
-CisJCQlyZWd1bGF0b3ItbmFtZSA9ICJwbTgzNTBfczEyIjsKKwkJCXJlZ3VsYXRvci1taW4t
-bWljcm92b2x0ID0gPDEyMjQwMDA+OworCQkJcmVndWxhdG9yLW1heC1taWNyb3ZvbHQgPSA8
-MTM2MDAwMD47CisJCQlyZWd1bGF0b3ItaW5pdGlhbC1tb2RlID0gPFJQTUhfUkVHVUxBVE9S
-X01PREVfSFBNPjsKKwkJfTsKKworCQlwbTgzNTBfbDE6IGxkbzEgeworCQkJcmVndWxhdG9y
-LW5hbWUgPSAicG04MzUwX2wxIjsKKwkJCXJlZ3VsYXRvci1taW4tbWljcm92b2x0ID0gPDkx
-MjAwMD47CisJCQlyZWd1bGF0b3ItbWF4LW1pY3Jvdm9sdCA9IDw5MjAwMDA+OworCQkJcmVn
-dWxhdG9yLWluaXRpYWwtbW9kZSA9IDxSUE1IX1JFR1VMQVRPUl9NT0RFX0hQTT47CisJCX07
-CisKKwkJcG04MzUwX2wyOiBsZG8yIHsKKwkJCXJlZ3VsYXRvci1uYW1lID0gInBtODM1MF9s
-MiI7CisJCQlyZWd1bGF0b3ItbWluLW1pY3Jvdm9sdCA9IDwzMDcyMDAwPjsKKwkJCXJlZ3Vs
-YXRvci1tYXgtbWljcm92b2x0ID0gPDMwNzIwMDA+OworCQkJcmVndWxhdG9yLWluaXRpYWwt
-bW9kZSA9IDxSUE1IX1JFR1VMQVRPUl9NT0RFX0hQTT47CisJCX07CisKKwkJcG04MzUwX2wz
-OiBsZG8zIHsKKwkJCXJlZ3VsYXRvci1uYW1lID0gInBtODM1MF9sMyI7CisJCQlyZWd1bGF0
-b3ItbWluLW1pY3Jvdm9sdCA9IDw5MDQwMDA+OworCQkJcmVndWxhdG9yLW1heC1taWNyb3Zv
-bHQgPSA8OTA0MDAwPjsKKwkJCXJlZ3VsYXRvci1pbml0aWFsLW1vZGUgPSA8UlBNSF9SRUdV
-TEFUT1JfTU9ERV9IUE0+OworCQl9OworCisJCS8qIEw0IC0gbG14Lmx2bCAoQVJDKSAqLwor
-CisJCXBtODM1MF9sNTogbGRvNSB7CisJCQlyZWd1bGF0b3ItbmFtZSA9ICJwbTgzNTBfbDUi
-OworCQkJcmVndWxhdG9yLW1pbi1taWNyb3ZvbHQgPSA8ODgwMDAwPjsKKwkJCXJlZ3VsYXRv
-ci1tYXgtbWljcm92b2x0ID0gPDg4ODAwMD47CisJCQlyZWd1bGF0b3ItaW5pdGlhbC1tb2Rl
-ID0gPFJQTUhfUkVHVUxBVE9SX01PREVfSFBNPjsKKwkJCXJlZ3VsYXRvci1hbGxvdy1zZXQt
-bG9hZDsKKwkJfTsKKworCQlwbTgzNTBfbDY6IGxkbzYgeworCQkJcmVndWxhdG9yLW5hbWUg
-PSAicG04MzUwX2w2IjsKKwkJCXJlZ3VsYXRvci1taW4tbWljcm92b2x0ID0gPDEyMDAwMDA+
-OworCQkJcmVndWxhdG9yLW1heC1taWNyb3ZvbHQgPSA8MTIwODAwMD47CisJCQlyZWd1bGF0
-b3ItaW5pdGlhbC1tb2RlID0gPFJQTUhfUkVHVUxBVE9SX01PREVfSFBNPjsKKwkJCXJlZ3Vs
-YXRvci1hbGxvdy1zZXQtbG9hZDsKKwkJfTsKKworCQlwbTgzNTBfbDc6IGxkbzcgeworCQkJ
-cmVndWxhdG9yLW5hbWUgPSAicG04MzUwX2w3IjsKKwkJCXJlZ3VsYXRvci1taW4tbWljcm92
-b2x0ID0gPDI0MDAwMDA+OworCQkJcmVndWxhdG9yLW1heC1taWNyb3ZvbHQgPSA8MzAwODAw
-MD47CisJCQlyZWd1bGF0b3ItaW5pdGlhbC1tb2RlID0gPFJQTUhfUkVHVUxBVE9SX01PREVf
-SFBNPjsKKwkJCXJlZ3VsYXRvci1hbGxvdy1zZXQtbG9hZDsKKwkJfTsKKworCQkvKiBMOCAt
-IGxjeC5sdmwgKEFSQykgKi8KKworCQlwbTgzNTBfbDk6IGxkbzkgeworCQkJcmVndWxhdG9y
-LW5hbWUgPSAicG04MzUwX2w5IjsKKwkJCXJlZ3VsYXRvci1taW4tbWljcm92b2x0ID0gPDEy
-MDAwMDA+OworCQkJcmVndWxhdG9yLW1heC1taWNyb3ZvbHQgPSA8MTIwMDAwMD47CisJCQly
-ZWd1bGF0b3ItaW5pdGlhbC1tb2RlID0gPFJQTUhfUkVHVUxBVE9SX01PREVfSFBNPjsKKwkJ
-CXJlZ3VsYXRvci1hbGxvdy1zZXQtbG9hZDsKKwkJfTsKKwl9OworCisJcG04MzUwYy1ycG1o
-LXJlZ3VsYXRvcnMgeworCQljb21wYXRpYmxlID0gInFjb20scG04MzUwYy1ycG1oLXJlZ3Vs
-YXRvcnMiOworCQlxY29tLHBtaWMtaWQgPSAiYyI7CisKKwkJdmRkLXMxLXN1cHBseSA9IDwm
-dnBoX3B3cj47CisJCXZkZC1zMi1zdXBwbHkgPSA8JnZwaF9wd3I+OworCQl2ZGQtczMtc3Vw
-cGx5ID0gPCZ2cGhfcHdyPjsKKwkJdmRkLXM0LXN1cHBseSA9IDwmdnBoX3B3cj47CisJCXZk
-ZC1zNS1zdXBwbHkgPSA8JnZwaF9wd3I+OworCQl2ZGQtczYtc3VwcGx5ID0gPCZ2cGhfcHdy
-PjsKKwkJdmRkLXM3LXN1cHBseSA9IDwmdnBoX3B3cj47CisJCXZkZC1zOC1zdXBwbHkgPSA8
-JnZwaF9wd3I+OworCQl2ZGQtczktc3VwcGx5ID0gPCZ2cGhfcHdyPjsKKwkJdmRkLXMxMC1z
-dXBwbHkgPSA8JnZwaF9wd3I+OworCisJCXZkZC1sMS1sMTItc3VwcGx5ID0gPCZwbTgzNTBj
-X3MxPjsKKwkJdmRkLWwyLWw4LXN1cHBseSA9IDwmcG04MzUwY19zMT47CisJCXZkZC1sMy1s
-NC1sNS1sNy1sMTMtc3VwcGx5ID0gPCZ2cmVnX2JvYj47CisJCXZkZC1sNi1sOS1sMTEtc3Vw
-cGx5ID0gPCZ2cmVnX2JvYj47CisJCXZkZC1sMTAtc3VwcGx5ID0gPCZwbTgzNTBfczEyPjsK
-KworCQl2ZGQtYm9iLXN1cHBseSA9IDwmdnBoX3B3cj47CisKKwkJcG04MzUwY19zMTogc21w
-czEgeworCQkJcmVndWxhdG9yLW5hbWUgPSAicG04MzUwY19zMSI7CisJCQlyZWd1bGF0b3It
-bWluLW1pY3Jvdm9sdCA9IDwxODAwMDAwPjsKKwkJCXJlZ3VsYXRvci1tYXgtbWljcm92b2x0
-ID0gPDE5NTIwMDA+OworCQkJcmVndWxhdG9yLWluaXRpYWwtbW9kZSA9IDxSUE1IX1JFR1VM
-QVRPUl9NT0RFX0hQTT47CisJCX07CisKKwkJLyogUzIgLSBlYmkubHZsIChBUkMpICovCisK
-KwkJcG04MzUwY19zMzogc21wczMgeworCQkJcmVndWxhdG9yLW5hbWUgPSAicG04MzUwY19z
-MyI7CisJCQlyZWd1bGF0b3ItbWluLW1pY3Jvdm9sdCA9IDwzMDAwMDA+OworCQkJcmVndWxh
-dG9yLW1heC1taWNyb3ZvbHQgPSA8NzA0MDAwPjsKKwkJCXJlZ3VsYXRvci1pbml0aWFsLW1v
-ZGUgPSA8UlBNSF9SRUdVTEFUT1JfTU9ERV9IUE0+OworCQl9OworCisJCS8qCisJCSAqIEFS
-QyByZWd1bGF0b3JzOgorCQkgKiBTNCAtIG1zcy5sdmwKKwkJICogUzYgLSBjeC5sdmwKKwkJ
-ICogUzggLSBtbWN4Lmx2bAorCQkgKi8KKworCQlwbTgzNTBjX3MxMDogc21wczEwIHsKKwkJ
-CXJlZ3VsYXRvci1uYW1lID0gInBtODM1MGNfczEwIjsKKwkJCXJlZ3VsYXRvci1taW4tbWlj
-cm92b2x0ID0gPDEwNDgwMDA+OworCQkJcmVndWxhdG9yLW1heC1taWNyb3ZvbHQgPSA8MTEy
-ODAwMD47CisJCQlyZWd1bGF0b3ItaW5pdGlhbC1tb2RlID0gPFJQTUhfUkVHVUxBVE9SX01P
-REVfSFBNPjsKKwkJfTsKKworCQlwbTgzNTBjX2wxOiBsZG8xIHsKKwkJCXJlZ3VsYXRvci1u
-YW1lID0gInBtODM1MGNfbDEiOworCQkJcmVndWxhdG9yLW1pbi1taWNyb3ZvbHQgPSA8MTgw
-MDAwMD47CisJCQlyZWd1bGF0b3ItbWF4LW1pY3Jvdm9sdCA9IDwxODAwMDAwPjsKKwkJCXJl
-Z3VsYXRvci1pbml0aWFsLW1vZGUgPSA8UlBNSF9SRUdVTEFUT1JfTU9ERV9IUE0+OworCQl9
-OworCisJCXBtODM1MGNfbDI6IGxkbzIgeworCQkJcmVndWxhdG9yLW5hbWUgPSAicG04MzUw
-Y19sMiI7CisJCQlyZWd1bGF0b3ItbWluLW1pY3Jvdm9sdCA9IDwxODAwMDAwPjsKKwkJCXJl
-Z3VsYXRvci1tYXgtbWljcm92b2x0ID0gPDE4MDAwMDA+OworCQkJcmVndWxhdG9yLWluaXRp
-YWwtbW9kZSA9IDxSUE1IX1JFR1VMQVRPUl9NT0RFX0hQTT47CisJCX07CisKKwkJcG04MzUw
-Y19sMzogbGRvMyB7CisJCQlyZWd1bGF0b3ItbmFtZSA9ICJwbTgzNTBjX2wzIjsKKwkJCXJl
-Z3VsYXRvci1taW4tbWljcm92b2x0ID0gPDMzMDAwMDA+OworCQkJcmVndWxhdG9yLW1heC1t
-aWNyb3ZvbHQgPSA8MzMwMDAwMD47CisJCQlyZWd1bGF0b3ItaW5pdGlhbC1tb2RlID0gPFJQ
-TUhfUkVHVUxBVE9SX01PREVfSFBNPjsKKwkJfTsKKworCQlwbTgzNTBjX2w0OiBsZG80IHsK
-KwkJCXJlZ3VsYXRvci1uYW1lID0gInBtODM1MGNfbDQiOworCQkJcmVndWxhdG9yLW1pbi1t
-aWNyb3ZvbHQgPSA8MTcwNDAwMD47CisJCQlyZWd1bGF0b3ItbWF4LW1pY3Jvdm9sdCA9IDwz
-MDAwMDAwPjsKKwkJCXJlZ3VsYXRvci1pbml0aWFsLW1vZGUgPSA8UlBNSF9SRUdVTEFUT1Jf
-TU9ERV9IUE0+OworCQl9OworCisJCXBtODM1MGNfbDU6IGxkbzUgeworCQkJcmVndWxhdG9y
-LW5hbWUgPSAicG04MzUwY19sNSI7CisJCQlyZWd1bGF0b3ItbWluLW1pY3Jvdm9sdCA9IDwx
-NzA0MDAwPjsKKwkJCXJlZ3VsYXRvci1tYXgtbWljcm92b2x0ID0gPDMwMDAwMDA+OworCQkJ
-cmVndWxhdG9yLWluaXRpYWwtbW9kZSA9IDxSUE1IX1JFR1VMQVRPUl9NT0RFX0hQTT47CisJ
-CX07CisKKwkJcG04MzUwY19sNjogbGRvNiB7CisJCQlyZWd1bGF0b3ItbmFtZSA9ICJwbTgz
-NTBjX2w2IjsKKwkJCXJlZ3VsYXRvci1taW4tbWljcm92b2x0ID0gPDE4MDAwMDA+OworCQkJ
-cmVndWxhdG9yLW1heC1taWNyb3ZvbHQgPSA8Mjk2MDAwMD47CisJCQlyZWd1bGF0b3ItaW5p
-dGlhbC1tb2RlID0gPFJQTUhfUkVHVUxBVE9SX01PREVfSFBNPjsKKwkJfTsKKworCQlwbTgz
-NTBjX2w3OiBsZG83IHsKKwkJCXJlZ3VsYXRvci1uYW1lID0gInBtODM1MGNfbDciOworCQkJ
-cmVndWxhdG9yLW1pbi1taWNyb3ZvbHQgPSA8MzAwODAwMD47CisJCQlyZWd1bGF0b3ItbWF4
-LW1pY3Jvdm9sdCA9IDwzMDA4MDAwPjsKKwkJCXJlZ3VsYXRvci1pbml0aWFsLW1vZGUgPSA8
-UlBNSF9SRUdVTEFUT1JfTU9ERV9IUE0+OworCQl9OworCisJCXBtODM1MGNfbDg6IGxkbzgg
-eworCQkJcmVndWxhdG9yLW5hbWUgPSAicG04MzUwY19sOCI7CisJCQlyZWd1bGF0b3ItbWlu
-LW1pY3Jvdm9sdCA9IDwxODAwMDAwPjsKKwkJCXJlZ3VsYXRvci1tYXgtbWljcm92b2x0ID0g
-PDE4MDAwMDA+OworCQkJcmVndWxhdG9yLWluaXRpYWwtbW9kZSA9IDxSUE1IX1JFR1VMQVRP
-Ul9NT0RFX0hQTT47CisJCX07CisKKwkJcG04MzUwY19sOTogbGRvOSB7CisJCQlyZWd1bGF0
-b3ItbmFtZSA9ICJwbTgzNTBjX2w5IjsKKwkJCXJlZ3VsYXRvci1taW4tbWljcm92b2x0ID0g
-PDI5NjAwMDA+OworCQkJcmVndWxhdG9yLW1heC1taWNyb3ZvbHQgPSA8MzAwODAwMD47CisJ
-CQlyZWd1bGF0b3ItaW5pdGlhbC1tb2RlID0gPFJQTUhfUkVHVUxBVE9SX01PREVfSFBNPjsK
-KwkJfTsKKworCQlwbTgzNTBjX2wxMDogbGRvMTAgeworCQkJcmVndWxhdG9yLW5hbWUgPSAi
-cG04MzUwY19sMTAiOworCQkJcmVndWxhdG9yLW1pbi1taWNyb3ZvbHQgPSA8MTIwMDAwMD47
-CisJCQlyZWd1bGF0b3ItbWF4LW1pY3Jvdm9sdCA9IDwxMjAwMDAwPjsKKwkJCXJlZ3VsYXRv
-ci1pbml0aWFsLW1vZGUgPSA8UlBNSF9SRUdVTEFUT1JfTU9ERV9IUE0+OworCQl9OworCisJ
-CXBtODM1MGNfbDExOiBsZG8xMSB7CisJCQlyZWd1bGF0b3ItbmFtZSA9ICJwbTgzNTBjX2wx
-MSI7CisJCQlyZWd1bGF0b3ItbWluLW1pY3Jvdm9sdCA9IDwyNDAwMDAwPjsKKwkJCXJlZ3Vs
-YXRvci1tYXgtbWljcm92b2x0ID0gPDMwMDgwMDA+OworCQkJcmVndWxhdG9yLWluaXRpYWwt
-bW9kZSA9IDxSUE1IX1JFR1VMQVRPUl9NT0RFX0hQTT47CisJCX07CisKKwkJcG04MzUwY19s
-MTI6IGxkbzEyIHsKKwkJCXJlZ3VsYXRvci1uYW1lID0gInBtODM1MGNfbDEyIjsKKwkJCXJl
-Z3VsYXRvci1taW4tbWljcm92b2x0ID0gPDE4MDAwMDA+OworCQkJcmVndWxhdG9yLW1heC1t
-aWNyb3ZvbHQgPSA8MjAwMDAwMD47CisJCQlyZWd1bGF0b3ItaW5pdGlhbC1tb2RlID0gPFJQ
-TUhfUkVHVUxBVE9SX01PREVfSFBNPjsKKwkJfTsKKworCQlwbTgzNTBjX2wxMzogbGRvMTMg
-eworCQkJcmVndWxhdG9yLW5hbWUgPSAicG04MzUwY19sMTMiOworCQkJcmVndWxhdG9yLW1p
-bi1taWNyb3ZvbHQgPSA8MzAwMDAwMD47CisJCQlyZWd1bGF0b3ItbWF4LW1pY3Jvdm9sdCA9
-IDwzMDAwMDAwPjsKKwkJCXJlZ3VsYXRvci1pbml0aWFsLW1vZGUgPSA8UlBNSF9SRUdVTEFU
-T1JfTU9ERV9IUE0+OworCQl9OworCisJCXZyZWdfYm9iOiBib2IgeworCQkJcmVndWxhdG9y
-LW5hbWUgPSAidnJlZ19ib2IiOworCQkJcmVndWxhdG9yLW1pbi1taWNyb3ZvbHQgPSA8MzQw
-MDAwMD47CisJCQlyZWd1bGF0b3ItbWF4LW1pY3Jvdm9sdCA9IDwzOTYwMDAwPjsKKwkJCXJl
-Z3VsYXRvci1pbml0aWFsLW1vZGUgPSA8UlBNSF9SRUdVTEFUT1JfTU9ERV9BVVRPPjsKKwkJ
-fTsKKwl9OworCisJLyogVE9ETzogQWRkIHBtODM1MGIgKGp1c3Qgb25lIGxkbykgb25jZSB0
-aGUgZHJpdmVyIHBhcnQgaXMgaW4gKi8KKworCXBtcjczNWEtcnBtaC1yZWd1bGF0b3JzIHsK
-KwkJY29tcGF0aWJsZSA9ICJxY29tLHBtcjczNWEtcnBtaC1yZWd1bGF0b3JzIjsKKwkJcWNv
-bSxwbWljLWlkID0gImUiOworCisJCXZkZC1zMS1zdXBwbHkgPSA8JnZwaF9wd3I+OworCQl2
-ZGQtczItc3VwcGx5ID0gPCZ2cGhfcHdyPjsKKwkJdmRkLXMzLXN1cHBseSA9IDwmdnBoX3B3
-cj47CisKKwkJdmRkLWwxLWwyLXN1cHBseSA9IDwmcG1yNzM1YV9zMj47CisJCXZkZC1sMy1z
-dXBwbHkgPSA8JnBtcjczNWFfczE+OworCQl2ZGQtbDQtc3VwcGx5ID0gPCZwbTgzNTBjX3Mx
-PjsKKwkJdmRkLWw1LWw2LXN1cHBseSA9IDwmcG04MzUwY19zMT47CisJCXZkZC1sNy1ib2It
-c3VwcGx5ID0gPCZ2cmVnX2JvYj47CisKKwkJcG1yNzM1YV9zMTogc21wczEgeworCQkJcmVn
-dWxhdG9yLW5hbWUgPSAicG1yNzM1YV9zMSI7CisJCQlyZWd1bGF0b3ItbWluLW1pY3Jvdm9s
-dCA9IDwxMjAwMDAwPjsKKwkJCXJlZ3VsYXRvci1tYXgtbWljcm92b2x0ID0gPDEyODAwMDA+
-OworCQl9OworCisJCXBtcjczNWFfczI6IHNtcHMyIHsKKwkJCXJlZ3VsYXRvci1uYW1lID0g
-InBtcjczNWFfczIiOworCQkJcmVndWxhdG9yLW1pbi1taWNyb3ZvbHQgPSA8NTAwMDAwPjsK
-KwkJCXJlZ3VsYXRvci1tYXgtbWljcm92b2x0ID0gPDk3NjAwMD47CisJCX07CisKKwkJcG1y
-NzM1YV9zMzogc21wczMgeworCQkJcmVndWxhdG9yLW5hbWUgPSAicG1yNzM1YV9zMyI7CisJ
-CQlyZWd1bGF0b3ItbWluLW1pY3Jvdm9sdCA9IDwyMjAwMDAwPjsKKwkJCXJlZ3VsYXRvci1t
-YXgtbWljcm92b2x0ID0gPDIzNTIwMDA+OworCQl9OworCisJCXBtcjczNWFfbDE6IGxkbzEg
-eworCQkJcmVndWxhdG9yLW5hbWUgPSAicG1yNzM1YV9sMSI7CisJCQlyZWd1bGF0b3ItbWlu
-LW1pY3Jvdm9sdCA9IDw5MTIwMDA+OworCQkJcmVndWxhdG9yLW1heC1taWNyb3ZvbHQgPSA8
-OTEyMDAwPjsKKwkJfTsKKworCQlwbXI3MzVhX2wyOiBsZG8yIHsKKwkJCXJlZ3VsYXRvci1u
-YW1lID0gInBtcjczNWFfbDIiOworCQkJcmVndWxhdG9yLW1pbi1taWNyb3ZvbHQgPSA8MTIw
-MDAwMD47CisJCQlyZWd1bGF0b3ItbWF4LW1pY3Jvdm9sdCA9IDwxMjAwMDAwPjsKKwkJfTsK
-KworCQlwbXI3MzVhX2wzOiBsZG8zIHsKKwkJCXJlZ3VsYXRvci1uYW1lID0gInBtcjczNWFf
-bDMiOworCQkJcmVndWxhdG9yLW1pbi1taWNyb3ZvbHQgPSA8MTIwMDAwMD47CisJCQlyZWd1
-bGF0b3ItbWF4LW1pY3Jvdm9sdCA9IDwxMjAwMDAwPjsKKwkJfTsKKworCQlwbXI3MzVhX2w0
-OiBsZG80IHsKKwkJCXJlZ3VsYXRvci1uYW1lID0gInBtcjczNWFfbDQiOworCQkJcmVndWxh
-dG9yLW1pbi1taWNyb3ZvbHQgPSA8MTc3NjAwMD47CisJCQlyZWd1bGF0b3ItbWF4LW1pY3Jv
-dm9sdCA9IDwxODcyMDAwPjsKKwkJfTsKKworCQlwbXI3MzVhX2w1OiBsZG81IHsKKwkJCXJl
-Z3VsYXRvci1uYW1lID0gInBtcjczNWFfbDUiOworCQkJcmVndWxhdG9yLW1pbi1taWNyb3Zv
-bHQgPSA8ODAwMDAwPjsKKwkJCXJlZ3VsYXRvci1tYXgtbWljcm92b2x0ID0gPDgwMDAwMD47
-CisJCX07CisKKwkJcG1yNzM1YV9sNjogbGRvNiB7CisJCQlyZWd1bGF0b3ItbmFtZSA9ICJw
-bXI3MzVhX2w2IjsKKwkJCXJlZ3VsYXRvci1taW4tbWljcm92b2x0ID0gPDQ4MDAwMD47CisJ
-CQlyZWd1bGF0b3ItbWF4LW1pY3Jvdm9sdCA9IDw5MDQwMDA+OworCQl9OworCisJCXBtcjcz
-NWFfbDc6IGxkbzcgeworCQkJcmVndWxhdG9yLW5hbWUgPSAicG1yNzM1YV9sNyI7CisJCQly
-ZWd1bGF0b3ItbWluLW1pY3Jvdm9sdCA9IDwyODAwMDAwPjsKKwkJCXJlZ3VsYXRvci1tYXgt
-bWljcm92b2x0ID0gPDI4MDAwMDA+OworCQl9OworCX07Cit9OworCiAmY2RzcCB7CiAJc3Rh
-dHVzID0gIm9rYXkiOwogCWZpcm13YXJlLW5hbWUgPSAicWNvbS9jZHNwLm1ibiI7Cg==
-
---------------WPJK0mzTbAcohIQgdAMyc7W3--
+>
+>
+> Regards
+> Jinlong Mao
+>
+>
+>>> Thanks
+>>> Jinlong Mao
+>>>
+>>>
+>>>> Konrad
+>>>>
+>>
+>>
