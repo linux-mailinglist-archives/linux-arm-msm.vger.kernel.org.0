@@ -2,130 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 56E5550863B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 12:45:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 078EB50860A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 12:36:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377800AbiDTKsT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Apr 2022 06:48:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47202 "EHLO
+        id S1351890AbiDTKiy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Apr 2022 06:38:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378096AbiDTKsM (ORCPT
+        with ESMTP id S1377720AbiDTKix (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Apr 2022 06:48:12 -0400
-X-Greylist: delayed 966 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 20 Apr 2022 03:45:19 PDT
-Received: from mail-m974.mail.163.com (mail-m974.mail.163.com [123.126.97.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 1117313F66;
-        Wed, 20 Apr 2022 03:45:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=7ut0Q
-        D0SeAhwHJ2wa4JZOw2v3iSr/i3NVuFHELZO3Hs=; b=iaitjDKGmArIa/RPsuIEE
-        uEdtSERqqRtURhqUx7BHXlYyE0/CAP0PZ3lIF2Min+CujtsfLf9GLnqFDtArgVWa
-        8eU9niGT+Dqr8RGBQ4uQK/Lg2k+mMzVFJs+TmUIim1CjoJV5TpOTYCqEOpkvpWS1
-        mg+3vZYGicnICipA0AZcxY=
-Received: from localhost.localdomain (unknown [112.97.59.179])
-        by smtp4 (Coremail) with SMTP id HNxpCgDX9AlY4F9i69iSAA--.8118S2;
-        Wed, 20 Apr 2022 18:28:42 +0800 (CST)
-From:   Slark Xiao <slark_xiao@163.com>
-To:     mani@kernel.org, quic_hemantk@quicinc.com
-Cc:     gregkh@linuxfoundation.org, loic.poulain@linaro.org,
-        slark_xiao@163.com, bbhatt@codeaurora.org,
-        christophe.jaillet@wanadoo.fr, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] bus: mhi: host: Add support for Cinterion MV32-WA/MV32-WB
-Date:   Wed, 20 Apr 2022 18:28:11 +0800
-Message-Id: <20220420102811.3157-1-slark_xiao@163.com>
-X-Mailer: git-send-email 2.25.1
+        Wed, 20 Apr 2022 06:38:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB0083FBD6;
+        Wed, 20 Apr 2022 03:36:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 596BD617CC;
+        Wed, 20 Apr 2022 10:36:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029CDC385A0;
+        Wed, 20 Apr 2022 10:36:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650450966;
+        bh=fTs96CqjvphFVKpX75orr/aEaWullDZzBRJGRDTh33s=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=asPD7GobM/w/uudIAIu8VzMwwEIoHsYwLLYYgCYAn1FwVfD1UucQdocoyxItb/pbs
+         +YSHC+0N2mmebNHxTuq2+OeBi3bLJvdASN8taaeYRrSzjSXemLwJVyYp9jKvgaAU4d
+         nSMcxvWwgL551aMxyp4Fgng92MOmrItgoNNC4Gqj+p0wEiFSsmjLKRoZdqDOE3/GJZ
+         fo3IYHoyVkiRerR5vg1HDzviQf/oGslXvGQR5SpPmfNwpiDi3ZPbuKICJY6GycTahi
+         n0DV5xsB6Oq0oEdDSyk0NmezfE/k0W8eUaDnQ5mtbulXKNLVhAAruhOczpOVlyJBzk
+         ySn3oHojwZKaw==
+Date:   Wed, 20 Apr 2022 16:06:02 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: dmaengine: qcom: gpi: Add minItems for
+ interrupts
+Message-ID: <Yl/iElIfHhmoOYOU@matsya>
+References: <20220414064235.1182195-1-vkoul@kernel.org>
+ <0598d1bb-cd7c-1414-910c-ae6bedc8295d@linaro.org>
+ <Ylf2gsJ+Ks0wz6i3@matsya>
+ <9d35e76e-5d98-b2d8-a22c-293adcbaadf0@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: HNxpCgDX9AlY4F9i69iSAA--.8118S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxGw48JF17ArW8KFyktr4xJFb_yoW5GFWDpF
-        WIvrWYyF4vqayaqanay34qgF98Cw4kG343KrnrKw12ywn0y34kZFykK343tFyYvw4vqrs3
-        tr1vqrW3uF4Dt3JanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zioGQfUUUUU=
-X-Originating-IP: [112.97.59.179]
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbCdRPoZGBbCtHDJAAAst
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9d35e76e-5d98-b2d8-a22c-293adcbaadf0@linaro.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MV32-WA is designed based on Qualcomm SDX62, and
-MV32-WB is designed based on QUalcomm SDX65. Both
-products' enumeration would align with previous
-product MV31-W.
-Add some new items for mv32 to separate it from
-mv31-w, in case we need to do any changes in
-future.
+On 14-04-22, 13:44, Krzysztof Kozlowski wrote:
+> On 14/04/2022 12:25, Vinod Koul wrote:
+> >>>        Interrupt lines for each GPI instance
+> >>> +    minItems: 1
+> >>
+> >> This should be some real case minimum, not just 1. Unless really only
+> >> one interrupt is also possible in existing variations?
+> > 
+> > So that depends on the channels available to use which can be worst case
+> > of 1. Maximum is 13.. Most of the controllers are between 12-13, but we
+> > dont want to change binding in future if controller has lesser channels
+> > right?
+> 
+> If the choice is per SoC-controller, then the best would be to limit in
+> allOf:if:then. However maybe the number of channels depends also on
+> other factor (e.g. secure world configuration)?
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
----
- drivers/bus/mhi/host/pci_generic.c | 41 ++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+That is quite right. So we wont know how many channels are made
+available..
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 541ced27d941..a2da40340df7 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -406,6 +406,41 @@ static const struct mhi_pci_dev_info mhi_mv31_info = {
- 	.mru_default = 32768,
- };
- 
-+static const struct mhi_channel_config mhi_mv32_channels[] = {
-+	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 64, 0),
-+	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 64, 0),
-+	/* MBIM Control Channel */
-+	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 64, 0),
-+	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 64, 0),
-+	/* MBIM Data Channel */
-+	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 512, 2),
-+	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 512, 3),
-+};
-+
-+static struct mhi_event_config mhi_mv32_events[] = {
-+	MHI_EVENT_CONFIG_CTRL(0, 256),
-+	MHI_EVENT_CONFIG_DATA(1, 256),
-+	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-+	MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101),
-+};
-+
-+static const struct mhi_controller_config modem_mv32_config = {
-+	.max_channels = 128,
-+	.timeout_ms = 20000,
-+	.num_channels = ARRAY_SIZE(mhi_mv32_channels),
-+	.ch_cfg = mhi_mv32_channels,
-+	.num_events = ARRAY_SIZE(mhi_mv32_events),
-+	.event_cfg = mhi_mv32_events,
-+};
-+
-+static const struct mhi_pci_dev_info mhi_mv32_info = {
-+	.name = "cinterion-mv32",
-+	.config = &modem_mv32_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.mru_default = 32768,
-+};
-+
- static const struct mhi_channel_config mhi_sierra_em919x_channels[] = {
- 	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
- 	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 256, 0),
-@@ -475,6 +510,12 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 	/* MV31-W (Cinterion) */
- 	{ PCI_DEVICE(0x1269, 0x00b3),
- 		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
-+	/* MV32-WA (Cinterion) */
-+	{ PCI_DEVICE(0x1269, 0x00ba),
-+		.driver_data = (kernel_ulong_t) &mhi_mv32_info },
-+	/* MV32-WB (Cinterion) */
-+	{ PCI_DEVICE(0x1269, 0x00bb),
-+		.driver_data = (kernel_ulong_t) &mhi_mv32_info },
- 	{  }
- };
- MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
+So is min 1 acceptable or do you have an alternate ?
+
 -- 
-2.25.1
-
+~Vinod
