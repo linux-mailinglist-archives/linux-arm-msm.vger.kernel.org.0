@@ -2,70 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6410B508850
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 14:41:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C44D50886B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 14:46:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353432AbiDTMn7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Apr 2022 08:43:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56276 "EHLO
+        id S1353371AbiDTMtC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Apr 2022 08:49:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350752AbiDTMn5 (ORCPT
+        with ESMTP id S1348748AbiDTMtC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Apr 2022 08:43:57 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF6861A800;
-        Wed, 20 Apr 2022 05:41:11 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5C9FB619E3;
-        Wed, 20 Apr 2022 12:41:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CC1C385A1;
-        Wed, 20 Apr 2022 12:41:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650458470;
-        bh=j1KYYrsq3QBPHD2FUNZJiA9ohS63WMTls9Sh71Rq/O0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mBnJcXad1dQ5UE8LtuudQYEuqUnTrZOZDETLeXb4u7Bq8vQnnrZGaFdunfGdZxngQ
-         aP4YLXkOgiiJQjqN9h5J9QIVSqRTVRn2njKObCRTrKC547T0xqpdPjmAPn0J47EgL5
-         9/iLFYzA0cse6251fPvGSXqJrOf9+yzlg4AGXsgvvc5EqVgTPwF/JuqrbgMJZv1lPV
-         CSjjwN5Ne3dzyB/zXml/PTfKu9OgKS2st7ypC8tbloZuoYeSVaxxo6rVbi52g57qz5
-         CySKvHavyXWCuEeCZMvHhuH10ymSiZM0toZOBuynTPNnp669qeNMI5X4afW7EACzjk
-         n2bz2nDqutP/Q==
-Date:   Wed, 20 Apr 2022 18:11:06 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: dmaengine: qcom: gpi: Add minItems for
- interrupts
-Message-ID: <Yl//YhBvzVxQu6GX@matsya>
-References: <20220414064235.1182195-1-vkoul@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220414064235.1182195-1-vkoul@kernel.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 20 Apr 2022 08:49:02 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A9383C485;
+        Wed, 20 Apr 2022 05:46:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650458776; x=1681994776;
+  h=from:to:cc:subject:date:message-id;
+  bh=wpZPNcTrbg6UuvRsRNQ06iL7QRinWmpeDhD7MtVprBQ=;
+  b=WuED9DTVS5DuhpAVB9Pw1Cq7gCMinbQZhkRduEAjRYj64MCOPdDSJjh5
+   9Bplpp3f6Cb74QpClsZSTgDaCL+nwfOmzQkvQDgw6fVihh5jbMemd16kP
+   jPEFYmrzjqT4TiFRq299yxaUmykzXYawhdnlY7ASBL2P3bprUlNZNk1JU
+   0=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 20 Apr 2022 05:46:16 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Apr 2022 05:46:14 -0700
+X-QCInternal: smtphost
+Received: from hyd-lablnx377.qualcomm.com ([10.204.178.226])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 20 Apr 2022 18:15:52 +0530
+Received: by hyd-lablnx377.qualcomm.com (Postfix, from userid 4035820)
+        id 51BCB21656; Wed, 20 Apr 2022 18:15:51 +0530 (IST)
+From:   Sai Teja Aluvala <quic_saluvala@quicinc.com>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org
+Cc:     mka@chromium.org, quic_hemantg@quicinc.com,
+        quic_bgodavar@quicinc.com, quic_rjliao@quicinc.com,
+        quic_hbandi@quicinc.com, abhishekpandit@chromium.org,
+        mcchou@chromium.org, Sai Teja Aluvala <quic_saluvala@quicinc.com>
+Subject: [PATCH v4] Bluetooth: arm64: dts: qcom: sc7280: Add IO regulator handler in SC7280 CRD platforms
+Date:   Wed, 20 Apr 2022 18:15:40 +0530
+Message-Id: <1650458740-16957-1-git-send-email-quic_saluvala@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14-04-22, 12:12, Vinod Koul wrote:
-> Add the minItems for interrupts property as well. In the absence of
-> this, we get warning if interrupts are less than 13
-> 
-> arch/arm64/boot/dts/qcom/qrb5165-rb5.dtb:
-> dma-controller@800000: interrupts: [[0, 588, 4], [0, 589, 4], [0, 590,
-> 4], [0, 591, 4], [0, 592, 4], [0, 593, 4], [0, 594, 4], [0, 595, 4], [0,
->   596, 4], [0, 597, 4]] is too short
+As IO regulator varies in different SC7280 platforms
+updating this handler in individual platform bluetooth node.
 
-Applied, thanks
+Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
+---
+v4: updated commit text
+v3: Updated commit text to reflect the change
+v2: updated reviewer comments.
+v1: intial patch
+---
+---
+ arch/arm64/boot/dts/qcom/sc7280-crd.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+index e2efbdd..6cbbddc 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+@@ -35,6 +35,10 @@
+ 	};
+ };
+ 
++&bluetooth {
++	vddio-supply = <&vreg_l18b_1p8>;
++};
++
+ ap_tp_i2c: &i2c0 {
+ 	status = "okay";
+ 	clock-frequency = <400000>;
 -- 
-~Vinod
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc.
+
