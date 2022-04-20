@@ -2,157 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B01E5508285
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 09:44:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80D3C5083B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 10:43:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376349AbiDTHrY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Apr 2022 03:47:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43150 "EHLO
+        id S1376852AbiDTIpn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Apr 2022 04:45:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376357AbiDTHrT (ORCPT
+        with ESMTP id S1376847AbiDTIpi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Apr 2022 03:47:19 -0400
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 230F93BBE5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 00:44:33 -0700 (PDT)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-e5e433d66dso1146696fac.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 00:44:33 -0700 (PDT)
+        Wed, 20 Apr 2022 04:45:38 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C49213B2B2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 01:42:52 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id s25so1302165edi.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 01:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WwYw/7+o6YUXusBvVdcg713W697lIpIcWLImq9IQZLc=;
-        b=u5OH/XQou5ikOvTKcspY/ijZaVXhW6U5psQ/O9mEKbptbh4j66ixnNtqXdwStg8beJ
-         X45gflZSx1QfLlQPoyoHoKFb/0MLikPjKRrsoVBpHsFEBj+Gkt6/htirUu+0KqnGd2Cc
-         aHazL9Hk+Cvhc+LwgYtYQtczBybQVPOHC7k2o6WYR9g2fzXfObo8aG4kvn58oFupo+z/
-         XNWw1Pq/aIK2AY09pJV0mLtjPa/fpqo4UwSroZgI8kAL0TYrSDeGBO3BEz8ON1Xu74G8
-         JdltELfQgLwLwaOJQ70CpVrL4PvQzNmMBiN/rQpAulP1uZVOSzND7ME4GjFnXkiDapEr
-         ZpdQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=a0iMNTEwMUTyoU7qHOTCB94CJKN7vHy3TmetHRHL5ng=;
+        b=StdJRvjuM6AflS16vjrcj5/EC/1KJhQtwNpSp/MuPm4qP37p8vvEkWy5q95gG0j6TI
+         wsdoRQTNYTNRurlY7iySdgYzdOVW8czJ8BJZAZwVnAwSV5OI97D1PqXAZxR3zGVbUyPP
+         IwKUHP8tWtmX8ti/PxneQe/5QCn52zfVovUphd+ULtRo+pDcinmJ4L73Px5R1URV65UK
+         nid2JfQoJUkE2fUQJ3FpLBlO8wbOHXnNan70pW+JVn3mcx/lL3Gz4r/ELkQuA+1rhuNK
+         UA4F3AQjcIVC3pwz6VOa3e0q8PPqbnYJ2e0mhx8zS5rcIxDNuXQH0Yr/KmXLfoJ/r5LS
+         VIxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WwYw/7+o6YUXusBvVdcg713W697lIpIcWLImq9IQZLc=;
-        b=nklpsp2YWuXlXdcyjCFYCM4PGRYt19gbt+RABL0tcjEm78wGL5Rz7kaN+SkPFWXTGJ
-         4ojVGJ+ulWpBqPWrb/H8vRcYg1Bq4MlWSWnEAnFk39QYFNOx1+YglRNmFzNtumbSeZPR
-         eHh8+59DZUuzpijWfgtPJhtoR46KdtU5PnYXaF9ymIgmk6XfAX1b18+G3k+c3st7FfF3
-         wI7IJD9NxV68fl6dLzF7nBDR17/pzigK20KjjfKe5A9PE/jQZNKvwpvFYjIEgPze9QHj
-         AAaS/9B509ooKj9obc8AFc+phHZk84WkEY1kfxqcDDligkIwczhLhlvutGWHxS+3uV9r
-         SpXA==
-X-Gm-Message-State: AOAM533pehHUDQZU7Tw4BDZttHd+Yea/IT0SopELw688ooCHbW8B3bnj
-        LvLNMvPFVQJpD1oGtvXXgM3CW4EP1I2Fng71F7sg6A==
-X-Google-Smtp-Source: ABdhPJz3HSKgFwTK7WGltRhpVJk5iwIQWxVia6R3e4KCXShKV9t/bmdxczAI1bTaTvoNtpu2MKMcFZ1ufXtoA6K68a4=
-X-Received: by 2002:a05:6870:2156:b0:e5:bb8d:f6e3 with SMTP id
- g22-20020a056870215600b000e5bb8df6e3mr1021563oae.48.1650440672449; Wed, 20
- Apr 2022 00:44:32 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=a0iMNTEwMUTyoU7qHOTCB94CJKN7vHy3TmetHRHL5ng=;
+        b=sHsvof3qm8mfPVAbemAfU8JejkYi/SuqApGKFxflTk1h0lvt4Trn9DvowEWR2gdqrw
+         AJ/lBCKn02NPUK+bYrpi/9xJMEpjRnsA6UnyxkYgvzuLOnPR62pEyT7AFPHeCZ/tMyln
+         oILnsk0JJ5h8N/cm+PoqMV4iXWAmS4zDqRU7reAEM5yVdu/KWD4doOJ0KiErKvs1YPpy
+         nl97FRP7p8pMqdBnuekVvtXfHeqTaSBiufHFYeJXwMKTJ+iGnW007DyHLykBZo+bnEn5
+         fSxC33fIOA3jk9W5jhH/PytoyCndNkwPIhws0vFpOo41SHx6svDucHrQwXTu/M/s3yoM
+         nkmQ==
+X-Gm-Message-State: AOAM53393q4P0VoW8aSJ3ZYDPnIQyfPw6sf7Y0YnPW/YlYDwqEN7pd/r
+        68F/MOCML4VdsFiZngXLKcUBYQ==
+X-Google-Smtp-Source: ABdhPJzHS7GNTqk2YusE9WZsjDe4804XYd4DEyi3+GRrX9yuUe3nI6KauVtP8hgH0pZZ+KXP7CODSw==
+X-Received: by 2002:a05:6402:1cc1:b0:413:2b12:fc49 with SMTP id ds1-20020a0564021cc100b004132b12fc49mr21810423edb.118.1650444171397;
+        Wed, 20 Apr 2022 01:42:51 -0700 (PDT)
+Received: from [192.168.0.223] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id mv12-20020a170907838c00b006e87c0247f4sm6427819ejc.186.2022.04.20.01.42.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Apr 2022 01:42:50 -0700 (PDT)
+Message-ID: <a3edf0e1-644a-38b2-b23d-30cc01005786@linaro.org>
+Date:   Wed, 20 Apr 2022 10:42:49 +0200
 MIME-Version: 1.0
-References: <20220414213139.476240-1-bhupesh.sharma@linaro.org>
- <20220414213139.476240-2-bhupesh.sharma@linaro.org> <Yl92blX6FaCMU48p@builder.lan>
-In-Reply-To: <Yl92blX6FaCMU48p@builder.lan>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Wed, 20 Apr 2022 13:14:21 +0530
-Message-ID: <CAH=2NtweJYnbtNwt93u+5VfWnLD7AfBob-LmBrE+g_U68qtfbw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sm8150: Add support for SDC2
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org,
-        Rob Herring <robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 1/2] dt-bindings: mailbox: qcom-ipcc: simplify the example
+Content-Language: en-US
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, netdev@vger.kernel.org
+Cc:     Rob Herring <robh@kernel.org>, Alex Elder <elder@kernel.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>
+References: <20220402155551.16509-1-krzysztof.kozlowski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220402155551.16509-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+On 02/04/2022 17:55, Krzysztof Kozlowski wrote:
+> Consumer examples in the bindings of resource providers are trivial,
+> useless and duplicating code.  Additionally the incomplete qcom,smp2p
+> example triggers DT schema warnings.
+> 
+> Cleanup the example by removing the consumer part and fixing the
+> indentation to DT schema convention.
+> 
+> Reported-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-On Wed, 20 Apr 2022 at 08:26, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Thu 14 Apr 16:31 CDT 2022, Bhupesh Sharma wrote:
->
-> > Add support for SDC2 which can be used to interface uSD card.
-> >
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Rob Herring <robh@kernel.org>
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->
-> Thanks for the patch Bhupesh. I have already applied v1 though. Can you
-> please double check linux-next to confirm that things are in order?
+Jassi,
+Do you plan to pick this mailbox patch?
 
-Sure, I will send a minor iommu sid related fix shortly as a separate
-patch, which
-is required to fix a ADMA error while using the microSD card on the ADP board
-(after rebasing it to linux-next/master tip).
-
-Regards,
-Bhupesh
-
-> > ---
-> >  arch/arm64/boot/dts/qcom/sm8150.dtsi | 45 ++++++++++++++++++++++++++++
-> >  1 file changed, 45 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> > index 15f3bf2e7ea0..0fecebf0a473 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> > @@ -3270,6 +3270,51 @@ usb_2_ssphy: phy@88eb200 {
-> >                       };
-> >               };
-> >
-> > +             sdhc_2: sdhci@8804000 {
-> > +                     compatible = "qcom,sm8150-sdhci", "qcom,sdhci-msm-v5";
-> > +                     reg = <0 0x08804000 0 0x1000>;
-> > +
-> > +                     interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
-> > +                                  <GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
-> > +                     interrupt-names = "hc_irq", "pwr_irq";
-> > +
-> > +                     clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-> > +                              <&gcc GCC_SDCC2_APPS_CLK>,
-> > +                              <&rpmhcc RPMH_CXO_CLK>;
-> > +                     clock-names = "iface", "core", "xo";
-> > +                     iommus = <&apps_smmu 0x6a0 0x0>;
-> > +                     qcom,dll-config = <0x0007642c>;
-> > +                     qcom,ddr-config = <0x80040868>;
-> > +                     power-domains = <&rpmhpd 0>;
-> > +                     operating-points-v2 = <&sdhc2_opp_table>;
-> > +
-> > +                     status = "disabled";
-> > +
-> > +                     sdhc2_opp_table: sdhc2-opp-table {
-> > +                             compatible = "operating-points-v2";
-> > +
-> > +                             opp-19200000 {
-> > +                                     opp-hz = /bits/ 64 <19200000>;
-> > +                                     required-opps = <&rpmhpd_opp_min_svs>;
-> > +                             };
-> > +
-> > +                             opp-50000000 {
-> > +                                     opp-hz = /bits/ 64 <50000000>;
-> > +                                     required-opps = <&rpmhpd_opp_low_svs>;
-> > +                             };
-> > +
-> > +                             opp-100000000 {
-> > +                                     opp-hz = /bits/ 64 <100000000>;
-> > +                                     required-opps = <&rpmhpd_opp_svs>;
-> > +                             };
-> > +
-> > +                             opp-202000000 {
-> > +                                     opp-hz = /bits/ 64 <202000000>;
-> > +                                     required-opps = <&rpmhpd_opp_svs_l1>;
-> > +                             };
-> > +                     };
-> > +             };
-> > +
-> >               dc_noc: interconnect@9160000 {
-> >                       compatible = "qcom,sm8150-dc-noc";
-> >                       reg = <0 0x09160000 0 0x3200>;
-> > --
-> > 2.35.1
-> >
+Best regards,
+Krzysztof
