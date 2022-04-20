@@ -2,52 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 752CD508104
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 08:22:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 358ED50810E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 08:23:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236981AbiDTGYt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Apr 2022 02:24:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48446 "EHLO
+        id S232987AbiDTG0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Apr 2022 02:26:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238877AbiDTGYr (ORCPT
+        with ESMTP id S243582AbiDTG0e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Apr 2022 02:24:47 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BBB43A5CD;
-        Tue, 19 Apr 2022 23:22:03 -0700 (PDT)
+        Wed, 20 Apr 2022 02:26:34 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53C383A5DE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Apr 2022 23:23:49 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D55B961784;
-        Wed, 20 Apr 2022 06:22:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BCFC385A0;
-        Wed, 20 Apr 2022 06:22:01 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id DE28AB81D2F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 06:23:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C7EC385A1;
+        Wed, 20 Apr 2022 06:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650435722;
-        bh=0wiyG++cnCAReYTUyPEPgmNcqx/VgJ0+quUuI7+Ueug=;
+        s=k20201202; t=1650435826;
+        bh=+OMMeE98fYLMWkYc9X5yU7S4E4XIWSYmxfbAd4UxU4M=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GQ0jnjGYSqYM2O4XrKLQSo0P4xEIN4h47nkgkVBaNCjQYKALHfMVJPVf/O1E0B+0r
-         TuH4Sq4oN2NNQiV6xzM94NluiRsljp4DtwBkf9sPA0slrizq5gRuRtcscQG22n6RiO
-         kA2IQLWmTMAdrdU3609LHU7jMze+YG7mlcHQYaTrxXoQ8QrPua/d+2Ogvivg4k8ihc
-         oCjUCcE8kIuhq5ubsK+Je9UNQCXzFK5nzWoh5aQFpgIaCM1pZsiC+pCV2hMiavpNl4
-         MMwpRIBeLxY3MA8Kb7jjsKz4uL02pEqKE5EIgxvmGTzYSXUCs2iruaFtTtiTaKrqZe
-         vfQk4DYAGddtg==
-Date:   Wed, 20 Apr 2022 11:51:58 +0530
+        b=EjRsB66A3W4Lr7hK3n+BS3RieKC0ou8JxJvv3bS1Qzmoa9kmdKda8xNVRncb4BE9T
+         GGmIE5alkr+0L/ltDdh9N4CibVLYLgT7YYe9oxHSCARgsQ699fMq1h624mWpeNkTBA
+         k8OOgNzNbCzHWffxGskqVQgKqWiRi9kNmk4AZNoxRsjwI+yrCeE4C6L2M1bJpwACw/
+         KKX03A7CoRjz+Tx6KTBWu3lKZWL2+nEt+OyTk3YciIhUk6/nPVSlAnmCJjJlPdUMQz
+         Ua1XkvlThFuQoa6tSgnUguhBzMmKAFaXJfyx9+HY1Qto13G9zGV6fxM764mHoiZH8C
+         74dwiwPJpiq9w==
+Date:   Wed, 20 Apr 2022 11:53:42 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] remoteproc: qcom: pas: Add sc8280xp remoteprocs
-Message-ID: <Yl+mhn0BlXrkdI8p@matsya>
-References: <20220408220539.625301-1-bjorn.andersson@linaro.org>
- <20220408220539.625301-2-bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm/msm/dsi: fixup DSC support for the cases when there
+ is no pannel attached
+Message-ID: <Yl+m7vWtJIqHvCT0@matsya>
+References: <20220419213706.1452361-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220408220539.625301-2-bjorn.andersson@linaro.org>
+In-Reply-To: <20220419213706.1452361-1-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -58,10 +60,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08-04-22, 15:05, Bjorn Andersson wrote:
-> Among the subsystems in the Qualcomm sc8280xp platform we find an audio
-> and two compute DSPs. Add support for controlling these using the
-> peripheral authentication service (PAS) remoteproc driver.
+On 20-04-22, 00:37, Dmitry Baryshkov wrote:
+> Unable to handle kernel paging request at virtual address fffffffffffffe2b
+
+...
+
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> 
+> Note: I'm going to squash this fix into the respective patch from the
+> DSC series
+
+Thanks this looks good to me:
 
 Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
