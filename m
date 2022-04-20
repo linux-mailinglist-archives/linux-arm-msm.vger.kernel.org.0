@@ -2,99 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80D3C5083B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 10:43:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C461A50843A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Apr 2022 10:56:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376852AbiDTIpn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Apr 2022 04:45:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40658 "EHLO
+        id S1351050AbiDTI6V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Apr 2022 04:58:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376847AbiDTIpi (ORCPT
+        with ESMTP id S1377079AbiDTI55 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Apr 2022 04:45:38 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C49213B2B2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 01:42:52 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id s25so1302165edi.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 01:42:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=a0iMNTEwMUTyoU7qHOTCB94CJKN7vHy3TmetHRHL5ng=;
-        b=StdJRvjuM6AflS16vjrcj5/EC/1KJhQtwNpSp/MuPm4qP37p8vvEkWy5q95gG0j6TI
-         wsdoRQTNYTNRurlY7iySdgYzdOVW8czJ8BJZAZwVnAwSV5OI97D1PqXAZxR3zGVbUyPP
-         IwKUHP8tWtmX8ti/PxneQe/5QCn52zfVovUphd+ULtRo+pDcinmJ4L73Px5R1URV65UK
-         nid2JfQoJUkE2fUQJ3FpLBlO8wbOHXnNan70pW+JVn3mcx/lL3Gz4r/ELkQuA+1rhuNK
-         UA4F3AQjcIVC3pwz6VOa3e0q8PPqbnYJ2e0mhx8zS5rcIxDNuXQH0Yr/KmXLfoJ/r5LS
-         VIxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=a0iMNTEwMUTyoU7qHOTCB94CJKN7vHy3TmetHRHL5ng=;
-        b=sHsvof3qm8mfPVAbemAfU8JejkYi/SuqApGKFxflTk1h0lvt4Trn9DvowEWR2gdqrw
-         AJ/lBCKn02NPUK+bYrpi/9xJMEpjRnsA6UnyxkYgvzuLOnPR62pEyT7AFPHeCZ/tMyln
-         oILnsk0JJ5h8N/cm+PoqMV4iXWAmS4zDqRU7reAEM5yVdu/KWD4doOJ0KiErKvs1YPpy
-         nl97FRP7p8pMqdBnuekVvtXfHeqTaSBiufHFYeJXwMKTJ+iGnW007DyHLykBZo+bnEn5
-         fSxC33fIOA3jk9W5jhH/PytoyCndNkwPIhws0vFpOo41SHx6svDucHrQwXTu/M/s3yoM
-         nkmQ==
-X-Gm-Message-State: AOAM53393q4P0VoW8aSJ3ZYDPnIQyfPw6sf7Y0YnPW/YlYDwqEN7pd/r
-        68F/MOCML4VdsFiZngXLKcUBYQ==
-X-Google-Smtp-Source: ABdhPJzHS7GNTqk2YusE9WZsjDe4804XYd4DEyi3+GRrX9yuUe3nI6KauVtP8hgH0pZZ+KXP7CODSw==
-X-Received: by 2002:a05:6402:1cc1:b0:413:2b12:fc49 with SMTP id ds1-20020a0564021cc100b004132b12fc49mr21810423edb.118.1650444171397;
-        Wed, 20 Apr 2022 01:42:51 -0700 (PDT)
-Received: from [192.168.0.223] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id mv12-20020a170907838c00b006e87c0247f4sm6427819ejc.186.2022.04.20.01.42.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Apr 2022 01:42:50 -0700 (PDT)
-Message-ID: <a3edf0e1-644a-38b2-b23d-30cc01005786@linaro.org>
-Date:   Wed, 20 Apr 2022 10:42:49 +0200
+        Wed, 20 Apr 2022 04:57:57 -0400
+X-Greylist: delayed 603 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 20 Apr 2022 01:55:10 PDT
+Received: from extserv.mm-sol.com (ns.mm-sol.com [37.157.136.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 949DFBE06;
+        Wed, 20 Apr 2022 01:55:10 -0700 (PDT)
+Received: from [192.168.1.9] (unknown [84.238.208.209])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        (Authenticated sender: svarbanov@mm-sol.com)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id C2BA5D292;
+        Wed, 20 Apr 2022 11:45:01 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1650444303; bh=6bT0jwuG1RRbClsvxfltVaKz24VyNwFJJX8CVTUiaSo=;
+        h=Date:Subject:To:Cc:From:From;
+        b=l6hP+1g2Ka6VlfEHgFBBHbXZqkWqgINhQ3/lJCebuInfY7hUIk2nhNrWXQlhX8/OY
+         +fhw3OKdgONAsmEEV3Tt350dNtrpdmiDggzArqUMIh05P5B0fYlG63+zVoofLzjHRe
+         DoEdQjqq56j5lWyoGTNGc3Cxy0KUrTO/QMxNHvjlk+hZziUHj9dCPm+IAiDphdbX7X
+         jITiiC0odu2BnI0Zrln6JBgGSrt9hGR+kL1gT+vAXoYtdXHQdjbUPklLijjqTkMHrO
+         YcYcVCm9ZF6HqUWS3DC0LVOgn2LK4bmuAHSCJdkTm4ipJYWJSCmAG+R+H4eo8kySep
+         NGGxTxYPsLmjQ==
+Message-ID: <d285c6e2-7d9b-1235-d644-bcdef1358835@mm-sol.com>
+Date:   Wed, 20 Apr 2022 11:44:57 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH 1/2] dt-bindings: mailbox: qcom-ipcc: simplify the example
+Subject: Re: [PATCH] PCI: qcom: Remove ddrss_sf_tbu clock from sc8180x
 Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, netdev@vger.kernel.org
-Cc:     Rob Herring <robh@kernel.org>, Alex Elder <elder@kernel.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>
-References: <20220402155551.16509-1-krzysztof.kozlowski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220402155551.16509-1-krzysztof.kozlowski@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220331013415.592748-1-bjorn.andersson@linaro.org>
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+In-Reply-To: <20220331013415.592748-1-bjorn.andersson@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/04/2022 17:55, Krzysztof Kozlowski wrote:
-> Consumer examples in the bindings of resource providers are trivial,
-> useless and duplicating code.  Additionally the incomplete qcom,smp2p
-> example triggers DT schema warnings.
-> 
-> Cleanup the example by removing the consumer part and fixing the
-> indentation to DT schema convention.
-> 
-> Reported-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Jassi,
-Do you plan to pick this mailbox patch?
 
-Best regards,
-Krzysztof
+On 3/31/22 04:34, Bjorn Andersson wrote:
+> The Qualcomm SC8180X platform was piggy backing on the SM8250
+> qcom_pcie_cfg, but the platform doesn't have the ddrss_sf_tbu clock, so
+> it now fails to probe due to the missing clock.
+> 
+> Give SC8180X its own qcom_pcie_cfg, without the ddrss_sf_tbu flag set.
+> 
+> Fixes: 0614f98bbb9f ("PCI: qcom: Add ddrss_sf_tbu flag")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+
+Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
+
+-- 
+regards,
+Stan
