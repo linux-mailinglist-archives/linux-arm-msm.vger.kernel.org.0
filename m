@@ -2,63 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B987550A269
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 16:29:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 690C550A26B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 16:29:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389312AbiDUOaZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 10:30:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35432 "EHLO
+        id S1388988AbiDUOa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 10:30:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1389309AbiDUOaU (ORCPT
+        with ESMTP id S1389315AbiDUOaV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 10:30:20 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FB603ED39
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:27 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id 12so5753581oix.12
+        Thu, 21 Apr 2022 10:30:21 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B6E63EF1B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:28 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id 12so5753625oix.12
         for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7Y+rGBJub4hUelqG6Wh/GRTU8FsHwDE9p9sZ9nEoVKQ=;
-        b=i8Jw5blRNpNTEopLw35Y+TQC2A2+Nrm9Hwa8Jp4lGm9FN73TIJiwgUuEtHVw7BwA/k
-         pdHr6K4ZAqp+eck+SqZkrX7w9Xkvmn//IUxnGY4NMunZRWKf9VmHwiDS9IrndGfJYGTV
-         sEQUUT+ycI/iBAez7xuA1bR6uECYMdeKAty07R7HiTkUk4K7iBrWu2PCPVHt9thRYj14
-         FxdmcqVlO0mWT0Fsey71UPB0083xxV+I8GI6dLygQmGXieIfXC7U5SPwA8wwFeqcnO1i
-         MR9yBMVKD4xiCD+/mELhhSfilMNfQejDwP193E9Or1ZoNxWmSNhPFpHpCkfOuDYFx0pt
-         1tHg==
+        bh=09r0zv3Eg6SiUBI7fQYP/qp7WkBDV+XQ5KMKFkihQXg=;
+        b=V9a1EG2HzIuNnqZBorgDu6lrJ0RkxaJEFc+oe+kuDIXDhkZdhRYDO1VxjiCv7rnnX2
+         ezV6GdQW4xCyRihclJwrDTWaMJxtSpxy7nPk2n1p/e+LvClsWGKTKuZ47VbrX21NZ/so
+         NtVsPP+4ALpy3VBb6Ps497/mqKzCV4smvXCv4wnOp38hKkJ4L05RpatADvd3vvObtTFQ
+         CZo4oDrITw9FMVsHaMLLLo8Kl5ke6Xqf9SBLxEu/5OaOyL6zK9qvV0a7bTVKtoJvtkp3
+         etYgMxdfYDLPr33PKjmscdb0QK0+zzZdPZzTi9JIDBd03liFBWTh12fM7KzJ/oIX0CNR
+         Zxlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7Y+rGBJub4hUelqG6Wh/GRTU8FsHwDE9p9sZ9nEoVKQ=;
-        b=o3A2SPpRXc6fmLJ3QY5weRCDXiNEjz8walkiOw/ETDEP+L+zFFdd8ECzHl/voOyTGg
-         6kvZJHJz9fliOUjB7rKeNwNZtl07PW3oM4+VKrddSpPWQxBFczJq8BtYKm0OHnL/H915
-         09MyRt4e/AaynKydIyj22jhKjvpgjrt0RolDmrnjTHZ4ylhmgx078npnj0FAQCxp0cyV
-         Rcl7Aq8TnDmXA3wof77t/ASR13kKyQtN/duxwOKicdrTXTlxyDLINgvKrxCWOhftQf80
-         8M071svo6cxtn/JFB2jSdVMDHxgUQ8HBhfg2SDZyDlME9xAcjl3wzKtcdB6g25gIcNBb
-         V2Wg==
-X-Gm-Message-State: AOAM5314NH5aoZ25SrVPk5JGBmWTueMTea6r3LjMTdxe5kS46L+XWPMu
-        tzYIuN0LT9esb80KZpV+edOGqdbFVD83TJF6
-X-Google-Smtp-Source: ABdhPJz+s/MnXFjAWX/wh2CCqvIrZgal3PVDIV6DOYifyt8dsIAkB6QhDTzoqVpGUZrI+GfQdsiTLA==
-X-Received: by 2002:a05:6808:2189:b0:322:e874:e8f2 with SMTP id be9-20020a056808218900b00322e874e8f2mr3632255oib.289.1650551246360;
-        Thu, 21 Apr 2022 07:27:26 -0700 (PDT)
+        bh=09r0zv3Eg6SiUBI7fQYP/qp7WkBDV+XQ5KMKFkihQXg=;
+        b=PLmkr77vXiEpcs8dRDJXZlMOkktvjhgm6ESbMlEqAx1A1H3WoZcxaYwf7jEoITmpgp
+         hGb/1p4GDZLTBHmj2LyCX2jEtMmfEGoj2/Zi0aWxTnrK3M0oMCd3CszJm8On5vcOb4Cf
+         1BnxZ1jx9l8NBvUM73iSGIVHe+PXXf2Sxo/l/DjxbtTOF1EJuy2p0Q0fjKiGOfOIt6HC
+         8XRhzKpMiNkfBhoKp5IolqZaGb5sfrNrywC2bdPx8k3GGUVm83EoVXCE8Q1nhmmajSl7
+         mRpl3JYuKV5/AWu0039aWL2JIvnU/pqZsRWPceR1VT1Zb+04QY5uyfU4Zu1NWgPNfGhJ
+         hBzg==
+X-Gm-Message-State: AOAM531A+JEHksdaAt3xDHiJUkz+nCdC8zr5JjWggTlMYO5umiXwYs9H
+        SWyB2GHwhQEO0phwaHAkJtpvIg==
+X-Google-Smtp-Source: ABdhPJyfBzIe9i36gp8CFD6yyUeYDAsqL0aLshRuSzretd3B5D5TUTzS0f/hmY7C0nFiEOu7xSaMYA==
+X-Received: by 2002:a05:6808:1693:b0:2f7:2aac:b47f with SMTP id bb19-20020a056808169300b002f72aacb47fmr4249184oib.104.1650551247375;
+        Thu, 21 Apr 2022 07:27:27 -0700 (PDT)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id s14-20020a0568302a8e00b006054e841915sm4296295otu.73.2022.04.21.07.27.25
+        by smtp.gmail.com with ESMTPSA id s14-20020a0568302a8e00b006054e841915sm4296295otu.73.2022.04.21.07.27.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 07:27:25 -0700 (PDT)
+        Thu, 21 Apr 2022 07:27:26 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Subject: Re: (subset) [PATCH] soc: qcom: socinfo: Sort out 8974PRO names
-Date:   Thu, 21 Apr 2022 09:27:02 -0500
-Message-Id: <165055095990.2574292.14922414539179554766.b4-ty@linaro.org>
+To:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, michael.srba@seznam.cz
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        devicetree@vger.kernel.org, Michael Srba <Michael.Srba@seznam.cz>,
+        linux-clk@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Saravana Kannan <saravanak@google.com>,
+        Arnd Bergmann <arnd@arndb.de>
+Subject: Re: (subset) [RESEND v9 0/5] enable use of resources on the SSC bus on (some) qcom SoCs
+Date:   Thu, 21 Apr 2022 09:27:03 -0500
+Message-Id: <165055095989.2574292.9107007554506586100.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220415195449.617040-1-luca@z3ntu.xyz>
-References: <20220415195449.617040-1-luca@z3ntu.xyz>
+In-Reply-To: <20220411072156.24451-1-michael.srba@seznam.cz>
+References: <20220411072156.24451-1-michael.srba@seznam.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -72,21 +81,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 15 Apr 2022 21:54:49 +0200, Luca Weiss wrote:
-> MSM8974PRO is commonly used for referring to Snapdragon 801, compared to
-> MSM8974 which is Snapdragon 800.
+On Mon, 11 Apr 2022 09:21:51 +0200, michael.srba@seznam.cz wrote:
+> From: Michael Srba <Michael.Srba@seznam.cz>
 > 
-> The Snapdragon 801 has three variants with different clock speeds, with
-> the -AA, -AB and -AC suffix.
+> NOTE: previous versions of this series didn't use a cover letter,
+> it's added in this resend in order to not upset the kernel bot.
 > 
-> Adjust the names in socinfo to reflect this.
+> This series adds necessary changes for accessing recources in the SSC block
+> on msm8998 (though it should be possible to extend this to support other
+> SoCs).
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] soc: qcom: socinfo: Sort out 8974PRO names
-      commit: a555b382e7640b80b20816cf9179d091dd7716eb
+[5/5] arm64: dts: qcom: msm8998: reserve potentially inaccessible clocks
+      commit: 1ed29355df221407370933522a94dc8a0f47eb35
 
 Best regards,
 -- 
