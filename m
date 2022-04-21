@@ -2,72 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 690C550A26B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 16:29:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A32850A274
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 16:29:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1388988AbiDUOa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 10:30:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35644 "EHLO
+        id S1377082AbiDUOab (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 10:30:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1389315AbiDUOaV (ORCPT
+        with ESMTP id S1389281AbiDUOaW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 10:30:21 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B6E63EF1B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:28 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id 12so5753625oix.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:27 -0700 (PDT)
+        Thu, 21 Apr 2022 10:30:22 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F6753F328
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:29 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id e189so5757506oia.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=09r0zv3Eg6SiUBI7fQYP/qp7WkBDV+XQ5KMKFkihQXg=;
-        b=V9a1EG2HzIuNnqZBorgDu6lrJ0RkxaJEFc+oe+kuDIXDhkZdhRYDO1VxjiCv7rnnX2
-         ezV6GdQW4xCyRihclJwrDTWaMJxtSpxy7nPk2n1p/e+LvClsWGKTKuZ47VbrX21NZ/so
-         NtVsPP+4ALpy3VBb6Ps497/mqKzCV4smvXCv4wnOp38hKkJ4L05RpatADvd3vvObtTFQ
-         CZo4oDrITw9FMVsHaMLLLo8Kl5ke6Xqf9SBLxEu/5OaOyL6zK9qvV0a7bTVKtoJvtkp3
-         etYgMxdfYDLPr33PKjmscdb0QK0+zzZdPZzTi9JIDBd03liFBWTh12fM7KzJ/oIX0CNR
-         Zxlw==
+        bh=0w23URXeycXFwHQWgdXQr4pbeMphaV2jmFrrqqfSE3s=;
+        b=Kebsc3zy2R6yFz94yzcf5L02awCw06FtzoKktwaU4iZ/+LNtOXn4l4wjwnFA8Xih3N
+         VPPlS4BHiIxYilcUMU2sRgVAvEJxkOxD1J8/HnmpZ8Dh/hNWGzH1/Kd2Jgm4Bx5ugpM7
+         3BVW5CbZ9hV+f9TvQuGyzrFZZU9DimKCStk4OmEOdq1MzjP0Sw7WKH1fTQe0BZXj/NZD
+         t7O4lcWpctPZEB+jxdXNPnwMpmAJoKSOMFXWFss8V9bg7/RXtzsAdaEAR/MLDEL6RGZ4
+         6zKGlSwaAFZ5kUBI1dHspvlo3sqi37zqx2jNTTZfqMmED0PR8UnWCBcpEq3H4b9ykIB5
+         aLqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=09r0zv3Eg6SiUBI7fQYP/qp7WkBDV+XQ5KMKFkihQXg=;
-        b=PLmkr77vXiEpcs8dRDJXZlMOkktvjhgm6ESbMlEqAx1A1H3WoZcxaYwf7jEoITmpgp
-         hGb/1p4GDZLTBHmj2LyCX2jEtMmfEGoj2/Zi0aWxTnrK3M0oMCd3CszJm8On5vcOb4Cf
-         1BnxZ1jx9l8NBvUM73iSGIVHe+PXXf2Sxo/l/DjxbtTOF1EJuy2p0Q0fjKiGOfOIt6HC
-         8XRhzKpMiNkfBhoKp5IolqZaGb5sfrNrywC2bdPx8k3GGUVm83EoVXCE8Q1nhmmajSl7
-         mRpl3JYuKV5/AWu0039aWL2JIvnU/pqZsRWPceR1VT1Zb+04QY5uyfU4Zu1NWgPNfGhJ
-         hBzg==
-X-Gm-Message-State: AOAM531A+JEHksdaAt3xDHiJUkz+nCdC8zr5JjWggTlMYO5umiXwYs9H
-        SWyB2GHwhQEO0phwaHAkJtpvIg==
-X-Google-Smtp-Source: ABdhPJyfBzIe9i36gp8CFD6yyUeYDAsqL0aLshRuSzretd3B5D5TUTzS0f/hmY7C0nFiEOu7xSaMYA==
-X-Received: by 2002:a05:6808:1693:b0:2f7:2aac:b47f with SMTP id bb19-20020a056808169300b002f72aacb47fmr4249184oib.104.1650551247375;
-        Thu, 21 Apr 2022 07:27:27 -0700 (PDT)
+        bh=0w23URXeycXFwHQWgdXQr4pbeMphaV2jmFrrqqfSE3s=;
+        b=AbmJrhzM+cn+Zeb1M1ofFo+UGjsd0j8oMF4zOfLb0BF38E1pPp7O9ogSfV4aaa15T/
+         9WjFXMDx38SZxT6SssQTsReFFa+M2g40PzbV97QLtOKWDQ3RQcQ2IbTxcQSyiw9BAFWZ
+         32A3kw5X2ueuUNdYn+qkTVDX4oCimTmvW4E39c4kx+A/aYrBFcxi+ULBT/n6gIRlz/cL
+         pvvVhuT8/wIW0BtuU6CNX/jxEXeg2FL+0P3d8OeaYQLa6/hxSGhMmT5RcEQUByV8gpc3
+         /dCehDr2q/3yNwD+6gmbuE0xwKt4h4hZn0dyPArfrX5sRtr/UHuIXLmw/mIa+YrYZH11
+         rlWw==
+X-Gm-Message-State: AOAM531t9L3qv/kIiHORPXeDH+X0zxt34NTQLnHxxpUagj8C04FRXbTD
+        FwSBImSxBPlmfic0ZRnqktK0UQ==
+X-Google-Smtp-Source: ABdhPJxCL7XWF6jtZFt9pOGaDmdX7DhZt/kmdmrCbgrDyE4fGGQ4vEqB3z2nqbkDX62yOn6G/+njBg==
+X-Received: by 2002:aca:bed6:0:b0:322:bd33:7efc with SMTP id o205-20020acabed6000000b00322bd337efcmr4424116oif.95.1650551248383;
+        Thu, 21 Apr 2022 07:27:28 -0700 (PDT)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id s14-20020a0568302a8e00b006054e841915sm4296295otu.73.2022.04.21.07.27.26
+        by smtp.gmail.com with ESMTPSA id s14-20020a0568302a8e00b006054e841915sm4296295otu.73.2022.04.21.07.27.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 07:27:26 -0700 (PDT)
+        Thu, 21 Apr 2022 07:27:27 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, michael.srba@seznam.cz
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, Michael Srba <Michael.Srba@seznam.cz>,
-        linux-clk@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Saravana Kannan <saravanak@google.com>,
-        Arnd Bergmann <arnd@arndb.de>
-Subject: Re: (subset) [RESEND v9 0/5] enable use of resources on the SSC bus on (some) qcom SoCs
-Date:   Thu, 21 Apr 2022 09:27:03 -0500
-Message-Id: <165055095989.2574292.9107007554506586100.b4-ty@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH] arm64: dts: qcom: sc7280: Add SAR sensors to herobrine crd
+Date:   Thu, 21 Apr 2022 09:27:04 -0500
+Message-Id: <165055095991.2574292.1674742785100690480.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220411072156.24451-1-michael.srba@seznam.cz>
-References: <20220411072156.24451-1-michael.srba@seznam.cz>
+In-Reply-To: <20220415172238.1.I671bdf40fdfce7a35f6349fca0dc56145d4210ee@changeid>
+References: <20220415172238.1.I671bdf40fdfce7a35f6349fca0dc56145d4210ee@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -81,22 +74,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 11 Apr 2022 09:21:51 +0200, michael.srba@seznam.cz wrote:
-> From: Michael Srba <Michael.Srba@seznam.cz>
+On Fri, 15 Apr 2022 17:22:41 -0700, Matthias Kaehlcke wrote:
+> Enable the two SAR sensors of the CRD based on herobrine.
 > 
-> NOTE: previous versions of this series didn't use a cover letter,
-> it's added in this resend in order to not upset the kernel bot.
 > 
-> This series adds necessary changes for accessing recources in the SSC block
-> on msm8998 (though it should be possible to extend this to support other
-> SoCs).
-> 
-> [...]
 
 Applied, thanks!
 
-[5/5] arm64: dts: qcom: msm8998: reserve potentially inaccessible clocks
-      commit: 1ed29355df221407370933522a94dc8a0f47eb35
+[1/1] arm64: dts: qcom: sc7280: Add SAR sensors to herobrine crd
+      commit: 5d04419045e7ad28155e2f7403599b2fdbd1548f
 
 Best regards,
 -- 
