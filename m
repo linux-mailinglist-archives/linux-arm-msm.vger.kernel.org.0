@@ -2,94 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DB325099CB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 09:56:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 038405099B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 09:56:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386085AbiDUHo0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 03:44:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33430 "EHLO
+        id S1386165AbiDUHuc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 03:50:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357136AbiDUHmQ (ORCPT
+        with ESMTP id S1386210AbiDUHuM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 03:42:16 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0C0E00F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 00:39:03 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id r13so8234046ejd.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 00:39:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=61zWdSoSfwdGyGU44PP+1guwlHy3W/BFUYlSNhQpCK0=;
-        b=CBU7olitGiLQzzEx9iv6wPvEsjbkpfrTdaLx9MIyj5KLa35zGrbCLuN1J6hL5gfybY
-         L8nh5fo2YrgNW1FDKdtBOWGmBWIpeii0ODyz9vm9uEQeOeJzvDCJqQXOCsUut3tgw1N6
-         1k4Cc0RE8ojHMIc2RO7RQC9orFAuvMYGJe4MNfAiD+1xkt1F0rMXsXPy9pd9ff4OkOcE
-         7iGBAY+H4mo+sygXKBEqcRMxV4HdzrtytPUbRRoPHP1KYc9D82rdNwL66WIgFMX2p5eq
-         jEmYVFntcMnAxxevgaEv2kusq82D/1Ap0R/mrEW68VYqdCmt8xjwD0yUDsVV0iqaBwwa
-         7FUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=61zWdSoSfwdGyGU44PP+1guwlHy3W/BFUYlSNhQpCK0=;
-        b=yc25atdUVaVEoJQ4ibp7W6qxzVI1hzDq6zUPq352XZufTNnWbuNaE7lx9IF2ZCcgP7
-         Df/wycj7qyLnWtDjpSypB9zdwv+Ly9aRzOTLwkUQ8z1wTg6S3hy73TnI0k3N4dQW8mrM
-         T/eJDA+Uo1WG0kc1DDAbZu+VLBfCquAx24zPHqqJ3slGQLUyMm+omP9UO8vbNBngrRul
-         4iBLX7NdhpG73Yq+YhU3zItGuE3xfeZDRQh40YrvOksa88xPYfpMgA/4OerMHM6e22jz
-         QdOYBBLNFTxaxER31csbLGuj0gQSLRBPyfYfcVGFjGgOCZFUUc+SQRQYAe7LmaVHwXRo
-         jVtg==
-X-Gm-Message-State: AOAM532nsrY5wFxeo5uQOeQ11jbKG8W88AuIgYD/kzFsoWdidP+QjmaI
-        ILkc4ydUvVyKG2OWJIKXrF9DVA==
-X-Google-Smtp-Source: ABdhPJxaRfyAn8cs1xVngJOMFpWPzz5LlyNq2PV6KZNKfmogE+zYMSfsE/xO6jPk9Gbll6tTtRLyuQ==
-X-Received: by 2002:a17:906:2646:b0:6d5:d889:c92b with SMTP id i6-20020a170906264600b006d5d889c92bmr22061179ejc.696.1650526741998;
-        Thu, 21 Apr 2022 00:39:01 -0700 (PDT)
-Received: from [192.168.0.226] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id 25-20020a170906311900b006e87e5dd529sm7496681ejx.70.2022.04.21.00.39.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Apr 2022 00:39:01 -0700 (PDT)
-Message-ID: <ff80981a-54e8-9163-ed62-bbb4e81bdb92@linaro.org>
-Date:   Thu, 21 Apr 2022 09:39:00 +0200
+        Thu, 21 Apr 2022 03:50:12 -0400
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6DBF1CFDB;
+        Thu, 21 Apr 2022 00:46:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1650527216; x=1682063216;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=P+XpSd9beND6/x2u+ntTWsApIZgguL/N6Ro0gQ3mGcc=;
+  b=Q2DB0MWauILg0KXLk+238OWym4kw6BFacTu0GDMW2TId5VafjjF2OhrC
+   inrUkZRykLeP+bEoFTtB2GoqanIN1sv5Cz5Y81JFLV8BT99okaYkE8sQX
+   OkOVtzJyiGemtSMKnCXKCJ283GJK/6KsTPBPBJX9sSyiV5CMyFGKT7N4d
+   FZK/u8oTmJnwJUj2wa3PA/LDb4HDjnJrBC5aM3mElEaqX2uSQhUIwAEa9
+   q5+AJJcZyk3z1NEGIwqLYVDXaYrJ/9/CqcazjCwMG5K0tu/Iwc6uimXAO
+   ZSbPSBRu2VJ//wVDj2jHKn6VzeSE9YiKEh02w5eUb6kdGZM5TxwByeSZC
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10323"; a="244203805"
+X-IronPort-AV: E=Sophos;i="5.90,278,1643702400"; 
+   d="scan'208";a="244203805"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2022 00:46:43 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,278,1643702400"; 
+   d="scan'208";a="702979847"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga001.fm.intel.com with SMTP; 21 Apr 2022 00:46:38 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Thu, 21 Apr 2022 10:46:37 +0300
+Date:   Thu, 21 Apr 2022 10:46:37 +0300
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     Mathias Nyman <mathias.nyman@linux.intel.com>
+Cc:     "Sandeep Maheswaram (Temp) (QUIC)" <quic_c_sanm@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "Pavan Kumar Kondeti (QUIC)" <quic_pkondeti@quicinc.com>,
+        "Pratham Pratap (QUIC)" <quic_ppratap@quicinc.com>,
+        "Krishna Kurapati PSSNV (QUIC)" <quic_kriskura@quicinc.com>,
+        "Vidya Sagar Pulyala (Temp) (QUIC)" <quic_vpulyala@quicinc.com>
+Subject: Re: [PATCH v3 0/2] Skip phy initialization for DWC3 USB Controllers
+Message-ID: <YmEL3WnyM7sa8VP9@kuha.fi.intel.com>
+References: <1649323888-12420-1-git-send-email-quic_c_sanm@quicinc.com>
+ <DM6PR02MB4857A0ADCDA1558DE58E103ADFF29@DM6PR02MB4857.namprd02.prod.outlook.com>
+ <4b34735f-8e1f-bf37-398f-9b4a8aa2e939@linux.intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: Fix can-clock node name
-Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>
-References: <20220421073502.1824089-1-vkoul@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220421073502.1824089-1-vkoul@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4b34735f-8e1f-bf37-398f-9b4a8aa2e939@linux.intel.com>
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/04/2022 09:35, Vinod Koul wrote:
-> Per DT spec node names should not have underscores (_) in them, so
-> change can_clock to can-clock.
+On Wed, Apr 20, 2022 at 04:20:52PM +0300, Mathias Nyman wrote:
+> On 19.4.2022 13.17, Sandeep Maheswaram (Temp) (QUIC) wrote:
+> > Hi Mathias, Felipe,
+> > 
+> >> -----Original Message-----
+> >> From: Sandeep Maheswaram (Temp) (QUIC) <quic_c_sanm@quicinc.com>
+> >> Sent: Thursday, April 7, 2022 3:01 PM
+> >> To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>; Felipe Balbi
+> >> <balbi@kernel.org>; Stephen Boyd <swboyd@chromium.org>; Doug
+> >> Anderson <dianders@chromium.org>; Matthias Kaehlcke
+> >> <mka@chromium.org>; Mathias Nyman <mathias.nyman@intel.com>
+> >> Cc: linux-arm-msm@vger.kernel.org; linux-usb@vger.kernel.org; linux-
+> >> kernel@vger.kernel.org; Pavan Kumar Kondeti (QUIC)
+> >> <quic_pkondeti@quicinc.com>; Pratham Pratap (QUIC)
+> >> <quic_ppratap@quicinc.com>; Krishna Kurapati PSSNV (QUIC)
+> >> <quic_kriskura@quicinc.com>; Vidya Sagar Pulyala (Temp) (QUIC)
+> >> <quic_vpulyala@quicinc.com>; Sandeep Maheswaram (Temp) (QUIC)
+> >> <quic_c_sanm@quicinc.com>
+> >> Subject: [PATCH v3 0/2] Skip phy initialization for DWC3 USB Controllers
+> >>
+> >> Runtime suspend of phy drivers was failing from DWC3 driver as runtime
+> >> usage value is 2 because the phy is initialized from
+> >> DWC3 core and HCD core.
+> >> Some controllers like DWC3 and CDNS3 manage phy in their core drivers.
+> >> This property can be set to avoid phy initialization in HCD core.
+> >>
+> >> v3:
+> >> Coming back to this series based on discussion at below thread
+> >> https://patchwork.kernel.org/project/linux-arm-msm/patch/1648103831-
+> >> 12347-4-git-send-email-quic_c_sanm@quicinc.com/
+> >> Dropped the dt bindings PATCH 1/3 in v2
+> >> https://patchwork.kernel.org/project/linux-arm-msm/cover/1636353710-
+> >> 25582-1-git-send-email-quic_c_sanm@quicinc.com/
+> >>
+> >> v2:
+> >> Updated the commit descriptions.
+> >> Changed subject prefix from dwc to dwc3.
+> >> Increased props array size.
+> >>
+> >> Sandeep Maheswaram (2):
+> >>   usb: host: xhci-plat: Add device property to set XHCI_SKIP_PHY_INIT
+> >>     quirk
+> >>   usb: dwc3: host: Set the property usb-skip-phy-init
+> >>
+> >>  drivers/usb/dwc3/host.c      | 4 +++-
+> >>  drivers/usb/host/xhci-plat.c | 3 +++
+> >>  2 files changed, 6 insertions(+), 1 deletion(-)
+> >>
+> >> --
+> >> 2.7.4
+> > 
+> > Please let me know your opinion about this series.
 > 
-> Fixes: 5c44c564e449 ("arm64: dts: qcom: qrb5165-rb5: Add support for MCP2518FD")
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Otherwise looks good but wondering if we should document that new device
+> property somewhere. 
+> 
+> Couldn't find a standard way how those device properties excluded from
+> Documentation/devicetree/binding are documented
 
+Couldn't it be just documented in drivers/usb/host/xhci-plat.c for now?
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+thanks,
 
-
-Best regards,
-Krzysztof
+-- 
+heikki
