@@ -2,69 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 733AD50A5C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 18:34:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 694D050A5E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 18:38:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231615AbiDUQdw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 12:33:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46590 "EHLO
+        id S231396AbiDUQje (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 12:39:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1390654AbiDUQdl (ORCPT
+        with ESMTP id S229544AbiDUQje (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 12:33:41 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 736CC48E55
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 09:28:53 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id s14so5353655plk.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 09:28:53 -0700 (PDT)
+        Thu, 21 Apr 2022 12:39:34 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 064BAE09C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 09:36:44 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id 88-20020a9d0ee1000000b005d0ae4e126fso3638775otj.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 09:36:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=WkdhlTGKvN68SlRLMJdx437G/wIo/jBpfIeJhDG0Jck=;
-        b=g39jc98KyMqzeT74PT79TxjVzfhAFziSDBuq3v+ZuzvRsVporGEnbMVsRQ1b6C3o5X
-         54Vr2jaUQIApND2TCOlwd7uaPlyoPFPRpa5ytuI8OzdU9IqVVanwrl/aFYoyA6qIC44R
-         2rrP+NXlVDCcuyelWumY9NhKgwTvxPswO/qAo=
+        bh=83PXzm6x6eodtfaWWKtWJXEPAymm3hB3+JWzv8XJjRE=;
+        b=YZ0zbWZ1qT4B2qeGZYeXoZQOF+2QyAZzlKtV3C4egrQkbWH5zETdeRWRzldys1bPFo
+         ih2FXDbV5soqMVuCveMKgAOhTL9bcjrD+li153kj//vfYDSoNUm8crPdNkmT8O7r9SAg
+         8bEeXrU6vOM4gv9luI4CP2OQl09e79pCZu8jZ0/DUzPg8ATHDapu3GSk59/Mej//NlUb
+         uBJ8jLDO1Gf4qpruJSAXPAQMpraxRBbmsaTj6IFkvpV2vvZP+K+icqfUcNgBLDgJCe8/
+         DvGKj5+Guyi6jn2zuaKE8sR86GSiDrrYmjRHDWM4uZadLZFesreOdwtHOok0BHdZVH4j
+         z+fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=WkdhlTGKvN68SlRLMJdx437G/wIo/jBpfIeJhDG0Jck=;
-        b=RmlkA/oWEgxbfHQbEP7n1vbf4iBRtxX5AHLRQrkTagq149fTVYQPW2VQvS7NtvmcZg
-         OzsYAAvGOaHFothA/TLDaYq1dRImzXkS48Pk5n02I1S6N70uCrNOXQrUCDj7VRuE8fyb
-         UoeUoTsLPgmSZyVYGE+JmOG0/tdxB+cqU5EHor51FIX8ewKrjcKf0O3oz4P30mO4v6fG
-         H3tsaxKwX/WDBUeW3wXJynz0svOeTIkA/5o485i3nN2LwWdlTPdayypTDM2efeDaTlhs
-         C2s3saPrbYsmuEWtU4D3sPOGbRfEnmXFkvvOROqnyOTNH2V89qNguiAc2uiJIT1y1YiS
-         5/Fw==
-X-Gm-Message-State: AOAM5334O9+iu1Iym40q1twBV8A04fen9WNOvowkP95t7WaaiiyHWkf9
-        0V7sug7Xk7nLtzJV0OwEfUianQ==
-X-Google-Smtp-Source: ABdhPJwwEZAKewcyO4Htm0T4aE9t8nchCjvROAy5B3s0/2c0AxEY8XyA/EVhcuqsUwTSeh7+7XgOtw==
-X-Received: by 2002:a17:902:8306:b0:158:2d58:a36a with SMTP id bd6-20020a170902830600b001582d58a36amr82271plb.55.1650558533004;
-        Thu, 21 Apr 2022 09:28:53 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:d426:5807:a72:7b27])
-        by smtp.gmail.com with UTF8SMTPSA id h13-20020a056a00230d00b004f427ffd485sm26982254pfh.143.2022.04.21.09.28.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Apr 2022 09:28:52 -0700 (PDT)
-Date:   Thu, 21 Apr 2022 09:28:50 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v9 03/12] arm64: dts: qcom: sc7280: Enable digital codecs
- and soundwire for CRD 3.0/3.1
-Message-ID: <YmGGQiD0L2GipcRt@google.com>
-References: <1650552459-21077-1-git-send-email-quic_srivasam@quicinc.com>
- <1650552459-21077-4-git-send-email-quic_srivasam@quicinc.com>
+        bh=83PXzm6x6eodtfaWWKtWJXEPAymm3hB3+JWzv8XJjRE=;
+        b=cRe14iLj3+Ov0ml5WEH+roBlW+8iyu4cHT15wTRaA64awTshkzHnWn+gqGP5uDVsQZ
+         oEWoaOKTfKfWJarrjlORrm6SDAe+z7+gjTssNx0wxMOMkOFY5TemFFAkjk8ldcbb0uz3
+         VxWbC0z1cCDGG6tNB6c+pQWux4rSdr7IlWiObw2kmFR06CmWgdEfupCLnoDntRUO4ElK
+         UO/oOQtp9OEV6ipnPRUdr57FzOCOeuLYbX9gmImZAJ3PShZxowJGq7qxcjWFwpSsPkF/
+         xhgcxIOLFeG9AyYxdUZEzZxzoE4FpnvTZVgzH7l8DWoU5zNc/TOtpRLOMHjPGlGXiZ/B
+         Gftw==
+X-Gm-Message-State: AOAM5339eaDRK0HJvhGZ60PTk7LJnj5KUWU/OK8R5oR2WEgSF8ZBRDqF
+        ZSVg+wcI6iFmo7xUtaq/FtoCHw==
+X-Google-Smtp-Source: ABdhPJwc7/n1sA7lRJ8fymgn0dC0huOPaDGwWhO7t0+WFNHW5yYiUNnYifSc2gzQYpmp/6E0CjYGnw==
+X-Received: by 2002:a05:6830:116:b0:605:4e0d:f020 with SMTP id i22-20020a056830011600b006054e0df020mr256809otp.43.1650559003377;
+        Thu, 21 Apr 2022 09:36:43 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id hq6-20020a0568709b0600b000e59102e1bbsm1193568oab.22.2022.04.21.09.36.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Apr 2022 09:36:42 -0700 (PDT)
+Date:   Thu, 21 Apr 2022 09:38:45 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
+        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@codeaurora.org,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v12 0/7] Add pin control support for lpass sc7280
+Message-ID: <YmGIlZcxmhiegmw/@ripper>
+References: <1647447426-23425-1-git-send-email-quic_srivasam@quicinc.com>
+ <CACRpkdZKQRnxFjOD9z7iNvRQeM6kGBBopjW7VzFSuj91GYeJOw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1650552459-21077-4-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <CACRpkdZKQRnxFjOD9z7iNvRQeM6kGBBopjW7VzFSuj91GYeJOw@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,66 +76,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 21, 2022 at 08:17:30PM +0530, Srinivasa Rao Mandadapu wrote:
-> Enable rx, tx and va macro codecs and soundwire nodes for
-> CRD rev5 (aka CRD 3.0/3.1) boards.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 35 +++++++++++++++++++++++
->  1 file changed, 35 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> index fd6eadc..d0794f2 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> @@ -69,6 +69,19 @@ ap_ts_pen_1v8: &i2c13 {
->  	};
->  };
->  
-> +&lpass_rx_macro {
-> +	status = "okay";
-> +};
-> +
-> +&lpass_tx_macro {
-> +	status = "okay";
-> +};
-> +
-> +&lpass_va_macro {
-> +	status = "okay";
-> +	vdd-micb-supply = <&vreg_bob>;
-> +};
-> +
->  /* For nvme */
->  &pcie1 {
->  	status = "okay";
-> @@ -89,6 +102,28 @@ ap_ts_pen_1v8: &i2c13 {
->  	status = "okay";
->  };
->  
-> +&swr0 {
-> +	status = "okay";
-> +
-> +	wcd_rx: codec@0,4 {
-> +		compatible = "sdw20217010d00";
-> +		reg = <0 4>;
-> +		#sound-dai-cells = <1>;
-> +		qcom,rx-port-mapping = <1 2 3 4 5>;
-> +	};
-> +};
-> +
-> +&swr1 {
-> +	status = "okay";
-> +
-> +	wcd_tx: codec@0,3 {
-> +		compatible = "sdw20217010d00";
-> +		reg = <0 3>;
-> +		#sound-dai-cells = <1>;
-> +		qcom,tx-port-mapping = <1 2 3 4>;
-> +	};
-> +};
+On Sun 17 Apr 16:32 PDT 2022, Linus Walleij wrote:
 
-The wcd9385 is on the qcard, so the wcd_tx/rx nodes should probably
-be added to sc7280-qcard.dtsi, and the CRD DT would only set 'status'.
+> On Wed, Mar 16, 2022 at 5:17 PM Srinivasa Rao Mandadapu
+> <quic_srivasam@quicinc.com> wrote:
+> 
+> > This patch series is to split lpass variant common pin control
+> > functions and SoC specific functions and to add lpass sc7280 pincontrol support.
+> > It also Adds dt-bindings for lpass sc7280 lpass lpi pincontrol.
+> >
+> > Changes Since V11:
+> 
+> Bjorn what do you say about v12?
+> 
+
+I say:
+
+Thanks for the updates to the patches Srinivasa!
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
