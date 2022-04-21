@@ -2,69 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65FFC50A7BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 20:04:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3ABE50A882
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 20:53:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1391181AbiDUSGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 14:06:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34548 "EHLO
+        id S1391605AbiDUS4b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 14:56:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1391184AbiDUSGn (ORCPT
+        with ESMTP id S1391600AbiDUS43 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 14:06:43 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F6914B43E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 11:03:23 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id 2so5662485pjw.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 11:03:23 -0700 (PDT)
+        Thu, 21 Apr 2022 14:56:29 -0400
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C1BB4C416
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 11:53:38 -0700 (PDT)
+Received: by mail-il1-x130.google.com with SMTP id o5so3634723ils.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 11:53:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=0R+rUO6qFnTFl4iOBE135fiQ5474O3jXDThMBCai2no=;
-        b=iXsHoNCc1h1zyDeB+QJKZuZBmwC9fGx543/8SCLGP8Vfaaoe+DkCmAte7fyz4LYrbn
-         raFeVzlgpnIIigHO6XkqQx0302XoulfnDLsv3/NQpNRKKL3fqSOEQL3P6cdvmDw/tKz/
-         +CdqNlgopHqKzxUE2pPL8ShnGCl7hTEPJM/to=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bbyMWcmSGXgNIxqKnDx18acQ+HwDjhU9tvhj4WCYFZ8=;
+        b=LUJpE0LvS6NNvu6GsYe9z/rRdBpPH8XLbYGjHkLYeg2Zpqz/kjcA498RzQKi/uVosJ
+         5suup8I/gHaT8iKnfb4/d4w7FmcAesDQGDOxtKYgEvCcIo8y9yRyDjU0eVofhKAWwYZH
+         XxNDj4T1CMx6r2GT163PhVC4aOt0zwT+ls3q/5KklxvsU7FOr771cIy3jkMAs9JQLWj4
+         sSZHV8cC+28IEOFfYGqTyv4xbvQ7qdx9opWJz1kQCYTcGELulvcJQF3IV+Tyxx4k2vAm
+         M4hoQAq+DejCcERjZ1+1v71n/K5unHy5K2sIn7SeUqybnNmnqSFsAh0jJY4gqbrfzD+0
+         X1rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=0R+rUO6qFnTFl4iOBE135fiQ5474O3jXDThMBCai2no=;
-        b=isxjJXYeGWcKxyNAhq0pNg2EdcZochJlvvN/iqXnclUM33rPA8/uaWYHJWGmY/ECx/
-         K+m1DdLmLGZ0aJBXDoyW0BGa9u0lA48EtQnK0j7i5wmXh/dYrHL60DwFYSB7F/VILhgE
-         KsS6ogd6Rx5BFmPqg/6lJnOSu339JUDbUz3bJTztNlF0QNrPr7bg040+jhu696fvwi74
-         /WXfEBJp6hZJIe3DVo69hcCbz+ty9RvP1jMFZrTZ5uV9nj3iy8MyjUWUlbQvloC8sR8l
-         tChp5bW5bt/mdhAaobCf85HUd3vWVfqoGlidFyN1vbFYWRgKY1YhJOhdxptjA1m0/9f4
-         FcMQ==
-X-Gm-Message-State: AOAM531wPktoc21z8UzUMKH+tTpBwN5J9ihEV1FTZbLoT29bnqfsQaep
-        G4Tverpd86la0MIAFlZwb8tHzw==
-X-Google-Smtp-Source: ABdhPJxfw0GmD+H/PI1CwP2ixJv3REBy3eeBNVafcTNTvNfAxmxpNZg2mrh+q8ErHNEivfQV2G9WYQ==
-X-Received: by 2002:a17:902:a987:b0:158:b020:e5b8 with SMTP id bh7-20020a170902a98700b00158b020e5b8mr429725plb.103.1650564202999;
-        Thu, 21 Apr 2022 11:03:22 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:d426:5807:a72:7b27])
-        by smtp.gmail.com with UTF8SMTPSA id k10-20020a056a00168a00b004f7e2a550ccsm25449651pfc.78.2022.04.21.11.03.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Apr 2022 11:03:22 -0700 (PDT)
-Date:   Thu, 21 Apr 2022 11:03:20 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v9 12/12] arm64: dts: qcom: sc7280: Add sound node for
- CRD 3.0/3.1
-Message-ID: <YmGcaG3MKIHSQyNi@google.com>
-References: <1650552459-21077-1-git-send-email-quic_srivasam@quicinc.com>
- <1650552459-21077-13-git-send-email-quic_srivasam@quicinc.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bbyMWcmSGXgNIxqKnDx18acQ+HwDjhU9tvhj4WCYFZ8=;
+        b=ZQLymBULXpCB831gATSuY2WLVnCqLjYaHASGZw+09uaKkxeZLOqzNmdkSvO0kBqOh1
+         4ZHYUaotOTix9Xt1nadHZpc2zTJfF4KRCy9jW3GkWi7NTPgaKiDXr9eMQSaCs2gZbJSv
+         OnzKBVpUijItZASdlVWE4AcnTzo+WAteUq2LV3peueO83pUnjvq4lyLYXToLYWiCG2dy
+         pS0wXgX/mb9HABXY+10PSBYAICPh6gPjBwzDn71i+SoTTBSwkIMzVwMzH40eqw0c1QGi
+         PwGI9NrWjbwR2shYyc+Gpdg13hl33y9qFLRLlX8TR6dYmYDoIjDYx4+X1C2ht+OlH38a
+         n7TQ==
+X-Gm-Message-State: AOAM531Vyyg8YXwzhSTUz37/6qT64modRahgrXWA4xeoC5vxpon/jhwx
+        ccHXKXl2ky8Gt1D+rBi86lF4Mw==
+X-Google-Smtp-Source: ABdhPJx4apFQHHAkJrvtgtLFm2zkEs6gniOhYfLa58nYwuzqg/vyWzgeBhEQ6U1F5u4P8TAk/HlbJw==
+X-Received: by 2002:a05:6e02:20c4:b0:2cc:4490:cb85 with SMTP id 4-20020a056e0220c400b002cc4490cb85mr452906ilq.73.1650567217715;
+        Thu, 21 Apr 2022 11:53:37 -0700 (PDT)
+Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id k11-20020a926f0b000000b002c2756f7e90sm12253320ilc.17.2022.04.21.11.53.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Apr 2022 11:53:36 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, kuba@kernel.org
+Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
+        cpratapa@codeaurora.org, avuyyuru@codeaurora.org,
+        jponduru@codeaurora.org, subashab@codeaurora.org, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH net-next] net: ipa: compute proper aggregation limit
+Date:   Thu, 21 Apr 2022 13:53:33 -0500
+Message-Id: <20220421185333.1371632-1-elder@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1650552459-21077-13-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,127 +71,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 21, 2022 at 08:17:39PM +0530, Srinivasa Rao Mandadapu wrote:
-> Add dt nodes for sound card support on rev5 (aka CRD 3.0/3.1) boards,
-> which is using WCD938x headset playback, capture, I2S speaker playback
-> and DMICs via VA macro.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 98 +++++++++++++++++++++++
->  1 file changed, 98 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> index 4033d2a..bc6dbcc 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> @@ -42,6 +42,104 @@
->  		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
->  		#sound-dai-cells = <1>;
->  	};
-> +
-> +	sound: sound {
-> +		compatible = "google,sc7280-herobrine";
-> +		model = "sc7280-wcd938x-max98360a-1mic";
-> +
-> +		audio-routing =
-> +			"IN1_HPHL", "HPHL_OUT",
-> +			"IN2_HPHR", "HPHR_OUT",
-> +			"AMIC1", "MIC BIAS1",
-> +			"AMIC2", "MIC BIAS2",
-> +			"VA DMIC0", "MIC BIAS1",
-> +			"VA DMIC1", "MIC BIAS1",
-> +			"VA DMIC2", "MIC BIAS3",
-> +			"VA DMIC3", "MIC BIAS3",
-> +			"TX SWR_ADC0", "ADC1_OUTPUT",
-> +			"TX SWR_ADC1", "ADC2_OUTPUT",
-> +			"TX SWR_ADC2", "ADC3_OUTPUT",
-> +			"TX SWR_DMIC0", "DMIC1_OUTPUT",
-> +			"TX SWR_DMIC1", "DMIC2_OUTPUT",
-> +			"TX SWR_DMIC2", "DMIC3_OUTPUT",
-> +			"TX SWR_DMIC3", "DMIC4_OUTPUT",
-> +			"TX SWR_DMIC4", "DMIC5_OUTPUT",
-> +			"TX SWR_DMIC5", "DMIC6_OUTPUT",
-> +			"TX SWR_DMIC6", "DMIC7_OUTPUT",
-> +			"TX SWR_DMIC7", "DMIC8_OUTPUT";
-> +
-> +		qcom,msm-mbhc-hphl-swh = <1>;
-> +		qcom,msm-mbhc-gnd-swh = <1>;
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		#sound-dai-cells = <0>;
-> +
-> +		dai-link@0 {
-> +			link-name = "MAX98360A";
-> +			reg = <MI2S_SECONDARY>;
+The aggregation byte limit for an endpoint is currently computed
+based on the endpoint's receive buffer size.
 
-same comment as for "arm64: dts: qcom: sc7280: Add sound node for CRD
-1.0 and CRD 2.0", i.e. use the link number for 'reg' instead of the lpass
-DAI id.
+However, some bytes at the front of each receive buffer are reserved
+on the assumption that--as with SKBs--it might be useful to insert
+data (such as headers) before what lands in the buffer.
 
-> +
-> +			cpu {
-> +				sound-dai = <&lpass_cpu MI2S_SECONDARY>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&max98360a>;
-> +			};
-> +		};
-> +
-> +		dai-link@1 {
-> +			link-name = "DisplayPort";
-> +			reg = <LPASS_DP_RX>;
-> +
-> +			cpu {
-> +				sound-dai = <&lpass_cpu LPASS_DP_RX>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&mdss_dp>;
-> +			};
-> +		};
-> +
-> +		dai-link@2 {
-> +			link-name = "WCD9385 Playback";
-> +			reg = <LPASS_CDC_DMA_RX0>;
-> +
-> +			cpu {
-> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_RX0>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&wcd938x 0>, <&swr0 0>, <&lpass_rx_macro 0>;
-> +			};
-> +		};
-> +
-> +		dai-link@3 {
-> +			link-name = "WCD9385 Capture";
-> +			reg = <LPASS_CDC_DMA_TX3>;
-> +
-> +			cpu {
-> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_TX3>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&wcd938x 1>, <&swr1 0>, <&lpass_tx_macro 0>;
-> +			};
-> +		};
-> +
-> +		dai-link@4 {
-> +			link-name = "DMIC";
-> +			reg = <LPASS_CDC_DMA_VA_TX0>;
-> +
-> +			cpu {
-> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_VA_TX0>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&lpass_va_macro 0>;
-> +			};
-> +		};
-> +	};
->  };
+The aggregation byte limit currently doesn't take into account that
+reserved space, and as a result, aggregation could require space
+past that which is available in the buffer.
+
+Fix this by reducing the size used to compute the aggregation byte
+limit by the NET_SKB_PAD offset reserved for each receive buffer.
+
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+Note:  This is a bug, but it won't apply cleanly to older kernels,
+       so I will be posting back-ports separately.
+
+ drivers/net/ipa/ipa_endpoint.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
+index 888e94278a84f..e133eb2bebcfb 100644
+--- a/drivers/net/ipa/ipa_endpoint.c
++++ b/drivers/net/ipa/ipa_endpoint.c
+@@ -130,9 +130,10 @@ static bool ipa_endpoint_data_valid_one(struct ipa *ipa, u32 count,
+ 		 */
+ 		if (data->endpoint.config.aggregation) {
+ 			limit += SZ_1K * aggr_byte_limit_max(ipa->version);
+-			if (buffer_size > limit) {
++			if (buffer_size - NET_SKB_PAD > limit) {
+ 				dev_err(dev, "RX buffer size too large for aggregated RX endpoint %u (%u > %u)\n",
+-					data->endpoint_id, buffer_size, limit);
++					data->endpoint_id,
++					buffer_size - NET_SKB_PAD, limit);
+ 
+ 				return false;
+ 			}
+@@ -739,6 +740,7 @@ static void ipa_endpoint_init_aggr(struct ipa_endpoint *endpoint)
+ 	if (endpoint->data->aggregation) {
+ 		if (!endpoint->toward_ipa) {
+ 			const struct ipa_endpoint_rx_data *rx_data;
++			u32 buffer_size;
+ 			bool close_eof;
+ 			u32 limit;
+ 
+@@ -746,7 +748,8 @@ static void ipa_endpoint_init_aggr(struct ipa_endpoint *endpoint)
+ 			val |= u32_encode_bits(IPA_ENABLE_AGGR, AGGR_EN_FMASK);
+ 			val |= u32_encode_bits(IPA_GENERIC, AGGR_TYPE_FMASK);
+ 
+-			limit = ipa_aggr_size_kb(rx_data->buffer_size);
++			buffer_size = rx_data->buffer_size;
++			limit = ipa_aggr_size_kb(buffer_size - NET_SKB_PAD);
+ 			val |= aggr_byte_limit_encoded(version, limit);
+ 
+ 			limit = IPA_AGGR_TIME_LIMIT;
+-- 
+2.32.0
+
