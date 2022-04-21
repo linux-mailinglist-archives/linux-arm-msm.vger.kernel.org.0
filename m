@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70CCF509947
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 09:38:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B11C509939
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 09:38:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1385797AbiDUHhq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 03:37:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58794 "EHLO
+        id S1385826AbiDUHiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 03:38:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1385791AbiDUHhl (ORCPT
+        with ESMTP id S241799AbiDUHiB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 03:37:41 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6483F1EA;
-        Thu, 21 Apr 2022 00:34:52 -0700 (PDT)
+        Thu, 21 Apr 2022 03:38:01 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F1FC10BE;
+        Thu, 21 Apr 2022 00:35:13 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 2B74CB82297;
-        Thu, 21 Apr 2022 07:34:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36852C385A1;
-        Thu, 21 Apr 2022 07:34:46 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EE37C61ABC;
+        Thu, 21 Apr 2022 07:35:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E6AC385A1;
+        Thu, 21 Apr 2022 07:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650526489;
-        bh=Kin58/D9rBGPYeU7vdp0KoxJSMLdV86dYDxrjs2mWTs=;
+        s=k20201202; t=1650526512;
+        bh=iodwjoJYbXPmx/V6513BVUqEJ60wYeP08zRJ3UhqYuo=;
         h=From:To:Cc:Subject:Date:From;
-        b=D4oyNGqbn3hpT5aW7wal6OkmWXo2Cwua9G/+HCjZlCcBvelUwHHhq/FqsO6ts5+tY
-         2qml5Q61vnK2VSCi2Ol3bRvbAMjUVN9nhg/7H++b+RL1TsYdLna7CirQ4hagpf8bq1
-         OsVwAZQvMS9PQU00CNpZh5AK2RZ2VJvBbFVfTNtlP5fnoDES6pNx1oO/ENTALvafiz
-         uP+pfoeNQuR0Evg5KZjc6rnb3KNGPaljiiETTSDe+OZTbT+B2d08J0XB/3K/9YgJBP
-         1CB9WP9n92AvMrTr/z7tcmfPe97J/J93JnbmC2QSurKaG9Xfm6DEcALjW0tVeUFu1p
-         IO5HCYFuUcQxw==
+        b=cxdRuyc6FKKbQ5sx++8H0dU+ckG/jI1H3qJI2ovV2IysiC8gvMIXAWnxRQoXH43PE
+         sNtgrkPOju1iBu9tceFnu8Er4s33zYmmCL9FOqGLBF0OLMvtjOWD3+0jy/UJ5CbH2O
+         k/+8sqlhAEfHmBf05TCexRJYNa4OJQ5nhkTJQLWPSFt0DvCM+lO8ou/2bGZryc/cxg
+         l1xpri7y0ETETdt4tgpphCyqY2me6pHXetn7xFAMJ1jmDP+eioJi9sLjcwHZL6B1hY
+         uE7RTNQPhdW7bdGJ/ilQ/mD8cl8HJGVIasBFo2T40k6EEUeKcx0x4+8EZs6VLBE77y
+         u+vV4z8YyxZwA==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
@@ -39,9 +39,9 @@ Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH v3] arm64: dts: qcom: db845c: Add support for MCP2517FD
-Date:   Thu, 21 Apr 2022 13:04:38 +0530
-Message-Id: <20220421073438.1824061-1-vkoul@kernel.org>
+Subject: [PATCH] arm64: dts: qcom: qrb5165-rb5: Fix can-clock node name
+Date:   Thu, 21 Apr 2022 13:05:02 +0530
+Message-Id: <20220421073502.1824089-1-vkoul@kernel.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -54,76 +54,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for onboard MCP2517FD SPI CAN transceiver attached to
-SPI0 of RB3.
+Per DT spec node names should not have underscores (_) in them, so
+change can_clock to can-clock.
 
+Fixes: 5c44c564e449 ("arm64: dts: qcom: qrb5165-rb5: Add support for MCP2518FD")
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
-Change in v3:
- - change underscore(_) to dash (-) in can-clock node name
- - remove superfluous status = okay in can node
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Changes in v2:
- - add cs and pinctrl config
- - remove misleading comment
-
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 32 ++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 28fe45c5d516..d2ade684703d 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -28,6 +28,13 @@ chosen {
- 		stdout-path = "serial0:115200n8";
+diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+index 845eb7a6bf92..0e63f707b911 100644
+--- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
++++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+@@ -29,7 +29,7 @@ chosen {
  	};
  
-+	/* Fixed crystal oscillator dedicated to MCP2517FD */
+ 	/* Fixed crystal oscillator dedicated to MCP2518FD */
+-	clk40M: can_clock {
 +	clk40M: can-clock {
-+		compatible = "fixed-clock";
-+		#clock-cells = <0>;
-+		clock-frequency = <40000000>;
-+	};
-+
- 	dc12v: dc12v-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "DC12V";
-@@ -746,6 +753,23 @@ codec {
- 	};
- };
- 
-+&spi0 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&qup_spi0_default>;
-+	cs-gpios = <&tlmm 3 GPIO_ACTIVE_LOW>;
-+
-+	can@0 {
-+		compatible = "microchip,mcp2517fd";
-+		reg = <0>;
-+		clocks = <&clk40M>;
-+		interrupts-extended = <&tlmm 104 IRQ_TYPE_LEVEL_LOW>;
-+		spi-max-frequency = <10000000>;
-+		vdd-supply = <&vdc_5v>;
-+		xceiver-supply = <&vdc_5v>;
-+	};
-+};
-+
- &spi2 {
- 	/* On Low speed expansion */
- 	label = "LS-SPI0";
-@@ -1219,3 +1243,11 @@ ov7251_ep: endpoint {
- 		};
- 	};
- };
-+
-+/* PINCTRL - additions to nodes defined in sdm845.dtsi */
-+&qup_spi0_default {
-+	config {
-+		drive-strength = <6>;
-+		bias-disable;
-+	};
-+};
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <40000000>;
 -- 
 2.34.1
 
