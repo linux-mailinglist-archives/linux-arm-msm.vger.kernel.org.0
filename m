@@ -2,97 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CBF450A22F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 16:27:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAF7F50A23F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 16:27:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389210AbiDUOaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 10:30:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35348 "EHLO
+        id S1389236AbiDUOaK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 10:30:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1388932AbiDUOaB (ORCPT
+        with ESMTP id S1389220AbiDUOaE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 10:30:01 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 557C119C0D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:11 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-d6e29fb3d7so5536560fac.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:11 -0700 (PDT)
+        Thu, 21 Apr 2022 10:30:04 -0400
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 450D13DA68
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:14 -0700 (PDT)
+Received: by mail-oo1-xc36.google.com with SMTP id 1-20020a4a0901000000b003296ea2104eso874669ooa.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zc771pCV5yvkuoxGNN54eOQ2bsAjCQt8Qb/qBZt7/8Q=;
-        b=jou0aJXIAc2MC2fbWw5xleaGzI6yD0lTBjd+otkGFCzVE1+TaV7nOEhWN8PBZcngfq
-         zwziu3h8j+wNHcLMcwD4cBDcYEGpofpDtmOlKLVgyvx8sersaZk/INJVM5MCaqnHh0ro
-         wb24Mndr2GN7mShoQqUJbrYqelSNhIX8o4jbXWdDbrid7H55O3hjM4+umakrU9ZU+Kkj
-         +McTWYklbfspcKq9UbW4GR2Wi+yss6GctbS5lpVxi+Bcvgk3WwNxhyLbsLcsd/nQDQ5S
-         hDTx8QWC6qJ3t0sgjBdYtAoAkPUfMTZvRmKUR9rrXW7cwUu0vicI8flh1eyjnnnO1hc9
-         9ntw==
+        bh=qfplEFqel18YWhzaQ99003BJu9htbTKjIoDfg6GItSU=;
+        b=TzRChBfHXToDF1YopklQzLLKfLQkX9y4QWa7b/LPTqzIrQ3SoT9KAsDEofGqDpA0cQ
+         7d8/uMn3qu+oh05Zx+H0VyliVXWqgiZR8CktNk3DC2xXGTufgcnZpl9aY0GRwCR78bCg
+         FmP2uIs1p4pRNVp9+BMqx4lqzCkuKNoKOxMw9k4/YN8RQQ7ZH/ED4aY2+vzM86j2qTj9
+         OysDt2E92eQjSxeEJ/NqHRTpvUX41FPEbyrB82xJLjJp/VlIiaPwETyuVluNS/3MayS4
+         a35KTnDgm3YLoJ0G03mXPgvIpypirHleECT22/PNzPUcplXzCH3TifSwQdbru3aLWM1Z
+         uB+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zc771pCV5yvkuoxGNN54eOQ2bsAjCQt8Qb/qBZt7/8Q=;
-        b=EM7+dr7s01bmvwIKT6W/VLnUW4uo8TdVx2bjsztqlPbZXjA3aDNByvWe54rxSQHYdZ
-         OWgnz/wMF7PLT8YM6grXGT+0ZDb3lf1+gT7GblqcMNOLkRdBjeh9cZoywU/LLVR/ZQe5
-         5QGebKsAlkJWVGhjV8wwgbk0ueiv/o3XCFW1ZJOwQcflb6vau7srlm6yS6LbWZTnUpcU
-         W8/E0VmELx4A28D5GMlMVmUaPVD9Lnw+7TaUBjyejNTCp0+3YpxK1gKWuldIzaEYk3nC
-         iXnDz0t93qdEyelOwgMQJdG56rE9wLu/9xmenC1Qmhhk0EBFjr91v6YebJA04PD8O4oR
-         /ZNg==
-X-Gm-Message-State: AOAM532iRL0VHrIhD3JdQDbVNAuvVF0bs3P2qZuCxB3udsXvwBfNBpPK
-        fGye2ez9OpU8xa3Z4vpDSZVv4BISmc90iPrO
-X-Google-Smtp-Source: ABdhPJzt/PYWMrBMEIEGEJh3pNdTVUBzzPxFqC12SNwy7kn/EzU9QYMEQoqNS71+4dfulmuoud5F9w==
-X-Received: by 2002:a05:6871:297:b0:e5:f100:602f with SMTP id i23-20020a056871029700b000e5f100602fmr4010890oae.126.1650551230731;
-        Thu, 21 Apr 2022 07:27:10 -0700 (PDT)
+        bh=qfplEFqel18YWhzaQ99003BJu9htbTKjIoDfg6GItSU=;
+        b=Ip/0xyVDYkINSrzt2Tc3pJrllAhzRfC/zDsPkZCRg4mpVsAY2fodWUEd6AIwHk0qky
+         2RWH+wq3fhBPyq+KsDkTcZb/V9/5VL9tKLTVoNPMML4x9qV7ubMNvijzlk0FcvdBURJe
+         rxqBsNPzpHtnc4SxiNc9Z7qOsOwSbDS58mhIL3TYo6AANXpBpUMcBamkM5ZkB+8us0Vz
+         ml4qwsC4mQW30WpG1MPjLTTuqjIerSL4YJXt5PnAXWeQVG3clGtOSlcPURaM5Kjndq7S
+         pgdNq0Fbff1HM06ucaTWluRGtrUPB4nHfq9cYIBk6Yr1QDcQ2RFLPitSKgq6wUYYOh/v
+         TDkw==
+X-Gm-Message-State: AOAM532v0Qyp8watmtaXFh97GDZdHnDWlV3JOLLPsynVTUMcGCM2A8uQ
+        Zm2ePX45k60ViF6bsMXck6k+fw==
+X-Google-Smtp-Source: ABdhPJyS9XP4YCoqUaBjhLeuRUQ9UT8/u0P/JagyRIv7kOHQ0VczNWGDL9Y5QXsspb3Zhc1ijTu/4Q==
+X-Received: by 2002:a4a:d4d6:0:b0:35d:83ed:12eb with SMTP id r22-20020a4ad4d6000000b0035d83ed12ebmr88624oos.57.1650551232749;
+        Thu, 21 Apr 2022 07:27:12 -0700 (PDT)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id s14-20020a0568302a8e00b006054e841915sm4296295otu.73.2022.04.21.07.27.09
+        by smtp.gmail.com with ESMTPSA id s14-20020a0568302a8e00b006054e841915sm4296295otu.73.2022.04.21.07.27.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 07:27:10 -0700 (PDT)
+        Thu, 21 Apr 2022 07:27:11 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     vladimir.zapolskiy@linaro.org, devicetree@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        agross@kernel.org, krzk+dt@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     jgrahsl@snap.com, hfink@snap.com, dmitry.baryshkov@linaro.org,
-        jonathan@marek.ca
-Subject: Re: [PATCH v3 0/3] Add camss to SM8250 dtsi
-Date:   Thu, 21 Apr 2022 09:26:49 -0500
-Message-Id: <165055095990.2574292.14686683834583624191.b4-ty@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Subject: Re: (subset) [PATCH 1/3] arm64: dts: qcom: sm8450: Add thermal sensor controllers
+Date:   Thu, 21 Apr 2022 09:26:50 -0500
+Message-Id: <165055095989.2574292.5086269721501386213.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220415164655.1679628-1-bryan.odonoghue@linaro.org>
-References: <20220415164655.1679628-1-bryan.odonoghue@linaro.org>
+In-Reply-To: <20220410234458.1739279-2-dmitry.baryshkov@linaro.org>
+References: <20220410234458.1739279-1-dmitry.baryshkov@linaro.org> <20220410234458.1739279-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 15 Apr 2022 17:46:52 +0100, Bryan O'Donoghue wrote:
-> V3:
-> - Reorder new DTS include to be alphabetised - Vladimir
-> - Place pinctrl-names after pinctrl reference - Vladimir
-> - GCC_VIDEO_AHB_CK -> GCC_CAMERA_AHB_CLK - Vladimir
-> - Adds suggested sleep_clk - Vladimir
-> - interconnect-cells - I believe is correct as-is - Bryan
-> - power-domain-names - not added camss does dev_pm_domain_attach_by_id() - Bryan
-> - Added Reviewed-by to #3 as indicated - Vladimir
+On Mon, 11 Apr 2022 02:44:56 +0300, Dmitry Baryshkov wrote:
+> From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 > 
-> [...]
+> The change adds description of two thermal sensor controllers found
+> on SM8450.
+> 
+> 
 
 Applied, thanks!
 
-[1/3] arm64: dts: qcom: sm8250: Add camcc DT node
-      commit: ca79a997f2c0826ccf7d313068de3d04d5e8c82b
-[2/3] arm64: dts: qcom: sm8250: camss: Add CAMSS block definition
-      commit: 30325603b910e4ca61d56d20e2f5b9076d371e83
-[3/3] arm64: dts: qcom: sm8250: camss: Add CCI definitions
-      commit: e7173009e139bc13bf7833ea4185dda4779b95f3
+[1/3] arm64: dts: qcom: sm8450: Add thermal sensor controllers
+      commit: 48995e863307bf08a51362a0aafb10e70bdafb4e
 
 Best regards,
 -- 
