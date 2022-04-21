@@ -2,113 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2296509932
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 09:38:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0369B5099F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 09:56:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1385844AbiDUHic (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 03:38:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59704 "EHLO
+        id S1385942AbiDUHmS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 03:42:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1385887AbiDUHiY (ORCPT
+        with ESMTP id S1386034AbiDUHlm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 03:38:24 -0400
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::225])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B847D13DD3;
-        Thu, 21 Apr 2022 00:35:31 -0700 (PDT)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id 55E7A1C000F;
-        Thu, 21 Apr 2022 07:35:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1650526529;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=p4QO0moKpEkXz+ulrvSLQo0T9lC8TOEa3gAblMHHWcg=;
-        b=W5tjJw+uF9lptPqXryNnTwotnKABgq9Ic3j79bCDlyH4iFgliXcsv9VSd7n99CplsWqHCq
-        okVua35NKDn/cOEwdtfhzT3+mokU0WhN1lah0wBVHe3nqb6em5PDNp5vJtLwKz6yXV+Zgw
-        vrf9KgFxLeQlocnMMpzXJHdG54xIiL887VIpXmBbT5sw8omtoMXb0CzImEZkf7fQPOs8iz
-        HmgZr3qiTBbVnufIUcXIru9Cy+I0hPCyWbZa4qVPZbVclAW+xG73nDp16a9J9YYzuyj0j3
-        Rd/slS5Gex4c2ycFMo2uZ3M9C51cMLv3LXCpbG7V+b7WX2aJimX71A4eDWNpwQ==
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Md Sadre Alam <quic_mdalam@quicinc.com>, mani@kernel.org,
-        miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     konrad.dybcio@somainline.org, quic_srichara@quicinc.com,
-        stable@vger.kernel.org
-Subject: Re: [PATCH V5] mtd: rawnand: qcom: fix memory corruption that causes panic
-Date:   Thu, 21 Apr 2022 09:35:27 +0200
-Message-Id: <20220421073527.71690-1-miquel.raynal@bootlin.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <1650268107-5363-1-git-send-email-quic_mdalam@quicinc.com>
-References: 
+        Thu, 21 Apr 2022 03:41:42 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DAEF1BEA5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 00:38:32 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id k23so8251052ejd.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 00:38:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=+JREelw6laYvmBddqI3EC14b1vQSIevLCDNJfmzFR2g=;
+        b=WDBW92vG0q4gsIhJeK1naDiFI4MbinA4vSOTB7TPvvbig288kf3Cu23BuaAGhT2gQE
+         yoMVoFBH+t7BkGd3eiBC1sbcYROV1DjbPgpG2jCMCfvUhN6AfJlTP5Wedu5RfwMgoINq
+         PpJ5iECwAN0DVjlD0jep13MWadZKuy5go9Aky6/VYdkDl3vGfNMML084FJP/X1F/rYUE
+         sfAEzYxqr+rI7eqafyMgHQkqAtYNJrh6HzkXAVQ2EI3MtxRUQChYMLuj3KqNqq0DGGf7
+         CovTosZ11cMllpGetNvTUF72tbFwCyZf3PATPU9G+fv07HnL73xDNFgpx81TqdbB6lM4
+         wNMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=+JREelw6laYvmBddqI3EC14b1vQSIevLCDNJfmzFR2g=;
+        b=1gftyo1TlwZQER3youLPeLM3VpQuBFauXxMyCizgVUuPnvJm4XJ5p/153jrdVGHkl9
+         ylNCP3Mql3SUSgP0618qsuzL5BYjFrw+/YT6jnu8McLYRdTbpCxi9uNM60jiMQ6UaDH1
+         Q1jtrPh9NqEVUTm4vJerY3Nc4limYri30AR6NZypHFJMhctwBV5w2VLgdG/CVp64MYLi
+         mCX8oisDyvvNrruRvxyVBloARWe6/1mfmljQbkMjEXdDq//QAK5/2b9HZQuYOI+i+nSg
+         qvNU04BbrMPdh6lqjC5bCeG258pJDHVvvK/K/FT9Sa9rP5ubLktHFb8s1mvKAH4zfEBy
+         lSRA==
+X-Gm-Message-State: AOAM530yJGFk95acvIl5xUP6b902iMTmRacZA1HMl39etLpuLOzjigUw
+        js+5rQqg59u+nOX5BwITgVpP9A==
+X-Google-Smtp-Source: ABdhPJwEX9Azhs73zsMaeaPiRIxEJNmtzI+MiCPqqVr+i68qFBVnLhjq+9N3+ut1oLawkJuUCRzkDQ==
+X-Received: by 2002:a17:906:4789:b0:6e8:7ab7:e843 with SMTP id cw9-20020a170906478900b006e87ab7e843mr21389705ejc.374.1650526710879;
+        Thu, 21 Apr 2022 00:38:30 -0700 (PDT)
+Received: from [192.168.0.226] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id v20-20020a056402349400b00425a5ea1bb7sm276423edc.57.2022.04.21.00.38.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Apr 2022 00:38:30 -0700 (PDT)
+Message-ID: <0dc122bc-c2de-8d3b-8d94-55586df35fc1@linaro.org>
+Date:   Thu, 21 Apr 2022 09:38:29 +0200
 MIME-Version: 1.0
-X-linux-mtd-patch-notification: thanks
-X-linux-mtd-patch-commit: b'ba7542eb2dd5dfc75c457198b88986642e602065'
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v3] arm64: dts: qcom: db845c: Add support for MCP2517FD
+Content-Language: en-US
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>
+References: <20220421073438.1824061-1-vkoul@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220421073438.1824061-1-vkoul@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2022-04-18 at 07:48:27 UTC, Md Sadre Alam wrote:
-> This patch fixes a memory corruption that occurred in the
-> nand_scan() path for Hynix nand device.
+On 21/04/2022 09:34, Vinod Koul wrote:
+> Add support for onboard MCP2517FD SPI CAN transceiver attached to
+> SPI0 of RB3.
 > 
-> On boot, for Hynix nand device will panic at a weird place:
-> | Unable to handle kernel NULL pointer dereference at virtual
->   address 00000070
-> | [00000070] *pgd=00000000
-> | Internal error: Oops: 5 [#1] PREEMPT SMP ARM
-> | Modules linked in:
-> | CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.17.0-01473-g13ae1769cfb0
->   #38
-> | Hardware name: Generic DT based system
-> | PC is at nandc_set_reg+0x8/0x1c
-> | LR is at qcom_nandc_command+0x20c/0x5d0
-> | pc : [<c088b74c>]    lr : [<c088d9c8>]    psr: 00000113
-> | sp : c14adc50  ip : c14ee208  fp : c0cc970c
-> | r10: 000000a3  r9 : 00000000  r8 : 00000040
-> | r7 : c16f6a00  r6 : 00000090  r5 : 00000004  r4 :c14ee040
-> | r3 : 00000000  r2 : 0000000b  r1 : 00000000  r0 :c14ee040
-> | Flags: nzcv  IRQs on  FIQs on  Mode SVC_32  ISA ARM Segment none
-> | Control: 10c5387d  Table: 8020406a  DAC: 00000051
-> | Register r0 information: slab kmalloc-2k start c14ee000 pointer offset
->   64 size 2048
-> | Process swapper/0 (pid: 1, stack limit = 0x(ptrval))
-> | nandc_set_reg from qcom_nandc_command+0x20c/0x5d0
-> | qcom_nandc_command from nand_readid_op+0x198/0x1e8
-> | nand_readid_op from hynix_nand_has_valid_jedecid+0x30/0x78
-> | hynix_nand_has_valid_jedecid from hynix_nand_init+0xb8/0x454
-> | hynix_nand_init from nand_scan_with_ids+0xa30/0x14a8
-> | nand_scan_with_ids from qcom_nandc_probe+0x648/0x7b0
-> | qcom_nandc_probe from platform_probe+0x58/0xac
-> 
-> The problem is that the nand_scan()'s qcom_nand_attach_chip callback
-> is updating the nandc->max_cwperpage from 1 to 4 or 8 based on page size.
-> This causes the sg_init_table of clear_bam_transaction() in the driver's
-> qcom_nandc_command() to memset much more than what was initially
-> allocated by alloc_bam_transaction().
-> 
-> This patch will update nandc->max_cwperpage 1 to 4 or 8 based on page
-> size in qcom_nand_attach_chip call back after freeing the previously
-> allocated memory for bam txn as per nandc->max_cwperpage = 1 and then
-> again allocating bam txn as per nandc->max_cwperpage = 4 or 8 based on
-> page size in qcom_nand_attach_chip call back itself.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 6a3cec64f18c ("mtd: rawnand: qcom: convert driver to nand_scan()")
-> Reported-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
-> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+> Change in v3:
+>  - change underscore(_) to dash (-) in can-clock node name
+>  - remove superfluous status = okay in can node
 
-Applied to https://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git mtd/fixes, thanks.
+FWIW:
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Miquel
+
+Best regards,
+Krzysztof
