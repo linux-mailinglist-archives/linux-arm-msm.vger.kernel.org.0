@@ -2,184 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3873750A3F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 17:24:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA1FC50A483
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 17:42:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1390039AbiDUP0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 11:26:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55328 "EHLO
+        id S1390340AbiDUPpg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 11:45:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1390034AbiDUP0s (ORCPT
+        with ESMTP id S1390278AbiDUPpc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 11:26:48 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 576A642EC4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 08:23:58 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id lc2so10716477ejb.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 08:23:58 -0700 (PDT)
+        Thu, 21 Apr 2022 11:45:32 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4693F48332
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 08:42:08 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id mp16-20020a17090b191000b001cb5efbcab6so8065671pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 08:42:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rWHrkI/plHQsKHEeS5/0Rby949Lxiklh2NSSrLYMtUM=;
-        b=ZhforE7iVW5RAp7ovyVF911uWEZSiPFqpwhnpmO8NbXTjh/OEabvdgvFeeGy86Iyjx
-         ARnVvz6IBOS3JkLh8eCwYpnKjgfkxZmH6+UQBzOY/Gzk7bdYAcEzGeXpg+Nknw4p+8FC
-         aqR5gA0GKGWQLbDBgz4ayC70r7I+L74SaskP0=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=L2BkpTCz5akLsohhEIIUYuv1LmfI2RQS6LEGsp/sj6w=;
+        b=m1gyy5dvpwSTVTH1w7nGbqrC6fljhM2QZ8C6huIyhVBYkcXMS4azkaDXSl+hJRAhxK
+         pmC6BhzshY1KUxMRPHX0/UlFJsqlZkAYRZqPEKDKaoTuxlmkGikKXmRKlYugk0gFMnZh
+         +zqsTkAumqipfpplHayGys82rP5jCL6o9cWOg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rWHrkI/plHQsKHEeS5/0Rby949Lxiklh2NSSrLYMtUM=;
-        b=zbietSMFOOvmQrAvXQx0ZVRoIFealmmMU2cXqWKKSkUGAcLehinA89YyuZeIbYURTm
-         Nm4T0dNz/qd3YL42mQj0m+lZC5NjIdmDiGVJBju0HUN1tLu+0/BylJc643oe22wbNTvT
-         KmOWSmiGWfe3/QCV7ith/+VgfVIe78OtExea08svhHuFRWDx14sCSZ3rZgX5uwa7xroH
-         uh8v7GzCZrJsmJKshzdrUt7eJbWQL501guDZ78mP3w8p9QRPhXDIMmVU9LF8ThOiVfjI
-         KVWw9HQfqVeEvO8BVBYYCAcYOpyJ/CfdqhTKZrMabi03rUqb48B6e2forK3vdZz0pP9X
-         wJaQ==
-X-Gm-Message-State: AOAM530zQFXJg7/udFZkVgSnkLte9c/vnHHKU3e41K12wLHi2r+ZUajK
-        6lWGq5jtKe42eO7rghM1H6zwFxkbl6pLYkqF
-X-Google-Smtp-Source: ABdhPJz4RlauD++HTmd2tziSZKy2iNa6WEjTfwp4YCZyHKrHxusZDS3xxFiT9wBhKeKzYH52xy+EFA==
-X-Received: by 2002:a17:907:7e8b:b0:6e8:9691:630e with SMTP id qb11-20020a1709077e8b00b006e89691630emr45577ejc.113.1650554636538;
-        Thu, 21 Apr 2022 08:23:56 -0700 (PDT)
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com. [209.85.221.49])
-        by smtp.gmail.com with ESMTPSA id kb9-20020a1709070f8900b006e889aad94esm7936564ejc.128.2022.04.21.08.23.55
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=L2BkpTCz5akLsohhEIIUYuv1LmfI2RQS6LEGsp/sj6w=;
+        b=ikfw/KCmwDImv+7yKnDa8SUB5Qow0cKZp3X7m+7KpO4q55X7XOQSbkt9Z75UORcl66
+         dvYWAwaqqQIrkG8tkxh74m0C96ngwJrMiOfIXwcwXiKh5ChDFq6SFd3qckiExAq6zuLt
+         6156LD7VQuWrCbUspU1KqNAz0Bdx2JcUklZupUIPc87LMcdVpnLmwyQKOmUa+hyQMKKw
+         0zy5T3Z7r7JyV83bq1wK7rAgWo2on2As4Ak4ecUeO6p9mRZcLaYS4sUBXN8ap9rAkW3v
+         cPF+Xu8oAKqkoNY3vytLUoxfkeB92hj5retk+EUh7Nnlep5eXmoFo8BFFG8ZLPwFn7dC
+         2Dkg==
+X-Gm-Message-State: AOAM531v7X0ZBjelCOxNeXug5RSl8xO+upWm4RFuwwR53FRLZjfcPIWb
+        2TfuIp2n7cbJvsYGHbR/adJsdw==
+X-Google-Smtp-Source: ABdhPJwYo4k73WHrantPhUBUqbwFNdVAqpeNInsw9CuK++22pbLVzGNiv9Mxabafa/NNcHZgLnRoIQ==
+X-Received: by 2002:a17:90a:c781:b0:1d0:c23e:5842 with SMTP id gn1-20020a17090ac78100b001d0c23e5842mr11130978pjb.182.1650555727697;
+        Thu, 21 Apr 2022 08:42:07 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:d426:5807:a72:7b27])
+        by smtp.gmail.com with UTF8SMTPSA id t66-20020a628145000000b0050ca37e60eesm1153066pfd.57.2022.04.21.08.42.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Apr 2022 08:23:55 -0700 (PDT)
-Received: by mail-wr1-f49.google.com with SMTP id c10so7213558wrb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 08:23:55 -0700 (PDT)
-X-Received: by 2002:a05:6000:1105:b0:20a:80b4:bcaf with SMTP id
- z5-20020a056000110500b0020a80b4bcafmr166285wrw.679.1650554634333; Thu, 21 Apr
- 2022 08:23:54 -0700 (PDT)
+        Thu, 21 Apr 2022 08:42:07 -0700 (PDT)
+Date:   Thu, 21 Apr 2022 08:42:05 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+        srinivas.kandagatla@linaro.org, dianders@chromium.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v8 2/4] arm64: dts: qcom: sc7280: Add nodes for wcd9385
+ and max98360a codec
+Message-ID: <YmF7TRlxUWWQ394e@google.com>
+References: <1650291252-30398-1-git-send-email-quic_srivasam@quicinc.com>
+ <1650291252-30398-3-git-send-email-quic_srivasam@quicinc.com>
+ <Yl2VmW18QAJl9v+m@google.com>
+ <5ac149ac-4862-e8c9-185c-524c4b111961@quicinc.com>
+ <5d4b7c44-62e1-aaa6-3116-f58e1a1b437b@quicinc.com>
 MIME-Version: 1.0
-References: <1650551811-24319-1-git-send-email-quic_sbillaka@quicinc.com> <1650551811-24319-3-git-send-email-quic_sbillaka@quicinc.com>
-In-Reply-To: <1650551811-24319-3-git-send-email-quic_sbillaka@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 21 Apr 2022 08:23:41 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UVmUG0t-8wFXT-NT1-naojeJ_gcd8eEVr96AnMos0m4A@mail.gmail.com>
-Message-ID: <CAD=FV=UVmUG0t-8wFXT-NT1-naojeJ_gcd8eEVr96AnMos0m4A@mail.gmail.com>
-Subject: Re: [PATCH v8 2/4] drm/msm/dp: Support only IRQ_HPD and REPLUG
- interrupts for eDP
-To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        quic_kalyant <quic_kalyant@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        quic_vproddut <quic_vproddut@quicinc.com>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        Steev Klimaszewski <steev@kali.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5d4b7c44-62e1-aaa6-3116-f58e1a1b437b@quicinc.com>
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu, Apr 21, 2022 at 12:31:52PM +0530, Srinivasa Rao Mandadapu wrote:
+> 
+> On 4/19/2022 4:54 PM, Srinivasa Rao Mandadapu wrote:
+> > 
+> > On 4/18/2022 10:15 PM, Matthias Kaehlcke wrote:
+> > Thanks for your time and valuable inputs Matthias!!!
+> > > On Mon, Apr 18, 2022 at 07:44:10PM +0530, Srinivasa Rao Mandadapu wrote:
+> > > > Add wcd938x and  max98360a codecs for audio use case on
+> > > > sc7280 based platforms.
+> > > > Add tlmm gpio property in wcd938x node for switching CTIA/OMTP Headset.
+> > > > Add amp_en node for  max98360a codec.
+> > > General note: I don't think it's a good practice to add stuff like
+> > > this to
+> > > multiple boards in a single patch. Why?
+> > > 
+> > > First the subject of such a patch tends to be vague ("arm64: dts: qcom:
+> > > sc7280: Add nodes for wcd9385 and max98360a codec"), in this case it
+> > > gives
+> > > no hint about the boards. If someone was interested in picking changes
+> > > for a given board they can't easily identify from the subject that the
+> > > change is relevant for them.
+> > > 
+> > > Changes touching multiple boards are more likely to cause conflicts when
+> > > being picked (or reverted), both upstream and in downstream trees (which
+> > > unfortunately have to exist for product development). Downstream trees
+> > > might only pick changes for the board(s) they target, patches that touch
+> > > mutiple boards often cause conflicts due to context deltas in the
+> > > 'irrelevant' boards.
+> > > 
+> > > Lastly it's usually easier to get a patch reviewed (in the sense of
+> > > getting a 'Reviewed-by' tag) and landed that does a single thing.
+> > 
+> > Yes, agree to your opinion. In a nutshell, we will include board
+> > name(ex: herobrine)
+> > 
+> > in commit message and split the patches per external codec.
+> > 
+> > Actually, in Initial herobrine boards, EVT and IDP, has both maxim
+> > speaker and WCD codec,
+> > 
+> > hence we included in same patch.
+> > 
+> > > > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> > > > Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> > > > Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> > > > ---
+> > > >   arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts     |  6 ++
+> > > >   arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  8 +++
+> > > >   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 97
+> > > > ++++++++++++++++++++++++++
+> > > >   3 files changed, 111 insertions(+)
+> > > > 
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> > > > b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> > > > index 344338a..aa0bf6e2 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> > > > +++ b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> > > > @@ -87,6 +87,12 @@ ap_ts_pen_1v8: &i2c13 {
+> > > >       pins = "gpio51";
+> > > >   };
+> > > >   +&wcd938x {
+> > > > +    pinctrl-names = "default";
+> > > > +    pinctrl-0 = <&us_euro_hs_sel>;
+> > > > +    us-euro-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
+> > > > +};
+> > > Since this is added for the CRD rev3 it probably should also be added to
+> > > sc7280-herobrine-crd.dts
+> > Okay. Will add in corresponding latest herobrine CRD dts file also.
+> > > 
+> > > > +
+> > > >   &tlmm {
+> > > >       tp_int_odl: tp-int-odl {
+> > > >           pins = "gpio7";
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> > > > b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> > > > index d58045d..f247403 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> > > > +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> > > > @@ -20,6 +20,14 @@
+> > > >   #include "sc7280-chrome-common.dtsi"
+> > > >     / {
+> > > > +    max98360a: audio-codec-0 {
+> > > > +        compatible = "maxim,max98360a";
+> > > > +        pinctrl-names = "default";
+> > > > +        pinctrl-0 = <&amp_en>;
+> > > > +        sdmode-gpios = <&tlmm 63 GPIO_ACTIVE_HIGH>;
+> > > > +        #sound-dai-cells = <0>;
+> > > > +    };
+> > > > +
+> > > >       chosen {
+> > > >           stdout-path = "serial0:115200n8";
+> > > >       };
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> > > > b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> > > > index 2f863c0..8dad599 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> > > > +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> > > > @@ -20,6 +20,42 @@
+> > > >           serial1 = &uart7;
+> > > >       };
+> > > >   +    max98360a: audio-codec-0 {
+> > > > +        compatible = "maxim,max98360a";
+> > > > +        pinctrl-names = "default";
+> > > > +        pinctrl-0 = <&amp_en>;
+> > > > +        sdmode-gpios = <&tlmm 63 GPIO_ACTIVE_HIGH>;
+> > > > +        #sound-dai-cells = <0>;
+> > > > +    };
+> > > > +
+> > > > +    wcd938x: audio-codec-1 {
+> > > Why 'wcd938x' and not 'wcd9385'?
+> > 
+> > Actually same driver is used for both wcd9380 and wcd9385. Here we can
+> > use specific name as per board.
+> > 
+> > Will change accordingly.
+> 
+> At present, dt-bindgs also has wcd938x. So will update the name in bindings
+> and here post this series.
+> 
+> is it okay?
 
-On Thu, Apr 21, 2022 at 7:37 AM Sankeerth Billakanti
-<quic_sbillaka@quicinc.com> wrote:
->
-> The panel-edp enables the eDP panel power during probe, get_modes
-> and pre-enable. The eDP connect and disconnect interrupts for the eDP/DP
-> controller are directly dependent on panel power. As eDP display can be
-> assumed as always connected, the controller driver can skip the eDP
-> connect and disconnect interrupts. Any disruption in the link status
-> will be indicated via the IRQ_HPD interrupts.
->
-> So, the eDP controller driver can just enable the IRQ_HPD and replug
-> interrupts. The DP controller driver still needs to enable all the
-> interrupts.
->
-> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-> ---
-> Changes in v8:
->   - add comment explaining the interrupt status return
->
-> Changes in v7:
->   - reordered the patch in the series
->   - modified the return statement for isr
->   - connector check modified to just check for eDP
->
->  drivers/gpu/drm/msm/dp/dp_catalog.c | 18 ++++++++++++------
->  drivers/gpu/drm/msm/dp/dp_display.c | 22 +++++++++++++++++++++-
->  2 files changed, 33 insertions(+), 7 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> index fac815f..3a298e9 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> @@ -569,10 +569,6 @@ void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog)
->
->         u32 reftimer = dp_read_aux(catalog, REG_DP_DP_HPD_REFTIMER);
->
-> -       /* enable HPD plug and unplug interrupts */
-> -       dp_catalog_hpd_config_intr(dp_catalog,
-> -               DP_DP_HPD_PLUG_INT_MASK | DP_DP_HPD_UNPLUG_INT_MASK, true);
-> -
->         /* Configure REFTIMER and enable it */
->         reftimer |= DP_DP_HPD_REFTIMER_ENABLE;
->         dp_write_aux(catalog, REG_DP_DP_HPD_REFTIMER, reftimer);
-> @@ -599,13 +595,23 @@ u32 dp_catalog_hpd_get_intr_status(struct dp_catalog *dp_catalog)
->  {
->         struct dp_catalog_private *catalog = container_of(dp_catalog,
->                                 struct dp_catalog_private, dp_catalog);
-> -       int isr = 0;
-> +       int isr, mask;
->
->         isr = dp_read_aux(catalog, REG_DP_DP_HPD_INT_STATUS);
->         dp_write_aux(catalog, REG_DP_DP_HPD_INT_ACK,
->                                  (isr & DP_DP_HPD_INT_MASK));
-> +       mask = dp_read_aux(catalog, REG_DP_DP_HPD_INT_MASK);
->
-> -       return isr;
-> +       /*
-> +        * REG_DP_DP_HPD_INT_STATUS reports the status of all interrupts
-> +        * irrespective of their masked status. The HW interrupt will not be
-> +        * generated if an interrupt is masked. However, the interrupt status
-> +        * bit in the register will still be set. The eDP controller driver
-> +        * masks the plug and unplug interrupts unlike DP controller which
-> +        * unmasks all the interrupts. So, do not report the status of the
-> +        * masked interrupts.
-> +        */
-> +       return isr & (mask | ~DP_DP_HPD_INT_MASK);
-
-What's still missing in your comments is why you aren't just doing
-"return isr & mask;". In other words, why is the API for HPD bits
-different from the API for non-HPD bits? What code out there wants to
-know about non-HPD interrupts even if they are masked?
-
-Actually, thinking about this more, my preference would be this:
-
-a) Rename the existing function to dp_catalog_hpd_get_intr_status_raw()
-
-b) Create a new function called dp_catalog_hpd_get_intr_status() whose
-implementation is:
-
-  return dp_catalog_hpd_get_intr_status_raw() & mask;
-
-Then any callers who care about the raw status can be changed to call
-dp_catalog_hpd_get_intr_status_raw(). If no callers need
-dp_catalog_hpd_get_intr_status_raw() then you don't actually need to
-create this function.
-
-If you make that change then all of a sudden the API isn't weird/wonky
-and you can just get rid of the comment I asked you to add.
-
-
--Doug
+I don't think it's strictly necessary to update the binding, as
+'wcd938x' is only used in the example, and also it's not really
+wrong. Then again, if the example in the binding uses a
+specific wcd version it might make it less likely that the
+wildcard name is used in future board DTs. Up to you :)
