@@ -2,217 +2,367 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E3095094E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 04:00:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0F30509549
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 05:16:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383757AbiDUCDR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Apr 2022 22:03:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43090 "EHLO
+        id S1383893AbiDUDTg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Apr 2022 23:19:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1383762AbiDUCDQ (ORCPT
+        with ESMTP id S1354738AbiDUDTf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Apr 2022 22:03:16 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE675BF63;
-        Wed, 20 Apr 2022 19:00:28 -0700 (PDT)
+        Wed, 20 Apr 2022 23:19:35 -0400
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96F781262D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 20:16:46 -0700 (PDT)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-e656032735so2848968fac.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 20:16:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650506429; x=1682042429;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=zXMWQITVh0r0GmBQz9Pe/u3r7jSNrLigmueSoCH3SF0=;
-  b=SKQfD/subJHEyskX0L9l0K0a/dlaWJYeu6UcqBithx8o5FTsAVX2Rs2B
-   dxLSuuGTiEu2Ca1X6EXNoSVi+bFmkEeF4Vi8xm+4AmqPPJMXnI/wWGGJV
-   hLEvBVIL6E1xCcwmNEjs/8t1w+5vOj92/SGGkjmX+KpygOgEbklUloMFG
-   E=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 20 Apr 2022 19:00:28 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2022 19:00:28 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 20 Apr 2022 19:00:27 -0700
-Received: from [10.50.28.179] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 20 Apr
- 2022 19:00:23 -0700
-Message-ID: <bb99b615-cc76-9591-a610-fb4841d41d62@quicinc.com>
-Date:   Thu, 21 Apr 2022 07:30:19 +0530
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5JB0gUMTmyGNaaB0sHkZ7WLGgPRHKvvOXuIeU593CwY=;
+        b=t6uXv3HdWpPzQFokq9nFqKyzjG8FMVTZXGj3xBOJq/tD78N6+spaYMgCxqM5o9UsUB
+         yGF3TdM7WDSclO7v/4X59nZm15yhyybppqRr73qIBr+QdFyQS+UfpVM78ER/TMLazdND
+         Zx/ioYJvXx8HYK+fRt+I2dSxnLglXJDGggYjBwDnt8ZUr+j0dezbtugfAue46BfNjfrm
+         QHXu2UvboYOk5VnAPvLdKIqqJZIoUjkh3HmXXQ3H27EAN5K5g3NWXv4dSt934jWkHRMG
+         cmtwklzhLNuFppsnepCWUcC1wkGVUTqcHwbBaGnpUjsrbcaG9AdMNNp9KfQq4j28gZoQ
+         vILw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5JB0gUMTmyGNaaB0sHkZ7WLGgPRHKvvOXuIeU593CwY=;
+        b=uE6lZGifxZEmlfZQbfnJ6SSc8KZ9TENWjZ2yKuwhHyovckaWo8bAtaMmzpl5NZ0VEN
+         71qyUSuIPNLwdrHten8Cd6l4cSPSqeOZ0AeUh+jNri7m7iEENDMwmBZf4HX1VIALKlJC
+         LJpITXzGM2DnGpsjs0xrHxeJsAYJN0B8bgWDr9urTBsfOgrG9lyTTtZ1TOYIYu86YhSL
+         t58/bq8c1WSKGpmZs46U/wbV5X42KINNyt37Mk3cFnGvcVVJhwvMWIKA2oC/bkfD39+k
+         xXlP/yuxFIw9RC3YJYNRLt+cEoBpbZWht/8EfKA9uhF1JQCK2ttC5yg6R0ux+EN2IFM5
+         5DDw==
+X-Gm-Message-State: AOAM531FLAEkiEkG2N8tkQVo5PCa7OJJHiUCSdAVibebydU2Ff1mOtNe
+        TumtBpXBNrTMhsbT98/ra3aoPniwvkexKT1l
+X-Google-Smtp-Source: ABdhPJyQdEmZ1cOI+Mu68onPfacFGFzdSHci+WhfKL+DEbliYtaiQkOEIeu0U+r2ttiEQaeKCVb2IA==
+X-Received: by 2002:a05:6870:8a0a:b0:e5:b7dd:9a04 with SMTP id p10-20020a0568708a0a00b000e5b7dd9a04mr2957492oaq.96.1650511005887;
+        Wed, 20 Apr 2022 20:16:45 -0700 (PDT)
+Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id x20-20020a4ac594000000b00329a02f2f34sm7339509oop.16.2022.04.20.20.16.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Apr 2022 20:16:45 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Amit Nischal <anischal@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v3] clk: qcom: rcg2: Cache CFG register updates for parked RCGs
+Date:   Wed, 20 Apr 2022 20:18:49 -0700
+Message-Id: <20220421031849.454626-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCHv10 0/6] lib/rwmmio/arm64: Add support to trace register
- reads/writes
-Content-Language: en-US
-To:     <arnd@arndb.de>
-CC:     <catalin.marinas@arm.com>, <gregkh@linuxfoundation.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <maz@kernel.org>, <quic_psodagud@quicinc.com>,
-        <quic_tsoni@quicinc.com>, <rostedt@goodmis.org>, <will@kernel.org>
-References: <cover.1644824638.git.quic_saipraka@quicinc.com>
- <20220408111707.2488-1-quic_saipraka@quicinc.com>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <20220408111707.2488-1-quic_saipraka@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Arnd,
+As GDSCs are turned on and off some associated clocks are momentarily
+enabled for house keeping purposes. For this, and similar, purposes the
+"shared RCGs" will park the RCG on a source clock which is known to be
+available.
+When the RCG is parked, a safe clock source will be selected and
+committed, then the original source would be written back and upon enable
+the change back to the unparked source would be committed.
 
-On 4/8/2022 4:47 PM, Sai Prakash Ranjan wrote:
-> Hi Arnd,
->
-> On 2/24/2022 11:37 AM, Sai Prakash Ranjan wrote:
->> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
->> are typically used to read/write from/to memory mapped registers
->> and can cause hangs or some undefined behaviour in following cases,
->>
->> * If the access to the register space is unclocked, for example: if
->>    there is an access to multimedia(MM) block registers without MM
->>    clocks.
->>
->> * If the register space is protected and not set to be accessible from
->>    non-secure world, for example: only EL3 (EL: Exception level) access
->>    is allowed and any EL2/EL1 access is forbidden.
->>
->> * If xPU(memory/register protection units) is controlling access to
->>    certain memory/register space for specific clients.
->>
->> and more...
->>
->> Such cases usually results in instant reboot/SErrors/NOC or interconnect
->> hangs and tracing these register accesses can be very helpful to debug
->> such issues during initial development stages and also in later stages.
->>
->> So use ftrace trace events to log such MMIO register accesses which
->> provides rich feature set such as early enablement of trace events,
->> filtering capability, dumping ftrace logs on console and many more.
->>
->> Sample output:
->>
->> rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
->> rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
->> rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
->> rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
->>
->> This series is a follow-up for the series [1] and a recent series [2] making use
->> of both.
->>
->> [1] https://lore.kernel.org/lkml/cover.1536430404.git.saiprakash.ranjan@codeaurora.org/
->> [2] https://lore.kernel.org/lkml/1604631386-178312-1-git-send-email-psodagud@codeaurora.org/
->>
->> Note in previous v4 version, Arnd suggested to benchmark and compare size with callback
->> based implementation, please see [3] for more details on that with brief comparison below.
->>
->>
->> **Inline version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
->> $ size vmlinux
->>     text           data             bss     dec             hex         filename
->>   23884219        14284468         532568 38701255        24e88c7        vmlinux
->>
->> **Callback version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
->> $ size vmlinux
->>      text          data             bss     dec             hex        filename
->>   24108179        14279596         532568 38920343        251e097       vmlinux
->>
->> $ ./scripts/bloat-o-meter inline-vmlinux callback-vmlinux
->> add/remove: 8/3 grow/shrink: 4889/89 up/down: 242244/-11564 (230680)
->> Total: Before=25812612, After=26043292, chg +0.89%
->>
->> [3] https://lore.kernel.org/lkml/466449a1-36da-aaa9-7e4f-477f36b52c9e@quicinc.com/
->>
->> Changes in v10:
->>   * Use GENMASK(31, 0) for -Woverflow warning in irqchip tegra driver (Marc).
->>   * Convert ETM4x ARM64 driver to use asm-generic IO memory barriers (Catalin).
->>   * Collect ack from Catalin for arm64 change.
->>
->> Changes in v9:
->>   * Use TRACE_EVENT_CLASS for rwmmio_write and post_write (Steven Rostedt).
->>
->> Changes in v8:
->>   * Fix build error reported by kernel test robot.
->>
->> Changes in v7:
->>   * Use lib/ instead of kernel/trace/ based on review comment by Steven Rostedt.
->>
->> Changes in v6:
->>   * Implemented suggestions by Arnd Bergmann:
->>     - Use arch independent IO barriers in arm64/asm
->>     - Add ARCH_HAVE_TRACE_MMIO_ACCESS
->>     - Add post read and post write logging support
->>     - Remove tracepoint_active check
->>   * Fix build error reported by kernel test robot.
->>
->> Changes in v5:
->>   * Move arm64 to use asm-generic provided high level MMIO accessors (Arnd).
->>   * Add inline logging for MMIO relaxed and non-relaxed accessors.
->>   * Move nVHE KVM comment to makefile (Marc).
->>   * Fix overflow warning due to switch to inline accessors instead of macro.
->>   * Modify trace event field to include caller and parent details for more detailed logs.
->>
->> Changes in v4:
->>   * Drop dynamic debug based filter support since that will be developed later with
->>     the help from Steven (Ftrace maintainer).
->>   * Drop value passed to writel as it is causing hangs when tracing is enabled.
->>   * Code cleanup for trace event as suggested by Steven for earlier version.
->>   * Fixed some build errors reported by 0-day bot.
->>
->> Changes in v3:
->>   * Create a generic mmio header for instrumented version (Earlier suggested in [1]
->>     by Will Deacon and recently [2] by Greg to have a generic version first).
->>   * Add dynamic debug support to filter out traces which can be very useful for targeted
->>     debugging specific to subsystems or drivers.
->>   * Few modifications to the rwmmio trace event fields to include the mmio width and print
->>     addresses in hex.
->>   * Rewrote commit msg to explain some more about usecases.
->>
->> Prasad Sodagudi (1):
->>    lib: Add register read/write tracing support
->>
->> Sai Prakash Ranjan (5):
->>    arm64: io: Use asm-generic high level MMIO accessors
->>    coresight: etm4x: Use asm-generic IO memory barriers
->>    irqchip/tegra: Fix overflow implicit truncation warnings
->>    drm/meson: Fix overflow implicit truncation warnings
->>    asm-generic/io: Add logging support for MMIO accessors
->>
->>   arch/Kconfig                                  |  3 +
->>   arch/arm64/Kconfig                            |  1 +
->>   arch/arm64/include/asm/io.h                   | 41 ++------
->>   arch/arm64/kvm/hyp/nvhe/Makefile              |  7 +-
->>   drivers/gpu/drm/meson/meson_viu.c             | 22 ++---
->>   .../coresight/coresight-etm4x-core.c          |  8 +-
->>   drivers/hwtracing/coresight/coresight-etm4x.h |  8 +-
->>   drivers/irqchip/irq-tegra.c                   | 10 +-
->>   include/asm-generic/io.h                      | 82 +++++++++++++++-
->>   include/trace/events/rwmmio.h                 | 97 +++++++++++++++++++
->>   lib/Kconfig                                   |  7 ++
->>   lib/Makefile                                  |  2 +
->>   lib/trace_readwrite.c                         | 47 +++++++++
->>   13 files changed, 273 insertions(+), 62 deletions(-)
->>   create mode 100644 include/trace/events/rwmmio.h
->>   create mode 100644 lib/trace_readwrite.c
->>
->>
->> base-commit: 754e0b0e35608ed5206d6a67a791563c631cec07
-> Gentle ping, could you please take a look at this, would appreciate your reviews.
->
+But starting with SM8350 this fails, as the value in CFG is committed by
+the GDSC handshake and without a ticking parent the GDSC enablement will
+time out.
 
-Gentle Ping !!
+This becomes a concrete problem if the runtime supended state of a
+device includes disabling such rcg's parent clock. As the device
+attempts to power up the domain again the rcg will fail to enable and
+hence the GDSC enablement will fail, preventing the device from
+returning from the suspended state.
 
-Thanks,
-Sai
+This can be seen in e.g. the display stack during probe on SM8350.
+
+To avoid this problem, the software needs to ensure that the RCG is
+configured to a active parent clock while it is disabled. This is done
+by caching the CFG register content while the shared RCG is parked on
+this safe source.
+
+Writes to M, N and D registers are committed as they are requested. New
+helpers for get_parent() and recalc_rate() are extracted from their
+previous implementations and __clk_rcg2_configure() is modified to allow
+it to operate on the cached value.
+
+Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as needed")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+
+Changes since v2:
+- Explained the symptoms in commit message
+- Reduced error in clk_rcg2_get_parent() to pr_debug()
+- Reduced the size of the change in __clk_rcg2_configure()
+- Polished comment in clk_rcg2_shared_set_rate()
+- Use clk_hw_is_enabled() in clk_rcg2_shared_set_parent()
+
+ drivers/clk/qcom/clk-rcg.h  |   2 +
+ drivers/clk/qcom/clk-rcg2.c | 124 ++++++++++++++++++++++++++++--------
+ 2 files changed, 100 insertions(+), 26 deletions(-)
+
+diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+index 00cea508d49e..012e745794fd 100644
+--- a/drivers/clk/qcom/clk-rcg.h
++++ b/drivers/clk/qcom/clk-rcg.h
+@@ -140,6 +140,7 @@ extern const struct clk_ops clk_dyn_rcg_ops;
+  * @freq_tbl: frequency table
+  * @clkr: regmap clock handle
+  * @cfg_off: defines the cfg register offset from the CMD_RCGR + CFG_REG
++ * @parked_cfg: cached value of the CFG register for parked RCGs
+  */
+ struct clk_rcg2 {
+ 	u32			cmd_rcgr;
+@@ -150,6 +151,7 @@ struct clk_rcg2 {
+ 	const struct freq_tbl	*freq_tbl;
+ 	struct clk_regmap	clkr;
+ 	u8			cfg_off;
++	u32			parked_cfg;
+ };
+ 
+ #define to_clk_rcg2(_hw) container_of(to_clk_regmap(_hw), struct clk_rcg2, clkr)
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index f675fd969c4d..9d218b04aa49 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -73,16 +73,11 @@ static int clk_rcg2_is_enabled(struct clk_hw *hw)
+ 	return (cmd & CMD_ROOT_OFF) == 0;
+ }
+ 
+-static u8 clk_rcg2_get_parent(struct clk_hw *hw)
++static u8 __clk_rcg2_get_parent(struct clk_hw *hw, u32 cfg)
+ {
+ 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+ 	int num_parents = clk_hw_get_num_parents(hw);
+-	u32 cfg;
+-	int i, ret;
+-
+-	ret = regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
+-	if (ret)
+-		goto err;
++	int i;
+ 
+ 	cfg &= CFG_SRC_SEL_MASK;
+ 	cfg >>= CFG_SRC_SEL_SHIFT;
+@@ -91,12 +86,27 @@ static u8 clk_rcg2_get_parent(struct clk_hw *hw)
+ 		if (cfg == rcg->parent_map[i].cfg)
+ 			return i;
+ 
+-err:
+ 	pr_debug("%s: Clock %s has invalid parent, using default.\n",
+ 		 __func__, clk_hw_get_name(hw));
+ 	return 0;
+ }
+ 
++static u8 clk_rcg2_get_parent(struct clk_hw *hw)
++{
++	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
++	u32 cfg;
++	int ret;
++
++	ret = regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
++	if (ret) {
++		pr_debug("%s: Unable to read CFG register for %s\n",
++			 __func__, clk_hw_get_name(hw));
++		return 0;
++	}
++
++	return __clk_rcg2_get_parent(hw, cfg);
++}
++
+ static int update_config(struct clk_rcg2 *rcg)
+ {
+ 	int count, ret;
+@@ -163,12 +173,10 @@ calc_rate(unsigned long rate, u32 m, u32 n, u32 mode, u32 hid_div)
+ }
+ 
+ static unsigned long
+-clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
++__clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate, u32 cfg)
+ {
+ 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+-	u32 cfg, hid_div, m = 0, n = 0, mode = 0, mask;
+-
+-	regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
++	u32 hid_div, m = 0, n = 0, mode = 0, mask;
+ 
+ 	if (rcg->mnd_width) {
+ 		mask = BIT(rcg->mnd_width) - 1;
+@@ -189,6 +197,17 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	return calc_rate(parent_rate, m, n, mode, hid_div);
+ }
+ 
++static unsigned long
++clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
++{
++	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
++	u32 cfg;
++
++	regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
++
++	return __clk_rcg2_recalc_rate(hw, parent_rate, cfg);
++}
++
+ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+ 				    struct clk_rate_request *req,
+ 				    enum freq_policy policy)
+@@ -262,7 +281,8 @@ static int clk_rcg2_determine_floor_rate(struct clk_hw *hw,
+ 	return _freq_tbl_determine_rate(hw, rcg->freq_tbl, req, FLOOR);
+ }
+ 
+-static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
++static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f,
++				u32 *_cfg)
+ {
+ 	u32 cfg, mask, d_val, not2d_val, n_minus_m;
+ 	struct clk_hw *hw = &rcg->clkr.hw;
+@@ -304,15 +324,27 @@ static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+ 	cfg |= rcg->parent_map[index].cfg << CFG_SRC_SEL_SHIFT;
+ 	if (rcg->mnd_width && f->n && (f->m != f->n))
+ 		cfg |= CFG_MODE_DUAL_EDGE;
+-	return regmap_update_bits(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg),
+-					mask, cfg);
++
++	*_cfg &= ~mask;
++	*_cfg |= cfg;
++
++	return 0;
+ }
+ 
+ static int clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+ {
++	u32 cfg;
+ 	int ret;
+ 
+-	ret = __clk_rcg2_configure(rcg, f);
++	ret = regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
++	if (ret)
++		return ret;
++
++	ret = __clk_rcg2_configure(rcg, f, &cfg);
++	if (ret)
++		return ret;
++
++	ret = regmap_write(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), cfg);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -979,11 +1011,12 @@ static int clk_rcg2_shared_set_rate(struct clk_hw *hw, unsigned long rate,
+ 		return -EINVAL;
+ 
+ 	/*
+-	 * In case clock is disabled, update the CFG, M, N and D registers
+-	 * and don't hit the update bit of CMD register.
++	 * In case clock is disabled, update the M, N and D registers, cache
++	 * the CFG value in parked_cfg and don't hit the update bit of CMD
++	 * register.
+ 	 */
+ 	if (!__clk_is_enabled(hw->clk))
+-		return __clk_rcg2_configure(rcg, f);
++		return __clk_rcg2_configure(rcg, f, &rcg->parked_cfg);
+ 
+ 	return clk_rcg2_shared_force_enable_clear(hw, f);
+ }
+@@ -1007,6 +1040,11 @@ static int clk_rcg2_shared_enable(struct clk_hw *hw)
+ 	if (ret)
+ 		return ret;
+ 
++	/* Write back the stored configuration corresponding to current rate */
++	ret = regmap_write(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, rcg->parked_cfg);
++	if (ret)
++		return ret;
++
+ 	ret = update_config(rcg);
+ 	if (ret)
+ 		return ret;
+@@ -1017,13 +1055,12 @@ static int clk_rcg2_shared_enable(struct clk_hw *hw)
+ static void clk_rcg2_shared_disable(struct clk_hw *hw)
+ {
+ 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+-	u32 cfg;
+ 
+ 	/*
+ 	 * Store current configuration as switching to safe source would clear
+ 	 * the SRC and DIV of CFG register
+ 	 */
+-	regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &cfg);
++	regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &rcg->parked_cfg);
+ 
+ 	/*
+ 	 * Park the RCG at a safe configuration - sourced off of safe source.
+@@ -1041,17 +1078,52 @@ static void clk_rcg2_shared_disable(struct clk_hw *hw)
+ 	update_config(rcg);
+ 
+ 	clk_rcg2_clear_force_enable(hw);
++}
+ 
+-	/* Write back the stored configuration corresponding to current rate */
+-	regmap_write(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, cfg);
++static u8 clk_rcg2_shared_get_parent(struct clk_hw *hw)
++{
++	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
++
++	/* If the shared rcg is parked used the cached cfg instead */
++	if (!__clk_is_enabled(hw->clk))
++		return __clk_rcg2_get_parent(hw, rcg->parked_cfg);
++
++	return clk_rcg2_get_parent(hw);
++}
++
++static int clk_rcg2_shared_set_parent(struct clk_hw *hw, u8 index)
++{
++	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
++
++	/* If the shared rcg is parked only update the cached cfg */
++	if (!clk_hw_is_enabled(hw)) {
++		rcg->parked_cfg &= ~CFG_SRC_SEL_MASK;
++		rcg->parked_cfg |= rcg->parent_map[index].cfg << CFG_SRC_SEL_SHIFT;
++
++		return 0;
++	}
++
++	return clk_rcg2_set_parent(hw, index);
++}
++
++static unsigned long
++clk_rcg2_shared_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
++{
++	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
++
++	/* If the shared rcg is parked used the cached cfg instead */
++	if (!__clk_is_enabled(hw->clk))
++		return __clk_rcg2_recalc_rate(hw, parent_rate, rcg->parked_cfg);
++
++	return clk_rcg2_recalc_rate(hw, parent_rate);
+ }
+ 
+ const struct clk_ops clk_rcg2_shared_ops = {
+ 	.enable = clk_rcg2_shared_enable,
+ 	.disable = clk_rcg2_shared_disable,
+-	.get_parent = clk_rcg2_get_parent,
+-	.set_parent = clk_rcg2_set_parent,
+-	.recalc_rate = clk_rcg2_recalc_rate,
++	.get_parent = clk_rcg2_shared_get_parent,
++	.set_parent = clk_rcg2_shared_set_parent,
++	.recalc_rate = clk_rcg2_shared_recalc_rate,
+ 	.determine_rate = clk_rcg2_determine_rate,
+ 	.set_rate = clk_rcg2_shared_set_rate,
+ 	.set_rate_and_parent = clk_rcg2_shared_set_rate_and_parent,
+-- 
+2.35.1
+
