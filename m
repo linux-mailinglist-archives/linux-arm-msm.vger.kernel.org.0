@@ -2,138 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3960509C2E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 11:22:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC6AE509C58
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 11:33:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1387592AbiDUJZc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 05:25:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35516 "EHLO
+        id S1387682AbiDUJe4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 05:34:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1387575AbiDUJZW (ORCPT
+        with ESMTP id S1387677AbiDUJey (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 05:25:22 -0400
-X-Greylist: delayed 82401 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 21 Apr 2022 02:22:32 PDT
-Received: from mail-m971.mail.163.com (mail-m971.mail.163.com [123.126.97.1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 630DA27145;
-        Thu, 21 Apr 2022 02:22:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=aiyjT
-        wKr2WrCCCy47eXa+PFgD09doEJV9YGfIs9RReM=; b=FR9+Ia5Ppk1WIAJQ/fowA
-        eRvsqxGkQG/YHAF5CPfIfJzyYTZr1oaWNEgnDICUIcoMY64t3fWFTEL0EedR5iBO
-        aEQqefVxoZNgj1WialM4M2fgdbLjf74R2gOXZy5xuaTthqEh0CD8lEszEKJC0c3q
-        1Myz0iYIUprxsuSIHGc+Xw=
-Received: from localhost.localdomain (unknown [112.97.55.38])
-        by smtp1 (Coremail) with SMTP id GdxpCgBnYN8yImFiFnrxCA--.411S2;
-        Thu, 21 Apr 2022 17:22:00 +0800 (CST)
-From:   Slark Xiao <slark_xiao@163.com>
-To:     mani@kernel.org, hemantk@codeaurora.org
-Cc:     gregkh@linuxfoundation.org, loic.poulain@linaro.org,
-        slark_xiao@163.com, bbhatt@codeaurora.org,
-        christophe.jaillet@wanadoo.fr, thomas.ulrich@thalesgroup.com,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] bus: mhi: host: Add support for Cinterion MV32-WA/MV32-WB
-Date:   Thu, 21 Apr 2022 17:21:41 +0800
-Message-Id: <20220421092141.3984-1-slark_xiao@163.com>
-X-Mailer: git-send-email 2.25.1
+        Thu, 21 Apr 2022 05:34:54 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5B4E1572F;
+        Thu, 21 Apr 2022 02:32:04 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6916AB823A7;
+        Thu, 21 Apr 2022 09:32:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B45BC385A1;
+        Thu, 21 Apr 2022 09:32:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1650533522;
+        bh=5tCYODYe4IUZwtg/8f/XY3fbdkY0KtrDaNGpzi8qFUc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=yfswzQHoys+STXSwb/IAa5il79nk+s0bn4xbXaq3LJUY4T+natHRxo3gFMZnnHrbr
+         qWtKCmV/Tu/jUBHnKejgruocGkKwQ0AY/s+DLkOHXVgjQPhCrkzNF0uLywNsqc1x/4
+         z88Hhlly+u+82ml4UqP+bBAjzPnflGgUiB3akSNY=
+Date:   Thu, 21 Apr 2022 11:31:59 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc:     Mathias Nyman <mathias.nyman@linux.intel.com>,
+        "Sandeep Maheswaram (Temp) (QUIC)" <quic_c_sanm@quicinc.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "Pavan Kumar Kondeti (QUIC)" <quic_pkondeti@quicinc.com>,
+        "Pratham Pratap (QUIC)" <quic_ppratap@quicinc.com>,
+        "Krishna Kurapati PSSNV (QUIC)" <quic_kriskura@quicinc.com>,
+        "Vidya Sagar Pulyala (Temp) (QUIC)" <quic_vpulyala@quicinc.com>
+Subject: Re: [PATCH v3 0/2] Skip phy initialization for DWC3 USB Controllers
+Message-ID: <YmEkj3/6+9gvgqAx@kroah.com>
+References: <1649323888-12420-1-git-send-email-quic_c_sanm@quicinc.com>
+ <DM6PR02MB4857A0ADCDA1558DE58E103ADFF29@DM6PR02MB4857.namprd02.prod.outlook.com>
+ <4b34735f-8e1f-bf37-398f-9b4a8aa2e939@linux.intel.com>
+ <YmEL3WnyM7sa8VP9@kuha.fi.intel.com>
+ <YmEXqe5IEAzZezU5@kroah.com>
+ <YmEYvYA0uXatStZg@kuha.fi.intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: GdxpCgBnYN8yImFiFnrxCA--.411S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxGw48JrWDCr1kAF17tr1xGrg_yoW5Aw4DpF
-        WxZrWayF48tFWaqa1vka4v9as8Gws7G3s8KrnrK3W2ywn8C34DXF1kG34SyF1Yy397Xrsr
-        tr4FqFW7W3WDtFJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zEYL9DUUUUU=
-X-Originating-IP: [112.97.55.38]
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbBDRjpZFaEIUY8WQAAsI
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YmEYvYA0uXatStZg@kuha.fi.intel.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MV32-WA is designed based on Qualcomm SDX62, and
-MV32-WB is designed based on QUalcomm SDX65. Both
-products' enumeration would align with previous
-product MV31-W.So we merge MV31 and MV32 to MV3X
-for some common settings.
+On Thu, Apr 21, 2022 at 11:41:33AM +0300, Heikki Krogerus wrote:
+> On Thu, Apr 21, 2022 at 10:36:57AM +0200, Greg Kroah-Hartman wrote:
+> > On Thu, Apr 21, 2022 at 10:46:37AM +0300, Heikki Krogerus wrote:
+> > > On Wed, Apr 20, 2022 at 04:20:52PM +0300, Mathias Nyman wrote:
+> > > > On 19.4.2022 13.17, Sandeep Maheswaram (Temp) (QUIC) wrote:
+> > > > > Hi Mathias, Felipe,
+> > > > > 
+> > > > >> -----Original Message-----
+> > > > >> From: Sandeep Maheswaram (Temp) (QUIC) <quic_c_sanm@quicinc.com>
+> > > > >> Sent: Thursday, April 7, 2022 3:01 PM
+> > > > >> To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>; Felipe Balbi
+> > > > >> <balbi@kernel.org>; Stephen Boyd <swboyd@chromium.org>; Doug
+> > > > >> Anderson <dianders@chromium.org>; Matthias Kaehlcke
+> > > > >> <mka@chromium.org>; Mathias Nyman <mathias.nyman@intel.com>
+> > > > >> Cc: linux-arm-msm@vger.kernel.org; linux-usb@vger.kernel.org; linux-
+> > > > >> kernel@vger.kernel.org; Pavan Kumar Kondeti (QUIC)
+> > > > >> <quic_pkondeti@quicinc.com>; Pratham Pratap (QUIC)
+> > > > >> <quic_ppratap@quicinc.com>; Krishna Kurapati PSSNV (QUIC)
+> > > > >> <quic_kriskura@quicinc.com>; Vidya Sagar Pulyala (Temp) (QUIC)
+> > > > >> <quic_vpulyala@quicinc.com>; Sandeep Maheswaram (Temp) (QUIC)
+> > > > >> <quic_c_sanm@quicinc.com>
+> > > > >> Subject: [PATCH v3 0/2] Skip phy initialization for DWC3 USB Controllers
+> > > > >>
+> > > > >> Runtime suspend of phy drivers was failing from DWC3 driver as runtime
+> > > > >> usage value is 2 because the phy is initialized from
+> > > > >> DWC3 core and HCD core.
+> > > > >> Some controllers like DWC3 and CDNS3 manage phy in their core drivers.
+> > > > >> This property can be set to avoid phy initialization in HCD core.
+> > > > >>
+> > > > >> v3:
+> > > > >> Coming back to this series based on discussion at below thread
+> > > > >> https://patchwork.kernel.org/project/linux-arm-msm/patch/1648103831-
+> > > > >> 12347-4-git-send-email-quic_c_sanm@quicinc.com/
+> > > > >> Dropped the dt bindings PATCH 1/3 in v2
+> > > > >> https://patchwork.kernel.org/project/linux-arm-msm/cover/1636353710-
+> > > > >> 25582-1-git-send-email-quic_c_sanm@quicinc.com/
+> > > > >>
+> > > > >> v2:
+> > > > >> Updated the commit descriptions.
+> > > > >> Changed subject prefix from dwc to dwc3.
+> > > > >> Increased props array size.
+> > > > >>
+> > > > >> Sandeep Maheswaram (2):
+> > > > >>   usb: host: xhci-plat: Add device property to set XHCI_SKIP_PHY_INIT
+> > > > >>     quirk
+> > > > >>   usb: dwc3: host: Set the property usb-skip-phy-init
+> > > > >>
+> > > > >>  drivers/usb/dwc3/host.c      | 4 +++-
+> > > > >>  drivers/usb/host/xhci-plat.c | 3 +++
+> > > > >>  2 files changed, 6 insertions(+), 1 deletion(-)
+> > > > >>
+> > > > >> --
+> > > > >> 2.7.4
+> > > > > 
+> > > > > Please let me know your opinion about this series.
+> > > > 
+> > > > Otherwise looks good but wondering if we should document that new device
+> > > > property somewhere. 
+> > > > 
+> > > > Couldn't find a standard way how those device properties excluded from
+> > > > Documentation/devicetree/binding are documented
+> > > 
+> > > Couldn't it be just documented in drivers/usb/host/xhci-plat.c for now?
+> > 
+> > That's not where DT properties are documented.
+> 
+> It's not a DT property.
 
-Fixes: 87693e092bd0 ("bus: mhi: pci_generic: Add Cinterion MV31-W PCIe to MHI")
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
----
- drivers/bus/mhi/host/pci_generic.c | 30 ++++++++++++++++++++++--------
- 1 file changed, 22 insertions(+), 8 deletions(-)
+Then what is it and why are the other properties documented?
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 9527b7d63840..ef8c16746b76 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -371,7 +371,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
- 	.sideband_wake = false,
- };
- 
--static const struct mhi_channel_config mhi_mv31_channels[] = {
-+static const struct mhi_channel_config mhi_mv3x_channels[] = {
- 	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 64, 0),
- 	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 64, 0),
- 	/* MBIM Control Channel */
-@@ -382,25 +382,33 @@ static const struct mhi_channel_config mhi_mv31_channels[] = {
- 	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 512, 3),
- };
- 
--static struct mhi_event_config mhi_mv31_events[] = {
-+static struct mhi_event_config mhi_mv3x_events[] = {
- 	MHI_EVENT_CONFIG_CTRL(0, 256),
- 	MHI_EVENT_CONFIG_DATA(1, 256),
- 	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
- 	MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101),
- };
- 
--static const struct mhi_controller_config modem_mv31_config = {
-+static const struct mhi_controller_config modem_mv3x_config = {
- 	.max_channels = 128,
- 	.timeout_ms = 20000,
--	.num_channels = ARRAY_SIZE(mhi_mv31_channels),
--	.ch_cfg = mhi_mv31_channels,
--	.num_events = ARRAY_SIZE(mhi_mv31_events),
--	.event_cfg = mhi_mv31_events,
-+	.num_channels = ARRAY_SIZE(mhi_mv3x_channels),
-+	.ch_cfg = mhi_mv3x_channels,
-+	.num_events = ARRAY_SIZE(mhi_mv3x_events),
-+	.event_cfg = mhi_mv3x_events,
- };
- 
- static const struct mhi_pci_dev_info mhi_mv31_info = {
- 	.name = "cinterion-mv31",
--	.config = &modem_mv31_config,
-+	.config = &modem_mv3x_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.mru_default = 32768,
-+};
-+
-+static const struct mhi_pci_dev_info mhi_mv32_info = {
-+	.name = "cinterion-mv32",
-+	.config = &modem_mv3x_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
- 	.mru_default = 32768,
-@@ -475,6 +483,12 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 	/* MV31-W (Cinterion) */
- 	{ PCI_DEVICE(0x1269, 0x00b3),
- 		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
-+	/* MV32-WA (Cinterion) */
-+	{ PCI_DEVICE(0x1269, 0x00ba),
-+		.driver_data = (kernel_ulong_t) &mhi_mv32_info },
-+	/* MV32-WB (Cinterion) */
-+	{ PCI_DEVICE(0x1269, 0x00bb),
-+		.driver_data = (kernel_ulong_t) &mhi_mv32_info },
- 	{  }
- };
- MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
--- 
-2.25.1
-
+Anyway, a new series has been submitted that does document this so I
+don't think it's an argument anymore :)
