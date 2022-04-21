@@ -2,174 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC840509CEB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 11:57:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2C6A509D93
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 12:24:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1385955AbiDUJ7L convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 05:59:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58462 "EHLO
+        id S1388351AbiDUK0g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 06:26:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346809AbiDUJ7G (ORCPT
+        with ESMTP id S1388319AbiDUK00 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 05:59:06 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62E9524BFF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 02:56:17 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <p.zabel@pengutronix.de>)
-        id 1nhTXh-0003ZT-V5; Thu, 21 Apr 2022 11:56:06 +0200
-Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <p.zabel@pengutronix.de>)
-        id 1nhTXf-004KoC-Qh; Thu, 21 Apr 2022 11:56:02 +0200
-Received: from pza by lupine with local (Exim 4.94.2)
-        (envelope-from <p.zabel@pengutronix.de>)
-        id 1nhTXd-0006Qn-Nd; Thu, 21 Apr 2022 11:56:01 +0200
-Message-ID: <9b2b9460e46d8544867589ce61d380265f42cd04.camel@pengutronix.de>
-Subject: Re: [PATCH V4] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
-From:   Philipp Zabel <p.zabel@pengutronix.de>
-To:     "Sajida Bhanu (Temp)" <quic_c_sbhanu@quicinc.com>,
-        adrian.hunter@intel.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
-        chris@printf.net, venkatg@codeaurora.org, gdjakov@mm-sol.com,
-        quic_asutoshd@quicinc.com
-Cc:     linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rampraka@quicinc.com,
-        quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com
-Date:   Thu, 21 Apr 2022 11:56:01 +0200
-In-Reply-To: <fb6480f6-f004-c02d-09fe-92a64785a0c5@quicinc.com>
-References: <1649759983-22035-1-git-send-email-quic_c_sbhanu@quicinc.com>
-         <1ee3b0619ee976eaf88e7207318770d441418c94.camel@pengutronix.de>
-         <1943a5fb-cf6c-f358-9e27-408792a458ce@quicinc.com>
-         <dc2252f03db5881dbb17006c910dfca54c7d2fee.camel@pengutronix.de>
-         <fb6480f6-f004-c02d-09fe-92a64785a0c5@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-User-Agent: Evolution 3.38.3-1 
+        Thu, 21 Apr 2022 06:26:26 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ED3015710;
+        Thu, 21 Apr 2022 03:23:37 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9B4FBB823EF;
+        Thu, 21 Apr 2022 10:23:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6AE8C385AD;
+        Thu, 21 Apr 2022 10:23:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650536613;
+        bh=OPcQi8PNLxtf9QqmHXSHr2vOBK8ZZT68KQP3kx1rv+E=;
+        h=From:To:Cc:Subject:Date:From;
+        b=qbA6edcrA92ddaDuiDgGIQ8er1FIBNdhw16dpGwwZRTMNAZmAWJ4MjfSCPscdF4BU
+         5qI71065k50tiLpfjRfpHEr1H926epJOCV9jebBB7ROGCIIUbLkFnAbmSVFzH4rbl4
+         maIrJTsdNvzsYVTzKl+ew6rtiqGgHtM+s/mX39cQRVHiaIFibeWk6+X0H7lOzS7f/8
+         c66O4O1FCb0nxGFiGN3YVPpVnYJLyMasC4O5HZe/mrQ2ocitChiZ+y+oTmzUYVVj8Y
+         dxzndsOM+XUXlziAoTjs2F9+CfXj0kTpYtfV+hq2QNxaDMgLudsjOlZi/oULOZ+Fob
+         guX8zs+eUWbsQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1nhTyA-0004Xc-Fq; Thu, 21 Apr 2022 12:23:27 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Stephen Boyd" <swboyd@chromium.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH RFC 0/5] phy: qcom-qmp: add support for pipe clock muxing
+Date:   Thu, 21 Apr 2022 12:20:36 +0200
+Message-Id: <20220421102041.17345-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Do, 2022-04-21 at 10:32 +0530, Sajida Bhanu (Temp) wrote:
-> Hi,
-> 
-> Thanks for the review.
-> 
-> Please find the inline comments.
-> 
-> Thanks,
-> 
-> Sajida
-> 
-> On 4/19/2022 12:52 PM, Philipp Zabel wrote:
-> > Hi Sajida,
-> > 
-> > On Di, 2022-04-19 at 11:46 +0530, Sajida Bhanu (Temp) wrote:
-> > [...]
-> > > > > +static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
-> > > > > +{
-> > > > > +	struct reset_control *reset;
-> > > > > +	int ret = 0;
-> > > > No need to initialize ret.
-> > > > 
-> > > > > +
-> > > > > +	reset = reset_control_get_optional_exclusive(dev, NULL);
-> > > > > +	if (IS_ERR(reset))
-> > > > > +		return dev_err_probe(dev, PTR_ERR(reset),
-> > > > > +				"unable to acquire core_reset\n");
-> > > > > +
-> > > > > +	if (!reset)
-> > > > > +		return ret;
-> > > Here we are returning ret directly if reset is NULL , so ret
-> > > initialization is required.
-> > You are right. I would just "return 0;" here, but this is correct as
-> > is.
-> Ok
-> > > > > +
-> > > > > +	ret = reset_control_assert(reset);
-> > > > > +	if (ret)
-> > > > > +		return dev_err_probe(dev, ret, "core_reset assert failed\n");
-> > > > Missing reset_control_put(reset) in the error path.
-> > > Sure will add
-> > > > > +
-> > > > > +	/*
-> > > > > +	 * The hardware requirement for delay between assert/deassert
-> > > > > +	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
-> > > > > +	 * ~125us (4/32768). To be on the safe side add 200us delay.
-> > > > > +	 */
-> > > > > +	usleep_range(200, 210);
-> > > > > +
-> > > > > +	ret = reset_control_deassert(reset);
-> > > > > +	if (ret)
-> > > > > +		return dev_err_probe(dev, ret, "core_reset deassert failed\n");
-> > > > Same as above. Maybe make both ret = dev_err_probe() and goto ...
-> > > In both cases error message is different so I think goto not good idea here.
-> > You could goto after the error message. Either way is fine.
-> 
-> Sorry didn't get this ..can  you please help
+Some QMP PHYs need to remux to their pipe clock input to the pipe clock
+output generated by the PHY before powering on the PHY and restore the
+default source during power down.
 
-I meant you could either use goto after the error messages:
+         +---------------+
+         |   PHY block   |<<---------------------------------------+
+         |               |                   +-----+               |
+         |   +-------+   |                   | GCC |               |
+   I/P---^-->|  PLL  |---^--->pipe_clksrc--->|-\   |		   |
+    clk  |   +-------+   |                   |  +--|--->pipe_clk---+
+    	 |		 |	       xo--->|-/   |  
+         +---------------+	             +-----|
 
-+static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
-+{
-[...]
-+	ret = reset_control_assert(reset);
-+	if (ret) {
-+		dev_err_probe(dev, ret, "core_reset assert failed\n");
-+		goto out_reset_put;
-+	}
-[...]
-+	ret = reset_control_deassert(reset);
-+	if (ret) {
-+		dev_err_probe(dev, ret, "core_reset deassert failed\n");
-+		goto out_reset_put;
-+	}
-+
-+	usleep_range(200, 210);
-+
-+out_reset_put:
-+	reset_control_put(reset);
-+
-+	return ret;
-+}
+This series moves the pipe clock mux handling from PCIe controller
+driver into the PHY driver which already manages the pipe clock as the
+PHY is both the producer of the pipe clock as well as its (primary)
+consumer.
 
-Or not use goto and copy the reset_control_put() into each error path:
+This is an alternative to the series posted here
 
-+static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
-+{
-[...]
-+	ret = reset_control_assert(reset);
-+	if (ret) {
-+		reset_control_put(reset);
-+		return dev_err_probe(dev, ret, "core_reset assert failed\n");
-+	}
-[...]
-+	ret = reset_control_deassert(reset);
-+	if (ret) {
-+		reset_control_put(reset);
-+		return dev_err_probe(dev, ret, "core_reset deassert failed\n");
-+	}
-+
-+	usleep_range(200, 210);
-+	reset_control_put(reset);
-+
-+	return 0;
-+}
+	https://lore.kernel.org/r/20220413233144.275926-1-dmitry.baryshkov@linaro.org
 
-regards
-Philipp
-> 
+which instead moves the mux handling into the clock drivers and ties
+remuxing to the gating/ungating of the pipe clock in the GCC. That
+approach means that it is still possible to have the pipe clock ungated
+without providing a valid source, somethings which can cause hangs when
+enabling/disabling the GDSC (presumably as some entity is consuming the
+pipe clock).
+
+Implementing this in the clock drivers also means that the
+implementation is spread out over multiple files and makes it harder to
+add support for new SoCs as it may not be clear that every pipe clock
+mux definition needs to be updated with safe and non-safe parent-clock
+indexes and an ad-hoc mux ops implementation.
+
+The custom mux implementation currently also hides the actual topology
+of the clock tree by always reporting the pipe mux source as being
+provided by the PHY (e.g. as reported by debugfs).
+
+This series, by contrast, ties the muxing to when the pipe clock source
+is enabled, that is, when the PHY is powered on, so that the GCC pipe
+clock always has a valid source.
+
+The implementation is more straight-forward, avoids the one-off clock
+mux implementation, and allows for documenting this once and for all in
+the PHY driver.
+
+Note that the devicetree bindings remains to be updated but that this
+was left out of this RFC.
+
+This series depends on the two qcom-qmp fixlets posted here:
+
+	https://lore.kernel.org/all/20220420152331.5527-1-johan+linaro@kernel.org/
+
+Johan
+
+
+Dmitry Baryshkov (1):
+  PCI: qcom: Remove unnecessary pipe_clk handling
+
+Johan Hovold (4):
+  phy: qcom-qmp: add support for pipe clock muxing
+  arm64: dts: qcom: sc7280: move pipe mux handling to phy
+  PCI: qcom: Drop pipe clock muxing
+  PCI: qcom: Drop unused post-init callbacks
+
+ arch/arm64/boot/dts/qcom/sc7280.dtsi   | 18 ++---
+ drivers/pci/controller/dwc/pcie-qcom.c | 96 ++------------------------
+ drivers/phy/qualcomm/phy-qcom-qmp.c    | 71 +++++++++++++++++--
+ 3 files changed, 76 insertions(+), 109 deletions(-)
+
+-- 
+2.35.1
+
