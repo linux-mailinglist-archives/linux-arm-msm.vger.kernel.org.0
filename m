@@ -2,167 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB2D35095B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 06:13:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2FDF509625
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 07:01:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384068AbiDUEQk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 00:16:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53686 "EHLO
+        id S1377563AbiDUFEa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 01:04:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349663AbiDUEQi (ORCPT
+        with ESMTP id S236127AbiDUFE3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 00:16:38 -0400
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62DE3E0D8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 21:13:48 -0700 (PDT)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-e2fa360f6dso4232075fac.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Apr 2022 21:13:48 -0700 (PDT)
+        Thu, 21 Apr 2022 01:04:29 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7337CB86B;
+        Wed, 20 Apr 2022 22:01:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=YxJkE8G1CRaDGILe7+GoWJTE8swqHANzIKXbTjCxfWA=;
-        b=wmc+QCZr7W/1S6Qi4m8vCRTullRSJITUAjG2JkXsl8y5jZBmRrU28R4meMbAFMy3j4
-         xQHQfXWzBZdgs6/PiN1QjCK7nca7KkIULjqpfArwqsljTp9SwXfgOAPvYa/92cfETLAO
-         LH346HKowgQBSMij8Rm6I/QklFiHzmza27cpSEJEdeZ83KaCQ/3QihpNz/jZGXDcdZXB
-         rgfhCdFLPpwEhmrawwEsfA7x/XzslBP9+9jEx720HPu5cdO5e9TWoRCQ+S0ou0bYepRe
-         DpwKKaqQtinBGgGsOfZBxZeQVVlZTAvWQhsNDyFZh2IskOh9wH/UhEVMJURzOankc7i2
-         6Jog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=YxJkE8G1CRaDGILe7+GoWJTE8swqHANzIKXbTjCxfWA=;
-        b=H9RInNPpa6usuxumNDZRHQbbsywW62kjkhoLcn+YNwt0G47j0aLZQ+c6oT0uXGcpfB
-         ghz97i1heBUq+JsMA/8cutqscqNolCDpjJA3KdkQNFSX072JzRj2YfWxi9tlDoTqidvo
-         g++VW0lfReA1wOtJRjyeWjq0Z6+RJMTpIR1anfyXIp0rZMfYi6Dm8JdllMBJ9420IRGl
-         YraDotle1kOo4c5jik04J3dAxu05jEag7xWY1To4J/5JudcpVnv0WtEBRAu80Vz2dpQt
-         NFJPHxmjAEtYAGJSc5s4FFe/5IGw0UK67ssBifApBbN/ehX0BrjzVBjcyNtzFy0/Xn0K
-         Ujzw==
-X-Gm-Message-State: AOAM531LMgCE76KKfS0I/tgeIvlKhO+8YOWn1m7brCxcIWp8rZNITI2U
-        leE9wc6nZBqbvKCAEUR1LA3eEA==
-X-Google-Smtp-Source: ABdhPJwj+TTo8+SybVk/1ckcBy63VRtH0SyOXR6xQENQRDdLYgNccjsgslQORDGkN774JfFw5rMNyQ==
-X-Received: by 2002:a05:6870:a707:b0:e2:cc85:d98 with SMTP id g7-20020a056870a70700b000e2cc850d98mr3085213oam.131.1650514427764;
-        Wed, 20 Apr 2022 21:13:47 -0700 (PDT)
-Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id h186-20020acab7c3000000b002ef5106248asm7115512oif.45.2022.04.20.21.13.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Apr 2022 21:13:47 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650517301; x=1682053301;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=fc+a+eesmMx+eKLhQKcZtdV5gq2ZPL8k4cLr5pDepa0=;
+  b=tEMgkTXGebLKXZ6OBw321GUY1sPlDQ203ME9JXdqIV1PtpH+MAv0vLfM
+   OWzibZPoc4VykxwMKO1uf5wjGeElNxcroRIMJOgYsv/ehYeiZF8XWmezw
+   O0N/6toDSbYzkqcStW1WGXWsudGXqtVrKC9wjNWnh3D5EGsmh251s4DqJ
+   Y=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 20 Apr 2022 22:01:41 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2022 22:01:40 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 20 Apr 2022 22:01:40 -0700
+Received: from c-sanm-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 20 Apr 2022 22:01:34 -0700
+From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v4 2/2] drm/msm/dpu: Issue MDSS reset during initialization
-Date:   Wed, 20 Apr 2022 21:15:50 -0700
-Message-Id: <20220421041550.643964-2-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220421041550.643964-1-bjorn.andersson@linaro.org>
-References: <20220421041550.643964-1-bjorn.andersson@linaro.org>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "Doug Anderson" <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
+CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_kriskura@quicinc.com>, <quic_vpulyala@quicinc.com>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Subject: [PATCH v4 0/3] Skip phy initialization for DWC3 USB Controllers
+Date:   Thu, 21 Apr 2022 10:30:52 +0530
+Message-ID: <1650517255-4871-1-git-send-email-quic_c_sanm@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's typical for the bootloader to bring up the display for showing a
-boot splash or efi framebuffer. But in some cases the kernel driver ends
-up only partially configuring (in particular) the DPU, which might
-result in e.g. that two different data paths attempts to push data to
-the interface - with resulting graphical artifacts.
+Runtime suspend of phy drivers was failing from DWC3 driver as
+runtime usage value is 2 because the phy is initialized from
+DWC3 core and HCD core.
+Some controllers like DWC3 and CDNS3 manage phy in their core drivers.
+This property can be set to avoid phy initialization in HCD core.
 
-Naturally the end goal would be to inherit the bootloader's
-configuration and provide the user with a glitch free handover from the
-boot configuration to a running DPU.
+v4:
+Added the device tree binding patch in the series.
 
-But as implementing seamless transition from the bootloader
-configuration to the running OS will be a considerable effort, start by
-simply resetting the entire MDSS to its power-on state, to avoid the
-partial configuration.
+v3:
+Coming back to this series based on discussion at below thread
+https://patchwork.kernel.org/project/linux-arm-msm/patch/1648103831-12347-4-git-send-email-quic_c_sanm@quicinc.com/
+Dropped the dt bindings PATCH 1/3 in v2
+https://patchwork.kernel.org/project/linux-arm-msm/cover/1636353710-25582-1-git-send-email-quic_c_sanm@quicinc.com/ 
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+v2:
+Updated the commit descriptions.
+Changed subject prefix from dwc to dwc3.
+Increased props array size.
 
-Changes since v3:
-- Rebased upon the mdss dpu/mdp restructuring (https://patchwork.freedesktop.org/series/98525/)
 
- drivers/gpu/drm/msm/msm_mdss.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+Sandeep Maheswaram (3):
+  dt-bindings: usb: usb-xhci: Add bindings for usb-skip-phy-init
+    property
+  usb: host: xhci-plat: Add device property to set XHCI_SKIP_PHY_INIT
+    quirk
+  usb: dwc3: host: Set the property usb-skip-phy-init
 
-diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index f6f0d0fa5ab2..20f154dda9cf 100644
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -4,11 +4,13 @@
-  */
- 
- #include <linux/clk.h>
-+#include <linux/delay.h>
- #include <linux/irq.h>
- #include <linux/irqchip.h>
- #include <linux/irqdesc.h>
- #include <linux/irqchip/chained_irq.h>
- #include <linux/pm_runtime.h>
-+#include <linux/reset.h>
- 
- #include "msm_drv.h"
- #include "msm_kms.h"
-@@ -193,6 +195,32 @@ static void msm_mdss_destroy(struct msm_mdss *msm_mdss)
- 	irq_set_chained_handler_and_data(irq, NULL, NULL);
- }
- 
-+static int msm_mdss_reset(struct device *dev)
-+{
-+	struct reset_control *reset;
-+
-+	reset = reset_control_get_optional_exclusive(dev, NULL);
-+	if (!reset) {
-+		/* Optional reset not specified */
-+		return 0;
-+	} else if (IS_ERR(reset)) {
-+		return dev_err_probe(dev, PTR_ERR(reset),
-+				     "failed to acquire mdss reset\n");
-+	}
-+
-+	reset_control_assert(reset);
-+	/*
-+	 * Tests indicate that reset has to be held for some period of time,
-+	 * make it one frame in a typical system
-+	 */
-+	msleep(20);
-+	reset_control_deassert(reset);
-+
-+	reset_control_put(reset);
-+
-+	return 0;
-+}
-+
- /*
-  * MDP5 MDSS uses at most three specified clocks.
-  */
-@@ -229,6 +257,10 @@ static struct msm_mdss *msm_mdss_init(struct platform_device *pdev, bool is_mdp5
- 	int ret;
- 	int irq;
- 
-+	ret = msm_mdss_reset(&pdev->dev);
-+	if (ret)
-+		return ERR_PTR(ret);
-+
- 	msm_mdss = devm_kzalloc(&pdev->dev, sizeof(*msm_mdss), GFP_KERNEL);
- 	if (!msm_mdss)
- 		return ERR_PTR(-ENOMEM);
+ Documentation/devicetree/bindings/usb/usb-xhci.yaml | 4 ++++
+ drivers/usb/dwc3/host.c                             | 4 +++-
+ drivers/usb/host/xhci-plat.c                        | 3 +++
+ 3 files changed, 10 insertions(+), 1 deletion(-)
+
 -- 
-2.35.1
+2.7.4
 
