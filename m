@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB99F50A270
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 16:29:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 538CC50A25B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 16:29:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389247AbiDUOan (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 10:30:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36354 "EHLO
+        id S1389345AbiDUObE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 10:31:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1389341AbiDUOaY (ORCPT
+        with ESMTP id S1389352AbiDUOaY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 21 Apr 2022 10:30:24 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B93333FD9B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:31 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id w194so5752212oiw.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:31 -0700 (PDT)
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6B893E5C9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:32 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id e4so5800023oif.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 07:27:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=d2ljouS/NpyCeddFpyIfjibsWr5AFiZwDxJgcpp7ScU=;
-        b=BbpDQvemCdZVqmb7nHXXs3coqPhdk0qtRa4x7/1gBOhP9l4iw9jADHsviJQ7FGmMFh
-         lwVjRS9Pt49yI/lahyfPIFslnEHOe5xLFZ7CDJy7VUlmORpJNaIoliyk9zV2+GoYo3f5
-         Oj4mRNsDtf0RSyGCTCMWM9ciA1j48YwniEb63nXu9aaYdEEURpQefnAQfONr/L1wSQ5k
-         N64GREE5ONZs5NDPX6KI+7EInR87qWSYNzh9iOoHdBpPXCuSWxwB7L8rvMwONVTo1w7G
-         Gu53muN8Wb02OHUF9cLwwyiM3rCj0lCyqG0/2wlpSwXV/R5iFljrYdVovGWXZRWM1ymL
-         5Elw==
+        bh=Y+YeVpF+XXNXv6igumvGpGrAaQhmDe2XduTo8xGKCNM=;
+        b=Xi2WxW6CvV2f6mBJr9C2k7VR0F64eAH9Ts8vrRc0czw4dlLBaNEPvimjsGsQvuivb/
+         v1bs5ZqhhY1vPHHBS3XieOmtvYrhNaDep9OFdHgfOeiK6eQdOc2dBbPHcEFV4K0UmjCW
+         sVHpy12E8ZT8+CjjRNdOz/3jvo00AASP3Qa5SJ0FNCnvSoZWFx+P8wBfWMegahrerfii
+         fm1z6tO1eNA2VhlUQmPYgesQQsNicvjjTgx3Jr0QYEbCMkuBOTGYsV9+qxkaPelI8Ktv
+         IsVqZMlNB+JgTB0ZbfwB1foUk5xtCaebqgk7egEY0x4hiK/ENSfjUp9lKIXDkiTgJuIf
+         tkFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=d2ljouS/NpyCeddFpyIfjibsWr5AFiZwDxJgcpp7ScU=;
-        b=I6oFDNrPxhLz7H52KLXszqflsJo9XPP+80z1xRbsnH9dEF2I5iTIhnO97yV/glIotX
-         dQ+vSXbcuY74oEq7M96E6pGg26nFOMx3tNFA35Ks9CgaK4vzs/dT49ynIvhamU0uTPlw
-         lnkmPYvUdx99j/uNz8se6YMorCx1bvMD4ikFJnAb1JaSEqRaPsKeljleKb2lEUiRnOkY
-         V+U4UHPslE/27UZPXzW4oU5xuGVqBwM0vFiJFG2o90xKHc/4A57UzEDXOgT+RWnwakof
-         c7HBWUwHGYay48IKa6e8x0XWrj5gdUlpqbw9G15hr9RXuSsR002mxOz6Nsk0Tt50aS+j
-         JfZg==
-X-Gm-Message-State: AOAM531zC5EIDY7C5o5N/a/H3ANy6PilydXbl0myKR1ej7XkyqvpkF/r
-        zaFPtJEURxltuofED+IxeUYtSw==
-X-Google-Smtp-Source: ABdhPJx88FVVrMymF5gKvcCBYCUtPX/ISFPeHlaE7O//hDUPNqrMeGTrMmybmJEhcEkrBXUAUv+EXA==
-X-Received: by 2002:a05:6808:23d1:b0:322:97f8:69d7 with SMTP id bq17-20020a05680823d100b0032297f869d7mr4348215oib.241.1650551250958;
-        Thu, 21 Apr 2022 07:27:30 -0700 (PDT)
+        bh=Y+YeVpF+XXNXv6igumvGpGrAaQhmDe2XduTo8xGKCNM=;
+        b=rn2kmJgmWasqRFUIWjdLhkEkLX6HFLTIapGpxQVI70UfAsDM3CgcQ8U3OtXCLdy0Gk
+         cJX1grqyU5K9jUP8VQQ1oO0LWkxHHU5zYrLLgr2+sT4mVFPQM+gDLg49ny/yzp48EoZQ
+         l6HM1Df55Yefjcz+DCnfwgksG11klQFMNC26xZab55Yy0uaKIGZU6dacU2PlXdgKc5p1
+         3pf9e/TP5h4auSdd7N7E8JBoLnkbmE9K0L6hjYb/A8XGnKLHVp2fgAU1MX/f2x2PiHGM
+         a+apElWoLSOBeIpEZs68S8wCZk7q8T59GSm+OPD6MWZCH6PyH90fAt0sgvZcaPQzmFJZ
+         SP/Q==
+X-Gm-Message-State: AOAM531YU5UuDuGfuHvgdt4X+zVCW1UA0yTxXiO7lhFR/8NhYLzrDclD
+        ny4WBPK0E+U6LEBuwQtNb0g2Zg==
+X-Google-Smtp-Source: ABdhPJyAWDnEf73EJQ2xtQ/tjqK8JJQHB26dASCBxTB3qthtJ1S/h5Slz6yOHwSC2UdCbKFEyqqrNg==
+X-Received: by 2002:aca:b505:0:b0:322:a524:8859 with SMTP id e5-20020acab505000000b00322a5248859mr4133243oif.2.1650551252015;
+        Thu, 21 Apr 2022 07:27:32 -0700 (PDT)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id s14-20020a0568302a8e00b006054e841915sm4296295otu.73.2022.04.21.07.27.29
+        by smtp.gmail.com with ESMTPSA id s14-20020a0568302a8e00b006054e841915sm4296295otu.73.2022.04.21.07.27.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 07:27:30 -0700 (PDT)
+        Thu, 21 Apr 2022 07:27:31 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Mukesh Savaliya <msavaliy@codeaurora.org>,
         Kuldeep Singh <singh.kuldeep87k@gmail.com>,
@@ -56,14 +56,14 @@ To:     Mukesh Savaliya <msavaliy@codeaurora.org>,
         Akash Asthana <akashast@codeaurora.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>
 Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: (subset) [PATCH v2 2/4] dt-bindings: qcom: geni-se: Update I2C schema reference
-Date:   Thu, 21 Apr 2022 09:27:06 -0500
-Message-Id: <165055095990.2574292.2416504278084349472.b4-ty@linaro.org>
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [PATCH v2 4/4] dt-bindings: qcom: geni-se: Update UART schema reference
+Date:   Thu, 21 Apr 2022 09:27:07 -0500
+Message-Id: <165055095990.2574292.9008815958206587881.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220404182938.29492-3-singh.kuldeep87k@gmail.com>
-References: <20220404182938.29492-1-singh.kuldeep87k@gmail.com> <20220404182938.29492-3-singh.kuldeep87k@gmail.com>
+In-Reply-To: <20220404182938.29492-5-singh.kuldeep87k@gmail.com>
+References: <20220404182938.29492-1-singh.kuldeep87k@gmail.com> <20220404182938.29492-5-singh.kuldeep87k@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -77,18 +77,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 4 Apr 2022 23:59:35 +0530, Kuldeep Singh wrote:
-> We now have geni based QUP I2C controller binding in place as
-> dt-bindigs/i2c/qcom,i2c-geni-qcom.yaml similar to other controllers,
-> update reference in parent schema and while at it, also remove
-> properties defined for the controller from common wrapper.
+On Mon, 4 Apr 2022 23:59:37 +0530, Kuldeep Singh wrote:
+> We now have geni based QUP UART controller individual binding, update
+> reference in parent schema and remove properties from common wrapper.
+> 
+> With removal of last child node schema, remove common properties of all
+> the controllers as they have become obsolete now.
 > 
 > 
+> [...]
 
 Applied, thanks!
 
-[2/4] dt-bindings: qcom: geni-se: Update I2C schema reference
-      commit: fcf2c0f7cbcad29f1decb88567e54c2451b60ba5
+[4/4] dt-bindings: qcom: geni-se: Update UART schema reference
+      commit: 6579f39290bf056442850094b8f4b95163c17996
 
 Best regards,
 -- 
