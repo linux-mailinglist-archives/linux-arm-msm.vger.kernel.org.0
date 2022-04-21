@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD58750A786
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 19:57:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65FFC50A7BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 20:04:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232674AbiDUR7u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 13:59:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54300 "EHLO
+        id S1391181AbiDUSGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 14:06:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1391003AbiDUR7r (ORCPT
+        with ESMTP id S1391184AbiDUSGn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 13:59:47 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D9294617A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 10:56:57 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id bg9so5261820pgb.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 10:56:57 -0700 (PDT)
+        Thu, 21 Apr 2022 14:06:43 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F6914B43E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 11:03:23 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id 2so5662485pjw.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 11:03:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=2+ODCy1CP4tXNwJ/czzqhnV/N8rv5UExaFfjbT7uxK0=;
-        b=SN0+wGaRQgeK/yobAP0eO+2elOIM186yLWYJIQiqby33hxF37gYyeRKcF8JHHlr3ex
-         GZdQxf1DulLjGXaU04BYJJ1bJSvNjXwRBPYaJ/gZ6EgSa27FefeQ5uFyXLI1QrGXagQf
-         Y2y3Rrw8vtg/lFqo6RVUXJ0F+CoJmlyEB8P7w=
+        bh=0R+rUO6qFnTFl4iOBE135fiQ5474O3jXDThMBCai2no=;
+        b=iXsHoNCc1h1zyDeB+QJKZuZBmwC9fGx543/8SCLGP8Vfaaoe+DkCmAte7fyz4LYrbn
+         raFeVzlgpnIIigHO6XkqQx0302XoulfnDLsv3/NQpNRKKL3fqSOEQL3P6cdvmDw/tKz/
+         +CdqNlgopHqKzxUE2pPL8ShnGCl7hTEPJM/to=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=2+ODCy1CP4tXNwJ/czzqhnV/N8rv5UExaFfjbT7uxK0=;
-        b=eYQGqcGQEaHLtXoi45+YLoEEdXqvuWxpujBKOZkKxv80l5J19niUVPn/iubBluVOCO
-         FJvoBv0qEez6ZCNJgN62q5sbO5srYicmdZXptjql/mFm5/I3h8OJ3rOqLBn3HJyZM1iA
-         NrB9dXC+ZXHVkUSWrzWkcKQaXKuH+gYdXJWxx48eqhKHEzBWSZmKbAjN70YKJ1HPclgE
-         raxAAYoiTxjL+kB4bSP8iekoAcmDMgHQtha9EKNNiv8NtnROSjK4E6oSWudEoEnpGpEU
-         AYMS3XafQ2VMqK/VpPlQCisV0BQC13PSVynczTZMLjWcd83w/LCu4Wo9osWdHplglIwB
-         rAgA==
-X-Gm-Message-State: AOAM530kK8mG/1nSkRr+sTSyuo9lQZr9591MVc0Fo0g96pkixsbi90yV
-        8vwr7IGGKqoDB7r6ECfuUDvIIQ==
-X-Google-Smtp-Source: ABdhPJyJg/AK+kN5U1bU4t3L8HJ/Exb45MCRhFrRIA1joWpLpyzYO3MyJyxe79d1ZWFfVsoDfbakIQ==
-X-Received: by 2002:a05:6a00:1943:b0:4cb:79c9:fa48 with SMTP id s3-20020a056a00194300b004cb79c9fa48mr779266pfk.47.1650563816644;
-        Thu, 21 Apr 2022 10:56:56 -0700 (PDT)
+        bh=0R+rUO6qFnTFl4iOBE135fiQ5474O3jXDThMBCai2no=;
+        b=isxjJXYeGWcKxyNAhq0pNg2EdcZochJlvvN/iqXnclUM33rPA8/uaWYHJWGmY/ECx/
+         K+m1DdLmLGZ0aJBXDoyW0BGa9u0lA48EtQnK0j7i5wmXh/dYrHL60DwFYSB7F/VILhgE
+         KsS6ogd6Rx5BFmPqg/6lJnOSu339JUDbUz3bJTztNlF0QNrPr7bg040+jhu696fvwi74
+         /WXfEBJp6hZJIe3DVo69hcCbz+ty9RvP1jMFZrTZ5uV9nj3iy8MyjUWUlbQvloC8sR8l
+         tChp5bW5bt/mdhAaobCf85HUd3vWVfqoGlidFyN1vbFYWRgKY1YhJOhdxptjA1m0/9f4
+         FcMQ==
+X-Gm-Message-State: AOAM531wPktoc21z8UzUMKH+tTpBwN5J9ihEV1FTZbLoT29bnqfsQaep
+        G4Tverpd86la0MIAFlZwb8tHzw==
+X-Google-Smtp-Source: ABdhPJxfw0GmD+H/PI1CwP2ixJv3REBy3eeBNVafcTNTvNfAxmxpNZg2mrh+q8ErHNEivfQV2G9WYQ==
+X-Received: by 2002:a17:902:a987:b0:158:b020:e5b8 with SMTP id bh7-20020a170902a98700b00158b020e5b8mr429725plb.103.1650564202999;
+        Thu, 21 Apr 2022 11:03:22 -0700 (PDT)
 Received: from localhost ([2620:15c:202:201:d426:5807:a72:7b27])
-        by smtp.gmail.com with UTF8SMTPSA id i6-20020a628706000000b0050adb5a4452sm3481477pfe.101.2022.04.21.10.56.55
+        by smtp.gmail.com with UTF8SMTPSA id k10-20020a056a00168a00b004f7e2a550ccsm25449651pfc.78.2022.04.21.11.03.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Apr 2022 10:56:56 -0700 (PDT)
-Date:   Thu, 21 Apr 2022 10:56:54 -0700
+        Thu, 21 Apr 2022 11:03:22 -0700 (PDT)
+Date:   Thu, 21 Apr 2022 11:03:20 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
@@ -54,83 +54,44 @@ Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         srinivas.kandagatla@linaro.org, dianders@chromium.org,
         swboyd@chromium.org, judyhsiao@chromium.org,
         Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v9 11/12] arm64: dts: qcom: sc7280: Add sound node for
- CRD 1.0 and CRD 2.0
-Message-ID: <YmGa5iQ1ozTs5jLJ@google.com>
+Subject: Re: [PATCH v9 12/12] arm64: dts: qcom: sc7280: Add sound node for
+ CRD 3.0/3.1
+Message-ID: <YmGcaG3MKIHSQyNi@google.com>
 References: <1650552459-21077-1-git-send-email-quic_srivasam@quicinc.com>
- <1650552459-21077-12-git-send-email-quic_srivasam@quicinc.com>
+ <1650552459-21077-13-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1650552459-21077-12-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1650552459-21077-13-git-send-email-quic_srivasam@quicinc.com>
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 21, 2022 at 08:17:38PM +0530, Srinivasa Rao Mandadapu wrote:
-
-> Subject: arm64: dts: qcom: sc7280: Add sound node for CRD 1.0 and CRD 2.0 
-
-nit: and the IDP boards?
-
-> Add dt nodes for sound card support on revision 3 and 4
-> (aka CRD 1.0 and 2.0) boards, which is using WCD938x headset
-> playback, capture, I2S speaker playback and DMICs via VA macro.
+On Thu, Apr 21, 2022 at 08:17:39PM +0530, Srinivasa Rao Mandadapu wrote:
+> Add dt nodes for sound card support on rev5 (aka CRD 3.0/3.1) boards,
+> which is using WCD938x headset playback, capture, I2S speaker playback
+> and DMICs via VA macro.
 > 
 > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 > Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 > Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts | 23 +++++++
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi   | 98 ++++++++++++++++++++++++++++++
->  2 files changed, 121 insertions(+)
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 98 +++++++++++++++++++++++
+>  1 file changed, 98 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
-> index 462d655..763d2bf 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
-> @@ -87,6 +87,29 @@ ap_ts_pen_1v8: &i2c13 {
->  	pins = "gpio51";
->  };
->  
-> +&sound {
-> +	audio-routing =
-> +		"IN1_HPHL", "HPHL_OUT",
-> +		"IN2_HPHR", "HPHR_OUT",
-> +		"AMIC1", "MIC BIAS1",
-> +		"AMIC2", "MIC BIAS2",
-> +		"VA DMIC0", "MIC BIAS1",
-> +		"VA DMIC1", "MIC BIAS1",
-> +		"VA DMIC2", "MIC BIAS3",
-> +		"VA DMIC3", "MIC BIAS3",
-> +		"TX SWR_ADC0", "ADC1_OUTPUT",
-> +		"TX SWR_ADC1", "ADC2_OUTPUT",
-> +		"TX SWR_ADC2", "ADC3_OUTPUT",
-> +		"TX SWR_DMIC0", "DMIC1_OUTPUT",
-> +		"TX SWR_DMIC1", "DMIC2_OUTPUT",
-> +		"TX SWR_DMIC2", "DMIC3_OUTPUT",
-> +		"TX SWR_DMIC3", "DMIC4_OUTPUT",
-> +		"TX SWR_DMIC4", "DMIC5_OUTPUT",
-> +		"TX SWR_DMIC5", "DMIC6_OUTPUT",
-> +		"TX SWR_DMIC6", "DMIC7_OUTPUT",
-> +		"TX SWR_DMIC7", "DMIC8_OUTPUT";
-> +};
-> +
->  &wcd938x {
->  	pinctrl-names = "default", "sleep", "us_euro_hs_sel";
->  	pinctrl-0 = <&wcd_reset_n>;
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index 2e991e8..f2ad0c6 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -85,6 +85,104 @@
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&nvme_pwren>;
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> index 4033d2a..bc6dbcc 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> @@ -42,6 +42,104 @@
+>  		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
+>  		#sound-dai-cells = <1>;
 >  	};
 > +
 > +	sound: sound {
@@ -142,10 +103,10 @@ nit: and the IDP boards?
 > +			"IN2_HPHR", "HPHR_OUT",
 > +			"AMIC1", "MIC BIAS1",
 > +			"AMIC2", "MIC BIAS2",
-> +			"VA DMIC0", "MIC BIAS3",
-> +			"VA DMIC1", "MIC BIAS3",
-> +			"VA DMIC2", "MIC BIAS1",
-> +			"VA DMIC3", "MIC BIAS1",
+> +			"VA DMIC0", "MIC BIAS1",
+> +			"VA DMIC1", "MIC BIAS1",
+> +			"VA DMIC2", "MIC BIAS3",
+> +			"VA DMIC3", "MIC BIAS3",
 > +			"TX SWR_ADC0", "ADC1_OUTPUT",
 > +			"TX SWR_ADC1", "ADC2_OUTPUT",
 > +			"TX SWR_ADC2", "ADC3_OUTPUT",
@@ -169,11 +130,9 @@ nit: and the IDP boards?
 > +			link-name = "MAX98360A";
 > +			reg = <MI2S_SECONDARY>;
 
-This usually is the same as the node address. Given that it's a bogus value that
-isn't used the link number seems a better choice than the lpass DAI id.
-
-Note for other reviewers: the current state of discussion is to remove this
-property from the binding and device trees in a follow up series.
+same comment as for "arm64: dts: qcom: sc7280: Add sound node for CRD
+1.0 and CRD 2.0", i.e. use the link number for 'reg' instead of the lpass
+DAI id.
 
 > +
 > +			cpu {
@@ -238,8 +197,3 @@ property from the binding and device trees in a follow up series.
 > +		};
 > +	};
 >  };
->  
->  &apps_rsc {
-> -- 
-> 2.7.4
-> 
