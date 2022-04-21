@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFF79509E41
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 13:09:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8B21509EA0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 13:36:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1388715AbiDULL1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 07:11:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49172 "EHLO
+        id S1376632AbiDULjB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 07:39:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1388707AbiDULLU (ORCPT
+        with ESMTP id S242782AbiDULjA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 07:11:20 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D14817E3D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 04:08:30 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id p10so8026127lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 04:08:30 -0700 (PDT)
+        Thu, 21 Apr 2022 07:39:00 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D26921258
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 04:36:10 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id d6so8152838lfv.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 04:36:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=lQpM5TBDz77TdM7yk6XHt2oHp2HL+z/14qpcwF/pmG0=;
-        b=IJ2ystDfkpqLxJeN0WS3y5iTnrQAMSQAPqsRxS8dn1pCQGtvLWiqKUcTErC6y310sh
-         Ugp+RGYieXrFPtyXAlCE2rRWE5VzcHRGvsrhvYVbv9V6ZWgCuwq7BWXazXKD5HNtFENN
-         Ur63VwYS9qzXk5uL7vwLNy7BMS6/khH/keiBj1Xul8khnoiU8MAZ9MXAT0E3P6O3FqpE
-         AmYg6Q7fdtrA8HTLQmArjnw21IgEk+TRXf4pkVsjwjUWCyE+2q8NUeQsH+FoIcDYiZQf
-         uGJi2MIbjTPQD5vt4WCtr3lCZU32Yjx6NJ6A1xY5Zbe7swaMN0EFekIN8wSi/CEU7dkO
-         iPww==
+        bh=nhxnVej2CIUMLhdNzrsZoPwHkHCS1xzrTTmqvH/njl8=;
+        b=JlgcvbzqGUzAWxfa2H0VDGBAue1ylSoHDEeaowQLuS7QB3U10bKI92k3Pnhi1se7Ud
+         wpwpruPBzEMnxiE7eHnnKLc66ErVKGoZvKUyfHQ2vPJhU1DGoELOMXZmjnpVGu6K6jkr
+         eQvTqyvE30q2iQHVz9GJyPhs2GKEs38GL4BSLyh8P1Pl+q+2RW3pOHYHHh1Ll4mPBsMD
+         aBq8q69v28bV2iMJXb3jOCDDkM6LwDUWlwjZ8a7i0MJHAgnsylmaKSI4jTWoq7NPFlb+
+         XNHQvFIl7FDBe/E6Z+H7VyGrw9afFBEfOGHZTU/IqrWwNR3zv0NhSPTjHMe1czKyWxds
+         Jynw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=lQpM5TBDz77TdM7yk6XHt2oHp2HL+z/14qpcwF/pmG0=;
-        b=QYg4HHeUCNdW2qxoA9zt5O1B9WenHw9NtXOvntUezNpAHEUN6kvLCWtGQUIHj0ZWAt
-         97G2b7cThKJR0ZE7trQ9l+cZWvf1iNpkdZUJG2u/2WOno6kCDeZ1Ha8sqaVy+W6kKAbf
-         YiZtG3AP3u8pXed7BK8dieIb4NB8+mklYIzkpNXgkGZ+30m9OTsTUvH8/hifQuyDdZTS
-         IkaBcT8jkWPoyeeUXhyy54r7zSZTde2c01a+Yj7QVe2qcrPzeVsSVM7TZiE6S/JbOsRZ
-         7OmFluE9cb+NSwJOWv9Rbz7c2eovxInV6LYmMfbe6u1MZqh4vDmrtdDlw7/+hxk1UtZI
-         GMjg==
-X-Gm-Message-State: AOAM531ooPLEprSr1TgqYbjkDGDQkOV0hDDaUxwCnUyhx8qQL5jtQ0QX
-        W+JlCj+EUL/h2sIf4jKiUxz2tA==
-X-Google-Smtp-Source: ABdhPJxV+GssN0hDSnuW3Ph3Wjyua4dePmUV+iy2gwS6Wvvy4HbR159vt36fH/7kulO3OzhWARNoxQ==
-X-Received: by 2002:a05:6512:12c6:b0:44a:650f:3b86 with SMTP id p6-20020a05651212c600b0044a650f3b86mr18708668lfg.79.1650539308358;
-        Thu, 21 Apr 2022 04:08:28 -0700 (PDT)
+        bh=nhxnVej2CIUMLhdNzrsZoPwHkHCS1xzrTTmqvH/njl8=;
+        b=eaXuIizneLPQXIaPfDKcG9y+M2ch6ESmwps8nkbEXB9r85BJMzgpAlNr7wZR0RVjWU
+         g7c2UnNbCjf2WYXVReEIVoRVwXnJCK6t1TKy34JV9U0H2Pb0ZSfBb63GlYtcOsca5caX
+         FcEXPpi9qoE8rQlkjcVQymlbAgLD8fxFAqRNDN0st2ZwKnvkWK8TQxBzsWxWPXYtTSn2
+         AmSCL7G/DKLBxIkXoz8HSGIxOvCJWi2S+xqXppyNSJx0b32YctBVnR/FgegFMURb4tcp
+         QpkbJ9ONXbvhdOp54Pdsc/GRwAwuKVN0KuOH2fmf59A2HaXcH8zFBRefNTSZsJvVfTDG
+         bDUg==
+X-Gm-Message-State: AOAM531q3in0bIOn+lH4QyIBojcouqr3HfiHAk19dt137B9kGppu4N4q
+        J7vwYpzlgOMDZ/re82xAGmJjZ/fmgtq3qw==
+X-Google-Smtp-Source: ABdhPJzUhkWLfAN2qyBuzif4rSkuHafqFixxn6fwtjaFjUpPSgYzT8HvoUwrlPrV9m9YTT0Id8YCBA==
+X-Received: by 2002:ac2:5339:0:b0:46b:c20a:b5f9 with SMTP id f25-20020ac25339000000b0046bc20ab5f9mr17943098lfh.105.1650540968641;
+        Thu, 21 Apr 2022 04:36:08 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id l11-20020a2e834b000000b00246308690e2sm2015005ljh.85.2022.04.21.04.08.27
+        by smtp.gmail.com with ESMTPSA id h6-20020a2e5306000000b00247e893075asm2007916ljb.37.2022.04.21.04.36.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Apr 2022 04:08:28 -0700 (PDT)
-Message-ID: <de4f9514-5132-f208-d43f-4c50afcda203@linaro.org>
-Date:   Thu, 21 Apr 2022 14:08:27 +0300
+        Thu, 21 Apr 2022 04:36:08 -0700 (PDT)
+Message-ID: <f4cfc1b3-2a85-f948-ff2c-27588cbe2210@linaro.org>
+Date:   Thu, 21 Apr 2022 14:36:05 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
@@ -80,8 +80,7 @@ Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -129,9 +128,6 @@ On 21/04/2022 13:20, Johan Hovold wrote:
 >   
 >   	struct clk_bulk_data *clks;
 > +	struct clk *pipe_clksrc;
-
-Please move this to qmp_phy too.
-
 >   	struct reset_control **resets;
 >   	struct regulator_bulk_data *vregs;
 >   
@@ -154,6 +150,17 @@ Please move this to qmp_phy too.
 > +		dev_err(qmp->dev, "failed to enable pipe clock: %d\n", ret);
 > +		goto err_restore_parent;
 > +	}
+
+So, what you do here is you manually set the parent of 
+GCC_PCIE_1_PIPE_CLK_SRC to PHY pipe clock right before enabling 
+GCC_PCIE_1_PIPE_CLK and set it back to XO after disabling 
+GCC_PCIE_1_PIPE_CLK.
+
+My proposal is doing exactly the same, but doing that automatically 
+through the clock infrastructure. After removing pipe_clock handling 
+from pcie driver itself, we can be sure that nobody is playing dirty 
+tricks around the pipe_clock.
+
 > +
 > +	return 0;
 > +
@@ -231,13 +238,6 @@ Please move this to qmp_phy too.
 > +			return ret;
 > +
 > +		qphy->pipemux_clk = NULL;
-
-This makes the driver ignore every possible erorr except -EPROBE_DEFER. 
-However the driver should behave in quite the oppposite way. Please use 
-devm_clk_get_optional() instead. It would do that in better way.
-
-Not to mention that this code leaks a refcount on the clock.
-
 > +	} else {
 > +		qphy->piperef_clk = of_clk_get_by_name(np, "ref");
 > +		if (IS_ERR(qphy->piperef_clk)) {
@@ -248,15 +248,6 @@ Not to mention that this code leaks a refcount on the clock.
 > +		}
 > +	}
 > +
-
-As a second thought.
-This needs to be more explicit. If the chipset requires the pipe clock 
-remuxing, we must fail if the clocks were not provided. So depending on 
-the qmp instance/property the driver should either use devm_clk_get() 
-(instead of _optional) or skip this block completely.
-
-But this will not work with earlier DTS files.
-
 >   	/* Get lane reset, if any */
 >   	if (cfg->has_lane_rst) {
 >   		snprintf(prop_name, sizeof(prop_name), "lane%d", id);
