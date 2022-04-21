@@ -2,80 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA9D1509EBF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 13:38:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E9E9509F13
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 13:55:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376358AbiDULkj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 07:40:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34726 "EHLO
+        id S231842AbiDUL62 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 07:58:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241226AbiDULki (ORCPT
+        with ESMTP id S230044AbiDUL61 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 07:40:38 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59D542BB36
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 04:37:49 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id h3so3474367lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 04:37:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=RsyMZ+3bz7iZqyG5PUvCw9htX6TYzgOo4J4yh71zpuI=;
-        b=gWpk+C7Y8yNeYTzGrteWODT0Ty2/cOa1ye8rnWxX4nOhjdnewnRTUZGfVSel4vVzqv
-         pfYaIcB0TRT8aqF3BGout/T/WgXUlORDXq8z/7s293Oo7Yc++V+MykeR26utUSXcZo2h
-         ZwhIvnZ1LDuwEt6+gpwhWAsx3PbMp2YTi1QwmkteTFukC4xX4c9/amqr/8U0CvxEAaeC
-         9g1uySEn6uDleNGwI6zm7y4v+nEA5VrUlmkNW5LB2kRtboaAhOuUGWuqdSeSPPpPoAWv
-         2UtTaqDGzRHqJGOXVRMu4UbOG1JYsk1JUXqFStKhosXJ5zmtLO0dLFgMOACCk5m0eI5O
-         nEHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=RsyMZ+3bz7iZqyG5PUvCw9htX6TYzgOo4J4yh71zpuI=;
-        b=pCPH0IDgv1u+voiToO/JIVx6rl6EXpUrMqrMJ7FAMWWCbDxBUv/B7jqJ4DWcpqCRAc
-         HT6E6LL0+PaMT5oXrnCukdPlygQtfzgt2Nioc8+Ff24WhfdQ/qRwrn8bW2G48KNEAPG5
-         hbYGEd006quZZRuFKxeK3wdQWSGYyu9jbhl0SWi7NFjuDNB7/ds05nWPw2nT8V3+aQbD
-         G9Q4K3tVF6bJutkb3lTRb13PrGKTmAMe7rx3F4c+CI6+X4JbyG49GXW4caXYvIy5vZtP
-         h/mSag2lV3qExaHjprlL7ZR3wxSYS1GZT0xQ/Kyznq/MYwjO62/rKsmZQzO2i0uMJx2u
-         hn2A==
-X-Gm-Message-State: AOAM530Xbh9A22N35aJNJKsB0jRVLZhm/wsSdWT/VgIQ19b+oQTdx092
-        q0bVfqyBl75CktSmkww/uU4+8A==
-X-Google-Smtp-Source: ABdhPJwoyEHiKGX2LHWti1yU+tp0BLmD36xMlD41AnkPLxpFfYI0J8MsaCAhBWjLpF7+Wu5WGVLvug==
-X-Received: by 2002:ac2:410b:0:b0:448:58a8:3e8a with SMTP id b11-20020ac2410b000000b0044858a83e8amr17874063lfi.258.1650541067634;
-        Thu, 21 Apr 2022 04:37:47 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id n17-20020a2e8791000000b0024db2d87102sm1518618lji.64.2022.04.21.04.37.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Apr 2022 04:37:47 -0700 (PDT)
-Message-ID: <4642b8dd-a638-79c6-c0c6-d72eca41d900@linaro.org>
-Date:   Thu, 21 Apr 2022 14:37:46 +0300
+        Thu, 21 Apr 2022 07:58:27 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67F822317A;
+        Thu, 21 Apr 2022 04:55:38 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 08CCCB823A5;
+        Thu, 21 Apr 2022 11:55:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1701DC385A1;
+        Thu, 21 Apr 2022 11:55:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650542135;
+        bh=PuqGZunpyyiWzzX8ODWt+Mql3d5o7hixevyuNaxcyGU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=XRZp0BD1xCoNdNZ31afyMvfQOHP4rJBP0sJYbkiIeEItJNwH9pJdpRE9y/kCkzA7G
+         zXWUxdZLKOl6pCym18ubq5LehbvFERZ7kQxBjJBhtZGE1fg+3D5lEXD8uj+D7bkfIh
+         wc8oPxrF6od9um3HMB8M2MuXZAH+Rjt4szRolt74u/D0uVGdmzz67SRLbYb5aUMRdI
+         xzCMK4r2CZ9ERBWIiqCMOUJqr/of5RtsebbcBFTSFMnJM38wqrCIP1JXf19ghTwRgN
+         YtxnoF0NHM4EXzXv/+uZflaAwvvQbojWwwKg5hJqJsEqieihKnXhx7mzeDMzrhk0iQ
+         GLHj1yY5MJ8+w==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] arm64: dts: qcom: sc7280: Add GPI DMAengines
+Date:   Thu, 21 Apr 2022 17:25:24 +0530
+Message-Id: <20220421115526.1828659-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v3 0/6] PCI: qcom: rework pipe_clk/pipe_clk_src handling
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-References: <20220413233144.275926-1-dmitry.baryshkov@linaro.org>
- <YmEx5JPcDucjDiho@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YmEx5JPcDucjDiho@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,32 +54,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/04/2022 13:28, Johan Hovold wrote:
-> On Thu, Apr 14, 2022 at 02:31:38AM +0300, Dmitry Baryshkov wrote:
->> PCIe pipe clk (and some other clocks) must be parked to the "safe"
->> source (bi_tcxo) when corresponding GDSC is turned off and on again.
->> Currently this is handcoded in the PCIe driver by reparenting the
->> gcc_pipe_N_clk_src clock.
->>
->> Instead of doing it manually, follow the approach used by
->> clk_rcg2_shared_ops and implement this parking in the enable() and
->> disable() clock operations for respective pipe clocks.
-> 
-> Please take a look at the alternative approach of moving the pipe clock
-> muxing into the PHY driver:
-> 
-> 	https://lore.kernel.org/all/20220421102041.17345-1-johan+linaro@kernel.org/
-> 
-> The implementation is more straight forward and I believe it is also
-> more conceptually sound as it ties the muxing to when the PHY is powered
-> on so that the GCC pipe clock always has a valid source.
+The Qualcomm SC7280 has two GPI DMAengines, add definitions for these.
 
-I still have a slight preference for the automated variant:
-  - Your code is manually doing exactly the same thing. Remuxing the 
-clocks in connection to the GCC_PIPE_n_CLOCK enabling/disabling
-  - DTS compatibility is preserved
+Co-developed-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 44 ++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index f0b64be63c21..20dd0f7ab322 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -901,6 +901,28 @@ opp-384000000 {
+ 
+ 		};
+ 
++		gpi_dma0: dma-controller@900000 {
++			#dma-cells = <3>;
++			compatible = "qcom,sc7280-gpi-dma";
++			reg = <0 0x00900000 0 0x60000>;
++			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
++			dma-channels = <12>;
++			dma-channel-mask = <0x7f>;
++			iommus = <&apps_smmu 0x0136 0x0>;
++			status = "disabled";
++		};
++
+ 		qupv3_id_0: geniqup@9c0000 {
+ 			compatible = "qcom,geni-se-qup";
+ 			reg = <0 0x009c0000 0 0x2000>;
+@@ -1330,6 +1352,28 @@ uart7: serial@99c000 {
+ 			};
+ 		};
+ 
++		gpi_dma1: dma-controller@a00000 {
++			#dma-cells = <3>;
++			compatible = "qcom,sc7280-gpi-dma";
++			reg = <0 0x00a00000 0 0x60000>;
++			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 283 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 284 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 293 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 294 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 295 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 296 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 297 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 298 IRQ_TYPE_LEVEL_HIGH>;
++			dma-channels = <12>;
++			dma-channel-mask = <0x1e>;
++			iommus = <&apps_smmu 0x56 0x0>;
++			status = "disabled";
++		};
++
+ 		qupv3_id_1: geniqup@ac0000 {
+ 			compatible = "qcom,geni-se-qup";
+ 			reg = <0 0x00ac0000 0 0x2000>;
 -- 
-With best wishes
-Dmitry
+2.34.1
+
