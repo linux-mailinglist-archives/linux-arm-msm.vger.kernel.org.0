@@ -2,49 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED1A6509F19
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 13:55:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07C5D509F79
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 14:17:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380607AbiDUL6d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 07:58:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42558 "EHLO
+        id S1350382AbiDUMUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 08:20:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378690AbiDUL6c (ORCPT
+        with ESMTP id S231570AbiDUMUe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 07:58:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A1AC252B2;
-        Thu, 21 Apr 2022 04:55:42 -0700 (PDT)
+        Thu, 21 Apr 2022 08:20:34 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3B872D1DC;
+        Thu, 21 Apr 2022 05:17:44 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8960661BEF;
-        Thu, 21 Apr 2022 11:55:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65614C385AB;
-        Thu, 21 Apr 2022 11:55:39 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C0D77B8244E;
+        Thu, 21 Apr 2022 12:17:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39F9C385A5;
+        Thu, 21 Apr 2022 12:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650542141;
-        bh=PByTpc0kanYHEF51ZVObewQsG4VYGCa8G5OAuwNtMrE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=i5ekYDKCCERsTj+Vt3BgkJiHuVAJDBTb97VPGRbKdnpD/jVK3a8CWktXNXXJkE3u6
-         GBygem+jxhYFsR87/iEddNMA1BDPkljWarbo7xupNAAbrAgcmge98fN6i4YIOz6tii
-         hfIJjOLMnEIRf3k3Le0QcKE7Xw4QjaOv8+B5j+Zl8fWvUktSHJr9tA4d6TcgKcVm0G
-         CT6veMnK/JUoI+CEKCpJM5rNLGlhSQrdMXbXUqkgIME/oHvtgd9kdIxp5DYfwdomDY
-         le0q9uxFxSIuiH2VbirGk1jyyHeuMaDEnoHwlR+Uogv1zEqTIzxtxcbqI0V1EfwioZ
-         RA2iyalIx3ASQ==
+        s=k20201202; t=1650543462;
+        bh=bWhHXUS3ks/K10eMNGHlsMHzHCbNNvETLjCIS2G+PL0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=N26UwyuHAXz4IxSwINoBj83cio8nD7RpJaoNvKKfi1nNza020ZQmk+Zp26yw+gI2O
+         p1I7RvSFH9qNtmznMRICwMTn8h1Vf+3wNL+7+F4qYXCsCcWYjwG4IbyXXDfigoNGCG
+         IPjOqzt/Tm5vz7xq+FOQtZUW0nlSrk2PXRkDnu4mXiHd/iTUrnNb8fCZoCiJmfv8ng
+         fH40njFZTUVvKLLYvfDY8fzLc02qd9XZUaw5m8MV/fTP0s36C0gxqGA8RooqXCzFNA
+         m5ATghtDwbrOI6nAJcIDh4Kor6pG2qwh1nacvVAxwHeddh/5GPELQ33jXy2gQXSoh+
+         xnKiITDsbp6Yw==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: sc7280-idp: Enable GPI DMAs
-Date:   Thu, 21 Apr 2022 17:25:26 +0530
-Message-Id: <20220421115526.1828659-3-vkoul@kernel.org>
+        dmaengine@vger.kernel.org,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: [PATCH] dmaengine: qcom: gpi: Add support for sc7280
+Date:   Thu, 21 Apr 2022 17:47:33 +0530
+Message-Id: <20220421121733.1829350-1-vkoul@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220421115526.1828659-1-vkoul@kernel.org>
-References: <20220421115526.1828659-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -56,36 +52,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some versions of the firmware for the sc7280-idp  board FIFO mode
-disabled and must thus use GPI DMA. Enable gpi_dma0 and gpi_dma1 to
-allow this.
+Add compatible and driver_data for GPI DMA engines found in Qualcomm
+SC7280. The driver_data contains ee_offset of 0x10000.
 
-Co-developed-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/dma/qcom/gpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index ecbf2b89d896..00f7ef197be7 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -233,6 +233,14 @@ vreg_bob: bob {
- 	};
- };
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index bdf2013ca7ca..09916a0eb755 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -2312,6 +2312,7 @@ static int gpi_probe(struct platform_device *pdev)
+ }
  
-+&gpi_dma0 {
-+	status = "okay";
-+};
-+
-+&gpi_dma1 {
-+	status = "okay";
-+};
-+
- &ipa {
- 	status = "okay";
- 	modem-init;
+ static const struct of_device_id gpi_of_match[] = {
++	{ .compatible = "qcom,sc7280-gpi-dma", .data = (void *)0x10000 },
+ 	{ .compatible = "qcom,sdm845-gpi-dma", .data = (void *)0x0 },
+ 	{ .compatible = "qcom,sm8150-gpi-dma", .data = (void *)0x0 },
+ 	{ .compatible = "qcom,sm8250-gpi-dma", .data = (void *)0x0 },
 -- 
 2.34.1
 
