@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C61A50A60E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 18:44:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6D7150A65D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Apr 2022 18:57:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230521AbiDUQrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Apr 2022 12:47:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58218 "EHLO
+        id S1388219AbiDUQ76 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Apr 2022 12:59:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232178AbiDUQrL (ORCPT
+        with ESMTP id S1385664AbiDUQ74 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Apr 2022 12:47:11 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 461E34924A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 09:44:21 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id c23so5442307plo.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 09:44:21 -0700 (PDT)
+        Thu, 21 Apr 2022 12:59:56 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE94F49CA0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 09:57:05 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id s14so5423577plk.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Apr 2022 09:57:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ELrSMlHFtMr5kTiuEuv+v5IwZOU2TDWewVy3+3i8s+E=;
-        b=KGbMcRgRVToQtVkjHO4X6veWbWQOAwSpRFDSPahDREaw8P+kwEX/89n3V0OTGM0Uou
-         QbptTZV5mKecQo+7kf5FNr38e6rFYigrGzUj5VaSUqI8lb5cZqDw2g4YmggdZo44oKOI
-         7sHzHDXx8zsaJpLGIa8AwryBhmTFDvgOFG7oc=
+        bh=Q2IAgvex9X3dkujovRgUSvoi3VREyFVH2u2OtN6n7C4=;
+        b=fMWH3qkFo6p1eQi3YpmP2ZMZp5lPiLxdtO4T1c9f48A1aMlUziVN0mMRXiRMzHK9x4
+         Q0VCxsYmd2PhUihaVke0MQnUfl8XnnjNLzU9zK1MO+aD39mfbk0i7CNVo2/heAKmIhsS
+         Fs2c9kpiwShaZW1QysMiXHWvB9/jmMfVFSq6g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ELrSMlHFtMr5kTiuEuv+v5IwZOU2TDWewVy3+3i8s+E=;
-        b=mCJb4qkrtu55P3hnQ3NdsE1jfkCDXV/uaLcDZd0VpVZFzW+CnBCCl5KsDIzA+3nxaz
-         Xwn0eKfLcNxuBfW9JulGs5zt4qmRSXBYPU9/xqwU0DwfEj3iP7mZWrbq1WVJQwJ7GYCT
-         c2233GhCElu7pRwo9AtIQ2oiJukCkOq+owC9KzNLYZ4jnNA4BPx0bRYu6HBk5ZYKjbI4
-         ZvKeDkCDn1bGrtr3DyIyefxolJ81mr9oFtupx5A9OHJOHTDuupetNeOgmP0xHaQf+zFS
-         8+e2k4/W5gb/SVYY2kVKjJ9E7jOCKfymz5BIbhk6isY3aPik90oaZi7Z/noIgbXChScK
-         rZqA==
-X-Gm-Message-State: AOAM532SpZ43PoDjUKON4q/FNY+jPVvMR0gYFbaK9J638pkFRHkqi2hF
-        w/hKiBFB7LhoB6IwrzXuvTpGpQ==
-X-Google-Smtp-Source: ABdhPJxfPWDW/DraNE8nAfBADhJNDVA05IUQjX3jYZ2vzr+l27XEwmhTSGKXVZCxzJBPThn6PPI/Gw==
-X-Received: by 2002:a17:902:f789:b0:156:5f56:ddff with SMTP id q9-20020a170902f78900b001565f56ddffmr403635pln.116.1650559460787;
-        Thu, 21 Apr 2022 09:44:20 -0700 (PDT)
+        bh=Q2IAgvex9X3dkujovRgUSvoi3VREyFVH2u2OtN6n7C4=;
+        b=ZZ0aRxzuFyQWv+aYqPXOsMBmUA2tzQq85+45BRq03eE3Nrldfe2JshSEjKghIWvff5
+         jTbAc/uG5HREbXfiK99Nnk4nhs/+On5xNtErOqLmTFpiryLMu1xnbaY5L5ZYpHyk2+ZZ
+         4nB3yFX21Dd5BPyXYKOn43epECCY4qO9BCftGFGNDHHdrogVs8df1tO8tWAduNsd3Evd
+         v4XmgktxdCJFhsTFcG0JncmGXJsLdiwNZPEhIGHViczSMR3AFkuoaa7Mhcb9LDhp5Lhg
+         Em3T8Vavlbx++t3ApDNwwLFKvXZVX+pE/a3EB8o50ouVif0GAmwN4J0pZtGmEEtNCh/G
+         dJOA==
+X-Gm-Message-State: AOAM530ya5O8i87mRt/U0UaeoUd1SKcKmNBdpo8M/89HlkSRaYRZIFuQ
+        8MN6KciN6T4pESrTFfQZMPKBLg==
+X-Google-Smtp-Source: ABdhPJzFhlybj2za5Cf0sYeFVh1imb8tBXDYiBI9X7QE2CeAiWCSE2WnwcwMFR4FAviXIBLsEU4ORQ==
+X-Received: by 2002:a17:90b:3508:b0:1d2:ef2f:9f8c with SMTP id ls8-20020a17090b350800b001d2ef2f9f8cmr11447953pjb.42.1650560225331;
+        Thu, 21 Apr 2022 09:57:05 -0700 (PDT)
 Received: from localhost ([2620:15c:202:201:d426:5807:a72:7b27])
-        by smtp.gmail.com with UTF8SMTPSA id y21-20020a631815000000b0039fcedd7bedsm24624449pgl.41.2022.04.21.09.44.19
+        by smtp.gmail.com with UTF8SMTPSA id p11-20020a65490b000000b003aa7791f3afsm4862691pgs.84.2022.04.21.09.57.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Apr 2022 09:44:20 -0700 (PDT)
-Date:   Thu, 21 Apr 2022 09:44:18 -0700
+        Thu, 21 Apr 2022 09:57:05 -0700 (PDT)
+Date:   Thu, 21 Apr 2022 09:57:03 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
@@ -54,86 +54,67 @@ Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         srinivas.kandagatla@linaro.org, dianders@chromium.org,
         swboyd@chromium.org, judyhsiao@chromium.org,
         Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v9 04/12] arm64: dts: qcom: sc7280: Add wcd9385 codec
- node for CRD 1.0 and CRD 2.0
-Message-ID: <YmGJ4sjTDo00/Tbl@google.com>
+Subject: Re: [PATCH v9 05/12] arm64: dts: qcom: sc7280: Add wcd9385 codec
+ node for CRD 3.0/3.1
+Message-ID: <YmGM35IjoEhNSdRD@google.com>
 References: <1650552459-21077-1-git-send-email-quic_srivasam@quicinc.com>
- <1650552459-21077-5-git-send-email-quic_srivasam@quicinc.com>
+ <1650552459-21077-6-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1650552459-21077-5-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1650552459-21077-6-git-send-email-quic_srivasam@quicinc.com>
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 21, 2022 at 08:17:31PM +0530, Srinivasa Rao Mandadapu wrote:
+On Thu, Apr 21, 2022 at 08:17:32PM +0530, Srinivasa Rao Mandadapu wrote:
+> Add wcd9385 codec node for audio use case on CRD rev5 (aka CRD 3.0/3.1)
 
-> arm64: dts: qcom: sc7280: Add wcd9385 codec node for CRD 1.0 and CRD 2.0
+nit: rev5+
 
-nit: and IDP boards?
-
-> Add wcd9385 codec node for audio use case on sc7280 based platforms
-> of revision 3 and 4 (aka CRD 1.0 and 2.0).
-> Add tlmm gpio property for switching CTIA/OMTP Headset.
+> boards. Add tlmm gpio property for switching CTIA/OMTP Headset.
 > 
 > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 > Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 > Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts |  8 +++++
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi   | 50 ++++++++++++++++++++++++++++++
->  2 files changed, 58 insertions(+)
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 52 +++++++++++++++++++++++
+>  1 file changed, 52 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
-> index 344338a..462d655 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
-> @@ -87,6 +87,14 @@ ap_ts_pen_1v8: &i2c13 {
->  	pins = "gpio51";
->  };
->  
-> +&wcd938x {
-> +	pinctrl-names = "default", "sleep", "us_euro_hs_sel";
-> +	pinctrl-0 = <&wcd_reset_n>;
-> +	pinctrl-1 = <&wcd_reset_n_sleep>;
-> +	pinctrl-2 = <&us_euro_hs_sel>;
-
-Which driver is supposed to select 'us_euro_hs_sel'?
-
-I suppose 'us_euro_hs_sel' should always be configured in the same way,
-so you probably want this:
-
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&wcd_reset_n>, <&us_euro_hs_sel>;
-	pinctrl-1 = <&wcd_reset_n_sleep>, <&us_euro_hs_sel>;
-
-> +	us-euro-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
-> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> index d0794f2..d6a3086 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> @@ -12,6 +12,36 @@
+>  / {
+>  	model = "Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+)";
+>  	compatible = "google,hoglin", "qcom,sc7280";
 > +
->  &tlmm {
->  	tp_int_odl: tp-int-odl {
->  		pins = "gpio7";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index 6cb5fc4..b711ad0 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -20,6 +20,34 @@
->  		serial1 = &uart7;
->  	};
->  
 > +	wcd938x: audio-codec-1 {
+
+wcd9385 (same for the CRD <= 2.0, I missed it there).
+
 > +		compatible = "qcom,wcd9385-codec";
-> +		pinctrl-names = "default", "sleep";
+
+
+
+> +		pinctrl-names = "default", "sleep", "us_euro_hs_sel";
 > +		pinctrl-0 = <&wcd_reset_n>;
 > +		pinctrl-1 = <&wcd_reset_n_sleep>;
+> +		pinctrl-2 = <&us_euro_hs_sel>;
+
+This looks wrong, see my comment on the CRD <= 2.0 patch
+(https://patchwork.kernel.org/project/linux-arm-msm/patch/1650552459-21077-5-git-send-email-quic_srivasam@quicinc.com/)
+
 > +
 > +		reset-gpios = <&tlmm 83 GPIO_ACTIVE_HIGH>;
+> +		us-euro-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
 > +
 > +		qcom,rx-device = <&wcd_rx>;
 > +		qcom,tx-device = <&wcd_tx>;
@@ -154,14 +135,19 @@ so you probably want this:
 > +		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
 > +		#sound-dai-cells = <1>;
 > +	};
-> +
->  	gpio-keys {
->  		compatible = "gpio-keys";
->  		label = "gpio-keys";
-> @@ -678,6 +706,28 @@
->  		function = "gpio";
->  		bias-pull-down;
->  	};
+
+The wcd9385 is on the qcard, so I think this node should be added to
+sc7280-qcard.dtsi and be marked as "disabled". This file can then just
+set the status to "okay". Future boards that use the wcd could do the
+same, rather than adding a copy of this node to their .dts file.
+
+>  };
+>  
+>  /* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
+> @@ -345,4 +375,26 @@ ap_ts_pen_1v8: &i2c13 {
+>  			  "",
+>  			  "",
+>  			  "";
 > +
 > +	us_euro_hs_sel: us-euro-hs-sel {
 > +		pins = "gpio81";
@@ -169,9 +155,6 @@ so you probably want this:
 > +		bias-pull-down;
 > +		drive-strength = <2>;
 > +	};
-
-This config is only used by the CRD, move it to sc7280-crd-r3.dts
-
 > +
 > +	wcd_reset_n: wcd-reset-n {
 > +		pins = "gpio83";
@@ -187,9 +170,5 @@ This config is only used by the CRD, move it to sc7280-crd-r3.dts
 > +		bias-disable;
 > +		output-low;
 > +	};
->  };
->  
->  &remoteproc_wpss {
-> -- 
-> 2.7.4
-> 
+
+These are also on the qcard, please move the nodes to sc7280-qcard.dtsi
