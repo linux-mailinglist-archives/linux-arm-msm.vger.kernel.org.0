@@ -2,117 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 476DC50B0FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 09:01:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 174B950B341
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 10:50:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1444504AbiDVHE0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 03:04:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59644 "EHLO
+        id S238517AbiDVIxJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 04:53:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1444426AbiDVHEZ (ORCPT
+        with ESMTP id S1445657AbiDVIxI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 03:04:25 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDB62BE21;
-        Fri, 22 Apr 2022 00:01:32 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id EBC2FB82A99;
-        Fri, 22 Apr 2022 07:01:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDE5C385A4;
-        Fri, 22 Apr 2022 07:01:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650610889;
-        bh=21Yl4xxhiWqKplYqfS+Y99XlgN55K+6oS3DyARdUs4o=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=JHv2sUfPT5E3Xt43uAbQdIR65LGFiab4UCBFrJovFH4Ar0GVM9ec8zwTyWUiHRXnY
-         xzGuwbcoLatbwti/gMFOM9cYHkdKayr9a2Gr30eliPJC3GmiLZwjp6/doleJ7Q+yfR
-         uDA30IHk5qsSoR0llts4WM1iqnxIhUODioI8bHTYK4eezUwf3N02q/cHI7oKAtJ1hZ
-         ikCBrNlyFD3lpL15W362ftXJ1oT6dyaCFrWMHjJyJ7FxlC0uihMHAIa+m5uCO8whgJ
-         t7uXmCT0wmBsYNwNL279LAq3zqmU3HDPOOSbdKhZNogr9wlgdjLAO8IBVqJyTJ2fQy
-         X0+8JcxzHvpWA==
-Message-ID: <e54804ee-15f8-36a1-bbc5-9a218a4aec56@kernel.org>
-Date:   Fri, 22 Apr 2022 10:01:24 +0300
+        Fri, 22 Apr 2022 04:53:08 -0400
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70583BE1B;
+        Fri, 22 Apr 2022 01:50:08 -0700 (PDT)
+Received: by mail-qk1-x72e.google.com with SMTP id y129so5363043qkb.2;
+        Fri, 22 Apr 2022 01:50:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6nkPYSNqK+Cw/qD6vjcOwkiY8eCBmiuAPmGQItUKZ0E=;
+        b=IdhdwlZB5sTnfN3m5koHQdBJdez4rySc7Gh3bi7zDveBPNwaHnj1HrpLWB8Xu3RN2c
+         q5ELUClQ1eGaDzTesqeK69p+q2L1oemo2Ov5wmUcNXYCEDlOcvXOdt2Hw0DmSI1h7WhL
+         ESqtoX9vIbUmbEFHKbmzUxZYfarIU5Ya8UWTc4Gmgpzj5ghpgmhqmihapgQ0X6TCaORO
+         QHKURbaD7/9p71VIYelAw7VlCWzlHvI+A7tdnmYgx6RRDBxHzP3xs9JOLuUDCKcAZxCw
+         CoHJKZx00cjCZzU+LmYcrHKeW3U+kbOOPWmCjhfSKTo/tzC+r/tPjhS7JsTAioo32o2I
+         fypQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6nkPYSNqK+Cw/qD6vjcOwkiY8eCBmiuAPmGQItUKZ0E=;
+        b=RHCh98n5O0Uj/cLDwMwlhTNkctcTyagNQ9ShRmmiddWUaUwmrs+dawV+e0QKEW8e1u
+         5ZNlv8LkuWR0dEup/bE5UaTxK0RPs285FmPzAoSk4fgJxQAQngRdGk0Ts7rAgrTHvnH5
+         PE8s940WULQ2/bbZtoyoWw6OD6IL7XqnsQ6moG8kkkRd3Fw9lKQZveGVrGU2bZEBMrJY
+         AWvilRnqDFKCBbQpAgOIvaxsVKXxkQaogogRAXZXrcVGt3qiiqlZIFK5iVnzvxS7db7W
+         NSXVNpf1ztxlQEJLpDkAQgVcZDuKY7ZcvgLxi/JAcWVJ8cBm1sJz5ubsP26toYvaWnAF
+         hM2A==
+X-Gm-Message-State: AOAM530zZz4jjH5npk7D1gZYJOQbMcMFtneqcbFvboQcYFm+KieHfcMR
+        gnJz4BUvZbsf3l5LgwxwyS0=
+X-Google-Smtp-Source: ABdhPJyXCx0PAFPmSxMP4XcsxbcfGEtc4GJyQK+4XSFjo//0/7XCsgrqJoEyPTW8ArA3Zu5AvNz3Bw==
+X-Received: by 2002:a05:620a:2681:b0:67e:933e:54b6 with SMTP id c1-20020a05620a268100b0067e933e54b6mr1980148qkp.428.1650617407550;
+        Fri, 22 Apr 2022 01:50:07 -0700 (PDT)
+Received: from localhost.localdomain ([193.203.214.57])
+        by smtp.gmail.com with ESMTPSA id w82-20020a376255000000b0069ee3f0ae63sm653237qkb.45.2022.04.22.01.50.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Apr 2022 01:50:07 -0700 (PDT)
+From:   cgel.zte@gmail.com
+X-Google-Original-From: lv.ruyi@zte.com.cn
+To:     robdclark@gmail.com, sean@poorly.run, quic_abhinavk@quicinc.com
+Cc:     airlied@linux.ie, daniel@ffwll.ch, swboyd@chromium.org,
+        dmitry.baryshkov@linaro.org, quic_khsieh@quicinc.com,
+        bjorn.andersson@linaro.org, linux@roeck-us.net,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Lv Ruyi <lv.ruyi@zte.com.cn>, Zeal Robot <zealci@zte.com.cn>
+Subject: [PATCH] drm/msm/dp: fix error check return value of irq_of_parse_and_map()
+Date:   Fri, 22 Apr 2022 08:49:51 +0000
+Message-Id: <20220422084951.2776123-1-lv.ruyi@zte.com.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Subject: Re: [PATCH 3/2] arm64: dts: qcom: sc7180: Remove ipa interconnect
- node
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
-        Alex Elder <elder@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-References: <20220412220033.1273607-1-swboyd@chromium.org>
- <20220415005828.1980055-1-swboyd@chromium.org> <Yl92UkRwlQsd71mr@ripper>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <Yl92UkRwlQsd71mr@ripper>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20.04.22 5:56, Bjorn Andersson wrote:
-> On Thu 14 Apr 17:58 PDT 2022, Stephen Boyd wrote:
-> 
->> This device node is unused now that we've removed the driver that
->> consumed it in the kernel. Drop the unused node to save some space.
->>
-> 
-> I'm expecting that merging patch 3 and 4 will work, but cause sync_state
-> to not happen until the driver changes are merged.
-> 
-> Can you confirm my expectation? And perhaps confirm that it's fine for
-> Georgi to pick the driver changes independently of the dts changes...
+From: Lv Ruyi <lv.ruyi@zte.com.cn>
 
-I have picked the driver changes, as the boot failure definitely needs to
-be addressed. The sync-state might not happen until we have the DT changes
-merged, as the framework is matching the count of probed drivers with the
-count of providers in DT.
+The irq_of_parse_and_map() function returns 0 on failure, and does not
+return an negative value.
 
->> Cc: Alex Elder <elder@linaro.org>
->> Cc: Taniya Das <quic_tdas@quicinc.com>
->> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
->> Cc: Georgi Djakov <djakov@kernel.org>
->> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Fixes: 	8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Lv Ruyi <lv.ruyi@zte.com.cn>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Acked-by: Georgi Djakov <djakov@kernel.org>
-
-Thanks,
-Georgi
-
->> ---
->>   arch/arm64/boot/dts/qcom/sc7180.dtsi | 7 -------
->>   1 file changed, 7 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> index e1c46b80f14a..1ff96ef30e3f 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> @@ -1421,13 +1421,6 @@ mmss_noc: interconnect@1740000 {
->>   			qcom,bcm-voters = <&apps_bcm_voter>;
->>   		};
->>   
->> -		ipa_virt: interconnect@1e00000 {
->> -			compatible = "qcom,sc7180-ipa-virt";
->> -			reg = <0 0x01e00000 0 0x1000>;
->> -			#interconnect-cells = <2>;
->> -			qcom,bcm-voters = <&apps_bcm_voter>;
->> -		};
->> -
->>   		ipa: ipa@1e40000 {
->>   			compatible = "qcom,sc7180-ipa";
->>   
->> -- 
->> https://chromeos.dev
->>
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index a42732b67349..3926d2ac107d 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1239,7 +1239,7 @@ int dp_display_request_irq(struct msm_dp *dp_display)
+ 	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 
+ 	dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
+-	if (dp->irq < 0) {
++	if (!dp->irq) {
+ 		rc = dp->irq;
+ 		DRM_ERROR("failed to get irq: %d\n", rc);
+ 		return rc;
+-- 
+2.25.1
 
