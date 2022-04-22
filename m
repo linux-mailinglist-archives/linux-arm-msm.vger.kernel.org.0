@@ -2,191 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 035D450B9A5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 16:10:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5710350BA62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 16:42:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1448464AbiDVONF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 10:13:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60912 "EHLO
+        id S1448798AbiDVOpA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 10:45:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1448430AbiDVOMs (ORCPT
+        with ESMTP id S1448789AbiDVOo7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 10:12:48 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F15BB23;
-        Fri, 22 Apr 2022 07:09:54 -0700 (PDT)
+        Fri, 22 Apr 2022 10:44:59 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DA2D5BE5C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 07:42:04 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id i27so16781812ejd.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 07:42:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650636594; x=1682172594;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=FO5HJLhOlc0undK2bVkLeqs+snE15I9Xj/fjUeq+J8k=;
-  b=r0ox1+HA+G9HMlDmy6DhlXu4GSDrLizYVPQd7bo1/9gLkwSb0RJOyVTb
-   sa69F5LB6a8fzZSWxLOc+CigCAsm5AlcIQT3dj+kibuEsIgZSzkncniWt
-   twVyCsdk9KA4CZWC9bOHEytsKvTbLHoZzyinEDtVO6YfGN5mWbkT+ylvv
-   U=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 22 Apr 2022 07:09:54 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2022 07:09:54 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 22 Apr 2022 07:09:53 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 22 Apr 2022 07:09:49 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v10 12/12] arm64: dts: qcom: sc7280: Add sound node for CRD 3.0/3.1
-Date:   Fri, 22 Apr 2022 19:38:41 +0530
-Message-ID: <1650636521-18442-13-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1650636521-18442-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1650636521-18442-1-git-send-email-quic_srivasam@quicinc.com>
+        d=fairphone.com; s=fair;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YPSNiy/WSLKetqRwGH3dF+rpEOiPZlSHrWRqFedtnF4=;
+        b=0tMdoCP+ffWO8q+DJhG8ohmRQyh6tnncLT6Cx/QL2gX3NNf11NX+1xXnpNqWcX9C/c
+         SXvYE9BZjUl2uC/vA500HXE9W2f1dBELQg9JK7sBOYRFdTpUPtV6esJpsWmIANrRlNI7
+         xt5iORgxgkN7mv0ECZQh5BeJtaBc4uhhiQz+ssGkZt0lQBgun1jmVjYBWQ5z833zWxLq
+         L4ZHcA+jPDCeCiWadUjPrWczRjk64kud7El/qGkL8gi/T6JKE7r5Toyh+PRigo95R8Pg
+         ccD87UoISQEEvYGDxU79Ev95zWrhp7qCkMf/s1WqKNmzp7TIrbmSOxtHNT5a+C9ecx6Q
+         2PaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YPSNiy/WSLKetqRwGH3dF+rpEOiPZlSHrWRqFedtnF4=;
+        b=Wgn0R4ar9VVU3EypuzgUtgUYVwIHGMkBPxu7D1VUxqLd7YOWNfiM2H68WuVaAqjQ3c
+         b8lW05YBzMRqFdEuGgSHW9wMIPbnccFqa5iQ39xunkyw7bjdO0psCBdcnoNtiYEYH/AN
+         2IH5OVCaDLtXlA/KF3xIUzlEYDcOF0S9gNSazPkmWkbbKD+clbk2iKFk8+CxQYJIHrqb
+         7oPyfOd1b44VLP93leNbylSqTUypKYkH7R4flFplO+VP+T6xZqeADPW5GThE8wyDcglr
+         hJCE+pDEzMvq4cemCxcjrdZzuiuBCyo96my3jolbB4IOu2EI7myFGRJvhmgPuTR8Ca2O
+         Ugwg==
+X-Gm-Message-State: AOAM531EN9FDy3BNLpEN6eKtEKereRD0MAM74S+SSDQnLxrSDtySu80s
+        1yLtRVjv6dXVQ0Er2Rm+AL4AL1T2ad7+GA==
+X-Google-Smtp-Source: ABdhPJysMwN6dg4jeawpJnY1cyANQrKMCfiG/FlpuhM3iJwkjTZkcHyc9G9XIGVn5vqtoFhXrjcolQ==
+X-Received: by 2002:a17:907:2daa:b0:6da:924e:955 with SMTP id gt42-20020a1709072daa00b006da924e0955mr4491227ejc.1.1650638522573;
+        Fri, 22 Apr 2022 07:42:02 -0700 (PDT)
+Received: from otso.. (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id u6-20020a17090626c600b006e74ef7f092sm818202ejc.176.2022.04.22.07.42.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Apr 2022 07:42:02 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        devicetree@vger.kernel.org,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        Odelu Kukatla <okukatla@codeaurora.org>
+Subject: [PATCH 0/4] Add interconnect support for SM6350
+Date:   Fri, 22 Apr 2022 16:40:16 +0200
+Message-Id: <20220422144021.232993-1-luca.weiss@fairphone.com>
+X-Mailer: git-send-email 2.36.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add dt nodes for sound card support on rev5+ (aka CRD 3.0/3.1) boards,
-which is using WCD9385 headset playback, capture, I2S speaker playback
-and DMICs via VA macro.
+This series adds interconnect support for the various NoCs found on
+sm6350.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 98 +++++++++++++++++++++++
- 1 file changed, 98 insertions(+)
+A more special modification is allowing child NoC devices, like done for
+rpm-based qcm2290 which was already merged, but now for rpmh-based
+interconnect.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-index ba13d62..1a18ab17 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-@@ -12,6 +12,104 @@
- / {
- 	model = "Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+)";
- 	compatible = "google,hoglin", "qcom,sc7280";
-+
-+	sound: sound {
-+		compatible = "google,sc7280-herobrine";
-+		model = "sc7280-wcd938x-max98360a-1mic";
-+
-+		audio-routing =
-+			"IN1_HPHL", "HPHL_OUT",
-+			"IN2_HPHR", "HPHR_OUT",
-+			"AMIC1", "MIC BIAS1",
-+			"AMIC2", "MIC BIAS2",
-+			"VA DMIC0", "MIC BIAS1",
-+			"VA DMIC1", "MIC BIAS1",
-+			"VA DMIC2", "MIC BIAS3",
-+			"VA DMIC3", "MIC BIAS3",
-+			"TX SWR_ADC0", "ADC1_OUTPUT",
-+			"TX SWR_ADC1", "ADC2_OUTPUT",
-+			"TX SWR_ADC2", "ADC3_OUTPUT",
-+			"TX SWR_DMIC0", "DMIC1_OUTPUT",
-+			"TX SWR_DMIC1", "DMIC2_OUTPUT",
-+			"TX SWR_DMIC2", "DMIC3_OUTPUT",
-+			"TX SWR_DMIC3", "DMIC4_OUTPUT",
-+			"TX SWR_DMIC4", "DMIC5_OUTPUT",
-+			"TX SWR_DMIC5", "DMIC6_OUTPUT",
-+			"TX SWR_DMIC6", "DMIC7_OUTPUT",
-+			"TX SWR_DMIC7", "DMIC8_OUTPUT";
-+
-+		qcom,msm-mbhc-hphl-swh = <1>;
-+		qcom,msm-mbhc-gnd-swh = <1>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		#sound-dai-cells = <0>;
-+
-+		dai-link@0 {
-+			link-name = "MAX98360A";
-+			reg = <0>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu MI2S_SECONDARY>;
-+			};
-+
-+			codec {
-+				sound-dai = <&max98360a>;
-+			};
-+		};
-+
-+		dai-link@1 {
-+			link-name = "DisplayPort";
-+			reg = <1>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_DP_RX>;
-+			};
-+
-+			codec {
-+				sound-dai = <&mdss_dp>;
-+			};
-+		};
-+
-+		dai-link@2 {
-+			link-name = "WCD9385 Playback";
-+			reg = <2>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_CDC_DMA_RX0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&wcd9385 0>, <&swr0 0>, <&lpass_rx_macro 0>;
-+			};
-+		};
-+
-+		dai-link@3 {
-+			link-name = "WCD9385 Capture";
-+			reg = <3>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_CDC_DMA_TX3>;
-+			};
-+
-+			codec {
-+				sound-dai = <&wcd9385 1>, <&swr1 0>, <&lpass_tx_macro 0>;
-+			};
-+		};
-+
-+		dai-link@4 {
-+			link-name = "DMIC";
-+			reg = <4>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_CDC_DMA_VA_TX0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&lpass_va_macro 0>;
-+			};
-+		};
-+	};
- };
- 
- /* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
+See also downstream dts:
+https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/tags/android-11.0.0_r0.81/qcom/lagoon-bus.dtsi
+
+Luca Weiss (4):
+  interconnect: qcom: icc-rpmh: Support child NoC device probe
+  dt-bindings: interconnect: Add Qualcomm SM6350 NoC support
+  interconnect: qcom: Add SM6350 driver support
+  arm64: dts: qcom: sm6350: Add interconnect support
+
+ .../bindings/interconnect/qcom,rpmh.yaml      |  44 ++
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          | 109 ++++
+ drivers/interconnect/qcom/Kconfig             |   9 +
+ drivers/interconnect/qcom/Makefile            |   2 +
+ drivers/interconnect/qcom/icc-rpmh.c          |   4 +
+ drivers/interconnect/qcom/sm6350.c            | 493 ++++++++++++++++++
+ drivers/interconnect/qcom/sm6350.h            | 139 +++++
+ .../dt-bindings/interconnect/qcom,sm6350.h    | 148 ++++++
+ 8 files changed, 948 insertions(+)
+ create mode 100644 drivers/interconnect/qcom/sm6350.c
+ create mode 100644 drivers/interconnect/qcom/sm6350.h
+ create mode 100644 include/dt-bindings/interconnect/qcom,sm6350.h
+
 -- 
-2.7.4
+2.36.0
 
