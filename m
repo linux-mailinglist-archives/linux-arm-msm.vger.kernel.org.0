@@ -2,81 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A54150B3E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 11:18:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BCB150B431
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 11:36:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1445925AbiDVJVI convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 05:21:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33294 "EHLO
+        id S1446081AbiDVJif (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 05:38:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1445974AbiDVJUv (ORCPT
+        with ESMTP id S1445907AbiDVJie (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 05:20:51 -0400
-X-Greylist: delayed 66 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 22 Apr 2022 02:17:12 PDT
-Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D0E1D53B73;
-        Fri, 22 Apr 2022 02:17:12 -0700 (PDT)
-Received: from smtpclient.apple (p4fefc32f.dip0.t-ipconnect.de [79.239.195.47])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 661B5CECD4;
-        Fri, 22 Apr 2022 11:17:11 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
-Subject: Re: [PATCH v1] Bluetooth: btusb: Set
- HCI_QUIRK_BROKEN_ERR_DATA_REPORTING for QCA
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1650012368-13505-1-git-send-email-quic_zijuhu@quicinc.com>
-Date:   Fri, 22 Apr 2022 11:17:11 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, c-hbandi@codeaurora.org,
-        hemantg@codeaurora.org, rjliao@codeaurora.org,
-        zijuhu@codeaurora.org, tjiang@codeaurora.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <1D02DBF7-9368-43D5-9062-96CC73E22B57@holtmann.org>
-References: <1650012368-13505-1-git-send-email-quic_zijuhu@quicinc.com>
-To:     Zijun Hu <quic_zijuhu@quicinc.com>
-X-Mailer: Apple Mail (2.3696.80.82.1.1)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Fri, 22 Apr 2022 05:38:34 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4C94527EE;
+        Fri, 22 Apr 2022 02:35:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650620141; x=1682156141;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=a1NKqMAQrpDA9DNNjLiY6Z6HBalYNQgIEUbfmgCyV1o=;
+  b=xsOWsvTUtrzwe1elaGXehg3zl6inUXZ9x3m5R5jLtbVcjdW44AOSfxjo
+   Z+LCG8oXB8gKRc/haGgmYLVByMddgvm+QTDxgAwHk9tyqlIPeMkyoIjTa
+   5BfmXAJnIiD3cE0vNjT0/1+V0FGL8UV4unM/bfzNP4l2wXKAv8nD9+EQO
+   U=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 22 Apr 2022 02:35:41 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2022 02:35:42 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 22 Apr 2022 02:35:40 -0700
+Received: from [10.216.36.2] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 22 Apr
+ 2022 02:35:36 -0700
+Message-ID: <c1dc4ce8-9dd5-d511-f022-5e71dd7c23ba@quicinc.com>
+Date:   Fri, 22 Apr 2022 15:05:31 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Add ldo_l17b regulator node
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>,
+        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1650550779-8133-1-git-send-email-quic_srivasam@quicinc.com>
+ <CAD=FV=VODaTxu+c8cXWyy8Mw1Qm145vwt-UspirE6k-XL-MZdg@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <CAD=FV=VODaTxu+c8cXWyy8Mw1Qm145vwt-UspirE6k-XL-MZdg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Zijun,
+Thanks for your time Doug!!!
 
-> Set HCI_QUIRK_BROKEN_ERR_DATA_REPORTING for QCA controllers since
-> they answer HCI_OP_READ_DEF_ERR_DATA_REPORTING with error code
-> "UNKNOWN HCI COMMAND" as shown below:
-> 
-> [  580.517552] Bluetooth: hci0: unexpected cc 0x0c5a length: 1 < 2
-> [  580.517660] Bluetooth: hci0: Opcode 0x c5a failed: -38
-> 
-> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-> ---
-> drivers/bluetooth/btusb.c | 2 ++
-> 1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index 06a854a2507e..a33f8705f147 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -3340,6 +3340,8 @@ static int btusb_setup_qca(struct hci_dev *hdev)
-> 	 */
-> 	set_bit(HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN, &hdev->quirks);
-> 
-> +	set_bit(HCI_QUIRK_BROKEN_ERR_DATA_REPORTING, &hdev->quirks);
-> +
-> 	return 0;
-> }
-
-please include the supported commands output from btmon that indicates that this hardware declares support for this command.
-
-Regards
-
-Marcel
-
+On 4/21/2022 9:50 PM, Doug Anderson wrote:
+> Hi,
+>
+> On Thu, Apr 21, 2022 at 7:20 AM Srinivasa Rao Mandadapu
+> <quic_srivasam@quicinc.com> wrote:
+>> Add ldo_l17b in pm7325 regulator, which is required for
+>> wcd codec vdd buck supply.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi | 5 +++++
+>>   1 file changed, 5 insertions(+)
+> The ${SUBJECT} should probably mention qcard somehow? Right now your
+> patch subject makes it sound like this applies to all sc7280 boards,
+> but this only affects those including the qcard dtsi file.
+Okay. Will update the subject accordingly.
+>
+>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+>> index b833ba1..17d0c05 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+>> @@ -113,6 +113,11 @@
+>>                          regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>>                  };
+>>
+>> +               vreg_l17b_1p8: ldo17 {
+>> +                       regulator-min-microvolt = <1700000>;
+>> +                       regulator-max-microvolt = <1900000>;
+> All the other regulators in this file specify:
+>
+> regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>
+> Why doesn't yours?
+Okay. Will add initial mode.
