@@ -2,131 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFC8350BBD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 17:40:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8693A50BC0C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 17:47:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234219AbiDVPnZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 11:43:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47090 "EHLO
+        id S1449530AbiDVPuX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 11:50:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1449490AbiDVPnM (ORCPT
+        with ESMTP id S234254AbiDVPuW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 11:43:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 99A5556218
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:40:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1650642017;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=4QhChbQB9YDaMeenbkdMZZmXadlUdt0Dsk5a56hLZNI=;
-        b=Ha1Gf7WFIZ3eDm+mcZMGEijd2zpqanqfk8P1If/XQPApTVgS3loPEu5oOPjAkgpO8XEaK4
-        7/1zgdrFYnjcNfZvRKVbpXFdhflI24WrnSHwMYynVdIPHMU9VBoOgND+TTFWy6m31O/8pN
-        Yj2Ba7AT675uM79tMrTkdKsFnZOCv8k=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-298-LZuxdkU2PbuaSgDbp6tpHQ-1; Fri, 22 Apr 2022 11:40:14 -0400
-X-MC-Unique: LZuxdkU2PbuaSgDbp6tpHQ-1
-Received: by mail-qk1-f199.google.com with SMTP id q5-20020a05620a0d8500b004738c1b48beso5639499qkl.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:40:14 -0700 (PDT)
+        Fri, 22 Apr 2022 11:50:22 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27C785DA06
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:47:28 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-2f16645872fso89662047b3.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:47:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ukTM52ERK2PAH2x9W0trRBxUxYmVFkTS8BhnUeQKe+Y=;
+        b=DsZ522CU4y+1NYWFKCKhotBkXppypbRBNkP1GKg8JybU7i/wjy1+8Rdd5zp8dPx3y7
+         mDESPEHuJvz9bo0luNm+iExatZnaOjJW/I+UuDUHiWnHTG0O8tPf1ya9A5DXw/7jJI9b
+         2Jnt8OXgA9jjqN34PcwbtZCbLvngZ+tbiUOgreIdhPanaIse+8m8Jp3zXm50tNqyWy7Y
+         wCp/zcfBpBM4iVEOfZDTV2kTv2hhMSgMFMkVjrXSXTnnjaBMXhlKGaeE1D4OKaE2+ETH
+         3kcGzprmxo0XDyZLES7uqpAX4g1BLu+ERpDP50w9vQ0LqH9Z7Lhb51DayDpnYl/7/II4
+         6wBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4QhChbQB9YDaMeenbkdMZZmXadlUdt0Dsk5a56hLZNI=;
-        b=jaTgP9QAr3Ejh/NuhKnuohsvI1DROpRk1hjCsNLKdYGPIuUCymum5DiTqdxR/cSnA6
-         0IVrfCdmWHcgVJiKqhA7hMJrf+0U4L/XfdSo03zru0RZ5LDeGrMnTMY4zhpggsqSzPEC
-         2lo66FCjFdEbpiOJ4RxflAWafKnq/qmF5nHak67lhC3ZzVLo/lr3A5qM7F5NO/HPOFNR
-         rh5xusWZ9mADJW4rolgQ+p9T+3LVWat0RO6yfgDk76ivzLsaJvgJDI30nVrn69X1WSl0
-         n7JwdKo4vnGkC8Gx1iyXKQ2WLuq86+309sOa2KqSIgkU9ZZhAokj9whWQUCAyHQPhblu
-         B+QQ==
-X-Gm-Message-State: AOAM531nIH8RhTZPW4jW5vy7DJCS8q9F1oRGSmaMA2LT2uvgJuQxK1f6
-        jIgmJ11n3f+aI7XCHt8tRrKJ1tIKdYFvEhsDMjl2aG7h60mYnlSy8Dvkv43eDxvbULxPhnfbrKy
-        PLV9Cwxz+Hptma4+/XttADquAVA==
-X-Received: by 2002:a05:6214:262c:b0:446:3464:57cd with SMTP id gv12-20020a056214262c00b00446346457cdmr4194746qvb.89.1650642014111;
-        Fri, 22 Apr 2022 08:40:14 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzU/zrP23x+VGLwwKjYVd8GBF1zIofL+6BYuCYCGu72U6zgNGIJUYYLxnyojnu2QA1/y2aBZw==
-X-Received: by 2002:a05:6214:262c:b0:446:3464:57cd with SMTP id gv12-20020a056214262c00b00446346457cdmr4194730qvb.89.1650642013880;
-        Fri, 22 Apr 2022 08:40:13 -0700 (PDT)
-Received: from halaneylaptop (068-184-200-203.res.spectrum.com. [68.184.200.203])
-        by smtp.gmail.com with ESMTPSA id e126-20020a376984000000b0069c86b28524sm1113111qkc.19.2022.04.22.08.40.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 08:40:13 -0700 (PDT)
-Date:   Fri, 22 Apr 2022 10:40:10 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
-        avri.altman@wdc.com, alim.akhtar@samsung.com,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/5] scsi: ufs: qcom: Fix acquiring the optional reset
- control line
-Message-ID: <20220422154010.2cxk4qy5eikxujb2@halaneylaptop>
-References: <20220422132140.313390-1-manivannan.sadhasivam@linaro.org>
- <20220422132140.313390-2-manivannan.sadhasivam@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ukTM52ERK2PAH2x9W0trRBxUxYmVFkTS8BhnUeQKe+Y=;
+        b=Z0r3aPWOhGN3sLnRs1do7kXFGC3cZBc66NFT4LXXLNSYZIzPdX22Wo7uhGw/MqPUFe
+         5mVVIUA6gpuB19aF2D2SFFnj1K82ipcrULEqf8EsaC9NEnS0a4Yb9h8Th3YOqyHjE17/
+         NNPsZXi4D0b5MUlRusiwvPVRIN3PH9Zfz5NiehLzuF+ERMNGczsDfEtjuInY2fmUS3KN
+         Cc5wvhoG1MobPjtaKZmSm2Sjr7XmSyT95IHaYIgLfuytpQKlfXj0Zo1SIWYP5iJfwrvR
+         3leD0/8mZ2Wj1LAnHNktJpZjUHUK88Xsgs/777w7/WgqQntl2rBvr0vJD103KH+W7mxI
+         tTDQ==
+X-Gm-Message-State: AOAM5316WY26R/iYYgxIKy4oWzdF8frDkGhbuz2U4GDAieAorhAaAbpt
+        sOj6NQ01Y/r+TGU4W7uG31DHLJhDRQE30Qe/9JsISQ==
+X-Google-Smtp-Source: ABdhPJxCgG9GjIP7oVFKGcnuyzU2sX36ebgw64u4B2HkK1gTlI+6j+IbRHE/2n3VJxjy099NvUbVqO0gEjw0S+0aC6o=
+X-Received: by 2002:a81:4c11:0:b0:2d1:1925:cd70 with SMTP id
+ z17-20020a814c11000000b002d11925cd70mr5290906ywa.101.1650642447704; Fri, 22
+ Apr 2022 08:47:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220422132140.313390-2-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20220422114841.1854138-1-dmitry.baryshkov@linaro.org>
+ <20220422114841.1854138-4-dmitry.baryshkov@linaro.org> <fe9c5691-caa1-79b4-666b-daac8913b546@linaro.org>
+In-Reply-To: <fe9c5691-caa1-79b4-666b-daac8913b546@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 22 Apr 2022 18:47:16 +0300
+Message-ID: <CAA8EJpr=XE-8fo+99+KjTEffS1jmBibQnbN1T4ZcgkhWCDucpg@mail.gmail.com>
+Subject: Re: [PATCH 3/6] dt-bindings: pci/qcom-pcie: specify reg-names explicitly
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 22, 2022 at 06:51:36PM +0530, Manivannan Sadhasivam wrote:
-> On Qcom UFS platforms, the reset control line seems to be optional
-> (for SoCs like MSM8996 and probably for others too). The current logic
-> tries to mimic the `devm_reset_control_get_optional()` API but it also
-> continues the probe if there is an error with the declared reset line in
-> DT/ACPI.
-> 
-> In an ideal case, if the reset line is not declared in DT/ACPI, the probe
-> should continue. But if there is problem in acquiring the declared reset
-> line (like EPROBE_DEFER) it should fail and return the appropriate error
-> code.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/scsi/ufs/ufs-qcom.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index 0d2e950d0865..5db0fd922062 100644
-> --- a/drivers/scsi/ufs/ufs-qcom.c
-> +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -1002,13 +1002,13 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->  	host->hba = hba;
->  	ufshcd_set_variant(hba, host);
->  
-> -	/* Setup the reset control of HCI */
-> -	host->core_reset = devm_reset_control_get(hba->dev, "rst");
-> +	/* Setup the optional reset control of HCI */
-> +	host->core_reset = devm_reset_control_get_optional(hba->dev, "rst");
->  	if (IS_ERR(host->core_reset)) {
->  		err = PTR_ERR(host->core_reset);
-> -		dev_warn(dev, "Failed to get reset control %d\n", err);
-> -		host->core_reset = NULL;
-> -		err = 0;
-> +		if (err != -EPROBE_DEFER)
-> +			dev_err(dev, "Failed to get reset control %d\n", err);
+On Fri, 22 Apr 2022 at 15:55, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 22/04/2022 13:48, Dmitry Baryshkov wrote:
+> > Instead of specifying the enum of possible reg-names, specify them
+> > explicitly. This allows us to specify which chipsets need the "atu"
+> > regions, which do not. Also it clearly describes which platforms
+> > enumerate PCIe cores using the dbi region and which use parf region for
+> > that.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  .../devicetree/bindings/pci/qcom,pcie.yaml    | 96 ++++++++++++++++---
+> >  1 file changed, 81 insertions(+), 15 deletions(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > index 7210057d1511..e78e63ea4b25 100644
+> > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > @@ -35,21 +35,6 @@ properties:
+> >            - qcom,pcie-ipq6018
+> >        - const: snps,dw-pcie
+> >
+> > -  reg:
+> > -    minItems: 4
+> > -    maxItems: 5
+>
+> This should stay.
+>
+> > -
+> > -  reg-names:
+> > -    minItems: 4
+> > -    maxItems: 5
+> > -    items:
+> > -      enum:
+> > -        - parf # Qualcomm specific registers
+> > -        - dbi # DesignWare PCIe registers
+> > -        - elbi # External local bus interface registers
+> > -        - config # PCIe configuration space
+> > -        - atu # ATU address space (optional)
+>
+> Move one of your lists for specific compatibles here and name last
+> element optional (minItems: 4).
+>
+> You will need to fix the order of regs in DTS to match the one defined here.
 
-Could we use dev_err_probe() here?
+I see your idea. I wanted to be explicit, which platforms need atu and
+which do not. You'd prefer not to.
+Let's probably drop this for now. The bindings proposed in patch 1
+work for now. I will work on updating reg-names later.
 
-Otherwise, looks good to me.
+>
+> > -
+> >    interrupts:
+> >      maxItems: 1
+> >
+> > @@ -108,6 +93,87 @@ required:
+> >
+> >  allOf:
+> >    - $ref: /schemas/pci/pci-bus.yaml#
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            enum:
+> > +              - qcom,pcie-apq8064
+> > +              - qcom,pcie-ipq4019
+> > +              - qcom,pcie-ipq8064
+> > +              - qcom,pcie-ipq8064v2
+> > +              - qcom,pcie-ipq8074
+> > +              - qcom,pcie-qcs404
+> > +    then:
+> > +      properties:
+> > +        reg:
+> > +          minItems: 4
+> > +          maxItems: 4
+>
+> Only maxItems: 4
+>
+> > +        reg-names:
+> > +          items:
+> > +            - const: dbi # DesignWare PCIe registers
+> > +            - const: elbi # External local bus interface registers
+> > +            - const: parf # Qualcomm specific registers
+> > +            - const: config # PCIe configuration space
+>
+> No need for this, instead only maxItems:4
+>
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            enum:
+> > +              - qcom,pcie-ipq6018
+> > +    then:
+> > +      properties:
+> > +        reg:
+> > +          minItems: 5
+> > +          maxItems: 5
+>
+> Only minItems:5 should be needed.
+>
+> > +        reg-names:
+> > +          items:
+> > +            - const: dbi # DesignWare PCIe registers
+> > +            - const: elbi # External local bus interface registers
+> > +            - const: atu # ATU address space (optional)
+> > +            - const: parf # Qualcomm specific registers
+> > +            - const: config # PCIe configuration space
+>
+> This can be removed.
+>
+> All other cases should be merged with the ones here.
+>
+> Best regards,
+> Krzysztof
 
-> +		goto out_variant_clear;
->  	}
->  
->  	/* Fire up the reset controller. Failure here is non-fatal. */
-> -- 
-> 2.25.1
-> 
 
+
+-- 
+With best wishes
+Dmitry
