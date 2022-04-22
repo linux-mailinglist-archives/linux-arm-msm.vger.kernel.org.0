@@ -2,96 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9EA950B5A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 12:54:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A145050B617
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 13:22:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1446897AbiDVK40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 06:56:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51560 "EHLO
+        id S1447009AbiDVLZJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 07:25:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1446891AbiDVK4Z (ORCPT
+        with ESMTP id S1446980AbiDVLZI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 06:56:25 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 859255523D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 03:53:32 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id z99so9947798ede.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 03:53:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5FUsF3Bm4YCkmboKOMo1H4UXrqyMZV42HmPdb6t+zEg=;
-        b=iTwMIkUlm5QdnVZDvAMZ8lv3kIjxsQ9C28n0K6MiwbpwtvFce7ujI+BCC8Rv2gER9h
-         a6684oc2VQwqV0D9gVE3quTVc776ypTodMrTG7mF+MNmMzk6nC3837htwDjcK3yrqYu1
-         9q1MwMpYT7T1YdAgi5q0/zzUWiT8eLkRI0a2K1W8Ejv5wlKP7UXZSA251z5qHmbCdIUw
-         e+JScoyT03JamWyFX0UEHVaaoAaMI6ZZbck336N1e0YwfeUiFB5OSh0WdNoX73I4DbcH
-         X45e5by65ELA6hXHR/qnfdriQvrl9tiFN41UWzC+94T5Pj8RgJqQ91XKCGUlBQ0b8gOl
-         0XSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5FUsF3Bm4YCkmboKOMo1H4UXrqyMZV42HmPdb6t+zEg=;
-        b=dxxo29Zw5TYBJ010KkIugYTW6JXTRFLqnRR5t3s+ufGUfNayUPcAngzNkVK1h7rswS
-         eUdD6yFTBf2NYgpSd7xEdOcRulGQoieW2OgWSyZz7rWOLIb+IW1YJRO2gyF4S87p67bm
-         1JzVauyyI04BlWVF28dicFatVkkFtEEYm5UY7LCF9OnMiKimapVY6y3EsLwtZf9eLDL+
-         ljN9ooWQzPIM72meQqR/++Kd90lKGEIEjO09xszqxg+1u/zH//EoZ3EwuakbzAYvKI1e
-         FwgVkLFQstFKppm7TEJMD4rG5ut+oBN3+rQ0KWIU+u2Sp947FKTmFiDneHyl/UHhmC7y
-         cVbw==
-X-Gm-Message-State: AOAM531hZKkc8bz1ZwjMGYIxxNNv+SkubVbiGx5U8PfPLvcYOiCWp+KN
-        RatBlwfcohC65NfX1rZpjwfAIw==
-X-Google-Smtp-Source: ABdhPJxxWJp8w+RW/AI0tJ84JwzVl6Kbq3YxN/Efj32iTP/ULw3xGNDAXNvf59LrAf6J6fDYljZPOQ==
-X-Received: by 2002:a05:6402:50d0:b0:423:f4a1:597d with SMTP id h16-20020a05640250d000b00423f4a1597dmr4136984edb.228.1650624811158;
-        Fri, 22 Apr 2022 03:53:31 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id lb26-20020a170907785a00b006ea4d2928e5sm625573ejc.218.2022.04.22.03.53.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 03:53:30 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 22 Apr 2022 07:25:08 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DB17541AC;
+        Fri, 22 Apr 2022 04:22:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C5E2361F72;
+        Fri, 22 Apr 2022 11:22:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25151C385A0;
+        Fri, 22 Apr 2022 11:22:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650626535;
+        bh=SVW4zVvibn9z+IjAwyBEd5JkQQkXUtOD1zca6C1BokE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qqInEFY2cO4FTnCH8Gno5qENJk/44n3MG8a3wISfMNbDgBokbaZ7vvr+qaZVsI27K
+         i/VwnIIIbXQceDYv0RAf7WYyxiTpWag2UFtrdfL2mC/attGJ1kr9GGgJxyTL35FDt0
+         SVEs8jdWWJveITVcdjC1Z+BBasxW4ilFyxeyNQGEWMhhl2oarOsIo5ZRE/s7n8WK29
+         E8FRNSTUeDUZ+HPQ7tnDqqlvzH/oG0ZspRVjbDvuzfsktZUAxzVXzMIUzFWa9ks5+Q
+         QkvKB3D94/j5v/Xc8a3s47FqgRn5wUTZWUkSJzw+PhcuThk+V5rwoy4G28IWV7jeTt
+         9sm4LcyOh1m0Q==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1nhrMW-0002mB-2D; Fri, 22 Apr 2022 13:22:08 +0200
+Date:   Fri, 22 Apr 2022 13:22:08 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] rpmsg: qcom_smd: Fix irq_of_parse_and_map() return value
-Date:   Fri, 22 Apr 2022 12:53:26 +0200
-Message-Id: <20220422105326.78713-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.32.0
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Subject: Re: [PATCH RFC 1/5] phy: qcom-qmp: add support for pipe clock muxing
+Message-ID: <YmKP4FXXm6NhQFYK@hovoldconsulting.com>
+References: <20220421102041.17345-1-johan+linaro@kernel.org>
+ <20220421102041.17345-2-johan+linaro@kernel.org>
+ <de4f9514-5132-f208-d43f-4c50afcda203@linaro.org>
+ <YmKBgGHtfDcO1Mkg@hovoldconsulting.com>
+ <CAA8EJpqTzcwAtxk+XtAWdZaKEx2=VduPiVBp+CWj=_C-921YJg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpqTzcwAtxk+XtAWdZaKEx2=VduPiVBp+CWj=_C-921YJg@mail.gmail.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The irq_of_parse_and_map() returns 0 on failure, not a negative ERRNO.
+[ Again, please trim unnecessary context from your replies. ]
 
-Fixes: 53e2822e56c7 ("rpmsg: Introduce Qualcomm SMD backend")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/rpmsg/qcom_smd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Fri, Apr 22, 2022 at 01:35:01PM +0300, Dmitry Baryshkov wrote:
+> On Fri, 22 Apr 2022 at 13:20, Johan Hovold <johan@kernel.org> wrote:
+> >
+> > On Thu, Apr 21, 2022 at 02:08:27PM +0300, Dmitry Baryshkov wrote:
+> > > On 21/04/2022 13:20, Johan Hovold wrote:
 
-diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-index 764c980507be..6ccfa12abd10 100644
---- a/drivers/rpmsg/qcom_smd.c
-+++ b/drivers/rpmsg/qcom_smd.c
-@@ -1407,7 +1407,7 @@ static int qcom_smd_parse_edge(struct device *dev,
- 		edge->name = node->name;
- 
- 	irq = irq_of_parse_and_map(node, 0);
--	if (irq < 0) {
-+	if (!irq) {
- 		dev_err(dev, "required smd interrupt missing\n");
- 		ret = irq;
- 		goto put_node;
--- 
-2.32.0
+> > > > +   /* Get optional pipe clock mux and default reference source clock. */
+> > > > +   qphy->pipemux_clk = of_clk_get_by_name(np, "mux");
+> > > > +   if (IS_ERR(qphy->pipemux_clk)) {
+> > > > +           ret = PTR_ERR(qphy->pipemux_clk);
+> > > > +           if (ret == -EPROBE_DEFER)
+> > > > +                   return ret;
+> > > > +
+> > > > +           qphy->pipemux_clk = NULL;
 
+> > > > +   } else {
+> > > > +           qphy->piperef_clk = of_clk_get_by_name(np, "ref");
+> > > > +           if (IS_ERR(qphy->piperef_clk)) {
+> > > > +                   ret = PTR_ERR(qphy->piperef_clk);
+> > > > +                   return dev_err_probe(dev, ret,
+> > > > +                                        "failed to get lane%d piperef_clk\n",
+> > > > +                                        id);
+> > > > +           }
+> > > > +   }
+> > > > +
+> > >
+> > > As a second thought.
+> > > This needs to be more explicit. If the chipset requires the pipe clock
+> > > remuxing, we must fail if the clocks were not provided. So depending on
+> > > the qmp instance/property the driver should either use devm_clk_get()
+> > > (instead of _optional) or skip this block completely.
+> >
+> > No, the kernel is not a DT validator (and we have the YAML bindings for
+> > that now).
+> 
+> It is not about DT validation. It is about passing a correct DT.
+
+Heh. That's the same thing.
+
+> The file can come up from the kernel. It can come from the older
+> kernel.  OR it can come from the vendor. Or it even might be being a
+> part of firmware flashed into the device.  So we can not assume that
+> the DT is correct just because the in-kernel DT passes YAML
+> validation.
+
+Again, no. The kernel does not need to implement DT validation and can
+assume that the DT describes the hardware accurately. If the DT says
+there's a mux, the driver can use it. If there's no mux in DT, the
+driver can assume it isn't there.
+
+The only thing that complicates things here is the sc7280 dts which has
+been released in 5.16. We don't care about Qualcomm's kernels and dts.
+
+> So, as I wrote, the whole patchset needs much more care about compatibility.
+> 
+> > > But this will not work with earlier DTS files.
+> >
+> > So this is not a problem (but if we really wanted to have the driver
+> > validate the DT it can be done by updating the compatible strings).
+> 
+> We should not update compatible strings just because the driver
+> changes. Compat strings describe the hardware, not the Linux point of
+> view on it.
+
+We can, it's a documented practise in case a binding needs to be
+updated in an incompatible way:
+
+	https://www.kernel.org/doc/html/latest/devicetree/bindings/ABI.html
+
+But I don't think it'll be needed here.
+
+Johan
