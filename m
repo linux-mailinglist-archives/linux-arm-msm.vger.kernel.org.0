@@ -2,69 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B3AC50B568
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 12:41:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 984FE50B570
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 12:42:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1446794AbiDVKog (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 06:44:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42608 "EHLO
+        id S1446785AbiDVKpD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 06:45:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1446674AbiDVKod (ORCPT
+        with ESMTP id S1446674AbiDVKpC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 06:44:33 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A1A0F4F;
-        Fri, 22 Apr 2022 03:41:33 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C11A8B82C14;
-        Fri, 22 Apr 2022 10:41:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535B0C385A0;
-        Fri, 22 Apr 2022 10:41:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650624090;
-        bh=XgeHDscq4XiMKn3nikqVv26WbVAc1uoCYL9IXMXzt9U=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=U7rO0t94WUjIwU5upicuh6PLMNXEsvt+bhoOcdH63t/Tzz6noC7mBAFjt9F4SVCPC
-         zhPYMjy8XQTXW3nUsCL5rB3dO0Fg6kXiv8NHCiVx0ypj1bfN+V8tQ2rtU1f/zIIjfD
-         vMmhwAZFoLdjZ4Y/NzHy7a56lvCVySO8qfe1tEYlwUdHBK84jbKWYuBlFhyv0S/+Mw
-         3nchJRG4qQh3OUWbPpyMB/EQf2PDXJqXgnz2QALSevvdK3MAySn+EDH665betUemdD
-         8xQGZ2ykaOUOY3DPT/OQt2LmksyDnzOHePeNILOiIA4N/OEK+3UTj2DkmazxBDSmx4
-         qCfJo4EmMsRBw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1nhqj6-0002YD-2f; Fri, 22 Apr 2022 12:41:24 +0200
-Date:   Fri, 22 Apr 2022 12:41:24 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH RFC 1/5] phy: qcom-qmp: add support for pipe clock muxing
-Message-ID: <YmKGVP5T/ijPvV+g@hovoldconsulting.com>
-References: <20220421102041.17345-1-johan+linaro@kernel.org>
- <20220421102041.17345-2-johan+linaro@kernel.org>
- <f4cfc1b3-2a85-f948-ff2c-27588cbe2210@linaro.org>
+        Fri, 22 Apr 2022 06:45:02 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C49AE30
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 03:42:08 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id x9so6635013ybe.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 03:42:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sRlCrOg5yqyYWcX3Vmg+YXtz00jXFt02K1SvmfVHuEo=;
+        b=YZKNNVCdCW1H9YpHWN2WwcXTeHpzenuCACQWt1cFsofkPWDjj+CZhGo5qBz34bXMrL
+         a8sGChDb4rj11K4jsnxJQrpcCmi/sg7315+vVhjz+9kcNVq0RLVpAunksA3AeNO7kccO
+         QnNI74QbFKhy8/7Hn2169LoSjveGvAA/Z6ar8aCW0HQP89inqH/9L9x7cFs3j0YJMi24
+         Vjl4hdYaqEQWvZhlLqiDMVG79bCKBj8oRlloEsu3mrlqK7q7t842V9yGwDbx4guv3qh6
+         zSgBtiXdqIR3W3Eg+4JrHKGcvBwnvXDx2oadjegPOLpPoCnkhqXvmyP5PynUzjZz/MkE
+         hD9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sRlCrOg5yqyYWcX3Vmg+YXtz00jXFt02K1SvmfVHuEo=;
+        b=UAwm993RVhUqqCLzSANI3xdQHnrPpKYblBKFT2r/lRiMAaZ6LwWKy9xFyLSMWzy3jG
+         IcaKr4iZc3/xKbmE/5fa41gNbpS6JoAFNM0y++TcMMmuji67n3ALoCmnnUw8B93eoLuA
+         OqS8paL2td868Ie+F3gROKLbmprl54NSCw4kdLivn9w1GFpnu9tGrvvR1Yu5t78snt5x
+         SJlrzBVfwAslMkEbSXaN7iPl9kGV7wl4lTw9DnBKbXqdGmr8MuqdL45+C2pF/q3Fr4ML
+         Qmkw6lsP+aEKrKHsviGhEAmmvUo2JYLMr/PObFYmh949BS2t33DdZseEi51NEtVQgIsH
+         cW8A==
+X-Gm-Message-State: AOAM533/FFE6xmn/y2OpqWdhOJjeyRh8Wufd4bDiR/7QQGsdriw1Gcpl
+        cMyGMNrcnuwDPSSDcvUWBP0glixOyJZimIQlh0zYX0sCnm+4MQ==
+X-Google-Smtp-Source: ABdhPJy+O9d88W+UfOJ7vyvqvuTfKHdZH3HhJTpSFNYmS29n1nw7GUb9A4Lca7pUm7kxAmK0DqCAl/r83g43Qgqyask=
+X-Received: by 2002:a25:d507:0:b0:63d:a541:1a8c with SMTP id
+ r7-20020a25d507000000b0063da5411a8cmr3865477ybe.92.1650624127547; Fri, 22 Apr
+ 2022 03:42:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f4cfc1b3-2a85-f948-ff2c-27588cbe2210@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20220422084951.2776123-1-lv.ruyi@zte.com.cn>
+In-Reply-To: <20220422084951.2776123-1-lv.ruyi@zte.com.cn>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 22 Apr 2022 13:41:56 +0300
+Message-ID: <CAA8EJpqJrWpRo_DJJdJqSMyDUyJJt3L3S7dNuWw6YeQgsp+TkA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dp: fix error check return value of irq_of_parse_and_map()
+To:     cgel.zte@gmail.com
+Cc:     robdclark@gmail.com, sean@poorly.run, quic_abhinavk@quicinc.com,
+        airlied@linux.ie, daniel@ffwll.ch, swboyd@chromium.org,
+        quic_khsieh@quicinc.com, bjorn.andersson@linaro.org,
+        linux@roeck-us.net, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, Lv Ruyi <lv.ruyi@zte.com.cn>,
+        Zeal Robot <zealci@zte.com.cn>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,82 +70,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 21, 2022 at 02:36:05PM +0300, Dmitry Baryshkov wrote:
-> On 21/04/2022 13:20, Johan Hovold wrote:
-> > Some QMP PHYs need to remux to their pipe clock input to the pipe clock
-> > output generated by the PHY before powering on the PHY and restore the
-> > default source during power down.
-> > 
-> > Add support for an optional pipe clock mux which will be reparented to
-> > the generated pipe clock before powering on the PHY and restored to the
-> > default reference source on power off.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
- 
-> > +static int qcom_qmp_phy_pipe_clk_enable(struct qmp_phy *qphy)
-> > +{
-> > +	struct qcom_qmp *qmp = qphy->qmp;
-> > +	int ret;
-> > +
-> > +	ret = clk_set_parent(qphy->pipemux_clk, qmp->pipe_clksrc);
-> > +	if (ret)
-> > +		dev_err(qmp->dev, "failed to reparent pipe clock: %d\n", ret);
-> > +
-> > +
-> > +	ret = clk_prepare_enable(qphy->pipe_clk);
-> > +	if (ret) {
-> > +		dev_err(qmp->dev, "failed to enable pipe clock: %d\n", ret);
-> > +		goto err_restore_parent;
-> > +	}
-> 
-> So, what you do here is you manually set the parent of 
-> GCC_PCIE_1_PIPE_CLK_SRC to PHY pipe clock right before enabling 
-> GCC_PCIE_1_PIPE_CLK and set it back to XO after disabling 
-> GCC_PCIE_1_PIPE_CLK.
-> 
-> My proposal is doing exactly the same, but doing that automatically 
-> through the clock infrastructure. After removing pipe_clock handling 
-> from pcie driver itself, we can be sure that nobody is playing dirty 
-> tricks around the pipe_clock.
+On Fri, 22 Apr 2022 at 11:50, <cgel.zte@gmail.com> wrote:
+>
+> From: Lv Ruyi <lv.ruyi@zte.com.cn>
+>
+> The irq_of_parse_and_map() function returns 0 on failure, and does not
+> return an negative value.
+>
+> Fixes:  8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
+> Reported-by: Zeal Robot <zealci@zte.com.cn>
+> Signed-off-by: Lv Ruyi <lv.ruyi@zte.com.cn>
 
-Yes, the end result is similar, but I believe handling it explicitly in
-the driver is preferred for a number of reasons that I've already
-mentioned. Not least because the mux needs to be updated when the PHY is
-powered on, not when the GCC pipe clock is ungated.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-In practise, powering on the PHY and ungating the clock happen to
-coincide in time because only the PHY driver will use the GCC pipe
-clock, but conceptually they are unrelated (and as the GDSC hang shows,
-something in the system appears to be ungating the clock while the PHY
-is powered off).
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index a42732b67349..3926d2ac107d 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1239,7 +1239,7 @@ int dp_display_request_irq(struct msm_dp *dp_display)
+>         dp = container_of(dp_display, struct dp_display_private, dp_display);
+>
+>         dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
+> -       if (dp->irq < 0) {
+> +       if (!dp->irq) {
+>                 rc = dp->irq;
+>                 DRM_ERROR("failed to get irq: %d\n", rc);
+>                 return rc;
+> --
+> 2.25.1
+>
 
-The QMP PHY driver implementation is much more straight forward and
-easier to reason about than having the mux implementation spread out
-over multiple clock drivers where it's not clear at all what is really
-going on or why (and even debugfs will give you a false view of the
-clock tree state).
 
-> > +
-> > +	return 0;
-> > +
-> > +err_restore_parent:
-> > +	clk_set_parent(qphy->pipemux_clk, qphy->piperef_clk);
-> > +
-> > +	return ret;
-> > +}
-> > +
-> > +static void qcom_qmp_phy_pipe_clk_disable(struct qmp_phy *qphy)
-> > +{
-> > +	struct qcom_qmp *qmp = qphy->qmp;
-> > +	int ret;
-> > +
-> > +	clk_disable_unprepare(qphy->pipe_clk);
-> > +
-> > +	ret = clk_set_parent(qphy->pipemux_clk, qphy->piperef_clk);
-> > +	if (ret)
-> > +		dev_err(qmp->dev, "failed to reparent pipe clock: %d\n", ret);
-> > +}
-> > +
-
-Johan
+-- 
+With best wishes
+Dmitry
