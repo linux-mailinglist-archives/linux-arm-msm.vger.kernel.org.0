@@ -2,293 +2,257 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A75650C4C4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 01:46:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6512950C4F4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 01:46:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230244AbiDVX22 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 19:28:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46834 "EHLO
+        id S229683AbiDVXsc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 19:48:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232053AbiDVX1z (ORCPT
+        with ESMTP id S229517AbiDVXsa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 19:27:55 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 794F86B0AE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 16:07:20 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id bj36so11287218ljb.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 16:07:20 -0700 (PDT)
+        Fri, 22 Apr 2022 19:48:30 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B169F57B38;
+        Fri, 22 Apr 2022 16:45:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=+omz4SMiA/FNbw95hOPG0uMbW0wRTZgF74DNTyZ1LWc=;
-        b=I/NIktzovazHXTI+cvhlhV9xzuiGibqKWatXMqYxYGOOltJWseZmRAqYso6HzDOS5a
-         ZfUzziSbcLebwm6A60cWOUaOS+dnVp60vY0sOP+fdkV6SZSHdxu27EZhVNwKwDXGp6VX
-         xV25HF9pad5mCDRNhfGfSFDdaeXDbsAPgVy9Ey/lsykb9jZVb45clqD+AUTY9cOxrkKD
-         Uu1JzYUcj3jpoIiOTdXBZpxx+bwaKFIxpGcCNuFzgXTZuF9WOQyjrqW/rkPMISh7LW19
-         vhgb3Ebjk6PaV/tQuiDvw1+9DHlt/DCYl+XoFiu0Mxs+gEIOxqNLCpSqJU32zxVtvA9i
-         sALw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=+omz4SMiA/FNbw95hOPG0uMbW0wRTZgF74DNTyZ1LWc=;
-        b=7uOEePJwCxJi/YQFeXwubjFX7zhnO9p6IkmMk/Y21l9pwnUDCno2EVhWTZPU6IRW2Y
-         Bp6+d0PW84GcNhkhhfsOxiRj/n4v91JAwTPSZ09aCyNS10XJBAH4GvgSVkB1EOqA7xP9
-         +hcs7OIw1dxR65G3iBtKB5A0DnXRmLFHToT3VA14PW0uv1nSnlMOQlmbQasVQ89Z1yn3
-         KRisFyq+hHDacHEi0ka10izvbOj8AZrKdhUlqxNfZ9WAbWtnqskVjXHiX6ssNT7PLUcj
-         2G2Vnm8zFOHOEwB79XG8qPN0Xy0yapduA7ekFaWtQ7Rj0v2xG2hrsj8U06AR+GhWujZ6
-         6m8A==
-X-Gm-Message-State: AOAM531e0Wz3PSDY5cP7dFYtKZPMlHWf70aS8XyIrkcsoW1s/KGhL06j
-        i7j4NphicA0lJwWYuQlSyy84kw==
-X-Google-Smtp-Source: ABdhPJy4QnX3N7jeqkRWD4a9h4+Eq/px39OkD/kxGlmlJUWO6Ndjf3tT/dOYJHX9KlseiTK3crayEw==
-X-Received: by 2002:a2e:850f:0:b0:24d:bca4:b9ae with SMTP id j15-20020a2e850f000000b0024dbca4b9aemr4020026lji.109.1650668838623;
-        Fri, 22 Apr 2022 16:07:18 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id k16-20020a192d10000000b0046ba99878a6sm385297lfj.17.2022.04.22.16.07.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Apr 2022 16:07:18 -0700 (PDT)
-Message-ID: <11a77fd7-d30b-edf6-3570-64d0c2e1764c@linaro.org>
-Date:   Sat, 23 Apr 2022 02:07:16 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650671135; x=1682207135;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=4lI5QQVTvYeP8wkKNBfN+3WtQcv3wu/e6yW5dEZ3qWQ=;
+  b=e1tgnpCOdd8bDpKJ8wPl5sRRrXOOkgmnrIR70CxQUl0rgJ2CeCiF4RAD
+   vO3YluGEUOACPx+KqaJFSW/wAKJ8W5AUBl+Fs8TdLac8TyOtA++9Gf8RB
+   eCfS+za2tGLXcqCD1x1nVtfMv6DnRPVEdTIKxG0RnITHcOHpjXKxdmGQJ
+   0=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 22 Apr 2022 16:45:34 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2022 16:45:33 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 22 Apr 2022 16:45:33 -0700
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 22 Apr 2022 16:45:32 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH] drm/msm/dp: move add fail safe mode to dp_connector_get_mode()
+Date:   Fri, 22 Apr 2022 16:45:23 -0700
+Message-ID: <1650671124-14030-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v3 2/2] drm/msm/dp: Implement oob_hotplug_event()
-Content-Language: en-GB
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-usb@vger.kernel.org
-References: <20220422223225.1297434-1-bjorn.andersson@linaro.org>
- <20220422223225.1297434-2-bjorn.andersson@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220422223225.1297434-2-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/04/2022 01:32, Bjorn Andersson wrote:
-> The Qualcomm DisplayPort driver contains traces of the necessary
-> plumbing to hook up USB HPD, in the form of the dp_hpd module and the
-> dp_usbpd_cb struct. Use this as basis for implementing the
-> oob_hotplug_event() callback, by amending the dp_hpd module with the
-> missing logic.
-> 
-> Overall the solution is similar to what's done downstream, but upstream
-> all the code to disect the HPD notification lives on the calling side of
-> drm_connector_oob_hotplug_event().
-> 
-> drm_connector_oob_hotplug_event() performs the lookup of the
-> drm_connector based on fwnode, hence the need to assign the fwnode in
-> dp_drm_connector_init().
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v2:
-> - Rebased patch
-> 
->   drivers/gpu/drm/msm/dp/dp_display.c |  9 +++++++++
->   drivers/gpu/drm/msm/dp/dp_display.h |  3 +++
->   drivers/gpu/drm/msm/dp/dp_drm.c     | 11 +++++++++++
->   drivers/gpu/drm/msm/dp/dp_hpd.c     | 21 +++++++++++++++++++++
->   drivers/gpu/drm/msm/dp/dp_hpd.h     |  5 +++++
->   5 files changed, 49 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index a42732b67349..1019f6d8fd03 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -449,6 +449,14 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
->   	return dp_display_process_hpd_high(dp);
->   }
->   
-> +void dp_display_oob_hotplug_event(struct msm_dp *dp_display,
-> +				  enum drm_connector_hpd_state hpd_state)
-> +{
-> +	struct dp_display_private *dp = container_of(dp_display, struct dp_display_private, dp_display);
-> +
-> +	dp->usbpd->oob_event(dp->usbpd, hpd_state);
-> +}
-> +
->   static int dp_display_usbpd_disconnect_cb(struct device *dev)
->   {
->   	struct dp_display_private *dp = dev_get_dp_display_private(dev);
-> @@ -1302,6 +1310,7 @@ static int dp_display_probe(struct platform_device *pdev)
->   	dp->pdev = pdev;
->   	dp->name = "drm_dp";
->   	dp->dp_display.connector_type = desc->connector_type;
-> +	dp->dp_display.dev = &pdev->dev;
->   
->   	rc = dp_init_sub_modules(dp);
->   	if (rc) {
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> index 7af2b186d2d9..16658270df2c 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> @@ -11,6 +11,7 @@
->   #include "disp/msm_disp_snapshot.h"
->   
->   struct msm_dp {
-> +	struct device *dev;
->   	struct drm_device *drm_dev;
->   	struct device *codec_dev;
->   	struct drm_bridge *bridge;
-> @@ -40,5 +41,7 @@ bool dp_display_check_video_test(struct msm_dp *dp_display);
->   int dp_display_get_test_bpp(struct msm_dp *dp_display);
->   void dp_display_signal_audio_start(struct msm_dp *dp_display);
->   void dp_display_signal_audio_complete(struct msm_dp *dp_display);
-> +void dp_display_oob_hotplug_event(struct msm_dp *dp_display,
-> +				  enum drm_connector_hpd_state hpd_state);
->   
->   #endif /* _DP_DISPLAY_H_ */
-> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-> index 80f59cf99089..76904b1601b1 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-> @@ -123,6 +123,14 @@ static enum drm_mode_status dp_connector_mode_valid(
->   	return dp_display_validate_mode(dp_disp, mode->clock);
->   }
->   
-> +static void dp_oob_hotplug_event(struct drm_connector *connector,
-> +				 enum drm_connector_hpd_state hpd_state)
-> +{
-> +	struct msm_dp *dp_disp = to_dp_connector(connector)->dp_display;
-> +
-> +	dp_display_oob_hotplug_event(dp_disp, hpd_state);
-> +}
-> +
->   static const struct drm_connector_funcs dp_connector_funcs = {
->   	.detect = dp_connector_detect,
->   	.fill_modes = drm_helper_probe_single_connector_modes,
-> @@ -130,6 +138,7 @@ static const struct drm_connector_funcs dp_connector_funcs = {
->   	.reset = drm_atomic_helper_connector_reset,
->   	.atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
->   	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
-> +	.oob_hotplug_event = dp_oob_hotplug_event,
+Current DP driver implementation has adding safe mode done at
+dp_hpd_plug_handle() which is expected to be executed under event
+thread context.
 
-We were (are) going to switch dp driver to use drm_bridge_connector (to 
-fix support for bridge chains, eDP panels, etc.
+However there is possible circular locking happen (see blow stack trace)
+after edp driver call dp_hpd_plug_handle() from dp_bridge_enable() which
+is executed under drm_thread context.
 
-So these changes must be ported to drm_bridge_connector (or we must 
-abandon/defer the idea of using the bridge_connector).
+To break this circular locking, this patch have safe mode added at
+dp_connector_get_mode() which is executed under drm thread context.
+Therefore no lock acquired required for &dev->mode_config.mutex while
+adding fail safe mode since it has been hold by drm thread already.
 
-For the oob_hotplug_event() callback proper support might be as simple 
-as calling drm_bridge_connector_hpd_cb().
+======================================================
+ WARNING: possible circular locking dependency detected
+ 5.15.35-lockdep #6 Tainted: G        W
+ ------------------------------------------------------
+ frecon/429 is trying to acquire lock:
+ ffffff808dc3c4e8 (&dev->mode_config.mutex){+.+.}-{3:3}, at:
+dp_panel_add_fail_safe_mode+0x4c/0xa0
 
->   };
->   
->   static const struct drm_connector_helper_funcs dp_connector_helper_funcs = {
-> @@ -160,6 +169,8 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
->   	if (ret)
->   		return ERR_PTR(ret);
->   
-> +	connector->fwnode = fwnode_handle_get(dev_fwnode(dp_display->dev));
-> +
+ but task is already holding lock:
+ ffffff808dc441e0 (&kms->commit_lock[i]){+.+.}-{3:3}, at: lock_crtcs+0xb4/0x124
 
-This would be much more interesting. Supporting this in a generic way 
-might be tricky. But we can still set the fwnode manually from the dp code.
+ which lock already depends on the new lock.
 
->   	drm_connector_helper_add(connector, &dp_connector_helper_funcs);
->   
->   	/*
-> diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.c b/drivers/gpu/drm/msm/dp/dp_hpd.c
-> index db98a1d431eb..cdb1feea5ebf 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_hpd.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_hpd.c
-> @@ -7,6 +7,8 @@
->   
->   #include <linux/slab.h>
->   #include <linux/device.h>
-> +#include <drm/drm_connector.h>
-> +#include <drm/drm_print.h>
->   
->   #include "dp_hpd.h"
->   
-> @@ -45,6 +47,24 @@ int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd)
->   	return rc;
->   }
->   
-> +static void dp_hpd_oob_event(struct dp_usbpd *dp_usbpd,
-> +			     enum drm_connector_hpd_state hpd_state)
-> +{
-> +	struct dp_hpd_private *hpd_priv = container_of(dp_usbpd, struct dp_hpd_private, dp_usbpd);
-> +
-> +	DRM_DEBUG_DP("hpd_state: %d connected: %d\n", hpd_state, dp_usbpd->connected);
-> +
-> +	if (!dp_usbpd->connected && hpd_state == DRM_CONNECTOR_HPD_HIGH) {
-> +		dp_usbpd->connected = true;
-> +		hpd_priv->dp_cb->configure(hpd_priv->dev);
-> +	} else if (hpd_state == DRM_CONNECTOR_HPD_LOW) {
-> +		dp_usbpd->connected = false;
-> +		hpd_priv->dp_cb->disconnect(hpd_priv->dev);
-> +	} else {
-> +		hpd_priv->dp_cb->attention(hpd_priv->dev);
-> +	}
-> +}
-> +
->   struct dp_usbpd *dp_hpd_get(struct device *dev, struct dp_usbpd_cb *cb)
->   {
->   	struct dp_hpd_private *dp_hpd;
-> @@ -62,6 +82,7 @@ struct dp_usbpd *dp_hpd_get(struct device *dev, struct dp_usbpd_cb *cb)
->   	dp_hpd->dp_cb = cb;
->   
->   	dp_hpd->dp_usbpd.connect = dp_hpd_connect;
-> +	dp_hpd->dp_usbpd.oob_event = dp_hpd_oob_event;
->   
->   	return &dp_hpd->dp_usbpd;
->   }
-> diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.h b/drivers/gpu/drm/msm/dp/dp_hpd.h
-> index 8feec5aa5027..4166e5fd3156 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_hpd.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_hpd.h
-> @@ -29,7 +29,9 @@ enum plug_orientation {
->    * @hpd_irq: Change in the status since last message
->    * @alt_mode_cfg_done: bool to specify alt mode status
->    * @debug_en: bool to specify debug mode
-> + * @connected: cable currently connected
->    * @connect: simulate disconnect or connect for debug mode
-> + * @oob_event: deliver oob event to the usbpd code
->    */
->   struct dp_usbpd {
->   	enum plug_orientation orientation;
-> @@ -41,8 +43,11 @@ struct dp_usbpd {
->   	bool hpd_irq;
->   	bool alt_mode_cfg_done;
->   	bool debug_en;
-> +	bool connected;
->   
->   	int (*connect)(struct dp_usbpd *dp_usbpd, bool hpd);
-> +	void (*oob_event)(struct dp_usbpd *dp_usbpd,
-> +			  enum drm_connector_hpd_state hpd_state);
->   };
->   
->   /**
+ the existing dependency chain (in reverse order) is:
 
+ -> #3 (&kms->commit_lock[i]){+.+.}-{3:3}:
+        __mutex_lock_common+0x174/0x1a64
+        mutex_lock_nested+0x98/0xac
+        lock_crtcs+0xb4/0x124
+        msm_atomic_commit_tail+0x330/0x748
+        commit_tail+0x19c/0x278
+        drm_atomic_helper_commit+0x1dc/0x1f0
+        drm_atomic_commit+0xc0/0xd8
+        drm_atomic_helper_set_config+0xb4/0x134
+        drm_mode_setcrtc+0x688/0x1248
+        drm_ioctl_kernel+0x1e4/0x338
+        drm_ioctl+0x3a4/0x684
+        __arm64_sys_ioctl+0x118/0x154
+        invoke_syscall+0x78/0x224
+        el0_svc_common+0x178/0x200
+        do_el0_svc+0x94/0x13c
+        el0_svc+0x5c/0xec
+        el0t_64_sync_handler+0x78/0x108
+        el0t_64_sync+0x1a4/0x1a8
 
+ -> #2 (crtc_ww_class_mutex){+.+.}-{3:3}:
+        __mutex_lock_common+0x174/0x1a64
+        ww_mutex_lock+0xb8/0x278
+        modeset_lock+0x304/0x4ac
+        drm_modeset_lock+0x4c/0x7c
+        drmm_mode_config_init+0x4a8/0xc50
+        msm_drm_init+0x274/0xac0
+        msm_drm_bind+0x20/0x2c
+        try_to_bring_up_master+0x3dc/0x470
+        __component_add+0x18c/0x3c0
+        component_add+0x1c/0x28
+        dp_display_probe+0x954/0xa98
+        platform_probe+0x124/0x15c
+        really_probe+0x1b0/0x5f8
+        __driver_probe_device+0x174/0x20c
+        driver_probe_device+0x70/0x134
+        __device_attach_driver+0x130/0x1d0
+        bus_for_each_drv+0xfc/0x14c
+        __device_attach+0x1bc/0x2bc
+        device_initial_probe+0x1c/0x28
+        bus_probe_device+0x94/0x178
+        deferred_probe_work_func+0x1a4/0x1f0
+        process_one_work+0x5d4/0x9dc
+        worker_thread+0x898/0xccc
+        kthread+0x2d4/0x3d4
+        ret_from_fork+0x10/0x20
+
+ -> #1 (crtc_ww_class_acquire){+.+.}-{0:0}:
+        ww_acquire_init+0x1c4/0x2c8
+        drm_modeset_acquire_init+0x44/0xc8
+        drm_helper_probe_single_connector_modes+0xb0/0x12dc
+        drm_mode_getconnector+0x5dc/0xfe8
+        drm_ioctl_kernel+0x1e4/0x338
+        drm_ioctl+0x3a4/0x684
+        __arm64_sys_ioctl+0x118/0x154
+        invoke_syscall+0x78/0x224
+        el0_svc_common+0x178/0x200
+        do_el0_svc+0x94/0x13c
+        el0_svc+0x5c/0xec
+        el0t_64_sync_handler+0x78/0x108
+        el0t_64_sync+0x1a4/0x1a8
+
+ -> #0 (&dev->mode_config.mutex){+.+.}-{3:3}:
+        __lock_acquire+0x2650/0x672c
+        lock_acquire+0x1b4/0x4ac
+        __mutex_lock_common+0x174/0x1a64
+        mutex_lock_nested+0x98/0xac
+        dp_panel_add_fail_safe_mode+0x4c/0xa0
+        dp_hpd_plug_handle+0x1f0/0x280
+        dp_bridge_enable+0x94/0x2b8
+        drm_atomic_bridge_chain_enable+0x11c/0x168
+        drm_atomic_helper_commit_modeset_enables+0x500/0x740
+        msm_atomic_commit_tail+0x3e4/0x748
+        commit_tail+0x19c/0x278
+        drm_atomic_helper_commit+0x1dc/0x1f0
+        drm_atomic_commit+0xc0/0xd8
+        drm_atomic_helper_set_config+0xb4/0x134
+        drm_mode_setcrtc+0x688/0x1248
+        drm_ioctl_kernel+0x1e4/0x338
+        drm_ioctl+0x3a4/0x684
+        __arm64_sys_ioctl+0x118/0x154
+        invoke_syscall+0x78/0x224
+        el0_svc_common+0x178/0x200
+        do_el0_svc+0x94/0x13c
+        el0_svc+0x5c/0xec
+        el0t_64_sync_handler+0x78/0x108
+        el0t_64_sync+0x1a4/0x1a8
+
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c |  6 ------
+ drivers/gpu/drm/msm/dp/dp_panel.c   | 23 +++++++++++++----------
+ 2 files changed, 13 insertions(+), 16 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 92cd50f..01453db 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -555,12 +555,6 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+ 
+ 	mutex_unlock(&dp->event_mutex);
+ 
+-	/*
+-	 * add fail safe mode outside event_mutex scope
+-	 * to avoid potiential circular lock with drm thread
+-	 */
+-	dp_panel_add_fail_safe_mode(dp->dp_display.connector);
+-
+ 	/* uevent will complete connection part */
+ 	return 0;
+ };
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index 1aa9aa8c..23fee42 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -151,15 +151,6 @@ static int dp_panel_update_modes(struct drm_connector *connector,
+ 	return rc;
+ }
+ 
+-void dp_panel_add_fail_safe_mode(struct drm_connector *connector)
+-{
+-	/* fail safe edid */
+-	mutex_lock(&connector->dev->mode_config.mutex);
+-	if (drm_add_modes_noedid(connector, 640, 480))
+-		drm_set_preferred_mode(connector, 640, 480);
+-	mutex_unlock(&connector->dev->mode_config.mutex);
+-}
+-
+ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 	struct drm_connector *connector)
+ {
+@@ -216,7 +207,11 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 			goto end;
+ 		}
+ 
+-		dp_panel_add_fail_safe_mode(connector);
++		/* fail safe edid */
++		mutex_lock(&connector->dev->mode_config.mutex);
++		if (drm_add_modes_noedid(connector, 640, 480))
++			drm_set_preferred_mode(connector, 640, 480);
++		mutex_unlock(&connector->dev->mode_config.mutex);
+ 	}
+ 
+ 	if (panel->aux_cfg_update_done) {
+@@ -266,6 +261,14 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
+ 		return -EINVAL;
+ 	}
+ 
++	/*
++	 * add fail safe mode (640x480) here
++	 * since we are executed in drm_thread context,
++	 * no mode_config.mutex acquired required
++	 */
++	if (drm_add_modes_noedid(connector, 640, 480))
++		drm_set_preferred_mode(connector, 640, 480);
++
+ 	if (dp_panel->edid)
+ 		return dp_panel_update_modes(connector, dp_panel->edid);
+ 
 -- 
-With best wishes
-Dmitry
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
