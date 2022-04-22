@@ -2,155 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1ECC50C061
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 21:37:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC1B050C200
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 00:07:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230003AbiDVTcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 15:32:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38958 "EHLO
+        id S231888AbiDVWJQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 18:09:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230055AbiDVTcD (ORCPT
+        with ESMTP id S232375AbiDVWIO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 15:32:03 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE181A4327
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 12:10:03 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id br15so1499431lfb.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 12:10:03 -0700 (PDT)
+        Fri, 22 Apr 2022 18:08:14 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C67B1DFE78;
+        Fri, 22 Apr 2022 13:54:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=YQMZQSjIRuMSjHIc47XNM/07efC1fXHqPz8fJtRCS8k=;
-        b=pbP0vqcqSJiqmC4EYHX7dALEr5BtFi716773PS0DgBtSAuqEuztcUXbhQuQUrGRW4q
-         k1JYxfVNuOnwPKgTh2Nc33FVB5uI8DszrysHizrS9MYjPyEEVRI9FYwQOZ2fmC878Snl
-         eqdq9nX/Lmw9cMk8u3dE7irQIPpQGFu6FQPmFEmbsUAvr6qMetZ5JlHf8jsMAQEWrfDE
-         Yrh8XZUEJzD3fNWMXHFD97J62U9PtbVNx/YT/BChrzlWf9LcgHAP/eLVBcyp0q2kdcSI
-         70Wq1YoXzZI7G5I1ya+pXND99kLNM5kNGdzhl7kIatcY8QQgmzD6hjpU5zjuCLE3nIWe
-         Azkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=YQMZQSjIRuMSjHIc47XNM/07efC1fXHqPz8fJtRCS8k=;
-        b=oTpeegNCJACw/2bbW7iDO/GO3y2yHKiu8VofPIGNsqkEncxYZ9EUVVzfox+jynYsrH
-         4jlyH+62l3ODvQIjl2ryUgHgTZzGuIredkeQduxOh0ktVt3mLHLzWLG5DMzQw/LB5Rw0
-         jOOc+a5RrZpb5Hx4gd+K8+EY1zUamM5o4Fr4bN1HFmnXdbKCrsk9bUdZjaBTyz30I7al
-         TZPVAKOQVgvPSF6pj/yCWCMZIqWMdNUZ4lnogG+M+l6yTDGW05dWHbhrNpwkq2yl/dgB
-         eZc5nE/JKSl0tP7F+Ha7hzaop/PUW4h+OyZnlbuAKFopvhAdQ2ckKpKiQpGBY6ezPHe/
-         TI5g==
-X-Gm-Message-State: AOAM530xQy+yS9Fq9fBvwj90aoP587X6U5PD0/gLQLpLOChbb29mc7yN
-        KEE8Yvz/+HuQFZdYlQZk+/+Opw==
-X-Google-Smtp-Source: ABdhPJwFcetF4SV9iA/ayn0H1FWGhLflhOmEFb0amIvByiecthv5UJbDfEhiTZ1cBU0B7Yy5uizseQ==
-X-Received: by 2002:a05:6512:3b9b:b0:471:8e54:2ecf with SMTP id g27-20020a0565123b9b00b004718e542ecfmr4071398lfv.286.1650654573572;
-        Fri, 22 Apr 2022 12:09:33 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id r4-20020a2e5744000000b0024d9e106768sm305118ljd.89.2022.04.22.12.09.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Apr 2022 12:09:32 -0700 (PDT)
-Message-ID: <5149ef96-0cdd-64cc-091f-bc97c04e7835@linaro.org>
-Date:   Fri, 22 Apr 2022 22:09:32 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650660876; x=1682196876;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=Yhh9Ox6gWEy5WyqGfCoP9kTx2lrAgn2h1flSuBeiyak=;
+  b=XYOGMIPiSF5FUuqyXzh+bWHtx0r8uqrmxsX7V1nLlIk2Oqclw5clK93f
+   /dU06yXbzlg8taNrypbNQeT8m7y+pRAyATwjHjc/x5+lvsAuXz41SqrwW
+   qMKz9uIkpF5JJcIrJM78KaUQdaS11T4BiveDQTn8Px/MmmOStt3Y39Soa
+   8=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Apr 2022 12:13:23 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2022 12:13:20 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 22 Apr 2022 12:13:20 -0700
+Received: from hu-amelende-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 22 Apr 2022 12:13:19 -0700
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+To:     <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <sre@kernel.org>,
+        <robh+dt@kernel.org>
+CC:     <linux-input@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <bjorn.andersson@linaro.org>,
+        <swboyd@chromium.org>, <linux-doc@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Anjelique Melendez <quic_amelende@quicinc.com>
+Subject: [PATCH v6 0/5] Extend pm8941-pwrkey driver
+Date:   Fri, 22 Apr 2022 12:12:35 -0700
+Message-ID: <20220422191239.6271-1-quic_amelende@quicinc.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH 3/6] dt-bindings: pci/qcom-pcie: specify reg-names
- explicitly
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220422114841.1854138-1-dmitry.baryshkov@linaro.org>
- <20220422114841.1854138-4-dmitry.baryshkov@linaro.org>
- <fe9c5691-caa1-79b4-666b-daac8913b546@linaro.org>
- <CAA8EJpr=XE-8fo+99+KjTEffS1jmBibQnbN1T4ZcgkhWCDucpg@mail.gmail.com>
- <338344c8-1812-de27-80f2-df4c2dc3c17b@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <338344c8-1812-de27-80f2-df4c2dc3c17b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/04/2022 18:51, Krzysztof Kozlowski wrote:
-> On 22/04/2022 17:47, Dmitry Baryshkov wrote:
->> On Fri, 22 Apr 2022 at 15:55, Krzysztof Kozlowski
->> <krzysztof.kozlowski@linaro.org> wrote:
->>>
->>> On 22/04/2022 13:48, Dmitry Baryshkov wrote:
->>>> Instead of specifying the enum of possible reg-names, specify them
->>>> explicitly. This allows us to specify which chipsets need the "atu"
->>>> regions, which do not. Also it clearly describes which platforms
->>>> enumerate PCIe cores using the dbi region and which use parf region for
->>>> that.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>   .../devicetree/bindings/pci/qcom,pcie.yaml    | 96 ++++++++++++++++---
->>>>   1 file changed, 81 insertions(+), 15 deletions(-)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->>>> index 7210057d1511..e78e63ea4b25 100644
->>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->>>> @@ -35,21 +35,6 @@ properties:
->>>>             - qcom,pcie-ipq6018
->>>>         - const: snps,dw-pcie
->>>>
->>>> -  reg:
->>>> -    minItems: 4
->>>> -    maxItems: 5
->>>
->>> This should stay.
->>>
->>>> -
->>>> -  reg-names:
->>>> -    minItems: 4
->>>> -    maxItems: 5
->>>> -    items:
->>>> -      enum:
->>>> -        - parf # Qualcomm specific registers
->>>> -        - dbi # DesignWare PCIe registers
->>>> -        - elbi # External local bus interface registers
->>>> -        - config # PCIe configuration space
->>>> -        - atu # ATU address space (optional)
->>>
->>> Move one of your lists for specific compatibles here and name last
->>> element optional (minItems: 4).
->>>
->>> You will need to fix the order of regs in DTS to match the one defined here.
->>
->> I see your idea. I wanted to be explicit, which platforms need atu and
->> which do not. You'd prefer not to.
-> 
-> Opposite, I wish platforms to be specific, which need atu which not.
-> However I wish the strictly defined, same order for everyone because it
-> looks possible.
+Changed from v5:
+  - Addressed Rob's comment in 1/5 and fixed reg property
+  - Addressed Dmitry's comment in 3/5 ang got rid of declaring
+    properties as false
 
-Well, the same order is not possible, since for some devices the first, 
-address-defining reg is "parf", for others it is "dbi". So, there will 
-be two "families" of the devices. Unless we want to change the DT 
-address of the unit.
+Changes from v4:
+  - Added new dt-binding patch as 1/5
+ 
+Changes from v3:
+  - Fixed dereference issue in 2/4
+  - Added Stephen's reviewed by tag for 2/4
 
->> Let's probably drop this for now. The bindings proposed in patch 1
->> work for now. I will work on updating reg-names later.
-> 
-> 
-> Best regards,
-> Krzysztof
+Changes from v2:
+  - Addressed Stephen's comments
+    - Add Stephen's reviewed by tag for 1/4
+    - Fixed style for 2/4
+    - Corrected function call to use correct function for 3/4
 
+Changes from v1:
+  - Removed Change-Id from all patches
+  - Updated subject line of cover letter
+  - Addressed Stephen's comments for v1 1/3
+    - Separated error message fix to own patch (v2 1/4)
+    - Separated PON GEN3 base address changes to own patch (v2 2/4)
+    - Added new variables and functions to make code more readable
+  - Removed v1 3/3 as per Bjorn's comments
+
+Anjelique Melendez (2):
+  input: misc: pm8941-pwrkey: fix error message
+  input: misc: pm8941-pwrkey: add support for PON GEN3 base addresses
+
+David Collins (3):
+  dt-bindings: power: reset: qcom-pon: update "reg" property details
+  input: misc: pm8941-pwrkey: add software key press debouncing support
+  input: misc: pm8941-pwrkey: simulate missed key press events
+
+ Documentation/devicetree/bindings/power/reset/qcom,pon.yaml | 19 ++++++++++++++++++-
+ drivers/input/misc/pm8941-pwrkey.c | 124 +++++++++++++++++++++++++----
+ 2 files changed, 129 insertions(+), 14 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.35.1
+
