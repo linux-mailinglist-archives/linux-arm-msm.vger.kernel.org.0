@@ -2,151 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 986A350B6AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 13:57:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6555B50B785
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 14:40:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1447229AbiDVMAW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 08:00:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57620 "EHLO
+        id S1447587AbiDVMne (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 08:43:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1447214AbiDVMAV (ORCPT
+        with ESMTP id S234044AbiDVMnb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 08:00:21 -0400
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBF7154FB5;
-        Fri, 22 Apr 2022 04:57:28 -0700 (PDT)
-Received: by mail-yb1-f175.google.com with SMTP id x9so6947421ybe.11;
-        Fri, 22 Apr 2022 04:57:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mo2gwYWJ7v3j2YMx6bxMzq/oePOXwNlGXJmLNbBcYNw=;
-        b=SPO+V7r6R/A+hJFfGn+eHiAq018UQgd9LrDiLxOPcg7r75J3PkVoN1f6NZUmKgZ1/0
-         Z1hii1ChUnKDQ7ujmbWSmQWVauk7knxbX6SUeY+RxbeaX/c9I5RVEcLK1kJfnkoLvSJn
-         Q9slWt+QAh1iV1aW0ZNXI5V9BWJJAL2W46bGoTDtCaIl+1MmubLIRhA/nRgtAVd1Yijy
-         +uNy5sfZWzr7IlfCk6RiYBYI1vYr8hAD5RFTmyCeaWBzSVkGvfIm8WInc3Q4ypnxXReP
-         F/Lvi+n3j1yx6FOOUERBYriB7ESSH8Vm3OFYL1y+8x478q6j7tNIMoHWLnqDuYt6nFzx
-         XubA==
-X-Gm-Message-State: AOAM533FUBZvtTuNUYD6tSb/zdMTNp4l/IXzWITVzcCG6zpuZZnE0YuU
-        0AV/bkHjGT0BuYdg4lW76IKAfG/nlUmMSQ6KyLE=
-X-Google-Smtp-Source: ABdhPJww0e7Q1osgVBWbiQpEUtZNSNKNM2OqFsD//h3jvx8Gu911m2tDMHkzJSveus4EHFgb0GUefU88XPyf4wwFDzQ=
-X-Received: by 2002:a25:3cc3:0:b0:63e:6ee9:4840 with SMTP id
- j186-20020a253cc3000000b0063e6ee94840mr4222715yba.153.1650628648089; Fri, 22
- Apr 2022 04:57:28 -0700 (PDT)
+        Fri, 22 Apr 2022 08:43:31 -0400
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47FBE13F97;
+        Fri, 22 Apr 2022 05:40:37 -0700 (PDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: kholk11)
+        with ESMTPSA id 01B831F467B0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1650631235;
+        bh=iPTlbvyMx1d7Mrt1YDijPEDXZRJjSVW/eJXTWZlURgI=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=FMiMQJrjHDXURWqTZZjn93rQIMl+5Yuzz+Tv9HnSkAHtSnldGOUrxG22nM/2m3Sy9
+         0kq4f+BM/HZntwLE6mR9Q1eX+pA/8ohtuQmmZhItTgahx+eVLUp/FvKKoaXVWLm1Uu
+         1Krkr554fJc+3KvsBhOX0v6eK1awjt5M6YhZBNHfpJFmr2fxLv5J3+5FrVX+U3XNqB
+         1OS5pyimSsjEGFADcla8eG0DO7cVkRYm+TpcjrwjemLjd4BnxTlba/dIkrtawtQrFT
+         UUlwoYCtuvVxPwg8kQ3B1FOKX/zYkeDwL8AmQeg/M1j4IIIiXGs0+Ep9vNSX8wuhbb
+         vPvitMbwo3m/g==
+Message-ID: <b1367db8-7cbb-557d-495a-863f9c98babf@collabora.com>
+Date:   Fri, 22 Apr 2022 14:40:32 +0200
 MIME-Version: 1.0
-References: <1650395470-31333-1-git-send-email-quic_c_sanm@quicinc.com> <1650395470-31333-3-git-send-email-quic_c_sanm@quicinc.com>
-In-Reply-To: <1650395470-31333-3-git-send-email-quic_c_sanm@quicinc.com>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Fri, 22 Apr 2022 13:57:17 +0200
-Message-ID: <CAJZ5v0h2ZKPN6SERPnASPywZfeOWXWncJgNZ1WZa80+=M4DCiQ@mail.gmail.com>
-Subject: Re: [PATCH v14 2/7] PM / wakeup: Add device_children_wakeup_capable()
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ULTRA-WIDEBAND (UWB) SUBSYSTEM:" 
-        <linux-usb@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_kriskura@quicinc.com, quic_vpulyala@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] drm: msm: fix error check return value of
+ irq_of_parse_and_map()
+Content-Language: en-US
+To:     cgel.zte@gmail.com, robdclark@gmail.com, sean@poorly.run,
+        dmitry.baryshkov@linaro.org
+Cc:     quic_abhinavk@quicinc.com, airlied@linux.ie, daniel@ffwll.ch,
+        swboyd@chromium.org, quic_mkrishn@quicinc.com, vulab@iscas.ac.cn,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Lv Ruyi <lv.ruyi@zte.com.cn>, Zeal Robot <zealci@zte.com.cn>
+References: <20220422085211.2776419-1-lv.ruyi@zte.com.cn>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20220422085211.2776419-1-lv.ruyi@zte.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
+        SPF_PASS,UNPARSEABLE_RELAY autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 19, 2022 at 9:11 PM Sandeep Maheswaram
-<quic_c_sanm@quicinc.com> wrote:
->
-> From: Matthias Kaehlcke <mka@chromium.org>
->
-> Add device_children_wakeup_capable() which checks whether the device itself
-> or one if its descendants is wakeup capable.
+Il 22/04/22 10:52, cgel.zte@gmail.com ha scritto:
+> From: Lv Ruyi <lv.ruyi@zte.com.cn>
+> 
+> The irq_of_parse_and_map() function returns 0 on failure, and does not
+> return an negative value.
+> 
+> Reported-by: Zeal Robot <zealci@zte.com.cn>
+> Signed-off-by: Lv Ruyi <lv.ruyi@zte.com.cn>
 
-device_wakeup_path() exists for a very similar purpose.
-
-Is it not usable for whatever you need the new function introduced here?
-
-> Suggested-by: Felipe Balbi <balbi@kernel.org>
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
->  drivers/base/power/wakeup.c | 18 ++++++++++++++++++
->  include/linux/pm_wakeup.h   |  7 +++++++
->  2 files changed, 25 insertions(+)
->
-> diff --git a/drivers/base/power/wakeup.c b/drivers/base/power/wakeup.c
-> index a57d469..1900637 100644
-> --- a/drivers/base/power/wakeup.c
-> +++ b/drivers/base/power/wakeup.c
-> @@ -541,6 +541,24 @@ int device_set_wakeup_enable(struct device *dev, bool enable)
->  }
->  EXPORT_SYMBOL_GPL(device_set_wakeup_enable);
->
-> +static int __device_children_wakeup_capable(struct device *dev, void *dummy)
-> +{
-> +       return device_may_wakeup(dev) ||
-> +               device_for_each_child(dev, NULL, __device_children_wakeup_capable);
-> +}
-> +
-> +/**
-> + * device_children_wakeup_capable - Check whether a device or one of its descendants is
-> + *                                  wakeup capable.
-> + * @dev: Device to handle.
-> + */
-> +bool device_children_wakeup_capable(struct device *dev)
-> +{
-> +       return __device_children_wakeup_capable(dev, NULL);
-> +}
-> +EXPORT_SYMBOL_GPL(device_children_wakeup_capable);
-> +
-> +
->  /**
->   * wakeup_source_not_registered - validate the given wakeup source.
->   * @ws: Wakeup source to be validated.
-> diff --git a/include/linux/pm_wakeup.h b/include/linux/pm_wakeup.h
-> index 196a157..9a3005b 100644
-> --- a/include/linux/pm_wakeup.h
-> +++ b/include/linux/pm_wakeup.h
-> @@ -109,6 +109,7 @@ extern struct wakeup_source *wakeup_sources_walk_next(struct wakeup_source *ws);
->  extern int device_wakeup_enable(struct device *dev);
->  extern int device_wakeup_disable(struct device *dev);
->  extern void device_set_wakeup_capable(struct device *dev, bool capable);
-> +extern bool device_children_wakeup_capable(struct device *dev);
->  extern int device_init_wakeup(struct device *dev, bool val);
->  extern int device_set_wakeup_enable(struct device *dev, bool enable);
->  extern void __pm_stay_awake(struct wakeup_source *ws);
-> @@ -186,6 +187,12 @@ static inline bool device_wakeup_path(struct device *dev)
->
->  static inline void device_set_wakeup_path(struct device *dev) {}
->
-> +static inline bool device_children_wakeup_capable(struct device *dev)
-> +{
-> +       return false;
-> +}
-> +
-> +
->  static inline void __pm_stay_awake(struct wakeup_source *ws) {}
->
->  static inline void pm_stay_awake(struct device *dev) {}
-> --
-> 2.7.4
->
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
