@@ -2,76 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C258F50B543
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 12:37:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E452D50B569
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 12:41:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1388868AbiDVKjl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 06:39:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36262 "EHLO
+        id S1446815AbiDVKoe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 06:44:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1446771AbiDVKjj (ORCPT
+        with ESMTP id S1446805AbiDVKoX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 06:39:39 -0400
+        Fri, 22 Apr 2022 06:44:23 -0400
 Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AE6255206
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 03:36:39 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id b26so8081704ybj.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 03:36:39 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E792B273D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 03:41:26 -0700 (PDT)
+Received: by mail-yb1-xb30.google.com with SMTP id f17so13711820ybj.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 03:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=4zcLXpCy7SBjHdgWPDMiVMAfSv9GgL9PPHTJHm95g50=;
-        b=TlZWQKiYpTuDxECbeXwF6tJvJGze7xTFNWlQD4B2jRWUPyNtSO32rIHpFbOH95KpZM
-         s26ARO9kRKdZUXaE9W+5GAk4Biz6ra37er4NWm9KQgbRawLZiJ4N62G0EB9Mm35+FIPt
-         VE0ppUmp9NOUmWczcYULL7OuU3fw+9RKxiZaP87uqLCwucSFLVBH5/tryhvBmqajwmoC
-         dy7swc3bCfD7Q+nwTUg1K9U7fgliOrmqEuFIfYXlrNb6gziSxffXs9/Ac4SEgpIBkQwS
-         hko+HrFRO72KcUP7tdIswvVyCkaDPDTJTQ4qtmZ3iuoFZRelgls7PmWUdYDm57FAvOFe
-         jd8A==
+        bh=BB+z/sNpdoQmOp+aeDFGtzesrgj54ahnX85kbOB7QMg=;
+        b=abNt8UJyo7oWu4YeugczIcw2HKnt573QtuCIX0kpROHHBTfDZ44GLVwSZbHXFcj6ok
+         gtW7g3p/up4ectz36iG/SH6o5V/x/RKjenuuTvxPUt8ZzfiqxUXXgzQDg/tz8MKFNcYz
+         ildOPGsN/S1GC5l6LWtEmSveqZrZkIT5Tyw2N5OL8fxmP/vannelo27VcTV/eTKh/mUW
+         1+Hm9E6rUbWvwUJaqal6SMegDE135493vMaM0OQefuPmkxB0kMPhI3NtgWSfLemUqvna
+         DMIOl1ND9xRdijwsZ/jQP5ysxHcGlkfQdhEQH4TXakrqAiUEA7nymqvQyWfDjWQPSIW6
+         lZ0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4zcLXpCy7SBjHdgWPDMiVMAfSv9GgL9PPHTJHm95g50=;
-        b=j4AJoGWA8VeKEjak1FueVk/noIhVbiD0EX0ckD+o0ac7DtvbeQ96+gOaQWvUhEfUIK
-         QVASZAY1U6lnIXacn+3EcCmTDpf7fTwHAwqh/b8Nn5O8PcCsRq4GDqlpFNMKkLU8ynxQ
-         CVte4SO374PV+ncEjXOMXUDDk9Bt++nNfVKkrC6BLalK+Vv0bXhCnGNULEpfDZBTdkiF
-         PL7ddfvEfznAgY/WxwJ6iumRryoF7XesFXkmdhhfETx3b4WlZb/xZxzuTQMFQVmi1JG4
-         n3FYHjyMqwD+1EjWioU6ROkdaQoIeFQOKgJKyUVTlViUme14Aky17uU83HfS/+LY3Y5u
-         Gcgw==
-X-Gm-Message-State: AOAM532394/KdzPvDfEaSpKfYs0DMF5x0AIW2Pwm6S0ayHAo4+st9YIz
-        oOSrl6bjrOLSW5opypCbUPxc4onLe9NdII5OPHpU/A==
-X-Google-Smtp-Source: ABdhPJz/ZFLFWoRZflZmG53V5oTsUDnKFJ76SRaHRYdcW5SRnzL6Jxlv23hnpEE1sIZLnoSq3Xe3/OdvM8uV/u46Xk0=
-X-Received: by 2002:a25:84c1:0:b0:63e:7733:f95a with SMTP id
- x1-20020a2584c1000000b0063e7733f95amr3370991ybm.234.1650623798744; Fri, 22
- Apr 2022 03:36:38 -0700 (PDT)
+        bh=BB+z/sNpdoQmOp+aeDFGtzesrgj54ahnX85kbOB7QMg=;
+        b=t52xYBlSzQK29qtuLwYTzAzokNzql3SPvBr7TN0QsgikF1LBy0Zf7JX/7gMxLLlBCI
+         oQuabgLMm2lJWI+Ggp8Jap39owguBZIhSfBUmN34OfCh/dWyzK1bj5dNQr0QzRJ7P/JL
+         63bPWd/slWlbgRA+xprVWJl3Kh4hzYZ1nVpWpFj3LHW5xnXpVymqeIgiksh0YdHYeEBB
+         3ScsW0/DP4uFG3lIkbpRU/RbIn/WS/W4bBJhnKO44PpBUSaJNoyLTR/Xtmvu88FuIh6C
+         FyLNCxFENoyKJanKYvbinqu0kBpr1ur4v7v0JsBDi7eN0tdpfoGRwPF9MlPD2SxffbyN
+         bIyQ==
+X-Gm-Message-State: AOAM530CbAJuiDoEP2Q2Qhc88Tv+O/giox+VjYk7EySNXFj6HZWf8eY5
+        tJ33lwD9iqT3qSfpSOt/JuvdkWmiaEslBz+vmIwamQ==
+X-Google-Smtp-Source: ABdhPJywlbGi8Liw+QkSDej3Yl+pGh+CnUP5xw1RQTvw7UzpZloUGNHHQvZWxVNt0MvxBaCcf9gKq0bKcE3NMiK40DY=
+X-Received: by 2002:a05:6902:1547:b0:641:fb0b:4830 with SMTP id
+ r7-20020a056902154700b00641fb0b4830mr3946865ybu.175.1650624086191; Fri, 22
+ Apr 2022 03:41:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220421102041.17345-1-johan+linaro@kernel.org>
- <20220421102041.17345-3-johan+linaro@kernel.org> <55d6e32b-9cf4-384c-1036-1adfb867ece8@linaro.org>
- <YmJ+Ti81el2MzsHG@hovoldconsulting.com>
-In-Reply-To: <YmJ+Ti81el2MzsHG@hovoldconsulting.com>
+References: <20220422032227.2991553-1-yangyingliang@huawei.com>
+In-Reply-To: <20220422032227.2991553-1-yangyingliang@huawei.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 22 Apr 2022 13:36:27 +0300
-Message-ID: <CAA8EJpq25Oi8scffT_u9kGN5CYM7nK4Wxh0Kep+eRFg8xngiHg@mail.gmail.com>
-Subject: Re: [PATCH RFC 2/5] arm64: dts: qcom: sc7280: move pipe mux handling
- to phy
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org
+Date:   Fri, 22 Apr 2022 13:41:15 +0300
+Message-ID: <CAA8EJpq2dNaRgEqrKpKTTfAm1p=QRZd2z1ouguiA6wUoxA9QAA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/hdmi: check return value after calling platform_get_resource_byname()
+To:     Yang Yingliang <yangyingliang@huawei.com>
+Cc:     linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        robdclark@gmail.com, jilaiw@codeaurora.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -83,83 +67,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 22 Apr 2022 at 13:07, Johan Hovold <johan@kernel.org> wrote:
+On Fri, 22 Apr 2022 at 06:10, Yang Yingliang <yangyingliang@huawei.com> wrote:
 >
-> On Thu, Apr 21, 2022 at 01:59:04PM +0300, Dmitry Baryshkov wrote:
-> > On 21/04/2022 13:20, Johan Hovold wrote:
-> > > The QMP PHY pipe clock remuxing is part of the PHY, which is both the
-> > > producer and the consumer of the pipe clock.
-> > >
-> > > Update the PCIe controller and PHY node to reflect the new binding.
-> > >
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/sc7280.dtsi | 18 ++++++------------
-> > >   1 file changed, 6 insertions(+), 12 deletions(-)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > index c07765df9303..b3a9630262dc 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > @@ -1837,11 +1837,7 @@ pcie1: pci@1c08000 {
-> > >                                     <0 0 0 3 &intc 0 0 0 438 IRQ_TYPE_LEVEL_HIGH>,
-> > >                                     <0 0 0 4 &intc 0 0 0 439 IRQ_TYPE_LEVEL_HIGH>;
-> > >
-> > > -                   clocks = <&gcc GCC_PCIE_1_PIPE_CLK>,
-> > > -                            <&gcc GCC_PCIE_1_PIPE_CLK_SRC>,
-> > > -                            <&pcie1_lane 0>,
-> > > -                            <&rpmhcc RPMH_CXO_CLK>,
-> > > -                            <&gcc GCC_PCIE_1_AUX_CLK>,
-> > > +                   clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
-> > >                              <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
-> > >                              <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
-> > >                              <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
-> > > @@ -1849,11 +1845,7 @@ pcie1: pci@1c08000 {
-> > >                              <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>,
-> > >                              <&gcc GCC_DDRSS_PCIE_SF_CLK>;
-> > >
-> > > -                   clock-names = "pipe",
-> > > -                                 "pipe_mux",
-> > > -                                 "phy_pipe",
-> > > -                                 "ref",
-> > > -                                 "aux",
-> > > +                   clock-names = "aux",
-> > >                                   "cfg",
-> > >                                   "bus_master",
-> > >                                   "bus_slave",
-> > > @@ -1910,8 +1902,10 @@ pcie1_lane: lanes@1c0e200 {
-> > >                                   <0 0x01c0e600 0 0x170>,
-> > >                                   <0 0x01c0e800 0 0x200>,
-> > >                                   <0 0x01c0ee00 0 0xf4>;
-> > > -                           clocks = <&gcc GCC_PCIE_1_PIPE_CLK>;
-> > > -                           clock-names = "pipe0";
-> > > +                           clocks = <&gcc GCC_PCIE_1_PIPE_CLK>,
-> > > +                                    <&gcc GCC_PCIE_1_PIPE_CLK_SRC>,
-> > > +                                    <&rpmhcc RPMH_CXO_CLK>;
-> > > +                           clock-names = "pipe0", "mux", "ref";
-> >
-> > This will not be compatible with earlier DTB files, which was a problem
-> > up to now.
+> It will cause null-ptr-deref if platform_get_resource_byname() returns NULL,
+> we need check the return value.
 >
-> That depends. The above wasn't added until 5.16 so we may still be able
-> to fix it.
+> Fixes: c6a57a50ad56 ("drm/msm/hdmi: add hdmi hdcp support (V3)")
+> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 
-That would depend on Rob/Krzyshtof. But the whole process should be described.
-The driver can nod depend on the clocks being there.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+> ---
+>  drivers/gpu/drm/msm/hdmi/hdmi.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 >
-> The NAK you got from Rob earlier was when you removed clocks that have
-> been in the devicetree for several years:
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> index ec324352e862..07e2ad527af9 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> @@ -142,6 +142,10 @@ static struct hdmi *msm_hdmi_init(struct platform_device *pdev)
+>         /* HDCP needs physical address of hdmi register */
+>         res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
+>                 config->mmio_name);
+> +       if (!res) {
+> +               ret = -EINVAL;
+> +               goto fail;
+> +       }
+>         hdmi->mmio_phy_addr = res->start;
 >
->         https://lore.kernel.org/all/YgQ+tGhLqwUCsTUo@robh.at.kernel.org/
+>         hdmi->qfprom_mmio = msm_ioremap(pdev, config->qfprom_mmio_name);
+> --
+> 2.25.1
 >
-> and would still be needed by older kernels.
->
-> Worst case, we need to keep both sets for sc7280 (i.e. like we need to
-> do with the pipe clocks that have been around for years).
->
-> Johan
-
 
 
 -- 
