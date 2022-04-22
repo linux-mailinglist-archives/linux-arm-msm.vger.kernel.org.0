@@ -2,69 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8570950B85B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 15:22:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F8F150B86D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 15:26:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1447934AbiDVNZU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 09:25:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56640 "EHLO
+        id S1447836AbiDVN3p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 09:29:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1447918AbiDVNZT (ORCPT
+        with ESMTP id S234679AbiDVN3o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 09:25:19 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3AD558390
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 06:22:24 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id x80so8018226pfc.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 06:22:24 -0700 (PDT)
+        Fri, 22 Apr 2022 09:29:44 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B5855520C;
+        Fri, 22 Apr 2022 06:26:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=zSqkX7TcWeywMjVGkDaqt4I0CfnOOWaEQNQoX91yxGM=;
-        b=sBqYuPt0XifDj11KJF2ArYF8kstCldmcCL7PC0qnMZN5P49dGeJEdwY9Il5Nbmigcm
-         vXAl+JKru3xK/8jUDHbzqSn+H80jg3PMAQQdnV4OSgs29xcJ9OVKpENSjCfG8FW5m2+y
-         SWHgrwbdOg/S7h2yLDzoYTK3n6rJGFol1s7zAfLq2BVvCleckLrksxLgFlsqPmiy4sF2
-         UV9J2EiGTccRVkxHKPvnRfRWBQn4iV3r6w20PkMg9+7pkiKuLrDljST+RrR+g/v8b5F9
-         EzPK6kBXX454I+61IhfYh3shai7uT7bWal6WUtObQR0UGnW7MRkJkARV22iYTF8Oypw0
-         njWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=zSqkX7TcWeywMjVGkDaqt4I0CfnOOWaEQNQoX91yxGM=;
-        b=v61ctBwQuq7ICKr+/8Q30h8hkmxJZ7QgVxuV24QUP1zpd4oKMSJtG+h+iqDwrqkqHq
-         J5nY0TkR73P3VzPpf5bPstQLYwhAVYHJIQsjRyHSS9btA3TfQSDzvyYwmLS7vHqymuyX
-         xcrvTl1R4RY5Y5LQZInrcoLPNkXBiNeNN31/v2VnjUnejvLK5SpAZMFYN9aabIZPCYjh
-         rnA2uq8Ajg6w6kfdp1/Cji02USf02vlM7IlM8hr03UEk4afCU0btuc1WBbiUGeWrQZCW
-         1xa35SAXUmlSTp5874E6DkFx/qqTDQhCj1DNBSby+sMuCNRL0Z0LzDNs2+XRUvgX58pp
-         vhFA==
-X-Gm-Message-State: AOAM532gIAXXFNRpIc/Uto/1CN0Y9Y6qNmgUj+dsIoofG2c5mLoD0osr
-        6P3zbprAdf/Ttutq5zavD5jX
-X-Google-Smtp-Source: ABdhPJx6Yzon0UefzWSg/IXHpu2HKWdTxoUKSHKl6fEweWwXW51KugE7J+akdjD2lSXiqst2VNTOMQ==
-X-Received: by 2002:a62:fb0e:0:b0:505:fd9e:9218 with SMTP id x14-20020a62fb0e000000b00505fd9e9218mr5075359pfm.78.1650633744289;
-        Fri, 22 Apr 2022 06:22:24 -0700 (PDT)
-Received: from localhost.localdomain ([117.207.28.196])
-        by smtp.gmail.com with ESMTPSA id g13-20020a62520d000000b0050a923a7754sm2586840pfb.119.2022.04.22.06.22.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 06:22:23 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     martin.petersen@oracle.com, jejb@linux.ibm.com
-Cc:     avri.altman@wdc.com, alim.akhtar@samsung.com,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 5/5] scsi: ufs: qcom: Enable RPM_AUTOSUSPEND for runtime PM
-Date:   Fri, 22 Apr 2022 18:51:40 +0530
-Message-Id: <20220422132140.313390-6-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220422132140.313390-1-manivannan.sadhasivam@linaro.org>
-References: <20220422132140.313390-1-manivannan.sadhasivam@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650634012; x=1682170012;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=ibCD8n+74D25bQ/6Jrl39b9qR5VPuTVM9OJHM9wXnOk=;
+  b=ydASwxOyfDaiPRJLLS+1ewfPPyzdDWOg2KxbNRObZccS7Z/cqpjfix6M
+   USRLRWmiBPW/Ccf0m4pPaxNlbe5AW5WdiWGu7Mt70CV3TMq60dWuQol3p
+   qTv+Zh40tQL3uFPMMHgVrKLi90prSzldCRCCcrkuxOJq5T2izHrmv2otW
+   k=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 22 Apr 2022 06:26:51 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2022 06:26:50 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 22 Apr 2022 06:26:50 -0700
+Received: from [10.216.36.2] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 22 Apr
+ 2022 06:26:44 -0700
+Message-ID: <fb53452a-0898-407e-5e86-897aeab446bc@quicinc.com>
+Date:   Fri, 22 Apr 2022 18:56:41 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v8 2/4] arm64: dts: qcom: sc7280: Add nodes for wcd9385
+ and max98360a codec
+Content-Language: en-US
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1650291252-30398-1-git-send-email-quic_srivasam@quicinc.com>
+ <1650291252-30398-3-git-send-email-quic_srivasam@quicinc.com>
+ <Yl2VmW18QAJl9v+m@google.com>
+ <5ac149ac-4862-e8c9-185c-524c4b111961@quicinc.com>
+ <5d4b7c44-62e1-aaa6-3116-f58e1a1b437b@quicinc.com>
+ <YmF7TRlxUWWQ394e@google.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <YmF7TRlxUWWQ394e@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,30 +77,126 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In order to allow the block devices to enter autosuspend mode during
-runtime, thereby allowing the ufshcd host driver to also runtime suspend,
-let's make use of the RPM_AUTOSUSPEND flag.
 
-Without this flag, userspace needs to enable the autosuspend feature of
-the block devices through sysfs.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/scsi/ufs/ufs-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index 5b9986c63eed..bbcaefd44699 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -879,6 +879,7 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
- 	hba->caps |= UFSHCD_CAP_WB_EN;
- 	hba->caps |= UFSHCD_CAP_CRYPTO;
- 	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
-+	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
- 
- 	if (host->hw_ver.major >= 0x2) {
- 		host->caps = UFS_QCOM_CAP_QUNIPRO |
--- 
-2.25.1
-
+On 4/21/2022 9:12 PM, Matthias Kaehlcke wrote:
+Thanks for your time Matthias!!
+> On Thu, Apr 21, 2022 at 12:31:52PM +0530, Srinivasa Rao Mandadapu wrote:
+>> On 4/19/2022 4:54 PM, Srinivasa Rao Mandadapu wrote:
+>>> On 4/18/2022 10:15 PM, Matthias Kaehlcke wrote:
+>>> Thanks for your time and valuable inputs Matthias!!!
+>>>> On Mon, Apr 18, 2022 at 07:44:10PM +0530, Srinivasa Rao Mandadapu wrote:
+>>>>> Add wcd938x and  max98360a codecs for audio use case on
+>>>>> sc7280 based platforms.
+>>>>> Add tlmm gpio property in wcd938x node for switching CTIA/OMTP Headset.
+>>>>> Add amp_en node for  max98360a codec.
+>>>> General note: I don't think it's a good practice to add stuff like
+>>>> this to
+>>>> multiple boards in a single patch. Why?
+>>>>
+>>>> First the subject of such a patch tends to be vague ("arm64: dts: qcom:
+>>>> sc7280: Add nodes for wcd9385 and max98360a codec"), in this case it
+>>>> gives
+>>>> no hint about the boards. If someone was interested in picking changes
+>>>> for a given board they can't easily identify from the subject that the
+>>>> change is relevant for them.
+>>>>
+>>>> Changes touching multiple boards are more likely to cause conflicts when
+>>>> being picked (or reverted), both upstream and in downstream trees (which
+>>>> unfortunately have to exist for product development). Downstream trees
+>>>> might only pick changes for the board(s) they target, patches that touch
+>>>> mutiple boards often cause conflicts due to context deltas in the
+>>>> 'irrelevant' boards.
+>>>>
+>>>> Lastly it's usually easier to get a patch reviewed (in the sense of
+>>>> getting a 'Reviewed-by' tag) and landed that does a single thing.
+>>> Yes, agree to your opinion. In a nutshell, we will include board
+>>> name(ex: herobrine)
+>>>
+>>> in commit message and split the patches per external codec.
+>>>
+>>> Actually, in Initial herobrine boards, EVT and IDP, has both maxim
+>>> speaker and WCD codec,
+>>>
+>>> hence we included in same patch.
+>>>
+>>>>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>>>>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>>>>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>>>>> ---
+>>>>>    arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts     |  6 ++
+>>>>>    arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  8 +++
+>>>>>    arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 97
+>>>>> ++++++++++++++++++++++++++
+>>>>>    3 files changed, 111 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+>>>>> b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+>>>>> index 344338a..aa0bf6e2 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+>>>>> @@ -87,6 +87,12 @@ ap_ts_pen_1v8: &i2c13 {
+>>>>>        pins = "gpio51";
+>>>>>    };
+>>>>>    +&wcd938x {
+>>>>> +    pinctrl-names = "default";
+>>>>> +    pinctrl-0 = <&us_euro_hs_sel>;
+>>>>> +    us-euro-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
+>>>>> +};
+>>>> Since this is added for the CRD rev3 it probably should also be added to
+>>>> sc7280-herobrine-crd.dts
+>>> Okay. Will add in corresponding latest herobrine CRD dts file also.
+>>>>> +
+>>>>>    &tlmm {
+>>>>>        tp_int_odl: tp-int-odl {
+>>>>>            pins = "gpio7";
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+>>>>> b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+>>>>> index d58045d..f247403 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+>>>>> @@ -20,6 +20,14 @@
+>>>>>    #include "sc7280-chrome-common.dtsi"
+>>>>>      / {
+>>>>> +    max98360a: audio-codec-0 {
+>>>>> +        compatible = "maxim,max98360a";
+>>>>> +        pinctrl-names = "default";
+>>>>> +        pinctrl-0 = <&amp_en>;
+>>>>> +        sdmode-gpios = <&tlmm 63 GPIO_ACTIVE_HIGH>;
+>>>>> +        #sound-dai-cells = <0>;
+>>>>> +    };
+>>>>> +
+>>>>>        chosen {
+>>>>>            stdout-path = "serial0:115200n8";
+>>>>>        };
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>>>>> b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>>>>> index 2f863c0..8dad599 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>>>>> @@ -20,6 +20,42 @@
+>>>>>            serial1 = &uart7;
+>>>>>        };
+>>>>>    +    max98360a: audio-codec-0 {
+>>>>> +        compatible = "maxim,max98360a";
+>>>>> +        pinctrl-names = "default";
+>>>>> +        pinctrl-0 = <&amp_en>;
+>>>>> +        sdmode-gpios = <&tlmm 63 GPIO_ACTIVE_HIGH>;
+>>>>> +        #sound-dai-cells = <0>;
+>>>>> +    };
+>>>>> +
+>>>>> +    wcd938x: audio-codec-1 {
+>>>> Why 'wcd938x' and not 'wcd9385'?
+>>> Actually same driver is used for both wcd9380 and wcd9385. Here we can
+>>> use specific name as per board.
+>>>
+>>> Will change accordingly.
+>> At present, dt-bindgs also has wcd938x. So will update the name in bindings
+>> and here post this series.
+>>
+>> is it okay?
+> I don't think it's strictly necessary to update the binding, as
+> 'wcd938x' is only used in the example, and also it's not really
+> wrong. Then again, if the example in the binding uses a
+> specific wcd version it might make it less likely that the
+> wildcard name is used in future board DTs. Up to you :)
+Okay. Will update accordingly.
