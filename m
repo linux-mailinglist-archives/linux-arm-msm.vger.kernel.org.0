@@ -2,76 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B41BA50B848
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 15:21:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D92F450B84C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 15:22:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234102AbiDVNX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 09:23:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55040 "EHLO
+        id S234112AbiDVNYv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 09:24:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234144AbiDVNX0 (ORCPT
+        with ESMTP id S234076AbiDVNYu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 09:23:26 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4700E57B27
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 06:20:33 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id i27so16332975ejd.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 06:20:33 -0700 (PDT)
+        Fri, 22 Apr 2022 09:24:50 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E2835675F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 06:21:57 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id x191so7338129pgd.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 06:21:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ZydoTw4mzwMScLgM9P3CZWDQFTuiETQUDxvT9OfBlMQ=;
-        b=PU9bDqmz9ld9PMvW3oMEIEtZLnZQ6yQnz+QRBQd2Xv5sbFT1dL1KEnCjaY+qF8tGRU
-         A84q8yQz/+CZoZskM+CRtbdNqJ+7Yr5Trc4oO3o0SXsyOov957se2W27FkGgsr3Ldpdw
-         rwF9TV2rAcS72mjqy463StssqyHfEYHvrmpVq4S95yleCFluzvnExiLbXPCXMU4sU+Vd
-         zFOJr4i9lh22efm4Mj6cgDVEWgucUtWvxbEi3uRBYcm+J66/iUHajQ9ZXf7pbkc0EbMw
-         bjyQ6tcMFiYrN+d6sCWjdoYE972bOGrRva0VH3v1dEm0jqwyIWEkYzrwZ8/49azhlP+R
-         T7gw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zF0nX3s3N6IwcPGME9n4tmBcuFVHyEKtz0zQOLiN7XU=;
+        b=KuW9QMCsD9egy7UVKqnRR+9C1Zclk2AmmkgDRZIrU9XsIt3mSpYiApeH6tsQAF8zNx
+         SovhEeYx52032GXDc8mY/tIb/IYnkycwm0hJstpkMTYSdSk7/Uc3YBEH+acwc17XKtNN
+         MY52ObTt9w8PCTqoGFRpaPQbgRh4cmYk5OBhctY5f+dUKcIqTSBZY3f6SekWgX2iAXbb
+         XeGmgJU6etFP8AcQeR0SmrucTCz+i96dcGzeXv5NTFLmxtLxF2Nm5o3/jNVBEWcKyTRe
+         VSYoGtAKj1W+o2sqC2/EXcVGqymo1Mwczzlcr99O1I/KCtvKJGqf/tLlMCUqo9XLqqbG
+         DcnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=ZydoTw4mzwMScLgM9P3CZWDQFTuiETQUDxvT9OfBlMQ=;
-        b=X4Wl1bvSeTEiWWhV1979yQpn2bzwSOf6tjolLE3Nlc9Dm3KMA9JrsbihcjXXZuda4Q
-         mhQgyEFp06GoKhVpvlhZkdVg1T9YY2R8/AXl/agxeyIouzSnQEHEUCBoAPxs7w/lPmSI
-         3HIsJ+uewmSAq9i3w9eijOs7qk/KMzZW/PG7+rEzi1sWbNKHe2NlHuvpgiN6qRjX/lOQ
-         6VAr2l6pmQJ1DDxdalzdsjeSHTIon/v/ea2KMrfGiJsPiaed2QS27891NDsHtEVPpnWk
-         DAInxl8m1Y9jPs0lsf4gkx5FZ6IIufhhxnQSPBXbHFaGEsSqoJOstm150lKWc5VAQmFF
-         wYJg==
-X-Gm-Message-State: AOAM530AR3PL17PeecaP8LpCZuHHSoi9vQmPN8u0u4+wffOfbsu37fmS
-        GZ4Fv2/hvcFD/ysxnAPhyfJUZw==
-X-Google-Smtp-Source: ABdhPJxBg6BT8rjPBDIiVtDEFoZGtHhGa256rmzmn9SueVEyXZnbXafDagCdRy/6vVh+o+rqLIgkmg==
-X-Received: by 2002:a17:906:9c84:b0:6e0:7c75:6f01 with SMTP id fj4-20020a1709069c8400b006e07c756f01mr4100078ejc.103.1650633631882;
-        Fri, 22 Apr 2022 06:20:31 -0700 (PDT)
-Received: from [192.168.0.232] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id p17-20020a17090635d100b006efcc06218dsm771025ejb.18.2022.04.22.06.20.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Apr 2022 06:20:31 -0700 (PDT)
-Message-ID: <c24e3a22-6ffa-f566-ee05-3aac030de8ff@linaro.org>
-Date:   Fri, 22 Apr 2022 15:20:30 +0200
+        bh=zF0nX3s3N6IwcPGME9n4tmBcuFVHyEKtz0zQOLiN7XU=;
+        b=pWp19ljBjd1Cw+PJkRVnEOu3sVlLUPldMv0qsGoifdxfzViIB4wPULpJXODhD+oQWP
+         Y6TJ22hUxhY+yd+TxmWTbpabwbscEsuLHr8s3MrOnoxu6PA09uPK4lcQtr1zhWrw9f8O
+         6vVOoBfIE1V4SvJymDi5du2AjveQ/gKtBmMErzcb+nVwSY+MywcBAEe48G372oa8iqVh
+         fZkOxH53mulCYFcSHdBmyMS0qGAOm/VyGDLdsLYfl9ttMRI/gdYRfeXQAzv27iqAtjSv
+         J7i8Eb76zh6o5Lc+VqAQ+QZK+RmpzZDAD/j8K2u4UwQgEFWWyvNYa4mGhGu4TS6mDPvg
+         wdmA==
+X-Gm-Message-State: AOAM530IqQ/8ydNyXDqOTM+GWnsOW2va9pTXbDf2Yi2nAToxrnWmxNKw
+        0BRfpjWE/3nUEnj2E0byyp5S
+X-Google-Smtp-Source: ABdhPJwGBdH1kJzOwxticugXo7nn+HgwWgTys7PUHRPSPiw/RGwuym1yyWo1xpGANGN/w+FJ66KIOQ==
+X-Received: by 2002:a05:6a00:1781:b0:50a:94f0:661d with SMTP id s1-20020a056a00178100b0050a94f0661dmr4980663pfg.10.1650633716680;
+        Fri, 22 Apr 2022 06:21:56 -0700 (PDT)
+Received: from localhost.localdomain ([117.207.28.196])
+        by smtp.gmail.com with ESMTPSA id g13-20020a62520d000000b0050a923a7754sm2586840pfb.119.2022.04.22.06.21.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Apr 2022 06:21:55 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     martin.petersen@oracle.com, jejb@linux.ibm.com
+Cc:     avri.altman@wdc.com, alim.akhtar@samsung.com,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/5] Qcom UFS driver updates
+Date:   Fri, 22 Apr 2022 18:51:35 +0530
+Message-Id: <20220422132140.313390-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: stop using snps,dw-pcie falback
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20220422114841.1854138-1-dmitry.baryshkov@linaro.org>
- <20220422114841.1854138-6-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220422114841.1854138-6-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,26 +70,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/04/2022 13:48, Dmitry Baryshkov wrote:
-> Qualcomm PCIe devices are not really compatible with the snps,dw-pcie.
-> Unlike the generic IP core, they have special requirements regarding
-> enabling clocks, toggling resets, using the PHY, etc.
-> 
-> This is not to mention that platform snps-dw-pcie driver expects to find
-> two IRQs declared, while Qualcomm platforms use just one.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/msm8996.dtsi | 6 +++---
->  arch/arm64/boot/dts/qcom/qcs404.dtsi  | 2 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi  | 4 ++--
->  arch/arm64/boot/dts/qcom/sm8250.dtsi  | 6 +++---
->  4 files changed, 9 insertions(+), 9 deletions(-)
-> 
+Hi,
 
+This series has some cleanups and updates to the Qcom UFS driver. There
+is also a patch that removes the redundant wmb() from
+ufshcd_send_command() in ufshcd driver.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+All these patches are tested on Qualcomm Robotics RB3 platform.
 
+Thanks,
+Mani
 
-Best regards,
-Krzysztof
+Manivannan Sadhasivam (5):
+  scsi: ufs: qcom: Fix acquiring the optional reset control line
+  scsi: ufs: qcom: Simplify handling of devm_phy_get()
+  scsi: ufs: qcom: Add a readl() to make sure ref_clk gets enabled
+  scsi: ufs: core: Remove redundant wmb() in ufshcd_send_command()
+  scsi: ufs: qcom: Enable RPM_AUTOSUSPEND for runtime PM
+
+ drivers/scsi/ufs/ufs-qcom.c | 43 +++++++++++++++----------------------
+ drivers/scsi/ufs/ufshcd.c   |  3 ---
+ 2 files changed, 17 insertions(+), 29 deletions(-)
+
+-- 
+2.25.1
+
