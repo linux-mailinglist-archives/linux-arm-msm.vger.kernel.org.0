@@ -2,235 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BC2E50C3AC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 01:11:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDC1050C2FF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 01:09:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232720AbiDVWT4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 18:19:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52556 "EHLO
+        id S232870AbiDVWbj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 18:31:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233282AbiDVWS3 (ORCPT
+        with ESMTP id S233040AbiDVWbZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 18:18:29 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DC132B257
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 14:10:12 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id m23so261272ljc.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 14:10:12 -0700 (PDT)
+        Fri, 22 Apr 2022 18:31:25 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 293BA1E0331
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 14:24:34 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id w20so10525355ybi.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 14:24:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xFeOtJuaV8reMhpK/AQiVQIOApHzYKJaZY7pKJ38rnU=;
-        b=h4qH1Bs65mZuxO1vz/kPsc1KiE5EyIyPiTjIDhXV8Gpb9Y6nS4NUJIRNdNQrSvWyF/
-         dY7b6XDNGNIr696Ix6ylgphn5GqPj3X3qZq2cQl1B1OgsCvwBpT7jc2vKoWO0xFrVPP5
-         ilTfyGlt1EZnE62PMqgHJD4gDgFN1zB09+0v1cDfl/Y0ez5rJG7stkaJPMtpAWWvFEmP
-         EHaEVi0vWOfDRwbG2kDPq6pPxoD6AWSaqUs2FZexEbDT+WaL+QwU3Vbmentk7oJ/yg0N
-         SKBRgDiAcSjn65mQRbJ2+nptv39ydnWeFGZBuErzQAMAdHFZkO9Xfsl87/fOHYv4/Yh3
-         hFwg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SOU4gw2OndPAHlyb0Yx1jIvLcwnBW7WU3bDm4X/+Fi4=;
+        b=YfsZ4tU3PuYgqcdjIDeQeP3YRzUO5ivIGgFF1ltC/6cArnKzaw0zeJWVYikoKwMjOE
+         OdEykxqICO7B5JcdxEsqUmyHPybbUs/wGZaO8WggpZlsChK/8OwwojOgf1BsBMku+PLG
+         MAtb2fgJpkzrfqNAIEezByuUWj1P12+quEESjC9NqSMK3lSlcD47ha1lp12du7h/IiM9
+         FDye+1z8JpkXsYNIIFUjATBQPXD1WBJ6fAmgYdNWG36EvLkWWB5Iqb8FzcwT3TpPcJGv
+         ntzQ1/nuCBAT00gA8Shal5DE+qEmWahWgq3yXj3gk7VaHYOto1+FcB+rijHPlvSV+dM8
+         TjcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xFeOtJuaV8reMhpK/AQiVQIOApHzYKJaZY7pKJ38rnU=;
-        b=3SeI/nRKqcfGwzlvP65BI2DkfCdjas1Q9AWZ1ishQ6NB/kPtPk1Ul/Nyaijg7k/wM+
-         JdlEUTsXQbOyddKy0MyHSy2F6iXMSGPb2X2um0y95WzpvYr79DPBljq87cl31UyTP4g3
-         E/Ncyq+xfF+UL1RobpY1EbK1tU3n4tJv3zgRq0HbSNVAPWqlNjeJivTVKGXr/9O6CS0S
-         QDlYGc1m92QwyWdCFDFAfJ6kO9f1iK+ByYZqiFzpdutugpSEamQv20sAcMAUrUDuQ2MC
-         z8dZ7vW1FKgzyBwHXfXX52zRhvUVGK4s9yxQcq012/nggYYXtvgr3ZGUWMmAFmApPsiR
-         wdzQ==
-X-Gm-Message-State: AOAM533xzsvDYld6y0jSO6r8xh8ITtSnzjjWKeCXwp62xm0nZFoHycyN
-        wv5V5XwHSmSrKW9r4zzPVcbp+g==
-X-Google-Smtp-Source: ABdhPJyg28RMqPSrMIWUjzaPSwIMi3WXLYU4k0MRVsdya1CRl/JmbfpTSXDOdyK3bloCVljegeh+PQ==
-X-Received: by 2002:a2e:8e93:0:b0:24d:ab45:4053 with SMTP id z19-20020a2e8e93000000b0024dab454053mr3782121ljk.231.1650661810160;
-        Fri, 22 Apr 2022 14:10:10 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 6-20020ac24d46000000b0046bb728b873sm351240lfp.252.2022.04.22.14.10.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 14:10:09 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v2 7/7] arm64: dts: qcom: replace deprecated perst-gpio with perst-gpios
-Date:   Sat, 23 Apr 2022 00:10:02 +0300
-Message-Id: <20220422211002.2012070-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220422211002.2012070-1-dmitry.baryshkov@linaro.org>
-References: <20220422211002.2012070-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SOU4gw2OndPAHlyb0Yx1jIvLcwnBW7WU3bDm4X/+Fi4=;
+        b=UVMEfm0x00qA17lpWbOqvFXy1PfpL6j8ENN43Y+uAFJ22WWvIuEbd0b1VJJtTxCbb0
+         XSqwlzDkfNZoeM5ylcVN6Vl7/eIJBLqmkOYR0yeiMegOLzRMufMmFNWWmbt6kiENZYPo
+         AYqAm7fnKjCOUAcFvB6ejKvwBrCaVentXK0FGdehpw8AsLGPAOD5+vwArbxUCvy7LjBH
+         E8tScW314WWSfaZePkZ19Mjw464ne0GGlGYMCfy5wih/bb/qqC37urc9tLvWc3X6DQGp
+         vYThglgSg23K6IdTE/Sc5Xe9Cc7qnHXMxMidVIQxaKeCyf54tjgOgBdpIGJ8u7555Ey4
+         lUQw==
+X-Gm-Message-State: AOAM531lWvL2y/VXftQdjry4nO7ciNX4asNhBmGn14a9qIJx4gu2hmvf
+        i+nXfN5euk8bW+sfurdI2aylXOGo+uk9lwu7HCahFzjVIms=
+X-Google-Smtp-Source: ABdhPJxsXcP45rrTkuqz2IOlfWfxSn7HO8ecvoT5emKdoiPaqAi9KObKULKewKrgsbOq2XjWVK/mAr4bUvR0dK/u9is=
+X-Received: by 2002:a5b:dc5:0:b0:624:f16d:7069 with SMTP id
+ t5-20020a5b0dc5000000b00624f16d7069mr6530719ybr.295.1650662673435; Fri, 22
+ Apr 2022 14:24:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220419141846.598305-1-maz@kernel.org>
+In-Reply-To: <20220419141846.598305-1-maz@kernel.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 22 Apr 2022 23:24:22 +0200
+Message-ID: <CACRpkda3L_itpqcnPq6xDoJtNHt8NuvE1MZk1bCNR+u2KKUpBA@mail.gmail.com>
+Subject: Re: [PATCH v3 00/10] gpiolib: Handle immutable irq_chip structures
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, Bartosz Golaszewski <brgl@bgdev.pl>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Joey Gouly <joey.gouly@arm.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, kernel-team@android.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replace deprecated perst-gpio properties with up-to-date perst-gpios
-in the Qualcomm device trees.
+On Tue, Apr 19, 2022 at 4:19 PM Marc Zyngier <maz@kernel.org> wrote:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/apq8096-db820c.dts            | 6 +++---
- arch/arm64/boot/dts/qcom/ipq8074-hk01.dts              | 4 ++--
- arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi             | 4 ++--
- arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi | 4 ++--
- arch/arm64/boot/dts/qcom/qcs404-evb.dtsi               | 2 +-
- arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi         | 2 +-
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi               | 2 +-
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts             | 4 ++--
- 8 files changed, 14 insertions(+), 14 deletions(-)
+> This is a followup from [2].
+>
+> I recently realised that the gpiolib play ugly tricks on the
+> unsuspecting irq_chip structures by patching the callbacks.
+>
+> Not only this breaks when an irq_chip structure is made const (which
+> really should be the default case), but it also forces this structure
+> to be copied at nauseam for each instance of the GPIO block, which is
+> a waste of memory.
+>
+> My current approach is to add a new irq_chip flag (IRQCHIP_IMMUTABLE)
+> which does what it says on the tin: don't you dare writing to them.
+> Gpiolib is further updated not to install its own callbacks, and it
+> becomes the responsibility of the driver to call into the gpiolib when
+> required. This is similar to what we do for other subsystems such as
+> PCI-MSI.
+>
+> 5 drivers are updated to this new model: M1, QC, Tegra, pl061 and AMD
+> (as I actively use them) keeping a single irq_chip structure, marking
+> it const, and exposing the new flag.
+>
+> Nothing breaks, the volume of change is small, the memory usage goes
+> down and we have fewer callbacks that can be used as attack vectors.
+> What's not to love?
+>
+> Since there wasn't any objection in the previous round of review, I'm
+> going to take this series into -next to see if anything breaks at
+> scale.
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-index f623db8451f1..9fb33850e46c 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-@@ -497,20 +497,20 @@ config {
- 
- &pcie0 {
- 	status = "okay";
--	perst-gpio = <&tlmm 35 GPIO_ACTIVE_LOW>;
-+	perst-gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
- 	vddpe-3v3-supply = <&wlan_en>;
- 	vdda-supply = <&vreg_l28a_0p925>;
- };
- 
- &pcie1 {
- 	status = "okay";
--	perst-gpio = <&tlmm 130 GPIO_ACTIVE_LOW>;
-+	perst-gpios = <&tlmm 130 GPIO_ACTIVE_LOW>;
- 	vdda-supply = <&vreg_l28a_0p925>;
- };
- 
- &pcie2 {
- 	status = "okay";
--	perst-gpio = <&tlmm 114 GPIO_ACTIVE_LOW>;
-+	perst-gpios = <&tlmm 114 GPIO_ACTIVE_LOW>;
- 	vdda-supply = <&vreg_l28a_0p925>;
- };
- 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-index b5e1eaa367bf..2d5ee337054c 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-@@ -54,12 +54,12 @@ &blsp1_uart5 {
- 
- &pcie0 {
- 	status = "okay";
--	perst-gpio = <&tlmm 61 0x1>;
-+	perst-gpios = <&tlmm 61 0x1>;
- };
- 
- &pcie1 {
- 	status = "okay";
--	perst-gpio = <&tlmm 58 0x1>;
-+	perst-gpios = <&tlmm 58 0x1>;
- };
- 
- &pcie_phy0 {
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-index 07e670829676..3c0ac747de0e 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-@@ -44,12 +44,12 @@ &blsp1_uart5 {
- 
- &pcie0 {
- 	status = "ok";
--	perst-gpio = <&tlmm 58 0x1>;
-+	perst-gpios = <&tlmm 58 0x1>;
- };
- 
- &pcie1 {
- 	status = "ok";
--	perst-gpio = <&tlmm 61 0x1>;
-+	perst-gpios = <&tlmm 61 0x1>;
- };
- 
- &pcie_phy0 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-index 3bb50cecd62d..b90000223d69 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-@@ -195,8 +195,8 @@ &mmcc {
- 
- &pcie0 {
- 	status = "okay";
--	perst-gpio = <&tlmm 35 GPIO_ACTIVE_LOW>;
--	wake-gpio = <&tlmm 37 GPIO_ACTIVE_HIGH>;
-+	perst-gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 37 GPIO_ACTIVE_HIGH>;
- 	vddpe-3v3-supply = <&wlan_en>;
- 	vdda-supply = <&pm8994_l28>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-index a80c578484ba..b067b9f95189 100644
---- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-@@ -99,7 +99,7 @@ pms405_s3: s3 {
- &pcie {
- 	status = "okay";
- 
--	perst-gpio = <&tlmm 43 GPIO_ACTIVE_LOW>;
-+	perst-gpios = <&tlmm 43 GPIO_ACTIVE_LOW>;
- 
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&perst_state>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-index dc17f2079695..461ba68fd939 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-@@ -362,7 +362,7 @@ &pcie1 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pcie1_clkreq_n>, <&ssd_rst_l>, <&pe_wake_odl>;
- 
--	perst-gpio = <&tlmm 2 GPIO_ACTIVE_LOW>;
-+	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
- 	vddpe-3v3-supply = <&pp3300_ssd>;
- };
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index ecbf2b89d896..8abf8077be11 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -240,7 +240,7 @@ &ipa {
- 
- &pcie1 {
- 	status = "okay";
--	perst-gpio = <&tlmm 2 GPIO_ACTIVE_LOW>;
-+	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
- 
- 	vddpe-3v3-supply = <&nvme_3v3_regulator>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 28fe45c5d516..1aadd5504631 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -502,7 +502,7 @@ &mss_pil {
- 
- &pcie0 {
- 	status = "okay";
--	perst-gpio = <&tlmm 35 GPIO_ACTIVE_LOW>;
-+	perst-gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
- 	enable-gpio = <&tlmm 134 GPIO_ACTIVE_HIGH>;
- 
- 	vddpe-3v3-supply = <&pcie0_3p3v_dual>;
-@@ -520,7 +520,7 @@ &pcie0_phy {
- 
- &pcie1 {
- 	status = "okay";
--	perst-gpio = <&tlmm 102 GPIO_ACTIVE_LOW>;
-+	perst-gpios = <&tlmm 102 GPIO_ACTIVE_LOW>;
- 
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pcie1_default_state>;
--- 
-2.35.1
+The series:
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
 
+Bartosz: if you're happy with this can you apply it to an immutable branch
+from v5.18-rc1 and merge that into the GPIO for-next and then I can also
+pull that into pinctrl?
+
+Yours,
+Linus Walleij
