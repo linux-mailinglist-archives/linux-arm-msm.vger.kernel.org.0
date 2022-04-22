@@ -2,135 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73FEA50BB97
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 17:22:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA64B50BBA4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 17:25:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1449394AbiDVPZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 11:25:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38254 "EHLO
+        id S1449424AbiDVP2G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 11:28:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353530AbiDVPZV (ORCPT
+        with ESMTP id S1448590AbiDVP2D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 11:25:21 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F27EE554B9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:22:27 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id v65so4667411oig.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:22:27 -0700 (PDT)
+        Fri, 22 Apr 2022 11:28:03 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C348765A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:25:07 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id y10so17022922ejw.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=zRM02qIQxQfC70nTBUvBA4m5fQ3xcQpnV7vq3c9440w=;
-        b=h/3IuuXkxgBlAc78SVN4gUgu/c8KG7pLgEH8c0fOYV68W85jMLSA+lPPcBKsKjg4QC
-         PqjIFSUHCosr0MyofPXkQCHfN90WQktRP53EDIzL1GES+d5gSpUOd0wF+JOyrWb2e+Si
-         kXbYBXHhSZ38Ta3vl9kMiBQ+9eEGuISje9Q1v9F62QBoYS0OKlwi34wIACZ+UvyupUdQ
-         2ha8AnWEw1/Mi4RmdfrlIcfzGrCz1LRPJbjcNBqr9GtuAIo7JxhE+gIlT/jdTcZlB0oj
-         cygYWKZ5WeOzAgqBjCz3cfyLkzh5Exoe1dmgnP4Zb2oH+kWXYp6obf0iua+0rrKvfcda
-         puGQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=sa/EoVj7UXoDHkP3+ISFzh+OXFxyPRq9RG0BLiBl6eg=;
+        b=hnD+E7YuymEsEN0uCt13UTly6lbaNaHlNGDgxZoQF6Xfs+pwqxOgf6vvEnBWYGXdM7
+         dKdfK9LhCPQpZGhqdHt4WYTEk5ts7Zb3rhsmo72FeTBK3Sj2+MNsDyAsCKgXcJu+oUgD
+         zsJVl2bniZZemVA2tO4GestXoYnAeXwsST3HEsV9/MscO3kJdbNnKLavvjPZORwpf1UT
+         XjXbgQ7S8b9gb61KpNZnA3D7PVlF/7JwzCup63xsTJszS32zOoGnzSMhqnabE/swfCpH
+         tZo/JMwTtWyBnuNpoq0h2IvAHRsOk7yGYR+NKRJdE88paV7aXSVn0yLzxMbWUj7ooOtL
+         vB1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=zRM02qIQxQfC70nTBUvBA4m5fQ3xcQpnV7vq3c9440w=;
-        b=Kt15UlqiF1pSYRyGc95r+gktmeMgNUdIXb5s0FQCS2YreUE0Egb4jqCgcIQItoqUY1
-         cgRiy3UOot3DAWoJrqqhfpobMbHH1xQ4N1IIN2MojmScnAm/mcZ06xjO6oOSCLWN48Y0
-         hWImPTDRV0v7twP9zVqKDrAQrP7WeQtwRz0qcjAG7f6C0CRsjCxWZi3U0GiEFXelWzgz
-         E3nFUcUlQpA6v5izpTzw8XAEPuqM2nGBV+ObNDvciea1RgZzEP/lWSO/+oIRSG6BR9nj
-         xkET/QgufwHXrhDiIdTX3HC+wh0wsPxK7day4oE4ScDVnHfLAA9zj4Rt3vRca7mIhUlM
-         QZMQ==
-X-Gm-Message-State: AOAM530j+8zdWuvVF4GEYe/ObRvOVsZzAw9HyfHDsdWmfaAVKGJlTTmX
-        4xhD4kDhAMmOTG6SB3R9ADphMw==
-X-Google-Smtp-Source: ABdhPJztX0pQAZNJhW4p1LHgjp7sVpM+w9Sq/Ow7PUaSzKnmgvwmZgkuX3dtlQ6yhTJ4zFgxKXGdsQ==
-X-Received: by 2002:a05:6808:e8c:b0:322:4b82:d33d with SMTP id k12-20020a0568080e8c00b003224b82d33dmr6802331oil.21.1650640947329;
-        Fri, 22 Apr 2022 08:22:27 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id u20-20020a4a9e94000000b003291f6ac4b2sm894365ook.28.2022.04.22.08.22.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 08:22:26 -0700 (PDT)
-Date:   Fri, 22 Apr 2022 10:22:24 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Yogesh Lal <quic_ylal@quicinc.com>
-Cc:     quic_sibis@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] remoteproc: qcom: Add fallback mechanism for full
- coredump collection
-Message-ID: <YmLIMG62vPv4qtVe@builder.lan>
-References: <1649269662-20338-1-git-send-email-quic_ylal@quicinc.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=sa/EoVj7UXoDHkP3+ISFzh+OXFxyPRq9RG0BLiBl6eg=;
+        b=yUWSzFj1QGPhkRQrpqw9qJ6d+Kk/81dseFjQFT65cQMEilVIX2eH/Az6d6D81Qsto7
+         BVuwzCCn4JCKqkQK440Uk7uZDIrEmo9xFY93QrUQmOfl2QwEU6YTenMtmQcQKNhUB6WS
+         RzJRUPwlX0dEosYBIG0MLhqc7Kuh5PqsSVs/VLyR4A87rYBd1DnWlze9qNvRK4E9YB8f
+         V1ts/fDlyQ53fXGW7cHIzvfXzi4+IMAj+v1M5qgXKJJtkMp00zNNzcjHPFg7Jf0okReR
+         i/InJyZulSytIbPfHHlGurusL1pPDMPTaaoa1LSoCwX+D8CFiWIhEvt4pspt5R2/WDBN
+         dsQQ==
+X-Gm-Message-State: AOAM533rqQpaiKckFEYfQiGL21DTjT0vUkdbDnVuPWvbqw3irxTm5u9i
+        TxCZpR22YXY8jSd/04EMfcNdhw==
+X-Google-Smtp-Source: ABdhPJyvnxn5qAFZghz/3D1h2x9gZV4WrjtyW7sthE7LvdhGsrfG8iMZquBRE7UxfVek29yANr+GVg==
+X-Received: by 2002:a17:907:8a20:b0:6f0:1e57:2dd1 with SMTP id sc32-20020a1709078a2000b006f01e572dd1mr4620592ejc.392.1650641105606;
+        Fri, 22 Apr 2022 08:25:05 -0700 (PDT)
+Received: from [192.168.0.232] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id cr10-20020a056402222a00b0041d918fdf99sm1008263edb.85.2022.04.22.08.25.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Apr 2022 08:25:05 -0700 (PDT)
+Message-ID: <b96fd335-df13-6657-c2ff-38ff677555a4@linaro.org>
+Date:   Fri, 22 Apr 2022 17:25:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1649269662-20338-1-git-send-email-quic_ylal@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 1/3] interconnect: qcom: constify qcom_icc_desc
+Content-Language: en-US
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220412102623.227607-1-krzysztof.kozlowski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220412102623.227607-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 06 Apr 13:27 CDT 2022, Yogesh Lal wrote:
-
-> In case remoteproc's firmware missing minidump support, during crash
-> scenario coredump does not collected. This change adds a fallback
-> mechanism for full coredump collection in the event of a crash.
+On 12/04/2022 12:26, Krzysztof Kozlowski wrote:
+> struct qcom_icc_desc is not modified so it can be made const for safety.
 > 
-> Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  drivers/remoteproc/qcom_common.c   | 11 ++++++++---
->  drivers/remoteproc/qcom_q6v5_pas.c |  1 +
->  2 files changed, 9 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-> index 4b91e3c..68bd0bc 100644
-> --- a/drivers/remoteproc/qcom_common.c
-> +++ b/drivers/remoteproc/qcom_common.c
-> @@ -162,13 +162,18 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id)
->  	 * is initialized in memory and encryption status is set.
->  	 */
->  	if (subsystem->regions_baseptr == 0 ||
-> -	    le32_to_cpu(subsystem->status) != 1 ||
-> -	    le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED ||
-> -	    le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
-> +		le32_to_cpu(subsystem->status) != 1 ||
-> +		le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED) {
-> +			return rproc_coredump(rproc);
-> +		}
-> +
-> +	if (le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
->  		dev_err(&rproc->dev, "Minidump not ready, skipping\n");
->  		return;
->  	}
->  
-> +	rproc_coredump_cleanup(rproc);
+>  drivers/interconnect/qcom/msm8916.c |  6 +++---
+>  drivers/interconnect/qcom/msm8939.c |  8 ++++----
+>  drivers/interconnect/qcom/msm8974.c | 12 ++++++------
+>  drivers/interconnect/qcom/qcm2290.c | 12 ++++++------
+>  drivers/interconnect/qcom/qcs404.c  |  6 +++---
+>  drivers/interconnect/qcom/sc7180.c  | 26 +++++++++++++-------------
+>  drivers/interconnect/qcom/sc7280.c  | 24 ++++++++++++------------
+>  drivers/interconnect/qcom/sdm660.c  | 12 ++++++------
+>  drivers/interconnect/qcom/sm8150.c  | 22 +++++++++++-----------
+>  drivers/interconnect/qcom/sm8250.c  | 22 +++++++++++-----------
+>  drivers/interconnect/qcom/sm8350.c  | 20 ++++++++++----------
+>  drivers/interconnect/qcom/sm8450.c  | 22 +++++++++++-----------
 
-The patch looks good, but could you please explain in the commit message
-why this needs to be added? If the thing described in the message
-happens this code path wouldn't be taken.
+Hi folks,
 
-Should it be a separate patch, or is it needed because of the fallback
-etc?
+Any comments here?
 
-Thanks,
-Bjorn
-
-> +
->  	ret = qcom_add_minidump_segments(rproc, subsystem);
->  	if (ret) {
->  		dev_err(&rproc->dev, "Failed with error: %d while adding minidump entries\n", ret);
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 1ae47cc..40bf747 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -293,6 +293,7 @@ static const struct rproc_ops adsp_minidump_ops = {
->  	.start = adsp_start,
->  	.stop = adsp_stop,
->  	.da_to_va = adsp_da_to_va,
-> +	.parse_fw = qcom_register_dump_segments,
->  	.load = adsp_load,
->  	.panic = adsp_panic,
->  	.coredump = adsp_minidump,
-> -- 
-> 2.7.4
-> 
+Best regards,
+Krzysztof
