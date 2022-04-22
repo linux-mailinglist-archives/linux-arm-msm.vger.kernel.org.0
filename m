@@ -2,398 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4CB550BD85
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 18:49:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3032550BD8B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 18:51:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1449857AbiDVQwY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 12:52:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50162 "EHLO
+        id S1449856AbiDVQyF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 12:54:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1449856AbiDVQwX (ORCPT
+        with ESMTP id S1449855AbiDVQyD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 12:52:23 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 263EB5F8DD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:49:28 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id f17so15492936ybj.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:49:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yjyLuNFV4sqz/6Z5vCk0BquB2BUmGkkNwZpzUE7yayc=;
-        b=NtuKuR9ejemQ0Vbhk022ozJzoN15S796zqY5kgkmqgh6HhdelrBgcjSgK1k9bJTUeU
-         qAX5HUlKUr0VW3Z7IRW9qQNyKnSrlEEmphawhq+/XXaJXZ5bzQyITUIQq5A25JcMsdXd
-         9Vc+b5SzYFyBzlXLCZQzXncxo/aEo9dmbXP8+94K8cH8tjsWFSdbGQiMEO7jn2ixHC++
-         PTLxiKs+YoPEA8ZZQwVNL/r+5Fx/s7WWheIsrekxPAxC2VirHqN2dieFniKqZ7/VnejI
-         DyLcnJ0pBcwo7QY2WU4HaPsGvCRsVR9RuBxG8Cxsg/0BHOiDXg4Uh2Liehyk8AKrXJ82
-         uiKQ==
+        Fri, 22 Apr 2022 12:54:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6E5795F27E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:51:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1650646267;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=RP65Uj7WP6EZyZBfeufvI+9bp/deJnrcdnu1tws0K2A=;
+        b=Sh+RI4qzipwvz36dpAQno5dGL6bHP5Q/1mVC/ZfMmAmGmFFbVM+TwpMa6S3KHgapEzTWt/
+        U5hnDs1CJWiJn/34X0jmA+GDFugOUrqST+39vRBnlAVea3TvdvXPN+buD8jdfEuqvCyGG2
+        mil2XxTZQ6Fak5AS5fxOFkF6vWJSHuo=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-322-V8pigZH0PlWnGclh2OjZmA-1; Fri, 22 Apr 2022 12:51:06 -0400
+X-MC-Unique: V8pigZH0PlWnGclh2OjZmA-1
+Received: by mail-qt1-f197.google.com with SMTP id o19-20020a05622a009300b002f24529993cso5388250qtw.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:51:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yjyLuNFV4sqz/6Z5vCk0BquB2BUmGkkNwZpzUE7yayc=;
-        b=qqUt78h66fFCUe3VSckRNpbf8WQK3hqnvewHqkQYeDErbiQmYErfFXH8r7CAw1fJlt
-         cJS5b2okLkESD11Dy4hlUXHGPv0c4CbVifczNHYtwHNAzPXzZcu3P/fNA16YcN22M6e9
-         2tZf5JeaeSrTqyFJdayUi0OA8pI7Mq4C3bbdiOKnilzKjmh89pcWEZluFSKwHy/kjKIo
-         BzJeCea8BVQQf/U4Hd6Wc/sxDqt1AXobVsZBY68/NdrKio5rtxhYM9QNZHTd20juyhcc
-         eyi21upAM88mF1B94jPaQqRX5+pnDNu4blUJ6cLHnF46jSL+mnBEYn0s0HJa5UAR7mzL
-         ko3Q==
-X-Gm-Message-State: AOAM530928sO7amqkLZ8X+OcDU1FU57s3Ao35LkpyoVELUZaclI6BN+q
-        ypcAUBoAmFcma8tiTW5rlNp3xVRCiDG3U7kgkXiDPg==
-X-Google-Smtp-Source: ABdhPJwy2xeRF63SDT0AhX59gghBPDPyHcSHhZA6XKRkTCrbOimvg+nahXvjrYYDANXbKLK5Gf9/epRz2Ei1gMsmB6A=
-X-Received: by 2002:a25:d507:0:b0:63d:a541:1a8c with SMTP id
- r7-20020a25d507000000b0063da5411a8cmr5548591ybe.92.1650646167265; Fri, 22 Apr
- 2022 09:49:27 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RP65Uj7WP6EZyZBfeufvI+9bp/deJnrcdnu1tws0K2A=;
+        b=NYTGS0M5nDE5bzvacVRADPoudIEs82JYhqL1o0PXuPy/UxZ0qcu9rMgkQla14/gc0z
+         zIMS6ziQE/wds8jjXR8lqWkHwyRPo9UtlNkDvxiCoZsvLBJ9rma5oxsREOimlhhQieAD
+         25vL4w6t2f+L4fvAFRj58KWePzniMZQWRfiA/oIo1fTC2VcQEugP7ca5+n+JnzylBzFv
+         2HocbYIvkvNf2nz2WgTWMMlBZmZdiWaVp7Xsj0HQDfz4BbMdY8SuzMYsLdAME5sj9Lj8
+         m4M9yIgNJ7Bg8+miseYClTLasrnawAycJjjYX4W1h+xxy+a1dpsRRmVeOtQD7A+aN2iZ
+         cyDw==
+X-Gm-Message-State: AOAM533Ibp2T0QcXhQkqhuBPsNVFjnt9ju5zE8NHhKnGW+2SYpZX5KdX
+        diA8eZbzcCrzp8sS0NrkWo8bTj6jBW9huaVs19UrT6d2N6KURBC5SeplO/euiyxdHEViGE3YDI1
+        qtFqDNTcpffZzWZhx9kjllUE5kw==
+X-Received: by 2002:a37:6181:0:b0:69e:7b8a:e72c with SMTP id v123-20020a376181000000b0069e7b8ae72cmr3255237qkb.388.1650646265968;
+        Fri, 22 Apr 2022 09:51:05 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzGjpvtzYiKxHawYsICXnZfMhkhwABbqQn0p9KPy6KU0/ydqClvRwXk3Olfd1QtTvoihYpO3g==
+X-Received: by 2002:a37:6181:0:b0:69e:7b8a:e72c with SMTP id v123-20020a376181000000b0069e7b8ae72cmr3255217qkb.388.1650646265599;
+        Fri, 22 Apr 2022 09:51:05 -0700 (PDT)
+Received: from halaneylaptop (068-184-200-203.res.spectrum.com. [68.184.200.203])
+        by smtp.gmail.com with ESMTPSA id e16-20020ac85990000000b002f33eb4523asm1542421qte.18.2022.04.22.09.51.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Apr 2022 09:51:04 -0700 (PDT)
+Date:   Fri, 22 Apr 2022 11:51:01 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
+        avri.altman@wdc.com, alim.akhtar@samsung.com,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/5] scsi: ufs: qcom: Simplify handling of devm_phy_get()
+Message-ID: <20220422165101.uy23jf3conuxr2iw@halaneylaptop>
+References: <20220422132140.313390-1-manivannan.sadhasivam@linaro.org>
+ <20220422132140.313390-3-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-References: <20220422114841.1854138-1-dmitry.baryshkov@linaro.org>
- <20220422114841.1854138-2-dmitry.baryshkov@linaro.org> <cbc35460-9ca0-0caa-7e7e-8458ec0b8f36@linaro.org>
-In-Reply-To: <cbc35460-9ca0-0caa-7e7e-8458ec0b8f36@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 22 Apr 2022 19:49:16 +0300
-Message-ID: <CAA8EJprvk8kt-Vq5WdeMqqZGJpMN5N9AaAAG1xp=pGM+EQF9Fw@mail.gmail.com>
-Subject: Re: [PATCH 1/6] dt-bindings: pci/qcom,pcie: convert to YAML
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220422132140.313390-3-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 22 Apr 2022 at 16:10, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 22/04/2022 13:48, Dmitry Baryshkov wrote:
-> > Changes to examples:
-> >  - Inline clock and reset numbers rather than including dt-bindings
-> >    files because of conflicts between the headers
-> >  - Split ranges properties to follow current practice
-> >
-> > Changes to the schema:
-> >  - Fixed the ordering of clock-names/reset-names according to
-> >    the dtsi files.
-> >  - Mark vdda-supply as required only for apq/ipq8064 (as it was marked
-> >    as generally required in the txt file).
-> >
-> > Note: while it was not clearly described in text schema, the majority of
-> > Qualcomm platforms follow the snps,dw-pcie schema and use two
-> > compatibility strings in the DT files: platform-specific one and a
-> > fallback to the generic snps,dw-pcie one. This will be sorted out in the
-> > next patches.
->
-> I don't get why you add snps,dw-pcie fallback here, even though original
-> bindings (except examples, which are not bindings) were not mentioning
-> it. Maybe just skip it?
+On Fri, Apr 22, 2022 at 06:51:37PM +0530, Manivannan Sadhasivam wrote:
+> There is no need to call devm_phy_get() if ACPI is used, so skip it.
+> The "host->generic_phy" pointer should already be NULL due to the kzalloc,
+> so no need to set it NULL again.
+> 
+> Also, don't print the error message in case of -EPROBE_DEFER and return
+> the error code directly.
+> 
+> While at it, also remove the comment that has no relationship with
+> devm_phy_get().
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/scsi/ufs/ufs-qcom.c | 26 +++++---------------------
+>  1 file changed, 5 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+> index 5db0fd922062..5f0a8f646eb5 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.c
+> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> @@ -1022,28 +1022,12 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>  		err = 0;
+>  	}
+>  
+> -	/*
+> -	 * voting/devoting device ref_clk source is time consuming hence
+> -	 * skip devoting it during aggressive clock gating. This clock
+> -	 * will still be gated off during runtime suspend.
+> -	 */
+> -	host->generic_phy = devm_phy_get(dev, "ufsphy");
+> -
+> -	if (host->generic_phy == ERR_PTR(-EPROBE_DEFER)) {
+> -		/*
+> -		 * UFS driver might be probed before the phy driver does.
+> -		 * In that case we would like to return EPROBE_DEFER code.
+> -		 */
+> -		err = -EPROBE_DEFER;
+> -		dev_warn(dev, "%s: required phy device. hasn't probed yet. err = %d\n",
+> -			__func__, err);
+> -		goto out_variant_clear;
+> -	} else if (IS_ERR(host->generic_phy)) {
+> -		if (has_acpi_companion(dev)) {
+> -			host->generic_phy = NULL;
+> -		} else {
+> +	if (!has_acpi_companion(dev)) {
+> +		host->generic_phy = devm_phy_get(dev, "ufsphy");
+> +		if (IS_ERR(host->generic_phy)) {
+>  			err = PTR_ERR(host->generic_phy);
+> -			dev_err(dev, "%s: PHY get failed %d\n", __func__, err);
+> +			if (err != -EPROBE_DEFER)
+> +				dev_err(dev, "Failed to get PHY: %d\n", err);
 
-Ack, I'll squash the snps,dw-pcie patch into this one.
+Risking sounding like a bad broken record, but I think this too could
+use dev_err_probe().
 
->
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  .../devicetree/bindings/pci/qcom,pcie.txt     | 397 ------------
-> >  .../devicetree/bindings/pci/qcom,pcie.yaml    | 607 ++++++++++++++++++
-> >  2 files changed, 607 insertions(+), 397 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> >  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >
->
-> (...)
->
-> > -     };
-> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > new file mode 100644
-> > index 000000000000..89a1021df9bc
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > @@ -0,0 +1,607 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm PCI express root complex
-> > +
-> > +maintainers:
-> > +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> > +  - Stanimir Varbanov <svarbanov@mm-sol.com>
-> > +
-> > +description: |
-> > +  Qualcomm PCIe root complex controller is bansed on the Synopsys DesignWare
-> > +  PCIe IP.
-> > +
-> > +properties:
-> > +  compatible:
-> > +    items:
-> > +      - enum:
-> > +          - qcom,pcie-ipq8064
-> > +          - qcom,pcie-ipq8064-v2
-> > +          - qcom,pcie-apq8064
-> > +          - qcom,pcie-apq8084
-> > +          - qcom,pcie-msm8996
-> > +          - qcom,pcie-ipq4019
-> > +          - qcom,pcie-ipq8074
-> > +          - qcom,pcie-qcs404
-> > +          - qcom,pcie-sc8180x
-> > +          - qcom,pcie-sdm845
-> > +          - qcom,pcie-sm8250
-> > +          - qcom,pcie-sm8450-pcie0
-> > +          - qcom,pcie-sm8450-pcie1
-> > +          - qcom,pcie-ipq6018
-> > +      - const: snps,dw-pcie
-> > +
-> > +  reg:
-> > +    minItems: 4
-> > +    maxItems: 5
-> > +
-> > +  reg-names:
-> > +    minItems: 4
-> > +    maxItems: 5
-> > +    items:
-> > +      enum:
-> > +        - parf # Qualcomm specific registers
-> > +        - dbi # DesignWare PCIe registers
-> > +        - elbi # External local bus interface registers
-> > +        - config # PCIe configuration space
-> > +        - atu # ATU address space (optional)> +
-> > +  interrupts:
-> > +    maxItems: 1
-> > +
-> > +  interrupt-names:
-> > +    items:
-> > +      - const: "msi"
-> > +
-> > +  clocks: true
->
-> min/maxItems
->
-> same for clock-names
->
-> > +
-> > +  vdda-supply:
-> > +    description: A phandle to the core analog power supply
-> > +
-> > +  vdda_phy-supply:
-> > +    description: A phandle to the core analog power supply for PHY
-> > +
-> > +  vdda_refclk-supply:
-> > +    description: A phandle to the core analog power supply for IC which generates reference clock
-> > +
-> > +  vddpe-3v3-supply:
-> > +    description: A phandle to the PCIe endpoint power supply
-> > +
-> > +  phys:
-> > +    maxItems: 1
-> > +
-> > +  phy-names:
-> > +    items:
-> > +      - const: "pciephy"
-> > +
-> > +  perst-gpio:
-> > +    description: GPIO pin number of PERST# signal
-> > +    maxItems: 1
-> > +    deprecated: true
->
-> Old binding did not have it.
+Looks good to me otherwise!
 
-Ack, dropping.
+>  			goto out_variant_clear;
+>  		}
+>  	}
+> -- 
+> 2.25.1
+> 
 
->
-> > +
-> > +  perst-gpios:
-> > +    description: GPIO controlled connection to PERST# signal
-> > +    maxItems: 1
-> > +
->
-> You miss here power-domains, resets and reset-names with min/maxItems.
-
-power-domains are described later in the non-8064 cases.
-
-Will add everything here.
-
->
-> > +  wake-gpio:
-> > +    description: GPIO pin number of WAKE# signal
-> > +    maxItems: 1
-> > +    deprecated: true
->
-
-Ack dropping.
-
->
-> > +
-> > +  wake-gpios:
-> > +    description: GPIO controlled connection to WAKE# signal
-> > +    maxItems: 1
-> > +
-> > +  iommu-map: true
-> > +  iommu-map-mask: true
->
-> Not present in old binding. If this is trully needed, mention it in
-> commit msg.
-
-They are used on newer platforms. Will mention it.
-
->
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - reg-names
-> > +  - interrupts
-> > +  - interrupt-names
->
-> What about interrupt-cells, clocks, clock-names, resets, reset-names?
-
-Ugh. Missed them, adding back.
-
->
-> > +
-> > +allOf:
-> > +  - $ref: /schemas/pci/pci-bus.yaml#
-> > +  - if:
-> > +      properties:
-> > +        compatible:
-> > +          contains:
-> > +            enum:
-> > +              - qcom,pcie-apq8064
-> > +    then:
-> > +      properties:
-> > +        clocks:
-> > +          minItems: 3
-> > +          maxItems: 3
-> > +        clock-names:
-> > +          items:
-> > +            - const: core # Clocks the pcie hw block
-> > +            - const: iface # Configuration AHB clock
-> > +            - const: phy # Clocks the pcie PHY block
-> > +        resets:
-> > +          minItems: 5
-> > +          maxItems: 5
-> > +        reset-names:
-> > +          items:
-> > +            - const: axi # AXI reset
-> > +            - const: ahb # AHB reset
-> > +            - const: por # POR reset
-> > +            - const: pci # PCI reset
-> > +            - const: phy # PHY reset
->
-> Missing required properties e.g. some supplies.
-
-Ok, I'll merge all apq8064 and ipq8064 entries into a single if/then condition.
-
-> Plus one blank line.
->
-> The same applies below to other ifs.
->
-> > +  - if:
-> > +      properties:
-> > +        compatible:
-> > +          contains:
-> > +            enum:
-> > +              - qcom,pcie-ipq8064
-> > +              - qcom,pcie-ipq8064v2
->
-> (...)
->
-> > +
-> > +unevaluatedProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> > +    pcie@1b500000 {
-> > +      compatible = "qcom,pcie-ipq8064", "snps,dw-pcie";
-> > +      reg = <0x1b500000 0x1000
-> > +             0x1b502000 0x80
-> > +             0x1b600000 0x100
-> > +             0x0ff00000 0x100000>;
->
-> Convert the example to match current bindings, so reg should be split.
-
-I wonder why the dt_bindings check didn't warn me about it.
-
->
-> > +      reg-names = "dbi", "elbi", "parf", "config";
-> > +      device_type = "pci";
-> > +      linux,pci-domain = <0>;
-> > +      bus-range = <0x00 0xff>;
-> > +      num-lanes = <1>;
-> > +      #address-cells = <3>;
-> > +      #size-cells = <2>;
-> > +      ranges = <0x81000000 0 0 0x0fe00000 0 0x00100000>,
-> > +               <0x82000000 0 0 0x08000000 0 0x07e00000>;
-> > +      interrupts = <GIC_SPI 238 IRQ_TYPE_NONE>;
->
-> Looks like wrong IRQ flag.
-
-Ack
-
->
-> > +      interrupt-names = "msi";
-> > +      #interrupt-cells = <1>;
-> > +      interrupt-map-mask = <0 0 0 0x7>;
-> > +      interrupt-map = <0 0 0 1 &intc 0 36 IRQ_TYPE_LEVEL_HIGH>,
-> > +                      <0 0 0 2 &intc 0 37 IRQ_TYPE_LEVEL_HIGH>,
-> > +                      <0 0 0 3 &intc 0 38 IRQ_TYPE_LEVEL_HIGH>,
-> > +                      <0 0 0 4 &intc 0 39 IRQ_TYPE_LEVEL_HIGH>;
-> > +      clocks = <&gcc 41>,
-> > +               <&gcc 43>,
-> > +               <&gcc 44>,
-> > +               <&gcc 42>,
-> > +               <&gcc 248>;
-> > +      clock-names = "core", "iface", "phy", "aux", "ref";
-> > +      resets = <&gcc 27>,
-> > +               <&gcc 26>,
-> > +               <&gcc 25>,
-> > +               <&gcc 24>,
-> > +               <&gcc 23>,
-> > +               <&gcc 22>;
-> > +      reset-names = "axi", "ahb", "por", "pci", "phy", "ext";
-> > +      pinctrl-0 = <&pcie_pins_default>;
-> > +      pinctrl-names = "default";
-> > +      vdda-supply = <&pm8921_s3>;
-> > +      vdda_phy-supply = <&pm8921_lvs6>;
-> > +      vdda_refclk-supply = <&ext_3p3v>;
-> > +    };
-> > +  - |
-> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> > +    #include <dt-bindings/gpio/gpio.h>
-> > +    pcie@fc520000 {
-> > +      compatible = "qcom,pcie-apq8084", "snps,dw-pcie";
-> > +      reg = <0xfc520000 0x2000>,
-> > +            <0xff000000 0x1000>,
-> > +            <0xff001000 0x1000>,
-> > +            <0xff002000 0x2000>;
-> > +      reg-names = "parf", "dbi", "elbi", "config";
-> > +      device_type = "pci";
-> > +      linux,pci-domain = <0>;
-> > +      bus-range = <0x00 0xff>;
-> > +      num-lanes = <1>;
-> > +      #address-cells = <3>;
-> > +      #size-cells = <2>;
-> > +      ranges = <0x81000000 0 0          0xff200000 0 0x00100000>,
-> > +               <0x82000000 0 0x00300000 0xff300000 0 0x00d00000>;
-> > +      interrupts = <GIC_SPI 243 IRQ_TYPE_NONE>;
->
-> Ditto.
-
-Ack
-
-
---
-With best wishes
-Dmitry
