@@ -2,73 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA64B50BBA4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 17:25:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFC8350BBD1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 17:40:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1449424AbiDVP2G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 11:28:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40122 "EHLO
+        id S234219AbiDVPnZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 11:43:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1448590AbiDVP2D (ORCPT
+        with ESMTP id S1449490AbiDVPnM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 11:28:03 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C348765A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:25:07 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id y10so17022922ejw.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=sa/EoVj7UXoDHkP3+ISFzh+OXFxyPRq9RG0BLiBl6eg=;
-        b=hnD+E7YuymEsEN0uCt13UTly6lbaNaHlNGDgxZoQF6Xfs+pwqxOgf6vvEnBWYGXdM7
-         dKdfK9LhCPQpZGhqdHt4WYTEk5ts7Zb3rhsmo72FeTBK3Sj2+MNsDyAsCKgXcJu+oUgD
-         zsJVl2bniZZemVA2tO4GestXoYnAeXwsST3HEsV9/MscO3kJdbNnKLavvjPZORwpf1UT
-         XjXbgQ7S8b9gb61KpNZnA3D7PVlF/7JwzCup63xsTJszS32zOoGnzSMhqnabE/swfCpH
-         tZo/JMwTtWyBnuNpoq0h2IvAHRsOk7yGYR+NKRJdE88paV7aXSVn0yLzxMbWUj7ooOtL
-         vB1g==
+        Fri, 22 Apr 2022 11:43:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 99A5556218
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:40:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1650642017;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=4QhChbQB9YDaMeenbkdMZZmXadlUdt0Dsk5a56hLZNI=;
+        b=Ha1Gf7WFIZ3eDm+mcZMGEijd2zpqanqfk8P1If/XQPApTVgS3loPEu5oOPjAkgpO8XEaK4
+        7/1zgdrFYnjcNfZvRKVbpXFdhflI24WrnSHwMYynVdIPHMU9VBoOgND+TTFWy6m31O/8pN
+        Yj2Ba7AT675uM79tMrTkdKsFnZOCv8k=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-298-LZuxdkU2PbuaSgDbp6tpHQ-1; Fri, 22 Apr 2022 11:40:14 -0400
+X-MC-Unique: LZuxdkU2PbuaSgDbp6tpHQ-1
+Received: by mail-qk1-f199.google.com with SMTP id q5-20020a05620a0d8500b004738c1b48beso5639499qkl.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:40:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=sa/EoVj7UXoDHkP3+ISFzh+OXFxyPRq9RG0BLiBl6eg=;
-        b=yUWSzFj1QGPhkRQrpqw9qJ6d+Kk/81dseFjQFT65cQMEilVIX2eH/Az6d6D81Qsto7
-         BVuwzCCn4JCKqkQK440Uk7uZDIrEmo9xFY93QrUQmOfl2QwEU6YTenMtmQcQKNhUB6WS
-         RzJRUPwlX0dEosYBIG0MLhqc7Kuh5PqsSVs/VLyR4A87rYBd1DnWlze9qNvRK4E9YB8f
-         V1ts/fDlyQ53fXGW7cHIzvfXzi4+IMAj+v1M5qgXKJJtkMp00zNNzcjHPFg7Jf0okReR
-         i/InJyZulSytIbPfHHlGurusL1pPDMPTaaoa1LSoCwX+D8CFiWIhEvt4pspt5R2/WDBN
-         dsQQ==
-X-Gm-Message-State: AOAM533rqQpaiKckFEYfQiGL21DTjT0vUkdbDnVuPWvbqw3irxTm5u9i
-        TxCZpR22YXY8jSd/04EMfcNdhw==
-X-Google-Smtp-Source: ABdhPJyvnxn5qAFZghz/3D1h2x9gZV4WrjtyW7sthE7LvdhGsrfG8iMZquBRE7UxfVek29yANr+GVg==
-X-Received: by 2002:a17:907:8a20:b0:6f0:1e57:2dd1 with SMTP id sc32-20020a1709078a2000b006f01e572dd1mr4620592ejc.392.1650641105606;
-        Fri, 22 Apr 2022 08:25:05 -0700 (PDT)
-Received: from [192.168.0.232] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id cr10-20020a056402222a00b0041d918fdf99sm1008263edb.85.2022.04.22.08.25.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Apr 2022 08:25:05 -0700 (PDT)
-Message-ID: <b96fd335-df13-6657-c2ff-38ff677555a4@linaro.org>
-Date:   Fri, 22 Apr 2022 17:25:04 +0200
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=4QhChbQB9YDaMeenbkdMZZmXadlUdt0Dsk5a56hLZNI=;
+        b=jaTgP9QAr3Ejh/NuhKnuohsvI1DROpRk1hjCsNLKdYGPIuUCymum5DiTqdxR/cSnA6
+         0IVrfCdmWHcgVJiKqhA7hMJrf+0U4L/XfdSo03zru0RZ5LDeGrMnTMY4zhpggsqSzPEC
+         2lo66FCjFdEbpiOJ4RxflAWafKnq/qmF5nHak67lhC3ZzVLo/lr3A5qM7F5NO/HPOFNR
+         rh5xusWZ9mADJW4rolgQ+p9T+3LVWat0RO6yfgDk76ivzLsaJvgJDI30nVrn69X1WSl0
+         n7JwdKo4vnGkC8Gx1iyXKQ2WLuq86+309sOa2KqSIgkU9ZZhAokj9whWQUCAyHQPhblu
+         B+QQ==
+X-Gm-Message-State: AOAM531nIH8RhTZPW4jW5vy7DJCS8q9F1oRGSmaMA2LT2uvgJuQxK1f6
+        jIgmJ11n3f+aI7XCHt8tRrKJ1tIKdYFvEhsDMjl2aG7h60mYnlSy8Dvkv43eDxvbULxPhnfbrKy
+        PLV9Cwxz+Hptma4+/XttADquAVA==
+X-Received: by 2002:a05:6214:262c:b0:446:3464:57cd with SMTP id gv12-20020a056214262c00b00446346457cdmr4194746qvb.89.1650642014111;
+        Fri, 22 Apr 2022 08:40:14 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzU/zrP23x+VGLwwKjYVd8GBF1zIofL+6BYuCYCGu72U6zgNGIJUYYLxnyojnu2QA1/y2aBZw==
+X-Received: by 2002:a05:6214:262c:b0:446:3464:57cd with SMTP id gv12-20020a056214262c00b00446346457cdmr4194730qvb.89.1650642013880;
+        Fri, 22 Apr 2022 08:40:13 -0700 (PDT)
+Received: from halaneylaptop (068-184-200-203.res.spectrum.com. [68.184.200.203])
+        by smtp.gmail.com with ESMTPSA id e126-20020a376984000000b0069c86b28524sm1113111qkc.19.2022.04.22.08.40.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Apr 2022 08:40:13 -0700 (PDT)
+Date:   Fri, 22 Apr 2022 10:40:10 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
+        avri.altman@wdc.com, alim.akhtar@samsung.com,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/5] scsi: ufs: qcom: Fix acquiring the optional reset
+ control line
+Message-ID: <20220422154010.2cxk4qy5eikxujb2@halaneylaptop>
+References: <20220422132140.313390-1-manivannan.sadhasivam@linaro.org>
+ <20220422132140.313390-2-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 1/3] interconnect: qcom: constify qcom_icc_desc
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220412102623.227607-1-krzysztof.kozlowski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220412102623.227607-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220422132140.313390-2-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,27 +81,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/04/2022 12:26, Krzysztof Kozlowski wrote:
-> struct qcom_icc_desc is not modified so it can be made const for safety.
+On Fri, Apr 22, 2022 at 06:51:36PM +0530, Manivannan Sadhasivam wrote:
+> On Qcom UFS platforms, the reset control line seems to be optional
+> (for SoCs like MSM8996 and probably for others too). The current logic
+> tries to mimic the `devm_reset_control_get_optional()` API but it also
+> continues the probe if there is an error with the declared reset line in
+> DT/ACPI.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> In an ideal case, if the reset line is not declared in DT/ACPI, the probe
+> should continue. But if there is problem in acquiring the declared reset
+> line (like EPROBE_DEFER) it should fail and return the appropriate error
+> code.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  drivers/interconnect/qcom/msm8916.c |  6 +++---
->  drivers/interconnect/qcom/msm8939.c |  8 ++++----
->  drivers/interconnect/qcom/msm8974.c | 12 ++++++------
->  drivers/interconnect/qcom/qcm2290.c | 12 ++++++------
->  drivers/interconnect/qcom/qcs404.c  |  6 +++---
->  drivers/interconnect/qcom/sc7180.c  | 26 +++++++++++++-------------
->  drivers/interconnect/qcom/sc7280.c  | 24 ++++++++++++------------
->  drivers/interconnect/qcom/sdm660.c  | 12 ++++++------
->  drivers/interconnect/qcom/sm8150.c  | 22 +++++++++++-----------
->  drivers/interconnect/qcom/sm8250.c  | 22 +++++++++++-----------
->  drivers/interconnect/qcom/sm8350.c  | 20 ++++++++++----------
->  drivers/interconnect/qcom/sm8450.c  | 22 +++++++++++-----------
+>  drivers/scsi/ufs/ufs-qcom.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+> index 0d2e950d0865..5db0fd922062 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.c
+> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> @@ -1002,13 +1002,13 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>  	host->hba = hba;
+>  	ufshcd_set_variant(hba, host);
+>  
+> -	/* Setup the reset control of HCI */
+> -	host->core_reset = devm_reset_control_get(hba->dev, "rst");
+> +	/* Setup the optional reset control of HCI */
+> +	host->core_reset = devm_reset_control_get_optional(hba->dev, "rst");
+>  	if (IS_ERR(host->core_reset)) {
+>  		err = PTR_ERR(host->core_reset);
+> -		dev_warn(dev, "Failed to get reset control %d\n", err);
+> -		host->core_reset = NULL;
+> -		err = 0;
+> +		if (err != -EPROBE_DEFER)
+> +			dev_err(dev, "Failed to get reset control %d\n", err);
 
-Hi folks,
+Could we use dev_err_probe() here?
 
-Any comments here?
+Otherwise, looks good to me.
 
-Best regards,
-Krzysztof
+> +		goto out_variant_clear;
+>  	}
+>  
+>  	/* Fire up the reset controller. Failure here is non-fatal. */
+> -- 
+> 2.25.1
+> 
+
