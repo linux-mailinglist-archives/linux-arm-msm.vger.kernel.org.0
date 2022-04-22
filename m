@@ -2,109 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45D9950BCA2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 18:10:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10C8F50BD55
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 18:43:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353308AbiDVQNs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 12:13:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46952 "EHLO
+        id S1449790AbiDVQqq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 12:46:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234353AbiDVQNr (ORCPT
+        with ESMTP id S1449796AbiDVQqp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 12:13:47 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A0135BE78
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:10:53 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id lc2so17247644ejb.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:10:53 -0700 (PDT)
+        Fri, 22 Apr 2022 12:46:45 -0400
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03F155F27F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:43:51 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id s17so12027833plg.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:43:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TO6k5Eg+5Nqe4CCIAN4ROGKgZysMxXNX64mWMEm2504=;
-        b=oY3R9eMENeA4yFgfxxAh0CIL63NfU/4cQZy0VBfnWqdkaQCrjP1OSsrzairEuqTc8h
-         dCnx5NBV16wwOh8IExGkxkRthS5yV1+uEB61rOzpqQGfyzUlUPRRrILpKog4hvbptgGe
-         HyH8ZzQX9V8+aRsclZdqqy2LK9aUqTNtjPWfA=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=lrKucvMjSEAYeo7mkhMZ89mS7UtYq+5fiKLotEll0Iw=;
+        b=KJqOFGiRM0NoHulPxQlBIdD5xIZKHn7rLOHYGLO9xNeOZISRGETPx4SM4vR6ydbqQA
+         NI4y5TDJw/7+d23ChXN4YvavOzE+5oJzv4i9PzLVqP7sNX2bmqclW5x6lh8rqlu2KJL5
+         8FNEYQrqe5lOTmuphrkrX6qyhv2KzOWkRgTLY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TO6k5Eg+5Nqe4CCIAN4ROGKgZysMxXNX64mWMEm2504=;
-        b=jD0z1iJ5uWXdK3IRtBNIyydPqVob+t57sKjX+2+tS6r81Y5H0SOWFCX6kSPROdKjDz
-         +7yzduWK96BNPFQr46IjRwllQ07FZJyVMXncM/V0q+VihxTFelKF6NZH/q4dSC/+D3zT
-         OpQPISKoewUsOV3Uhk28lXzs8vco03kj4AzoqhqnMvBpFatdOZZnWsxvR5ieTd1r05Y8
-         kSAij/+Bx1e69XiMKh2CkfOxny1UmhjNkQyyfPTzVuir1jDI+A8xm65o15h2iTkYbxZM
-         0G/Tf3ID7A0CkFFz+PK4e1qkSw+XlkGX7Z7fxx6hJr30Xxw/Bc+iCN1Gcdsj5iEHPRAv
-         HDKA==
-X-Gm-Message-State: AOAM5314Xy8bDR7Ve/sXSnq3HO585ujV/5PEK1/pffSgijK53tqqe66w
-        3aOwURtFZZHNYG1Wvt7Y6anFRqMgQNpRDnlBSxA=
-X-Google-Smtp-Source: ABdhPJytmqbH08JpUjHjifAy0J+uQVISiEL/brxiLytuokxRBURSZAaIsMNISLKPSVffSG91eNqrCg==
-X-Received: by 2002:a17:906:5811:b0:6e8:47dd:c55d with SMTP id m17-20020a170906581100b006e847ddc55dmr4824699ejq.191.1650643851967;
-        Fri, 22 Apr 2022 09:10:51 -0700 (PDT)
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com. [209.85.221.53])
-        by smtp.gmail.com with ESMTPSA id lb4-20020a170907784400b006e0d13f65e5sm885484ejc.167.2022.04.22.09.10.51
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=lrKucvMjSEAYeo7mkhMZ89mS7UtYq+5fiKLotEll0Iw=;
+        b=FG7oLrsUR9CvsakOqa3c4LBBZpnYqUXgY45KChRJuvGk3DDe+ELrhQL1Va4/iRJfRH
+         4o1tsDI4aQ31jIWiQsUu2Cy+Lixjwr2rHeIHip9kgoa0xN1TAtvFiNcxjHxmVtg2PYNq
+         mynqvnwswuwj8RUWMSCVT+t/Dx7T9MHPiUKPGrTE/Vgc1Fb3SD406bfgIgj1LT/ZVEnI
+         hX7Bt+ZAtrkgm9sAZqbiupTfF23bGhInIQDMX7mjawVBf0AF6Tm6ctf3zoPRK7OObcJD
+         7pxBfW5mYNQI65zhuM1n2AmTlU4ffP/LWTBSf9QU6NaRmdnxybdrE+6QJfjnaBseYi4L
+         w3QQ==
+X-Gm-Message-State: AOAM53386l9WCLLp9ZClRGvZaS8TJLVTgrVspWDiNVAiDOpVBeZTpfZW
+        tFdyYSlRBVbTAal8NJJ13X85XMK66R//2w==
+X-Google-Smtp-Source: ABdhPJzooajiMzsvQqp7dhjoexwLfBnInq7z+C+wddLwUGAnQiW+4w6W3wlFS/U/eCy66izJHmZqHQ==
+X-Received: by 2002:a17:903:2342:b0:15b:f6ff:79f5 with SMTP id c2-20020a170903234200b0015bf6ff79f5mr4055976plh.128.1650645830359;
+        Fri, 22 Apr 2022 09:43:50 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:404c:8721:29:87a4])
+        by smtp.gmail.com with UTF8SMTPSA id j10-20020a17090a94ca00b001d792761e2esm3819628pjw.47.2022.04.22.09.43.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Apr 2022 09:10:51 -0700 (PDT)
-Received: by mail-wr1-f53.google.com with SMTP id x18so11793220wrc.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:10:51 -0700 (PDT)
-X-Received: by 2002:adf:a29c:0:b0:20a:a246:a826 with SMTP id
- s28-20020adfa29c000000b0020aa246a826mr4418755wra.422.1650643850709; Fri, 22
- Apr 2022 09:10:50 -0700 (PDT)
+        Fri, 22 Apr 2022 09:43:49 -0700 (PDT)
+Date:   Fri, 22 Apr 2022 09:43:47 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+        srinivas.kandagatla@linaro.org, dianders@chromium.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v10 02/12] arm64: dts: qcom: sc7280: Enable digital
+ codecs and soundwire for CRD 1.0/2.0 and IDP boards
+Message-ID: <YmLbQ6e12+t3ZRWQ@google.com>
+References: <1650636521-18442-1-git-send-email-quic_srivasam@quicinc.com>
+ <1650636521-18442-3-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-References: <1650618666-15342-1-git-send-email-quic_sbillaka@quicinc.com>
- <1650618666-15342-3-git-send-email-quic_sbillaka@quicinc.com>
- <CAD=FV=WWa8n0MJB8ks7bgrSj1Qop1Z5hvfEAOWtFcmsz38eR_w@mail.gmail.com> <83129bad-44a9-bec7-f931-8067ef1b9d4d@quicinc.com>
-In-Reply-To: <83129bad-44a9-bec7-f931-8067ef1b9d4d@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 22 Apr 2022 09:10:37 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Vu_0vxb_D+8n3qhNZ66nRXBp5vxshChmOM-ToPJxk=aA@mail.gmail.com>
-Message-ID: <CAD=FV=Vu_0vxb_D+8n3qhNZ66nRXBp5vxshChmOM-ToPJxk=aA@mail.gmail.com>
-Subject: Re: [PATCH v9 2/4] drm/msm/dp: Support only IRQ_HPD and REPLUG
- interrupts for eDP
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        quic_kalyant <quic_kalyant@quicinc.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        quic_vproddut <quic_vproddut@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Sean Paul <sean@poorly.run>, Sean Paul <seanpaul@chromium.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1650636521-18442-3-git-send-email-quic_srivasam@quicinc.com>
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, Apr 22, 2022 at 07:38:31PM +0530, Srinivasa Rao Mandadapu wrote:
+> Enable rx, tx and va macro codecs and soundwire nodes on revision 3,
+> 4 (aka CRD 1.0 and 2.0) and IDP boards.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 
-On Fri, Apr 22, 2022 at 9:05 AM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
-> Hi Doug
->
-> For the lockdep error, the splat looks similar to what kuogee fixed
-> recently.
->
-> Can you please check if below patch is present in your tree?
->
-> https://patchwork.freedesktop.org/patch/481396/
-
-Indeed I did have that in my tree already, but the lockdep splat is
-still there. I think the problem is that we're now calling
-dp_hpd_plug_handle() directly in dp_bridge_enable()
-
--Doug
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
