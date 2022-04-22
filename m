@@ -2,149 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A145050B617
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 13:22:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEAFA50B674
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 13:48:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1447009AbiDVLZJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 07:25:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40144 "EHLO
+        id S1447167AbiDVLvk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 07:51:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1446980AbiDVLZI (ORCPT
+        with ESMTP id S1447162AbiDVLvj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 07:25:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DB17541AC;
-        Fri, 22 Apr 2022 04:22:16 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C5E2361F72;
-        Fri, 22 Apr 2022 11:22:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25151C385A0;
-        Fri, 22 Apr 2022 11:22:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650626535;
-        bh=SVW4zVvibn9z+IjAwyBEd5JkQQkXUtOD1zca6C1BokE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qqInEFY2cO4FTnCH8Gno5qENJk/44n3MG8a3wISfMNbDgBokbaZ7vvr+qaZVsI27K
-         i/VwnIIIbXQceDYv0RAf7WYyxiTpWag2UFtrdfL2mC/attGJ1kr9GGgJxyTL35FDt0
-         SVEs8jdWWJveITVcdjC1Z+BBasxW4ilFyxeyNQGEWMhhl2oarOsIo5ZRE/s7n8WK29
-         E8FRNSTUeDUZ+HPQ7tnDqqlvzH/oG0ZspRVjbDvuzfsktZUAxzVXzMIUzFWa9ks5+Q
-         QkvKB3D94/j5v/Xc8a3s47FqgRn5wUTZWUkSJzw+PhcuThk+V5rwoy4G28IWV7jeTt
-         9sm4LcyOh1m0Q==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1nhrMW-0002mB-2D; Fri, 22 Apr 2022 13:22:08 +0200
-Date:   Fri, 22 Apr 2022 13:22:08 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Fri, 22 Apr 2022 07:51:39 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DFAC56415
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 04:48:45 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id u24so1768647ljd.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 04:48:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UZT/TykfMBCVk8d3xWr6e8o/MGP9L3Bc57oie76TSkw=;
+        b=W+7yNPwJBCf6O8jxaNp7vTbIrZfvI98OqXcx6TEPsRsqoUsSvp7CrYdAChOPhlCWYw
+         bs6f80ubE3uyH2iKZ0OHKc6iW2cDWLMydzMgJXP1vnoN/QCsEU41UUdCzIK1rawryw0Z
+         VMPcpI4JRVvKEYZ2FUJZHJjOmhmBWvd2TCOQ68P9d1gGHZJfnyX81dKOrX27eYCw0CaD
+         c+e2mLEV/4AK3BstUPbMc3iXkGxMbdwq4XFQMUeeb7DWEIXZ7d/GJYsZy9RBnehEc9m3
+         1qpaxPGcWa3uGaKExa962sH+ZE8DXFPB5A4laq/NZh1Hhwhcf/pn1m2DYgePofeGX/9f
+         kNaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UZT/TykfMBCVk8d3xWr6e8o/MGP9L3Bc57oie76TSkw=;
+        b=r7iUAdOdir9NPG4ZOXA91mARO5zUvEm9i6OVMZbplqUBUvuEhZcX4tfGHLhOf94i3a
+         Oqw9mny1qBNBxQ5F1gsdkjSNpU2K/HwI62vIn4VLAjEKC1PiCO7u3A3nN55t5vnvGDwI
+         6dV+im4zbwig2idKZANfzZ2kkrA3+qOhdEE3eEJPnTmGXg4dcQxPOiyAL9suXaEliA3Q
+         8m8xu+GhvNV/AEa5JuMFNYLWPqP62RuH5XBioPOaVLSVBZWluqSgcIxZKju+h6L7YErK
+         k4Kt1xPILddt3Us8ECWTPe3iMBZXsVVs4EBmNceqrIe/P8qehaCAWENdeujw52W5N+NB
+         R78A==
+X-Gm-Message-State: AOAM531S8SPTpgC1iqboTAsKjPofTNYdbVrQODSG+Yj7OZ67N84iBLuX
+        5BLBSLbKgRw1HaOZorm2TkmK7A==
+X-Google-Smtp-Source: ABdhPJyppi8DNcV45XTcmBLpWWHvYlql+hZLlqy8Nnn2S80SviDVAFF4inFYXqNrUenHR2Sg97ArUA==
+X-Received: by 2002:a2e:8e93:0:b0:24d:ab45:4053 with SMTP id z19-20020a2e8e93000000b0024dab454053mr2487282ljk.231.1650628123482;
+        Fri, 22 Apr 2022 04:48:43 -0700 (PDT)
+Received: from eriador.lumag.spb.ru ([188.162.65.189])
+        by smtp.gmail.com with ESMTPSA id h7-20020a19ca47000000b0047014ca10f2sm200695lfj.8.2022.04.22.04.48.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Apr 2022 04:48:43 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH RFC 1/5] phy: qcom-qmp: add support for pipe clock muxing
-Message-ID: <YmKP4FXXm6NhQFYK@hovoldconsulting.com>
-References: <20220421102041.17345-1-johan+linaro@kernel.org>
- <20220421102041.17345-2-johan+linaro@kernel.org>
- <de4f9514-5132-f208-d43f-4c50afcda203@linaro.org>
- <YmKBgGHtfDcO1Mkg@hovoldconsulting.com>
- <CAA8EJpqTzcwAtxk+XtAWdZaKEx2=VduPiVBp+CWj=_C-921YJg@mail.gmail.com>
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH 0/6] dt-bindings: YAMLify pci/qcom,pcie schema
+Date:   Fri, 22 Apr 2022 14:48:35 +0300
+Message-Id: <20220422114841.1854138-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpqTzcwAtxk+XtAWdZaKEx2=VduPiVBp+CWj=_C-921YJg@mail.gmail.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[ Again, please trim unnecessary context from your replies. ]
+Convert pci/qcom,pcie schema to YAML description. The first patch
+introduces several warnings which are fixed by the other patches in the
+series.
 
-On Fri, Apr 22, 2022 at 01:35:01PM +0300, Dmitry Baryshkov wrote:
-> On Fri, 22 Apr 2022 at 13:20, Johan Hovold <johan@kernel.org> wrote:
-> >
-> > On Thu, Apr 21, 2022 at 02:08:27PM +0300, Dmitry Baryshkov wrote:
-> > > On 21/04/2022 13:20, Johan Hovold wrote:
+Note regarding the snps,dw-pcie compatibility. The Qualcomm PCIe
+controller uses Synopsys PCIe IP core. However it is not just fused to
+the address space. Accessing PCIe registers requires several clocks and
+regulators to be powered up. Thus it can be assumed that the qcom,pcie
+bindings are not fully compatible with the snps,dw-pcie schema.
 
-> > > > +   /* Get optional pipe clock mux and default reference source clock. */
-> > > > +   qphy->pipemux_clk = of_clk_get_by_name(np, "mux");
-> > > > +   if (IS_ERR(qphy->pipemux_clk)) {
-> > > > +           ret = PTR_ERR(qphy->pipemux_clk);
-> > > > +           if (ret == -EPROBE_DEFER)
-> > > > +                   return ret;
-> > > > +
-> > > > +           qphy->pipemux_clk = NULL;
+Dmitry Baryshkov (6):
+  dt-bindings: pci/qcom,pcie: convert to YAML
+  dt-bindings: pci/qcom,pcie: add schema for sc7280 chipset
+  dt-bindings: pci/qcom-pcie: specify reg-names explicitly
+  dt-bindings: pci/qcom,pcie: stop using snps,dw-pcie fallback
+  arm64: dts: qcom: stop using snps,dw-pcie falback
+  arm: dts: qcom: stop using snps,dw-pcie falback
 
-> > > > +   } else {
-> > > > +           qphy->piperef_clk = of_clk_get_by_name(np, "ref");
-> > > > +           if (IS_ERR(qphy->piperef_clk)) {
-> > > > +                   ret = PTR_ERR(qphy->piperef_clk);
-> > > > +                   return dev_err_probe(dev, ret,
-> > > > +                                        "failed to get lane%d piperef_clk\n",
-> > > > +                                        id);
-> > > > +           }
-> > > > +   }
-> > > > +
-> > >
-> > > As a second thought.
-> > > This needs to be more explicit. If the chipset requires the pipe clock
-> > > remuxing, we must fail if the clocks were not provided. So depending on
-> > > the qmp instance/property the driver should either use devm_clk_get()
-> > > (instead of _optional) or skip this block completely.
-> >
-> > No, the kernel is not a DT validator (and we have the YAML bindings for
-> > that now).
-> 
-> It is not about DT validation. It is about passing a correct DT.
+ .../devicetree/bindings/pci/qcom,pcie.txt     | 397 ----------
+ .../devicetree/bindings/pci/qcom,pcie.yaml    | 701 ++++++++++++++++++
+ arch/arm/boot/dts/qcom-apq8064.dtsi           |   2 +-
+ arch/arm/boot/dts/qcom-ipq4019.dtsi           |   2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |   6 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   4 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |   6 +-
+ 8 files changed, 712 insertions(+), 408 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.txt
+ create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.yaml
 
-Heh. That's the same thing.
+-- 
+2.35.1
 
-> The file can come up from the kernel. It can come from the older
-> kernel.  OR it can come from the vendor. Or it even might be being a
-> part of firmware flashed into the device.  So we can not assume that
-> the DT is correct just because the in-kernel DT passes YAML
-> validation.
-
-Again, no. The kernel does not need to implement DT validation and can
-assume that the DT describes the hardware accurately. If the DT says
-there's a mux, the driver can use it. If there's no mux in DT, the
-driver can assume it isn't there.
-
-The only thing that complicates things here is the sc7280 dts which has
-been released in 5.16. We don't care about Qualcomm's kernels and dts.
-
-> So, as I wrote, the whole patchset needs much more care about compatibility.
-> 
-> > > But this will not work with earlier DTS files.
-> >
-> > So this is not a problem (but if we really wanted to have the driver
-> > validate the DT it can be done by updating the compatible strings).
-> 
-> We should not update compatible strings just because the driver
-> changes. Compat strings describe the hardware, not the Linux point of
-> view on it.
-
-We can, it's a documented practise in case a binding needs to be
-updated in an incompatible way:
-
-	https://www.kernel.org/doc/html/latest/devicetree/bindings/ABI.html
-
-But I don't think it'll be needed here.
-
-Johan
