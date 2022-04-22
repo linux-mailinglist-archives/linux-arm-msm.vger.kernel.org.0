@@ -2,144 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3032550BD8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 18:51:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0229750BDA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 18:53:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1449856AbiDVQyF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 12:54:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51598 "EHLO
+        id S1344576AbiDVQ4A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 12:56:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1449855AbiDVQyD (ORCPT
+        with ESMTP id S1352538AbiDVQz7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 12:54:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6E5795F27E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:51:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1650646267;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=RP65Uj7WP6EZyZBfeufvI+9bp/deJnrcdnu1tws0K2A=;
-        b=Sh+RI4qzipwvz36dpAQno5dGL6bHP5Q/1mVC/ZfMmAmGmFFbVM+TwpMa6S3KHgapEzTWt/
-        U5hnDs1CJWiJn/34X0jmA+GDFugOUrqST+39vRBnlAVea3TvdvXPN+buD8jdfEuqvCyGG2
-        mil2XxTZQ6Fak5AS5fxOFkF6vWJSHuo=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-322-V8pigZH0PlWnGclh2OjZmA-1; Fri, 22 Apr 2022 12:51:06 -0400
-X-MC-Unique: V8pigZH0PlWnGclh2OjZmA-1
-Received: by mail-qt1-f197.google.com with SMTP id o19-20020a05622a009300b002f24529993cso5388250qtw.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:51:06 -0700 (PDT)
+        Fri, 22 Apr 2022 12:55:59 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4DFD5F8FE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:53:05 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id c23so12134303plo.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 09:53:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=o3BhiJLBy4IijjkScOwH74+iwEXUL4miJ/y8puUDURY=;
+        b=XlTuqLr76Lj6K3o30mqa10MTvf9RAj5K316xDwmfbMk6iYo5hd8brw2BGI9k6hIDJU
+         H44qXf0bZiSXYm0rj0Erpt2kNqxYUjXqZUPON81oQtkGx40XGtUDj9rSUXADtmrm73b1
+         g/NykxVOZdfjBfQFgs94n7CIi0z8mfEXgQE8U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=RP65Uj7WP6EZyZBfeufvI+9bp/deJnrcdnu1tws0K2A=;
-        b=NYTGS0M5nDE5bzvacVRADPoudIEs82JYhqL1o0PXuPy/UxZ0qcu9rMgkQla14/gc0z
-         zIMS6ziQE/wds8jjXR8lqWkHwyRPo9UtlNkDvxiCoZsvLBJ9rma5oxsREOimlhhQieAD
-         25vL4w6t2f+L4fvAFRj58KWePzniMZQWRfiA/oIo1fTC2VcQEugP7ca5+n+JnzylBzFv
-         2HocbYIvkvNf2nz2WgTWMMlBZmZdiWaVp7Xsj0HQDfz4BbMdY8SuzMYsLdAME5sj9Lj8
-         m4M9yIgNJ7Bg8+miseYClTLasrnawAycJjjYX4W1h+xxy+a1dpsRRmVeOtQD7A+aN2iZ
-         cyDw==
-X-Gm-Message-State: AOAM533Ibp2T0QcXhQkqhuBPsNVFjnt9ju5zE8NHhKnGW+2SYpZX5KdX
-        diA8eZbzcCrzp8sS0NrkWo8bTj6jBW9huaVs19UrT6d2N6KURBC5SeplO/euiyxdHEViGE3YDI1
-        qtFqDNTcpffZzWZhx9kjllUE5kw==
-X-Received: by 2002:a37:6181:0:b0:69e:7b8a:e72c with SMTP id v123-20020a376181000000b0069e7b8ae72cmr3255237qkb.388.1650646265968;
-        Fri, 22 Apr 2022 09:51:05 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzGjpvtzYiKxHawYsICXnZfMhkhwABbqQn0p9KPy6KU0/ydqClvRwXk3Olfd1QtTvoihYpO3g==
-X-Received: by 2002:a37:6181:0:b0:69e:7b8a:e72c with SMTP id v123-20020a376181000000b0069e7b8ae72cmr3255217qkb.388.1650646265599;
-        Fri, 22 Apr 2022 09:51:05 -0700 (PDT)
-Received: from halaneylaptop (068-184-200-203.res.spectrum.com. [68.184.200.203])
-        by smtp.gmail.com with ESMTPSA id e16-20020ac85990000000b002f33eb4523asm1542421qte.18.2022.04.22.09.51.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 09:51:04 -0700 (PDT)
-Date:   Fri, 22 Apr 2022 11:51:01 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
-        avri.altman@wdc.com, alim.akhtar@samsung.com,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/5] scsi: ufs: qcom: Simplify handling of devm_phy_get()
-Message-ID: <20220422165101.uy23jf3conuxr2iw@halaneylaptop>
-References: <20220422132140.313390-1-manivannan.sadhasivam@linaro.org>
- <20220422132140.313390-3-manivannan.sadhasivam@linaro.org>
+        bh=o3BhiJLBy4IijjkScOwH74+iwEXUL4miJ/y8puUDURY=;
+        b=LVIzuPvLQqiPSslwPMwKYwGKHAXwQrQfxXiQsnMuxmc70XyCzk1DsFgHKhCuIfeeH7
+         OWvxVrZ9AbibzpGPkmSlkHtplpaps+SjTQjzZW3sdKsX33LvScuzl7Ah05l2YcKlKOwb
+         Z3gITepbi/d5xw2HmA6Rhh546ODma1SV6nmWwPeSyeWRcJCPo9E8IU+DNFQwivhagWDp
+         u2iYIIX1SFgpgh6A5pSm8ijy441f+UZQuXdbkD0DXz0rUwaL3gXj+DDfzG/eyO0lQdrD
+         PspfM5wJMt2iR99f9AUK09JnBgYKzzR6r4g56ylS4qYAVOrCEZ8VIdi8zTbkxvSgrsdc
+         E2/g==
+X-Gm-Message-State: AOAM5316lCAuHuK35V8896LB6Gd6NKThNnUyR3bXsCal9+Bbjx67U+0S
+        hKQeVl27Z8AgjQbI4V8LS3iQjA==
+X-Google-Smtp-Source: ABdhPJzgVsShtxlViE0TtlwlsFrEfZCebVj8XdaMwkzuxuE4ygGeEmoNYlRbg7t1e5gqFqS8GiWEJA==
+X-Received: by 2002:a17:903:40ce:b0:14d:8ab1:919 with SMTP id t14-20020a17090340ce00b0014d8ab10919mr5413045pld.122.1650646385510;
+        Fri, 22 Apr 2022 09:53:05 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:404c:8721:29:87a4])
+        by smtp.gmail.com with UTF8SMTPSA id a10-20020a17090a480a00b001cd4989ff65sm6540829pjh.44.2022.04.22.09.53.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Apr 2022 09:53:04 -0700 (PDT)
+Date:   Fri, 22 Apr 2022 09:53:02 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+        srinivas.kandagatla@linaro.org, dianders@chromium.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v10 04/12] arm64: dts: qcom: sc7280: Add wcd9385 codec
+ node for CRD 1.0/2.0 and IDP boards
+Message-ID: <YmLdbvpeqZ+qJNNL@google.com>
+References: <1650636521-18442-1-git-send-email-quic_srivasam@quicinc.com>
+ <1650636521-18442-5-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220422132140.313390-3-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <1650636521-18442-5-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 22, 2022 at 06:51:37PM +0530, Manivannan Sadhasivam wrote:
-> There is no need to call devm_phy_get() if ACPI is used, so skip it.
-> The "host->generic_phy" pointer should already be NULL due to the kzalloc,
-> so no need to set it NULL again.
+On Fri, Apr 22, 2022 at 07:38:33PM +0530, Srinivasa Rao Mandadapu wrote:
+> Add wcd9385 codec node for audio use case on sc7280 based platforms
+> of revision 3, 4 (aka CRD 1.0 and 2.0) and IDP boards.
+> Add tlmm gpio property for switching CTIA/OMTP Headset.
 > 
-> Also, don't print the error message in case of -EPROBE_DEFER and return
-> the error code directly.
-> 
-> While at it, also remove the comment that has no relationship with
-> devm_phy_get().
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/scsi/ufs/ufs-qcom.c | 26 +++++---------------------
->  1 file changed, 5 insertions(+), 21 deletions(-)
-> 
-> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index 5db0fd922062..5f0a8f646eb5 100644
-> --- a/drivers/scsi/ufs/ufs-qcom.c
-> +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -1022,28 +1022,12 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->  		err = 0;
->  	}
->  
-> -	/*
-> -	 * voting/devoting device ref_clk source is time consuming hence
-> -	 * skip devoting it during aggressive clock gating. This clock
-> -	 * will still be gated off during runtime suspend.
-> -	 */
-> -	host->generic_phy = devm_phy_get(dev, "ufsphy");
-> -
-> -	if (host->generic_phy == ERR_PTR(-EPROBE_DEFER)) {
-> -		/*
-> -		 * UFS driver might be probed before the phy driver does.
-> -		 * In that case we would like to return EPROBE_DEFER code.
-> -		 */
-> -		err = -EPROBE_DEFER;
-> -		dev_warn(dev, "%s: required phy device. hasn't probed yet. err = %d\n",
-> -			__func__, err);
-> -		goto out_variant_clear;
-> -	} else if (IS_ERR(host->generic_phy)) {
-> -		if (has_acpi_companion(dev)) {
-> -			host->generic_phy = NULL;
-> -		} else {
-> +	if (!has_acpi_companion(dev)) {
-> +		host->generic_phy = devm_phy_get(dev, "ufsphy");
-> +		if (IS_ERR(host->generic_phy)) {
->  			err = PTR_ERR(host->generic_phy);
-> -			dev_err(dev, "%s: PHY get failed %d\n", __func__, err);
-> +			if (err != -EPROBE_DEFER)
-> +				dev_err(dev, "Failed to get PHY: %d\n", err);
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 
-Risking sounding like a bad broken record, but I think this too could
-use dev_err_probe().
-
-Looks good to me otherwise!
-
->  			goto out_variant_clear;
->  		}
->  	}
-> -- 
-> 2.25.1
-> 
-
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
