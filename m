@@ -2,117 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A55E750B683
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 13:49:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 986A350B6AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 13:57:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1447170AbiDVLvr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 07:51:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52146 "EHLO
+        id S1447229AbiDVMAW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 08:00:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1447178AbiDVLvp (ORCPT
+        with ESMTP id S1447214AbiDVMAV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 07:51:45 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E4A34505C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 04:48:52 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id w19so13826877lfu.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 04:48:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=eKXTtjYFcEQgI7OAk+AWDIKyBY3JD30G/f2vgibUKRc=;
-        b=G1RmDSwcEXWaf6CLdiuS25imj1oTo1y3LajZ9q5tiLycYgie5G43xpSReOQXuv6vA7
-         Ys5+PszyP9TnQNtRyAHCozPPuVuX5/LS1ZaU57WDtRIopEJQA0CEs3MHMdNVT1HhxjmC
-         Wm7M50uzjUtoYYHgrKqf/+xiX5LC4YJp8kPG4wOKd6UnQWVlcJw60XWWD8bJW9OM8e3y
-         Qa4+Mm98DBXbqLJiPZPvaw/pAwvn1efJz1rpd4oHw4ojZ/fTyGvDOJQrFOdV1DZ+sb5N
-         bCWOb31kQAgFLCugJqi7IkUOhGzy4oPAUsInDJAuR5HZGCpZQTMXy2hVJbFWxm8SsykR
-         BuHw==
+        Fri, 22 Apr 2022 08:00:21 -0400
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBF7154FB5;
+        Fri, 22 Apr 2022 04:57:28 -0700 (PDT)
+Received: by mail-yb1-f175.google.com with SMTP id x9so6947421ybe.11;
+        Fri, 22 Apr 2022 04:57:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eKXTtjYFcEQgI7OAk+AWDIKyBY3JD30G/f2vgibUKRc=;
-        b=GgqQfIQHlVDLEJ+30olzPbhk1e+HN/3uI/KilcvlJ/ZvUrcq62K3/nMOF9BA7WnlzE
-         8U3yj9D6NrDb3evO3Mr0RMU9DmJ2Rhaw426DzvhfB4st+EOkUin9Zd/ruNwLntk2xavG
-         rXhy2+k708P6CMRgLRAFYSYeyCU2CnpD22vero+9LYwfmpwOV/KeX3v/VH3QvkcrU5+G
-         NlOvFvwk65r4tBNILFyQlWY/9J9DgH2j9FJnXPzkjoibTBM8R+jMm07rQgGHYM1IEtv9
-         u9iEkFYN18JvQ4ioYEky90O9W9AGxvVD+3KAbueUFBEOfJvQoppfPLULIJksGD25T8IG
-         Tnqw==
-X-Gm-Message-State: AOAM532r7ji3QLiA7VgPKmakey0Y22ndTnn3msj/zEGxJ689U6b6HPvD
-        8ehdBY6YwuTyX72D6sY7kXxlIg==
-X-Google-Smtp-Source: ABdhPJxJlRycBOH0SGbmLkwM5l8/ghLzeYkLfMVbvmWZHm1gzTpFRsw31SkpUA29oEEGuocfYdwLUA==
-X-Received: by 2002:a05:6512:b08:b0:46b:a876:3009 with SMTP id w8-20020a0565120b0800b0046ba8763009mr2795050lfu.378.1650628130825;
-        Fri, 22 Apr 2022 04:48:50 -0700 (PDT)
-Received: from eriador.lumag.spb.ru ([188.162.65.189])
-        by smtp.gmail.com with ESMTPSA id h7-20020a19ca47000000b0047014ca10f2sm200695lfj.8.2022.04.22.04.48.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 04:48:50 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH 6/6] arm: dts: qcom: stop using snps,dw-pcie falback
-Date:   Fri, 22 Apr 2022 14:48:41 +0300
-Message-Id: <20220422114841.1854138-7-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220422114841.1854138-1-dmitry.baryshkov@linaro.org>
-References: <20220422114841.1854138-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mo2gwYWJ7v3j2YMx6bxMzq/oePOXwNlGXJmLNbBcYNw=;
+        b=SPO+V7r6R/A+hJFfGn+eHiAq018UQgd9LrDiLxOPcg7r75J3PkVoN1f6NZUmKgZ1/0
+         Z1hii1ChUnKDQ7ujmbWSmQWVauk7knxbX6SUeY+RxbeaX/c9I5RVEcLK1kJfnkoLvSJn
+         Q9slWt+QAh1iV1aW0ZNXI5V9BWJJAL2W46bGoTDtCaIl+1MmubLIRhA/nRgtAVd1Yijy
+         +uNy5sfZWzr7IlfCk6RiYBYI1vYr8hAD5RFTmyCeaWBzSVkGvfIm8WInc3Q4ypnxXReP
+         F/Lvi+n3j1yx6FOOUERBYriB7ESSH8Vm3OFYL1y+8x478q6j7tNIMoHWLnqDuYt6nFzx
+         XubA==
+X-Gm-Message-State: AOAM533FUBZvtTuNUYD6tSb/zdMTNp4l/IXzWITVzcCG6zpuZZnE0YuU
+        0AV/bkHjGT0BuYdg4lW76IKAfG/nlUmMSQ6KyLE=
+X-Google-Smtp-Source: ABdhPJww0e7Q1osgVBWbiQpEUtZNSNKNM2OqFsD//h3jvx8Gu911m2tDMHkzJSveus4EHFgb0GUefU88XPyf4wwFDzQ=
+X-Received: by 2002:a25:3cc3:0:b0:63e:6ee9:4840 with SMTP id
+ j186-20020a253cc3000000b0063e6ee94840mr4222715yba.153.1650628648089; Fri, 22
+ Apr 2022 04:57:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <1650395470-31333-1-git-send-email-quic_c_sanm@quicinc.com> <1650395470-31333-3-git-send-email-quic_c_sanm@quicinc.com>
+In-Reply-To: <1650395470-31333-3-git-send-email-quic_c_sanm@quicinc.com>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Fri, 22 Apr 2022 13:57:17 +0200
+Message-ID: <CAJZ5v0h2ZKPN6SERPnASPywZfeOWXWncJgNZ1WZa80+=M4DCiQ@mail.gmail.com>
+Subject: Re: [PATCH v14 2/7] PM / wakeup: Add device_children_wakeup_capable()
+To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ULTRA-WIDEBAND (UWB) SUBSYSTEM:" 
+        <linux-usb@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_kriskura@quicinc.com, quic_vpulyala@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm PCIe devices are not really compatible with the snps,dw-pcie.
-Unlike the generic IP core, they have special requirements regarding
-enabling clocks, toggling resets, using the PHY, etc.
+On Tue, Apr 19, 2022 at 9:11 PM Sandeep Maheswaram
+<quic_c_sanm@quicinc.com> wrote:
+>
+> From: Matthias Kaehlcke <mka@chromium.org>
+>
+> Add device_children_wakeup_capable() which checks whether the device itself
+> or one if its descendants is wakeup capable.
 
-This is not to mention that platform snps-dw-pcie driver expects to find
-two IRQs declared, while Qualcomm platforms use just one.
+device_wakeup_path() exists for a very similar purpose.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
- arch/arm/boot/dts/qcom-ipq4019.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Is it not usable for whatever you need the new function introduced here?
 
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index a1c8ae516d21..ec2f98671a8c 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -1370,7 +1370,7 @@ gfx3d1: iommu@7d00000 {
- 		};
- 
- 		pcie: pci@1b500000 {
--			compatible = "qcom,pcie-apq8064", "snps,dw-pcie";
-+			compatible = "qcom,pcie-apq8064";
- 			reg = <0x1b500000 0x1000>,
- 			      <0x1b502000 0x80>,
- 			      <0x1b600000 0x100>,
-diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-index a9d0566a3190..1e814dbe135e 100644
---- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-@@ -412,7 +412,7 @@ restart@4ab000 {
- 		};
- 
- 		pcie0: pci@40000000 {
--			compatible = "qcom,pcie-ipq4019", "snps,dw-pcie";
-+			compatible = "qcom,pcie-ipq4019";
- 			reg =  <0x40000000 0xf1d
- 				0x40000f20 0xa8
- 				0x80000 0x2000
--- 
-2.35.1
-
+> Suggested-by: Felipe Balbi <balbi@kernel.org>
+> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+>  drivers/base/power/wakeup.c | 18 ++++++++++++++++++
+>  include/linux/pm_wakeup.h   |  7 +++++++
+>  2 files changed, 25 insertions(+)
+>
+> diff --git a/drivers/base/power/wakeup.c b/drivers/base/power/wakeup.c
+> index a57d469..1900637 100644
+> --- a/drivers/base/power/wakeup.c
+> +++ b/drivers/base/power/wakeup.c
+> @@ -541,6 +541,24 @@ int device_set_wakeup_enable(struct device *dev, bool enable)
+>  }
+>  EXPORT_SYMBOL_GPL(device_set_wakeup_enable);
+>
+> +static int __device_children_wakeup_capable(struct device *dev, void *dummy)
+> +{
+> +       return device_may_wakeup(dev) ||
+> +               device_for_each_child(dev, NULL, __device_children_wakeup_capable);
+> +}
+> +
+> +/**
+> + * device_children_wakeup_capable - Check whether a device or one of its descendants is
+> + *                                  wakeup capable.
+> + * @dev: Device to handle.
+> + */
+> +bool device_children_wakeup_capable(struct device *dev)
+> +{
+> +       return __device_children_wakeup_capable(dev, NULL);
+> +}
+> +EXPORT_SYMBOL_GPL(device_children_wakeup_capable);
+> +
+> +
+>  /**
+>   * wakeup_source_not_registered - validate the given wakeup source.
+>   * @ws: Wakeup source to be validated.
+> diff --git a/include/linux/pm_wakeup.h b/include/linux/pm_wakeup.h
+> index 196a157..9a3005b 100644
+> --- a/include/linux/pm_wakeup.h
+> +++ b/include/linux/pm_wakeup.h
+> @@ -109,6 +109,7 @@ extern struct wakeup_source *wakeup_sources_walk_next(struct wakeup_source *ws);
+>  extern int device_wakeup_enable(struct device *dev);
+>  extern int device_wakeup_disable(struct device *dev);
+>  extern void device_set_wakeup_capable(struct device *dev, bool capable);
+> +extern bool device_children_wakeup_capable(struct device *dev);
+>  extern int device_init_wakeup(struct device *dev, bool val);
+>  extern int device_set_wakeup_enable(struct device *dev, bool enable);
+>  extern void __pm_stay_awake(struct wakeup_source *ws);
+> @@ -186,6 +187,12 @@ static inline bool device_wakeup_path(struct device *dev)
+>
+>  static inline void device_set_wakeup_path(struct device *dev) {}
+>
+> +static inline bool device_children_wakeup_capable(struct device *dev)
+> +{
+> +       return false;
+> +}
+> +
+> +
+>  static inline void __pm_stay_awake(struct wakeup_source *ws) {}
+>
+>  static inline void pm_stay_awake(struct device *dev) {}
+> --
+> 2.7.4
+>
