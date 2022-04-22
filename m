@@ -2,110 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6534E50BB83
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 17:17:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73FEA50BB97
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Apr 2022 17:22:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1449348AbiDVPUG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 11:20:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34294 "EHLO
+        id S1449394AbiDVPZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 11:25:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1449357AbiDVPUE (ORCPT
+        with ESMTP id S1353530AbiDVPZV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 11:20:04 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0FA35DA15
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:17:08 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id be20so2488239edb.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:17:08 -0700 (PDT)
+        Fri, 22 Apr 2022 11:25:21 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F27EE554B9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:22:27 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id v65so4667411oig.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bCYg7vAuheGkarssmttLzV2pY8DshumVmOA1bng63AI=;
-        b=MEHquvyCw0wwPt7kCehis+PVhTx3pdKhV9pM8R14d3I84H9iWWWE6KzzCxSsYQhhsl
-         c83Cbt0ZGqEK5noq0q1nj6TCqfNagjRO4ZvehG7CajbMG52gB3gjedYjBEbc1tmEBrbI
-         A/ZhHFcuM+kMPol4W5p8CvCk05gkvpyT0o8xg=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=zRM02qIQxQfC70nTBUvBA4m5fQ3xcQpnV7vq3c9440w=;
+        b=h/3IuuXkxgBlAc78SVN4gUgu/c8KG7pLgEH8c0fOYV68W85jMLSA+lPPcBKsKjg4QC
+         PqjIFSUHCosr0MyofPXkQCHfN90WQktRP53EDIzL1GES+d5gSpUOd0wF+JOyrWb2e+Si
+         kXbYBXHhSZ38Ta3vl9kMiBQ+9eEGuISje9Q1v9F62QBoYS0OKlwi34wIACZ+UvyupUdQ
+         2ha8AnWEw1/Mi4RmdfrlIcfzGrCz1LRPJbjcNBqr9GtuAIo7JxhE+gIlT/jdTcZlB0oj
+         cygYWKZ5WeOzAgqBjCz3cfyLkzh5Exoe1dmgnP4Zb2oH+kWXYp6obf0iua+0rrKvfcda
+         puGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bCYg7vAuheGkarssmttLzV2pY8DshumVmOA1bng63AI=;
-        b=UPRiBquGHKCFvLLqmeKZqp18KsemGvywjCZaA+MZ+A/eYWN8GTSlz7dCcQsXlEQoAI
-         LIBsDpJq01zEgVlpN20pSmT4yppZUkICL8z+Mh7EX39Z2MmSO8jldGEahzc07FAZ6rTT
-         AbsU6Jc343EmBGpgI9/u29yCRarmjpwszQcw2NwOiHT8NgxLU0bM+UjAb5OD/V1NEPVw
-         UseKY0kDPSBQEFeAAwT9A8QfeQBeLmfxWF7e/MuIYyGBnD4ACVQt86JShKa7j3bMoiM7
-         1KfYjLJuI2JNboONAap7B3KCy7V/K0oE2XqkmMggYVYUosfNusmpP48Z5fxETvHOVWvA
-         koOg==
-X-Gm-Message-State: AOAM531/2c9xrJ8RiHC8/Qz0hr3O0+fUPtOmafkyA82a1bNqrExoqO24
-        NmIoHCj+x2jztx36pYWpix1bz0MvAS+7FBAqy9U=
-X-Google-Smtp-Source: ABdhPJzRcBrEQI6KRF6buvF2iaVCcM4WbOPGEUrL1IBITNHSNGUiI/Pvs47C6wg/CSc8N48o+Mv3SQ==
-X-Received: by 2002:a05:6402:348d:b0:424:1a29:327e with SMTP id v13-20020a056402348d00b004241a29327emr5412745edc.36.1650640626976;
-        Fri, 22 Apr 2022 08:17:06 -0700 (PDT)
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
-        by smtp.gmail.com with ESMTPSA id la16-20020a170907781000b006efa121a837sm850253ejc.98.2022.04.22.08.17.05
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Apr 2022 08:17:06 -0700 (PDT)
-Received: by mail-wm1-f54.google.com with SMTP id x3so5269663wmj.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 08:17:05 -0700 (PDT)
-X-Received: by 2002:a05:600c:3c99:b0:392:b49c:7b79 with SMTP id
- bg25-20020a05600c3c9900b00392b49c7b79mr4569863wmb.199.1650640625481; Fri, 22
- Apr 2022 08:17:05 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zRM02qIQxQfC70nTBUvBA4m5fQ3xcQpnV7vq3c9440w=;
+        b=Kt15UlqiF1pSYRyGc95r+gktmeMgNUdIXb5s0FQCS2YreUE0Egb4jqCgcIQItoqUY1
+         cgRiy3UOot3DAWoJrqqhfpobMbHH1xQ4N1IIN2MojmScnAm/mcZ06xjO6oOSCLWN48Y0
+         hWImPTDRV0v7twP9zVqKDrAQrP7WeQtwRz0qcjAG7f6C0CRsjCxWZi3U0GiEFXelWzgz
+         E3nFUcUlQpA6v5izpTzw8XAEPuqM2nGBV+ObNDvciea1RgZzEP/lWSO/+oIRSG6BR9nj
+         xkET/QgufwHXrhDiIdTX3HC+wh0wsPxK7day4oE4ScDVnHfLAA9zj4Rt3vRca7mIhUlM
+         QZMQ==
+X-Gm-Message-State: AOAM530j+8zdWuvVF4GEYe/ObRvOVsZzAw9HyfHDsdWmfaAVKGJlTTmX
+        4xhD4kDhAMmOTG6SB3R9ADphMw==
+X-Google-Smtp-Source: ABdhPJztX0pQAZNJhW4p1LHgjp7sVpM+w9Sq/Ow7PUaSzKnmgvwmZgkuX3dtlQ6yhTJ4zFgxKXGdsQ==
+X-Received: by 2002:a05:6808:e8c:b0:322:4b82:d33d with SMTP id k12-20020a0568080e8c00b003224b82d33dmr6802331oil.21.1650640947329;
+        Fri, 22 Apr 2022 08:22:27 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id u20-20020a4a9e94000000b003291f6ac4b2sm894365ook.28.2022.04.22.08.22.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Apr 2022 08:22:26 -0700 (PDT)
+Date:   Fri, 22 Apr 2022 10:22:24 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Yogesh Lal <quic_ylal@quicinc.com>
+Cc:     quic_sibis@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] remoteproc: qcom: Add fallback mechanism for full
+ coredump collection
+Message-ID: <YmLIMG62vPv4qtVe@builder.lan>
+References: <1649269662-20338-1-git-send-email-quic_ylal@quicinc.com>
 MIME-Version: 1.0
-References: <1647919631-14447-1-git-send-email-quic_vpolimer@quicinc.com> <1647919631-14447-2-git-send-email-quic_vpolimer@quicinc.com>
-In-Reply-To: <1647919631-14447-2-git-send-email-quic_vpolimer@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 22 Apr 2022 08:16:51 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Xe1bOuiG0T7Y3rRN0cmsjdUK-sDvE-E02eDfSdKih9MA@mail.gmail.com>
-Message-ID: <CAD=FV=Xe1bOuiG0T7Y3rRN0cmsjdUK-sDvE-E02eDfSdKih9MA@mail.gmail.com>
-Subject: Re: [PATCH v7 1/5] drm/msm/disp/dpu1: set mdp clk to the maximum
- frequency in opp table during probe
-To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        quic_kalyant <quic_kalyant@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1649269662-20338-1-git-send-email-quic_ylal@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed 06 Apr 13:27 CDT 2022, Yogesh Lal wrote:
 
-On Mon, Mar 21, 2022 at 8:27 PM Vinod Polimera
-<quic_vpolimer@quicinc.com> wrote:
->
-> Set mdp clock to max clock rate during probe/bind sequence from the
-> opp table so that rails are not at undetermined state. Since we do not
-> know what will be the rate set in boot loader, it would be ideal to
-> vote at max frequency. There could be a firmware display programmed
-> in bootloader and we want to transition it to kernel without underflowing.
-> The clock will be scaled down later when framework sends an update.
->
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> In case remoteproc's firmware missing minidump support, during crash
+> scenario coredump does not collected. This change adds a fallback
+> mechanism for full coredump collection in the event of a crash.
+> 
+> Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
+>  drivers/remoteproc/qcom_common.c   | 11 ++++++++---
+>  drivers/remoteproc/qcom_q6v5_pas.c |  1 +
+>  2 files changed, 9 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+> index 4b91e3c..68bd0bc 100644
+> --- a/drivers/remoteproc/qcom_common.c
+> +++ b/drivers/remoteproc/qcom_common.c
+> @@ -162,13 +162,18 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id)
+>  	 * is initialized in memory and encryption status is set.
+>  	 */
+>  	if (subsystem->regions_baseptr == 0 ||
+> -	    le32_to_cpu(subsystem->status) != 1 ||
+> -	    le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED ||
+> -	    le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
+> +		le32_to_cpu(subsystem->status) != 1 ||
+> +		le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED) {
+> +			return rproc_coredump(rproc);
+> +		}
+> +
+> +	if (le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
+>  		dev_err(&rproc->dev, "Minidump not ready, skipping\n");
+>  		return;
+>  	}
+>  
+> +	rproc_coredump_cleanup(rproc);
 
-Just wanted to confirm that this patch will be queued up somewhat
-soon. I think it's good to go but I don't see it in any trees yet. ;-)
+The patch looks good, but could you please explain in the commit message
+why this needs to be added? If the thing described in the message
+happens this code path wouldn't be taken.
 
-FWIW, I can also say that I've tested this patch and it fixes the
-underrun issues on sc7280-herobrine-rev1.
+Should it be a separate patch, or is it needed because of the fallback
+etc?
 
-Tested-by: Douglas Anderson <dianders@chromium.org>
+Thanks,
+Bjorn
 
--Doug
+> +
+>  	ret = qcom_add_minidump_segments(rproc, subsystem);
+>  	if (ret) {
+>  		dev_err(&rproc->dev, "Failed with error: %d while adding minidump entries\n", ret);
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 1ae47cc..40bf747 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -293,6 +293,7 @@ static const struct rproc_ops adsp_minidump_ops = {
+>  	.start = adsp_start,
+>  	.stop = adsp_stop,
+>  	.da_to_va = adsp_da_to_va,
+> +	.parse_fw = qcom_register_dump_segments,
+>  	.load = adsp_load,
+>  	.panic = adsp_panic,
+>  	.coredump = adsp_minidump,
+> -- 
+> 2.7.4
+> 
