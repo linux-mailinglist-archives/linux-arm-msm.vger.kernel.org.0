@@ -2,67 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D95E650C6F9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 05:48:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63F7850C72C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 06:10:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232552AbiDWDtm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 23:49:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50578 "EHLO
+        id S232133AbiDWENR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Apr 2022 00:13:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232529AbiDWDtk (ORCPT
+        with ESMTP id S232324AbiDWENN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 23:49:40 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF313138492
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 20:46:45 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-d39f741ba0so10599764fac.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 20:46:45 -0700 (PDT)
+        Sat, 23 Apr 2022 00:13:13 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CB3A1F8EDD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 21:10:16 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id 12so11178039oix.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 21:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=VK+Mc12IDWDoCeB4UokFVRy/0yOeXXdrFoo8csy15fI=;
-        b=rj1fWjvFr6UfrBYJZaadRrPi88B/qmQLm8ZzbEv6/alcfmDFmFeBGWnL4HKOjP37Oo
-         XIMpB2qQ1V8TZ5PJZgcS9t0rwYLuCx/HXeYd46dXX9BffgCtszf+ujA7bpVEDTbTllKr
-         9KuNVf4yaUNy1B2uLsiF1lj0wM19F15AdtbVlPC3DYFAWn8EYd5Wb3/cp0mY5gePmOY0
-         uDlSHzgYy48VHrRChwQWIbKfAU2B7/G+sVEH4wDLIPfXhyL1qCG67Gokmjruh61W/Wkf
-         ArAI0RkwHAhB9loPoYk+0/fRNf1D40UaO2lsgdjDih3yTT+SgLXv2D69dVSO4yoTT1lF
-         9EPw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=YNhoTijYDK5hg3tJxjQgdgbL/kgrcPDOQkgZNKFoLe0=;
+        b=hdtSyu9V8DkuUoFOA2YMj1NAwALLRl8/nme92ADOd6vw4uiyPQw2nLnwlWE4hZOTYh
+         hMVnDHLTvfUc3WViSmGZpg2u+pUEdcvsCyRqN73T6IzHEHGfA1vTEDiRHBJPN+6XlSrv
+         msMrpfZZZUF+GyEAV6/iGHUUspOxCkoTxxTgLKGlzea3b8Ke23TheCXbCJsLEcyEmSAx
+         ScCt27p+r7SoHmhvmiiLbK5GcRXCci038RWnzP44TuuwC/pgLF4fgvBbUOcFzAdBcVtl
+         NfA6FDVc5YQAbEHs68IP4imFUJETFAHSxXGTUp5cLGJo2EgIWtcozlUiXlg7hCcXLvqZ
+         T+QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=VK+Mc12IDWDoCeB4UokFVRy/0yOeXXdrFoo8csy15fI=;
-        b=tlo3SWvwUheZsHTBMuUk1VojG+Nl5zOqd92fQgJE2XdH73skBkTBI/UdDx1dY9K6zH
-         K0R4mMtfU+GNoFZ103dere/ZpTcG7Ded4sIooVt/t7TXjuF6fW8eI0IrBnJ6dIF+qq4j
-         SDZ/4D8iso2BxRm7gjlGoqvH8aTVosDPQl7D5U4ZqNgau5JSK0yemE73yGMXzAEA/m2t
-         y1Y69p6Ce8kVR4eBnENX9vX7tFuupJ/wTvmf2fb+/+6UoxR1qv7TmpIDe0PsovWCpT18
-         sa0F2FYL/Gax4aOdHLe8gej7SBr6ljhcvge+Q5svi8QbNj9X0vUwj+J5/wEcN2XWfsP0
-         fxJw==
-X-Gm-Message-State: AOAM531KdfCC307LcnQPBdhd48dVw0SEIeGIku4z2dyPDZMDt6rocR6V
-        86EPxejeVa7YZhP85kZoYoBq9g==
-X-Google-Smtp-Source: ABdhPJwkRUj9ppkMSZqmz3YeDFf41/hx08RbxlEXevnET+FZzlP8mrOGYwNPSqQII5QEVaDRbcIT6A==
-X-Received: by 2002:a05:6870:8907:b0:e2:a4fd:7539 with SMTP id i7-20020a056870890700b000e2a4fd7539mr7629021oao.56.1650685605139;
-        Fri, 22 Apr 2022 20:46:45 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id b188-20020aca34c5000000b002da579c994dsm1440218oia.31.2022.04.22.20.46.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=YNhoTijYDK5hg3tJxjQgdgbL/kgrcPDOQkgZNKFoLe0=;
+        b=GP8/1pEoGTcyzPaeJCJi765ztLJybgw6Uj+wIoYo//bfTybtxqhwZSy8rEwfGNrek1
+         Y3Oeb31Bz8jX2kciHS5o/OJ0J/TIVED2Vi3MfKFAOa/7LsqV0BFKXQnNqNRYQZZ5OZ7z
+         ohTOF5RD8iZ0cpWWad6mGgf7fI/OcjHse1GO9c5XnTAeTH7qyzjFlNN9gxqztyIJZ8t7
+         DiQjpROaAt5LmfuvP/kO4oGpv5jZeumWG3juNr+AdGmZy9Lr+yYOh/fGSy+OQSLgq5QO
+         8iLmoqnNjWDm1ETzAwFCmF5AxbU6Gf1K5f9ql5q9rOikQ0rebITwfAeKZfkCE8iFK3zv
+         GuqA==
+X-Gm-Message-State: AOAM533nSVOVyWftWtWvJchWLbKwIYM4MtTiUfrPfwcEsDkv1J+EDKXb
+        /bwlb/+obkOv+hsro5W+E6tfvg==
+X-Google-Smtp-Source: ABdhPJzEuQC08m6xCkVKR6XsHeSL5p0/ZkR7uRyRVVh9KvlNaDYNcO6f0NhDLqPj0GWi2P4EkbGFgQ==
+X-Received: by 2002:a05:6808:1a04:b0:322:7b89:1973 with SMTP id bk4-20020a0568081a0400b003227b891973mr8311352oib.227.1650687016176;
+        Fri, 22 Apr 2022 21:10:16 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id l10-20020aca3e0a000000b0032258369a5fsm1410185oia.44.2022.04.22.21.10.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 20:46:44 -0700 (PDT)
+        Fri, 22 Apr 2022 21:10:15 -0700 (PDT)
+Date:   Fri, 22 Apr 2022 21:12:16 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-remoteproc@vger.kernel.org
-Subject: Re: (subset) [PATCH] rpmsg: qcom_smd: Fix irq_of_parse_and_map() return value
-Date:   Fri, 22 Apr 2022 22:46:41 -0500
-Message-Id: <165068558593.2759280.17055526649115604333.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220422105326.78713-1-krzysztof.kozlowski@linaro.org>
-References: <20220422105326.78713-1-krzysztof.kozlowski@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-usb@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] drm/msm/dp: Implement oob_hotplug_event()
+Message-ID: <YmN8oMl7EulvBbEG@ripper>
+References: <20220422223225.1297434-1-bjorn.andersson@linaro.org>
+ <20220422223225.1297434-2-bjorn.andersson@linaro.org>
+ <11a77fd7-d30b-edf6-3570-64d0c2e1764c@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <11a77fd7-d30b-edf6-3570-64d0c2e1764c@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -73,16 +87,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 22 Apr 2022 12:53:26 +0200, Krzysztof Kozlowski wrote:
-> The irq_of_parse_and_map() returns 0 on failure, not a negative ERRNO.
+On Fri 22 Apr 16:07 PDT 2022, Dmitry Baryshkov wrote:
+> On 23/04/2022 01:32, Bjorn Andersson wrote:
+[..]
+> > diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> > index 80f59cf99089..76904b1601b1 100644
+> > --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> > +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> > @@ -123,6 +123,14 @@ static enum drm_mode_status dp_connector_mode_valid(
+> >   	return dp_display_validate_mode(dp_disp, mode->clock);
+> >   }
+> > +static void dp_oob_hotplug_event(struct drm_connector *connector,
+> > +				 enum drm_connector_hpd_state hpd_state)
+> > +{
+> > +	struct msm_dp *dp_disp = to_dp_connector(connector)->dp_display;
+> > +
+> > +	dp_display_oob_hotplug_event(dp_disp, hpd_state);
+> > +}
+> > +
+> >   static const struct drm_connector_funcs dp_connector_funcs = {
+> >   	.detect = dp_connector_detect,
+> >   	.fill_modes = drm_helper_probe_single_connector_modes,
+> > @@ -130,6 +138,7 @@ static const struct drm_connector_funcs dp_connector_funcs = {
+> >   	.reset = drm_atomic_helper_connector_reset,
+> >   	.atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
+> >   	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
+> > +	.oob_hotplug_event = dp_oob_hotplug_event,
 > 
+> We were (are) going to switch dp driver to use drm_bridge_connector (to fix
+> support for bridge chains, eDP panels, etc.
+> 
+> So these changes must be ported to drm_bridge_connector (or we must
+> abandon/defer the idea of using the bridge_connector).
+> 
+> For the oob_hotplug_event() callback proper support might be as simple as
+> calling drm_bridge_connector_hpd_cb().
 > 
 
-Applied, thanks!
+Are you saying that you have code ready and being merged into linux-next
+that I should redesign this on top of, or that you're planning to write
+some code in the future and DisplayPort support have to wait until then?
 
-[1/1] rpmsg: qcom_smd: Fix irq_of_parse_and_map() return value
-      commit: 1a358d35066487d228a68303d808bc4721c6b1b9
+> >   };
+> >   static const struct drm_connector_helper_funcs dp_connector_helper_funcs = {
+> > @@ -160,6 +169,8 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
+> >   	if (ret)
+> >   		return ERR_PTR(ret);
+> > +	connector->fwnode = fwnode_handle_get(dev_fwnode(dp_display->dev));
+> > +
+> 
+> This would be much more interesting. Supporting this in a generic way might
+> be tricky. But we can still set the fwnode manually from the dp code.
+> 
 
-Best regards,
--- 
-Bjorn Andersson <bjorn.andersson@linaro.org>
+There's a slight mishmash here, because the device used to initialize
+the connector is the drm_dev, but we need the actual fwnode of the DP
+device associated with the connector.
+
+So I think this is how it needs to be done.
+
+Regards,
+Bjorn
