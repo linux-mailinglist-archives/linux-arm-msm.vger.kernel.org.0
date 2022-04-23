@@ -2,93 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B05FB50CCB7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 19:45:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85E3550CCD1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 20:09:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236678AbiDWRsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Apr 2022 13:48:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45262 "EHLO
+        id S236707AbiDWSMs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Apr 2022 14:12:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236675AbiDWRs3 (ORCPT
+        with ESMTP id S236702AbiDWSMj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Apr 2022 13:48:29 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1582A1C45A9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 10:45:31 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id bv19so22050694ejb.6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 10:45:31 -0700 (PDT)
+        Sat, 23 Apr 2022 14:12:39 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9868331506;
+        Sat, 23 Apr 2022 11:09:41 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id bo5so11005581pfb.4;
+        Sat, 23 Apr 2022 11:09:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=tv8k2QNg8f0WWAxqQErrRdjZaMld74wjV/Sdmm45yvw=;
-        b=QA1CN7Yo/6gnRE7FGNyHY399Llyw07eMEHEMEHOzviC8T/cQspbvxBnPM4mpVMqez+
-         zlPAjJPV0XqL7Q9eUgAW51B/x2l2XVOkvzIKe796mUooQW2ycNZjpuel5iSt3AfvdPr+
-         LWB95jcBP17l5/2gvWrw6LkrUsfTFxGc2k/JLebkHKM9fRM1zwNygoC54umq7gLFXCFw
-         u776JpgOYMB1eFrdESimVciRNOJDxZK/CVC2McdODSJ7JcNMtf9ONdXycitO8DoipcpN
-         UWVQUG5Q4K7fIlUL2UhBtalPPvPuMfWuazTwtrQsz7rhu/jmhsr9NNy1kwnYVFA28r23
-         /YAw==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Gc8OMd0WK3EM7XKyqfhBxSqSzVvH1RI2L8p7UF4ZJKI=;
+        b=MyUXP+nPMRFKM7KBij5V88Kadq9Cwb7ilo8gbWXugPkKu7ikueR9ODe6XCBXllhxRY
+         t2K8iWM25L4tG714asQxh4jn1WE+DTMldXp4hP0NjZh4DlsI2Lce9fAVrGCJE2IAk5bn
+         mcluZM0dTwvueSqr6ZKAFDmwkkkeM5f0knRO+HYmVsY2DSpq7WXBMeIICt6CxarFRm/h
+         CkfpmtPCETh72phJrMtNxuWwjA7JYDWCWRtOz9nGwFskEGdWLm/v0sXyoVkC3tV0wJzj
+         e2QN8Jwu/YI1shN4tYpzMYf4BQzQJ6r17qyzAyEBlQC9+A/bgq36/wF+alXhTUlGEY20
+         c9MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=tv8k2QNg8f0WWAxqQErrRdjZaMld74wjV/Sdmm45yvw=;
-        b=Nqlb4IRP7t6bSc5+gKheOMNvqziGFpypAxaxJm27naFmgMKLvQtJEfw1QW9+k3WEY+
-         6ojC5eSIt+/dTL8FgxecDaSLcAVSy8hRSaiscaTMyLOhtDFVx10xKLq/Y0p+80newynn
-         h63tUjOsaiyvsl0mTzW1jYEE3gP/2qOVt+aOfFlqANDCK1Bj00ZcYaaea2yp6wroDTP2
-         nRtCCgyTNuYkJF1HhVfi9PzdjX5fdCuITCW4ovdNZmBuBp6FkZ81szTRcE0uEhipJ1tR
-         OO+TQG0SlPQdL194suFzJcYfABp1sCA825gBMbl3bgfm2uczpvCo+KL/MMHEx8BH2fqx
-         WxkA==
-X-Gm-Message-State: AOAM533RTt+FpXDC4URcxzOTXV3Bb6M+Z3lJNJit7bA6Eiz+u3ihsMen
-        Eh7KRcv4iL/45J6qIfMfoBQexg==
-X-Google-Smtp-Source: ABdhPJwtFCxar+dccJDt2FfSCA7OH7G26P7gbrmnXI+xFS4WCiwHqfZZI/jbOn2J+8dol6tfCtMcMQ==
-X-Received: by 2002:a17:906:7304:b0:6e0:6918:ef6f with SMTP id di4-20020a170906730400b006e06918ef6fmr9090867ejc.370.1650735929711;
-        Sat, 23 Apr 2022 10:45:29 -0700 (PDT)
-Received: from [192.168.0.234] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id e22-20020a50d4d6000000b00425d4753b2esm917752edj.74.2022.04.23.10.45.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 23 Apr 2022 10:45:29 -0700 (PDT)
-Message-ID: <219696e6-2ae9-3265-8735-d612408df841@linaro.org>
-Date:   Sat, 23 Apr 2022 19:45:28 +0200
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Gc8OMd0WK3EM7XKyqfhBxSqSzVvH1RI2L8p7UF4ZJKI=;
+        b=sLgxowHxZU9sUdqePPomny9wa/Ze15gm4QTs+KJbKaUcie/qeNYHyX0O8wqGYPyhbV
+         Ri5vtj/3AJzP2fC/jHRd7Ro6T4QqkHipCCY59D1DMSTzpklJ2ihH0u9ndqSB0TAamSiV
+         MqQGUZZ3pSZufFGnxHwN3HGD1P407gWf/iOZ2pY4QTkgKKDvVcB7PwjAUKi67ZOkScyz
+         mt6rkxI+Cpvq0AExqyHlILLOLGN4smneti9nDaxZR5AbnVGdHh8Jyuyx+hk5nO46pNw/
+         0fSZtQVNwD1m80LjwL54NnlWEI88A7dMEg6RgIxmr7aiAAqdtL7aIXVglw9uMtIyswWB
+         M8XA==
+X-Gm-Message-State: AOAM5331Wu5ZcYsGidkjK7HplxtQElxTKBw6C7JTdXDtXmAT/ml14wdV
+        nJo2Yvpq/pwBuZ8O6t1KadhuqMbj4t8=
+X-Google-Smtp-Source: ABdhPJy0lWuLN5chYofeTD/QFGdPthlPalxZFhXI/z3NQ82KN26+XmYuzgNMa5g69QhIOJ01KrK6ng==
+X-Received: by 2002:a63:2cc3:0:b0:39d:a9af:bc5b with SMTP id s186-20020a632cc3000000b0039da9afbc5bmr8884062pgs.3.1650737381059;
+        Sat, 23 Apr 2022 11:09:41 -0700 (PDT)
+Received: from 9a2d8922b8f1 ([122.161.51.18])
+        by smtp.gmail.com with ESMTPSA id x23-20020a17090a0bd700b001cd498dc152sm9799317pjd.2.2022.04.23.11.09.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Apr 2022 11:09:40 -0700 (PDT)
+Date:   Sat, 23 Apr 2022 23:39:34 +0530
+From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 1/4] ARM: dts: qcom: apq8064: Use generic node name
+ for DMA
+Message-ID: <20220423180934.GA35431@9a2d8922b8f1>
+References: <20220421171809.32722-1-singh.kuldeep87k@gmail.com>
+ <20220421171809.32722-2-singh.kuldeep87k@gmail.com>
+ <YmQjW4OYe5rTBP/Q@ripper>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v2 7/7] arm64: dts: qcom: replace deprecated perst-gpio
- with perst-gpios
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20220422211002.2012070-1-dmitry.baryshkov@linaro.org>
- <20220422211002.2012070-8-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220422211002.2012070-8-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YmQjW4OYe5rTBP/Q@ripper>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/04/2022 23:10, Dmitry Baryshkov wrote:
-> Replace deprecated perst-gpio properties with up-to-date perst-gpios
-> in the Qualcomm device trees.
+On Sat, Apr 23, 2022 at 09:03:39AM -0700, Bjorn Andersson wrote:
+> On Thu 21 Apr 10:18 PDT 2022, Kuldeep Singh wrote:
 > 
+> > Qcom BAM DT spec expects generic DMA controller node name as
+> > "dma-controller" to enable validations.
+> > 
+> > Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> It seems that I picked up v3, but patchwork-bot didn't send out any
+> notifications.
 
-You also replaced wake-gpio in one case.
+Yes, somehow there was no notification for this series as well as geni
+uart/i2c patches also.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> Please double check linux-next to confirm that we got them all sorted
+> out.
 
-Best regards,
-Krzysztof
+I checked dma dts patches[1] and they are in next/linux-next.
+I hope I checked the right tree, please correct me if it's wrong.
+
+Please note, there was one small typo fix from v3->v4 in commit
+header(s/User/Use). Not sure if it's worth updating as it's already in
+next tree, upto you. Thanks!
+
+-Kuldeep
+[1]
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=fb1bdb7e787a6037f501869b5aaf9e5cabe7a7bc
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=fbf64afd16b9581ae5a89c6924b50f83041463e0
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=095a7137ba3630bcca11e6017bfd4ab48b7fc12e
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=a86efc02b34104b93a0f9707d1e61577671fc4ad
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=7224013d4b5a64c43be23204bcfb4070dbd7fd76
