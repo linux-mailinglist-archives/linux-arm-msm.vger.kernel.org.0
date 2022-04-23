@@ -2,194 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AAAF50C6CF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 05:01:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26C6E50C6E1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 05:23:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232321AbiDWDD5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 23:03:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49026 "EHLO
+        id S232417AbiDWDQu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 23:16:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232299AbiDWDDy (ORCPT
+        with ESMTP id S232414AbiDWDQs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 23:03:54 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF1E41FE6D8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 20:00:57 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id z8so11111083oix.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 20:00:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Z01ZX/eSD7gWHPOLzm6BsqAyU5hOlUHJpTNJkHkEOQk=;
-        b=OQy5pbi2V8P7+8nbw7viv9EC72ztvMlIp4uoHQvN373CnFpxUXkLDcJiMbkwKSd1TX
-         /xi8gjeHVmuqnUV1Nhr5n3MYF6tej6+mG4Nx6gOSWLEn/ftlyavgPCjR66kNssmEVtW1
-         ARFGPOYoAHU7haQdipuTcAt1c3G4pfIpIRK0bn6qSnUDoYDU1Pz0euQJYi4criK9cuSh
-         m1kIWx+93qHWQYcLG+6ArbyWnOmtbXkpGz7hYDfsgIhCLfqy2e0tYkQSzPzsaIu1epVS
-         ad01IS6j8ABAIDLL/o03uYgzB5HTW9R+XMFXmtVenh77JzoAyYLQyDCylGJM47fmQRUW
-         lWuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Z01ZX/eSD7gWHPOLzm6BsqAyU5hOlUHJpTNJkHkEOQk=;
-        b=7Ph1+w8si8HG2OdsQ3+oUUNZjSwx+FmQt1/EtcGPn0tV/03x3crNn2/6u7pgLg42Qx
-         K6l9QRnPd1nt39zn/dAzFZ1HrW+/OOkUSWj88tEJ4zgr8IYRRoxp6+/Nv/PsQpU1//u/
-         HP0qvRJ7jExq9h+F2/ITubKg0lTl+upwVQ/eatCxmX1VFGOEO8CiCBSBRYkX2hihNHOZ
-         h4CvTLripY5CDajX4WjoS5Fz6Tyodvbvm4BXo5RAtZhzqX+3hq7wuvULFmneszm0kFh5
-         rJ/uidOrmSew64928TdXNTbQ39/ajz03eDyUZOqTdZShKF0DWldF4jQoiTHejL5JLDsq
-         MvDw==
-X-Gm-Message-State: AOAM530AGu2SHMq3xMSAYEduZok0E218OPVzWdc7EhgdV4Htiq53sY0P
-        YgWEefAU8BCctPgWQrSMugrLQw==
-X-Google-Smtp-Source: ABdhPJxaDzvRJf2bpiAF38YoDo5+oP+LcNWYr+r/d8JYzz3aKhSEJuv2rYkuoct5XvlvfFivi7Nskw==
-X-Received: by 2002:a05:6808:1881:b0:322:9e57:9e56 with SMTP id bi1-20020a056808188100b003229e579e56mr7863341oib.97.1650682856893;
-        Fri, 22 Apr 2022 20:00:56 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id b14-20020a056870160e00b000e67f5bd9b9sm1363747oae.45.2022.04.22.20.00.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 20:00:56 -0700 (PDT)
-Date:   Fri, 22 Apr 2022 20:02:57 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>
+        Fri, 22 Apr 2022 23:16:48 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AEC0C60;
+        Fri, 22 Apr 2022 20:13:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4CDECB8335D;
+        Sat, 23 Apr 2022 03:13:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01299C385A0;
+        Sat, 23 Apr 2022 03:13:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650683630;
+        bh=cAjB3SwesxGlhRGXCKftp+OPMZZqvtJP/UCppIG/HvA=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=OP0hdxPZNSvivrDZoK0G6hQtq+j61ny5knTMEfFwL0Con60lrQ1oaYhaVVB7LJ79V
+         4baTC7tvXP6FwN2rTlcdvLumGdhHfS5Qp7ChLxmqiIWwFSto95M54Hr22HFEufPOH9
+         wcvdrNcMMsrwnBUx9GgqLbmL4vCFpwta7TugRPl/HoeVcjHIbDoovqdeEPo1Giy4xz
+         BI+QlrKhBYdyynnPalzlwH7TZpHZYtEgXMlN0xYKK2g+gP05Im1V8alSHjBifY9ZvG
+         dWicF5RDot33bfL5HKhXthcURnzQj2IVoal3mZGePG8EB32p2jltoqMle4zwgRtlb8
+         pNAlaYY498otg==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <YmNsYSxLtwLpw98t@ripper>
+References: <20220422230013.1332993-1-bjorn.andersson@linaro.org> <20220423014824.912ACC385A0@smtp.kernel.org> <YmNsYSxLtwLpw98t@ripper>
+Subject: Re: [PATCH v2 1/2] dt-bindings: clock: Add Qualcomm SC8280XP GCC bindings
+From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         quic_tdas@quicinc.com
-Subject: Re: [PATCH v2 1/2] dt-bindings: clock: Add Qualcomm SC8280XP GCC
- bindings
-Message-ID: <YmNsYSxLtwLpw98t@ripper>
-References: <20220422230013.1332993-1-bjorn.andersson@linaro.org>
- <20220423014824.912ACC385A0@smtp.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220423014824.912ACC385A0@smtp.kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Date:   Fri, 22 Apr 2022 20:13:48 -0700
+User-Agent: alot/0.10
+Message-Id: <20220423031350.01299C385A0@smtp.kernel.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 22 Apr 18:48 PDT 2022, Stephen Boyd wrote:
+Quoting Bjorn Andersson (2022-04-22 20:02:57)
+> On Fri 22 Apr 18:48 PDT 2022, Stephen Boyd wrote:
+>=20
+> > Quoting Bjorn Andersson (2022-04-22 16:00:12)
+> > > Add binding for the Qualcomm SC8280XP Global Clock controller.
+> > >=20
+> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> >=20
+> > Why no cover letter?
+> >=20
+>=20
+> I didn't have anything useful to write in it. Will provide you one in
+> the future...
 
-> Quoting Bjorn Andersson (2022-04-22 16:00:12)
-> > Add binding for the Qualcomm SC8280XP Global Clock controller.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> Why no cover letter?
-> 
+Thanks!
 
-I didn't have anything useful to write in it. Will provide you one in
-the future...
+> > > +  clocks:
+> > > +    items:
+> > > +      - description: XO reference clock
+> >=20
+> > "clock" is redundant in all these descriptions. Please remove.
+> >=20
+>=20
+> You don't think it's a little bit odd to have description such as
+> "Sleep", "PCIe 2a pipe" or First EMAC controller reference"?
+>=20
+> I mean I agree that it's obviously clocks we're talking about, but to me
+> that makes it seems like the descriptions are cut short, just for the
+> sake of avoiding "clock".
 
-> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-> > new file mode 100644
-> > index 000000000000..44e5f0d0a795
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-> > @@ -0,0 +1,199 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/clock/qcom,gcc-sc8280xp.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Global Clock & Reset Controller Binding for SC8280xp
-> > +
-> > +maintainers:
-> > +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> > +
-> > +description: |
-> > +  Qualcomm global clock control module which supports the clocks, resets and
-> > +  power domains on SC8280xp.
-> > +
-> > +  See also:
-> > +  - dt-bindings/clock/qcom,gcc-sc8280xp.h
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: qcom,gcc-sc8280xp
-> > +
-> > +  clocks:
-> > +    items:
-> > +      - description: XO reference clock
-> 
-> "clock" is redundant in all these descriptions. Please remove.
-> 
+Alright, keeping clock is OK as long as
 
-You don't think it's a little bit odd to have description such as
-"Sleep", "PCIe 2a pipe" or First EMAC controller reference"?
+>=20
+> > > +      - description: Sleep clock
+> > > +      - description: UFS memory first RX symbol clock
+> > > +      - description: UFS memory second RX symbol clock
+> > > +      - description: UFS memory first TX symbol clock
+> > > +      - description: UFS card first RX symbol clock
+> > > +      - description: UFS card second RX symbol clock
+> > > +      - description: UFS card first TX symbol clock
+> > > +      - description: Primary USB SuperSpeed pipe clock
+> > > +      - description: gcc_usb4_phy_pipegmux_clk_src
 
-I mean I agree that it's obviously clocks we're talking about, but to me
-that makes it seems like the descriptions are cut short, just for the
-sake of avoiding "clock".
+there is a better name for this and the other non-word descriptions.
 
-> > +      - description: Sleep clock
-> > +      - description: UFS memory first RX symbol clock
-> > +      - description: UFS memory second RX symbol clock
-> > +      - description: UFS memory first TX symbol clock
-> > +      - description: UFS card first RX symbol clock
-> > +      - description: UFS card second RX symbol clock
-> > +      - description: UFS card first TX symbol clock
-> > +      - description: Primary USB SuperSpeed pipe clock
-> > +      - description: gcc_usb4_phy_pipegmux_clk_src
-> > +      - description: gcc_usb4_phy_dp_gmux_clk_src
-> > +      - description: gcc_usb4_phy_sys_pipegmux_clk_src
-> > +      - description: usb4_phy_gcc_usb4_pcie_pipe_clk
-> > +      - description: usb4_phy_gcc_usb4rtr_max_pipe_clk
-> > +      - description: Primary USB4 RX0 clock
-> > +      - description: Primary USB4 RX1 clock
-> > +      - description: Secondary USB SuperSpeed pipe clock
-> > +      - description: gcc_usb4_1_phy_pipegmux_clk_src
-> > +      - description: gcc_usb4_1_phy_dp_gmux_clk_src
-> > +      - description: gcc_usb4_1_phy_sys_pipegmux_clk_src
-> > +      - description: usb4_1_phy_gcc_usb4_pcie_pipe_clk
-> > +      - description: usb4_1_phy_gcc_usb4rtr_max_pipe_clk
-> > +      - description: Secondary USB4 RX0 clock
-> > +      - description: Secondary USB4 RX0 clock
-> > +      - description: Multiport USB first SupserSpeed pipe clock
-> > +      - description: Multiport USB second SuperSpeed pipe clock
-> > +      - description: PCIe 2a pipe clock
-> > +      - description: PCIe 2b pipe clock
-> > +      - description: PCIe 3a pipe clock
-> > +      - description: PCIe 3b pipe clock
-> > +      - description: PCIe 4 pipe clock
-> > +      - description: First EMAC controller reference clock
-> > +      - description: Second EMAC controller reference clock
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: bi_tcxo
-> > +      - const: sleep_clk
-> 
-> And "_clk" postfix is redundant in all these strings. Remove?
-> 
+USB4 phy pipe gmux clock source?
 
-In this case I think they should include _clk, as they actually matches
-the clock names in the documentation.
+> > > +      - description: gcc_usb4_phy_dp_gmux_clk_src
+> > > +      - description: gcc_usb4_phy_sys_pipegmux_clk_src
+> > > +      - description: usb4_phy_gcc_usb4_pcie_pipe_clk
+> > > +      - description: usb4_phy_gcc_usb4rtr_max_pipe_clk
+> > > +      - description: Primary USB4 RX0 clock
+> > > +      - description: Primary USB4 RX1 clock
+> > > +      - description: Secondary USB SuperSpeed pipe clock
+> > > +      - description: gcc_usb4_1_phy_pipegmux_clk_src
+> > > +      - description: gcc_usb4_1_phy_dp_gmux_clk_src
+> > > +      - description: gcc_usb4_1_phy_sys_pipegmux_clk_src
+> > > +      - description: usb4_1_phy_gcc_usb4_pcie_pipe_clk
+> > > +      - description: usb4_1_phy_gcc_usb4rtr_max_pipe_clk
+> > > +      - description: Secondary USB4 RX0 clock
+> > > +      - description: Secondary USB4 RX0 clock
+> > > +      - description: Multiport USB first SupserSpeed pipe clock
+> > > +      - description: Multiport USB second SuperSpeed pipe clock
+> > > +      - description: PCIe 2a pipe clock
+> > > +      - description: PCIe 2b pipe clock
+> > > +      - description: PCIe 3a pipe clock
+> > > +      - description: PCIe 3b pipe clock
+> > > +      - description: PCIe 4 pipe clock
+> > > +      - description: First EMAC controller reference clock
+> > > +      - description: Second EMAC controller reference clock
+> > > +
+> > > +  clock-names:
+> > > +    items:
+> > > +      - const: bi_tcxo
+> > > +      - const: sleep_clk
+> >=20
+> > And "_clk" postfix is redundant in all these strings. Remove?
+> >=20
+>=20
+> In this case I think they should include _clk, as they actually matches
+> the clock names in the documentation.
+>=20
 
-Regards,
-Bjorn
-
-> > +      - const: ufs_phy_rx_symbol_0_clk
-> > +      - const: ufs_phy_rx_symbol_1_clk
-> > +      - const: ufs_phy_tx_symbol_0_clk
-> > +      - const: ufs_card_rx_symbol_0_clk
-> > +      - const: ufs_card_rx_symbol_1_clk
-> > +      - const: ufs_card_tx_symbol_0_clk
-> > +      - const: usb3_phy_wrapper_gcc_usb30_pipe_clk
-> > +      - const: gcc_usb4_phy_pipegmux_clk_src
-> > +      - const: gcc_usb4_phy_dp_gmux_clk_src
-> > +      - const: gcc_usb4_phy_sys_pipegmux_clk_src
-> > +      - const: usb4_phy_gcc_usb4_pcie_pipe_clk
-> > +      - const: usb4_phy_gcc_usb4rtr_max_pipe_clk
-> > +      - const: qusb4phy_gcc_usb4_rx0_clk
-> > +      - const: qusb4phy_gcc_usb4_rx1_clk
-> > +      - const: usb3_uni_phy_sec_gcc_usb30_pipe_clk
+I'd really rather not have clock-names at all because we spend a bunch
+of time comparing strings with them when we could just as easily use
+a number.
