@@ -2,56 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68B1250C5A3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 02:13:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11E7C50C5BC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 02:29:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230379AbiDWAQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Apr 2022 20:16:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52060 "EHLO
+        id S230294AbiDWAcb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Apr 2022 20:32:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229747AbiDWAQl (ORCPT
+        with ESMTP id S230060AbiDWAca (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Apr 2022 20:16:41 -0400
+        Fri, 22 Apr 2022 20:32:30 -0400
 Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE7926D4FB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 17:13:46 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-e5ca5c580fso10286802fac.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 17:13:46 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9607249267
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 17:29:34 -0700 (PDT)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-deb9295679so10305519fac.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 17:29:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=zfFaHSOoCxM9k7WKIO+SokAw11U0tu3SQrHG+UYnnlM=;
-        b=SMTCDHnxPQC5SWcOnrjWlUXYfTnq2kSb7H1LnbYRP0ofrUmzM0854ZNXMkmhrSDnWT
-         3RZUnfA5zAxRFraIm7Qjx9cilV+2Ss7wB7JctfUBW0X5wdAlynDjUAwvHAr+dMNJ44BZ
-         s/fxmjw3HKSl+k+EjZ4bHrJ/VUc44pDQvSTwI=
+        bh=TV1o9feYxCdyKt0JuJiBgbZSXqeh07AaBQWI/pgyL08=;
+        b=LHERZD4VRU537UNeGu4kQJYZvCu0l/bUDJruPxQimieXQjAX7LiJpdEkKbNSh1uoEy
+         8oSyOUxSJNDayHO96q+MfbC8WSVI1QsSik5zxPPllIpQoNBdYYZTteTzstLtP/2HzKQE
+         R2yadhEr14mQtZ5JEFlVYKv+EG35Ui7zfG8cg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=zfFaHSOoCxM9k7WKIO+SokAw11U0tu3SQrHG+UYnnlM=;
-        b=ocjRbY6tFMnkXFsTb2zm3BdmGn7qfGxAy9a6aJImN4wf7nxx31iucKxquadA3H+2r2
-         z+8SLW04ujMJzyRXBpvvNmjH1NCVrixn2e15ArJ4MMrrAEzfXMaPc7MfDDzYiPqSt+23
-         f6h3ip+LT24CLcQmSp62LIv3a1E20cTKRP+sIUZ9rlWuE0e0FQoE/X0VFqKbyvlGgVK3
-         IaqNEbimuLb+ez2+daFz9VMxilymif9tltkFrBsPga8GxCvqi1TmFMZ+dEtNBd3FMl4q
-         r/d53YgRaPuwctn30EC3yKsC3Du9EyfYvB3rgBx/7Dqh5yQu0thtYe7dZ87B16RzrF7h
-         eRzw==
-X-Gm-Message-State: AOAM531UY5+UlEFAPaieCG16/70kvRqNkdjlBUw2FDjacQdkx0gWnoWc
-        IKMP7TMJ74v70ejb0XnGxd8b41CD16ZZTdy8NivgTw==
-X-Google-Smtp-Source: ABdhPJyDBwXV+rdQrcRoHA6+8NjnidEoQADmYUSSgyUssOflCC+zmPxyfEsir5j8jsvIFyT+93lwtCnrCsLX4JuITZg=
-X-Received: by 2002:a05:6870:15ca:b0:e9:551:6d1c with SMTP id
- k10-20020a05687015ca00b000e905516d1cmr1773145oad.193.1650672826133; Fri, 22
- Apr 2022 17:13:46 -0700 (PDT)
+        bh=TV1o9feYxCdyKt0JuJiBgbZSXqeh07AaBQWI/pgyL08=;
+        b=C3MYpz4FCs+2gqMv07U/HgCbY7TdPUl19AoS6fNYmoCWKzmKTA9JRbzxuf8T0V55Am
+         8pGBbyR5aY1ZL5zK7kuTSe+IAHk/067t90N2aKyj0RWf8h4jPw5aSwgyAEIrEyeMM5MV
+         JByJw5QVLsDEpSFrfNyI+jf6qgQNKog/7ejZHbnSRQb60RGliP2QR1AGnwfFX4jed5RR
+         b0/Ois0nO5vxrpaWQsYXOGCSK6sxKItImvijWw7zcUdsx3u2002sKlUi2ImkOatCGlrv
+         jMm4h7UH9yYv2tNCRUlmGEh5F8QidVlqpPbNferAYEWvC0rIKejY0mEOfdR+DkmGznDY
+         JvUA==
+X-Gm-Message-State: AOAM533CwLauMPdT7DzL9zd/jPRFYI04BPUYmEMmsE8HEW+gKgsfNIsH
+        yoPTFiAFKqPetE9bZ3WhN3bUApEe1/SbHUCenqTPcA==
+X-Google-Smtp-Source: ABdhPJwZSWtMrJXIW76T3DHRM8eiuaVPJzLzWN3WNj80zMzBEv1KTqiTUVdC20phzW29gNwZ7oWC/dChPOa9FfCP8GM=
+X-Received: by 2002:a05:6870:558e:b0:e1:db7c:26aa with SMTP id
+ n14-20020a056870558e00b000e1db7c26aamr3197762oao.63.1650673773969; Fri, 22
+ Apr 2022 17:29:33 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 22 Apr 2022 17:13:45 -0700
+ HTTPREST; Fri, 22 Apr 2022 17:29:33 -0700
 MIME-Version: 1.0
-In-Reply-To: <1650618666-15342-2-git-send-email-quic_sbillaka@quicinc.com>
-References: <1650618666-15342-1-git-send-email-quic_sbillaka@quicinc.com> <1650618666-15342-2-git-send-email-quic_sbillaka@quicinc.com>
+In-Reply-To: <1650618666-15342-3-git-send-email-quic_sbillaka@quicinc.com>
+References: <1650618666-15342-1-git-send-email-quic_sbillaka@quicinc.com> <1650618666-15342-3-git-send-email-quic_sbillaka@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Fri, 22 Apr 2022 17:13:45 -0700
-Message-ID: <CAE-0n51VBDmOOworjpuB1nqVD-7055yqvn2Er5H13qgFC5R2AQ@mail.gmail.com>
-Subject: Re: [PATCH v9 1/4] drm/msm/dp: Add eDP support via aux_bus
+Date:   Fri, 22 Apr 2022 17:29:33 -0700
+Message-ID: <CAE-0n52tKt3yywZFEKobet4t9xXA_GbTDcUqPPEj5A-KkDET3Q@mail.gmail.com>
+Subject: Re: [PATCH v9 2/4] drm/msm/dp: Support only IRQ_HPD and REPLUG
+ interrupts for eDP
 To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -74,146 +75,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sankeerth Billakanti (2022-04-22 02:11:03)
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index d7a19d6..055681a 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+Quoting Sankeerth Billakanti (2022-04-22 02:11:04)
+> The panel-edp enables the eDP panel power during probe, get_modes
+> and pre-enable. The eDP connect and disconnect interrupts for the eDP/DP
+> controller are directly dependent on panel power. As eDP display can be
+> assumed as always connected, the controller driver can skip the eDP
+> connect and disconnect interrupts. Any disruption in the link status
+> will be indicated via the IRQ_HPD interrupts.
+>
+> So, the eDP controller driver can just enable the IRQ_HPD and replug
+> interrupts. The DP controller driver still needs to enable all the
+> interrupts.
+>
+> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
 
-Some nitpicks
+The sprinkling of if conditions and manual driving of the DP plug/unplug
+state machine is pretty convoluted. To make it better the driver needs
+an overhaul. Anyway, it looks mostly fine to me except for this replug
+interrupt question below. Otherwise
 
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-> @@ -1508,7 +1509,8 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+>  int dp_catalog_ctrl_get_interrupt(struct dp_catalog *dp_catalog)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 055681a..dea4de9 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1096,6 +1097,13 @@ static void dp_display_config_hpd(struct dp_display_private *dp)
+>         dp_display_host_init(dp);
+>         dp_catalog_ctrl_hpd_config(dp->catalog);
 >
->         dp_hpd_event_setup(dp);
->
-> -       dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
-> +       if (!dp_display->is_edp)
-> +               dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
-
-Did it turn out that in fact DP isn't ready still to setup even after
-delaying the irq?
-
->  }
->
->  void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
-> @@ -1530,6 +1532,65 @@ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
->         }
->  }
->
-> +static int dp_display_get_next_bridge(struct msm_dp *dp)
-> +{
-> +       int rc;
-> +       struct dp_display_private *dp_priv;
-> +       struct device_node *aux_bus;
-> +       struct device *dev;
+> +       /* Enable plug and unplug interrupts only for external DisplayPort */
+> +       if (!dp->dp_display.is_edp)
+> +               dp_catalog_hpd_config_intr(dp->catalog,
+> +                               DP_DP_HPD_PLUG_INT_MASK |
+> +                               DP_DP_HPD_UNPLUG_INT_MASK,
+> +                               true);
 > +
-> +       dp_priv = container_of(dp, struct dp_display_private, dp_display);
-> +       dev = &dp_priv->pdev->dev;
-> +       aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
-> +
-> +       if (aux_bus && dp->is_edp) {
-> +               dp_display_host_init(dp_priv);
-> +               dp_catalog_ctrl_hpd_config(dp_priv->catalog);
-> +               dp_display_host_phy_init(dp_priv);
-> +               enable_irq(dp_priv->irq);
-> +
-> +               /*
-> +                * The code below assumes that the panel will finish probing
-> +                * by the time devm_of_dp_aux_populate_ep_devices() returns.
-> +                * This isn't a great assumption since it will fail if the
-> +                * panel driver is probed asynchronously but is the best we
-> +                * can do without a bigger driver reorganization.
-> +                */
-> +               rc = devm_of_dp_aux_populate_ep_devices(dp_priv->aux);
-> +               of_node_put(aux_bus);
-> +               if (rc)
-> +                       goto error;
-> +       } else if (dp->is_edp) {
-> +               DRM_ERROR("eDP aux_bus not found\n");
-> +               return -ENODEV;
-> +       }
-> +
-> +       /*
-> +        * External bridges are mandatory for eDP interfaces: one has to
-> +        * provide at least an eDP panel (which gets wrapped into panel-bridge).
-> +        *
-> +        * For DisplayPort interfaces external bridges are optional, so
-> +        * silently ignore an error if one is not present (-ENODEV).
-> +        */
-> +       rc = dp_parser_find_next_bridge(dp_priv->parser);
-> +       if (!dp->is_edp && rc == -ENODEV)
-> +               return 0;
-> +       else if (rc)
 
-Just an if because there's a return above.
+It seems like only the plug and unplug is enabled for DP here. Is replug
+enabled for eDP when it shouldn't be?
 
-> +               goto error;
-> +
-> +       dp->next_bridge = dp_priv->parser->next_bridge;
-
-In which case it almost feels like it could be written
-
-	if (!dp->is_edp && rc == -ENODEV)
-		return 0;
-	if (!rc) {
-		dp->next_bridge = dp_priv->parser->next_bridge;
-		return 0;
-	}
-error:
-	if (dp->is_edp) {
-
-but I'm not worried either way, besides removing the else from the else-if.
-
-> +
-> +       return 0;
-> +
-> +error:
-> +       if (dp->is_edp) {
-> +               disable_irq(dp_priv->irq);
-> +               dp_display_host_phy_exit(dp_priv);
-> +               dp_display_host_deinit(dp_priv);
-> +       }
-> +       return rc;
-> +}
-> +
->  int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
->                         struct drm_encoder *encoder)
->  {
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-> index d371bae..950416c 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-> @@ -125,7 +125,7 @@ struct dp_parser {
->         u32 max_dp_lanes;
->         struct drm_bridge *next_bridge;
->
-> -       int (*parse)(struct dp_parser *parser, int connector_type);
-> +       int (*parse)(struct dp_parser *parser);
->  };
->
->  /**
-> @@ -141,4 +141,15 @@ struct dp_parser {
->   */
->  struct dp_parser *dp_parser_get(struct platform_device *pdev);
->
-> +/**
-> + * dp_parser_find_next_bridge() - find an additional bridge to DP
-> + *
-> + * @parser: dp_parser data from client
-> + * return: 0 if able to get the bridge else return an error code
-
-return comes after the description below. Also should be capitalized.
-You can check this by compiling with W=1 I believe, or run the
-kernel doc format script on the file..
-
-> + *
-> + * This function is used to find any additional bridge attached to
-> + * the DP controller. The eDP interface requires a panel bridge.
-
-Return: 0 if able to get the bridge, otherwise negative errno for failure
-
-> + */
-> +int dp_parser_find_next_bridge(struct dp_parser *parser);
-> +
+>         /* Enable interrupt first time
+>          * we are leaving dp clocks on during disconnect
+>          * and never disable interrupt
