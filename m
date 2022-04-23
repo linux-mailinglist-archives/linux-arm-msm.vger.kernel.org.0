@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C7E650C9DD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 14:23:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1C0750C9E1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 14:26:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235352AbiDWM0e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Apr 2022 08:26:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57898 "EHLO
+        id S231321AbiDWM3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Apr 2022 08:29:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235342AbiDWM0e (ORCPT
+        with ESMTP id S231231AbiDWM3u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Apr 2022 08:26:34 -0400
+        Sat, 23 Apr 2022 08:29:50 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD177183F84;
-        Sat, 23 Apr 2022 05:23:37 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B34574871;
+        Sat, 23 Apr 2022 05:26:52 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 483C560FC8;
-        Sat, 23 Apr 2022 12:23:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F49C385A5;
-        Sat, 23 Apr 2022 12:23:33 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 26C5B610A3;
+        Sat, 23 Apr 2022 12:26:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8868C385A5;
+        Sat, 23 Apr 2022 12:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650716616;
-        bh=1ZDjuPtLpq1fxqlJBuXcS1neob/RlAg1nHXUoBOA43g=;
+        s=k20201202; t=1650716811;
+        bh=p40jvo6iLy+D16SXcDbbHtObi3NFXFDafaBZX/wN0d0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RjpyDUwtlQrv7/c1lLzBfXgeagx3tB/M9NIXbNSBZAykTurh15C8vVIyOdNv6uvYV
-         eOdhCz+zsQJ1nFw6vafKtQzuD5FHLNram2173vjiK5+k63EaqfGCNvuL8jgjcoX6Rt
-         dpUKR8mN/T5+vXvlO+WtMhUGiIlKdGGg232QZxGRydyrOvP5rnw4Aq+3U4MhcpWVvu
-         QXQF+IpwCxn4jeHGiYMgk8lhBMYzt0gYXhrgR4eet1ibG8TnCUQnycsLPO8dRUC2fI
-         NaLUmU0qBf5dDJPFfbH/zxncTvbE80CpkG+w7VMPDdADqkPzmaKLQYC5+UUNhHFCWX
-         C6ciwV7uNcJ5g==
-Date:   Sat, 23 Apr 2022 17:53:29 +0530
+        b=XRNcDgr3Q/vz2yWopQQ+WeK3MtLGmTl4mnqBcA72/G42Ghc2RuiThu0trImXKH3ko
+         +7xz1PVhYakC8qXivSgD7CuKpuQ9Szwbgc4VBQOPo8G70PWic2JxKVOY0Qp14MPiS5
+         tCYconMTnfHFMZoeNx1R0Xwo7On6mPI3gcOOxVRyqaoMhatgkiaUey5t+Uzga95Wl7
+         j6XMDeoHerEAISp6FxLvVluXL6fAj22b9z2E9yp8uvAd7ZjKAlJEvmbnLnRF2W38Iy
+         5W+qVG+UbSDKe5ot/0IzQ89PzmRvGEo/ll82pGLxD4QGI6h7M7jsgoN3wYqrSI4n0Y
+         63bRoWVxKBTnw==
+Date:   Sat, 23 Apr 2022 17:56:44 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
-        dnlplm@gmail.com
-Subject: Re: [PATCH v2] bus: mhi: host: pci_generic: Sort mhi_pci_id_table
- based on the PID
-Message-ID: <20220423122329.GK374560@thinkpad>
-References: <20220411133428.42165-1-manivannan.sadhasivam@linaro.org>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: Re: [PATCH v4 1/2] bus: mhi: host: Bail on writing register fields
+ if read fails
+Message-ID: <20220423122644.GL374560@thinkpad>
+References: <1650304226-11080-1-git-send-email-quic_jhugo@quicinc.com>
+ <1650304226-11080-2-git-send-email-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220411133428.42165-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <1650304226-11080-2-git-send-email-quic_jhugo@quicinc.com>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -56,58 +56,216 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 11, 2022 at 07:04:28PM +0530, Manivannan Sadhasivam wrote:
-> Sorting this way helps in identifying the products of vendors. There is no
-> sorting required for VID and the new VID should be added as the last entry.
+On Mon, Apr 18, 2022 at 11:50:25AM -0600, Jeffrey Hugo wrote:
+> From: Bhaumik Bhatt <bbhatt@codeaurora.org>
 > 
-> Let's also add a note clarifying this.
+> Helper API to write register fields relies on successful reads
+> of the register/address prior to the write. Bail out if a failure
+> is seen when reading the register before the actual write is
+> performed.
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-Applied to mhi-next!
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Thanks,
 Mani
 
 > ---
+>  drivers/bus/mhi/host/boot.c     | 22 ++++++++++++++++------
+>  drivers/bus/mhi/host/init.c     | 22 +++++++++++++++++-----
+>  drivers/bus/mhi/host/internal.h |  7 ++++---
+>  drivers/bus/mhi/host/main.c     |  9 ++++++---
+>  drivers/bus/mhi/host/pm.c       | 15 +++++++++++----
+>  5 files changed, 54 insertions(+), 21 deletions(-)
 > 
-> Changes in v2:
-> 
-> * Fixup the 0x0306 entry by moving it after subid
-> 
->  drivers/bus/mhi/host/pci_generic.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 541ced27d941..8858f3bf4f04 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -446,20 +446,21 @@ static const struct mhi_pci_dev_info mhi_sierra_em919x_info = {
->  	.sideband_wake = false,
->  };
+> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+> index b0da7ca..26d0edd 100644
+> --- a/drivers/bus/mhi/host/boot.c
+> +++ b/drivers/bus/mhi/host/boot.c
+> @@ -19,8 +19,8 @@
+>  #include "internal.h"
 >  
-> +/* Keep the list sorted based on the PID. New VID should be added as the last entry */
->  static const struct pci_device_id mhi_pci_id_table[] = {
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
-> +		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
->  	/* EM919x (sdx55), use the same vid:pid as qcom-sdx55m */
->  	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, 0x18d7, 0x0200),
->  		.driver_data = (kernel_ulong_t) &mhi_sierra_em919x_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
->  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
-> -	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
-> -		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
-> +		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
->  	{ PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->  	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> -	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
-> -		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
->  	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
->  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
->  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+>  /* Setup RDDM vector table for RDDM transfer and program RXVEC */
+> -void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
+> -		      struct image_info *img_info)
+> +int mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
+> +		     struct image_info *img_info)
+>  {
+>  	struct mhi_buf *mhi_buf = img_info->mhi_buf;
+>  	struct bhi_vec_entry *bhi_vec = img_info->bhi_vec;
+> @@ -28,6 +28,7 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>  	u32 sequence_id;
+>  	unsigned int i;
+> +	int ret;
+>  
+>  	for (i = 0; i < img_info->entries - 1; i++, mhi_buf++, bhi_vec++) {
+>  		bhi_vec->dma_addr = mhi_buf->dma_addr;
+> @@ -45,11 +46,17 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
+>  	mhi_write_reg(mhi_cntrl, base, BHIE_RXVECSIZE_OFFS, mhi_buf->len);
+>  	sequence_id = MHI_RANDOM_U32_NONZERO(BHIE_RXVECSTATUS_SEQNUM_BMSK);
+>  
+> -	mhi_write_reg_field(mhi_cntrl, base, BHIE_RXVECDB_OFFS,
+> -			    BHIE_RXVECDB_SEQNUM_BMSK, sequence_id);
+> +	ret = mhi_write_reg_field(mhi_cntrl, base, BHIE_RXVECDB_OFFS,
+> +				  BHIE_RXVECDB_SEQNUM_BMSK, sequence_id);
+> +	if (ret) {
+> +		dev_err(dev, "Failed to write sequence ID for BHIE_RXVECDB\n");
+> +		return ret;
+> +	}
+>  
+>  	dev_dbg(dev, "Address: %p and len: 0x%zx sequence: %u\n",
+>  		&mhi_buf->dma_addr, mhi_buf->len, sequence_id);
+> +
+> +	return 0;
+>  }
+>  
+>  /* Collect RDDM buffer during kernel panic */
+> @@ -198,10 +205,13 @@ static int mhi_fw_load_bhie(struct mhi_controller *mhi_cntrl,
+>  
+>  	mhi_write_reg(mhi_cntrl, base, BHIE_TXVECSIZE_OFFS, mhi_buf->len);
+>  
+> -	mhi_write_reg_field(mhi_cntrl, base, BHIE_TXVECDB_OFFS,
+> -			    BHIE_TXVECDB_SEQNUM_BMSK, sequence_id);
+> +	ret = mhi_write_reg_field(mhi_cntrl, base, BHIE_TXVECDB_OFFS,
+> +				  BHIE_TXVECDB_SEQNUM_BMSK, sequence_id);
+>  	read_unlock_bh(pm_lock);
+>  
+> +	if (ret)
+> +		return ret;
+> +
+>  	/* Wait for the image download to complete */
+>  	ret = wait_event_timeout(mhi_cntrl->state_event,
+>  				 MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state) ||
+> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> index a8c18c5f..3842611 100644
+> --- a/drivers/bus/mhi/host/init.c
+> +++ b/drivers/bus/mhi/host/init.c
+> @@ -547,9 +547,14 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+>  	mhi_cntrl->mhi_cmd[PRIMARY_CMD_RING].ring.db_addr = base + CRDB_LOWER;
+>  
+>  	/* Write to MMIO registers */
+> -	for (i = 0; reg_info[i].offset; i++)
+> -		mhi_write_reg_field(mhi_cntrl, base, reg_info[i].offset,
+> -				    reg_info[i].mask, reg_info[i].val);
+> +	for (i = 0; reg_info[i].offset; i++) {
+> +		ret = mhi_write_reg_field(mhi_cntrl, base, reg_info[i].offset,
+> +					  reg_info[i].mask, reg_info[i].val);
+> +		if (ret) {
+> +			dev_err(dev, "Unable to write to MMIO registers\n");
+> +			return ret;
+> +		}
+> +	}
+>  
+>  	return 0;
+>  }
+> @@ -1117,8 +1122,15 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
+>  		 */
+>  		mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
+>  				     mhi_cntrl->rddm_size);
+> -		if (mhi_cntrl->rddm_image)
+> -			mhi_rddm_prepare(mhi_cntrl, mhi_cntrl->rddm_image);
+> +		if (mhi_cntrl->rddm_image) {
+> +			ret = mhi_rddm_prepare(mhi_cntrl,
+> +					       mhi_cntrl->rddm_image);
+> +			if (ret) {
+> +				mhi_free_bhie_table(mhi_cntrl,
+> +						    mhi_cntrl->rddm_image);
+> +				goto error_reg_offset;
+> +			}
+> +		}
+>  	}
+>  
+>  	mutex_unlock(&mhi_cntrl->pm_mutex);
+> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+> index b47d8ef..01fd10a 100644
+> --- a/drivers/bus/mhi/host/internal.h
+> +++ b/drivers/bus/mhi/host/internal.h
+> @@ -324,8 +324,9 @@ int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
+>  				    u32 val, u32 delayus);
+>  void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
+>  		   u32 offset, u32 val);
+> -void mhi_write_reg_field(struct mhi_controller *mhi_cntrl, void __iomem *base,
+> -			 u32 offset, u32 mask, u32 val);
+> +int __must_check mhi_write_reg_field(struct mhi_controller *mhi_cntrl,
+> +				     void __iomem *base, u32 offset, u32 mask,
+> +				     u32 val);
+>  void mhi_ring_er_db(struct mhi_event *mhi_event);
+>  void mhi_write_db(struct mhi_controller *mhi_cntrl, void __iomem *db_addr,
+>  		  dma_addr_t db_val);
+> @@ -339,7 +340,7 @@ int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl);
+>  void mhi_deinit_dev_ctxt(struct mhi_controller *mhi_cntrl);
+>  int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl);
+>  void mhi_deinit_free_irq(struct mhi_controller *mhi_cntrl);
+> -void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
+> +int mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
+>  		      struct image_info *img_info);
+>  void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl);
+>  
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index 9021be7..142eea1 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -65,19 +65,22 @@ void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
+>  	mhi_cntrl->write_reg(mhi_cntrl, base + offset, val);
+>  }
+>  
+> -void mhi_write_reg_field(struct mhi_controller *mhi_cntrl, void __iomem *base,
+> -			 u32 offset, u32 mask, u32 val)
+> +int __must_check mhi_write_reg_field(struct mhi_controller *mhi_cntrl,
+> +				     void __iomem *base, u32 offset, u32 mask,
+> +				     u32 val)
+>  {
+>  	int ret;
+>  	u32 tmp;
+>  
+>  	ret = mhi_read_reg(mhi_cntrl, base, offset, &tmp);
+>  	if (ret)
+> -		return;
+> +		return ret;
+>  
+>  	tmp &= ~mask;
+>  	tmp |= (val << __ffs(mask));
+>  	mhi_write_reg(mhi_cntrl, base, offset, tmp);
+> +
+> +	return 0;
+>  }
+>  
+>  void mhi_write_db(struct mhi_controller *mhi_cntrl, void __iomem *db_addr,
+> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> index c000a92..dc2e8ff 100644
+> --- a/drivers/bus/mhi/host/pm.c
+> +++ b/drivers/bus/mhi/host/pm.c
+> @@ -129,13 +129,20 @@ enum mhi_pm_state __must_check mhi_tryset_pm_state(struct mhi_controller *mhi_cn
+>  
+>  void mhi_set_mhi_state(struct mhi_controller *mhi_cntrl, enum mhi_state state)
+>  {
+> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	int ret;
+> +
+>  	if (state == MHI_STATE_RESET) {
+> -		mhi_write_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+> -				    MHICTRL_RESET_MASK, 1);
+> +		ret = mhi_write_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+> +					  MHICTRL_RESET_MASK, 1);
+>  	} else {
+> -		mhi_write_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+> -				    MHICTRL_MHISTATE_MASK, state);
+> +		ret = mhi_write_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+> +					  MHICTRL_MHISTATE_MASK, state);
+>  	}
+> +
+> +	if (ret)
+> +		dev_err(dev, "Failed to set MHI state to: %s\n",
+> +			mhi_state_str(state));
+>  }
+>  
+>  /* NOP for backward compatibility, host allowed to ring DB in M2 state */
 > -- 
-> 2.25.1
+> 2.7.4
+> 
 > 
