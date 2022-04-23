@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0160750CB96
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 17:15:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0947350CB9B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 17:16:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231389AbiDWPSD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Apr 2022 11:18:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44946 "EHLO
+        id S231871AbiDWPTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Apr 2022 11:19:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231741AbiDWPRy (ORCPT
+        with ESMTP id S231956AbiDWPTK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Apr 2022 11:17:54 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6999C1D4A44
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 08:14:56 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id v12-20020a9d7d0c000000b006054b51c3d4so7584001otn.8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 08:14:56 -0700 (PDT)
+        Sat, 23 Apr 2022 11:19:10 -0400
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DA8826ACC
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 08:16:13 -0700 (PDT)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-e5c42b6e31so11638851fac.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 08:16:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=22eenijkFNhaFMADi9ElotDWSOkFn1tnTr48x0vYVAk=;
-        b=GVdoeLER62JBuMZ1/XSDwKSXWJkTrASzMX5GiiwdNPfJpMt3lNuHKyAGznJg8Jj4YD
-         Y0OgdPH+yHPluQvdKK3tdKlA4FhK00j6P8A+eVTuWE62F0BA+1BT9iPrsiEQhdeB0Lyv
-         Mp55lWoI9zECwZV1oVFZ44zoPfl0NGOMvxjTvQzy57f8uBYv9cxvyEVwOAonr4A0dTy/
-         FylA5e256esQ4NvjSDMgX+7TWx3tRd5+MhV6m1R/JrsoaVFNS4Zknfl56tfhL248WpNR
-         ORX4eiJMnfEkp8WGVALV2vSEcA9fQNUvChHieI4oGExC8+50/kh7o16ztg8T6y4QK1w/
-         OjZA==
+        bh=+Z8i3Sf79kQmbsZCRy7tgX2BrMIrvDhagSyA9O02bRs=;
+        b=b8+1G7DuMVB/EgYkfLbMFJSWeyUtfh8tukMduU8Jwkm8r7mlMq73cST1V1AWe4JKrP
+         VSd4nb9d7C9HaKkZUhxpae0cnj+nPe3xHdMp1R49IEmQOhWeXHAyGTWPyBcYyFGO72aV
+         uxZjsif+DoBP+6l4B7WMhWLRQ7yl9EBoIXP16WMw1s0kDcgtRHPD++PoHquvsJ1pm6x/
+         o79jja6Ku4GYWKJ4jJWO+/hnFc1yw6YbmUCynhwKKxP2RKYIseX5AWP9DKKzRujm6XLx
+         mKumKkgDze1G0/S4C0FuLTFvoT/GE3i+bWnJJjmKyTh0axUmcNpZL+4pwyBAwykcmjLe
+         KlgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=22eenijkFNhaFMADi9ElotDWSOkFn1tnTr48x0vYVAk=;
-        b=VftIIkI0r47iuDgBRlVgqtCdQKog9NEUHWnDXyaYkCu2HudjSTUxBR9k2xxX/fFPQh
-         Z3ydGA8Atm71nz5HMpFcOetzer/dKKYOrC/Z8/RxBOfA5BBuyJh6AlqREAd4goIOlDCy
-         KMcFM9qea5xjVd+RkZq8KaVqGoYMJime37BBISvFemO8G+UaWQpJbaaQjVeYPkWuN9G7
-         CGPem6koP98+vLNwtBrwNbSU2c7ObB6XyUu7DgFeFkCV/HJEbk/gLIaFMrPEBgU906dz
-         8XWAnxzbRGxNOwcLUO+tkFUH3GSIuYlsU02JkP93fIJyO7c4RDlT+CIjgc1Yr5PBCgIn
-         aRIg==
-X-Gm-Message-State: AOAM530JjqXBTeXspDXKgALa5ugyjajggYojt95PhMJQQor3MJWMJBW6
-        4aWEH8ypt8E4Pu7BrE36BjOgZNsJIpAOfFTF
-X-Google-Smtp-Source: ABdhPJyb/SfQ9fd+qfhl32OUbxio3UtCSvHIoOgBXrvsGqMSbnLd4vidbHe+NzwDUCm28o1ezpfXrQ==
-X-Received: by 2002:a9d:3624:0:b0:5e9:5778:d0c6 with SMTP id w33-20020a9d3624000000b005e95778d0c6mr3657575otb.367.1650726895781;
-        Sat, 23 Apr 2022 08:14:55 -0700 (PDT)
+        bh=+Z8i3Sf79kQmbsZCRy7tgX2BrMIrvDhagSyA9O02bRs=;
+        b=K66ow5lQN8/tvRAu+MxcZT/lGXYht6D7o/aSJrLsSj8P0HCB+KMrDAhNff4LgUsSLN
+         7wOCDgSC0JZ8buMuUxE/fk0q2r+f+Mtwj1G35q/fjM4Orrt6LHjnA7J3QXX0oOlTDQL+
+         6zw9hLWHu792sHmOl63PRmyPp6nUNR1wuNa5MR3MNbHQ42xFlW64g2uETzMNt4Gms6b7
+         XCt89dv0Fu2wkLRaz4vFp88nFUeC6MSk5k3jrrUotzwioizxmDZNdwik//MKBBsGXB+L
+         xafg7djF7y7/qpag14Kuy6K4Rm7A02wRiSoN9W3XQxDjnJsim+YzcWyirzxQb7SDNjA6
+         ubqg==
+X-Gm-Message-State: AOAM532hSZcpXddCZwkWA1WGWZjUNQeevGYFx3z2F3UxEiq7SBB3hRnB
+        5xPu+9BiSOlbaYL/jyTtPTVjgQ==
+X-Google-Smtp-Source: ABdhPJzuY1MsOi4UM15qQCC37vc8BRI0PBgBxIkc8xCzrR15vBpdXvAOqP6rg2XV8ToSSAFumy/yAQ==
+X-Received: by 2002:a05:6870:c110:b0:e7:ff9e:c888 with SMTP id f16-20020a056870c11000b000e7ff9ec888mr3600693oad.19.1650726972533;
+        Sat, 23 Apr 2022 08:16:12 -0700 (PDT)
 Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id 1-20020a05687011c100b000de98359b43sm1684551oav.1.2022.04.23.08.14.54
+        by smtp.gmail.com with ESMTPSA id w36-20020a05687033a400b000d75f1d9b82sm1645301oae.47.2022.04.23.08.16.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Apr 2022 08:14:55 -0700 (PDT)
-Date:   Sat, 23 Apr 2022 08:16:55 -0700
+        Sat, 23 Apr 2022 08:16:11 -0700 (PDT)
+Date:   Sat, 23 Apr 2022 08:18:12 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
@@ -56,16 +56,16 @@ Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
         linux-arm-msm@vger.kernel.org, quic_asutoshd@quicinc.com,
         quic_cang@quicinc.com, linux-scsi@vger.kernel.org,
         linux-kernel@vger.kernel.org, bvanassche@acm.org,
-        ahalaney@redhat.com
-Subject: Re: [PATCH v2 2/5] scsi: ufs: qcom: Simplify handling of
- devm_phy_get()
-Message-ID: <YmQYZ8l+QOsz11ld@ripper>
+        ahalaney@redhat.com, stable@vger.kernel.org
+Subject: Re: [PATCH v2 3/5] scsi: ufs: qcom: Add a readl() to make sure
+ ref_clk gets enabled
+Message-ID: <YmQYtHfSYJxKwivg@ripper>
 References: <20220423140245.394092-1-manivannan.sadhasivam@linaro.org>
- <20220423140245.394092-3-manivannan.sadhasivam@linaro.org>
+ <20220423140245.394092-4-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220423140245.394092-3-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20220423140245.394092-4-manivannan.sadhasivam@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
@@ -78,72 +78,49 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Sat 23 Apr 07:02 PDT 2022, Manivannan Sadhasivam wrote:
 
-> There is no need to call devm_phy_get() if ACPI is used, so skip it.
-> The "host->generic_phy" pointer should already be NULL due to the kzalloc,
-> so no need to set it NULL again.
+> In ufs_qcom_dev_ref_clk_ctrl(), it was noted that the ref_clk needs to be
+> stable for at least 1us. Even though there is wmb() to make sure the write
+> gets "completed", there is no guarantee that the write actually reached
+> the UFS device. There is a good chance that the write could be stored in
+> a Write Buffer (WB). In that case, even though the CPU waits for 1us, the
+> ref_clk might not be stable for that period.
 > 
-> Also, don't print the error message in case of -EPROBE_DEFER and return
-> the error code directly.
+> So lets do a readl() to make sure that the previous write has reached the
+> UFS device before udelay().
 > 
-> While at it, also remove the comment that has no relationship with
-> devm_phy_get().
+> Also, the wmb() after writel_relaxed is not really needed. Both writel and
+> readl are ordered on all architectures and the CPU won't speculate
+> instructions after readl() due to the in-built control dependency with
+> read value on weakly ordered architectures. So it can be safely removed.
 > 
+> Cc: stable@vger.kernel.org
+> Fixes: f06fcc7155dc ("scsi: ufs-qcom: add QUniPro hardware support and power optimizations")
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/scsi/ufs/ufs-qcom.c | 26 +++++---------------------
->  1 file changed, 5 insertions(+), 21 deletions(-)
-> 
-> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index bee81b45299e..6ee33cc0ad09 100644
-> --- a/drivers/scsi/ufs/ufs-qcom.c
-> +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -1022,28 +1022,12 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->  		err = 0;
->  	}
->  
-> -	/*
-> -	 * voting/devoting device ref_clk source is time consuming hence
-> -	 * skip devoting it during aggressive clock gating. This clock
-> -	 * will still be gated off during runtime suspend.
-> -	 */
-> -	host->generic_phy = devm_phy_get(dev, "ufsphy");
-> -
-> -	if (host->generic_phy == ERR_PTR(-EPROBE_DEFER)) {
-> -		/*
-> -		 * UFS driver might be probed before the phy driver does.
-> -		 * In that case we would like to return EPROBE_DEFER code.
-> -		 */
-> -		err = -EPROBE_DEFER;
-> -		dev_warn(dev, "%s: required phy device. hasn't probed yet. err = %d\n",
-> -			__func__, err);
-> -		goto out_variant_clear;
-> -	} else if (IS_ERR(host->generic_phy)) {
-> -		if (has_acpi_companion(dev)) {
-> -			host->generic_phy = NULL;
-> -		} else {
-> +	if (!has_acpi_companion(dev)) {
-> +		host->generic_phy = devm_phy_get(dev, "ufsphy");
-> +		if (IS_ERR(host->generic_phy)) {
->  			err = PTR_ERR(host->generic_phy);
-> -			dev_err(dev, "%s: PHY get failed %d\n", __func__, err);
-> +			if (err != -EPROBE_DEFER)
-> +				dev_err_probe(dev, err, "Failed to get PHY\n");
-
-I believe the idiomatic form is:
-			err = dev_err_probe(dev, PTR_ERR(host->generic_phy), "Failed to get PHY\n");
-
-
-But as with the previous patch, please remove the condition and you have
-my:
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Regards,
-Bjorn
-
->  			goto out_variant_clear;
->  		}
->  	}
+> ---
+>  drivers/scsi/ufs/ufs-qcom.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+> index 6ee33cc0ad09..f47a16b7cff5 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.c
+> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> @@ -687,8 +687,11 @@ static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
+>  
+>  		writel_relaxed(temp, host->dev_ref_clk_ctrl_mmio);
+>  
+> -		/* ensure that ref_clk is enabled/disabled before we return */
+> -		wmb();
+> +		/*
+> +		 * Make sure the write to ref_clk reaches the destination and
+> +		 * not stored in a Write Buffer (WB).
+> +		 */
+> +		readl(host->dev_ref_clk_ctrl_mmio);
+>  
+>  		/*
+>  		 * If we call hibern8 exit after this, we need to make sure that
 > -- 
 > 2.25.1
 > 
