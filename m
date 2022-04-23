@@ -2,74 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85E3550CCD1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 20:09:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CF9550CD3C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 21:50:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236707AbiDWSMs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Apr 2022 14:12:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49452 "EHLO
+        id S236936AbiDWTxO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Apr 2022 15:53:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236702AbiDWSMj (ORCPT
+        with ESMTP id S236925AbiDWTxN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Apr 2022 14:12:39 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9868331506;
-        Sat, 23 Apr 2022 11:09:41 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id bo5so11005581pfb.4;
-        Sat, 23 Apr 2022 11:09:41 -0700 (PDT)
+        Sat, 23 Apr 2022 15:53:13 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05130BDA
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 12:50:14 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id s14so18212815plk.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 12:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Gc8OMd0WK3EM7XKyqfhBxSqSzVvH1RI2L8p7UF4ZJKI=;
-        b=MyUXP+nPMRFKM7KBij5V88Kadq9Cwb7ilo8gbWXugPkKu7ikueR9ODe6XCBXllhxRY
-         t2K8iWM25L4tG714asQxh4jn1WE+DTMldXp4hP0NjZh4DlsI2Lce9fAVrGCJE2IAk5bn
-         mcluZM0dTwvueSqr6ZKAFDmwkkkeM5f0knRO+HYmVsY2DSpq7WXBMeIICt6CxarFRm/h
-         CkfpmtPCETh72phJrMtNxuWwjA7JYDWCWRtOz9nGwFskEGdWLm/v0sXyoVkC3tV0wJzj
-         e2QN8Jwu/YI1shN4tYpzMYf4BQzQJ6r17qyzAyEBlQC9+A/bgq36/wF+alXhTUlGEY20
-         c9MA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NnaG27CUaF96qRrvNCKtI1jKKcB/F0ggNK0LpZNX450=;
+        b=euvqk/3k5nOsdbMbphMEN4CwhHk+MVqAtb6+sfEQPJ448w0ggdkR+rcGKaevDGxoNk
+         bOMGahgHVkcsUAPcl/LhZDuTB1MblzoVJHEkc4qKEmG2ekAolZj1IVdErGWNMM3rTQNK
+         JbG2dGea4xzd2gH6xT4Y03yutNxe4uZNDxKiteEI1v+RoGFc8DO3KeQGAP3HEZxqx2cb
+         XO7Pi8HdzhH86C8L3QXz2EpfpoZRd43/kQp5y4IXRlKEuhEy1TlYLd/C/x1Ll9fputQ5
+         vHIhGkgm5js/ND2+KhZpuTD8q0ysc6CZ2RBvI5i2Rt9v6Eg94RtY7dnTMXUIMkpv7rBg
+         g0iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Gc8OMd0WK3EM7XKyqfhBxSqSzVvH1RI2L8p7UF4ZJKI=;
-        b=sLgxowHxZU9sUdqePPomny9wa/Ze15gm4QTs+KJbKaUcie/qeNYHyX0O8wqGYPyhbV
-         Ri5vtj/3AJzP2fC/jHRd7Ro6T4QqkHipCCY59D1DMSTzpklJ2ihH0u9ndqSB0TAamSiV
-         MqQGUZZ3pSZufFGnxHwN3HGD1P407gWf/iOZ2pY4QTkgKKDvVcB7PwjAUKi67ZOkScyz
-         mt6rkxI+Cpvq0AExqyHlILLOLGN4smneti9nDaxZR5AbnVGdHh8Jyuyx+hk5nO46pNw/
-         0fSZtQVNwD1m80LjwL54NnlWEI88A7dMEg6RgIxmr7aiAAqdtL7aIXVglw9uMtIyswWB
-         M8XA==
-X-Gm-Message-State: AOAM5331Wu5ZcYsGidkjK7HplxtQElxTKBw6C7JTdXDtXmAT/ml14wdV
-        nJo2Yvpq/pwBuZ8O6t1KadhuqMbj4t8=
-X-Google-Smtp-Source: ABdhPJy0lWuLN5chYofeTD/QFGdPthlPalxZFhXI/z3NQ82KN26+XmYuzgNMa5g69QhIOJ01KrK6ng==
-X-Received: by 2002:a63:2cc3:0:b0:39d:a9af:bc5b with SMTP id s186-20020a632cc3000000b0039da9afbc5bmr8884062pgs.3.1650737381059;
-        Sat, 23 Apr 2022 11:09:41 -0700 (PDT)
-Received: from 9a2d8922b8f1 ([122.161.51.18])
-        by smtp.gmail.com with ESMTPSA id x23-20020a17090a0bd700b001cd498dc152sm9799317pjd.2.2022.04.23.11.09.37
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NnaG27CUaF96qRrvNCKtI1jKKcB/F0ggNK0LpZNX450=;
+        b=eVcpXpX09tcbvzfFal8oc0J0lPQh93gc6t3FjVNbd+ufx6mEkAeH7rW1ZLsBGNVx2P
+         aoPBzwa/gVGyg3Ilc+j4RgrVTY6CtOkznk/cq+vD6Vt32225Fs8YwPzGOLADgVFTlcD3
+         l/BeiMqI5ZJwAdyUegVckKniH/8OoLalyi1545AeZP568Jhj/U6eIBjjZ4+Aoi3Lez86
+         mkZK9nn1sOvZOLTXv/bPopjnRPXOGUH+5QO72YtgWAIZ50SBwMZxw51DHUl0+n3lJVy8
+         uKe8lz+bHcSzcLLE97McO4uK1oUU9FPTESUcXZ4KMssPQGPdEibvTDjKI07HCGUJCo+l
+         lyQw==
+X-Gm-Message-State: AOAM531+13hLoQH8ZTtGyXdZUE7vynRt9EBikAlituHUht8n7sLdmiKn
+        VIv3UtaF1zAZPnRQ3ilBd8fxDgYF0/LGlA==
+X-Google-Smtp-Source: ABdhPJz+MlFDRUsCphdYzX6ga/IiEzYxo+rtWsKc2w02ngaXhEqKsTbIPV4kfcY7i/T+DD62oiCLaw==
+X-Received: by 2002:a17:902:e748:b0:15c:e3b9:bba3 with SMTP id p8-20020a170902e74800b0015ce3b9bba3mr4883928plf.139.1650743413356;
+        Sat, 23 Apr 2022 12:50:13 -0700 (PDT)
+Received: from localhost.localdomain ([223.233.64.97])
+        by smtp.gmail.com with ESMTPSA id g17-20020a625211000000b005056a6313a7sm6308781pfb.87.2022.04.23.12.50.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Apr 2022 11:09:40 -0700 (PDT)
-Date:   Sat, 23 Apr 2022 23:39:34 +0530
-From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 1/4] ARM: dts: qcom: apq8064: Use generic node name
- for DMA
-Message-ID: <20220423180934.GA35431@9a2d8922b8f1>
-References: <20220421171809.32722-1-singh.kuldeep87k@gmail.com>
- <20220421171809.32722-2-singh.kuldeep87k@gmail.com>
- <YmQjW4OYe5rTBP/Q@ripper>
+        Sat, 23 Apr 2022 12:50:13 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 1/1] arm64: dts: qcom: sa8155p-adp: Disable multiple Tx and Rx queues for ethernet IP
+Date:   Sun, 24 Apr 2022 01:20:03 +0530
+Message-Id: <20220423195003.353150-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YmQjW4OYe5rTBP/Q@ripper>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,36 +69,91 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Apr 23, 2022 at 09:03:39AM -0700, Bjorn Andersson wrote:
-> On Thu 21 Apr 10:18 PDT 2022, Kuldeep Singh wrote:
-> 
-> > Qcom BAM DT spec expects generic DMA controller node name as
-> > "dma-controller" to enable validations.
-> > 
-> > Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
-> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> It seems that I picked up v3, but patchwork-bot didn't send out any
-> notifications.
+Fix the issues seen with ethernet traffic getting stalled on SA8155p-ADP
+board with default (or larger) mtu size of 1500 bytes, by disabling
+multiple Tx and Rx queues for the stmmac IP block.
 
-Yes, somehow there was no notification for this series as well as geni
-uart/i2c patches also.
+With the single queue setup, the ethernet traffic is stable,
+wget / curl can work well on the board and no ethernet stall is
+observed even when longer netperf / iperf3 test are run. Also
+a performance of ~940 Mbits/sec is observed on the 1G link, so
+there is no observable degradation in performance as well.
 
->
-> Please double check linux-next to confirm that we got them all sorted
-> out.
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 40 ++----------------------
+ 1 file changed, 2 insertions(+), 38 deletions(-)
 
-I checked dma dts patches[1] and they are in next/linux-next.
-I hope I checked the right tree, please correct me if it's wrong.
+diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+index 8034d0d31bd0..ba547ca9fc6b 100644
+--- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
++++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+@@ -49,7 +49,7 @@ vreg_s4a_1p8: smps4 {
+ 	};
+ 
+ 	mtl_rx_setup: rx-queues-config {
+-		snps,rx-queues-to-use = <4>;
++		snps,rx-queues-to-use = <1>;
+ 		snps,rx-sched-sp;
+ 
+ 		queue0 {
+@@ -58,28 +58,10 @@ queue0 {
+ 			snps,route-up;
+ 			snps,priority = <0x1>;
+ 		};
+-
+-		queue1 {
+-			snps,dcb-algorithm;
+-			snps,map-to-dma-channel = <0x1>;
+-			snps,route-ptp;
+-		};
+-
+-		queue2 {
+-			snps,avb-algorithm;
+-			snps,map-to-dma-channel = <0x2>;
+-			snps,route-avcp;
+-		};
+-
+-		queue3 {
+-			snps,avb-algorithm;
+-			snps,map-to-dma-channel = <0x3>;
+-			snps,priority = <0xC>;
+-		};
+ 	};
+ 
+ 	mtl_tx_setup: tx-queues-config {
+-		snps,tx-queues-to-use = <4>;
++		snps,tx-queues-to-use = <1>;
+ 		snps,tx-sched-wrr;
+ 
+ 		queue0 {
+@@ -87,24 +69,6 @@ queue0 {
+ 			snps,dcb-algorithm;
+ 			snps,priority = <0x0>;
+ 		};
+-
+-		queue1 {
+-			snps,weight = <0x11>;
+-			snps,dcb-algorithm;
+-			snps,priority = <0x1>;
+-		};
+-
+-		queue2 {
+-			snps,weight = <0x12>;
+-			snps,dcb-algorithm;
+-			snps,priority = <0x2>;
+-		};
+-
+-		queue3 {
+-			snps,weight = <0x13>;
+-			snps,dcb-algorithm;
+-			snps,priority = <0x3>;
+-		};
+ 	};
+ };
+ 
+-- 
+2.35.1
 
-Please note, there was one small typo fix from v3->v4 in commit
-header(s/User/Use). Not sure if it's worth updating as it's already in
-next tree, upto you. Thanks!
-
--Kuldeep
-[1]
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=fb1bdb7e787a6037f501869b5aaf9e5cabe7a7bc
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=fbf64afd16b9581ae5a89c6924b50f83041463e0
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=095a7137ba3630bcca11e6017bfd4ab48b7fc12e
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=a86efc02b34104b93a0f9707d1e61577671fc4ad
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=7224013d4b5a64c43be23204bcfb4070dbd7fd76
