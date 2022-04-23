@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41F3550CAAA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 15:36:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C01CD50CAAE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 15:38:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234947AbiDWNim (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Apr 2022 09:38:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49730 "EHLO
+        id S234322AbiDWNlk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Apr 2022 09:41:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234327AbiDWNim (ORCPT
+        with ESMTP id S232261AbiDWNlj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Apr 2022 09:38:42 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DE6613C3D4;
-        Sat, 23 Apr 2022 06:35:45 -0700 (PDT)
+        Sat, 23 Apr 2022 09:41:39 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BCB2174F56;
+        Sat, 23 Apr 2022 06:38:42 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EE36D611E1;
-        Sat, 23 Apr 2022 13:35:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B1BC385A5;
-        Sat, 23 Apr 2022 13:35:40 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4FBCBB8077D;
+        Sat, 23 Apr 2022 13:38:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27113C385A5;
+        Sat, 23 Apr 2022 13:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650720944;
-        bh=rcT0itwEuGIdSuVrugDjXf4ZJA/D1R/gAaME3DtkKWk=;
+        s=k20201202; t=1650721120;
+        bh=1iuqdE/gMCK/IrEB1cps2joJ8q8TDslu7dsCHyQdk3c=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lJBGwmgGWcuQZTCWx60EhXQOGAcpLsgeKI6SZZy+WVgD2ZqnjpHxdv+hwwjxwB1L7
-         jgMx4tUR5pfklwNpbU0kwRU30GyvsBQma/+o66/+hr4rmIlTeCdlQATNXbi6DRZdW1
-         vxYYwMdyzuPfE4Kdd32A0NxQr6TTmDQh85fBf9NOEEwBWlj3K7HJ1KFOEAt1DBU0pU
-         PPjZk44IfMPuPfqA6m4lHfCppQW1uacy9TiEvugKe+Vv//p7nz6W87cqJMwRfvRViF
-         jBK0PSTe/uvmxVyz9cJXL9uO7SjvH2pEUr582v92h2nGIKtz23BHNMM4wB0csOLv+v
-         0hmS6mUfjk2XA==
-Date:   Sat, 23 Apr 2022 19:05:32 +0530
+        b=PqhKrvSOkUQJzntv042bNJrnI5ExqK27Ys0YSXQmTvP8xMjZUIkrz9FV3a0ov7W1I
+         LcJPNXxfJIhwMhU+icUIJ9cbwVXWzLvH80HIi4QC55WkTj/zQq8+5nSaCDudhszTYh
+         jH/lBlH0BPzV22xse/CPKXKb9ddt/VUAJ44n6bUyKCEh5K+f33Xy/SNLgBymglJkmD
+         H06xI2qiHYBMC3povZSv84IDtYb6l/N8NqK5zY1+AZSAZZOv13RBUN43GbHHvD9kJ3
+         wMITBo9YKWhpI86ijjap321Cvx3NQ0avpN67qu4zs+ViXGBxPf2h/ZmY7gHLiga1GJ
+         CJ+Ra4/cJNlQw==
+Date:   Sat, 23 Apr 2022 19:08:31 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Slark Xiao <slark_xiao@163.com>
 Cc:     hemantk@codeaurora.org, gregkh@linuxfoundation.org,
@@ -42,7 +42,7 @@ Cc:     hemantk@codeaurora.org, gregkh@linuxfoundation.org,
         linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v2] bus: mhi: host: Add support for Cinterion
  MV32-WA/MV32-WB
-Message-ID: <20220423133532.GP374560@thinkpad>
+Message-ID: <20220423133831.GQ374560@thinkpad>
 References: <20220421092141.3984-1-slark_xiao@163.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -66,12 +66,9 @@ On Thu, Apr 21, 2022 at 05:21:41PM +0800, Slark Xiao wrote:
 > for some common settings.
 > 
 > Fixes: 87693e092bd0 ("bus: mhi: pci_generic: Add Cinterion MV31-W PCIe to MHI")
-
-As Loic noted, Fixes tag is not relevant here. I'll remove it while applying.
-
 > Signed-off-by: Slark Xiao <slark_xiao@163.com>
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Applied to mhi-next!
 
 Thanks,
 Mani
