@@ -2,149 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 63F7850C72C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 06:10:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15CFA50C776
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 07:03:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232133AbiDWENR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Apr 2022 00:13:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47024 "EHLO
+        id S233073AbiDWFGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Apr 2022 01:06:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232324AbiDWENN (ORCPT
+        with ESMTP id S231760AbiDWFGV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Apr 2022 00:13:13 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CB3A1F8EDD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 21:10:16 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id 12so11178039oix.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Apr 2022 21:10:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=YNhoTijYDK5hg3tJxjQgdgbL/kgrcPDOQkgZNKFoLe0=;
-        b=hdtSyu9V8DkuUoFOA2YMj1NAwALLRl8/nme92ADOd6vw4uiyPQw2nLnwlWE4hZOTYh
-         hMVnDHLTvfUc3WViSmGZpg2u+pUEdcvsCyRqN73T6IzHEHGfA1vTEDiRHBJPN+6XlSrv
-         msMrpfZZZUF+GyEAV6/iGHUUspOxCkoTxxTgLKGlzea3b8Ke23TheCXbCJsLEcyEmSAx
-         ScCt27p+r7SoHmhvmiiLbK5GcRXCci038RWnzP44TuuwC/pgLF4fgvBbUOcFzAdBcVtl
-         NfA6FDVc5YQAbEHs68IP4imFUJETFAHSxXGTUp5cLGJo2EgIWtcozlUiXlg7hCcXLvqZ
-         T+QQ==
+        Sat, 23 Apr 2022 01:06:21 -0400
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D331F8EF4;
+        Fri, 22 Apr 2022 22:03:25 -0700 (PDT)
+Received: by mail-pf1-f178.google.com with SMTP id p8so9835237pfh.8;
+        Fri, 22 Apr 2022 22:03:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=YNhoTijYDK5hg3tJxjQgdgbL/kgrcPDOQkgZNKFoLe0=;
-        b=GP8/1pEoGTcyzPaeJCJi765ztLJybgw6Uj+wIoYo//bfTybtxqhwZSy8rEwfGNrek1
-         Y3Oeb31Bz8jX2kciHS5o/OJ0J/TIVED2Vi3MfKFAOa/7LsqV0BFKXQnNqNRYQZZ5OZ7z
-         ohTOF5RD8iZ0cpWWad6mGgf7fI/OcjHse1GO9c5XnTAeTH7qyzjFlNN9gxqztyIJZ8t7
-         DiQjpROaAt5LmfuvP/kO4oGpv5jZeumWG3juNr+AdGmZy9Lr+yYOh/fGSy+OQSLgq5QO
-         8iLmoqnNjWDm1ETzAwFCmF5AxbU6Gf1K5f9ql5q9rOikQ0rebITwfAeKZfkCE8iFK3zv
-         GuqA==
-X-Gm-Message-State: AOAM533nSVOVyWftWtWvJchWLbKwIYM4MtTiUfrPfwcEsDkv1J+EDKXb
-        /bwlb/+obkOv+hsro5W+E6tfvg==
-X-Google-Smtp-Source: ABdhPJzEuQC08m6xCkVKR6XsHeSL5p0/ZkR7uRyRVVh9KvlNaDYNcO6f0NhDLqPj0GWi2P4EkbGFgQ==
-X-Received: by 2002:a05:6808:1a04:b0:322:7b89:1973 with SMTP id bk4-20020a0568081a0400b003227b891973mr8311352oib.227.1650687016176;
-        Fri, 22 Apr 2022 21:10:16 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id l10-20020aca3e0a000000b0032258369a5fsm1410185oia.44.2022.04.22.21.10.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 21:10:15 -0700 (PDT)
-Date:   Fri, 22 Apr 2022 21:12:16 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] drm/msm/dp: Implement oob_hotplug_event()
-Message-ID: <YmN8oMl7EulvBbEG@ripper>
-References: <20220422223225.1297434-1-bjorn.andersson@linaro.org>
- <20220422223225.1297434-2-bjorn.andersson@linaro.org>
- <11a77fd7-d30b-edf6-3570-64d0c2e1764c@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=vD0W6bI9inxY1IqwYpYGCs5VOO5jHMZ9Ui2cOWh/okI=;
+        b=RWffJnpR0EMAvWQ4n2uAQXH5VLGnAAh/w4N9lv+SQOf4g6YmvoL9PFiFykGtYKhk7x
+         grsCxY+NknzeRoR12SmHnJqHcKY4pph25sgJqAY+Lbo4ra8rU3GvcdqBL9omc9twkdIC
+         oMe4adn6AwuBdfuawmRqT2v+eUIUz2ZAE2gImJ47Ghl/aAHiZenZWWsuoj1yXb+3BCwM
+         ifpS6TbmsfKApb7HnQ1X1/8TlrJcfac5lag46NuEtw/KoyFvtSMDtGpPB69LlgNpuUqE
+         dygL8IfQTH7uYgC6SkiuixzzRQqaHsw0YbMvobXXlFxm6FSFKeE6oCBU2hVR0o10lo2c
+         WARw==
+X-Gm-Message-State: AOAM533xQsTJGJDcfOqdykMC6p5QsJzIA5Si0h39Toq3ANa13WPhDcNZ
+        Vlz2Q70kuV4X2LXvJV66t9c=
+X-Google-Smtp-Source: ABdhPJx6rWeo45nxheFodGYu+usoypVGBw0VrjbV/QATcx3S17+KMoJacGaZFY6u3PPv2KOdDQPdXw==
+X-Received: by 2002:a05:6a00:164c:b0:50a:472a:6b0a with SMTP id m12-20020a056a00164c00b0050a472a6b0amr8424873pfc.77.1650690204550;
+        Fri, 22 Apr 2022 22:03:24 -0700 (PDT)
+Received: from ?IPV6:2601:647:4000:d7:feaa:14ff:fe9d:6dbd? ([2601:647:4000:d7:feaa:14ff:fe9d:6dbd])
+        by smtp.gmail.com with ESMTPSA id r19-20020a17090b051300b001cd4989ff5esm7630037pjz.37.2022.04.22.22.03.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Apr 2022 22:03:23 -0700 (PDT)
+Message-ID: <5ee685f5-152c-aca0-cc14-646cfae93000@acm.org>
+Date:   Fri, 22 Apr 2022 22:03:22 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <11a77fd7-d30b-edf6-3570-64d0c2e1764c@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 3/5] scsi: ufs: qcom: Add a readl() to make sure ref_clk
+ gets enabled
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        martin.petersen@oracle.com, jejb@linux.ibm.com
+Cc:     avri.altman@wdc.com, alim.akhtar@samsung.com,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+References: <20220422132140.313390-1-manivannan.sadhasivam@linaro.org>
+ <20220422132140.313390-4-manivannan.sadhasivam@linaro.org>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20220422132140.313390-4-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 22 Apr 16:07 PDT 2022, Dmitry Baryshkov wrote:
-> On 23/04/2022 01:32, Bjorn Andersson wrote:
-[..]
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-> > index 80f59cf99089..76904b1601b1 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_drm.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-> > @@ -123,6 +123,14 @@ static enum drm_mode_status dp_connector_mode_valid(
-> >   	return dp_display_validate_mode(dp_disp, mode->clock);
-> >   }
-> > +static void dp_oob_hotplug_event(struct drm_connector *connector,
-> > +				 enum drm_connector_hpd_state hpd_state)
-> > +{
-> > +	struct msm_dp *dp_disp = to_dp_connector(connector)->dp_display;
-> > +
-> > +	dp_display_oob_hotplug_event(dp_disp, hpd_state);
-> > +}
-> > +
-> >   static const struct drm_connector_funcs dp_connector_funcs = {
-> >   	.detect = dp_connector_detect,
-> >   	.fill_modes = drm_helper_probe_single_connector_modes,
-> > @@ -130,6 +138,7 @@ static const struct drm_connector_funcs dp_connector_funcs = {
-> >   	.reset = drm_atomic_helper_connector_reset,
-> >   	.atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
-> >   	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
-> > +	.oob_hotplug_event = dp_oob_hotplug_event,
-> 
-> We were (are) going to switch dp driver to use drm_bridge_connector (to fix
-> support for bridge chains, eDP panels, etc.
-> 
-> So these changes must be ported to drm_bridge_connector (or we must
-> abandon/defer the idea of using the bridge_connector).
-> 
-> For the oob_hotplug_event() callback proper support might be as simple as
-> calling drm_bridge_connector_hpd_cb().
-> 
+On 4/22/22 06:21, Manivannan Sadhasivam wrote:
+> In ufs_qcom_dev_ref_clk_ctrl(), it was noted that the ref_clk needs to be
+> stable for atleast 1us. Eventhough there is wmb() to make sure the write
+                ^              ^
+Some spaces are missing.
 
-Are you saying that you have code ready and being merged into linux-next
-that I should redesign this on top of, or that you're planning to write
-some code in the future and DisplayPort support have to wait until then?
+> gets "completed", there is no guarantee that the write actually reached
+> the UFS device. There is a good chance that the write could be stored in
+> a Write Buffer (WB). In that case, eventhough the CPU waits for 1us, the
+                                          ^
+missing space----------------------------
 
-> >   };
-> >   static const struct drm_connector_helper_funcs dp_connector_helper_funcs = {
-> > @@ -160,6 +169,8 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
-> >   	if (ret)
-> >   		return ERR_PTR(ret);
-> > +	connector->fwnode = fwnode_handle_get(dev_fwnode(dp_display->dev));
-> > +
+> ref_clk might not be stable for that period.
 > 
-> This would be much more interesting. Supporting this in a generic way might
-> be tricky. But we can still set the fwnode manually from the dp code.
+> So lets do a readl() to make sure that the previous write has reached the
+> UFS device before udelay().
 > 
+> Cc: stable@vger.kernel.org
+> Fixes: f06fcc7155dc ("scsi: ufs-qcom: add QUniPro hardware support and power optimizations")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>   drivers/scsi/ufs/ufs-qcom.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+> index 5f0a8f646eb5..5b9986c63eed 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.c
+> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> @@ -690,6 +690,12 @@ static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
+>   		/* ensure that ref_clk is enabled/disabled before we return */
+>   		wmb();
+>   
+> +		/*
+> +		 * Make sure the write to ref_clk reaches the destination and
+> +		 * not stored in a Write Buffer (WB).
+> +		 */
+> +		readl(host->dev_ref_clk_ctrl_mmio);
+> +
+>   		/*
+>   		 * If we call hibern8 exit after this, we need to make sure that
+>   		 * device ref_clk is stable for at least 1us before the hibern8
 
-There's a slight mishmash here, because the device used to initialize
-the connector is the drm_dev, but we need the actual fwnode of the DP
-device associated with the connector.
+The comment above the wmb() call looks wrong to me. How about removing 
+that wmb() call?
 
-So I think this is how it needs to be done.
+Thanks,
 
-Regards,
-Bjorn
+Bart.
