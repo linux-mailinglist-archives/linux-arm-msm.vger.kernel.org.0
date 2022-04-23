@@ -2,54 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C01CD50CAAE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 15:38:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87D5050CAB1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 15:40:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234322AbiDWNlk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Apr 2022 09:41:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34150 "EHLO
+        id S235902AbiDWNnI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Apr 2022 09:43:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232261AbiDWNlj (ORCPT
+        with ESMTP id S235820AbiDWNmk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Apr 2022 09:41:39 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BCB2174F56;
-        Sat, 23 Apr 2022 06:38:42 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 4FBCBB8077D;
-        Sat, 23 Apr 2022 13:38:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27113C385A5;
-        Sat, 23 Apr 2022 13:38:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650721120;
-        bh=1iuqdE/gMCK/IrEB1cps2joJ8q8TDslu7dsCHyQdk3c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PqhKrvSOkUQJzntv042bNJrnI5ExqK27Ys0YSXQmTvP8xMjZUIkrz9FV3a0ov7W1I
-         LcJPNXxfJIhwMhU+icUIJ9cbwVXWzLvH80HIi4QC55WkTj/zQq8+5nSaCDudhszTYh
-         jH/lBlH0BPzV22xse/CPKXKb9ddt/VUAJ44n6bUyKCEh5K+f33Xy/SNLgBymglJkmD
-         H06xI2qiHYBMC3povZSv84IDtYb6l/N8NqK5zY1+AZSAZZOv13RBUN43GbHHvD9kJ3
-         wMITBo9YKWhpI86ijjap321Cvx3NQ0avpN67qu4zs+ViXGBxPf2h/ZmY7gHLiga1GJ
-         CJ+Ra4/cJNlQw==
-Date:   Sat, 23 Apr 2022 19:08:31 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Slark Xiao <slark_xiao@163.com>
-Cc:     hemantk@codeaurora.org, gregkh@linuxfoundation.org,
-        loic.poulain@linaro.org, bbhatt@codeaurora.org,
-        christophe.jaillet@wanadoo.fr, thomas.ulrich@thalesgroup.com,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] bus: mhi: host: Add support for Cinterion
- MV32-WA/MV32-WB
-Message-ID: <20220423133831.GQ374560@thinkpad>
-References: <20220421092141.3984-1-slark_xiao@163.com>
+        Sat, 23 Apr 2022 09:42:40 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 834111759EF
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 06:39:43 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id w19so18800377lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 06:39:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WmG3r1mZsoVYs6QsuMg1BBRJC+fIBK1Gsm9c/gPZCvQ=;
+        b=brJk0DzJNCmKD58MDuyNtEZdvjAvWql5feN/k63q8FkURGD2ZZiZOooj1Uweb4/nmY
+         aTQyhVHdXCM0i+znL3n04sOGYFJHam5eqgIX/5lEpaFnr3kmH/eTfgQRbbshTkV1Tr8G
+         maXIfNDgGmTEOaL5IC7UbaJpUvvgJRSkM7q6vsCd/Lj5wkvlJoONW44nW+bK7HFFL8rv
+         RI4yfiOEHPxAYViyGsVzk1MHxELD8Qw7F9+I/uL0Q9qbyXUQkZJdkY4zVmSchEyHg91R
+         NMAeTH0R7ShOtM5J+wxyj9tUTv1zhun70Xu7P994JBOA2B4Vf4v1upeeFQKC/YitGsHZ
+         Qggg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WmG3r1mZsoVYs6QsuMg1BBRJC+fIBK1Gsm9c/gPZCvQ=;
+        b=7bL1P8EselPhxR+FEkw0LOE2IWog298E9y8PjcF2d+PAJL9WEoGtotTWMuf8Fri4Tc
+         o4qQKRC8pFxSZ+cHzOBD6EAEqMRSj5DJ9dDnv1wrM2lflTMDZLrhsTGEMaJ1KNd8NMR8
+         OuYXCVDPlx9D8kPqiOQzS1vJ4ejLXniiLizfp7NhGDe1XpC34auBG3XQyF/RbJ1wUMIx
+         i+eCunQ4+G5tmFnNFNb+05MBK0dlYZtglMAl49boCYu0CuQS5wNBylw7cz7/QiiJZQ6y
+         wu1WCpc2/xNDyBPKwAUwAvTPVJKyGvAsgnpaez0/V6tCd9GK3EKB7nrvXSAw+nIUJtyC
+         1gjg==
+X-Gm-Message-State: AOAM530y1FmTNH33+iJF+FO/JGM9xrun5YW506RHUU48RIjD4k+g2TQW
+        Oq+9xzanh/Wdwk2XYfEtv8Yj0g==
+X-Google-Smtp-Source: ABdhPJzNLqTQ0ZF1Gk+ntfeo51DuIfvr6hU33kAUNwB8sXvtjcrjTuyKjJ30vzcYy2TCS1mdmhm4tw==
+X-Received: by 2002:a05:6512:11cc:b0:44a:5770:7425 with SMTP id h12-20020a05651211cc00b0044a57707425mr6363344lfr.406.1650721181764;
+        Sat, 23 Apr 2022 06:39:41 -0700 (PDT)
+Received: from eriador.lumag.spb.ru ([94.25.228.223])
+        by smtp.gmail.com with ESMTPSA id c21-20020a2ea795000000b0024ee0f8ef92sm544535ljf.36.2022.04.23.06.39.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Apr 2022 06:39:41 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v2 0/5] PCI: qcom: Fix higher MSI vectors handling
+Date:   Sat, 23 Apr 2022 16:39:34 +0300
+Message-Id: <20220423133939.2123449-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220421092141.3984-1-slark_xiao@163.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -58,92 +74,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 21, 2022 at 05:21:41PM +0800, Slark Xiao wrote:
-> MV32-WA is designed based on Qualcomm SDX62, and
-> MV32-WB is designed based on QUalcomm SDX65. Both
-> products' enumeration would align with previous
-> product MV31-W.So we merge MV31 and MV32 to MV3X
-> for some common settings.
-> 
-> Fixes: 87693e092bd0 ("bus: mhi: pci_generic: Add Cinterion MV31-W PCIe to MHI")
-> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+I have replied with my Tested-by to the patch at [2], which has landed
+in the linux-next as the commit 8ae0117418f3 ("PCI: qcom:
+Add support for handling MSIs from 8 endpoints"). However lately I
+noticed that during the tests I still had 'pcie_pme=nomsi', so the
+device was not forced to use higher MSI vectors.
 
-Applied to mhi-next!
+After removing this option I noticed that hight MSI vectors are not
+delivered on tested platforms. After additional research I stumbled upon
+a patch in msm-4.14 ([1]), which describes that each group of MSI
+vectors is mapped to the separate interrupt. Implement corresponding
+mapping.
 
-Thanks,
-Mani
+Patchseries dependecies: [2] (landed in pci-next) and [3] (for the
+schema change).
 
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 30 ++++++++++++++++++++++--------
->  1 file changed, 22 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 9527b7d63840..ef8c16746b76 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -371,7 +371,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
->  	.sideband_wake = false,
->  };
->  
-> -static const struct mhi_channel_config mhi_mv31_channels[] = {
-> +static const struct mhi_channel_config mhi_mv3x_channels[] = {
->  	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 64, 0),
->  	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 64, 0),
->  	/* MBIM Control Channel */
-> @@ -382,25 +382,33 @@ static const struct mhi_channel_config mhi_mv31_channels[] = {
->  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 512, 3),
->  };
->  
-> -static struct mhi_event_config mhi_mv31_events[] = {
-> +static struct mhi_event_config mhi_mv3x_events[] = {
->  	MHI_EVENT_CONFIG_CTRL(0, 256),
->  	MHI_EVENT_CONFIG_DATA(1, 256),
->  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
->  	MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101),
->  };
->  
-> -static const struct mhi_controller_config modem_mv31_config = {
-> +static const struct mhi_controller_config modem_mv3x_config = {
->  	.max_channels = 128,
->  	.timeout_ms = 20000,
-> -	.num_channels = ARRAY_SIZE(mhi_mv31_channels),
-> -	.ch_cfg = mhi_mv31_channels,
-> -	.num_events = ARRAY_SIZE(mhi_mv31_events),
-> -	.event_cfg = mhi_mv31_events,
-> +	.num_channels = ARRAY_SIZE(mhi_mv3x_channels),
-> +	.ch_cfg = mhi_mv3x_channels,
-> +	.num_events = ARRAY_SIZE(mhi_mv3x_events),
-> +	.event_cfg = mhi_mv3x_events,
->  };
->  
->  static const struct mhi_pci_dev_info mhi_mv31_info = {
->  	.name = "cinterion-mv31",
-> -	.config = &modem_mv31_config,
-> +	.config = &modem_mv3x_config,
-> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +	.dma_data_width = 32,
-> +	.mru_default = 32768,
-> +};
-> +
-> +static const struct mhi_pci_dev_info mhi_mv32_info = {
-> +	.name = "cinterion-mv32",
-> +	.config = &modem_mv3x_config,
->  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->  	.dma_data_width = 32,
->  	.mru_default = 32768,
-> @@ -475,6 +483,12 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  	/* MV31-W (Cinterion) */
->  	{ PCI_DEVICE(0x1269, 0x00b3),
->  		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
-> +	/* MV32-WA (Cinterion) */
-> +	{ PCI_DEVICE(0x1269, 0x00ba),
-> +		.driver_data = (kernel_ulong_t) &mhi_mv32_info },
-> +	/* MV32-WB (Cinterion) */
-> +	{ PCI_DEVICE(0x1269, 0x00bb),
-> +		.driver_data = (kernel_ulong_t) &mhi_mv32_info },
->  	{  }
->  };
->  MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
-> -- 
-> 2.25.1
-> 
+Changes since v1:
+ - Split a huge patch into three patches as suggested by Bjorn Helgaas
+ - snps,dw-pcie removal is now part of [3]
+
+[1] https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/commit/671a3d5f129f4bfe477152292ada2194c8440d22
+[2] https://lore.kernel.org/linux-arm-msm/20211214101319.25258-1-manivannan.sadhasivam@linaro.org/
+[3] https://lore.kernel.org/linux-arm-msm/20220422211002.2012070-1-dmitry.baryshkov@linaro.org/
+
+
+Dmitry Baryshkov (5):
+  PCI: dwc: Convert msi_irq to the array
+  PCI: dwc: Teach dwc core to parse additional MSI interrupts
+  PCI: qcom: Handle MSI IRQs properly
+  dt-bindings: pci/qcom,pcie: support additional MSI interrupts
+  arm64: dts: qcom: sm8250: provide additional MSI interrupts
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    | 14 ++++-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          | 11 +++-
+ drivers/pci/controller/dwc/pci-dra7xx.c       |  2 +-
+ drivers/pci/controller/dwc/pci-exynos.c       |  2 +-
+ .../pci/controller/dwc/pcie-designware-host.c | 53 ++++++++++++++-----
+ drivers/pci/controller/dwc/pcie-designware.h  |  3 +-
+ drivers/pci/controller/dwc/pcie-keembay.c     |  2 +-
+ drivers/pci/controller/dwc/pcie-qcom.c        |  1 +
+ drivers/pci/controller/dwc/pcie-spear13xx.c   |  2 +-
+ drivers/pci/controller/dwc/pcie-tegra194.c    |  2 +-
+ 10 files changed, 70 insertions(+), 22 deletions(-)
+
+
+base-commit: ce522ba9ef7e2d9fb22a39eb3371c0c64e2a433e
+prerequisite-patch-id: bfbbebbfd7a7f7acf46ddfa99da1cb259fbcf9e6
+prerequisite-patch-id: dc9fc1a533b2ee58336b6af58546ec4ce4dc69d1
+prerequisite-patch-id: d02abf52f065fee631769ed3362b5cba30c9b71e
+prerequisite-patch-id: ade72962f2915faef888a605b322fbfb063009d7
+prerequisite-patch-id: e7c1182f9dd63f4dec7f76b08f74b1b3152bf49d
+prerequisite-patch-id: fe65300b2a281a148e079e4d8cecb6018475abd6
+prerequisite-patch-id: 509ce8b6c53bc9426b6ffaaa63a4a64b221a8b18
+prerequisite-patch-id: f459fbbb2cfb317b8c85701eefd8f7c9e1a55b34
+-- 
+2.35.1
+
