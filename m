@@ -2,133 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 134FC50C8DB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 11:54:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 768ED50C93A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 12:31:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234689AbiDWJ53 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Apr 2022 05:57:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54120 "EHLO
+        id S234999AbiDWKd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Apr 2022 06:33:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234678AbiDWJ52 (ORCPT
+        with ESMTP id S232670AbiDWKdZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Apr 2022 05:57:28 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A88BC1399B3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 02:54:31 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id b15so10255079pfm.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 02:54:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=yUtsnYBIm01JXZecNVsIjjwJM9zeU9bP2sYqdVupyhs=;
-        b=s2hZa+V1gBmYvlkiakilXv/njbEHD3uo6Q+veU65MapnY7ergLjc0EcstslsKTuDem
-         hD2Wplm+D+hYzgFz8tTKyb8mPGn8vUiEoBTwSVEGDzjr0PyhnhO1IH/oj1P3dMPowB7e
-         gm3GW9ARiqEkLnCJKY/9cPqA8wzFbxL/6N2jkww8i6OdbOqRAYnJoEednmjHsfwH8FHV
-         Oxuun+ZFtniPOU33RGtU9DUjZAajYIbtXzLR/BM5bGjCa5645s544KVtpZC+NDqFM/ax
-         ocgK4S8RBm0qTosF5SXoAu5HWGRx0F0Myp1y6NUIb8gYu9sG35NhLTXdTisEOdY0viOW
-         GTuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=yUtsnYBIm01JXZecNVsIjjwJM9zeU9bP2sYqdVupyhs=;
-        b=rP/kdyRP/4iyQg+N/BPuoWPCjlov/nvFKCzWjWpcMC1p4ncaQ7JfMKvgLDP69UA3uP
-         flzrMGV/A7wPNL4SaU4Yi4L2UApwqzfEz/tc4TmX7hCehXQFKjSgve/Ed7Q6jdOdvelP
-         ECB7nSvk1RfgDmUw8i4RI7/Qo/Xy5CGasq/NzpaS4wtkVwLCd/TzmUMOel+zn+T9Z6zi
-         GGH8Ji6LRZHLuk3X2j+Ks0X+9CvbgDD83uiLiF6HeMvfi5Hyv7vTY/Q+D67hRq3WZ/Uv
-         TgKQUkhqtdNWG3bkKOXKnyw4fK51+5wh6Nlb/X/T0ST/blX0i/dGNJJcvG+vrFBWVRF6
-         Ns4w==
-X-Gm-Message-State: AOAM530VMapI4OyDwDkjpEE/oI8G1Jdy87Hri5iYmP7FNPH8sDwnsXBs
-        NqJgSzutVDLvKp14y7NUvm29
-X-Google-Smtp-Source: ABdhPJyUD2+pddHG8R+pE+ymvssOE4dR8B16cM/ywDRUpHhIwOAvha9/v9gMtwZJBfeuBUslOAaECg==
-X-Received: by 2002:aa7:90d5:0:b0:4e1:307c:d94a with SMTP id k21-20020aa790d5000000b004e1307cd94amr9292303pfk.38.1650707671128;
-        Sat, 23 Apr 2022 02:54:31 -0700 (PDT)
-Received: from thinkpad ([117.207.28.196])
-        by smtp.gmail.com with ESMTPSA id iy2-20020a17090b16c200b001d75aabe050sm6309658pjb.34.2022.04.23.02.54.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Apr 2022 02:54:30 -0700 (PDT)
-Date:   Sat, 23 Apr 2022 15:24:23 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
-        avri.altman@wdc.com, alim.akhtar@samsung.com,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/5] scsi: ufs: qcom: Fix acquiring the optional reset
- control line
-Message-ID: <20220423095423.GA374560@thinkpad>
-References: <20220422132140.313390-1-manivannan.sadhasivam@linaro.org>
- <20220422132140.313390-2-manivannan.sadhasivam@linaro.org>
- <20220422154010.2cxk4qy5eikxujb2@halaneylaptop>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220422154010.2cxk4qy5eikxujb2@halaneylaptop>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Sat, 23 Apr 2022 06:33:25 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C5211EACF;
+        Sat, 23 Apr 2022 03:30:29 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0117E60F72;
+        Sat, 23 Apr 2022 10:30:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51ABFC385A5;
+        Sat, 23 Apr 2022 10:30:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650709828;
+        bh=ff4v014/iePNUz+icT/yCsh2zIx6F6nb3gqJB1eZ8UE=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=IXbxE35IvogCm4AZ8zf3jDibpQvSyM0C/W7X9aOUpsRCzXOI07cfGdkWgEbDXWuCr
+         kHSslvl42YFufuJLUjxH+6Rlemh4k5ehoJ0U76XnWwo/D64jT3So83tqkAFjCS9+H6
+         9XGZjuNh5XDyj1VT2QzlODsbPR56lIo8wzJ2/IPR+6qUMek4L2BCV/t5x64hN25Q8y
+         Xr9LLlVN3fF+XBKV03hhLSY0wx9o5lEU7yd8whJ6OEG30xUTbuEa5djU8KMh+2QwPC
+         oAsEmKmW3z1C/HA7pmQSaW9nJigb1Pte7SU3itFZmqvPUSBZDBhkZgGwGurE72xs+j
+         1h8z5Y+LbCwCQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=billy-the-mountain.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1niD21-006Mq2-Qb; Sat, 23 Apr 2022 11:30:25 +0100
+Date:   Sat, 23 Apr 2022 11:30:25 +0100
+Message-ID: <874k2kccse.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, Bartosz Golaszewski <brgl@bgdev.pl>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Joey Gouly <joey.gouly@arm.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, kernel-team@android.com
+Subject: Re: [PATCH v3 00/10] gpiolib: Handle immutable irq_chip structures
+In-Reply-To: <CACRpkda3L_itpqcnPq6xDoJtNHt8NuvE1MZk1bCNR+u2KKUpBA@mail.gmail.com>
+References: <20220419141846.598305-1-maz@kernel.org>
+        <CACRpkda3L_itpqcnPq6xDoJtNHt8NuvE1MZk1bCNR+u2KKUpBA@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: linus.walleij@linaro.org, linux-kernel@vger.kernel.org, brgl@bgdev.pl, thierry.reding@gmail.com, joey.gouly@arm.com, jonathanh@nvidia.com, marcan@marcan.st, sven@svenpeter.dev, alyssa@rosenzweig.io, bjorn.andersson@linaro.org, agross@kernel.org, jeffrey.l.hugo@gmail.com, tglx@linutronix.de, Basavaraj.Natikar@amd.com, Shyam-sundar.S-k@amd.com, andy.shevchenko@gmail.com, linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 22, 2022 at 10:40:10AM -0500, Andrew Halaney wrote:
-> On Fri, Apr 22, 2022 at 06:51:36PM +0530, Manivannan Sadhasivam wrote:
-> > On Qcom UFS platforms, the reset control line seems to be optional
-> > (for SoCs like MSM8996 and probably for others too). The current logic
-> > tries to mimic the `devm_reset_control_get_optional()` API but it also
-> > continues the probe if there is an error with the declared reset line in
-> > DT/ACPI.
-> > 
-> > In an ideal case, if the reset line is not declared in DT/ACPI, the probe
-> > should continue. But if there is problem in acquiring the declared reset
-> > line (like EPROBE_DEFER) it should fail and return the appropriate error
-> > code.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/scsi/ufs/ufs-qcom.c | 10 +++++-----
-> >  1 file changed, 5 insertions(+), 5 deletions(-)
-> > 
-> > diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> > index 0d2e950d0865..5db0fd922062 100644
-> > --- a/drivers/scsi/ufs/ufs-qcom.c
-> > +++ b/drivers/scsi/ufs/ufs-qcom.c
-> > @@ -1002,13 +1002,13 @@ static int ufs_qcom_init(struct ufs_hba *hba)
-> >  	host->hba = hba;
-> >  	ufshcd_set_variant(hba, host);
-> >  
-> > -	/* Setup the reset control of HCI */
-> > -	host->core_reset = devm_reset_control_get(hba->dev, "rst");
-> > +	/* Setup the optional reset control of HCI */
-> > +	host->core_reset = devm_reset_control_get_optional(hba->dev, "rst");
-> >  	if (IS_ERR(host->core_reset)) {
-> >  		err = PTR_ERR(host->core_reset);
-> > -		dev_warn(dev, "Failed to get reset control %d\n", err);
-> > -		host->core_reset = NULL;
-> > -		err = 0;
-> > +		if (err != -EPROBE_DEFER)
-> > +			dev_err(dev, "Failed to get reset control %d\n", err);
+On Fri, 22 Apr 2022 22:24:22 +0100,
+Linus Walleij <linus.walleij@linaro.org> wrote:
 > 
-> Could we use dev_err_probe() here?
+> On Tue, Apr 19, 2022 at 4:19 PM Marc Zyngier <maz@kernel.org> wrote:
 > 
+> > This is a followup from [2].
+> >
+> > I recently realised that the gpiolib play ugly tricks on the
+> > unsuspecting irq_chip structures by patching the callbacks.
+> >
+> > Not only this breaks when an irq_chip structure is made const (which
+> > really should be the default case), but it also forces this structure
+> > to be copied at nauseam for each instance of the GPIO block, which is
+> > a waste of memory.
+> >
+> > My current approach is to add a new irq_chip flag (IRQCHIP_IMMUTABLE)
+> > which does what it says on the tin: don't you dare writing to them.
+> > Gpiolib is further updated not to install its own callbacks, and it
+> > becomes the responsibility of the driver to call into the gpiolib when
+> > required. This is similar to what we do for other subsystems such as
+> > PCI-MSI.
+> >
+> > 5 drivers are updated to this new model: M1, QC, Tegra, pl061 and AMD
+> > (as I actively use them) keeping a single irq_chip structure, marking
+> > it const, and exposing the new flag.
+> >
+> > Nothing breaks, the volume of change is small, the memory usage goes
+> > down and we have fewer callbacks that can be used as attack vectors.
+> > What's not to love?
+> >
+> > Since there wasn't any objection in the previous round of review, I'm
+> > going to take this series into -next to see if anything breaks at
+> > scale.
+> 
+> The series:
+> Acked-by: Linus Walleij <linus.walleij@linaro.org>
+> 
+> Bartosz: if you're happy with this can you apply it to an immutable branch
+> from v5.18-rc1 and merge that into the GPIO for-next and then I can also
+> pull that into pinctrl?
 
-Yes. Will do the same for patch 2/5 as well.
+For what it is worth, I've pushed this branch into irqchip-next.
 
-Thanks,
-Mani
+You can pick it up from:
 
-> Otherwise, looks good to me.
-> 
-> > +		goto out_variant_clear;
-> >  	}
-> >  
-> >  	/* Fire up the reset controller. Failure here is non-fatal. */
-> > -- 
-> > 2.25.1
-> > 
-> 
+https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log/?h=irq/gpio-immutable
+
+but I can also drop it from the irqchip tree.
+
+Just let me know.
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
