@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCB3350CB7B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 16:57:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0160750CB96
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 17:15:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230421AbiDWPAQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Apr 2022 11:00:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37388 "EHLO
+        id S231389AbiDWPSD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Apr 2022 11:18:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbiDWPAQ (ORCPT
+        with ESMTP id S231741AbiDWPRy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Apr 2022 11:00:16 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4F57893A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 07:57:18 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id c11-20020a9d684b000000b00603307cef05so7576732oto.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 07:57:18 -0700 (PDT)
+        Sat, 23 Apr 2022 11:17:54 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6999C1D4A44
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 08:14:56 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id v12-20020a9d7d0c000000b006054b51c3d4so7584001otn.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 08:14:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=XjKZSro3DpVzoh8wbUic306++EFAdF/1LLF/UK3rLrU=;
-        b=advgWBozNFrwpMfVZAmEPyp93pCNxaIz6pe9scBCWEWrGuzCKhU+KPXWoUbuYXyZFp
-         UEyWbJKARQAYgO87vKKrI+61t6FQksdhtFNAaApxx5Ia+3dFukKZxCSTurFnWb1eZaK5
-         1tsjN7sAmoSaDLRTK1JwQLio2Ey/9UocuDqfleswIGHQpdrA36eCFtKQV0Tk158lPQ+7
-         1BT2Vc6SjiE+cETdnMHDQxp+1Bjo451C1YZ3J3WINEchyhpyUu0gyZ5FrJKutBqxmOOJ
-         Bq0BSHnf7Pv9cjPxy3miXXJs1/yZUEhGzdq+A42ewc+fFUM9b6VJ7mPgj1ZT+zb/x0Vn
-         KlZA==
+        bh=22eenijkFNhaFMADi9ElotDWSOkFn1tnTr48x0vYVAk=;
+        b=GVdoeLER62JBuMZ1/XSDwKSXWJkTrASzMX5GiiwdNPfJpMt3lNuHKyAGznJg8Jj4YD
+         Y0OgdPH+yHPluQvdKK3tdKlA4FhK00j6P8A+eVTuWE62F0BA+1BT9iPrsiEQhdeB0Lyv
+         Mp55lWoI9zECwZV1oVFZ44zoPfl0NGOMvxjTvQzy57f8uBYv9cxvyEVwOAonr4A0dTy/
+         FylA5e256esQ4NvjSDMgX+7TWx3tRd5+MhV6m1R/JrsoaVFNS4Zknfl56tfhL248WpNR
+         ORX4eiJMnfEkp8WGVALV2vSEcA9fQNUvChHieI4oGExC8+50/kh7o16ztg8T6y4QK1w/
+         OjZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=XjKZSro3DpVzoh8wbUic306++EFAdF/1LLF/UK3rLrU=;
-        b=mgXrtX9p80uRRPYhVTXrp7b955mnupbVcfcWAVfY4YM8CzisPGksmj1blaQSqVFQdD
-         pslVspINsECzMZBgSjKEnngvfwPFQBed0kW0h4wuoum38sAFDyxCMJZJzSuKVxwOh3X8
-         /YFq3AEyxvzW2ztsNk7dA9i0qFh8Yf1xqCywa0RwWsYs8i6f1eVZPKdLUWgabZe9pvjy
-         3AXKCpiwIbJS9ItM9STFYlVwPulRV6A2NgXaeuhzjZ24zlN7ZVYAUgN8BEW74Ch7VYva
-         8txKoIdr2D95U7apZdqeCS20v+lW4MZhesbuchTSLDdc7Z7wifsv841PvS7E0bRa7VdD
-         qoxA==
-X-Gm-Message-State: AOAM531hUD5dgFMd/RWXQvKSz7Mw5TiqTciuGz62u4WCd3jnbek9jEn9
-        fWYdQkwtUP4rDCollBuTA9FYQw==
-X-Google-Smtp-Source: ABdhPJzfaf0fnc1yHREYwM0HAeiZQYOU4Bw+tQ9TIWYCkZYyebUV4SVBJ/C1GeZkG1pskEFy7KO7ww==
-X-Received: by 2002:a9d:5a19:0:b0:5cd:9ca0:898b with SMTP id v25-20020a9d5a19000000b005cd9ca0898bmr3666119oth.318.1650725837834;
-        Sat, 23 Apr 2022 07:57:17 -0700 (PDT)
+        bh=22eenijkFNhaFMADi9ElotDWSOkFn1tnTr48x0vYVAk=;
+        b=VftIIkI0r47iuDgBRlVgqtCdQKog9NEUHWnDXyaYkCu2HudjSTUxBR9k2xxX/fFPQh
+         Z3ydGA8Atm71nz5HMpFcOetzer/dKKYOrC/Z8/RxBOfA5BBuyJh6AlqREAd4goIOlDCy
+         KMcFM9qea5xjVd+RkZq8KaVqGoYMJime37BBISvFemO8G+UaWQpJbaaQjVeYPkWuN9G7
+         CGPem6koP98+vLNwtBrwNbSU2c7ObB6XyUu7DgFeFkCV/HJEbk/gLIaFMrPEBgU906dz
+         8XWAnxzbRGxNOwcLUO+tkFUH3GSIuYlsU02JkP93fIJyO7c4RDlT+CIjgc1Yr5PBCgIn
+         aRIg==
+X-Gm-Message-State: AOAM530JjqXBTeXspDXKgALa5ugyjajggYojt95PhMJQQor3MJWMJBW6
+        4aWEH8ypt8E4Pu7BrE36BjOgZNsJIpAOfFTF
+X-Google-Smtp-Source: ABdhPJyb/SfQ9fd+qfhl32OUbxio3UtCSvHIoOgBXrvsGqMSbnLd4vidbHe+NzwDUCm28o1ezpfXrQ==
+X-Received: by 2002:a9d:3624:0:b0:5e9:5778:d0c6 with SMTP id w33-20020a9d3624000000b005e95778d0c6mr3657575otb.367.1650726895781;
+        Sat, 23 Apr 2022 08:14:55 -0700 (PDT)
 Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id b4-20020aca1b04000000b00322959f5251sm1816136oib.26.2022.04.23.07.57.16
+        by smtp.gmail.com with ESMTPSA id 1-20020a05687011c100b000de98359b43sm1684551oav.1.2022.04.23.08.14.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Apr 2022 07:57:17 -0700 (PDT)
-Date:   Sat, 23 Apr 2022 07:59:17 -0700
+        Sat, 23 Apr 2022 08:14:55 -0700 (PDT)
+Date:   Sat, 23 Apr 2022 08:16:55 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
@@ -57,19 +57,19 @@ Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
         quic_cang@quicinc.com, linux-scsi@vger.kernel.org,
         linux-kernel@vger.kernel.org, bvanassche@acm.org,
         ahalaney@redhat.com
-Subject: Re: [PATCH v2 1/5] scsi: ufs: qcom: Fix acquiring the optional reset
- control line
-Message-ID: <YmQURV7yQMof4RB8@ripper>
+Subject: Re: [PATCH v2 2/5] scsi: ufs: qcom: Simplify handling of
+ devm_phy_get()
+Message-ID: <YmQYZ8l+QOsz11ld@ripper>
 References: <20220423140245.394092-1-manivannan.sadhasivam@linaro.org>
- <20220423140245.394092-2-manivannan.sadhasivam@linaro.org>
+ <20220423140245.394092-3-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220423140245.394092-2-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20220423140245.394092-3-manivannan.sadhasivam@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -78,55 +78,72 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Sat 23 Apr 07:02 PDT 2022, Manivannan Sadhasivam wrote:
 
-> On Qcom UFS platforms, the reset control line seems to be optional
-> (for SoCs like MSM8996 and probably for others too). The current logic
-> tries to mimic the `devm_reset_control_get_optional()` API but it also
-> continues the probe if there is an error with the declared reset line in
-> DT/ACPI.
+> There is no need to call devm_phy_get() if ACPI is used, so skip it.
+> The "host->generic_phy" pointer should already be NULL due to the kzalloc,
+> so no need to set it NULL again.
 > 
-> In an ideal case, if the reset line is not declared in DT/ACPI, the probe
-> should continue. But if there is problem in acquiring the declared reset
-> line (like EPROBE_DEFER) it should fail and return the appropriate error
-> code.
+> Also, don't print the error message in case of -EPROBE_DEFER and return
+> the error code directly.
+> 
+> While at it, also remove the comment that has no relationship with
+> devm_phy_get().
 > 
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  drivers/scsi/ufs/ufs-qcom.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>  drivers/scsi/ufs/ufs-qcom.c | 26 +++++---------------------
+>  1 file changed, 5 insertions(+), 21 deletions(-)
 > 
 > diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index 0d2e950d0865..bee81b45299e 100644
+> index bee81b45299e..6ee33cc0ad09 100644
 > --- a/drivers/scsi/ufs/ufs-qcom.c
 > +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -1002,13 +1002,13 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->  	host->hba = hba;
->  	ufshcd_set_variant(hba, host);
+> @@ -1022,28 +1022,12 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>  		err = 0;
+>  	}
 >  
-> -	/* Setup the reset control of HCI */
-> -	host->core_reset = devm_reset_control_get(hba->dev, "rst");
-> +	/* Setup the optional reset control of HCI */
-> +	host->core_reset = devm_reset_control_get_optional(hba->dev, "rst");
->  	if (IS_ERR(host->core_reset)) {
->  		err = PTR_ERR(host->core_reset);
-> -		dev_warn(dev, "Failed to get reset control %d\n", err);
-> -		host->core_reset = NULL;
-> -		err = 0;
-> +		if (err != -EPROBE_DEFER)
+> -	/*
+> -	 * voting/devoting device ref_clk source is time consuming hence
+> -	 * skip devoting it during aggressive clock gating. This clock
+> -	 * will still be gated off during runtime suspend.
+> -	 */
+> -	host->generic_phy = devm_phy_get(dev, "ufsphy");
+> -
+> -	if (host->generic_phy == ERR_PTR(-EPROBE_DEFER)) {
+> -		/*
+> -		 * UFS driver might be probed before the phy driver does.
+> -		 * In that case we would like to return EPROBE_DEFER code.
+> -		 */
+> -		err = -EPROBE_DEFER;
+> -		dev_warn(dev, "%s: required phy device. hasn't probed yet. err = %d\n",
+> -			__func__, err);
+> -		goto out_variant_clear;
+> -	} else if (IS_ERR(host->generic_phy)) {
+> -		if (has_acpi_companion(dev)) {
+> -			host->generic_phy = NULL;
+> -		} else {
+> +	if (!has_acpi_companion(dev)) {
+> +		host->generic_phy = devm_phy_get(dev, "ufsphy");
+> +		if (IS_ERR(host->generic_phy)) {
+>  			err = PTR_ERR(host->generic_phy);
+> -			dev_err(dev, "%s: PHY get failed %d\n", __func__, err);
+> +			if (err != -EPROBE_DEFER)
+> +				dev_err_probe(dev, err, "Failed to get PHY\n");
 
-dev_err_probe() does this comparison internally, so you can omit it
-here.
+I believe the idiomatic form is:
+			err = dev_err_probe(dev, PTR_ERR(host->generic_phy), "Failed to get PHY\n");
 
-With that removed, feel free to add my:
+
+But as with the previous patch, please remove the condition and you have
+my:
+
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
 
-> +			dev_err_probe(dev, err, "Failed to get reset control\n");
-> +		goto out_variant_clear;
+>  			goto out_variant_clear;
+>  		}
 >  	}
->  
->  	/* Fire up the reset controller. Failure here is non-fatal. */
 > -- 
 > 2.25.1
 > 
