@@ -2,149 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AF3550CBEC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 17:44:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 461D250CBF8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 17:51:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236078AbiDWPrq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Apr 2022 11:47:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47918 "EHLO
+        id S236119AbiDWPyg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Apr 2022 11:54:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236081AbiDWPrp (ORCPT
+        with ESMTP id S233748AbiDWPye (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Apr 2022 11:47:45 -0400
-Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6F6A2DAB8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 08:44:47 -0700 (PDT)
-Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-e604f712ecso11702255fac.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 08:44:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=WI4v9jTbsIcKFzbTFV4CkXCBay54N1Oo0tLcKG2okuk=;
-        b=GuCc7g12xSirTqULiexO/HNajNdmFb2nq0eVlcaz0hWMdnxOMIk5AeBAMqPyL0rYVl
-         MyvXwBc0tDxT1g1wi/Na74VHs+MMpCLVOCNuBRnNQYccRZvr/MHAzIyK7mu7VWVpRxnS
-         2zWuzRZCM9bVznfcRL1kSJRE+M+CxxTBdcY92OfyTcIYJBFBWe4C0NRAKHjdSUIVENHC
-         Xy4MWQrTivSTA6Ul6V8DvmPaHa+OhENFObjP1VJjSASeTRgGypP/0vY2zI0L8UwjUDoG
-         GUiSkSQlPu2plfvN4ZygVwuRULWkCX/AT5k4dMY1vakwjk16RPIUsOeK/9prQjRUtz9q
-         LvfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WI4v9jTbsIcKFzbTFV4CkXCBay54N1Oo0tLcKG2okuk=;
-        b=sCQRJdIvnAjQtmAZkncLhLS3WD21KthdGLx3hF86ifVVMLugCe8406cUlzuHJ7Kkp6
-         txQs6/Mdulv14yng8pdzLbE/bCe109k23ZR8OR5Qdn0/kFQNUSiPKVrmdn9PvdJAdENY
-         y8fRLZESkcrxkrq5XPGfTnwjG8d+NImD7ATygeP/AqczF9S4dDSlYvwsMSGmmpcWqWgN
-         QIJ0lJa2kswGCTCTM12upYD32onY90NAKBA3bdl1xFxyzQwlaQ3KHxKcqMCsngW/qR5Z
-         NGOXH+qOYm/Gvz0j6l7cSMUh4Y5xV2a71dGT0gDZtlfApQrJqaoMDAtAZAe0FWL+8fx5
-         i9sQ==
-X-Gm-Message-State: AOAM5312A+vflNHHuJSeiDuMQML7x0P3x58tnYfxiFy49mpofGusWxjH
-        +DMoT9rBQbSw4rV/YX/P6VHzNi+tRDdNjD24
-X-Google-Smtp-Source: ABdhPJwhzqzGCODM05j5yChA14I3TniITfBb/T0zYrHKD6GGVSxGnliKR/rMO0K34IDB5CGKJF3asg==
-X-Received: by 2002:a05:6870:4414:b0:e6:244f:78ba with SMTP id u20-20020a056870441400b000e6244f78bamr7984019oah.201.1650728687284;
-        Sat, 23 Apr 2022 08:44:47 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id g25-20020a544f99000000b002da70c710b8sm1933901oiy.54.2022.04.23.08.44.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Apr 2022 08:44:46 -0700 (PDT)
-Date:   Sat, 23 Apr 2022 08:46:47 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        bhupesh.linux@gmail.com, agross@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, vkoul@kernel.org
-Subject: Re: [PATCH v3 1/4] dt-bindings: phy: qcom,qmp: Mark '#clock-cells'
- as a 'optional' property
-Message-ID: <YmQfZ+h5tD6KbMID@ripper>
-References: <20220418205509.1102109-1-bhupesh.sharma@linaro.org>
- <20220418205509.1102109-2-bhupesh.sharma@linaro.org>
+        Sat, 23 Apr 2022 11:54:34 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C51D64C3;
+        Sat, 23 Apr 2022 08:51:36 -0700 (PDT)
+Received: from g550jk.arnhem.chello.nl (a246182.upc-a.chello.nl [62.163.246.182])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 3E165CAE5B;
+        Sat, 23 Apr 2022 15:51:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1650729095; bh=Pv8SOge4wX45Hpi29ExyVTuAkh3jcltOvD+t2ezoUEQ=;
+        h=From:To:Cc:Subject:Date;
+        b=djoiGXYM+jQLxx3Tu89EH4wzvKevDNK/X+X84GBLjY8YiOP/EjoyHYlVgR4Kx1SR+
+         8XvzpPveYIIPeqjsRBXmsn/JlCowliOsBBzfG+daUdgaF6R6iebsqbkC04vi95aCEx
+         l16kezGumToX0L+sDK99D0BOhGQSi3J8m/onfAWc=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/5] dt-bindings: remoteproc: qcom: pas: Add MSM8226 adsp
+Date:   Sat, 23 Apr 2022 17:50:55 +0200
+Message-Id: <20220423155059.660387-1-luca@z3ntu.xyz>
+X-Mailer: git-send-email 2.36.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220418205509.1102109-2-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        FROM_SUSPICIOUS_NTLD_FP,PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 18 Apr 13:55 PDT 2022, Bhupesh Sharma wrote:
+Add the compatible for the adsp found in MSM8226.
 
-> '#clock-cells' is not a required property for qmp-phy(s) in the
-> '/' node, but it should be is used in 'phy@' subnode (where it is
-> actually a 'required' property). Fix the same.
-> 
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+ Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-It's not that #clock-cells is "not a required property", it's that the
-clock comes out of the phy (the child node), so there is no clocks
-provided by the parent device.
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+index a4409c398193..925e4015d59b 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+@@ -16,6 +16,7 @@ description:
+ properties:
+   compatible:
+     enum:
++      - qcom,msm8226-adsp-pil
+       - qcom,msm8974-adsp-pil
+       - qcom,msm8996-adsp-pil
+       - qcom,msm8996-slpi-pil
+@@ -159,6 +160,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,msm8226-adsp-pil
+               - qcom,msm8974-adsp-pil
+               - qcom,msm8996-adsp-pil
+               - qcom,msm8996-slpi-pil
+@@ -274,6 +276,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,msm8226-adsp-pil
+               - qcom,msm8974-adsp-pil
+               - qcom,msm8996-adsp-pil
+               - qcom,msm8996-slpi-pil
+@@ -364,6 +367,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,msm8226-adsp-pil
+               - qcom,msm8996-adsp-pil
+               - qcom,msm8998-adsp-pas
+     then:
+@@ -546,6 +550,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,msm8226-adsp-pil
+               - qcom,msm8974-adsp-pil
+               - qcom,msm8996-adsp-pil
+               - qcom,msm8996-slpi-pil
+-- 
+2.36.0
 
-
-Please rewrite the commit message.
-
-> This also fixes the following 'make dtbs_check' warning(s):
-> 
-> sm8350-microsoft-surface-duo2.dt.yaml: phy@1d87000:
->   '#clock-cells' is a required property
-> 
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> index 8b850c5ab116..c39ead81ecd7 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> @@ -66,9 +66,6 @@ properties:
->        - description: Address and length of PHY's common serdes block.
->        - description: Address and length of PHY's DP_COM control block.
->  
-> -  "#clock-cells":
-> -    enum: [ 1, 2 ]
-> -
->    "#address-cells":
->      enum: [ 1, 2 ]
->  
-> @@ -112,11 +109,13 @@ patternProperties:
->      description:
->        Each device node of QMP phy is required to have as many child nodes as
->        the number of lanes the PHY has.
-> +    properties:
-> +      "#clock-cells":
-> +        enum: [ 0, 1, 2 ]
-
-The commit message doesn't mention the fact that 0 is also a valid
-value. Perhaps just keep it [1, 2] in this patch?
-
-Regards,
-Bjorn
-
->  
->  required:
->    - compatible
->    - reg
-> -  - "#clock-cells"
->    - "#address-cells"
->    - "#size-cells"
->    - ranges
-> @@ -468,7 +467,6 @@ examples:
->      usb_2_qmpphy: phy-wrapper@88eb000 {
->          compatible = "qcom,sdm845-qmp-usb3-uni-phy";
->          reg = <0x088eb000 0x18c>;
-> -        #clock-cells = <1>;
->          #address-cells = <1>;
->          #size-cells = <1>;
->          ranges = <0x0 0x088eb000 0x2000>;
-> -- 
-> 2.35.1
-> 
