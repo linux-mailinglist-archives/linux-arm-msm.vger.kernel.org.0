@@ -2,97 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E75AF50CD53
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Apr 2022 21:58:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B79650CEDB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Apr 2022 05:20:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236974AbiDWT75 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Apr 2022 15:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50308 "EHLO
+        id S237122AbiDXDXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Apr 2022 23:23:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236120AbiDWT7r (ORCPT
+        with ESMTP id S237931AbiDXDXI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Apr 2022 15:59:47 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BEAD19A491
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 12:56:46 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id a1so8541649edt.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Apr 2022 12:56:46 -0700 (PDT)
+        Sat, 23 Apr 2022 23:23:08 -0400
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28DF53A6;
+        Sat, 23 Apr 2022 20:20:09 -0700 (PDT)
+Received: by mail-qt1-x82c.google.com with SMTP id ay11so8251284qtb.4;
+        Sat, 23 Apr 2022 20:20:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=yNSMjzR/UC7gAKQriiodIhNkqmmIvXbfjZZmbtmDsBI=;
-        b=yzdnRPgskGVSMi8zv4oBko9lVeYwVJkxDSR6MCkGUoXeTAK/4NDODNNgZ26KgG/mOU
-         CoB2QmI5FRJiOq51uIk68eCareFVrvmvpKA6fadl6vN+B9T5RdthGC51nk1UKkl+rI8V
-         bjJ2huIzejbSjE72D4g4LFxCCdRX9/IA+qfbvCDwAyYtGJd+1W1YKHpSRD6XJtD/NGTi
-         CpaqFGoxA5vUA+GgVLLCa5jP0gs2G4OvNlibifucQX9N1C8ExbobxZ9RxTWEg1kPm5Q4
-         cw1AHrC+4rdOM3XxOEVWQzz9UEH9NMK1rgPaPN7MQiMNTT4/+pOMEGnmTuWdtFC0C1b1
-         hT4w==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=EBA8aWav/CoBSWehGgBZGEgzVa0RTgL7rHF90t0PF20=;
+        b=JtCtdl+5DWWk4Pj9mz99phQ52W2SEjVTzE0ETbG/GthiQd5Wtt48zvgm17LijeXvJr
+         6IzCxPrwD4LoIgSQ2+7/ourtejJG8l6yw8eLo6FoULmb+Oj/bnsSYX1ft83j+PyhqiWp
+         IwvEvi6FBAiL3t5BDs6w2mairv9tUe5Op/o3lYtpLWQ51kqOY/n6STPEvu9VIBUKqZ5Y
+         X3DbqKe/e4ol+BBWSRXv3w7+CzjMtQzfgG4oDyuipqiGkaN06SKC/1N+ePKNwmwyredJ
+         zpSOf1dW+mHjE7kL1PxJCRTK4HkX9LmIABQTXTYCGVMOToQfQbHoOISYkqgd8BdTffdS
+         m0/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=yNSMjzR/UC7gAKQriiodIhNkqmmIvXbfjZZmbtmDsBI=;
-        b=V54x8sq8JHSqmU/xIv4MPwm910MFE7w2qQcKSMvuw4/OI9N2cQPbuG5adbY7GeqqiQ
-         mGTTbYEzyzIl4xBgxecNNLs6STiQdwBw3EjjDlVrqEWgky1vozrfF7BhKTRDw676s1vM
-         5G/avf1SnKottKkWWjrWPyVYkDdThqqRxXsU0z9bAl4F4piLwEd0jj5GMm570cm9LBcP
-         5nw+MGWujb25aAaaStBWQAJJAPketO6ZnFNJGCyFPl8vwzRfcznIKDgJHThdWAGMZDAR
-         n/0k5fN+6/SpnjL6BF8AiGoE6qcQDaWifVUIsgBIMNeiEjkdAhiNFnU+Ie53TjhKsNnc
-         b2Og==
-X-Gm-Message-State: AOAM533giVR8GJZksxbeQb5RMldA3CthnIfKLdjG8GdDy3V7ZPuFpCe7
-        JIHbxpug701Kc7O2c7QsIs0Aaw==
-X-Google-Smtp-Source: ABdhPJzP7TI1ViD5VGn0KNvewzYBqWM6Mjpp1qDDQ0uaLL/LxQa1J8/5UFBb/Hc1PCg1kUb/MRd8iw==
-X-Received: by 2002:a05:6402:331c:b0:41d:9354:97c2 with SMTP id e28-20020a056402331c00b0041d935497c2mr11442391eda.300.1650743805113;
-        Sat, 23 Apr 2022 12:56:45 -0700 (PDT)
-Received: from [192.168.0.234] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id p24-20020a056402045800b0041614c8f79asm2518327edw.88.2022.04.23.12.56.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 23 Apr 2022 12:56:44 -0700 (PDT)
-Message-ID: <af3d5b2f-b245-6c10-1e2c-0f8f5a979fc0@linaro.org>
-Date:   Sat, 23 Apr 2022 21:56:43 +0200
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=EBA8aWav/CoBSWehGgBZGEgzVa0RTgL7rHF90t0PF20=;
+        b=TJSMiUJpHtjVmtPWjAPfhLv1QHo1xqwP58MykzT2R3vdxptzTlRBKBWhPBK8W3gkQo
+         kYFXyczpr7X6MfZkcizMQtEhFAzqmS0Gde/qeqXCKWGmnMXZhcAFX7HEcpHdAdtwHKrd
+         LCShFrH9c5JnePcAR+OJ1OFXQfOdBz3bej8ivtpzXYJzwgHbLhBVfosmN08qsseOxoGR
+         vPm0nVCSLAge3+h1QE9029qxNnGHkbDCwKEXcMUZggbAf+/VmjtlIg/h55yATpbNiKKJ
+         QSSsAgd6iuvYka9rtcUhnaLU7k275Mgj9KJFRWdJOpmyk1gZZQfle87toBFqPyh9yrmr
+         pr9g==
+X-Gm-Message-State: AOAM533QkFteeTLud1MDq8xT5ZyVhBmhj6aA10ols2HBzhQ0VgmwQf1b
+        Hg8a3ye/zqum96H+PhOKoM7cM4vUWNM=
+X-Google-Smtp-Source: ABdhPJxjmwV+ialnqEb/Pgpw43PsgJzk6QNcPOzlVGXfI4DjI6QU1OgP12eLiyjzGuEKuW7rqWPBSA==
+X-Received: by 2002:ac8:7f53:0:b0:2e0:77a0:1d35 with SMTP id g19-20020ac87f53000000b002e077a01d35mr7983018qtk.496.1650770408094;
+        Sat, 23 Apr 2022 20:20:08 -0700 (PDT)
+Received: from localhost.localdomain ([193.203.214.57])
+        by smtp.gmail.com with ESMTPSA id y5-20020a05620a0e0500b0069c28a4e8ddsm3060267qkm.72.2022.04.23.20.20.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Apr 2022 20:20:07 -0700 (PDT)
+From:   cgel.zte@gmail.com
+X-Google-Original-From: lv.ruyi@zte.com.cn
+To:     dmitry.baryshkov@linaro.org
+Cc:     airlied@linux.ie, angelogioacchino.delregno@collabora.com,
+        cgel.zte@gmail.com, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, lv.ruyi@zte.com.cn,
+        quic_abhinavk@quicinc.com, quic_mkrishn@quicinc.com,
+        sean@poorly.run, swboyd@chromium.org, vulab@iscas.ac.cn,
+        Zeal Robot <zealci@zte.com.cn>
+Subject: [PATCH v2] drm: msm: fix error check return value of irq_of_parse_and_map()
+Date:   Sun, 24 Apr 2022 03:19:59 +0000
+Message-Id: <20220424031959.3172406-1-lv.ruyi@zte.com.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <39b3828e-064c-6aa4-de77-35b201b1b40f@linaro.org>
+References: <39b3828e-064c-6aa4-de77-35b201b1b40f@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 1/5] dt-bindings: remoteproc: qcom: pas: Add MSM8226 adsp
-Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220423155059.660387-1-luca@z3ntu.xyz>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220423155059.660387-1-luca@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/04/2022 17:50, Luca Weiss wrote:
-> Add the compatible for the adsp found in MSM8226.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
->  Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
+From: Lv Ruyi <lv.ruyi@zte.com.cn>
 
+The irq_of_parse_and_map() function returns 0 on failure, and does not
+return an negative value.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Lv Ruyi <lv.ruyi@zte.com.cn>
+---
+v2: don't print irq, and return ERR_PTR(-EINVAL)
+---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index 3b92372e7bdf..44e395e59df9 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -570,9 +570,9 @@ struct msm_kms *mdp5_kms_init(struct drm_device *dev)
+ 	}
+ 
+ 	irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
+-	if (irq < 0) {
+-		ret = irq;
+-		DRM_DEV_ERROR(&pdev->dev, "failed to get irq: %d\n", ret);
++	if (!irq) {
++		ret = -EINVAL;
++		DRM_DEV_ERROR(&pdev->dev, "failed to get irq\n");
+ 		goto fail;
+ 	}
+ 
+-- 
+2.25.1
 
-Best regards,
-Krzysztof
