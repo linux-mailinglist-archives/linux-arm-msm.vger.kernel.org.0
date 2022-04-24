@@ -2,332 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8789C50D1E5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Apr 2022 15:16:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0233F50D1EA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Apr 2022 15:20:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233387AbiDXNSt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Apr 2022 09:18:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35050 "EHLO
+        id S233882AbiDXNXi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Apr 2022 09:23:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233780AbiDXNSr (ORCPT
+        with ESMTP id S233971AbiDXNXi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Apr 2022 09:18:47 -0400
-Received: from ixit.cz (ip-94-112-206-30.net.upcbroadband.cz [94.112.206.30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAB3DE93;
-        Sun, 24 Apr 2022 06:15:43 -0700 (PDT)
-Received: from localhost.localdomain (unknown [185.14.232.186])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id BDB0524CEB;
-        Sun, 24 Apr 2022 15:15:40 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1650806141;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=QdcXMwu4StCDfRuTYNtvpLD+CnAXeUVdYF37s7EbreU=;
-        b=VG9iHFerBI9Cz0raVcbmWn9zE6CMctfUAgRYWg6kcv06hKspdnQ2osqyUAzO4b3M/1xp31
-        UhIr4dKGljKnAlU8Fy9C2YjP9iyjqgkj3FwBUxaYuHIlYf/Ejwn2iLdRMuHFxELsVyNh9X
-        JM8MGeZcoRJnIxMAZk2bbCuCHZX4M9g=
-From:   David Heidelberg <david@ixit.cz>
+        Sun, 24 Apr 2022 09:23:38 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65A2F63A0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Apr 2022 06:20:37 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id p12so16369504lfs.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Apr 2022 06:20:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gqL8llnX3k0LZEaNoV5Vdp4GgnVXzeumqjyslS75z/E=;
+        b=JnLsqtwkHiLjRESz7QrLyUFNZUlpCWj8oqPRifj8JkNSJOXmOYtIQUrOpG71enpV5A
+         FwAj91k2+wAimqiqtHbBruV1ROVdnQf7wWEk/5WuFm1CKhz3V7dDrJ6WWjitMX56TyeB
+         FlWAJjVumDcrKa+VZeVXebajSJppajnmBahYWjyH6FbnHvSRCDaTrnItqIgrcXkdIOpO
+         2TlyDBK1jZP1r3pnkglZQY5FWmejjgngo7xFRSvZN2d3uJ+cw05h2jyqfpTdiJveOdBc
+         AjZKuySC7vzN0IYjQ4NL2CjfKFi66cUxRsKvLz1Ffv3kCpVRlXrYzqRVH9w/ZKWtvL8e
+         vrAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gqL8llnX3k0LZEaNoV5Vdp4GgnVXzeumqjyslS75z/E=;
+        b=L2jlyJ+Xk5yDPWFJUudkzLIcwMOdsAUQPvmnVHd18BfH5eWyoXrLJOoDITE627aUFJ
+         qrFfjSf+S2RYPzZA3XcaqaVK0Fk6jiWEwkmapDnavjlRA4DWwkwikcP57lt6XugmcXjz
+         C9Vm+S5eFewpzc0/KVjuR8DZpPfCunxxirCG1LpIaJ/X/8KwSrLXvemr0wylG+nN9Cga
+         PzMN13uzvR008uLUiKhKgBC6ldBvNjCvh0Eisonj03dJc+qB+VFFkDbJxXsayJOxJjpD
+         +fnQchMPzGZlNlZAGKb5I1euxkZohDEXCh1zVGXDARHeFQTq2Zwq3A6UAhIvGZgW0Euz
+         tCPA==
+X-Gm-Message-State: AOAM532VGUu2I8ViGJ0cFcRPAFFrvVoxzfplMt1nplmMwOEKtH+VR1iu
+        frMj2exeJtJoMWZ1h3y3uSz+mg==
+X-Google-Smtp-Source: ABdhPJxVgUpCgkcu1XNcQuQ0HsmEBuh3pEQZ+YwTsCZvGR1Lo4iwqswy+yD0kN/PtrHU7QSlW8lruQ==
+X-Received: by 2002:a05:6512:2009:b0:471:ffee:6ee1 with SMTP id a9-20020a056512200900b00471ffee6ee1mr2392821lfb.268.1650806435703;
+        Sun, 24 Apr 2022 06:20:35 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id l12-20020a056512332c00b0046d0e0e5b44sm1015877lfe.20.2022.04.24.06.20.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 24 Apr 2022 06:20:35 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc:     David Heidelberg <david@ixit.cz>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/3] dt-bindings: soc: qcom: convert QCOM SMP2P binding to yaml
-Date:   Sun, 24 Apr 2022 15:15:21 +0200
-Message-Id: <20220424131522.14185-3-david@ixit.cz>
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v3 0/8]  dt-bindings: YAMLify pci/qcom,pcie schema
+Date:   Sun, 24 Apr 2022 16:20:26 +0300
+Message-Id: <20220424132034.2235768-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220424131522.14185-1-david@ixit.cz>
-References: <20220424131522.14185-1-david@ixit.cz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RDNS_DYNAMIC,SPF_HELO_PASS,
-        SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm SoC SMP2P binding to the yaml format.
+Convert pci/qcom,pcie schema to YAML description. The first patch
+introduces several warnings which are fixed by the other patches in the
+series.
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
-v2:
- - dropped constraints on sub-node names,
-   converted patternProperties to additionalProperties
- - adjusted name from "Point 2 Point" to "Point to Point"
----
- .../bindings/soc/qcom/qcom,smp2p.txt          | 110 --------------
- .../bindings/soc/qcom/qcom,smp2p.yaml         | 136 ++++++++++++++++++
- 2 files changed, 136 insertions(+), 110 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt
- create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
+Note regarding the snps,dw-pcie compatibility. The Qualcomm PCIe
+controller uses Synopsys PCIe IP core. However it is not just fused to
+the address space. Accessing PCIe registers requires several clocks and
+regulators to be powered up. Thus it can be assumed that the qcom,pcie
+bindings are not fully compatible with the snps,dw-pcie schema.
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt
-deleted file mode 100644
-index 49e1d72d3648..000000000000
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt
-+++ /dev/null
-@@ -1,110 +0,0 @@
--Qualcomm Shared Memory Point 2 Point binding
--
--The Shared Memory Point to Point (SMP2P) protocol facilitates communication of
--a single 32-bit value between two processors.  Each value has a single writer
--(the local side) and a single reader (the remote side).  Values are uniquely
--identified in the system by the directed edge (local processor ID to remote
--processor ID) and a string identifier.
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: must be one of:
--		    "qcom,smp2p"
--
--- interrupts:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: one entry specifying the smp2p notification interrupt
--
--- mboxes:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: reference to the associated doorbell in APCS, as described
--		    in mailbox/mailbox.txt
--
--- qcom,ipc:
--	Usage: required, unless mboxes is specified
--	Value type: <prop-encoded-array>
--	Definition: three entries specifying the outgoing ipc bit used for
--		    signaling the remote end of the smp2p edge:
--		    - phandle to a syscon node representing the apcs registers
--		    - u32 representing offset to the register within the syscon
--		    - u32 representing the ipc bit within the register
--
--- qcom,smem:
--	Usage: required
--	Value type: <u32 array>
--	Definition: two identifiers of the inbound and outbound smem items used
--		    for this edge
--
--- qcom,local-pid:
--	Usage: required
--	Value type: <u32>
--	Definition: specifies the identifier of the local endpoint of this edge
--
--- qcom,remote-pid:
--	Usage: required
--	Value type: <u32>
--	Definition: specifies the identifier of the remote endpoint of this edge
--
--= SUBNODES
--Each SMP2P pair contain a set of inbound and outbound entries, these are
--described in subnodes of the smp2p device node. The node names are not
--important.
--
--- qcom,entry-name:
--	Usage: required
--	Value type: <string>
--	Definition: specifies the name of this entry, for inbound entries this
--		    will be used to match against the remotely allocated entry
--		    and for outbound entries this name is used for allocating
--		    entries
--
--- interrupt-controller:
--	Usage: required for incoming entries
--	Value type: <empty>
--	Definition: marks the entry as inbound; the node should be specified
--		    as a two cell interrupt-controller as defined in
--		    "../interrupt-controller/interrupts.txt"
--		    If not specified this node will denote the outgoing entry
--
--- #interrupt-cells:
--	Usage: required for incoming entries
--	Value type: <u32>
--	Definition: must be 2 - denoting the bit in the entry and IRQ flags
--
--- #qcom,smem-state-cells:
--	Usage: required for outgoing entries
--	Value type: <u32>
--	Definition: must be 1 - denoting the bit in the entry
--
--= EXAMPLE
--The following example shows the SMP2P setup with the wireless processor,
--defined from the 8974 apps processor's point-of-view. It encompasses one
--inbound and one outbound entry:
--
--wcnss-smp2p {
--	compatible = "qcom,smp2p";
--	qcom,smem = <431>, <451>;
--
--	interrupts = <0 143 1>;
--
--	qcom,ipc = <&apcs 8 18>;
--
--	qcom,local-pid = <0>;
--	qcom,remote-pid = <4>;
--
--	wcnss_smp2p_out: master-kernel {
--		qcom,entry-name = "master-kernel";
--
--		#qcom,smem-state-cells = <1>;
--	};
--
--	wcnss_smp2p_in: slave-kernel {
--		qcom,entry-name = "slave-kernel";
--
--		interrupt-controller;
--		#interrupt-cells = <2>;
--	};
--};
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-new file mode 100644
-index 000000000000..9d728c76f7b0
---- /dev/null
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-@@ -0,0 +1,136 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/soc/qcom/qcom,smp2p.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Qualcomm Shared Memory Point to Point
-+
-+description: |
-+  The Shared Memory Point to Point (SMP2P) protocol facilitates communication of
-+  a single 32-bit value between two processors.  Each value has a single writer
-+  (the local side) and a single reader (the remote side).  Values are uniquely
-+  identified in the system by the directed edge (local processor ID to remote
-+  processor ID) and a string identifier.
-+
-+maintainers:
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+
-+properties:
-+  compatible:
-+    const: qcom,smp2p
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  mboxes:
-+    description: >
-+      reference to the associated doorbell in APCS, as described
-+      in mailbox/mailbox.txt
-+
-+  qcom,ipc:
-+    $ref: /schemas/types.yaml#/definitions/uint32-matrix
-+    description: >
-+      three entries specifying the outgoing ipc bit used for
-+      signaling the remote end of the smp2p edge
-+    minItems: 1
-+    maxItems: 32 # no hard limit
-+    items:
-+      items:
-+        - description: phandle to a syscon node representing the apcs registers
-+        - description: offset to the register within the syscon
-+        - description: the IPC bit within the register
-+
-+  qcom,smem:
-+    $ref: /schemas/types.yaml#/definitions/uint32-matrix
-+    description: indentifiers of the smem items used for this edge
-+    items:
-+      - items:
-+          - description: identifier of inbound smem items
-+      - items:
-+          - description: identifier of outbound smem items
-+
-+  qcom,local-pid:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: specifies the identifier of the local endpoint of this edge
-+
-+  qcom,remote-pid:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: specifies the identifier of the remote endpoint of this edge
-+
-+additionalProperties:
-+  type: object
-+  properties:
-+    interrupt-controller:
-+      description: >
-+        marks the entry as inbound, if not specified
-+        this node will denote the outgoing entry
-+
-+    '#interrupt-cells':
-+      const: 2
-+
-+    qcom,entry-name:
-+      $ref: /schemas/types.yaml#/definitions/string
-+      description: >
-+        specifies the name of this entry, for inbound entries this will be
-+        used to match against the remotely allocated entry and for outbound
-+        entries this name is used for allocating entries
-+
-+    '#qcom,smem-state-cells':
-+      $ref: /schemas/types.yaml#/definitions/uint32
-+      description: required for outgoing entries
-+      const: 1
-+
-+  required:
-+    - qcom,entry-name
-+
-+  oneOf:
-+    - required:
-+        - interrupt-controller
-+        - '#interrupt-cells'
-+    - required:
-+        - '#qcom,smem-state-cells'
-+
-+  additionalProperties: false
-+
-+required:
-+  - compatible
-+  - qcom,smem
-+  - qcom,local-pid
-+  - qcom,remote-pid
-+
-+anyOf:
-+  - required:
-+      - mboxes
-+  - required:
-+      - qcom,ipc
-+
-+examples:
-+  # The following example shows the SMP2P setup with the wireless processor,
-+  # defined from the 8974 apps processor's point-of-view. It encompasses one
-+  # inbound and one outbound entry:
-+  - |
-+    wcnss-smp2p {
-+        compatible = "qcom,smp2p";
-+        qcom,smem = <431>, <451>;
-+
-+        interrupts = <0 143 1>;
-+
-+        qcom,ipc = <&apcs 8 18>;
-+
-+        qcom,local-pid = <0>;
-+        qcom,remote-pid = <4>;
-+
-+        wcnss_smp2p_out: master-kernel {
-+            qcom,entry-name = "master-kernel";
-+
-+            #qcom,smem-state-cells = <1>;
-+        };
-+
-+        wcnss_smp2p_in: slave-kernel {
-+            qcom,entry-name = "slave-kernel";
-+
-+            interrupt-controller;
-+            #interrupt-cells = <2>;
-+        };
-+    };
+Changes since v2 (still kudos to Krzyshtof):
+ - Readded reg-names conversion patch
+ - Mention wake-gpio update in the commit message
+ - Remove extra quotes in the schema
+
+Changes since v1 (all kudos to Krzyshtof):
+ - Dropped the reg-names patch. It will be handled separately
+ - Squashed the snps,dw-pcie removal (from schema) into the first patch
+ - Replaced deprecated perst-gpio and wake-gpio with perst-gpios and
+   wake-gpios in the examples and in DT files
+ - Moved common clocks/clock-names, resets/reset-names and power-domains
+   properties to the top level of the schema, leaving only platform
+   specifics in the conditional branches
+ - Dropped iommu-map/iommu-map-mask for now
+ - Added (missed) interrupt-cells, clocks, clock-names, resets,
+   reset-names properties to the required list (resets/reset-names are
+   removed in the next patch, as they are not used on msm8996)
+ - Fixed IRQ flags in the examples
+ - Merged apq8064/ipq8064 into the single condition statement
+ - Added extra empty lines
+
+
+Dmitry Baryshkov (8):
+  dt-bindings: pci/qcom,pcie: convert to YAML
+  dt-bindings: pci/qcom,pcie: resets are not defined for msm8996
+  dt-bindings: pci/qcom-pcie: specify reg-names explicitly
+  dt-bindings: pci/qcom,pcie: add schema for sc7280 chipset
+  arm64: dts: qcom: stop using snps,dw-pcie falback
+  arm: dts: qcom: stop using snps,dw-pcie falback
+  arm: dts: qcom-*: replace deprecated perst-gpio with perst-gpios
+  arm64: dts: qcom: replace deprecated perst-gpio with perst-gpios
+
+ .../devicetree/bindings/pci/qcom,pcie.txt     | 397 ----------
+ .../devicetree/bindings/pci/qcom,pcie.yaml    | 712 ++++++++++++++++++
+ arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts   |   2 +-
+ arch/arm/boot/dts/qcom-apq8064-ifc6410.dts    |   2 +-
+ arch/arm/boot/dts/qcom-apq8064.dtsi           |   2 +-
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi |   2 +-
+ .../boot/dts/qcom-ipq4019-ap.dk07.1-c1.dts    |   2 +-
+ arch/arm/boot/dts/qcom-ipq4019.dtsi           |   2 +-
+ arch/arm/boot/dts/qcom-ipq8064.dtsi           |   6 +-
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dts   |   6 +-
+ arch/arm64/boot/dts/qcom/ipq8074-hk01.dts     |   4 +-
+ arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi    |   4 +-
+ .../dts/qcom/msm8996-sony-xperia-tone.dtsi    |   4 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |   6 +-
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi      |   2 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |   2 +-
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |   2 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |   2 +-
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |   4 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   4 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |   6 +-
+ 21 files changed, 744 insertions(+), 429 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.txt
+ create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+
+
+base-commit: ce522ba9ef7e2d9fb22a39eb3371c0c64e2a433e
 -- 
 2.35.1
 
