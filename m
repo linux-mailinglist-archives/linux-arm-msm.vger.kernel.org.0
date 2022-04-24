@@ -2,111 +2,281 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91B5C50CEE1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Apr 2022 05:25:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3656C50D12A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Apr 2022 12:36:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236187AbiDXD2B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Apr 2022 23:28:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51866 "EHLO
+        id S239062AbiDXKjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Apr 2022 06:39:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235940AbiDXD12 (ORCPT
+        with ESMTP id S237370AbiDXKjD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Apr 2022 23:27:28 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92B52174F46;
-        Sat, 23 Apr 2022 20:24:27 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id f22so8232850qtp.13;
-        Sat, 23 Apr 2022 20:24:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=eqBlRZKmWXonJqRPv0/gmIodrBlaINi/8RFwh4KPYVo=;
-        b=IGCNjuJzMB0egqttIvZuaEMfeM4P3pewgaNHqC2ykJS+bmBF+pboRCYd4uikqES3Ap
-         vQUeKeCXbx38GV9GK0QqvlLoXXeoCTpYg86Lp1uaSK/cOwVhFlJkWyBKZKE+nEmWRuBi
-         biVS0WdQflPqhNZQHv6rlJR4ZPKmH2yZ6ELQY38zO6N141H3AmXqrugAlzQDlC6korgg
-         2chSzUSyo0uCvWWKs1iqjsCL3TQQKbyhP6uXPy0Rt0U0NT0dMbKRiLQrpr2lvXVeL5T8
-         jdubCP933OMf8QpngLLn9SOhHd1wwtmZbJwLTcB4zTURLkXfUNq7zzTYJ4Wxy8Ceyq+o
-         ZA+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eqBlRZKmWXonJqRPv0/gmIodrBlaINi/8RFwh4KPYVo=;
-        b=XB3d0AT0fAcM2f3U+zP7awFeaAb8bjC6BTFpJAPycm+dECf0ofA8/zPujBVRIdFG8Q
-         VEsJDC7/tBOZaoLZFU/GiTtrPIzsADzp57QdixfmWAFnKH7UbShzx1WXY3W1/t2lopH+
-         HorhmnnjpTJJVuVVc0matGQ1sPpTkP8fvShtPNfXodHxED6W1UCi7jSICBuw9/73jJA+
-         bvlUmrTBi3wyzHqdqEv5TYUj27cUT5jXnFwrkSxxpNGopxYAfLOQgUvMh2isC6illsMa
-         sBAJO7Wfpx0QEj25FTesdLycOv8JTNTkMY1STAQu6q8m6mKt1B2bpnXewkY2gtg1FDMn
-         mFGg==
-X-Gm-Message-State: AOAM531sswyAoMAABq+MmjTOyVvMdnQ3+5L+OhxWm4yNpLOf0DxbsJ/6
-        78GKNsrWSDjdIW0ulOnRZQY=
-X-Google-Smtp-Source: ABdhPJx3igzCHoeO0tVtEqABqsVn0BHEEn7rMTXyCjjgErjXpg5VcP7xv+7pqhEZa4T6Hf8jzXTRTw==
-X-Received: by 2002:a05:622a:256:b0:2e1:a01b:a538 with SMTP id c22-20020a05622a025600b002e1a01ba538mr8163370qtx.167.1650770666773;
-        Sat, 23 Apr 2022 20:24:26 -0700 (PDT)
-Received: from localhost.localdomain ([193.203.214.57])
-        by smtp.gmail.com with ESMTPSA id f14-20020ac87f0e000000b002f28b077974sm4043923qtk.87.2022.04.23.20.24.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Apr 2022 20:24:26 -0700 (PDT)
-From:   cgel.zte@gmail.com
-X-Google-Original-From: lv.ruyi@zte.com.cn
-To:     dmitry.baryshkov@linaro.org
-Cc:     airlied@linux.ie, bjorn.andersson@linaro.org, cgel.zte@gmail.com,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux@roeck-us.net, lv.ruyi@zte.com.cn, quic_abhinavk@quicinc.com,
-        quic_khsieh@quicinc.com, robdclark@gmail.com, sean@poorly.run,
-        swboyd@chromium.org, Zeal Robot <zealci@zte.com.cn>
-Subject: [PATCH v2] drm/msm/dp: fix error check return value of irq_of_parse_and_map()
-Date:   Sun, 24 Apr 2022 03:24:18 +0000
-Message-Id: <20220424032418.3173632-1-lv.ruyi@zte.com.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <0e6028f6-3fc1-2a27-0a45-0e024c632248@linaro.org>
-References: <0e6028f6-3fc1-2a27-0a45-0e024c632248@linaro.org>
+        Sun, 24 Apr 2022 06:39:03 -0400
+X-Greylist: delayed 600 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 24 Apr 2022 03:36:00 PDT
+Received: from ixit.cz (ip-94-112-206-30.net.upcbroadband.cz [94.112.206.30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44D2FB7FF;
+        Sun, 24 Apr 2022 03:35:59 -0700 (PDT)
+Received: from newone.lan (_gateway [10.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id 0560D2007F;
+        Sun, 24 Apr 2022 12:16:38 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1650795399;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=VsxlHSCxfLkkpkO33EFxBJss/Y+p5nxxc/qA09xOduY=;
+        b=oVJr/PwOq3gjJ+cvMMYV0Vqkys94BMt9RRAl0kDxzpMijPzBvEG5Vq0KJx+80+0dIuRbae
+        CSr8ADB1Yyvq91gamdcmeBuFuUV9/Cox7Y2A0pfuOHwRFqWKQHGPGU6hEMb18jy1EYRDTe
+        tRu0gWgUqrEeECTjsOxO/v/j1NZBz7Y=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc:     David Heidelberg <david@ixit.cz>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: soc: qcom: convert GLINK binding to yaml
+Date:   Sun, 24 Apr 2022 12:16:37 +0200
+Message-Id: <20220424101637.20721-1-david@ixit.cz>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam: Yes
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RDNS_DYNAMIC,SPF_HELO_PASS,
+        SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Lv Ruyi <lv.ruyi@zte.com.cn>
+Convert Qualcomm GLINK binding to the yaml format.
 
-The irq_of_parse_and_map() function returns 0 on failure, and does not
-return an negative value.
-
-Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
-Reported-by: Zeal Robot <zealci@zte.com.cn>
-Signed-off-by: Lv Ruyi <lv.ruyi@zte.com.cn>
+Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
-v2: don't print rc, and return -EINVAL rather than 0
----
- drivers/gpu/drm/msm/dp/dp_display.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+v1:
+ - remove quotes around qcom,intent
+ - use additionalProperties
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index a42732b67349..c3566e6564b1 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1239,10 +1239,9 @@ int dp_display_request_irq(struct msm_dp *dp_display)
- 	dp = container_of(dp_display, struct dp_display_private, dp_display);
- 
- 	dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
--	if (dp->irq < 0) {
--		rc = dp->irq;
--		DRM_ERROR("failed to get irq: %d\n", rc);
--		return rc;
-+	if (!dp->irq) {
-+		DRM_ERROR("failed to get irq\n");
-+		return -EINVAL;
- 	}
- 
- 	rc = devm_request_irq(&dp->pdev->dev, dp->irq,
+ .../bindings/soc/qcom/qcom,glink.txt          |  94 ----------------
+ .../bindings/soc/qcom/qcom,glink.yaml         | 103 ++++++++++++++++++
+ 2 files changed, 103 insertions(+), 94 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,glink.txt
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,glink.yaml
+
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,glink.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,glink.txt
+deleted file mode 100644
+index 1214192847ac..000000000000
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,glink.txt
++++ /dev/null
+@@ -1,94 +0,0 @@
+-Qualcomm GLINK edge binding
+-
+-This binding describes a Qualcomm GLINK edge, a fifo based mechanism for
+-communication between subsystem-pairs on various Qualcomm platforms. Two types
+-of edges can be described by the binding; the GLINK RPM edge and a SMEM based
+-edge.
+-
+-- compatible:
+-	Usage: required for glink-rpm
+-	Value type: <stringlist>
+-	Definition: must be "qcom,glink-rpm"
+-
+-- label:
+-	Usage: optional
+-	Value type: <string>
+-	Definition: should specify the subsystem name this edge corresponds to.
+-
+-- interrupts:
+-	Usage: required
+-	Value type: <prop-encoded-array>
+-	Definition: should specify the IRQ used by the remote processor to
+-		    signal this processor about communication related events
+-
+-- qcom,remote-pid:
+-	Usage: required for glink-smem
+-	Value type: <u32>
+-	Definition: specifies the identifier of the remote endpoint of this edge
+-
+-- qcom,rpm-msg-ram:
+-	Usage: required for glink-rpm
+-	Value type: <prop-encoded-array>
+-	Definition: handle to RPM message memory resource
+-
+-- mboxes:
+-	Usage: required
+-	Value type: <prop-encoded-array>
+-	Definition: reference to the "rpm_hlos" mailbox in APCS, as described
+-		    in mailbox/mailbox.txt
+-
+-= GLINK DEVICES
+-Each subnode of the GLINK node represent function tied to a virtual
+-communication channel. The name of the nodes are not important. The properties
+-of these nodes are defined by the individual bindings for the specific function
+-- but must contain the following property:
+-
+-- qcom,glink-channels:
+-	Usage: required
+-	Value type: <stringlist>
+-	Definition: a list of channels tied to this function, used for matching
+-		    the function to a set of virtual channels
+-
+-- qcom,intents:
+-	Usage: optional
+-	Value type: <prop-encoded-array>
+-	Definition: a list of size,amount pairs describing what intents should
+-		    be preallocated for this virtual channel. This can be used
+-		    to tweak the default intents available for the channel to
+-		    meet expectations of the remote.
+-
+-= EXAMPLE
+-The following example represents the GLINK RPM node on a MSM8996 device, with
+-the function for the "rpm_request" channel defined, which is used for
+-regulators and root clocks.
+-
+-	apcs_glb: mailbox@9820000 {
+-		compatible = "qcom,msm8996-apcs-hmss-global";
+-		reg = <0x9820000 0x1000>;
+-
+-		#mbox-cells = <1>;
+-	};
+-
+-	rpm_msg_ram: memory@68000 {
+-		compatible = "qcom,rpm-msg-ram";
+-		reg = <0x68000 0x6000>;
+-	};
+-
+-	rpm-glink {
+-		compatible = "qcom,glink-rpm";
+-
+-		interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+-
+-		qcom,rpm-msg-ram = <&rpm_msg_ram>;
+-
+-		mboxes = <&apcs_glb 0>;
+-
+-		rpm-requests {
+-			compatible = "qcom,rpm-msm8996";
+-			qcom,glink-channels = "rpm_requests";
+-
+-			qcom,intents = <0x400 5
+-					0x800 1>;
+-			...
+-		};
+-	};
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,glink.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,glink.yaml
+new file mode 100644
+index 000000000000..12ccc875ff0f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,glink.yaml
+@@ -0,0 +1,103 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/soc/qcom/qcom,glink.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm GLINK edge
++
++description: |
++  Qualcomm GLINK edge, a fifo based mechanism for communication between
++  subsystem-pairs on various Qualcomm platforms. Two types of edges can be
++  described by the binding; the GLINK RPM edge and a SMEM based.
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++properties:
++  $nodename:
++    pattern: "^(rpm-)?glink(-edge)?$"
++
++  compatible:
++    const: qcom,glink-rpm
++
++  label:
++    $ref: /schemas/types.yaml#/definitions/string
++    description: should specify the subsystem name this edge corresponds to
++
++  interrupts:
++    description: >
++      should specify the IRQ used by the remote processor to
++      signal this processor about communication related events
++    maxItems: 1
++
++  mboxes:
++    description: >
++      reference to the "rpm_hlos" mailbox in APCS, as described
++      in mailbox/mailbox.txt
++
++  qcom,remote-pid:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: specifies the identifier of the remote endpoint of this edge
++
++  qcom,rpm-msg-ram:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: RPM message memory resource
++
++additionalProperties:
++  type: object
++  properties:
++    qcom,glink-channels:
++      $ref: /schemas/types.yaml#/definitions/string
++      description: >
++        a list of channels tied to this function, used for matching
++        the function to a set of virtual channels
++
++    qcom,intents:
++      $ref: /schemas/types.yaml#/definitions/uint32-array
++      description: >
++        a list of size, amount pairs describing what intents should
++        be preallocated for this virtual channel. This can be used
++        to tweak the default intents available for the channel to
++        meet expectations of the remote
++
++  required:
++    - qcom,glink-channels
++
++  additionalProperties: false
++
++required:
++  - interrupts
++  - mboxes
++  - qcom,smem
++  - qcom,local-pid
++  - qcom,remote-pid
++
++anyOf:
++  - required:
++      - qcom,remote-pid
++  - required:
++      - qcom,rpm-msg-ram
++
++examples:
++  # The following example represents the GLINK RPM node on a MSM8996 device,
++  # with the function for the "rpm_request" channel defined, which
++  # is used for regulators and root clocks.
++  - |
++    rpm-glink {
++        compatible = "qcom,glink-rpm";
++
++        interrupts = <0 168 1>;
++
++        qcom,rpm-msg-ram = <&rpm_msg_ram>;
++
++        mboxes = <&apcs_glb 0>;
++
++        rpm-requests {
++            compatible = "qcom,rpm-msm8996";
++            qcom,glink-channels = "rpm_requests";
++
++            qcom,intents = <0x400 5
++                            0x800 1>;
++        };
++    };
 -- 
-2.25.1
+2.35.1
 
