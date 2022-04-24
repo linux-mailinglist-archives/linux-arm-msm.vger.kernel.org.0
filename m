@@ -2,80 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B50850D164
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Apr 2022 13:05:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D4C150D1E1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Apr 2022 15:15:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234449AbiDXLH5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Apr 2022 07:07:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41196 "EHLO
+        id S233689AbiDXNSo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Apr 2022 09:18:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229605AbiDXLHy (ORCPT
+        with ESMTP id S233855AbiDXNSn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Apr 2022 07:07:54 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C81B3A738;
-        Sun, 24 Apr 2022 04:04:52 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id be20so7013603edb.12;
-        Sun, 24 Apr 2022 04:04:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :content-transfer-encoding:user-agent:mime-version;
-        bh=6LLXdUdwxKY7YdYKPcEjKt1YLzULEQ9fvuAEvpfSSVc=;
-        b=bxNilV/G0uGLePf9NmRaDFUR61yh2eOu7FZQvxpN8b3X1AM61Fk0PO2AcYlBGwJehj
-         3uCp8M9O7edZD86EuS/IWyMg+HTIoBKNxmQ9sbiuRYhjAL+8EdRSxRUjYRiljQtbu4Ao
-         HttIEC+WmpeBMA+h3c5YYqfFqdnMwd4PsMmWoApVXjAQtBMO1yORAaMWxmJMnqyHYdpV
-         DV3SiXsq2KlWb2jVKkPIkfh12sxCT+1Rw55XZueDUUIzqRVdTDzlKENVBa5B751ybPMF
-         Ad/a53WSqFv7TQgN6QAPVi/QE8T3g2kQGXCT6qz/+1sqmzc+qD+IOFarxdVsSWMF2FW1
-         d26g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-transfer-encoding:user-agent:mime-version;
-        bh=6LLXdUdwxKY7YdYKPcEjKt1YLzULEQ9fvuAEvpfSSVc=;
-        b=hRopNf+lHY2heABORPga+UwvPu5gtBbTQSDcpH8nKyXCz72Hft8DZQ5gYJY7GmjQ9C
-         iUo9jtN56rsZDk/jSxTm9aTBeptwAZfKqR0rVrZODPssmgovu4QESIFNuDK+apzdZ/w8
-         SAUG3z35D7rWwRbFX2qYg++sCxUO1/6cpE9B7cesmCymo+MRsZs0RSrESuUM7OEfWd1V
-         foCjzWg/UNFnWxpVVfXRrERL/3qvwOey7WupBhLLUGxVA/cVwjlXR8Nz8+qVlqK/bfgY
-         +4yv0Hj5fgSg2ekrjoA98UD24gTuF1xSxRAysr88aXxsH7geGwT1e6i5V7tBdf/CTf/3
-         45eg==
-X-Gm-Message-State: AOAM5327E+Zp42AOmmxniXvZFTwxeeXFnHkOl9gnqdqSdngE1I6gRHwY
-        dv3GV1uIWNwGGhxObrakquKwDX6OVitRiQ==
-X-Google-Smtp-Source: ABdhPJzvsh1P684P9PR9vpiWSWqxY0VwT4x9TksJZZ/owoajUzP2VckOsExGoo/ZDHniBzKR8D5zDg==
-X-Received: by 2002:aa7:c790:0:b0:41d:7e0f:f15c with SMTP id n16-20020aa7c790000000b0041d7e0ff15cmr13626785eds.129.1650798290974;
-        Sun, 24 Apr 2022 04:04:50 -0700 (PDT)
-Received: from [192.168.3.2] (p5dd1ed70.dip0.t-ipconnect.de. [93.209.237.112])
-        by smtp.googlemail.com with ESMTPSA id h8-20020a1709066d8800b006e09a49a713sm2499580ejt.159.2022.04.24.04.04.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Apr 2022 04:04:50 -0700 (PDT)
-Message-ID: <0b8ffa449b2ff56d994978ce73e0c9df0454ae07.camel@gmail.com>
-Subject: Re: [PATCH v2 4/5] scsi: ufs: core: Remove redundant wmb() in
- ufshcd_send_command()
-From:   Bean Huo <huobean@gmail.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        martin.petersen@oracle.com, jejb@linux.ibm.com
-Cc:     avri.altman@wdc.com, alim.akhtar@samsung.com,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bvanassche@acm.org, ahalaney@redhat.com
-Date:   Sun, 24 Apr 2022 13:04:50 +0200
-In-Reply-To: <20220423140245.394092-5-manivannan.sadhasivam@linaro.org>
-References: <20220423140245.394092-1-manivannan.sadhasivam@linaro.org>
-         <20220423140245.394092-5-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-User-Agent: Evolution 3.44.0-1 
+        Sun, 24 Apr 2022 09:18:43 -0400
+Received: from ixit.cz (ip-94-112-206-30.net.upcbroadband.cz [94.112.206.30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49198E75;
+        Sun, 24 Apr 2022 06:15:35 -0700 (PDT)
+Received: from localhost.localdomain (unknown [185.14.232.186])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id 4E2392007F;
+        Sun, 24 Apr 2022 15:15:33 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1650806133;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=zPQBmF6RCri6FaOeXB4uCyYG7fLRcwk0ijBNbmDhGyI=;
+        b=FW803gmT7/vhnipM26391eda+F4hv/rsvEAPtF+UiR8BmsjvZHJlYqmVsalxuvuPiFgYkV
+        fjSOP5TvQkclAlXIUTS4W2ABpWlC/++Avi/M0sspYsOaspNOmvQ/K9jXChl3xZ6zZsjJwt
+        5LL84YgU2PpCdOihkNndpqFGmkpc3MA=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Alex Elder <elder@kernel.org>
+Cc:     David Heidelberg <david@ixit.cz>, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/3] dt-bindings: net: qcom,ipa: fix example for upcomming smp2p conversion
+Date:   Sun, 24 Apr 2022 15:15:19 +0200
+Message-Id: <20220424131522.14185-1-david@ixit.cz>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam: Yes
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RDNS_DYNAMIC,SPF_HELO_PASS,
+        SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Example of mpss was missing required properties.
 
-Acked-by: Bean Huo <beanhuo@micron.com>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+ Documentation/devicetree/bindings/net/qcom,ipa.yaml | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+index 58ecc62adfaa..852658b4d05c 100644
+--- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
++++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+@@ -182,6 +182,11 @@ examples:
+ 
+         smp2p-mpss {
+                 compatible = "qcom,smp2p";
++                mboxes = <&apss_shared 14>;
++                qcom,smem = <435>, <428>;
++                qcom,local-pid = <0>;
++                qcom,remote-pid = <1>;
++
+                 ipa_smp2p_out: ipa-ap-to-modem {
+                         qcom,entry-name = "ipa";
+                         #qcom,smem-state-cells = <1>;
+-- 
+2.35.1
+
