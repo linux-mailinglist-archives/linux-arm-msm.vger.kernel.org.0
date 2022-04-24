@@ -2,74 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC2A250D254
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Apr 2022 16:41:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EDD550D25B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Apr 2022 16:43:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239369AbiDXOoK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Apr 2022 10:44:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35364 "EHLO
+        id S239412AbiDXOqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Apr 2022 10:46:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232753AbiDXOoJ (ORCPT
+        with ESMTP id S239395AbiDXOqV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Apr 2022 10:44:09 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1468C506D6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Apr 2022 07:41:09 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id kq17so1898706ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Apr 2022 07:41:09 -0700 (PDT)
+        Sun, 24 Apr 2022 10:46:21 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 043DE6F48E
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Apr 2022 07:43:21 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id k23so25087249ejd.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Apr 2022 07:43:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=RZeD7VZeCx2JfogRYjFn59CVQqv5yT2Ex57lPtVonrM=;
-        b=GDOnFK53Lyz6+WpoTaj42rYsc+OyWpyddPpETFYQEHaaCDUl2915QVrDP3Yyqp8HuJ
-         KYuPrGLvvfMWGw+u9El0tNbZ0SlcHWvtSBig2aAHZ8+62cFyGH9imSA8+B8Dab+r8Qg7
-         i0nVRi0MUBvZYMuEjjAiB+fB0Y+BGx1OQdpFSt5advOo4lWOXOfWfAmvXQy4roS7namK
-         2kVL1DNTPgB5b4LHAiA9xQQYEkpVzOmOT5bCvb/mTfs5g2EUbUgvVlFNYg3NmNx3UyfJ
-         FlfhqOte5ah5NZ6F1zHvEbs+H7ve+Qne8pAvROKbtHQ5+8lxv7esUAShzfOqNygDy/v4
-         4pGw==
+        bh=CUwHn5LcN/jPUon6t5Vp4fHS3jup7Ak+niSGtw8dmg4=;
+        b=dcSGtrlFaEvsDm0BQsAQx/ik8aLhT8jHvXKu+9yuu1m46PPNK89megPvnUCpmrPdAY
+         uv2rMjFy8R3VvjvTU8OR5ROxk0Cmc3HLQCETQHyRFAgr1jdAfUXybB/Qa0bZJjrycUnt
+         1tBeAIrYjqJnQwY3C3PGv8L2mfkYhpGjOmzRFt076jGIQ0RVcApT5sPEb8Qs5PmRC9gX
+         PikG0NEa+r89bL3Tf+tYnG85Ui+vpytwaduIqXXbspIBab7vf/l5Mqtdg4xwsh63j3aU
+         4tkjjMCNzQOT2FDMzut/HKqkiYwd+K0cH09mjZ5P8joJVR1fpDTCjJFrAUclTNS/njmY
+         Zb8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=RZeD7VZeCx2JfogRYjFn59CVQqv5yT2Ex57lPtVonrM=;
-        b=gLoh04F5X+GUMATOY81JYYMDzun8xH9Ut4/khVOAsTyGTf5jA3YPRGJml+iOT6bSpm
-         r0Wd8EAh8VK7EyBQiDH4INuM14o6R0xSkZ72k7XoohR1pss1UF7ID6SFPTDy/5DglL8G
-         thEsAFuSfRpgTfcwhAM6MmtT2D97aDvg03gHZ7eLswHXCT/q78ZP0j12wbIyP63m2/ge
-         05uar3EaHXY08XagMEiXlL3E3y/Ku9t+z3sG3m+9aFvdCjmAcGZf1A/hWvW5QZR7aV5d
-         VNaKEN7osQv5sN+YbthMOFJ4RqkvvvtOb9GEispZD68YdcjYOoBkAAdEysPIA7iVMbv5
-         fXbg==
-X-Gm-Message-State: AOAM533effBc0cnrtlP3eKIhTS/8YFEc4BoqATaftB3mtRb13AzqhgjX
-        L/ICKD7ctT4w6RdurzogKrytgw==
-X-Google-Smtp-Source: ABdhPJz7Ncqwo2BgPXvbIAy2wgLUD3MtUq3yFRoyLm0iwljhuBrfg6w+G3XuREblHM8OGKifSld2qQ==
-X-Received: by 2002:a17:907:9710:b0:6f3:6e7e:d5bd with SMTP id jg16-20020a170907971000b006f36e7ed5bdmr7302793ejc.252.1650811267684;
-        Sun, 24 Apr 2022 07:41:07 -0700 (PDT)
+        bh=CUwHn5LcN/jPUon6t5Vp4fHS3jup7Ak+niSGtw8dmg4=;
+        b=1xhnXpynM/eggeP1tnMDo8uBjpP7aaSIvry5gzdqJr1KxqjsxPiFqmTk7ByPNteVXC
+         jR2H8tX1WY18FCw5qy8CPuF7x5GVouwVT9yMehV+0AIsdH/rl7YGL+45KxPbs/RHOZ+h
+         hIvJzEML6Ad1PaV6xWmmO4ylCSgK3U3E/sKkXQXbiR50NdaZEVgYX/bdfoWAZw414GmT
+         ry6dVLZYzB14XWQMAf8VCzsNMPRvG9hvH+hhgyPM0KbMXtLg2TOs5hgpw2CTwHh/25Wk
+         QGVb6IdTGh4an8p3t1NPEgdF9RciCY3xqffy4bxioSEAWclF/LIhQdO7EFELqQxVbI4o
+         /B6g==
+X-Gm-Message-State: AOAM530SB9QhNeN6Wx1boVhUtXK2xyUBu/S5PKZ2Lcw+keTt7PGY0BzV
+        ORvftdKarzsRaMani9scKhgx2A==
+X-Google-Smtp-Source: ABdhPJxxXjktzPATxGp4cvCDqA3bguvqYj5lfoO1JAHAJSjSFOjey+2nzg73oNdoM5cZTYrjToX/Qg==
+X-Received: by 2002:a17:907:7fac:b0:6ef:e068:f5aa with SMTP id qk44-20020a1709077fac00b006efe068f5aamr5783755ejc.238.1650811399613;
+        Sun, 24 Apr 2022 07:43:19 -0700 (PDT)
 Received: from [192.168.0.235] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id s14-20020aa7cb0e000000b00410bf015567sm3279398edt.92.2022.04.24.07.41.06
+        by smtp.gmail.com with ESMTPSA id lo15-20020a170906fa0f00b006e8a81cb623sm2667962ejb.224.2022.04.24.07.43.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Apr 2022 07:41:07 -0700 (PDT)
-Message-ID: <f19273c8-a8be-1bc2-d5aa-2f131822b4cd@linaro.org>
-Date:   Sun, 24 Apr 2022 16:41:06 +0200
+        Sun, 24 Apr 2022 07:43:19 -0700 (PDT)
+Message-ID: <5bc96cbd-cc5a-9ddb-4756-9f94324f00a7@linaro.org>
+Date:   Sun, 24 Apr 2022 16:43:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH v2 1/3] dt-bindings: net: qcom,ipa: fix example for
- upcomming smp2p conversion
+Subject: Re: [PATCH v2 2/3] dt-bindings: mailbox: qcom-ipcc: add missing
+ properties into example
 Content-Language: en-US
-To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
+To:     David Heidelberg <david@ixit.cz>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Alex Elder <elder@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
 References: <20220424131522.14185-1-david@ixit.cz>
+ <20220424131522.14185-2-david@ixit.cz>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220424131522.14185-1-david@ixit.cz>
+In-Reply-To: <20220424131522.14185-2-david@ixit.cz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,15 +84,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 24/04/2022 15:15, David Heidelberg wrote:
-> Example of mpss was missing required properties.
+> These missing required properties are needed for
+> smp2p binding reference checks.
 > 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  Documentation/devicetree/bindings/net/qcom,ipa.yaml | 5 +++++
+> Misc: adjusted examples properties formatting from dtsi.
 
-This needs rebasing on linux-next and then probably won't be
-correct/necessary.
+I don't get the "misc:" comment. What is it about?
 
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
