@@ -2,169 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92F1B50E7A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 19:58:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B77050E7D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 20:13:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239402AbiDYSAk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 14:00:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56960 "EHLO
+        id S244253AbiDYSQZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 14:16:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236650AbiDYSAj (ORCPT
+        with ESMTP id S233957AbiDYSQZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 14:00:39 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3641827FFD;
-        Mon, 25 Apr 2022 10:57:34 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id gh6so7084839ejb.0;
-        Mon, 25 Apr 2022 10:57:34 -0700 (PDT)
+        Mon, 25 Apr 2022 14:16:25 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9530E111161
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 11:13:20 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id p18so14279188edr.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 11:13:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=nCw5SiyH02JYEtCbJEBk5eKSQGGhic3V110ywY3fNdE=;
-        b=laUNwVSZ14D4dL8jv9hcIJQmdV2MZ5C/1j+xNDSueiDVLc/zGrThozVnvtFxmiAqU3
-         Fy74Su/eNRAMUZU3Yw20DnjRLNQo/d65U14GHnmCKD27CVX+DsWXtrlE4EX9X6TMb211
-         kBycbitLRlwMUncCkjRCVyKJW71MAbUblN4P5OJInVXNmrMLOqMpmJCpb6Rt5x68V0br
-         RVkYgNMOxtLGs/698/87Lrp3sAG865o20WEegFs/YKKqhkMPHGadMANh1X6Vy9xlKTZj
-         FScb86cgpqELLsqrioqI3Ye4BpJ34CgydzsrhfVcTfET1OdcuuhCzMmPlGyLpqDMduTr
-         3VEw==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=7iXUh6w5klPzZmwb5uwLAuLc4DT8QKgVuYqByN0Wq3o=;
+        b=dLfuIvuztwY7oZGDEDolqppkr6SYbEWG/68mEJoZoBp4Z5VJ3RUsY7L9CWlSy54GqE
+         6I5QpJz3r5cYEimbdAZJzIN5QwEk0BGT8321wJ9DPZ90/Y34FX+lTatOJzGrGU51siY7
+         ORTAYBCMTQfA1dGtSbjYBHnB2ZzES9Y7MtYEw5Pq2X7B0+o2Cr2qZYBlbNE4BO/sa56S
+         VArRa0BUdsnQijAtLKrw/OqFMpL9bo0EduNxn/yqQdBYzvFbgepPHwY/UnTRx5TG5lyc
+         rEX15Qs9D88Qqr+9c0Mb/CsFOfmc8LCEZenrrCtqdeOPPP6W5Sm/GuP3bpewkk+ntqQB
+         sHzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=nCw5SiyH02JYEtCbJEBk5eKSQGGhic3V110ywY3fNdE=;
-        b=ClK+U958U1WA5cq0QxnDzv6YHmw5mdf9SuVt/yminuQrd5doH8C8+cnYPqXkhXaM7Y
-         kmeg95w1kjRs756jtRutcPOs9MEXJT8M988sPTwgkiP87g44pxCgibu4GzUU09ryrhnx
-         r8WCp8UEjHmwGHMONg8vbLnWrfHX1rafLnZkZHJ8I2XcrC/PBjICszBEoC2gKuKFzhZm
-         IJUd5dNWQqRZX/k/M0i5iDagKrNY5ZgBvcX/pXl43v+qR+oMT2Fd5k0A2SJBvlkUqUA7
-         rSqLonNGXhqP0ztvqlUYn2Du1x3QBWb9kiaGjXNdtUKfnFPoj2Vj5rX04zzb4tGjsSLv
-         CjZg==
-X-Gm-Message-State: AOAM533/04HvSxg3QyCPGy3BtIZQnLspnTyBL50UXZDdcT8rINKHChXe
-        AFqpiGjMkVF5wxEgNttxWkc=
-X-Google-Smtp-Source: ABdhPJwgJPQ7Pdur7c3zxCEHWM7f4+KFEQ4/hAEDbTEc9ljH71+UuCZocMgoM7FbMdmeIkp+TyXYoA==
-X-Received: by 2002:a17:907:7287:b0:6f3:8414:74f1 with SMTP id dt7-20020a170907728700b006f3841474f1mr9343687ejc.123.1650909452587;
-        Mon, 25 Apr 2022 10:57:32 -0700 (PDT)
-Received: from fedora.robimarko.hr (cpe-94-253-165-91.zg.cable.xnet.hr. [94.253.165.91])
-        by smtp.googlemail.com with ESMTPSA id e22-20020a170906505600b006da7d71f25csm3853198ejk.41.2022.04.25.10.57.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Apr 2022 10:57:32 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     svarbanov@mm-sol.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, lorenzo.pieralisi@arm.com,
-        robh@kernel.org, kw@linux.com, bhelgaas@google.com,
-        p.zabel@pengutronix.de, jingoohan1@gmail.com,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH] PCI: qcom: fix IPQ8074 Gen2 support
-Date:   Mon, 25 Apr 2022 19:57:27 +0200
-Message-Id: <20220425175727.2704430-1-robimarko@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        bh=7iXUh6w5klPzZmwb5uwLAuLc4DT8QKgVuYqByN0Wq3o=;
+        b=fCflyM46/uUE36mlILYN2rKs/jcSYrpyFq1fcWg/bmTN7RqrREl9In8cO6jZI7I0RF
+         nybxO2K9vaW2jp+rodwg/lAyXd0k1JK6d3bmj6PJtwm8BMKLMU0CaBn2axGnh3pdtMom
+         MP0J1OAFGxCiSl7Vxps9edTDq+CmgVtjMx8X5Ejwsq1l/XiXj4a0tzbIhM09hIt+Kysq
+         WRebSV9ixRpmiAnfOS0lo1Z2flTxvzMYjfBndg0C5VIxh3ioIC/mb09nbBeOX+P0Eg6y
+         9gE/kUcjA9CpeMhYyWwzWwBRGtds0VM5n/KKjAFRdoe7S8bGTKgfP5UwsRnZ7gjMgs8X
+         I33g==
+X-Gm-Message-State: AOAM530zsQd6nbvkGlqVKBEW05s/0hMcIvbMjycihqz4LaFqWGMyGwGs
+        ZxrmnyC9LlGXuvFP8Vq9URs49Q==
+X-Google-Smtp-Source: ABdhPJxKuXeaUAj8ZrVnSgp5aI4Q43HTeLfHUZ/VwVZHs7i0fciNqh+oIbav14YsHrviQQqTDLBXaw==
+X-Received: by 2002:a05:6402:2999:b0:418:eb22:64f9 with SMTP id eq25-20020a056402299900b00418eb2264f9mr20130391edb.391.1650910399169;
+        Mon, 25 Apr 2022 11:13:19 -0700 (PDT)
+Received: from [192.168.0.244] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id gy10-20020a170906f24a00b006e894144707sm3904428ejb.53.2022.04.25.11.13.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Apr 2022 11:13:18 -0700 (PDT)
+Message-ID: <1c356a5c-ae85-9aa7-f8cb-e463480c24b8@linaro.org>
+Date:   Mon, 25 Apr 2022 20:13:17 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] dt-bindings: clock: qcom,gcc-apq8064: Fix typo in
+ compatible string
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <tdas@codeaurora.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220425133527.3723233-1-robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220425133527.3723233-1-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ8074 has one Gen2 and one Gen3 port, currently the Gen2 port will
-cause the system to hang as its using DBI registers in the .init
-and those are only accesible after phy_power_on().
+On 25/04/2022 15:35, Rob Herring wrote:
+> The compatible string should be 'qcom,gcc-apq8064', not
+> 'qcom,gcc-apq8084'. Found by enabling undocumented compatible checks.
+> 
+> Cc: Ansuel Smith <ansuelsmth@gmail.com>
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-So solve this by splitting the DBI read/writes to .post_init.
+Thanks Rob!
 
-Fixes: a0fd361db8e5 ("PCI: dwc: Move "dbi", "dbi2", and "addr_space" resource setup into common code")
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 48 +++++++++++++++-----------
- 1 file changed, 28 insertions(+), 20 deletions(-)
+Fixes: a469bf89a009 ("dt-bindings: clock: simplify qcom,gcc-apq8064
+Documentation")
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 9419b5d9d482..ed261d84d2b4 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1059,9 +1059,7 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
- 	struct qcom_pcie_resources_2_3_3 *res = &pcie->res.v2_3_3;
- 	struct dw_pcie *pci = pcie->pci;
- 	struct device *dev = pci->dev;
--	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
- 	int i, ret;
--	u32 val;
- 
- 	for (i = 0; i < ARRAY_SIZE(res->rst); i++) {
- 		ret = reset_control_assert(res->rst[i]);
-@@ -1118,6 +1116,33 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
- 		goto err_clk_aux;
- 	}
- 
-+	return 0;
-+
-+err_clk_aux:
-+	clk_disable_unprepare(res->ahb_clk);
-+err_clk_ahb:
-+	clk_disable_unprepare(res->axi_s_clk);
-+err_clk_axi_s:
-+	clk_disable_unprepare(res->axi_m_clk);
-+err_clk_axi_m:
-+	clk_disable_unprepare(res->iface);
-+err_clk_iface:
-+	/*
-+	 * Not checking for failure, will anyway return
-+	 * the original failure in 'ret'.
-+	 */
-+	for (i = 0; i < ARRAY_SIZE(res->rst); i++)
-+		reset_control_assert(res->rst[i]);
-+
-+	return ret;
-+}
-+
-+static int qcom_pcie_post_init_2_3_3(struct qcom_pcie *pcie)
-+{
-+	struct dw_pcie *pci = pcie->pci;
-+	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+	u32 val;
-+
- 	writel(SLV_ADDR_SPACE_SZ,
- 		pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
- 
-@@ -1145,24 +1170,6 @@ static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
- 		PCI_EXP_DEVCTL2);
- 
- 	return 0;
--
--err_clk_aux:
--	clk_disable_unprepare(res->ahb_clk);
--err_clk_ahb:
--	clk_disable_unprepare(res->axi_s_clk);
--err_clk_axi_s:
--	clk_disable_unprepare(res->axi_m_clk);
--err_clk_axi_m:
--	clk_disable_unprepare(res->iface);
--err_clk_iface:
--	/*
--	 * Not checking for failure, will anyway return
--	 * the original failure in 'ret'.
--	 */
--	for (i = 0; i < ARRAY_SIZE(res->rst); i++)
--		reset_control_assert(res->rst[i]);
--
--	return ret;
- }
- 
- static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
-@@ -1612,6 +1619,7 @@ static const struct qcom_pcie_ops ops_2_4_0 = {
- static const struct qcom_pcie_ops ops_2_3_3 = {
- 	.get_resources = qcom_pcie_get_resources_2_3_3,
- 	.init = qcom_pcie_init_2_3_3,
-+	.post_init = qcom_pcie_post_init_2_3_3,
- 	.deinit = qcom_pcie_deinit_2_3_3,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
- };
--- 
-2.35.1
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
+Best regards,
+Krzysztof
