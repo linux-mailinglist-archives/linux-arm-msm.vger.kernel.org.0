@@ -2,102 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FD3B50EA7B
+	by mail.lfdr.de (Postfix) with ESMTP id 4824050EA7A
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 22:29:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245497AbiDYU3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 16:29:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43370 "EHLO
+        id S245405AbiDYUav (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 16:30:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245523AbiDYU3n (ORCPT
+        with ESMTP id S245492AbiDYUam (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 16:29:43 -0400
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C35013A4FE;
-        Mon, 25 Apr 2022 13:23:34 -0700 (PDT)
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-e922e68b0fso6212146fac.1;
-        Mon, 25 Apr 2022 13:23:34 -0700 (PDT)
+        Mon, 25 Apr 2022 16:30:42 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1264D14EC59
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 13:24:56 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id c17-20020a056830349100b00605ca7d1deeso42761otu.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 13:24:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=i/cbTDQy63LDQhOihWzHzZUmvcSW7IqWrJf3iJytnOs=;
+        b=HNP4FnWUAWSVYDGDBPgD8iux+2z7R28TGzFiVrDlHmpIf05Co3eDVAciUrDqWte8qL
+         SmiZGLOnXM/1FqL4454+qEox4QsuvNukIAGQ/PdKidaICzi05UiogyTi26UaG/BRQk4O
+         i5biSKCOVzl33MfoNv3ZraKE9WsGM/5qpSpR4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=D2SoBc/ZKxqDhwD3SmpOX8NpZ3lzQzNbqGfppTEeXT8=;
-        b=grrQibbnsq+KDsNEQEQ7CrC5UpnU5WLVWW8SSeoI7MW/Lnnu2sypH43mIOAZFUB6kE
-         bACki5Og/TI4GiIv7Thc9IpszVPHinSOC0A9VFstqjC2XYKdaGf/lQWDpTBFdcuo8Jjj
-         P/UoOOprPEUikWga/K+RMdkWvlN1mmwIIl8u5oCX+dj35vP1DDyuHAFkmR46Sx6ghpks
-         qSwTHgtEfMO+YeTB0BbxfRbnB91zmfQB+m6m/O38poJ+5BM1000B5EOv8BXo0tCBzDnO
-         HaDpsuY/+eTnIx6Oaie78nlkYp9Lz3pAWbazOIX/vh1E5w+43yCx46Js8Bq/KsEt8X4p
-         Mg2g==
-X-Gm-Message-State: AOAM532qh4HfvNL2dsYC1QX5/m0yLr4sIQu+k7VUL5brUAnA6WFn9OkW
-        AeLiOhegg/u6kHtPwAJlug==
-X-Google-Smtp-Source: ABdhPJy4QG+AiLDRpFd6VuYZL+if3WYEliknPfhviWpj3Tj70cgUFs3NxoYMEFdnhg5ZAMBgQPrIEA==
-X-Received: by 2002:a05:6870:3394:b0:dd:cfdd:34c9 with SMTP id w20-20020a056870339400b000ddcfdd34c9mr12086516oae.31.1650918184692;
-        Mon, 25 Apr 2022 13:23:04 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id p17-20020a4a3651000000b0035d9b838f21sm4772764ooe.10.2022.04.25.13.23.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Apr 2022 13:23:04 -0700 (PDT)
-Received: (nullmailer pid 206743 invoked by uid 1000);
-        Mon, 25 Apr 2022 20:23:03 -0000
-Date:   Mon, 25 Apr 2022 15:23:03 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: clock: qcom,gcc-apq8064: Fix typo in
- compatible string
-Message-ID: <YmcDJw6T7p4dtFYc@robh.at.kernel.org>
-References: <20220425133527.3723233-1-robh@kernel.org>
- <20220425193253.06828C385A4@smtp.kernel.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=i/cbTDQy63LDQhOihWzHzZUmvcSW7IqWrJf3iJytnOs=;
+        b=WNVoaZrJyqXuXEeU/dcnTWBAGX3NNxSFM285td0tKeiKFepy6Aamot0WPcW/eVU1Xg
+         IcDtqz1jba+TXvcrW2yPJqvjNSxsKyL5I0goN0bGq8O1RJvBxg57fv9R337p/owNQ3wn
+         g44wrQkPcs9eMI4oCghzPB087+73bLkYUb4+PSiIdBa+Zr/JU/q4Kv+Vup+rK8y2S2BX
+         o0wUr3XWwdMgJBaPea56Fbwq+4vqK8Gqp78HOxvkWlAqgeb9v/BPZqzfaxm/TlZ/pBC3
+         1sGfPCj4W4Vdr2TdesdiZLJGoPPlVCIa4nxaXQwpkajmaYwp+fxpEcDFg2hMF3a5+OJH
+         XYTQ==
+X-Gm-Message-State: AOAM5308YAZ9Enh2bBD0Dg+L1r+4q8NuQN14MfaE+9yJ67RFlWcG4IMG
+        fwAhTiceGfRV+jJ0U1ackQdJc51iHqWJ2dmG/KhtKQ==
+X-Google-Smtp-Source: ABdhPJwVqbmVCPVHZaaa+iMgaqmo2o0oIEdpUhkFrQMPWCAx0UGWznDThN+OMIc0e6bI2J92JJDahtpwrSyFiUV0n+Y=
+X-Received: by 2002:a9d:b85:0:b0:5cb:3eeb:d188 with SMTP id
+ 5-20020a9d0b85000000b005cb3eebd188mr7176514oth.77.1650918294748; Mon, 25 Apr
+ 2022 13:24:54 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 25 Apr 2022 13:24:54 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220425193253.06828C385A4@smtp.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <20220425122223.7415-1-guozhengkui@vivo.com>
+References: <20220425122223.7415-1-guozhengkui@vivo.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Mon, 25 Apr 2022 13:24:54 -0700
+Message-ID: <CAE-0n50a6K-UbG1xM+Au_-f1k98-uth8a__2YzzpZ4F4qBbBoA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: fix returnvar.cocci warning
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        David Heidelberg <david@ixit.cz>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Guo Zhengkui <guozhengkui@vivo.com>,
+        Lyude Paul <lyude@redhat.com>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, Xu Wang <vulab@iscas.ac.cn>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     zhengkui_guo@outlook.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 25, 2022 at 12:32:51PM -0700, Stephen Boyd wrote:
-> Quoting Rob Herring (2022-04-25 06:35:27)
-> > The compatible string should be 'qcom,gcc-apq8064', not
-> > 'qcom,gcc-apq8084'. Found by enabling undocumented compatible checks.
-> > 
-> > Cc: Ansuel Smith <ansuelsmth@gmail.com>
-> > Signed-off-by: Rob Herring <robh@kernel.org>
-> > ---
-> >  Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-> > index 97936411b6b4..9910a3e033bb 100644
-> > --- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-> > +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-> > @@ -25,7 +25,7 @@ description: |
-> >  
-> >  properties:
-> >    compatible:
-> > -    const: qcom,gcc-apq8084
-> > +    const: qcom,gcc-apq8064
-> 
-> This file has dt-bindings/clock/qcom,gcc-apq8084.h referenced. Should
-> that be removed? It looks like commit a469bf89a009 ("dt-bindings: clock:
-> simplify qcom,gcc-apq8064 Documentation") took the more than just the
-> compatible for apq8084 from qcom,gcc-other.yaml and put it in here while
-> removing gcc-apq8064. Probably the apq8084 part needs to be a copy of
-> the apq8064 file with the single compatible changed.
+Quoting Guo Zhengkui (2022-04-25 05:22:21)
+> Fix the following coccicheck warning:
+> drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c:24:5-8: Unneeded variable:
+> "ret". Return "0" on line 75.
+>
+> Signed-off-by: Guo Zhengkui <guozhengkui@vivo.com>
+> ---
 
-IDK, can someone (Ansuel?) fix this properly?
-
-Rob
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
