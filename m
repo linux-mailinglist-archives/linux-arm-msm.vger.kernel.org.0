@@ -2,97 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E73950D781
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 05:27:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2FC750D789
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 05:28:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240603AbiDYDaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Apr 2022 23:30:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53678 "EHLO
+        id S240614AbiDYDbo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Apr 2022 23:31:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237472AbiDYDaP (ORCPT
+        with ESMTP id S240624AbiDYDbm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Apr 2022 23:30:15 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC54A240A4;
-        Sun, 24 Apr 2022 20:27:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650857232; x=1682393232;
-  h=from:to:cc:subject:date:message-id;
-  bh=YjOcgIOFXyRnwECVbo7xYwtnF1RAoHpr1cKLFYwgHuA=;
-  b=fcDVdDpI2jjjtmSVq9sH1GKF7KwWrK3e1bPXrjlo5XpHXD0F2WUyOUuE
-   Y3+ms09O6hgJLkPWgUusegJ4stwhl4y4Dpy+4n/2ijMa3eBKX1/9d62nJ
-   6sme/Yw3rtP1Lu9bgbFDBE44ci7vQ0XN1rCs8CA6Wc0YESPEfjDnrNu6p
-   0=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 24 Apr 2022 20:27:11 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 24 Apr 2022 20:27:10 -0700
-X-QCInternal: smtphost
-Received: from vpolimer-linux.qualcomm.com ([10.204.67.235])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 25 Apr 2022 08:56:56 +0530
-Received: by vpolimer-linux.qualcomm.com (Postfix, from userid 463814)
-        id 0A71255BD; Mon, 25 Apr 2022 08:56:55 +0530 (IST)
-From:   Vinod Polimera <quic_vpolimer@quicinc.com>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dmitry.baryshkov@linaro.org, dianders@chromium.org,
-        quic_kalyant@quicinc.com
-Subject: [PATCH] drm/msm/disp/dpu1: set vbif hw config to NULL to avoid use after memory free during pm runtime resume
-Date:   Mon, 25 Apr 2022 08:56:53 +0530
-Message-Id: <1650857213-30075-1-git-send-email-quic_vpolimer@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+        Sun, 24 Apr 2022 23:31:42 -0400
+Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 920EE7670;
+        Sun, 24 Apr 2022 20:28:39 -0700 (PDT)
+Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+         client-signature RSA-PSS (2048 bits) client-digest SHA256)
+        (Client CN "mail.riseup.net", Issuer "R3" (not verified))
+        by mx1.riseup.net (Postfix) with ESMTPS id 4Kmr864kxYzDsBT;
+        Sun, 24 Apr 2022 20:28:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1650857318; bh=J+EuToFStwQYsaImeqhXLTcurckLsomJchnIecq5Fno=;
+        h=From:To:Cc:Subject:Date:From;
+        b=b7AJq7GbAN356D+WnL1TxqFfIwn2bAjZUM4NdCMkoG7FH8j8IkhxUgNhsru7AEtKn
+         IriCERZ31/ZD0NMRMawX/n506OWG3ThdDZ923SeVziN1qYXaDdbG+IR1IkSdRHphwY
+         ijPJGraM0GXPvzuOqdccA9r6TmWnxyUgfy/TC4l4=
+X-Riseup-User-ID: 577A01DE89EE81C1397BDDC451FEDDA874471FF9635140DD193F048E1C2F3BD3
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by fews1.riseup.net (Postfix) with ESMTPSA id 4Kmr841hPpz5vXY;
+        Sun, 24 Apr 2022 20:28:36 -0700 (PDT)
+From:   Dang Huynh <danct12@riseup.net>
+To:     Dang Huynh <danct12@riseup.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sdm660-xiaomi-lavender: Configure WLED
+Date:   Mon, 25 Apr 2022 10:28:24 +0700
+Message-Id: <20220425032824.211975-1-danct12@riseup.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-BUG: Unable to handle kernel paging request at virtual address 006b6b6b6b6b6be3
+WLED is used for controlling display backlight on this phone.
 
-Call trace:
-  dpu_vbif_init_memtypes+0x40/0xb8
-  dpu_runtime_resume+0xcc/0x1c0
-  pm_generic_runtime_resume+0x30/0x44
-  __genpd_runtime_resume+0x68/0x7c
-  genpd_runtime_resume+0x134/0x258
-  __rpm_callback+0x98/0x138
-  rpm_callback+0x30/0x88
-  rpm_resume+0x36c/0x49c
-  __pm_runtime_resume+0x80/0xb0
-  dpu_core_irq_uninstall+0x30/0xb0
-  dpu_irq_uninstall+0x18/0x24
-  msm_drm_uninit+0xd8/0x16c
-
-Fixes: 25fdd5933e4 ("drm/msm: Add SDM845 DPU support")
-Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+Signed-off-by: Dang Huynh <danct12@riseup.net>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 9c346ce..59982d3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -793,8 +793,10 @@ static void _dpu_kms_hw_destroy(struct dpu_kms *dpu_kms)
- 		for (i = 0; i < dpu_kms->catalog->vbif_count; i++) {
- 			u32 vbif_idx = dpu_kms->catalog->vbif[i].id;
+diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+index dcbaacf18f66..7a30008ee0dd 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
++++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+@@ -363,6 +363,14 @@ vreg_l19a_3p3: l19 {
+ 	};
+ };
  
--			if ((vbif_idx < VBIF_MAX) && dpu_kms->hw_vbif[vbif_idx])
-+			if ((vbif_idx < VBIF_MAX) && dpu_kms->hw_vbif[vbif_idx]) {
- 				dpu_hw_vbif_destroy(dpu_kms->hw_vbif[vbif_idx]);
-+				dpu_kms->hw_vbif[vbif_idx] = NULL;
-+			}
- 		}
- 	}
- 
++&pm660l_wled {
++	status = "okay";
++
++	qcom,switching-freq = <800>;
++	qcom,current-limit-microamp = <20000>;
++	qcom,num-strings = <2>;
++};
++
+ &sdhc_1 {
+ 	status = "okay";
+ 	supports-cqe;
 -- 
-2.7.4
+2.36.0
 
