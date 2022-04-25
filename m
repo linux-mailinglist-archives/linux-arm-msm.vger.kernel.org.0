@@ -2,107 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 605D350EBA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 00:21:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4160850EC11
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 00:28:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235541AbiDYWYp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 18:24:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56042 "EHLO
+        id S234179AbiDYWaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 18:30:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343701AbiDYWP6 (ORCPT
+        with ESMTP id S230293AbiDYWac (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 18:15:58 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 006A42FE59
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 15:12:52 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id t25so28713639lfg.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 15:12:52 -0700 (PDT)
+        Mon, 25 Apr 2022 18:30:32 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 806D6139385
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 15:23:49 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id p10so28755384lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 15:23:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=CAP7rPZV7Wg1L7ILm1X74Kue+bkQwcGO5HR9HWZTqCQ=;
-        b=dJX2cSv/+gKglImH2uFpJEYgjc5+NX9Xd3BuvqhDgGusOPOJFIHWKeRICKBQpPPoSR
-         LRWg4erbLAb1L1jmTzVE/ERDXVMvVaMjRvVK7eK25m1tZvgc7xsuVzviLcWRLXb4qJNe
-         NncodU0a2RPl7ROmTaSIncvmiSd45Wt4Ukqa56boq0NxluU+2gvngMpLmVhuRptAw847
-         xuWUIzDVOKohXpafkUfT2vcFXmK0te0qBVyT91KKUUDbSKU9uqP1ofJgrALW5B6j0/MD
-         B0TFCbQWgpjg+K5CtO/iipd/25Fhf9UGPKZNMiNdweZ0IA1QeOLtbn7yj1vNiyXmfHLL
-         3RdA==
+        bh=X6tPtyrOOLF1/p14xxSTVx958MJNQbxFMOc73dV5Mzo=;
+        b=Ce7pCVUGiFJQSnItmyWywubtP/Tv45dyMCL1pPWfKJJsTdHrxgfCvX2KsBbiyFqZGS
+         901m5YPZcONrcIef6sdmwhVrPW1kaCXD9G041SP5iPMSzE1RLDX+bASNocYr2CCvcDXs
+         zB7zZVUHI8pwS/nHvMGZNa/UtCBMU90HFa3ZsXC8jEoLC+6kVzr7bukkiDi9clU5rCha
+         8qOIrhFwfd6NpJUV3luIYezgZV1CPJFqxHRNEiyLpuRKNM5yFKbwPwikPsjqQI/LB11r
+         /sXNjJZo08eJQNLd4RxJWAtWXTe3iq0fTXNDpIRvqPVrs2Cme9p0NXt8bwoXT1g50RuN
+         QK4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=CAP7rPZV7Wg1L7ILm1X74Kue+bkQwcGO5HR9HWZTqCQ=;
-        b=2J9j+7sSgTRcFGFdp/dUk4K7tcyxnF/qbXLIT3gXj0q1NViT9EcTUMO9v8DIpcDWuo
-         1L7MeqFQwhjANxXKusHzE6+t0jcHArNoPdNux1vGkMPfAcRBlidu4mT1k6RJB4cEaO+1
-         93G5Dxl/TwzVWnie/2Wx50cJTgagee+OQOeIzNmufvX6lL6pzVxUDH8IZTIDkt2H2OLq
-         DBO4OPgnihzuk08IC5P/XObEVJnHNIjbTq+12auIwhkjZxDpM2B/vBOnVbCr6I6v1Uvc
-         MAZEkzuTS0adLBmkYvezCubnuF/ZqXXeEfIvuI64ZeglmPlxhsWwEmnDyDz9bY7MWbrq
-         Mc+A==
-X-Gm-Message-State: AOAM532N2lBDinx2vkyGjkHmC4mFCNvmdJKVAMoR5yIxwpx5JenarWca
-        rUqWX5s7I929pqTePfQ/UrtznA==
-X-Google-Smtp-Source: ABdhPJwcqBXtXmf+RLDNzHIm9VFcDdg9XbcmIbPJSD5DRm06iD9NfzLea91rV2lpzRSmr+WIJqT1DQ==
-X-Received: by 2002:ac2:435a:0:b0:46b:ae5b:83e8 with SMTP id o26-20020ac2435a000000b0046bae5b83e8mr14551244lfl.485.1650924771409;
-        Mon, 25 Apr 2022 15:12:51 -0700 (PDT)
+        bh=X6tPtyrOOLF1/p14xxSTVx958MJNQbxFMOc73dV5Mzo=;
+        b=Nt885B+JP2Dtrq1JbA6nEPJ9gfRnVpZMKzbwRlVCgsApdNupybN/pI/Y9iw2BU2zoq
+         XyqEVWasNMU3jXzO/IJQc+EJseHzJoVw/3nxecu1WH6AKoxQviJR8z9g87iMSRHyJXU0
+         4Y81jmJNZpDzmrLWM/X/zV/OEv7VSD5nH4QM+IHbpBs5pRyOoYHvt3WJ5uG4i4QlKT8P
+         xwNcQwrjnQsP18W+2yIkA88Bil79a1bkiQcNDjmPVDQWPsFbLIjZX7h0ZKhYhcE6Byqd
+         2e5YzVLJrFYDABuTD/S5yrcTpUU1uEwC3bUBG7QBeRfFG6hUq/DZV1EY9ZsTe30Wr5l/
+         rElw==
+X-Gm-Message-State: AOAM533tL92BN/GEckcW9HGvczAzjcUCPwzJYxjtopv6+EMnA2SbViSw
+        qaKXdj1Wu+I9f/jOYrYzNDAQNA==
+X-Google-Smtp-Source: ABdhPJzxHLoRrGJZ4lg39u4RC4KZZ7ipF64tibG2Qxu8QIwRay7SmyMbnhHFRx5OOlxuYAKETLeK2Q==
+X-Received: by 2002:a05:6512:b1e:b0:44a:9b62:3201 with SMTP id w30-20020a0565120b1e00b0044a9b623201mr14974371lfu.42.1650925419622;
+        Mon, 25 Apr 2022 15:23:39 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id l28-20020a19495c000000b0044a8abcb589sm1536797lfj.186.2022.04.25.15.12.50
+        by smtp.gmail.com with ESMTPSA id z17-20020a05651c023100b0024f11b44e93sm453321ljn.102.2022.04.25.15.23.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Apr 2022 15:12:51 -0700 (PDT)
-Message-ID: <e9d7c636-09ba-52f4-5575-a7027f722d20@linaro.org>
-Date:   Tue, 26 Apr 2022 01:12:50 +0300
+        Mon, 25 Apr 2022 15:23:39 -0700 (PDT)
+Message-ID: <d315bd2d-6f8d-592f-b24e-15ee34ca22d8@linaro.org>
+Date:   Tue, 26 Apr 2022 01:23:38 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
-Subject: Re: [PATCH] drm/msm: change msm_sched_ops from global to static
+Subject: Re: [PATCH v2] drm: msm: fix error check return value of
+ irq_of_parse_and_map()
 Content-Language: en-GB
-To:     Tom Rix <trix@redhat.com>, robdclark@gmail.com, sean@poorly.run,
-        quic_abhinavk@quicinc.com, airlied@linux.ie, daniel@ffwll.ch
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20220421131507.1557667-1-trix@redhat.com>
+To:     cgel.zte@gmail.com
+Cc:     airlied@linux.ie, angelogioacchino.delregno@collabora.com,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        lv.ruyi@zte.com.cn, quic_abhinavk@quicinc.com,
+        quic_mkrishn@quicinc.com, sean@poorly.run, swboyd@chromium.org,
+        vulab@iscas.ac.cn, Zeal Robot <zealci@zte.com.cn>
+References: <39b3828e-064c-6aa4-de77-35b201b1b40f@linaro.org>
+ <20220424031959.3172406-1-lv.ruyi@zte.com.cn>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220421131507.1557667-1-trix@redhat.com>
+In-Reply-To: <20220424031959.3172406-1-lv.ruyi@zte.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/04/2022 16:15, Tom Rix wrote:
-> Smatch reports this issue
-> msm_ringbuffer.c:43:36: warning: symbol 'msm_sched_ops' was not declared. Should it be static?
+On 24/04/2022 06:19, cgel.zte@gmail.com wrote:
+> From: Lv Ruyi <lv.ruyi@zte.com.cn>
 > 
-> msm_sched_ops is only used in msm_ringbuffer.c so change its
-> storage-class specifier to static.
+> The irq_of_parse_and_map() function returns 0 on failure, and does not
+> return an negative value.
 > 
-> Signed-off-by: Tom Rix <trix@redhat.com>
+> Reported-by: Zeal Robot <zealci@zte.com.cn>
+> Signed-off-by: Lv Ruyi <lv.ruyi@zte.com.cn>
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 > ---
->   drivers/gpu/drm/msm/msm_ringbuffer.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> v2: don't print irq, and return ERR_PTR(-EINVAL)
+> ---
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-> index 367a6aaa3a20..66f4ec09ef67 100644
-> --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-> @@ -40,7 +40,7 @@ static void msm_job_free(struct drm_sched_job *job)
->   	msm_gem_submit_put(submit);
->   }
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> index 3b92372e7bdf..44e395e59df9 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> @@ -570,9 +570,9 @@ struct msm_kms *mdp5_kms_init(struct drm_device *dev)
+>   	}
 >   
-> -const struct drm_sched_backend_ops msm_sched_ops = {
-> +static const struct drm_sched_backend_ops msm_sched_ops = {
->   	.run_job = msm_job_run,
->   	.free_job = msm_job_free
->   };
+>   	irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
+> -	if (irq < 0) {
+> -		ret = irq;
+> -		DRM_DEV_ERROR(&pdev->dev, "failed to get irq: %d\n", ret);
+> +	if (!irq) {
+> +		ret = -EINVAL;
+> +		DRM_DEV_ERROR(&pdev->dev, "failed to get irq\n");
+>   		goto fail;
+>   	}
+>   
 
 
 -- 
