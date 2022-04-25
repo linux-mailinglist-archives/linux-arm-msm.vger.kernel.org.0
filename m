@@ -2,97 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6F36515C6A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 13:38:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11396515D88
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 15:27:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231593AbiD3Llj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 07:41:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53052 "EHLO
+        id S1359327AbiD3NaW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 09:30:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229923AbiD3Llh (ORCPT
+        with ESMTP id S238390AbiD3NaQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Apr 2022 07:41:37 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13B192C10B
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 04:38:16 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id a21so11760540edb.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 04:38:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=KRYhM2rH5zK3jCSlpwvDvduhHoJfrdE1g2Q5vdC1OLc=;
-        b=FGvLGshcelcrOnf7weKDl4hcCuJuvNb9XV88W55aKWtWMIqB/ZaWemQoOuNbHnjmSZ
-         8wC0bvp2wOU4/bbtBV7QifUsZHEMgjDJZ3bZ9dalR0DFR7+ALq57vM+YR0EFdVACl8vp
-         9eQ4nzSMVw2hMDOwCsNCppyCnrNICuAIvIWX5PmYh0uQrfxPy4fJvS/19Rlv2gumzpVx
-         mQehrWGe5ZMEZXU68/pxGYMpg/n77RAv2laX2UZsDpWfmewJYT7iEX11nPzYQ9rtEmCG
-         iZPxBPQq+cYIpm+40yy8aA5cgv4iJxdyxbpyWGnFUQzKn3nl/Yxui0WGqi5S1V0xD5qK
-         WprQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=KRYhM2rH5zK3jCSlpwvDvduhHoJfrdE1g2Q5vdC1OLc=;
-        b=J3HUcT+R0r8ZvoBxTrKe+elNq1kCyPuRrY+WNVhmX3F0dxSgUA8KA6jGrqkXU8IvCG
-         4cbwV0Jy+D4N48bd236sOLun/1KcOEAX9kzPWk+KQ3cb//+kXlyh7pjExHW8oiJ8Yu1N
-         3g5VNW4//3Z2jiLLjNCHdABhcGaFs2pWJD6Lz7gPBGHubEAYHLDETxEAhHbccOlguAsZ
-         JMZhhOz5vIDQIliukC0SdWMrI8cMMvAGpqDdkonenFfGlOsxSMS4mvZJHrrPUETzWKFI
-         de2ts6/l7kb5I/OLz3EI1Z/8fTAZ8zC1FRB0/cwybZVdCTjHAZtjjLVK7FKbgtqLxWXX
-         4DzA==
-X-Gm-Message-State: AOAM532b3TZS5hYJhzYcdhYVwWtU/xQj6WBr18fjbkoFLQFhi8G8dXFX
-        sb4lZ9Nnsns+TbI2oNfbDjTuIA==
-X-Google-Smtp-Source: ABdhPJyclT1vcvVX+IL3ABxlppUHvHUohv4aQd3hoyNcOyeQmiYcJEx/AHtRLM0vx5DamGHZWhAmWA==
-X-Received: by 2002:a05:6402:3695:b0:427:b16e:e1b4 with SMTP id ej21-20020a056402369500b00427b16ee1b4mr754032edb.117.1651318694674;
-        Sat, 30 Apr 2022 04:38:14 -0700 (PDT)
-Received: from [192.168.0.177] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id zp1-20020a17090684e100b006f3ef214defsm1527602ejb.85.2022.04.30.04.38.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Apr 2022 04:38:14 -0700 (PDT)
-Message-ID: <bc8c9453-d82f-c3be-184a-355579d3c64b@linaro.org>
-Date:   Sat, 30 Apr 2022 13:38:12 +0200
+        Sat, 30 Apr 2022 09:30:16 -0400
+X-Greylist: delayed 43879 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 30 Apr 2022 06:26:44 PDT
+Received: from spiderman.my-portal.gr (spiderman.my-portal.gr [144.76.89.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E672635DC4;
+        Sat, 30 Apr 2022 06:26:44 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by spiderman.my-portal.gr (Postfix) with ESMTP id 06BDDE7B50F;
+        Tue, 26 Apr 2022 01:59:45 +0300 (EEST)
+X-Virus-Scanned: Debian amavisd-new at spiderman.my-portal.gr
+Received: from spiderman.my-portal.gr ([127.0.0.1])
+        by localhost (spiderman.my-portal.gr [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id oGsCGVyA5pyF; Tue, 26 Apr 2022 01:59:44 +0300 (EEST)
+Received: from www.hotelartemision.gr (localhost [127.0.0.1])
+        (Authenticated sender: info@hotelartemision.gr)
+        by spiderman.my-portal.gr (Postfix) with ESMTPA id DF9C9E79769;
+        Tue, 26 Apr 2022 00:10:23 +0300 (EEST)
+Received: from 209.107.210.62
+        (SquirrelMail authenticated user info@hotelartemision.gr)
+        by www.hotelartemision.gr with HTTP;
+        Mon, 25 Apr 2022 21:10:28 -0000
+Message-ID: <673c688bea437d65e20731991b094957.squirrel@www.hotelartemision.gr>
+Date:   Mon, 25 Apr 2022 21:10:28 -0000
+Subject: RE:
+From:   "Mackenzie Scott" <info@hotelartemision.gr>
+Reply-To: "Mackenzie Scott" <info@ebumk.com.br>
+User-Agent: SquirrelMail/1.4.23 [SVN]
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 2/6] clk: qcom: Add DT bindings for IPQ8074 APSS clock
- controller
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        jassisinghbrar@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20220429114330.59026-1-robimarko@gmail.com>
- <20220429114330.59026-2-robimarko@gmail.com>
- <1b545fbb-eaca-fb98-f77a-15326a7a2e4e@linaro.org>
- <CAOX2RU4KiKxCSMGDu+=FZqkdRia0MSBcz-eMn0kGpJ5ABxdkSg@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAOX2RU4KiKxCSMGDu+=FZqkdRia0MSBcz-eMn0kGpJ5ABxdkSg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain;charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+X-Priority: 3 (Normal)
+Importance: Normal
+X-Spam-Status: No, score=3.4 required=5.0 tests=BAYES_50,LOTS_OF_MONEY,
+        MISSING_HEADERS,REPLYTO_WITHOUT_TO_CC,SPF_FAIL,SPF_HELO_NONE
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/04/2022 23:56, Robert Marko wrote:
->>> +/* SPDX-License-Identifier: GPL-2.0 */
->>
->> This should be licensed the same as bindings, so GPL|BSD, unless it's a
->> derivative of some other work?
-> 
-> It's derivated from IPQ6018 PLL bindings which are marked GPL-2.0 so I
-> decided to keep that.
 
-OK
 
-Best regards,
-Krzysztof
+
+Xin chào,
+
+Tôi là Mackenzie Scott, v&#7907; c&#361; c&#7911;a ng&#432;&#7901;i sáng
+l&#7853;p kiêm Giám &#273;&#7889;c &#273;i&#7873;u hành Amazon (Jeff
+Bezos).
+Tôi quyên góp 4 t&#7927; &#273;ô la cho các t&#7893; ch&#7913;c t&#7915;
+thi&#7879;n, cá nhân và tr&#432;&#7901;ng cao &#273;&#7859;ng trên toàn
+c&#7847;u t&#7915; Qu&#7929; c&#7911;a Scott, &#273;&#7875; h&#7895;
+tr&#7907; ngay l&#7853;p t&#7913;c cho nh&#7919;ng ng&#432;&#7901;i
+b&#7883; thi&#7879;t h&#7841;i v&#7873; kinh t&#7871; do &#273;&#7841;i
+d&#7883;ch COVID-19 và b&#7841;n là m&#7897;t trong nh&#7919;ng
+ng&#432;&#7901;i may m&#7855;n chi&#7871;n th&#7855;ng.
+Tôi có m&#7897;t kho&#7843;n tài tr&#7907; tr&#7883; giá $ 100,800,000 cho
+b&#7841;n và c&#7897;ng &#273;&#7891;ng c&#7911;a b&#7841;n.
+Liên h&#7879; v&#7899;i tôi &#273;&#7875; bi&#7871;t thêm thông tin
+n&#7871;u b&#7841;n quan tâm.
+
+Trân tr&#7885;ng
+Mackenzie Scott
+
+
+
+
+
+
+Hello,
+
+I am Mackenzie Scott, ex-wife of Amazon founder and CEO(Jeff Bezos).
+I'm donating $ 4 billion to charities, individuals and colleges across the
+Globe from the Scott's Foundation, to provide immediate support to people
+suffering economically from the  COVID-19 pandemic and you are one of the
+lucky winners.
+I have a donation grant worth $100,800,000 for you and your community.
+Contact me for more information if you are interested.
+
+Best regards
+Mackenzie Scott
+
