@@ -2,57 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2072D50DDDD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 12:30:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5EB650DDF4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 12:33:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236846AbiDYKd3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 06:33:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54654 "EHLO
+        id S230334AbiDYKfy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 06:35:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238598AbiDYKdQ (ORCPT
+        with ESMTP id S238148AbiDYKfw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 06:33:16 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D88FC13;
-        Mon, 25 Apr 2022 03:30:13 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1C2A560EC8;
-        Mon, 25 Apr 2022 10:30:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7C8B1C385AE;
-        Mon, 25 Apr 2022 10:30:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650882612;
-        bh=kMSI7jYM56shSMbM4ufkb7PWdB8PwotuJ9mxtYzPqSg=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=b7q+a271nra3bDS2ncH4iyVSDSN1JWY+xbWh4Kql9JCSN8qGwFuXS98TxK2SOUOk+
-         uZg4+AxYPqtEhAzGq5iKwTsgCG61De2sYSlQU/K+Gt6t54bW3Om0Pg8VzZhYkcFwgg
-         2/o7iKPqvsSRWWs7fPs1eAZZkTOXQW8Ev66r87YTUjc1+ICzqJ8w3kdzzTxkepCduc
-         nQEFZ4hceirJlQQlwIdewQKphvDKTfQtvILGJk/GvPODA8B0nJGak/PzTFhG+Y0zJc
-         pmcF8i+IxNwGn0sMh89Ei/wH05vkCXCPS9AAF42StwlSSzowI9ZagVRPALcywQrQq2
-         g6/bQgh5lSENg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 66BBEEAC09C;
-        Mon, 25 Apr 2022 10:30:12 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Mon, 25 Apr 2022 06:35:52 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD75A186D1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 03:32:28 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id r13so28728426ejd.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 03:32:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:cc:references:in-reply-to:content-transfer-encoding;
+        bh=l4U9a3Zi4lHZ61yfuUBIblmiOyI1fKpkBOTkv3JlGtQ=;
+        b=Ymlwiw0q6E1oM2ZVpnGCmW5V5/N40PyfUybcUSeQt3NKV3qWyOatxXuMVogNBBqF8a
+         BJOTudbuDHyOyOx71QYJCJ3WbK38vO3MGDojm1zz/+iY0XvAa878smvwmlRRtbwTkepr
+         bCZjBgmyCUvpDEdppU50eCERAGfHuc4z9XWzaW+tsniMqEGhRMzLOvRBniGcSOzppuRw
+         7ydvUDZbFWUqMU0Wgz59QlKDSBzfjOMJbdoncAFaGJHsgmVDfCJWVwYjhY1uI7UwrqGq
+         gw1qBTXBSNFSk+vVwrJ02Z5Ke3z+RPggu+luaRqxiRd7zs2ZUpt+jTXbWj5p0YxEY7vS
+         eaow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:from:to:cc:references:in-reply-to
+         :content-transfer-encoding;
+        bh=l4U9a3Zi4lHZ61yfuUBIblmiOyI1fKpkBOTkv3JlGtQ=;
+        b=NOhx7jiRGs5N93BR4U+EJH2pXRxpio5HJ/7iBxDkF1StXuujFAYf8P29bqvYg/pZMA
+         Z5vulJPcSNPzfd46/nHVTHuG1tc5NqK36WoSRxs/xCJhJKadtHA2MdGUB8nF9o1GWOF8
+         rq8lvnZHXDelblyL1bIFZyqLyr0wt9Z3CayQG+sZWTLDf1EnqAtC4iITu9icDs4w/aaA
+         hKc8/4bEzMevlq49nrffTAOx06+Vd763EYLAgRnAOZL140j5W59ozn9sElhPOmBNSr2m
+         lhRnERWJA0KFFfW9Yal0UowsHmKABPKJ5H+Kq5x7Jmyiilg/cKtdkbuTGhKyyAVB62Ba
+         ctzg==
+X-Gm-Message-State: AOAM531/N6wB/t+Ziouzg6s9BVskoEsiNxvcqWBoLktO76I1QXMQTamf
+        seOnO/L6e/5PNnkZVApffm52NQ==
+X-Google-Smtp-Source: ABdhPJxcCZZQNOatq8Xg0snh4n+++QXiYb0f8DTwryfx5qVf1qv+dM8xahTIrDiTY/L1FxmLbA8f3w==
+X-Received: by 2002:a17:906:2989:b0:6f3:a215:8426 with SMTP id x9-20020a170906298900b006f3a2158426mr1188179eje.725.1650882747453;
+        Mon, 25 Apr 2022 03:32:27 -0700 (PDT)
+Received: from [192.168.0.241] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id z21-20020a170906435500b006e8669fae36sm3486626ejm.189.2022.04.25.03.32.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Apr 2022 03:32:26 -0700 (PDT)
+Message-ID: <90c6fda4-b179-1d27-eb07-cfee0b375ec6@linaro.org>
+Date:   Mon, 25 Apr 2022 12:32:25 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next] net: ipa: compute proper aggregation limit
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <165088261241.604.18011066317491406409.git-patchwork-notify@kernel.org>
-Date:   Mon, 25 Apr 2022 10:30:12 +0000
-References: <20220421185333.1371632-1-elder@linaro.org>
-In-Reply-To: <20220421185333.1371632-1-elder@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, kuba@kernel.org, mka@chromium.org,
-        evgreen@chromium.org, bjorn.andersson@linaro.org,
-        cpratapa@codeaurora.org, avuyyuru@codeaurora.org,
-        jponduru@codeaurora.org, subashab@codeaurora.org, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 4/5] dt-bindings: pci/qcom,pcie: support additional MSI
+ interrupts
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220423133939.2123449-1-dmitry.baryshkov@linaro.org>
+ <20220423133939.2123449-5-dmitry.baryshkov@linaro.org>
+ <b1b0a459-5970-7a14-eb51-6a464fe83753@linaro.org>
+In-Reply-To: <b1b0a459-5970-7a14-eb51-6a464fe83753@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,28 +82,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
-
-This patch was applied to netdev/net-next.git (master)
-by David S. Miller <davem@davemloft.net>:
-
-On Thu, 21 Apr 2022 13:53:33 -0500 you wrote:
-> The aggregation byte limit for an endpoint is currently computed
-> based on the endpoint's receive buffer size.
+On 23/04/2022 19:37, Krzysztof Kozlowski wrote:
+> On 23/04/2022 15:39, Dmitry Baryshkov wrote:
+>> On Qualcomm platforms each group of 32 MSI vectors is routed to the
+>> separate GIC interrupt. Document mapping of additional interrupts.
 > 
-> However, some bytes at the front of each receive buffer are reserved
-> on the assumption that--as with SKBs--it might be useful to insert
-> data (such as headers) before what lands in the buffer.
-> 
-> [...]
+> Is it on every Qualcomm platform? How many per each variant? IOW, this
+> should have a per-compatible constraints, if possible.
 
-Here is the summary with links:
-  - [net-next] net: ipa: compute proper aggregation limit
-    https://git.kernel.org/netdev/net-next/c/c5794097b269
+After discussions on IRC, that finding such per-variant constraints is
+tricky:
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
+Best regards,
+Krzysztof
