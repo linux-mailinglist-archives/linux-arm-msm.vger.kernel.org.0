@@ -2,89 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EEA150E1FC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 15:36:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A1F950E24B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 15:48:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239362AbiDYNis (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 09:38:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42090 "EHLO
+        id S242135AbiDYNu2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 09:50:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242078AbiDYNim (ORCPT
+        with ESMTP id S230034AbiDYNu1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 09:38:42 -0400
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17432E08D;
-        Mon, 25 Apr 2022 06:35:36 -0700 (PDT)
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-e922e68b0fso4941586fac.1;
-        Mon, 25 Apr 2022 06:35:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=eWDdwifgZhaME7/9bbYcbOyDoL5Cm/Iis4lrqeTNv8s=;
-        b=tn3fSVS47TBsKRCxOIqqui//Z9Tux0QAAaHTg/y5UfpHhywOh+mrqPMPC6D3VC+Cta
-         9W/77W7HkEWql1U/TelW+l5olfDerL9Xmq2GGI2nUyi6l8RFU9m74vsGLSFIcgm4x6I1
-         mn4fE9/urlLrb5N/MWpMW0CwNXHEBTMJNtOFe8HlTuWVUEtj/bfGO/mhmxx5OeyTJU9C
-         uhUCSMXlrIfbGqSMINWzpWQUj4/NsBJ2LXfXWPKPEVtBkyFbZnNYlFHlCH6CSQoKPBlj
-         qXShzgns2vQezzCsFmeMEOt7CAFHjbjrXXfxtuvUc386sfUE/hEjgQZoqlw3/32/GNBd
-         Ig5Q==
-X-Gm-Message-State: AOAM532/bCM9GqyxQIQP8Y33XGtAOFYJhsfmZrTSsFf39crAUsLR7kjV
-        xuAcGPXVEv9wB2xPGx/14A==
-X-Google-Smtp-Source: ABdhPJwNQwgIz1IVtFAES7n46O++bDNiPj2rnMysprTANu14ErWz1Q6f87G3aAAFyOMd5ZuGKxYgqg==
-X-Received: by 2002:a05:6871:1d4:b0:de:6122:2bbb with SMTP id q20-20020a05687101d400b000de61222bbbmr6919422oad.210.1650893735279;
-        Mon, 25 Apr 2022 06:35:35 -0700 (PDT)
-Received: from xps15.. (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.googlemail.com with ESMTPSA id ex10-20020a056870ed4a00b000e9373e2864sm1285077oab.34.2022.04.25.06.35.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Apr 2022 06:35:34 -0700 (PDT)
-From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mon, 25 Apr 2022 09:50:27 -0400
+Received: from ixit.cz (ip-94-112-206-30.net.upcbroadband.cz [94.112.206.30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6EB149F92;
+        Mon, 25 Apr 2022 06:47:21 -0700 (PDT)
+Received: from newone.lan (_gateway [10.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id B8BD82007F;
+        Mon, 25 Apr 2022 15:47:18 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1650894438;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=nBusD0JLQsF2NHhbTW59axXiZRAd0PqNZWGXhfmIbfk=;
+        b=RWpLA1nU6NpIJZ/dTaDIG2dtr3j7rO+PXJ5puEiCezRh2gckTBUnLiPycToTNPknKugXuq
+        QlW09h+Gw+xjcOPIpb66muM2Fbthrzu7p3/QbRC8t4OUV04qj5ukx3SlMoTq36IVcnY6Z6
+        2jtV0dQ73xQn/FZtH3EkP2oCVS45W5k=
+From:   David Heidelberg <david@ixit.cz>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: clock: qcom,gcc-apq8064: Fix typo in compatible string
-Date:   Mon, 25 Apr 2022 08:35:27 -0500
-Message-Id: <20220425133527.3723233-1-robh@kernel.org>
-X-Mailer: git-send-email 2.34.1
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc:     David Heidelberg <david@ixit.cz>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v3 1/2] dt-bindings: mailbox: qcom-ipcc: add missing compatible for SM8450
+Date:   Mon, 25 Apr 2022 15:47:15 +0200
+Message-Id: <20220425134717.55418-1-david@ixit.cz>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam: Yes
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RDNS_DYNAMIC,SPF_HELO_PASS,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The compatible string should be 'qcom,gcc-apq8064', not
-'qcom,gcc-apq8084'. Found by enabling undocumented compatible checks.
+Adds forgotten compatible and update SPDX header.
 
-Cc: Ansuel Smith <ansuelsmth@gmail.com>
-Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-index 97936411b6b4..9910a3e033bb 100644
---- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-@@ -25,7 +25,7 @@ description: |
+diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+index 866efb278813..825d29367737 100644
+--- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
++++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+@@ -1,4 +1,4 @@
+-# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+ %YAML 1.2
+ ---
+ $id: http://devicetree.org/schemas/mailbox/qcom-ipcc.yaml#
+@@ -27,6 +27,7 @@ properties:
+           - qcom,sm6350-ipcc
+           - qcom,sm8250-ipcc
+           - qcom,sm8350-ipcc
++          - qcom,sm8450-ipcc
+           - qcom,sc7280-ipcc
+       - const: qcom,ipcc
  
- properties:
-   compatible:
--    const: qcom,gcc-apq8084
-+    const: qcom,gcc-apq8064
- 
-   nvmem-cells:
-     minItems: 1
 -- 
-2.34.1
+2.35.1
 
