@@ -2,90 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 593D450D8BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 07:17:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C15650DA12
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 09:27:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241215AbiDYFU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 01:20:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58920 "EHLO
+        id S237303AbiDYHaU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 03:30:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237644AbiDYFUz (ORCPT
+        with ESMTP id S236676AbiDYHaS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 01:20:55 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8369225C7B;
-        Sun, 24 Apr 2022 22:17:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-        MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-        Content-ID:Content-Description:In-Reply-To:References;
-        bh=meuyd5s5sKHgxd8ubGIDV4Lp775gVZDBvZL2URV69CI=; b=z2MBfke8CNp6nXVdpSO9571jy4
-        8EVJJNWrXZapRSNvXWdHT/bl3W7NY9n/RCLj70FQqi3GHw7cRyhKYx0Xc9Jkmz7h6hbAi1eqRtAPm
-        McESKglmClcdfvbD3BV5971lvCFpqV5drTewZB47UiLwPuDPpIfR59V4ZseASUlI3uD8ejHySV6wo
-        Z371yu9X72z7LHou1IP+/Gb2wdhMBGuDgHwpE3ROuT45NyFMCzFDwYh7GQZksBvecttR1HutXo1TF
-        9Kech2yyapbfxsk0G0wae1Fmk04M25e1ZKUtav9H6wOKyfPrDHkc/kIyhxCUQ3Cmy+xQ8vGX0pknP
-        Dchzyz+g==;
-Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
-        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1nir6e-008GJZ-Ev; Mon, 25 Apr 2022 05:17:52 +0000
-From:   Randy Dunlap <rdunlap@infradead.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     Randy Dunlap <rdunlap@infradead.org>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 25 Apr 2022 03:30:18 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DDF0A1AA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 00:27:13 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id j8so25049673pll.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 00:27:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rxyP1rA1NVCKi+Fqd9RTEgWTAs6MpVuSe+By3MBiK+g=;
+        b=uhHdnNiHGlo6+p+WxcM0C9NfBcZ1yMZ4ZL8lPJjCqFO59XftyiBXmxLnJ4x/8IHesk
+         Iz/e+72c+hpYYtSkpN9st79ktLRdF9ucEIcsSZFrJz8zW/33b/zII36XFlgftlgRt/Rn
+         NcV0nn+GcFItTljdcQkhhruORyaimT8Hcjdf+33DifIdLTWHRc7f4BBjOpmEow9TxUAk
+         H3AoQBVj8pg7peGOZ40pMWJPb4v77MByQ/hq2wnaWxWmitojdTlAcivhdbQ8eALivIcc
+         CxsiobTeJA1GwrggCLqf/tliVYwpbUOcyyC+5xohbYhPGazYOIMkwv+sGtPOlvneNaO1
+         ub6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rxyP1rA1NVCKi+Fqd9RTEgWTAs6MpVuSe+By3MBiK+g=;
+        b=20YSeRqKP2S2RvTokYMW3RZc1UfqA36xfePXtWfuvgFHRlAN9usgwvU40BhxKvRpW0
+         CKJPuj+gomshDY7GdiJrWGTCy4kaqPU9sdElmKgAhg5Os3Z5gSfRySi/PtMVBZn9E1d6
+         j4KQpRfiOMV1fSlyLXw7b9ySBQjzw39YPbaesknCGM4rANzwQ3xTG+f0VVOD+IVXeqt2
+         1bCCVEuFmx1YE+SjQjcQ7j7euMmYwaTuSVg6NU4ArwMtMSbRw0B6mx752jN5rPXpaDVG
+         RgAtPNroPz7CcGyVPLAqvtL6ByOfAKe9goCXnzAp5Z8RWtjG7oR8plQLaBlpJHVaVbGt
+         eqJQ==
+X-Gm-Message-State: AOAM532q4SuAeopvGPEQze1FZbJECvz0AhjLrTqMbWfSkvr7h/ftGtoB
+        UKDPB/+vgyc3NP/sAHIVARE8RA==
+X-Google-Smtp-Source: ABdhPJxE5RcvTjEYwI71Iu772xtRFctxCEAFvy9tKFHoG9lHlSKr+lSmvTHqmcMFobuMjeZomF3jKA==
+X-Received: by 2002:a17:90b:3b46:b0:1c7:9ca8:a19e with SMTP id ot6-20020a17090b3b4600b001c79ca8a19emr29586651pjb.245.1650871632716;
+        Mon, 25 Apr 2022 00:27:12 -0700 (PDT)
+Received: from localhost ([122.171.250.232])
+        by smtp.gmail.com with ESMTPSA id p4-20020a637404000000b00375948e63d6sm8596664pgc.91.2022.04.25.00.27.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Apr 2022 00:27:12 -0700 (PDT)
+Date:   Mon, 25 Apr 2022 12:57:10 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-pm@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH v2] cpuidle: arm: fix ARM_QCOM_SPM_CPUIDLE dependency
-Date:   Sun, 24 Apr 2022 22:17:51 -0700
-Message-Id: <20220425051751.28705-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.34.1
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
+Subject: Re: [RFC PATCH v2 4/6] PM: opp: allow control of multiple clocks
+Message-ID: <20220425072710.v6gwo4gu3aouezg4@vireshk-i7>
+References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
+ <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
+User-Agent: NeoMutt/20180716-391-311a52
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix Kconfig warning and subsequent build errors due to the
-Kconfig problem.
+On 11-04-22, 17:43, Krzysztof Kozlowski wrote:
+> Devices might need to control several clocks when scaling the frequency
+> and voltage.  Example is the Universal Flash Storage (UFS) which scales
+> several independent clocks with change of performance levels.
+> 
+> Add parsing of multiple clocks and clock names
 
-WARNING: unmet direct dependencies detected for ARM_CPU_SUSPEND
-  Depends on [n]: ARCH_SUSPEND_POSSIBLE [=n]
-  Selected by [y]:
-  - ARM_QCOM_SPM_CPUIDLE [=y] && CPU_IDLE [=y] && (ARM [=y] || ARM64) && (ARCH_QCOM [=n] || COMPILE_TEST [=y]) && !ARM64 && MMU [=y]
+This part is fine, the OPP core should be able to do this.
 
-arm-linux-gnueabi-ld: arch/arm/kernel/sleep.o: in function `__cpu_suspend':
-(.text+0x68): undefined reference to `cpu_sa110_suspend_size'
-arm-linux-gnueabi-ld: arch/arm/kernel/suspend.o: in function `__cpu_suspend_save':
-suspend.c:(.text+0x478): undefined reference to `cpu_sa110_do_suspend'
-arm-linux-gnueabi-ld: suspend.c:(.text+0x4e8): undefined reference to `cpu_sa110_do_resume'
+> and scale all of them,
 
-Fixes: a871be6b8eee ("cpuidle: Convert Qualcomm SPM driver to a generic CPUidle driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc: linux-pm@vger.kernel.org
-Cc: Stephan Gerhold <stephan@gerhold.net>
----
- drivers/cpuidle/Kconfig.arm |    1 +
- 1 file changed, 1 insertion(+)
+This is tricky as the OPP core can't really assume the order in which the clocks
+needs to be programmed. We had the same problem with multiple regulators and the
+same is left for drivers to do via the custom-api.
 
---- a/drivers/cpuidle/Kconfig.arm
-+++ b/drivers/cpuidle/Kconfig.arm
-@@ -110,6 +110,7 @@ config ARM_TEGRA_CPUIDLE
- config ARM_QCOM_SPM_CPUIDLE
- 	bool "CPU Idle Driver for Qualcomm Subsystem Power Manager (SPM)"
- 	depends on (ARCH_QCOM || COMPILE_TEST) && !ARM64 && MMU
-+	depends on ARCH_SUSPEND_POSSIBLE
- 	select ARM_CPU_SUSPEND
- 	select CPU_IDLE_MULTIPLE_DRIVERS
- 	select DT_IDLE_STATES
+Either we can take the same route here, and let platforms add their own OPP
+drivers which can handle this, Or hide this all behind a basic device clock's
+driver, which you get with clk_get(dev, NULL).
+
+> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+
+> +static int _generic_set_opp_clks_only(struct device *dev,
+> +				      struct opp_table *opp_table,
+> +				      struct dev_pm_opp *opp)
+> +{
+> +	int i, ret;
+> +
+> +	if (!opp_table->clks)
+> +		return 0;
+> +
+> +	for (i = 0; i < opp_table->clk_count; i++) {
+> +		if (opp->rates[i]) {
+
+This should mean that we can disable that clock and it isn't required.
+
+> +			ret = _generic_set_opp_clk_only(dev, opp_table->clks[i],
+> +							opp->rates[i]);
+> +			if (ret) {
+> +				dev_err(dev, "%s: failed to set clock %pC rate: %d\n",
+> +					__func__, opp_table->clks[i], ret);
+> +				return ret;
+> +			}
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+
+As said earlier, this won't work in the core.
+
+> +
+>  static int _generic_set_opp_regulator(struct opp_table *opp_table,
+>  				      struct device *dev,
+>  				      struct dev_pm_opp *opp,
+> @@ -796,7 +835,7 @@ static int _generic_set_opp_regulator(struct opp_table *opp_table,
+>  	}
+>  
+>  	/* Change frequency */
+> -	ret = _generic_set_opp_clk_only(dev, opp_table->clk, freq);
+> +	ret = _generic_set_opp_clks_only(dev, opp_table, opp);
+>  	if (ret)
+>  		goto restore_voltage;
+>  
+> @@ -820,7 +859,7 @@ static int _generic_set_opp_regulator(struct opp_table *opp_table,
+>  	return 0;
+>  
+>  restore_freq:
+> -	if (_generic_set_opp_clk_only(dev, opp_table->clk, old_opp->rate))
+> +	if (_generic_set_opp_clks_only(dev, opp_table, old_opp))
+>  		dev_err(dev, "%s: failed to restore old-freq (%lu Hz)\n",
+>  			__func__, old_opp->rate);
+>  restore_voltage:
+> @@ -880,7 +919,7 @@ static int _set_opp_custom(const struct opp_table *opp_table,
+
+This is where we can handle it in your case, if you don't want to hide it behind
+a clk driver.
+
+>  	}
+>  
+>  	data->regulators = opp_table->regulators;
+> -	data->clk = opp_table->clk;
+> +	data->clk = (opp_table->clks ? opp_table->clks[0] : NULL);
+>  	data->dev = dev;
+>  	data->old_opp.rate = old_opp->rate;
+>  	data->new_opp.rate = freq;
+> @@ -969,8 +1008,8 @@ static void _find_current_opp(struct device *dev, struct opp_table *opp_table)
+
+I think this routine breaks as soon as we add support for multiple clocks.
+clks[0]'s frequency can be same for multiple OPPs and this won't get you the
+right OPP then.
+
+>  	struct dev_pm_opp *opp = ERR_PTR(-ENODEV);
+>  	unsigned long freq;
+>  
+> -	if (!IS_ERR(opp_table->clk)) {
+> -		freq = clk_get_rate(opp_table->clk);
+> +	if (opp_table->clks && !IS_ERR(opp_table->clks[0])) {
+> +		freq = clk_get_rate(opp_table->clks[0]);
+>  		opp = _find_freq_ceil(opp_table, &freq);
+>  	}
+>  
+> @@ -1070,7 +1109,7 @@ static int _set_opp(struct device *dev, struct opp_table *opp_table,
+>  						 scaling_down);
+>  	} else {
+>  		/* Only frequency scaling */
+> -		ret = _generic_set_opp_clk_only(dev, opp_table->clk, freq);
+> +		ret = _generic_set_opp_clks_only(dev, opp_table, opp);
+>  	}
+>  
+>  	if (ret)
+> @@ -1135,11 +1174,15 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned long target_freq)
+
+This should have a BUG or WARN _ON() now if clock count is more than one. This
+routine can't be called unless custom handler is available.
+
+I skipped rest of the code as we need to work/decide on the design first.
+
+Thanks.
+
+-- 
+viresh
