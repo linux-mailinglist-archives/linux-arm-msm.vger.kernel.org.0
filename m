@@ -2,120 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F104350E2BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 16:11:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B17850E3E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 17:01:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237857AbiDYOOa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 10:14:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57932 "EHLO
+        id S235931AbiDYPEm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 11:04:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234033AbiDYOO3 (ORCPT
+        with ESMTP id S242577AbiDYPEl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 10:14:29 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF6D5DE45
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 07:11:24 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id gh6so5818652ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 07:11:24 -0700 (PDT)
+        Mon, 25 Apr 2022 11:04:41 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72E995F6C;
+        Mon, 25 Apr 2022 08:01:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=hbNq8UvBnN7+r4Fd2yWxDnQ9hsYwZngmugC9ubWuoPM=;
-        b=tM68+Ax+c59zekowsoZDmmi4d+26x0+qsaJ+zYByavNorx6Uq9ihBhPkrjYGueEand
-         YbXMfFOq9veOveoLIodGDVBpDL1InoOVXLlB8n5GOcTVlN9jC6FG1YQZh2/AsoDVpHhU
-         LOvw3okgzu+aa3brpJxC5a0sT1LJNVySGwT9X+9k5Y1Le8GmmHJffJzjJGI+71L0fUKp
-         30LTUUICVyXh6EQIQCXxjCo7jmuq9Ih2n0+QDYhTQnxbyCLpwLvoi2qo6RZKN+pw622R
-         ecGpGQTPbtkRYZ5tEOZDOKQeO7pDs+IsKLr9KoUveEgJOmQ2iFaN+/l1etXZPfS874bu
-         zGhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=hbNq8UvBnN7+r4Fd2yWxDnQ9hsYwZngmugC9ubWuoPM=;
-        b=c1q+HEkKNH56qd7+rhLKncvyvqtA3WD1KT0DDAAumsClyUsHpFpbjyCDUrU0S1Bm4s
-         0W+KwUysSJl+ZiqLcrOb7TV/A6++4xijErk9srpUqga2M1fq7mzhZKQazA4gwhGEFrfE
-         NLf79+gvXomB5Wrz5N17RH2m+WoqTmVa2iOrjU+ZAwKEleZcsINp0gjd03pz5/vzJykG
-         uKKqOURkmhHX2eTAzdgVA8j/QrIZGawJvu8i2bVJCTABi7jlCPGg0TBsJIcSdjxn05c/
-         HL93lAP0rirXp/xxsrtajekICznuCUjG2lY3n+8F/Ib0yasqh95iBWbZh5r+ZJ3gisBd
-         tRDA==
-X-Gm-Message-State: AOAM530iOOKnCnYl0rjI+DvtpJCCiYJUu9ySCin18UI3cf5liJDSkFvB
-        uTPb8+MrxPIRutEQSGKI4+h7kQ==
-X-Google-Smtp-Source: ABdhPJxbhn3boE1o3X/8j8VbZQ/AXjtkDwzYBO0vBbDatkzQ9OM04+IR/v3GrPVceJO4HphUCbP7IQ==
-X-Received: by 2002:a17:907:6d08:b0:6f3:9c6a:d82f with SMTP id sa8-20020a1709076d0800b006f39c6ad82fmr3326924ejc.632.1650895883017;
-        Mon, 25 Apr 2022 07:11:23 -0700 (PDT)
-Received: from [192.168.0.243] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id f1-20020a056402194100b00416b174987asm4775820edz.35.2022.04.25.07.11.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Apr 2022 07:11:22 -0700 (PDT)
-Message-ID: <6ce4f8a6-42c0-2f49-bd19-744d8cca716b@linaro.org>
-Date:   Mon, 25 Apr 2022 16:11:21 +0200
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650898897; x=1682434897;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=FBrhtTN2aS8dT3F1AKor4CP1gqyYhfOxCA3kTdmrgqA=;
+  b=UjY4g4CE5ScekPwphlgge125EFaJ7B7fnUTrZy9th44WzVhyzZV5dy8E
+   L19pXWfLpYWT3JhLivpHyuS8MdbSWFTHHCFo0ni71JzH/wq6UVCwzzPcL
+   wwdj7LP2kbsVvpePbY2WR2lYlWrafq6s8lStokJ30G4XkevXbFJY/ObNX
+   Y=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 25 Apr 2022 08:01:37 -0700
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2022 08:01:37 -0700
+Received: from zijuhu-gv.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 25 Apr 2022 08:01:34 -0700
+From:   Zijun Hu <quic_zijuhu@quicinc.com>
+To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>,
+        <luiz.dentz@gmail.com>
+CC:     <linux-kernel@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, Zijun Hu <quic_zijuhu@quicinc.com>
+Subject: [PATCH v3] Bluetooth: btusb: add support for Qualcomm WCN785x
+Date:   Mon, 25 Apr 2022 23:01:29 +0800
+Message-ID: <1650898889-12470-1-git-send-email-quic_zijuhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v3 1/2] dt-bindings: mailbox: qcom-ipcc: add missing
- compatible for SM8450
-Content-Language: en-US
-To:     David Heidelberg <david@ixit.cz>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20220425134717.55418-1-david@ixit.cz>
- <6f72be3c-c907-bc7a-6b64-6becfc76934e@linaro.org>
- <33da014b-bfb0-a39f-aba7-f469fcb5cfbb@ixit.cz>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <33da014b-bfb0-a39f-aba7-f469fcb5cfbb@ixit.cz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/04/2022 16:05, David Heidelberg wrote:
-> On 25/04/2022 15:51, Krzysztof Kozlowski wrote:
->> On 25/04/2022 15:47, David Heidelberg wrote:
->>> Adds forgotten compatible and update SPDX header.
->> You need to explain what is this "forgotten compatible". It's to vague.
-> Forgotten by someone who implemented it in driver. Hope that clarify it 
-> for you and possibly other readers. Btw. qcom,*sm8450* compatibles are 
-> widely used and fact that `make dtbs_check` noticed it missing here 
-> isn't suprising..
+Qualcomm WCN785x has PID/VID 0cf3/e700 as shown by
+/sys/kernel/debug/usb/devices:
 
-This has to be in the commit msg, that you document compatibles already
-being used. "forgotten" does not explain that.
+T:  Bus=02 Lev=02 Prnt=02 Port=01 Cnt=02 Dev#=  8 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0cf3 ProdID=e700 Rev= 0.01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
 
->>
->> The SPDX update lacks answer to "why". There is no reason to do it, so
->> please explain why it is needed.
-> 
-> Please read https://spdx.org/licenses/GPL-2.0.html (red colored text).
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+---
+ drivers/bluetooth/btusb.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-The kernel lists it as valid SPDX and we did not deprecate it. For the
-kernel it is still considered valid.
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 06a854a2507e..e6e28d3d1683 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -317,6 +317,11 @@ static const struct usb_device_id blacklist_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH |
+ 						     BTUSB_VALID_LE_STATES },
+ 
++	/* QCA WCN785x chipset */
++	{ USB_DEVICE(0x0cf3, 0xe700), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH |
++						     BTUSB_VALID_LE_STATES },
++
+ 	/* Broadcom BCM2035 */
+ 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
+ 	{ USB_DEVICE(0x0a5c, 0x200a), .driver_info = BTUSB_WRONG_SCO_MTU },
+@@ -3037,6 +3042,7 @@ static const struct qca_device_info qca_devices_table[] = {
+ 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
+ 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
+ 	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
++	{ 0x00190200, 40, 4, 16 }, /* WCN785x 2.0 */
+ };
+ 
+ static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+@@ -3327,11 +3333,11 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+ 		if (err < 0)
+ 			return err;
+ 
+-		/* WCN6855 2.1 will reset to apply firmware downloaded here, so
++		/* WCN6855 2.1 and later will reset to apply firmware downloaded here, so
+ 		 * wait ~100ms for reset Done then go ahead, otherwise, it maybe
+ 		 * cause potential enable failure.
+ 		 */
+-		if (info->rom_version == 0x00130201)
++		if (info->rom_version >= 0x00130201)
+ 			msleep(QCA_BT_RESET_WAIT_MS);
+ 	}
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 
-Feel free to propose otherwise but then you need to explain it in commit
-msg and update LICENSES/preferred/GPL-2.0.
-
-> 
-> I personally encountered situation, where usage GPL license without 
-> specific `-only` or `-or-later` caused unnecessary confusion and 
-> uncertainty.
-
-Could be, I am not arguing with it. Yet kernel explicitly makes it a
-valid SPDX.
-
-Best regards,
-Krzysztof
