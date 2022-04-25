@@ -2,121 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C209B50E16C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 15:20:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA20750E1D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 15:32:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241922AbiDYNWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 09:22:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45302 "EHLO
+        id S242040AbiDYNe2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 09:34:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240630AbiDYNV6 (ORCPT
+        with ESMTP id S242045AbiDYNe1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 09:21:58 -0400
-X-Greylist: delayed 334 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 25 Apr 2022 06:18:52 PDT
-Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [213.239.216.189])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 88D6819C1B;
-        Mon, 25 Apr 2022 06:18:52 -0700 (PDT)
-Received: from [192.168.20.2] (unknown [77.239.252.99])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id CE6281401AA;
-        Mon, 25 Apr 2022 13:13:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-        s=donut; t=1650892397;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=NtMvqtWv7gKAIjVSrogMl1TwJ2S/Nzn3ITgo73M/4VU=;
-        b=qA8EsmCX23eV9yoU59uUqUrWZCNGRa+SlrMMUxE16M/Asod97hVFwxb4iosyhKn1zfLCZT
-        MBTK2hsffB7ym30XRxjjE1c0HdTagnkxTMAoIW1m/VpElg3MkZ84L40M8tZyL7aS1RlvM+
-        ua0sNfBHbLwgYo1lZBJ+HMzSgFHciBc=
-Message-ID: <b1c64333-c6a5-defd-ae27-0fb307647cb3@postmarketos.org>
-Date:   Mon, 25 Apr 2022 16:13:16 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] arm64: dts: qcom: sdm660-xiaomi-lavender: Configure WLED
-Content-Language: en-US
-To:     Dang Huynh <danct12@riseup.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>
-References: <20220425032824.211975-1-danct12@riseup.net>
-From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
-In-Reply-To: <20220425032824.211975-1-danct12@riseup.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 25 Apr 2022 09:34:27 -0400
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E713A29A;
+        Mon, 25 Apr 2022 06:31:21 -0700 (PDT)
+Received: by mail-oi1-f173.google.com with SMTP id m11so6287699oib.11;
+        Mon, 25 Apr 2022 06:31:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=GUfySEJJQHigKKbyCdUKKYOqIxCh0oO9rPKwD6ultJ0=;
+        b=Q5cvUAHbTFFraAFzgookFfGEjQZPwO4QP3peH+LWvHZBsu2ALM2KEB2MICtPjlyKWO
+         qE/gH2bQESi+Ups/Ksg6hVVaocgag/iIav57exGeKb+OszyqMCSk7Rtu7mfpWT1WniIC
+         0fsjBByGH8NGrlFE9qiAw//sixcyHRVIvQ+zCw1IHc57ubD3ZczAEC7wb7KxLxI4Mwpf
+         No7KuZBvvjIRw7lciBsqQdB4Q2Jm311bpQ5AT/pZlz7CeWYsQ0J9hui04H1YAriSit2c
+         AZKZv4AAXYSo4GafxTriBn3gx9iFhkKSlB6HceK2hspIgxU5LmFnBISq8loVpdPbTpEP
+         Dz0Q==
+X-Gm-Message-State: AOAM5314w7uXfmYB8wV/hWAL50B1DZNXBvygjN3wAWS3pshbJ6TZZkQP
+        Hq3hjfDGqXlPBF/5b4dpog==
+X-Google-Smtp-Source: ABdhPJxa46qPKjUROvXBgyXHn1w+wkciL8kidB567QnbYwcBqFlbJMT1L4DOwjjfyAJunbcJUTUk6g==
+X-Received: by 2002:a05:6808:1998:b0:323:2818:86c0 with SMTP id bj24-20020a056808199800b00323281886c0mr8261044oib.294.1650893480691;
+        Mon, 25 Apr 2022 06:31:20 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id o19-20020a4a9593000000b0032176119e65sm4395149ooi.34.2022.04.25.06.31.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Apr 2022 06:31:20 -0700 (PDT)
+Received: (nullmailer pid 3715962 invoked by uid 1000);
+        Mon, 25 Apr 2022 13:31:19 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        devicetree@vger.kernel.org, Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+In-Reply-To: <20220424131522.14185-2-david@ixit.cz>
+References: <20220424131522.14185-1-david@ixit.cz> <20220424131522.14185-2-david@ixit.cz>
+Subject: Re: [PATCH v2 2/3] dt-bindings: mailbox: qcom-ipcc: add missing properties into example
+Date:   Mon, 25 Apr 2022 08:31:19 -0500
+Message-Id: <1650893479.245343.3715961.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-25.04.2022 06:28, Dang Huynh wrote:
-> WLED is used for controlling display backlight on this phone.
+On Sun, 24 Apr 2022 15:15:20 +0200, David Heidelberg wrote:
+> These missing required properties are needed for
+> smp2p binding reference checks.
+> 
+> Misc: adjusted examples properties formatting from dtsi.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  .../devicetree/bindings/mailbox/qcom-ipcc.yaml        | 11 ++++++++---
+>  1 file changed, 8 insertions(+), 3 deletions(-)
 > 
 
-Hi!
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-Interacting with wled changes brightness indeed, but results in the 
-following trace in dmesg:
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-```
-[  499.906317] ------------[ cut here ]------------
-[  499.906478] Unbalanced enable for IRQ 39
-[  499.910118] WARNING: CPU: 4 PID: 74 at kernel/irq/manage.c:774 
-__enable_irq+0x4c/0x80
-[  499.914094] Modules linked in:
-[  499.921705] CPU: 4 PID: 74 Comm: kworker/4:2 Not tainted 
-5.17.0-sdm660-07615-gd33d148796b0-dirty #23
-[  499.924800] Hardware name: Xiaomi Redmi Note 7 (DT)
-[  499.933988] Workqueue: events wled_ovp_work
-[  499.938571] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS 
-BTYPE=--)
-[  499.942803] pc : __enable_irq+0x4c/0x80
-[  499.949687] lr : __enable_irq+0x4c/0x80
-[  499.953506] sp : ffff800008a73d70
-[  499.957311] x29: ffff800008a73d70 x28: 0000000000000000 x27: 
-0000000000000000
-[  499.960890] x26: ffffad5f9fa4efc0 x25: ffff60283e4baf05 x24: 
-ffff602781f65130
-[  499.968010] x23: ffff60283e4baf00 x22: ffff60283e4b7180 x21: 
-0000000000000000
-[  499.975128] x20: 0000000000000027 x19: ffff602781136600 x18: 
-ffffffffffffffff
-[  499.982243] x17: 0000000000000000 x16: 0000000000000000 x15: 
-0000000000000001
-[  499.989363] x14: 0000000000000000 x13: ffffad5f9f92fea8 x12: 
-0000000000000357
-[  499.996479] x11: 000000000000011d x10: ffffad5f9f987ea8 x9 : 
-ffffad5f9f92fea8
-[  500.003597] x8 : 00000000ffffefff x7 : ffffad5f9f987ea8 x6 : 
-0000000000000000
-[  500.010714] x5 : 000000000000bff4 x4 : 0000000000000000 x3 : 
-0000000000000000
-[  500.017832] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 
-ffff6027820c8000
-[  500.024954] Call trace:
-[  500.047230]  __enable_irq+0x4c/0x80
-[  500.062686]  enable_irq+0x48/0xa0
-[  500.078190]  wled_ovp_work+0x14/0x20
-[  500.093761]  process_one_work+0x1d0/0x320
-[  500.105080]  worker_thread+0x14c/0x444
-[  500.120700]  kthread+0x10c/0x110
-[  500.136347]  ret_from_fork+0x10/0x20
-[  500.151981] ---[ end trace 0000000000000000 ]---
-```
+Full log is available here: https://patchwork.ozlabs.org/patch/
 
--- 
-Regards,
-Alexey Minnekhanov
-postmarketOS developer
-https://www.postmarketos.org
+
+mailbox@ed18000: compatible:0: 'qcom,sm8450-ipcc' is not one of ['qcom,sm6350-ipcc', 'qcom,sm8250-ipcc', 'qcom,sm8350-ipcc', 'qcom,sc7280-ipcc']
+	arch/arm64/boot/dts/qcom/sm8450-hdk.dtb
+	arch/arm64/boot/dts/qcom/sm8450-qrd.dtb
+
