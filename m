@@ -2,191 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E0BE50D305
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Apr 2022 18:03:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D32DB50D6B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 03:50:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233081AbiDXQGA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Apr 2022 12:06:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51296 "EHLO
+        id S240244AbiDYBxt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Apr 2022 21:53:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231513AbiDXQF7 (ORCPT
+        with ESMTP id S240251AbiDYBxs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Apr 2022 12:05:59 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9044A74DE8;
-        Sun, 24 Apr 2022 09:02:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650816179; x=1682352179;
-  h=from:to:cc:subject:date:message-id;
-  bh=hgmWv2J10YMgm1PnZWc/9wRep8El2UqAWfmRn8325s4=;
-  b=jEt7LQkoynYBAPloafnl0suI/aTOA9YzWNOkiVz0lSTgSjKpjLbSswaD
-   2c2c0LnuOvcjz8gUWaf21W1QudwrIPLnV2BUBKuUNkto3TBGmxXLlBgEQ
-   gYtGE32aDWyRLivpy+WwpZ2VHAwPkBv+AdPystonVEj7jNOZweZ9gnwCp
-   4=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 24 Apr 2022 09:02:58 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 24 Apr 2022 09:02:56 -0700
-X-QCInternal: smtphost
-Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 24 Apr 2022 21:32:34 +0530
-Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
-        id 5C3C45B82; Sun, 24 Apr 2022 21:32:33 +0530 (IST)
-From:   Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        p.zabel@pengutronix.de, chris@printf.net, venkatg@codeaurora.org,
-        gdjakov@mm-sol.com, quic_asutoshd@quicinc.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rampraka@quicinc.com,
-        quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com,
-        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-Subject: [PATCH V5] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
-Date:   Sun, 24 Apr 2022 21:32:33 +0530
-Message-Id: <1650816153-23797-1-git-send-email-quic_c_sbhanu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=no
-        autolearn_force=no version=3.4.6
+        Sun, 24 Apr 2022 21:53:48 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 241EE6458;
+        Sun, 24 Apr 2022 18:50:41 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DAE126149E;
+        Mon, 25 Apr 2022 01:50:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DEDC385A9;
+        Mon, 25 Apr 2022 01:50:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650851440;
+        bh=A+IkgleLx5GpYaRe8XgG8WBa7kh9cTf9GNEyRineIbQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=HLzwfKf8aWJjQvJFi64XmqmEotQ7wdDf+Plzmipv4qqh7a4ldhUwheEfX8PzJdxhn
+         5oPvKJOk4Q5uZqvERPwIAWGAm8xbckez7Ux6KzOh9GvXVfulc+iZOK6wkU8DcFkvp7
+         t3GXfYgvB496nc5isCNdDWV/F79VpBWujCMn5ovQROgEd28cctv3oScU8+n6vGH/Ob
+         151fat9emLRcHXUUDrt8JNmYRyd9Ov/Dpoh1T2+h/Lal1W0UfU8HY2m6kgH8qO72CL
+         eA1qn1cbWjilygyH4HUkWuuq/g3PBpNJ/aqopPmEdo6tAXbYQmeasdSM9hN7x2BL5x
+         um5Of0HHfgGSg==
+Date:   Sun, 24 Apr 2022 20:50:37 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/5] PCI: dwc: Teach dwc core to parse additional MSI
+ interrupts
+Message-ID: <20220425015037.GA1611231@bhelgaas>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220423133939.2123449-3-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reset GCC_SDCC_BCR register before every fresh initilazation. This will
-reset whole SDHC-msm controller, clears the previous power control
-states and avoids, software reset timeout issues as below.
+On Sat, Apr 23, 2022 at 04:39:36PM +0300, Dmitry Baryshkov wrote:
+> DWC driver parses a single "msi" interrupt which gets fired when the EP
+> sends an MSI interrupt, however for some devices (Qualcomm) devies MSI
+> vectors are handled in groups of 32 vectors. Add support for parsing
+> "split" MSI interrupts.
 
-[ 5.458061][ T262] mmc1: Reset 0x1 never completed.
-[ 5.462454][ T262] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
-[ 5.469065][ T262] mmc1: sdhci: Sys addr: 0x00000000 | Version: 0x00007202
-[ 5.475688][ T262] mmc1: sdhci: Blk size: 0x00000000 | Blk cnt: 0x00000000
-[ 5.482315][ T262] mmc1: sdhci: Argument: 0x00000000 | Trn mode: 0x00000000
-[ 5.488927][ T262] mmc1: sdhci: Present: 0x01f800f0 | Host ctl: 0x00000000
-[ 5.495539][ T262] mmc1: sdhci: Power: 0x00000000 | Blk gap: 0x00000000
-[ 5.502162][ T262] mmc1: sdhci: Wake-up: 0x00000000 | Clock: 0x00000003
-[ 5.508768][ T262] mmc1: sdhci: Timeout: 0x00000000 | Int stat: 0x00000000
-[ 5.515381][ T262] mmc1: sdhci: Int enab: 0x00000000 | Sig enab: 0x00000000
-[ 5.521996][ T262] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
-[ 5.528607][ T262] mmc1: sdhci: Caps: 0x362dc8b2 | Caps_1: 0x0000808f
-[ 5.535227][ T262] mmc1: sdhci: Cmd: 0x00000000 | Max curr: 0x00000000
-[ 5.541841][ T262] mmc1: sdhci: Resp[0]: 0x00000000 | Resp[1]: 0x00000000
-[ 5.548454][ T262] mmc1: sdhci: Resp[2]: 0x00000000 | Resp[3]: 0x00000000
-[ 5.555079][ T262] mmc1: sdhci: Host ctl2: 0x00000000
-[ 5.559651][ T262] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP-----------
-[ 5.566621][ T262] mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg: 0x6000642c | DLL cfg2: 0x0020a000
-[ 5.575465][ T262] mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl: 0x00010800 | DDR cfg: 0x80040873
-[ 5.584658][ T262] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
+devies?  Maybe spurious?
 
-Fixes: 0eb0d9f4de34 ("mmc: sdhci-msm: Initial support for Qualcomm chipsets")
-Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
----
+> In addition to the "msi" interrupt, the code will lookup the "msi2",
+> "msi3", etc. IRQs and use them for the MSI group interrupts. For
+> backwards compatibility with existing DTS files, the code will not error
+> out if any of these interrupts is missing. Instead it will limit itself
+> to the amount of MSI group IRQs declared in the DT file.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../pci/controller/dwc/pcie-designware-host.c | 23 +++++++++++++++++++
+>  drivers/pci/controller/dwc/pcie-designware.h  |  1 +
+>  2 files changed, 24 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 5d90009a0f73..ce7071095006 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -382,6 +382,29 @@ int dw_pcie_host_init(struct pcie_port *pp)
+>  				pp->msi_irq[0] = irq;
+>  			}
+>  
+> +			if (pp->has_split_msi_irq) {
+> +				char irq_name[] = "msiXXX";
+> +				int irq;
+> +
+> +				for (ctrl = 1; ctrl < num_ctrls; ctrl++) {
+> +					if (pp->msi_irq[ctrl])
+> +						continue;
+> +
+> +					snprintf(irq_name, sizeof(irq_name), "msi%d", ctrl + 1);
+> +					irq = platform_get_irq_byname_optional(pdev, irq_name);
+> +					if (irq == -ENXIO) {
+> +						num_ctrls = ctrl;
+> +						pp->num_vectors = num_ctrls * MAX_MSI_IRQS_PER_CTRL;
+> +						dev_warn(dev, "Limiting amount of MSI irqs to %d\n", pp->num_vectors);
+> +						break;
+> +					}
+> +					if (irq < 0)
+> +						return irq;
+> +
+> +					pp->msi_irq[ctrl] = irq;
+> +				}
+> +			}
 
-Changes since V4:
-	- Called reset_control_put() in error path.
+This is getting pretty deeply nested, which means it's impractical to
+fit in 80 columns like the rest of the file, which means it's ripe for
+refactoring to reduce the indentation.
 
-Changes since V3:
-	- Used reset controller local variable as suggested by
-	  Bjorn Andersson.
-	- Passed NULL as a parameter to
-	  devm_reset_control_get_optional_exclusive() as suggested by
-	  Bjorn Andersson.
-	- Replaced devm_reset_control_get_optional_exclusive() with
-	  reset_control_get_optional_exclusive() and called
-	  reset_control_put() before returning to clear the reset
-	  controller as suggested by Bjorn Andersson.
+s/amount of/number of/
+s/MSI irqs/MSI IRQs/
 
-Changes since V2:
-	- Dropped new line after fixes tag as suggested by Bjorn
-	  Andersson.
-	- Passed device structure instead of passing platform_device
-	  structure as a argument for sdhci_msm_gcc_reset() as suggested
-	  by Bjorn Andersson.
-	- Replaced dev_err() with dev_err_probe() as suggested by Bjorn
-	  Andersson.
-
-Changes since V1:
-	- Added fixes tag as suggested by Ulf Hansson.
-	- Replaced devm_reset_control_get() with
-	  devm_reset_control_get_optional_exclusive() as suggested by
-	  Ulf Hansson.
----
- drivers/mmc/host/sdhci-msm.c | 42 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
-
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 50c71e0..ff9f5b6 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -17,6 +17,7 @@
- #include <linux/regulator/consumer.h>
- #include <linux/interconnect.h>
- #include <linux/pinctrl/consumer.h>
-+#include <linux/reset.h>
- 
- #include "sdhci-pltfm.h"
- #include "cqhci.h"
-@@ -2482,6 +2483,43 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
- 	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
- }
- 
-+static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
-+{
-+	struct reset_control *reset;
-+	int ret = 0;
-+
-+	reset = reset_control_get_optional_exclusive(dev, NULL);
-+	if (IS_ERR(reset))
-+		return dev_err_probe(dev, PTR_ERR(reset),
-+				"unable to acquire core_reset\n");
-+
-+	if (!reset)
-+		return ret;
-+
-+	ret = reset_control_assert(reset);
-+	if (ret) {
-+		reset_control_put(reset);
-+		return dev_err_probe(dev, ret, "core_reset assert failed\n");
-+	}
-+
-+	/*
-+	 * The hardware requirement for delay between assert/deassert
-+	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
-+	 * ~125us (4/32768). To be on the safe side add 200us delay.
-+	 */
-+	usleep_range(200, 210);
-+
-+	ret = reset_control_deassert(reset);
-+	if (ret) {
-+		reset_control_put(reset);
-+		return dev_err_probe(dev, ret, "core_reset deassert failed\n");
-+	}
-+
-+	usleep_range(200, 210);
-+	reset_control_put(reset);
-+
-+	return ret;
-+}
- 
- static int sdhci_msm_probe(struct platform_device *pdev)
- {
-@@ -2529,6 +2567,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 
- 	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
- 
-+	ret = sdhci_msm_gcc_reset(&pdev->dev, host);
-+	if (ret)
-+		goto pltfm_free;
-+
- 	/* Setup SDCC bus voter clock. */
- 	msm_host->bus_clk = devm_clk_get(&pdev->dev, "bus");
- 	if (!IS_ERR(msm_host->bus_clk)) {
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+>  			pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
+>  
+>  			ret = dw_pcie_allocate_domains(pp);
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index 9c1a38b0a6b3..3aa840a5b19c 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -179,6 +179,7 @@ struct dw_pcie_host_ops {
+>  
+>  struct pcie_port {
+>  	bool			has_msi_ctrl:1;
+> +	bool			has_split_msi_irq:1;
+>  	u64			cfg0_base;
+>  	void __iomem		*va_cfg0_base;
+>  	u32			cfg0_size;
+> -- 
+> 2.35.1
+> 
