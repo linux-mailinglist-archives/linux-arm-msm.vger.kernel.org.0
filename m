@@ -2,95 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A82D50D821
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 06:09:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DD2950D8BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 07:17:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240975AbiDYELt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 00:11:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54786 "EHLO
+        id S241076AbiDYFUg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 01:20:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241000AbiDYELU (ORCPT
+        with ESMTP id S237644AbiDYFUf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 00:11:20 -0400
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0D9724091;
-        Sun, 24 Apr 2022 21:07:38 -0700 (PDT)
-Received: by mail-pg1-x529.google.com with SMTP id k29so12349053pgm.12;
-        Sun, 24 Apr 2022 21:07:38 -0700 (PDT)
+        Mon, 25 Apr 2022 01:20:35 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46C412DD9;
+        Sun, 24 Apr 2022 22:17:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=T/RS4kjp9B0g3NPXTLSfahxyA66d9aAV7XBkghwCN/E=;
-        b=NDYVPJ4ex/Hk2DUN+EsX9+jTACoUSLTboNubhD0Yzyw4i7emuW01uRggF76BPPonhl
-         Xy0SA4s3wxUzh/qca11nolLu3A6/0sGBC0fHn59CNc4BsNAlifxxRcxU7XWS99/H3RQ7
-         +zRl5LnyJidg8bArhA1XzBzgMF0at59MMJBs3eImvEBF/BrRsHcpagsX/qAxDFwV6YT/
-         20rTE2rHG4k09LBmkAnFHeIR+5VhjjnvY/18Y1N2OdBgwkq08ZWbqlxd2+jOeVFsdw4O
-         cGFwb3XnMmEjHAYjKBl7pxMwW7Z+G4vIwxJ2EJuO/1hu0HIHA87xlAbVPQ5VzQLKJjcm
-         xFbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=T/RS4kjp9B0g3NPXTLSfahxyA66d9aAV7XBkghwCN/E=;
-        b=aPyJSpQ0tZZZRmdJyraHYGfEOWRyPwI1Gv/89FOnOEDHHNGsXxBIjKISYvs6JOZPEA
-         N/1ULVwYRGAxv4tTJple+IoH8XLx2Z2Ufs8E5C4L1QA3LgqfOYmM1/wEWvxf/GcToPWJ
-         GU4f6S6vyax5mmcvIsBUi1WWn5V5nc9TN01b2Qq/PbQbtw1CIzCUMyhihPCfZ4P4c3yI
-         tF1IV4c1L+qOP63ukzZ6WNV/0BSISZLgqH24wuIMZze3XDG+99Zq1ZqDKHTu5QJP4apv
-         8xnR8kyFItxp7N4DKVaSop1zhUDMe0Q1aQhUodjUjS6wOyN79CnhZlRgRYkDn/zBGH5c
-         vpCA==
-X-Gm-Message-State: AOAM530L2bo7I1nomTaWC1RLGXM1J4zCvbaAjGIL4llrOLzMJSZlPqjC
-        hk1nTOw0E/5PyvgHLss4L41HViriKQc=
-X-Google-Smtp-Source: ABdhPJzcRmB19uWBDkx1hPPfE/7wMYmPC/YFu+CmSK7SgDHGMUdqjFQH3kJzkMqRynvrlqJk3J+MAw==
-X-Received: by 2002:a63:290:0:b0:3aa:8b8b:1a3d with SMTP id 138-20020a630290000000b003aa8b8b1a3dmr13179262pgc.208.1650859657997;
-        Sun, 24 Apr 2022 21:07:37 -0700 (PDT)
-Received: from google.com ([2620:15c:202:201:282a:d50e:e0fc:c145])
-        by smtp.gmail.com with ESMTPSA id r29-20020a63441d000000b003a97e8f71e7sm8147069pga.88.2022.04.24.21.07.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Apr 2022 21:07:37 -0700 (PDT)
-Date:   Sun, 24 Apr 2022 21:07:34 -0700
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Anjelique Melendez <quic_amelende@quicinc.com>
-Cc:     corbet@lwn.net, sre@kernel.org, robh+dt@kernel.org,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        swboyd@chromium.org, linux-doc@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        David Collins <collinsd@codeaurora.org>
-Subject: Re: [PATCH v6 5/5] input: misc: pm8941-pwrkey: simulate missed key
- press events
-Message-ID: <YmYehgw3eUdRAXYp@google.com>
-References: <20220422191239.6271-1-quic_amelende@quicinc.com>
- <20220422191239.6271-6-quic_amelende@quicinc.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650863847; x=1682399847;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=qAAiyq//qlwD5o1Z65odfkrvAYtitgtFY9JA6EBbbfw=;
+  b=ErYFwXzDZTCmxoonqlf7hsUEW/UPyr7FwrloY73xuJnMQksrweF+VgCA
+   hcgxDiNXmOkbQTBC9UPVURaQIGdTZbXeCc4/shhcwy6bNE2BzPtrrg0oI
+   blwg3wvvz56b9W+q6n2jswqqZOK8fsTEvM77veRSAfvmCgiHnOSIYp7gN
+   Y=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 24 Apr 2022 22:17:26 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2022 22:17:25 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Sun, 24 Apr 2022 22:17:25 -0700
+Received: from [10.216.15.239] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Sun, 24 Apr
+ 2022 22:17:21 -0700
+Message-ID: <d678588b-e38e-c9f8-c7e6-1786f8398ffc@quicinc.com>
+Date:   Mon, 25 Apr 2022 10:47:18 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220422191239.6271-6-quic_amelende@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Add ldo_l17b regulator node
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     <agross@kernel.org>, <robh+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <dianders@chromium.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <quic_rjendra@quicinc.com>,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1650550779-8133-1-git-send-email-quic_srivasam@quicinc.com>
+ <YmQiIJatomyUVahR@builder.lan>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <YmQiIJatomyUVahR@builder.lan>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 22, 2022 at 12:12:43PM -0700, Anjelique Melendez wrote:
-> From: David Collins <collinsd@codeaurora.org>
-> 
-> The status of the keys connected to the KPDPWR_N and RESIN_N pins
-> is identified by reading corresponding bits in the interrupt real
-> time status register.  If the status has changed by the time that
-> the interrupt is handled then a press event will be missed.
-> 
-> Maintain a last known status variable to find unbalanced release
-> events and simulate press events for each accordingly.
-> 
-> Signed-off-by: David Collins <collinsd@codeaurora.org>
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
 
-Applied, thank you.
-
--- 
-Dmitry
+On 4/23/2022 9:28 PM, Bjorn Andersson wrote:
+Thanks for your time Bjorn!!
+> On Thu 21 Apr 09:19 CDT 2022, Srinivasa Rao Mandadapu wrote:
+>
+>> Add ldo_l17b in pm7325 regulator, which is required for
+>> wcd codec vdd buck supply.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+>> index b833ba1..17d0c05 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+>> @@ -113,6 +113,11 @@
+>>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>>   		};
+>>   
+>> +		vreg_l17b_1p8: ldo17 {
+>> +			regulator-min-microvolt = <1700000>;
+>> +			regulator-max-microvolt = <1900000>;
+> Can you confirm that this doesn't need to be in HPM mode?
+HPM mode included and sent V2 patch.
+>
+> Thanks,
+> Bjorn
+>
+>> +		};
+>> +
+>>   		vdd_px_wcd9385:
+>>   		vdd_txrx:
+>>   		vddpx_0:
+>> -- 
+>> 2.7.4
+>>
