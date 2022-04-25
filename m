@@ -2,87 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1030150E9F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 22:11:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FD3B50EA7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 22:29:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235860AbiDYUOe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 16:14:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56072 "EHLO
+        id S245497AbiDYU3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 16:29:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245140AbiDYUOb (ORCPT
+        with ESMTP id S245523AbiDYU3n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 16:14:31 -0400
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 092F3EDB55
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 13:11:23 -0700 (PDT)
-Received: by mail-oi1-x236.google.com with SMTP id e189so18389565oia.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 13:11:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=Mjic/+zJme8zynP2sX08SrHAg/3yMfrQ4Fx00iF0fX0=;
-        b=YFgrUyczjyRzM90CDf5/Q+sTl7Kk/h/LjwzwpqWYXv8MY6Ga3wHBTtJbp4NrHlrftw
-         bnW+y73vDjwcQZmAoJZZRdXVMvoZOcrRQGqlI+V9gNKnqrvxEAUaR0vvfMW+3XTxIAi0
-         S42sLU1a7TGGtIAvPUaN1sh2Nl4dEk/2gxGYw=
+        Mon, 25 Apr 2022 16:29:43 -0400
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C35013A4FE;
+        Mon, 25 Apr 2022 13:23:34 -0700 (PDT)
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-e922e68b0fso6212146fac.1;
+        Mon, 25 Apr 2022 13:23:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=Mjic/+zJme8zynP2sX08SrHAg/3yMfrQ4Fx00iF0fX0=;
-        b=VT+PyJeMrUmj1ujdiE95TdffjMnNZ+GnMP4DKTuQD3BwH5vj9+m0SCNymM4fPfANCy
-         Mx/T28Rpe/AHkMmkBkuHId5j1ttNhoDWcNB5WPxw/cWxNNajVkXtV2XeKanwuHMlSCQS
-         CP86mBk9TiMlZCeNZzSp7UZkCHhAHnuQ1Fm+l/GSMLmqR09fqhg8XejsmCZ/Extz7d74
-         lr1o6/VGcMQLWMzizPLDng6FYxjeefWg0kCLdf+ByBEcPVEHVF17rPmLFrLE19ULfdwZ
-         CYCEkFmKxlRYV0Qpdtl387qqvDGk1QcUYFpJR7ZQfemSLktqlmaLgAxLIagJG1WGRreT
-         1xIA==
-X-Gm-Message-State: AOAM531fAuOnyfdZOYg+s69FjWgTfTEOQdRgLCrzjmnjvjKYVUeXNIG6
-        pdk6kjCcgIw8eiZQpsvJKo/xw7IiaC6c5ZIvl4J+3Q==
-X-Google-Smtp-Source: ABdhPJxsMQaEqd9ibkQQl1fMlnDAr7kXgMYwl7tspORWVrkHPLW8+XsZ5FMAITRuX/xmgDJGyjvQ9czYe2KUg+TvZD8=
-X-Received: by 2002:a05:6808:1296:b0:325:8fb:68f3 with SMTP id
- a22-20020a056808129600b0032508fb68f3mr5230521oiw.193.1650917482697; Mon, 25
- Apr 2022 13:11:22 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 25 Apr 2022 13:11:22 -0700
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=D2SoBc/ZKxqDhwD3SmpOX8NpZ3lzQzNbqGfppTEeXT8=;
+        b=grrQibbnsq+KDsNEQEQ7CrC5UpnU5WLVWW8SSeoI7MW/Lnnu2sypH43mIOAZFUB6kE
+         bACki5Og/TI4GiIv7Thc9IpszVPHinSOC0A9VFstqjC2XYKdaGf/lQWDpTBFdcuo8Jjj
+         P/UoOOprPEUikWga/K+RMdkWvlN1mmwIIl8u5oCX+dj35vP1DDyuHAFkmR46Sx6ghpks
+         qSwTHgtEfMO+YeTB0BbxfRbnB91zmfQB+m6m/O38poJ+5BM1000B5EOv8BXo0tCBzDnO
+         HaDpsuY/+eTnIx6Oaie78nlkYp9Lz3pAWbazOIX/vh1E5w+43yCx46Js8Bq/KsEt8X4p
+         Mg2g==
+X-Gm-Message-State: AOAM532qh4HfvNL2dsYC1QX5/m0yLr4sIQu+k7VUL5brUAnA6WFn9OkW
+        AeLiOhegg/u6kHtPwAJlug==
+X-Google-Smtp-Source: ABdhPJy4QG+AiLDRpFd6VuYZL+if3WYEliknPfhviWpj3Tj70cgUFs3NxoYMEFdnhg5ZAMBgQPrIEA==
+X-Received: by 2002:a05:6870:3394:b0:dd:cfdd:34c9 with SMTP id w20-20020a056870339400b000ddcfdd34c9mr12086516oae.31.1650918184692;
+        Mon, 25 Apr 2022 13:23:04 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id p17-20020a4a3651000000b0035d9b838f21sm4772764ooe.10.2022.04.25.13.23.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Apr 2022 13:23:04 -0700 (PDT)
+Received: (nullmailer pid 206743 invoked by uid 1000);
+        Mon, 25 Apr 2022 20:23:03 -0000
+Date:   Mon, 25 Apr 2022 15:23:03 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: clock: qcom,gcc-apq8064: Fix typo in
+ compatible string
+Message-ID: <YmcDJw6T7p4dtFYc@robh.at.kernel.org>
+References: <20220425133527.3723233-1-robh@kernel.org>
+ <20220425193253.06828C385A4@smtp.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20220425091831.3500487-1-lv.ruyi@zte.com.cn>
-References: <20220425091831.3500487-1-lv.ruyi@zte.com.cn>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Mon, 25 Apr 2022 13:11:22 -0700
-Message-ID: <CAE-0n53xBM+n__eKKGaCuB+3Ea4O+rNk2PUQbD2bjW3JS7YJBA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/hdmi: fix error check return value of irq_of_parse_and_map()
-To:     cgel.zte@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run
-Cc:     robdclark@gmail.com, airlied@linux.ie, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org,
-        angelogioacchino.delregno@collabora.com,
-        daniel.thompson@linaro.org, linmq006@gmail.com,
-        christophe.jaillet@wanadoo.fr, lv.ruyi@zte.com.cn,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Zeal Robot <zealci@zte.com.cn>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220425193253.06828C385A4@smtp.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting cgel.zte@gmail.com (2022-04-25 02:18:31)
-> From: Lv Ruyi <lv.ruyi@zte.com.cn>
->
-> The irq_of_parse_and_map() function returns 0 on failure, and does not
-> return a negative value anyhow, so never enter this conditional branch.
->
-> Fixes: f6a8eaca0ea1 ("drm/msm/mdp5: use irqdomains")
-> Reported-by: Zeal Robot <zealci@zte.com.cn>
-> Signed-off-by: Lv Ruyi <lv.ruyi@zte.com.cn>
-> ---
+On Mon, Apr 25, 2022 at 12:32:51PM -0700, Stephen Boyd wrote:
+> Quoting Rob Herring (2022-04-25 06:35:27)
+> > The compatible string should be 'qcom,gcc-apq8064', not
+> > 'qcom,gcc-apq8084'. Found by enabling undocumented compatible checks.
+> > 
+> > Cc: Ansuel Smith <ansuelsmth@gmail.com>
+> > Signed-off-by: Rob Herring <robh@kernel.org>
+> > ---
+> >  Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> > index 97936411b6b4..9910a3e033bb 100644
+> > --- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> > +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> > @@ -25,7 +25,7 @@ description: |
+> >  
+> >  properties:
+> >    compatible:
+> > -    const: qcom,gcc-apq8084
+> > +    const: qcom,gcc-apq8064
+> 
+> This file has dt-bindings/clock/qcom,gcc-apq8084.h referenced. Should
+> that be removed? It looks like commit a469bf89a009 ("dt-bindings: clock:
+> simplify qcom,gcc-apq8064 Documentation") took the more than just the
+> compatible for apq8084 from qcom,gcc-other.yaml and put it in here while
+> removing gcc-apq8064. Probably the apq8084 part needs to be a copy of
+> the apq8064 file with the single compatible changed.
 
-This one fixes a commit that moved away from platform APIs!
+IDK, can someone (Ansuel?) fix this properly?
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Rob
