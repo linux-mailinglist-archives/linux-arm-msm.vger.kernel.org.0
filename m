@@ -2,147 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFB6950E103
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 15:03:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C209B50E16C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 15:20:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234224AbiDYNGU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 09:06:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54320 "EHLO
+        id S241922AbiDYNWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 09:22:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229854AbiDYNGT (ORCPT
+        with ESMTP id S240630AbiDYNV6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 09:06:19 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B52E913D76;
-        Mon, 25 Apr 2022 06:03:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650891796; x=1682427796;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=TCbxBJKDjx/pXpEyqjCCZTPX37Sf1AfCI5Sa6rwvQV8=;
-  b=frjy5xJ9toS//lrdEWlSAFXRKfwE35+roBJiBjyecfB4BpgkfOkJP6zX
-   j9hMBjY0MFRKIyZwRef4Y49EW1SIMavemxx3YTWoxdDG68+93JZ3dfvQf
-   6d4Nvdzou1x1tDrdTSJQFZmk/AJaB7O0/AOHj0aIP1PFTSsPaCrGe8Tdp
-   8=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 25 Apr 2022 06:03:15 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2022 06:03:14 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 25 Apr 2022 06:03:14 -0700
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 25 Apr 2022 06:03:07 -0700
-Date:   Mon, 25 Apr 2022 18:33:03 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Matthias Kaehlcke <mka@chromium.org>
-CC:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Len Brown <len.brown@intel.com>, "Pavel Machek" <pavel@ucw.cz>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ULTRA-WIDEBAND (UWB) SUBSYSTEM:" 
-        <linux-usb@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_kriskura@quicinc.com>, <quic_vpulyala@quicinc.com>
-Subject: Re: [PATCH v14 2/7] PM / wakeup: Add device_children_wakeup_capable()
-Message-ID: <20220425130303.GA16319@hu-pkondeti-hyd.qualcomm.com>
-References: <1650395470-31333-1-git-send-email-quic_c_sanm@quicinc.com>
- <1650395470-31333-3-git-send-email-quic_c_sanm@quicinc.com>
- <CAJZ5v0h2ZKPN6SERPnASPywZfeOWXWncJgNZ1WZa80+=M4DCiQ@mail.gmail.com>
- <YmL3lMaR79wPMEfY@google.com>
+        Mon, 25 Apr 2022 09:21:58 -0400
+X-Greylist: delayed 334 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 25 Apr 2022 06:18:52 PDT
+Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [213.239.216.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 88D6819C1B;
+        Mon, 25 Apr 2022 06:18:52 -0700 (PDT)
+Received: from [192.168.20.2] (unknown [77.239.252.99])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id CE6281401AA;
+        Mon, 25 Apr 2022 13:13:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+        s=donut; t=1650892397;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=NtMvqtWv7gKAIjVSrogMl1TwJ2S/Nzn3ITgo73M/4VU=;
+        b=qA8EsmCX23eV9yoU59uUqUrWZCNGRa+SlrMMUxE16M/Asod97hVFwxb4iosyhKn1zfLCZT
+        MBTK2hsffB7ym30XRxjjE1c0HdTagnkxTMAoIW1m/VpElg3MkZ84L40M8tZyL7aS1RlvM+
+        ua0sNfBHbLwgYo1lZBJ+HMzSgFHciBc=
+Message-ID: <b1c64333-c6a5-defd-ae27-0fb307647cb3@postmarketos.org>
+Date:   Mon, 25 Apr 2022 16:13:16 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <YmL3lMaR79wPMEfY@google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] arm64: dts: qcom: sdm660-xiaomi-lavender: Configure WLED
+Content-Language: en-US
+To:     Dang Huynh <danct12@riseup.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>
+References: <20220425032824.211975-1-danct12@riseup.net>
+From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
+In-Reply-To: <20220425032824.211975-1-danct12@riseup.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
-
-On Fri, Apr 22, 2022 at 11:44:36AM -0700, Matthias Kaehlcke wrote:
-> On Fri, Apr 22, 2022 at 01:57:17PM +0200, Rafael J. Wysocki wrote:
-> > On Tue, Apr 19, 2022 at 9:11 PM Sandeep Maheswaram
-> > <quic_c_sanm@quicinc.com> wrote:
-> > >
-> > > From: Matthias Kaehlcke <mka@chromium.org>
-> > >
-> > > Add device_children_wakeup_capable() which checks whether the device itself
-> > > or one if its descendants is wakeup capable.
-> > 
-> > device_wakeup_path() exists for a very similar purpose.
-> > 
-> > Is it not usable for whatever you need the new function introduced here?
+25.04.2022 06:28, Dang Huynh wrote:
+> WLED is used for controlling display backlight on this phone.
 > 
-> I wasn't aware of it's function, there are no doc comments and the
-> name isn't really self explanatory.
-> 
-> In a quick test device_wakeup_path() returned inconsistent values for the
-> root hub, sometimes true, others false when a wakeup capable USB device was
-> connected.
 
-We will also test the same to double confirm the behavior of
-device_wakeup_path(). I am assuming that you checked device_wakeup_path()
-only during system suspend path.
+Hi!
 
-Here is what I understood by looking at __device_suspend(). Please share
-your thoughts on this.
+Interacting with wled changes brightness indeed, but results in the 
+following trace in dmesg:
 
-power.wakeup_path is set to true for the parent *after* a wakeup capable
-device is suspended. This means when the root hub(s) is suspended, it is
-propagated to xhci-plat and when xhci-plat is suspended, it is propagated
-to dwc3. bottom up propgation during system suspend.
+```
+[  499.906317] ------------[ cut here ]------------
+[  499.906478] Unbalanced enable for IRQ 39
+[  499.910118] WARNING: CPU: 4 PID: 74 at kernel/irq/manage.c:774 
+__enable_irq+0x4c/0x80
+[  499.914094] Modules linked in:
+[  499.921705] CPU: 4 PID: 74 Comm: kworker/4:2 Not tainted 
+5.17.0-sdm660-07615-gd33d148796b0-dirty #23
+[  499.924800] Hardware name: Xiaomi Redmi Note 7 (DT)
+[  499.933988] Workqueue: events wled_ovp_work
+[  499.938571] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS 
+BTYPE=--)
+[  499.942803] pc : __enable_irq+0x4c/0x80
+[  499.949687] lr : __enable_irq+0x4c/0x80
+[  499.953506] sp : ffff800008a73d70
+[  499.957311] x29: ffff800008a73d70 x28: 0000000000000000 x27: 
+0000000000000000
+[  499.960890] x26: ffffad5f9fa4efc0 x25: ffff60283e4baf05 x24: 
+ffff602781f65130
+[  499.968010] x23: ffff60283e4baf00 x22: ffff60283e4b7180 x21: 
+0000000000000000
+[  499.975128] x20: 0000000000000027 x19: ffff602781136600 x18: 
+ffffffffffffffff
+[  499.982243] x17: 0000000000000000 x16: 0000000000000000 x15: 
+0000000000000001
+[  499.989363] x14: 0000000000000000 x13: ffffad5f9f92fea8 x12: 
+0000000000000357
+[  499.996479] x11: 000000000000011d x10: ffffad5f9f987ea8 x9 : 
+ffffad5f9f92fea8
+[  500.003597] x8 : 00000000ffffefff x7 : ffffad5f9f987ea8 x6 : 
+0000000000000000
+[  500.010714] x5 : 000000000000bff4 x4 : 0000000000000000 x3 : 
+0000000000000000
+[  500.017832] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 
+ffff6027820c8000
+[  500.024954] Call trace:
+[  500.047230]  __enable_irq+0x4c/0x80
+[  500.062686]  enable_irq+0x48/0xa0
+[  500.078190]  wled_ovp_work+0x14/0x20
+[  500.093761]  process_one_work+0x1d0/0x320
+[  500.105080]  worker_thread+0x14c/0x444
+[  500.120700]  kthread+0x10c/0x110
+[  500.136347]  ret_from_fork+0x10/0x20
+[  500.151981] ---[ end trace 0000000000000000 ]---
+```
 
-I believe we can directly check something like this in the dwc3 driver
-instead of having another wrapper like device_children_wakeup_capable().
-
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 1170b80..a783257 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1878,8 +1878,14 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
- 		break;
- 	case DWC3_GCTL_PRTCAP_HOST:
- 		if (!PMSG_IS_AUTO(msg)) {
-+			/*
-+			 * Don't kill the host when dwc3 is wakeup capable and
-+			 * its children needs wakeup.
-+			 */
-+			if (device_may_wakeup(dwc->dev) && device_wakeup_path(dwc->dev))
-+				handle_it();
-+		} else {
- 			dwc3_core_exit(dwc);
--			break;
- 		}
- 
- 		/* Let controller to suspend HSPHY before PHY driver suspends */
-
-Thanks,
-Pavan
+-- 
+Regards,
+Alexey Minnekhanov
+postmarketOS developer
+https://www.postmarketos.org
