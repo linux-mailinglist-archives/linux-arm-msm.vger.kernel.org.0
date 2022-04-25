@@ -2,115 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEE0750DF39
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 13:46:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3C2250E048
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Apr 2022 14:28:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241735AbiDYLtL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 07:49:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58292 "EHLO
+        id S241907AbiDYMac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 08:30:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238987AbiDYLtG (ORCPT
+        with ESMTP id S241971AbiDYM2J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 07:49:06 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF83F289BC;
-        Mon, 25 Apr 2022 04:45:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650887137; x=1682423137;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=Qnj3SyhLLaXfmPzPA+zkwNWdJ+d+Aa4qqr65H2FSVXA=;
-  b=EAknslpBh/kGNGG0hYa6blq1cUrJXGaOAHHRrhCc/CoC/O1MGPMcK5Ig
-   I0omAsc+ntuz41YacnHcnMxzWRr+L0JZcwqivSGA/DZmIkplIcgxT7T9H
-   8DWQ1VIz4xrjosLiq2O4vkMPI74X9XuKpvqejeVusrEDnBC4foH7fFv1f
-   U=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 25 Apr 2022 04:45:36 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2022 04:45:36 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 25 Apr 2022 04:45:35 -0700
-Received: from sbillaka-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 25 Apr 2022 04:45:29 -0700
-From:   Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <quic_kalyant@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <dianders@chromium.org>,
-        <quic_khsieh@quicinc.com>, <bjorn.andersson@linaro.org>,
-        <sean@poorly.run>, <airlied@linux.ie>, <daniel@ffwll.ch>,
-        <dmitry.baryshkov@linaro.org>, <quic_vproddut@quicinc.com>,
-        <quic_aravindh@quicinc.com>, <steev@kali.org>
-Subject: [PATCH v10 4/4] drm/msm/dp: Support the eDP modes given by panel
-Date:   Mon, 25 Apr 2022 17:14:32 +0530
-Message-ID: <1650887072-16652-5-git-send-email-quic_sbillaka@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1650887072-16652-1-git-send-email-quic_sbillaka@quicinc.com>
-References: <1650887072-16652-1-git-send-email-quic_sbillaka@quicinc.com>
-MIME-Version: 1.0
+        Mon, 25 Apr 2022 08:28:09 -0400
+Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on2107.outbound.protection.outlook.com [40.107.255.107])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 810F064BD1;
+        Mon, 25 Apr 2022 05:22:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=N5pYIzW44HQtYPvPfwZiuA1oSblgGVJDj+iQu3AVOrylaNbdL085+TeTTpLdq/0Veo91UBgxpNEc5pd9rO0ii2NdB7WIwrKSPExOf6gAcGmz3ZNv7PlkjT91dKQJsJqtNTQvVnHK9xmtMyTCWR9FzbP/vJGND/TMe85cUTD0IDa4pT1HKTe4CVFanaesvJO+4mjgCPUS4OaOK3rpfwXYnIWbaac5e4mp/IER5/7Fl6HJwaPxw8pX1onTsISSlHnxwCT7biDD2SWm2hKf2+lPe6109CSKaZ5UYJr5BEDsrrUOTw1b4V7BWs8jP+KTPvjIkQ9Tr+uaqAbR0VamjAk1Nw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oSSTaCRoFuoFRjyZ4RqHKYwxgulUdtKd1/oEIFavEiQ=;
+ b=VAMFP8LEuQccp3In+2PvH5py5nwBVgs8C4DTDj8/ahODq6S6zkaBg7Lu8HVHSFjuK2YTPNHSyWbZoC8hPlgSEU25c8VhMoYgP0C4G/ivaF7QXy4420PiL8yzHklYHaxIxbr1+F0A3ZNn/VYwq2ASVlkULnDoGEdg5pEaGEKwC0BHP/gf2hfQ/wchiDpydiAHydAPZdStso76FhXOMCjShvqV5KddpQtLoMaP3tPkaqI/U4l/yNV4vPiHacK29zqMp+W9082g43UGpu0jAcbjshdmlBA3WTBD1ADvs3wcZiqKVDf104CjOUrRODcLYknnmVBb+NpR2uBVemhvBtH/xw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo0.onmicrosoft.com;
+ s=selector2-vivo0-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oSSTaCRoFuoFRjyZ4RqHKYwxgulUdtKd1/oEIFavEiQ=;
+ b=SzWyiYfqr+v2dvhW0awhu1dKAcOPyysIuRGDNJ9V12Zyl8MTCyFhk/ZBYQbdhFYyEtVkpsutONLsnEgMDP7dn9IFVgaqsbMZylOOaW/QVU/QO7H+4hJiqrmgpvwOhtVcObyfvyps+wplTFIo0Zc3bdBLw+ogpbo/iGj9qKiTxZw=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vivo.com;
+Received: from HK2PR06MB3492.apcprd06.prod.outlook.com (2603:1096:202:2f::10)
+ by SG2PR06MB2508.apcprd06.prod.outlook.com (2603:1096:4:5f::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5186.15; Mon, 25 Apr
+ 2022 12:22:47 +0000
+Received: from HK2PR06MB3492.apcprd06.prod.outlook.com
+ ([fe80::88e1:dc04:6851:ad08]) by HK2PR06MB3492.apcprd06.prod.outlook.com
+ ([fe80::88e1:dc04:6851:ad08%7]) with mapi id 15.20.5186.021; Mon, 25 Apr 2022
+ 12:22:47 +0000
+From:   Guo Zhengkui <guozhengkui@vivo.com>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Heidelberg <david@ixit.cz>,
+        Lyude Paul <lyude@redhat.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Guo Zhengkui <guozhengkui@vivo.com>,
+        Xu Wang <vulab@iscas.ac.cn>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Cc:     zhengkui_guo@outlook.com
+Subject: [PATCH] drm/msm: fix returnvar.cocci warning
+Date:   Mon, 25 Apr 2022 20:22:21 +0800
+Message-Id: <20220425122223.7415-1-guozhengkui@vivo.com>
+X-Mailer: git-send-email 2.20.1
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-ClientProxiedBy: HK2PR0401CA0009.apcprd04.prod.outlook.com
+ (2603:1096:202:2::19) To HK2PR06MB3492.apcprd06.prod.outlook.com
+ (2603:1096:202:2f::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 7c74186e-fabd-4770-80e8-08da26b64e71
+X-MS-TrafficTypeDiagnostic: SG2PR06MB2508:EE_
+X-Microsoft-Antispam-PRVS: <SG2PR06MB2508FC744C357606C71F43E9C7F89@SG2PR06MB2508.apcprd06.prod.outlook.com>
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: sUOE3h7tWc84LkADNVzWgieXHKYf8Nmy1fOLieQtQXtl7v6iL/Hq0ZfVCKLApxVGArNtJpmIugLvIieGSxmj2IN/lOqnh+FczW+akuAnH2ZlF2B8ez+lx3XHYwLVKfPcNENKMRi6ZJVzQLZLH2EvTvBOoLtFjdznqi/RqP2LaVtJYkWtcsOrfubJ+GIS7aRFl/T+Jvn3CQJ9+acx5BbQKHkziChc6/DVUbqo9XqCWK+VvB8lhOFH+QJEjnftHId1OoCnKZMh+V6v2gTsQzyCdmaRhPglrC3rwYXFX7nQ+U1Gc/AwQ5TY1AtBun1xwOJjWsrwYo/ZafF6qMcfGYAjzrohNH9JK7Npg19Irk/XX7CsEr1Ob8S9GyuwoujVbHBEeqr1gaoBeA9S9HNXpZKgc4Nn9B3RwFUkoFFdhMSMDgnV43rtFIUhQyvHnGR+XkX62WyTOfn+QGlGEnbb98mZQ0/+Z9/tDVatUff797IMUmfKxzssYV337LldzLRJaMjOI3zqZlEtRTA2twwWdNUa9XXYnqkOC9YgJJNoXaBZ1UxvLhst7kPYGbWya2pSSLVaOIXeboqK6D3sHexR7jHYZM6vhMP47BflON8razJPFV92cBX21Y8yUPUdDtkslH8KbUmQpWqPwGeZLXJVAwK6qSx1VQ8fFJUxhWCHUEJobFpQiGeCu/VqN53Hx15u7eIdQGd4a1jcjtRrHKIutMVNGmbetUNO9I5obWq15xIe75c=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:HK2PR06MB3492.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(26005)(6666004)(36756003)(6512007)(921005)(6506007)(508600001)(6486002)(83380400001)(52116002)(1076003)(2616005)(316002)(186003)(86362001)(4744005)(2906002)(8936002)(7416002)(5660300002)(4326008)(8676002)(66556008)(66946007)(66476007)(38100700002)(38350700002)(110136005);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?X/0vhP7D0AqawylAbBWJ0wlhSIQKr61NvtyWcy3AT17VOP8hn0oXcxl6z7Pl?=
+ =?us-ascii?Q?C63eaYRIJ2fgR9iYZzsp58fFAMy5JLlSVuQDWx6MUBpswzD6VwSC0A4bcbOo?=
+ =?us-ascii?Q?cAeroWVlvLJGG/eSAeNzDniNNAf8rElvRYHWQ80YEE4SgfqkyqTNmBldo+Az?=
+ =?us-ascii?Q?MUQtJ1lzZphSJx+JJBLcgHxslzaqmDy/RLrYwli7uV82kj6UN/4/BwUjA/KX?=
+ =?us-ascii?Q?qq1zcnJv3SMOLI8sD0qT1FcP5NhtFLYY/r0yr1nztA9DNQSYn3ODStluzqD6?=
+ =?us-ascii?Q?1YDK4okVtDxPRHL+p34bmj+5+M1cd5NtVvGrs7FMPYlQrh0kSVnK1bwe4xPk?=
+ =?us-ascii?Q?SXfHYHhKsEYCYdPpgEcpXpx57HMSkPV7tdqy2hyJzHJYFCza9J0S4E9S2C9n?=
+ =?us-ascii?Q?2i8aSMMUFbiZjbzbb4LTQBfrfWUrv0y9Xx3dEfryQXxOoWYkhc9UHGiaJ/wD?=
+ =?us-ascii?Q?Iuh5AqBI7fQhDWo9in5d8k1RFhS9L2vhDsSppSFku7zbgKkp2X+kUSGLGesh?=
+ =?us-ascii?Q?cgJbC7auBZqlGin0TUObutzeEi4S0eTkvE079aE0f6jVE816Z4tC0ADzgGtn?=
+ =?us-ascii?Q?WePZDuH4uXccoWEfAkn/eW52G/G4XdI2sU7gBuGh/ahKU8Fk+vNKPY6UEvvu?=
+ =?us-ascii?Q?90G2LmF8CSj05oXj7zufcnP/6RiYvOdJaKfb+7rDnHh+PSCle5SMh8u+ZKAy?=
+ =?us-ascii?Q?90jf122FysBG61vlnbOhi0G2EWCquLLGbVbRyTikCc2TgauIyw3CCkUh0zUf?=
+ =?us-ascii?Q?7vJ1plFFLbcYTVXahH3wfOsXz5vEZc2+HwHW2w2YzXD1uvmkayr5r/9zizKD?=
+ =?us-ascii?Q?/Ax9IIlazUH94lGevHv21Dn+jPqqIuoI7BOZmHBx38S3vxv8HICchP+V7UvG?=
+ =?us-ascii?Q?i5ZuMV4th3WkRL6B8PX6uhInukn5mXPwWK7RQqd2coo99Fp/gKkwV0YZYEOo?=
+ =?us-ascii?Q?i42zTsAmBESqGes2krTIMis5rbrOsVl0PfdnwLGlZPppsttJWq/GiYpWtF4w?=
+ =?us-ascii?Q?l1E3xukohaD/hTWgr3Emqi2caLpHcTgok4e6x9hXXaieGuD7Zn2HmP59Pqnl?=
+ =?us-ascii?Q?UO6Qi0pbpZUl/AuJn0MBruhKM5mVsnoUhprO6dDK+RwdZB0Q7pmkGvC55G2t?=
+ =?us-ascii?Q?Ezs83/fPmIlZBPUXMvDGc4a+AdOA+n32Y7RMDWErjmE4WvykOU3+LF2aG5H7?=
+ =?us-ascii?Q?V1uv6CCYlHMoWeh/F/9rw9rb8iOKQgpQ6Mtl5Y2pIeKpoXo107CR4GAaUus+?=
+ =?us-ascii?Q?8jEl9tPIx5gfd8MF/u8IEJZPRV6vVeWlG5uJiyNeZdfwjcKGn1imzoaeUGFr?=
+ =?us-ascii?Q?syzc+WDU2NavoobKYFL0Ub4EVcd37JZV/elStLroUF58ByardPy8QqRw5MKH?=
+ =?us-ascii?Q?z43nh8PzbROTCVmn6FpZlFOkbkw5UXLhD9w//RDXiQy4Qz+9RUFwS8kG/TfZ?=
+ =?us-ascii?Q?xcoj2ud+RV9keYq0GuEtbDSahjt36MHB+uQbiBPQmlTQ00rH9Cf+oee6YsqH?=
+ =?us-ascii?Q?//Nkf35mnE4YTrt5hvbe9KfYNy3h56BPQSJ9ga0IRQ+Pstzac7REw0v6WCxY?=
+ =?us-ascii?Q?2ZAm0+Z3R+pgcC6CxpguvWfBxDdlQgwkX7SAez54qdA133R3buYdtpYYmZll?=
+ =?us-ascii?Q?z8v6eZiNhY+/sDwepsG8INEHxx9OB2mOw2iZ90YaLxzg0E3GROv5W3orhnQI?=
+ =?us-ascii?Q?4n0/sWO7cikfr+14n8bGLN+PMpNgC4TWw8fplVqOl7tBjvyrsjOgTPzV4Yjd?=
+ =?us-ascii?Q?3ZNkLftRFQ=3D=3D?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7c74186e-fabd-4770-80e8-08da26b64e71
+X-MS-Exchange-CrossTenant-AuthSource: HK2PR06MB3492.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Apr 2022 12:22:46.9717
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: YYyuXrqdKmWUPbBVfcudchVQODM3BqNcdIcNNPNqMalB1fM4i+onfU3xDCMkv/Q81sCdiMk020beibI89uNwag==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR06MB2508
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The eDP controller does not have a reliable way keep panel
-powered on to read the sink capabilities. So, the controller
-driver cannot validate if a mode can be supported by the
-source. We will rely on the panel driver to populate only
-the supported modes for now.
+Fix the following coccicheck warning:
+drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c:24:5-8: Unneeded variable:
+"ret". Return "0" on line 75.
 
-Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Guo Zhengkui <guozhengkui@vivo.com>
 ---
-Changes in v10:
-  - none 
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Changes in v9:
-  - none
-
-Changes in v8:
-  - add the drm/msm/dp tag in the commit title
-
- drivers/gpu/drm/msm/dp/dp_display.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index fd1dddb9..637fb63 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -998,6 +998,14 @@ enum drm_mode_status dp_bridge_mode_valid(struct drm_bridge *bridge,
- 		return -EINVAL;
- 	}
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+index 3cf476c55158..8ae66facc095 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+@@ -21,7 +21,6 @@ static int mdp4_hw_init(struct msm_kms *kms)
+ 	struct drm_device *dev = mdp4_kms->dev;
+ 	u32 dmap_cfg, vg_cfg;
+ 	unsigned long clk;
+-	int ret = 0;
  
-+	/*
-+	 * The eDP controller currently does not have a reliable way of
-+	 * enabling panel power to read sink capabilities. So, we rely
-+	 * on the panel driver to populate only supported modes for now.
-+	 */
-+	if (dp->is_edp)
-+		return MODE_OK;
-+
- 	if ((dp->max_pclk_khz <= 0) ||
- 			(dp->max_pclk_khz > DP_MAX_PIXEL_CLK_KHZ) ||
- 			(mode->clock > dp->max_pclk_khz))
+ 	pm_runtime_get_sync(dev->dev);
+ 
+@@ -72,7 +71,7 @@ static int mdp4_hw_init(struct msm_kms *kms)
+ 
+ 	pm_runtime_put_sync(dev->dev);
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static void mdp4_enable_commit(struct msm_kms *kms)
 -- 
-2.7.4
+2.20.1
 
