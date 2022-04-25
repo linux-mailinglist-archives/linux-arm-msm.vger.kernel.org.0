@@ -2,69 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06A4750EC1F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 00:30:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0413050EC2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 00:34:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233297AbiDYWdG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Apr 2022 18:33:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52136 "EHLO
+        id S233965AbiDYWhd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Apr 2022 18:37:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236200AbiDYWc4 (ORCPT
+        with ESMTP id S230484AbiDYWhc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Apr 2022 18:32:56 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CB3CA185;
-        Mon, 25 Apr 2022 15:29:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650925781; x=1682461781;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=5Xh4n6qYzYGCgES5QzsoDE6tDwiLaiGMdlmL/LBrteY=;
-  b=uIw/yiLU0irgRBFt2jpaDY1yDhFSI/DbKSGCj2QG6BZuexvQ83h70q3l
-   0WPswGsaobE8vJ68/uAWysFuPxZbEu7y3sYdKSZsZTkrir/vDqSbWIr/s
-   iWFtweNMnss6kIgaU+Ey8iWA/WZ0LxhHmm0S0reE006y2/xk7er+DNz6p
-   I=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 25 Apr 2022 15:29:41 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2022 15:29:40 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 25 Apr 2022 15:29:40 -0700
-Received: from [10.110.33.26] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 25 Apr
- 2022 15:29:39 -0700
-Message-ID: <07f1e701-f921-b06a-7492-63810a937322@quicinc.com>
-Date:   Mon, 25 Apr 2022 15:29:30 -0700
+        Mon, 25 Apr 2022 18:37:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCF72104F2C;
+        Mon, 25 Apr 2022 15:34:27 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7A46061553;
+        Mon, 25 Apr 2022 22:34:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE973C385A4;
+        Mon, 25 Apr 2022 22:34:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650926066;
+        bh=kcoJOwxO7li9dg8WiipeoY/VN7Fr/qwxU1nP5uosILM=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=pOb/CjVMTnNj5CtyEGmtzZu4ukywwssAoRr6dCrvih/QV+LtwArQKq3zBai0RCpQ4
+         /e5snSqYfUO+LCP1azsjP8yTgLm1KgrZPQCoHbUX/GPDl88MabLpNDuu016aDz3j8l
+         jsvhHMCCl56daLBIP1YKtTS59MZrERDn1wvWvJAaBXQnHR79+wivFJwMOoxlLjiNK6
+         b8xjvbKWsIeWJCGJjRf4RlhrZCtpC7JYTI1f4yPh/4YZMt9mLWQsE9k/B0WAdbmrsV
+         MJ0K/zgfEMII79g+Z/8NPeXb+FKfpp8nqSzaD1wtCe8JUfwsus48jgftn1o5etP/gG
+         WVQGk/hEli9aQ==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH] drm/msm/dp: tear down main link at unplug handle
- immediately
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
-        <daniel@ffwll.ch>, <dmitry.baryshkov@linaro.org>,
-        <robdclark@gmail.com>, <sean@poorly.run>, <vkoul@kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1649970223-9522-1-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n51rp73v6tod98TX3Y_q8TuOppJVdm9Te_9kSNyqyFuoog@mail.gmail.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAE-0n51rp73v6tod98TX3Y_q8TuOppJVdm9Te_9kSNyqyFuoog@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <YmN11qt/PqogYruQ@ripper>
+References: <20220422230013.1332993-1-bjorn.andersson@linaro.org> <20220423014824.912ACC385A0@smtp.kernel.org> <YmNsYSxLtwLpw98t@ripper> <20220423031350.01299C385A0@smtp.kernel.org> <YmN11qt/PqogYruQ@ripper>
+Subject: Re: [PATCH v2 1/2] dt-bindings: clock: Add Qualcomm SC8280XP GCC bindings
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_tdas@quicinc.com
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Date:   Mon, 25 Apr 2022 15:34:24 -0700
+User-Agent: alot/0.10
+Message-Id: <20220425223426.BE973C385A4@smtp.kernel.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,124 +58,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Bjorn Andersson (2022-04-22 20:43:18)
+> On Fri 22 Apr 20:13 PDT 2022, Stephen Boyd wrote:
+> >=20
+> > I'd really rather not have clock-names at all because we spend a bunch
+> > of time comparing strings with them when we could just as easily use
+> > a number.
+>=20
+> I know that you would like to get rid of the clock-names for the clock
+> controllers. I've looked at it since and while it will be faster to
+> execute I still feel that it's going to be harder to write and maintain.
+>=20
+> E.g. look at gcc_pcie_4_pipe_clk_src, its parents today are
+> pcie_4_pipe_clk and bi_tcxo. Something I can reason about being correct
+> or not.
+>=20
+> If we ditch the clock-names I will have:
+>=20
+> static const struct clk_parent_data gcc_parent_data_14[] =3D {
+>         { .index =3D 30 },
+>         { .index =3D 0 },
 
-On 4/20/2022 3:38 PM, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2022-04-14 14:03:43)
->> Two stages are required to setup up main link to be ready to transmit
->> video stream.
->> Stage 1: dp_hpd_plug_handle() perform link training to set up main link
->> stage 2: user space framework (msm_dp_display_enable()) to enable pixel
->> clock and transfer main link to video ready state.
->>
->> At current implementation, when dongle unplugged dp_hdp_unplug_handle()
->> has to wait until stage 2 completed before it can send link down uevent
->> to user space framework to disable pixel clock followed by tearing down
->> main link.  This introduce unnecessary latency if dongle unplugged happen
->> after stage 1 and before stage 2. It also has possibility leave main link
->> stay at ready state after dongle unplugged if framework does not response
->> to link down uevent notification. This will prevent next dongle plug in
->> from working. This scenario could possibly happen when dongle unplug while
->> system in the middle of suspending.
->>
->> This patch allow unplug handle to tear down main link and notify
->> framework link down immediately if dongle unplugged happen after
->> stage 1 and before stage 2. With this approach, dp driver is much
->> more resilient to any different scenarios. Also redundant both
->> dp_connect_pending_timeout() and dp_disconnect_pending_timeout()
->> are removed to reduce logic complexity.
->>
->> Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
->
-> Some questions below but doesn't seem like it will hold up this patch.
->
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 01453db..f5bd8f5 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -615,24 +598,21 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
->>                  if (dp->link->sink_count == 0) {
->>                          dp_display_host_phy_exit(dp);
->>                  }
->> +               dp_display_notify_disconnect(&dp->pdev->dev);
->>                  mutex_unlock(&dp->event_mutex);
->>                  return 0;
->> -       }
->> -
->> -       if (state == ST_DISCONNECT_PENDING) {
->> +       } else if (state == ST_DISCONNECT_PENDING) {
->>                  mutex_unlock(&dp->event_mutex);
->>                  return 0;
->> -       }
->> -
->> -       if (state == ST_CONNECT_PENDING) {
->> -               /* wait until CONNECTED */
->> -               dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 1); /* delay = 1 */
->> +       } else if (state == ST_CONNECT_PENDING) {
-> I take it that ST_CONNECT_PENDING is sort of like "userspace hasn't
-> handled the uevent yet and modeset hasn't been called but the link is
-> setup and now we want to tear it down". The state name may want to be
-> changed to something else.
-yes, how about change to  ST_MAINLINK_READY?
->
->> +               dp_ctrl_off_link(dp->ctrl);
->> +               dp_display_host_phy_exit(dp);
->> +               dp->hpd_state = ST_DISCONNECTED;
->> +               dp_display_notify_disconnect(&dp->pdev->dev);
->>                  mutex_unlock(&dp->event_mutex);
->>                  return 0;
->>          }
->>
->> -       dp->hpd_state = ST_DISCONNECT_PENDING;
->> -
->>          /* disable HPD plug interrupts */
->>          dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
->>
->> @@ -640,10 +620,13 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
->>           * We don't need separate work for disconnect as
->>           * connect/attention interrupts are disabled
->>           */
->> -       dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
->> +       dp_display_notify_disconnect(&dp->pdev->dev);
->>
->> -       /* start sentinel checking in case of missing uevent */
->> -       dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
->> +       if (state == ST_DISPLAY_OFF) {
->> +               dp->hpd_state = ST_DISCONNECTED;
->> +       } else {
->> +               dp->hpd_state = ST_DISCONNECT_PENDING;
->> +       }
-> Nitpick: No braces needed for single line if clauses.
->
->>          DRM_DEBUG_DP("hpd_state=%d\n", state);
->>          /* signal the disconnect event early to ensure proper teardown */
->> @@ -1529,8 +1480,11 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
->>
->>          mutex_lock(&dp_display->event_mutex);
->>
->> -       /* stop sentinel checking */
->> -       dp_del_event(dp_display, EV_CONNECT_PENDING_TIMEOUT);
->> +       state = dp_display->hpd_state;
->> +       if (state != ST_DISPLAY_OFF && state != ST_CONNECT_PENDING) {
-> Is this to guard against userspace doing an atomic commit when the
-> display isn't connected? Is that even possible?
+Those numbers could have some #define.
 
-No, it used to guard follow scenario in timing order,
+	{ .index =3D PCIE_4_PIPE_CLK_DT }
+	{ .index =3D BI_TCXO_DT }
 
-1) plugin had been handled and mainlink is ready,
+> };
+>=20
+> Generally we would perhaps use some compile time constant, but that
+> won't work here because we're talking about the index in the clocks
+> array in the yaml.
+>=20
+>=20
+> But perhaps I'm missing something that would make this manageable?
 
-2)  userspace hasn't handled the uevent yet and modeset hasn't been called
+I dunno. Maybe a macro in the dt-binding header could be used to specify
+the 'clocks' property of the DT node that is providing the other side?
+The idea is to make a bunch of macros that insert the arguments of the
+macro in the right place for the clocks property and then define the
+order of arguments otherwise. It would be similar to how
+CREATE_TRACE_POINTS is used in include/trace/define_trace.h=20
 
-3) unplugged happen, mainlink be teared down
+In the dt-bindings/qcom,gcc-soc.h file:
 
-4) user space start to response to uevent  and try to enable display. 
-(it too late since mainlink had been teared down)
+	#ifdef IN_DTSI
+
+	#undef GCC_DT_NODE_CLOCKS
+	#define GCC_DT_NODE_CLOCKS
+		clocks =3D <BI_TCXO_DT>,
+			 <SLEEP_CLK_DT>;
+
+	#endif /* IN_DTSI */
+
+	#define BI_TCXO_DT 0
+	#define SLEEP_CLK_DT 1
 
 
->> +               mutex_unlock(&dp_display->event_mutex);
->> +               return rc;
->> +       }
->>
->>          rc = dp_display_set_mode(dp, &dp_display->dp_mode);
->>          if (rc) {
+And then in the SoC.dtsi file have
+
+	#define IN_DTSI
+	#include <dt-bindings/qcom,gcc-soc.h>
+
+	#define BI_TCXO_DT	&xo_board
+	#define SLEEP_CLK_DT	&sleep_clk
+
+	...
+
+	clock-controller@a000000 {
+		compatible =3D "qcom,gcc-soc";
+		reg =3D <0xa000000 0x10000>;
+		GCC_DT_NODE_CLOCKS
+	};
+
+
+and then in drivers/clk/qcom/gcc-soc.c file:
+
+	#include <dt-bindings/qcom,gcc-soc.h>
+
+	static const struct clk_parent_data gcc_parent_data_14[] =3D {
+		{ .index =3D PCIE_4_PIPE_CLK_DT },
+		{ .index =3D BI_TCXO_DT },
+	};
+
+The benefit I see to this is that the index for each clock is in the
+header file (BI_TCXO_DT is 0) and it's next to the clocks property.
+Someone could still mess up the index based on where the macro is used
+in the clocks property though.
