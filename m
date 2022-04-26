@@ -2,101 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7769150F096
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 08:02:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3828950F135
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 08:39:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241888AbiDZGFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 02:05:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46812 "EHLO
+        id S231748AbiDZGmF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 02:42:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235519AbiDZGFh (ORCPT
+        with ESMTP id S245365AbiDZGmB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 02:05:37 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFF6876295;
-        Mon, 25 Apr 2022 23:02:29 -0700 (PDT)
+        Tue, 26 Apr 2022 02:42:01 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E97021B784
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 23:38:53 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id r9so402232pjo.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 23:38:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650952951; x=1682488951;
-  h=from:to:cc:subject:date:message-id;
-  bh=amARuMpJBWtf7g90334aANQiHnLqYqTFsIkho2bxSdw=;
-  b=lgtg5CPrApKwxqMXF37qbcewbUbMq+OJtzGEVH4kU3n4VeHWANqOfs7M
-   Ei0ly4HbEldb2DV3hhwBtdQXScLdKU0VotCvI5HhHxQIwLyK5t3YKXCce
-   Ecw3hgMj5BkaAc8Pi7ooDzY9P+Uqc0mTTEzhXsislQqLhkIJIa5s6S0NS
-   M=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 25 Apr 2022 23:02:30 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 Apr 2022 23:02:27 -0700
-X-QCInternal: smtphost
-Received: from vpolimer-linux.qualcomm.com ([10.204.67.235])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 26 Apr 2022 11:32:14 +0530
-Received: by vpolimer-linux.qualcomm.com (Postfix, from userid 463814)
-        id 91B9D55F7; Tue, 26 Apr 2022 11:32:13 +0530 (IST)
-From:   Vinod Polimera <quic_vpolimer@quicinc.com>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dmitry.baryshkov@linaro.org, dianders@chromium.org,
-        quic_kalyant@quicinc.com
-Subject: [PATCH] drm/msm/disp/dpu1: avoid clearing hw interrupts if hw_intr is null during drm uninit
-Date:   Tue, 26 Apr 2022 11:32:11 +0530
-Message-Id: <1650952931-31988-1-git-send-email-quic_vpolimer@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=6pV6AUjp2V1UC4cOoLtl5XlEXuEwCEfH5h8T/x9bk1s=;
+        b=Hmq+v0Iu9XUEYI+1g/J9Ol51Ng1sNDpr9SRXE0a6waomwbD4nITRtU1TL2MQeNMjBR
+         uCPbmlFUp8wLu327lk1gbpkTH5/aBUUMRSIWRYfgbmFwhdMBYP/kxqBRsYdJmgfWqcaP
+         FeH38Tfr10wIkoay+CkyGAHTGYyTEykVIUf+pmAn36fed5XzOD/nWBN4EQOilIQl6ClE
+         MbIeVR7Lz6VvVwzRNX5d5KdS7xWchAx2kOVATgQTkGDlehTPiNoDx3YaFWlcfdSUCTZu
+         qQ9YxtvkOKA2CNcvuARwJ8VZp5ljq+XililkDbnPHrCCZhZ35q2sszDuNULxC5aHF7f1
+         1t7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=6pV6AUjp2V1UC4cOoLtl5XlEXuEwCEfH5h8T/x9bk1s=;
+        b=H0//5fHrdxzHDrjdoqibAuXKUmEM5UURwduuNLkT89JGk7K7f86Ik17mf2djelFpYd
+         QBCXvtV0IfoRTlfO8POSqP2Ddf+d1VRlESEpTCzE+O7OW+6bBYPsJcVe8eWdy+YH2xrw
+         dtJW0hw2D+K/UIN8XUhPcaGJHuTK/0wRV1KCNy1J/XzmZ6FZTTR6GDqLeYNfeoYLcvo4
+         h7m2LWu3BxMy9jJJET0vKhPHdgwRliV+hK2KI5ac9ioes/Z6QDYQ2eE5aFAyShq3ntK5
+         12QZ23DtTjLeOKSu++QPdMBcEUazFJZ6tsMijVjvA7bM7eyfCxpfeUZhtlTGrAMyuWLG
+         ksVQ==
+X-Gm-Message-State: AOAM530WrjXuCC1tb+e67z5vf3RbxYtmASkwyqnrsXe6arCsb8q2vwS1
+        QPODv6tceenfPWXO4gy91nb6AA==
+X-Google-Smtp-Source: ABdhPJzrYFXkv18FmVHTmLX062X8RhEqAtjZP26tpHCie3BswX1/uq501vZuyAz3S/LIowMNf08Raw==
+X-Received: by 2002:a17:90b:605:b0:1d9:b208:7507 with SMTP id gb5-20020a17090b060500b001d9b2087507mr1431242pjb.125.1650955133468;
+        Mon, 25 Apr 2022 23:38:53 -0700 (PDT)
+Received: from localhost ([122.177.141.190])
+        by smtp.gmail.com with ESMTPSA id d16-20020a056a00245000b004f771b48736sm14770838pfj.194.2022.04.25.23.38.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Apr 2022 23:38:52 -0700 (PDT)
+Date:   Tue, 26 Apr 2022 12:08:51 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH v3] cpufreq: qcom-cpufreq-hw: Clear dcvs interrupts
+Message-ID: <20220426063851.u65lyudtatnaribr@vireshk-i7>
+References: <20220407200919.3054189-1-vladimir.zapolskiy@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220407200919.3054189-1-vladimir.zapolskiy@linaro.org>
+User-Agent: NeoMutt/20180716-391-311a52
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Avoid clearing irqs and derefernce hw_intr when hw_intr is null.
+On 07-04-22, 23:09, Vladimir Zapolskiy wrote:
+> It's noted that dcvs interrupts are not self-clearing, thus an interrupt
+> handler runs constantly, which leads to a severe regression in runtime.
+> To fix the problem an explicit write to clear interrupt register is
+> required, note that on OSM platforms the register may not be present.
+> 
+> Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-BUG: Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+Applied. Thanks.
 
-Call trace:
- dpu_core_irq_uninstall+0x50/0xb0
- dpu_irq_uninstall+0x18/0x24
- msm_drm_uninit+0xd8/0x16c
- msm_drm_bind+0x580/0x5fc
- try_to_bring_up_master+0x168/0x1c0
- __component_add+0xb4/0x178
- component_add+0x1c/0x28
- dp_display_probe+0x38c/0x400
- platform_probe+0xb0/0xd0
- really_probe+0xcc/0x2c8
- __driver_probe_device+0xbc/0xe8
- driver_probe_device+0x48/0xf0
- __device_attach_driver+0xa0/0xc8
- bus_for_each_drv+0x8c/0xd8
- __device_attach+0xc4/0x150
- device_initial_probe+0x1c/0x28
-
-Fixes: a73033619ea ("drm/msm/dpu: squash dpu_core_irq into dpu_hw_interrupts")
-Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-index c515b7c..ab28577 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-@@ -599,6 +599,9 @@ void dpu_core_irq_uninstall(struct dpu_kms *dpu_kms)
- {
- 	int i;
- 
-+	if (!dpu_kms->hw_intr)
-+		return;
-+
- 	pm_runtime_get_sync(&dpu_kms->pdev->dev);
- 	for (i = 0; i < dpu_kms->hw_intr->total_irqs; i++)
- 		if (!list_empty(&dpu_kms->hw_intr->irq_cb_tbl[i]))
 -- 
-2.7.4
-
+viresh
