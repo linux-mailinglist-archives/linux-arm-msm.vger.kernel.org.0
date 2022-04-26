@@ -2,131 +2,256 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FBE1510AC3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 22:53:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 626E3510AE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 23:00:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355159AbiDZU4S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 16:56:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32836 "EHLO
+        id S1355224AbiDZVDj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 17:03:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355153AbiDZU4R (ORCPT
+        with ESMTP id S1344183AbiDZVDg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 16:56:17 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BBCE48887
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 13:53:08 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id kq17so15341837ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 13:53:08 -0700 (PDT)
+        Tue, 26 Apr 2022 17:03:36 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AECC377F8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 14:00:27 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id t25so34060320lfg.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 14:00:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=o+6smG6ZsaikM1dg09vZip/ZwNi93PfiwahWrVpAv9A=;
-        b=hJIZi6xaEIf7LJsIqr6G55r7hJou56/b/P3bACckDThw8eadVK4SdjrGaWfAee4zN4
-         6TeH/YbjnzVAyl/zOKMMRvgLHGPqu9gyRKWTE0HjuunYksv8Wkja294rzR9FVDeeMnC1
-         zb7rGNPS6Q8lK1WtG3/29Ko/NFQH0MCJEIteI=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=GSzP6uxkKYuG1R8bJVRxzgpXjWf7cw3KARY48NOzhZE=;
+        b=ZqR39PynCKwRobtW85Gl8+U6Etmd68x91oTP/DUIr3hHG9UjCCxIRW8gGWCyTDgX40
+         Pr0rox50PCYQVIMtBzG1kZ9nipQrB2Cd0YbdqjqnyIGWPLlmkunrvIRIGtv6MfTIn8RQ
+         gbhZW0AEpXZXb4xSIA/KxwVtR97+oEMXv4CtRRS9WTdTnRZ3JgSXeopmCzQhsTzcFjLk
+         lwy/AjSAtcrY3/HAjkNBX3zH7+ISVxJOFNPYWD9tlVO0FFOBdhV/dWcVGLRd8Bn1fVH8
+         HISu88wLJP6tmz++fXs5SSZ101xW2P9MGYALFdRvBkdUHveTbiAhpgY/5FLpGzPTHXCB
+         PMrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=o+6smG6ZsaikM1dg09vZip/ZwNi93PfiwahWrVpAv9A=;
-        b=tqFREmj/eqNHIByOJvzjM+qmXlw1u6hf0FOr/jubrIDXd1uMVj/oa5g9uHq4366HvD
-         cOLcO7R0kbFhBQBktdawHrY3ZTt8DFqdlNf3Ql7FzxqX5FZIkKmUvbq8cbPYUQfexfAO
-         JBf3xXigM/yfJboLUZMByeFxrt9BfHoHJg2ta0i4Lc7oAOGDfChUeDtLmS/Juzvwhiy1
-         Qg3k3OSTJFz9EA+S8UuiZGzc5M6y9cI2HP+xAYA1pKUiNHf5WunO6z7vOTX17EBb8252
-         aW3v8IF242XDXkV9tMsrA3gsZXuW2gYjv/X26xzMDMmOhPR319MV7Wj6y8W2p1XkIJEk
-         Xijw==
-X-Gm-Message-State: AOAM533sp/ewdvbl6TsJUbj139CWN/3cxMYEuvPje92EICdUQnuYyT75
-        X0MnaMvMrHmEc8NggFMfdDmjkNrpB7NFbQ/u+EU=
-X-Google-Smtp-Source: ABdhPJy5R6lMVVxEBMaI6jVkXE/PLsXWfF1Gt6b6mGDUVfTQRyfEIWer1SkfV+m0kDUQv+ZFVwfNqQ==
-X-Received: by 2002:a17:907:3f13:b0:6f3:ad46:be1f with SMTP id hq19-20020a1709073f1300b006f3ad46be1fmr5613612ejc.627.1651006386549;
-        Tue, 26 Apr 2022 13:53:06 -0700 (PDT)
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com. [209.85.128.53])
-        by smtp.gmail.com with ESMTPSA id r3-20020aa7cb83000000b0041b573e2654sm6861475edt.94.2022.04.26.13.53.05
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=GSzP6uxkKYuG1R8bJVRxzgpXjWf7cw3KARY48NOzhZE=;
+        b=QwiXiicF4KxNc477hj4kKeJxS0ssyILiVuRuBdy558qwDw2CZTwAoDWUr0zYFYEZ+a
+         W6f5xp3I/8jZRInhQXYLCiPZl3UkmtrhZqqESj5MVqOeZlLLj5mjxZlNeFghBupkbb6I
+         Sfer6DLmeV9ixYWJtF/SHcBrHqgzXurfVJ72z87ZOTT5bBI1dh883/IHbs3RVPmfXWQN
+         erGaDk7M/wp06pJIB62QksNIQ41maAkNWmvwEMTlpG8qgfN0e1Enwu87h/7A3/ZLkH2R
+         cjYmfe9Ra+y2pEU5Ds7Rq0iHVCC4fcw5IAZAZPdtPoSRVTh04AtGR2xipmnGWYGfydto
+         6OLQ==
+X-Gm-Message-State: AOAM532pVsiAmWmrBlAVgL3EXnSam+I11FyzMt3KV11NtIHFMDwoBqeD
+        RUCudkVGiExeGNBQSbXK9sZHbA==
+X-Google-Smtp-Source: ABdhPJxAocXmhkxgMF4RMOVxnXBY7lKs3WTWGFENrd1f2UBUWnOmGz/h1CzDIgE5DeoVSmIQNoiKCA==
+X-Received: by 2002:a05:6512:2613:b0:448:5164:689d with SMTP id bt19-20020a056512261300b004485164689dmr17737110lfb.526.1651006825775;
+        Tue, 26 Apr 2022 14:00:25 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id p6-20020a2e7406000000b0024f0b2c6dbdsm1068185ljc.71.2022.04.26.14.00.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Apr 2022 13:53:05 -0700 (PDT)
-Received: by mail-wm1-f53.google.com with SMTP id ay11-20020a05600c1e0b00b0038eb92fa965so2250403wmb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 13:53:05 -0700 (PDT)
-X-Received: by 2002:a05:600c:3d0e:b0:38f:f83b:e7dc with SMTP id
- bh14-20020a05600c3d0e00b0038ff83be7dcmr31516102wmb.29.1651006385011; Tue, 26
- Apr 2022 13:53:05 -0700 (PDT)
+        Tue, 26 Apr 2022 14:00:25 -0700 (PDT)
+Message-ID: <e7a8ce84-3029-ea90-628b-1072bd49baf4@linaro.org>
+Date:   Wed, 27 Apr 2022 00:00:24 +0300
 MIME-Version: 1.0
-References: <20220426132121.RFC.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
- <a21a6ad5-5ed3-6207-8af7-655d19197041@quicinc.com>
-In-Reply-To: <a21a6ad5-5ed3-6207-8af7-655d19197041@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 26 Apr 2022 13:52:52 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XOWfz39imimoijNM14dUJNiwr8_aqPFCR=LmgH7yYzQQ@mail.gmail.com>
-Message-ID: <CAD=FV=XOWfz39imimoijNM14dUJNiwr8_aqPFCR=LmgH7yYzQQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] drm/edid: drm_add_modes_noedid() should set lowest
- resolution as preferred
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH v1 2/5] interconnect: qcom: Move qcom_icc_xlate_extended()
+ to a common file
+Content-Language: en-GB
+To:     Leo Yan <leo.yan@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220416154013.1357444-1-leo.yan@linaro.org>
+ <20220416154013.1357444-3-leo.yan@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220416154013.1357444-3-leo.yan@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 16/04/2022 18:40, Leo Yan wrote:
+> since there have conflict between two headers icc-rpmh.h and icc-rpm.h,
+> the function qcom_icc_xlate_extended() is declared in icc-rpmh.h thus
+> it cannot be used by icc-rpm driver.
+> 
+> Move the function to a new common file icc-common.c so that allow it to
+> be called by multiple drivers.
+> 
+> Signed-off-by: Leo Yan <leo.yan@linaro.org>
 
-On Tue, Apr 26, 2022 at 1:46 PM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
-> On 4/26/2022 1:21 PM, Douglas Anderson wrote:
-> > If we're unable to read the EDID for a display because it's corrupt /
-> > bogus / invalid then we'll add a set of standard modes for the
-> > display. When userspace looks at these modes it doesn't really have a
-> > good concept for which mode to pick and it'll likely pick the highest
-> > resolution one by default. That's probably not ideal because the modes
-> > were purely guesses on the part of the Linux kernel.
-> >
-> > Let's instead set 640x480 as the "preferred" mode when we have no EDID.
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
->
-> drm_dmt_modes array is sorted but you are also relying on this check to
-> eliminate the non-60fps modes
->
-> 5611            if (drm_mode_vrefresh(ptr) > 61)
-> 5612                    continue;
->
-> I am not sure why we filter out the modes > 61 vrefresh.
->
-> If that check will remain this is okay.
->
-> If its not, its not reliable that the first mode will be 640x480@60
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-I suspect that the check will remain. I guess I could try to do
-something fancier if people want, but I'd be interested in _what_
-fancier thing I should do if so. Do we want the rule to remain that we
-always prefer 640x480, or do we want to prefer the lowest resolution?
-...do we want to prefer 60 Hz or the lowest refresh rate? Do we do
-this only for DP (which explicitly calls out 640x480 @60Hz as the best
-failsafe) or for everything?
+> ---
+>   drivers/interconnect/qcom/Makefile     |  3 +++
+>   drivers/interconnect/qcom/icc-common.c | 34 ++++++++++++++++++++++++++
+>   drivers/interconnect/qcom/icc-common.h | 13 ++++++++++
+>   drivers/interconnect/qcom/icc-rpmh.c   | 26 +-------------------
+>   drivers/interconnect/qcom/icc-rpmh.h   |  1 -
+>   drivers/interconnect/qcom/sm8450.c     |  1 +
+>   6 files changed, 52 insertions(+), 26 deletions(-)
+>   create mode 100644 drivers/interconnect/qcom/icc-common.c
+>   create mode 100644 drivers/interconnect/qcom/icc-common.h
+> 
+> diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
+> index ceae9bb566c6..bbb3d6daaad1 100644
+> --- a/drivers/interconnect/qcom/Makefile
+> +++ b/drivers/interconnect/qcom/Makefile
+> @@ -1,5 +1,8 @@
+>   # SPDX-License-Identifier: GPL-2.0
+>   
+> +obj-$(CONFIG_INTERCONNECT_QCOM) += interconnect_qcom.o
+> +
+> +interconnect_qcom-y			:= icc-common.o
+>   icc-bcm-voter-objs			:= bcm-voter.o
+>   qnoc-msm8916-objs			:= msm8916.o
+>   qnoc-msm8939-objs			:= msm8939.o
+> diff --git a/drivers/interconnect/qcom/icc-common.c b/drivers/interconnect/qcom/icc-common.c
+> new file mode 100644
+> index 000000000000..0822ce207b5d
+> --- /dev/null
+> +++ b/drivers/interconnect/qcom/icc-common.c
+> @@ -0,0 +1,34 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (C) 2022 Linaro Ltd.
+> + */
+> +
+> +#include <linux/of.h>
+> +#include <linux/slab.h>
+> +
+> +#include "icc-common.h"
+> +
+> +struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void *data)
+> +{
+> +	struct icc_node_data *ndata;
+> +	struct icc_node *node;
+> +
+> +	node = of_icc_xlate_onecell(spec, data);
+> +	if (IS_ERR(node))
+> +		return ERR_CAST(node);
+> +
+> +	ndata = kzalloc(sizeof(*ndata), GFP_KERNEL);
+> +	if (!ndata)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	ndata->node = node;
+> +
+> +	if (spec->args_count == 2)
+> +		ndata->tag = spec->args[1];
+> +
+> +	if (spec->args_count > 2)
+> +		pr_warn("%pOF: Too many arguments, path tag is not parsed\n", spec->np);
+> +
+> +	return ndata;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_icc_xlate_extended);
+> diff --git a/drivers/interconnect/qcom/icc-common.h b/drivers/interconnect/qcom/icc-common.h
+> new file mode 100644
+> index 000000000000..33bb2c38dff3
+> --- /dev/null
+> +++ b/drivers/interconnect/qcom/icc-common.h
+> @@ -0,0 +1,13 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Copyright (C) 2022 Linaro Ltd.
+> + */
+> +
+> +#ifndef __DRIVERS_INTERCONNECT_QCOM_ICC_COMMON_H__
+> +#define __DRIVERS_INTERCONNECT_QCOM_ICC_COMMON_H__
+> +
+> +#include <linux/interconnect-provider.h>
 
-For now, the way it's coded up seems reasonable (to me). It's the
-lowest resolution _and_ it's 640x480 just because of the current
-values of the table. I suspect that extra lower resolution failsafe
-modes won't be added, but we can always change the rules here if/when
-they are.
+If it's just for the sake of the function prototype, you can replace 
+#include with forward declarations of two used structures:
 
--Doug
+struct icc_node_data;
+struct of_phandle_args;
+
+> +
+> +struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void *data);
+> +
+> +#endif
+> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+> index 2c8e12549804..9a0ac85d2a84 100644
+> --- a/drivers/interconnect/qcom/icc-rpmh.c
+> +++ b/drivers/interconnect/qcom/icc-rpmh.c
+> @@ -11,6 +11,7 @@
+>   #include <linux/slab.h>
+>   
+>   #include "bcm-voter.h"
+> +#include "icc-common.h"
+>   #include "icc-rpmh.h"
+>   
+>   /**
+> @@ -100,31 +101,6 @@ int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
+>   }
+>   EXPORT_SYMBOL_GPL(qcom_icc_set);
+>   
+> -struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void *data)
+> -{
+> -	struct icc_node_data *ndata;
+> -	struct icc_node *node;
+> -
+> -	node = of_icc_xlate_onecell(spec, data);
+> -	if (IS_ERR(node))
+> -		return ERR_CAST(node);
+> -
+> -	ndata = kzalloc(sizeof(*ndata), GFP_KERNEL);
+> -	if (!ndata)
+> -		return ERR_PTR(-ENOMEM);
+> -
+> -	ndata->node = node;
+> -
+> -	if (spec->args_count == 2)
+> -		ndata->tag = spec->args[1];
+> -
+> -	if (spec->args_count > 2)
+> -		pr_warn("%pOF: Too many arguments, path tag is not parsed\n", spec->np);
+> -
+> -	return ndata;
+> -}
+> -EXPORT_SYMBOL_GPL(qcom_icc_xlate_extended);
+> -
+>   /**
+>    * qcom_icc_bcm_init - populates bcm aux data and connect qnodes
+>    * @bcm: bcm to be initialized
+> diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
+> index 4bfc060529ba..84acc540a5f7 100644
+> --- a/drivers/interconnect/qcom/icc-rpmh.h
+> +++ b/drivers/interconnect/qcom/icc-rpmh.h
+> @@ -131,7 +131,6 @@ struct qcom_icc_desc {
+>   int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+>   		       u32 peak_bw, u32 *agg_avg, u32 *agg_peak);
+>   int qcom_icc_set(struct icc_node *src, struct icc_node *dst);
+> -struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void *data);
+>   int qcom_icc_bcm_init(struct qcom_icc_bcm *bcm, struct device *dev);
+>   void qcom_icc_pre_aggregate(struct icc_node *node);
+>   int qcom_icc_rpmh_probe(struct platform_device *pdev);
+> diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
+> index 8d99ee6421df..23045cf17e37 100644
+> --- a/drivers/interconnect/qcom/sm8450.c
+> +++ b/drivers/interconnect/qcom/sm8450.c
+> @@ -12,6 +12,7 @@
+>   #include <dt-bindings/interconnect/qcom,sm8450.h>
+>   
+>   #include "bcm-voter.h"
+> +#include "icc-common.h"
+>   #include "icc-rpmh.h"
+>   #include "sm8450.h"
+>   
+
+
+-- 
+With best wishes
+Dmitry
