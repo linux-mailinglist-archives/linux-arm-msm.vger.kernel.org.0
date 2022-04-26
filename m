@@ -2,187 +2,308 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1CC5510505
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 19:14:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF961510504
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 19:14:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353600AbiDZRQN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 13:16:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46278 "EHLO
+        id S231429AbiDZRQB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 13:16:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353059AbiDZRMY (ORCPT
+        with ESMTP id S232116AbiDZROv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 13:12:24 -0400
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2057.outbound.protection.outlook.com [40.107.220.57])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7643B35DFB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 10:08:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=CSeb29vMkYBz8CUYN721bu63QZEuLQzu7s5zwcz7H3n79mTixlZb/oLQrfvvp5i+XSG0V7isIs+VH4aAg+ngFDyCS5xggu35a13DEAnEIdhmhl+jZPLRvb3lWNrosFhZFC7ZNkuu0MQ2B8K3shBFSa25qb6g1sjl5LnHBO7WFOxTo/t5/ZLebs42LLb1NH90QLRsZ6nuJX7ZmWlizEGN//dtVQdeAW7dbkAthCMZg4cYojVjhVBpOp2xczxu4qQmIaSMqorDHSmphqayXxJ4G1LeKr2hf6LxpCkfJd2g64E7etORLzqHUHXWXDgyu/e8Azo+VfX7Gc9na7MfXOjhvw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6j1eYy1F6Q0G6h44mvc2aCyPqgnT5/Aovqkcfp3k8EE=;
- b=RFYg4+qqst/Dgu0RT9Xxh2+KtP7uTiLWmANkMGrt7HdgEi5xPpHVndtoF8Hb7cAKRR8eZYEOd/Yggzhilzr7tIa66sap/hKEv34xW9LdGvz2qnbuk7DgAOURwEjyr2ZnrdBTOf4vjhBT//VuS72ZkdttdmArF3tj7ZVm/HdNUuxzSLV8tosY0AYnCsRwGovE00E2hj9v/QZxT+fIzNwNlRfqQP34tn9D0Od7efwyGju5DaML0EIeLb9ugpYc8vAmRbJGOWkW/kfrwbqQTk08m4r0QonGLriayNI3wbwG33fI3mv6sAvBqCxAc/vkk5NTMkzVyg8sa9Q8rnTMUqCkOw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6j1eYy1F6Q0G6h44mvc2aCyPqgnT5/Aovqkcfp3k8EE=;
- b=QKtXOT9uBB1TedfDZhz1bGDlZdinYsM361aPr5J1im0Vd/2qayxd/1Gl19gidYDLg4V4nJECPv3KRUJCxxechlm92HRzMeYb09w1+yxaBm92tluEfJzjE4m/vvAMI1De0kFCgdcVha1CqRcnzngZkH7wNSZmhg1HAhIU75yQG3M=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
- by MN2PR12MB2957.namprd12.prod.outlook.com (2603:10b6:208:100::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5186.21; Tue, 26 Apr
- 2022 17:08:53 +0000
-Received: from BN8PR12MB3587.namprd12.prod.outlook.com
- ([fe80::a5fb:7137:5e64:cf8]) by BN8PR12MB3587.namprd12.prod.outlook.com
- ([fe80::a5fb:7137:5e64:cf8%5]) with mapi id 15.20.5186.021; Tue, 26 Apr 2022
- 17:08:53 +0000
-Message-ID: <215f55f6-97b8-5dd3-a2cc-fe42e19a2769@amd.com>
-Date:   Tue, 26 Apr 2022 19:08:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v2] drm/msm: add trace_dma_fence_emit to msm_gpu_submit
-Content-Language: en-US
-To:     Rob Clark <robdclark@chromium.org>
-Cc:     Chia-I Wu <olvaffe@gmail.com>, freedreno@lists.freedesktop.org,
-        ML dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20220412212558.827289-1-olvaffe@gmail.com>
- <CAPaKu7Tv1Mxt7Ao8kH2-MZDBK7EB0D41COJD8Sjze76t_o-qmw@mail.gmail.com>
- <ffe7dbc1-8a19-1e19-402d-27efc8e55b39@amd.com>
- <CAJs_Fx7OQ2OJo3pQ-ETT1827PtfuFsvn984gg8GeDVrqy0Ucug@mail.gmail.com>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-In-Reply-To: <CAJs_Fx7OQ2OJo3pQ-ETT1827PtfuFsvn984gg8GeDVrqy0Ucug@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AS9PR06CA0411.eurprd06.prod.outlook.com
- (2603:10a6:20b:461::25) To BN8PR12MB3587.namprd12.prod.outlook.com
- (2603:10b6:408:43::13)
+        Tue, 26 Apr 2022 13:14:51 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02D6D237DA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 10:11:25 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id g20so23182517edw.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 10:11:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=90WOln1uLYqSTbETT8f1iohTkA/2aH9Lj2jwOkUtno4=;
+        b=dNVlrh3iJXwdEerY3gFXeGNN1xr+XG6EYJEw4pTDhKyFBBVQ49XrVBdMhPgic7frMK
+         K9s2N3tI/I6qwBQaUzcJurOmJyIMZxdFyECfbwEo8s2p2oXD6sT1mEXF/CcR0p1ygdq7
+         5TyZaqvBNxHmoUZqzDt7Ei/lqYY/Nd9Aq5SCM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=90WOln1uLYqSTbETT8f1iohTkA/2aH9Lj2jwOkUtno4=;
+        b=v7fyUtM8JJ00F1OalNrZaIvTlhCaRyCYClXAp/9woV0HEervLh66IMeQNq3+cdFP6P
+         dH9uTG06zWD6a5oH062iN/Ri8r+pt+isTXrnqT5Nt/NcrbN61eBLn6BiQXrZgSki6MCY
+         ZnzYZv8vCRcwVD35ebA3w7JQDtQhEATkavpGpm1rw7Q/8Gz98kQsko66H0dZ/q8lv+K1
+         dTcfU6mAlo9SISRMv5ZdR/P9ncABFw5BwqnLHafc7pcOefrqngzs0ovjPQblnLfAkoVR
+         /2f+2LqlWBznikKonxf2BqmkLtb57+nNkCITZ3dV3+R5K1/DiM+HxDjXrd4fBclMKDEJ
+         EFwQ==
+X-Gm-Message-State: AOAM530NWhTLfvtm5HtjabIwvwNrDHKW2Q/lhQ5mbNY4zDOD1REIKY5n
+        2Y8LIkF18taBl4IvHjBeTs+BbX6PgT/KUY/o
+X-Google-Smtp-Source: ABdhPJwww8htCmKkVwOY1OEW1oA/keK3CmLNbAXSJUp6VFNsdBlndgCSM9kGcpkWRfW5P59bdBh6hg==
+X-Received: by 2002:a05:6402:2815:b0:420:c32e:ebe2 with SMTP id h21-20020a056402281500b00420c32eebe2mr25404165ede.1.1650993082990;
+        Tue, 26 Apr 2022 10:11:22 -0700 (PDT)
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com. [209.85.221.49])
+        by smtp.gmail.com with ESMTPSA id s3-20020a1709067b8300b006e4a6dee49dsm5289393ejo.184.2022.04.26.10.11.21
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Apr 2022 10:11:22 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id i5so7326413wrc.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 10:11:21 -0700 (PDT)
+X-Received: by 2002:a5d:64eb:0:b0:20a:ecf8:ac9f with SMTP id
+ g11-20020a5d64eb000000b0020aecf8ac9fmr97138wri.342.1650993080769; Tue, 26 Apr
+ 2022 10:11:20 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 8bcbf956-22ea-43f3-5c3f-08da27a770dc
-X-MS-TrafficTypeDiagnostic: MN2PR12MB2957:EE_
-X-Microsoft-Antispam-PRVS: <MN2PR12MB295761E3846B25CDD184404083FB9@MN2PR12MB2957.namprd12.prod.outlook.com>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: VAz3OBROEobooKaTvbT6vDIb7jbVrTPOGJex2nBUqVJ+KSVgp6N510kTLzd74kp411t2mkUcZSXlUoNyiSFNHjjc7+kz76xRlm7Au90KsXEeMJRo6RfAjNc4GQ+si4AANUDUZtk3Jz8agVak8Qo2gesN0RzhQfHo0vcQ8KS5cTtP/2bYFlHqMpnBqdRj1N8aPJkrDnDM9E4xg2j59On6ktV6SJoh+c4ftNUQ2vFYZno6A3LjM7exuZytXA/XTNoZZ3dFhQPu57pSH0eV6KjlqN7Xak3lUJbxnS3XwgSsRX0618h1LC+d9ZT9pw7KPILGZhUl1n54AHReqv3IF6RhIwLH7GYoPdwbf6tKUhChdB0mxX51c3rBmw1Sh9Yrp9y3Y1DP7SXey+uZjvVs/z/fFXIUV9Y3EBZ26/w8wR6VRjRRerymYTCFyPWVCKvhHzyvaPZMutxydgsp/EKNmkBX5ht4+70E63rZtFVbU30v0ibJBKQmOyVwArW549UA6cUYjDdyzI/lFAfuuT4kKBt5c898+sLqSZD0kGwtJq4cCUHzGnuUbDqd6FPAx1yzmRD2HfGKjSa1PAxFbM4cp9cylKCrQgCa0e/uWY7wCujnM7AZ0zzZ/yoYuI5t7k5ojC9Jzik2ekoHlI5J0ImtWld7RLw4gTYbWKsvAXzvwgWMPc2vR1v2BMTr7IS4SoDn1qiT3PPHjfxcxK5LMEaCLis328KmzoyKIRqrdq2mYUbV3q/VKBh5+DzPEZGXZOJcmKXz
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(8936002)(6486002)(6506007)(186003)(83380400001)(36756003)(31686004)(6916009)(4326008)(66946007)(2906002)(66476007)(54906003)(6666004)(8676002)(66556008)(316002)(38100700002)(6512007)(53546011)(2616005)(31696002)(508600001)(7416002)(5660300002)(86362001)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QW1qcERvT1N2TDFGa1I5RHJxWkhieVBEcUpQWWVrZGFzMlhFWjVLYzJNbTcw?=
- =?utf-8?B?VnZDamlFVlh0ZE9wMkg1QU9RZHMrQ0d5Q1dTNGJCY0lLTUdGWVgrZUVMQXdZ?=
- =?utf-8?B?ejQwbUNwNFlzU0E1dzd1ZHUxSXpwUmFqWFhSenJYbHRRMWdUVFJqWmtONFRu?=
- =?utf-8?B?NldKNUhTb1VQMGlKUFZoNEJFVkNPV2ZwSUo4VWMvakFIVVFySG5pQ3JpZVVr?=
- =?utf-8?B?cGdPY0JxSUlxZjc2OXZhQWs0dHlsalZGWkRUL0RsNURjNXhxWEdJcExqZHRY?=
- =?utf-8?B?dm8vVUJCVS9pYVR0YU5Jd2ZuczFiZ0d3UFU2V1JxTjJxb3hhYlNzdmp1cFhD?=
- =?utf-8?B?ZzhNdEdpeVFGNytaZ3EzR1BjV2J0N1BlSG5CaCtiOGp4dXJHTk5TMjBKNkFW?=
- =?utf-8?B?V2tLaWZIa1oxS1V2SlZ1UmJrVk9jZEtxemYyVXFUTmdKUi9iSEtiVU4zYURR?=
- =?utf-8?B?elhMeUx0a2E1YkhZVGtkZ2VSQXRBVFFUM3VOQlR5ZW5PeTh1cXplOERIN3Vl?=
- =?utf-8?B?cmxUeC84WFh2eDVQZ2ZGcTJQMGxTV3hJMFdZbkxhSFkzMkgzOVQzYXFZY3lI?=
- =?utf-8?B?UXJCVFBGSDdQS1V0WXoyTmNGSU5YMWlaL1Z0eGlnNHZHVUxQdi9QTWRiajlY?=
- =?utf-8?B?K3FnK25vWXUrM05ONjdOMjNrSjBzRGxZOThuUzg0UVhsR1Z1Ni9pTWdFL2VK?=
- =?utf-8?B?YzVVMTlDQUJOZUZGU3dPY2xZOGx4bE0xTnBuUEYzeEtJb2M1ekJDOWM1bVpp?=
- =?utf-8?B?MThCUGNJRWV6UnhuMTExaVdZTllqTTRPVStDTVRQZ0Zqb2YyQmlSTDRiQXZu?=
- =?utf-8?B?Z0EzMkpiSVhQQURVQTlMaHR5YkVVbytJbFVnZEJJQkJ5anV6akVQcFhvNmxo?=
- =?utf-8?B?bGVzQWhUaklnOFh4WW5iR3NVb3ZZdFJFM2tUQ1pKRkUvZkR0TGVtYThzYW4x?=
- =?utf-8?B?cHpwaUhHSmJzQ3BQQTVEdUJzcTJMTExETFAweFp6OHFsUThKY281bVU5VTc0?=
- =?utf-8?B?VENleG1YL21teXN4QnZla2hiM1NUOUJra2taZklUOVd5WWx5eVNoQmJCalVl?=
- =?utf-8?B?cC92UC9sdC81UXpLaU93VmFMWTdLbm9wc1BBUFJ3eUFacGlWVFdtdTJXTEdJ?=
- =?utf-8?B?d0FRZERoVzVpT0plSXVTQWd2TUxQT2szV3g2T0Z4ZUk4YURpR2Z4aU52MXp4?=
- =?utf-8?B?Y0FiM2ZCRy9yc0wzSmdRUm9rVHVvQ2RKanBBeUE0V0RGa3BTSDNlaWdGRlkz?=
- =?utf-8?B?TXcxZHJXN2VVVkQwTGJlYlgxSUV4akhXYllSaUZwUFBZeGVzdWFaZ1FsWi8w?=
- =?utf-8?B?TElBTGRvZW5rM1hIVjloeUpBa09UQnRtbDNGSUtPNEFrOEZSb0h4MGFQU1Nu?=
- =?utf-8?B?SVYwTXh0MUtwcUNTMm9PSGRZVm5nMUR5R3lWNHJaQ3JEMEZnd1Fmb1hqYUUy?=
- =?utf-8?B?dzY5Y1lOK2dkQW9wQXh5bzlQZjNDNlN6UlM0L0ZQM1hrNHJtNU81Sk9vbU5Y?=
- =?utf-8?B?d2VFM2lKMEYyWTVqWUllT2xMdzQzcXNFTEdEYWlnRjEyK2tiSmVPK2p6YkxR?=
- =?utf-8?B?a2lnMmFzUVAzRU1HRi8zVkFta3B5eitSQ3RhWENkWUJaR3YyMGR6Y0JveTE0?=
- =?utf-8?B?TXZ0RjFtN3dOQUw5WW42RHc1bnd1YnF6eFdOSTZJVzVvanhlWTY0VzRCdWo0?=
- =?utf-8?B?RW8vcTZiVkdCL2ZIQlJrcGhtenNoWndFQWFPUzZRYXl3djdlelNhMisvdmJC?=
- =?utf-8?B?SHIwc3J0TGsveVFDdjA4djFjTFYyc0d4VUViMXJ5UmV0YllsbnB2ekd2YXAz?=
- =?utf-8?B?OGxOZzN1OEtiREsraUlLRXE4cDYyVlJUcXNNTEs0U2ZkK1E5dkFrQU1mb1FB?=
- =?utf-8?B?RUNjOEZ0WGhESTFvRDg3R1hZak13VnIzVjk2NXIzVStub3NRenpKUlY1TDlh?=
- =?utf-8?B?SGNmQnpNQStCSFVlOFJveTZqODJJV04zRVRMTTllMnFReWhmS1R1ZU1pTnFs?=
- =?utf-8?B?N0dETG42MXVycDVYSG81L1ZBQzBDendmYWk0eEhVZlBtV2lDNHg1cFh1dmls?=
- =?utf-8?B?UklCM3poVnoxSU93SFpmWW9WSVJTQUpoR2tQOTZGMUtKTUdjQkV1RUM3Sk8x?=
- =?utf-8?B?K3ZrWUxRdW8zMVV3YXB2RFdLeUYvekxnSGpja0N1SmJyQkRWbkF4NkdwT09E?=
- =?utf-8?B?MnVYQVYydWh3WlAreDhNa3l0VzRaUlVGZlhmcXFoOG1FSVhXTDZTUFJqSW5J?=
- =?utf-8?B?YWJyWUhOMGtnYlJPSEQvRkNqZEtjQ21hczRwY0lZZlFVT05iQ1o2YVJ3NEhM?=
- =?utf-8?B?aFlMWjk2a3BTQmhoaHhaSVRFa1U5S1VzT1pxUGJKRDJKMFh2ZjRpUnlLL2kz?=
- =?utf-8?Q?Gw6zU4Xl37fkhCTvwoaCSxDWNL8a8ktEW/UuF5xo9tCyd?=
-X-MS-Exchange-AntiSpam-MessageData-1: uKE7Izbz37RpcA==
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8bcbf956-22ea-43f3-5c3f-08da27a770dc
-X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Apr 2022 17:08:53.5045
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LBBcpEuF0l6WIdGn3wZFMxeoz9OEGyEi4K42GyUTp3tHrMIPc6bMd7rVZMz4grzi
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB2957
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <1650671124-14030-1-git-send-email-quic_khsieh@quicinc.com>
+ <3b9588d2-d9f6-c96f-b316-953b56b59bfe@linaro.org> <73e2a37e-23db-d614-5f5c-8120f1869158@quicinc.com>
+ <CAA8EJprjuzUrfwXodgKmbWxgK6t+bY601E_nS7CHNH_+4Tfn5Q@mail.gmail.com>
+ <9b331b16-8d1b-4e74-8fee-d74c4041f8d7@quicinc.com> <CAD=FV=VxEnbBypNYSq=iTUTwZUs_v620juSA6gsMW4h2_3HyBQ@mail.gmail.com>
+ <9b4ccdef-c98a-b907-c7ee-a92456dc5bba@quicinc.com> <CAD=FV=U3MJ1W6CCVW0+Si8ZyAD+_ZBYsL1cT6Y8yhcTvWsCLUQ@mail.gmail.com>
+ <d3d1d0d5-d3e0-0777-5b20-cdf24697742d@quicinc.com> <CAD=FV=W2WPdiY2zq6JC_-10kOqzDuiUYQOdYbyRyw2k-fbXFXQ@mail.gmail.com>
+ <eaedbc40-f8cb-aaf8-f335-ef48e3cf82cc@quicinc.com> <87a921db-c4bb-eb43-96c5-0bdb757c7df9@linaro.org>
+In-Reply-To: <87a921db-c4bb-eb43-96c5-0bdb757c7df9@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 26 Apr 2022 10:11:08 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XNWCLxEcGdDOarsY5j7wQDcPP__VsMhpe_G4N1kL-gHg@mail.gmail.com>
+Message-ID: <CAD=FV=XNWCLxEcGdDOarsY5j7wQDcPP__VsMhpe_G4N1kL-gHg@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH] drm/msm/dp: move add fail safe mode to dp_connector_get_mode()
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>, Sean Paul <sean@poorly.run>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 26.04.22 um 19:05 schrieb Rob Clark:
-> On Tue, Apr 26, 2022 at 9:42 AM Christian König
-> <christian.koenig@amd.com> wrote:
->> Am 26.04.22 um 18:32 schrieb Chia-I Wu:
->>> On Tue, Apr 12, 2022 at 2:26 PM Chia-I Wu <olvaffe@gmail.com> wrote:
->>>> In practice, trace_dma_fence_init called from dma_fence_init is good
->>>> enough and almost no driver calls trace_dma_fence_emit.  But drm_sched
->>>> and virtio both have cases where trace_dma_fence_init and
->>>> trace_dma_fence_emit can be apart.  It is easier for visualization tools
->>>> to always use the more correct trace_dma_fence_emit when visualizing
->>>> fence timelines.
->>>>
->>>> v2: improve commit message (Dmitry)
->>>>
->>>> Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
->>>> Cc: Rob Clark <robdclark@chromium.org>
->>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> This has been reviewed.  Should we land it?
->> No, there are still open discussions about it.
-> I think if it is needed for trace visualization, that is justification
-> enough for me
+Hi,
+
+On Tue, Apr 26, 2022 at 10:01 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> I don't really see otherwise how a generic trace visualization tool
-> like perfetto would handle the case that some fence timelines have
-> separate events but others do not.
-
-Well I just send a patch to completely remove the trace point.
-
-As I said it absolutely doesn't make sense to use this for 
-visualization, that's what the trace_dma_fence_init trace point is good for.
-
-The only use case is for debugging the GPU scheduler and we should 
-probably introduce a separate GPU scheduler specific trace point for 
-this instead if we should ever need it.
-
-Regards,
-Christian.
-
+> On 26/04/2022 18:37, Abhinav Kumar wrote:
+> > Hi Doug
+> >
+> > On 4/26/2022 8:20 AM, Doug Anderson wrote:
+> >> Hi,
+> >>
+> >> On Mon, Apr 25, 2022 at 8:35 PM Abhinav Kumar
+> >> <quic_abhinavk@quicinc.com> wrote:
+> >>>
+> >>> On 4/25/2022 7:18 PM, Doug Anderson wrote:
+> >>>> Hi,
+> >>>>
+> >>>> On Mon, Apr 25, 2022 at 6:42 PM Abhinav Kumar
+> >>>> <quic_abhinavk@quicinc.com> wrote:
+> >>>>>
+> >>>>>>> 2) When there was a valid EDID but no 640x480 mode
+> >>>>>>>
+> >>>>>>> This is the equipment specific case and the one even I was a bit
+> >>>>>>> surprised. There is a DP compliance equipment we have in-house
+> >>>>>>> and while
+> >>>>>>> validation, it was found that in its list of modes , it did not
+> >>>>>>> have any
+> >>>>>>> modes which chromebook supported ( due to 2 lanes ). But my
+> >>>>>>> understanding was that, all sinks should have atleast 640x480 but
+> >>>>>>> apparently this one did not have that. So to handle this DP
+> >>>>>>> compliance
+> >>>>>>> equipment behavior, we had to do this.
+> >>>>>>
+> >>>>>> That doesn't seem right. If there's a valid EDID and the valid EDID
+> >>>>>> doesn't contain 640x480, are you _sure_ you're supposed to be adding
+> >>>>>> 640x480? That doesn't sound right to me. I've got a tiny display in
+> >>>>>> front of me for testing that only has one mode:
+> >>>>>>
+> >>>>>>      #0 800x480 65.68 800 840 888 928 480 493 496 525 32000
+> >>>>>>
+> >>>>>
+> >>>>> As I had wrote, DRM core kicks in only when the count of modes is 0.
+> >>>>> Here what is happening is the count was not 0 but 640x480 was not
+> >>>>> present in the EDID. So we had to add it explicitly.
+> >>>>>
+> >>>>> Your tiny display is a display port display?
+> >>>>>
+> >>>>> I am referring to only display port monitors. If your tiny display is
+> >>>>> DP, it should have had 640x480 in its list of modes.
+> >>>>
+> >>>> My tiny display is actually a HDMI display hooked up to a HDMI to DP
+> >>>> (active) adapter.
+> >>>>
+> >>>> ...but this is a legal and common thing to have. I suppose possibly my
+> >>>> HDMI display is "illegal"?
+> >>>>
+> >>>> OK, so reading through the spec more carefully, I do see that the DP
+> >>>> spec makes numerous mentions of the fact that DP sinks _must_ support
+> >>>> 640x480. Even going back to DP 1.4, I see section "5.2.1.2 Video
+> >>>> Timing Format" says that we must support 640x480. It seems like that's
+> >>>> _intended_ to be used only if the EDID read fails, though or if we
+> >>>> somehow have to output video without knowledge of the EDID. It seems
+> >>>> hard to believe that there's a great reason to assume a display will
+> >>>> support 640x480 if we have more accurate knowledge.
+> >>>>
+> >>>> In any case, I guess I would still say that adding this mode belongs
+> >>>> in the DRM core. The core should notice that it's a DP connection
+> >>>> (bridge->type == DRM_MODE_CONNECTOR_DisplayPort) and that 640x480 was
+> >>>> left out and it should add it. We should also make sure it's not
+> >>>> "preferred" and is last in the list so we never accidentally pick it.
+> >>>> If DP truly says that we should always give the user 640x480 then
+> >>>> that's true for everyone, not just Qualcomm. We should add it in the
+> >>>> core. If, later, someone wants to hide this from the UI it would be
+> >>>> much easier if they only needed to modify one place.
+> >>>>
+> >>>
+> >>> So I debugged with kuogee just now using the DP compliance equipment.
+> >>> It turns out, the issue is not that 640x480 mode is not present.
+> >>>
+> >>> The issue is that it is not marked as preferred.
+> >>>
+> >>> Hence we missed this part during debugging this equipment failure.
+> >>>
+> >>> We still have to figure out the best way to either mark 640x480 as
+> >>> preferred or eliminate other modes during the test-case so that 640x480
+> >>> is actually picked by usermode.
+> >>>
+> >>> Now that being said, the fix still doesn't belong in the framework. It
+> >>> has to be in the msm/dp code.
+> >>>
+> >>> Different vendors handle this failure case differently looks like.
+> >>>
+> >>> Lets take below snippet from i915 as example.
+> >>>
+> >>> 3361    if (intel_connector->detect_edid == NULL ||
+> >>> 3362        connector->edid_corrupt ||
+> >>> 3363        intel_dp->aux.i2c_defer_count > 6) {
+> >>> 3364            /* Check EDID read for NACKs, DEFERs and corruption
+> >>> 3365             * (DP CTS 1.2 Core r1.1)
+> >>> 3366             *    4.2.2.4 : Failed EDID read, I2C_NAK
+> >>> 3367             *    4.2.2.5 : Failed EDID read, I2C_DEFER
+> >>> 3368             *    4.2.2.6 : EDID corruption detected
+> >>> 3369             * Use failsafe mode for all cases
+> >>> 3370             */
+> >>> 3371            if (intel_dp->aux.i2c_nack_count > 0 ||
+> >>> 3372                    intel_dp->aux.i2c_defer_count > 0)
+> >>> 3373                    drm_dbg_kms(&i915->drm,
+> >>> 3374                                "EDID read had %d NACKs, %d
+> >>> DEFERs\n",
+> >>> 3375                                intel_dp->aux.i2c_nack_count,
+> >>> 3376                                intel_dp->aux.i2c_defer_count);
+> >>> 3377            intel_dp->compliance.test_data.edid =
+> >>> INTEL_DP_RESOLUTION_FAILSAFE;
+> >>
+> >
+> > The reason I pointed to this code is to give an example of how other
+> > drivers handle this test-case.
+> >
+> > We added this patch for 4.2.2.1 and 4.2.2.6 EDID test cases.
+> >
+> > The challenge here as found out from our discussion here was to mark a
+> > particular mode as preferred so that the Chrome usermode can pick it.
+> >
+> > Now whats happening with that there was always a possibility of two
+> > modes being marked as preferred due to this and so-on.
+> >
+> > We had a pretty long discussion last night and thought of all possible
+> > solutions but all of them look like a hack to us in the driver because
+> > we end up breaking other things due to this.
+> >
+> > So we decided that driver is not the place to handle this test case.
+> > Since we do have IGT support for chromebooks, we will handle both these
+> > test cases there as other vendors do the same way and it works.
+> >
+> >
+> >> Just because Intel DRM has its own solution for something doesn't mean
+> >> everyone else should copy them and implement their own solution. Up
+> >> until recently DP AUX backlights were baked into different DRM
+> >> drivers. A recent effort was made to pull it out. I think the Intel
+> >> DRM code was the "first one" to the party and it wasn't clear how
+> >> things should be broken up to share with other drivers, so mostly it
+> >> did everything itself, but that's not the long term answer.
+> >>
+> >> I'm not saying that we need to block your change on a full re-design
+> >> or anything, but I'm just saying that:
+> >>
+> >> * You're trying to implement a generic DP rule, not something specific
+> >> to Qualcomm hardware. That implies that, if possible, it shouldn't be
+> >> in a Qualcomm driver.
+> >>
+> >> * It doesn't seem like it would be terrible to handle this in the core.
+> >>
+> >>
+> >>> This marks the fail safe mode and IGT test case reads this to set this
+> >>> mode and hence the test passes.
+> >>>
+> >>> We rely on the chromeOS usermode to output pixel data for this test-case
+> >>> and not IGT. We use IGT only for video pattern CTS today but this is a
+> >>> different test-case which is failing.
+> >>>
+> >>> ChromeOS usermode will not pick 640x480 unless we mark it as preferred
+> >>> or other modes are eliminated.
+> >>>
+> >>> So we have to come up with the right way for the usermode to pick
+> >>> 640x480.
+> >>>
+> >>> We will discuss this a bit more and come up with a different change.
+> >>
+> >> Can you provide the exact EDID from the failing test case? Maybe that
+> >> will help shed some light on what's going on. I looked at the original
+> >> commit and it just referred to 4.2.2.1, which I assume is "EDID Read
+> >> upon HPD Plug Event", but that doesn't give details that seem relevant
+> >> to the discussion here.
+> >
+> > Yes so it is 4.2.2.1 and 4.2.2.6.
+> >
+> > That alone wont give the full picture.
+> >
+> > So its a combination of things.
+> >
+> > While running the test, the test equipment published only one mode.
+> > But we could not support that mode because of 2 lanes.
+> > Equipment did not add 640x480 to the list of modes.
+> > DRM fwk will also not add it because count_modes is not 0 ( there was
+> > one mode ).
+> > So we ended up making these changes.
 >
-> BR,
-> -R
+> I think a proper solution might be to rewrite
+> drm_helper_probe_single_connector_modes() in the following way:
+> - call get_modes()
+> - validate the result
+> - prune invalid
 >
->> Regards,
->> Christian.
->>
->>> (Or, how do I check if it has landed?)
+> - if the number of modes is 0, call drm_add_override_edid_modes()
+> - validate the result
+> - prune invalid
+>
+> - if the number of modes is still 0, call drm_add_modes_noedid()
+> - validate the result
+> - prune invalid
+>
+> [A separate change might happen here after all the checks: if the number
+> of modes is still 0 and if it is a DP, enforce adding 640x480 even w/o
+> validation. But generally I feel that this shouldn't be necessary
+> because the previous step should have added it.]
+>
+> This way we can be sure that all modes are validated, but still to do
+> our best to add something supported to the list of modes.
 
+I'm partway through implementing / testing something similar to this.
+;-) My logic is slightly different than yours, though. In the very
+least I'm not convinced that we want to add the higher resolution
+modes (like 1024x768) if all the modes fail to validate. The DP spec
+only claims 640x480 is always supported. The higher resolution modes
+are for when the EDID fails to read I think. Similarly I'm not
+convinced that we should do pruning before deciding on
+drm_add_override_edid_modes().
+
+-Doug
