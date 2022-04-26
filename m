@@ -2,83 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4658E510B78
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 23:42:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C260510B84
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 23:50:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234799AbiDZVp4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 17:45:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59578 "EHLO
+        id S1355555AbiDZVxz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 17:53:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230085AbiDZVpz (ORCPT
+        with ESMTP id S1355563AbiDZVxx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 17:45:55 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F7AD4EA3A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 14:42:47 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id j6so16811116pfe.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 14:42:47 -0700 (PDT)
+        Tue, 26 Apr 2022 17:53:53 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56F1B3B56E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 14:50:44 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id e4so117333oif.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 14:50:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=5gf3nYF9WdYbXs00QxenyePit2YiJMZrQ9wLgL5Q7jI=;
-        b=P1z9e3nqHlFrb7EEv991K5FPplMY7ZI1McJEtBr+SDacbu1UC4zCOuxlTzzfu9JQnl
-         YXMyyZXta2j13wlKX49/81iO4BvwKpOOLdaOQ0x1GkeKE4+64YeAjG4x8QrMzxhJ0RZG
-         GbldKWaqPCre7DNy7Nh+edcZiQ52K3xj50atE=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=pjo5mXaYQ8tuJfJZuu4TdSNcsnRgj5B9DLZVepdghWQ=;
+        b=CQiwaHLvsuJ+ikXqofBkW8jrqC5ybJyYGda2ADk6TuRwRak/ZZrAWQr+Oc3GoIyUxL
+         jAiQC84FRkg0/xIgPZYwLmYHAR/MiaTGiJk7wDC3ByWcpz0mVRL0o5yr3i5GeTh9YxTq
+         TczVSgufsKZt2Yp2vNv7WM6j9VMoK+ZRTN5VI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5gf3nYF9WdYbXs00QxenyePit2YiJMZrQ9wLgL5Q7jI=;
-        b=68/GYiJjyqwjauU6wPaNQSegNn4tUhdSEooGEPWGogUuapLg6KjJhwTB7NvccZtn+K
-         /FXFKR2BuNPNXq/cAxbpzFoyxw2pNjuWhCa0PUn0+el6FGb5yHojCMQKVBYuYHKnOYnL
-         Opztg95E1AHY+/9LTvPYQM6j3eowUX89ojiJQoP8+onbE9m6XmWC8h6iVwHmRIiKhhOt
-         mfoPJrPTDgulDYKAmQiNGd1S1Qu8rWDuToHLrS1uBZCNHZT2oor3uSCLkcUP4C82O0of
-         loEN7jPzFAd0rkar6bfIxx4fxOHMiQ4rOlL7m3RjRSFAd58IDUMMbN5ETyzTdD8Dv6cU
-         rhgQ==
-X-Gm-Message-State: AOAM5304jqiiyAioThc4JJGzepE984yp3mDdNvljuyCt+GSeW0MEe4OA
-        Ym2QoGpWmxdoNnlGz5St15sxjQ==
-X-Google-Smtp-Source: ABdhPJwkQycKLw71SdNQNmcdN0UC64HuTVTyy5S9/DPWZMaF7QkDs0vFU+GmjzeWN51eQxo23te19A==
-X-Received: by 2002:a63:8b4b:0:b0:3ab:25dd:3836 with SMTP id j72-20020a638b4b000000b003ab25dd3836mr11262472pge.112.1651009366617;
-        Tue, 26 Apr 2022 14:42:46 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:eb63:4211:eb5d:f6b])
-        by smtp.gmail.com with UTF8SMTPSA id x8-20020aa784c8000000b0050577c51d38sm15727853pfn.20.2022.04.26.14.42.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Apr 2022 14:42:46 -0700 (PDT)
-Date:   Tue, 26 Apr 2022 14:42:44 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v11 3/4] arm64: dts: qcom: sc7280: add lpass lpi pin
- controller node
-Message-ID: <YmhnVLAsKCDr+TEh@google.com>
-References: <1650957666-6266-1-git-send-email-quic_srivasam@quicinc.com>
- <1650957666-6266-4-git-send-email-quic_srivasam@quicinc.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=pjo5mXaYQ8tuJfJZuu4TdSNcsnRgj5B9DLZVepdghWQ=;
+        b=FojSByuQG9J7TvN4n0+XjcS6OxWPPysy7ayzIHQ7H5DVyfrjSLw1/QTWTRS29EMFwd
+         +NbqR4iEdjAGB0kVOctHYTuLvgRga53XeLCoXiwynMy1gC2wUj04eWWZHM9SsL6/3dfK
+         f1HK7x1fYcSkvJA05EEFKwB53UMm2LsuKyrQMfupWZybCDFJTf/w9N3wtKs1iI6/v3dx
+         BzOzRseuvRbjhZymBIk6ZnrDv+milBkzuFa+LlGZxwUi/Iv2+MZH9WgoBmY+Eqo4kNWf
+         uPe42o10Wl2Mjr3XiRd+fAH+uyRFMsIpsrsXH8Hsq2W/M9CGH9xtkjOdUZk25eNe2h8w
+         t66w==
+X-Gm-Message-State: AOAM532T8FJz8Ie1u6unsr6cewzpaG/TyadAXCE6Ara/k6+Ivnb9o+A0
+        30Q6/psk+cDP8zYRFRgmwcFLxavdN6Bk0YVMV7+/SA==
+X-Google-Smtp-Source: ABdhPJwyMTUw/mtFu6agjAsPIJW+iWTJHYIxIVvFs4+GRM3nbBnWOJM3vPKxiLw52uQ1xwjfjvHgiiuMneQ854bVIsM=
+X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
+ n62-20020acabd41000000b002ecff42814fmr11888453oif.63.1651009843704; Tue, 26
+ Apr 2022 14:50:43 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 26 Apr 2022 14:50:43 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1650957666-6266-4-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1650952931-31988-1-git-send-email-quic_vpolimer@quicinc.com>
+References: <1650952931-31988-1-git-send-email-quic_vpolimer@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 26 Apr 2022 14:50:43 -0700
+Message-ID: <CAE-0n52cSR_xCxF+_UeK8CaHqsu=4HOtfWQ3BMmx2Tx3kmk-ZA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/disp/dpu1: avoid clearing hw interrupts if
+ hw_intr is null during drm uninit
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dmitry.baryshkov@linaro.org, dianders@chromium.org,
+        quic_kalyant@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 26, 2022 at 12:51:05PM +0530, Srinivasa Rao Mandadapu wrote:
-> Add LPASS LPI pinctrl node required for Audio functionality on sc7280
-> based platforms.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Quoting Vinod Polimera (2022-04-25 23:02:11)
+> Avoid clearing irqs and derefernce hw_intr when hw_intr is null.
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Presumably this is only the case when the display driver doesn't fully
+probe and something probe defers? Can you clarify how this situation
+happens?
+
+>
+> BUG: Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+>
+> Call trace:
+>  dpu_core_irq_uninstall+0x50/0xb0
+>  dpu_irq_uninstall+0x18/0x24
+>  msm_drm_uninit+0xd8/0x16c
+>  msm_drm_bind+0x580/0x5fc
+>  try_to_bring_up_master+0x168/0x1c0
+>  __component_add+0xb4/0x178
+>  component_add+0x1c/0x28
+>  dp_display_probe+0x38c/0x400
+>  platform_probe+0xb0/0xd0
+>  really_probe+0xcc/0x2c8
+>  __driver_probe_device+0xbc/0xe8
+>  driver_probe_device+0x48/0xf0
+>  __device_attach_driver+0xa0/0xc8
+>  bus_for_each_drv+0x8c/0xd8
+>  __device_attach+0xc4/0x150
+>  device_initial_probe+0x1c/0x28
+>
+> Fixes: a73033619ea ("drm/msm/dpu: squash dpu_core_irq into dpu_hw_interrupts")
+
+The fixes tag looks odd. In dpu_core_irq_uninstall() at that commit it
+is dealing with 'irq_obj' which isn't a pointer. After commit
+f25f656608e3 ("drm/msm/dpu: merge struct dpu_irq into struct
+dpu_hw_intr") dpu_core_irq_uninstall() starts using 'hw_intr' which is
+allocated on the heap. If we backported this patch to a place that had
+a73033619ea without f25f656608e3 it wouldn't make any sense.
+
+> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> index c515b7c..ab28577 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> @@ -599,6 +599,9 @@ void dpu_core_irq_uninstall(struct dpu_kms *dpu_kms)
+>  {
+>         int i;
+>
+> +       if (!dpu_kms->hw_intr)
+> +               return;
+> +
+>         pm_runtime_get_sync(&dpu_kms->pdev->dev);
+>         for (i = 0; i < dpu_kms->hw_intr->total_irqs; i++)
