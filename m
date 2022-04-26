@@ -2,82 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 573CD50FB37
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 12:43:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5435950FB84
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 12:55:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349363AbiDZKqb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 06:46:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41122 "EHLO
+        id S1346939AbiDZK6T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 06:58:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349043AbiDZKp4 (ORCPT
+        with ESMTP id S1346665AbiDZK6R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 06:45:56 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25535D52
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 03:36:35 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id j6so1297468ejc.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 03:36:35 -0700 (PDT)
+        Tue, 26 Apr 2022 06:58:17 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7D5D5FD8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 03:55:08 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id a1so16179460edt.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 03:55:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=03JHyVcnDtVRCT1SZNlsYY6E7LDhShIBmeQH7UCWb5Q=;
-        b=TLmerg/GnvN27In+YodvcDqxMfddqh49b8DPl2i75Ctw7YdreDnekmhoIONxgupBK3
-         cljPnMDHPuHi+TqxLolsnnSvvO5THxbVDg7QIxBJVf+OA5hZ7yfGtDuje2WZf7gQAKt9
-         nOMgs/BZ5KjfMPVQ43XeMYpOMBAJvJM9kOGEPfyXNbcTowT743xsqsfabmWcKwGsrBsS
-         xP7V72u+YQwHg40v3OKtYOGtEjS3HllQvWrXtbxAM0GUMTc/OFZJtR/UYB0oZwfz+BzQ
-         +c4QxCLjqHXATif+W/FxwIi6kgXHwAEJELnuUkE9MCiWiGcO8pm/Vbi5L2mned/HUKn+
-         Nkcw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=s+kdqZ0e0BfTpUJcAQ2+O79SrHfdDIBqWofdQvVP3M4=;
+        b=jR1XbJCEl9tiQvAOzAvK6SaGzt3gFC6OkN33Bn+qV2rYMQ/PHWJOCnSJrOAS5dlrdA
+         wFGWQba/x7UMC8XoxnEKpy5ZsBchJpCsmRWXNFw1nSIXDW3pbdyrEmVziEV55lq0j1Uw
+         2L66vW4wAOu18ynJ9vGnejALfPx6bo2ZFNIbXhAbG6C0kjLJVgHp1X08ZmtLpMm6j+hE
+         /Ai07IduDoiGsWcob6ITc5bQch8uiOuFt4D0WkFH0JJZOsC/mbzgoGAWkoE12qENsUnc
+         UCfM3WYJNkP+KxmIcpJaJYhz8/jFu3XnBSwBqX+ZqWbEODq/ro6MDrTMikmwTdmpBcbF
+         pafg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=03JHyVcnDtVRCT1SZNlsYY6E7LDhShIBmeQH7UCWb5Q=;
-        b=ZoLHoQFj/6bHE7HEsCB70YQQf0UZqZMoorwqRdWROYIpMBrcxysS8QYO3u3RP34EBw
-         utSqD3yYnIOTwgfOHSICyTWPyz+O+06tb4Suz7ScbB1ucketI7px5hUUvNedc57t6+x5
-         mKa8Uv+T4lDPaJhsBZGmFSqPBublujUICwFBt4SnNOYhyYXgOgEA5A5IXWnpFdtb1ttv
-         xBPLaICL51qGeVhrgnRlsbB3lcuMESIwXqBNZyHTr5kGY3nMhWoUsLjv/oVt5zpair+O
-         URaLhbESezgnCalijjj0OuW5kF371SXE9CDqhanoPKNL26NTpgIKsEKyXb7jTSeN3GqV
-         Yacw==
-X-Gm-Message-State: AOAM533UytVnr7j4K9GyvngLRQ84AOhVJRJD/J1/vYiEYJmNq6NfZJgU
-        Z3WE7JzU4gi7kipWsjceVI3LQw==
-X-Google-Smtp-Source: ABdhPJw6DaMltbJJc7Yzq1Tp0x7WQkv+N3L4u8ibEqiMFEoXnXRu3hTBOVsKOG02p9gMJClHF/WxHg==
-X-Received: by 2002:a17:907:a425:b0:6f3:6b5d:a29c with SMTP id sg37-20020a170907a42500b006f36b5da29cmr15857758ejc.144.1650969393687;
-        Tue, 26 Apr 2022 03:36:33 -0700 (PDT)
-Received: from [192.168.0.249] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id i12-20020a05640200cc00b00421058b175esm5978605edu.53.2022.04.26.03.36.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Apr 2022 03:36:33 -0700 (PDT)
-Message-ID: <d1cd8e2c-d882-5f6b-863a-2c623fa38edb@linaro.org>
-Date:   Tue, 26 Apr 2022 12:36:31 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 1/2] dt-bindings: mailbox: qcom-ipcc: simplify the example
-Content-Language: en-US
-To:     Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Devicetree List <devicetree@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>, netdev@vger.kernel.org,
-        Rob Herring <robh@kernel.org>, Alex Elder <elder@kernel.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>
-References: <20220402155551.16509-1-krzysztof.kozlowski@linaro.org>
- <a3edf0e1-644a-38b2-b23d-30cc01005786@linaro.org>
- <CABb+yY3uRxKdQ_Q-yvWipmOqLNbJXmJ141oYJnq1di_Yu66T_Q@mail.gmail.com>
+        bh=s+kdqZ0e0BfTpUJcAQ2+O79SrHfdDIBqWofdQvVP3M4=;
+        b=ewOVh6o3XtMishH7d2XLJWq71PiK/arD3amprx8XNlk16oflouajxg2fxpjvT4tseC
+         4jmY0KCGqdMuipNlJ+kDzprtX0eBHb441i/c+CO/1SKyaupLZtiXq2Z5S7J8MRikdDtj
+         ruwYGPmwwLhCqgEpqXxYgwyy/0RkJGqE7TOysiu8itakdhZSO2GuAk1LlfguS+DH4u+d
+         ibvEEpw1kDegGvQOYTfGk2W4Z2e8CjEDwnPhCmqVMsiRFHiv2KvEbPfLZ2q+uw03klG2
+         npiS0RUlwfqAX5l//ur0CJIhciXp7a5otfQklxJKJpd+Yt4SLvmmXW14zTx/LbpX6S1x
+         Gw2A==
+X-Gm-Message-State: AOAM5328fCYMEnHnFW7Y9991TFrCpR9AvCnS38JHaLFhcZx5QvSfg+/Z
+        GtVyflpY9/BJO3Om1q3VidhFzg==
+X-Google-Smtp-Source: ABdhPJy8Kgtcoxq+3D7YG54/OKzySwOPcYIgi5z6xFfcVwdiTIgBOe/ypJFWJcbxqd/lHrsPuJLQsg==
+X-Received: by 2002:aa7:cb93:0:b0:415:d57a:4603 with SMTP id r19-20020aa7cb93000000b00415d57a4603mr23568366edt.62.1650970507360;
+        Tue, 26 Apr 2022 03:55:07 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id s5-20020a508dc5000000b004241a4abbdfsm6062843edh.45.2022.04.26.03.55.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Apr 2022 03:55:06 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CABb+yY3uRxKdQ_Q-yvWipmOqLNbJXmJ141oYJnq1di_Yu66T_Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 0/3] regulator: dt-bindings: qcom,rpmh: minor cleanups and extend supplies
+Date:   Tue, 26 Apr 2022 12:54:58 +0200
+Message-Id: <20220426105501.73200-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.32.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,28 +74,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/04/2022 16:22, Jassi Brar wrote:
-> On Wed, Apr 20, 2022 at 3:42 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 02/04/2022 17:55, Krzysztof Kozlowski wrote:
->>> Consumer examples in the bindings of resource providers are trivial,
->>> useless and duplicating code.  Additionally the incomplete qcom,smp2p
->>> example triggers DT schema warnings.
->>>
->>> Cleanup the example by removing the consumer part and fixing the
->>> indentation to DT schema convention.
->>>
->>> Reported-by: Rob Herring <robh@kernel.org>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> Jassi,
->> Do you plan to pick this mailbox patch?
->>
-> Yes, I do.  I am ok too, if you want it through some other tree as a
-> part of some bigger patchset.
+Hi,
 
-It's not going through any other tree, so please pick it up.
+Extend the RPMH regulator bindings with minor fixes and adding narrow supply
+matching.
+
+Changes since v2
+================
+1. Remove "defs" method, because schema nows allows unevaluatedProperties
+   without references to other schemas.
+2. Include maintainer change patch, previously sent separately.
+
+Changes since v1
+================
+1. Use "defs" method instead of referencing additional YAML file, because the
+   latter was not working properly.
 
 Best regards,
 Krzysztof
+
+Krzysztof Kozlowski (3):
+  regulator: dt-bindings: qcom,rpmh: update maintainers
+  regulator: dt-bindings: qcom,rpmh: document supplies per variant
+  regulator: dt-bindings: qcom,rpmh: document vdd-l7-bob-supply on
+    PMR735A
+
+ .../regulator/qcom,rpmh-regulator.yaml        | 260 +++++++++++++++++-
+ 1 file changed, 245 insertions(+), 15 deletions(-)
+
+-- 
+2.32.0
+
