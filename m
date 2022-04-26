@@ -2,67 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 59E0E510CB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 01:33:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D26B8510CBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 01:35:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356106AbiDZXgZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 19:36:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45144 "EHLO
+        id S1355264AbiDZXiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 19:38:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356125AbiDZXgY (ORCPT
+        with ESMTP id S1349182AbiDZXiF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 19:36:24 -0400
-Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50CE02C129
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 16:33:15 -0700 (PDT)
-Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-e9027efe6aso267918fac.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 16:33:15 -0700 (PDT)
+        Tue, 26 Apr 2022 19:38:05 -0400
+Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4B5E6A43D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 16:34:56 -0700 (PDT)
+Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-e93bbb54f9so262440fac.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 16:34:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mPLQqqv78H4vpATnizZrr8k/pThUI48bHzxuZTk6fwo=;
-        b=wX1c0JS3y92QFPGUeiWHj+woXNrE7erTJk1Ex1Fdj0oLhGeW9WijdzMooVfBdRU8/w
-         xsy7sCPjHKmvPO6vxB5Gj0LrX9a4k5539SnsgDlw9uIP/3YZSbfSfPOODmfkhe+xjtuB
-         qNDjL4sT24F6tM7p+iqXuUJk/mMzofIPrc/1ZZojc77kJmhbZuiKPWZrKvwALm3tqiBB
-         yyi/tKSqfNHHhA7CmBivBsydaiVENxDTGhckVAMknF2PZIIkGxbkhyTDJZrwWs43AmUx
-         4riM15Fj3ccawuBPlYgeJt4IiZZUo/LvlxRCzE0qA9SXNCYbwcn1XLtmRJxkK6+cOoab
-         u7ow==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=rqUfSOGZ1teIwHlqjTqKW5qefctpAygnKO2drKsH9dI=;
+        b=D/qioClAQ+KU8gvRilbYlhEYHKiT+0H/WIBXw23GyCqUBT5D8fmk9R1OIc44TEA7js
+         +LJywEt/aWtxDDGmaIb3x7OIM9HUv4+VQCyEeqSNT3F9YE2mgLgWg6InNomvU/TLopSj
+         SPjIXyKBWIW+4Pe3DeDI3Y01BJlrBk79IPWZmRFqwmC3rPlB0eiLtSEBBUrueNP3krfd
+         GsXNnOCv1ouynGD/puxrVQzOADywScBxVEXDVOp35gElrUGBKctk4MTsxyXLlwt9RSfb
+         YLeojdMQg5/efwjxkeMR2EADPGvVf5NrUJgSFqU0870iNFTTEF0O21XVoVCBFHEDoZVn
+         HBvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mPLQqqv78H4vpATnizZrr8k/pThUI48bHzxuZTk6fwo=;
-        b=2t+PvWCFrVnCam/A1b5f6vAfwJYACmn+FdDmtOFmC3KaKToTQd//AwVvPp83At44im
-         ur+iGdByNt2uDTTc/iTglA5mZbPn704kuguk8iIOywRzSGeHQcCOwF+2EYhF1KSUzysw
-         /mfaB5IsEj0WalC7WoSRtJWupuNX3VfQ2XKuvQjldXJk2oIybp3CB/FVtn9pGpwWYWia
-         CAl47bv6trXSmLYMVV4wcNa8AABYIqctctyZnd5EhtWXIkAB10NhJNF4jUASEM632uPl
-         AisknIthjRpyAgTAUm/pxwWMDEUcNheiTpuQqXPkQgoqnv6OrMfOZGcZP5SmfdY3Xfnp
-         quaw==
-X-Gm-Message-State: AOAM530qHvfmQxsXJ3pZxO7zm15WIxhiTiJTXczkkwvW2gSwMJq3vejO
-        zQoBgjHXYHQYiknF48ZN3XIo/A==
-X-Google-Smtp-Source: ABdhPJyFzx5w7Bc5hjOwS1ur3aTP5yIT4qlqeVoSB/Ri8LWJ2hKuoMOgzDxIeA7qxam0MS/2BSW8mg==
-X-Received: by 2002:a05:6870:471f:b0:e9:5b13:3881 with SMTP id b31-20020a056870471f00b000e95b133881mr3603134oaq.106.1651015994714;
-        Tue, 26 Apr 2022 16:33:14 -0700 (PDT)
-Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id k2-20020a4adfa2000000b0033a3381a7f1sm6151658ook.44.2022.04.26.16.33.13
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=rqUfSOGZ1teIwHlqjTqKW5qefctpAygnKO2drKsH9dI=;
+        b=8BW9zXhOArjqGUt9RXH/KuyFI6e3rJlXbWo4CFUT98lO14rQ/QIobns04jKKBTM3Vk
+         KAQn4XoAueeWHagltTC6yiEZeAdPEkJd9btXqWnhaf33zHUFlFa6dCNTAiabgQKnwhWc
+         vq/ImClLfv9MEOOifMOpk67bLPMen/bmca1o2TrwNGRZmZKsZfTUILbQ1TZ3ymqiswqR
+         8/QHAdywYS3dit/OXZTxiTFjJUgVCloYGd4DvKHPBVTIsLCzlTxiA2Jpdz3B4FepXgpn
+         zms3FgF+XppGycu55B43UbNC6mtyE7F3p/uJsN3Vn83WnqnqNfnXqC1VHCjWu1iL2L7r
+         ak7Q==
+X-Gm-Message-State: AOAM5330PYxjKjXcehrifIjsOWSjR0V0xmXGJ23ZDJik52FnCGvUFIgc
+        I11wsyr3UjCDkSrrXk244Mf15g==
+X-Google-Smtp-Source: ABdhPJwVdqnpXywCFOoorgAPIFV29CT0TZAoi/FfYZqaI//R10zdLuGPYfllUCuqMHyeD6k33aytKw==
+X-Received: by 2002:a05:6870:d5a2:b0:de:f682:6c4d with SMTP id u34-20020a056870d5a200b000def6826c4dmr10417337oao.283.1651016095986;
+        Tue, 26 Apr 2022 16:34:55 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id t22-20020a056870e75600b000e915a9121csm1341699oak.52.2022.04.26.16.34.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 16:33:14 -0700 (PDT)
+        Tue, 26 Apr 2022 16:34:55 -0700 (PDT)
+Date:   Tue, 26 Apr 2022 16:36:51 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/3] soc: qcom: rpmhpd: add sc8280xp & sa8540p rpmh power-domains
-Date:   Tue, 26 Apr 2022 16:35:08 -0700
-Message-Id: <20220426233508.1762345-4-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220426233508.1762345-1-bjorn.andersson@linaro.org>
-References: <20220426233508.1762345-1-bjorn.andersson@linaro.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
+Subject: Re: [PATCH 1/2] phy: qcom-qmp: fix struct clk leak on probe errors
+Message-ID: <YmiCE35hvUzQW2Bc@ripper>
+References: <20220422130941.2044-1-johan+linaro@kernel.org>
+ <20220422130941.2044-2-johan+linaro@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220422130941.2044-2-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -72,97 +74,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Qualcomm sc8280xp platform has 13 and the sa8540p platform has 11
-power-domains. Add compatibles, the typically used ones power-domains
-and their relevant active-only variants, to the RPMh power-domain
-driver.
+On Fri 22 Apr 06:09 PDT 2022, Johan Hovold wrote:
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+> Make sure to release the pipe clock reference in case of a late probe
+> error (e.g. probe deferral).
+> 
+> Fixes: e78f3d15e115 ("phy: qcom-qmp: new qmp phy driver for qcom-chipsets")
+> Cc: stable@vger.kernel.org      # 4.12
+> Cc: Vivek Gautam <vivek.gautam@codeaurora.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Changes since v1:
-- Added QPHY
-- Split out sa8540
-- Sorted the entries alphabetically
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
- drivers/soc/qcom/rpmhpd.c | 53 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+Regards,
+Bjorn
 
-diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-index f8d28e902942..05fff8691ee3 100644
---- a/drivers/soc/qcom/rpmhpd.c
-+++ b/drivers/soc/qcom/rpmhpd.c
-@@ -180,6 +180,36 @@ static struct rpmhpd mxc_ao = {
- 	.res_name = "mxc.lvl",
- };
- 
-+static struct rpmhpd nsp = {
-+	.pd = { .name = "nsp", },
-+	.res_name = "nsp.lvl",
-+};
-+
-+static struct rpmhpd qphy = {
-+	.pd = { .name = "qphy", },
-+	.res_name = "qphy.lvl",
-+};
-+
-+/* SA8540P RPMH powerdomains */
-+static struct rpmhpd *sa8540p_rpmhpds[] = {
-+	[SC8280XP_CX] = &cx,
-+	[SC8280XP_CX_AO] = &cx_ao,
-+	[SC8280XP_EBI] = &ebi,
-+	[SC8280XP_GFX] = &gfx,
-+	[SC8280XP_LCX] = &lcx,
-+	[SC8280XP_LMX] = &lmx,
-+	[SC8280XP_MMCX] = &mmcx,
-+	[SC8280XP_MMCX_AO] = &mmcx_ao,
-+	[SC8280XP_MX] = &mx,
-+	[SC8280XP_MX_AO] = &mx_ao,
-+	[SC8280XP_NSP] = &nsp,
-+};
-+
-+static const struct rpmhpd_desc sa8540p_desc = {
-+	.rpmhpds = sa8540p_rpmhpds,
-+	.num_pds = ARRAY_SIZE(sa8540p_rpmhpds),
-+};
-+
- /* SDM845 RPMH powerdomains */
- static struct rpmhpd *sdm845_rpmhpds[] = {
- 	[SDM845_CX] = &cx_w_mx_parent,
-@@ -378,10 +408,33 @@ static const struct rpmhpd_desc sc8180x_desc = {
- 	.num_pds = ARRAY_SIZE(sc8180x_rpmhpds),
- };
- 
-+/* SC8280xp RPMH powerdomains */
-+static struct rpmhpd *sc8280xp_rpmhpds[] = {
-+	[SC8280XP_CX] = &cx,
-+	[SC8280XP_CX_AO] = &cx_ao,
-+	[SC8280XP_EBI] = &ebi,
-+	[SC8280XP_GFX] = &gfx,
-+	[SC8280XP_LCX] = &lcx,
-+	[SC8280XP_LMX] = &lmx,
-+	[SC8280XP_MMCX] = &mmcx,
-+	[SC8280XP_MMCX_AO] = &mmcx_ao,
-+	[SC8280XP_MX] = &mx,
-+	[SC8280XP_MX_AO] = &mx_ao,
-+	[SC8280XP_NSP] = &nsp,
-+	[SC8280XP_QPHY] = &qphy,
-+};
-+
-+static const struct rpmhpd_desc sc8280xp_desc = {
-+	.rpmhpds = sc8280xp_rpmhpds,
-+	.num_pds = ARRAY_SIZE(sc8280xp_rpmhpds),
-+};
-+
- static const struct of_device_id rpmhpd_match_table[] = {
-+	{ .compatible = "qcom,sa8540p-rpmhpd", .data = &sa8540p_desc },
- 	{ .compatible = "qcom,sc7180-rpmhpd", .data = &sc7180_desc },
- 	{ .compatible = "qcom,sc7280-rpmhpd", .data = &sc7280_desc },
- 	{ .compatible = "qcom,sc8180x-rpmhpd", .data = &sc8180x_desc },
-+	{ .compatible = "qcom,sc8280xp-rpmhpd", .data = &sc8280xp_desc },
- 	{ .compatible = "qcom,sdm845-rpmhpd", .data = &sdm845_desc },
- 	{ .compatible = "qcom,sdx55-rpmhpd", .data = &sdx55_desc},
- 	{ .compatible = "qcom,sdx65-rpmhpd", .data = &sdx65_desc},
--- 
-2.35.1
-
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> index 7d2d1ab061f7..a84f7d1fc9b7 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> @@ -6077,7 +6077,7 @@ int qcom_qmp_phy_create(struct device *dev, struct device_node *np, int id,
+>  	 * all phys that don't need this.
+>  	 */
+>  	snprintf(prop_name, sizeof(prop_name), "pipe%d", id);
+> -	qphy->pipe_clk = of_clk_get_by_name(np, prop_name);
+> +	qphy->pipe_clk = devm_get_clk_from_child(dev, np, prop_name);
+>  	if (IS_ERR(qphy->pipe_clk)) {
+>  		if (cfg->type == PHY_TYPE_PCIE ||
+>  		    cfg->type == PHY_TYPE_USB3) {
+> -- 
+> 2.35.1
+> 
