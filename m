@@ -2,199 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8613050F25B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 09:26:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14FDC50F277
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 09:32:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236124AbiDZH3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 03:29:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34000 "EHLO
+        id S1343988AbiDZHfS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 03:35:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344023AbiDZH3M (ORCPT
+        with ESMTP id S234454AbiDZHfS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 03:29:12 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 042D32181
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 00:26:05 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id v1so17387871ljv.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 00:26:04 -0700 (PDT)
+        Tue, 26 Apr 2022 03:35:18 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEB82F69A7;
+        Tue, 26 Apr 2022 00:32:11 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id g19so30395279lfv.2;
+        Tue, 26 Apr 2022 00:32:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Ip4yKprUwa5CWGfKSGf6LxYHkAhSkHn2zyYdRVkuKYU=;
-        b=lM/cGyNPCgOlRbQmCDv2N0LFI8Z/V1E3GPTN3qhv6IeGaKXN89UYs3/xI2kcwElbtG
-         g4o7WQ9jIP5pxzL9gWHSBOjFqAIZilmXBnEWYQbWRlG+Vvr6Uu2mZXDNgx7F6qhoP6p7
-         KaIajNLuJH6vtSFd0Cptuqa6QLdml1zWy9D/S4XCiWhQOyKo2zKpYW8fOhzah8JTnb86
-         byhACWCLlrYEWu40468Fal0BIm0Ber8W91ukxTecLm6UqPyfCBNLhBWoewva5Gu7p9wu
-         q6TWpnHeZ36EqEBakXDRlUbSiJXMjItpxV2Ynu6tgFrxGp+jmdY5mQuKU/zP36H7BgBq
-         q9kw==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KGVWNZVJs3H4ln7FqWp8hNIQLAnf5hs9n+dr8i9g9tg=;
+        b=VzU/kOlnRRt72ndXE20uRMJGW7pW5wxcTn8B0SnCn0x548hG00MUtin/JiPmRl6Pl9
+         05tBaEBidCN9b0v1jXXX1E1uKr85X2WLyJtnH8JZWradn9WlyRyxrU7pHJXbeWozESUo
+         v2HRWZnnSHpA3V8YgrKitZRByAgdhLgF+nX5OxrL/zX21ugYuDItWLEZTj3OStmHxqFR
+         hdTziQkjgMwwu17DfFP0yJfbQRF9ScMKwEjnHGJqyDmuRcrIUY07Um6jX2haGmCp0eu1
+         qhx+XCkYGPYsxLQe1qkk3xYHzcq8PvzMCNn/wLzmuaKQWUaoXZGml9maux3gYcIJGY/p
+         R0NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Ip4yKprUwa5CWGfKSGf6LxYHkAhSkHn2zyYdRVkuKYU=;
-        b=tb6Sv0nZspCmkI/Q/sEcGl7/OU4sZHTfVxNM/eK1+0ycRDeVwGQn7+Ml0ZT35ZjzNs
-         kds2D9VGEJOlJRtP6ftonaY5GkPhOnRgSfgGoW9vBu28pJcCpLMkVPutShp7KDkKyA2U
-         7WzCXVdrFi7kA8wncvZ5CUZ9X6Dhz6U1VsmpLVgefxA7y/tdf/PF50QwwrSy7la5iW/t
-         43X+4CzJbBF9HLmGpYlNvID8yY6KwXNM8I+dqtwgpOCGgLdB6TkjlVwbQu3R7Pey8egX
-         GBm8LVw8ulbNPwd6zBK40ReLDWhS4yANcL8Kd/PcFl+w4Ooz3JAzPdM9G4M5R0WxWiZv
-         vTAA==
-X-Gm-Message-State: AOAM533g9GG13c82fH3oZSd7H6MY9O/46THsyKmlFqNROtjQSmKqwTZ1
-        Ro16xBlOgKgXIyoxoRCHBjTkag==
-X-Google-Smtp-Source: ABdhPJwYgtV/i5ybL48Y+kjThwzp8oCL1bzTgORpgBsO3BcnlY+Ccb/X9tyWeGjjIRdQU0g/NK/9JQ==
-X-Received: by 2002:a2e:bf12:0:b0:249:3a3b:e91a with SMTP id c18-20020a2ebf12000000b002493a3be91amr13833393ljr.343.1650957963192;
-        Tue, 26 Apr 2022 00:26:03 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h13-20020a056512338d00b0047203470747sm795653lfg.245.2022.04.26.00.26.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Apr 2022 00:26:02 -0700 (PDT)
-Message-ID: <3f407912-be75-19a8-d406-ae042d23fd9e@linaro.org>
-Date:   Tue, 26 Apr 2022 10:26:02 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v3 3/3] dt-bindings: clock: qcom,gcc-apq8064: split tsens
- to the child node
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        bh=KGVWNZVJs3H4ln7FqWp8hNIQLAnf5hs9n+dr8i9g9tg=;
+        b=pQgyrhp/53WICIwBqW0cB9ExdeKw4C5w5iCT+NW4zKJQlF51qE5gS82yMvGHhPOEnU
+         pWeLBPZEb2PEyXE4ypkTqwywVV+01PEiipHnlJHOUsy2Ds9id6YzVAjzmJvr9BkKphCr
+         KDcBbro+ySp109uGa2S4HaQ23hutHrIZa9d3RSIoEuu2jH52Z3Jgc6XG/JpNzyaw/bzQ
+         fivV27TeTpFWWjw+/9GNSi5J9XVRBMnHEfSh1myXTOY8bUu18Z51JWjtx5ldo59sWkYb
+         H1cAZXLW81hqgiml8HWOjRkr3EFZaean3f47eUz4nZ5FrsyoJgdx5RKCE/nO0Q+SNFY3
+         6Hug==
+X-Gm-Message-State: AOAM530Qn7TRF155ovaOBs5cMPbAquzR+clvK4a4LZAOHEismR3p415z
+        TJOa+X1qZtd96B3mEbRFGVbv3SLKLec=
+X-Google-Smtp-Source: ABdhPJzV0w9Ag/2E0pd5HIehjAlfu13I+V9s9zGFXbrSLGznof90bE58xbsYOgL/b6SH5rZ7TbjiOQ==
+X-Received: by 2002:a19:ee05:0:b0:46e:2f8d:db76 with SMTP id g5-20020a19ee05000000b0046e2f8ddb76mr15945835lfb.321.1650958329909;
+        Tue, 26 Apr 2022 00:32:09 -0700 (PDT)
+Received: from localhost.localdomain (adla4.neoplus.adsl.tpnet.pl. [79.185.4.4])
+        by smtp.gmail.com with ESMTPSA id d2-20020a056512320200b004721999f1cesm103509lfe.66.2022.04.26.00.32.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Apr 2022 00:32:09 -0700 (PDT)
+From:   Adam Skladowski <a39.skl@gmail.com>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Adam Skladowski <a39.skl@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20220425212750.2749135-1-dmitry.baryshkov@linaro.org>
- <20220425212750.2749135-4-dmitry.baryshkov@linaro.org>
- <8579a3df-1a1d-c258-f65e-531cf0731949@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <8579a3df-1a1d-c258-f65e-531cf0731949@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v2 0/3] MSM8976 GCC updates
+Date:   Tue, 26 Apr 2022 09:30:45 +0200
+Message-Id: <20220426073048.11509-1-a39.skl@gmail.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/04/2022 10:08, Krzysztof Kozlowski wrote:
-> On 25/04/2022 23:27, Dmitry Baryshkov wrote:
->> Split tsens properties to the child node of the gcc. This follows the
->> lead of ipq8064 (which also uses a separate node for tsens) and makes
->> device tree closer to other platforms, where tsens is a completely
->> separate device.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../bindings/clock/qcom,gcc-apq8064.yaml      | 45 +++++++------------
->>   1 file changed, 17 insertions(+), 28 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
->> index b867da12761e..f2762599f679 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
->> @@ -23,47 +23,36 @@ description: |
->>   
->>   properties:
->>     compatible:
->> -    enum:
->> -      - qcom,gcc-apq8064
->> -      - qcom,gcc-msm8060
-> 
-> Hm, such list does not exist in mainline, so is your set rebased on
-> something? See also:
-> https://lore.kernel.org/linux-devicetree/20220425133527.3723233-1-robh@kernel.org/
-> https://lore.kernel.org/linux-devicetree/20220426064241.6379-1-krzysztof.kozlowski@linaro.org/
+This patch series brings small fixes for SDCC clocks
+and adds reset for modem.
 
-Ugh, yes. I missed a patch during git send-email. I've sent it 
-separately (dt-bindings: clock: gcc-apq8064: move qcom,apq8084 back to 
-gcc-other.yaml)
+Changes since v1
+================
+1. Adjusted comment line length for SDCC patch.
+2. Added Acked-by to dt-bindings patch.
 
-> 
-> 
->> -
->> -  nvmem-cells:
->> -    minItems: 1
->> -    maxItems: 2
->> -    description:
->> -      Qualcomm TSENS (thermal sensor device) on some devices can
->> -      be part of GCC and hence the TSENS properties can also be part
->> -      of the GCC/clock-controller node.
->> -      For more details on the TSENS properties please refer
->> -      Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->> -
->> -  nvmem-cell-names:
->> -    minItems: 1
->>       items:
->> -      - const: calib
->> -      - const: calib_backup
-> 
-> I see the removal of tsens properties, but I do not see the other part
-> of split - adding them as child. It does not come from qcom,gcc.yaml,
-> either.
-> 
->> -
->> -  '#thermal-sensor-cells':
->> -    const: 1
->> +      - enum:
->> +          - qcom,gcc-apq8064
->> +          - qcom,gcc-msm8060
->> +      - const: syscon
->>   
->>   required:
->>     - compatible
->> -  - nvmem-cells
->> -  - nvmem-cell-names
->> -  - '#thermal-sensor-cells'
->>   
->>   unevaluatedProperties: false
->>   
->>   examples:
->>     - |
->>       clock-controller@900000 {
->> -      compatible = "qcom,gcc-apq8064";
->> +      compatible = "qcom,gcc-apq8064", "syscon";
->>         reg = <0x00900000 0x4000>;
->> -      nvmem-cells = <&tsens_calib>, <&tsens_backup>;
->> -      nvmem-cell-names = "calib", "calib_backup";
->>         #clock-cells = <1>;
->>         #reset-cells = <1>;
->>         #power-domain-cells = <1>;
->> -      #thermal-sensor-cells = <1>;
->> +
->> +      thermal-sensor {
->> +        compatible = "qcom,msm8960-tsens";
->> +
->> +        nvmem-cells = <&tsens_calib>, <&tsens_backup>;
->> +        nvmem-cell-names = "calib", "calib_backup";
->> +        interrupts = <0 178 4>;
-> 
-> 0 and 4 look like GIC/interrupt flags, so please use defines.
-> 
->> +        interrupt-names = "uplow";
->> +
->> +        #qcom,sensors = <11>;
->> +        #thermal-sensor-cells = <1>;
->> +        };
-> 
-> Indentation looks weird here.
-> 
->>       };
->>   ...
-> 
-> 
-> Best regards,
-> Krzysztof
+Adam Skladowski (3):
+  clk: qcom: gcc-msm8976: Set floor ops for SDCC
+  dt-bindings: clk: qcom: gcc-msm8976: Add modem reset
+  clk: qcom: gcc-msm8976: Add modem reset
 
+ drivers/clk/qcom/gcc-msm8976.c               | 7 ++++---
+ include/dt-bindings/clock/qcom,gcc-msm8976.h | 1 +
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.25.1
+
