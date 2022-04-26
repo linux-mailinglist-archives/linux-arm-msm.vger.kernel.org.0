@@ -2,105 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 688C350F198
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 08:59:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1DD550F1CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 09:08:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242958AbiDZHCm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 03:02:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37002 "EHLO
+        id S1343728AbiDZHL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 03:11:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343573AbiDZHCl (ORCPT
+        with ESMTP id S1343722AbiDZHLY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 03:02:41 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA1F1606C8;
-        Mon, 25 Apr 2022 23:59:34 -0700 (PDT)
+        Tue, 26 Apr 2022 03:11:24 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02C7137BC5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 00:08:17 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id kq17so10985566ejb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 00:08:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650956374; x=1682492374;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=aw5r7BrW1vwKf05/8tJIj1dopbQ3n7YUHorQBJQ/h8o=;
-  b=v1QPtj84natss33sTLNDCdQ0LyYa8U3o3aR1ZiP/fU11uCBFYS0RzWVK
-   2j2LrdnYSs6J8ZWs/ibJjyc/9TWoKuOxm4hkSWqdQ02w4pUkYv37miY28
-   5+Z492nh2gPQjaXpTxa2upR1SEq248iT0lvvNEirnxS2/9Zptv1Y7MvHJ
-   o=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 25 Apr 2022 23:59:34 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2022 23:59:33 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 25 Apr 2022 23:59:33 -0700
-Received: from [10.216.40.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 25 Apr
- 2022 23:59:29 -0700
-Message-ID: <c625c66b-54f6-1796-4ccc-b807ca821ef3@quicinc.com>
-Date:   Tue, 26 Apr 2022 12:29:25 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=myMJmmFzXabm0MK8zN+AefUrpxOTRg0KpTHnfY8SV+k=;
+        b=dky4F+ZpEvfdqcQOTGzp4A+aq5RvLb28otRcNi3DcgkiqiFA2nKPK/Y9UDrHakFyMj
+         fUlE7g537+mnO5GDaDHPiSjZVRCfCv02qJBG0mu8swW5UCNIXVIWvAMqpOoEvwaiaK/E
+         MOvmPKiAr5XCwpx0dMWqecvTvO5NozzKjYbVyoDirTAPzUzU5abZrnwPwajnoCh+8hO7
+         UTUaucOUhwjTvWpxhezi+x4agKcerorZDZ5pFKuMUZmk9jYL9oURCNjOvQzcBZpZiCa/
+         nDeSBEfZuujw3mebo3w5NOy+Pi1Wu5Pe230s1dJg4M/4tC2/3/Da/wMa4hwMKxger2ps
+         DQpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=myMJmmFzXabm0MK8zN+AefUrpxOTRg0KpTHnfY8SV+k=;
+        b=T8kF+eVqpKrXBULnkVHhHsdp2ERbfZCUbtKP66sZ1i/IZxSUzMunaDdrW6WOqByHD0
+         txSXDwxG/7DBlkgkCkIkeY+3rJnDHeuxDCywjCP7wSCasfvucwgr1nEl4ZA1j3FQoDtd
+         M0VOCCyHGNWx4qmJK9mxgpP9/p6v/KlRwXyTkf+6SjlikU9H3lq4ft2oYnokUQ85K5VL
+         Qzq573D1/yDOfUx/EnPRaAg/BVc3tfEq9s/WJG6SgGL6u2kh6oawHHc2x28Ub98ZqfdV
+         lUatm1j/q91pXD5rg0ZULnhXe16JvULeeXC2GJAdD/9wWCDOVZ4wN+CoeBU+kCJbj7Ex
+         EqnA==
+X-Gm-Message-State: AOAM530pSvqTEqGNb2YQ1i+swoyACifpJg4P5SOEbIEk4pCDCbUMfC93
+        s3G+Sd3Kr2RBduzKsrz40kD78Q==
+X-Google-Smtp-Source: ABdhPJyJm7edS3wk4FQaxMVtJqIYWKgMPmgVMD3GlzTqVk274oieHiuG28hXKbIevNFawdYIy0Kihw==
+X-Received: by 2002:a17:906:5d0d:b0:6f3:a870:ff2a with SMTP id g13-20020a1709065d0d00b006f3a870ff2amr3803917ejt.171.1650956895542;
+        Tue, 26 Apr 2022 00:08:15 -0700 (PDT)
+Received: from [192.168.0.244] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id p12-20020a50c94c000000b00425c48132bfsm5005280edh.55.2022.04.26.00.08.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Apr 2022 00:08:15 -0700 (PDT)
+Message-ID: <8579a3df-1a1d-c258-f65e-531cf0731949@linaro.org>
+Date:   Tue, 26 Apr 2022 09:08:14 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v10 00/12] Add soundcard support for sc7280 based
- platforms.
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v3 3/3] dt-bindings: clock: qcom,gcc-apq8064: split tsens
+ to the child node
 Content-Language: en-US
-To:     Matthias Kaehlcke <mka@chromium.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>
-References: <1650636521-18442-1-git-send-email-quic_srivasam@quicinc.com>
- <YmbotwGzLn/Z9Fq5@google.com>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <YmbotwGzLn/Z9Fq5@google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20220425212750.2749135-1-dmitry.baryshkov@linaro.org>
+ <20220425212750.2749135-4-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220425212750.2749135-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 25/04/2022 23:27, Dmitry Baryshkov wrote:
+> Split tsens properties to the child node of the gcc. This follows the
+> lead of ipq8064 (which also uses a separate node for tsens) and makes
+> device tree closer to other platforms, where tsens is a completely
+> separate device.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../bindings/clock/qcom,gcc-apq8064.yaml      | 45 +++++++------------
+>  1 file changed, 17 insertions(+), 28 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> index b867da12761e..f2762599f679 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> @@ -23,47 +23,36 @@ description: |
+>  
+>  properties:
+>    compatible:
+> -    enum:
+> -      - qcom,gcc-apq8064
+> -      - qcom,gcc-msm8060
 
-On 4/26/2022 12:00 AM, Matthias Kaehlcke wrote:
-> On Fri, Apr 22, 2022 at 07:38:29PM +0530, Srinivasa Rao Mandadapu wrote:
->> This patch set is to add bolero digital macros, WCD and maxim codecs nodes
->> for audio on sc7280 based platforms.
->>
->> This patch set depends on:
->>      -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=631506
-> There's a newer version (v10) [1]
->
-> which should be ready to land now that 'Add pin control support for lpass
-> sc7280' [2] has landed in Linus' pinctrl tree
-Yes. It's ready for landing. But will post the next version, as per new 
-herobrine dts files for rev5+ boards.
->
->>      -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=601249
-> These are flagged as 'Queued', so probably landing soon.
-Yes. They may land soon.
->
->>      -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=634203
-> There is a newer version [3] which seems ready to land.
-Yes. It's reviewed.
->
->>      -- Clock reset control patches
-> What is this? I don't think I have seen an upstream version of this.
-> Please provide a link, or if it hasn't be posted upstream yet make sure
-> it is done ASAP.
-These patches are yet to upstream by Clock team. Requested them to do ASAP.
->
-> [1]https://patchwork.kernel.org/project/linux-arm-msm/list/?series=632316
-> [2] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=633019&state=*
-> [3] https://patchwork.kernel.org/project/linux-arm-msm/patch/1650621734-10297-1-git-send-email-quic_srivasam@quicinc.com/
+Hm, such list does not exist in mainline, so is your set rebased on
+something? See also:
+https://lore.kernel.org/linux-devicetree/20220425133527.3723233-1-robh@kernel.org/
+https://lore.kernel.org/linux-devicetree/20220426064241.6379-1-krzysztof.kozlowski@linaro.org/
+
+
+> -
+> -  nvmem-cells:
+> -    minItems: 1
+> -    maxItems: 2
+> -    description:
+> -      Qualcomm TSENS (thermal sensor device) on some devices can
+> -      be part of GCC and hence the TSENS properties can also be part
+> -      of the GCC/clock-controller node.
+> -      For more details on the TSENS properties please refer
+> -      Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> -
+> -  nvmem-cell-names:
+> -    minItems: 1
+>      items:
+> -      - const: calib
+> -      - const: calib_backup
+
+I see the removal of tsens properties, but I do not see the other part
+of split - adding them as child. It does not come from qcom,gcc.yaml,
+either.
+
+> -
+> -  '#thermal-sensor-cells':
+> -    const: 1
+> +      - enum:
+> +          - qcom,gcc-apq8064
+> +          - qcom,gcc-msm8060
+> +      - const: syscon
+>  
+>  required:
+>    - compatible
+> -  - nvmem-cells
+> -  - nvmem-cell-names
+> -  - '#thermal-sensor-cells'
+>  
+>  unevaluatedProperties: false
+>  
+>  examples:
+>    - |
+>      clock-controller@900000 {
+> -      compatible = "qcom,gcc-apq8064";
+> +      compatible = "qcom,gcc-apq8064", "syscon";
+>        reg = <0x00900000 0x4000>;
+> -      nvmem-cells = <&tsens_calib>, <&tsens_backup>;
+> -      nvmem-cell-names = "calib", "calib_backup";
+>        #clock-cells = <1>;
+>        #reset-cells = <1>;
+>        #power-domain-cells = <1>;
+> -      #thermal-sensor-cells = <1>;
+> +
+> +      thermal-sensor {
+> +        compatible = "qcom,msm8960-tsens";
+> +
+> +        nvmem-cells = <&tsens_calib>, <&tsens_backup>;
+> +        nvmem-cell-names = "calib", "calib_backup";
+> +        interrupts = <0 178 4>;
+
+0 and 4 look like GIC/interrupt flags, so please use defines.
+
+> +        interrupt-names = "uplow";
+> +
+> +        #qcom,sensors = <11>;
+> +        #thermal-sensor-cells = <1>;
+> +        };
+
+Indentation looks weird here.
+
+>      };
+>  ...
+
+
+Best regards,
+Krzysztof
