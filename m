@@ -2,112 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FED55106AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 20:20:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9FC05106C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 20:24:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347064AbiDZSX1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 14:23:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42740 "EHLO
+        id S1348265AbiDZS1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 14:27:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350350AbiDZSXX (ORCPT
+        with ESMTP id S235205AbiDZS1W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 14:23:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79F9ABC8C;
-        Tue, 26 Apr 2022 11:20:13 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9F4AB6187F;
-        Tue, 26 Apr 2022 18:20:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 09B6DC385A0;
-        Tue, 26 Apr 2022 18:20:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650997212;
-        bh=pUAAbRv5wP4gWM5AuRMqHaGND3XB7Ugb5gqYlrWTp/I=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=BqU+6eblqStF3Yz7DhWeuRwbOuljqcOq9vC8dFfhpJm8ypOFiS9nbJdv/yxDIu1mz
-         LYazen/u/v2XeX6GTxUfklH+uJ6nQIIl7gqC0EIotVTXFw+L88J1W2lmnQ9kejIJi0
-         q7ZQ401HJZH939rkNmTqxLB46zyqNsgiPFKn546mF1Idl5P4ji4C6rE85UgEXDwraI
-         e8RJs9oBdexeRiBypUAAfgEhMS+BMzWkmBThzdzzXLV1zhVVI3z4x2ZZNm0NpdojP3
-         y9utFypzh/Ikwy5wrpvKUvE/AbhWCUuc2wUKLuYEXFKjwm3sQSGYffFd4dmvFL0Dj7
-         xEFlO4negZr2A==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id DD0B2F67CA0;
-        Tue, 26 Apr 2022 18:20:11 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Tue, 26 Apr 2022 14:27:22 -0400
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53B661524B7;
+        Tue, 26 Apr 2022 11:24:14 -0700 (PDT)
+Received: by mail-oi1-f170.google.com with SMTP id l203so10764556oif.0;
+        Tue, 26 Apr 2022 11:24:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=eYGpzVL6z/9v1Xf7+HUnb3XtEpbv7g1nd4l3yujJBqU=;
+        b=g0mQlxclTxCDLMthMXeZxF5RI6PEX2kV3FVg8Oq2chf7qqniHPcRxzNo7VGLRp13/x
+         UQd2tLiBscbDFvpTU7OEaM/CWo0tzVfVixSGmW7s4409hLzUKS+GZ53d/kS56SLoYUF1
+         Jqjrzy2AimgDIBe28bshQQIaRShsnLB1jroVd2D3bJh3TmdKPO9fXCoTaLFv1DPVoKQL
+         ruYOnTo4Iu6W2Iva0pG3rF3UIo1xjFDy0yEhzolZZ/JqIj9FPUz2alOjDhx2bbdeiuZT
+         L/xfZv+HOtD5VxwVnCAQFPNzXGE9yD/9Qxa2hQMZeayLefU26dULjwjJkN8eqHdChlWg
+         XmFg==
+X-Gm-Message-State: AOAM5307WoZD0NL/zX7NI5lbs3ZfSgIZIbPqrW+n7k0+ZsGSDHKNWuRk
+        ZY+GKhiSR4hxceumwpjl8u4kD3gPbQ==
+X-Google-Smtp-Source: ABdhPJwqJ/M/GPcWpn4KFmsYPNq6cn7iuEhMpX3WrbveRkvKdJR+4UP5ufGYG8dqHTiVlMa8p7jzuw==
+X-Received: by 2002:a05:6808:8da:b0:324:be6a:e866 with SMTP id k26-20020a05680808da00b00324be6ae866mr9705228oij.72.1650997453643;
+        Tue, 26 Apr 2022 11:24:13 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id l16-20020a9d6a90000000b0060548d240d4sm5160969otq.74.2022.04.26.11.24.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Apr 2022 11:24:13 -0700 (PDT)
+Received: (nullmailer pid 2302730 invoked by uid 1000);
+        Tue, 26 Apr 2022 18:24:12 -0000
+Date:   Tue, 26 Apr 2022 13:24:12 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org, quic_tdas@quicinc.com
+Subject: Re: [PATCH v4 3/3] dt-bindings: clock: qcom,gcc-apq8064: split tsens
+ to the child node
+Message-ID: <Ymg4zFsQB2MAQ/T5@robh.at.kernel.org>
+References: <20220426094144.2958416-1-dmitry.baryshkov@linaro.org>
+ <20220426094144.2958416-4-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3] Bluetooth: btusb: add support for Qualcomm WCN785x
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <165099721190.28515.14695801626807676486.git-patchwork-notify@kernel.org>
-Date:   Tue, 26 Apr 2022 18:20:11 +0000
-References: <1650898889-12470-1-git-send-email-quic_zijuhu@quicinc.com>
-In-Reply-To: <1650898889-12470-1-git-send-email-quic_zijuhu@quicinc.com>
-To:     quic_zijuhu <quic_zijuhu@quicinc.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220426094144.2958416-4-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
-
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Marcel Holtmann <marcel@holtmann.org>:
-
-On Mon, 25 Apr 2022 23:01:29 +0800 you wrote:
-> Qualcomm WCN785x has PID/VID 0cf3/e700 as shown by
-> /sys/kernel/debug/usb/devices:
+On Tue, Apr 26, 2022 at 12:41:44PM +0300, Dmitry Baryshkov wrote:
+> Split tsens properties to the child node of the gcc. This follows the
+> lead of ipq8064 (which also uses a separate node for tsens) and makes
+> device tree closer to other platforms, where tsens is a completely
+> separate device.
 > 
-> T:  Bus=02 Lev=02 Prnt=02 Port=01 Cnt=02 Dev#=  8 Spd=12   MxCh= 0
-> D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-> P:  Vendor=0cf3 ProdID=e700 Rev= 0.01
-> C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
-> I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-> E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-> E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-> I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-> I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-> I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-> I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-> I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-> I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-> I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../bindings/clock/qcom,gcc-apq8064.yaml      | 45 +++++++------------
+>  1 file changed, 17 insertions(+), 28 deletions(-)
 > 
-> [...]
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> index b867da12761e..f2762599f679 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> @@ -23,47 +23,36 @@ description: |
+>  
+>  properties:
+>    compatible:
+> -    enum:
+> -      - qcom,gcc-apq8064
+> -      - qcom,gcc-msm8060
+> -
+> -  nvmem-cells:
+> -    minItems: 1
+> -    maxItems: 2
+> -    description:
+> -      Qualcomm TSENS (thermal sensor device) on some devices can
+> -      be part of GCC and hence the TSENS properties can also be part
+> -      of the GCC/clock-controller node.
+> -      For more details on the TSENS properties please refer
+> -      Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> -
+> -  nvmem-cell-names:
+> -    minItems: 1
+>      items:
+> -      - const: calib
+> -      - const: calib_backup
+> -
+> -  '#thermal-sensor-cells':
+> -    const: 1
+> +      - enum:
+> +          - qcom,gcc-apq8064
+> +          - qcom,gcc-msm8060
+> +      - const: syscon
+>  
+>  required:
+>    - compatible
+> -  - nvmem-cells
+> -  - nvmem-cell-names
+> -  - '#thermal-sensor-cells'
+>  
+>  unevaluatedProperties: false
+>  
+>  examples:
+>    - |
+>      clock-controller@900000 {
+> -      compatible = "qcom,gcc-apq8064";
+> +      compatible = "qcom,gcc-apq8064", "syscon";
+>        reg = <0x00900000 0x4000>;
+> -      nvmem-cells = <&tsens_calib>, <&tsens_backup>;
+> -      nvmem-cell-names = "calib", "calib_backup";
+>        #clock-cells = <1>;
+>        #reset-cells = <1>;
+>        #power-domain-cells = <1>;
+> -      #thermal-sensor-cells = <1>;
+> +
+> +      thermal-sensor {
 
-Here is the summary with links:
-  - [v3] Bluetooth: btusb: add support for Qualcomm WCN785x
-    https://git.kernel.org/bluetooth/bluetooth-next/c/d42038f8db90
+This should throw a warning I think as 'thermal-sensor' needs to be 
+defined. The patch didn't apply for me though.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+> +        compatible = "qcom,msm8960-tsens";
+> +
+> +        nvmem-cells = <&tsens_calib>, <&tsens_backup>;
+> +        nvmem-cell-names = "calib", "calib_backup";
+> +        interrupts = <0 178 4>;
+> +        interrupt-names = "uplow";
+> +
+> +        #qcom,sensors = <11>;
+> +        #thermal-sensor-cells = <1>;
+> +        };
+>      };
+>  ...
+> -- 
+> 2.35.1
+> 
+> 
