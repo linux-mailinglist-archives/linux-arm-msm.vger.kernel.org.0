@@ -2,69 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3828950F135
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 08:39:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EBA750F13D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 08:40:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231748AbiDZGmF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 02:42:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44942 "EHLO
+        id S245422AbiDZGnX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 02:43:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245365AbiDZGmB (ORCPT
+        with ESMTP id S245365AbiDZGnU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 02:42:01 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E97021B784
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 23:38:53 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id r9so402232pjo.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 23:38:53 -0700 (PDT)
+        Tue, 26 Apr 2022 02:43:20 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5ADC632A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 23:40:12 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id bv19so34008762ejb.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 23:40:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6pV6AUjp2V1UC4cOoLtl5XlEXuEwCEfH5h8T/x9bk1s=;
-        b=Hmq+v0Iu9XUEYI+1g/J9Ol51Ng1sNDpr9SRXE0a6waomwbD4nITRtU1TL2MQeNMjBR
-         uCPbmlFUp8wLu327lk1gbpkTH5/aBUUMRSIWRYfgbmFwhdMBYP/kxqBRsYdJmgfWqcaP
-         FeH38Tfr10wIkoay+CkyGAHTGYyTEykVIUf+pmAn36fed5XzOD/nWBN4EQOilIQl6ClE
-         MbIeVR7Lz6VvVwzRNX5d5KdS7xWchAx2kOVATgQTkGDlehTPiNoDx3YaFWlcfdSUCTZu
-         qQ9YxtvkOKA2CNcvuARwJ8VZp5ljq+XililkDbnPHrCCZhZ35q2sszDuNULxC5aHF7f1
-         1t7A==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=YQBirjcHw1XssjMgenO6HRfRZsWWatGT2BxMsOHFYCE=;
+        b=IBjeDJUQPPgNrNiqtJATmu07ecSQmbmK+jJQ9Qkqm68KYBT2mZNkWUVJVPy5PP28iC
+         ZZ5YiSPdZxmlFb9F21Hv6A+edHNDWn1wc2SnbnTRFUMJQVRVZYnI6etGe9iHNhOZg5fG
+         RMKKEG/rXDg2iKI6iDxzFMiZH+w+BxAN7X+a15HLRXcrIZBPXGDDzgfbFlnhh5Mo+Xwc
+         5QLsw9I2ampq1hTraxXnKTLSoGq6LkPZCV7WBSQhuah3W2lWXHHgu1iftsIPNLV/YbGG
+         MGepN8bjr7Iauo5KoUBkHqk4ReN7oFG+cfLmxYq0peiDALMtxKCbbfG3TQ89HGsNxOcy
+         k0qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6pV6AUjp2V1UC4cOoLtl5XlEXuEwCEfH5h8T/x9bk1s=;
-        b=H0//5fHrdxzHDrjdoqibAuXKUmEM5UURwduuNLkT89JGk7K7f86Ik17mf2djelFpYd
-         QBCXvtV0IfoRTlfO8POSqP2Ddf+d1VRlESEpTCzE+O7OW+6bBYPsJcVe8eWdy+YH2xrw
-         dtJW0hw2D+K/UIN8XUhPcaGJHuTK/0wRV1KCNy1J/XzmZ6FZTTR6GDqLeYNfeoYLcvo4
-         h7m2LWu3BxMy9jJJET0vKhPHdgwRliV+hK2KI5ac9ioes/Z6QDYQ2eE5aFAyShq3ntK5
-         12QZ23DtTjLeOKSu++QPdMBcEUazFJZ6tsMijVjvA7bM7eyfCxpfeUZhtlTGrAMyuWLG
-         ksVQ==
-X-Gm-Message-State: AOAM530WrjXuCC1tb+e67z5vf3RbxYtmASkwyqnrsXe6arCsb8q2vwS1
-        QPODv6tceenfPWXO4gy91nb6AA==
-X-Google-Smtp-Source: ABdhPJzrYFXkv18FmVHTmLX062X8RhEqAtjZP26tpHCie3BswX1/uq501vZuyAz3S/LIowMNf08Raw==
-X-Received: by 2002:a17:90b:605:b0:1d9:b208:7507 with SMTP id gb5-20020a17090b060500b001d9b2087507mr1431242pjb.125.1650955133468;
-        Mon, 25 Apr 2022 23:38:53 -0700 (PDT)
-Received: from localhost ([122.177.141.190])
-        by smtp.gmail.com with ESMTPSA id d16-20020a056a00245000b004f771b48736sm14770838pfj.194.2022.04.25.23.38.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Apr 2022 23:38:52 -0700 (PDT)
-Date:   Tue, 26 Apr 2022 12:08:51 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH v3] cpufreq: qcom-cpufreq-hw: Clear dcvs interrupts
-Message-ID: <20220426063851.u65lyudtatnaribr@vireshk-i7>
-References: <20220407200919.3054189-1-vladimir.zapolskiy@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=YQBirjcHw1XssjMgenO6HRfRZsWWatGT2BxMsOHFYCE=;
+        b=xxCfL0fSGyPp9p8178T9QDHqUMqi9Spg5Thw1wUkR0PmYr/eJ9hA2PSUv1lwI3UAcF
+         sDnA1CafagEWixRjmXiHGAbd8eG+PgqDRrKu4hJJ99ZNVx/q9vC66lFmfqfGJ/Z2CJDn
+         IKS/KByHTMwrD6DFqofrzexb+Vx5O4y4YSERSDtkxBqosqov+/9CgYl4ut5pE5WK7yuX
+         eoRm4rTzS2nY39o4Pg/nZch+TluN2YdTwz/g3PPwIE4xe3QH7Q/WqtLBCGutJ99nrD1K
+         oOO4hazwWd7ViinZ9AumjmEl05Pch4UJi/LLM3I9h8yGRCAQ4e+JpfTBxQwpF62I8sFO
+         rsiQ==
+X-Gm-Message-State: AOAM532zjRtV6KxrKokj2k4hPXUzFnWPyo0om66B6Ovs1zXuOjLM9cB4
+        sQmvPheTGDwWY884TRae7YFVmQ==
+X-Google-Smtp-Source: ABdhPJxZhXFQhcEzCB8B5dlgOiWdecKG+rf6v1oIMQ4/m9NvZbzVShnAUy6VkZ6totD6LEgaHzmIYQ==
+X-Received: by 2002:a17:907:8a0d:b0:6f3:a595:6136 with SMTP id sc13-20020a1709078a0d00b006f3a5956136mr4544804ejc.54.1650955211482;
+        Mon, 25 Apr 2022 23:40:11 -0700 (PDT)
+Received: from [192.168.0.244] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id r13-20020a508d8d000000b00425d3555fc6sm4309024edh.30.2022.04.25.23.40.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Apr 2022 23:40:11 -0700 (PDT)
+Message-ID: <8498c0b4-ed1f-b4a0-d53c-a7addf75ea66@linaro.org>
+Date:   Tue, 26 Apr 2022 08:40:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220407200919.3054189-1-vladimir.zapolskiy@linaro.org>
-User-Agent: NeoMutt/20180716-391-311a52
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] dt-bindings: clock: qcom,gcc-apq8064: Fix typo in
+ compatible and split apq8084
+Content-Language: en-US
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Rob Herring <robh@kernel.org>
+References: <20220425204001.710238-1-krzysztof.kozlowski@linaro.org>
+ <20220425224000.CB7F3C385A4@smtp.kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220425224000.CB7F3C385A4@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,16 +83,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07-04-22, 23:09, Vladimir Zapolskiy wrote:
-> It's noted that dcvs interrupts are not self-clearing, thus an interrupt
-> handler runs constantly, which leads to a severe regression in runtime.
-> To fix the problem an explicit write to clear interrupt register is
-> required, note that on OSM platforms the register may not be present.
+On 26/04/2022 00:39, Stephen Boyd wrote:
+> Quoting Krzysztof Kozlowski (2022-04-25 13:40:01)
+>> The qcom,gcc-apq8064.yaml was meant to describe only APQ8064 and APQ8084
+>> should have slightly different bindings (without Qualcomm thermal sensor
+>> device).
+>>
+>> Fixes: a469bf89a009 ("dt-bindings: clock: simplify qcom,gcc-apq8064 Documentation")
+>> Reported-by: Rob Herring <robh@kernel.org>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../bindings/clock/qcom,gcc-apq8064.yaml      |  4 +-
+>>  .../bindings/clock/qcom,gcc-apq8084.yaml      | 42 +++++++++++++++++++
+>>  2 files changed, 43 insertions(+), 3 deletions(-)
+>>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-apq8084.yaml
 > 
-> Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> If it's generated with 'format-patch -C -M' does it detect the copy?
 
-Applied. Thanks.
+Nope, and I think these are default. The files are not that similar,
+because while copying I cleaned it up.
 
--- 
-viresh
+format-patch -C20% -M20% also does not detect it. Only `git format-patch
+-1 -C20% -M20% --find-copies-harder` detects a copy. I will use it, but
+you won't see nice copy-patch.
+
+> 
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8084.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8084.yaml
+>> new file mode 100644
+>> index 000000000000..63d08e82b3d8
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8084.yaml
+>> @@ -0,0 +1,42 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/clock/qcom,gcc-apq8084.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Global Clock & Reset Controller Binding for APQ8084
+>> +
+>> +maintainers:
+>> +  - Stephen Boyd <sboyd@kernel.org>
+>> +  - Taniya Das <tdas@codeaurora.org>
+> 
+> Please fix Taniya's email quic_tdas@quicinc.com
+
+I wished Codeaurora/QUIC folks updated their emails all over the tree
+because otherwise it looks like they do not want or cannot maintain
+these files.
+
+Best regards,
+Krzysztof
