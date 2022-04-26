@@ -2,68 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D322510A56
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 22:22:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D5D6510A67
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 22:26:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354683AbiDZUZA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 16:25:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52974 "EHLO
+        id S1354798AbiDZU3j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 16:29:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355048AbiDZUY7 (ORCPT
+        with ESMTP id S1354796AbiDZU3i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 16:24:59 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5412A26577
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 13:21:50 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id k4so19686966plk.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 13:21:50 -0700 (PDT)
+        Tue, 26 Apr 2022 16:29:38 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB16456223
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 13:26:27 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id k23so38400954ejd.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 13:26:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=2PC82LstV6tocxMGUgC+f9s/KheVTFFbt3d61yAZ2go=;
-        b=kTSO+u0oPyCgqiOMOit0gAUCMZRNZxANk+X/wb8YJ7K82r0PKU60PVtTM8yJOlTVI2
-         tQA12jy2wCF8duMMzy++AdPcptLc7XN5vhaE+zINVCTQzuObUq8Wn6KcAXnaYuxvXlUF
-         F9idAg4n+2jPJzP/RL1PE2pxV3+gzUC68C5PI=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2511p8lKZKcGvrdWMgX+EBPJEHzSt9seRbYqac/RtCc=;
+        b=hGaC+IKpJb4ZV+/ENuOXAUoomcMvR+upCE8ArlkpYy2b8mRmHTEsubcOgafG49YseP
+         HkjfuuPrbfj0jJLzu8eNAa2qEfgNSd2/LiT0jOpAksb761IuBP5LFzmucDc7WpKcv2oz
+         mU2cNpQEwya2VI/kRxFNNe1GpUFz8nIO94XqU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=2PC82LstV6tocxMGUgC+f9s/KheVTFFbt3d61yAZ2go=;
-        b=zkIlhUrxAruEOR0j5iFzrAndcosd7TewtHYFgh8d5bJgF1DnDcVf2LSpzYCFCDAFib
-         rULXT513rnKRK5T+gcVWN9kBOknHfM1+Kqcs6ulpzxkRyRidpg8aWITFjooFt6kgegMc
-         sni0m+LsPOTYXMYvrV0p9B5AkKkayV0asYff+JwQ4vIXmoRReXgE6FXme8y/WCyXfyjl
-         5mbrHTz0j4ymfYFLFhUOXAlzHjI6x2fJIYMeLMK28X964kI7UyPSswhHzTT1mUxVqsXB
-         tzBs6BY+GGLH3O8da3dlCX1Nnmry0ulPgKU0vsZIYByZ0FrzEqHUDugV7wGZzMcI4ReY
-         1gaQ==
-X-Gm-Message-State: AOAM530Dn3H12GPiVThELDl1EnCwkyDXoosflfnoAUmSpRVJTr9+F+0N
-        FB+pkyBLXIwHpj3P8R+0MYW7Pw==
-X-Google-Smtp-Source: ABdhPJzNq1iE5QQhWz5FHSE6fbIuvdm3ZiwM9Z8WYDwJn0e17SMpLk/f5RFeGQ7Yc2aCs/MGDJFQ/Q==
-X-Received: by 2002:a17:902:dac1:b0:15d:356:887c with SMTP id q1-20020a170902dac100b0015d0356887cmr14441943plx.78.1651004509863;
-        Tue, 26 Apr 2022 13:21:49 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:8e92:9f42:eda6:c0ee])
-        by smtp.gmail.com with ESMTPSA id h195-20020a6283cc000000b0050d2c0729b0sm11285215pfe.18.2022.04.26.13.21.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 13:21:49 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     dri-devel@lists.freedesktop.org
-Cc:     robdclark@gmail.com, linux-arm-msm@vger.kernel.org,
-        quic_abhinavk@quicinc.com, quic_khsieh@quicinc.com,
-        quic_aravindh@quicinc.com, swboyd@chromium.org,
-        dmitry.baryshkov@linaro.org, quic_sbillaka@quicinc.com,
-        Douglas Anderson <dianders@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        linux-kernel@vger.kernel.org
-Subject: [RFC PATCH] drm/edid: drm_add_modes_noedid() should set lowest resolution as preferred
-Date:   Tue, 26 Apr 2022 13:21:26 -0700
-Message-Id: <20220426132121.RFC.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
-X-Mailer: git-send-email 2.36.0.rc2.479.g8af0fa9b8e-goog
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2511p8lKZKcGvrdWMgX+EBPJEHzSt9seRbYqac/RtCc=;
+        b=Cdt3lEdwIyVMXq4aLxFBzSLFo+BiLODH4pQtvz6EdVMTy+ThLDDzOvFIct3++w7itv
+         JynQPWaPDLk/6TvNLVIqtfwDjj5x3abZkJe9RM4U5IOPubov5fm/awLWNhrgEwkGYoSY
+         3LP9D9lwiSFfdT5jEPPJ3xsLCF3xNG4B4LMSNvxZnfq7AKWiLkbOtT1567mnM39JjEu9
+         oscfZ1a/S8w00zUp2WmkR4zEFr7fXCINh5dhsm6foTR2oBMV9fo1UcyHcp/lKYgP1RfL
+         ibMzwbf4GBn2WOvWnBDmVP/XxHzVhoY3fAb76IyHq8Vg4zi1JexLRMWspWcvmyVWg/Jv
+         9YtQ==
+X-Gm-Message-State: AOAM533dt/CbEwcIxSeecp0YnMVwMyMJJh9QHHa4pwgRWcraZiYPvt/A
+        DKS2YIMcHIXoxf2jsXmh4qBBPqYw0bPFgP6U2Qk=
+X-Google-Smtp-Source: ABdhPJwQbl54hFGXtfyDDIWHhKs2Z3AkhqM4mqynyfCSvTv6L7kpWOIU81xriLXgb63vxGfa+9vvpA==
+X-Received: by 2002:a17:907:3e94:b0:6ef:f135:4b with SMTP id hs20-20020a1709073e9400b006eff135004bmr22051639ejc.609.1651004786094;
+        Tue, 26 Apr 2022 13:26:26 -0700 (PDT)
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com. [209.85.221.51])
+        by smtp.gmail.com with ESMTPSA id s5-20020a508dc5000000b004241a4abbdfsm6995651edh.45.2022.04.26.13.26.23
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Apr 2022 13:26:24 -0700 (PDT)
+Received: by mail-wr1-f51.google.com with SMTP id x18so27072986wrc.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 13:26:23 -0700 (PDT)
+X-Received: by 2002:a05:6000:c7:b0:20a:d8c1:d044 with SMTP id
+ q7-20020a05600000c700b0020ad8c1d044mr11038520wrx.422.1651004783068; Tue, 26
+ Apr 2022 13:26:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220426114627.1.I2dd93486c6952bd52f2020904de0133970d11b29@changeid>
+ <20220426114627.2.I4ac7f55aa446699f8c200a23c10463256f6f439f@changeid>
+ <fa49384c-76a5-6686-7d4d-cf11f3e98c75@quicinc.com> <517f71e4-785f-ef6f-d30e-fb18974eed57@quicinc.com>
+In-Reply-To: <517f71e4-785f-ef6f-d30e-fb18974eed57@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 26 Apr 2022 13:26:10 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Xn_uTOxvwTZsKnQN4651T1OuZNd-EQG0WqvDsFPz+4hQ@mail.gmail.com>
+Message-ID: <CAD=FV=Xn_uTOxvwTZsKnQN4651T1OuZNd-EQG0WqvDsFPz+4hQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] drm/probe-helper: For DP, add 640x480 if all other
+ modes are bad
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -73,41 +83,158 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If we're unable to read the EDID for a display because it's corrupt /
-bogus / invalid then we'll add a set of standard modes for the
-display. When userspace looks at these modes it doesn't really have a
-good concept for which mode to pick and it'll likely pick the highest
-resolution one by default. That's probably not ideal because the modes
-were purely guesses on the part of the Linux kernel.
+Hi,
 
-Let's instead set 640x480 as the "preferred" mode when we have no EDID.
+On Tue, Apr 26, 2022 at 12:20 PM Abhinav Kumar
+<quic_abhinavk@quicinc.com> wrote:
+>
+> Missed one more comment.
+>
+> On 4/26/2022 12:16 PM, Abhinav Kumar wrote:
+> > Hi Doug
+> >
+> > One minor comment below.
+> >
+> > But otherwise, looking at this change this should work for us acc to me.
+> >
+> > We will test this out with our equipment and then provide R-b.
+> >
+> > Thanks
+> >
+> > Abhinav
+> > On 4/26/2022 11:46 AM, Douglas Anderson wrote:
+> >> As per Displayport spec section 5.2.1.2 ("Video Timing Format") says
+> >> that all detachable sinks shall support 640x480 @60Hz as a fail safe
+> >> mode.
+> >>
+> >> A DP compliance test expected us to utilize the above fact when all
+> >> modes it presented to the DP source were not achievable. It presented
+> >> only modes that would be achievable with more lanes and/or higher
+> >> speeds than we had available and expected that when we couldn't do
+> >> that then we'd fall back to 640x480 even though it didn't advertise
+> >> this size.
+> >>
+> >> In order to pass the compliance test (and also support any users who
+> >> might fall into a similar situation with their display), we need to
+> >> add 640x480 into the list of modes. However, we don't want to add
+> >> 640x480 all the time. Despite the fact that the DP spec says all sinks
+> >> _shall support_ 640x480, they're not guaranteed to support it
+> >> _well_. Continuing to read the spec you can see that the display is
+> >> not required to really treat 640x480 equal to all the other modes. It
+> >> doesn't need to scale or anything--just display the pixels somehow for
+> >> failsafe purposes. It should also be noted that it's not hard to find
+> >> a display hooked up via DisplayPort that _doesn't_ support 640x480 at
+> >> all. The HP ZR30w screen I'm sitting in front of has a native DP port
+> >> and doesn't work at 640x480. I also plugged in a tiny 800x480 HDMI
+> >> display via a DP to HDMI adapter and that screen definitely doesn't
+> >> support 640x480.
+> >>
+> >> As a compromise solution, let's only add the 640x480 mode if:
+> >> * We're on DP.
+> >> * All other modes have been pruned.
+> >>
+> >> This acknowledges that 640x480 might not be the best mode to use but,
+> >> since sinks are _supposed_ to support it, we will at least fall back
+> >> to it if there's nothing else.
+> >>
+> >> Note that we _don't_ add higher resolution modes like 1024x768 in this
+> >> case. We only add those modes for a failed EDID read where we have no
+> >> idea what's going on. In the case where we've pruned all modes then
+> >> instead we only want 640x480 which is the only defined "Fail Safe"
+> >> resolution.
+> >>
+> >> This patch originated in response to Kuogee Hsieh's patch [1].
+> >>
+> >> [1]
+> >> https://lore.kernel.org/r/1650671124-14030-1-git-send-email-quic_khsieh@quicinc.com
+> >>
+> >>
+> >> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> >> ---
+> >>
+> >>   drivers/gpu/drm/drm_probe_helper.c | 26 +++++++++++++++++++++-----
+> >>   1 file changed, 21 insertions(+), 5 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/drm_probe_helper.c
+> >> b/drivers/gpu/drm/drm_probe_helper.c
+> >> index 819225629010..90cd46cbfec1 100644
+> >> --- a/drivers/gpu/drm/drm_probe_helper.c
+> >> +++ b/drivers/gpu/drm/drm_probe_helper.c
+> >> @@ -476,7 +476,6 @@ int drm_helper_probe_single_connector_modes(struct
+> >> drm_connector *connector,
+> >>       const struct drm_connector_helper_funcs *connector_funcs =
+> >>           connector->helper_private;
+> >>       int count = 0, ret;
+> >> -    bool verbose_prune = true;
+> >>       enum drm_connector_status old_status;
+> >>       struct drm_modeset_acquire_ctx ctx;
+> >> @@ -556,8 +555,8 @@ int drm_helper_probe_single_connector_modes(struct
+> >> drm_connector *connector,
+> >>           DRM_DEBUG_KMS("[CONNECTOR:%d:%s] disconnected\n",
+> >>               connector->base.id, connector->name);
+> >>           drm_connector_update_edid_property(connector, NULL);
+> >> -        verbose_prune = false;
+> >> -        goto prune;
+> >> +        drm_mode_prune_invalid(dev, &connector->modes, false);
+> >> +        goto exit;
+> >>       }
+> >>       count = (*connector_funcs->get_modes)(connector);
+> >> @@ -580,9 +579,26 @@ int
+> >> drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+> >>           }
+> >>       }
+> >> -prune:
+> >> -    drm_mode_prune_invalid(dev, &connector->modes, verbose_prune);
+> >> +    drm_mode_prune_invalid(dev, &connector->modes, true);
+> >> +    /*
+> >> +     * Displayport spec section 5.2.1.2 ("Video Timing Format") says
+> >> that
+> >> +     * all detachable sinks shall support 640x480 @60Hz as a fail safe
+> >> +     * mode. If all modes were pruned, perhaps because they need more
+> >> +     * lanes or a higher pixel clock than available, at least try to add
+> >> +     * in 640x480.
+> >> +     */
+> >> +    if (list_empty(&connector->modes) &&
+> >> +        connector->connector_type == DRM_MODE_CONNECTOR_DisplayPort) {
+> >> +        count = drm_add_modes_noedid(connector, 640, 480);
+> >> +        if (_drm_helper_update_and_validate(connector, maxX, maxY,
+> >> &ctx)) {
+> >> +            drm_modeset_backoff(&ctx);
+> >> +            goto retry;
+> >
+> > Do we need another retry here? This will again repeat everything from
+> > get_modes().
+> > The fact that we are hitting this code is because we have already tried
+> > that and this is already a second-pass. So I think another retry isnt
+> > needed?
+>
+> This will help cover the case of 4.2.2.6 but not fix 4.2.2.1.
+>
+> For 4.2.2.1, we will have 0 modes and so the original DRM fwk code of
+> adding all modes <= 1024x768 will kick in.
+>
+> Now, in that list, we will still need to pick/mark 640x480 as the
+> preferred mode.
+>
+> We still need IGT for that.
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+Are you sure you don't have those backwards? It seems like 4.2.2.6 is
+the test case dealing with corrupt EDID and that's the one that will
+still be broken, no? ...and corrupt EDID is still the case where we
+have 0 modes.
 
- drivers/gpu/drm/drm_edid.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+In any case, let's see what people think about:
 
-diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-index 7a8482b75071..64ccfff4167e 100644
---- a/drivers/gpu/drm/drm_edid.c
-+++ b/drivers/gpu/drm/drm_edid.c
-@@ -5839,6 +5839,15 @@ int drm_add_modes_noedid(struct drm_connector *connector,
- 			continue;
- 		mode = drm_mode_duplicate(dev, ptr);
- 		if (mode) {
-+			/*
-+			 * The drm_dmt_modes array is sorted so that lower
-+			 * resolutions come first. We'll set the lowest
-+			 * resolution mode as preferred. We have no EDID so
-+			 * we should prefer the lowest resolution mode as
-+			 * the safest one.
-+			 */
-+			if (num_modes == 0)
-+				mode->type |= DRM_MODE_TYPE_PREFERRED;
- 			drm_mode_probed_add(connector, mode);
- 			num_modes++;
- 		}
--- 
-2.36.0.rc2.479.g8af0fa9b8e-goog
+https://lore.kernel.org/r/20220426132121.RFC.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid
 
+I've marked that one as RFC just because it seems like a bigger change
+to existing behavior, though it still seems correct to me.
+
+NOTE: reading 4.2.2.6 more closely, it actually looks as if we're
+actually supposed to be able to try various video modes one at a time
+until we find one that works (or land on 640x480). Seems as if we're
+supposed to be able to try the higher resolutions one at a time and we
+can tell whether the sink "accepted" it by seeing if SINK_STATUS goes
+to 1? I have no idea how that works with all the Linux APIs, though.
+
+-Doug
