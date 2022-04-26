@@ -2,69 +2,298 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10FA950FBDB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 13:19:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D578250FC3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 13:49:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240604AbiDZLWt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 07:22:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54568 "EHLO
+        id S1349667AbiDZLwt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 07:52:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235688AbiDZLWt (ORCPT
+        with ESMTP id S236247AbiDZLwt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 07:22:49 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60E69F3AF;
-        Tue, 26 Apr 2022 04:19:41 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Tue, 26 Apr 2022 07:52:49 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1C8B3C4B8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 04:49:39 -0700 (PDT)
+Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6E766617CE;
-        Tue, 26 Apr 2022 11:19:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AFBC385A0;
-        Tue, 26 Apr 2022 11:19:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1650971980;
-        bh=3G+BWF2uOD2Q6bXIupAqKAltjzdSI3qx1aK7Z08dEOI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bT8lLhpLA/9KOVS3YuXUWTL27Yp+cxKk6V4wVppDcmbu3k9KVYDXJJktOqQnn0GfB
-         Y4Pohr9g7qZTd3F5peLXGTDyhnBDd5OoBE+DRZDDvRN8paaT3rx0112GIS4NFelchs
-         VRROoDuHTGR2EwVnrokRmX+IbeGcesDBwZH3KzuU=
-Date:   Tue, 26 Apr 2022 13:19:37 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        elder@linaro.org, mhi@lists.linux.dev, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
-        bjorn.andersson@linaro.org, dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH 00/18] Add initial support for MHI endpoint stack
-Message-ID: <YmfVSe1JHbXTtZLG@kroah.com>
-References: <20220405135754.6622-1-manivannan.sadhasivam@linaro.org>
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 66FBB3F67B;
+        Tue, 26 Apr 2022 13:49:35 +0200 (CEST)
+Message-ID: <a5daf7ed-9baa-5684-4823-30b0cca69488@somainline.org>
+Date:   Tue, 26 Apr 2022 13:49:33 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220405135754.6622-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.8.0
+Subject: Re: [PATCH v6 10/10] ARM: dts: msm: Add tpdm mm/prng for sm8250
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc:     Mike Leach <mike.leach@linaro.org>, Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20220425040304.37487-1-quic_jinlmao@quicinc.com>
+ <20220425040304.37487-11-quic_jinlmao@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220425040304.37487-11-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 05, 2022 at 07:27:36PM +0530, Manivannan Sadhasivam wrote:
-> Hi Greg,
-> 
-> Here is the series for adding the initial support for the MHI bus
-> implementation in Endpoint devices (EP) like PCIe based SDX55 modems from
-> Qualcomm. This MHI EP stack runs on the modem itself and communicates with
-> the host MHI stack [1] over a physical bus like PCIe. The usecase of this
-> stack is to carry the data packets from modem DSP to provide data
-> connectivity to the host machine.
-> 
-> All these patches were submitted to mhi-list previously and reviewed by the
-> developers from Linaro and Qualcomm. Please find the summary below:
 
-Sorry for the delay, looks good, all now queued up.
+On 25/04/2022 06:03, Mao Jinlong wrote:
+> Add tpdm mm and tpdm prng for sm8250.
+>
+> +---------------+                +-------------+
+> |  tpdm@6c08000 |                |tpdm@684C000 |
+> +-------|-------+                +------|------+
+>          |                               |
+> +-------|-------+                       |
+> | funnel@6c0b000|                       |
+> +-------|-------+                       |
+>          |                               |
+> +-------|-------+                       |
+> |funnel@6c2d000 |                       |
+> +-------|-------+                       |
+>          |                               |
+>          |    +---------------+          |
+>          +----- tpda@6004000  -----------+
+>               +-------|-------+
+>                       |
+>               +-------|-------+
+>               |funnel@6005000 |
+>               +---------------+
+>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8250.dtsi | 170 +++++++++++++++++++++++++++
+>   1 file changed, 170 insertions(+)
 
-greg k-h
+Hi,
+
+
+some of the previous comments (uppercase hex instead of lowercase and 
+wrong commit title) still haven't been addressed.
+
+
+Konrad
+
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index 53ab2b457a2f..ce558a2639e7 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -4703,6 +4703,73 @@
+>   			};
+>   		};
+>   
+> +		tpda@6004000 {
+> +			compatible = "arm,primecell";
+> +			reg = <0 0x06004000 0 0x1000>;
+> +			reg-names = "tpda-base";
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					reg = <0>;
+> +					tpda_out_funnel_qatb: endpoint {
+> +						remote-endpoint = <&funnel_qatb_in_tpda>;
+> +					};
+> +				};
+> +			};
+> +
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@9 {
+> +					reg = <9>;
+> +					tpda_9_in_tpdm_mm: endpoint {
+> +						remote-endpoint = <&tpdm_mm_out_tpda9>;
+> +					};
+> +				};
+> +
+> +				port@23 {
+> +					reg = <23>;
+> +					tpda_23_in_tpdm_prng: endpoint {
+> +						remote-endpoint = <&tpdm_prng_out_tpda_23>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		funnel@6005000 {
+> +			compatible = "arm,primecell";
+> +
+> +			reg = <0 0x06005000 0 0x1000>;
+> +			reg-names = "funnel-base";
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					funnel_qatb_out_funnel_in0: endpoint {
+> +						remote-endpoint = <&funnel_in0_in_funnel_qatb>;
+> +					};
+> +				};
+> +			};
+> +
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +					funnel_qatb_in_tpda: endpoint {
+> +						remote-endpoint = <&tpda_out_funnel_qatb>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+>   		funnel@6041000 {
+>   			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+>   			reg = <0 0x06041000 0 0x1000>;
+> @@ -4722,6 +4789,13 @@
+>   				#address-cells = <1>;
+>   				#size-cells = <0>;
+>   
+> +				port@6 {
+> +					reg = <6>;
+> +					funnel_in0_in_funnel_qatb: endpoint {
+> +						remote-endpoint = <&funnel_qatb_out_funnel_in0>;
+> +					};
+> +				};
+> +
+>   				port@7 {
+>   					reg = <7>;
+>   					funnel0_in7: endpoint {
+> @@ -4836,6 +4910,23 @@
+>   			};
+>   		};
+>   
+> +		tpdm@684C000 {
+> +			compatible = "arm,primecell";
+> +			reg = <0 0x0684C000 0 0x1000>;
+> +			reg-names = "tpdm-base";
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					tpdm_prng_out_tpda_23: endpoint {
+> +						remote-endpoint = <&tpda_23_in_tpdm_prng>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+>   		funnel@6b04000 {
+>   			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+>   			arm,primecell-periphid = <0x000bb908>;
+> @@ -4920,6 +5011,85 @@
+>   			};
+>   		};
+>   
+> +		tpdm@6c08000 {
+> +			compatible = "arm,primecell";
+> +			reg = <0 0x06c08000 0 0x1000>;
+> +			reg-names = "tpdm-base";
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					tpdm_mm_out_funnel_dl_mm: endpoint {
+> +						remote-endpoint = <&funnel_dl_mm_in_tpdm_mm>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		funnel@6c0b000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +
+> +			reg = <0 0x06c0b000 0 0x1000>;
+> +			reg-names = "funnel-base";
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					funnel_dl_mm_out_funnel_dl_center: endpoint {
+> +						remote-endpoint = <&funnel_dl_center_in_funnel_dl_mm>;
+> +					};
+> +				};
+> +			};
+> +
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@3 {
+> +					reg = <3>;
+> +					funnel_dl_mm_in_tpdm_mm: endpoint {
+> +						remote-endpoint = <&tpdm_mm_out_funnel_dl_mm>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		funnel@6c2d000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +
+> +			reg = <0 0x06c2d000 0 0x1000>;
+> +			reg-names = "funnel-base";
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +				port {
+> +					tpdm_mm_out_tpda9: endpoint {
+> +						remote-endpoint = <&tpda_9_in_tpdm_mm>;
+> +					};
+> +				};
+> +			};
+> +
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@2 {
+> +					reg = <2>;
+> +					funnel_dl_center_in_funnel_dl_mm: endpoint {
+> +						remote-endpoint = <&funnel_dl_mm_out_funnel_dl_center>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+>   		etm@7040000 {
+>   			compatible = "arm,coresight-etm4x", "arm,primecell";
+>   			reg = <0 0x07040000 0 0x1000>;
