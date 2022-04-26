@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ABD1351094A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 21:46:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5915751097A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 22:04:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239567AbiDZTtt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 15:49:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48722 "EHLO
+        id S1354381AbiDZUHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 16:07:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229974AbiDZTtt (ORCPT
+        with ESMTP id S1354433AbiDZUHd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 15:49:49 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C122C2DD6F;
-        Tue, 26 Apr 2022 12:46:40 -0700 (PDT)
+        Tue, 26 Apr 2022 16:07:33 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93836136973;
+        Tue, 26 Apr 2022 13:04:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651002400; x=1682538400;
+  t=1651003463; x=1682539463;
   h=from:to:cc:subject:date:message-id:mime-version;
-  bh=hwvV40yuftcbV3vyTi9JaXKPJEHRLNAffYIMHJpqEtw=;
-  b=mRtQV3vtwJlXgpawgx3qIUhiqVMI0bYnT4Xvc+wtG9pPgcW9IYfXONpy
-   5SZihLLYC/Mmfthtt18nwuudfUCSQ8pNrZ2PMMAtnBJcBzzUQ54g1zeAt
-   jN/TkkBet9Vrv7ICf0wpO6eF8JaBTVOoYSnWfrlJRtHmDyRmW/5JJU+1J
-   Y=;
+  bh=vAevQ4srD5zQS7PlLFtIfEwqUNEjclHUZuvXkVq5uRM=;
+  b=wU3Ot4wU0nmNl+7d7qmsM9qcBnKY6acL2Br/csQG+BWxf05hFNJ/ldO5
+   iOlURY6c61DLCkPwep4A0q0reCy9DN7dRg1QGa1WSckKwFJ0/TxldtdLC
+   8nBuzGu8srzqDkHc3zitvdti7AjyaMt+FklHvGQXMFtQj/ObRLuDZNuWK
+   c=;
 Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 26 Apr 2022 12:46:40 -0700
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 26 Apr 2022 13:04:23 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 12:46:40 -0700
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 13:04:22 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 26 Apr 2022 12:46:39 -0700
+ 15.2.986.22; Tue, 26 Apr 2022 13:04:22 -0700
 Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 26 Apr 2022 12:46:39 -0700
+ 15.2.986.22; Tue, 26 Apr 2022 13:04:21 -0700
 From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
 To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <bjorn.andersson@linaro.org>
+        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
+        <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
 CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
         <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
         <freedreno@lists.freedesktop.org>,
         <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3] drm/msm/dp: remove fail safe mode related code
-Date:   Tue, 26 Apr 2022 12:46:30 -0700
-Message-ID: <1651002390-4926-1-git-send-email-quic_khsieh@quicinc.com>
+Subject: [PATCH v4] drm/msm/dp: remove fail safe mode related code
+Date:   Tue, 26 Apr 2022 13:04:13 -0700
+Message-ID: <1651003453-12282-1-git-send-email-quic_khsieh@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -190,6 +190,9 @@ Changes in v2:
 Changes in v3:
 -- remove dp_panel_add_fail_safe_mode() from dp_panel.h
 -- add Fixes
+
+Changes in v4:
+--  to=dianders@chromium.org
 
 Fixes: 8b2c181 ("drm/msm/dp: add fail safe mode outside of event_mutex context")
 Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
