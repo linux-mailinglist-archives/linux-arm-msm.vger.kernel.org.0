@@ -2,107 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A281850FB2B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 12:42:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE80450FB35
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 12:43:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349121AbiDZKpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 06:45:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44570 "EHLO
+        id S1348961AbiDZKqa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 06:46:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349263AbiDZKpE (ORCPT
+        with ESMTP id S1348977AbiDZKpv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 06:45:04 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 444D335250
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 03:35:02 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id g6so12312670ejw.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 03:35:02 -0700 (PDT)
+        Tue, 26 Apr 2022 06:45:51 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 946B5CF;
+        Tue, 26 Apr 2022 03:36:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=LHOLjPb0Gd87HYrejyxO3Dkz7va58yAZPFUDJ9tFmx4=;
-        b=JuyytUXtIijlMjojBPasSxCObLn+H2rVGhEM7P2YbYAupd9seWkHRymgjkwYAxLdrE
-         3uiTl1rDAmGb799ZARMjyPe3iTEVogLZxPzVsD69MJ69y1tQ6qHaah5EjZpPCe+GRDZT
-         Vn0EJvA5Q1tUxX6tMqgamhVveIa0k1oUWn0o9rTFAIdnB0xyDwZJvre13s3OKhwCbD7y
-         sOfX/tn+bMjtDzsozFrThShtXHZbO4gGFaN/7H7db2mGKhBUT8ma/xrU8SXqw110HY05
-         7IGYsP+GYfW2LblJpM2DMXAO953d9a05DbWd4qYoEmvbhxL3VK7ApnS0DGYOrWR7fhis
-         KzgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=LHOLjPb0Gd87HYrejyxO3Dkz7va58yAZPFUDJ9tFmx4=;
-        b=AMqJvrrfCWcDKPHvZLP8OuLXkby/S3XhH/ghzXM8Iv8g4uL/i5Ik/w+dN1nlVNnFVj
-         TOiDNRolBfjsCSqnLwP63/l+/VPnh+FYEG/9tQAeK/6qqT/32V8QV6sBebAQDLy8goYh
-         Orfy3WFbYEycovyY1hdEjmZ1h+YfSieEI3rELJQp6tgPURQwGrT7fxR+zWLxozTFTENK
-         swyhoeugE/toFLJR2V3bFbVy6iE/H1YoYDZYEaIWwYtxDtrT69Mbq9D/7ovE2WiHAO6Q
-         3TAXtkO7ehtB+RRD7M69JM06vXT3kvDrgGulGoO7WOiB3HA1TNasUkesEZw0Wm9GD2/3
-         MTSA==
-X-Gm-Message-State: AOAM533+ptAvDjPtsV8NFLtnFj/Ax5Is6S9e8p9+6e5hj6U3HH0SNDJU
-        uzuXMyPvKALKAy0NXTg4j1FONQ==
-X-Google-Smtp-Source: ABdhPJxw2pK4EmRfd/xR78vgBtt0JVfot3Kjrzt69s/MPOpmCUNpD31PPUksf+4+gVizgrZES5dl4A==
-X-Received: by 2002:a17:906:b0c5:b0:6f3:bb5e:54a8 with SMTP id bk5-20020a170906b0c500b006f3bb5e54a8mr477383ejb.534.1650969300701;
-        Tue, 26 Apr 2022 03:35:00 -0700 (PDT)
-Received: from [192.168.0.249] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id x19-20020a05640226d300b004228faf83desm6338221edd.12.2022.04.26.03.34.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Apr 2022 03:34:59 -0700 (PDT)
-Message-ID: <0f522c24-36b5-67f1-e282-2d6f5b81645d@linaro.org>
-Date:   Tue, 26 Apr 2022 12:34:58 +0200
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650969392; x=1682505392;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=apd35d7BYOvqx7f5UyepnqlMxVdwfN37PS+LrGA7JK4=;
+  b=MWg4E3weB3gb2vDyazwvYxySMZueGT9ecz43/0NEeKZU7Yle1NvfBaYu
+   BBvNKQ+R7eGgXkPhGWvkikFuzUycJ096fzQn3d9+hPvvAaq/d0pVyUSZG
+   TmuIJEX9LByVdEaWwq27x1STmyhnUlfYW2Qu3eKKdiS1LrZVl6dPaZqz0
+   8=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 26 Apr 2022 03:36:32 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 03:36:32 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 26 Apr 2022 03:36:31 -0700
+Received: from hu-ylal-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 26 Apr 2022 03:36:29 -0700
+From:   Yogesh Lal <quic_ylal@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <quic_sibis@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Yogesh Lal <quic_ylal@quicinc.com>
+Subject: [PATCH v2] remoteproc: qcom: Add fallback mechanism for full coredump collection
+Date:   Tue, 26 Apr 2022 16:06:14 +0530
+Message-ID: <1650969374-19245-1-git-send-email-quic_ylal@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v4 2/2] dt-bindings: mailbox: qcom-ipcc: add missing
- properties into example
-Content-Language: en-US
-To:     David Heidelberg <david@ixit.cz>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20220426101837.16201-1-david@ixit.cz>
- <20220426101837.16201-2-david@ixit.cz>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220426101837.16201-2-david@ixit.cz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/04/2022 12:18, David Heidelberg wrote:
-> These missing required properties are needed for
-> smp2p binding reference checks.
-> 
-> Also includes cosmetic change to the example formatting.
-> 
+In case remoteproc's firmware missing minidump support, during crash
+scenario coredump does not collected. This change adds a fallback
+mechanism for full coredump collection in the event of a crash.
 
-Missing reported-by:
-Reported-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
+---
+ drivers/remoteproc/qcom_common.c   | 9 ++++++---
+ drivers/remoteproc/qcom_q6v5_pas.c | 1 +
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
-> v3:
->  - add Krzysztof R-b
+diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+index 4b91e3c..12b4142 100644
+--- a/drivers/remoteproc/qcom_common.c
++++ b/drivers/remoteproc/qcom_common.c
+@@ -162,9 +162,12 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id)
+ 	 * is initialized in memory and encryption status is set.
+ 	 */
+ 	if (subsystem->regions_baseptr == 0 ||
+-	    le32_to_cpu(subsystem->status) != 1 ||
+-	    le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED ||
+-	    le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
++		le32_to_cpu(subsystem->status) != 1 ||
++		le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED) {
++			return rproc_coredump(rproc);
++		}
++
++	if (le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
+ 		dev_err(&rproc->dev, "Minidump not ready, skipping\n");
+ 		return;
+ 	}
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 1ae47cc..40bf747 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -293,6 +293,7 @@ static const struct rproc_ops adsp_minidump_ops = {
+ 	.start = adsp_start,
+ 	.stop = adsp_stop,
+ 	.da_to_va = adsp_da_to_va,
++	.parse_fw = qcom_register_dump_segments,
+ 	.load = adsp_load,
+ 	.panic = adsp_panic,
+ 	.coredump = adsp_minidump,
+-- 
+2.7.4
 
-BTW, this patch confuses me a bit... You sent it some time after I sent
-a fix:
-https://lore.kernel.org/all/20220402155551.16509-1-krzysztof.kozlowski@linaro.org/
-
-
-Best regards,
-Krzysztof
