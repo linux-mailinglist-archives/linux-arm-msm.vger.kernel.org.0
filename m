@@ -2,67 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 857055104E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 19:06:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CA3D510503
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 19:14:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231254AbiDZRJv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 13:09:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59932 "EHLO
+        id S230441AbiDZRMk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 13:12:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232009AbiDZRJQ (ORCPT
+        with ESMTP id S1353916AbiDZRLk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 13:09:16 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CA0E31537
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 10:06:08 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id k4so19237278plk.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 10:06:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=2bOAXdV05ngOnaAdgM1PB5gzMCRGIbydXOaP7Kl6nBQ=;
-        b=SVMfpAb+mMdqVE00gH2Mh39sQeKFsd/ATsbbNWPBL/C3MYtGoz3lb0UpmG/PBzGVVk
-         xPLQ8XDvIvLY6C8jz6GUEWdOlFkKUuxWnxggPRoVnkRQR4Du5y20v9/aifNNhJmxvSKZ
-         ohdRhWLKpKf3H51ftID3WRS8UIhQaXAkERoEE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2bOAXdV05ngOnaAdgM1PB5gzMCRGIbydXOaP7Kl6nBQ=;
-        b=WsVB2No++qZ6PljzMVzCr7h0Rga2JBb09QejUeG7LckVEOYeMocxDmoT+qXQayEjO4
-         Kj/7eVpjzEVRxBhiJGd/VagiE1HnQuvSdfl6w1r6soRyRJ3nXcCaOGlksS4vSgdBR9iq
-         v1C+9yYv3Ic1A6IuFgfZUMR7ga0OrcPpjLybqfdWpDduRXPN436bifcFBns2Qi3FvNLk
-         0bgc52bphYhgH5z0xnCMSCP4Z4nNGiWM+ArN/VtV2zsfQA4jmwp8KxNwZOIwSh+5/siC
-         uHCpAi6NCX0Z7tY0DmzpJ/aDsrJevd1ym7QaKm0Xqe4erjUR9w980J2uKzPjPiFF4uCS
-         VFVg==
-X-Gm-Message-State: AOAM530r26iFA0OT6uWI5XGorg/r8iRgJMgQH31aX3Gcp6KkZISgndpd
-        qys3d7BlbVnhZ5TFuZ2J85xuHfHvBWXatpp/mAcOgg==
-X-Google-Smtp-Source: ABdhPJziBWuuXlLcANNapMCrTENULU79cINFh95+CzlTGasENmvcqLOM8a7K9yUv3HU8fo8ckeShRPRjdvUf9ljBzRk=
-X-Received: by 2002:a17:903:1248:b0:151:9708:d586 with SMTP id
- u8-20020a170903124800b001519708d586mr24374144plh.15.1650992768013; Tue, 26
- Apr 2022 10:06:08 -0700 (PDT)
+        Tue, 26 Apr 2022 13:11:40 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B14F340EE;
+        Tue, 26 Apr 2022 10:08:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4584D6159F;
+        Tue, 26 Apr 2022 17:07:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE08C385A0;
+        Tue, 26 Apr 2022 17:07:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1650992869;
+        bh=dgLR3TJhT/EC15yAj4pcZSpH0ev/CMEBayE7jUH2n2k=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=R6yCjZh9Pd5a1cJfpZbK4GvKX+nR4A/muitN3gB2kT+ln6pKlwWs4cb+jM4qax83X
+         ItwRgJI57HCHD5rhEVHZymhSUa6z36Q5RVNNAoBDb5nAZo9aWwz8xm4fM2ftT/HkWu
+         yxhMqsrvwFA/G6VqWKp6MPs8k+9n70C3ANdRJrJT6PAkUbAQmYKDcHzBjLdK5JTjfV
+         xllp1hAQvdKGXQGAjJljA+UylV3BxUHY+rQiZOmFfZ5izY2QQQu7kCRmgYLA4doyRh
+         j0/1zc7QdVTdTPeB8gh1qmoOh2wqX0emkCbWyzbc0qnK3+yrTi4ZzgT5AH5JNnNtjs
+         tCO95OsDKH+rw==
+From:   Mark Brown <broonie@kernel.org>
+To:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org,
+        quic_rohkumar@quicinc.com, robh+dt@kernel.org,
+        judyhsiao@chromium.org, agross@kernel.org,
+        quic_srivasam@quicinc.com, bjorn.andersson@linaro.org,
+        bgoswami@quicinc.com, alsa-devel@alsa-project.org, tiwai@suse.com,
+        perex@perex.cz, linux-kernel@vger.kernel.org,
+        quic_plai@quicinc.com, swboyd@chromium.org, lgirdwood@gmail.com
+Cc:     quic_potturu@quicinc.com
+In-Reply-To: <1650374329-7279-1-git-send-email-quic_srivasam@quicinc.com>
+References: <1650374329-7279-1-git-send-email-quic_srivasam@quicinc.com>
+Subject: Re: [PATCH v2] ASoC: qcom: SC7280: Update machine driver startup, shutdown callbacks
+Message-Id: <165099286607.2323572.4725275320203551447.b4-ty@kernel.org>
+Date:   Tue, 26 Apr 2022 18:07:46 +0100
 MIME-Version: 1.0
-References: <20220412212558.827289-1-olvaffe@gmail.com> <CAPaKu7Tv1Mxt7Ao8kH2-MZDBK7EB0D41COJD8Sjze76t_o-qmw@mail.gmail.com>
- <ffe7dbc1-8a19-1e19-402d-27efc8e55b39@amd.com>
-In-Reply-To: <ffe7dbc1-8a19-1e19-402d-27efc8e55b39@amd.com>
-From:   Rob Clark <robdclark@chromium.org>
-Date:   Tue, 26 Apr 2022 10:05:57 -0700
-Message-ID: <CAJs_Fx7OQ2OJo3pQ-ETT1827PtfuFsvn984gg8GeDVrqy0Ucug@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm: add trace_dma_fence_emit to msm_gpu_submit
-To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc:     Chia-I Wu <olvaffe@gmail.com>, freedreno@lists.freedesktop.org,
-        ML dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,41 +58,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 26, 2022 at 9:42 AM Christian K=C3=B6nig
-<christian.koenig@amd.com> wrote:
->
-> Am 26.04.22 um 18:32 schrieb Chia-I Wu:
-> > On Tue, Apr 12, 2022 at 2:26 PM Chia-I Wu <olvaffe@gmail.com> wrote:
-> >> In practice, trace_dma_fence_init called from dma_fence_init is good
-> >> enough and almost no driver calls trace_dma_fence_emit.  But drm_sched
-> >> and virtio both have cases where trace_dma_fence_init and
-> >> trace_dma_fence_emit can be apart.  It is easier for visualization too=
-ls
-> >> to always use the more correct trace_dma_fence_emit when visualizing
-> >> fence timelines.
-> >>
-> >> v2: improve commit message (Dmitry)
-> >>
-> >> Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
-> >> Cc: Rob Clark <robdclark@chromium.org>
-> >> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > This has been reviewed.  Should we land it?
->
-> No, there are still open discussions about it.
+On Tue, 19 Apr 2022 18:48:49 +0530, Srinivasa Rao Mandadapu wrote:
+> Update machine driver startup, shutdown callback functions to avoid
+> sound card registration failure on other platforms.
+> Without this change, platforms with WCD codec is failing to register
+> sound card.
+> 
+> Fixes: c5198db82d4c ("ASoC: qcom: Add driver support for ALC5682I-VS")
+> 
+> [...]
 
-I think if it is needed for trace visualization, that is justification
-enough for me
+Applied to
 
-I don't really see otherwise how a generic trace visualization tool
-like perfetto would handle the case that some fence timelines have
-separate events but others do not.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-BR,
--R
+Thanks!
 
-> Regards,
-> Christian.
->
-> >
-> > (Or, how do I check if it has landed?)
->
+[1/1] ASoC: qcom: SC7280: Update machine driver startup, shutdown callbacks
+      commit: c85f533d51ca42a461a61303322b0cf74fb75a6b
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
