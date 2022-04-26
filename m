@@ -2,144 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF5E350FAA5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 12:33:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3119250FAEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 12:34:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349180AbiDZKfh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 06:35:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33586 "EHLO
+        id S1349002AbiDZKhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 06:37:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349158AbiDZKfV (ORCPT
+        with ESMTP id S232506AbiDZKgn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 06:35:21 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7523CBC0C;
-        Tue, 26 Apr 2022 03:15:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1650968154; x=1682504154;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=ED9E86mWaIi1Q6en5l7HRo4ItpanEZ0wiCJUj9mkLTE=;
-  b=rpMHai2H4YFP3BRCQlPmaEf6Y6Hsqp+hK1g89J2CNJcTGW0vZROEfVmM
-   2B37wM/yee9D4FKMdDZk4s2hyMk12KwITYE7yKcQFPRcbsoQ+Z0VCJugA
-   gTR26YAgXlLY100hJEL9B0rnF6Qzt0XbpsmelVzddgCgs1ZyG7FjpK5QD
-   A=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 26 Apr 2022 03:15:51 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 03:15:51 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 26 Apr 2022 03:15:51 -0700
-Received: from [10.216.37.34] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 26 Apr
- 2022 03:15:47 -0700
-Message-ID: <7a9fb53f-61a8-0e1e-decf-60629be0a478@quicinc.com>
-Date:   Tue, 26 Apr 2022 15:45:42 +0530
+        Tue, 26 Apr 2022 06:36:43 -0400
+Received: from ixit.cz (ip-94-112-206-30.net.upcbroadband.cz [94.112.206.30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 533C2FE1;
+        Tue, 26 Apr 2022 03:19:15 -0700 (PDT)
+Received: from newone.lan (_gateway [10.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id ED8F52007F;
+        Tue, 26 Apr 2022 12:19:12 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1650968353;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=jhXrkBPa8UDRhn5vgDFZy3QcHxJ5cL5qpzIMBVhCnoE=;
+        b=iugD44YLoI7nDkNeiCi7FNF38+/jmF2StFqQrhu3+6Vb1e5Et08aWwLHv76XOgxlhlULpv
+        g6DAhavb//1YlKAA7rnwNLoHbcnX0GkVBRxQSbGs5sqc1C7kD4kyLZXHuFd/aNzYjq6s0l
+        hv8ZD4rnix36j79PvycdHDHz0cFa1MM=
+From:   David Heidelberg <david@ixit.cz>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc:     David Heidelberg <david@ixit.cz>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v4 1/2] dt-bindings: mailbox: qcom-ipcc: add missing compatible for SM8450
+Date:   Tue, 26 Apr 2022 12:18:36 +0200
+Message-Id: <20220426101837.16201-1-david@ixit.cz>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] remoteproc: qcom: Add fallback mechanism for full
- coredump collection
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     "Sibi Sankar (QUIC)" <quic_sibis@quicinc.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-remoteproc@vger.kernel.org" <linux-remoteproc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <1649269662-20338-1-git-send-email-quic_ylal@quicinc.com>
- <YmLIMG62vPv4qtVe@builder.lan>
-From:   Yogesh Lal <quic_ylal@quicinc.com>
-In-Reply-To: <YmLIMG62vPv4qtVe@builder.lan>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam: Yes
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RDNS_DYNAMIC,SPF_HELO_PASS,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Fill missing compatible already used in SM8450 DTS.
 
-On 4/22/2022 8:52 PM, Bjorn Andersson wrote:
-> WARNING: This email originated from outside of Qualcomm. Please be wary of any links or attachments, and do not enable macros.
->
-> On Wed 06 Apr 13:27 CDT 2022, Yogesh Lal wrote:
->
->> In case remoteproc's firmware missing minidump support, during crash
->> scenario coredump does not collected. This change adds a fallback
->> mechanism for full coredump collection in the event of a crash.
->>
->> Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
->> ---
->>   drivers/remoteproc/qcom_common.c   | 11 ++++++++---
->>   drivers/remoteproc/qcom_q6v5_pas.c |  1 +
->>   2 files changed, 9 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
->> index 4b91e3c..68bd0bc 100644
->> --- a/drivers/remoteproc/qcom_common.c
->> +++ b/drivers/remoteproc/qcom_common.c
->> @@ -162,13 +162,18 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id)
->>         * is initialized in memory and encryption status is set.
->>         */
->>        if (subsystem->regions_baseptr == 0 ||
->> -         le32_to_cpu(subsystem->status) != 1 ||
->> -         le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED ||
->> -         le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
->> +             le32_to_cpu(subsystem->status) != 1 ||
->> +             le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED) {
->> +                     return rproc_coredump(rproc);
->> +             }
->> +
->> +     if (le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
->>                dev_err(&rproc->dev, "Minidump not ready, skipping\n");
->>                return;
->>        }
->>
->> +     rproc_coredump_cleanup(rproc);
-> The patch looks good, but could you please explain in the commit message
-> why this needs to be added? If the thing described in the message
-> happens this code path wouldn't be taken.
->
-> Should it be a separate patch, or is it needed because of the fallback
-> etc?
->
-> Thanks,
-> Bjorn
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+ Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Will push separate patch for it.
+diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+index 866efb278813..c57dd423e98c 100644
+--- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
++++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+@@ -27,6 +27,7 @@ properties:
+           - qcom,sm6350-ipcc
+           - qcom,sm8250-ipcc
+           - qcom,sm8350-ipcc
++          - qcom,sm8450-ipcc
+           - qcom,sc7280-ipcc
+       - const: qcom,ipcc
+ 
+-- 
+2.35.1
 
-Thanks
-
-Yogesh Lal
-
-
->> +
->>        ret = qcom_add_minidump_segments(rproc, subsystem);
->>        if (ret) {
->>                dev_err(&rproc->dev, "Failed with error: %d while adding minidump entries\n", ret);
->> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
->> index 1ae47cc..40bf747 100644
->> --- a/drivers/remoteproc/qcom_q6v5_pas.c
->> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
->> @@ -293,6 +293,7 @@ static const struct rproc_ops adsp_minidump_ops = {
->>        .start = adsp_start,
->>        .stop = adsp_stop,
->>        .da_to_va = adsp_da_to_va,
->> +     .parse_fw = qcom_register_dump_segments,
->>        .load = adsp_load,
->>        .panic = adsp_panic,
->>        .coredump = adsp_minidump,
->> --
->> 2.7.4
->>
