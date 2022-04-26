@@ -2,96 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CA3D510503
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 19:14:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1CC5510505
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 19:14:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230441AbiDZRMk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 13:12:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42368 "EHLO
+        id S1353600AbiDZRQN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 13:16:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353916AbiDZRLk (ORCPT
+        with ESMTP id S1353059AbiDZRMY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 13:11:40 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B14F340EE;
-        Tue, 26 Apr 2022 10:08:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4584D6159F;
-        Tue, 26 Apr 2022 17:07:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE08C385A0;
-        Tue, 26 Apr 2022 17:07:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1650992869;
-        bh=dgLR3TJhT/EC15yAj4pcZSpH0ev/CMEBayE7jUH2n2k=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=R6yCjZh9Pd5a1cJfpZbK4GvKX+nR4A/muitN3gB2kT+ln6pKlwWs4cb+jM4qax83X
-         ItwRgJI57HCHD5rhEVHZymhSUa6z36Q5RVNNAoBDb5nAZo9aWwz8xm4fM2ftT/HkWu
-         yxhMqsrvwFA/G6VqWKp6MPs8k+9n70C3ANdRJrJT6PAkUbAQmYKDcHzBjLdK5JTjfV
-         xllp1hAQvdKGXQGAjJljA+UylV3BxUHY+rQiZOmFfZ5izY2QQQu7kCRmgYLA4doyRh
-         j0/1zc7QdVTdTPeB8gh1qmoOh2wqX0emkCbWyzbc0qnK3+yrTi4ZzgT5AH5JNnNtjs
-         tCO95OsDKH+rw==
-From:   Mark Brown <broonie@kernel.org>
-To:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        quic_rohkumar@quicinc.com, robh+dt@kernel.org,
-        judyhsiao@chromium.org, agross@kernel.org,
-        quic_srivasam@quicinc.com, bjorn.andersson@linaro.org,
-        bgoswami@quicinc.com, alsa-devel@alsa-project.org, tiwai@suse.com,
-        perex@perex.cz, linux-kernel@vger.kernel.org,
-        quic_plai@quicinc.com, swboyd@chromium.org, lgirdwood@gmail.com
-Cc:     quic_potturu@quicinc.com
-In-Reply-To: <1650374329-7279-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1650374329-7279-1-git-send-email-quic_srivasam@quicinc.com>
-Subject: Re: [PATCH v2] ASoC: qcom: SC7280: Update machine driver startup, shutdown callbacks
-Message-Id: <165099286607.2323572.4725275320203551447.b4-ty@kernel.org>
-Date:   Tue, 26 Apr 2022 18:07:46 +0100
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+        Tue, 26 Apr 2022 13:12:24 -0400
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2057.outbound.protection.outlook.com [40.107.220.57])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7643B35DFB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 10:08:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CSeb29vMkYBz8CUYN721bu63QZEuLQzu7s5zwcz7H3n79mTixlZb/oLQrfvvp5i+XSG0V7isIs+VH4aAg+ngFDyCS5xggu35a13DEAnEIdhmhl+jZPLRvb3lWNrosFhZFC7ZNkuu0MQ2B8K3shBFSa25qb6g1sjl5LnHBO7WFOxTo/t5/ZLebs42LLb1NH90QLRsZ6nuJX7ZmWlizEGN//dtVQdeAW7dbkAthCMZg4cYojVjhVBpOp2xczxu4qQmIaSMqorDHSmphqayXxJ4G1LeKr2hf6LxpCkfJd2g64E7etORLzqHUHXWXDgyu/e8Azo+VfX7Gc9na7MfXOjhvw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6j1eYy1F6Q0G6h44mvc2aCyPqgnT5/Aovqkcfp3k8EE=;
+ b=RFYg4+qqst/Dgu0RT9Xxh2+KtP7uTiLWmANkMGrt7HdgEi5xPpHVndtoF8Hb7cAKRR8eZYEOd/Yggzhilzr7tIa66sap/hKEv34xW9LdGvz2qnbuk7DgAOURwEjyr2ZnrdBTOf4vjhBT//VuS72ZkdttdmArF3tj7ZVm/HdNUuxzSLV8tosY0AYnCsRwGovE00E2hj9v/QZxT+fIzNwNlRfqQP34tn9D0Od7efwyGju5DaML0EIeLb9ugpYc8vAmRbJGOWkW/kfrwbqQTk08m4r0QonGLriayNI3wbwG33fI3mv6sAvBqCxAc/vkk5NTMkzVyg8sa9Q8rnTMUqCkOw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6j1eYy1F6Q0G6h44mvc2aCyPqgnT5/Aovqkcfp3k8EE=;
+ b=QKtXOT9uBB1TedfDZhz1bGDlZdinYsM361aPr5J1im0Vd/2qayxd/1Gl19gidYDLg4V4nJECPv3KRUJCxxechlm92HRzMeYb09w1+yxaBm92tluEfJzjE4m/vvAMI1De0kFCgdcVha1CqRcnzngZkH7wNSZmhg1HAhIU75yQG3M=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
+ by MN2PR12MB2957.namprd12.prod.outlook.com (2603:10b6:208:100::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5186.21; Tue, 26 Apr
+ 2022 17:08:53 +0000
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::a5fb:7137:5e64:cf8]) by BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::a5fb:7137:5e64:cf8%5]) with mapi id 15.20.5186.021; Tue, 26 Apr 2022
+ 17:08:53 +0000
+Message-ID: <215f55f6-97b8-5dd3-a2cc-fe42e19a2769@amd.com>
+Date:   Tue, 26 Apr 2022 19:08:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2] drm/msm: add trace_dma_fence_emit to msm_gpu_submit
+Content-Language: en-US
+To:     Rob Clark <robdclark@chromium.org>
+Cc:     Chia-I Wu <olvaffe@gmail.com>, freedreno@lists.freedesktop.org,
+        ML dri-devel <dri-devel@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20220412212558.827289-1-olvaffe@gmail.com>
+ <CAPaKu7Tv1Mxt7Ao8kH2-MZDBK7EB0D41COJD8Sjze76t_o-qmw@mail.gmail.com>
+ <ffe7dbc1-8a19-1e19-402d-27efc8e55b39@amd.com>
+ <CAJs_Fx7OQ2OJo3pQ-ETT1827PtfuFsvn984gg8GeDVrqy0Ucug@mail.gmail.com>
+From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
+In-Reply-To: <CAJs_Fx7OQ2OJo3pQ-ETT1827PtfuFsvn984gg8GeDVrqy0Ucug@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-ClientProxiedBy: AS9PR06CA0411.eurprd06.prod.outlook.com
+ (2603:10a6:20b:461::25) To BN8PR12MB3587.namprd12.prod.outlook.com
+ (2603:10b6:408:43::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 8bcbf956-22ea-43f3-5c3f-08da27a770dc
+X-MS-TrafficTypeDiagnostic: MN2PR12MB2957:EE_
+X-Microsoft-Antispam-PRVS: <MN2PR12MB295761E3846B25CDD184404083FB9@MN2PR12MB2957.namprd12.prod.outlook.com>
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: VAz3OBROEobooKaTvbT6vDIb7jbVrTPOGJex2nBUqVJ+KSVgp6N510kTLzd74kp411t2mkUcZSXlUoNyiSFNHjjc7+kz76xRlm7Au90KsXEeMJRo6RfAjNc4GQ+si4AANUDUZtk3Jz8agVak8Qo2gesN0RzhQfHo0vcQ8KS5cTtP/2bYFlHqMpnBqdRj1N8aPJkrDnDM9E4xg2j59On6ktV6SJoh+c4ftNUQ2vFYZno6A3LjM7exuZytXA/XTNoZZ3dFhQPu57pSH0eV6KjlqN7Xak3lUJbxnS3XwgSsRX0618h1LC+d9ZT9pw7KPILGZhUl1n54AHReqv3IF6RhIwLH7GYoPdwbf6tKUhChdB0mxX51c3rBmw1Sh9Yrp9y3Y1DP7SXey+uZjvVs/z/fFXIUV9Y3EBZ26/w8wR6VRjRRerymYTCFyPWVCKvhHzyvaPZMutxydgsp/EKNmkBX5ht4+70E63rZtFVbU30v0ibJBKQmOyVwArW549UA6cUYjDdyzI/lFAfuuT4kKBt5c898+sLqSZD0kGwtJq4cCUHzGnuUbDqd6FPAx1yzmRD2HfGKjSa1PAxFbM4cp9cylKCrQgCa0e/uWY7wCujnM7AZ0zzZ/yoYuI5t7k5ojC9Jzik2ekoHlI5J0ImtWld7RLw4gTYbWKsvAXzvwgWMPc2vR1v2BMTr7IS4SoDn1qiT3PPHjfxcxK5LMEaCLis328KmzoyKIRqrdq2mYUbV3q/VKBh5+DzPEZGXZOJcmKXz
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(8936002)(6486002)(6506007)(186003)(83380400001)(36756003)(31686004)(6916009)(4326008)(66946007)(2906002)(66476007)(54906003)(6666004)(8676002)(66556008)(316002)(38100700002)(6512007)(53546011)(2616005)(31696002)(508600001)(7416002)(5660300002)(86362001)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QW1qcERvT1N2TDFGa1I5RHJxWkhieVBEcUpQWWVrZGFzMlhFWjVLYzJNbTcw?=
+ =?utf-8?B?VnZDamlFVlh0ZE9wMkg1QU9RZHMrQ0d5Q1dTNGJCY0lLTUdGWVgrZUVMQXdZ?=
+ =?utf-8?B?ejQwbUNwNFlzU0E1dzd1ZHUxSXpwUmFqWFhSenJYbHRRMWdUVFJqWmtONFRu?=
+ =?utf-8?B?NldKNUhTb1VQMGlKUFZoNEJFVkNPV2ZwSUo4VWMvakFIVVFySG5pQ3JpZVVr?=
+ =?utf-8?B?cGdPY0JxSUlxZjc2OXZhQWs0dHlsalZGWkRUL0RsNURjNXhxWEdJcExqZHRY?=
+ =?utf-8?B?dm8vVUJCVS9pYVR0YU5Jd2ZuczFiZ0d3UFU2V1JxTjJxb3hhYlNzdmp1cFhD?=
+ =?utf-8?B?ZzhNdEdpeVFGNytaZ3EzR1BjV2J0N1BlSG5CaCtiOGp4dXJHTk5TMjBKNkFW?=
+ =?utf-8?B?V2tLaWZIa1oxS1V2SlZ1UmJrVk9jZEtxemYyVXFUTmdKUi9iSEtiVU4zYURR?=
+ =?utf-8?B?elhMeUx0a2E1YkhZVGtkZ2VSQXRBVFFUM3VOQlR5ZW5PeTh1cXplOERIN3Vl?=
+ =?utf-8?B?cmxUeC84WFh2eDVQZ2ZGcTJQMGxTV3hJMFdZbkxhSFkzMkgzOVQzYXFZY3lI?=
+ =?utf-8?B?UXJCVFBGSDdQS1V0WXoyTmNGSU5YMWlaL1Z0eGlnNHZHVUxQdi9QTWRiajlY?=
+ =?utf-8?B?K3FnK25vWXUrM05ONjdOMjNrSjBzRGxZOThuUzg0UVhsR1Z1Ni9pTWdFL2VK?=
+ =?utf-8?B?YzVVMTlDQUJOZUZGU3dPY2xZOGx4bE0xTnBuUEYzeEtJb2M1ekJDOWM1bVpp?=
+ =?utf-8?B?MThCUGNJRWV6UnhuMTExaVdZTllqTTRPVStDTVRQZ0Zqb2YyQmlSTDRiQXZu?=
+ =?utf-8?B?Z0EzMkpiSVhQQURVQTlMaHR5YkVVbytJbFVnZEJJQkJ5anV6akVQcFhvNmxo?=
+ =?utf-8?B?bGVzQWhUaklnOFh4WW5iR3NVb3ZZdFJFM2tUQ1pKRkUvZkR0TGVtYThzYW4x?=
+ =?utf-8?B?cHpwaUhHSmJzQ3BQQTVEdUJzcTJMTExETFAweFp6OHFsUThKY281bVU5VTc0?=
+ =?utf-8?B?VENleG1YL21teXN4QnZla2hiM1NUOUJra2taZklUOVd5WWx5eVNoQmJCalVl?=
+ =?utf-8?B?cC92UC9sdC81UXpLaU93VmFMWTdLbm9wc1BBUFJ3eUFacGlWVFdtdTJXTEdJ?=
+ =?utf-8?B?d0FRZERoVzVpT0plSXVTQWd2TUxQT2szV3g2T0Z4ZUk4YURpR2Z4aU52MXp4?=
+ =?utf-8?B?Y0FiM2ZCRy9yc0wzSmdRUm9rVHVvQ2RKanBBeUE0V0RGa3BTSDNlaWdGRlkz?=
+ =?utf-8?B?TXcxZHJXN2VVVkQwTGJlYlgxSUV4akhXYllSaUZwUFBZeGVzdWFaZ1FsWi8w?=
+ =?utf-8?B?TElBTGRvZW5rM1hIVjloeUpBa09UQnRtbDNGSUtPNEFrOEZSb0h4MGFQU1Nu?=
+ =?utf-8?B?SVYwTXh0MUtwcUNTMm9PSGRZVm5nMUR5R3lWNHJaQ3JEMEZnd1Fmb1hqYUUy?=
+ =?utf-8?B?dzY5Y1lOK2dkQW9wQXh5bzlQZjNDNlN6UlM0L0ZQM1hrNHJtNU81Sk9vbU5Y?=
+ =?utf-8?B?d2VFM2lKMEYyWTVqWUllT2xMdzQzcXNFTEdEYWlnRjEyK2tiSmVPK2p6YkxR?=
+ =?utf-8?B?a2lnMmFzUVAzRU1HRi8zVkFta3B5eitSQ3RhWENkWUJaR3YyMGR6Y0JveTE0?=
+ =?utf-8?B?TXZ0RjFtN3dOQUw5WW42RHc1bnd1YnF6eFdOSTZJVzVvanhlWTY0VzRCdWo0?=
+ =?utf-8?B?RW8vcTZiVkdCL2ZIQlJrcGhtenNoWndFQWFPUzZRYXl3djdlelNhMisvdmJC?=
+ =?utf-8?B?SHIwc3J0TGsveVFDdjA4djFjTFYyc0d4VUViMXJ5UmV0YllsbnB2ekd2YXAz?=
+ =?utf-8?B?OGxOZzN1OEtiREsraUlLRXE4cDYyVlJUcXNNTEs0U2ZkK1E5dkFrQU1mb1FB?=
+ =?utf-8?B?RUNjOEZ0WGhESTFvRDg3R1hZak13VnIzVjk2NXIzVStub3NRenpKUlY1TDlh?=
+ =?utf-8?B?SGNmQnpNQStCSFVlOFJveTZqODJJV04zRVRMTTllMnFReWhmS1R1ZU1pTnFs?=
+ =?utf-8?B?N0dETG42MXVycDVYSG81L1ZBQzBDendmYWk0eEhVZlBtV2lDNHg1cFh1dmls?=
+ =?utf-8?B?UklCM3poVnoxSU93SFpmWW9WSVJTQUpoR2tQOTZGMUtKTUdjQkV1RUM3Sk8x?=
+ =?utf-8?B?K3ZrWUxRdW8zMVV3YXB2RFdLeUYvekxnSGpja0N1SmJyQkRWbkF4NkdwT09E?=
+ =?utf-8?B?MnVYQVYydWh3WlAreDhNa3l0VzRaUlVGZlhmcXFoOG1FSVhXTDZTUFJqSW5J?=
+ =?utf-8?B?YWJyWUhOMGtnYlJPSEQvRkNqZEtjQ21hczRwY0lZZlFVT05iQ1o2YVJ3NEhM?=
+ =?utf-8?B?aFlMWjk2a3BTQmhoaHhaSVRFa1U5S1VzT1pxUGJKRDJKMFh2ZjRpUnlLL2kz?=
+ =?utf-8?Q?Gw6zU4Xl37fkhCTvwoaCSxDWNL8a8ktEW/UuF5xo9tCyd?=
+X-MS-Exchange-AntiSpam-MessageData-1: uKE7Izbz37RpcA==
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8bcbf956-22ea-43f3-5c3f-08da27a770dc
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Apr 2022 17:08:53.5045
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: LBBcpEuF0l6WIdGn3wZFMxeoz9OEGyEi4K42GyUTp3tHrMIPc6bMd7rVZMz4grzi
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB2957
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 19 Apr 2022 18:48:49 +0530, Srinivasa Rao Mandadapu wrote:
-> Update machine driver startup, shutdown callback functions to avoid
-> sound card registration failure on other platforms.
-> Without this change, platforms with WCD codec is failing to register
-> sound card.
-> 
-> Fixes: c5198db82d4c ("ASoC: qcom: Add driver support for ALC5682I-VS")
-> 
-> [...]
+Am 26.04.22 um 19:05 schrieb Rob Clark:
+> On Tue, Apr 26, 2022 at 9:42 AM Christian König
+> <christian.koenig@amd.com> wrote:
+>> Am 26.04.22 um 18:32 schrieb Chia-I Wu:
+>>> On Tue, Apr 12, 2022 at 2:26 PM Chia-I Wu <olvaffe@gmail.com> wrote:
+>>>> In practice, trace_dma_fence_init called from dma_fence_init is good
+>>>> enough and almost no driver calls trace_dma_fence_emit.  But drm_sched
+>>>> and virtio both have cases where trace_dma_fence_init and
+>>>> trace_dma_fence_emit can be apart.  It is easier for visualization tools
+>>>> to always use the more correct trace_dma_fence_emit when visualizing
+>>>> fence timelines.
+>>>>
+>>>> v2: improve commit message (Dmitry)
+>>>>
+>>>> Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+>>>> Cc: Rob Clark <robdclark@chromium.org>
+>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> This has been reviewed.  Should we land it?
+>> No, there are still open discussions about it.
+> I think if it is needed for trace visualization, that is justification
+> enough for me
+>
+> I don't really see otherwise how a generic trace visualization tool
+> like perfetto would handle the case that some fence timelines have
+> separate events but others do not.
 
-Applied to
+Well I just send a patch to completely remove the trace point.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+As I said it absolutely doesn't make sense to use this for 
+visualization, that's what the trace_dma_fence_init trace point is good for.
 
-Thanks!
+The only use case is for debugging the GPU scheduler and we should 
+probably introduce a separate GPU scheduler specific trace point for 
+this instead if we should ever need it.
 
-[1/1] ASoC: qcom: SC7280: Update machine driver startup, shutdown callbacks
-      commit: c85f533d51ca42a461a61303322b0cf74fb75a6b
+Regards,
+Christian.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+>
+> BR,
+> -R
+>
+>> Regards,
+>> Christian.
+>>
+>>> (Or, how do I check if it has landed?)
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
