@@ -2,161 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F39AF50FA0C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 12:17:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF5E350FAA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 12:33:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243687AbiDZKUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 06:20:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36316 "EHLO
+        id S1349180AbiDZKfh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 06:35:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348663AbiDZKSH (ORCPT
+        with ESMTP id S1349158AbiDZKfV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 06:18:07 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F2CA136631
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 02:41:52 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id y19so9932753ljd.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 02:41:52 -0700 (PDT)
+        Tue, 26 Apr 2022 06:35:21 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7523CBC0C;
+        Tue, 26 Apr 2022 03:15:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=oPLNTV7n0Ijb4QN5+/ZP2G9taYmSFsaYJE9s/1u9hZM=;
-        b=IT9mK2eoGUOIpdf1Q2IMc+OQyH3OeGKt1vz56WDGc8UWW1sxqL2BYBk4sECBkmNuCq
-         6Ws0vp6DOahvYB9133CJYMBwrPPD15dKg/bnu9Y8K0W4DFJN9jvYS+5QEEFfWpjnJUxd
-         rHOvUcGrXyCeMQaPtATLWwBSut3HR/GZNXQ3D1uaJpZaO7f88E1axyvlQHgKtKzoVif7
-         BmAMHIiijOdTbe760WL+8a8bnmBD2x802Kdx3FSsGI9GiZounpJ47jxk0yuc3v0XgVmo
-         RtcFCuSsNYeDE0xvMWSbGngpPJv5oBw7Z35/LjtIkvKEjdBXXnFyZRSjs7pGRbSd3Tt+
-         EVgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=oPLNTV7n0Ijb4QN5+/ZP2G9taYmSFsaYJE9s/1u9hZM=;
-        b=fxKvtXpTwG+ZaPxMsOYtC/OWccZHM+RUGSVRh8C83R9y2dirjeTYpGMJwu/wSoslwH
-         c/351g1dLC6+E2z3hoaTw5vm9FZtgychtrOi1zRFHbpP70koLDJgGb1DaydUj23uV4t2
-         6er20qnGsLEuZzVAfEdlGiwKi5nIUlyQZSFDOy5NvKa3PAF69XQ2Tu9r3ayB3Gbf+CBz
-         AEiPinmPnPKqLWQpnJb77pBcPNeq9OFGY9PexW1A6Z8adQxgR+Yr1fD2DBS8Fg9TJNrB
-         szuWHAozraGquc+2aYj7GRdtYBxypV3xwgAlQMOG/zPJ4q9XqjwCRaxW/Al+lPP9tIiQ
-         e6YQ==
-X-Gm-Message-State: AOAM5324/7zKnkkl8s1vt4Gzt8azcGNMOvxl5VDS6wMGzSDkPF313lYN
-        yO+LRYBxfRgmG+Br1rbaMNbMxg==
-X-Google-Smtp-Source: ABdhPJxgDm/fyRI4MiY9vpmBbhCagFjJGzxR3PP62y4dLAuol0ngRjqo5SRL31C8w7+svvwwsfoQgA==
-X-Received: by 2002:a2e:b8cc:0:b0:24d:c4a0:7ff4 with SMTP id s12-20020a2eb8cc000000b0024dc4a07ff4mr13947382ljp.378.1650966110734;
-        Tue, 26 Apr 2022 02:41:50 -0700 (PDT)
-Received: from eriador.lumag.spb.ru ([188.162.64.30])
-        by smtp.gmail.com with ESMTPSA id y28-20020a19641c000000b00471f6806403sm1330117lfb.16.2022.04.26.02.41.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 02:41:50 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-        quic_tdas@quicinc.com
-Subject: [PATCH v4 3/3] dt-bindings: clock: qcom,gcc-apq8064: split tsens to the child node
-Date:   Tue, 26 Apr 2022 12:41:44 +0300
-Message-Id: <20220426094144.2958416-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220426094144.2958416-1-dmitry.baryshkov@linaro.org>
-References: <20220426094144.2958416-1-dmitry.baryshkov@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1650968154; x=1682504154;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=ED9E86mWaIi1Q6en5l7HRo4ItpanEZ0wiCJUj9mkLTE=;
+  b=rpMHai2H4YFP3BRCQlPmaEf6Y6Hsqp+hK1g89J2CNJcTGW0vZROEfVmM
+   2B37wM/yee9D4FKMdDZk4s2hyMk12KwITYE7yKcQFPRcbsoQ+Z0VCJugA
+   gTR26YAgXlLY100hJEL9B0rnF6Qzt0XbpsmelVzddgCgs1ZyG7FjpK5QD
+   A=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 26 Apr 2022 03:15:51 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 03:15:51 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 26 Apr 2022 03:15:51 -0700
+Received: from [10.216.37.34] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 26 Apr
+ 2022 03:15:47 -0700
+Message-ID: <7a9fb53f-61a8-0e1e-decf-60629be0a478@quicinc.com>
+Date:   Tue, 26 Apr 2022 15:45:42 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] remoteproc: qcom: Add fallback mechanism for full
+ coredump collection
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     "Sibi Sankar (QUIC)" <quic_sibis@quicinc.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-remoteproc@vger.kernel.org" <linux-remoteproc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <1649269662-20338-1-git-send-email-quic_ylal@quicinc.com>
+ <YmLIMG62vPv4qtVe@builder.lan>
+From:   Yogesh Lal <quic_ylal@quicinc.com>
+In-Reply-To: <YmLIMG62vPv4qtVe@builder.lan>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Split tsens properties to the child node of the gcc. This follows the
-lead of ipq8064 (which also uses a separate node for tsens) and makes
-device tree closer to other platforms, where tsens is a completely
-separate device.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../bindings/clock/qcom,gcc-apq8064.yaml      | 45 +++++++------------
- 1 file changed, 17 insertions(+), 28 deletions(-)
+On 4/22/2022 8:52 PM, Bjorn Andersson wrote:
+> WARNING: This email originated from outside of Qualcomm. Please be wary of any links or attachments, and do not enable macros.
+>
+> On Wed 06 Apr 13:27 CDT 2022, Yogesh Lal wrote:
+>
+>> In case remoteproc's firmware missing minidump support, during crash
+>> scenario coredump does not collected. This change adds a fallback
+>> mechanism for full coredump collection in the event of a crash.
+>>
+>> Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
+>> ---
+>>   drivers/remoteproc/qcom_common.c   | 11 ++++++++---
+>>   drivers/remoteproc/qcom_q6v5_pas.c |  1 +
+>>   2 files changed, 9 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+>> index 4b91e3c..68bd0bc 100644
+>> --- a/drivers/remoteproc/qcom_common.c
+>> +++ b/drivers/remoteproc/qcom_common.c
+>> @@ -162,13 +162,18 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id)
+>>         * is initialized in memory and encryption status is set.
+>>         */
+>>        if (subsystem->regions_baseptr == 0 ||
+>> -         le32_to_cpu(subsystem->status) != 1 ||
+>> -         le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED ||
+>> -         le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
+>> +             le32_to_cpu(subsystem->status) != 1 ||
+>> +             le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED) {
+>> +                     return rproc_coredump(rproc);
+>> +             }
+>> +
+>> +     if (le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
+>>                dev_err(&rproc->dev, "Minidump not ready, skipping\n");
+>>                return;
+>>        }
+>>
+>> +     rproc_coredump_cleanup(rproc);
+> The patch looks good, but could you please explain in the commit message
+> why this needs to be added? If the thing described in the message
+> happens this code path wouldn't be taken.
+>
+> Should it be a separate patch, or is it needed because of the fallback
+> etc?
+>
+> Thanks,
+> Bjorn
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-index b867da12761e..f2762599f679 100644
---- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-@@ -23,47 +23,36 @@ description: |
- 
- properties:
-   compatible:
--    enum:
--      - qcom,gcc-apq8064
--      - qcom,gcc-msm8060
--
--  nvmem-cells:
--    minItems: 1
--    maxItems: 2
--    description:
--      Qualcomm TSENS (thermal sensor device) on some devices can
--      be part of GCC and hence the TSENS properties can also be part
--      of the GCC/clock-controller node.
--      For more details on the TSENS properties please refer
--      Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
--
--  nvmem-cell-names:
--    minItems: 1
-     items:
--      - const: calib
--      - const: calib_backup
--
--  '#thermal-sensor-cells':
--    const: 1
-+      - enum:
-+          - qcom,gcc-apq8064
-+          - qcom,gcc-msm8060
-+      - const: syscon
- 
- required:
-   - compatible
--  - nvmem-cells
--  - nvmem-cell-names
--  - '#thermal-sensor-cells'
- 
- unevaluatedProperties: false
- 
- examples:
-   - |
-     clock-controller@900000 {
--      compatible = "qcom,gcc-apq8064";
-+      compatible = "qcom,gcc-apq8064", "syscon";
-       reg = <0x00900000 0x4000>;
--      nvmem-cells = <&tsens_calib>, <&tsens_backup>;
--      nvmem-cell-names = "calib", "calib_backup";
-       #clock-cells = <1>;
-       #reset-cells = <1>;
-       #power-domain-cells = <1>;
--      #thermal-sensor-cells = <1>;
-+
-+      thermal-sensor {
-+        compatible = "qcom,msm8960-tsens";
-+
-+        nvmem-cells = <&tsens_calib>, <&tsens_backup>;
-+        nvmem-cell-names = "calib", "calib_backup";
-+        interrupts = <0 178 4>;
-+        interrupt-names = "uplow";
-+
-+        #qcom,sensors = <11>;
-+        #thermal-sensor-cells = <1>;
-+        };
-     };
- ...
--- 
-2.35.1
+Will push separate patch for it.
 
+Thanks
+
+Yogesh Lal
+
+
+>> +
+>>        ret = qcom_add_minidump_segments(rproc, subsystem);
+>>        if (ret) {
+>>                dev_err(&rproc->dev, "Failed with error: %d while adding minidump entries\n", ret);
+>> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+>> index 1ae47cc..40bf747 100644
+>> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+>> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+>> @@ -293,6 +293,7 @@ static const struct rproc_ops adsp_minidump_ops = {
+>>        .start = adsp_start,
+>>        .stop = adsp_stop,
+>>        .da_to_va = adsp_da_to_va,
+>> +     .parse_fw = qcom_register_dump_segments,
+>>        .load = adsp_load,
+>>        .panic = adsp_panic,
+>>        .coredump = adsp_minidump,
+>> --
+>> 2.7.4
+>>
