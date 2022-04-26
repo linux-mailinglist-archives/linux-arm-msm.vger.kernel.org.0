@@ -2,731 +2,422 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E913510C96
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 01:22:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FEFF510CA2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 01:25:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356064AbiDZX0B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 19:26:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36374 "EHLO
+        id S1356087AbiDZX2k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 19:28:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356059AbiDZX0A (ORCPT
+        with ESMTP id S240844AbiDZX2j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 19:26:00 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ABB9369F0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 16:22:50 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id m11so275026oib.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 16:22:50 -0700 (PDT)
+        Tue, 26 Apr 2022 19:28:39 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B62D1D32E;
+        Tue, 26 Apr 2022 16:25:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8JM3YAoXZIaxl8CJ+Jntk7vC7GmY13GOCI7jWedlCxU=;
-        b=el7o0fQxIPlVg5dYkbL4eU5o3BL3rl5pdH4WonXqoALz6OBdt3VgVXHGs7YebRXZSz
-         T8IHbQgwUCks5U+Z8U7ZQoSCK8uLhSB7gB1oRyWQbCkqiolhjkYRbhxkrd0u8mQ3jPmj
-         7igHYFiPBb8XCPQUQ6lciY3EurNrs/WMszZgX3UhPuyF2w2idRiM83WoWIOn5Sx+A/BP
-         dBnDVaRhmsdEjyxWNzJvvdHiNaaWLnrX8N3zzxCUzKk1qgF0AL2h25/jVdT78ivDxaBY
-         JRgOqceIbeU5O+hZzq8XhaKzS1T23HD1h7Gy+UOYMtEYo6VpaHJb9nVNlhmRa8orXdyW
-         /e2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8JM3YAoXZIaxl8CJ+Jntk7vC7GmY13GOCI7jWedlCxU=;
-        b=J2vIvVmEqS9jS9ubk6go0z3GVPkZtaTFgkoRhkgVRQWJi+BIJblqXIwzWQzjvXgJHS
-         M1rkdCkB21Icu8gNh/CU16kiX49wnuehfryvlrJYTT6E7M48sOXzgisrq3Uf08W3QFmT
-         U9E+7Y+5N4+DK3eF7makiE1Jv8qfxbOSwfweGeLhiWqZ2RrveTp9P7Up+6JyPGin1br/
-         eOZpnqpTT/30EhLkjBj9MRKNjy/vejEwW6hjCTSZvYY93ZQCclyrkos/E415kBEsqv4e
-         SgfkoHhA7IVeymV4QnrR/lQ8zqROOIM/VVsOERvbHIxXAcnC3PbV0yUJLZq7TCKKCou5
-         8E3A==
-X-Gm-Message-State: AOAM532ArjzmCuC7U1ANXWExEGS343+doLFaO71KgFFIRuRQm7MO4yTY
-        Qyoe/qgA1zkY1sI6eabaM6p0Fg==
-X-Google-Smtp-Source: ABdhPJyoonkDw6Lkfvi+bE4vQGvfnWPrknZur5Ew+bY9QoUkDPQiJZ5+szO9YpUjGagQ6DWPY1yLrQ==
-X-Received: by 2002:a05:6808:f0e:b0:322:e85c:2494 with SMTP id m14-20020a0568080f0e00b00322e85c2494mr11684890oiw.197.1651015369019;
-        Tue, 26 Apr 2022 16:22:49 -0700 (PDT)
-Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id n28-20020a0568080a1c00b0032578b7e377sm253000oij.26.2022.04.26.16.22.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 16:22:48 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 1/2] dt-bindings: clock: Add Qualcomm SC8280XP GCC bindings
-Date:   Tue, 26 Apr 2022 16:24:43 -0700
-Message-Id: <20220426232444.1761869-2-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220426232444.1761869-1-bjorn.andersson@linaro.org>
-References: <20220426232444.1761869-1-bjorn.andersson@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651015529; x=1682551529;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=VBHhZTUndDoE3XZwQ3zJr364tYVtcvh1w48A7WY8HM4=;
+  b=T4V+XCwKf6GKo+0Q1rn7/D6D1Izao6YMgYOxnIeQHEYsRc2r5aQzR4oo
+   CNzfTHgr05lsYf6iwnK1h8O4XsrxvJUdrgG9EaB5JTVZinGDDLoodIkK+
+   lEY+/w9VPR/+OqZnVoxiGhYz3C2bxNYK9l23YnzWWgEb+bZypr5AgQUeV
+   o=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 26 Apr 2022 16:25:27 -0700
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 16:25:27 -0700
+Received: from [10.253.37.230] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 26 Apr
+ 2022 16:25:25 -0700
+Message-ID: <e557a608-f488-2c3b-8e81-458e28f28520@quicinc.com>
+Date:   Wed, 27 Apr 2022 07:25:23 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75 autolearn=no autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH v1] Bluetooth: btusb: Set
+ HCI_QUIRK_BROKEN_ERR_DATA_REPORTING for QCA
+Content-Language: en-US
+To:     Marcel Holtmann <marcel@holtmann.org>
+CC:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        BlueZ <linux-bluetooth@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <1650012368-13505-1-git-send-email-quic_zijuhu@quicinc.com>
+ <1D02DBF7-9368-43D5-9062-96CC73E22B57@holtmann.org>
+ <23ab1e90-fc3c-117c-01e2-bc73288b7d47@quicinc.com>
+ <389C696B-0A23-4033-A047-922EB2E7A997@holtmann.org>
+From:   quic_zijuhu <quic_zijuhu@quicinc.com>
+In-Reply-To: <389C696B-0A23-4033-A047-922EB2E7A997@holtmann.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add binding for the Qualcomm SC8280XP Global Clock controller.
+On 4/27/2022 2:14 AM, Marcel Holtmann wrote:
+> Hi,
+> 
+>>>> Set HCI_QUIRK_BROKEN_ERR_DATA_REPORTING for QCA controllers since
+>>>> they answer HCI_OP_READ_DEF_ERR_DATA_REPORTING with error code
+>>>> "UNKNOWN HCI COMMAND" as shown below:
+>>>>
+>>>> [ 580.517552] Bluetooth: hci0: unexpected cc 0x0c5a length: 1 < 2
+>>>> [ 580.517660] Bluetooth: hci0: Opcode 0x c5a failed: -38
+>>>>
+>>>> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+>>>> ---
+>>>> drivers/bluetooth/btusb.c | 2 ++
+>>>> 1 file changed, 2 insertions(+)
+>>>>
+>>>> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+>>>> index 06a854a2507e..a33f8705f147 100644
+>>>> --- a/drivers/bluetooth/btusb.c
+>>>> +++ b/drivers/bluetooth/btusb.c
+>>>> @@ -3340,6 +3340,8 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+>>>> 	 */
+>>>> 	set_bit(HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN, &hdev->quirks);
+>>>>
+>>>> +	set_bit(HCI_QUIRK_BROKEN_ERR_DATA_REPORTING, &hdev->quirks);
+>>>> +
+>>>> 	return 0;
+>>>> }
+>>>
+>>> please include the supported commands output from btmon that indicates that this hardware declares support for this command.
+>>>
+>> hcitool -i hci0 cmd 0x04 0x02
+>> < HCI Command: ogf 0x04, ocf 0x0002, plen 0
+>>> HCI Event: 0x0e plen 68
+>> 01 02 10 00 FF FF FB 03 CE FF EF FF FF FF FF 1F F2 0F E8 FE
+>> 3F F7 8F FF 1C 00 04 00 61 FF FF FF 7F BE 20 F5 FF F0 FF FF
+>> FF FF FF FF FF EF FF FF FF FF 03 00 00 00 00 00 00 00 00 00
+>> 00 00 00 00 00 00 00 00
+>>
+>> btmon output:
+>> < HCI Command: Read Local Supported Commands (0x04|0x0002) plen 0 5.414488
+>>> HCI Event: Command Complete (0x0e) plen 68 5.419751
+>>      Read Local Supported Commands (0x04|0x0002) ncmd 1
+>>        Status: Success (0x00)
+>>        Commands: 288 entries
+>>          Inquiry (Octet 0 - Bit 0)
+>>          Inquiry Cancel (Octet 0 - Bit 1)
+>>          Periodic Inquiry Mode (Octet 0 - Bit 2)
+>>          Exit Periodic Inquiry Mode (Octet 0 - Bit 3)
+>>          Create Connection (Octet 0 - Bit 4)
+>>          Disconnect (Octet 0 - Bit 5)
+>>          Add SCO Connection (Octet 0 - Bit 6)
+>>          Create Connection Cancel (Octet 0 - Bit 7)
+>>          Accept Connection Request (Octet 1 - Bit 0)
+>>          Reject Connection Request (Octet 1 - Bit 1)
+>>          Link Key Request Reply (Octet 1 - Bit 2)
+>>          Link Key Request Negative Reply (Octet 1 - Bit 3)
+>>          PIN Code Request Reply (Octet 1 - Bit 4)
+>>          PIN Code Request Negative Reply (Octet 1 - Bit 5)
+>>          Change Connection Packet Type (Octet 1 - Bit 6)
+>>          Authentication Requested (Octet 1 - Bit 7)
+>>          Set Connection Encryption (Octet 2 - Bit 0)
+>>          Change Connection Link Key (Octet 2 - Bit 1)
+>>          Remote Name Request (Octet 2 - Bit 3)
+>>          Remote Name Request Cancel (Octet 2 - Bit 4)
+>>          Read Remote Supported Features (Octet 2 - Bit 5)
+>>          Read Remote Extended Features (Octet 2 - Bit 6)
+>>          Read Remote Version Information (Octet 2 - Bit 7)
+>>          Read Clock Offset (Octet 3 - Bit 0)
+>>          Read LMP Handle (Octet 3 - Bit 1)
+>>          Hold Mode (Octet 4 - Bit 1)
+>>          Sniff Mode (Octet 4 - Bit 2)
+>>          Exit Sniff Mode (Octet 4 - Bit 3)
+>>          QoS Setup (Octet 4 - Bit 6)
+>>          Role Discovery (Octet 4 - Bit 7)
+>>          Switch Role (Octet 5 - Bit 0)
+>>          Read Link Policy Settings (Octet 5 - Bit 1)
+>>          Write Link Policy Settings (Octet 5 - Bit 2)
+>>          Read Default Link Policy Settings (Octet 5 - Bit 3)
+>>          Write Default Link Policy Settings (Octet 5 - Bit 4)
+>>          Flow Specification (Octet 5 - Bit 5)
+>>          Set Event Mask (Octet 5 - Bit 6)
+>>          Reset (Octet 5 - Bit 7)
+>>          Set Event Filter (Octet 6 - Bit 0)
+>>          Flush (Octet 6 - Bit 1)
+>>          Read PIN Type (Octet 6 - Bit 2)
+>>          Write PIN Type (Octet 6 - Bit 3)
+>>          Read Stored Link Key (Octet 6 - Bit 5)
+>>          Write Stored Link Key (Octet 6 - Bit 6)
+>>          Delete Stored Link Key (Octet 6 - Bit 7)
+>>          Write Local Name (Octet 7 - Bit 0)
+>>          Read Local Name (Octet 7 - Bit 1)
+>>          Read Connection Accept Timeout (Octet 7 - Bit 2)
+>>          Write Connection Accept Timeout (Octet 7 - Bit 3)
+>>          Read Page Timeout (Octet 7 - Bit 4)
+>>          Write Page Timeout (Octet 7 - Bit 5)
+>>          Read Scan Enable (Octet 7 - Bit 6)
+>>          Write Scan Enable (Octet 7 - Bit 7)
+>>          Read Page Scan Activity (Octet 8 - Bit 0)
+>>          Write Page Scan Activity (Octet 8 - Bit 1)
+>>          Read Inquiry Scan Activity (Octet 8 - Bit 2)
+>>          Write Inquiry Scan Activity (Octet 8 - Bit 3)
+>>          Read Authentication Enable (Octet 8 - Bit 4)
+>>          Write Authentication Enable (Octet 8 - Bit 5)
+>>          Read Encryption Mode (Octet 8 - Bit 6)
+>>          Write Encryption Mode (Octet 8 - Bit 7)
+>>          Read Class of Device (Octet 9 - Bit 0)
+>>          Write Class of Device (Octet 9 - Bit 1)
+>>          Read Voice Setting (Octet 9 - Bit 2)
+>>          Write Voice Setting (Octet 9 - Bit 3)
+>>          Read Automatic Flush Timeout (Octet 9 - Bit 4)
+>>          Write Automatic Flush Timeout (Octet 9 - Bit 5)
+>>          Read Num Broadcast Retransmissions (Octet 9 - Bit 6)
+>>          Write Num Broadcast Retransmissions (Octet 9 - Bit 7)
+>>          Read Hold Mode Activity (Octet 10 - Bit 0)
+>>          Write Hold Mode Activity (Octet 10 - Bit 1)
+>>          Read Transmit Power Level (Octet 10 - Bit 2)
+>>          Read Sync Flow Control Enable (Octet 10 - Bit 3)
+>>          Write Sync Flow Control Enable (Octet 10 - Bit 4)
+>>          Set Controller To Host Flow Control (Octet 10 - Bit 5)
+>>          Host Buffer Size (Octet 10 - Bit 6)
+>>          Host Number of Completed Packets (Octet 10 - Bit 7)
+>>          Read Link Supervision Timeout (Octet 11 - Bit 0)
+>>          Write Link Supervision Timeout (Octet 11 - Bit 1)
+>>          Read Number of Supported IAC (Octet 11 - Bit 2)
+>>          Read Current IAC LAP (Octet 11 - Bit 3)
+>>          Write Current IAC LAP (Octet 11 - Bit 4)
+>>          Set AFH Host Channel Classification (Octet 12 - Bit 1)
+>>          Read Inquiry Scan Type (Octet 12 - Bit 4)
+>>          Write Inquiry Scan Type (Octet 12 - Bit 5)
+>>          Read Inquiry Mode (Octet 12 - Bit 6)
+>>          Write Inquiry Mode (Octet 12 - Bit 7)
+>>          Read Page Scan Type (Octet 13 - Bit 0)
+>>          Write Page Scan Type (Octet 13 - Bit 1)
+>>          Read AFH Channel Assessment Mode (Octet 13 - Bit 2)
+>>          Write AFH Channel Assessment Mode (Octet 13 - Bit 3)
+>>          Read Local Version Information (Octet 14 - Bit 3)
+>>          Read Local Supported Features (Octet 14 - Bit 5)
+>>          Read Local Extended Features (Octet 14 - Bit 6)
+>>          Read Buffer Size (Octet 14 - Bit 7)
+>>          Read BD ADDR (Octet 15 - Bit 1)
+>>          Read Failed Contact Counter (Octet 15 - Bit 2)
+>>          Reset Failed Contact Counter (Octet 15 - Bit 3)
+>>          Read Link Quality (Octet 15 - Bit 4)
+>>          Read RSSI (Octet 15 - Bit 5)
+>>          Read AFH Channel Map (Octet 15 - Bit 6)
+>>          Read Clock (Octet 15 - Bit 7)
+>>          Read Loopback Mode (Octet 16 - Bit 0)
+>>          Write Loopback Mode (Octet 16 - Bit 1)
+>>          Enable Device Under Test Mode (Octet 16 - Bit 2)
+>>          Setup Synchronous Connection (Octet 16 - Bit 3)
+>>          Accept Synchronous Connection Request (Octet 16 - Bit 4)
+>>          Reject Synchronous Connection Request (Octet 16 - Bit 5)
+>>          Read Extended Inquiry Response (Octet 17 - Bit 0)
+>>          Write Extended Inquiry Response (Octet 17 - Bit 1)
+>>          Refresh Encryption Key (Octet 17 - Bit 2)
+>>          Sniff Subrating (Octet 17 - Bit 4)
+>>          Read Simple Pairing Mode (Octet 17 - Bit 5)
+>>          Write Simple Pairing Mode (Octet 17 - Bit 6)
+>>          Read Local OOB Data (Octet 17 - Bit 7)
+>>          Read Inquiry Response TX Power Level (Octet 18 - Bit 0)
+>>          Write Inquiry Transmit Power Level (Octet 18 - Bit 1)
+>>          Read Default Erroneous Data Reporting (Octet 18 - Bit 2)
+>>          Write Default Erroneous Data Reporting (Octet 18 - Bit 3)
+>>          IO Capability Request Reply (Octet 18 - Bit 7)
+>>          User Confirmation Request Reply (Octet 19 - Bit 0)
+>>          User Confirmation Request Neg Reply (Octet 19 - Bit 1)
+>>          User Passkey Request Reply (Octet 19 - Bit 2)
+>>          User Passkey Request Negative Reply (Octet 19 - Bit 3)
+>>          Remote OOB Data Request Reply (Octet 19 - Bit 4)
+>>          Write Simple Pairing Debug Mode (Octet 19 - Bit 5)
+>>          Enhanced Flush (Octet 19 - Bit 6)
+>>          Remote OOB Data Request Neg Reply (Octet 19 - Bit 7)
+>>          Send Keypress Notification (Octet 20 - Bit 2)
+>>          IO Capability Request Negative Reply (Octet 20 - Bit 3)
+>>          Read Encryption Key Size (Octet 20 - Bit 4)
+>>          Set Event Mask Page 2 (Octet 22 - Bit 2)
+>>          Read Enhanced Transmit Power Level (Octet 24 - Bit 0)
+>>          Read LE Host Supported (Octet 24 - Bit 5)
+>>          Write LE Host Supported (Octet 24 - Bit 6)
+>>          LE Set Event Mask (Octet 25 - Bit 0)
+>>          LE Read Buffer Size (Octet 25 - Bit 1)
+>>          LE Read Local Supported Features (Octet 25 - Bit 2)
+>>          Octet 25 - Bit 3
+>>          LE Set Random Address (Octet 25 - Bit 4)
+>>          LE Set Advertising Parameters (Octet 25 - Bit 5)
+>>          LE Read Advertising Channel TX Power (Octet 25 - Bit 6)
+>>          LE Set Advertising Data (Octet 25 - Bit 7)
+>>          LE Set Scan Response Data (Octet 26 - Bit 0)
+>>          LE Set Advertise Enable (Octet 26 - Bit 1)
+>>          LE Set Scan Parameters (Octet 26 - Bit 2)
+>>          LE Set Scan Enable (Octet 26 - Bit 3)
+>>          LE Create Connection (Octet 26 - Bit 4)
+>>          LE Create Connection Cancel (Octet 26 - Bit 5)
+>>          LE Read White List Size (Octet 26 - Bit 6)
+>>          LE Clear White List (Octet 26 - Bit 7)
+>>          LE Add Device To White List (Octet 27 - Bit 0)
+>>          LE Remove Device From White List (Octet 27 - Bit 1)
+>>          LE Connection Update (Octet 27 - Bit 2)
+>>          LE Set Host Channel Classification (Octet 27 - Bit 3)
+>>          LE Read Channel Map (Octet 27 - Bit 4)
+>>          LE Read Remote Used Features (Octet 27 - Bit 5)
+>>          LE Encrypt (Octet 27 - Bit 6)
+>>          LE Rand (Octet 27 - Bit 7)
+>>          LE Start Encryption (Octet 28 - Bit 0)
+>>          LE Long Term Key Request Reply (Octet 28 - Bit 1)
+>>          LE Long Term Key Request Neg Reply (Octet 28 - Bit 2)
+>>          LE Read Supported States (Octet 28 - Bit 3)
+>>          LE Receiver Test (Octet 28 - Bit 4)
+>>          LE Transmitter Test (Octet 28 - Bit 5)
+>>          LE Test End (Octet 28 - Bit 6)
+>>          Octet 29 - Bit 1
+>>          Octet 29 - Bit 2
+>>          Enhanced Setup Synchronous Connection (Octet 29 - Bit 3)
+>>          Enhanced Accept Synchronous Connection Request (Octet 29 - Bit 4)
+>>          Read Local Supported Codecs (Octet 29 - Bit 5)
+>>          Set External Frame Configuration (Octet 29 - Bit 7)
+>>          Set Triggered Clock Capture (Octet 30 - Bit 5)
+>>          Set Connectionless Slave Broadcast (Octet 31 - Bit 0)
+>>          Start Synchronization Train (Octet 31 - Bit 2)
+>>          Set Reserved LT_ADDR (Octet 31 - Bit 4)
+>>          Delete Reserved LT_ADDR (Octet 31 - Bit 5)
+>>          Set Connectionless Slave Broadcast Data (Octet 31 - Bit 6)
+>>          Read Synchronization Train Parameters (Octet 31 - Bit 7)
+>>          Write Synchronization Train Parameters (Octet 32 - Bit 0)
+>>          Remote OOB Extended Data Request Reply (Octet 32 - Bit 1)
+>>          Read Secure Connections Host Support (Octet 32 - Bit 2)
+>>          Write Secure Connections Host Support (Octet 32 - Bit 3)
+>>          Read Authenticated Payload Timeout (Octet 32 - Bit 4)
+>>          Write Authenticated Payload Timeout (Octet 32 - Bit 5)
+>>          Read Local OOB Extended Data (Octet 32 - Bit 6)
+>>          Write Secure Connections Test Mode (Octet 32 - Bit 7)
+>>          LE Remote Connection Parameter Request Reply (Octet 33 - Bit 4)
+>>          LE Remote Connection Parameter Request Negative Reply (Octet 33 - Bit 5)
+>>          LE Set Data Length (Octet 33 - Bit 6)
+>>          LE Read Suggested Default Data Length (Octet 33 - Bit 7)
+>>          LE Write Suggested Default Data Length (Octet 34 - Bit 0)
+>>          LE Read Local P-256 Public Key (Octet 34 - Bit 1)
+>>          LE Generate DHKey (Octet 34 - Bit 2)
+>>          LE Add Device To Resolving List (Octet 34 - Bit 3)
+>>          LE Remove Device From Resolving List (Octet 34 - Bit 4)
+>>          LE Clear Resolving List (Octet 34 - Bit 5)
+>>          LE Read Resolving List Size (Octet 34 - Bit 6)
+>>          LE Read Peer Resolvable Address (Octet 34 - Bit 7)
+>>          LE Read Local Resolvable Address (Octet 35 - Bit 0)
+>>          LE Set Address Resolution Enable (Octet 35 - Bit 1)
+>>          LE Set Resolvable Private Address Timeout (Octet 35 - Bit 2)
+>>          LE Read Maximum Data Length (Octet 35 - Bit 3)
+>>          Octet 35 - Bit 4
+>>          Octet 35 - Bit 5
+>>          Octet 35 - Bit 6
+>>          Octet 35 - Bit 7
+>>          Octet 36 - Bit 0
+>>          Octet 36 - Bit 1
+>>          Octet 36 - Bit 2
+>>          Octet 36 - Bit 3
+>>          Octet 36 - Bit 4
+>>          Octet 36 - Bit 5
+>>          Octet 36 - Bit 6
+>>          Octet 36 - Bit 7
+>>          Octet 37 - Bit 0
+>>          Octet 37 - Bit 1
+>>          Octet 37 - Bit 2
+>>          Octet 37 - Bit 3
+>>          Octet 37 - Bit 4
+>>          Octet 37 - Bit 5
+>>          Octet 37 - Bit 6
+>>          Octet 37 - Bit 7
+>>          Octet 38 - Bit 0
+>>          Octet 38 - Bit 1
+>>          Octet 38 - Bit 2
+>>          Octet 38 - Bit 3
+>>          Octet 38 - Bit 4
+>>          Octet 38 - Bit 5
+>>          Octet 38 - Bit 6
+>>          Octet 38 - Bit 7
+>>          Octet 39 - Bit 0
+>>          Octet 39 - Bit 1
+>>          Octet 39 - Bit 2
+>>          Octet 39 - Bit 3
+>>          Octet 39 - Bit 4
+>>          Octet 39 - Bit 5
+>>          Octet 39 - Bit 6
+>>          Octet 39 - Bit 7
+>>          Octet 40 - Bit 0
+>>          Octet 40 - Bit 1
+>>          Octet 40 - Bit 2
+>>          Octet 40 - Bit 3
+>>          Octet 40 - Bit 4
+>>          Octet 40 - Bit 5
+>>          Octet 40 - Bit 6
+>>          Octet 40 - Bit 7
+>>          Octet 41 - Bit 0
+>>          Octet 41 - Bit 1
+>>          Octet 41 - Bit 2
+>>          Octet 41 - Bit 3
+>>          Octet 41 - Bit 5
+>>          Octet 41 - Bit 6
+>>          Octet 41 - Bit 7
+>>          Octet 42 - Bit 0
+>>          Octet 42 - Bit 1
+>>          Octet 42 - Bit 2
+>>          Octet 42 - Bit 3
+>>          Octet 42 - Bit 4
+>>          Octet 42 - Bit 5
+>>          Octet 42 - Bit 6
+>>          Octet 42 - Bit 7
+>>          Octet 43 - Bit 0
+>>          Octet 43 - Bit 1
+>>          Octet 43 - Bit 2
+>>          Octet 43 - Bit 3
+>>          Octet 43 - Bit 4
+>>          Octet 43 - Bit 5
+>>          Octet 43 - Bit 6
+>>          Octet 43 - Bit 7
+>>          Octet 44 - Bit 0
+>>          Octet 44 - Bit 1
+>>          Octet 44 - Bit 2
+>>          Octet 44 - Bit 3
+>>          Octet 44 - Bit 4
+>>          Octet 44 - Bit 5
+>>          Octet 44 - Bit 6
+>>          Octet 44 - Bit 7
+>>          Octet 45 - Bit 0
+>>          Octet 45 - Bit 1
+>>          Octet 45 - Bit 2
+>>          Octet 45 - Bit 3
+>>          Octet 45 - Bit 4
+>>          Octet 45 - Bit 5
+>>          Octet 45 - Bit 6
+>>          Octet 45 - Bit 7
+>>          Octet 46 - Bit 0
+>>          Octet 46 - Bit 1
+> 
+> you might want to use a recent btmon. However can you show how the Read Default Erroneous Data Reporting is failing? It sounds like this hardware is fundamentally broken.
+> 
+# hcitool -i hci0 cmd 0x03 0x5a
+< HCI Command: ogf 0x03, ocf 0x005a, plen 0
+> HCI Event: 0x0e plen 4
+  01 5A 0C 01
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+btmon output:
+@ RAW Open: hcitool (privileged) version 2.22                                                                                          {0x0002} 331.950253
+< HCI Command: Read Default Erroneous Data Reporting (0x03|0x005a) plen 0                                                                    #1 331.950535
+> HCI Event: Command Complete (0x0e) plen 4                                                                                                  #2 331.951421
+      Read Default Erroneous Data Reporting (0x03|0x005a) ncmd 1
+        Status: Unknown HCI Command (0x01)
+@ RAW Close: hcitool                                                                                                                   
 
-Changes since v2:
-- Dropped clock-names, in favor of forcing implementation to rely on index
-  based clock matching.
-- Updated descriptions for a few clocks that only had their clock names.
-
- .../bindings/clock/qcom,gcc-sc8280xp.yaml     | 129 +++++
- include/dt-bindings/clock/qcom,gcc-sc8280xp.h | 496 ++++++++++++++++++
- 2 files changed, 625 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
- create mode 100644 include/dt-bindings/clock/qcom,gcc-sc8280xp.h
-
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-new file mode 100644
-index 000000000000..bf4f9dd3ec85
---- /dev/null
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-@@ -0,0 +1,129 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/clock/qcom,gcc-sc8280xp.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Global Clock & Reset Controller Binding for SC8280xp
-+
-+maintainers:
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+
-+description: |
-+  Qualcomm global clock control module which supports the clocks, resets and
-+  power domains on SC8280xp.
-+
-+  See also:
-+  - dt-bindings/clock/qcom,gcc-sc8280xp.h
-+
-+properties:
-+  compatible:
-+    const: qcom,gcc-sc8280xp
-+
-+  clocks:
-+    items:
-+      - description: XO reference clock
-+      - description: Sleep clock
-+      - description: UFS memory first RX symbol clock
-+      - description: UFS memory second RX symbol clock
-+      - description: UFS memory first TX symbol clock
-+      - description: UFS card first RX symbol clock
-+      - description: UFS card second RX symbol clock
-+      - description: UFS card first TX symbol clock
-+      - description: Primary USB SuperSpeed pipe clock
-+      - description: USB4 PHY pipegmux clock source
-+      - description: USB4 PHY DP gmux clock source
-+      - description: USB4 PHY sys piegmux clock source
-+      - description: USB4 PHY PCIe pipe clock
-+      - description: USB4 PHY router max pipe clock
-+      - description: Primary USB4 RX0 clock
-+      - description: Primary USB4 RX1 clock
-+      - description: Secondary USB SuperSpeed pipe clock
-+      - description: Second USB4 PHY pipegmux clock source
-+      - description: Second USB4 PHY DP gmux clock source
-+      - description: Second USB4 PHY sys pipegmux clock source
-+      - description: Second USB4 PHY PCIe pipe clock
-+      - description: Second USB4 PHY router max pipe clock
-+      - description: Secondary USB4 RX0 clock
-+      - description: Secondary USB4 RX0 clock
-+      - description: Multiport USB first SupserSpeed pipe clock
-+      - description: Multiport USB second SuperSpeed pipe clock
-+      - description: PCIe 2a pipe clock
-+      - description: PCIe 2b pipe clock
-+      - description: PCIe 3a pipe clock
-+      - description: PCIe 3b pipe clock
-+      - description: PCIe 4 pipe clock
-+      - description: First EMAC controller reference clock
-+      - description: Second EMAC controller reference clock
-+
-+  '#clock-cells':
-+    const: 1
-+
-+  '#reset-cells':
-+    const: 1
-+
-+  '#power-domain-cells':
-+    const: 1
-+
-+  reg:
-+    maxItems: 1
-+
-+  protected-clocks:
-+    description:
-+      Protected clock specifier list as per common clock binding.
-+
-+required:
-+  - compatible
-+  - clocks
-+  - reg
-+  - '#clock-cells'
-+  - '#reset-cells'
-+  - '#power-domain-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,rpmh.h>
-+    clock-controller@100000 {
-+      compatible = "qcom,gcc-sc8280xp";
-+      reg = <0x00100000 0x1f0000>;
-+      clocks = <&rpmhcc RPMH_CXO_CLK>,
-+               <&sleep_clk>,
-+               <&ufs_phy_rx_symbol_0_clk>,
-+               <&ufs_phy_rx_symbol_1_clk>,
-+               <&ufs_phy_tx_symbol_0_clk>,
-+               <&ufs_card_rx_symbol_0_clk>,
-+               <&ufs_card_rx_symbol_1_clk>,
-+               <&ufs_card_tx_symbol_0_clk>,
-+               <&usb_0_ssphy>,
-+               <&gcc_usb4_phy_pipegmux_clk_src>,
-+               <&gcc_usb4_phy_dp_gmux_clk_src>,
-+               <&gcc_usb4_phy_sys_pipegmux_clk_src>,
-+               <&usb4_phy_gcc_usb4_pcie_pipe_clk>,
-+               <&usb4_phy_gcc_usb4rtr_max_pipe_clk>,
-+               <&qusb4phy_gcc_usb4_rx0_clk>,
-+               <&qusb4phy_gcc_usb4_rx1_clk>,
-+               <&usb_1_ssphy>,
-+               <&gcc_usb4_1_phy_pipegmux_clk_src>,
-+               <&gcc_usb4_1_phy_dp_gmux_clk_src>,
-+               <&gcc_usb4_1_phy_sys_pipegmux_clk_src>,
-+               <&usb4_1_phy_gcc_usb4_pcie_pipe_clk>,
-+               <&usb4_1_phy_gcc_usb4rtr_max_pipe_clk>,
-+               <&qusb4phy_1_gcc_usb4_rx0_clk>,
-+               <&qusb4phy_1_gcc_usb4_rx1_clk>,
-+               <&usb_2_ssphy>,
-+               <&usb_3_ssphy>,
-+               <&pcie2a_lane>,
-+               <&pcie2b_lane>,
-+               <&pcie3a_lane>,
-+               <&pcie3b_lane>,
-+               <&pcie4_lane>,
-+               <&rxc0_ref_clk>,
-+               <&rxc1_ref_clk>;
-+
-+      #clock-cells = <1>;
-+      #reset-cells = <1>;
-+      #power-domain-cells = <1>;
-+    };
-+...
-diff --git a/include/dt-bindings/clock/qcom,gcc-sc8280xp.h b/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
-new file mode 100644
-index 000000000000..cb2fb638825c
---- /dev/null
-+++ b/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
-@@ -0,0 +1,496 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-+/*
-+ * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022, Linaro Ltd.
-+ */
-+
-+#ifndef _DT_BINDINGS_CLK_QCOM_GCC_DIREWOLF_H
-+#define _DT_BINDINGS_CLK_QCOM_GCC_DIREWOLF_H
-+
-+/* GCC clocks */
-+#define GCC_GPLL0					0
-+#define GCC_GPLL0_OUT_EVEN				1
-+#define GCC_GPLL2					2
-+#define GCC_GPLL4					3
-+#define GCC_GPLL7					4
-+#define GCC_GPLL8					5
-+#define GCC_GPLL9					6
-+#define GCC_AGGRE_NOC_PCIE0_TUNNEL_AXI_CLK		7
-+#define GCC_AGGRE_NOC_PCIE1_TUNNEL_AXI_CLK		8
-+#define GCC_AGGRE_NOC_PCIE_4_AXI_CLK			9
-+#define GCC_AGGRE_NOC_PCIE_SOUTH_SF_AXI_CLK		10
-+#define GCC_AGGRE_UFS_CARD_AXI_CLK			11
-+#define GCC_AGGRE_UFS_PHY_AXI_CLK			12
-+#define GCC_AGGRE_USB3_MP_AXI_CLK			13
-+#define GCC_AGGRE_USB3_PRIM_AXI_CLK			14
-+#define GCC_AGGRE_USB3_SEC_AXI_CLK			15
-+#define GCC_AGGRE_USB4_1_AXI_CLK			16
-+#define GCC_AGGRE_USB4_AXI_CLK				17
-+#define GCC_AGGRE_USB_NOC_AXI_CLK			18
-+#define GCC_AGGRE_USB_NOC_NORTH_AXI_CLK			19
-+#define GCC_AGGRE_USB_NOC_SOUTH_AXI_CLK			20
-+#define GCC_AHB2PHY0_CLK				21
-+#define GCC_AHB2PHY2_CLK				22
-+#define GCC_BOOT_ROM_AHB_CLK				23
-+#define GCC_CAMERA_AHB_CLK				24
-+#define GCC_CAMERA_HF_AXI_CLK				25
-+#define GCC_CAMERA_SF_AXI_CLK				26
-+#define GCC_CAMERA_THROTTLE_NRT_AXI_CLK			27
-+#define GCC_CAMERA_THROTTLE_RT_AXI_CLK			28
-+#define GCC_CAMERA_THROTTLE_XO_CLK			29
-+#define GCC_CAMERA_XO_CLK				30
-+#define GCC_CFG_NOC_USB3_MP_AXI_CLK			31
-+#define GCC_CFG_NOC_USB3_PRIM_AXI_CLK			32
-+#define GCC_CFG_NOC_USB3_SEC_AXI_CLK			33
-+#define GCC_CNOC_PCIE0_TUNNEL_CLK			34
-+#define GCC_CNOC_PCIE1_TUNNEL_CLK			35
-+#define GCC_CNOC_PCIE4_QX_CLK				36
-+#define GCC_DDRSS_GPU_AXI_CLK				37
-+#define GCC_DDRSS_PCIE_SF_TBU_CLK			38
-+#define GCC_DISP1_AHB_CLK				39
-+#define GCC_DISP1_HF_AXI_CLK				40
-+#define GCC_DISP1_SF_AXI_CLK				41
-+#define GCC_DISP1_THROTTLE_NRT_AXI_CLK			42
-+#define GCC_DISP1_THROTTLE_RT_AXI_CLK			43
-+#define GCC_DISP1_XO_CLK				44
-+#define GCC_DISP_AHB_CLK				45
-+#define GCC_DISP_HF_AXI_CLK				46
-+#define GCC_DISP_SF_AXI_CLK				47
-+#define GCC_DISP_THROTTLE_NRT_AXI_CLK			48
-+#define GCC_DISP_THROTTLE_RT_AXI_CLK			49
-+#define GCC_DISP_XO_CLK					50
-+#define GCC_EMAC0_AXI_CLK				51
-+#define GCC_EMAC0_PTP_CLK				52
-+#define GCC_EMAC0_PTP_CLK_SRC				53
-+#define GCC_EMAC0_RGMII_CLK				54
-+#define GCC_EMAC0_RGMII_CLK_SRC				55
-+#define GCC_EMAC0_SLV_AHB_CLK				56
-+#define GCC_EMAC1_AXI_CLK				57
-+#define GCC_EMAC1_PTP_CLK				58
-+#define GCC_EMAC1_PTP_CLK_SRC				59
-+#define GCC_EMAC1_RGMII_CLK				60
-+#define GCC_EMAC1_RGMII_CLK_SRC				61
-+#define GCC_EMAC1_SLV_AHB_CLK				62
-+#define GCC_GP1_CLK					63
-+#define GCC_GP1_CLK_SRC					64
-+#define GCC_GP2_CLK					65
-+#define GCC_GP2_CLK_SRC					66
-+#define GCC_GP3_CLK					67
-+#define GCC_GP3_CLK_SRC					68
-+#define GCC_GP4_CLK					69
-+#define GCC_GP4_CLK_SRC					70
-+#define GCC_GP5_CLK					71
-+#define GCC_GP5_CLK_SRC					72
-+#define GCC_GPU_CFG_AHB_CLK				73
-+#define GCC_GPU_GPLL0_CLK_SRC				74
-+#define GCC_GPU_GPLL0_DIV_CLK_SRC			75
-+#define GCC_GPU_IREF_EN					76
-+#define GCC_GPU_MEMNOC_GFX_CLK				77
-+#define GCC_GPU_SNOC_DVM_GFX_CLK			78
-+#define GCC_GPU_TCU_THROTTLE_AHB_CLK			79
-+#define GCC_GPU_TCU_THROTTLE_CLK			80
-+#define GCC_PCIE0_PHY_RCHNG_CLK				81
-+#define GCC_PCIE1_PHY_RCHNG_CLK				82
-+#define GCC_PCIE2A_PHY_RCHNG_CLK			83
-+#define GCC_PCIE2B_PHY_RCHNG_CLK			84
-+#define GCC_PCIE3A_PHY_RCHNG_CLK			85
-+#define GCC_PCIE3B_PHY_RCHNG_CLK			86
-+#define GCC_PCIE4_PHY_RCHNG_CLK				87
-+#define GCC_PCIE_0_AUX_CLK				88
-+#define GCC_PCIE_0_AUX_CLK_SRC				89
-+#define GCC_PCIE_0_CFG_AHB_CLK				90
-+#define GCC_PCIE_0_MSTR_AXI_CLK				91
-+#define GCC_PCIE_0_PHY_RCHNG_CLK_SRC			92
-+#define GCC_PCIE_0_PIPE_CLK				93
-+#define GCC_PCIE_0_SLV_AXI_CLK				94
-+#define GCC_PCIE_0_SLV_Q2A_AXI_CLK			95
-+#define GCC_PCIE_1_AUX_CLK				96
-+#define GCC_PCIE_1_AUX_CLK_SRC				97
-+#define GCC_PCIE_1_CFG_AHB_CLK				98
-+#define GCC_PCIE_1_MSTR_AXI_CLK				99
-+#define GCC_PCIE_1_PHY_RCHNG_CLK_SRC			100
-+#define GCC_PCIE_1_PIPE_CLK				101
-+#define GCC_PCIE_1_SLV_AXI_CLK				102
-+#define GCC_PCIE_1_SLV_Q2A_AXI_CLK			103
-+#define GCC_PCIE_2A2B_CLKREF_CLK			104
-+#define GCC_PCIE_2A_AUX_CLK				105
-+#define GCC_PCIE_2A_AUX_CLK_SRC				106
-+#define GCC_PCIE_2A_CFG_AHB_CLK				107
-+#define GCC_PCIE_2A_MSTR_AXI_CLK			108
-+#define GCC_PCIE_2A_PHY_RCHNG_CLK_SRC			109
-+#define GCC_PCIE_2A_PIPE_CLK				110
-+#define GCC_PCIE_2A_PIPE_CLK_SRC			111
-+#define GCC_PCIE_2A_PIPE_DIV_CLK_SRC			112
-+#define GCC_PCIE_2A_PIPEDIV2_CLK			113
-+#define GCC_PCIE_2A_SLV_AXI_CLK				114
-+#define GCC_PCIE_2A_SLV_Q2A_AXI_CLK			115
-+#define GCC_PCIE_2B_AUX_CLK				116
-+#define GCC_PCIE_2B_AUX_CLK_SRC				117
-+#define GCC_PCIE_2B_CFG_AHB_CLK				118
-+#define GCC_PCIE_2B_MSTR_AXI_CLK			119
-+#define GCC_PCIE_2B_PHY_RCHNG_CLK_SRC			120
-+#define GCC_PCIE_2B_PIPE_CLK				121
-+#define GCC_PCIE_2B_PIPE_CLK_SRC			122
-+#define GCC_PCIE_2B_PIPE_DIV_CLK_SRC			123
-+#define GCC_PCIE_2B_PIPEDIV2_CLK			124
-+#define GCC_PCIE_2B_SLV_AXI_CLK				125
-+#define GCC_PCIE_2B_SLV_Q2A_AXI_CLK			126
-+#define GCC_PCIE_3A3B_CLKREF_CLK			127
-+#define GCC_PCIE_3A_AUX_CLK				128
-+#define GCC_PCIE_3A_AUX_CLK_SRC				129
-+#define GCC_PCIE_3A_CFG_AHB_CLK				130
-+#define GCC_PCIE_3A_MSTR_AXI_CLK			131
-+#define GCC_PCIE_3A_PHY_RCHNG_CLK_SRC			132
-+#define GCC_PCIE_3A_PIPE_CLK				133
-+#define GCC_PCIE_3A_PIPE_CLK_SRC			134
-+#define GCC_PCIE_3A_PIPE_DIV_CLK_SRC			135
-+#define GCC_PCIE_3A_PIPEDIV2_CLK			136
-+#define GCC_PCIE_3A_SLV_AXI_CLK				137
-+#define GCC_PCIE_3A_SLV_Q2A_AXI_CLK			138
-+#define GCC_PCIE_3B_AUX_CLK				139
-+#define GCC_PCIE_3B_AUX_CLK_SRC				140
-+#define GCC_PCIE_3B_CFG_AHB_CLK				141
-+#define GCC_PCIE_3B_MSTR_AXI_CLK			142
-+#define GCC_PCIE_3B_PHY_RCHNG_CLK_SRC			143
-+#define GCC_PCIE_3B_PIPE_CLK				144
-+#define GCC_PCIE_3B_PIPE_CLK_SRC			145
-+#define GCC_PCIE_3B_PIPE_DIV_CLK_SRC			146
-+#define GCC_PCIE_3B_PIPEDIV2_CLK			147
-+#define GCC_PCIE_3B_SLV_AXI_CLK				148
-+#define GCC_PCIE_3B_SLV_Q2A_AXI_CLK			149
-+#define GCC_PCIE_4_AUX_CLK				150
-+#define GCC_PCIE_4_AUX_CLK_SRC				151
-+#define GCC_PCIE_4_CFG_AHB_CLK				152
-+#define GCC_PCIE_4_CLKREF_CLK				153
-+#define GCC_PCIE_4_MSTR_AXI_CLK				154
-+#define GCC_PCIE_4_PHY_RCHNG_CLK_SRC			155
-+#define GCC_PCIE_4_PIPE_CLK				156
-+#define GCC_PCIE_4_PIPE_CLK_SRC				157
-+#define GCC_PCIE_4_PIPE_DIV_CLK_SRC			158
-+#define GCC_PCIE_4_PIPEDIV2_CLK				159
-+#define GCC_PCIE_4_SLV_AXI_CLK				160
-+#define GCC_PCIE_4_SLV_Q2A_AXI_CLK			161
-+#define GCC_PCIE_RSCC_AHB_CLK				162
-+#define GCC_PCIE_RSCC_XO_CLK				163
-+#define GCC_PCIE_RSCC_XO_CLK_SRC			164
-+#define GCC_PCIE_THROTTLE_CFG_CLK			165
-+#define GCC_PDM2_CLK					166
-+#define GCC_PDM2_CLK_SRC				167
-+#define GCC_PDM_AHB_CLK					168
-+#define GCC_PDM_XO4_CLK					169
-+#define GCC_QMIP_CAMERA_NRT_AHB_CLK			170
-+#define GCC_QMIP_CAMERA_RT_AHB_CLK			171
-+#define GCC_QMIP_DISP1_AHB_CLK				172
-+#define GCC_QMIP_DISP1_ROT_AHB_CLK			173
-+#define GCC_QMIP_DISP_AHB_CLK				174
-+#define GCC_QMIP_DISP_ROT_AHB_CLK			175
-+#define GCC_QMIP_VIDEO_CVP_AHB_CLK			176
-+#define GCC_QMIP_VIDEO_VCODEC_AHB_CLK			177
-+#define GCC_QUPV3_WRAP0_CORE_2X_CLK			178
-+#define GCC_QUPV3_WRAP0_CORE_CLK			179
-+#define GCC_QUPV3_WRAP0_QSPI0_CLK			180
-+#define GCC_QUPV3_WRAP0_S0_CLK				181
-+#define GCC_QUPV3_WRAP0_S0_CLK_SRC			182
-+#define GCC_QUPV3_WRAP0_S1_CLK				183
-+#define GCC_QUPV3_WRAP0_S1_CLK_SRC			184
-+#define GCC_QUPV3_WRAP0_S2_CLK				185
-+#define GCC_QUPV3_WRAP0_S2_CLK_SRC			186
-+#define GCC_QUPV3_WRAP0_S3_CLK				187
-+#define GCC_QUPV3_WRAP0_S3_CLK_SRC			188
-+#define GCC_QUPV3_WRAP0_S4_CLK				189
-+#define GCC_QUPV3_WRAP0_S4_CLK_SRC			190
-+#define GCC_QUPV3_WRAP0_S4_DIV_CLK_SRC			191
-+#define GCC_QUPV3_WRAP0_S5_CLK				192
-+#define GCC_QUPV3_WRAP0_S5_CLK_SRC			193
-+#define GCC_QUPV3_WRAP0_S6_CLK				194
-+#define GCC_QUPV3_WRAP0_S6_CLK_SRC			195
-+#define GCC_QUPV3_WRAP0_S7_CLK				196
-+#define GCC_QUPV3_WRAP0_S7_CLK_SRC			197
-+#define GCC_QUPV3_WRAP1_CORE_2X_CLK			198
-+#define GCC_QUPV3_WRAP1_CORE_CLK			199
-+#define GCC_QUPV3_WRAP1_QSPI0_CLK			200
-+#define GCC_QUPV3_WRAP1_S0_CLK				201
-+#define GCC_QUPV3_WRAP1_S0_CLK_SRC			202
-+#define GCC_QUPV3_WRAP1_S1_CLK				203
-+#define GCC_QUPV3_WRAP1_S1_CLK_SRC			204
-+#define GCC_QUPV3_WRAP1_S2_CLK				205
-+#define GCC_QUPV3_WRAP1_S2_CLK_SRC			206
-+#define GCC_QUPV3_WRAP1_S3_CLK				207
-+#define GCC_QUPV3_WRAP1_S3_CLK_SRC			208
-+#define GCC_QUPV3_WRAP1_S4_CLK				209
-+#define GCC_QUPV3_WRAP1_S4_CLK_SRC			210
-+#define GCC_QUPV3_WRAP1_S4_DIV_CLK_SRC			211
-+#define GCC_QUPV3_WRAP1_S5_CLK				212
-+#define GCC_QUPV3_WRAP1_S5_CLK_SRC			213
-+#define GCC_QUPV3_WRAP1_S6_CLK				214
-+#define GCC_QUPV3_WRAP1_S6_CLK_SRC			215
-+#define GCC_QUPV3_WRAP1_S7_CLK				216
-+#define GCC_QUPV3_WRAP1_S7_CLK_SRC			217
-+#define GCC_QUPV3_WRAP2_CORE_2X_CLK			218
-+#define GCC_QUPV3_WRAP2_CORE_CLK			219
-+#define GCC_QUPV3_WRAP2_QSPI0_CLK			220
-+#define GCC_QUPV3_WRAP2_S0_CLK				221
-+#define GCC_QUPV3_WRAP2_S0_CLK_SRC			222
-+#define GCC_QUPV3_WRAP2_S1_CLK				223
-+#define GCC_QUPV3_WRAP2_S1_CLK_SRC			224
-+#define GCC_QUPV3_WRAP2_S2_CLK				225
-+#define GCC_QUPV3_WRAP2_S2_CLK_SRC			226
-+#define GCC_QUPV3_WRAP2_S3_CLK				227
-+#define GCC_QUPV3_WRAP2_S3_CLK_SRC			228
-+#define GCC_QUPV3_WRAP2_S4_CLK				229
-+#define GCC_QUPV3_WRAP2_S4_CLK_SRC			230
-+#define GCC_QUPV3_WRAP2_S4_DIV_CLK_SRC			231
-+#define GCC_QUPV3_WRAP2_S5_CLK				232
-+#define GCC_QUPV3_WRAP2_S5_CLK_SRC			233
-+#define GCC_QUPV3_WRAP2_S6_CLK				234
-+#define GCC_QUPV3_WRAP2_S6_CLK_SRC			235
-+#define GCC_QUPV3_WRAP2_S7_CLK				236
-+#define GCC_QUPV3_WRAP2_S7_CLK_SRC			237
-+#define GCC_QUPV3_WRAP_0_M_AHB_CLK			238
-+#define GCC_QUPV3_WRAP_0_S_AHB_CLK			239
-+#define GCC_QUPV3_WRAP_1_M_AHB_CLK			240
-+#define GCC_QUPV3_WRAP_1_S_AHB_CLK			241
-+#define GCC_QUPV3_WRAP_2_M_AHB_CLK			242
-+#define GCC_QUPV3_WRAP_2_S_AHB_CLK			243
-+#define GCC_SDCC2_AHB_CLK				244
-+#define GCC_SDCC2_APPS_CLK				245
-+#define GCC_SDCC2_APPS_CLK_SRC				246
-+#define GCC_SDCC4_AHB_CLK				247
-+#define GCC_SDCC4_APPS_CLK				248
-+#define GCC_SDCC4_APPS_CLK_SRC				249
-+#define GCC_SYS_NOC_USB_AXI_CLK				250
-+#define GCC_UFS_1_CARD_CLKREF_CLK			251
-+#define GCC_UFS_CARD_AHB_CLK				252
-+#define GCC_UFS_CARD_AXI_CLK				253
-+#define GCC_UFS_CARD_AXI_CLK_SRC			254
-+#define GCC_UFS_CARD_CLKREF_CLK				255
-+#define GCC_UFS_CARD_ICE_CORE_CLK			256
-+#define GCC_UFS_CARD_ICE_CORE_CLK_SRC			257
-+#define GCC_UFS_CARD_PHY_AUX_CLK			258
-+#define GCC_UFS_CARD_PHY_AUX_CLK_SRC			259
-+#define GCC_UFS_CARD_RX_SYMBOL_0_CLK			260
-+#define GCC_UFS_CARD_RX_SYMBOL_0_CLK_SRC		261
-+#define GCC_UFS_CARD_RX_SYMBOL_1_CLK			262
-+#define GCC_UFS_CARD_RX_SYMBOL_1_CLK_SRC		263
-+#define GCC_UFS_CARD_TX_SYMBOL_0_CLK			264
-+#define GCC_UFS_CARD_TX_SYMBOL_0_CLK_SRC		265
-+#define GCC_UFS_CARD_UNIPRO_CORE_CLK			266
-+#define GCC_UFS_CARD_UNIPRO_CORE_CLK_SRC		267
-+#define GCC_UFS_PHY_AHB_CLK				268
-+#define GCC_UFS_PHY_AXI_CLK				269
-+#define GCC_UFS_PHY_AXI_CLK_SRC				270
-+#define GCC_UFS_PHY_ICE_CORE_CLK			271
-+#define GCC_UFS_PHY_ICE_CORE_CLK_SRC			272
-+#define GCC_UFS_PHY_PHY_AUX_CLK				273
-+#define GCC_UFS_PHY_PHY_AUX_CLK_SRC			274
-+#define GCC_UFS_PHY_RX_SYMBOL_0_CLK			275
-+#define GCC_UFS_PHY_RX_SYMBOL_0_CLK_SRC			276
-+#define GCC_UFS_PHY_RX_SYMBOL_1_CLK			277
-+#define GCC_UFS_PHY_RX_SYMBOL_1_CLK_SRC			278
-+#define GCC_UFS_PHY_TX_SYMBOL_0_CLK			279
-+#define GCC_UFS_PHY_TX_SYMBOL_0_CLK_SRC			280
-+#define GCC_UFS_PHY_UNIPRO_CORE_CLK			281
-+#define GCC_UFS_PHY_UNIPRO_CORE_CLK_SRC			282
-+#define GCC_UFS_REF_CLKREF_CLK				283
-+#define GCC_USB2_HS0_CLKREF_CLK				284
-+#define GCC_USB2_HS1_CLKREF_CLK				285
-+#define GCC_USB2_HS2_CLKREF_CLK				286
-+#define GCC_USB2_HS3_CLKREF_CLK				287
-+#define GCC_USB30_MP_MASTER_CLK				288
-+#define GCC_USB30_MP_MASTER_CLK_SRC			289
-+#define GCC_USB30_MP_MOCK_UTMI_CLK			290
-+#define GCC_USB30_MP_MOCK_UTMI_CLK_SRC			291
-+#define GCC_USB30_MP_MOCK_UTMI_POSTDIV_CLK_SRC		292
-+#define GCC_USB30_MP_SLEEP_CLK				293
-+#define GCC_USB30_PRIM_MASTER_CLK			294
-+#define GCC_USB30_PRIM_MASTER_CLK_SRC			295
-+#define GCC_USB30_PRIM_MOCK_UTMI_CLK			296
-+#define GCC_USB30_PRIM_MOCK_UTMI_CLK_SRC		297
-+#define GCC_USB30_PRIM_MOCK_UTMI_POSTDIV_CLK_SRC	298
-+#define GCC_USB30_PRIM_SLEEP_CLK			299
-+#define GCC_USB30_SEC_MASTER_CLK			300
-+#define GCC_USB30_SEC_MASTER_CLK_SRC			301
-+#define GCC_USB30_SEC_MOCK_UTMI_CLK			302
-+#define GCC_USB30_SEC_MOCK_UTMI_CLK_SRC			303
-+#define GCC_USB30_SEC_MOCK_UTMI_POSTDIV_CLK_SRC		304
-+#define GCC_USB30_SEC_SLEEP_CLK				305
-+#define GCC_USB34_PRIM_PHY_PIPE_CLK_SRC			306
-+#define GCC_USB34_SEC_PHY_PIPE_CLK_SRC			307
-+#define GCC_USB3_MP0_CLKREF_CLK				308
-+#define GCC_USB3_MP1_CLKREF_CLK				309
-+#define GCC_USB3_MP_PHY_AUX_CLK				310
-+#define GCC_USB3_MP_PHY_AUX_CLK_SRC			311
-+#define GCC_USB3_MP_PHY_COM_AUX_CLK			312
-+#define GCC_USB3_MP_PHY_PIPE_0_CLK			313
-+#define GCC_USB3_MP_PHY_PIPE_0_CLK_SRC			314
-+#define GCC_USB3_MP_PHY_PIPE_1_CLK			315
-+#define GCC_USB3_MP_PHY_PIPE_1_CLK_SRC			316
-+#define GCC_USB3_PRIM_PHY_AUX_CLK			317
-+#define GCC_USB3_PRIM_PHY_AUX_CLK_SRC			318
-+#define GCC_USB3_PRIM_PHY_COM_AUX_CLK			319
-+#define GCC_USB3_PRIM_PHY_PIPE_CLK			320
-+#define GCC_USB3_PRIM_PHY_PIPE_CLK_SRC			321
-+#define GCC_USB3_SEC_PHY_AUX_CLK			322
-+#define GCC_USB3_SEC_PHY_AUX_CLK_SRC			323
-+#define GCC_USB3_SEC_PHY_COM_AUX_CLK			324
-+#define GCC_USB3_SEC_PHY_PIPE_CLK			325
-+#define GCC_USB3_SEC_PHY_PIPE_CLK_SRC			326
-+#define GCC_USB4_1_CFG_AHB_CLK				327
-+#define GCC_USB4_1_DP_CLK				328
-+#define GCC_USB4_1_MASTER_CLK				329
-+#define GCC_USB4_1_MASTER_CLK_SRC			330
-+#define GCC_USB4_1_PHY_DP_CLK_SRC			331
-+#define GCC_USB4_1_PHY_P2RR2P_PIPE_CLK			332
-+#define GCC_USB4_1_PHY_P2RR2P_PIPE_CLK_SRC		333
-+#define GCC_USB4_1_PHY_PCIE_PIPE_CLK			334
-+#define GCC_USB4_1_PHY_PCIE_PIPE_CLK_SRC		335
-+#define GCC_USB4_1_PHY_PCIE_PIPE_MUX_CLK_SRC		336
-+#define GCC_USB4_1_PHY_PCIE_PIPEGMUX_CLK_SRC		337
-+#define GCC_USB4_1_PHY_RX0_CLK				338
-+#define GCC_USB4_1_PHY_RX0_CLK_SRC			339
-+#define GCC_USB4_1_PHY_RX1_CLK				340
-+#define GCC_USB4_1_PHY_RX1_CLK_SRC			341
-+#define GCC_USB4_1_PHY_SYS_CLK_SRC			342
-+#define GCC_USB4_1_PHY_USB_PIPE_CLK			343
-+#define GCC_USB4_1_SB_IF_CLK				344
-+#define GCC_USB4_1_SB_IF_CLK_SRC			345
-+#define GCC_USB4_1_SYS_CLK				346
-+#define GCC_USB4_1_TMU_CLK				347
-+#define GCC_USB4_1_TMU_CLK_SRC				348
-+#define GCC_USB4_CFG_AHB_CLK				349
-+#define GCC_USB4_CLKREF_CLK				350
-+#define GCC_USB4_DP_CLK					351
-+#define GCC_USB4_EUD_CLKREF_CLK				352
-+#define GCC_USB4_MASTER_CLK				353
-+#define GCC_USB4_MASTER_CLK_SRC				354
-+#define GCC_USB4_PHY_DP_CLK_SRC				355
-+#define GCC_USB4_PHY_P2RR2P_PIPE_CLK			356
-+#define GCC_USB4_PHY_P2RR2P_PIPE_CLK_SRC		357
-+#define GCC_USB4_PHY_PCIE_PIPE_CLK			358
-+#define GCC_USB4_PHY_PCIE_PIPE_CLK_SRC			359
-+#define GCC_USB4_PHY_PCIE_PIPE_MUX_CLK_SRC		360
-+#define GCC_USB4_PHY_PCIE_PIPEGMUX_CLK_SRC		361
-+#define GCC_USB4_PHY_RX0_CLK				362
-+#define GCC_USB4_PHY_RX0_CLK_SRC			363
-+#define GCC_USB4_PHY_RX1_CLK				364
-+#define GCC_USB4_PHY_RX1_CLK_SRC			365
-+#define GCC_USB4_PHY_SYS_CLK_SRC			366
-+#define GCC_USB4_PHY_USB_PIPE_CLK			367
-+#define GCC_USB4_SB_IF_CLK				368
-+#define GCC_USB4_SB_IF_CLK_SRC				369
-+#define GCC_USB4_SYS_CLK				370
-+#define GCC_USB4_TMU_CLK				371
-+#define GCC_USB4_TMU_CLK_SRC				372
-+#define GCC_VIDEO_AHB_CLK				373
-+#define GCC_VIDEO_AXI0_CLK				374
-+#define GCC_VIDEO_AXI1_CLK				375
-+#define GCC_VIDEO_CVP_THROTTLE_CLK			376
-+#define GCC_VIDEO_VCODEC_THROTTLE_CLK			377
-+#define GCC_VIDEO_XO_CLK				378
-+#define GCC_AGGRE_UFS_CARD_AXI_HW_CTL_CLK		379
-+#define GCC_AGGRE_UFS_PHY_AXI_HW_CTL_CLK		380
-+#define GCC_UFS_CARD_AXI_HW_CTL_CLK			381
-+#define GCC_UFS_CARD_ICE_CORE_HW_CTL_CLK		382
-+#define GCC_UFS_CARD_PHY_AUX_HW_CTL_CLK			383
-+#define GCC_UFS_CARD_UNIPRO_CORE_HW_CTL_CLK		384
-+#define GCC_UFS_PHY_AXI_HW_CTL_CLK			385
-+#define GCC_UFS_PHY_ICE_CORE_HW_CTL_CLK			386
-+#define GCC_UFS_PHY_PHY_AUX_HW_CTL_CLK			387
-+#define GCC_UFS_PHY_UNIPRO_CORE_HW_CTL_CLK		388
-+
-+/* GCC resets */
-+#define GCC_EMAC0_BCR					0
-+#define GCC_EMAC1_BCR					1
-+#define GCC_PCIE_0_LINK_DOWN_BCR			2
-+#define GCC_PCIE_0_NOCSR_COM_PHY_BCR			3
-+#define GCC_PCIE_0_PHY_BCR				4
-+#define GCC_PCIE_0_PHY_NOCSR_COM_PHY_BCR		5
-+#define GCC_PCIE_0_TUNNEL_BCR				6
-+#define GCC_PCIE_1_LINK_DOWN_BCR			7
-+#define GCC_PCIE_1_NOCSR_COM_PHY_BCR			8
-+#define GCC_PCIE_1_PHY_BCR				9
-+#define GCC_PCIE_1_PHY_NOCSR_COM_PHY_BCR		10
-+#define GCC_PCIE_1_TUNNEL_BCR				11
-+#define GCC_PCIE_2A_BCR					12
-+#define GCC_PCIE_2A_LINK_DOWN_BCR			13
-+#define GCC_PCIE_2A_NOCSR_COM_PHY_BCR			14
-+#define GCC_PCIE_2A_PHY_BCR				15
-+#define GCC_PCIE_2A_PHY_NOCSR_COM_PHY_BCR		16
-+#define GCC_PCIE_2B_BCR					17
-+#define GCC_PCIE_2B_LINK_DOWN_BCR			18
-+#define GCC_PCIE_2B_NOCSR_COM_PHY_BCR			19
-+#define GCC_PCIE_2B_PHY_BCR				20
-+#define GCC_PCIE_2B_PHY_NOCSR_COM_PHY_BCR		21
-+#define GCC_PCIE_3A_BCR					22
-+#define GCC_PCIE_3A_LINK_DOWN_BCR			23
-+#define GCC_PCIE_3A_NOCSR_COM_PHY_BCR			24
-+#define GCC_PCIE_3A_PHY_BCR				25
-+#define GCC_PCIE_3A_PHY_NOCSR_COM_PHY_BCR		26
-+#define GCC_PCIE_3B_BCR					27
-+#define GCC_PCIE_3B_LINK_DOWN_BCR			28
-+#define GCC_PCIE_3B_NOCSR_COM_PHY_BCR			29
-+#define GCC_PCIE_3B_PHY_BCR				30
-+#define GCC_PCIE_3B_PHY_NOCSR_COM_PHY_BCR		31
-+#define GCC_PCIE_4_BCR					32
-+#define GCC_PCIE_4_LINK_DOWN_BCR			33
-+#define GCC_PCIE_4_NOCSR_COM_PHY_BCR			34
-+#define GCC_PCIE_4_PHY_BCR				35
-+#define GCC_PCIE_4_PHY_NOCSR_COM_PHY_BCR		36
-+#define GCC_PCIE_PHY_CFG_AHB_BCR			37
-+#define GCC_PCIE_PHY_COM_BCR				38
-+#define GCC_PCIE_RSCC_BCR				39
-+#define GCC_QUSB2PHY_HS0_MP_BCR				40
-+#define GCC_QUSB2PHY_HS1_MP_BCR				41
-+#define GCC_QUSB2PHY_HS2_MP_BCR				42
-+#define GCC_QUSB2PHY_HS3_MP_BCR				43
-+#define GCC_QUSB2PHY_PRIM_BCR				44
-+#define GCC_QUSB2PHY_SEC_BCR				45
-+#define GCC_SDCC2_BCR					46
-+#define GCC_SDCC4_BCR					47
-+#define GCC_UFS_CARD_BCR				48
-+#define GCC_UFS_PHY_BCR					49
-+#define GCC_USB2_PHY_PRIM_BCR				50
-+#define GCC_USB2_PHY_SEC_BCR				51
-+#define GCC_USB30_MP_BCR				52
-+#define GCC_USB30_PRIM_BCR				53
-+#define GCC_USB30_SEC_BCR				54
-+#define GCC_USB3_DP_PHY_PRIM_BCR			55
-+#define GCC_USB3_DP_PHY_SEC_BCR				56
-+#define GCC_USB3_PHY_PRIM_BCR				57
-+#define GCC_USB3_PHY_SEC_BCR				58
-+#define GCC_USB3_UNIPHY_MP0_BCR				59
-+#define GCC_USB3_UNIPHY_MP1_BCR				60
-+#define GCC_USB3PHY_PHY_PRIM_BCR			61
-+#define GCC_USB3PHY_PHY_SEC_BCR				62
-+#define GCC_USB3UNIPHY_PHY_MP0_BCR			63
-+#define GCC_USB3UNIPHY_PHY_MP1_BCR			64
-+#define GCC_USB4_1_BCR					65
-+#define GCC_USB4_1_DP_PHY_PRIM_BCR			66
-+#define GCC_USB4_1_DPPHY_AUX_BCR			67
-+#define GCC_USB4_1_PHY_PRIM_BCR				68
-+#define GCC_USB4_BCR					69
-+#define GCC_USB4_DP_PHY_PRIM_BCR			70
-+#define GCC_USB4_DPPHY_AUX_BCR				71
-+#define GCC_USB4_PHY_PRIM_BCR				72
-+#define GCC_USB4PHY_1_PHY_PRIM_BCR			73
-+#define GCC_USB4PHY_PHY_PRIM_BCR			74
-+#define GCC_USB_PHY_CFG_AHB2PHY_BCR			75
-+#define GCC_VIDEO_BCR					76
-+#define GCC_VIDEO_AXI0_CLK_ARES				77
-+#define GCC_VIDEO_AXI1_CLK_ARES				78
-+
-+/* GCC GDSCs */
-+#define PCIE_0_TUNNEL_GDSC				0
-+#define PCIE_1_TUNNEL_GDSC				1
-+#define PCIE_2A_GDSC					2
-+#define PCIE_2B_GDSC					3
-+#define PCIE_3A_GDSC					4
-+#define PCIE_3B_GDSC					5
-+#define PCIE_4_GDSC					6
-+#define UFS_CARD_GDSC					7
-+#define UFS_PHY_GDSC					8
-+#define USB30_MP_GDSC					9
-+#define USB30_PRIM_GDSC					10
-+#define USB30_SEC_GDSC					11
-+
-+#endif
--- 
-2.35.1
+> Regards
+> 
+> Marcel
+> 
 
