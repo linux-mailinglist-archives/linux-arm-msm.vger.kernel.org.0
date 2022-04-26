@@ -2,136 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96A1D50F424
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 10:32:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 775A850F94A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 11:58:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344830AbiDZIfN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 04:35:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36234 "EHLO
+        id S1346280AbiDZJrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 05:47:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345091AbiDZIeE (ORCPT
+        with ESMTP id S1346374AbiDZJrd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 04:34:04 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67F796AA44
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 01:25:59 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id dk23so11178711ejb.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 01:25:59 -0700 (PDT)
+        Tue, 26 Apr 2022 05:47:33 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECCD4184;
+        Tue, 26 Apr 2022 02:03:17 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id c15so21051351ljr.9;
+        Tue, 26 Apr 2022 02:03:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=kVo+bOOc4liirVkqcBpptO7RyaT+yAq19oDpkuLKV4E=;
-        b=eOmyd84XMli/pg4xVDLutFSYv003hteq9oM1eOGc5N2Dxcut0nBlgdvh5ObPu6/aoZ
-         KgKzDTSKIn0uZ1W2iXQ3R2DjmyXt4pSzvdbYVM6KTQ7gabVUk20p10OwKea8O81ZQ7QO
-         fe9c6BmnTA1TLqipnZOYXipFA7AbqL/3E0DNxL7oDw6tW2YwwqMkOBPrZ/X2HGaLNHjw
-         qtZHDDZmqDP4+3io6a5pxKNsK5KDZpuUI9ApJLqJj5OIHmulMD28+8xaAc9QtTO+PRxj
-         G7U0JkExj9cODdI5/zlS+7EVxfvym/Tfn8Gwq10l7M1M5xhn/jOP13AWTGhDjHWacAqj
-         z5Fg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Si96HTniFqAHPeuy1DolLYYuwT3M1Hn5V7Wkw5gU8dw=;
+        b=I+zMLdnK0IsKBTQHU/XV/hEh4vvw0myMCRtn4sbatiHozSMkOGb0FOsgBwA/vfVjhD
+         uU3Wiv1PLIRpzYcRSCNwViH2i0lwYGHFTaY2x93DkdzTQeM9+yTozlQdsu1MwoDTeEfA
+         LQwypL7I8OR19vYMCUMA9bgIFROc42Fk+7758yQa+ZGI6I3Je+iRLrEGRvJFPQEDP1YH
+         eg5btLnW9fI1aWbIFt5yGI1wx0SJGRfUyi3NkT7Obcs8U1PTFPkhV8SxVCMe8YEIDRbJ
+         95YjluZXoumd/xFuH+z8ChJ5PBx7lJtuoHAqfgeNSPK6o5e9hHuIP3vPMS8mzs7OfhmG
+         IKzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=kVo+bOOc4liirVkqcBpptO7RyaT+yAq19oDpkuLKV4E=;
-        b=RjnYTUtKNnuwKqpw7GGLjs/4nlJa1Ax3XrfSbcIca6yDv6afox5ivRLryoJCVCVgqx
-         XACCZXXEPUti7UHnlbf+fm3O4G1PYtWFJqp/0hc1trxqH95B2r3s8Xw11EgV78e6ZLLz
-         C5J0ilGOL1sMgvv5mVowx3Qx0Z89ssM7iKsZnkD66r/OGn2v/J3RLUKEbDUZE7yAQuaO
-         e8/3jFuZs2WnZRYv+I/pkFhcviiuGrqKwOe9tFubv9PfOKq2GMVTSGP7SoBG13WKN3/8
-         ROu9M40TJPBkqduQIN4BjU3dK1nziBRq9WmKJRu8BcgKlYiPCrkMsFCPvBkDTUI2TkjS
-         KeTQ==
-X-Gm-Message-State: AOAM532s+6lLwfLAPkBIJTy7S/reWuQB2Oq0fApPBGwdgeOB5f/2Lz2E
-        hJgrg6RXq2fR/JaciCCKFBm6HA==
-X-Google-Smtp-Source: ABdhPJyWJN3OdTtdtqejs/Xoh52Bj3LRyCRNGd2/GmGEFwjXptF/32UbDQ7adCd/0m6cxLG81ACqCw==
-X-Received: by 2002:a17:907:6d83:b0:6f3:adf4:9817 with SMTP id sb3-20020a1709076d8300b006f3adf49817mr2655975ejc.491.1650961557905;
-        Tue, 26 Apr 2022 01:25:57 -0700 (PDT)
-Received: from [192.168.0.245] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id i17-20020a1709064ed100b006f382c0b89dsm2915462ejv.56.2022.04.26.01.25.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Apr 2022 01:25:57 -0700 (PDT)
-Message-ID: <8238f2e8-82cf-0bca-8a50-b1b6fc0ec665@linaro.org>
-Date:   Tue, 26 Apr 2022 10:25:56 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] dt-bindings: clock: gcc-apq8064: move qcom,apq8084 back
- to gcc-other.yaml
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        bh=Si96HTniFqAHPeuy1DolLYYuwT3M1Hn5V7Wkw5gU8dw=;
+        b=F3ad8Ygr3euGH+2PkLYDcUz/aaAV5iEzxt81R1E+iJ7x1ODJ5Co3SfDKgJ11DXMQaE
+         /kgS/Qncg+tUNMnG6ElySDrwhsvoMqUUDAFRbJUTeq3mxUo02O+jZkF9k6bo1BvIFs6W
+         RqQdfdXjarGTBzc+sDef9qoL0YMizmTNojH+yX5+v7rYUxyW16tnPsdhAHYyL+dS4NUf
+         CrTmcSahgX1whqIfLyZwaV5YjbQHyU1wIuvzJk8agSETivkqOs4nlg9yE4zWWIe8pia1
+         6rFmAw/N602N3dPUP2SV71+KpCyJ8ONHBDuZvB8wXzfeSEbrK78mQNHPrq8g6qLKTVRU
+         tEiQ==
+X-Gm-Message-State: AOAM5328jPU/RLz/yhUjbqM3bI1/Uq7zJRJg/Bh1AY7K4TGoJCZwN8fY
+        teipAvg8NKDd3o6CStZkbwH4svJxX0o=
+X-Google-Smtp-Source: ABdhPJyp8ibW5mSQfSOznK4zZ6YB3MyymZuzLrP+5/DL3Ssiv5SEM3UZA1quuwjQGYWglB+c6A0XgQ==
+X-Received: by 2002:a2e:b901:0:b0:24f:f84:9793 with SMTP id b1-20020a2eb901000000b0024f0f849793mr6657359ljb.256.1650963796118;
+        Tue, 26 Apr 2022 02:03:16 -0700 (PDT)
+Received: from localhost.localdomain (adla4.neoplus.adsl.tpnet.pl. [79.185.4.4])
+        by smtp.gmail.com with ESMTPSA id i6-20020a198c46000000b0044424910c94sm1676907lfj.113.2022.04.26.02.03.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Apr 2022 02:03:15 -0700 (PDT)
+From:   Adam Skladowski <a39.skl@gmail.com>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220426072451.2905910-1-dmitry.baryshkov@linaro.org>
- <6b766f08-5cac-fbda-cdb5-364aabb54fb3@linaro.org>
- <CAA8EJppBAUbT58yFyQTYPou37BquHDjbvqw9ziL4XEz15M4S-g@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAA8EJppBAUbT58yFyQTYPou37BquHDjbvqw9ziL4XEz15M4S-g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: smd: Update MSM8976 RPM clocks.
+Date:   Tue, 26 Apr 2022 11:02:17 +0200
+Message-Id: <20220426090226.27293-1-a39.skl@gmail.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/04/2022 10:07, Dmitry Baryshkov wrote:
-> On Tue, 26 Apr 2022 at 10:31, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 26/04/2022 09:24, Dmitry Baryshkov wrote:
->>> The global clock controller on apq8084 has nothing to do with the schema
->>> for apq8064. It uses the schema defined in qcom,gcc-other.yaml. Move
->>> respective declarations back.
->>>
->>> Instead add what was really meant to be present in qcom,gcc-apq8064
->>> schema: the compatibility string for qcom,apq8064 device.
->>>
->>
->> Reported-by: Rob Herring <robh@kernel.org>
->>
->>
->>> Fixes: a469bf89a009 ("dt-bindings: clock: simplify qcom,gcc-apq8064 Documentation")
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>  .../devicetree/bindings/clock/qcom,gcc-apq8064.yaml         | 6 +++---
->>>  Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml | 3 +++
->>>  2 files changed, 6 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
->>> index 97936411b6b4..b867da12761e 100644
->>> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
->>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
->>> @@ -20,12 +20,12 @@ description: |
->>>    See also:
->>>    - dt-bindings/clock/qcom,gcc-msm8960.h
->>>    - dt-bindings/reset/qcom,gcc-msm8960.h
->>> -  - dt-bindings/clock/qcom,gcc-apq8084.h
->>> -  - dt-bindings/reset/qcom,gcc-apq8084.h
->>>
->>>  properties:
->>>    compatible:
->>> -    const: qcom,gcc-apq8084
->>> +    enum:
->>> +      - qcom,gcc-apq8064
->>> +      - qcom,gcc-msm8060
->>
->> This looks wrong. msm8060 was not broken by that commit and was never
->> here, was it?
-> 
-> I'm not sure that msm8060 even existed. This should be msm8960.
-> 
-> I can send v2 if you like this approach or I can rebase my tsens
-> patches on top of your patch.
+MSM8976 does not have rpm clock named mmssnoc,
+instead it's called sysmmnoc, drop define and reuse.
+While we are at it add XO clock to list.
 
-Your approach of moving the apq8064 here is correct, but addition of
-msm8960 should be a separate patch because this compatible was not
-broken by that commit. What is more, that compatible is in gcc-other.yaml.
+Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+---
+ drivers/clk/qcom/clk-smd-rpm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+index afc6dc930011..10b4e6d8d10f 100644
+--- a/drivers/clk/qcom/clk-smd-rpm.c
++++ b/drivers/clk/qcom/clk-smd-rpm.c
+@@ -563,17 +563,19 @@ static const struct rpm_smd_clk_desc rpm_clk_msm8974 = {
+ 	.num_clks = ARRAY_SIZE(msm8974_clks),
+ };
+ 
+-DEFINE_CLK_SMD_RPM(msm8976, mmssnoc_ahb_clk, mmssnoc_ahb_a_clk,
+-		   QCOM_SMD_RPM_BUS_CLK, 2);
+ DEFINE_CLK_SMD_RPM(msm8976, ipa_clk, ipa_a_clk, QCOM_SMD_RPM_IPA_CLK, 0);
+ 
+ static struct clk_smd_rpm *msm8976_clks[] = {
++	[RPM_SMD_XO_CLK_SRC] = &sdm660_bi_tcxo,
++	[RPM_SMD_XO_A_CLK_SRC] = &sdm660_bi_tcxo_a,
+ 	[RPM_SMD_PCNOC_CLK] = &msm8916_pcnoc_clk,
+ 	[RPM_SMD_PCNOC_A_CLK] = &msm8916_pcnoc_a_clk,
+ 	[RPM_SMD_SNOC_CLK] = &msm8916_snoc_clk,
+ 	[RPM_SMD_SNOC_A_CLK] = &msm8916_snoc_a_clk,
+ 	[RPM_SMD_BIMC_CLK] = &msm8916_bimc_clk,
+ 	[RPM_SMD_BIMC_A_CLK] = &msm8916_bimc_a_clk,
++	[RPM_SMD_SYSMMNOC_CLK]	= &msm8936_sysmmnoc_clk,
++	[RPM_SMD_SYSMMNOC_A_CLK] = &msm8936_sysmmnoc_a_clk,
+ 	[RPM_SMD_QDSS_CLK] = &msm8916_qdss_clk,
+ 	[RPM_SMD_QDSS_A_CLK] = &msm8916_qdss_a_clk,
+ 	[RPM_SMD_BB_CLK1] = &msm8916_bb_clk1,
+@@ -586,8 +588,6 @@ static struct clk_smd_rpm *msm8976_clks[] = {
+ 	[RPM_SMD_BB_CLK1_A_PIN] = &msm8916_bb_clk1_a_pin,
+ 	[RPM_SMD_BB_CLK2_PIN] = &msm8916_bb_clk2_pin,
+ 	[RPM_SMD_BB_CLK2_A_PIN] = &msm8916_bb_clk2_a_pin,
+-	[RPM_SMD_MMSSNOC_AHB_CLK] = &msm8976_mmssnoc_ahb_clk,
+-	[RPM_SMD_MMSSNOC_AHB_A_CLK] = &msm8976_mmssnoc_ahb_a_clk,
+ 	[RPM_SMD_DIV_CLK2] = &msm8974_div_clk2,
+ 	[RPM_SMD_DIV_A_CLK2] = &msm8974_div_a_clk2,
+ 	[RPM_SMD_IPA_CLK] = &msm8976_ipa_clk,
+-- 
+2.25.1
 
-Best regards,
-Krzysztof
