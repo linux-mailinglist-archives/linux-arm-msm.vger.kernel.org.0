@@ -2,71 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CAD4D510AB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 22:46:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 714C3510ABA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 22:47:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355125AbiDZUtR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 16:49:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35392 "EHLO
+        id S1355138AbiDZUuV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 16:50:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355103AbiDZUtP (ORCPT
+        with ESMTP id S1355136AbiDZUuU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 16:49:15 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F2CC3ED18;
-        Tue, 26 Apr 2022 13:46:06 -0700 (PDT)
+        Tue, 26 Apr 2022 16:50:20 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7445C4D24A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 13:47:11 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id z2so22045505oic.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 13:47:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651005966; x=1682541966;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=H/MSWAr9aGb3XoC6bVHw7v/tgbOnpwvSajQyOcB3O3A=;
-  b=f7gIuo6s7yD5KcP7PWHSCo6D80ZhVYoObv09XsvR8BBfaA+QqMcPBOrM
-   t8UFZhgZbhrAQp95NwCZq2HStVnGhsT5csnZ2yCXxybTr0N0BKb4fv/AN
-   7204jfR2dju1IE0uynez4X2/VJRzjwTKHS+zZaKmpk/2RJn2VF9JY19h0
-   0=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 26 Apr 2022 13:46:06 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 13:46:05 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 26 Apr 2022 13:46:04 -0700
-Received: from [10.111.160.161] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 26 Apr
- 2022 13:46:01 -0700
-Message-ID: <a21a6ad5-5ed3-6207-8af7-655d19197041@quicinc.com>
-Date:   Tue, 26 Apr 2022 13:45:59 -0700
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=QzB3Bdi4TZ2Nws2HCQQhwkIjzXxft3C3e6a003vLbvE=;
+        b=vvdly9VcW+FAd/BRUYEN8pLSa18CiNt5rOAYy02F79PncC/cyELUr+kTRLEVjoCkGa
+         k9KSZCcXnphk9wvuD4zWOPN4X9m9maHjKdcZ9ip7EL4paaEKbK2y+b+ELiNGUcJT8Fge
+         7u6HxblMgLQ2RHnGNu7+9GQcJsO06eb9PaEeGnFlug6AXrG9Kw1g2fFN65GQFMIVfPuX
+         sK2XxmONL1F5NzcNC1epk4czsWVBA4KNxAPTKwHdrc5WlBBJnz1wb3dwNtJZSVSN1s65
+         FKNrAfb0hgm428AFl6BDNWA0EXOwTIj2GkGKx6gEcztMfaCrr+2CG3fFcDS0C9w/b9xB
+         YtEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=QzB3Bdi4TZ2Nws2HCQQhwkIjzXxft3C3e6a003vLbvE=;
+        b=LJmcffEJgvl9DdhgnnaF8ruTgctPjy9W6/U2bqCWST0rOABodSywtJCi8xwYcJyN96
+         vn9dwYTfKay5lJw3vbhOwQsa45ePpV7f7mrt0J1B9+wmRn/Aiha2IlIwgq7MdV/Kv73L
+         E0WmWqy3wrHDNyH6F1sKWi61fFqkwgom9NexFM4z+rSzzPjO1HtXXJstVZXHIwlQb5Qi
+         yLeVOh6o8OsVJRmIH+vyDp5mEHeGkiMX9vOxOtWUtQjrxsEXOPop8gc8EuvYpzoEWAr5
+         LFRY0DMR4u7Sm6+18uNpRcE2Pj8RtQayWL7M6mwRz2cnodNGmKsOQun3F2KJKErXEKAE
+         yMbQ==
+X-Gm-Message-State: AOAM531AB8jLqNaMBGVDPqGIgoXOa6m9R21Q/2UdJ0+gaMxN7wgNQZZK
+        9y0PDNigEL65+3M4qSi7pSbmmA==
+X-Google-Smtp-Source: ABdhPJytkLIz0yPUD72X91npy9NSOKrvOFG9hQCViddsQAVjI6xY6tpbOieUx0/M7QRqK/nF1xwQ1w==
+X-Received: by 2002:aca:1004:0:b0:322:8ac2:a1ef with SMTP id 4-20020aca1004000000b003228ac2a1efmr14892914oiq.239.1651006030834;
+        Tue, 26 Apr 2022 13:47:10 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id e26-20020a056820061a00b0035e46250f56sm5331987oow.13.2022.04.26.13.47.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Apr 2022 13:47:09 -0700 (PDT)
+Date:   Tue, 26 Apr 2022 13:49:05 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Kuldeep Singh <singh.kuldeep87k@gmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 1/4] ARM: dts: qcom: apq8064: Use generic node name
+ for DMA
+Message-ID: <YmhawW3wAn7HAUVC@ripper>
+References: <20220421171809.32722-1-singh.kuldeep87k@gmail.com>
+ <20220421171809.32722-2-singh.kuldeep87k@gmail.com>
+ <YmQjW4OYe5rTBP/Q@ripper>
+ <20220423180934.GA35431@9a2d8922b8f1>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [RFC PATCH] drm/edid: drm_add_modes_noedid() should set lowest
- resolution as preferred
-Content-Language: en-US
-To:     Douglas Anderson <dianders@chromium.org>,
-        <dri-devel@lists.freedesktop.org>
-CC:     <robdclark@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <quic_khsieh@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
-        <quic_sbillaka@quicinc.com>, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        <linux-kernel@vger.kernel.org>
-References: <20220426132121.RFC.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220426132121.RFC.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220423180934.GA35431@9a2d8922b8f1>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,54 +77,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat 23 Apr 11:09 PDT 2022, Kuldeep Singh wrote:
 
-
-On 4/26/2022 1:21 PM, Douglas Anderson wrote:
-> If we're unable to read the EDID for a display because it's corrupt /
-> bogus / invalid then we'll add a set of standard modes for the
-> display. When userspace looks at these modes it doesn't really have a
-> good concept for which mode to pick and it'll likely pick the highest
-> resolution one by default. That's probably not ideal because the modes
-> were purely guesses on the part of the Linux kernel.
+> On Sat, Apr 23, 2022 at 09:03:39AM -0700, Bjorn Andersson wrote:
+> > On Thu 21 Apr 10:18 PDT 2022, Kuldeep Singh wrote:
+> > 
+> > > Qcom BAM DT spec expects generic DMA controller node name as
+> > > "dma-controller" to enable validations.
+> > > 
+> > > Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
+> > > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > 
+> > It seems that I picked up v3, but patchwork-bot didn't send out any
+> > notifications.
 > 
-> Let's instead set 640x480 as the "preferred" mode when we have no EDID.
+> Yes, somehow there was no notification for this series as well as geni
+> uart/i2c patches also.
 > 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-
-drm_dmt_modes array is sorted but you are also relying on this check to 
-eliminate the non-60fps modes
-
-5611 		if (drm_mode_vrefresh(ptr) > 61)
-5612 			continue;
-
-I am not sure why we filter out the modes > 61 vrefresh.
-
-If that check will remain this is okay.
-
-If its not, its not reliable that the first mode will be 640x480@60
-
-> ---
+> >
+> > Please double check linux-next to confirm that we got them all sorted
+> > out.
 > 
->   drivers/gpu/drm/drm_edid.c | 9 +++++++++
->   1 file changed, 9 insertions(+)
+> I checked dma dts patches[1] and they are in next/linux-next.
+> I hope I checked the right tree, please correct me if it's wrong.
 > 
-> diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-> index 7a8482b75071..64ccfff4167e 100644
-> --- a/drivers/gpu/drm/drm_edid.c
-> +++ b/drivers/gpu/drm/drm_edid.c
-> @@ -5839,6 +5839,15 @@ int drm_add_modes_noedid(struct drm_connector *connector,
->   			continue;
->   		mode = drm_mode_duplicate(dev, ptr);
->   		if (mode) {
-> +			/*
-> +			 * The drm_dmt_modes array is sorted so that lower
-> +			 * resolutions come first. We'll set the lowest
-> +			 * resolution mode as preferred. We have no EDID so
-> +			 * we should prefer the lowest resolution mode as
-> +			 * the safest one.
-> +			 */
-> +			if (num_modes == 0)
-> +				mode->type |= DRM_MODE_TYPE_PREFERRED;
->   			drm_mode_probed_add(connector, mode);
->   			num_modes++;
->   		}
+> Please note, there was one small typo fix from v3->v4 in commit
+> header(s/User/Use). Not sure if it's worth updating as it's already in
+> next tree, upto you. Thanks!
+> 
+
+I generally never rebase my trees, as that's causing issues for anyone
+references commits in my tree. So we'll have to live with this typo.
+
+Thanks,
+Bjorn
