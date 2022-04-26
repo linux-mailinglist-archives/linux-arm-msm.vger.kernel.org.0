@@ -2,121 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED5AE5106CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 20:24:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50AF6510762
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 20:47:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351255AbiDZS16 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 14:27:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33042 "EHLO
+        id S1352270AbiDZSuU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 14:50:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243844AbiDZS1y (ORCPT
+        with ESMTP id S1345820AbiDZSuT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 14:27:54 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5C3A198C5E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 11:24:43 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id m62so1127676wme.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 11:24:43 -0700 (PDT)
+        Tue, 26 Apr 2022 14:50:19 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6998389CC0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 11:47:11 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id z16so18773963pfh.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 11:47:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=+SCJtuLLPCBIugzhmGROyOenrWlaIWVL1GHx1RKXQ04=;
-        b=nntI83QQTS/o0PgqWKe78Wr/Fs7Rm4Eskmyw6Fc9ZUnLXEOEzdwyZ4D9skbnKDbf1I
-         PaGaX7HxqO4WvGXMqz28D5yOrFtObmRpnP/7aL+ypyEKGi70g+DZBVCB5tuweBllAyOD
-         /vT3/SyWlkJeaeo5SCcoedvh9KBVPgls0+VEecJNwud2dU0fmwnnYG+D4u4o6r+ocx7k
-         Vsn7mz7BQcsEek2QZJqcz2GwyR9Wt16Zkq10n9tiRtM9OKx1ZFI57S0OhQ1ZuNRqiAJy
-         UPQixnwjYm0CiEt5CWRFhEKn0nnI0oPn837Ny7wrD7WzyqK5KzwRqRop4m0ydqI1MnyH
-         LL/Q==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iNPhuCT76qA1HQ8jsp8ivJVMa3tulsabXFtzJpJBhPs=;
+        b=d0R9Datgcjx0dtRH18O4eGeuP/02RmWwNyFLxcUk94GR9KyWIR5HHfvio5VldwlFY/
+         POd6UXcXZ3ABHMsIn954aXk19N1evea074yhvchiWA+N6RouViWkvoLmYWrzocY1sGMn
+         rL/XObfXzumEiwmDgAy6r3BNCbFRdLZqhpLBs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=+SCJtuLLPCBIugzhmGROyOenrWlaIWVL1GHx1RKXQ04=;
-        b=SvmPXUCclxGXItm/33WhcwnOErf/cvN8SrW12YUE2+eZP9WQkoBZF2feWsIlKxgoK5
-         7gyuLHmujuExIRzpcqGGYiEDA5pUnCFHCHd/5ZuCq08oE/I8zQoQpQ2VYbxQH9gVfqcI
-         VvCuW0uXyogaf9xce3sorivptoTnbbjYQRdz9al+ZVY4Af9JTIzvNq+CtkFSrlj4EvKc
-         YlICqnuzi3KOkLd3ZUY8kIXy3k9zK0wLTFW+1kGaJ3CUcJZiHTJsB0dTuzGcZ6HqXU8H
-         BI6tnbr/Tv1eF5kSVshZ+9Mhqd3UytQwhVkUzI8jbsXhytsjfBdrifZ9m4Bzg7eDBQlz
-         hNwg==
-X-Gm-Message-State: AOAM532G8qY4qYuT6pNX0K6pwslpdJsGCbcW9HfCwP5D0V2N/5wL0OI0
-        Pc8PWoz4zy3AKL1/nIh4AeNp+Q==
-X-Google-Smtp-Source: ABdhPJwz//6x4ICwKAzGCmmXVVYSEtHxdDp9dLUNvkRfLP6WxyjweH5Q18HN37vwRJIIiCxDpbUDqQ==
-X-Received: by 2002:a7b:c0d0:0:b0:392:a02c:28ab with SMTP id s16-20020a7bc0d0000000b00392a02c28abmr31509324wmh.2.1650997482193;
-        Tue, 26 Apr 2022 11:24:42 -0700 (PDT)
-Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
-        by smtp.gmail.com with ESMTPSA id p14-20020a05600c1d8e00b0038ecb2d2feasm11567536wms.4.2022.04.26.11.24.40
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iNPhuCT76qA1HQ8jsp8ivJVMa3tulsabXFtzJpJBhPs=;
+        b=7Hb+nSumBUrhZyqEstRBC0Z3vt64Il7AOwfIRe/rLxIE4RkdyeSL057HQfr0tN2A3W
+         xDBK7ueB2kKEFKWCNnzGnR3X4u6L2fwnf5cDS9pPrwuCoPyW8OHewUR+7DOEMWTN4zJx
+         qU3LM8kI+ISmb7WhYJIXq0OsdkB5YhCAsTjxMRQrQXGgHzlu/w9NNcykBjO5Lk9jkZt8
+         MaPW7zg0VClAS4SIoFc2AxRjaP0BJAimhf15CSpeJBAPo5dHqchbR7FCdOMKTvzFXe5Y
+         m9Og1ihwU1QIlpKq52MyBsACC+WkJsQsmqmWVtQAEv6pGkPUoRQoLs92vglXMcw68B+H
+         XMxg==
+X-Gm-Message-State: AOAM532SS2mX8f47HYAOjmuduhnUWMIhWkUmkIDdYwpaEPdhgCEZl/yu
+        uD6+aIRSDPBVzDtIRXgvjf5c1g==
+X-Google-Smtp-Source: ABdhPJzpVJ4/P4pT54blJ/GUKBW2RU9EpDtmWHh7QkA9X5s7rM+Lwfc6H9IyqTdQUFnUIeJSkVZe7g==
+X-Received: by 2002:a65:6a16:0:b0:39d:4f3:67e6 with SMTP id m22-20020a656a16000000b0039d04f367e6mr21199191pgu.84.1650998830924;
+        Tue, 26 Apr 2022 11:47:10 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:8e92:9f42:eda6:c0ee])
+        by smtp.gmail.com with ESMTPSA id p185-20020a62d0c2000000b0050d1f7c515esm12584396pfg.219.2022.04.26.11.47.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 11:24:41 -0700 (PDT)
-Date:   Tue, 26 Apr 2022 19:24:39 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        sumit.semwal@linaro.org, amit.pundir@linaro.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v13 3/9] mfd: qcom-spmi-pmic: read fab id on supported
- PMICs
-Message-ID: <Ymg455MYRIJTXgvW@google.com>
-References: <20220323162820.110806-1-caleb@connolly.tech>
- <20220323162820.110806-4-caleb@connolly.tech>
- <Yma4tXvPQ+U89Whr@google.com>
- <10f7cb8e-4c2a-0bba-df55-16b56d429147@linaro.org>
+        Tue, 26 Apr 2022 11:47:10 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     dmitry.baryshkov@linaro.org, swboyd@chromium.org,
+        quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        robdclark@gmail.com, quic_khsieh@quicinc.com,
+        linux-arm-msm@vger.kernel.org, quic_sbillaka@quicinc.com,
+        Douglas Anderson <dianders@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] drm/probe-helper: Add helper for drm_helper_probe_single_connector_modes()
+Date:   Tue, 26 Apr 2022 11:46:50 -0700
+Message-Id: <20220426114627.1.I2dd93486c6952bd52f2020904de0133970d11b29@changeid>
+X-Mailer: git-send-email 2.36.0.rc2.479.g8af0fa9b8e-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <10f7cb8e-4c2a-0bba-df55-16b56d429147@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 26 Apr 2022, Caleb Connolly wrote:
-> On 25/04/2022 16:05, Lee Jones wrote:
-> > On Wed, 23 Mar 2022, Caleb Connolly wrote:
-> > 
-> > > From: Caleb Connolly <caleb.connolly@linaro.org>
-> > > 
-> > > The PMI8998 and PM660 expose the fab_id, this is needed by drivers like
-> > > the RRADC to calibrate ADC values.
-> > > 
-> > > Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >   drivers/mfd/qcom-spmi-pmic.c      | 7 +++++++
-> > >   include/soc/qcom/qcom-spmi-pmic.h | 1 +
-> > >   2 files changed, 8 insertions(+)
-> > 
-> > Please change the Subject line to match the style of the sub-system?
-> Hi, sorry if this is a silly question, I don't quite understand what you
-> want me to change here, the subject line is in the same "mfd: driver:"
-> format as other patches in the subsystem?
+The drm_helper_probe_single_connector_modes() is a bit long. Let's
+break a chunk off to update and validate modes. This helps avoid one
+goto and also will allow us to more easily call the helper a second
+time in a future patch without adding looping or another goto.
 
-mfd: qcom-spmi-pmic: Read fab ID on supported PMICs
+This change is intended to be a no-op change--just code movement.
 
-What's 'fab' should that be capitalised too?
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-> > Once changed:
-> > 
-> >    Acked-by: Lee Jones <lee.jones@linaro.org>
-> > 
-> 
+ drivers/gpu/drm/drm_probe_helper.c | 105 ++++++++++++++++-------------
+ 1 file changed, 59 insertions(+), 46 deletions(-)
 
+diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+index 682359512996..819225629010 100644
+--- a/drivers/gpu/drm/drm_probe_helper.c
++++ b/drivers/gpu/drm/drm_probe_helper.c
+@@ -354,6 +354,61 @@ drm_helper_probe_detect(struct drm_connector *connector,
+ }
+ EXPORT_SYMBOL(drm_helper_probe_detect);
+ 
++static bool _drm_helper_update_and_validate(struct drm_connector *connector,
++					    uint32_t maxX, uint32_t maxY,
++					    struct drm_modeset_acquire_ctx *ctx)
++{
++	struct drm_device *dev = connector->dev;
++	struct drm_display_mode *mode;
++	int mode_flags = 0;
++	int ret;
++
++	drm_connector_list_update(connector);
++
++	if (connector->interlace_allowed)
++		mode_flags |= DRM_MODE_FLAG_INTERLACE;
++	if (connector->doublescan_allowed)
++		mode_flags |= DRM_MODE_FLAG_DBLSCAN;
++	if (connector->stereo_allowed)
++		mode_flags |= DRM_MODE_FLAG_3D_MASK;
++
++	list_for_each_entry(mode, &connector->modes, head) {
++		if (mode->status != MODE_OK)
++			continue;
++
++		mode->status = drm_mode_validate_driver(dev, mode);
++		if (mode->status != MODE_OK)
++			continue;
++
++		mode->status = drm_mode_validate_size(mode, maxX, maxY);
++		if (mode->status != MODE_OK)
++			continue;
++
++		mode->status = drm_mode_validate_flag(mode, mode_flags);
++		if (mode->status != MODE_OK)
++			continue;
++
++		ret = drm_mode_validate_pipeline(mode, connector, ctx,
++						 &mode->status);
++		if (ret) {
++			drm_dbg_kms(dev,
++				    "drm_mode_validate_pipeline failed: %d\n",
++				    ret);
++
++			if (drm_WARN_ON_ONCE(dev, ret != -EDEADLK))
++				mode->status = MODE_ERROR;
++			else
++				return true;
++		}
++
++		if (mode->status != MODE_OK)
++			continue;
++		mode->status = drm_mode_validate_ycbcr420(mode, connector);
++	}
++
++	return false;
++}
++
+ /**
+  * drm_helper_probe_single_connector_modes - get complete set of display modes
+  * @connector: connector to probe
+@@ -421,7 +476,6 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+ 	const struct drm_connector_helper_funcs *connector_funcs =
+ 		connector->helper_private;
+ 	int count = 0, ret;
+-	int mode_flags = 0;
+ 	bool verbose_prune = true;
+ 	enum drm_connector_status old_status;
+ 	struct drm_modeset_acquire_ctx ctx;
+@@ -519,52 +573,11 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+ 			   connector->status == connector_status_unknown))
+ 		count = drm_add_modes_noedid(connector, 1024, 768);
+ 	count += drm_helper_probe_add_cmdline_mode(connector);
+-	if (count == 0)
+-		goto prune;
+-
+-	drm_connector_list_update(connector);
+-
+-	if (connector->interlace_allowed)
+-		mode_flags |= DRM_MODE_FLAG_INTERLACE;
+-	if (connector->doublescan_allowed)
+-		mode_flags |= DRM_MODE_FLAG_DBLSCAN;
+-	if (connector->stereo_allowed)
+-		mode_flags |= DRM_MODE_FLAG_3D_MASK;
+-
+-	list_for_each_entry(mode, &connector->modes, head) {
+-		if (mode->status != MODE_OK)
+-			continue;
+-
+-		mode->status = drm_mode_validate_driver(dev, mode);
+-		if (mode->status != MODE_OK)
+-			continue;
+-
+-		mode->status = drm_mode_validate_size(mode, maxX, maxY);
+-		if (mode->status != MODE_OK)
+-			continue;
+-
+-		mode->status = drm_mode_validate_flag(mode, mode_flags);
+-		if (mode->status != MODE_OK)
+-			continue;
+-
+-		ret = drm_mode_validate_pipeline(mode, connector, &ctx,
+-						 &mode->status);
+-		if (ret) {
+-			drm_dbg_kms(dev,
+-				    "drm_mode_validate_pipeline failed: %d\n",
+-				    ret);
+-
+-			if (drm_WARN_ON_ONCE(dev, ret != -EDEADLK)) {
+-				mode->status = MODE_ERROR;
+-			} else {
+-				drm_modeset_backoff(&ctx);
+-				goto retry;
+-			}
++	if (count != 0) {
++		if (_drm_helper_update_and_validate(connector, maxX, maxY, &ctx)) {
++			drm_modeset_backoff(&ctx);
++			goto retry;
+ 		}
+-
+-		if (mode->status != MODE_OK)
+-			continue;
+-		mode->status = drm_mode_validate_ycbcr420(mode, connector);
+ 	}
+ 
+ prune:
 -- 
-Lee Jones [李琼斯]
-Principal Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+2.36.0.rc2.479.g8af0fa9b8e-goog
+
