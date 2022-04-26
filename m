@@ -2,49 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8FDF50F152
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 08:43:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BE3750F15D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 08:43:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245569AbiDZGph (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 02:45:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49700 "EHLO
+        id S245737AbiDZGqI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 02:46:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245611AbiDZGoE (ORCPT
+        with ESMTP id S245725AbiDZGp7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 02:44:04 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79B4CE099;
-        Mon, 25 Apr 2022 23:40:53 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 0287CB81C1E;
-        Tue, 26 Apr 2022 06:40:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF1AC385AE;
-        Tue, 26 Apr 2022 06:40:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1650955250;
-        bh=6torebe632s6Xh8593qZioLSF0dyeFQL93aZy68b2AU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fKqg1mY+zPEmj0CIcvgxqV4kN9oczi+6n9FcLrbgXCfl5q87ug6obd0BE2YwGn9br
-         TLqNHVJjwZBc6mpkwIhwg+OhDd0BOYJAhU2fIH3ncr9w/GfHLFhdG4OpTr1q1MenZS
-         bI5u0Ya/Ie5vBC6/MSi4RxceFLOFb1/F1gkCWe7c=
-Date:   Tue, 26 Apr 2022 08:40:47 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     stable@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        davem@davemloft.net, linux-arm-msm@vger.kernel.org,
+        Tue, 26 Apr 2022 02:45:59 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA90EFADA0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 23:42:46 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id l18so7387918ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Apr 2022 23:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vEOSnXjfcH/l5Es8VtB/ak1K3hreA1C3eDBJ8dHARyo=;
+        b=bASAClY6Ytda/4xUhup8MUSUMsRpRAR50cqsJ0XAhppisIw/yr3Xf8wWEbZ5+xFHAI
+         TOHWNUaLKHbhBnYaZ2Q9x9tGRWB0zFVJFafT2ODZVUTXhAMONRvUCRUf2QdJ7NOT3Xdi
+         GtfHjgDwHJKBPP6tvv+uw318ezvkJt13nlj2HrLqud15LIUkl+IzyVCZ7DJ0QlV2CrcQ
+         G9fFDlVrRM3nHlVe/lfOa6Oq+iQuNKfkFOs6uC/DXvxAtb6pVhPTws9BjtCfeQW/AXxm
+         /t2ybFAayhGpTecMphERvHj25Qx0POiUlJLQe2OOQUCoeXGzWX9AFfPMTBWMvmKmPCaX
+         u4Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vEOSnXjfcH/l5Es8VtB/ak1K3hreA1C3eDBJ8dHARyo=;
+        b=sqVKpjNanc1fJT+9wsBiQIxbZ/CQYxNDAFHFzpXTeUQP0CXp67Xgj3tQMPyZ+82Rji
+         IgSx9MDUZGERZdBmoNozNXtv3nHbXbP23AU57ft3OzLclTSaH3j8m7wFPH/p8BI4Z34G
+         0oFMc+ktaUeFfbEeo8ITjI6CIbqDYuwjnqFy9f5iOTAIKDW8DVCnMZ4d6RgrngvGbJfx
+         tG7v64PbNYuItYkyWAELC0XjzVGQBnW4UVft82JQxtgpHNPjiBpA6C7ilf9k277m+Czq
+         wzaty+CIBzsQhmO3PDQ0cizbEWyN9Alk4/yjYcBq3CfAsQQVwVlO+5D/kV8eehEBfFkQ
+         zlWA==
+X-Gm-Message-State: AOAM532fa/ohNJNAOT2bH4H4VpPWmCdY24m/6v2G8jWIaf9KsGKE3yBA
+        lYP9WcWZVoqnmEfyVrJ4u+Sbhg==
+X-Google-Smtp-Source: ABdhPJyQuE+1pRBGE66dl8vawhJjRk0oRMEc2gZhd7SNDASBfF96iGQsJRh6XDctSdl8wKwtt+jiWw==
+X-Received: by 2002:a17:906:1315:b0:6ef:5903:c5d1 with SMTP id w21-20020a170906131500b006ef5903c5d1mr19635606ejb.537.1650955365291;
+        Mon, 25 Apr 2022 23:42:45 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id fx3-20020a170906b74300b006daecedee44sm4386885ejb.220.2022.04.25.23.42.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Apr 2022 23:42:44 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: add IPA qcom,qmp property
-Message-ID: <YmeT7yC4896tlwi9@kroah.com>
-References: <20220421220011.1750952-1-elder@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v2] dt-bindings: clock: qcom,gcc-apq8064: Fix typo in compatible and split apq8084
+Date:   Tue, 26 Apr 2022 08:42:41 +0200
+Message-Id: <20220426064241.6379-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220421220011.1750952-1-elder@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -52,22 +76,136 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 21, 2022 at 05:00:11PM -0500, Alex Elder wrote:
-> commit 73419e4d2fd1b838fcb1df6a978d67b3ae1c5c01 upstream.
-> 
-> At least three platforms require the "qcom,qmp" property to be
-> specified, so the IPA driver can request register retention across
-> power collapse.  Update DTS files accordingly.
-> 
-> Cc: <stable@vger.kernel.org>    # 5.15.x
-> Fixes: 1aac309d3207 ("net: ipa: use autosuspend")
-> Signed-off-by: Alex Elder <elder@linaro.org>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Link: https://lore.kernel.org/r/20220201140723.467431-1-elder@linaro.org
-> ---
-> Enable this feature, now that 8ff8bdb8c92d6 ("net: ipa: request IPA
-> register values be retained") has been accepted into linux-5.15.y.
+The qcom,gcc-apq8064.yaml was meant to describe only APQ8064 and APQ8084
+should have slightly different bindings (without Qualcomm thermal sensor
+device).  Add new bindings for APQ8084.
 
-Both now queued up, thanks.
+Fixes: a469bf89a009 ("dt-bindings: clock: simplify qcom,gcc-apq8064 Documentation")
+Reported-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-greg k-h
+---
+
+Changes since v1:
+1. Correct Taniya's email.
+2. Correct chipset name in description.
+3. Extend commit msg.
+---
+ .../bindings/clock/qcom,gcc-apq8064.yaml      |  4 +-
+ ...gcc-apq8064.yaml => qcom,gcc-apq8084.yaml} | 57 +++++--------------
+ 2 files changed, 16 insertions(+), 45 deletions(-)
+ copy Documentation/devicetree/bindings/clock/{qcom,gcc-apq8064.yaml => qcom,gcc-apq8084.yaml} (31%)
+
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+index 97936411b6b4..9fafcb080069 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+@@ -20,12 +20,10 @@ description: |
+   See also:
+   - dt-bindings/clock/qcom,gcc-msm8960.h
+   - dt-bindings/reset/qcom,gcc-msm8960.h
+-  - dt-bindings/clock/qcom,gcc-apq8084.h
+-  - dt-bindings/reset/qcom,gcc-apq8084.h
+ 
+ properties:
+   compatible:
+-    const: qcom,gcc-apq8084
++    const: qcom,gcc-apq8064
+ 
+   nvmem-cells:
+     minItems: 1
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8084.yaml
+similarity index 31%
+copy from Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+copy to Documentation/devicetree/bindings/clock/qcom,gcc-apq8084.yaml
+index 97936411b6b4..397fb918e032 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8084.yaml
+@@ -1,69 +1,42 @@
+-# SPDX-License-Identifier: GPL-2.0-only
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+ %YAML 1.2
+ ---
+-$id: http://devicetree.org/schemas/clock/qcom,gcc-apq8064.yaml#
++$id: http://devicetree.org/schemas/clock/qcom,gcc-apq8084.yaml#
+ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+-title: Qualcomm Global Clock & Reset Controller Binding for APQ8064
+-
+-allOf:
+-  - $ref: qcom,gcc.yaml#
++title: Qualcomm Global Clock & Reset Controller Binding for APQ8084
+ 
+ maintainers:
+   - Stephen Boyd <sboyd@kernel.org>
+-  - Taniya Das <tdas@codeaurora.org>
++  - Taniya Das <quic_tdas@quicinc.com>
+ 
+ description: |
+   Qualcomm global clock control module which supports the clocks, resets and
+-  power domains on APQ8064.
++  power domains on APQ8084.
+ 
+-  See also:
+-  - dt-bindings/clock/qcom,gcc-msm8960.h
+-  - dt-bindings/reset/qcom,gcc-msm8960.h
++  See also::
+   - dt-bindings/clock/qcom,gcc-apq8084.h
+   - dt-bindings/reset/qcom,gcc-apq8084.h
+ 
++allOf:
++  - $ref: qcom,gcc.yaml#
++
+ properties:
+   compatible:
+     const: qcom,gcc-apq8084
+ 
+-  nvmem-cells:
+-    minItems: 1
+-    maxItems: 2
+-    description:
+-      Qualcomm TSENS (thermal sensor device) on some devices can
+-      be part of GCC and hence the TSENS properties can also be part
+-      of the GCC/clock-controller node.
+-      For more details on the TSENS properties please refer
+-      Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+-
+-  nvmem-cell-names:
+-    minItems: 1
+-    items:
+-      - const: calib
+-      - const: calib_backup
+-
+-  '#thermal-sensor-cells':
+-    const: 1
+-
+ required:
+   - compatible
+-  - nvmem-cells
+-  - nvmem-cell-names
+-  - '#thermal-sensor-cells'
+ 
+ unevaluatedProperties: false
+ 
+ examples:
+   - |
+-    clock-controller@900000 {
+-      compatible = "qcom,gcc-apq8064";
+-      reg = <0x00900000 0x4000>;
+-      nvmem-cells = <&tsens_calib>, <&tsens_backup>;
+-      nvmem-cell-names = "calib", "calib_backup";
+-      #clock-cells = <1>;
+-      #reset-cells = <1>;
+-      #power-domain-cells = <1>;
+-      #thermal-sensor-cells = <1>;
++    clock-controller@fc400000 {
++        compatible = "qcom,gcc-apq8084";
++        reg = <0xfc400000 0x4000>;
++        #clock-cells = <1>;
++        #reset-cells = <1>;
++        #power-domain-cells = <1>;
+     };
+ ...
+-- 
+2.32.0
+
