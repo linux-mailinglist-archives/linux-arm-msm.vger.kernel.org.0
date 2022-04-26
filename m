@@ -2,86 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E88A510B1B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 23:18:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 355BD510B20
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 23:19:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354017AbiDZVVn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 17:21:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49398 "EHLO
+        id S1355344AbiDZVWs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 17:22:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243374AbiDZVVm (ORCPT
+        with ESMTP id S1355327AbiDZVWr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 17:21:42 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ED50C8662
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 14:18:34 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-e93ff05b23so7632182fac.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 14:18:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=UQdTLiFS6s5lb76z4V/zrcCjKl7kNha5dSW7q7Ju4iw=;
-        b=i4UpTC9epX2dJK4owogRVosBAzugi615/pZuFaNT0GMn/rXImP/Z1IkC2BP9L9m3KO
-         mOisseWijdZbjf0asGuv7vhXCkSH5GH52OL4ryQ5V/9AvT8Iyl7NkSWHt+uM/IKxVuKp
-         8mCGvnSETOUjT5zWn1gPpmQuBa/iZlytHc92U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=UQdTLiFS6s5lb76z4V/zrcCjKl7kNha5dSW7q7Ju4iw=;
-        b=HrvaUnHavFc+1+RP9AAvq7mu3qxjNa0VgS0GGbt5O8+IDijCyo6FjrPP1EMI5Ezqcv
-         YiJ10ohqQCQ8wPZR0HKKBAqrMl2odgqDx3scJb0EeYLZe6CwH65uuTs3kfgc7VCwWQ5+
-         13MoJ6FHzI8/usn4ieOSAqAfAdwadDbPo7mOt6j3dD/A0L/3h4PUiKPVWv1LQSQ8mc0s
-         MwV1LYxG/83b6Hc4KPZfpFPQisbo0yTqBrYeQqWxgFguPCmARkOOxlnKEhDVY2eW74iz
-         gqEEIHaxkM7NMEqcz/RDS+KjzYEAOxUd7jqPwOrtY3mDr+c82GbslTv9FQo+U0bNqSVo
-         EBrA==
-X-Gm-Message-State: AOAM532b8gKK8fpdrFQu8AVMuPjBvQCEZdd+mpvLpGQ/kcfbfR+6+8i5
-        lYOM8KGn6vyTzvgYr8aSADoNQbYjEh5NY8NrNxWJ4Q==
-X-Google-Smtp-Source: ABdhPJyW17NjxF3rs/I0KgToaqsIbXY3bjCBx58ePbAI217dDz1IltjBckzBntvCJY0CiDdmMaXOV9ldviATzU4d0f8=
-X-Received: by 2002:a05:6870:15ca:b0:e9:551:6d1c with SMTP id
- k10-20020a05687015ca00b000e905516d1cmr8599802oad.193.1651007913723; Tue, 26
- Apr 2022 14:18:33 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 26 Apr 2022 14:18:33 -0700
+        Tue, 26 Apr 2022 17:22:47 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D5E9C8677;
+        Tue, 26 Apr 2022 14:19:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651007979; x=1682543979;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=EpwUa4TvzlVvOHJi5+yOiqfv4c3h+/WtFw0HkynHRMc=;
+  b=jw0FGDzob5T0ofLUw3h07A5ZmFhNoI8V8bjB7MsxC+bSOyqc2YzYGWOQ
+   zhZC2+MwAqzcokjlaf8QzkN/fjzviRqEi4lDA/36pPsoyV/9JAhWmCUTo
+   y269u+E89CqLF6R6pQ/4LX7DmkIKb8yNyfGwGr42OVVCK/jF3Quvuqwp/
+   QZBLOC+GM+Pun7UD/KrV98+j+1hA9xqzKQqjm5IWKSAdJBwc3yjF2Rx1z
+   Vb9HdBtozEv5Pjukx+0Fw3TnZ12WymRMznpADYW4p7JmvUNYERGJOFDLD
+   RnPiyrgkoCHT18Iee7DZb/RnZhx3hCOXKjMb8IjhBL0sNEEWzGIf1O+/D
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10329"; a="263317228"
+X-IronPort-AV: E=Sophos;i="5.90,292,1643702400"; 
+   d="scan'208";a="263317228"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 14:19:38 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,292,1643702400"; 
+   d="scan'208";a="595960382"
+Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
+  by orsmga001.jf.intel.com with ESMTP; 26 Apr 2022 14:19:36 -0700
+Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1njSau-0003zy-4H;
+        Tue, 26 Apr 2022 21:19:36 +0000
+Date:   Wed, 27 Apr 2022 05:18:46 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Yogesh Lal <quic_ylal@quicinc.com>, bjorn.andersson@linaro.org,
+        quic_sibis@quicinc.com
+Cc:     kbuild-all@lists.01.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Yogesh Lal <quic_ylal@quicinc.com>
+Subject: Re: [PATCH v2] remoteproc: qcom: Add fallback mechanism for full
+ coredump collection
+Message-ID: <202204270556.J6HOrXrU-lkp@intel.com>
+References: <1650969374-19245-1-git-send-email-quic_ylal@quicinc.com>
 MIME-Version: 1.0
-In-Reply-To: <1651007534-31842-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1651007534-31842-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 26 Apr 2022 14:18:33 -0700
-Message-ID: <CAE-0n50Hpt92HAZH2JF88LfXzGEJ8sa4cy5RsnKpFmZ5fWSzAg@mail.gmail.com>
-Subject: Re: [PATCH v6] drm/msm/dp: remove fail safe mode related code
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dianders@chromium.org, dmitry.baryshkov@linaro.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1650969374-19245-1-git-send-email-quic_ylal@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-04-26 14:12:14)
-> Current DP driver implementation has adding safe mode done at
-> dp_hpd_plug_handle() which is expected to be executed under event
-> thread context.
->
-[...]
->
-> Changes in v6:
-> --  fix Fixes commit ID
->
-> Fixes: 8b2c181e3dcf ("drm/msm/dp: add fail safe mode outside of event_mutex context")
-> Reported-by: Douglas Anderson <dianders@chromium.org>
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Hi Yogesh,
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Thank you for the patch! Yet something to improve:
+
+[auto build test ERROR on remoteproc/rproc-next]
+[also build test ERROR on v5.18-rc4 next-20220426]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Yogesh-Lal/remoteproc-qcom-Add-fallback-mechanism-for-full-coredump-collection/20220426-184634
+base:   git://git.kernel.org/pub/scm/linux/kernel/git/remoteproc/linux.git rproc-next
+config: arm-defconfig (https://download.01.org/0day-ci/archive/20220427/202204270556.J6HOrXrU-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/679fb5eca3c1ce97bbd22b4f082d9db24f13b878
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Yogesh-Lal/remoteproc-qcom-Add-fallback-mechanism-for-full-coredump-collection/20220426-184634
+        git checkout 679fb5eca3c1ce97bbd22b4f082d9db24f13b878
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>, old ones prefixed by <<):
+
+>> ERROR: modpost: "rproc_coredump" [drivers/remoteproc/qcom_common.ko] undefined!
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
