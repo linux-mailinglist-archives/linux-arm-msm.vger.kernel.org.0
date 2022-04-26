@@ -2,173 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2783B51059D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 19:41:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FD9B51059E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 19:42:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348284AbiDZRoM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 13:44:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57142 "EHLO
+        id S1351281AbiDZRpH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 13:45:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353425AbiDZRoB (ORCPT
+        with ESMTP id S1349342AbiDZRpG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 13:44:01 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AC3B14035
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 10:40:52 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id bv19so37559123ejb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 10:40:52 -0700 (PDT)
+        Tue, 26 Apr 2022 13:45:06 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B817B1AF2B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 10:41:57 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id e2so20212672wrh.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 10:41:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=39WI8e9MaPtwFY3BU5vYG4JdpWLlNJ93HLnpo4B04GI=;
-        b=pXvbv4zo49JQaB+hW9g4iXfuoZ9i90YISVmG2MzzVmhMh8tlRI2GlNk5DQ+toDgl5h
-         lTLNDi2dpS/ggI7dmzbBWDKI/XT1Kb/MqruFpet7/8AFN7Q7trmyuCNdst6TZFXNjmS2
-         T28yyjIfkO9MzeoZm/yJMEqN4tStppw/6CS9qq1ZFv79wE4Br+Z79EE+eIam3dChlK0S
-         9Q6O61QC/bZNj8Donp2VqOWbSZU2QkCVMT2KeYiwU7ASJCqu6haSLhpuspRqCj1NgNex
-         wQRpWamb7RFYvja0JY8+4NtDH7N0qEPNHS6TgZeko6zb4czuHkv69Za/0M8wfhZoES6+
-         Oo5w==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=QQA23ghBxeAWrg+1pTuG+EIpzKydBoAGm6JxIISmz68=;
+        b=k3ePSYdc/oMFI8zzl1Ck2yhC1E/Jbn9NSPODTh/jCaB75hYUB4RUnVAylJ32pERmyW
+         zShZu08Cwn8JV+Mr2IuxMH0jNdh9h/ipjh+GGkF8fVSgj0uxKNB7RP8vbQkSxIBtDaLs
+         2YC5xTY1klMyg6x7J01UZFwkT5O/nTYpwZlz9vCY0wRiFg3EhQZ/H506Rl9Kbag0m5hy
+         QULhN8LIr98ALYBHOFJCqr1qaEVSUFWD663pBj4/pnIgGtp6s8HJZFPeBHde2RNXeeo7
+         Z/wR/ct1JvIkj592CtgaVlnj4MDQT/+D2coCXcSzuqqWfh0E39OQvlb4sVOBvacmv6GA
+         mNEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=39WI8e9MaPtwFY3BU5vYG4JdpWLlNJ93HLnpo4B04GI=;
-        b=QW1IjRRGuIiUVQWK6atpO1rEVwG7tWqnuS4IHfD91A/3BHgtnzrFQ2/QslRRUrHC2n
-         86xLiVvYmYbmsZAW98zJhVuENjlqrRD7qtrEoNcGOZlZ2K3YkqHnAT32ZCZQ620nmTGo
-         dWfpOSHbgCNnVMLKgRz0QIIPZe8EfxPgS7Zp0R12wawueTbrxBnDtRi5yZfSzpnMDJJV
-         un2IdiVPwZGsBklO9wR3lXgJD1glzhPEfYDu+8nE6Q1/I5ZC7PWaxMJz0t37d/xLeQix
-         cMTjUdlYd3uNn3UUYUTxWKo0km8saNnu6H7/SPt2yQ2VO85dUs30B6ghB5PlbS1QczMQ
-         25Qg==
-X-Gm-Message-State: AOAM531FjKduvdD0vbV3A2r8Vxit4wFbTb30cWolcki2VfqK4fponQG3
-        ADr5qhnGdueCVTYWHEkqz+tukWejOqjuU65FA5o=
-X-Google-Smtp-Source: ABdhPJyTOt9N11WaJgYRYWkyR24Jh9AivZtJjPPrwNMZgQRcJfFlbnqNN/vLX5HRo3fMd7cs41zvVOz/axAGVu6HET4=
-X-Received: by 2002:a17:907:9808:b0:6f3:89ed:279a with SMTP id
- ji8-20020a170907980800b006f389ed279amr13339749ejc.308.1650994850729; Tue, 26
- Apr 2022 10:40:50 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QQA23ghBxeAWrg+1pTuG+EIpzKydBoAGm6JxIISmz68=;
+        b=zw8CB3aAiwJkbZf4TukelYo3f+ySFw/ddH43aZw7rHVkoMzpvFwCvhAR2X+Fp1uAt1
+         TMc6t9/UP6TbHw7r9j/8rbX+JlX+08KCDuQzUNeB5ANuiMjmGq3tBf9n/oPIGL53onDa
+         HOwZotvXM8ena+zFwJbHXhHBt5w5SicevQ17WScYL1hSkkzY23mPu5hx0W0VmDXW3guV
+         INsjzTB7GKmdubAuguwrZkTS66QlbB4Ugw5wrgeygHAVp/8x2QlD1JE0brNnEFUVi2Vw
+         u+20TMRAa0ibWYA46jYeQhuTYIDw7ZLDppRLQ6EIi9j+8h2aEZ9Wf7AAJSjrba1LcHz+
+         Bfmg==
+X-Gm-Message-State: AOAM532YsV3XPoTWHbh2nHND869VLZMecybFgAC4ppR6OyPuyGNND2W6
+        ODsfDDzJzSUtvXSepcgN4oqSSA==
+X-Google-Smtp-Source: ABdhPJwt90fodsf0OiUB4eqoLjLOvhGcW/S/Y1bclGSbPT/V6AE1gAQWmdiwV/0T4GMToMHwE2gluA==
+X-Received: by 2002:a05:6000:1547:b0:20a:79dd:28bf with SMTP id 7-20020a056000154700b0020a79dd28bfmr18728266wry.505.1650994916368;
+        Tue, 26 Apr 2022 10:41:56 -0700 (PDT)
+Received: from [192.168.0.33] (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
+        by smtp.gmail.com with ESMTPSA id s30-20020adf979e000000b0020adfb1292fsm4374036wrb.16.2022.04.26.10.41.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Apr 2022 10:41:55 -0700 (PDT)
+Message-ID: <10f7cb8e-4c2a-0bba-df55-16b56d429147@linaro.org>
+Date:   Tue, 26 Apr 2022 18:41:54 +0100
 MIME-Version: 1.0
-References: <20220412212558.827289-1-olvaffe@gmail.com> <CAPaKu7Tv1Mxt7Ao8kH2-MZDBK7EB0D41COJD8Sjze76t_o-qmw@mail.gmail.com>
- <ffe7dbc1-8a19-1e19-402d-27efc8e55b39@amd.com> <CAJs_Fx7OQ2OJo3pQ-ETT1827PtfuFsvn984gg8GeDVrqy0Ucug@mail.gmail.com>
- <215f55f6-97b8-5dd3-a2cc-fe42e19a2769@amd.com> <CAJs_Fx69yhVQ6t1xdTqEs3kxiz1gZSZ2-qNA=Cq21j_BSaymrQ@mail.gmail.com>
- <17fc1a68-747a-f707-364d-76f12a2b535a@amd.com>
-In-Reply-To: <17fc1a68-747a-f707-364d-76f12a2b535a@amd.com>
-From:   Chia-I Wu <olvaffe@gmail.com>
-Date:   Tue, 26 Apr 2022 10:40:39 -0700
-Message-ID: <CAPaKu7Rny7pxsPA+cnow0d6PAD2YCb+b+j1_Di5gziyOVNLaYQ@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm: add trace_dma_fence_emit to msm_gpu_submit
-To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        freedreno@lists.freedesktop.org,
-        ML dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v13 3/9] mfd: qcom-spmi-pmic: read fab id on supported
+ PMICs
+Content-Language: en-US
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        sumit.semwal@linaro.org, amit.pundir@linaro.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20220323162820.110806-1-caleb@connolly.tech>
+ <20220323162820.110806-4-caleb@connolly.tech> <Yma4tXvPQ+U89Whr@google.com>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <Yma4tXvPQ+U89Whr@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 26, 2022 at 10:20 AM Christian K=C3=B6nig
-<christian.koenig@amd.com> wrote:
->
-> Am 26.04.22 um 19:16 schrieb Rob Clark:
-> > On Tue, Apr 26, 2022 at 10:08 AM Christian K=C3=B6nig
-> > <christian.koenig@amd.com> wrote:
-> >> Am 26.04.22 um 19:05 schrieb Rob Clark:
-> >>> On Tue, Apr 26, 2022 at 9:42 AM Christian K=C3=B6nig
-> >>> <christian.koenig@amd.com> wrote:
-> >>>> Am 26.04.22 um 18:32 schrieb Chia-I Wu:
-> >>>>> On Tue, Apr 12, 2022 at 2:26 PM Chia-I Wu <olvaffe@gmail.com> wrote=
-:
-> >>>>>> In practice, trace_dma_fence_init called from dma_fence_init is go=
-od
-> >>>>>> enough and almost no driver calls trace_dma_fence_emit.  But drm_s=
-ched
-> >>>>>> and virtio both have cases where trace_dma_fence_init and
-> >>>>>> trace_dma_fence_emit can be apart.  It is easier for visualization=
- tools
-> >>>>>> to always use the more correct trace_dma_fence_emit when visualizi=
-ng
-> >>>>>> fence timelines.
-> >>>>>>
-> >>>>>> v2: improve commit message (Dmitry)
-> >>>>>>
-> >>>>>> Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
-> >>>>>> Cc: Rob Clark <robdclark@chromium.org>
-> >>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>>>> This has been reviewed.  Should we land it?
-> >>>> No, there are still open discussions about it.
-> >>> I think if it is needed for trace visualization, that is justificatio=
-n
-> >>> enough for me
-> >>>
-> >>> I don't really see otherwise how a generic trace visualization tool
-> >>> like perfetto would handle the case that some fence timelines have
-> >>> separate events but others do not.
-> >> Well I just send a patch to completely remove the trace point.
-> >>
-> >> As I said it absolutely doesn't make sense to use this for
-> >> visualization, that's what the trace_dma_fence_init trace point is goo=
-d for.
-I am a bit confused by this.  _emit and _signaled are a great way to
-see how many fences are pending from cpu's point of view.  How does
-_emit make no sense and _init is good instead?
 
-Or is this just that _init is good enough most of the time?  (More below)
 
-> >>
-> >> The only use case is for debugging the GPU scheduler and we should
-> >> probably introduce a separate GPU scheduler specific trace point for
-> >> this instead if we should ever need it.
-> > Hmm, AFAIU from Chia-I, virtgpu has a separation of init and emit..
-> > OTOH if using separate events in these special cases is better, then
-> > I'm ok with that and can revert this patch.  Chia-I is more familiar
-> > with the visualization end of it, so I'll let him comment on whether
-> > that is a workable approach.
->
-> Interesting, I wasn't aware of the virtgpu separation of init and emit.
->
-> But yes if there is really an use case for tracing this time stamp as
-> well then we should probably have that use case specific.
->
-> I just looked into the scheduler case a bit and found that even there we
-> already have a different trace point for it, which is probably the
-> reason why we never used trace_dma_fence_emit there.
-Yeah, I am using drm_sched tracepoints in that case.
->
-> So yes, there really isn't much reason I can see two have two separate
-> trace points for every driver.
-That sounds fair.  In any tool, it should be easy to see if a fence
-timeline has _emit in addition to _init, and adapt accordingly.  We
-can drop this patch.
+On 25/04/2022 16:05, Lee Jones wrote:
+> On Wed, 23 Mar 2022, Caleb Connolly wrote:
+> 
+>> From: Caleb Connolly <caleb.connolly@linaro.org>
+>>
+>> The PMI8998 and PM660 expose the fab_id, this is needed by drivers like
+>> the RRADC to calibrate ADC values.
+>>
+>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/mfd/qcom-spmi-pmic.c      | 7 +++++++
+>>   include/soc/qcom/qcom-spmi-pmic.h | 1 +
+>>   2 files changed, 8 insertions(+)
+> 
+> Please change the Subject line to match the style of the sub-system?
+Hi, sorry if this is a silly question, I don't quite understand what you want me 
+to change here, the subject line is in the same "mfd: driver:" format as other 
+patches in the subsystem?
+> 
+> Once changed:
+> 
+>    Acked-by: Lee Jones <lee.jones@linaro.org>
+> 
 
-A clarification that _emit is optional/redundant for most fence
-timelines should be nicer than removing it though.
-
->
-> Christian.
->
-> >
-> > BR,
-> > -R
-> >
-> >> Regards,
-> >> Christian.
-> >>
-> >>> BR,
-> >>> -R
-> >>>
-> >>>> Regards,
-> >>>> Christian.
-> >>>>
-> >>>>> (Or, how do I check if it has landed?)
->
+-- 
+Kind Regards,
+Caleb (they/he)
