@@ -2,159 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9FC05106C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 20:24:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED5AE5106CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Apr 2022 20:24:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348265AbiDZS1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 14:27:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58896 "EHLO
+        id S1351255AbiDZS16 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 14:27:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235205AbiDZS1W (ORCPT
+        with ESMTP id S243844AbiDZS1y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 14:27:22 -0400
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53B661524B7;
-        Tue, 26 Apr 2022 11:24:14 -0700 (PDT)
-Received: by mail-oi1-f170.google.com with SMTP id l203so10764556oif.0;
-        Tue, 26 Apr 2022 11:24:14 -0700 (PDT)
+        Tue, 26 Apr 2022 14:27:54 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5C3A198C5E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 11:24:43 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id m62so1127676wme.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 11:24:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=+SCJtuLLPCBIugzhmGROyOenrWlaIWVL1GHx1RKXQ04=;
+        b=nntI83QQTS/o0PgqWKe78Wr/Fs7Rm4Eskmyw6Fc9ZUnLXEOEzdwyZ4D9skbnKDbf1I
+         PaGaX7HxqO4WvGXMqz28D5yOrFtObmRpnP/7aL+ypyEKGi70g+DZBVCB5tuweBllAyOD
+         /vT3/SyWlkJeaeo5SCcoedvh9KBVPgls0+VEecJNwud2dU0fmwnnYG+D4u4o6r+ocx7k
+         Vsn7mz7BQcsEek2QZJqcz2GwyR9Wt16Zkq10n9tiRtM9OKx1ZFI57S0OhQ1ZuNRqiAJy
+         UPQixnwjYm0CiEt5CWRFhEKn0nnI0oPn837Ny7wrD7WzyqK5KzwRqRop4m0ydqI1MnyH
+         LL/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=eYGpzVL6z/9v1Xf7+HUnb3XtEpbv7g1nd4l3yujJBqU=;
-        b=g0mQlxclTxCDLMthMXeZxF5RI6PEX2kV3FVg8Oq2chf7qqniHPcRxzNo7VGLRp13/x
-         UQd2tLiBscbDFvpTU7OEaM/CWo0tzVfVixSGmW7s4409hLzUKS+GZ53d/kS56SLoYUF1
-         Jqjrzy2AimgDIBe28bshQQIaRShsnLB1jroVd2D3bJh3TmdKPO9fXCoTaLFv1DPVoKQL
-         ruYOnTo4Iu6W2Iva0pG3rF3UIo1xjFDy0yEhzolZZ/JqIj9FPUz2alOjDhx2bbdeiuZT
-         L/xfZv+HOtD5VxwVnCAQFPNzXGE9yD/9Qxa2hQMZeayLefU26dULjwjJkN8eqHdChlWg
-         XmFg==
-X-Gm-Message-State: AOAM5307WoZD0NL/zX7NI5lbs3ZfSgIZIbPqrW+n7k0+ZsGSDHKNWuRk
-        ZY+GKhiSR4hxceumwpjl8u4kD3gPbQ==
-X-Google-Smtp-Source: ABdhPJwqJ/M/GPcWpn4KFmsYPNq6cn7iuEhMpX3WrbveRkvKdJR+4UP5ufGYG8dqHTiVlMa8p7jzuw==
-X-Received: by 2002:a05:6808:8da:b0:324:be6a:e866 with SMTP id k26-20020a05680808da00b00324be6ae866mr9705228oij.72.1650997453643;
-        Tue, 26 Apr 2022 11:24:13 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id l16-20020a9d6a90000000b0060548d240d4sm5160969otq.74.2022.04.26.11.24.12
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=+SCJtuLLPCBIugzhmGROyOenrWlaIWVL1GHx1RKXQ04=;
+        b=SvmPXUCclxGXItm/33WhcwnOErf/cvN8SrW12YUE2+eZP9WQkoBZF2feWsIlKxgoK5
+         7gyuLHmujuExIRzpcqGGYiEDA5pUnCFHCHd/5ZuCq08oE/I8zQoQpQ2VYbxQH9gVfqcI
+         VvCuW0uXyogaf9xce3sorivptoTnbbjYQRdz9al+ZVY4Af9JTIzvNq+CtkFSrlj4EvKc
+         YlICqnuzi3KOkLd3ZUY8kIXy3k9zK0wLTFW+1kGaJ3CUcJZiHTJsB0dTuzGcZ6HqXU8H
+         BI6tnbr/Tv1eF5kSVshZ+9Mhqd3UytQwhVkUzI8jbsXhytsjfBdrifZ9m4Bzg7eDBQlz
+         hNwg==
+X-Gm-Message-State: AOAM532G8qY4qYuT6pNX0K6pwslpdJsGCbcW9HfCwP5D0V2N/5wL0OI0
+        Pc8PWoz4zy3AKL1/nIh4AeNp+Q==
+X-Google-Smtp-Source: ABdhPJwz//6x4ICwKAzGCmmXVVYSEtHxdDp9dLUNvkRfLP6WxyjweH5Q18HN37vwRJIIiCxDpbUDqQ==
+X-Received: by 2002:a7b:c0d0:0:b0:392:a02c:28ab with SMTP id s16-20020a7bc0d0000000b00392a02c28abmr31509324wmh.2.1650997482193;
+        Tue, 26 Apr 2022 11:24:42 -0700 (PDT)
+Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
+        by smtp.gmail.com with ESMTPSA id p14-20020a05600c1d8e00b0038ecb2d2feasm11567536wms.4.2022.04.26.11.24.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 11:24:13 -0700 (PDT)
-Received: (nullmailer pid 2302730 invoked by uid 1000);
-        Tue, 26 Apr 2022 18:24:12 -0000
-Date:   Tue, 26 Apr 2022 13:24:12 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 26 Apr 2022 11:24:41 -0700 (PDT)
+Date:   Tue, 26 Apr 2022 19:24:39 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org, quic_tdas@quicinc.com
-Subject: Re: [PATCH v4 3/3] dt-bindings: clock: qcom,gcc-apq8064: split tsens
- to the child node
-Message-ID: <Ymg4zFsQB2MAQ/T5@robh.at.kernel.org>
-References: <20220426094144.2958416-1-dmitry.baryshkov@linaro.org>
- <20220426094144.2958416-4-dmitry.baryshkov@linaro.org>
+        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        sumit.semwal@linaro.org, amit.pundir@linaro.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v13 3/9] mfd: qcom-spmi-pmic: read fab id on supported
+ PMICs
+Message-ID: <Ymg455MYRIJTXgvW@google.com>
+References: <20220323162820.110806-1-caleb@connolly.tech>
+ <20220323162820.110806-4-caleb@connolly.tech>
+ <Yma4tXvPQ+U89Whr@google.com>
+ <10f7cb8e-4c2a-0bba-df55-16b56d429147@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220426094144.2958416-4-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <10f7cb8e-4c2a-0bba-df55-16b56d429147@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 26, 2022 at 12:41:44PM +0300, Dmitry Baryshkov wrote:
-> Split tsens properties to the child node of the gcc. This follows the
-> lead of ipq8064 (which also uses a separate node for tsens) and makes
-> device tree closer to other platforms, where tsens is a completely
-> separate device.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/clock/qcom,gcc-apq8064.yaml      | 45 +++++++------------
->  1 file changed, 17 insertions(+), 28 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-> index b867da12761e..f2762599f679 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-> @@ -23,47 +23,36 @@ description: |
->  
->  properties:
->    compatible:
-> -    enum:
-> -      - qcom,gcc-apq8064
-> -      - qcom,gcc-msm8060
-> -
-> -  nvmem-cells:
-> -    minItems: 1
-> -    maxItems: 2
-> -    description:
-> -      Qualcomm TSENS (thermal sensor device) on some devices can
-> -      be part of GCC and hence the TSENS properties can also be part
-> -      of the GCC/clock-controller node.
-> -      For more details on the TSENS properties please refer
-> -      Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> -
-> -  nvmem-cell-names:
-> -    minItems: 1
->      items:
-> -      - const: calib
-> -      - const: calib_backup
-> -
-> -  '#thermal-sensor-cells':
-> -    const: 1
-> +      - enum:
-> +          - qcom,gcc-apq8064
-> +          - qcom,gcc-msm8060
-> +      - const: syscon
->  
->  required:
->    - compatible
-> -  - nvmem-cells
-> -  - nvmem-cell-names
-> -  - '#thermal-sensor-cells'
->  
->  unevaluatedProperties: false
->  
->  examples:
->    - |
->      clock-controller@900000 {
-> -      compatible = "qcom,gcc-apq8064";
-> +      compatible = "qcom,gcc-apq8064", "syscon";
->        reg = <0x00900000 0x4000>;
-> -      nvmem-cells = <&tsens_calib>, <&tsens_backup>;
-> -      nvmem-cell-names = "calib", "calib_backup";
->        #clock-cells = <1>;
->        #reset-cells = <1>;
->        #power-domain-cells = <1>;
-> -      #thermal-sensor-cells = <1>;
-> +
-> +      thermal-sensor {
+On Tue, 26 Apr 2022, Caleb Connolly wrote:
+> On 25/04/2022 16:05, Lee Jones wrote:
+> > On Wed, 23 Mar 2022, Caleb Connolly wrote:
+> > 
+> > > From: Caleb Connolly <caleb.connolly@linaro.org>
+> > > 
+> > > The PMI8998 and PM660 expose the fab_id, this is needed by drivers like
+> > > the RRADC to calibrate ADC values.
+> > > 
+> > > Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >   drivers/mfd/qcom-spmi-pmic.c      | 7 +++++++
+> > >   include/soc/qcom/qcom-spmi-pmic.h | 1 +
+> > >   2 files changed, 8 insertions(+)
+> > 
+> > Please change the Subject line to match the style of the sub-system?
+> Hi, sorry if this is a silly question, I don't quite understand what you
+> want me to change here, the subject line is in the same "mfd: driver:"
+> format as other patches in the subsystem?
 
-This should throw a warning I think as 'thermal-sensor' needs to be 
-defined. The patch didn't apply for me though.
+mfd: qcom-spmi-pmic: Read fab ID on supported PMICs
 
-> +        compatible = "qcom,msm8960-tsens";
-> +
-> +        nvmem-cells = <&tsens_calib>, <&tsens_backup>;
-> +        nvmem-cell-names = "calib", "calib_backup";
-> +        interrupts = <0 178 4>;
-> +        interrupt-names = "uplow";
-> +
-> +        #qcom,sensors = <11>;
-> +        #thermal-sensor-cells = <1>;
-> +        };
->      };
->  ...
-> -- 
-> 2.35.1
+What's 'fab' should that be capitalised too?
+
+> > Once changed:
+> > 
+> >    Acked-by: Lee Jones <lee.jones@linaro.org>
+> > 
 > 
-> 
+
+-- 
+Lee Jones [李琼斯]
+Principal Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
