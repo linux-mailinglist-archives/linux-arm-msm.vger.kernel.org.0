@@ -2,198 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EB5A511B2A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:57:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFE91511918
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:55:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235642AbiD0NPm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 09:15:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46504 "EHLO
+        id S236208AbiD0Noz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 09:44:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235629AbiD0NPi (ORCPT
+        with ESMTP id S236197AbiD0Noy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 09:15:38 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0666082335
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 06:12:01 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id e23so1873433eda.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 06:12:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wYkrJLy1p+XxvrhEEZ1IAgmat2NjMtZTka/mSSSQ/0U=;
-        b=R7mvZDkphifKpD+Z3mHx+KUHUKCaGykfzTW6eMWM5uCsYpCIK6gl1s7xDyT7u64x9t
-         rggEL21uN/Q5+jmrizztW9MZPNxfIYNfWlJypbO1CyrVFQCd7nkj438C7AloHHMekZaY
-         Vj31PGqGQDIxviLNg2mhtmn67dp5f8V3jIZy56BBD5vj5K3KZRRLsmGxGPQLcdEiNzPm
-         ipxa/NSj5juloOMHzxNhyK4OWqIGkWUqBlbEs4Ss2nmxeVpBS4cr5j2Vhc+y0LTrGwZ6
-         O6rI2O0EX7CbXl356TTkhUKqb0rWJ24hT3Uf2o6uWEne1jfXsPIl+9ufPCLwwmNKzkev
-         y/+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wYkrJLy1p+XxvrhEEZ1IAgmat2NjMtZTka/mSSSQ/0U=;
-        b=BM5Zjh9ZcyR1KY43wD7D0SeVYQkq8gcOj2rqCNdFzyHxQGLOA3qm63dYtiPUoVYsFm
-         Xm20Sg1W+PkofpLFhGLgNRPvB9VO4HzXHuwiKdq8x0wxMWDGyd6OLk3vFXbOIZV6gz1d
-         7t05jOoEZHoHUbzt91QOTJpGAise2AVPF/SQZX3StMxvgk0uG5n8IAh0ZK83dC8Schl0
-         ovvXjH1MQrxhSnXyCh71BZDYWAWUkAFcNIpakzOf0gnvdxjEAxcbU18BEVkh0K+MYjyp
-         qzyCYXNuJluwJiJG6vEIoXxjL95ZEhPUeCFGNzT6S/Q0AcyRbEKoTbDJLnvKP0LSu0h6
-         QiPQ==
-X-Gm-Message-State: AOAM531/EIZAeacVsh0lyy1UL1OBwbXNG9S2bsosRuwh5vf7dOelvemE
-        g6vSyp9zzf6ppcnDF3alwifHOw==
-X-Google-Smtp-Source: ABdhPJzgV11aeWdeaNi6wWDhLWIwyBsX5gRZgeIBu5ZKrL8bNbV72OnYm+daQTwpmatrZHODOLinyA==
-X-Received: by 2002:a05:6402:d05:b0:425:b5c8:faeb with SMTP id eb5-20020a0564020d0500b00425b5c8faebmr30177910edb.273.1651065120316;
-        Wed, 27 Apr 2022 06:12:00 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id o23-20020a509b17000000b00425edfe72a3sm4881031edi.43.2022.04.27.06.11.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 06:11:59 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Wed, 27 Apr 2022 09:44:54 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78C0118A623;
+        Wed, 27 Apr 2022 06:41:42 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 332A9B82753;
+        Wed, 27 Apr 2022 13:41:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B36C385A7;
+        Wed, 27 Apr 2022 13:41:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651066899;
+        bh=JvnuE53/WDyOKYiC36PoY+sIAe3A9YYBJuCSYXsQ12U=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=DNC48r6Cs5njO786Vb4JFy1oedi9Zbawu+/HJOwWE1H4AIYR/gA62sDwBTlkVYUlg
+         MiJadURXFWRoVycgCVjBcBstSepTsV7EW4qWNAktWwFRQPTj728Rx2LdrkTLq3FDPb
+         2ux2qnvW7Kq/YjxzG5OqcXb9QeFwqAF/C4c+JsOn+U/L+RmNRwqipvS3N07ZwEjq7c
+         7jpyu3UDabC5tQ5s29EvBhOQ3p7aD5jiuwHugj52SGrMvGFkiA2D9Yb0SpNm0kgobR
+         59VYGhZ1kG3lONEVOW7eowBCIxcLJkKvBUF9XYJXY4QuA9Bvh62nwtGQDGZPeax6/4
+         R112T5iTRTuSQ==
+Date:   Wed, 27 Apr 2022 14:41:34 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/3] interconnect: qcom: sc8280xp: constify qcom_icc_bcm pointers
-Date:   Wed, 27 Apr 2022 15:11:54 +0200
-Message-Id: <20220427131154.302581-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220427131154.302581-1-krzysztof.kozlowski@linaro.org>
-References: <20220427131154.302581-1-krzysztof.kozlowski@linaro.org>
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v3 1/3] regulator: dt-bindings: qcom,rpmh: update
+ maintainers
+Message-ID: <YmlIDn1aHSrcoeoJ@sirena.org.uk>
+References: <20220426105501.73200-1-krzysztof.kozlowski@linaro.org>
+ <20220426105501.73200-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="SmmnhEWlYdM7amTZ"
+Content-Disposition: inline
+In-Reply-To: <20220426105501.73200-2-krzysztof.kozlowski@linaro.org>
+X-Cookie: Buckle up!
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Pointers to struct qcom_icc_bcm are not modified, so they can be made
-const for safety.  The contents of struct qcom_icc_bcm must stay
-non-const.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/interconnect/qcom/sc8280xp.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+--SmmnhEWlYdM7amTZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/drivers/interconnect/qcom/sc8280xp.c b/drivers/interconnect/qcom/sc8280xp.c
-index 408f6ade29e4..507fe5f89791 100644
---- a/drivers/interconnect/qcom/sc8280xp.c
-+++ b/drivers/interconnect/qcom/sc8280xp.c
-@@ -2009,7 +2009,7 @@ static struct qcom_icc_bcm bcm_sn10 = {
- 	.nodes = { &xs_qdss_stm },
- };
- 
--static struct qcom_icc_bcm *aggre1_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
- 	&bcm_sn3,
- 	&bcm_sn5,
- };
-@@ -2040,7 +2040,7 @@ static const struct qcom_icc_desc sc8280xp_aggre1_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre1_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *aggre2_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre2_noc_bcms[] = {
- 	&bcm_ce0,
- 	&bcm_pci0,
- 	&bcm_sn4,
-@@ -2076,7 +2076,7 @@ static const struct qcom_icc_desc sc8280xp_aggre2_noc = {
- 	.num_bcms = ARRAY_SIZE(aggre2_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *clk_virt_bcms[] = {
-+static struct qcom_icc_bcm * const clk_virt_bcms[] = {
- 	&bcm_ip0,
- 	&bcm_qup0,
- 	&bcm_qup1,
-@@ -2101,7 +2101,7 @@ static const struct qcom_icc_desc sc8280xp_clk_virt = {
- 	.num_bcms = ARRAY_SIZE(clk_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *config_noc_bcms[] = {
-+static struct qcom_icc_bcm * const config_noc_bcms[] = {
- 	&bcm_cn0,
- 	&bcm_cn1,
- 	&bcm_cn2,
-@@ -2205,7 +2205,7 @@ static const struct qcom_icc_desc sc8280xp_config_noc = {
- 	.num_bcms = ARRAY_SIZE(config_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *dc_noc_bcms[] = {
-+static struct qcom_icc_bcm * const dc_noc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const dc_noc_nodes[] = {
-@@ -2221,7 +2221,7 @@ static const struct qcom_icc_desc sc8280xp_dc_noc = {
- 	.num_bcms = ARRAY_SIZE(dc_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *gem_noc_bcms[] = {
-+static struct qcom_icc_bcm * const gem_noc_bcms[] = {
- 	&bcm_sh0,
- 	&bcm_sh2,
- };
-@@ -2255,7 +2255,7 @@ static const struct qcom_icc_desc sc8280xp_gem_noc = {
- 	.num_bcms = ARRAY_SIZE(gem_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *lpass_ag_noc_bcms[] = {
-+static struct qcom_icc_bcm * const lpass_ag_noc_bcms[] = {
- 	&bcm_sn9,
- };
- 
-@@ -2278,7 +2278,7 @@ static const struct qcom_icc_desc sc8280xp_lpass_ag_noc = {
- 	.num_bcms = ARRAY_SIZE(lpass_ag_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *mc_virt_bcms[] = {
-+static struct qcom_icc_bcm * const mc_virt_bcms[] = {
- 	&bcm_acv,
- 	&bcm_mc0,
- };
-@@ -2295,7 +2295,7 @@ static const struct qcom_icc_desc sc8280xp_mc_virt = {
- 	.num_bcms = ARRAY_SIZE(mc_virt_bcms),
- };
- 
--static struct qcom_icc_bcm *mmss_noc_bcms[] = {
-+static struct qcom_icc_bcm * const mmss_noc_bcms[] = {
- 	&bcm_mm0,
- 	&bcm_mm1,
- };
-@@ -2326,7 +2326,7 @@ static const struct qcom_icc_desc sc8280xp_mmss_noc = {
- 	.num_bcms = ARRAY_SIZE(mmss_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *nspa_noc_bcms[] = {
-+static struct qcom_icc_bcm * const nspa_noc_bcms[] = {
- 	&bcm_nsa0,
- 	&bcm_nsa1,
- };
-@@ -2346,7 +2346,7 @@ static const struct qcom_icc_desc sc8280xp_nspa_noc = {
- 	.num_bcms = ARRAY_SIZE(nspa_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *nspb_noc_bcms[] = {
-+static struct qcom_icc_bcm * const nspb_noc_bcms[] = {
- 	&bcm_nsb0,
- 	&bcm_nsb1,
- };
-@@ -2366,7 +2366,7 @@ static const struct qcom_icc_desc sc8280xp_nspb_noc = {
- 	.num_bcms = ARRAY_SIZE(nspb_noc_bcms),
- };
- 
--static struct qcom_icc_bcm *system_noc_main_bcms[] = {
-+static struct qcom_icc_bcm * const system_noc_main_bcms[] = {
- 	&bcm_sn0,
- 	&bcm_sn1,
- 	&bcm_sn3,
--- 
-2.32.0
+On Tue, Apr 26, 2022 at 12:54:59PM +0200, Krzysztof Kozlowski wrote:
 
+>  maintainers:
+> -  - David Collins <collinsd@codeaurora.org>
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Bjorn, are you OK with this?
+
+--SmmnhEWlYdM7amTZ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmJpSA0ACgkQJNaLcl1U
+h9DwqQf/QWvVpu1E4Y2lmTqpoWMjhHl74TYz1z9mqhTZzyBQnq38ic0K7K6RcbpA
+KU2o+cwOoShzLOQlBtADE0Jl/+ua5TeepGWi7yFAjHn1hkJEhMP0zgV0ozWiRlo4
+8l7/HbMXuOBQWEFTe5mBBfEC2XbjTLJpVcqJc324vnXVMTSbaI2CLqbp0AKk4LIW
+gAHphDaqjm9syRrunsZIIzfhLtHoSJR2CQMOlUWyEnfZJadDEmWtIUpPXz17QxJ1
+uK0ZR7trr6uh9DO6CKbvIV1+e5Y9RHGdBPVxRWoQZSP91Rgc2DNVbPrMb3diRaLJ
+ApBhfQnyWdO/lWAXspDKhQ9gwE9FUA==
+=cdZn
+-----END PGP SIGNATURE-----
+
+--SmmnhEWlYdM7amTZ--
