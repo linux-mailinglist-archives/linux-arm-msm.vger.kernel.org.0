@@ -2,56 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 53C525113C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 10:49:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A19B511482
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 11:55:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242945AbiD0IwN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 04:52:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54758 "EHLO
+        id S231228AbiD0JlI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 05:41:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240362AbiD0IwL (ORCPT
+        with ESMTP id S231480AbiD0Jk7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 04:52:11 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD4FC18C2AB;
-        Wed, 27 Apr 2022 01:49:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0CE6561C4F;
-        Wed, 27 Apr 2022 08:49:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DAFC385A7;
-        Wed, 27 Apr 2022 08:48:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651049339;
-        bh=4/pwffnz1gA5fVolKqCSmvQ8ffQV331yFy9eoDnVIZE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=T1K9IFXCK9nUsObNGX2mup9YAMQfQFdd+Sb+5rIG0KSkFGemd3+e/8SdzUxPnWaqJ
-         mcmV1n+xBZi72irt9nTcqAcuhoOPStkkGzFofdhldw0PsO8tZHycG6vQGknXCHImYH
-         O5VZ94V4FnqjgpH6abhrSK3kF8P0nvPZ5G4JJQRxs9fsKj6aYyyVyxQG6MEbKz5LVe
-         gIMt6O5N0nut335n8VQQuHPohtPGB8FMw0nVc74A7/8OCkKbZFW7IMpj9zFv5ADgLc
-         e+apFV3aZh5fuq+ZHVasRdMoT6twHbCDuheb4u/bONNfwSQbBTQBdtRmlU2DnnLCCT
-         zeFU9TwlBONQg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1njdM4-0004wv-I0; Wed, 27 Apr 2022 10:49:01 +0200
-Date:   Wed, 27 Apr 2022 10:49:00 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wed, 27 Apr 2022 05:40:59 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 957FCE7F;
+        Wed, 27 Apr 2022 02:37:06 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A7C4DED1;
+        Wed, 27 Apr 2022 02:10:02 -0700 (PDT)
+Received: from e123427-lin.home (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4E0003F5A1;
+        Wed, 27 Apr 2022 02:10:00 -0700 (PDT)
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Andy Gross <agross@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
         Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        linux-pci@vger.kernel.org, Rob Herring <robh@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] soc: qcom: rpmhpd: Add sc8280xp and sa8540p
-Message-ID: <YmkDfI8HPNhDxpEv@hovoldconsulting.com>
-References: <20220426233508.1762345-1-bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v2 0/2] PCI: qcom: Fix probe error paths
+Date:   Wed, 27 Apr 2022 10:09:50 +0100
+Message-Id: <165105057429.27309.6448107267848897699.b4-ty@arm.com>
+X-Mailer: git-send-email 2.31.0
+In-Reply-To: <20220401133854.10421-1-johan+linaro@kernel.org>
+References: <20220401133854.10421-1-johan+linaro@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220426233508.1762345-1-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,17 +50,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 26, 2022 at 04:35:05PM -0700, Bjorn Andersson wrote:
-> Add compatibles and power-domain definitions for the sc8280xp and sa8540p
-> platforms.
+On Fri, 1 Apr 2022 15:38:52 +0200, Johan Hovold wrote:
+> This series fixes a few problems in the probe error handling which could
+> cause trouble, for example, on probe deferral.
 > 
-> Bjorn Andersson (3):
->   dt-bindings: power: rpmpd: Add sc8280xp RPMh power-domains
->   soc: qcom: rpmhpd: Don't warn about sparse rpmhpd arrays
->   soc: qcom: rpmhpd: add sc8280xp & sa8540p rpmh power-domains
+> Johan
+> 
+> 
+> Changes in v2
+>  - Capitalise subject lines according to PCI subsystem conventions
+> 
+> [...]
 
-Looks good. For the series:
+Applied to pci/qcom, thanks!
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+[1/2] PCI: qcom: Fix runtime PM imbalance on probe errors
+      https://git.kernel.org/lpieralisi/pci/c/b986db29ed
+[2/2] PCI: qcom: Fix unbalanced PHY init on probe errors
+      https://git.kernel.org/lpieralisi/pci/c/3ae93c5a97
 
-Johan
+Thanks,
+Lorenzo
