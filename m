@@ -2,68 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71F53510DFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 03:34:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A81F9510DF0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 03:34:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354206AbiD0BfV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 21:35:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53508 "EHLO
+        id S1356741AbiD0Bfk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 21:35:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347268AbiD0BfS (ORCPT
+        with ESMTP id S1356739AbiD0Bfj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 21:35:18 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4540346B1D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 18:32:09 -0700 (PDT)
+        Tue, 26 Apr 2022 21:35:39 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1331646B27
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 18:32:29 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id a15so312831pfv.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 18:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651023129; x=1682559129;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=QK4zLsgaPmqk1x3WRkwBi/Mt0CrjV6TALSubp/95LrA=;
-  b=hh/s76G1GLMkj8jPXoBQLuBLEUpuWIL1ec/KTS4uHX8cxoUbmOPNQkHS
-   lDbROa+2LaJP8o2Va8p1MzPr0K4GjeobswsTpAUo4bYpTtrXBt/ryLzyJ
-   Ovkqza5a8xFMDpWMeEWgfNs0dlXfpMD94z8fIT5kaumy9/2Y5pTyI5NPL
-   g=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 26 Apr 2022 18:32:08 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 18:32:08 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 26 Apr 2022 18:32:08 -0700
-Received: from [10.111.160.161] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 26 Apr
- 2022 18:32:06 -0700
-Message-ID: <ede78f59-84a7-11fb-e436-3a0683b264c7@quicinc.com>
-Date:   Tue, 26 Apr 2022 18:32:04 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 02/25] drm/msm/dpu: do not limit the zpos property
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=E4TARPsvw/6+T5xnBdJYIvhddKnceWXOgm76kowYwB4=;
+        b=eBoaI9KnKdjcjCGhUBWnufouBY5PH1rYH44I3Jf8h9NKLIuR81SA2zDiglWU+lzDkp
+         WCszhz5uvqLHug4eDyFdMjLzVUf2YD7v1eCtzM/8LLixnPZ99nyqqa0qpF9UavlbgVs1
+         9e2s1ql4hz+dpB+eaWXi5VT+xnRNf7m1LDtLA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=E4TARPsvw/6+T5xnBdJYIvhddKnceWXOgm76kowYwB4=;
+        b=4dkLcZRE87XCcqZMUkYG9KdtS52zScUL6cDqfs1aORLk0LxP8Dvcz/pNquYU8xalVN
+         3wPy+9UOCoh0CSff7fM6lSSiaJckU9iG/v2D2PX3vSSPFQFt4jAZE38obrQoceagfnnG
+         mNctkFAZCFmH/fHVx7Y9BnyosU5DrMWtNTsyF7aEyW3pyQfGyiO7dGDBSUCiLlTmUwby
+         7hPw/ewZnjMLCiNWsys1iRfRCU5vvXpjBo1Uw8+Jm3SzJpChpg0vT3PMVskExUOw7md/
+         /jj8fk5UTwlXkOPIcpr56w66V0mOV8rlY8rHg6kQGNpegNGtvyZZqovSDBjlr9pQY6L3
+         O2oA==
+X-Gm-Message-State: AOAM532zBRTHAzTNexVTCw0zRzVRj7/KAnH19ImkDWUrWQf8YuQu/xwS
+        SY36gJjTLL1E+CCKyQQkRcrWcg==
+X-Google-Smtp-Source: ABdhPJxiRnUb0EOiLoh+dgt8l52uaf+WN6GBsR2KA/LrzuMlZVFfpWUZAXKIMi9G1qMoHiAv24I/Bw==
+X-Received: by 2002:aa7:82d9:0:b0:4fa:2c7f:41e with SMTP id f25-20020aa782d9000000b004fa2c7f041emr27548617pfn.1.1651023148003;
+        Tue, 26 Apr 2022 18:32:28 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:482e:60bc:84d1:bf5c])
+        by smtp.gmail.com with ESMTPSA id n20-20020a634d54000000b0039d18bf7864sm14019589pgl.20.2022.04.26.18.32.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Apr 2022 18:32:27 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Georgi Djakov <djakov@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
- <20220209172520.3719906-3-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220209172520.3719906-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        Doug Anderson <dianders@chromium.org>,
+        Alex Elder <elder@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+Subject: [PATCH] interconnect: Restore sync state by ignoring ipa-virt in provider count
+Date:   Tue, 26 Apr 2022 18:32:26 -0700
+Message-Id: <20220427013226.341209-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.36.0.rc2.479.g8af0fa9b8e-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,44 +69,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Ignore compatible strings for the IPA virt drivers that were removed in
+commits 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0
+interconnects") and 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0
+interconnects") so that the sync state logic can kick in again.
+Otherwise all the interconnects in the system will stay pegged at max
+speeds because 'providers_count' is always going to be one larger than
+the number of drivers that will ever probe on sc7180 or sdx55. This
+fixes suspend on sc7180 and sdx55 devices when you don't have a
+devicetree patch to remove the ipa-virt compatible node.
 
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Doug Anderson <dianders@chromium.org>
+Cc: Alex Elder <elder@linaro.org>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+Fixes: 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0 interconnects")
+Fixes: 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0 interconnects")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/interconnect/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-On 2/9/2022 9:24 AM, Dmitry Baryshkov wrote:
-> Stop limiting zpos property values, we use normalized_zpos anyway. And
-> nothing stops userspace from assigning several planes to a single zpos
-> (it is a userspace bug, but the kernel is forgiving about it).
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 10 +---------
->   1 file changed, 1 insertion(+), 9 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 3fcc964dec0a..c04c3be16d85 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -1429,7 +1429,6 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
->   	struct dpu_plane *pdpu;
->   	struct msm_drm_private *priv = dev->dev_private;
->   	struct dpu_kms *kms = to_dpu_kms(priv->kms);
-> -	int zpos_max = DPU_ZPOS_MAX;
->   	uint32_t num_formats;
->   	int ret = -EINVAL;
->   
-> @@ -1467,14 +1466,7 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
->   
->   	pdpu->catalog = kms->catalog;
->   
-> -	if (kms->catalog->mixer_count &&
-> -		kms->catalog->mixer[0].sblk->maxblendstages) {
-> -		zpos_max = kms->catalog->mixer[0].sblk->maxblendstages - 1;
-> -		if (zpos_max > DPU_STAGE_MAX - DPU_STAGE_0 - 1)
-> -			zpos_max = DPU_STAGE_MAX - DPU_STAGE_0 - 1;
-> -	}
-> -
-> -	ret = drm_plane_create_zpos_property(plane, 0, 0, zpos_max);
-> +	ret = drm_plane_create_zpos_property(plane, 0, 0, DPU_ZPOS_MAX);
->   	if (ret)
->   		DPU_ERROR("failed to install zpos property, rc = %d\n", ret);
->   
+diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+index 9050ca1f4285..c52915a58b22 100644
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -1087,9 +1087,15 @@ static int of_count_icc_providers(struct device_node *np)
+ {
+ 	struct device_node *child;
+ 	int count = 0;
++	const struct of_device_id ignore_list[] = {
++		{ .compatible = "qcom,sc7180-ipa-virt" },
++		{ .compatible = "qcom,sdx55-ipa-virt" },
++		{}
++	};
+ 
+ 	for_each_available_child_of_node(np, child) {
+-		if (of_property_read_bool(child, "#interconnect-cells"))
++		if (of_property_read_bool(child, "#interconnect-cells") &&
++		    likely(!of_match_node(ignore_list, child)))
+ 			count++;
+ 		count += of_count_icc_providers(child);
+ 	}
+
+base-commit: 2fb251c265608636fc961b7d38e1a03937e57371
+-- 
+https://chromeos.dev
+
