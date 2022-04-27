@@ -2,178 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2B5E5121C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 20:52:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EF1E5121D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 20:57:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231736AbiD0Szi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 14:55:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42796 "EHLO
+        id S231915AbiD0TA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 15:00:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234085AbiD0Sy5 (ORCPT
+        with ESMTP id S232034AbiD0TAV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 14:54:57 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33442EDB47
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 11:41:25 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id l62-20020a1c2541000000b0038e4570af2fso1723328wml.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 11:41:24 -0700 (PDT)
+        Wed, 27 Apr 2022 15:00:21 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BB4812622
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 11:45:55 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id q23so3751844wra.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 11:45:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=UNAQFZYH/igEDPdHL3ir2IRYt88PXPn3Q8Z0llJsjqM=;
-        b=CyKF3Gtrgmb7DChTG3HlP4rJaP76kaU7Pyy88pG48AITBWCw6zfeggSjVMMbPXvRU1
-         p5ujHRua3cun+gOuyUcEyDcPN1zcFVtvGCJfFoXZfQtm9Kqgt/EJulxsuJfWOLv6j7uO
-         6Eva9zTK70UGMX0wQLYHXDLwSVrOawg5AbtUZz/mlDOiU0lvphnI9Y8P3ZMuFsUoHAC3
-         npJergekPUXVOIYURxpSS4jKX1MF6oFivsSRx4AyDdr7PdOhS4BvpE6nRBAUmqXZOYtT
-         AppTN7aVR9FE0XYXTikyT7vGkMMTZMaCdsXVO6ddal3pBOXQaqEf+dqYOqv77s9dLOR2
-         kBXQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=f6A2106wpv8FyptFj0CXPhRPGyQFfkvsvlQQIXuralk=;
+        b=USObKSJ2kUmKR31NngLz5pIhR33a1ZqcyGnNJvvYxbtjXLPQ7/hNFRSGycWBoFt1nc
+         N59r9GCtKEmYZj+ib5amTDGDj14ILlYXGFtMVNvOyhmi5HMcGMWTx3wGdr9Kaa/Xd8Pv
+         JFg5T4JrpfTKFMvZurcH4H0qA/oFeuochOGfzpSJEYbSxIlXdWL0a6Ht91kjt5uiL5Vm
+         9MRD1gGbh3/YwNuS3P35nfQ97q+CWsojhI5X/qzkWKSGTLr3Wotx67sIZmRB9kBuy9QQ
+         ds6kBFj6Va/Tv0NYAzeJIwu+5RdbvIdSZZ7GeNN45cRktvWeQnnXVX1umxvn6He7Op+1
+         xCCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=UNAQFZYH/igEDPdHL3ir2IRYt88PXPn3Q8Z0llJsjqM=;
-        b=EAlZVuY5b2opwo3K7PqZhkiTWehaHbG3Vvdo7fBJ9Eelhw+/wBbKRFtWjPAMXTLhW8
-         S7TXnp9KNk+lzI2583TF6T9RoNkeSnomxotJsaQy4ejif6lMtn56UkWMJZ3RPTrHVbRb
-         5COXkHMx1ARyw4Lip0wDrQOHLFillu2wK2+ipQAW+AmX4WunNJEbe4l5x//aSr8W7BTM
-         6W9GtFVkFQpGB/ERuvfMgefKluSHzauAQWqHaYAVNI3wKm7z4VG9wVY/yswv3u6eHnpD
-         HvsaWtlsSDOsmsCI5uoeiu/Whs65rtOVQHxMMVUSEbrMI+0ddgM5tysyK4HDMSS8znST
-         61jQ==
-X-Gm-Message-State: AOAM531d1c1cy1UCDGoNgLeg6y1nJO1LxpR58mSWWIgYpDSfK0z33ZCj
-        XfhVV8pjalQYe5v0Lt9WFAH5/A==
-X-Google-Smtp-Source: ABdhPJw3sVTSRGZWSYrRc79qfqdc3uTzShD8sEa4DX2AY7xFycIkSg4u3I0cKXiCbzqFYll7z/WcCA==
-X-Received: by 2002:a05:600c:3b02:b0:393:e7d4:b660 with SMTP id m2-20020a05600c3b0200b00393e7d4b660mr18720272wms.183.1651084883538;
-        Wed, 27 Apr 2022 11:41:23 -0700 (PDT)
-Received: from localhost.localdomain (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
-        by smtp.gmail.com with ESMTPSA id f3-20020a5d64c3000000b0020aef267950sm1992798wri.49.2022.04.27.11.41.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 11:41:22 -0700 (PDT)
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-To:     caleb.connolly@linaro.org, Sebastian Reichel <sre@kernel.org>,
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=f6A2106wpv8FyptFj0CXPhRPGyQFfkvsvlQQIXuralk=;
+        b=ynDw9w8GRfgyJvXhKIWb2vfuolKYtpduxFMpZHVrbjNEi1m4t/fJ++5e1PaiFi96S4
+         NoHV7AXi3OueCBSdulF59PzROpTHPrrxYjUIg8njsjvYc2VA5brfCUTVeHM8G9SRkZKP
+         ytw2O37oZkcoCbmPowl9S9ZN0Y+BVfw8Y/sHNT7F0Zim87Z/W7Yap+dG6phGgsBSFkR+
+         2g4Esmes8wgB4Nxy0ieF+LV/eg7nvKgZ96UuxOJkjWgU+isLwf3js+QL3nUDEQl9jo5C
+         6N/gqWg9MfsxzLJBHaY+kfifeLmB+o6wcO9s8Af1tUgBI8p1H3zipIAQdUP0fw9vHe7C
+         fxwA==
+X-Gm-Message-State: AOAM531SF+uwF/EVY7QLy0gzwqfUAR9JQfPiLKz55flpiu4Tz7X69G4w
+        bzyDfQQE7iScWz2pHA5QUob5uQ==
+X-Google-Smtp-Source: ABdhPJxx/6zywqLRr3upfT6X/fKMN9/MUALq+nXlNuxuHRehXy0gUkKXOtbbfTTNa2tlTpDBgcRNkA==
+X-Received: by 2002:a5d:47c4:0:b0:20a:e090:8590 with SMTP id o4-20020a5d47c4000000b0020ae0908590mr10237714wrc.465.1651085154133;
+        Wed, 27 Apr 2022 11:45:54 -0700 (PDT)
+Received: from [192.168.0.33] (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
+        by smtp.gmail.com with ESMTPSA id n13-20020a5d51cd000000b0020af0706b9csm1774340wrv.53.2022.04.27.11.45.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Apr 2022 11:45:52 -0700 (PDT)
+Message-ID: <850d2c2d-9531-ed4c-48fc-2daa0311e3e6@linaro.org>
+Date:   Wed, 27 Apr 2022 19:45:51 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v13 3/9] mfd: qcom-spmi-pmic: read fab id on supported
+ PMICs
+Content-Language: en-US
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Amit Pundir <amit.pundir@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [PATCH 6/6] dt-bindings: power: supply: qcom,pmi8998-charger: add bindings for smb2 driver
-Date:   Wed, 27 Apr 2022 19:40:31 +0100
-Message-Id: <20220427184031.2569442-7-caleb.connolly@linaro.org>
-X-Mailer: git-send-email 2.36.0
-In-Reply-To: <20220427184031.2569442-1-caleb.connolly@linaro.org>
-References: <20220427184031.2569442-1-caleb.connolly@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        sumit.semwal@linaro.org, amit.pundir@linaro.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20220323162820.110806-1-caleb@connolly.tech>
+ <20220323162820.110806-4-caleb@connolly.tech> <Yma4tXvPQ+U89Whr@google.com>
+ <10f7cb8e-4c2a-0bba-df55-16b56d429147@linaro.org>
+ <Ymg455MYRIJTXgvW@google.com>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <Ymg455MYRIJTXgvW@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add devicetree bindings for the Qualcomm PMI8998/PM660 SMB2 charger
-driver.
 
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
----
- .../power/supply/qcom,pmi8998-charger.yaml    | 83 +++++++++++++++++++
- 1 file changed, 83 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
 
-diff --git a/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml b/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
-new file mode 100644
-index 000000000000..41b471713364
---- /dev/null
-+++ b/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
-@@ -0,0 +1,83 @@
-+# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/power/supply/qcom,pmi8998-charger.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm PMI8998/PM660 Switch-Mode Battery Charger "2"
-+
-+maintainers:
-+  - Caleb Connolly <caleb.connolly@linaro.org>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,pmi8998-charger
-+      - qcom,pm660-charger
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    minItems: 4
-+    maxItems: 4
-+
-+  interrupt-names:
-+    items:
-+      - const: usb-plugin
-+      - const: bat-ov
-+      - const: wdog-bark
-+      - const: usbin-icl-change
-+
-+  io-channels:
-+    items:
-+      - description: USB in current in uA
-+      - description: USB in voltage in uV
-+
-+  io-channel-names:
-+    items:
-+      - const: usbin_i
-+      - const: usbin_v
-+
-+  monitored-battery:
-+    description: phandle to the simple-battery node
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - io-channels
-+  - io-channel-names
-+  - monitored-battery
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    pmic {
-+      #address-cells = <1>;
-+      #size-cells = <0>;
-+      #interrupt-cells = <4>;
-+
-+      charger@1000 {
-+        compatible = "qcom,pmi8998-charger";
-+        reg = <0x1000>;
-+
-+        interrupts = <0x2 0x12 0x2 IRQ_TYPE_EDGE_BOTH>,
-+                     <0x2 0x13 0x4 IRQ_TYPE_EDGE_BOTH>,
-+                     <0x2 0x13 0x6 IRQ_TYPE_EDGE_RISING>,
-+                     <0x2 0x16 0x1 IRQ_TYPE_EDGE_RISING>;
-+        interrupt-names = "usb-plugin", "bat-ov", "wdog-bark", "usbin-icl-change";
-+
-+        io-channels = <&pmi8998_rradc 3>,
-+                      <&pmi8998_rradc 4>;
-+        io-channel-names = "usbin_i",
-+                           "usbin_v";
-+
-+        monitored-battery = <&battery>;
-+      };
-+    };
+On 26/04/2022 19:24, Lee Jones wrote:
+> On Tue, 26 Apr 2022, Caleb Connolly wrote:
+>> On 25/04/2022 16:05, Lee Jones wrote:
+>>> On Wed, 23 Mar 2022, Caleb Connolly wrote:
+>>>
+>>>> From: Caleb Connolly <caleb.connolly@linaro.org>
+>>>>
+>>>> The PMI8998 and PM660 expose the fab_id, this is needed by drivers like
+>>>> the RRADC to calibrate ADC values.
+>>>>
+>>>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> ---
+>>>>    drivers/mfd/qcom-spmi-pmic.c      | 7 +++++++
+>>>>    include/soc/qcom/qcom-spmi-pmic.h | 1 +
+>>>>    2 files changed, 8 insertions(+)
+>>>
+>>> Please change the Subject line to match the style of the sub-system?
+>> Hi, sorry if this is a silly question, I don't quite understand what you
+>> want me to change here, the subject line is in the same "mfd: driver:"
+>> format as other patches in the subsystem?
+> 
+> mfd: qcom-spmi-pmic: Read fab ID on supported PMICs
+> 
+> What's 'fab' should that be capitalised too?
+"fab" is short for fabrication I think, the register value can be used to 
+determine which factory the chip was manufactured in.
+
+I can make it clearer and go for
+
+mfd: qcom-spmi-pmic: Read fabrication ID on supported PMICs
+> 
+>>> Once changed:
+>>>
+>>>     Acked-by: Lee Jones <lee.jones@linaro.org>
+>>>
+>>
+> 
+
 -- 
-2.36.0
-
+Kind Regards,
+Caleb (they/he)
