@@ -2,255 +2,248 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 593E2511A08
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:56:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9CC0511AFA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:57:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237359AbiD0OQ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 10:16:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43758 "EHLO
+        id S237431AbiD0OQu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 10:16:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237380AbiD0OQ0 (ORCPT
+        with ESMTP id S237419AbiD0OQu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 10:16:26 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E375F52E62
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:13:14 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id j6so1665940pfe.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:13:14 -0700 (PDT)
+        Wed, 27 Apr 2022 10:16:50 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42E5E53A53
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:13:35 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id r83so1574515pgr.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:13:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=DhokFBZ8F+taIE1k9mg2zZtCYLVYVOeEuTezkpT79r0=;
-        b=P3+JotLgiip8RxPVXYAXVXxK/wRp63a4Wo/GDeeUArGs0ys+6YbeQav72knUKSjSgG
-         XMAWMCV+T7fbSun5DsZP6df1JmVvkUJAPmZNsMs1M7c5fBo06US16QTLJ7iqgKnfgTZe
-         9G8GJJzxHyGGpNJi+WihEAk01SV57ERNAWrWJ5fEcVw2gzCLu5bNBz6ThMUDpck3b/hv
-         JHmwNeUg+H6/4bBEt5l++B5tjifB3FMsjZDhG4aHNH9KFGJOAWVcXhsBVUBMgP1OSQcC
-         2CQbs3h/RzvPILD7JMzwc9ggQ4jxbFRshk6tACwUSAKJuAIM+sHLdXce0zHTfY0E4XLT
-         aI9w==
+        bh=4SSg9xvttj6ofRIso6mDTNWRqylug+TxQegoRN2Hy+E=;
+        b=Ynrnt4ag/fTrk+ZaeCVK91gLosITF9Y2Spphnsg7OwPVSutemFem4wUfO8W20f+lhq
+         BegLMnSak3Ylp4XQUdTIGVwVdXfAIuiw8klflijsMOqIBnyuHQ+6ZVyFQBMe9v0qy4JX
+         x3NafhSsue3PmXZz9Cx/JJy8j4tAf8anKqJ2blfUZ01hgEO46nb6E5AEXOG0KPBIIbnd
+         a3aOJoKs63JHNEHYSnu9Eo0uNcWOhk6w6ykqMGQkLStQV0GOZj6mwSJ6R+GR0rrCLUHX
+         ona7CdaBgXXIlGEVqcMcglwN2u4iybJUz0yAPmF7KkbMGn8PBFthelPqu8D88K1qqzVz
+         mLZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=DhokFBZ8F+taIE1k9mg2zZtCYLVYVOeEuTezkpT79r0=;
-        b=kCYNf6F/1hiYpeujDrHDV8guvoYaEpDQ5gnB2ihNGfDswYnDADdzg7mxLqaNjJF22Y
-         zLnGJlMmLYKfylXyCgmDnFdboV2LCQSIPY4PLhaMz+xIX9H40zgNXQvA35qmkjlx41Vi
-         cMqPyNQwUCRWcilaG+h/9cQCYm/aCOwT2icKjOSoXh3q/FsvU6z0zewgem0rIGYqP0Kb
-         8FQGD7HYd+oimZjZecWexQU8jhovKH/f1NFoGMIhIsIc6b5VliMW3MAWBy4SRsBI5RBx
-         NLYQ50v4wVWBSfiQDBLpiUBgQlBLl6RVHufu+c0Qr+s++Jl44tbTYlyfvYfsEn9DrY68
-         PTvA==
-X-Gm-Message-State: AOAM530PfbggGGXryZCc/o+2W/PlmNzQS8+aoDeahXmSHxRA1IdeqMlA
-        7ksJKxvtoHqS2qochjrChlYuqw==
-X-Google-Smtp-Source: ABdhPJzwqnRqzlvetnWaWNh50u652unG7bmUQL7VOe8oZll9/mfsDqCxv7Fg9ArlskIvhhOuWvfmqA==
-X-Received: by 2002:a63:18c:0:b0:3aa:d794:7c44 with SMTP id 134-20020a63018c000000b003aad7947c44mr21425027pgb.126.1651068794150;
-        Wed, 27 Apr 2022 07:13:14 -0700 (PDT)
-Received: from leoy-ThinkPad-X240s ([134.195.101.46])
-        by smtp.gmail.com with ESMTPSA id x129-20020a623187000000b0050835f6d6a1sm19002767pfx.9.2022.04.27.07.13.08
+        bh=4SSg9xvttj6ofRIso6mDTNWRqylug+TxQegoRN2Hy+E=;
+        b=KiBanlYgaWe5/uSzrvjcgLgP6/nYwdPk/xxZDbxKGZDk1bi5Xp0M+DT6hZGjv+uSPm
+         qYXNulukKyiR/1lhmSEuZDNy7TVEthYEIGro8G7iSr8j4h1BfZUhUk/OZNuCarTWDzI1
+         0SuUPEsYYvGyyCXAB6e1ceppLyh/sGR6ZZ2UlbKA0gTnJfElDNWuIIgTZ3alJeGVG20i
+         GDsZsnYj9+V5X4lCyIS/XmT5bruzTG5ZSjmNilF0SV58AiqNRmV3bTa39mXqn/PhbX/2
+         dhGMWeGpCWhGQXjcoRkFYo+An6fdfC99Ek1rOLbTNbHlas0EoUr6vcn1il2Fhmi1OQWo
+         u7XA==
+X-Gm-Message-State: AOAM5318LdkpJjpPpOTWFNer5xqhsQfSauaU8MdOtooukLWkjbQglBeN
+        CRtxNwwlpKgdeRO1+Bk2T1gJ41c0zunD
+X-Google-Smtp-Source: ABdhPJyeZaLnVABPLhwheo7Q4u0alHqWLeJL95RhQwsTcziUeecNyjDChzeEPdc5CEVZHjhp3r+f7g==
+X-Received: by 2002:a63:5464:0:b0:3c1:4930:fbd5 with SMTP id e36-20020a635464000000b003c14930fbd5mr2572020pgm.94.1651068814601;
+        Wed, 27 Apr 2022 07:13:34 -0700 (PDT)
+Received: from thinkpad ([27.111.75.179])
+        by smtp.gmail.com with ESMTPSA id bo3-20020a17090b090300b001cd4989fecesm7273661pjb.26.2022.04.27.07.13.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 07:13:13 -0700 (PDT)
-Date:   Wed, 27 Apr 2022 22:13:05 +0800
-From:   Leo Yan <leo.yan@linaro.org>
+        Wed, 27 Apr 2022 07:13:34 -0700 (PDT)
+Date:   Wed, 27 Apr 2022 19:43:29 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 2/5] interconnect: qcom: Move
- qcom_icc_xlate_extended() to a common file
-Message-ID: <20220427141305.GB560849@leoy-ThinkPad-X240s>
-References: <20220416154013.1357444-1-leo.yan@linaro.org>
- <20220416154013.1357444-3-leo.yan@linaro.org>
- <e7a8ce84-3029-ea90-628b-1072bd49baf4@linaro.org>
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 1/5] PCI: dwc: Convert msi_irq to the array
+Message-ID: <20220427141329.GA4161@thinkpad>
+References: <20220427121653.3158569-1-dmitry.baryshkov@linaro.org>
+ <20220427121653.3158569-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e7a8ce84-3029-ea90-628b-1072bd49baf4@linaro.org>
-X-Spam-Status: No, score=-0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_BL_SPAMCOP_NET,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220427121653.3158569-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 27, 2022 at 12:00:24AM +0300, Dmitry Baryshkov wrote:
-> On 16/04/2022 18:40, Leo Yan wrote:
-> > since there have conflict between two headers icc-rpmh.h and icc-rpm.h,
-> > the function qcom_icc_xlate_extended() is declared in icc-rpmh.h thus
-> > it cannot be used by icc-rpm driver.
-> > 
-> > Move the function to a new common file icc-common.c so that allow it to
-> > be called by multiple drivers.
-> > 
-> > Signed-off-by: Leo Yan <leo.yan@linaro.org>
+On Wed, Apr 27, 2022 at 03:16:49PM +0300, Dmitry Baryshkov wrote:
+> Qualcomm version of DWC PCIe controller supports more than 32 MSI
+> interrupts, but they are routed to separate interrupts in groups of 32
+> vectors. To support such configuration, change the msi_irq field into an
+> array. Let the DWC core handle all interrupts that were set in this
+> array.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> > ---
-> >   drivers/interconnect/qcom/Makefile     |  3 +++
-> >   drivers/interconnect/qcom/icc-common.c | 34 ++++++++++++++++++++++++++
-> >   drivers/interconnect/qcom/icc-common.h | 13 ++++++++++
-> >   drivers/interconnect/qcom/icc-rpmh.c   | 26 +-------------------
-> >   drivers/interconnect/qcom/icc-rpmh.h   |  1 -
-> >   drivers/interconnect/qcom/sm8450.c     |  1 +
-> >   6 files changed, 52 insertions(+), 26 deletions(-)
-> >   create mode 100644 drivers/interconnect/qcom/icc-common.c
-> >   create mode 100644 drivers/interconnect/qcom/icc-common.h
-> > 
-> > diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
-> > index ceae9bb566c6..bbb3d6daaad1 100644
-> > --- a/drivers/interconnect/qcom/Makefile
-> > +++ b/drivers/interconnect/qcom/Makefile
-> > @@ -1,5 +1,8 @@
-> >   # SPDX-License-Identifier: GPL-2.0
-> > +obj-$(CONFIG_INTERCONNECT_QCOM) += interconnect_qcom.o
-> > +
-> > +interconnect_qcom-y			:= icc-common.o
-> >   icc-bcm-voter-objs			:= bcm-voter.o
-> >   qnoc-msm8916-objs			:= msm8916.o
-> >   qnoc-msm8939-objs			:= msm8939.o
-> > diff --git a/drivers/interconnect/qcom/icc-common.c b/drivers/interconnect/qcom/icc-common.c
-> > new file mode 100644
-> > index 000000000000..0822ce207b5d
-> > --- /dev/null
-> > +++ b/drivers/interconnect/qcom/icc-common.c
-> > @@ -0,0 +1,34 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/*
-> > + * Copyright (C) 2022 Linaro Ltd.
-> > + */
-> > +
-> > +#include <linux/of.h>
-> > +#include <linux/slab.h>
-> > +
-> > +#include "icc-common.h"
-> > +
-> > +struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void *data)
-> > +{
-> > +	struct icc_node_data *ndata;
-> > +	struct icc_node *node;
-> > +
-> > +	node = of_icc_xlate_onecell(spec, data);
-> > +	if (IS_ERR(node))
-> > +		return ERR_CAST(node);
-> > +
-> > +	ndata = kzalloc(sizeof(*ndata), GFP_KERNEL);
-> > +	if (!ndata)
-> > +		return ERR_PTR(-ENOMEM);
-> > +
-> > +	ndata->node = node;
-> > +
-> > +	if (spec->args_count == 2)
-> > +		ndata->tag = spec->args[1];
-> > +
-> > +	if (spec->args_count > 2)
-> > +		pr_warn("%pOF: Too many arguments, path tag is not parsed\n", spec->np);
-> > +
-> > +	return ndata;
-> > +}
-> > +EXPORT_SYMBOL_GPL(qcom_icc_xlate_extended);
-> > diff --git a/drivers/interconnect/qcom/icc-common.h b/drivers/interconnect/qcom/icc-common.h
-> > new file mode 100644
-> > index 000000000000..33bb2c38dff3
-> > --- /dev/null
-> > +++ b/drivers/interconnect/qcom/icc-common.h
-> > @@ -0,0 +1,13 @@
-> > +/* SPDX-License-Identifier: GPL-2.0 */
-> > +/*
-> > + * Copyright (C) 2022 Linaro Ltd.
-> > + */
-> > +
-> > +#ifndef __DRIVERS_INTERCONNECT_QCOM_ICC_COMMON_H__
-> > +#define __DRIVERS_INTERCONNECT_QCOM_ICC_COMMON_H__
-> > +
-> > +#include <linux/interconnect-provider.h>
-> 
-> If it's just for the sake of the function prototype, you can replace
-> #include with forward declarations of two used structures:
-> 
-> struct icc_node_data;
-> struct of_phandle_args;
 
-Will fix in next spin.
+Instead of defining it as an array, can we allocate it dynamically in the
+controller drivers instead? This has two benefits:
+
+1. There is no need of using a dedicated flag.
+2. Controller drivers that don't support MSIs can pass NULL and in the core we
+can use platform_get_irq_byname_optional() to get supported number of MSIs from
+devicetree.
 
 Thanks,
-Leo
+Mani
 
-> > +
-> > +struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void *data);
-> > +
-> > +#endif
-> > diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
-> > index 2c8e12549804..9a0ac85d2a84 100644
-> > --- a/drivers/interconnect/qcom/icc-rpmh.c
-> > +++ b/drivers/interconnect/qcom/icc-rpmh.c
-> > @@ -11,6 +11,7 @@
-> >   #include <linux/slab.h>
-> >   #include "bcm-voter.h"
-> > +#include "icc-common.h"
-> >   #include "icc-rpmh.h"
-> >   /**
-> > @@ -100,31 +101,6 @@ int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
-> >   }
-> >   EXPORT_SYMBOL_GPL(qcom_icc_set);
-> > -struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void *data)
-> > -{
-> > -	struct icc_node_data *ndata;
-> > -	struct icc_node *node;
-> > -
-> > -	node = of_icc_xlate_onecell(spec, data);
-> > -	if (IS_ERR(node))
-> > -		return ERR_CAST(node);
-> > -
-> > -	ndata = kzalloc(sizeof(*ndata), GFP_KERNEL);
-> > -	if (!ndata)
-> > -		return ERR_PTR(-ENOMEM);
-> > -
-> > -	ndata->node = node;
-> > -
-> > -	if (spec->args_count == 2)
-> > -		ndata->tag = spec->args[1];
-> > -
-> > -	if (spec->args_count > 2)
-> > -		pr_warn("%pOF: Too many arguments, path tag is not parsed\n", spec->np);
-> > -
-> > -	return ndata;
-> > -}
-> > -EXPORT_SYMBOL_GPL(qcom_icc_xlate_extended);
-> > -
-> >   /**
-> >    * qcom_icc_bcm_init - populates bcm aux data and connect qnodes
-> >    * @bcm: bcm to be initialized
-> > diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
-> > index 4bfc060529ba..84acc540a5f7 100644
-> > --- a/drivers/interconnect/qcom/icc-rpmh.h
-> > +++ b/drivers/interconnect/qcom/icc-rpmh.h
-> > @@ -131,7 +131,6 @@ struct qcom_icc_desc {
-> >   int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
-> >   		       u32 peak_bw, u32 *agg_avg, u32 *agg_peak);
-> >   int qcom_icc_set(struct icc_node *src, struct icc_node *dst);
-> > -struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void *data);
-> >   int qcom_icc_bcm_init(struct qcom_icc_bcm *bcm, struct device *dev);
-> >   void qcom_icc_pre_aggregate(struct icc_node *node);
-> >   int qcom_icc_rpmh_probe(struct platform_device *pdev);
-> > diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
-> > index 8d99ee6421df..23045cf17e37 100644
-> > --- a/drivers/interconnect/qcom/sm8450.c
-> > +++ b/drivers/interconnect/qcom/sm8450.c
-> > @@ -12,6 +12,7 @@
-> >   #include <dt-bindings/interconnect/qcom,sm8450.h>
-> >   #include "bcm-voter.h"
-> > +#include "icc-common.h"
-> >   #include "icc-rpmh.h"
-> >   #include "sm8450.h"
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pci-dra7xx.c       |  2 +-
+>  drivers/pci/controller/dwc/pci-exynos.c       |  2 +-
+>  .../pci/controller/dwc/pcie-designware-host.c | 30 +++++++++++--------
+>  drivers/pci/controller/dwc/pcie-designware.h  |  2 +-
+>  drivers/pci/controller/dwc/pcie-keembay.c     |  2 +-
+>  drivers/pci/controller/dwc/pcie-spear13xx.c   |  2 +-
+>  drivers/pci/controller/dwc/pcie-tegra194.c    |  2 +-
+>  7 files changed, 24 insertions(+), 18 deletions(-)
 > 
-> 
+> diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
+> index dfcdeb432dc8..0919c96dcdbd 100644
+> --- a/drivers/pci/controller/dwc/pci-dra7xx.c
+> +++ b/drivers/pci/controller/dwc/pci-dra7xx.c
+> @@ -483,7 +483,7 @@ static int dra7xx_add_pcie_port(struct dra7xx_pcie *dra7xx,
+>  		return pp->irq;
+>  
+>  	/* MSI IRQ is muxed */
+> -	pp->msi_irq = -ENODEV;
+> +	pp->msi_irq[0] = -ENODEV;
+>  
+>  	ret = dra7xx_pcie_init_irq_domain(pp);
+>  	if (ret < 0)
+> diff --git a/drivers/pci/controller/dwc/pci-exynos.c b/drivers/pci/controller/dwc/pci-exynos.c
+> index 467c8d1cd7e4..4f2010bd9cd7 100644
+> --- a/drivers/pci/controller/dwc/pci-exynos.c
+> +++ b/drivers/pci/controller/dwc/pci-exynos.c
+> @@ -292,7 +292,7 @@ static int exynos_add_pcie_port(struct exynos_pcie *ep,
+>  	}
+>  
+>  	pp->ops = &exynos_pcie_host_ops;
+> -	pp->msi_irq = -ENODEV;
+> +	pp->msi_irq[0] = -ENODEV;
+>  
+>  	ret = dw_pcie_host_init(pp);
+>  	if (ret) {
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 2fa86f32d964..5d90009a0f73 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -257,8 +257,11 @@ int dw_pcie_allocate_domains(struct pcie_port *pp)
+>  
+>  static void dw_pcie_free_msi(struct pcie_port *pp)
+>  {
+> -	if (pp->msi_irq)
+> -		irq_set_chained_handler_and_data(pp->msi_irq, NULL, NULL);
+> +	u32 ctrl;
+> +
+> +	for (ctrl = 0; ctrl < MAX_MSI_CTRLS; ctrl++)
+> +		if (pp->msi_irq[ctrl])
+> +			irq_set_chained_handler_and_data(pp->msi_irq[ctrl], NULL, NULL);
+>  
+>  	irq_domain_remove(pp->msi_domain);
+>  	irq_domain_remove(pp->irq_domain);
+> @@ -368,13 +371,15 @@ int dw_pcie_host_init(struct pcie_port *pp)
+>  			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
+>  				pp->irq_mask[ctrl] = ~0;
+>  
+> -			if (!pp->msi_irq) {
+> -				pp->msi_irq = platform_get_irq_byname_optional(pdev, "msi");
+> -				if (pp->msi_irq < 0) {
+> -					pp->msi_irq = platform_get_irq(pdev, 0);
+> -					if (pp->msi_irq < 0)
+> -						return pp->msi_irq;
+> +			if (!pp->msi_irq[0]) {
+> +				int irq = platform_get_irq_byname_optional(pdev, "msi");
+> +
+> +				if (irq < 0) {
+> +					irq = platform_get_irq(pdev, 0);
+> +					if (irq < 0)
+> +						return irq;
+>  				}
+> +				pp->msi_irq[0] = irq;
+>  			}
+>  
+>  			pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
+> @@ -383,10 +388,11 @@ int dw_pcie_host_init(struct pcie_port *pp)
+>  			if (ret)
+>  				return ret;
+>  
+> -			if (pp->msi_irq > 0)
+> -				irq_set_chained_handler_and_data(pp->msi_irq,
+> -							    dw_chained_msi_isr,
+> -							    pp);
+> +			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
+> +				if (pp->msi_irq[ctrl] > 0)
+> +					irq_set_chained_handler_and_data(pp->msi_irq[ctrl],
+> +									 dw_chained_msi_isr,
+> +									 pp);
+>  
+>  			ret = dma_set_mask(pci->dev, DMA_BIT_MASK(32));
+>  			if (ret)
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index 7d6e9b7576be..9c1a38b0a6b3 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -187,7 +187,7 @@ struct pcie_port {
+>  	u32			io_size;
+>  	int			irq;
+>  	const struct dw_pcie_host_ops *ops;
+> -	int			msi_irq;
+> +	int			msi_irq[MAX_MSI_CTRLS];
+>  	struct irq_domain	*irq_domain;
+>  	struct irq_domain	*msi_domain;
+>  	u16			msi_msg;
+> diff --git a/drivers/pci/controller/dwc/pcie-keembay.c b/drivers/pci/controller/dwc/pcie-keembay.c
+> index 1ac29a6eef22..297e6e926c00 100644
+> --- a/drivers/pci/controller/dwc/pcie-keembay.c
+> +++ b/drivers/pci/controller/dwc/pcie-keembay.c
+> @@ -338,7 +338,7 @@ static int keembay_pcie_add_pcie_port(struct keembay_pcie *pcie,
+>  	int ret;
+>  
+>  	pp->ops = &keembay_pcie_host_ops;
+> -	pp->msi_irq = -ENODEV;
+> +	pp->msi_irq[0] = -ENODEV;
+>  
+>  	ret = keembay_pcie_setup_msi_irq(pcie);
+>  	if (ret)
+> diff --git a/drivers/pci/controller/dwc/pcie-spear13xx.c b/drivers/pci/controller/dwc/pcie-spear13xx.c
+> index 1569e82b5568..cc7776833810 100644
+> --- a/drivers/pci/controller/dwc/pcie-spear13xx.c
+> +++ b/drivers/pci/controller/dwc/pcie-spear13xx.c
+> @@ -172,7 +172,7 @@ static int spear13xx_add_pcie_port(struct spear13xx_pcie *spear13xx_pcie,
+>  	}
+>  
+>  	pp->ops = &spear13xx_pcie_host_ops;
+> -	pp->msi_irq = -ENODEV;
+> +	pp->msi_irq[0] = -ENODEV;
+>  
+>  	ret = dw_pcie_host_init(pp);
+>  	if (ret) {
+> diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+> index b1b5f836a806..e75712db85b0 100644
+> --- a/drivers/pci/controller/dwc/pcie-tegra194.c
+> +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+> @@ -2271,7 +2271,7 @@ static void tegra194_pcie_shutdown(struct platform_device *pdev)
+>  
+>  	disable_irq(pcie->pci.pp.irq);
+>  	if (IS_ENABLED(CONFIG_PCI_MSI))
+> -		disable_irq(pcie->pci.pp.msi_irq);
+> +		disable_irq(pcie->pci.pp.msi_irq[0]);
+>  
+>  	tegra194_pcie_pme_turnoff(pcie);
+>  	tegra_pcie_unconfig_controller(pcie);
 > -- 
-> With best wishes
-> Dmitry
+> 2.35.1
+> 
