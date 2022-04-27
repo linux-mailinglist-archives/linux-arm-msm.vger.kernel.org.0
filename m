@@ -2,106 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E773511627
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 13:33:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28A8A511634
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 13:34:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230155AbiD0KvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 06:51:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38884 "EHLO
+        id S231560AbiD0LFl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 07:05:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230237AbiD0KvL (ORCPT
+        with ESMTP id S232364AbiD0LDc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 06:51:11 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC5F137306E;
-        Wed, 27 Apr 2022 03:22:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EA0C261CDF;
-        Wed, 27 Apr 2022 10:22:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65856C385A7;
-        Wed, 27 Apr 2022 10:22:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651054934;
-        bh=/l0+X+uY0RGD3XCFihbZoXk+GiTAu5F7H5VVNMO1SFE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YPRpKWw7RkFCv3TNq6CrOTPWcmgczFFuWKF5CbARd8K3PteP1PdJA0od0eqcxe5pk
-         WilNsgLzRyd3Q+4bdGK6xXhl218reLuUimckCK6QtU1QuQQK3/E1fGRcHzlFzXJ9TZ
-         m4S/+2B4jKWMcZlj8I8iE1nR/2xe3ok2LtGF+lueyucO4sQCu/lDiuM4FL+3t/aZAE
-         isjG7urMZuoAvrdOOg8mEDKzQqvQSa53V7G+xV+/QbLFwUDMFCC4z1qZwR9ETPFyta
-         3GGHyJwQjXTKsHrm7dZHFXhbcjUgDdc+DnYk6Zrz8ydzZNtGJwC4cIAHDnWlhBt6ID
-         6Sylq0yZhFFQA==
-Date:   Wed, 27 Apr 2022 15:52:06 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Wan Jiabing <wanjiabing@vivo.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Hemant Kumar <quic_hemantk@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Paul Davey <paul.davey@alliedtelesis.co.nz>,
-        Kees Cook <keescook@chromium.org>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: replace snprintf with sysfs_emit
-Message-ID: <20220427102206.GD2536@thinkpad>
-References: <20220426125902.681258-1-wanjiabing@vivo.com>
+        Wed, 27 Apr 2022 07:03:32 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF4F286173
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 03:53:04 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id x17so2402555lfa.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 03:53:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=/MDg5A9f9rvXZp1xmjZTzHZIeAwlmtx2mQRfLrQsy7E=;
+        b=pIfuPJr7nqblgDaRQ4dMb03d0stbXtuCVITICOO7D+Sw4d+0uljC/gJd1LCHv7Wm9B
+         y2F0N82TJJBYu0rQaIMQKnpmzGNTPTX5A+GLOyh8RADJXlYzT/kGOqQhs7QPP6GHlFJ5
+         kmLGvEhadsTzLtWOODP2aBnJUHIf7Hk/jn1ipAPo0UhWS72L3ZzXTQ+w41iM/nmLTfl8
+         wmzpzsg2qFyv1MxvPC3mFzATo055/Ji8SfudiSp05BcwrRzxyyN/sgMAt6+nNg/dWo5X
+         nzaD0OWmvYHrz0atobccvico61skaUsgrUdBzgcJP3W3slbs/JsbPCWA0WzOuMTUYJcg
+         Qwhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=/MDg5A9f9rvXZp1xmjZTzHZIeAwlmtx2mQRfLrQsy7E=;
+        b=2GHSl9F/rWbeu/UDxVZq8QB8ZKmoZ2xdi/O4bxpcq/1OGjM9/urMfZT5FX5DQPJsqu
+         477++B3nSy7bUO8mw5HPIiWs/JqzxtD3gGfAEAUAfpXiMcBetuTtCITNhlKw1o6L2/8H
+         GQduZavNyeeQjTKaB8kumrtTU8rTB9bsAPj0d3YSts/3d7yLpf01qW/kTnx69iah7pJ0
+         ZYDvXHkVb0jio1jQsvPi7POb4TIngi+o9q/q9t9F5KCHRutgNJMqDloq4mndfyX5G6ar
+         Wwc+OTAUAzVgM7P4i0pnAP+AnkoRFQRmZbBJwBcpzUV5HOu9usp1ahrAYi0cSnDfE9kk
+         USkQ==
+X-Gm-Message-State: AOAM532sEtXwzCVCJjdzyD+KYGHzq9aM1o0XnTV9u38jaSnGnC2eGnL+
+        op94aH9qAB6J18ImozaQ4qMGCg==
+X-Google-Smtp-Source: ABdhPJzYAmcUZabicyvLvDv5FdlC1iUQgJ59NCULUae//BS2fAbM2zBP4v+0xt14oQfazbKVtV3ERA==
+X-Received: by 2002:ac2:4add:0:b0:471:fc6d:a71d with SMTP id m29-20020ac24add000000b00471fc6da71dmr14050863lfp.350.1651056782925;
+        Wed, 27 Apr 2022 03:53:02 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id c6-20020a19e346000000b0046b8aac6e16sm2022462lfk.26.2022.04.27.03.53.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Apr 2022 03:53:02 -0700 (PDT)
+Message-ID: <e20d94d7-a865-21f7-0514-706992294614@linaro.org>
+Date:   Wed, 27 Apr 2022 13:53:01 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220426125902.681258-1-wanjiabing@vivo.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH] drm/msm/disp/dpu1: avoid clearing hw interrupts if
+ hw_intr is null during drm uninit
+Content-Language: en-GB
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, quic_kalyant@quicinc.com
+References: <1650952931-31988-1-git-send-email-quic_vpolimer@quicinc.com>
+ <CAE-0n52cSR_xCxF+_UeK8CaHqsu=4HOtfWQ3BMmx2Tx3kmk-ZA@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAE-0n52cSR_xCxF+_UeK8CaHqsu=4HOtfWQ3BMmx2Tx3kmk-ZA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 26, 2022 at 08:58:59PM +0800, Wan Jiabing wrote:
-> Fix following coccicheck warning:
-> ./drivers/bus/mhi/host/init.c:89:8-16: WARNING: use scnprintf or sprintf
+On 27/04/2022 00:50, Stephen Boyd wrote:
+> Quoting Vinod Polimera (2022-04-25 23:02:11)
+>> Avoid clearing irqs and derefernce hw_intr when hw_intr is null.
 > 
-> Use sysfs_emit and sysfs_emit_at instead of snprintf.
+> Presumably this is only the case when the display driver doesn't fully
+> probe and something probe defers? Can you clarify how this situation
+> happens?
 > 
-> Signed-off-by: Wan Jiabing <wanjiabing@vivo.com>
+>>
+>> BUG: Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+>>
+>> Call trace:
+>>   dpu_core_irq_uninstall+0x50/0xb0
+>>   dpu_irq_uninstall+0x18/0x24
+>>   msm_drm_uninit+0xd8/0x16c
+>>   msm_drm_bind+0x580/0x5fc
+>>   try_to_bring_up_master+0x168/0x1c0
+>>   __component_add+0xb4/0x178
+>>   component_add+0x1c/0x28
+>>   dp_display_probe+0x38c/0x400
+>>   platform_probe+0xb0/0xd0
+>>   really_probe+0xcc/0x2c8
+>>   __driver_probe_device+0xbc/0xe8
+>>   driver_probe_device+0x48/0xf0
+>>   __device_attach_driver+0xa0/0xc8
+>>   bus_for_each_drv+0x8c/0xd8
+>>   __device_attach+0xc4/0x150
+>>   device_initial_probe+0x1c/0x28
+>>
+>> Fixes: a73033619ea ("drm/msm/dpu: squash dpu_core_irq into dpu_hw_interrupts")
+> 
+> The fixes tag looks odd. In dpu_core_irq_uninstall() at that commit it
+> is dealing with 'irq_obj' which isn't a pointer. After commit
+> f25f656608e3 ("drm/msm/dpu: merge struct dpu_irq into struct
+> dpu_hw_intr") dpu_core_irq_uninstall() starts using 'hw_intr' which is
+> allocated on the heap. If we backported this patch to a place that had
+> a73033619ea without f25f656608e3 it wouldn't make any sense.
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+I'd agree here. The following tag would be correct:
 
-Thanks,
-Mani
+Fixes: f25f656608e3 ("drm/msm/dpu: merge struct dpu_irq into struct 
+dpu_hw_intr")
 
-> ---
->  drivers/bus/mhi/host/init.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
+
 > 
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index cbb86b21063e..c137d55ccfa0 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -86,7 +86,7 @@ static ssize_t serial_number_show(struct device *dev,
->  	struct mhi_device *mhi_dev = to_mhi_device(dev);
->  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
->  
-> -	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
-> +	return sysfs_emit(buf, "Serial Number: %u\n",
->  			mhi_cntrl->serial_number);
->  }
->  static DEVICE_ATTR_RO(serial_number);
-> @@ -100,9 +100,8 @@ static ssize_t oem_pk_hash_show(struct device *dev,
->  	int i, cnt = 0;
->  
->  	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++)
-> -		cnt += snprintf(buf + cnt, PAGE_SIZE - cnt,
-> -				"OEMPKHASH[%d]: 0x%x\n", i,
-> -				mhi_cntrl->oem_pk_hash[i]);
-> +		cnt += sysfs_emit_at(buf, cnt, "OEMPKHASH[%d]: 0x%x\n",
-> +				i, mhi_cntrl->oem_pk_hash[i]);
->  
->  	return cnt;
->  }
-> -- 
-> 2.35.3
-> 
-> 
+>> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+>> index c515b7c..ab28577 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+>> @@ -599,6 +599,9 @@ void dpu_core_irq_uninstall(struct dpu_kms *dpu_kms)
+>>   {
+>>          int i;
+>>
+>> +       if (!dpu_kms->hw_intr)
+>> +               return;
+>> +
+>>          pm_runtime_get_sync(&dpu_kms->pdev->dev);
+>>          for (i = 0; i < dpu_kms->hw_intr->total_irqs; i++)
+
+
+-- 
+With best wishes
+Dmitry
