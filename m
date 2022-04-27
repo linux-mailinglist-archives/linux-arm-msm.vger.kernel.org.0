@@ -2,82 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CF73510E3B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 03:47:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C550510E80
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 04:07:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351813AbiD0BtG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 21:49:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49132 "EHLO
+        id S1357021AbiD0CGw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 22:06:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357001AbiD0BtE (ORCPT
+        with ESMTP id S1356963AbiD0CGv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 21:49:04 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49892403D9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 18:45:55 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id t6-20020a056830224600b00605491a5cd7so157719otd.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 18:45:55 -0700 (PDT)
+        Tue, 26 Apr 2022 22:06:51 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 741044C7B1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 19:03:42 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id n18so366536plg.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 19:03:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to;
-        bh=eVQ/inWcT1l7VEk2UI5ksomqsYzFOO+BWWxBaDOj8zM=;
-        b=h+COwLhnLVvSim4lcztBrlz3xxy+PnXdwM2J05oYWN9JXlf3kNZFsxDqiwbmMV2HDb
-         GKx/Zsxx+dpTD/4vdAxYHq5kXiYg/vYmbyxFjNJpZcJuBlGaBRFBhkXXALa8MiWbMxQ3
-         esIwnMrxvgJCtolvw/8BfFp+O2vZabX8dalg8=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Wc+2XZPEQYFH8y8VTjcF8pWwSz487fhH3cfdOdvAYWY=;
+        b=mZ8usUoirqcoTx9Hs24a9CJ/Vus3WeuHhFuyQW79gUnyF0wurc/Bx6DpY9EEYitYiy
+         x5OBFxn8PVsSVmB6f4nEvvHOMR5x7akAdh5p/MaEh2aopCQAWSZ2X2q56b0xG/M04sZF
+         1BteDlHlgMMv6dDVmdphUnP04lkZfHxtWaNgg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to;
-        bh=eVQ/inWcT1l7VEk2UI5ksomqsYzFOO+BWWxBaDOj8zM=;
-        b=lQAIXUwlTWEYEi2l97NBnMBhsfJDJ2c8LsG5TPoIeYkJd+wHScyON1SnkcXnp999vr
-         +XusIHpm+sTQh4mMn48v+Ly4Or+x4ml0RdARGjf5NIL0GcfsJpVz6CFDETgoHuZX0xOW
-         KCcLg4SZV07LBWIk4pv3L4/9SrR8N/5YBNISp0pffLqTd10RkqS2zxeRKGyjZguQ3Veb
-         Fq3onI3iuw+O/e3NDt5G6IQM7TDFPqU3WiRPW2IW6uJv6N7+jbTLIi/ESZkyND90y0xA
-         1UjMKE1mUxBTX0up5Kt5R+ohKVZzaNc+olUVpBoJ6eeZMU7RyzNwymZ4eia/+nndAv1r
-         SH9Q==
-X-Gm-Message-State: AOAM533OGtzjI20UVs7WRwZOlky0cGpjYZagupcK+RnYFnWlGHzmaavu
-        mgeClkflQI2F7GymI5WicSBUzb400SoE5cAdbq6iXg==
-X-Google-Smtp-Source: ABdhPJydWa6HcDqzOZ2NAkK6dx7hzYYZk+t8oX2oVqffHMh76w8ByLBGFcO4y3yZHY58tqfOqBClX0JRv2cb7LDQ7SU=
-X-Received: by 2002:a9d:20a1:0:b0:5e8:d2b6:f63f with SMTP id
- x30-20020a9d20a1000000b005e8d2b6f63fmr9152407ota.159.1651023954650; Tue, 26
- Apr 2022 18:45:54 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 26 Apr 2022 18:45:54 -0700
-MIME-Version: 1.0
-In-Reply-To: <20220426170306.v22.2.I18481b296484eec47bdc292a31fa46fa8c655ca9@changeid>
-References: <20220426170306.v22.1.I7a1a6448d50bdd38e6082204a9818c59cc7a9bfd@changeid>
- <20220426170306.v22.2.I18481b296484eec47bdc292a31fa46fa8c655ca9@changeid>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Wc+2XZPEQYFH8y8VTjcF8pWwSz487fhH3cfdOdvAYWY=;
+        b=w/5tqJhMDKe17/5SL6eWRrYniw1RIuHtbVRF5b88ZZqyosMn7qaVOEBBpVM9VAJOWn
+         0p6bkpDKNyaFpMaND4z/S/R2uPGs/Zxahl18tcVodDIBHQHvzgckz53vCq6diMrEh6wc
+         y1DEohWXJkMl3cwGtkwDIRoY8jfXa1bwwwsJNLh09IWjb/Z3KNCVl8xKzEM74pzinumy
+         BuUmRurt7EEdg1P9bbixs18BgcEKsD4dpDpVaC8UBEDRRteagFkfuO5c3uoZGWJlJVop
+         q5wO3TB8OKy+xAT4mpAlCRYpbIhfPwolVOC2JiMS1Uvp5e7S1OQGXHH5rWg5wivmETPU
+         N9fg==
+X-Gm-Message-State: AOAM532SXzAZNs7Nkl2ETSl5TM71AT36BReLC7k+NTkPBMeAH0x/l6L0
+        f9YukMcZiy/KTf3NQl5LGzgYwg==
+X-Google-Smtp-Source: ABdhPJwbzaogkQCtlbv1RZNPvF9OcQIiCWJ5G1M9CMws5WnO3sCYZskphMfOjbW7oZHd3/44RVMyZw==
+X-Received: by 2002:a17:90a:3d02:b0:1ca:7f92:1bf1 with SMTP id h2-20020a17090a3d0200b001ca7f921bf1mr41124131pjc.177.1651025021797;
+        Tue, 26 Apr 2022 19:03:41 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:482e:60bc:84d1:bf5c])
+        by smtp.gmail.com with ESMTPSA id g15-20020a056a0023cf00b004e17e11cb17sm18324197pfc.111.2022.04.26.19.03.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Apr 2022 19:03:41 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 26 Apr 2022 18:45:54 -0700
-Message-ID: <CAE-0n51c2xq1h_E0TgnEEQqTKC44oLV7pV3qkSNNSGe0VUo3pg@mail.gmail.com>
-Subject: Re: [PATCH v22 2/2] arm64: dts: qcom: sc7280-herobrine: Add nodes for
- onboard USB hub
 To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org,
+        "Joseph S. Barrera III" <joebar@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH v2 0/3] arm64: dts: qcom: sc7180-trogdor: Simplify!
+Date:   Tue, 26 Apr 2022 19:03:36 -0700
+Message-Id: <20220427020339.360855-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.36.0.rc2.479.g8af0fa9b8e-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Matthias Kaehlcke (2022-04-26 17:03:23)
-> Add nodes for the onboard USB hub on herobrine devices. Remove the
-> 'always-on' property from the hub regulator, since the regulator
-> is now managed by the onboard_usb_hub driver.
->
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
+Here's a couple patches to simplify sc7180-trogdor dtsi files further.
+There will be logical conflicts with the wormdingler patch because it
+will need to have similar changes done for the swizzle and include, but
+that can be cleaned up later or I can resend if the wormdingler patch
+gets merged first. Either way nothing will be broken from what I can
+tell.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+I compiled these and diffed the dtbs before and after and found no
+changes.
+
+Changes from v1 (https://lore.kernel.org/r/20220325234344.199841-1-swboyd@chromium.org):
+ * Another patch to move around sc7180.dtsi includes
+ * Fixed trackpad for trogdor-r1 and pompom
+ * Made spi0/spi6 patch not as aggressive
+
+Stephen Boyd (3):
+  arm64: dts: qcom: sc7180-trogdor: Simplify trackpad enabling
+  arm64: dts: qcom: sc7180-trogdor: Simplify spi0/spi6 labeling
+  arm64: dts: qcom: Only include sc7180.dtsi in sc7180-trogdor.dtsi
+
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 11 +----------
+ .../boot/dts/qcom/sc7180-trogdor-homestar-r2.dts      |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-homestar-r3.dts      |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-homestar-r4.dts      |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi |  7 -------
+ .../qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts    |  2 +-
+ .../qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts    |  2 +-
+ .../dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts     |  2 +-
+ .../dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts     |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts  |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts  |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts      |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts     |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts  |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts      |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts     |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts  |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    |  7 ++++---
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi   |  9 ++++-----
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts        |  9 ++++-----
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi          |  8 ++++----
+ 21 files changed, 32 insertions(+), 49 deletions(-)
+
+Cc: "Joseph S. Barrera III" <joebar@chromium.org>
+Cc: Douglas Anderson <dianders@chromium.org>
+
+base-commit: f238ff81e8946540e1a7c1496aa92fa2386893dc
+-- 
+https://chromeos.dev
+
