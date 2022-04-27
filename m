@@ -2,112 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71E0F5119B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:55:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 028B151198E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:55:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236425AbiD0Nv0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 09:51:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56244 "EHLO
+        id S237519AbiD0OJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 10:09:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236383AbiD0NvZ (ORCPT
+        with ESMTP id S237460AbiD0OJK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 09:51:25 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 627C652B1A;
-        Wed, 27 Apr 2022 06:48:14 -0700 (PDT)
+        Wed, 27 Apr 2022 10:09:10 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3314E38C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:05:58 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id j17so1666290pfi.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651067294; x=1682603294;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=3VKraWGq9JKDghUpz/S876MR6EjNBCyS7OXTjzs1g+o=;
-  b=Lhbs97ijHiYYJZXdsp1lKAlVe5VZ6BFM4RUT0D7fhuXUsPOhgJPaf1sX
-   XvAR3nJY02uq+mhSLgZh2zULehXe5C3raRjyZsRm3s7hnttGcdEmo5+VV
-   IFZ9Jj9G6JSd4qbdtjLr0IoJxIIM4Rx8irHhcEfZFhQeLVy6kMMNd5Z6e
-   U=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Apr 2022 06:48:14 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2022 06:48:14 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 27 Apr 2022 06:48:13 -0700
-Received: from [10.216.55.16] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 27 Apr
- 2022 06:48:11 -0700
-Subject: Re: [PATCH V10 4/9] mfd: pm8008: Add reset-gpios
-To:     Stephen Boyd <swboyd@chromium.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1649939418-19861-1-git-send-email-quic_c_skakit@quicinc.com>
- <1649939418-19861-5-git-send-email-quic_c_skakit@quicinc.com>
- <CAE-0n50HR6w-v3ub8HR_K2PsqqTTrVAaQa0pZ7QjY39WmkDyQQ@mail.gmail.com>
- <010bd223-94a0-fe8c-d1ab-39153bb68a7d@quicinc.com>
- <a4cbdb4c-dbba-75ee-202a-6b429c0eb390@quicinc.com>
- <104b529b-946d-f171-5a82-6052aef2dbbb@quicinc.com>
- <CAE-0n532pgMKBFmK2etwCjMydKqD276X-veqqsne=WgE-sUegA@mail.gmail.com>
-From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Message-ID: <42655ad8-7eae-b629-69f8-e8e401bb7170@quicinc.com>
-Date:   Wed, 27 Apr 2022 19:18:07 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OT8jLHi5I0OiZTy0LV6eIgEYpe0uYFZJA9KqVmBMVzw=;
+        b=SrCfyOO36j1AT9uvoaS4hD0HxsHPiTi/Zy5MVVnulvhwb5YNHoxltXjGvslBhCNqbS
+         iTySn/IB5d+64LM1C9WgYvoHu1w1KB+pV5D212QvcON3HhOiSUTmBWNTl/Iz98Yt02t8
+         QpUsTbFJL0/uHrbDkPpawLRsJ5y7gKkxalTVnzG0seOeIIi662zyZNogfo2xOvcOEho8
+         mrLpq8HQ5j5V4lkt17/dOwTt21cI8UJCNI+xWHO6lb5mHlZmdG2WhxheejJxdhi9CX60
+         rOtpqy+b5DV79oHhBI11C0oj7NBXBVHtPD60/GoipuT6VI/3anhFYhCF4opst0xtVWlP
+         ex2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OT8jLHi5I0OiZTy0LV6eIgEYpe0uYFZJA9KqVmBMVzw=;
+        b=AdfyvQaOe6vUQnKtMzKUMky6Hm2iwUhx1FBAWUnzJULurnkRrG1IzNePQiue8To/Ti
+         wS/EFc8RmdaQEfNQSe9dlnrO6lq0EPzx871Hk0Fg0zD7Ll3WaXzEiPVbTMHRrXXnFl2u
+         fQ7m2kMUJzN4r9+F5GmGFJsYppAkAFLbgwBDBTWzZkZOyTTcigC8zbsyqBObcZTBqyzX
+         FhvFykAhpRvQ7gWomwDWf4c0tXQkeHIeq12/2wQWyWpjaWqrCYQkkOfQCc34JbqIGijs
+         iXZ8mtY98M0aNMN+nmfSf7g6Oqeb2fmFRu67d30jWeWjhp7XiAf4QBgT+coaMwLaXyqi
+         sMBw==
+X-Gm-Message-State: AOAM533Y0ppSvsVdvMBWA2ar/ALeeAIFlJwcjhEfiumeGfGDbFPpT2cK
+        +uNtOcn4VBEmARTBcL5/ERCDaQ==
+X-Google-Smtp-Source: ABdhPJyogLOjd4c37B198F/9gX6yPAM/D9FmoWqn+QNk98u1oleDEd359HLuknmbJwCvePhkv8ZUIA==
+X-Received: by 2002:a63:6e0b:0:b0:397:f965:64a7 with SMTP id j11-20020a636e0b000000b00397f96564a7mr23830267pgc.581.1651068358118;
+        Wed, 27 Apr 2022 07:05:58 -0700 (PDT)
+Received: from leoy-ThinkPad-X240s ([134.195.101.46])
+        by smtp.gmail.com with ESMTPSA id p64-20020a622943000000b004fdd5c07d0bsm18622190pfp.63.2022.04.27.07.05.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Apr 2022 07:05:57 -0700 (PDT)
+Date:   Wed, 27 Apr 2022 22:05:50 +0800
+From:   Leo Yan <leo.yan@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 1/5] dt-bindings: interconnect: Update property for
+ icc-rpm path tag
+Message-ID: <20220427140550.GA560849@leoy-ThinkPad-X240s>
+References: <20220416154013.1357444-1-leo.yan@linaro.org>
+ <20220416154013.1357444-2-leo.yan@linaro.org>
+ <YmhBE/JDV66qQIBv@robh.at.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n532pgMKBFmK2etwCjMydKqD276X-veqqsne=WgE-sUegA@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YmhBE/JDV66qQIBv@robh.at.kernel.org>
+X-Spam-Status: No, score=-0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_BL_SPAMCOP_NET,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Apr 26, 2022 at 01:59:31PM -0500, Rob Herring wrote:
+> On Sat, Apr 16, 2022 at 11:40:09PM +0800, Leo Yan wrote:
+> > To support path tag in icc-rpm driver, the "#interconnect-cells"
+> > property is updated as enumerate values: 1 or 2.  Setting to 1 means
+> > it is compatible with old DT binding that interconnect path doesn't
+> > contain tag, if set to 2 for "#interconnect-cells" property, then the
+> > second specifier in the interconnect path indicates the voting is for
+> > which buckets.
+> > 
+> > Signed-off-by: Leo Yan <leo.yan@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
+> > index 89853b482513..7464a50804db 100644
+> > --- a/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
+> > +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
+> > @@ -118,7 +118,7 @@ allOf:
+> >                    - qcom,msm8939-snoc-mm
+> >  
+> >                '#interconnect-cells':
+> > -                const: 1
+> > +                enum: [ 1, 2 ]
+> 
+> Describe what each cell value is here.
 
-On 4/27/2022 12:00 PM, Stephen Boyd wrote:
-> Quoting Satya Priya Kakitapalli (Temp) (2022-04-26 23:03:08)
->> On 4/27/2022 10:58 AM, Satya Priya Kakitapalli (Temp) wrote:
->>> On 4/18/2022 10:34 AM, Satya Priya Kakitapalli (Temp) wrote:
->>>> On 4/15/2022 5:40 AM, Stephen Boyd wrote:
->>>>> Quoting Satya Priya (2022-04-14 05:30:13)
->>>>>> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
->>>>>> index c472d7f..97a72da 100644
->>>>>> --- a/drivers/mfd/qcom-pm8008.c
->>>>>> +++ b/drivers/mfd/qcom-pm8008.c
->>>>>> +               return PTR_ERR(chip->reset_gpio);
->>>>>> +       }
->>>>>> +       gpiod_set_value(chip->reset_gpio, 1);
->>>>> Does this do anything? Does this work just as well?
->>>>>
->>>>>      reset_gpio = devm_gpiod_get(chip->dev, "reset", GPIOD_OUT_LOW);
->>>>>      if (IS_ERR(reset_gpio))
->>>>>          return PTR_ERR(reset_gpio);
->>>>>
->>> This is not working as expected. We need to add
->>> "gpiod_set_value(chip->reset_gpio, 1);"  to actually toggle the line.
->>>
->> I checked again and it is working after using GPIOD_OUT_HIGH instead of LOW.
->>
->> reset_gpio = devm_gpiod_get(chip->dev, "reset", GPIOD_OUT_HIGH);
->>       if (IS_ERR(reset_gpio))
->>           return PTR_ERR(reset_gpio);
->>
-> What do you have in DT for the 'reset-gpios' property? GPIOD_OUT_HIGH
-> means the reset line is asserted, which presumably you don't want to be
-> the case because you typically deassert a reset to "take it out of
-> reset". Using GPIOD_OUT_HIGH probably works because DT has the wrong
-> GPIO flag, i.e.  GPIO_ACTIVE_HIGH, for an active low reset, or vice
-> versa.
+Will do.
 
-
-Yeah, I had GPIOD_OUT_HIGH in DT, now I changed and it is working fine 
-with GPIOD_OUT_LOW.
-
+Thanks,
+Leo
