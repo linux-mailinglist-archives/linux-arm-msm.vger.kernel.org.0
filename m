@@ -2,59 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFE91511918
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:55:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71E0F5119B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:55:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236208AbiD0Noz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 09:44:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55758 "EHLO
+        id S236425AbiD0Nv0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 09:51:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236197AbiD0Noy (ORCPT
+        with ESMTP id S236383AbiD0NvZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 09:44:54 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78C0118A623;
-        Wed, 27 Apr 2022 06:41:42 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 332A9B82753;
-        Wed, 27 Apr 2022 13:41:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B36C385A7;
-        Wed, 27 Apr 2022 13:41:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651066899;
-        bh=JvnuE53/WDyOKYiC36PoY+sIAe3A9YYBJuCSYXsQ12U=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DNC48r6Cs5njO786Vb4JFy1oedi9Zbawu+/HJOwWE1H4AIYR/gA62sDwBTlkVYUlg
-         MiJadURXFWRoVycgCVjBcBstSepTsV7EW4qWNAktWwFRQPTj728Rx2LdrkTLq3FDPb
-         2ux2qnvW7Kq/YjxzG5OqcXb9QeFwqAF/C4c+JsOn+U/L+RmNRwqipvS3N07ZwEjq7c
-         7jpyu3UDabC5tQ5s29EvBhOQ3p7aD5jiuwHugj52SGrMvGFkiA2D9Yb0SpNm0kgobR
-         59VYGhZ1kG3lONEVOW7eowBCIxcLJkKvBUF9XYJXY4QuA9Bvh62nwtGQDGZPeax6/4
-         R112T5iTRTuSQ==
-Date:   Wed, 27 Apr 2022 14:41:34 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v3 1/3] regulator: dt-bindings: qcom,rpmh: update
- maintainers
-Message-ID: <YmlIDn1aHSrcoeoJ@sirena.org.uk>
-References: <20220426105501.73200-1-krzysztof.kozlowski@linaro.org>
- <20220426105501.73200-2-krzysztof.kozlowski@linaro.org>
+        Wed, 27 Apr 2022 09:51:25 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 627C652B1A;
+        Wed, 27 Apr 2022 06:48:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651067294; x=1682603294;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=3VKraWGq9JKDghUpz/S876MR6EjNBCyS7OXTjzs1g+o=;
+  b=Lhbs97ijHiYYJZXdsp1lKAlVe5VZ6BFM4RUT0D7fhuXUsPOhgJPaf1sX
+   XvAR3nJY02uq+mhSLgZh2zULehXe5C3raRjyZsRm3s7hnttGcdEmo5+VV
+   IFZ9Jj9G6JSd4qbdtjLr0IoJxIIM4Rx8irHhcEfZFhQeLVy6kMMNd5Z6e
+   U=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Apr 2022 06:48:14 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2022 06:48:14 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 27 Apr 2022 06:48:13 -0700
+Received: from [10.216.55.16] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 27 Apr
+ 2022 06:48:11 -0700
+Subject: Re: [PATCH V10 4/9] mfd: pm8008: Add reset-gpios
+To:     Stephen Boyd <swboyd@chromium.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1649939418-19861-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1649939418-19861-5-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n50HR6w-v3ub8HR_K2PsqqTTrVAaQa0pZ7QjY39WmkDyQQ@mail.gmail.com>
+ <010bd223-94a0-fe8c-d1ab-39153bb68a7d@quicinc.com>
+ <a4cbdb4c-dbba-75ee-202a-6b429c0eb390@quicinc.com>
+ <104b529b-946d-f171-5a82-6052aef2dbbb@quicinc.com>
+ <CAE-0n532pgMKBFmK2etwCjMydKqD276X-veqqsne=WgE-sUegA@mail.gmail.com>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+Message-ID: <42655ad8-7eae-b629-69f8-e8e401bb7170@quicinc.com>
+Date:   Wed, 27 Apr 2022 19:18:07 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="SmmnhEWlYdM7amTZ"
-Content-Disposition: inline
-In-Reply-To: <20220426105501.73200-2-krzysztof.kozlowski@linaro.org>
-X-Cookie: Buckle up!
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <CAE-0n532pgMKBFmK2etwCjMydKqD276X-veqqsne=WgE-sUegA@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,32 +72,42 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---SmmnhEWlYdM7amTZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 4/27/2022 12:00 PM, Stephen Boyd wrote:
+> Quoting Satya Priya Kakitapalli (Temp) (2022-04-26 23:03:08)
+>> On 4/27/2022 10:58 AM, Satya Priya Kakitapalli (Temp) wrote:
+>>> On 4/18/2022 10:34 AM, Satya Priya Kakitapalli (Temp) wrote:
+>>>> On 4/15/2022 5:40 AM, Stephen Boyd wrote:
+>>>>> Quoting Satya Priya (2022-04-14 05:30:13)
+>>>>>> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+>>>>>> index c472d7f..97a72da 100644
+>>>>>> --- a/drivers/mfd/qcom-pm8008.c
+>>>>>> +++ b/drivers/mfd/qcom-pm8008.c
+>>>>>> +               return PTR_ERR(chip->reset_gpio);
+>>>>>> +       }
+>>>>>> +       gpiod_set_value(chip->reset_gpio, 1);
+>>>>> Does this do anything? Does this work just as well?
+>>>>>
+>>>>>      reset_gpio = devm_gpiod_get(chip->dev, "reset", GPIOD_OUT_LOW);
+>>>>>      if (IS_ERR(reset_gpio))
+>>>>>          return PTR_ERR(reset_gpio);
+>>>>>
+>>> This is not working as expected. We need to add
+>>> "gpiod_set_value(chip->reset_gpio, 1);"  to actually toggle the line.
+>>>
+>> I checked again and it is working after using GPIOD_OUT_HIGH instead of LOW.
+>>
+>> reset_gpio = devm_gpiod_get(chip->dev, "reset", GPIOD_OUT_HIGH);
+>>       if (IS_ERR(reset_gpio))
+>>           return PTR_ERR(reset_gpio);
+>>
+> What do you have in DT for the 'reset-gpios' property? GPIOD_OUT_HIGH
+> means the reset line is asserted, which presumably you don't want to be
+> the case because you typically deassert a reset to "take it out of
+> reset". Using GPIOD_OUT_HIGH probably works because DT has the wrong
+> GPIO flag, i.e.  GPIO_ACTIVE_HIGH, for an active low reset, or vice
+> versa.
 
-On Tue, Apr 26, 2022 at 12:54:59PM +0200, Krzysztof Kozlowski wrote:
 
->  maintainers:
-> -  - David Collins <collinsd@codeaurora.org>
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Yeah, I had GPIOD_OUT_HIGH in DT, now I changed and it is working fine 
+with GPIOD_OUT_LOW.
 
-Bjorn, are you OK with this?
-
---SmmnhEWlYdM7amTZ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmJpSA0ACgkQJNaLcl1U
-h9DwqQf/QWvVpu1E4Y2lmTqpoWMjhHl74TYz1z9mqhTZzyBQnq38ic0K7K6RcbpA
-KU2o+cwOoShzLOQlBtADE0Jl/+ua5TeepGWi7yFAjHn1hkJEhMP0zgV0ozWiRlo4
-8l7/HbMXuOBQWEFTe5mBBfEC2XbjTLJpVcqJc324vnXVMTSbaI2CLqbp0AKk4LIW
-gAHphDaqjm9syRrunsZIIzfhLtHoSJR2CQMOlUWyEnfZJadDEmWtIUpPXz17QxJ1
-uK0ZR7trr6uh9DO6CKbvIV1+e5Y9RHGdBPVxRWoQZSP91Rgc2DNVbPrMb3diRaLJ
-ApBhfQnyWdO/lWAXspDKhQ9gwE9FUA==
-=cdZn
------END PGP SIGNATURE-----
-
---SmmnhEWlYdM7amTZ--
