@@ -2,357 +2,330 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A073510E82
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 04:07:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7A83510E77
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 04:07:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357062AbiD0CHF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 22:07:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60896 "EHLO
+        id S1356253AbiD0CJZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 22:09:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349121AbiD0CHE (ORCPT
+        with ESMTP id S1355825AbiD0CJY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 22:07:04 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFC2D4D24A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 19:03:46 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id a15so359671pfv.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 19:03:46 -0700 (PDT)
+        Tue, 26 Apr 2022 22:09:24 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CB64140E7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 19:06:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=D4jnht1c5Kgw5e3GXlYF8fsD8xe9LBqpiwIiKCgR7SQ=;
-        b=IUgrYQrhOP0dako0NPfxiJu5zzUHUwRrwNfWXw5uqrRgi71KlHL981Ak+LSyfpwjc8
-         Ta/4SSH/QEHSlur9Z8VxrSVXWPE78Ik84bvNX4616IU1q+BiFCJTCS3lykbYA+MqRUw2
-         IZVm8kQwyj6bztTqCpI2JEMl/c97yj0mJl0Ig=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=D4jnht1c5Kgw5e3GXlYF8fsD8xe9LBqpiwIiKCgR7SQ=;
-        b=LEiQB/J/c+ecj1Oq29jEeqsiAwNSFGQiGkAaJVPfAr9WLcWbk0+HOuHrtXNPJCoBTt
-         Eiei6IUuZwIwJiSlf8S6tF8qTSkWdQ/lVKLYgDo8HwUFq6045sqONoPl4yGJ+hkTWkiu
-         bnZ8MKDnU8hRdQ6kz5l65lLjN/dVJMpP/7lS01iONGIITOCB1EEszQnA3qeU2KUxPjNg
-         4f53aIaVkAXu+mk9DNXRylxZSnZa0fLGVWh+stIPH6mdPn62g3d7uQfvd5msd2U52+6L
-         pnf4WvRseqdPInVkG6Kyfnx2M1e/vRk5TfnpHrGkRIjHdxk89BdAozlUYI6zdbkJlQlN
-         Jf/w==
-X-Gm-Message-State: AOAM5337pqhx45gNOHwFD5EJrE6KD1gDbQh4a4qqmU5u54EiJr6mukWR
-        i7Xv0a/txQzbDrt3dd8vm5wnyw==
-X-Google-Smtp-Source: ABdhPJytHxFAohQo92hRvg2LG2Wl7JyrqpSqlwvhAu43tYRp6CaqKZl0+iJhldAycfZ4JjEu7yGhVg==
-X-Received: by 2002:a05:6a00:1494:b0:50d:4b12:8dfa with SMTP id v20-20020a056a00149400b0050d4b128dfamr9953075pfu.43.1651025026172;
-        Tue, 26 Apr 2022 19:03:46 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:482e:60bc:84d1:bf5c])
-        by smtp.gmail.com with ESMTPSA id g15-20020a056a0023cf00b004e17e11cb17sm18324197pfc.111.2022.04.26.19.03.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 19:03:45 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org,
-        "Joseph S. Barrera III" <joebar@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH v2 3/3] arm64: dts: qcom: Only include sc7180.dtsi in sc7180-trogdor.dtsi
-Date:   Tue, 26 Apr 2022 19:03:39 -0700
-Message-Id: <20220427020339.360855-4-swboyd@chromium.org>
-X-Mailer: git-send-email 2.36.0.rc2.479.g8af0fa9b8e-goog
-In-Reply-To: <20220427020339.360855-1-swboyd@chromium.org>
-References: <20220427020339.360855-1-swboyd@chromium.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651025175; x=1682561175;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=0m+dY10uYolN81K4/2jJLNtkRZYeucyRLbTsObn7+EE=;
+  b=mrfrRZf5rU0DS7xF9WtiY/ggE05aozdXJPTag/h3Mzj9+50yKwbMA88z
+   o+Ss0724vsTb8gZpyaaxlnwE5KfUbsAvIn0Mih/NGLpyTe4o7+89iHToQ
+   YANFPDWSzo6Is3mybxwmn8ulDWVOXE91BoVA19khXyQVWtH6H80r43kpX
+   w=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 26 Apr 2022 19:06:15 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 19:06:14 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 26 Apr 2022 19:06:13 -0700
+Received: from [10.111.160.161] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 26 Apr
+ 2022 19:06:11 -0700
+Message-ID: <0b3245d7-1d1e-4e34-004e-821be59451f1@quicinc.com>
+Date:   Tue, 26 Apr 2022 19:06:09 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 03/25] drm/msm/dpu: add support for SSPP allocation to RM
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
+ <20220209172520.3719906-4-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220209172520.3719906-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SoC is always present on sc7180-trogdor.dtsi and thus we should
-include it in the "generic" dtsi file for trogdor. Previously we had
-removed it from there because we had to do the spi6/spi0 swizzle, so
-each trogdor variant board had to include sc7180.dtsi and then
-sc7180-trogdor.dtsi so that the latter dtsi file could modify the right
-spi bus for EC and H1 properties that are common to all trogdor boards.
 
-Now that we're done with that we can replace sc7180.dtsi includes with
-sc7180-trogdor.dtsi and include sc7180.dtsi in sc7180-trogdor.dtsi as
-was originally intended. We still need to include sc7180-trogdor.dtsi
-before the bridge dtsi files though because those rely on the panel
-label.
 
-Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-Cc: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi            | 1 -
- arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dts        | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dts        | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r4.dts        | 2 +-
- .../boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts    | 2 +-
- .../boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts    | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts  | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts  | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts           | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts           | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts        | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts       | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts           | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts        | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts       | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts           | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi            | 1 -
- arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts                 | 1 -
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi                   | 3 ++-
- 19 files changed, 17 insertions(+), 19 deletions(-)
+On 2/9/2022 9:24 AM, Dmitry Baryshkov wrote:
+> Add support for handling and allocting SSPP blocks through the resource
+> manager. Handling code is not converted to use it though.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h | 10 +++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  1 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 18 ++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 81 +++++++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  6 ++
+>   5 files changed, 104 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> index 1b18de957500..f805c30643b1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> @@ -388,6 +388,16 @@ struct dpu_hw_pipe {
+>   };
+>   
+>   struct dpu_kms;
+> +/**
+> + * to_dpu_hw_pipe - convert base object dpu_hw_base to container
+> + * @hw: Pointer to base hardware block
+> + * return: Pointer to hardware block container
+> + */
+> +static inline struct dpu_hw_pipe *to_dpu_hw_pipe(struct dpu_hw_blk *hw)
+> +{
+> +	return container_of(hw, struct dpu_hw_pipe, base);
+> +}
+> +
+>   /**
+>    * dpu_hw_sspp_init - initializes the sspp hw driver object.
+>    * Should be called once before accessing every pipe.
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> index 2d385b4b7f5e..824495ad2392 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> @@ -146,6 +146,7 @@ struct dpu_global_state {
+>   	uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
+>   	uint32_t intf_to_enc_id[INTF_MAX - INTF_0];
+>   	uint32_t dspp_to_enc_id[DSPP_MAX - DSPP_0];
+> +	uint32_t pipe_to_plane_id[SSPP_MAX - SSPP_NONE];
+>   };
+>   
+>   struct dpu_global_state
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index c04c3be16d85..146dbccd79cd 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -1235,8 +1235,6 @@ static void dpu_plane_destroy(struct drm_plane *plane)
+>   		/* this will destroy the states as well */
+>   		drm_plane_cleanup(plane);
+>   
+> -		dpu_hw_sspp_destroy(pdpu->pipe_hw);
+> -
+>   		kfree(pdpu);
+>   	}
+>   }
+> @@ -1445,14 +1443,13 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>   	pdpu->pipe = pipe;
+>   
+>   	/* initialize underlying h/w driver */
+> -	pdpu->pipe_hw = dpu_hw_sspp_init(pipe, kms->mmio, kms->catalog);
+> -	if (IS_ERR(pdpu->pipe_hw)) {
+> -		DPU_ERROR("[%u]SSPP init failed\n", pipe);
+> -		ret = PTR_ERR(pdpu->pipe_hw);
+> +	if (!kms->rm.sspp_blks[pipe - SSPP_NONE])
+>   		goto clean_plane;
+> -	} else if (!pdpu->pipe_hw->cap || !pdpu->pipe_hw->cap->sblk) {
+> +	pdpu->pipe_hw = to_dpu_hw_pipe(kms->rm.sspp_blks[pipe - SSPP_NONE]);
+> +
+> +	if (!pdpu->pipe_hw->cap || !pdpu->pipe_hw->cap->sblk) {
+>   		DPU_ERROR("[%u]SSPP init returned invalid cfg\n", pipe);
+> -		goto clean_sspp;
+> +		goto clean_plane;
+>   	}
+>   
+>   	format_list = pdpu->pipe_hw->cap->sblk->format_list;
+> @@ -1462,7 +1459,7 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>   				format_list, num_formats,
+>   				supported_format_modifiers, type, NULL);
+>   	if (ret)
+> -		goto clean_sspp;
+> +		goto clean_plane;
+>   
+>   	pdpu->catalog = kms->catalog;
+>   
+> @@ -1494,9 +1491,6 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>   					pipe, plane->base.id);
+>   	return plane;
+>   
+> -clean_sspp:
+> -	if (pdpu && pdpu->pipe_hw)
+> -		dpu_hw_sspp_destroy(pdpu->pipe_hw);
+>   clean_plane:
+>   	kfree(pdpu);
+>   	return ERR_PTR(ret);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> index f9c83d6e427a..21c9e513f1f6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> @@ -8,6 +8,7 @@
+>   #include "dpu_hw_lm.h"
+>   #include "dpu_hw_ctl.h"
+>   #include "dpu_hw_pingpong.h"
+> +#include "dpu_hw_sspp.h"
+>   #include "dpu_hw_intf.h"
+>   #include "dpu_hw_dspp.h"
+>   #include "dpu_hw_merge3d.h"
+> @@ -35,6 +36,14 @@ int dpu_rm_destroy(struct dpu_rm *rm)
+>   {
+>   	int i;
+>   
+> +	for (i = 0; i < ARRAY_SIZE(rm->sspp_blks); i++) {
+> +		struct dpu_hw_pipe *hw;
+> +
+> +		if (rm->sspp_blks[i]) {
+> +			hw = to_dpu_hw_pipe(rm->sspp_blks[i]);
+> +			dpu_hw_sspp_destroy(hw);
+> +		}
+> +	}
+>   	for (i = 0; i < ARRAY_SIZE(rm->pingpong_blks); i++) {
+>   		struct dpu_hw_pingpong *hw;
+>   
+> @@ -166,6 +175,24 @@ int dpu_rm_init(struct dpu_rm *rm,
+>   		rm->pingpong_blks[pp->id - PINGPONG_0] = &hw->base;
+>   	}
+>   
+> +	for (i = 0; i < cat->sspp_count; i++) {
+> +		struct dpu_hw_pipe *hw;
+> +		const struct dpu_sspp_cfg *sspp = &cat->sspp[i];
+> +
+> +		if (sspp->id <= SSPP_NONE || sspp->id >= SSPP_MAX) {
+> +			DPU_ERROR("skip sspp %d with invalid id\n", sspp->id);
+> +			continue;
+> +		}
+> +		hw = dpu_hw_sspp_init(sspp->id, mmio, cat);
+> +		if (IS_ERR_OR_NULL(hw)) {
+> +			rc = PTR_ERR(hw);
+> +			DPU_ERROR("failed sspp object creation: err %d\n",
+> +				rc);
+> +			goto fail;
+> +		}
+> +		rm->sspp_blks[sspp->id - SSPP_NONE] = &hw->base;
+> +	}
+> +
+>   	for (i = 0; i < cat->intf_count; i++) {
+>   		struct dpu_hw_intf *hw;
+>   		const struct dpu_intf_cfg *intf = &cat->intf[i];
+> @@ -660,3 +687,57 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+>   
+>   	return num_blks;
+>   }
+> +
+> +enum dpu_sspp dpu_rm_get_sspp(struct dpu_rm *rm, struct dpu_global_state *global_state, uint32_t plane_id, bool yuv, bool scale)
+> +{
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index ac2279142a95..8ac1f1e61006 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -5,7 +5,6 @@
-  * Copyright 2020 Google LLC.
-  */
- 
--#include "sc7180.dtsi"
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dts
-index 70032983fb65..d9e905ed4e62 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-homestar.dtsi"
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dts
-index e92e2e9e48ed..242c178fdc52 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-homestar.dtsi"
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r4.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r4.dts
-index 0de0c97f5728..66dd87016201 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r4.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r4.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-homestar.dtsi"
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts
-index f360ff27226e..235cda2bba5e 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
-index c44ed54af690..913b5fc3ba76 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts
-index 42b4bbcc76f4..d42dcd421146 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts
-index dc47842bc662..15d77dc5f956 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-index b142006478ea..bfbf26fd2cd4 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-index 59740799fa3a..d45a59afd7fc 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
-index 18ef9da71998..6ff81c1f7c44 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-lite.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
-index 8913592b2d82..e58e36e35950 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
-index 7adcedbf080d..76c83f88cb41 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-lite.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
-index 7f5c015e1ecb..960f7b7ce094 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-lite.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
-index 8107f3d932eb..38027f13b9d0 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts
-index 83f6a4eb5ae5..56dd222650d3 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts
-@@ -7,7 +7,7 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
-+#include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-parade-ps8640.dtsi"
- #include "sc7180-trogdor-lazor.dtsi"
- #include "sc7180-lite.dtsi"
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-index 3bca7545ffe5..4841d42c8c62 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-@@ -5,7 +5,6 @@
-  * Copyright 2020 Google LLC.
-  */
- 
--#include "sc7180.dtsi"
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index 6c822c84112a..352827e5740a 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -7,7 +7,6 @@
- 
- /dts-v1/;
- 
--#include "sc7180.dtsi"
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index ea5bedc3d1cb..e55dbaa6dc12 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -11,7 +11,8 @@
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include <dt-bindings/sound/sc7180-lpass.h>
- 
--/* PMICs depend on spmi_bus label and so must come after SoC */
-+#include "sc7180.dtsi"
-+/* PMICs depend on spmi_bus label and so must come after sc7180.dtsi */
- #include "pm6150.dtsi"
- #include "pm6150l.dtsi"
- 
--- 
-https://chromeos.dev
+Right now we have only yuv and scale as requirements for the incoming 
+plane. But these requirements can expand.
 
+Do you think a enum req_mask will be a good addition here?
+You can start with having 2 masks for YUV and Scale but atleast that way 
+its expandable cleanly rather than just increasing function parameters here.
+
+
+> +	int i;
+> +	enum dpu_sspp pipe = SSPP_NONE;
+> +	struct dpu_hw_pipe *pipe_hw;
+> +	bool retry = false;
+> +
+> +retry_loop:
+> +	for (i = 0; i < ARRAY_SIZE(rm->sspp_blks) && pipe == SSPP_NONE; i++) {
+> +		if (!rm->sspp_blks[i])
+> +			continue;
+> +		if (reserved_by_other(global_state->pipe_to_plane_id, i, plane_id))
+> +			continue;
+> +
+> +		pipe_hw = to_dpu_hw_pipe(rm->sspp_blks[i]);
+> +
+> +		/* skip incompatible planes */
+> +		if (scale && !(pipe_hw->cap->features & DPU_SSPP_SCALER))
+> +			continue;
+> +
+> +		if (yuv && (!(pipe_hw->cap->features & DPU_SSPP_SCALER) ||
+> +			    !(pipe_hw->cap->features & DPU_SSPP_CSC_ANY)))
+> +			continue;
+> +
+> +		/* For non-yuv, non-scaled planes try to find simple (DMA)
+> +		 * plane, fallback to VIG on a second try.
+> +		 *
+> +		 * This way we'd leave VIG pipes to be later used for YUV formats.
+> +		 */
+> +
+
+this strategy should work. I just think we need to validate this quite a 
+bit with some real world cases such as video playback with UI layers, 
+opening and closing video players, browsers etc.
+
+I am yet to review the usage of this in the next patches, but yes if 
+even this wont kick in for small layers, we are protected.
+
+
+> +		if (!scale && !yuv && !retry &&
+> +		    (pipe_hw->cap->features & (DPU_SSPP_SCALER | DPU_SSPP_CSC_ANY)))
+> +			continue;
+> +
+> +		pipe = i + SSPP_NONE;
+> +	};
+> +
+> +	if (!scale && !yuv && !retry && pipe == SSPP_NONE) {
+> +		retry = true;
+> +		goto retry_loop;
+> +	}
+> +
+> +	if (pipe != SSPP_NONE)
+> +		global_state->pipe_to_plane_id[pipe - SSPP_NONE] = plane_id;
+> +
+> +	return pipe;
+> +}
+> +
+> +void dpu_rm_release_sspp(struct dpu_rm *rm, struct dpu_global_state *global_state, uint32_t plane_id)
+> +{
+> +	_dpu_rm_clear_mapping(global_state->pipe_to_plane_id,
+> +			ARRAY_SIZE(global_state->pipe_to_plane_id), plane_id);
+> +}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> index 1f12c8d5b8aa..b759fe39f6d6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> @@ -16,6 +16,7 @@ struct dpu_global_state;
+>   /**
+>    * struct dpu_rm - DPU dynamic hardware resource manager
+>    * @pingpong_blks: array of pingpong hardware resources
+> + * @sspp_blks: array of sspp hardware resources
+>    * @mixer_blks: array of layer mixer hardware resources
+>    * @ctl_blks: array of ctl hardware resources
+>    * @intf_blks: array of intf hardware resources
+> @@ -25,6 +26,7 @@ struct dpu_global_state;
+>    */
+>   struct dpu_rm {
+>   	struct dpu_hw_blk *pingpong_blks[PINGPONG_MAX - PINGPONG_0];
+> +	struct dpu_hw_blk *sspp_blks[SSPP_MAX - SSPP_NONE];
+>   	struct dpu_hw_blk *mixer_blks[LM_MAX - LM_0];
+>   	struct dpu_hw_blk *ctl_blks[CTL_MAX - CTL_0];
+>   	struct dpu_hw_blk *intf_blks[INTF_MAX - INTF_0];
+> @@ -88,5 +90,9 @@ void dpu_rm_release(struct dpu_global_state *global_state,
+>   int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+>   	struct dpu_global_state *global_state, uint32_t enc_id,
+>   	enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size);
+> +
+> +enum dpu_sspp dpu_rm_get_sspp(struct dpu_rm *rm, struct dpu_global_state *global_state, uint32_t plane_id, bool yuv, bool scale);
+> +void dpu_rm_release_sspp(struct dpu_rm *rm, struct dpu_global_state *global_state, uint32_t plane_id);
+> +
+>   #endif /* __DPU_RM_H__ */
+>   
