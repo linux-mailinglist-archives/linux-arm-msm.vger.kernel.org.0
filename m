@@ -2,162 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB460511F7B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 20:38:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EE34511ECF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 20:37:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241680AbiD0QMA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 12:12:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49114 "EHLO
+        id S230162AbiD0RWd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 13:22:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242154AbiD0QLv (ORCPT
+        with ESMTP id S234530AbiD0RWc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 12:11:51 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 543493656E4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 09:07:46 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id p12so2011160pfn.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 09:07:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=thh3b7rvFYMcWHBGJTfcjm7L4QV8/jt2EZrs9nTl3/s=;
-        b=nHvJcRQDvgnFH2mocyoYQgZtIrbsIsmTsZ74EguoCNewAbSODSdrwqhoxexS8tR/yh
-         hBYBW29wCw14+O+78B8pYxO/PeMyALOI0bQ46Nl3BgK4n56x6OF7xgpz0MHDdtlXed8M
-         DM9tNwEwzP500NWVah6UGtMlwOluQHybWUawI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=thh3b7rvFYMcWHBGJTfcjm7L4QV8/jt2EZrs9nTl3/s=;
-        b=AGbH+WBqevnKOy/UHwbw/vDbOr31lEFslfJaVkhNT1gpY8i9PjQvsbZagyN+n4P7ID
-         LlcyzL0N4MakeoJnIkGAhl6rFQlAU9LggHEB6KCuJA5LfLhax/avHIQnh6Uy848w5/eK
-         q8m15FnS+9RKkGKCRMXQuZXIMrf8PZHGcLnmY/8DCmPSBrRIhXJdWub5eQDUDbuBMcfP
-         yBv19kQUsT2ovi1N9MCkvkvo/R92+iy2CU3lDWe/FyIdqsPSD5I8Iid5DqW/wYIQn8v1
-         P0FyWFEgSMu3P4h/2dGjctwh5dtb1efldIdEcEB3zZUKxLNsUom1pQc6+C1TY5pwtbMG
-         2KaQ==
-X-Gm-Message-State: AOAM531nrV4wfBM07e79OD03S9JKyYwBHrtDbMIQLlUtXF9IiWxI6qoC
-        txeWb2RBDVxC74vW7klGlf+L9meFI01qmA/VpIdIwQ==
-X-Google-Smtp-Source: ABdhPJx8fm8/yx+ZjmZhEV0V49ps4Zr4PYjpyXxyQlzPoHV3JUBxQd/ptdVWyyMngsed5HIFfmLvF6S+wXinkOQR8f4=
-X-Received: by 2002:a05:6a00:14c5:b0:50d:4871:3619 with SMTP id
- w5-20020a056a0014c500b0050d48713619mr13516854pfu.12.1651075637181; Wed, 27
- Apr 2022 09:07:17 -0700 (PDT)
+        Wed, 27 Apr 2022 13:22:32 -0400
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0726B43EEE;
+        Wed, 27 Apr 2022 10:19:19 -0700 (PDT)
+Received: from mail-yb1-f177.google.com ([209.85.219.177]) by
+ mrelayeu.kundenserver.de (mreue107 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1M3lHZ-1nk2AY3Yhf-000pwR; Wed, 27 Apr 2022 19:19:18 +0200
+Received: by mail-yb1-f177.google.com with SMTP id y76so4637875ybe.1;
+        Wed, 27 Apr 2022 10:19:17 -0700 (PDT)
+X-Gm-Message-State: AOAM531+el4QSdxw258V6dhpmKYBsthoDpzNMuJRfg2G2rqhJY7U0zPF
+        tOAY0RJXUQchtqJqCDXOk4ygqMzOqVYwCMBmjFA=
+X-Google-Smtp-Source: ABdhPJxykFm2YFdeTD9c0X4acekrQD5pMu7gY+0N7BMUQZQ8AeFGwdPZwBJhORkCJQqjgz7RTTvsKHR+rJyDsdyNlv0=
+X-Received: by 2002:a25:75c5:0:b0:648:dccd:e1c with SMTP id
+ q188-20020a2575c5000000b00648dccd0e1cmr2536236ybc.452.1651076102000; Wed, 27
+ Apr 2022 09:15:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220412212558.827289-1-olvaffe@gmail.com> <CAPaKu7Tv1Mxt7Ao8kH2-MZDBK7EB0D41COJD8Sjze76t_o-qmw@mail.gmail.com>
- <ffe7dbc1-8a19-1e19-402d-27efc8e55b39@amd.com> <CAJs_Fx7OQ2OJo3pQ-ETT1827PtfuFsvn984gg8GeDVrqy0Ucug@mail.gmail.com>
- <215f55f6-97b8-5dd3-a2cc-fe42e19a2769@amd.com> <CAJs_Fx69yhVQ6t1xdTqEs3kxiz1gZSZ2-qNA=Cq21j_BSaymrQ@mail.gmail.com>
- <17fc1a68-747a-f707-364d-76f12a2b535a@amd.com> <CAPaKu7Rny7pxsPA+cnow0d6PAD2YCb+b+j1_Di5gziyOVNLaYQ@mail.gmail.com>
- <c32bf2de-0e48-e3b7-98ae-0bcd46933465@amd.com> <CAPaKu7T2hTFnsSSdFvQRuGefhZHVmGO9KXKpO8Y_ZcLbe75rpA@mail.gmail.com>
- <b587ca5f-eb8a-cf0c-5c07-9844c8794463@amd.com>
-In-Reply-To: <b587ca5f-eb8a-cf0c-5c07-9844c8794463@amd.com>
-From:   Rob Clark <robdclark@chromium.org>
-Date:   Wed, 27 Apr 2022 09:07:06 -0700
-Message-ID: <CAJs_Fx7Jq9VWy_Eux+hGoQTCTeKkFMQCdibY9gFQTqrvVob5fA@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm: add trace_dma_fence_emit to msm_gpu_submit
-To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc:     Chia-I Wu <olvaffe@gmail.com>, freedreno@lists.freedesktop.org,
-        ML dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <cover.1644824638.git.quic_saipraka@quicinc.com> <8cf9304d9941c25d920c4835cbc624ff5c2ac2cb.1644824638.git.quic_saipraka@quicinc.com>
+In-Reply-To: <8cf9304d9941c25d920c4835cbc624ff5c2ac2cb.1644824638.git.quic_saipraka@quicinc.com>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Wed, 27 Apr 2022 18:14:46 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a1WwghVToFBNZMpG7Wcji_k3CebK3--LL8YNJs_Wu3rBQ@mail.gmail.com>
+Message-ID: <CAK8P3a1WwghVToFBNZMpG7Wcji_k3CebK3--LL8YNJs_Wu3rBQ@mail.gmail.com>
+Subject: Re: [PATCHv10 5/6] lib: Add register read/write tracing support
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        quic_psodagud@quicinc.com, gregkh <gregkh@linuxfoundation.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Provags-ID: V03:K1:fNiZgmJlIJjWIct59kSQx8ulkmtN7VhuK0xD8FBYWGJHejqOqrI
+ WFoOWk0Jgc7ITQkzCBP5gToDgyKqCqne6ABQKANTZkYzI1M5xyZ9RUDFVXiffCSp9+h9Zj1
+ UOaUe5K+szrhJSycphxyeSlW48qZTsHNffCN4KgdaxAMECjwlxLO5GZc/ro/Q3GDdbaDM5o
+ q37ylgOliMyNA6s2ZlGGg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mOXcYFdOMKM=:QmOMmZLYg82fxODCPrNcJ0
+ JSFAZq7c4sP4ApFc32S0zxRzq9pXxIuf1/FtJ/ltcbaIBDMqW2sWzroaY/plVcskhNUEixEsK
+ 9qB5s94QXjaTur14KQdE1bO3mD2qeDKo6jClJxyGYNxGTGgZRMdgsBFiBI+zwdT5457qvykQG
+ KtzY7BDW6aAKlLyZhTxHbrheYXdBUGfYjydv21D5O96VD3bqLz4g/sASmb+CqjS8QP7f24NbE
+ Hv1yFrTMcgw1ecRKj15UGFZOHZQxypiY+JTz0eTjmJ5F2LVEprNAGpI0j6f7XbTZzs/0rDIZc
+ JtaBpJKwXbjoxUPynlZdO1D8HdLGhlzFpXKg/Ai6goHh63fs75tSHhkx00iO6QLHsV8FyWIJj
+ Y/CHAYNo8Lz83S2XZzf7YM2rxW+8ZegpOJDjzcFSH10BoZ46528Ga/+nJtTqfQLo7ldcGckNX
+ EkiAXt8HLH3DvuQjpxf6W57oV1SiRQr5q+whbtup0clInB2B0Lb0W/X3soL/JQ3kX96XLWFDC
+ yioUU8XbUrRZPYGqyx26m5PCmPSD4YwpvAJekKKBiPYSSE0T7SlWRPSzfI0xXLbEPzOEFyCnb
+ 4LCFFDtw+SahIIwrOyxL4W0VBW4ua78M/c4791VuqB9RInnZiCuEwK3U5zteFDRt7beC+u52v
+ V9OKFr67tL8nOBBR3QtLtojhYG3BiEMV1frW64JklzhkcMTT8a+t7LLIjgW4yJtAERwdrV1Q3
+ +6oKpKHEDbtMFdhfOz2ZCQrnzUSGis9snuu0tCA5hN77ikYFKyyMW0I173A0FigpnGDX/DR7J
+ N4PKUBbPALox6FEjjz/W5hNkL2cYboQ2JFlwxUQlN8IZfcOt0Y=
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 26, 2022 at 11:20 PM Christian K=C3=B6nig
-<christian.koenig@amd.com> wrote:
+On Thu, Feb 24, 2022 at 7:07 AM Sai Prakash Ranjan
+<quic_saipraka@quicinc.com> wrote:
 >
-> Am 26.04.22 um 20:50 schrieb Chia-I Wu:
-> > On Tue, Apr 26, 2022 at 11:02 AM Christian K=C3=B6nig
-> > <christian.koenig@amd.com> wrote:
-> >> Am 26.04.22 um 19:40 schrieb Chia-I Wu:
-> >>> [SNIP]
-> >>>>>> Well I just send a patch to completely remove the trace point.
-> >>>>>>
-> >>>>>> As I said it absolutely doesn't make sense to use this for
-> >>>>>> visualization, that's what the trace_dma_fence_init trace point is=
- good for.
-> >>> I am a bit confused by this.  _emit and _signaled are a great way to
-> >>> see how many fences are pending from cpu's point of view.  How does
-> >>> _emit make no sense and _init is good instead?
-> >> We had exactly that confusion now multiple times and it's one of the
-> >> main reasons why I want to remove the _emit trace point.
-> >>
-> >> See the when you want to know how many fences are pending you need to
-> >> watch out for init/destroy and *NOT* emit.
-> >>
-> >> The reason is that in the special case where emit makes sense (e.g. th=
-e
-> >> GPU scheduler fences) emit comes later than init, but pending on the C=
-PU
-> >> and taking up resources are all fences and not just the one emitted to
-> >> the hardware.
-> > I am more interested in pending on the GPU.
-> >
-> >> On the other hand when you want to measure how much time each operatio=
-n
-> >> took on the hardware you need to take a look at the differences of the
-> >> signal events on each timeline.
-> > _signaled alone is not enough when the GPU is not always busy.  After
-> > the last pending fence signals but before the following _init/_emit,
-> > nothing is pending.
+> From: Prasad Sodagudi <psodagud@codeaurora.org>
 >
-> Yeah, I'm perfectly aware of that.
+> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
+> are typically used to read/write from/to memory mapped registers
+> and can cause hangs or some undefined behaviour in following few
+> cases,
 >
-> > For all drivers except virtio-gpu, _init and "ring head update" always
-> > happen close enough that I can see why _emit is redundant.  But I like
-> > having _emit as a generic tracepoint for timelines where _init and
-> > _emit can be apart, instead of requiring a special case tracepoint for
-> > each special case timeline.
+> * If the access to the register space is unclocked, for example: if
+>   there is an access to multimedia(MM) block registers without MM
+>   clocks.
 >
-> And I'm certainly not going to add _emit to all drivers just because of
-> that. As you said it is a special case for virtio-gpu and the GPU schedul=
-er.
+> * If the register space is protected and not set to be accessible from
+>   non-secure world, for example: only EL3 (EL: Exception level) access
+>   is allowed and any EL2/EL1 access is forbidden.
 >
-> And as I explained before the difference between _init and _emit
-> shouldn't matter to your visualization. The background is that as soon
-> as an dma_fence is initialized with _init it is "live" regarding the
-> dependency and memory management and exactly that's what matters for the
-> visualization.
+> * If xPU(memory/register protection units) is controlling access to
+>   certain memory/register space for specific clients.
 >
-> The latency between _init and _emit is just interesting for debugging
-> the scheduler and surprisingly virtio-gpu as well, for all other use
-> cases it is irrelevant.
+> and more...
+>
+> Such cases usually results in instant reboot/SErrors/NOC or interconnect
+> hangs and tracing these register accesses can be very helpful to debug
+> such issues during initial development stages and also in later stages.
+>
+> So use ftrace trace events to log such MMIO register accesses which
+> provides rich feature set such as early enablement of trace events,
+> filtering capability, dumping ftrace logs on console and many more.
+>
+> Sample output:
+>
+> rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+> rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+> rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
+> rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
+>
+> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
+> Co-developed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 
-It might actually be *more* interesting for virtio-gpu.. unless there
-is some other way to link guest and host fences to see what the
-potential latency of guest->host is
+I think this is ok in general. I saw that Steve had a minor comment, and
+I suppose you could have just resent the same patches with a fixup in order
+to have me pick it up into the asm-generic tree for 5.19.
 
-re: adding the tracepoint to other drivers, I'm fine with folks doing
-that as needed.  Unless you have a better proposal about how to
-visualize init vs emit latency, I think it's fine to have an extra
-tracepoint even if it is redundant in some cases.  The visualization
-tool is the customer here, we have to give it what it wants/needs.
+There is one more thing that I saw looking through this patch again: the
+address you print is the virtual __iomem token, but it might be more
+valuable to have the physical address instead, which can be looked up
+in the devicetree to know which register is affected.
 
-BR,
--R
+There is a small extra cost to walk the page table, and I'm not sure
+if we actually have an interface for it (vmalloc_to_page is almost
+what we want, but it returns an invalid page pointer). Any suggestions
+on this?
 
->
-> Regards,
-> Christian.
->
-> >> So there isn't really any use case for the emit trace point, except wh=
-en
-> >> you want to figure out how much latency the scheduler introduce. Then
-> >> you want to take a look at init and emit, but that isn't really that
-> >> interesting for performance analyses.
-> >>
-> >> Regards,
-> >> Christian.
-> >>
->
+       Arnd
