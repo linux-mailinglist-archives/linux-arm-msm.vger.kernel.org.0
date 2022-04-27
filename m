@@ -2,61 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4FB05110CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 08:01:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AED85110D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 08:03:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348733AbiD0GEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 02:04:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47562 "EHLO
+        id S1351813AbiD0GGt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 02:06:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357954AbiD0GEy (ORCPT
+        with ESMTP id S241334AbiD0GGs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 02:04:54 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5979146163;
-        Tue, 26 Apr 2022 23:01:44 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id F37C2B823F1;
-        Wed, 27 Apr 2022 06:01:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BA5C385A7;
-        Wed, 27 Apr 2022 06:01:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651039301;
-        bh=vrSKVfzDuthRYBdUjrjFxhx98WWa/Du4tj2i28+8jhE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=OEfFw5R30Zg7fXlsRxQJh/mLBRyQVwhu8NnsvUmUl7RvZ8MLkQdTxC+SynmyQGRAX
-         SX8ommb4WBMGfD4UkluVFED3wsgNdbiL3E/Nyf1oSEjMrFcWxAykXoTGLCq2ahtLbg
-         SKd7fLyCEi9dp0zkMuF+QUOu4m40sKBNHrYDL0a4vdYFLjvbgzZ+uzm4flH1rK/I1J
-         OUNADI/y9fGtuHVkaDvo2uDEmGXeLqNgoDyyXYCclqF/ajSoxcP8Oe0ND3wMp9as5i
-         Lw3aoun+ORwsIkLLXeZKWSG2tpCxcWD82ySLMxdH9M1XLYqStNUu1n6DeD8AzHkAdB
-         OULQUiACm4BaQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1njakA-0000EW-Sx; Wed, 27 Apr 2022 08:01:42 +0200
-Date:   Wed, 27 Apr 2022 08:01:42 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Vivek Gautam <vivek.gautam@codeaurora.org>
-Subject: Re: [PATCH 2/2] phy: qcom-qmp: fix reset-controller leak on probe
- errors
-Message-ID: <YmjcRleHMaWKUcni@hovoldconsulting.com>
-References: <20220422130941.2044-1-johan+linaro@kernel.org>
- <20220422130941.2044-3-johan+linaro@kernel.org>
- <59b135206b456fd8f8df30a4e474e385a922bf77.camel@pengutronix.de>
+        Wed, 27 Apr 2022 02:06:48 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB9174D260;
+        Tue, 26 Apr 2022 23:03:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651039417; x=1682575417;
+  h=subject:from:to:cc:references:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=TRmJ3gGVnOosqPIffEyCf+GxktF5ed1iCgomGlFfGV8=;
+  b=ef6c70B2RD9JYr0c0abUdFj8GkS3hrObHEHNH097Iu/nodrVXATOiml8
+   g4AgC8LkLcRwHHJ/KBgqOsWyghg3e7rJSJzIqDDAzdstrar1XoNk1IS3z
+   Qa2/bUHBpRgV31G/agh3TdnhWqPzOcnr8b0EdTxVATqWSz48tWCQ1GkkC
+   o=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 26 Apr 2022 23:03:37 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 23:03:37 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 26 Apr 2022 23:03:37 -0700
+Received: from [10.216.55.16] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 26 Apr
+ 2022 23:03:35 -0700
+Subject: Re: [PATCH V10 4/9] mfd: pm8008: Add reset-gpios
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+To:     Stephen Boyd <swboyd@chromium.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1649939418-19861-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1649939418-19861-5-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n50HR6w-v3ub8HR_K2PsqqTTrVAaQa0pZ7QjY39WmkDyQQ@mail.gmail.com>
+ <010bd223-94a0-fe8c-d1ab-39153bb68a7d@quicinc.com>
+ <a4cbdb4c-dbba-75ee-202a-6b429c0eb390@quicinc.com>
+Message-ID: <104b529b-946d-f171-5a82-6052aef2dbbb@quicinc.com>
+Date:   Wed, 27 Apr 2022 11:33:08 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <59b135206b456fd8f8df30a4e474e385a922bf77.camel@pengutronix.de>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <a4cbdb4c-dbba-75ee-202a-6b429c0eb390@quicinc.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,44 +69,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 25, 2022 at 11:45:29AM +0200, Philipp Zabel wrote:
-> Hi Johan,
-> 
-> On Fr, 2022-04-22 at 15:09 +0200, Johan Hovold wrote:
-> > Make sure to release the lane reset controller in case of a late probe
-> > error (e.g. probe deferral).
-> 
-> Right. grepping for "of_reset_control_get", there seem to be are a few
-> other drivers that might share the same issue...
 
-Yeah, I'm sure there are more of these.
- 
-> > Note that due to the reset controller being defined in devicetree in
-> > (questionable) "lane" child nodes, devm_reset_control_get_exclusive()
-> > cannot be used (and we shouldn't add devres helpers for the legacy reset
-> > controller API).
-> 
-> Do you mean of_reset_control_get()? Maybe you could switch to
-> of_reset_control_get_exclusive() while at it?
+On 4/27/2022 10:58 AM, Satya Priya Kakitapalli (Temp) wrote:
+>
+> On 4/18/2022 10:34 AM, Satya Priya Kakitapalli (Temp) wrote:
+>>
+>> On 4/15/2022 5:40 AM, Stephen Boyd wrote:
+>>> Quoting Satya Priya (2022-04-14 05:30:13)
+>>>> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+>>>> index c472d7f..97a72da 100644
+>>>> --- a/drivers/mfd/qcom-pm8008.c
+>>>> +++ b/drivers/mfd/qcom-pm8008.c
+>>>> @@ -239,6 +241,13 @@ static int pm8008_probe(struct i2c_client 
+>>>> *client)
+>>>>                          dev_err(chip->dev, "Failed to probe irq 
+>>>> periphs: %d\n", rc);
+>>>>          }
+>>>>
+>>>> +       chip->reset_gpio = devm_gpiod_get(chip->dev, "reset", 
+>>>> GPIOD_OUT_HIGH);
+>>>> +       if (IS_ERR(chip->reset_gpio)) {
+>>>> +               dev_err(chip->dev, "failed to acquire reset gpio\n");
+>>> The API looks to print debug messages. This print doesn't look 
+>>> required.
+>>
+>>
+>> Okay.
+>>
+>>
+>>>> +               return PTR_ERR(chip->reset_gpio);
+>>>> +       }
+>>>> +       gpiod_set_value(chip->reset_gpio, 1);
+>>> Does this do anything? Does this work just as well?
+>>>
+>>>     reset_gpio = devm_gpiod_get(chip->dev, "reset", GPIOD_OUT_LOW);
+>>>     if (IS_ERR(reset_gpio))
+>>>         return PTR_ERR(reset_gpio);
+>>>
+>
+> This is not working as expected. We need to add 
+> "gpiod_set_value(chip->reset_gpio, 1);"  to actually toggle the line.
+>
 
-Right, I was referring to of_reset_control_get() but obviously
-of_reset_control_get_exclusive() could still get a devres version so
-that sentence in parenthesis doesn't make much sense.
+I checked again and it is working after using GPIOD_OUT_HIGH instead of LOW.
 
-I must have mistakingly imagined that the latter also retrieved the
-struct device_node from a struct device like the current devres helpers
-do.
+reset_gpio = devm_gpiod_get(chip->dev, "reset", GPIOD_OUT_HIGH);
+     if (IS_ERR(reset_gpio))
+         return PTR_ERR(reset_gpio);
 
-> That one might warrant a devres helper if other drivers were to adopt
-> the same pattern.
 
-Right.
-
-> The patch itself looks fine to me,
-> 
-> Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-
-Thanks for reviewing. I'll send a v2 with an updated commit message and
-switch to the new API in a new follow-on patch.
-
-Johan
+>
+>>> Note that there's no point to store the reset gpio in the structure if
+>>> it won't be used outside of probe.
+>>
+>>
+>> Okay, I'll use a local variable.
+>>
+>>
+>>> This should work fine? I used
+>>> GPIOD_OUT_LOW to indicate that the reset should be returned to this
+>>> function deasserted, i.e. taking the PMIC out of reset.
+>>
+>>
+>> I'll try this out.
+>>
+>>
