@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5563510E81
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 04:07:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94299510E59
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 04:07:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357031AbiD0CGz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Apr 2022 22:06:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60328 "EHLO
+        id S1357063AbiD0CHE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Apr 2022 22:07:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357050AbiD0CGy (ORCPT
+        with ESMTP id S1357053AbiD0CGz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Apr 2022 22:06:54 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C19514BB86
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 19:03:44 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id p8so369986pfh.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 19:03:44 -0700 (PDT)
+        Tue, 26 Apr 2022 22:06:55 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 113464CD72
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 19:03:45 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id w5-20020a17090aaf8500b001d74c754128so3799329pjq.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Apr 2022 19:03:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yFVyvOlELL5XODI+YbD3glMBxc9SbOBZ4/P+Bbkh1ok=;
-        b=eofUnvcy5TptxOPQA1Pcipte2Ep+hB2GmiPI4fCbJBoqWRIkJCD/H+E+p7eLpcLX+Q
-         z6XVvQ7Js6EtWkTCUXvrk9R+xzY88GuXp9QS8YuUILl8f4BsJZO+O2bDvQcD2r+H9hND
-         9i26iV5wDnbztb9DtLAVQJsiYe1S2okgGUtoM=
+        bh=IsZlbQsLWz0QOpEE8Q49QKK/xrVS19U6wy6L3ZRioo0=;
+        b=PR6vJ1BFrsbzEIyCBU+Yaei+DFk23SdPZaWHZUdskP4Nn0HqSyd+uEDGScjf8Y174C
+         mBrvEjdb1W9Pm/2uiqPF07JxuyxUI4ZnToANMUpW/aUioT3iIpHx0eLws4Z6pBq9Vvwf
+         Al7gYm9GHmVyzvg66ZqFUxofNo0UsM/CmIvbY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yFVyvOlELL5XODI+YbD3glMBxc9SbOBZ4/P+Bbkh1ok=;
-        b=av2HLUS1YMCIq4VBarKT+PdTuvEMp4B8d6PcPlY4GhrE9o/4/7y0AfpiQnOYJqw4/s
-         nYs32v1gAy8u9i+fZ4MtShk/lpTcREZB15tQA9OlZpCjEaHaJrhDWYk9V4CcQSzGuiFJ
-         B1xWlGjff+KBRP/5H//LdbPuHh5MJ/nMlIPPm2U5Q8P2KOSkWEBxylLWlP4yFvFswCQh
-         ecDALYKKxDviXRMdQLjk2i/hmchQjQqJgf4QzRU9jb6aj2uBBEYDlNFZjPh8uUddE+Ww
-         9w/4roUW5VkaS8BRJ2cQw10cykiOTdWLtWQN+BfcK4w5vb5fd8tpeFXLxI5T+qSzpeZI
-         g33w==
-X-Gm-Message-State: AOAM533qSf7DkMZHVezGtpVouO9SGk4T+TY8hQRTDXfCu5440S+gU861
-        YJAfuysx/M6NHFNJEX0OAZswlQ==
-X-Google-Smtp-Source: ABdhPJwL9hKfueg8igk3jQbIZxvAjauLxtDwfM+AFYufdTueYG+yA2TLjIHDut7uUddtED7VuxuxsQ==
-X-Received: by 2002:a65:6e4d:0:b0:39d:a6ce:14dc with SMTP id be13-20020a656e4d000000b0039da6ce14dcmr21945803pgb.476.1651025024277;
-        Tue, 26 Apr 2022 19:03:44 -0700 (PDT)
+        bh=IsZlbQsLWz0QOpEE8Q49QKK/xrVS19U6wy6L3ZRioo0=;
+        b=tvZ7bKrpFm0UdEnIf771QbDPHYHGs/lM65X5orvJdh/Fow6Z/begqm9hz5Y0T1rTR+
+         gVMx+tBtjH+Bu6zrRzwcxPjhwI/4UDG09fDkKa7YE4NAEIQXF0BLEZJuuoZf1R3Q3O7B
+         FnFjwl8maY88Thcv1/dbGozVhoCY42QcnkYk5PQswGSd4XVsq01Oo+xK6aHaONnny1h5
+         zDCh8wFHUFMk1xa8G5v0f6HAPDEq2UB7yMV7+2mS/wEAtg1we/ZBOPZHnXA0KAkT/PX2
+         xlHCXmGF+TYi51YcEBcWI71T7Kyf5kZ6nYfJ+W1ElqZa/tgydGJXsh1kYMt37aA0ob0u
+         4kXA==
+X-Gm-Message-State: AOAM530m71Evk5LEMuxQAjdjJQ0LqtqjPwTCWqx8P3o7648Vl7gBdVZV
+        /MNNYzyMFwmNuK5XhRjYn6GFeQ==
+X-Google-Smtp-Source: ABdhPJz0d+vYS+RNgyPxW7emSuqX0TIM5P7LtPrQRlY01RTKs1I5onV9ABIJ7MIl6S35/NISjwVBKg==
+X-Received: by 2002:a17:90b:4f43:b0:1da:3cba:bd51 with SMTP id pj3-20020a17090b4f4300b001da3cbabd51mr201502pjb.246.1651025025217;
+        Tue, 26 Apr 2022 19:03:45 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:202:201:482e:60bc:84d1:bf5c])
-        by smtp.gmail.com with ESMTPSA id g15-20020a056a0023cf00b004e17e11cb17sm18324197pfc.111.2022.04.26.19.03.41
+        by smtp.gmail.com with ESMTPSA id g15-20020a056a0023cf00b004e17e11cb17sm18324197pfc.111.2022.04.26.19.03.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 19:03:43 -0700 (PDT)
+        Tue, 26 Apr 2022 19:03:44 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -52,9 +52,9 @@ Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
         linux-arm-msm@vger.kernel.org,
         "Joseph S. Barrera III" <joebar@chromium.org>,
         Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH v2 1/3] arm64: dts: qcom: sc7180-trogdor: Simplify trackpad enabling
-Date:   Tue, 26 Apr 2022 19:03:37 -0700
-Message-Id: <20220427020339.360855-2-swboyd@chromium.org>
+Subject: [PATCH v2 2/3] arm64: dts: qcom: sc7180-trogdor: Simplify spi0/spi6 labeling
+Date:   Tue, 26 Apr 2022 19:03:38 -0700
+Message-Id: <20220427020339.360855-3-swboyd@chromium.org>
 X-Mailer: git-send-email 2.36.0.rc2.479.g8af0fa9b8e-goog
 In-Reply-To: <20220427020339.360855-1-swboyd@chromium.org>
 References: <20220427020339.360855-1-swboyd@chromium.org>
@@ -69,111 +69,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Trogdor boards with a detachable keyboard don't have a trackpad over
-i2c. Instead the trackpad is on the detachable keyboard base. Let's move
-the enabling of the trackpad i2c bus out of the base sc7180-trogdor.dtsi
-file so that each trogdor board that is detachable, of which there are
-many, doesn't have to disable the trackpad bus.
+We had to do this spi0/spi6 flip-flop on trogdor-r0 because the spi
+buses got swizzled between r0 and r1. The swizzle stopped after r1, but
+we kept this around to support either hardware possibility and to keep
+trogdor-r0 working.
+
+trogdor-r0 isn't supported upstream, so this swizzle is not doing
+anything besides making a pattern that others tryt  to copy for the EC and
+H1 nodes. Let's remove it and simplify the dts files.
 
 Cc: "Joseph S. Barrera III" <joebar@chromium.org>
 Cc: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 4 ----
- arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 4 ----
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    | 4 ++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi   | 4 ++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts        | 4 ++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi          | 1 -
- 6 files changed, 12 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 6 +-----
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 3 ---
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    | 3 ---
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi   | 4 ----
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts        | 4 ----
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi          | 4 ++--
+ 6 files changed, 3 insertions(+), 21 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index c81805ef2250..8da61a52f150 100644
+index 8da61a52f150..ac2279142a95 100644
 --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -111,10 +111,6 @@ ap_ts: touchscreen@5d {
- 	};
- };
+@@ -6,14 +6,10 @@
+  */
  
--&i2c7 {
--	status = "disabled";
--};
+ #include "sc7180.dtsi"
 -
- &i2c9 {
- 	status = "disabled";
- };
+-ap_ec_spi: &spi6 {};
+-ap_h1_spi: &spi0 {};
+-
+ #include "sc7180-trogdor.dtsi"
+ #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+ 
+-/* Deleted nodes from trogdor.dtsi */
++/* Deleted nodes from sc7180-trogdor.dtsi */
+ 
+ /delete-node/ &alc5682;
+ /delete-node/ &pp3300_codec;
 diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index bff2b556cc75..532c7dcc3f73 100644
+index 532c7dcc3f73..9b3e3d13c165 100644
 --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -88,10 +88,6 @@ map1 {
+@@ -5,9 +5,6 @@
+  * Copyright 2021 Google LLC.
+  */
+ 
+-ap_ec_spi: &spi6 {};
+-ap_h1_spi: &spi0 {};
+-
+ #include "sc7180-trogdor.dtsi"
+ 
+ / {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+index 75df5d1633b2..fe2369c29aad 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+@@ -5,9 +5,6 @@
+  * Copyright 2020 Google LLC.
+  */
+ 
+-ap_ec_spi: &spi6 {};
+-ap_h1_spi: &spi0 {};
+-
+ #include "sc7180-trogdor.dtsi"
+ 
+ &ap_sar_sensor {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
+index 410ca2a76d81..3bca7545ffe5 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
+@@ -6,10 +6,6 @@
+  */
+ 
+ #include "sc7180.dtsi"
+-
+-ap_ec_spi: &spi6 {};
+-ap_h1_spi: &spi0 {};
+-
+ #include "sc7180-trogdor.dtsi"
+ #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
+index 311c42a535ff..6c822c84112a 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
+@@ -8,10 +8,6 @@
+ /dts-v1/;
+ 
+ #include "sc7180.dtsi"
+-
+-ap_ec_spi: &spi6 {};
+-ap_h1_spi: &spi0 {};
+-
+ #include "sc7180-trogdor.dtsi"
+ #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 7648be83f7e4..ea5bedc3d1cb 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -626,7 +626,7 @@ src_vreg_bob: bob {
  	};
  };
  
--&ap_tp_i2c {
--	status = "disabled";
--};
--
- ap_ts_pen_1v8: &i2c4 {
+-&ap_ec_spi {
++ap_ec_spi: &spi6 {
  	status = "okay";
- 	clock-frequency = <400000>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index 69666f92176a..75df5d1633b2 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -19,6 +19,10 @@ &ap_sar_sensor {
- 	semtech,avg-pos-strength = <64>;
+ 	cros_ec: ec@0 {
+ 		compatible = "google,cros-ec-spi";
+@@ -675,7 +675,7 @@ usb_c1: connector@1 {
+ 	};
  };
  
-+&ap_tp_i2c {
-+	status = "okay";
-+};
-+
- /*
-  * Lazor is stuffed with a 47k NTC as charger thermistor which currently is
-  * not supported by the PM6150 ADC driver. Disable the charger thermal zone
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-index e90f99ef5323..410ca2a76d81 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-@@ -36,6 +36,10 @@ &alc5682 {
- 	realtek,dmic-clk-driving-high = "true";
- };
- 
-+&ap_tp_i2c {
-+	status = "okay";
-+};
-+
- &cpu6_alert0 {
- 	temperature = <60000>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index 457c25499863..311c42a535ff 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -20,6 +20,10 @@ / {
- 	compatible = "google,trogdor", "qcom,sc7180";
- };
- 
-+&ap_tp_i2c {
-+	status = "okay";
-+};
-+
- ap_ts_pen_1v8: &i2c4 {
+-&ap_h1_spi {
++ap_h1_spi: &spi0 {
  	status = "okay";
- 	clock-frequency = <400000>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index b0efb354458c..7648be83f7e4 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -727,7 +727,6 @@ ap_sar_sensor: proximity@28 {
- };
- 
- ap_tp_i2c: &i2c7 {
--	status = "okay";
- 	clock-frequency = <400000>;
- 
- 	trackpad: trackpad@15 {
+ 	cr50: tpm@0 {
+ 		compatible = "google,cr50";
 -- 
 https://chromeos.dev
 
