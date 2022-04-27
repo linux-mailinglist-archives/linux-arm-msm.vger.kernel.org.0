@@ -2,67 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77D51511B85
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:58:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AE23511E56
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 20:37:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238853AbiD0O7f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 10:59:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55886 "EHLO
+        id S239192AbiD0PN3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 11:13:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235407AbiD0O7d (ORCPT
+        with ESMTP id S239176AbiD0PN2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 10:59:33 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9CFF72478
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:56:20 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id i19so3905098eja.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:56:20 -0700 (PDT)
+        Wed, 27 Apr 2022 11:13:28 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 025F02D4203
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 08:10:17 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id k23so4048468ejd.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 08:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3kzcmQQ6qe9BuAfgJ/H9FnVAxTClpIB9Ec1O4pt+pto=;
-        b=SuM2kKvg9MIOsrbRnXK49sswjYDmhNL5auXZSawiQyqu/3r96paw8FAO/3qj4Q/cJ8
-         QYQrKWJdSqC8sHYmnj3Ta4awWKPn4feNlwgOplnY7O9t/jqCVdEUVFAP5imygZIAANnr
-         MT+u4rZ8Ba81rIDlGcH2OVlTjOJklsHfmI/CvtwDKGXyxegRBceREqeeVyyVY+NdL1yi
-         48cfxCNoL2cXq0oZV0ZSE1VeyCIF54D3kppj5UtOzfj51E71+6ttlj1FBAsklxpRdBWu
-         Id+SYXX+XrwwMOYDLDN7Sxv6Zzl7dmcpeukJ4DRd47WwLDuP8LwIWVeT1R8N0zs12UHs
-         OdFw==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8bcBCHuka1c7eUCHaJJ1Tf0YnngjHSBeBCkk7aucJRc=;
+        b=Bha64TEobiweIEID7s+302mbO83FZsNFeG4G9pC1hn4DLldhg2boTtAWRnZIW4hMUF
+         tEcxiUcYoQYdX1hA3zzB/izxzVa9EYpvkdFybz8Yc5m2SSrZZfsI3qdXkKCDux6UJORd
+         nTkuWxGNRe424v5bdabJpziKRa/X0pZvUGGqY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3kzcmQQ6qe9BuAfgJ/H9FnVAxTClpIB9Ec1O4pt+pto=;
-        b=rlwi+tGj/R3NrJGZhnjDj/bRYXQnM5uSbkvvQLtJuvp2qGo1dk0PAu79TuSk2QOcv/
-         wf9O08hnlJGmi/zfuBqmm0kFW6HiCRgwKkYGf1mYxYCk6uTOxMSGmPj65QwCMSxeLFvG
-         fqkFng68pUyVErI58JNy+/ig8FbmzKWRTIJ1emwjWkEpzBYLxDIleGAAc3pFdFP36E0b
-         wjrOAjMxr3KEPDc3ZsJ8IckQvw0FBEwsUXBTqREUF3MwAENcPKaBYSGNWGNAd0gka5BK
-         BhgwG83GhdIhbxKJ0NjzYcK+VLuDaBFsmxOordQQMIEQGWRc7YeDgCjk/4ITRO3861Rx
-         wJZw==
-X-Gm-Message-State: AOAM5320odSeoI1HsWHj4+HCBHCWVSQNAwHV79cAHDpQsprnumX43GNV
-        oqDuImScWeTQOXOvDtTY6vOmHA==
-X-Google-Smtp-Source: ABdhPJx+Vs5y8HA3NpMU0R2RfFBUtP1VAq77R6zckJbYjK/ihkSS/J5AT+rfpaCiLUn1ZhdDvQMSIw==
-X-Received: by 2002:a17:907:3f9c:b0:6f0:28d1:3ad6 with SMTP id hr28-20020a1709073f9c00b006f028d13ad6mr27009349ejc.365.1651071379475;
-        Wed, 27 Apr 2022 07:56:19 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id u4-20020aa7db84000000b004136c2c357csm8475284edt.70.2022.04.27.07.56.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 07:56:18 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] interconnect: qcom: use icc_sync_state
-Date:   Wed, 27 Apr 2022 16:56:16 +0200
-Message-Id: <20220427145616.523557-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.32.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8bcBCHuka1c7eUCHaJJ1Tf0YnngjHSBeBCkk7aucJRc=;
+        b=6uEGufVzHp7eyDafnBeOq/AO3m6KKrmEhv7vR7NxHvzvdNovFbzKnxwDfM+RW5G3FU
+         AW4PXKBfgIxlT4MVSA5fimHnSyQmBQsqXYJqAktv0QOZBzO2sI8c4b24pBR3mEtUt60p
+         OBu8MWjd6alNT8AnOzpfWh+Y3GlpcxBeXWq7RaqFBSdRKhdByujl04Mvrx6cWFId6Ar3
+         MYY7xduSrH5GgktUI6EQ5harvOaeecnjVsa5C12ZymmdggcPshOc4/faxhzAzgEsNPyI
+         N7IjMQLEQWq7pZfNs+Jwqf3eW/LzuupwrAYwXPfTEG93zGvUUyQ9L+4NldS/cioPxxNn
+         zAaQ==
+X-Gm-Message-State: AOAM530I58OF2FG+LNFk3xFaePUOxoCDSQZawwSyLsW5vavexGPM7r05
+        WA4hbiLp0IOKQ7ZsYwvy40IsFoUN1v+QZXv1YWc=
+X-Google-Smtp-Source: ABdhPJxpUddVSPg6lFPSdA2oYcuK5NoEzAoQ57XX9cuMTlgQ4SOnh+zYPYW6PIBeXMY98eoIuiCTYw==
+X-Received: by 2002:a17:907:72c4:b0:6f3:6b11:3190 with SMTP id du4-20020a17090772c400b006f36b113190mr22234053ejc.369.1651072215272;
+        Wed, 27 Apr 2022 08:10:15 -0700 (PDT)
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com. [209.85.128.47])
+        by smtp.gmail.com with ESMTPSA id 22-20020a508e16000000b00425c9d1704bsm7482896edw.4.2022.04.27.08.10.12
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Apr 2022 08:10:12 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id u9-20020a05600c00c900b00393e729e655so1424984wmm.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 08:10:12 -0700 (PDT)
+X-Received: by 2002:a05:600c:502b:b0:38f:f7c6:3609 with SMTP id
+ n43-20020a05600c502b00b0038ff7c63609mr26785973wmr.15.1651072211589; Wed, 27
+ Apr 2022 08:10:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+References: <20220426225748.324759-1-swboyd@chromium.org> <CAD=FV=WMf0Jc9oD7CGoLthguzt2aV31sZmFoenbjn72MfwFYEA@mail.gmail.com>
+In-Reply-To: <CAD=FV=WMf0Jc9oD7CGoLthguzt2aV31sZmFoenbjn72MfwFYEA@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 27 Apr 2022 08:09:59 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Wey2P_=3Lp6M8GEaoyCn1XcYFhfJwfx43a5f_8H0obwg@mail.gmail.com>
+Message-ID: <CAD=FV=Wey2P_=3Lp6M8GEaoyCn1XcYFhfJwfx43a5f_8H0obwg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Remove cros-ec keyboard
+ from detachables
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Benson Leung <bleung@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Hsin-Yi Wang <hsinyi@chromium.org>,
+        "Joseph S. Barrera III" <joebar@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,117 +80,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use icc_sync_state for interconnect providers, so that the bandwidth
-request doesn't need to stay on maximum value.
+Hi,
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/interconnect/qcom/msm8916.c | 1 +
- drivers/interconnect/qcom/qcm2290.c | 1 +
- drivers/interconnect/qcom/qcs404.c  | 1 +
- drivers/interconnect/qcom/sdm660.c  | 1 +
- drivers/interconnect/qcom/sm8150.c  | 1 +
- drivers/interconnect/qcom/sm8250.c  | 1 +
- drivers/interconnect/qcom/sm8350.c  | 1 +
- drivers/interconnect/qcom/sm8450.c  | 1 +
- 8 files changed, 8 insertions(+)
+On Tue, Apr 26, 2022 at 5:17 PM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Tue, Apr 26, 2022 at 3:57 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Trogdor devices that have a detachable keyboard still have a
+> > non-detachable keyboard input device present because we include the
+> > cros-ec-keyboard.dtsi snippet in the top-level sc7180-trogdor.dtsi file
+> > that every variant board includes. We do this because the
+> > keyboard-controller node also provides some buttons like the power
+> > button and volume buttons. Unfortunately, this means we register a
+> > keyboard input device that doesn't do anything on boards with a
+> > detachable keyboard. Let's delete the rows/columns properties of the
+> > device node to indicate that there isn't a matrix keyboard on these
+> > boards.
+> >
+> > Cc: Benson Leung <bleung@chromium.org>
+> > Cc: Guenter Roeck <groeck@chromium.org>
+> > Cc: Douglas Anderson <dianders@chromium.org>
+> > Cc: Hsin-Yi Wang <hsinyi@chromium.org>
+> > Cc: "Joseph S. Barrera III" <joebar@chromium.org>
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 5 +++++
+> >  arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 5 +++++
+> >  2 files changed, 10 insertions(+)
+>
+> Presumably we need to do this same thing for wormdingler [1]
+>
+> [1] https://lore.kernel.org/r/20220426151204.1.Id2821de5fde55ebe928e8fc87a71c8d535edb383@changeid
+>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
-diff --git a/drivers/interconnect/qcom/msm8916.c b/drivers/interconnect/qcom/msm8916.c
-index 2f397a7c3322..811370fcd211 100644
---- a/drivers/interconnect/qcom/msm8916.c
-+++ b/drivers/interconnect/qcom/msm8916.c
-@@ -1347,6 +1347,7 @@ static struct platform_driver msm8916_noc_driver = {
- 	.driver = {
- 		.name = "qnoc-msm8916",
- 		.of_match_table = msm8916_noc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(msm8916_noc_driver);
-diff --git a/drivers/interconnect/qcom/qcm2290.c b/drivers/interconnect/qcom/qcm2290.c
-index 74404e0b2080..6cf75da91428 100644
---- a/drivers/interconnect/qcom/qcm2290.c
-+++ b/drivers/interconnect/qcom/qcm2290.c
-@@ -1355,6 +1355,7 @@ static struct platform_driver qcm2290_noc_driver = {
- 	.driver = {
- 		.name = "qnoc-qcm2290",
- 		.of_match_table = qcm2290_noc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qcm2290_noc_driver);
-diff --git a/drivers/interconnect/qcom/qcs404.c b/drivers/interconnect/qcom/qcs404.c
-index 416c8bff8efa..d82f9add4933 100644
---- a/drivers/interconnect/qcom/qcs404.c
-+++ b/drivers/interconnect/qcom/qcs404.c
-@@ -1086,6 +1086,7 @@ static struct platform_driver qcs404_noc_driver = {
- 	.driver = {
- 		.name = "qnoc-qcs404",
- 		.of_match_table = qcs404_noc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qcs404_noc_driver);
-diff --git a/drivers/interconnect/qcom/sdm660.c b/drivers/interconnect/qcom/sdm660.c
-index 274a7139fe1a..706b49a4bb70 100644
---- a/drivers/interconnect/qcom/sdm660.c
-+++ b/drivers/interconnect/qcom/sdm660.c
-@@ -1716,6 +1716,7 @@ static struct platform_driver sdm660_noc_driver = {
- 	.driver = {
- 		.name = "qnoc-sdm660",
- 		.of_match_table = sdm660_noc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(sdm660_noc_driver);
-diff --git a/drivers/interconnect/qcom/sm8150.c b/drivers/interconnect/qcom/sm8150.c
-index 745e3c36a61a..2a85f53802b5 100644
---- a/drivers/interconnect/qcom/sm8150.c
-+++ b/drivers/interconnect/qcom/sm8150.c
-@@ -535,6 +535,7 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sm8150",
- 		.of_match_table = qnoc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qnoc_driver);
-diff --git a/drivers/interconnect/qcom/sm8250.c b/drivers/interconnect/qcom/sm8250.c
-index aa707582ea01..8dfb5dea562a 100644
---- a/drivers/interconnect/qcom/sm8250.c
-+++ b/drivers/interconnect/qcom/sm8250.c
-@@ -551,6 +551,7 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sm8250",
- 		.of_match_table = qnoc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qnoc_driver);
-diff --git a/drivers/interconnect/qcom/sm8350.c b/drivers/interconnect/qcom/sm8350.c
-index c79f93a1ac73..3e26a2175b28 100644
---- a/drivers/interconnect/qcom/sm8350.c
-+++ b/drivers/interconnect/qcom/sm8350.c
-@@ -531,6 +531,7 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sm8350",
- 		.of_match_table = qnoc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qnoc_driver);
-diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
-index 8d99ee6421df..d573018a6324 100644
---- a/drivers/interconnect/qcom/sm8450.c
-+++ b/drivers/interconnect/qcom/sm8450.c
-@@ -1968,6 +1968,7 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sm8450",
- 		.of_match_table = qnoc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- 
--- 
-2.32.0
+Do we need to delay landing this patch for a release? I haven't tested
+myself, but from re-reading through the code it looks as if
+cros_ec_keyb_register_matrix() will return an error code if we have
+the device tree patch _without_ commit 4352e23a7ff2 ("Input:
+cros-ec-keyb - only register keyboard if rows/columns exist"). That
+will cause it to skip registering the buttons/switches, right?
 
+-Doug
