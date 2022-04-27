@@ -2,181 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5323E511E86
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 20:37:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1A5E51205A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 20:39:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239889AbiD0PiT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 11:38:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45910 "EHLO
+        id S242437AbiD0QRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 12:17:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240093AbiD0PiO (ORCPT
+        with ESMTP id S244083AbiD0QPt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 11:38:14 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8B2C1816A7;
-        Wed, 27 Apr 2022 08:35:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 4169AB8285F;
-        Wed, 27 Apr 2022 15:34:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9D1C385A7;
-        Wed, 27 Apr 2022 15:34:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651073698;
-        bh=AY0M6MiJp4yABlTT36iztg/uwDJL1rZ8nO+etu2NN5k=;
-        h=Date:Subject:To:References:From:In-Reply-To:From;
-        b=dNn2o7iv3UOzfnVpz12chMS2Vu3hNyqvCho+mP+Sppo9FCUA9rUgm8UIZ5xTH/3dm
-         ObdB5J89Yp7d4BXhFpDoluPd7FNemcKpGE9LwRRyC00mNwBphFkUszDGLRZRFkoRWE
-         uwbQf82txbG0c0qL3fn5BT/yO8ZMlOhD93gM0W0iCCNumygEX9VjL3dt09sNxtn8TJ
-         aOuhT+mJrvWHJG41QeoYoZamVNb77oD3fqABjur0Z+wRT5K3yXw9xlrB4Ro1/nZ0S2
-         16zRf69wemBadJ59SOSMthDxq1UWGFwVcPviQiCGfNXvZYIHfbFbkcqGkDiqRHBvbz
-         A8Sb4HXMO80VQ==
-Message-ID: <4769c796-6edd-c23a-ee2a-ce54495548f7@kernel.org>
-Date:   Wed, 27 Apr 2022 18:34:53 +0300
+        Wed, 27 Apr 2022 12:15:49 -0400
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 322273656ED
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 09:12:11 -0700 (PDT)
+Received: from mail-yw1-f182.google.com ([209.85.128.182]) by
+ mrelayeu.kundenserver.de (mreue012 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1N7gfa-1nxXST1xT8-014kRE; Wed, 27 Apr 2022 17:51:15 +0200
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-2f7c57ee6feso23870207b3.2;
+        Wed, 27 Apr 2022 08:51:15 -0700 (PDT)
+X-Gm-Message-State: AOAM533rrCUH6IJcp5DF3XdAVfDG6sQ8oZ1gHSZ3ZNCoVzgNijJjmiTM
+        ye9MCteio7kbdvJu7BPPYKNc+N7D0ev57bhMp6A=
+X-Google-Smtp-Source: ABdhPJwBNg6CpYFtUIKnpc/Rw8f1CBuXpCeXNKFcU4p5clk+M9zAP7ztHnapftV8iB5Ue4CUulJ/G3F9UTFN2azYVGk=
+X-Received: by 2002:a81:2305:0:b0:2f7:dadb:2162 with SMTP id
+ j5-20020a812305000000b002f7dadb2162mr16669826ywj.42.1651074674179; Wed, 27
+ Apr 2022 08:51:14 -0700 (PDT)
 MIME-Version: 1.0
-Subject: Re: [PATCH] interconnect: qcom: use icc_sync_state
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220427145616.523557-1-krzysztof.kozlowski@linaro.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20220427145616.523557-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <cover.1644824638.git.quic_saipraka@quicinc.com>
+ <20220408111707.2488-1-quic_saipraka@quicinc.com> <bb99b615-cc76-9591-a610-fb4841d41d62@quicinc.com>
+In-Reply-To: <bb99b615-cc76-9591-a610-fb4841d41d62@quicinc.com>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Wed, 27 Apr 2022 17:50:58 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a1b0K4hJC9esuznqDdcBoX6+QqD74nVh91-iYbkZxiqbQ@mail.gmail.com>
+Message-ID: <CAK8P3a1b0K4hJC9esuznqDdcBoX6+QqD74nVh91-iYbkZxiqbQ@mail.gmail.com>
+Subject: Re: [PATCHv10 0/6] lib/rwmmio/arm64: Add support to trace register reads/writes
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        gregkh <gregkh@linuxfoundation.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Marc Zyngier <maz@kernel.org>, quic_psodagud@quicinc.com,
+        quic_tsoni@quicinc.com, Steven Rostedt <rostedt@goodmis.org>,
+        Will Deacon <will@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Provags-ID: V03:K1:pncfSqlqmkLGmXVT6iOeX9Q1Y5SrTfn+p6zxB0RcOvbHs6h4IJU
+ e/TgQwSwn14JJi3z+ibkbDWNEe1SPl2Xq87Ingxlw63795fkBjpPgxQpvVoTFe1sGJWQDaL
+ r8s1lprZyJUoMFxIb2Z2qQ5UbLgpk22TH3aWz4Et6BV+eRcwiUtaiOupnINB9nkEUEFg2hC
+ kwudHN4G6BlH2NXA7GmOA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:BN4wDJ4SaVo=:41A/1zg1JrEyX7yxgryftP
+ j2FXS/Ftp4K/4AzDj42CJWXiBD1XGiskFPsbqxbwKbSgEmGkllXEn7nCk/Wd4dLLECI0l7zUt
+ XSrXjEoQaMPfsQz+Ips35kGGtq3dWMlBUJnGyZ+asI4C/MzLbuNcmt0vBoLNu86gbAp5m1CM0
+ Qc/FEw2uTXZ+PVvoAAfDS08XjEnIv4aIahs3koZ99jyEvTK3Jg72DbtD2uaT92Dp9R67bLt4f
+ JdAVRbwTrrb2zxG25HMlkzosWSX9O6cCKk6hURdBZ5/QeEL3bbas+GXmw35G22E6mdtOzCdoL
+ 096NVUsYgb9yehD5/GuQ0RM6dZ0F5rv8UTJdmbp2BMiPGzlI0ivVA+GdZq0oypwSgjJJUzK0E
+ K176CYoSMFATo+JrmppgEbXyAJBa3Xl8gHCDdogeHKbJ45n4b9pDFglSicWRVdra0lpP60YZV
+ z6CXScO6oEpOQ4prm8vsb5CXrSDYeADWicrifyfEERpFJmtzZlYFB1fDqA0upb8oh2QN3XY0+
+ gvH4cZqruNsiI3BgoPn2WXZz/v5Mlsk/i4IOwlq8LyeDoDSSpmw4x0eI7YwV4KOE/QZiNWJ/l
+ MDDOd3foVxI9PSHXmFwztyLPlzM7Cp4/8Woh8TCKgLYxSGs0LMQQJWvZ7a275HB2kvXYyCJqJ
+ IYUHINlvSdv7SXI6m5LlT/P4HGv2rtYmycLeyunWG5Sa+TUbWWzzMuZ9RHbjQ6u1+rWv9dFEi
+ F0BL7vIc6NeS9Z1++h5aSTyXFCZpiiZWvDOOBkM1Z+gVwQkbPESBreQvjvt00n5MaKtK/iiKF
+ kXBJB6b2sP79tkUbcqqoZTzcD81XadKGpkhT28+WG5ALiE6nYA=
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.04.22 17:56, Krzysztof Kozlowski wrote:
-> Use icc_sync_state for interconnect providers, so that the bandwidth
-> request doesn't need to stay on maximum value.
+On Thu, Apr 21, 2022 at 4:00 AM Sai Prakash Ranjan
+<quic_saipraka@quicinc.com> wrote:
+> On 4/8/2022 4:47 PM, Sai Prakash Ranjan wrote:
 
-Did you test this? In general, we should not enable this on boards that
-do not have full interconnect scaling support in consumer drivers yet.
-Some of the interconnects could be enabled by default by the bootloader
-and usually later during boot the consumer drivers request the bandwidth
-that they need. But if the requests are missing, the interconnects
-without bandwidth users will be disabled when we reach sync state. So
-this may (or not) cause issues...
+> > Gentle ping, could you please take a look at this, would appreciate your reviews.
+> >
+>
+> Gentle Ping !!
+>
 
-Thanks,
-Georgi
+Sorry for dropping the ball on this. I'll go through the patches again
+now. From a new
+look, this all seems fine, but I'll need to take a little extra time
+to understand why we
+are getting the warnings that you are fixing, and how one will use the
+tracepoints
+in the end.
 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   drivers/interconnect/qcom/msm8916.c | 1 +
->   drivers/interconnect/qcom/qcm2290.c | 1 +
->   drivers/interconnect/qcom/qcs404.c  | 1 +
->   drivers/interconnect/qcom/sdm660.c  | 1 +
->   drivers/interconnect/qcom/sm8150.c  | 1 +
->   drivers/interconnect/qcom/sm8250.c  | 1 +
->   drivers/interconnect/qcom/sm8350.c  | 1 +
->   drivers/interconnect/qcom/sm8450.c  | 1 +
->   8 files changed, 8 insertions(+)
-> 
-> diff --git a/drivers/interconnect/qcom/msm8916.c b/drivers/interconnect/qcom/msm8916.c
-> index 2f397a7c3322..811370fcd211 100644
-> --- a/drivers/interconnect/qcom/msm8916.c
-> +++ b/drivers/interconnect/qcom/msm8916.c
-> @@ -1347,6 +1347,7 @@ static struct platform_driver msm8916_noc_driver = {
->   	.driver = {
->   		.name = "qnoc-msm8916",
->   		.of_match_table = msm8916_noc_of_match,
-> +		.sync_state = icc_sync_state,
->   	},
->   };
->   module_platform_driver(msm8916_noc_driver);
-> diff --git a/drivers/interconnect/qcom/qcm2290.c b/drivers/interconnect/qcom/qcm2290.c
-> index 74404e0b2080..6cf75da91428 100644
-> --- a/drivers/interconnect/qcom/qcm2290.c
-> +++ b/drivers/interconnect/qcom/qcm2290.c
-> @@ -1355,6 +1355,7 @@ static struct platform_driver qcm2290_noc_driver = {
->   	.driver = {
->   		.name = "qnoc-qcm2290",
->   		.of_match_table = qcm2290_noc_of_match,
-> +		.sync_state = icc_sync_state,
->   	},
->   };
->   module_platform_driver(qcm2290_noc_driver);
-> diff --git a/drivers/interconnect/qcom/qcs404.c b/drivers/interconnect/qcom/qcs404.c
-> index 416c8bff8efa..d82f9add4933 100644
-> --- a/drivers/interconnect/qcom/qcs404.c
-> +++ b/drivers/interconnect/qcom/qcs404.c
-> @@ -1086,6 +1086,7 @@ static struct platform_driver qcs404_noc_driver = {
->   	.driver = {
->   		.name = "qnoc-qcs404",
->   		.of_match_table = qcs404_noc_of_match,
-> +		.sync_state = icc_sync_state,
->   	},
->   };
->   module_platform_driver(qcs404_noc_driver);
-> diff --git a/drivers/interconnect/qcom/sdm660.c b/drivers/interconnect/qcom/sdm660.c
-> index 274a7139fe1a..706b49a4bb70 100644
-> --- a/drivers/interconnect/qcom/sdm660.c
-> +++ b/drivers/interconnect/qcom/sdm660.c
-> @@ -1716,6 +1716,7 @@ static struct platform_driver sdm660_noc_driver = {
->   	.driver = {
->   		.name = "qnoc-sdm660",
->   		.of_match_table = sdm660_noc_of_match,
-> +		.sync_state = icc_sync_state,
->   	},
->   };
->   module_platform_driver(sdm660_noc_driver);
-> diff --git a/drivers/interconnect/qcom/sm8150.c b/drivers/interconnect/qcom/sm8150.c
-> index 745e3c36a61a..2a85f53802b5 100644
-> --- a/drivers/interconnect/qcom/sm8150.c
-> +++ b/drivers/interconnect/qcom/sm8150.c
-> @@ -535,6 +535,7 @@ static struct platform_driver qnoc_driver = {
->   	.driver = {
->   		.name = "qnoc-sm8150",
->   		.of_match_table = qnoc_of_match,
-> +		.sync_state = icc_sync_state,
->   	},
->   };
->   module_platform_driver(qnoc_driver);
-> diff --git a/drivers/interconnect/qcom/sm8250.c b/drivers/interconnect/qcom/sm8250.c
-> index aa707582ea01..8dfb5dea562a 100644
-> --- a/drivers/interconnect/qcom/sm8250.c
-> +++ b/drivers/interconnect/qcom/sm8250.c
-> @@ -551,6 +551,7 @@ static struct platform_driver qnoc_driver = {
->   	.driver = {
->   		.name = "qnoc-sm8250",
->   		.of_match_table = qnoc_of_match,
-> +		.sync_state = icc_sync_state,
->   	},
->   };
->   module_platform_driver(qnoc_driver);
-> diff --git a/drivers/interconnect/qcom/sm8350.c b/drivers/interconnect/qcom/sm8350.c
-> index c79f93a1ac73..3e26a2175b28 100644
-> --- a/drivers/interconnect/qcom/sm8350.c
-> +++ b/drivers/interconnect/qcom/sm8350.c
-> @@ -531,6 +531,7 @@ static struct platform_driver qnoc_driver = {
->   	.driver = {
->   		.name = "qnoc-sm8350",
->   		.of_match_table = qnoc_of_match,
-> +		.sync_state = icc_sync_state,
->   	},
->   };
->   module_platform_driver(qnoc_driver);
-> diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
-> index 8d99ee6421df..d573018a6324 100644
-> --- a/drivers/interconnect/qcom/sm8450.c
-> +++ b/drivers/interconnect/qcom/sm8450.c
-> @@ -1968,6 +1968,7 @@ static struct platform_driver qnoc_driver = {
->   	.driver = {
->   		.name = "qnoc-sm8450",
->   		.of_match_table = qnoc_of_match,
-> +		.sync_state = icc_sync_state,
->   	},
->   };
->   
-
+       Arnd
