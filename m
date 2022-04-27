@@ -2,248 +2,335 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9CC0511AFA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:57:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F9E85119D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:56:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237431AbiD0OQu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 10:16:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45364 "EHLO
+        id S237681AbiD0Oa4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 10:30:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237419AbiD0OQu (ORCPT
+        with ESMTP id S237616AbiD0Oaz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 10:16:50 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42E5E53A53
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:13:35 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id r83so1574515pgr.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:13:35 -0700 (PDT)
+        Wed, 27 Apr 2022 10:30:55 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66E159FDA;
+        Wed, 27 Apr 2022 07:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=4SSg9xvttj6ofRIso6mDTNWRqylug+TxQegoRN2Hy+E=;
-        b=Ynrnt4ag/fTrk+ZaeCVK91gLosITF9Y2Spphnsg7OwPVSutemFem4wUfO8W20f+lhq
-         BegLMnSak3Ylp4XQUdTIGVwVdXfAIuiw8klflijsMOqIBnyuHQ+6ZVyFQBMe9v0qy4JX
-         x3NafhSsue3PmXZz9Cx/JJy8j4tAf8anKqJ2blfUZ01hgEO46nb6E5AEXOG0KPBIIbnd
-         a3aOJoKs63JHNEHYSnu9Eo0uNcWOhk6w6ykqMGQkLStQV0GOZj6mwSJ6R+GR0rrCLUHX
-         ona7CdaBgXXIlGEVqcMcglwN2u4iybJUz0yAPmF7KkbMGn8PBFthelPqu8D88K1qqzVz
-         mLZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4SSg9xvttj6ofRIso6mDTNWRqylug+TxQegoRN2Hy+E=;
-        b=KiBanlYgaWe5/uSzrvjcgLgP6/nYwdPk/xxZDbxKGZDk1bi5Xp0M+DT6hZGjv+uSPm
-         qYXNulukKyiR/1lhmSEuZDNy7TVEthYEIGro8G7iSr8j4h1BfZUhUk/OZNuCarTWDzI1
-         0SuUPEsYYvGyyCXAB6e1ceppLyh/sGR6ZZ2UlbKA0gTnJfElDNWuIIgTZ3alJeGVG20i
-         GDsZsnYj9+V5X4lCyIS/XmT5bruzTG5ZSjmNilF0SV58AiqNRmV3bTa39mXqn/PhbX/2
-         dhGMWeGpCWhGQXjcoRkFYo+An6fdfC99Ek1rOLbTNbHlas0EoUr6vcn1il2Fhmi1OQWo
-         u7XA==
-X-Gm-Message-State: AOAM5318LdkpJjpPpOTWFNer5xqhsQfSauaU8MdOtooukLWkjbQglBeN
-        CRtxNwwlpKgdeRO1+Bk2T1gJ41c0zunD
-X-Google-Smtp-Source: ABdhPJyeZaLnVABPLhwheo7Q4u0alHqWLeJL95RhQwsTcziUeecNyjDChzeEPdc5CEVZHjhp3r+f7g==
-X-Received: by 2002:a63:5464:0:b0:3c1:4930:fbd5 with SMTP id e36-20020a635464000000b003c14930fbd5mr2572020pgm.94.1651068814601;
-        Wed, 27 Apr 2022 07:13:34 -0700 (PDT)
-Received: from thinkpad ([27.111.75.179])
-        by smtp.gmail.com with ESMTPSA id bo3-20020a17090b090300b001cd4989fecesm7273661pjb.26.2022.04.27.07.13.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 07:13:34 -0700 (PDT)
-Date:   Wed, 27 Apr 2022 19:43:29 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 1/5] PCI: dwc: Convert msi_irq to the array
-Message-ID: <20220427141329.GA4161@thinkpad>
-References: <20220427121653.3158569-1-dmitry.baryshkov@linaro.org>
- <20220427121653.3158569-2-dmitry.baryshkov@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651069663; x=1682605663;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=M3SYFGLPWzKvtp1WGADcPgzrAp27QvnoGE8k0g5v2OY=;
+  b=tlNcXdd6MfaddGC0FAtk4FdAsF++y2C6e//raC6TsJGo+ufrZJ21eCtx
+   5UWePTfpJGyNB1DTy5kc8yGG7vUaEc9MUi7eXXOeX28NE7jI/i3bUTyFU
+   RAOpyxDZqV0y6YUr8X0lgA7G98RBU/JLsSgcBH4Upt14widtbby4UD0Z8
+   U=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 27 Apr 2022 07:27:43 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2022 07:27:42 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 27 Apr 2022 07:27:42 -0700
+Received: from [10.253.36.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 27 Apr
+ 2022 07:27:38 -0700
+Message-ID: <5752f130-c040-6156-44dc-497011f2a78e@quicinc.com>
+Date:   Wed, 27 Apr 2022 22:27:35 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220427121653.3158569-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v6 10/10] ARM: dts: msm: Add tpdm mm/prng for sm8250
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+CC:     Mike Leach <mike.leach@linaro.org>, Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20220425040304.37487-1-quic_jinlmao@quicinc.com>
+ <20220425040304.37487-11-quic_jinlmao@quicinc.com>
+ <a5daf7ed-9baa-5684-4823-30b0cca69488@somainline.org>
+From:   Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <a5daf7ed-9baa-5684-4823-30b0cca69488@somainline.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 27, 2022 at 03:16:49PM +0300, Dmitry Baryshkov wrote:
-> Qualcomm version of DWC PCIe controller supports more than 32 MSI
-> interrupts, but they are routed to separate interrupts in groups of 32
-> vectors. To support such configuration, change the msi_irq field into an
-> array. Let the DWC core handle all interrupts that were set in this
-> array.
-> 
+Thank you Konrad for the review.
 
-Instead of defining it as an array, can we allocate it dynamically in the
-controller drivers instead? This has two benefits:
+On 4/26/2022 7:49 PM, Konrad Dybcio wrote:
+>
+> On 25/04/2022 06:03, Mao Jinlong wrote:
+>> Add tpdm mm and tpdm prng for sm8250.
+>>
+>> +---------------+                +-------------+
+>> |  tpdm@6c08000 |                |tpdm@684C000 |
+>> +-------|-------+                +------|------+
+>>          |                               |
+>> +-------|-------+                       |
+>> | funnel@6c0b000|                       |
+>> +-------|-------+                       |
+>>          |                               |
+>> +-------|-------+                       |
+>> |funnel@6c2d000 |                       |
+>> +-------|-------+                       |
+>>          |                               |
+>>          |    +---------------+          |
+>>          +----- tpda@6004000  -----------+
+>>               +-------|-------+
+>>                       |
+>>               +-------|-------+
+>>               |funnel@6005000 |
+>>               +---------------+
+>>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm8250.dtsi | 170 +++++++++++++++++++++++++++
+>>   1 file changed, 170 insertions(+)
+>
+> Hi,
+>
+>
+> some of the previous comments (uppercase hex instead of lowercase and 
+> wrong commit title) still haven't been addressed.
 
-1. There is no need of using a dedicated flag.
-2. Controller drivers that don't support MSIs can pass NULL and in the core we
-can use platform_get_irq_byname_optional() to get supported number of MSIs from
-devicetree.
+I will double check and address your comments.
 
-Thanks,
-Mani
+Thanks
 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/pci/controller/dwc/pci-dra7xx.c       |  2 +-
->  drivers/pci/controller/dwc/pci-exynos.c       |  2 +-
->  .../pci/controller/dwc/pcie-designware-host.c | 30 +++++++++++--------
->  drivers/pci/controller/dwc/pcie-designware.h  |  2 +-
->  drivers/pci/controller/dwc/pcie-keembay.c     |  2 +-
->  drivers/pci/controller/dwc/pcie-spear13xx.c   |  2 +-
->  drivers/pci/controller/dwc/pcie-tegra194.c    |  2 +-
->  7 files changed, 24 insertions(+), 18 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
-> index dfcdeb432dc8..0919c96dcdbd 100644
-> --- a/drivers/pci/controller/dwc/pci-dra7xx.c
-> +++ b/drivers/pci/controller/dwc/pci-dra7xx.c
-> @@ -483,7 +483,7 @@ static int dra7xx_add_pcie_port(struct dra7xx_pcie *dra7xx,
->  		return pp->irq;
->  
->  	/* MSI IRQ is muxed */
-> -	pp->msi_irq = -ENODEV;
-> +	pp->msi_irq[0] = -ENODEV;
->  
->  	ret = dra7xx_pcie_init_irq_domain(pp);
->  	if (ret < 0)
-> diff --git a/drivers/pci/controller/dwc/pci-exynos.c b/drivers/pci/controller/dwc/pci-exynos.c
-> index 467c8d1cd7e4..4f2010bd9cd7 100644
-> --- a/drivers/pci/controller/dwc/pci-exynos.c
-> +++ b/drivers/pci/controller/dwc/pci-exynos.c
-> @@ -292,7 +292,7 @@ static int exynos_add_pcie_port(struct exynos_pcie *ep,
->  	}
->  
->  	pp->ops = &exynos_pcie_host_ops;
-> -	pp->msi_irq = -ENODEV;
-> +	pp->msi_irq[0] = -ENODEV;
->  
->  	ret = dw_pcie_host_init(pp);
->  	if (ret) {
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 2fa86f32d964..5d90009a0f73 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -257,8 +257,11 @@ int dw_pcie_allocate_domains(struct pcie_port *pp)
->  
->  static void dw_pcie_free_msi(struct pcie_port *pp)
->  {
-> -	if (pp->msi_irq)
-> -		irq_set_chained_handler_and_data(pp->msi_irq, NULL, NULL);
-> +	u32 ctrl;
-> +
-> +	for (ctrl = 0; ctrl < MAX_MSI_CTRLS; ctrl++)
-> +		if (pp->msi_irq[ctrl])
-> +			irq_set_chained_handler_and_data(pp->msi_irq[ctrl], NULL, NULL);
->  
->  	irq_domain_remove(pp->msi_domain);
->  	irq_domain_remove(pp->irq_domain);
-> @@ -368,13 +371,15 @@ int dw_pcie_host_init(struct pcie_port *pp)
->  			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
->  				pp->irq_mask[ctrl] = ~0;
->  
-> -			if (!pp->msi_irq) {
-> -				pp->msi_irq = platform_get_irq_byname_optional(pdev, "msi");
-> -				if (pp->msi_irq < 0) {
-> -					pp->msi_irq = platform_get_irq(pdev, 0);
-> -					if (pp->msi_irq < 0)
-> -						return pp->msi_irq;
-> +			if (!pp->msi_irq[0]) {
-> +				int irq = platform_get_irq_byname_optional(pdev, "msi");
-> +
-> +				if (irq < 0) {
-> +					irq = platform_get_irq(pdev, 0);
-> +					if (irq < 0)
-> +						return irq;
->  				}
-> +				pp->msi_irq[0] = irq;
->  			}
->  
->  			pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
-> @@ -383,10 +388,11 @@ int dw_pcie_host_init(struct pcie_port *pp)
->  			if (ret)
->  				return ret;
->  
-> -			if (pp->msi_irq > 0)
-> -				irq_set_chained_handler_and_data(pp->msi_irq,
-> -							    dw_chained_msi_isr,
-> -							    pp);
-> +			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
-> +				if (pp->msi_irq[ctrl] > 0)
-> +					irq_set_chained_handler_and_data(pp->msi_irq[ctrl],
-> +									 dw_chained_msi_isr,
-> +									 pp);
->  
->  			ret = dma_set_mask(pci->dev, DMA_BIT_MASK(32));
->  			if (ret)
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index 7d6e9b7576be..9c1a38b0a6b3 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -187,7 +187,7 @@ struct pcie_port {
->  	u32			io_size;
->  	int			irq;
->  	const struct dw_pcie_host_ops *ops;
-> -	int			msi_irq;
-> +	int			msi_irq[MAX_MSI_CTRLS];
->  	struct irq_domain	*irq_domain;
->  	struct irq_domain	*msi_domain;
->  	u16			msi_msg;
-> diff --git a/drivers/pci/controller/dwc/pcie-keembay.c b/drivers/pci/controller/dwc/pcie-keembay.c
-> index 1ac29a6eef22..297e6e926c00 100644
-> --- a/drivers/pci/controller/dwc/pcie-keembay.c
-> +++ b/drivers/pci/controller/dwc/pcie-keembay.c
-> @@ -338,7 +338,7 @@ static int keembay_pcie_add_pcie_port(struct keembay_pcie *pcie,
->  	int ret;
->  
->  	pp->ops = &keembay_pcie_host_ops;
-> -	pp->msi_irq = -ENODEV;
-> +	pp->msi_irq[0] = -ENODEV;
->  
->  	ret = keembay_pcie_setup_msi_irq(pcie);
->  	if (ret)
-> diff --git a/drivers/pci/controller/dwc/pcie-spear13xx.c b/drivers/pci/controller/dwc/pcie-spear13xx.c
-> index 1569e82b5568..cc7776833810 100644
-> --- a/drivers/pci/controller/dwc/pcie-spear13xx.c
-> +++ b/drivers/pci/controller/dwc/pcie-spear13xx.c
-> @@ -172,7 +172,7 @@ static int spear13xx_add_pcie_port(struct spear13xx_pcie *spear13xx_pcie,
->  	}
->  
->  	pp->ops = &spear13xx_pcie_host_ops;
-> -	pp->msi_irq = -ENODEV;
-> +	pp->msi_irq[0] = -ENODEV;
->  
->  	ret = dw_pcie_host_init(pp);
->  	if (ret) {
-> diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-> index b1b5f836a806..e75712db85b0 100644
-> --- a/drivers/pci/controller/dwc/pcie-tegra194.c
-> +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-> @@ -2271,7 +2271,7 @@ static void tegra194_pcie_shutdown(struct platform_device *pdev)
->  
->  	disable_irq(pcie->pci.pp.irq);
->  	if (IS_ENABLED(CONFIG_PCI_MSI))
-> -		disable_irq(pcie->pci.pp.msi_irq);
-> +		disable_irq(pcie->pci.pp.msi_irq[0]);
->  
->  	tegra194_pcie_pme_turnoff(pcie);
->  	tegra_pcie_unconfig_controller(pcie);
-> -- 
-> 2.35.1
-> 
+Jinlong Mao
+
+>
+>
+> Konrad
+>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>> index 53ab2b457a2f..ce558a2639e7 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>> @@ -4703,6 +4703,73 @@
+>>               };
+>>           };
+>>   +        tpda@6004000 {
+>> +            compatible = "arm,primecell";
+>> +            reg = <0 0x06004000 0 0x1000>;
+>> +            reg-names = "tpda-base";
+>> +
+>> +            clocks = <&aoss_qmp>;
+>> +            clock-names = "apb_pclk";
+>> +
+>> +            out-ports {
+>> +                port {
+>> +                    reg = <0>;
+>> +                    tpda_out_funnel_qatb: endpoint {
+>> +                        remote-endpoint = <&funnel_qatb_in_tpda>;
+>> +                    };
+>> +                };
+>> +            };
+>> +
+>> +            in-ports {
+>> +                #address-cells = <1>;
+>> +                #size-cells = <0>;
+>> +
+>> +                port@9 {
+>> +                    reg = <9>;
+>> +                    tpda_9_in_tpdm_mm: endpoint {
+>> +                        remote-endpoint = <&tpdm_mm_out_tpda9>;
+>> +                    };
+>> +                };
+>> +
+>> +                port@23 {
+>> +                    reg = <23>;
+>> +                    tpda_23_in_tpdm_prng: endpoint {
+>> +                        remote-endpoint = <&tpdm_prng_out_tpda_23>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>> +        funnel@6005000 {
+>> +            compatible = "arm,primecell";
+>> +
+>> +            reg = <0 0x06005000 0 0x1000>;
+>> +            reg-names = "funnel-base";
+>> +
+>> +            clocks = <&aoss_qmp>;
+>> +            clock-names = "apb_pclk";
+>> +
+>> +            out-ports {
+>> +                port {
+>> +                    funnel_qatb_out_funnel_in0: endpoint {
+>> +                        remote-endpoint = <&funnel_in0_in_funnel_qatb>;
+>> +                    };
+>> +                };
+>> +            };
+>> +
+>> +            in-ports {
+>> +                #address-cells = <1>;
+>> +                #size-cells = <0>;
+>> +
+>> +                port@0 {
+>> +                    reg = <0>;
+>> +                    funnel_qatb_in_tpda: endpoint {
+>> +                        remote-endpoint = <&tpda_out_funnel_qatb>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>>           funnel@6041000 {
+>>               compatible = "arm,coresight-dynamic-funnel", 
+>> "arm,primecell";
+>>               reg = <0 0x06041000 0 0x1000>;
+>> @@ -4722,6 +4789,13 @@
+>>                   #address-cells = <1>;
+>>                   #size-cells = <0>;
+>>   +                port@6 {
+>> +                    reg = <6>;
+>> +                    funnel_in0_in_funnel_qatb: endpoint {
+>> +                        remote-endpoint = 
+>> <&funnel_qatb_out_funnel_in0>;
+>> +                    };
+>> +                };
+>> +
+>>                   port@7 {
+>>                       reg = <7>;
+>>                       funnel0_in7: endpoint {
+>> @@ -4836,6 +4910,23 @@
+>>               };
+>>           };
+>>   +        tpdm@684C000 {
+>> +            compatible = "arm,primecell";
+>> +            reg = <0 0x0684C000 0 0x1000>;
+>> +            reg-names = "tpdm-base";
+>> +
+>> +            clocks = <&aoss_qmp>;
+>> +            clock-names = "apb_pclk";
+>> +
+>> +            out-ports {
+>> +                port {
+>> +                    tpdm_prng_out_tpda_23: endpoint {
+>> +                        remote-endpoint = <&tpda_23_in_tpdm_prng>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>>           funnel@6b04000 {
+>>               compatible = "arm,coresight-dynamic-funnel", 
+>> "arm,primecell";
+>>               arm,primecell-periphid = <0x000bb908>;
+>> @@ -4920,6 +5011,85 @@
+>>               };
+>>           };
+>>   +        tpdm@6c08000 {
+>> +            compatible = "arm,primecell";
+>> +            reg = <0 0x06c08000 0 0x1000>;
+>> +            reg-names = "tpdm-base";
+>> +
+>> +            clocks = <&aoss_qmp>;
+>> +            clock-names = "apb_pclk";
+>> +
+>> +            out-ports {
+>> +                port {
+>> +                    tpdm_mm_out_funnel_dl_mm: endpoint {
+>> +                        remote-endpoint = <&funnel_dl_mm_in_tpdm_mm>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>> +        funnel@6c0b000 {
+>> +            compatible = "arm,coresight-dynamic-funnel", 
+>> "arm,primecell";
+>> +
+>> +            reg = <0 0x06c0b000 0 0x1000>;
+>> +            reg-names = "funnel-base";
+>> +
+>> +            clocks = <&aoss_qmp>;
+>> +            clock-names = "apb_pclk";
+>> +
+>> +            out-ports {
+>> +                port {
+>> +                    funnel_dl_mm_out_funnel_dl_center: endpoint {
+>> +                        remote-endpoint = 
+>> <&funnel_dl_center_in_funnel_dl_mm>;
+>> +                    };
+>> +                };
+>> +            };
+>> +
+>> +            in-ports {
+>> +                #address-cells = <1>;
+>> +                #size-cells = <0>;
+>> +
+>> +                port@3 {
+>> +                    reg = <3>;
+>> +                    funnel_dl_mm_in_tpdm_mm: endpoint {
+>> +                        remote-endpoint = <&tpdm_mm_out_funnel_dl_mm>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>> +        funnel@6c2d000 {
+>> +            compatible = "arm,coresight-dynamic-funnel", 
+>> "arm,primecell";
+>> +
+>> +            reg = <0 0x06c2d000 0 0x1000>;
+>> +            reg-names = "funnel-base";
+>> +
+>> +            clocks = <&aoss_qmp>;
+>> +            clock-names = "apb_pclk";
+>> +
+>> +            out-ports {
+>> +                #address-cells = <1>;
+>> +                #size-cells = <0>;
+>> +                port {
+>> +                    tpdm_mm_out_tpda9: endpoint {
+>> +                        remote-endpoint = <&tpda_9_in_tpdm_mm>;
+>> +                    };
+>> +                };
+>> +            };
+>> +
+>> +            in-ports {
+>> +                #address-cells = <1>;
+>> +                #size-cells = <0>;
+>> +
+>> +                port@2 {
+>> +                    reg = <2>;
+>> +                    funnel_dl_center_in_funnel_dl_mm: endpoint {
+>> +                        remote-endpoint = 
+>> <&funnel_dl_mm_out_funnel_dl_center>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>>           etm@7040000 {
+>>               compatible = "arm,coresight-etm4x", "arm,primecell";
+>>               reg = <0 0x07040000 0 0x1000>;
