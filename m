@@ -2,148 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28A8A511634
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 13:34:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C067511652
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 13:34:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231560AbiD0LFl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 07:05:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49576 "EHLO
+        id S232747AbiD0LgC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 07:36:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232364AbiD0LDc (ORCPT
+        with ESMTP id S232694AbiD0LgB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 07:03:32 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF4F286173
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 03:53:04 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id x17so2402555lfa.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 03:53:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=/MDg5A9f9rvXZp1xmjZTzHZIeAwlmtx2mQRfLrQsy7E=;
-        b=pIfuPJr7nqblgDaRQ4dMb03d0stbXtuCVITICOO7D+Sw4d+0uljC/gJd1LCHv7Wm9B
-         y2F0N82TJJBYu0rQaIMQKnpmzGNTPTX5A+GLOyh8RADJXlYzT/kGOqQhs7QPP6GHlFJ5
-         kmLGvEhadsTzLtWOODP2aBnJUHIf7Hk/jn1ipAPo0UhWS72L3ZzXTQ+w41iM/nmLTfl8
-         wmzpzsg2qFyv1MxvPC3mFzATo055/Ji8SfudiSp05BcwrRzxyyN/sgMAt6+nNg/dWo5X
-         nzaD0OWmvYHrz0atobccvico61skaUsgrUdBzgcJP3W3slbs/JsbPCWA0WzOuMTUYJcg
-         Qwhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=/MDg5A9f9rvXZp1xmjZTzHZIeAwlmtx2mQRfLrQsy7E=;
-        b=2GHSl9F/rWbeu/UDxVZq8QB8ZKmoZ2xdi/O4bxpcq/1OGjM9/urMfZT5FX5DQPJsqu
-         477++B3nSy7bUO8mw5HPIiWs/JqzxtD3gGfAEAUAfpXiMcBetuTtCITNhlKw1o6L2/8H
-         GQduZavNyeeQjTKaB8kumrtTU8rTB9bsAPj0d3YSts/3d7yLpf01qW/kTnx69iah7pJ0
-         ZYDvXHkVb0jio1jQsvPi7POb4TIngi+o9q/q9t9F5KCHRutgNJMqDloq4mndfyX5G6ar
-         Wwc+OTAUAzVgM7P4i0pnAP+AnkoRFQRmZbBJwBcpzUV5HOu9usp1ahrAYi0cSnDfE9kk
-         USkQ==
-X-Gm-Message-State: AOAM532sEtXwzCVCJjdzyD+KYGHzq9aM1o0XnTV9u38jaSnGnC2eGnL+
-        op94aH9qAB6J18ImozaQ4qMGCg==
-X-Google-Smtp-Source: ABdhPJzYAmcUZabicyvLvDv5FdlC1iUQgJ59NCULUae//BS2fAbM2zBP4v+0xt14oQfazbKVtV3ERA==
-X-Received: by 2002:ac2:4add:0:b0:471:fc6d:a71d with SMTP id m29-20020ac24add000000b00471fc6da71dmr14050863lfp.350.1651056782925;
-        Wed, 27 Apr 2022 03:53:02 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c6-20020a19e346000000b0046b8aac6e16sm2022462lfk.26.2022.04.27.03.53.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Apr 2022 03:53:02 -0700 (PDT)
-Message-ID: <e20d94d7-a865-21f7-0514-706992294614@linaro.org>
-Date:   Wed, 27 Apr 2022 13:53:01 +0300
+        Wed, 27 Apr 2022 07:36:01 -0400
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B54743A721;
+        Wed, 27 Apr 2022 04:32:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651059169; x=1682595169;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=/A3B6d6OPF/q0b6dnctlrtCp51yNGiV6UyDdy28MVuE=;
+  b=iNFNVLwfGCZNsFZ3eoeZ2Ts5f4XJLFn5otE+t4J4916LU4ZlwJEcrmgg
+   bzQmSi7kggUt16B9OVAeUzlq+niB0SZT+pj9eERGhC8mE/TUp5VsfpUHh
+   hfv91GujNi5x2RF+6SeguVuE+IjxoL2tSt91Pw7kdAZuFZ7MG4ZELuO2Y
+   G3nbofBS5hfNjqtqaFxgBaQWcKKUh726Z8Y4eddWAgZ97+8penETfHFoy
+   En4QHOSjbyDdMOUvUq2BvbQpoLE/c9SXCyFhGtJ0dR7pyouaB1HqMVoNX
+   K3nb+VKweohXkUa1pAl8FOoF11XpJkOj4ucMdq3myAYrVok0SS7oikYlj
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10329"; a="326391272"
+X-IronPort-AV: E=Sophos;i="5.90,292,1643702400"; 
+   d="scan'208";a="326391272"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2022 04:32:49 -0700
+X-IronPort-AV: E=Sophos;i="5.90,292,1643702400"; 
+   d="scan'208";a="580543933"
+Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.60.122])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2022 04:32:42 -0700
+Message-ID: <c592d7b6-b317-2f14-e4a2-62529129b0e5@intel.com>
+Date:   Wed, 27 Apr 2022 14:32:38 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH] drm/msm/disp/dpu1: avoid clearing hw interrupts if
- hw_intr is null during drm uninit
-Content-Language: en-GB
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dianders@chromium.org, quic_kalyant@quicinc.com
-References: <1650952931-31988-1-git-send-email-quic_vpolimer@quicinc.com>
- <CAE-0n52cSR_xCxF+_UeK8CaHqsu=4HOtfWQ3BMmx2Tx3kmk-ZA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAE-0n52cSR_xCxF+_UeK8CaHqsu=4HOtfWQ3BMmx2Tx3kmk-ZA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Firefox/91.0 Thunderbird/91.7.0
+Subject: Re: [PATCH V5] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
+Content-Language: en-US
+To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
+        p.zabel@pengutronix.de, chris@printf.net, venkatg@codeaurora.org,
+        gdjakov@mm-sol.com, quic_asutoshd@quicinc.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rampraka@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com
+References: <1650816153-23797-1-git-send-email-quic_c_sbhanu@quicinc.com>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+In-Reply-To: <1650816153-23797-1-git-send-email-quic_c_sbhanu@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/04/2022 00:50, Stephen Boyd wrote:
-> Quoting Vinod Polimera (2022-04-25 23:02:11)
->> Avoid clearing irqs and derefernce hw_intr when hw_intr is null.
+On 24/04/22 19:02, Shaik Sajida Bhanu wrote:
+> Reset GCC_SDCC_BCR register before every fresh initilazation. This will
+> reset whole SDHC-msm controller, clears the previous power control
+> states and avoids, software reset timeout issues as below.
 > 
-> Presumably this is only the case when the display driver doesn't fully
-> probe and something probe defers? Can you clarify how this situation
-> happens?
+> [ 5.458061][ T262] mmc1: Reset 0x1 never completed.
+> [ 5.462454][ T262] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+> [ 5.469065][ T262] mmc1: sdhci: Sys addr: 0x00000000 | Version: 0x00007202
+> [ 5.475688][ T262] mmc1: sdhci: Blk size: 0x00000000 | Blk cnt: 0x00000000
+> [ 5.482315][ T262] mmc1: sdhci: Argument: 0x00000000 | Trn mode: 0x00000000
+> [ 5.488927][ T262] mmc1: sdhci: Present: 0x01f800f0 | Host ctl: 0x00000000
+> [ 5.495539][ T262] mmc1: sdhci: Power: 0x00000000 | Blk gap: 0x00000000
+> [ 5.502162][ T262] mmc1: sdhci: Wake-up: 0x00000000 | Clock: 0x00000003
+> [ 5.508768][ T262] mmc1: sdhci: Timeout: 0x00000000 | Int stat: 0x00000000
+> [ 5.515381][ T262] mmc1: sdhci: Int enab: 0x00000000 | Sig enab: 0x00000000
+> [ 5.521996][ T262] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+> [ 5.528607][ T262] mmc1: sdhci: Caps: 0x362dc8b2 | Caps_1: 0x0000808f
+> [ 5.535227][ T262] mmc1: sdhci: Cmd: 0x00000000 | Max curr: 0x00000000
+> [ 5.541841][ T262] mmc1: sdhci: Resp[0]: 0x00000000 | Resp[1]: 0x00000000
+> [ 5.548454][ T262] mmc1: sdhci: Resp[2]: 0x00000000 | Resp[3]: 0x00000000
+> [ 5.555079][ T262] mmc1: sdhci: Host ctl2: 0x00000000
+> [ 5.559651][ T262] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP-----------
+> [ 5.566621][ T262] mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg: 0x6000642c | DLL cfg2: 0x0020a000
+> [ 5.575465][ T262] mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl: 0x00010800 | DDR cfg: 0x80040873
+> [ 5.584658][ T262] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
 > 
->>
->> BUG: Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
->>
->> Call trace:
->>   dpu_core_irq_uninstall+0x50/0xb0
->>   dpu_irq_uninstall+0x18/0x24
->>   msm_drm_uninit+0xd8/0x16c
->>   msm_drm_bind+0x580/0x5fc
->>   try_to_bring_up_master+0x168/0x1c0
->>   __component_add+0xb4/0x178
->>   component_add+0x1c/0x28
->>   dp_display_probe+0x38c/0x400
->>   platform_probe+0xb0/0xd0
->>   really_probe+0xcc/0x2c8
->>   __driver_probe_device+0xbc/0xe8
->>   driver_probe_device+0x48/0xf0
->>   __device_attach_driver+0xa0/0xc8
->>   bus_for_each_drv+0x8c/0xd8
->>   __device_attach+0xc4/0x150
->>   device_initial_probe+0x1c/0x28
->>
->> Fixes: a73033619ea ("drm/msm/dpu: squash dpu_core_irq into dpu_hw_interrupts")
+> Fixes: 0eb0d9f4de34 ("mmc: sdhci-msm: Initial support for Qualcomm chipsets")
+> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+
+> ---
 > 
-> The fixes tag looks odd. In dpu_core_irq_uninstall() at that commit it
-> is dealing with 'irq_obj' which isn't a pointer. After commit
-> f25f656608e3 ("drm/msm/dpu: merge struct dpu_irq into struct
-> dpu_hw_intr") dpu_core_irq_uninstall() starts using 'hw_intr' which is
-> allocated on the heap. If we backported this patch to a place that had
-> a73033619ea without f25f656608e3 it wouldn't make any sense.
-
-I'd agree here. The following tag would be correct:
-
-Fixes: f25f656608e3 ("drm/msm/dpu: merge struct dpu_irq into struct 
-dpu_hw_intr")
-
-
+> Changes since V4:
+> 	- Called reset_control_put() in error path.
 > 
->> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 3 +++
->>   1 file changed, 3 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
->> index c515b7c..ab28577 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
->> @@ -599,6 +599,9 @@ void dpu_core_irq_uninstall(struct dpu_kms *dpu_kms)
->>   {
->>          int i;
->>
->> +       if (!dpu_kms->hw_intr)
->> +               return;
->> +
->>          pm_runtime_get_sync(&dpu_kms->pdev->dev);
->>          for (i = 0; i < dpu_kms->hw_intr->total_irqs; i++)
+> Changes since V3:
+> 	- Used reset controller local variable as suggested by
+> 	  Bjorn Andersson.
+> 	- Passed NULL as a parameter to
+> 	  devm_reset_control_get_optional_exclusive() as suggested by
+> 	  Bjorn Andersson.
+> 	- Replaced devm_reset_control_get_optional_exclusive() with
+> 	  reset_control_get_optional_exclusive() and called
+> 	  reset_control_put() before returning to clear the reset
+> 	  controller as suggested by Bjorn Andersson.
+> 
+> Changes since V2:
+> 	- Dropped new line after fixes tag as suggested by Bjorn
+> 	  Andersson.
+> 	- Passed device structure instead of passing platform_device
+> 	  structure as a argument for sdhci_msm_gcc_reset() as suggested
+> 	  by Bjorn Andersson.
+> 	- Replaced dev_err() with dev_err_probe() as suggested by Bjorn
+> 	  Andersson.
+> 
+> Changes since V1:
+> 	- Added fixes tag as suggested by Ulf Hansson.
+> 	- Replaced devm_reset_control_get() with
+> 	  devm_reset_control_get_optional_exclusive() as suggested by
+> 	  Ulf Hansson.
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 42 insertions(+)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 50c71e0..ff9f5b6 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -17,6 +17,7 @@
+>  #include <linux/regulator/consumer.h>
+>  #include <linux/interconnect.h>
+>  #include <linux/pinctrl/consumer.h>
+> +#include <linux/reset.h>
+>  
+>  #include "sdhci-pltfm.h"
+>  #include "cqhci.h"
+> @@ -2482,6 +2483,43 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
+>  	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
+>  }
+>  
+> +static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
+> +{
+> +	struct reset_control *reset;
+> +	int ret = 0;
+> +
+> +	reset = reset_control_get_optional_exclusive(dev, NULL);
+> +	if (IS_ERR(reset))
+> +		return dev_err_probe(dev, PTR_ERR(reset),
+> +				"unable to acquire core_reset\n");
+> +
+> +	if (!reset)
+> +		return ret;
+> +
+> +	ret = reset_control_assert(reset);
+> +	if (ret) {
+> +		reset_control_put(reset);
+> +		return dev_err_probe(dev, ret, "core_reset assert failed\n");
+> +	}
+> +
+> +	/*
+> +	 * The hardware requirement for delay between assert/deassert
+> +	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
+> +	 * ~125us (4/32768). To be on the safe side add 200us delay.
+> +	 */
+> +	usleep_range(200, 210);
+> +
+> +	ret = reset_control_deassert(reset);
+> +	if (ret) {
+> +		reset_control_put(reset);
+> +		return dev_err_probe(dev, ret, "core_reset deassert failed\n");
+> +	}
+> +
+> +	usleep_range(200, 210);
+> +	reset_control_put(reset);
+> +
+> +	return ret;
+> +}
+>  
+>  static int sdhci_msm_probe(struct platform_device *pdev)
+>  {
+> @@ -2529,6 +2567,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>  
+>  	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
+>  
+> +	ret = sdhci_msm_gcc_reset(&pdev->dev, host);
+> +	if (ret)
+> +		goto pltfm_free;
+> +
+>  	/* Setup SDCC bus voter clock. */
+>  	msm_host->bus_clk = devm_clk_get(&pdev->dev, "bus");
+>  	if (!IS_ERR(msm_host->bus_clk)) {
 
-
--- 
-With best wishes
-Dmitry
