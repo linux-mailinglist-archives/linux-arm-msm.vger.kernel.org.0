@@ -2,57 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0709512422
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 22:52:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 824E751244E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 23:06:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237201AbiD0U4H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 16:56:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36488 "EHLO
+        id S237431AbiD0VJI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 17:09:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236962AbiD0U4F (ORCPT
+        with ESMTP id S237876AbiD0VI4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 16:56:05 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36BE781194;
-        Wed, 27 Apr 2022 13:52:48 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id DFC11B82A53;
-        Wed, 27 Apr 2022 20:52:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C48C385A9;
-        Wed, 27 Apr 2022 20:52:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651092765;
-        bh=v307TXmNX7Dq2c5DVdjkniPVMOiPiXk6sD1IgSoBwuk=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=P9m+UfRC0IpQ/qL6+CZa0XyV1aGev8ss06l5wt3Yo2ywAQRD6OP06klVRAbABES23
-         N2Oi/mMC6KXz8eVr+GUoeKqkDgCD3YM+hptXm57Kaduc2pB5MwXp2P/shI0Nwr1ZL1
-         E08z7RTZdZxY1tyd/di4kcYEcLU5syNHhpzpn8fnNZT3ejRECInNUE98m+DgDZ91W6
-         /SOxVtJO58S/Xqw2Z5vIszx0U93UwjtzsZBk6V7liJHJ2sZEL4FrGIL1VqCZsgn+uU
-         h5CZnWI1yyF0PeSvJNSnrWD/2HBEcDyY7HdbPu8A+o0iBz6/jEWHvn8wz0Ypms0rmb
-         /qlh5sdvvsJGQ==
-Message-ID: <38149635-26ee-ab02-7c69-c5dd5f64fab5@kernel.org>
-Date:   Wed, 27 Apr 2022 23:52:39 +0300
+        Wed, 27 Apr 2022 17:08:56 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F36BD8CDB7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 14:05:20 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id k23so5812174ejd.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 14:05:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wC/Y/xUAMY3MM1qWZscCo6iihTvh79u5k2H+tub7M5E=;
+        b=FtTefVbihHVnJliLByKdlxfzTCkA6hkXRuVpjPjfpK7Oa0kTJUlsvEOldTXWCNcy8R
+         NS656K5NfT9ME8aV/LBodl8YHBCxFs+MokOClhyZny34wKHaKFHE5QWoklgs2sSgrN6q
+         ZaEoD5CFYhv4xaF3hnzN/9+MU2iyeE2Kq9lUk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wC/Y/xUAMY3MM1qWZscCo6iihTvh79u5k2H+tub7M5E=;
+        b=tWimK51KsAeQ8wOn8TrveF8qcDYK2WBBdtSheSS9zdTXcYgT44lUc0I/BwRjpZQEA3
+         UMLnCxSWnrQf5Bb3HELeouBH8YEdqBqboWgskhDlR1xRCM9ylClotpZv5bcCqrkTtGCq
+         GyVEgiems1dewxhqzwVuK9pS+YsCpIewxIzmHEEevzEPTzheBdO1JDXGZZLKYsAA0cy0
+         oFjoQzTgyhCY/NnoRR1CjZdLkzeyCAXO0L7agS+kXGPw95GdP+4lJYSVkY8LZAjZnkt0
+         1D3Cl/wBiXXWOAj6q3Tl1uPNbPjFcmRg8F7elO2y627qiVvKmE47NpR74aFulnzDOKtb
+         JEww==
+X-Gm-Message-State: AOAM530QYpvqZGhy0IP/Im9OAP/BdFNg50YoyY8d1NaeX/vzvqg/pMxz
+        wqd7rzL4zW6Us7iuiTvOfAH62LDF9jJ9aEAC
+X-Google-Smtp-Source: ABdhPJyeiYegNpYA3BU6Pl528l5725EQxZBAFX5N06G30oH/cy8zsfRvultAGq/OFilug7ekgo0Cvw==
+X-Received: by 2002:a17:906:c14b:b0:6da:b30d:76a0 with SMTP id dp11-20020a170906c14b00b006dab30d76a0mr27768566ejc.279.1651093519043;
+        Wed, 27 Apr 2022 14:05:19 -0700 (PDT)
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com. [209.85.128.52])
+        by smtp.gmail.com with ESMTPSA id x18-20020a170906b09200b006e8baac3a09sm7306052ejy.157.2022.04.27.14.05.17
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Apr 2022 14:05:17 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id u9-20020a05600c00c900b00393e729e655so1964218wmm.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 14:05:17 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f08:b0:391:fe3c:40e6 with SMTP id
+ l8-20020a05600c4f0800b00391fe3c40e6mr36937959wmq.34.1651093516669; Wed, 27
+ Apr 2022 14:05:16 -0700 (PDT)
 MIME-Version: 1.0
-Subject: Re: [PATCH] interconnect: Restore sync state by ignoring ipa-virt in
- provider count
-Content-Language: en-US
-To:     Alex Elder <elder@linaro.org>, Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+References: <20220426170306.v22.1.I7a1a6448d50bdd38e6082204a9818c59cc7a9bfd@changeid>
+In-Reply-To: <20220426170306.v22.1.I7a1a6448d50bdd38e6082204a9818c59cc7a9bfd@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 27 Apr 2022 14:05:04 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UzhOrXgB4LrHO4kaSrfw1GQJMb0RNsQXYfG5kG8EwcRA@mail.gmail.com>
+Message-ID: <CAD=FV=UzhOrXgB4LrHO4kaSrfw1GQJMb0RNsQXYfG5kG8EwcRA@mail.gmail.com>
+Subject: Re: [PATCH v22 1/2] arm64: dts: qcom: sc7180-trogdor: Add nodes for
+ onboard USB hub
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-References: <20220427013226.341209-1-swboyd@chromium.org>
- <fb1f9a17-9b27-b0ac-124d-66644851e204@linaro.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <fb1f9a17-9b27-b0ac-124d-66644851e204@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,72 +79,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.04.22 15:00, Alex Elder wrote:
-> On 4/26/22 8:32 PM, Stephen Boyd wrote:
->> Ignore compatible strings for the IPA virt drivers that were removed in
->> commits 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0
->> interconnects") and 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0
->> interconnects") so that the sync state logic can kick in again.
->> Otherwise all the interconnects in the system will stay pegged at max
->> speeds because 'providers_count' is always going to be one larger than
->> the number of drivers that will ever probe on sc7180 or sdx55. This
->> fixes suspend on sc7180 and sdx55 devices when you don't have a
->> devicetree patch to remove the ipa-virt compatible node.
->>
->> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Cc: Doug Anderson <dianders@chromium.org>
->> Cc: Alex Elder <elder@linaro.org>
->> Cc: Taniya Das <quic_tdas@quicinc.com>
->> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
->> Fixes: 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0 interconnects")
->> Fixes: 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0 interconnects")
->> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> 
-> So of_count_icc_providers() counts the number of
-> interconnect providers defined in the DTB, regardless
-> of whether anything in the code supports it.
+Hi,
 
-Yes, that's the case currently. There could be multiple provider drivers
-in different modules, and the modules may be loaded even not during boot,
-but later. So we rely on DT.
+On Tue, Apr 26, 2022 at 5:03 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+>
+> Add nodes for the onboard USB hub on trogdor devices. Remove the
+> 'always-on' property from the hub regulator, since the regulator
+> is now managed by the onboard_usb_hub driver.
 
-Thanks,
-Georgi
+There are people out there that are running trogdor devices with
+upstream Linux. There's not much we can do about it, but probably this
+patch will cause them to fail to probe USB because they won't have
+"CONFIG_USB_ONBOARD_HUB=y". Luckily the commit subject has "USB" in it
+so hopefully it'll be easy to spot, but I wonder if we should add
+something to the commit message that makes that super obvious and
+tells them about the relevant commit, like:
 
-> This seems to be a more general problem, but I
-> suppose in practice it's not likely to occur.
-> 
-> I think your solution looks fine, but I'm interested
-> in what Georgi has to say.
-> 
-> Reviewed-by: Alex Elder <elder@linaro.org>
-> 
-> 
->> ---
->>   drivers/interconnect/core.c | 8 +++++++-
->>   1 file changed, 7 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
->> index 9050ca1f4285..c52915a58b22 100644
->> --- a/drivers/interconnect/core.c
->> +++ b/drivers/interconnect/core.c
->> @@ -1087,9 +1087,15 @@ static int of_count_icc_providers(struct device_node *np)
->>   {
->>       struct device_node *child;
->>       int count = 0;
->> +    const struct of_device_id ignore_list[] = {
->> +        { .compatible = "qcom,sc7180-ipa-virt" },
->> +        { .compatible = "qcom,sdx55-ipa-virt" },
->> +        {}
->> +    };
->>       for_each_available_child_of_node(np, child) {
->> -        if (of_property_read_bool(child, "#interconnect-cells"))
->> +        if (of_property_read_bool(child, "#interconnect-cells") &&
->> +            likely(!of_match_node(ignore_list, child)))
->>               count++;
->>           count += of_count_icc_providers(child);
->>       }
->>
->> base-commit: 2fb251c265608636fc961b7d38e1a03937e57371
-> 
+For anyone using trogdor-based devices on Linux, it should be noted
+that this requires "CONFIG_USB_ONBOARD_HUB=y".
 
+
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> Depends on "usb: misc: Add onboard_usb_hub driver" [1] which landed in
+> https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git/commit/?h=usb-testing
+>
+> This patch was split off the above series.
+>
+> [1] https://patchwork.kernel.org/project/linux-usb/list/?series=615531&state=%2A&archive=both
+
+I presume it will be moderately annoying if this lands in the Qualcomm
+branch before the driver lands in mainline? Otherwise USB will fully
+stop working on the Qualcomm branch. Do we want to postpone landing
+this?
+
+
+-Doug
