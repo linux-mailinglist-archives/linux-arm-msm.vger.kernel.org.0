@@ -2,78 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CEDC511787
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 14:46:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05A5C51191B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:55:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234566AbiD0MmC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 08:42:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55726 "EHLO
+        id S235004AbiD0M5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 08:57:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234428AbiD0Ml4 (ORCPT
+        with ESMTP id S234973AbiD0M5i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 08:41:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D156D35AAB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 05:38:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1651063120;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=K5T2mzcnLGwMqpeR6jrzAYwjw0tWje8edHf2UQdVa4A=;
-        b=Co1fUC3eP2z3cPzZqRomEKsHLwo7ufTz9gmlWjLK0E1b/zXXhIBxdYFeJYOJcZaEx+cm5u
-        Q09vqVahsz6+fw3B17gOEaHRipBY7n1oKyr4kE+y+7fFTCG1Gkh0hM5LTHA+ByijyRt0hG
-        ahQgf5hYE0JFjlyQjEU0FQQD7NUj18c=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-624-HeLBCkQFOCGoqtgXCpUwQg-1; Wed, 27 Apr 2022 08:38:38 -0400
-X-MC-Unique: HeLBCkQFOCGoqtgXCpUwQg-1
-Received: by mail-qv1-f70.google.com with SMTP id 33-20020a0c8024000000b0043d17ffb0bdso1086543qva.18
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 05:38:38 -0700 (PDT)
+        Wed, 27 Apr 2022 08:57:38 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E66814B407
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 05:54:26 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id p12so2977947lfs.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 05:54:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HqwVCZPmc4mOi+NYnTP0qy4thOKdsBFKwRmb5wY2Y64=;
+        b=nb2mYuJus/SBWKqm+xwNcWbLPTPY8OHld/D92DhMZDeDDvXZ1O2qm8P9B2sPE7HjDT
+         k5SHg44VprWmmOt+sVgtGU6Mvqtizzsg4DSIsVHcZL9IVKk5tOSDofqu5PBDw9lu0LwA
+         C1exm9Ip7hWKEo9MTPlsPSUgZwB7SCxi2RXc6EI9jlHJpxkypBW4+13lBclvGZCwZced
+         FO0WN2MofEnZsf6/lK8ffA5xmzxwH2iRFGk6FRzqG8/ej3fhSpIOElB7lXrdrQF/rf1g
+         +rEGoG/hnrctD39363ggSuJ/kI4bI0bs9eXqL5U+S069tQjpikEKee23Q6aRMU6hKYrQ
+         RFxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=K5T2mzcnLGwMqpeR6jrzAYwjw0tWje8edHf2UQdVa4A=;
-        b=q/7MrNsqzN2KQjoXMKWegI5IF4lIXr47XrpjvrEp8wqbpt1XjH214dL7kzRNq4leBh
-         zv12RO/2H3/LexjmsUBO/QPs5v4YOmI7WHbw1jawDQlUQ4T3JcejUuHtPQRtrFJCuEGn
-         nFVHGLtoAsDBD+xjjR/XzpLMcKcvqLffEVv6LtynJaSnRDijFuGxLkpqnY4aaIK6Iir8
-         7B0JKRz5SwbFlglZUZhOivRHFHiLd0xAzI3xOOjPVHqgM/DU93jlUcwqsJyEfs9uwfCR
-         3QuNoX+KYBbuV5BDhOEdlv8EhULQEjXsrd9BgXmObV0ap3eeuQP08w8OQ2U8m3B9pV5s
-         cWTg==
-X-Gm-Message-State: AOAM530vuyMg73Qb69+JF+g/gHXPsso26xhKSeIdR2tGJGuGVu9Ks0gT
-        m7ycSy3uIblQoF4Wwo8vI7m7ZA/3An1gqpTeqkcd873aA5I4V9R3mQYbp7Ba2hZKRd4zTra8n/p
-        LRu35wvGXaWY5MlAj7Fw6qvuuYw==
-X-Received: by 2002:a37:9c2:0:b0:69e:c2b3:7120 with SMTP id 185-20020a3709c2000000b0069ec2b37120mr16241121qkj.150.1651063118418;
-        Wed, 27 Apr 2022 05:38:38 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwGDRMFfPx3BNBiON+Vbt8m+O9ygcWAUz2DFQIfNuuFEMKm5cj6DQH71r3jcUKRi5p2wmmBJA==
-X-Received: by 2002:a37:9c2:0:b0:69e:c2b3:7120 with SMTP id 185-20020a3709c2000000b0069ec2b37120mr16241113qkj.150.1651063118186;
-        Wed, 27 Apr 2022 05:38:38 -0700 (PDT)
-Received: from halaneylaptop (068-184-200-203.res.spectrum.com. [68.184.200.203])
-        by smtp.gmail.com with ESMTPSA id 186-20020a3707c3000000b0069f9a8cbec2sm149714qkh.131.2022.04.27.05.38.36
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HqwVCZPmc4mOi+NYnTP0qy4thOKdsBFKwRmb5wY2Y64=;
+        b=cDnUuzRtLICuzntkDuQ+nri2FirSCVdbTg88OqHL+DrjaNDiD2HBfP8NI/3MmSNv/U
+         WlaE8HTtDkCwU3BtqgARSsZo2bStn1s3X3aqb57ZqtQfD0cgKEcYbLFtOZBw5WRoUU5h
+         t7jw5eLHDzn3epc4N/STyRSuFFxe+oJ3MmWvWlt4Hlt+l9V7KK+9mvhu7c9hBNtIKaJs
+         2A2TEPdRn+jyzbo1wchA/ccTTm6IkL++2RT8jYfA+dVNRaSJbhYaNXTBLLcSLzwJgRcD
+         UfVFg7kAdrLkMbSw12N6YSMYfp05sFccnJJ+pVlTMM3o4UWU5uTUi41Q4tv+aQo3KMv/
+         sIZw==
+X-Gm-Message-State: AOAM5322MuRlHOTmZVyPbfDs0KUXw0BeC2L7Qx+R1yEr4EizHhRNxW/N
+        mpBrNuPeF7D9KgMXpBTdYjp/4w==
+X-Google-Smtp-Source: ABdhPJzIgbUxr5NmjM1/E6copsx350dNy6TDDaAQYsEjU2Ck+B9ydWxc5wsxXOyLjTiao6E5dAqaEw==
+X-Received: by 2002:ac2:4204:0:b0:464:f034:77a7 with SMTP id y4-20020ac24204000000b00464f03477a7mr19790889lfh.328.1651064065238;
+        Wed, 27 Apr 2022 05:54:25 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id r9-20020a2e94c9000000b0024b4c2a1346sm1827445ljh.123.2022.04.27.05.54.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 05:38:37 -0700 (PDT)
-Date:   Wed, 27 Apr 2022 07:38:35 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] soc: qcom: rpmhpd: add sc8280xp & sa8540p rpmh
- power-domains
-Message-ID: <20220427123835.hmfdu66ut3uvvtjp@halaneylaptop>
-References: <20220426233508.1762345-1-bjorn.andersson@linaro.org>
- <20220426233508.1762345-4-bjorn.andersson@linaro.org>
+        Wed, 27 Apr 2022 05:54:24 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+        quic_tdas@quicinc.com
+Subject: [PATCH v5 0/3] arm: qcom: qcom-apq8064: add separate device node for tsens
+Date:   Wed, 27 Apr 2022 15:54:20 +0300
+Message-Id: <20220427125423.3166138-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220426233508.1762345-4-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,111 +76,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 26, 2022 at 04:35:08PM -0700, Bjorn Andersson wrote:
-> The Qualcomm sc8280xp platform has 13 and the sa8540p platform has 11
-> power-domains. Add compatibles, the typically used ones power-domains
-> and their relevant active-only variants, to the RPMh power-domain
-> driver.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v1:
-> - Added QPHY
-> - Split out sa8540
-> - Sorted the entries alphabetically
-> 
->  drivers/soc/qcom/rpmhpd.c | 53 +++++++++++++++++++++++++++++++++++++++
->  1 file changed, 53 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-> index f8d28e902942..05fff8691ee3 100644
-> --- a/drivers/soc/qcom/rpmhpd.c
-> +++ b/drivers/soc/qcom/rpmhpd.c
-> @@ -180,6 +180,36 @@ static struct rpmhpd mxc_ao = {
->  	.res_name = "mxc.lvl",
->  };
->  
-> +static struct rpmhpd nsp = {
-> +	.pd = { .name = "nsp", },
-> +	.res_name = "nsp.lvl",
-> +};
-> +
-> +static struct rpmhpd qphy = {
-> +	.pd = { .name = "qphy", },
-> +	.res_name = "qphy.lvl",
-> +};
-> +
-> +/* SA8540P RPMH powerdomains */
-> +static struct rpmhpd *sa8540p_rpmhpds[] = {
-> +	[SC8280XP_CX] = &cx,
-> +	[SC8280XP_CX_AO] = &cx_ao,
-> +	[SC8280XP_EBI] = &ebi,
-> +	[SC8280XP_GFX] = &gfx,
-> +	[SC8280XP_LCX] = &lcx,
-> +	[SC8280XP_LMX] = &lmx,
-> +	[SC8280XP_MMCX] = &mmcx,
-> +	[SC8280XP_MMCX_AO] = &mmcx_ao,
-> +	[SC8280XP_MX] = &mx,
-> +	[SC8280XP_MX_AO] = &mx_ao,
-> +	[SC8280XP_NSP] = &nsp,
-> +};
-> +
-> +static const struct rpmhpd_desc sa8540p_desc = {
-> +	.rpmhpds = sa8540p_rpmhpds,
-> +	.num_pds = ARRAY_SIZE(sa8540p_rpmhpds),
-> +};
-> +
->  /* SDM845 RPMH powerdomains */
->  static struct rpmhpd *sdm845_rpmhpds[] = {
->  	[SDM845_CX] = &cx_w_mx_parent,
-> @@ -378,10 +408,33 @@ static const struct rpmhpd_desc sc8180x_desc = {
->  	.num_pds = ARRAY_SIZE(sc8180x_rpmhpds),
->  };
->  
-> +/* SC8280xp RPMH powerdomains */
-> +static struct rpmhpd *sc8280xp_rpmhpds[] = {
-> +	[SC8280XP_CX] = &cx,
-> +	[SC8280XP_CX_AO] = &cx_ao,
-> +	[SC8280XP_EBI] = &ebi,
-> +	[SC8280XP_GFX] = &gfx,
-> +	[SC8280XP_LCX] = &lcx,
-> +	[SC8280XP_LMX] = &lmx,
-> +	[SC8280XP_MMCX] = &mmcx,
-> +	[SC8280XP_MMCX_AO] = &mmcx_ao,
-> +	[SC8280XP_MX] = &mx,
-> +	[SC8280XP_MX_AO] = &mx_ao,
-> +	[SC8280XP_NSP] = &nsp,
-> +	[SC8280XP_QPHY] = &qphy,
-> +};
+Currently gcc-msm8960 driver manually creates tsens device. Instantiate
+the device using DT node instead. This makes the APQ8064 follow the
+IPQ8064 device tree schema (which is also closer to the way tsens
+devices are described on newer Qualcomm platforms).
 
-The commit messages mention sc8280xp having 13 power domains, but here I
-only count 12. Good chance I'm just missing something obvious (not
-familiar with using power domains or rpmh) but I thought I should
-highlight it in case that was an error.
+Compatibility with the previous devices trees is kept intact.
 
-I attempted to find where this sort of thing is defined downstream, but
-failed :(
+Changes since v4:
+- Added thermal-sensor description to the qcom,gcc-apq8064 schema
 
-Thanks,
-Andrew
+Changes since v3:
+- Fix a typo qcom,gcc-msm8060 -> qcom,gcc-msm8960 (noted by Krzyshtof)
+- Fixed indentation in the example (also noted by Krzyshtof)
 
-> +
-> +static const struct rpmhpd_desc sc8280xp_desc = {
-> +	.rpmhpds = sc8280xp_rpmhpds,
-> +	.num_pds = ARRAY_SIZE(sc8280xp_rpmhpds),
-> +};
-> +
->  static const struct of_device_id rpmhpd_match_table[] = {
-> +	{ .compatible = "qcom,sa8540p-rpmhpd", .data = &sa8540p_desc },
->  	{ .compatible = "qcom,sc7180-rpmhpd", .data = &sc7180_desc },
->  	{ .compatible = "qcom,sc7280-rpmhpd", .data = &sc7280_desc },
->  	{ .compatible = "qcom,sc8180x-rpmhpd", .data = &sc8180x_desc },
-> +	{ .compatible = "qcom,sc8280xp-rpmhpd", .data = &sc8280xp_desc },
->  	{ .compatible = "qcom,sdm845-rpmhpd", .data = &sdm845_desc },
->  	{ .compatible = "qcom,sdx55-rpmhpd", .data = &sdx55_desc},
->  	{ .compatible = "qcom,sdx65-rpmhpd", .data = &sdx65_desc},
-> -- 
-> 2.35.1
-> 
+Changes since v2:
+- Remove patches merged by Daniel
+- Rephrase commit messages to emphasize that these changes make apq8064
+  follow ipq8064
+
+Changes since v1:
+- populate child devices in gcc-msm8960
+- add syscon to the gcc device tree node
+
+Dmitry Baryshkov (3):
+  clk: qcom: gcc-msm8960: create tsens device if there are no child
+    nodes
+  arm: dts: qcom-apq8064: create tsens device node
+  dt-bindings: clock: qcom,gcc-apq8064: split tsens to the child node
+
+ .../bindings/clock/qcom,gcc-apq8064.yaml      | 49 +++++++++----------
+ arch/arm/boot/dts/qcom-apq8064.dtsi           | 25 +++++++---
+ drivers/clk/qcom/gcc-msm8960.c                |  6 ++-
+ 3 files changed, 44 insertions(+), 36 deletions(-)
+
+
+base-commit: 3123109284176b1532874591f7c81f3837bbdc17
+prerequisite-patch-id: b5aad2b1e0db4e6d77d6a2faa2fe95acf274b3c8
+prerequisite-patch-id: a0c7dcfc85a1eac4969530b73230f226006d6e1a
+prerequisite-patch-id: 0fbf70957a52fa87d038d08f9c599e314c69e7d5
+prerequisite-patch-id: d22652b1f0e097692b670a0ed4c3f803875d1c5e
+-- 
+2.35.1
 
