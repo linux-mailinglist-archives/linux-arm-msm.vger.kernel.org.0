@@ -2,77 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F9E85119D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:56:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30FC1511A8B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:57:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237681AbiD0Oa4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 10:30:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41470 "EHLO
+        id S237720AbiD0ObO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 10:31:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237616AbiD0Oaz (ORCPT
+        with ESMTP id S237710AbiD0ObO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 10:30:55 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66E159FDA;
-        Wed, 27 Apr 2022 07:27:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651069663; x=1682605663;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=M3SYFGLPWzKvtp1WGADcPgzrAp27QvnoGE8k0g5v2OY=;
-  b=tlNcXdd6MfaddGC0FAtk4FdAsF++y2C6e//raC6TsJGo+ufrZJ21eCtx
-   5UWePTfpJGyNB1DTy5kc8yGG7vUaEc9MUi7eXXOeX28NE7jI/i3bUTyFU
-   RAOpyxDZqV0y6YUr8X0lgA7G98RBU/JLsSgcBH4Upt14widtbby4UD0Z8
-   U=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 27 Apr 2022 07:27:43 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2022 07:27:42 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 27 Apr 2022 07:27:42 -0700
-Received: from [10.253.36.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 27 Apr
- 2022 07:27:38 -0700
-Message-ID: <5752f130-c040-6156-44dc-497011f2a78e@quicinc.com>
-Date:   Wed, 27 Apr 2022 22:27:35 +0800
+        Wed, 27 Apr 2022 10:31:14 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5E8555B0;
+        Wed, 27 Apr 2022 07:28:01 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AEBDE61DD4;
+        Wed, 27 Apr 2022 14:28:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A78FC385A9;
+        Wed, 27 Apr 2022 14:27:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651069680;
+        bh=jg7isHeqWXUe3zjwvEzCpYqI8jozk7FW2/8Y/IJfTPk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=B2apnaAN8F00Nb0/0lcis7BIXCkSWoWIE73bihLjuaOBevH1jREETlouT5o7hIjBx
+         8ezccvuK1pn2aGyZbT0MZuePPqvBZbuMolbXOwLswPJtljZ63LLzws1yYM8RyoYrTK
+         EVyyEBU+i3Avy4u2H2344lfF3L/8/dmjH0Cjg9HCB/lpUDjzYASj0bdWelFL2C6q3q
+         9WC5Yue0KY29fGGF97qCaowKp6Ce8ogYeay+7ZCsyW2tGZMisoKI5tSWnwUeb7OwtJ
+         6au8W3SAJ4dN1wPzDLEEDZwDYTgwhE9NgH5+eeEw7zSUAq7I9D3kd6OPaA2UnmW1F6
+         4aF5BoWU5t1DQ==
+Date:   Wed, 27 Apr 2022 19:57:53 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] dt-bindings: mailbox: qcom-ipcc: add missing
+ compatible for SM8450
+Message-ID: <20220427142753.GB4161@thinkpad>
+References: <20220426101837.16201-1-david@ixit.cz>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v6 10/10] ARM: dts: msm: Add tpdm mm/prng for sm8250
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-CC:     Mike Leach <mike.leach@linaro.org>, Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20220425040304.37487-1-quic_jinlmao@quicinc.com>
- <20220425040304.37487-11-quic_jinlmao@quicinc.com>
- <a5daf7ed-9baa-5684-4823-30b0cca69488@somainline.org>
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <a5daf7ed-9baa-5684-4823-30b0cca69488@somainline.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220426101837.16201-1-david@ixit.cz>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,257 +60,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thank you Konrad for the review.
+On Tue, Apr 26, 2022 at 12:18:36PM +0200, David Heidelberg wrote:
+> Fill missing compatible already used in SM8450 DTS.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
 
-On 4/26/2022 7:49 PM, Konrad Dybcio wrote:
->
-> On 25/04/2022 06:03, Mao Jinlong wrote:
->> Add tpdm mm and tpdm prng for sm8250.
->>
->> +---------------+                +-------------+
->> |  tpdm@6c08000 |                |tpdm@684C000 |
->> +-------|-------+                +------|------+
->>          |                               |
->> +-------|-------+                       |
->> | funnel@6c0b000|                       |
->> +-------|-------+                       |
->>          |                               |
->> +-------|-------+                       |
->> |funnel@6c2d000 |                       |
->> +-------|-------+                       |
->>          |                               |
->>          |    +---------------+          |
->>          +----- tpda@6004000  -----------+
->>               +-------|-------+
->>                       |
->>               +-------|-------+
->>               |funnel@6005000 |
->>               +---------------+
->>
->> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8250.dtsi | 170 +++++++++++++++++++++++++++
->>   1 file changed, 170 insertions(+)
->
-> Hi,
->
->
-> some of the previous comments (uppercase hex instead of lowercase and 
-> wrong commit title) still haven't been addressed.
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
-I will double check and address your comments.
+Thanks,
+Mani
 
-Thanks
-
-Jinlong Mao
-
->
->
-> Konrad
->
->> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi 
->> b/arch/arm64/boot/dts/qcom/sm8250.dtsi
->> index 53ab2b457a2f..ce558a2639e7 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
->> @@ -4703,6 +4703,73 @@
->>               };
->>           };
->>   +        tpda@6004000 {
->> +            compatible = "arm,primecell";
->> +            reg = <0 0x06004000 0 0x1000>;
->> +            reg-names = "tpda-base";
->> +
->> +            clocks = <&aoss_qmp>;
->> +            clock-names = "apb_pclk";
->> +
->> +            out-ports {
->> +                port {
->> +                    reg = <0>;
->> +                    tpda_out_funnel_qatb: endpoint {
->> +                        remote-endpoint = <&funnel_qatb_in_tpda>;
->> +                    };
->> +                };
->> +            };
->> +
->> +            in-ports {
->> +                #address-cells = <1>;
->> +                #size-cells = <0>;
->> +
->> +                port@9 {
->> +                    reg = <9>;
->> +                    tpda_9_in_tpdm_mm: endpoint {
->> +                        remote-endpoint = <&tpdm_mm_out_tpda9>;
->> +                    };
->> +                };
->> +
->> +                port@23 {
->> +                    reg = <23>;
->> +                    tpda_23_in_tpdm_prng: endpoint {
->> +                        remote-endpoint = <&tpdm_prng_out_tpda_23>;
->> +                    };
->> +                };
->> +            };
->> +        };
->> +
->> +        funnel@6005000 {
->> +            compatible = "arm,primecell";
->> +
->> +            reg = <0 0x06005000 0 0x1000>;
->> +            reg-names = "funnel-base";
->> +
->> +            clocks = <&aoss_qmp>;
->> +            clock-names = "apb_pclk";
->> +
->> +            out-ports {
->> +                port {
->> +                    funnel_qatb_out_funnel_in0: endpoint {
->> +                        remote-endpoint = <&funnel_in0_in_funnel_qatb>;
->> +                    };
->> +                };
->> +            };
->> +
->> +            in-ports {
->> +                #address-cells = <1>;
->> +                #size-cells = <0>;
->> +
->> +                port@0 {
->> +                    reg = <0>;
->> +                    funnel_qatb_in_tpda: endpoint {
->> +                        remote-endpoint = <&tpda_out_funnel_qatb>;
->> +                    };
->> +                };
->> +            };
->> +        };
->> +
->>           funnel@6041000 {
->>               compatible = "arm,coresight-dynamic-funnel", 
->> "arm,primecell";
->>               reg = <0 0x06041000 0 0x1000>;
->> @@ -4722,6 +4789,13 @@
->>                   #address-cells = <1>;
->>                   #size-cells = <0>;
->>   +                port@6 {
->> +                    reg = <6>;
->> +                    funnel_in0_in_funnel_qatb: endpoint {
->> +                        remote-endpoint = 
->> <&funnel_qatb_out_funnel_in0>;
->> +                    };
->> +                };
->> +
->>                   port@7 {
->>                       reg = <7>;
->>                       funnel0_in7: endpoint {
->> @@ -4836,6 +4910,23 @@
->>               };
->>           };
->>   +        tpdm@684C000 {
->> +            compatible = "arm,primecell";
->> +            reg = <0 0x0684C000 0 0x1000>;
->> +            reg-names = "tpdm-base";
->> +
->> +            clocks = <&aoss_qmp>;
->> +            clock-names = "apb_pclk";
->> +
->> +            out-ports {
->> +                port {
->> +                    tpdm_prng_out_tpda_23: endpoint {
->> +                        remote-endpoint = <&tpda_23_in_tpdm_prng>;
->> +                    };
->> +                };
->> +            };
->> +        };
->> +
->>           funnel@6b04000 {
->>               compatible = "arm,coresight-dynamic-funnel", 
->> "arm,primecell";
->>               arm,primecell-periphid = <0x000bb908>;
->> @@ -4920,6 +5011,85 @@
->>               };
->>           };
->>   +        tpdm@6c08000 {
->> +            compatible = "arm,primecell";
->> +            reg = <0 0x06c08000 0 0x1000>;
->> +            reg-names = "tpdm-base";
->> +
->> +            clocks = <&aoss_qmp>;
->> +            clock-names = "apb_pclk";
->> +
->> +            out-ports {
->> +                port {
->> +                    tpdm_mm_out_funnel_dl_mm: endpoint {
->> +                        remote-endpoint = <&funnel_dl_mm_in_tpdm_mm>;
->> +                    };
->> +                };
->> +            };
->> +        };
->> +
->> +        funnel@6c0b000 {
->> +            compatible = "arm,coresight-dynamic-funnel", 
->> "arm,primecell";
->> +
->> +            reg = <0 0x06c0b000 0 0x1000>;
->> +            reg-names = "funnel-base";
->> +
->> +            clocks = <&aoss_qmp>;
->> +            clock-names = "apb_pclk";
->> +
->> +            out-ports {
->> +                port {
->> +                    funnel_dl_mm_out_funnel_dl_center: endpoint {
->> +                        remote-endpoint = 
->> <&funnel_dl_center_in_funnel_dl_mm>;
->> +                    };
->> +                };
->> +            };
->> +
->> +            in-ports {
->> +                #address-cells = <1>;
->> +                #size-cells = <0>;
->> +
->> +                port@3 {
->> +                    reg = <3>;
->> +                    funnel_dl_mm_in_tpdm_mm: endpoint {
->> +                        remote-endpoint = <&tpdm_mm_out_funnel_dl_mm>;
->> +                    };
->> +                };
->> +            };
->> +        };
->> +
->> +        funnel@6c2d000 {
->> +            compatible = "arm,coresight-dynamic-funnel", 
->> "arm,primecell";
->> +
->> +            reg = <0 0x06c2d000 0 0x1000>;
->> +            reg-names = "funnel-base";
->> +
->> +            clocks = <&aoss_qmp>;
->> +            clock-names = "apb_pclk";
->> +
->> +            out-ports {
->> +                #address-cells = <1>;
->> +                #size-cells = <0>;
->> +                port {
->> +                    tpdm_mm_out_tpda9: endpoint {
->> +                        remote-endpoint = <&tpda_9_in_tpdm_mm>;
->> +                    };
->> +                };
->> +            };
->> +
->> +            in-ports {
->> +                #address-cells = <1>;
->> +                #size-cells = <0>;
->> +
->> +                port@2 {
->> +                    reg = <2>;
->> +                    funnel_dl_center_in_funnel_dl_mm: endpoint {
->> +                        remote-endpoint = 
->> <&funnel_dl_mm_out_funnel_dl_center>;
->> +                    };
->> +                };
->> +            };
->> +        };
->> +
->>           etm@7040000 {
->>               compatible = "arm,coresight-etm4x", "arm,primecell";
->>               reg = <0 0x07040000 0 0x1000>;
+> ---
+>  Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+> index 866efb278813..c57dd423e98c 100644
+> --- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+> +++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+> @@ -27,6 +27,7 @@ properties:
+>            - qcom,sm6350-ipcc
+>            - qcom,sm8250-ipcc
+>            - qcom,sm8350-ipcc
+> +          - qcom,sm8450-ipcc
+>            - qcom,sc7280-ipcc
+>        - const: qcom,ipcc
+>  
+> -- 
+> 2.35.1
+> 
