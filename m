@@ -2,109 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC783511ABC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:57:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D64AF511A7C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:56:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237726AbiD0Ob6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 10:31:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46410 "EHLO
+        id S238215AbiD0OjQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 10:39:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237711AbiD0Ob5 (ORCPT
+        with ESMTP id S238536AbiD0OjC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 10:31:57 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 969E513F57;
-        Wed, 27 Apr 2022 07:28:46 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3225FB82795;
-        Wed, 27 Apr 2022 14:28:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3364C385A7;
-        Wed, 27 Apr 2022 14:28:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651069723;
-        bh=HQEf+K93lpEwvVIi3pxJSI52K68XBRJIQrx55pS3WDw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=b9Gig039K96xmSRBZXNII5d1S0VSphvA1sRCFUK7BeExVUH/0sGPhYy4cAsNaTWgW
-         oZhBjhy8S8rcUcG2IYO43Edn5IOEHOSLJ2VekPg9b7EnSj1KwTASOoIecCEutcVqxI
-         1a7NYi0tn7jIXDTq5uzqiIHi9vqmUopgCveum7Q/pnoVepzpBkUMbmSYzJC2GMjiiL
-         plmS63siOhF0dwqNTV6SeDfOK2e2HeamVSYtfcMrZV2WW6MlaX6zb9hvAMgHxEfL0a
-         Yv5cOIhCl3OpYtzugrnKnid9+j1ZUCHIfxC0zK1ZnWn68mGnV+5sxb7+bvazZ7VooF
-         no3OCCvsBUckQ==
-Date:   Wed, 27 Apr 2022 19:58:37 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] dt-bindings: mailbox: qcom-ipcc: add missing
- properties into example
-Message-ID: <20220427142837.GC4161@thinkpad>
-References: <20220426101837.16201-1-david@ixit.cz>
- <20220426101837.16201-2-david@ixit.cz>
+        Wed, 27 Apr 2022 10:39:02 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908B2658E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:35:51 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id kq17so3831647ejb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:35:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iBjVwlfQHfJTzGZmbfEvXhaX1IO5OkSRicNnSdosqfE=;
+        b=NSdJkx1jUjjiXuAhxMA30qKgzaND/A7AqoOWPp5E5YGLrXn7dcO3OQMupXUipJJWOA
+         JUFRfFkfl9q1bKNHk3/zQMSwlO/gsV/x5hR66QT7FXzr1siOkocOBQR/F+ktgDFUNnWb
+         X5fL4fh2Ok7wc8jM9Rp0R1OuGPLDz4fwit9ro=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iBjVwlfQHfJTzGZmbfEvXhaX1IO5OkSRicNnSdosqfE=;
+        b=KVgfJygfgEzZ6+epheF5DxPMqMZgcAZG15KV4KoDj8MKXT7ThYxR3h9cpy9J0oCwc9
+         EDF1+A+m37KPlfDCInXI8sKbjzmVp2fu74J/MQyPJ/eyveyyBmxy7k1y+Pgz0UsAgdYR
+         78CAMVdLQ0PvNo06189JE0WgbcH0JYw3XdoKl1c8yqmpjV3CKqllcglYp+kllaWEsoRX
+         0Xzo4kNJ5dPhp6SdmZf0rwNLRoB4MlTzRzdHIkqWiy7DMvkr5MquVizEM38m9wP7gNll
+         8MWTZb0BAqAVofcZMpW8jAs0VtMXxLioU2XQANtTy1xHRPJzzrPG4ZRzhm/5j/HpH6S4
+         roJQ==
+X-Gm-Message-State: AOAM533SfFF15iinW4XRraHa5TkY4hD/7rvUTxBakPsqGy8daKC2tDra
+        0kTKrBH+LVrUM3pjlsUWc+xLYhcr0azq7LTFvC0=
+X-Google-Smtp-Source: ABdhPJxsXGLBHMaHaCbTeZcaJRghEQS81Fvf5Qh+Kgub2CQEVR7WmO0cM9zMH5VY/pIO8UY+JvgtCA==
+X-Received: by 2002:a17:907:168a:b0:6da:9177:9fdd with SMTP id hc10-20020a170907168a00b006da91779fddmr26983739ejc.757.1651070149866;
+        Wed, 27 Apr 2022 07:35:49 -0700 (PDT)
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com. [209.85.128.44])
+        by smtp.gmail.com with ESMTPSA id bw5-20020a170906c1c500b006f01492689bsm7000045ejb.143.2022.04.27.07.35.48
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Apr 2022 07:35:48 -0700 (PDT)
+Received: by mail-wm1-f44.google.com with SMTP id m62so1256067wme.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:35:48 -0700 (PDT)
+X-Received: by 2002:a05:600c:3c99:b0:392:b49c:7b79 with SMTP id
+ bg25-20020a05600c3c9900b00392b49c7b79mr26204171wmb.199.1651070147811; Wed, 27
+ Apr 2022 07:35:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220426101837.16201-2-david@ixit.cz>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220427013226.341209-1-swboyd@chromium.org>
+In-Reply-To: <20220427013226.341209-1-swboyd@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 27 Apr 2022 07:35:36 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UK522o=zak8ryR4e8yGTm=wGtMjxtfYNJ4DXk5ayAGhw@mail.gmail.com>
+Message-ID: <CAD=FV=UK522o=zak8ryR4e8yGTm=wGtMjxtfYNJ4DXk5ayAGhw@mail.gmail.com>
+Subject: Re: [PATCH] interconnect: Restore sync state by ignoring ipa-virt in
+ provider count
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Georgi Djakov <djakov@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alex Elder <elder@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 26, 2022 at 12:18:37PM +0200, David Heidelberg wrote:
-> These missing required properties are needed for
-> smp2p binding reference checks.
-> 
-> Also includes cosmetic change to the example formatting.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
+Hi,
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-
-Thanks,
-Mani
-
+On Tue, Apr 26, 2022 at 6:32 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Ignore compatible strings for the IPA virt drivers that were removed in
+> commits 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0
+> interconnects") and 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0
+> interconnects") so that the sync state logic can kick in again.
+> Otherwise all the interconnects in the system will stay pegged at max
+> speeds because 'providers_count' is always going to be one larger than
+> the number of drivers that will ever probe on sc7180 or sdx55. This
+> fixes suspend on sc7180 and sdx55 devices when you don't have a
+> devicetree patch to remove the ipa-virt compatible node.
+>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Doug Anderson <dianders@chromium.org>
+> Cc: Alex Elder <elder@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+> Fixes: 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0 interconnects")
+> Fixes: 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0 interconnects")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
-> v3:
->  - add Krzysztof R-b
-> ---
->  .../devicetree/bindings/mailbox/qcom-ipcc.yaml        | 11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-> index c57dd423e98c..50f9aa72c670 100644
-> --- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-> +++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-> @@ -76,9 +76,14 @@ examples:
->  
->          smp2p-modem {
->                  compatible = "qcom,smp2p";
-> -                interrupts-extended = <&ipcc_mproc IPCC_CLIENT_MPSS
-> -                                IPCC_MPROC_SIGNAL_SMP2P IRQ_TYPE_EDGE_RISING>;
-> -                mboxes = <&ipcc_mproc IPCC_CLIENT_MPSS IPCC_MPROC_SIGNAL_SMP2P>;
-> +                qcom,smem = <443>, <429>;
-> +                interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
-> +                                             IPCC_MPROC_SIGNAL_SMP2P
-> +                                             IRQ_TYPE_EDGE_RISING>;
-> +                mboxes = <&ipcc IPCC_CLIENT_LPASS
-> +                                IPCC_MPROC_SIGNAL_SMP2P>;
->  
-> +                qcom,local-pid = <0>;
-> +                qcom,remote-pid = <2>;
->                  /* Other SMP2P fields */
->          };
-> -- 
-> 2.35.1
-> 
+>  drivers/interconnect/core.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+
+Ick, but seems like an expedient fix to get us back to working while
+we try to come up with something better.
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
