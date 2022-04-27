@@ -2,43 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB4FB511321
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 10:01:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9206511378
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 10:28:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234307AbiD0IEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 04:04:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58770 "EHLO
+        id S1359392AbiD0IbG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 04:31:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359253AbiD0IEX (ORCPT
+        with ESMTP id S1359384AbiD0IbF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 04:04:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B516155732
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 01:01:12 -0700 (PDT)
+        Wed, 27 Apr 2022 04:31:05 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90CCE37A95
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 01:27:54 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9AE2461B86
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 08:01:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B12C385A9;
-        Wed, 27 Apr 2022 08:01:09 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 36D1061C0D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 08:27:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1483AC385A9;
+        Wed, 27 Apr 2022 08:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651046471;
-        bh=e1OamTbNjENnPRg8VTXFAk4Ge8BWuKjIPV8oBNXlP4c=;
+        s=k20201202; t=1651048073;
+        bh=4HvRzWljFP0kZogLP59D2+mng84twQ8e2aB6BBENma4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=H/4acNyCt5CX3OC9RUXX5fBau7Bn2erNd5o5OCVIhZKFLqxRYfBv1CVNyxDnrhCUT
-         Hufw1lHLkQtGNU9vwc/F6RaZ6jNNFd82WHEe9wa/kyiZ0+wHqXPDa/lZuUjMjfrTgr
-         HXSLoT0Jv4VTTFd7flxfWv/WAwmTyd7gv0Aadh2JrWlzJHlB7nH73nKxKVaw7ESutx
-         xN0QE0AkG9nAL5JVkVQJXpl3pGOs8qEWfuhHkd1pvPvJdlqSaYhrpZN/s3ktrcyQad
-         Tc1Eayzb/cdnHKewKZZ5Hnp1YMlpfqS1aHyaAmmbCR3q57t5U0QttmWAfgkaXem9cD
-         oL310sWL6wFfQ==
-Date:   Wed, 27 Apr 2022 13:31:04 +0530
+        b=hG5G933xReV0el3gbCHvr9lAIG5R3v8nSNFSijEWeWWBBIGxJ56rQizUPREhNMEwF
+         1XmBNDLL1GhgdZ4Io5ZSxhhLnopbFCuzoG48qsBULbWLq11KTz8TJMljQzs9DjdO+0
+         CLIFhMzreDhTCac5u1qhHOor0H/GUmmaGV+5Oj3cceOdebNudgRDHBezL54hizAOhW
+         M+1LSvlpfBDnqxGWr5PT6Bcd8BDz1Gc4r8AfM51uwfbqOXEnEJMTMG6PcKGUVTL7sT
+         GB09Fc3051p38GzOqlE5DDEz/37j5rY0SfjSkBj6us8nr0xIJdiaUpfpdoL6qdWMPl
+         hpnkegzN4mJTA==
+Date:   Wed, 27 Apr 2022 13:57:47 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Daniele Palmas <dnlplm@gmail.com>
 Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
 Subject: Re: [PATCH v2 1/1] bus: mhi: pci_generic: add Telit FN980 v1
  hardware revision
-Message-ID: <20220427080104.GA2536@thinkpad>
+Message-ID: <20220427082747.GB2536@thinkpad>
 References: <20220427072648.17635-1-dnlplm@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -61,7 +61,7 @@ On Wed, Apr 27, 2022 at 09:26:48AM +0200, Daniele Palmas wrote:
 > 
 > Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Applied to mhi-next!
 
 Thanks,
 Mani
