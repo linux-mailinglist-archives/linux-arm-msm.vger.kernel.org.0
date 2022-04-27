@@ -2,118 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A01A05117A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 14:46:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F1A351174F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 14:46:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233679AbiD0MUO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 08:20:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49374 "EHLO
+        id S233698AbiD0MUj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 08:20:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233748AbiD0MUN (ORCPT
+        with ESMTP id S233653AbiD0MUi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 08:20:13 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7631889CD3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 05:17:01 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id c15so2354820ljr.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 05:17:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ga1FXFUoff60uV1gZjfSxxZrosbrRhkS2aF6jySEeu8=;
-        b=IcljhcOdPTP29vZlW5X6ro/FUMEN8BihPCMjQ4DLD17n66EQMN3ngucpWlHM/1adsk
-         zJOOSqbDVUtln5M8uXceQPT/9IJop7SWDuLHhQgHRXry6Mv52rZvxaj8FcDWjkkFOWIA
-         OwKFt/UkKddYIlAxdNzXZisw3D8MTb4reAK7fdGijT+pOXIqp75xVLzK+XQh4+MMKxk8
-         SYKMdHh5oDfToYb+vHFJ2QEjWT42q3fAQUUsolFPimdQ107oJfsCMuKz+wH2JBt/hz26
-         8+83hfCjLp3+d2l4sGxgdll5iV4aTlCfffJXiwIdDdKVtcI9lSXFhxPaEN7n9duq9FkP
-         MWKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ga1FXFUoff60uV1gZjfSxxZrosbrRhkS2aF6jySEeu8=;
-        b=6X/Vdl/dMV+JPWEo4tkTmVGY62gUwbm4/fLBWD5jtkljwm5RWiqS292nxgBKwNx8A8
-         QQ/5L1EKtcJV7aGNSYKJpyL88Ea/oRQXEVaGonnF1rTMOOn80A+a9JVEK18TtCFIactQ
-         BuCF3DLUCwxWXRrYidU6OHx9lRi92EronQAE1lehd4R8va6p4OHEZCNZ7xQjF5dx3ukM
-         wHOgbjnHs1gvFD5qNNAGA3CeyOhNXcm3KjM11Y7nSIdidjgpdFySIBSj7MxAeRB2u/6/
-         6PGhHd5t/LYi4LBUmUago8mC6VljFjp15N6b4cWNAYTYnAVK6uf/U6GDeiiur+jnLuWp
-         Tl4Q==
-X-Gm-Message-State: AOAM5338ILTQhToio1c3w0WIdRbV4JAtOB53pqny4c0W227do3GaEUOv
-        QOgThhFDaQd+/IPLI0zYceXZTg==
-X-Google-Smtp-Source: ABdhPJzzpKoE3lHAYhI7agfuzEbxveMnjFO6GHr912Gvl7Gw/JzYOQtHj9siquDy56l3ZF0qn9fusA==
-X-Received: by 2002:a2e:9e50:0:b0:24f:14e0:6a25 with SMTP id g16-20020a2e9e50000000b0024f14e06a25mr7994316ljk.121.1651061819670;
-        Wed, 27 Apr 2022 05:16:59 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id y1-20020a0565123f0100b0044584339e5dsm2043388lfa.190.2022.04.27.05.16.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 05:16:59 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v3 5/5] arm64: dts: qcom: sm8250: provide additional MSI interrupts
-Date:   Wed, 27 Apr 2022 15:16:53 +0300
-Message-Id: <20220427121653.3158569-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220427121653.3158569-1-dmitry.baryshkov@linaro.org>
-References: <20220427121653.3158569-1-dmitry.baryshkov@linaro.org>
+        Wed, 27 Apr 2022 08:20:38 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C5333D489;
+        Wed, 27 Apr 2022 05:17:28 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E8BFA619F1;
+        Wed, 27 Apr 2022 12:17:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DE1C385A9;
+        Wed, 27 Apr 2022 12:17:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651061847;
+        bh=cfgh7Wb560mKp9MUdbD9T6uPA3TRHqxPZgTmSnaDhEk=;
+        h=Date:From:Subject:To:References:In-Reply-To:From;
+        b=n1J94SppjAv5wHSxxe39PLSHfvYctqiNRGF4TRVlc4S1gu+cGjcQENrDquMxTpRvJ
+         zkRGafADlPfeVAFA2ENv/F26I+kSnGi2YikFRDtCKhiR2Vx+EeErqx+WTQsj83m1m1
+         1VM6l6thbHG1LZUshPaI+mPI80SX5iciAbh3vU+HaRNZ41IRH4FyFD50djj1qxe79a
+         4mOwG97O0o7NXZj62XYof44noq0VJ6iYSIJOA31RFXLuRhMCgq+O3l5cTR0qiuFLpA
+         Y/epgo/X6y/hDq1f22Be15DrUPGC4E0hXYreJjJJ9rJ0NNsUOEF6oKsUmss2myyod6
+         NU5kSA7FsdR1g==
+Message-ID: <12570c36-d005-f51c-654b-01d52c50205c@kernel.org>
+Date:   Wed, 27 Apr 2022 15:17:21 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+From:   Georgi Djakov <djakov@kernel.org>
+Subject: Re: [PATCH 1/3] interconnect: qcom: constify qcom_icc_desc
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220412102623.227607-1-krzysztof.kozlowski@linaro.org>
+ <b96fd335-df13-6657-c2ff-38ff677555a4@linaro.org>
+Content-Language: en-US
+In-Reply-To: <b96fd335-df13-6657-c2ff-38ff677555a4@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SM8250 each group of MSI interrupts is mapped to the separate host
-interrupt. Describe each of interrupts in the device tree for PCIe0
-host.
+On 22.04.22 18:25, Krzysztof Kozlowski wrote:
+> On 12/04/2022 12:26, Krzysztof Kozlowski wrote:
+>> struct qcom_icc_desc is not modified so it can be made const for safety.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>   drivers/interconnect/qcom/msm8916.c |  6 +++---
+>>   drivers/interconnect/qcom/msm8939.c |  8 ++++----
+>>   drivers/interconnect/qcom/msm8974.c | 12 ++++++------
+>>   drivers/interconnect/qcom/qcm2290.c | 12 ++++++------
+>>   drivers/interconnect/qcom/qcs404.c  |  6 +++---
+>>   drivers/interconnect/qcom/sc7180.c  | 26 +++++++++++++-------------
+>>   drivers/interconnect/qcom/sc7280.c  | 24 ++++++++++++------------
+>>   drivers/interconnect/qcom/sdm660.c  | 12 ++++++------
+>>   drivers/interconnect/qcom/sm8150.c  | 22 +++++++++++-----------
+>>   drivers/interconnect/qcom/sm8250.c  | 22 +++++++++++-----------
+>>   drivers/interconnect/qcom/sm8350.c  | 20 ++++++++++----------
+>>   drivers/interconnect/qcom/sm8450.c  | 22 +++++++++++-----------
+> 
+> Hi folks,
+> 
+> Any comments here?
 
-Tested on Qualcomm RB5 platform with first group of MSI interrupts being
-used by the PME and attached ath11k WiFi chip using second group of MSI
-interrupts.
+Thanks for the patches! I had actually some of these changes in my local tree
+for a long time. Do you want to send a follow-up patch also for sc8280xp?
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 410272a1e19b..0659ac45c651 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -1807,8 +1807,15 @@ pcie0: pci@1c00000 {
- 			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
- 
--			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
-+			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi", "msi2", "msi3", "msi4", "msi5", "msi6", "msi7", "msi8";
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 0x7>;
- 			interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
--- 
-2.35.1
-
+BR,
+Georgi
