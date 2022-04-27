@@ -2,73 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 028B151198E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:55:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 593E2511A08
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Apr 2022 16:56:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237519AbiD0OJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 10:09:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42582 "EHLO
+        id S237359AbiD0OQ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 10:16:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237460AbiD0OJK (ORCPT
+        with ESMTP id S237380AbiD0OQ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 10:09:10 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3314E38C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:05:58 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id j17so1666290pfi.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:05:58 -0700 (PDT)
+        Wed, 27 Apr 2022 10:16:26 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E375F52E62
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:13:14 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id j6so1665940pfe.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 07:13:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=OT8jLHi5I0OiZTy0LV6eIgEYpe0uYFZJA9KqVmBMVzw=;
-        b=SrCfyOO36j1AT9uvoaS4hD0HxsHPiTi/Zy5MVVnulvhwb5YNHoxltXjGvslBhCNqbS
-         iTySn/IB5d+64LM1C9WgYvoHu1w1KB+pV5D212QvcON3HhOiSUTmBWNTl/Iz98Yt02t8
-         QpUsTbFJL0/uHrbDkPpawLRsJ5y7gKkxalTVnzG0seOeIIi662zyZNogfo2xOvcOEho8
-         mrLpq8HQ5j5V4lkt17/dOwTt21cI8UJCNI+xWHO6lb5mHlZmdG2WhxheejJxdhi9CX60
-         rOtpqy+b5DV79oHhBI11C0oj7NBXBVHtPD60/GoipuT6VI/3anhFYhCF4opst0xtVWlP
-         ex2A==
+        bh=DhokFBZ8F+taIE1k9mg2zZtCYLVYVOeEuTezkpT79r0=;
+        b=P3+JotLgiip8RxPVXYAXVXxK/wRp63a4Wo/GDeeUArGs0ys+6YbeQav72knUKSjSgG
+         XMAWMCV+T7fbSun5DsZP6df1JmVvkUJAPmZNsMs1M7c5fBo06US16QTLJ7iqgKnfgTZe
+         9G8GJJzxHyGGpNJi+WihEAk01SV57ERNAWrWJ5fEcVw2gzCLu5bNBz6ThMUDpck3b/hv
+         JHmwNeUg+H6/4bBEt5l++B5tjifB3FMsjZDhG4aHNH9KFGJOAWVcXhsBVUBMgP1OSQcC
+         2CQbs3h/RzvPILD7JMzwc9ggQ4jxbFRshk6tACwUSAKJuAIM+sHLdXce0zHTfY0E4XLT
+         aI9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=OT8jLHi5I0OiZTy0LV6eIgEYpe0uYFZJA9KqVmBMVzw=;
-        b=AdfyvQaOe6vUQnKtMzKUMky6Hm2iwUhx1FBAWUnzJULurnkRrG1IzNePQiue8To/Ti
-         wS/EFc8RmdaQEfNQSe9dlnrO6lq0EPzx871Hk0Fg0zD7Ll3WaXzEiPVbTMHRrXXnFl2u
-         fQ7m2kMUJzN4r9+F5GmGFJsYppAkAFLbgwBDBTWzZkZOyTTcigC8zbsyqBObcZTBqyzX
-         FhvFykAhpRvQ7gWomwDWf4c0tXQkeHIeq12/2wQWyWpjaWqrCYQkkOfQCc34JbqIGijs
-         iXZ8mtY98M0aNMN+nmfSf7g6Oqeb2fmFRu67d30jWeWjhp7XiAf4QBgT+coaMwLaXyqi
-         sMBw==
-X-Gm-Message-State: AOAM533Y0ppSvsVdvMBWA2ar/ALeeAIFlJwcjhEfiumeGfGDbFPpT2cK
-        +uNtOcn4VBEmARTBcL5/ERCDaQ==
-X-Google-Smtp-Source: ABdhPJyogLOjd4c37B198F/9gX6yPAM/D9FmoWqn+QNk98u1oleDEd359HLuknmbJwCvePhkv8ZUIA==
-X-Received: by 2002:a63:6e0b:0:b0:397:f965:64a7 with SMTP id j11-20020a636e0b000000b00397f96564a7mr23830267pgc.581.1651068358118;
-        Wed, 27 Apr 2022 07:05:58 -0700 (PDT)
+        bh=DhokFBZ8F+taIE1k9mg2zZtCYLVYVOeEuTezkpT79r0=;
+        b=kCYNf6F/1hiYpeujDrHDV8guvoYaEpDQ5gnB2ihNGfDswYnDADdzg7mxLqaNjJF22Y
+         zLnGJlMmLYKfylXyCgmDnFdboV2LCQSIPY4PLhaMz+xIX9H40zgNXQvA35qmkjlx41Vi
+         cMqPyNQwUCRWcilaG+h/9cQCYm/aCOwT2icKjOSoXh3q/FsvU6z0zewgem0rIGYqP0Kb
+         8FQGD7HYd+oimZjZecWexQU8jhovKH/f1NFoGMIhIsIc6b5VliMW3MAWBy4SRsBI5RBx
+         NLYQ50v4wVWBSfiQDBLpiUBgQlBLl6RVHufu+c0Qr+s++Jl44tbTYlyfvYfsEn9DrY68
+         PTvA==
+X-Gm-Message-State: AOAM530PfbggGGXryZCc/o+2W/PlmNzQS8+aoDeahXmSHxRA1IdeqMlA
+        7ksJKxvtoHqS2qochjrChlYuqw==
+X-Google-Smtp-Source: ABdhPJzwqnRqzlvetnWaWNh50u652unG7bmUQL7VOe8oZll9/mfsDqCxv7Fg9ArlskIvhhOuWvfmqA==
+X-Received: by 2002:a63:18c:0:b0:3aa:d794:7c44 with SMTP id 134-20020a63018c000000b003aad7947c44mr21425027pgb.126.1651068794150;
+        Wed, 27 Apr 2022 07:13:14 -0700 (PDT)
 Received: from leoy-ThinkPad-X240s ([134.195.101.46])
-        by smtp.gmail.com with ESMTPSA id p64-20020a622943000000b004fdd5c07d0bsm18622190pfp.63.2022.04.27.07.05.52
+        by smtp.gmail.com with ESMTPSA id x129-20020a623187000000b0050835f6d6a1sm19002767pfx.9.2022.04.27.07.13.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 07:05:57 -0700 (PDT)
-Date:   Wed, 27 Apr 2022 22:05:50 +0800
+        Wed, 27 Apr 2022 07:13:13 -0700 (PDT)
+Date:   Wed, 27 Apr 2022 22:13:05 +0800
 From:   Leo Yan <leo.yan@linaro.org>
-To:     Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 1/5] dt-bindings: interconnect: Update property for
- icc-rpm path tag
-Message-ID: <20220427140550.GA560849@leoy-ThinkPad-X240s>
+Subject: Re: [PATCH v1 2/5] interconnect: qcom: Move
+ qcom_icc_xlate_extended() to a common file
+Message-ID: <20220427141305.GB560849@leoy-ThinkPad-X240s>
 References: <20220416154013.1357444-1-leo.yan@linaro.org>
- <20220416154013.1357444-2-leo.yan@linaro.org>
- <YmhBE/JDV66qQIBv@robh.at.kernel.org>
+ <20220416154013.1357444-3-leo.yan@linaro.org>
+ <e7a8ce84-3029-ea90-628b-1072bd49baf4@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YmhBE/JDV66qQIBv@robh.at.kernel.org>
+In-Reply-To: <e7a8ce84-3029-ea90-628b-1072bd49baf4@linaro.org>
 X-Spam-Status: No, score=-0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_BL_SPAMCOP_NET,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
@@ -79,34 +79,178 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 26, 2022 at 01:59:31PM -0500, Rob Herring wrote:
-> On Sat, Apr 16, 2022 at 11:40:09PM +0800, Leo Yan wrote:
-> > To support path tag in icc-rpm driver, the "#interconnect-cells"
-> > property is updated as enumerate values: 1 or 2.  Setting to 1 means
-> > it is compatible with old DT binding that interconnect path doesn't
-> > contain tag, if set to 2 for "#interconnect-cells" property, then the
-> > second specifier in the interconnect path indicates the voting is for
-> > which buckets.
+On Wed, Apr 27, 2022 at 12:00:24AM +0300, Dmitry Baryshkov wrote:
+> On 16/04/2022 18:40, Leo Yan wrote:
+> > since there have conflict between two headers icc-rpmh.h and icc-rpm.h,
+> > the function qcom_icc_xlate_extended() is declared in icc-rpmh.h thus
+> > it cannot be used by icc-rpm driver.
+> > 
+> > Move the function to a new common file icc-common.c so that allow it to
+> > be called by multiple drivers.
 > > 
 > > Signed-off-by: Leo Yan <leo.yan@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
-> > index 89853b482513..7464a50804db 100644
-> > --- a/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
-> > +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
-> > @@ -118,7 +118,7 @@ allOf:
-> >                    - qcom,msm8939-snoc-mm
-> >  
-> >                '#interconnect-cells':
-> > -                const: 1
-> > +                enum: [ 1, 2 ]
 > 
-> Describe what each cell value is here.
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> > ---
+> >   drivers/interconnect/qcom/Makefile     |  3 +++
+> >   drivers/interconnect/qcom/icc-common.c | 34 ++++++++++++++++++++++++++
+> >   drivers/interconnect/qcom/icc-common.h | 13 ++++++++++
+> >   drivers/interconnect/qcom/icc-rpmh.c   | 26 +-------------------
+> >   drivers/interconnect/qcom/icc-rpmh.h   |  1 -
+> >   drivers/interconnect/qcom/sm8450.c     |  1 +
+> >   6 files changed, 52 insertions(+), 26 deletions(-)
+> >   create mode 100644 drivers/interconnect/qcom/icc-common.c
+> >   create mode 100644 drivers/interconnect/qcom/icc-common.h
+> > 
+> > diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
+> > index ceae9bb566c6..bbb3d6daaad1 100644
+> > --- a/drivers/interconnect/qcom/Makefile
+> > +++ b/drivers/interconnect/qcom/Makefile
+> > @@ -1,5 +1,8 @@
+> >   # SPDX-License-Identifier: GPL-2.0
+> > +obj-$(CONFIG_INTERCONNECT_QCOM) += interconnect_qcom.o
+> > +
+> > +interconnect_qcom-y			:= icc-common.o
+> >   icc-bcm-voter-objs			:= bcm-voter.o
+> >   qnoc-msm8916-objs			:= msm8916.o
+> >   qnoc-msm8939-objs			:= msm8939.o
+> > diff --git a/drivers/interconnect/qcom/icc-common.c b/drivers/interconnect/qcom/icc-common.c
+> > new file mode 100644
+> > index 000000000000..0822ce207b5d
+> > --- /dev/null
+> > +++ b/drivers/interconnect/qcom/icc-common.c
+> > @@ -0,0 +1,34 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/*
+> > + * Copyright (C) 2022 Linaro Ltd.
+> > + */
+> > +
+> > +#include <linux/of.h>
+> > +#include <linux/slab.h>
+> > +
+> > +#include "icc-common.h"
+> > +
+> > +struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void *data)
+> > +{
+> > +	struct icc_node_data *ndata;
+> > +	struct icc_node *node;
+> > +
+> > +	node = of_icc_xlate_onecell(spec, data);
+> > +	if (IS_ERR(node))
+> > +		return ERR_CAST(node);
+> > +
+> > +	ndata = kzalloc(sizeof(*ndata), GFP_KERNEL);
+> > +	if (!ndata)
+> > +		return ERR_PTR(-ENOMEM);
+> > +
+> > +	ndata->node = node;
+> > +
+> > +	if (spec->args_count == 2)
+> > +		ndata->tag = spec->args[1];
+> > +
+> > +	if (spec->args_count > 2)
+> > +		pr_warn("%pOF: Too many arguments, path tag is not parsed\n", spec->np);
+> > +
+> > +	return ndata;
+> > +}
+> > +EXPORT_SYMBOL_GPL(qcom_icc_xlate_extended);
+> > diff --git a/drivers/interconnect/qcom/icc-common.h b/drivers/interconnect/qcom/icc-common.h
+> > new file mode 100644
+> > index 000000000000..33bb2c38dff3
+> > --- /dev/null
+> > +++ b/drivers/interconnect/qcom/icc-common.h
+> > @@ -0,0 +1,13 @@
+> > +/* SPDX-License-Identifier: GPL-2.0 */
+> > +/*
+> > + * Copyright (C) 2022 Linaro Ltd.
+> > + */
+> > +
+> > +#ifndef __DRIVERS_INTERCONNECT_QCOM_ICC_COMMON_H__
+> > +#define __DRIVERS_INTERCONNECT_QCOM_ICC_COMMON_H__
+> > +
+> > +#include <linux/interconnect-provider.h>
+> 
+> If it's just for the sake of the function prototype, you can replace
+> #include with forward declarations of two used structures:
+> 
+> struct icc_node_data;
+> struct of_phandle_args;
 
-Will do.
+Will fix in next spin.
 
 Thanks,
 Leo
+
+> > +
+> > +struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void *data);
+> > +
+> > +#endif
+> > diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+> > index 2c8e12549804..9a0ac85d2a84 100644
+> > --- a/drivers/interconnect/qcom/icc-rpmh.c
+> > +++ b/drivers/interconnect/qcom/icc-rpmh.c
+> > @@ -11,6 +11,7 @@
+> >   #include <linux/slab.h>
+> >   #include "bcm-voter.h"
+> > +#include "icc-common.h"
+> >   #include "icc-rpmh.h"
+> >   /**
+> > @@ -100,31 +101,6 @@ int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
+> >   }
+> >   EXPORT_SYMBOL_GPL(qcom_icc_set);
+> > -struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void *data)
+> > -{
+> > -	struct icc_node_data *ndata;
+> > -	struct icc_node *node;
+> > -
+> > -	node = of_icc_xlate_onecell(spec, data);
+> > -	if (IS_ERR(node))
+> > -		return ERR_CAST(node);
+> > -
+> > -	ndata = kzalloc(sizeof(*ndata), GFP_KERNEL);
+> > -	if (!ndata)
+> > -		return ERR_PTR(-ENOMEM);
+> > -
+> > -	ndata->node = node;
+> > -
+> > -	if (spec->args_count == 2)
+> > -		ndata->tag = spec->args[1];
+> > -
+> > -	if (spec->args_count > 2)
+> > -		pr_warn("%pOF: Too many arguments, path tag is not parsed\n", spec->np);
+> > -
+> > -	return ndata;
+> > -}
+> > -EXPORT_SYMBOL_GPL(qcom_icc_xlate_extended);
+> > -
+> >   /**
+> >    * qcom_icc_bcm_init - populates bcm aux data and connect qnodes
+> >    * @bcm: bcm to be initialized
+> > diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
+> > index 4bfc060529ba..84acc540a5f7 100644
+> > --- a/drivers/interconnect/qcom/icc-rpmh.h
+> > +++ b/drivers/interconnect/qcom/icc-rpmh.h
+> > @@ -131,7 +131,6 @@ struct qcom_icc_desc {
+> >   int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+> >   		       u32 peak_bw, u32 *agg_avg, u32 *agg_peak);
+> >   int qcom_icc_set(struct icc_node *src, struct icc_node *dst);
+> > -struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void *data);
+> >   int qcom_icc_bcm_init(struct qcom_icc_bcm *bcm, struct device *dev);
+> >   void qcom_icc_pre_aggregate(struct icc_node *node);
+> >   int qcom_icc_rpmh_probe(struct platform_device *pdev);
+> > diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
+> > index 8d99ee6421df..23045cf17e37 100644
+> > --- a/drivers/interconnect/qcom/sm8450.c
+> > +++ b/drivers/interconnect/qcom/sm8450.c
+> > @@ -12,6 +12,7 @@
+> >   #include <dt-bindings/interconnect/qcom,sm8450.h>
+> >   #include "bcm-voter.h"
+> > +#include "icc-common.h"
+> >   #include "icc-rpmh.h"
+> >   #include "sm8450.h"
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
