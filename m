@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C551513175
+	by mail.lfdr.de (Postfix) with ESMTP id ACC04513177
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 12:43:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245277AbiD1KqO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 06:46:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57770 "EHLO
+        id S1343654AbiD1KqQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 06:46:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245313AbiD1KqL (ORCPT
+        with ESMTP id S1343625AbiD1KqL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 28 Apr 2022 06:46:11 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DF1385951
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 03:42:54 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id j6so8661801ejc.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 03:42:54 -0700 (PDT)
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D24686E20
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 03:42:56 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id i27so8692477ejd.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 03:42:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eVrG7ytRhvfMLwg4sL6jbIdDhYj5gKeUGxhEwn4Bejk=;
-        b=BJXlGK81Gi71Z8HxoEnY11K+gDOzQVNHqhtuUdEI8MGf68sHJf+x768slqQyn/S9+k
-         iy1lDOkc1p3T4q9qa9V9Q10QQ5LBa9xudCJaVZBztiEy26LfiyjDRCO1rdrQTLzYmm2s
-         mk3ffQ8YvBTwSzeP1rSXOljFCx0xNzu0/t1NQcz+Yt5FC4zWLRTgv9fHaOhJZScXwNoQ
-         nUkkYbRoAzQbgodD7ONX4+jOvJtB2wQZeapWoFs+AhVRoaVhvpf5GZv/Eg3AebW8z7me
-         f/dQHPs+Jx6tMj9vDgFTEhAcscAn2vDRMKSsKKY+kQBsrZjxExyBT8GoMhoEJW9dpjf4
-         eovQ==
+        bh=7j+DqABE5tEF/l7nDn4CCYhccura8tc3QgvKgiSg/ic=;
+        b=W+nR7RzdjRjfwSb82vOnGdvUai69HsZ4v6yC94FtZtg95MheceQN30U89f1zOeuToe
+         aPSRpZwNVeNk96CCQYrSxIJFsj1zzoFDFMHhbEYDfqZJuaV0k/TcNVT/MVuX15RkyRpt
+         oYR/5EEiFAHELJ4ChWYWv03e+0D29Hh7gxk5VHlG3LYkGroPdh0BpSTUVv4WBSgY1vEZ
+         jWdfkk9PL717gxVPrEluMcxBz61vBDsrQaRSegc7h79gWi2vrLZ3K/Cl9uchWM6ABs2f
+         fldgVnWpTozFI+sq8S7oUpCUNCDs+OgDb9dFVw3vT2LMKTn81Yh6Ja4Q+SbAGm0QLg4h
+         jfpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eVrG7ytRhvfMLwg4sL6jbIdDhYj5gKeUGxhEwn4Bejk=;
-        b=L6FRKtclYEo7r2+z/mevYP3iBEwsXIgeIsxmr+vwS1YVgOd+LBob5gBDDKlPs2rVE/
-         iBzwM4cOvnW4lzJoV16s/WDtKMIbthHlnAT14WVJTQ98YChMxEr+c7sz1yih6uMK0JpA
-         PxdFbYzGrtRGiwRVXxjUHRwMi/b1jNqTg2ZLi+tUUSLegpZt8VJWJD6nRp6pmv7EAL2a
-         SqwHvmn9C7TnqsodJ9965aYdHif60qGdTjTHBFigMYzjQ12lmeXql0/74VBwy9oml7rK
-         4+hG/jsv6iyefXvYZQkta4s9T7P6dk21KwrH17otNs15/94yjCwii9cF3PCzraz7SUgn
-         u2Gw==
-X-Gm-Message-State: AOAM533vQUrLLR65T/ezcggITAj5aIbteaNNSb2cTIgt+9rVa66GdKkR
-        HKQ1NqTQNqfdSk+ZVWKutk3F/w==
-X-Google-Smtp-Source: ABdhPJzqQ4xoq3ewwa2SFLN6+Qifk+2YjdCez3ZVLT7Mv4oKmLqYRUYKBKSzP6eNxb+f5xRpRHg7wg==
-X-Received: by 2002:a17:906:804b:b0:6f3:8d78:ffa8 with SMTP id x11-20020a170906804b00b006f38d78ffa8mr20612885ejw.588.1651142573217;
-        Thu, 28 Apr 2022 03:42:53 -0700 (PDT)
+        bh=7j+DqABE5tEF/l7nDn4CCYhccura8tc3QgvKgiSg/ic=;
+        b=RPPqz+DCjbJnDxds5cLg4vHEL6Gjjpl+iGGv6aDfxCaK61GxK+2a4EmUJibKJKRuMK
+         pLWNbAZZ9JzPMYn1lT5ADviBdW6u6tv4sbNQiALaSrE5urkEBjzPSzw+Gty4b/GTPH7I
+         2xw6NcZdPYSBtqO0wxNHKjC8V0zySenMOfx8szQeaqLSKverTVTZUJIJaVZaEC1/PJnc
+         bpHL4D9cSVBXm0rPaFs0AFzP5whxdAQCbfh49jFciNKn0N41Nb5eCvK9KNYkNTTTNJWI
+         7PbSXh2TGbaKCIqZYHG+8NiFS8BqXNISwhzS9FwwcjCrCuCaaj0OvqjIJa57K0PCXCp2
+         UP7A==
+X-Gm-Message-State: AOAM532JZwCuVC7fq3RV6ljUjC+Lyd0rRwwekZCXQQacYrNOl3Ir2Dyt
+        GOM3w43NCPYmUIWZKIoYsCpBhg==
+X-Google-Smtp-Source: ABdhPJxhlXC/fSWqv3z31EYB8Mrtj88p1ll9+srcCmzQzRRlYBpc5l5sxvwS8r1Mhu65NCAXSYjHEA==
+X-Received: by 2002:a17:907:3da1:b0:6f3:e9d7:127 with SMTP id he33-20020a1709073da100b006f3e9d70127mr596474ejc.29.1651142574609;
+        Thu, 28 Apr 2022 03:42:54 -0700 (PDT)
 Received: from localhost.localdomain (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
-        by smtp.gmail.com with ESMTPSA id mf1-20020a1709071a4100b006f39f556011sm4982583ejc.125.2022.04.28.03.42.51
+        by smtp.gmail.com with ESMTPSA id mf1-20020a1709071a4100b006f39f556011sm4982583ejc.125.2022.04.28.03.42.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Apr 2022 03:42:52 -0700 (PDT)
+        Thu, 28 Apr 2022 03:42:53 -0700 (PDT)
 From:   Caleb Connolly <caleb.connolly@linaro.org>
 To:     caleb.connolly@linaro.org, Sebastian Reichel <sre@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -58,9 +58,9 @@ To:     caleb.connolly@linaro.org, Sebastian Reichel <sre@kernel.org>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Cc:     Amit Pundir <amit.pundir@linaro.org>,
         Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [PATCH v2 5/6] arm64: dts: qcom: sdm845-xiaomi-beryllium enable pmi8998 charger
-Date:   Thu, 28 Apr 2022 11:42:32 +0100
-Message-Id: <20220428104233.2980806-6-caleb.connolly@linaro.org>
+Subject: [PATCH v2 6/6] dt-bindings: power: supply: qcom,pmi8998-charger: add bindings for smb2 driver
+Date:   Thu, 28 Apr 2022 11:42:33 +0100
+Message-Id: <20220428104233.2980806-7-caleb.connolly@linaro.org>
 X-Mailer: git-send-email 2.36.0
 In-Reply-To: <20220428104233.2980806-1-caleb.connolly@linaro.org>
 References: <20220428104233.2980806-1-caleb.connolly@linaro.org>
@@ -76,45 +76,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the smb2 charger driver and add a battery node to report the
-battery stats correctly.
+Add devicetree bindings for the Qualcomm PMI8998/PM660 SMB2 charger
+driver.
 
 Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 ---
- .../arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ .../power/supply/qcom,pmi8998-charger.yaml    | 82 +++++++++++++++++++
+ 1 file changed, 82 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-index b3b6aa4e0fa3..1a5e127d7a43 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-@@ -109,6 +109,14 @@ rmtfs_mem: memory@f6301000 {
- 		};
- 	};
- 
-+	battery: battery {
-+		compatible = "simple-battery";
+diff --git a/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml b/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
+new file mode 100644
+index 000000000000..277c47e048b6
+--- /dev/null
++++ b/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
+@@ -0,0 +1,82 @@
++# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/power/supply/qcom,pmi8998-charger.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+		charge-full-design-microamp-hours = <4000000>;
-+		voltage-min-design-microvolt = <3400000>;
-+		voltage-max-design-microvolt = <4400000>;
-+	};
++title: Qualcomm PMI8998/PM660 Switch-Mode Battery Charger "2"
 +
- 	vreg_s4a_1p8: vreg-s4a-1p8 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vreg_s4a_1p8";
-@@ -302,6 +310,11 @@ vol_up_pin_a: vol-up-active {
- 	};
- };
- 
-+&pmi8998_charger {
-+	status = "okay";
-+	monitored-battery = <&battery>;
-+};
++maintainers:
++  - Caleb Connolly <caleb.connolly@linaro.org>
 +
- &pm8998_pon {
- 	resin {
- 		compatible = "qcom,pm8941-resin";
++properties:
++  compatible:
++    enum:
++      - qcom,pmi8998-charger
++      - qcom,pm660-charger
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 4
++
++  interrupt-names:
++    items:
++      - const: usb-plugin
++      - const: bat-ov
++      - const: wdog-bark
++      - const: usbin-icl-change
++
++  io-channels:
++    items:
++      - description: USB in current in uA
++      - description: USB in voltage in uV
++
++  io-channel-names:
++    items:
++      - const: usbin_i
++      - const: usbin_v
++
++  monitored-battery:
++    description: phandle to the simple-battery node
++    $ref: /schemas/types.yaml#/definitions/phandle
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - interrupt-names
++  - io-channels
++  - io-channel-names
++  - monitored-battery
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++
++    pmic {
++      #address-cells = <1>;
++      #size-cells = <0>;
++      #interrupt-cells = <4>;
++
++      charger@1000 {
++        compatible = "qcom,pmi8998-charger";
++        reg = <0x1000>;
++
++        interrupts = <0x2 0x12 0x2 IRQ_TYPE_EDGE_BOTH>,
++                     <0x2 0x13 0x4 IRQ_TYPE_EDGE_BOTH>,
++                     <0x2 0x13 0x6 IRQ_TYPE_EDGE_RISING>,
++                     <0x2 0x16 0x1 IRQ_TYPE_EDGE_RISING>;
++        interrupt-names = "usb-plugin", "bat-ov", "wdog-bark", "usbin-icl-change";
++
++        io-channels = <&pmi8998_rradc 3>,
++                      <&pmi8998_rradc 4>;
++        io-channel-names = "usbin_i",
++                           "usbin_v";
++
++        monitored-battery = <&battery>;
++      };
++    };
 -- 
 2.36.0
 
