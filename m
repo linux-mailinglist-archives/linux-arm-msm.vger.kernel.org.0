@@ -2,75 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C29D513336
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 14:00:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07D4751334D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 14:02:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345987AbiD1MC6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 08:02:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46672 "EHLO
+        id S1345996AbiD1MGG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 08:06:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345841AbiD1MC5 (ORCPT
+        with ESMTP id S1345985AbiD1MGB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 08:02:57 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9416890B3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 04:59:42 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id p12so8193534lfs.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 04:59:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ga1FXFUoff60uV1gZjfSxxZrosbrRhkS2aF6jySEeu8=;
-        b=qHRlOaZrKYy+h2j4/xpMrJ8Jpya5vzFKtP1USakpGDqSEgWC8npgtUSATvrfOoxehH
-         3bOL8BdWR37B0G+dpMH4JCszCMNudQQ1IkfQbjXm4zfEW42f45ZHpr9iJTaoEDCWEs2X
-         mi9bo+bp3dyS3C9HjDnFz4sO0D3mYtmJM3aJrZl2N1iToGmBMORpMA0Upovb2hAmIZCb
-         7KgxSfmFsRPg0+pu0lcb/1guN5uG9CVqHeC+3ow04eTcEBipEtJFlniJLLNUl3U95U9a
-         eXIk3NZRQHBJz/4Xzndc3GyduSPTn3MPUVNSUWsPQ9dc+DIYID0WaCvbKR+8LYw1K3qq
-         ++aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ga1FXFUoff60uV1gZjfSxxZrosbrRhkS2aF6jySEeu8=;
-        b=ago1M9GfmP+3ow/03EER6XLUF7o3OWA1Rq93JfVc1M2i2HYogtgaFNLRAs/3vs7y8f
-         9z6diTiUB8n2942wiOnFRjbRX0CoYGyOzcQDvkFXR3POnBorhvLOS+3sVcz2JW1ApXrn
-         FYCBKi6+SelEmpUKaVumhfOaw8M/s45d8bIcKukChc4v/+astmqXtqxi0747oflciYfl
-         J3ggYTUhfLQslNAStQS6lCq99iltyyV8YV3ntOoTHo7tYxO+Sa7z6DOno+gjZnSln6lN
-         YMC+AnuqZ9s4lwusar72pqcQlj9LtBAeYwFFZP8/nAsRzhDW9qpWYjATqJkXzt7NiQ7v
-         jF3g==
-X-Gm-Message-State: AOAM5319gmi2IVuxZoTKlw00bWmTDZ0ChO/6+AuoYGFC22iNJcu69I9V
-        RecoaMD4PG3qZ7FiUgn7mZsUnA==
-X-Google-Smtp-Source: ABdhPJwGVIR/60HEZ4oXF7Iw5Vsm6k3walKG/awaV+8la2yAUyqU/7qbz2OJkTKWl7EtlvON69JzRw==
-X-Received: by 2002:a05:6512:3d06:b0:472:3a24:7e78 with SMTP id d6-20020a0565123d0600b004723a247e78mr1968510lfv.468.1651147181067;
-        Thu, 28 Apr 2022 04:59:41 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id f1-20020a2e1f01000000b0024602522b5dsm2069137ljf.120.2022.04.28.04.59.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Apr 2022 04:59:40 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v4 7/7] arm64: dts: qcom: sm8250: provide additional MSI interrupts
-Date:   Thu, 28 Apr 2022 14:59:34 +0300
-Message-Id: <20220428115934.3414641-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220428115934.3414641-1-dmitry.baryshkov@linaro.org>
-References: <20220428115934.3414641-1-dmitry.baryshkov@linaro.org>
+        Thu, 28 Apr 2022 08:06:01 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0F87ADD70;
+        Thu, 28 Apr 2022 05:02:46 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id AB666B82C97;
+        Thu, 28 Apr 2022 12:02:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005D7C385A9;
+        Thu, 28 Apr 2022 12:02:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1651147364;
+        bh=RuozuLWzG4C8Ggsyl8kWlvlvUawIVpr6zx6B7prgFZM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Hs17iDXfGMIN4DA5xhkGxMW2hsXvLoHy/mlZ1h2K2QQfd0VADQNRs3bkj/+QY8s1J
+         lGiXtq7Lv7NaKJ391GPhoq5YSTaJsYdmAmrjO14yNnIIV9AdZQCuI8tmd9HdFitWgZ
+         ak385yipdDltz09gEM2Ei+tEQCYt8gDVj4JMV/tM=
+Date:   Thu, 28 Apr 2022 14:02:41 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     arnd@arndb.de, catalin.marinas@arm.com, rostedt@goodmis.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        maz@kernel.org, quic_psodagud@quicinc.com, quic_tsoni@quicinc.com,
+        will@kernel.org
+Subject: Re: [PATCHv12 7/9] asm-generic/io: Add logging support for MMIO
+ accessors
+Message-ID: <YmqCYZwHoRuKtFSN@kroah.com>
+References: <cover.1651139070.git.quic_saipraka@quicinc.com>
+ <6673a2e73d3dd4c7aa01fee9b26cc4a52176ba7a.1651139070.git.quic_saipraka@quicinc.com>
+ <YmpxxW5CZjMVrzF0@kroah.com>
+ <6688ffa2-ec14-9126-1296-6180bab3e1d6@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6688ffa2-ec14-9126-1296-6180bab3e1d6@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,41 +57,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SM8250 each group of MSI interrupts is mapped to the separate host
-interrupt. Describe each of interrupts in the device tree for PCIe0
-host.
+On Thu, Apr 28, 2022 at 04:51:49PM +0530, Sai Prakash Ranjan wrote:
+> On 4/28/2022 4:21 PM, Greg KH wrote:
+> > On Thu, Apr 28, 2022 at 03:25:30PM +0530, Sai Prakash Ranjan wrote:
+> > > Add logging support for MMIO high level accessors such as read{b,w,l,q}
+> > > and their relaxed versions to aid in debugging unexpected crashes/hangs
+> > > caused by the corresponding MMIO operation.
+> > > 
+> > > Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+> > > ---
+> > >   include/asm-generic/io.h | 82 ++++++++++++++++++++++++++++++++++++++--
+> > >   1 file changed, 78 insertions(+), 4 deletions(-)
+> > > 
+> > > diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
+> > > index 7ce93aaf69f8..99090722cb4b 100644
+> > > --- a/include/asm-generic/io.h
+> > > +++ b/include/asm-generic/io.h
+> > > @@ -10,6 +10,7 @@
+> > >   #include <asm/page.h> /* I/O is all done through memory accesses */
+> > >   #include <linux/string.h> /* for memset() and memcpy() */
+> > >   #include <linux/types.h>
+> > > +#include <linux/instruction_pointer.h>
+> > >   #ifdef CONFIG_GENERIC_IOMAP
+> > >   #include <asm-generic/iomap.h>
+> > > @@ -61,6 +62,35 @@
+> > >   #define __io_par(v)     __io_ar(v)
+> > >   #endif
+> > > +#if IS_ENABLED(CONFIG_TRACE_MMIO_ACCESS) && !(defined(__DISABLE_TRACE_MMIO__))
+> > Shouldn't you document __DISABLE_TRACE_MMIO__ somewhere?  It's not even
+> > in the changelog.  Put a big comment above this for what is is for and
+> > how to use it.  Otherwise you will forget all about this in 6 months :)
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> 
+> Didn't you ask me to split the patch to the one actually adding the flag and the one using it.
 
-Tested on Qualcomm RB5 platform with first group of MSI interrupts being
-used by the PME and attached ath11k WiFi chip using second group of MSI
-interrupts.
+Yes, and isn't this the commit that adds the flag?  Or was that on an
+earlier one that I missed?
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+Ah, it's in patch 6/9
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 410272a1e19b..0659ac45c651 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -1807,8 +1807,15 @@ pcie0: pci@1c00000 {
- 			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
- 
--			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
-+			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi", "msi2", "msi3", "msi4", "msi5", "msi6", "msi7", "msi8";
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 0x7>;
- 			interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
--- 
-2.35.1
+But you should also document it here in the .h file, otherwise the only
+place it is described is in some random kvm Makefile that no one will
+ever notice :)
 
+thanks,
+
+greg k-h
