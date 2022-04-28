@@ -2,285 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DEF4512CF2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 09:34:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6DB4512D07
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 09:36:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239271AbiD1Hhh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 03:37:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38304 "EHLO
+        id S245604AbiD1Hj3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 03:39:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234672AbiD1Hhg (ORCPT
+        with ESMTP id S245562AbiD1HjV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 03:37:36 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D40DF9BAD1;
-        Thu, 28 Apr 2022 00:34:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651131262; x=1682667262;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=tCs7ErG885gKztJRvUVGDYnI/7nNF4ztVwUO/AczKV8=;
-  b=Y076bJgAWC9OnwVedBMkuXtvUq1by3OfqsZkLUvhMUcP9OfKKoIeK4Nx
-   mRky2Yr7LwNLmFHFpWLF3xKPDCFdwec3n6zrvN2u6roBtiJvL7xi7ipYR
-   Lf961z20oPf5hFSdWFKIY53+cJtI3j+7Yjc+vjfuphE9vha22CSkEa3Y/
-   8=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 28 Apr 2022 00:34:22 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 00:34:22 -0700
-Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 28 Apr 2022 00:34:19 -0700
-From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-To:     <linux-media@vger.kernel.org>, <stanimir.varbanov@linaro.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_vgarodia@quicinc.com>, <frkoenig@chromium.org>,
-        <quic_dikshita@quicinc.com>
-Subject: [PATCH] media: venus: set ubwc configuration on specific video hardware
-Date:   Thu, 28 Apr 2022 13:04:08 +0530
-Message-ID: <1651131248-20313-1-git-send-email-quic_vgarodia@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Thu, 28 Apr 2022 03:39:21 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30F6F9BAD3;
+        Thu, 28 Apr 2022 00:36:03 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C043861F1B;
+        Thu, 28 Apr 2022 07:36:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3AAC385A9;
+        Thu, 28 Apr 2022 07:36:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1651131361;
+        bh=ugnB0+VxFaXUG+LIM3fB+IZ8PXAmen5TGP1XLvNJDHk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=kRMVMro0a49W2h8r9B26ww0tU8NLIPJoDH7f81kqotoWi9h9JezPDBSNEInplz5gt
+         WLitLjH/1xoBqh5q9wTiqpc6tBiHZLJTKU5Zbg0PoBhPPxMVklW1wJ/EUcpjUrIUvc
+         JDCLrspSh7xuB2I/ymUaM2mplR/uLZpoROxL621U=
+Date:   Thu, 28 Apr 2022 09:35:58 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     arnd@arndb.de, catalin.marinas@arm.com, rostedt@goodmis.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        maz@kernel.org, quic_psodagud@quicinc.com, quic_tsoni@quicinc.com,
+        will@kernel.org
+Subject: Re: [PATCHv11 6/6] asm-generic/io: Add logging support for MMIO
+ accessors
+Message-ID: <YmpD3tIQK2iiqt46@kroah.com>
+References: <cover.1645772606.git.quic_saipraka@quicinc.com>
+ <3de35c9f4a3a070d197bab499acefc709a6f5336.1645772606.git.quic_saipraka@quicinc.com>
+ <YmorayBozWWRlTpP@kroah.com>
+ <96dc5e2e-5d88-52ce-c295-779603e668f2@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <96dc5e2e-5d88-52ce-c295-779603e668f2@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-UBWC configuration parameters would vary across video hardware
-generations. At the same time, driver is expected to configure
-these parameters, without relying on video firmware to use the
-default configurations.
-Setting the configuration parameters for sc7280.
+On Thu, Apr 28, 2022 at 12:59:13PM +0530, Sai Prakash Ranjan wrote:
+> On 4/28/2022 11:21 AM, Greg KH wrote:
+> > On Thu, Apr 28, 2022 at 09:00:13AM +0530, Sai Prakash Ranjan wrote:
+> > > Add logging support for MMIO high level accessors such as read{b,w,l,q}
+> > > and their relaxed versions to aid in debugging unexpected crashes/hangs
+> > > caused by the corresponding MMIO operation. Also add a generic flag
+> > > (__DISABLE_TRACE_MMIO__) which is used to disable MMIO tracing in nVHE KVM
+> > > and if required can be used to disable MMIO tracing for specific drivers.
+> > This "add a build flag to a Makefile to change how a driver operates"
+> > feels very wrong to me given that this is now a totally new way to
+> > control how a driver works at build time.  That's not anything we have
+> > done before for drivers and if added, is only going to create much added
+> > complexity.
+> 
+> Not exactly, there are already many such build flags being used currently across kernel.
+> 
+> Example: "-D__KVM_NVHE_HYPERVISOR__, D__KVM_VHE_HYPERVISOR__,
 
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
----
- drivers/media/platform/qcom/venus/core.c       |  5 +++
- drivers/media/platform/qcom/venus/core.h       | 18 +++++++++
- drivers/media/platform/qcom/venus/hfi_cmds.c   |  9 +++++
- drivers/media/platform/qcom/venus/hfi_cmds.h   |  1 +
- drivers/media/platform/qcom/venus/hfi_helper.h | 20 ++++++++++
- drivers/media/platform/qcom/venus/hfi_venus.c  | 54 ++++++++++++++++++++++++++
- 6 files changed, 107 insertions(+)
+That's crazy KVM stuff, don't extrapoloate that to all kernel drivers
+please.
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 877eca1..75d8e14 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -832,6 +832,10 @@ static const struct reg_val sm7280_reg_preset[] = {
- 	{ 0xb0088, 0 },
- };
- 
-+static const struct ubwc_config sc7280_ubwc_config[] = {
-+	{{1, 1, 1, 0, 0, 0}, 8, 32, 14, 0, 0},
-+};
-+
- static const struct venus_resources sc7280_res = {
- 	.freq_tbl = sc7280_freq_table,
- 	.freq_tbl_size = ARRAY_SIZE(sc7280_freq_table),
-@@ -841,6 +845,7 @@ static const struct venus_resources sc7280_res = {
- 	.bw_tbl_enc_size = ARRAY_SIZE(sc7280_bw_table_enc),
- 	.bw_tbl_dec = sc7280_bw_table_dec,
- 	.bw_tbl_dec_size = ARRAY_SIZE(sc7280_bw_table_dec),
-+	.ubwc_conf = sc7280_ubwc_config,
- 	.clks = {"core", "bus", "iface"},
- 	.clks_num = 3,
- 	.vcodec0_clks = {"vcodec_core", "vcodec_bus"},
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index c3023340..ef71462 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -47,6 +47,23 @@ struct bw_tbl {
- 	u32 peak_10bit;
- };
- 
-+struct ubwc_config {
-+	struct {
-+		u32 max_channel_override : 1;
-+		u32 mal_length_override : 1;
-+		u32 hb_override : 1;
-+		u32 bank_swzl_level_override : 1;
-+		u32 bank_spreading_override : 1;
-+		u32 reserved : 27;
-+	} override_bit_info;
-+
-+	u32 max_channels;
-+	u32 mal_length;
-+	u32 highest_bank_bit;
-+	u32 bank_swzl_level;
-+	u32 bank_spreading;
-+};
-+
- struct venus_resources {
- 	u64 dma_mask;
- 	const struct freq_tbl *freq_tbl;
-@@ -57,6 +74,7 @@ struct venus_resources {
- 	unsigned int bw_tbl_dec_size;
- 	const struct reg_val *reg_tbl;
- 	unsigned int reg_tbl_size;
-+	const struct ubwc_config *ubwc_conf;
- 	const char * const clks[VIDC_CLKS_NUM_MAX];
- 	unsigned int clks_num;
- 	const char * const vcodec0_clks[VIDC_VCODEC_CLKS_NUM_MAX];
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-index 4ecd444..036eaca 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-@@ -58,6 +58,15 @@ void pkt_sys_coverage_config(struct hfi_sys_set_property_pkt *pkt, u32 mode)
- 	pkt->data[1] = mode;
- }
- 
-+void pkt_sys_ubwc_config(struct hfi_sys_set_property_pkt *pkt, struct hfi_ubwc_config *hfi)
-+{
-+	pkt->hdr.size = struct_size(pkt, data, 1) + sizeof(*hfi);
-+	pkt->hdr.pkt_type = HFI_CMD_SYS_SET_PROPERTY;
-+	pkt->num_properties = 1;
-+	pkt->data[0] = HFI_PROPERTY_SYS_UBWC_CONFIG;
-+	memcpy(&pkt->data[1], hfi, sizeof(*hfi));
-+}
-+
- int pkt_sys_set_resource(struct hfi_sys_set_resource_pkt *pkt, u32 id, u32 size,
- 			 u32 addr, void *cookie)
- {
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
-index 327ed90..ce7179e 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.h
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
-@@ -256,6 +256,7 @@ void pkt_sys_init(struct hfi_sys_init_pkt *pkt, u32 arch_type);
- void pkt_sys_pc_prep(struct hfi_sys_pc_prep_pkt *pkt);
- void pkt_sys_idle_indicator(struct hfi_sys_set_property_pkt *pkt, u32 enable);
- void pkt_sys_power_control(struct hfi_sys_set_property_pkt *pkt, u32 enable);
-+void pkt_sys_ubwc_config(struct hfi_sys_set_property_pkt *pkt, struct hfi_ubwc_config *hfi);
- int pkt_sys_set_resource(struct hfi_sys_set_resource_pkt *pkt, u32 id, u32 size,
- 			 u32 addr, void *cookie);
- int pkt_sys_unset_resource(struct hfi_sys_release_resource_pkt *pkt, u32 id,
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index 2daa88e..d2d6719 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -427,6 +427,7 @@
- #define HFI_PROPERTY_SYS_CODEC_POWER_PLANE_CTRL			0x5
- #define HFI_PROPERTY_SYS_IMAGE_VERSION				0x6
- #define HFI_PROPERTY_SYS_CONFIG_COVERAGE			0x7
-+#define HFI_PROPERTY_SYS_UBWC_CONFIG				0x8
- 
- /*
-  * HFI_PROPERTY_PARAM_COMMON_START
-@@ -626,6 +627,25 @@ struct hfi_debug_config {
- 	u32 mode;
- };
- 
-+struct hfi_ubwc_config {
-+	u32 size;
-+	u32 packet_type;
-+	struct {
-+		u32 max_channel_override : 1;
-+		u32 mal_length_override : 1;
-+		u32 hb_override : 1;
-+		u32 bank_swzl_level_override : 1;
-+		u32 bank_spreading_override : 1;
-+		u32 reserved : 27;
-+		} override_bit_info;
-+	u32 max_channels;
-+	u32 mal_length;
-+	u32 highest_bank_bit;
-+	u32 bank_swzl_level;
-+	u32 bank_spreading;
-+	u32 reserved[2];
-+};
-+
- struct hfi_enable {
- 	u32 enable;
- };
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index 3a75a27..25131d0 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -904,6 +904,52 @@ static int venus_sys_set_power_control(struct venus_hfi_device *hdev,
- 	return 0;
- }
- 
-+static int venus_sys_set_ubwc_config(struct venus_hfi_device *hdev)
-+{
-+	struct hfi_sys_set_property_pkt *pkt;
-+	u8 packet[IFACEQ_VAR_SMALL_PKT_SIZE];
-+	struct hfi_ubwc_config *hfi;
-+	const struct venus_resources *res = hdev->core->res;
-+	const struct ubwc_config *ubwc_conf = res->ubwc_conf;
-+	int ret;
-+
-+	hfi = kzalloc(sizeof(*hfi), GFP_KERNEL);
-+	if (!hfi)
-+		return -ENOMEM;
-+
-+	pkt = (struct hfi_sys_set_property_pkt *)packet;
-+
-+	hfi->max_channels = ubwc_conf->max_channels;
-+	hfi->override_bit_info.max_channel_override =
-+		ubwc_conf->override_bit_info.max_channel_override;
-+
-+	hfi->mal_length = ubwc_conf->mal_length;
-+	hfi->override_bit_info.mal_length_override =
-+		ubwc_conf->override_bit_info.mal_length_override;
-+
-+	hfi->highest_bank_bit = ubwc_conf->highest_bank_bit;
-+	hfi->override_bit_info.hb_override =
-+		ubwc_conf->override_bit_info.hb_override;
-+
-+	hfi->bank_swzl_level = ubwc_conf->bank_swzl_level;
-+	hfi->override_bit_info.bank_swzl_level_override =
-+		ubwc_conf->override_bit_info.bank_swzl_level_override;
-+
-+	hfi->bank_spreading = ubwc_conf->bank_spreading;
-+	hfi->override_bit_info.bank_spreading_override =
-+		ubwc_conf->override_bit_info.bank_spreading_override;
-+
-+	pkt_sys_ubwc_config(pkt, hfi);
-+
-+	kfree(hfi);
-+
-+	ret = venus_iface_cmdq_write(hdev, pkt, false);
-+	if (ret)
-+		return ret;
-+
-+	return 0;
-+}
-+
- static int venus_get_queue_size(struct venus_hfi_device *hdev,
- 				unsigned int index)
- {
-@@ -922,6 +968,7 @@ static int venus_get_queue_size(struct venus_hfi_device *hdev,
- static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
- {
- 	struct device *dev = hdev->core->dev;
-+	const struct venus_resources *res = hdev->core->res;
- 	int ret;
- 
- 	ret = venus_sys_set_debug(hdev, venus_fw_debug);
-@@ -945,6 +992,13 @@ static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
- 		dev_warn(dev, "setting hw power collapse ON failed (%d)\n",
- 			 ret);
- 
-+	/* For specific venus core, it is mandatory to set the UBWC configuration */
-+	if (res->ubwc_conf) {
-+		ret = venus_sys_set_ubwc_config();
-+		if (ret)
-+			dev_warn(dev, "setting ubwc config failed (%d)\n", ret);
-+	}
-+
- 	return ret;
- }
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> -D__NO_FORTIFY, -D__DISABLE_EXPORTS, -DDISABLE_BRANCH_PROFILING".
 
+Those are compiler flags that affect gcc, not kernel code functionality.
+
+> It gives us even more flexibility to disable feature for multiple files under a directory
+> rather than individually cluttering each file, look at "-D__KVM_NVHE_HYPERVISOR__"
+> for files under "arch/arm64/kvm/hyp/nvhe/".
+
+Again, crazy KVM stuff, do not want that for all drivers in the kernel.
+
+> > How about requiring that the #define be in the .c files, and not in the
+> > Makefile, as Makefile changes are much much harder to notice and review
+> > over time.
+> 
+> How is this cleaner, lets say we have many such drivers like all drivers under drivers/serial,
+> so we go and add #define for each of them? That looks more spread out than having all
+> such information under one file (Makefile).
+
+If you have to go and add this to each and every driver, that is a HUGE
+hint that this feature is not a good one and that no one should be using
+it in the first place, right?
+
+Again, this is a new way to modify driver functionality that is outside
+of the driver itself, which is not something that I would like to see
+added without a whole lot of discussion and planning.  To throw it in as
+part of a kvm change is not a nice way to hide such a thing.
+
+> And I didn't understand how is it harder to track changes to makefile? Makefile is  part
+> of the driver directory and any changes to makefile is visible to the corresponding maintainers.
+> Do you mean something else?
+
+I mean that we review driver changes all the time, and code is
+self-contained and the functionality is only affected right now by
+Kconfig options, and what is in the .c files itself.  You are adding a
+new way to change functionality by adding a Makefile configuration
+option as well.  That is a major functional change for how we do our
+configuration logic in Linux.
+
+> > Also, I see that this "disable the trace" feature has already been asked
+> > for for 2 other drivers in the Android kernel tree, why not include
+> > those changes here as well?  That kind of shows that this new feature is
+> > limited in that driver authors are already wanting it disabled, even
+> > before it is accepted.
+> 
+> That can be done later on top of this series right? This series mainly deals with adding
+> initial support for such tracing, there could be numerous drivers who might or might
+> not want the feature which can be added onto later. We can't actually identify all
+> the driver requirements upfront. As an example, we have already used the flag to
+> disable tracing for nVHE KVM, so we know how to use the flag.
+
+Again, make it explicit in the driver file itself that it is doing this,
+not in the Makefile, and I will not have any objections.
+
+> > Because of that, who _will_ be using this feature?
+> > 
+> 
+> Every driver except those two or few more, and it is not a bug or anything, they just want to disable it
+> to limit the logs in case of example UART driver since the reads/writes are very frequent in those cases
+> and the logs are not necessarily useful for them.
+
+I have a feeling that lots more drivers will want this disabled due to
+the noise it will cause.  The fact that we already have 2 requests to
+change this _before_ the code is even merged is proof of that.
+
+thanks,
+
+greg k-h
