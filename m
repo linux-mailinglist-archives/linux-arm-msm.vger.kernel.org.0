@@ -2,641 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5057E512EDB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 10:46:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2D1E512EDC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 10:46:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245321AbiD1Itb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 04:49:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44146 "EHLO
+        id S229978AbiD1Itc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 04:49:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344647AbiD1IsS (ORCPT
+        with ESMTP id S1344803AbiD1Is6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 04:48:18 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91EFA6E8C9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 01:41:06 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id c23so3788681plo.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 01:41:06 -0700 (PDT)
+        Thu, 28 Apr 2022 04:48:58 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCCB1DFE0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 01:41:49 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id iq10so3727655pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 01:41:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bXZP+N1W8fXu7+L5j5j9rjdK9XbMzmaaXJPe797XS+0=;
-        b=g9D8kQqantSnm5fD8zpBxmmhl/IXNdAQtphK8BkRdu7KHnxTheurq2s8KXSCbcNuaI
-         CtiOug5F3pE97EdeNlx555k7dT3U/wZOj11WJEjt+z7MW9fapZkaHTlChVO088HuQfQq
-         qxP96nZYI/EuqF2LfK5DSYQyDL3GqgZyTUZNw=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wIdqzQenp8zuRFBiUnNUkRO/mr/GSoN96MpP4RdC2Ks=;
+        b=xsSu5UkuQp97dr0n35uBtIUmJEnPrOq+7/Ht8m1e0fS41D6us0m0UdxZsuYoBM+4L/
+         qyYzrP9GeLa+6aX7dVwBoEiHpKMPqehEugWifRgV5H1Xq8/A/v21RTNfffson+PMEqdH
+         ejG15f5Yzg6nvPTTMcwiIaUHytZtm5yY+/LtxbPzw0uM76D3tVjrBOQScji6XW3+kpTL
+         vjfvAzqMjKj8Fa/q89vqNDEUWwEWUyLQUvoZATzyJi5sP5DWq6qEWzguM9rw0/74T0TB
+         iH8uoemrGokyoSu5V20+EEEyDMp9zy9aL9wwYjwcmevwmXTy6GdrMwzr6i10GIaKLoRl
+         RYgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bXZP+N1W8fXu7+L5j5j9rjdK9XbMzmaaXJPe797XS+0=;
-        b=PBN8Gl0XJKMchy7ytXPocfbaxXVqPKRp27r5fDyLVtlXKaMtwMlmo0r5IJZitNyQlG
-         UBZ40CWQgOjFx7nlCkT5ePcdmmXu7lduLLmVeGWWlJMAryPLfhMzw3QCVGoIE6qSdghQ
-         CnwUjValc5YEjcZFH/UGve1eu24WRVtCKoF/3jphYVNL+gOOXMBRcOlxxBou2ujNRfHf
-         HO6xuFYQxEVly27IZWmejBFAIQPwg3ZLTI3pTeNhgmdyJqt/XL+r2+Ro0XqMY3FWZdLo
-         apsBiDAHp+hGah1kisrP4Elu95kQPKL3r+VmRuSaGHXhtVZynb5lcuHaW/kLc3AASpxy
-         uYYg==
-X-Gm-Message-State: AOAM532ujWi6EWZsCGTZq5vrKp4vsfv6F9CbyovkmNs7X7nQb5SNSl2V
-        0kc3jsL51TrrbTaP3J0fLrwsHA==
-X-Google-Smtp-Source: ABdhPJzzpkkJCyC33/cHxkFrX+5tixgTafTfw0TGhGw/GymT9QyQfcIN4j3DeWk05dEaOvGUj3vTEA==
-X-Received: by 2002:a17:902:8a95:b0:156:a40a:71e5 with SMTP id p21-20020a1709028a9500b00156a40a71e5mr32515940plo.144.1651135265995;
-        Thu, 28 Apr 2022 01:41:05 -0700 (PDT)
-Received: from joebar-glaptop.lan (c-71-202-34-56.hsd1.ca.comcast.net. [71.202.34.56])
-        by smtp.gmail.com with ESMTPSA id g15-20020aa7818f000000b00505ce2e4640sm21011462pfi.100.2022.04.28.01.41.05
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wIdqzQenp8zuRFBiUnNUkRO/mr/GSoN96MpP4RdC2Ks=;
+        b=zd3a/V5b1bl6M1S6ho9Q2M/Fm4+2g3uwTyVOiX5Vj9FgWpoxgd2PfRRckdrUL2z7hm
+         tXr/Ld0qbx/zKnk+xhXuRzJXSjF5S/L49uBL8lPF191QC+JcN7K0YQG8/qcCP2m0GhtL
+         u3jCwepY0CLF4DC1myjEqJIgx7vvruZswQ4U1FJTMeR5dL84s15OfIgwHP/F/I5Y3BsE
+         0782G+Q3GFvTC+p5Yavwtvjw8Wm+1yOT/H2g9d5xDLATbDlC+RLeyX7XgvTT7rCvZx8x
+         rgK3uHyvto/c2dgi1+V5GQs3cMHhq/X5NQefHFjLt7VBhJpOtEhgqEq9A2pceKlf30sg
+         3ffA==
+X-Gm-Message-State: AOAM530rfCBTPRnUaMr5PeYNAGHGsbUwDL64oljDJlYmdK9vJ/qtTfp3
+        qG3skm1aGiCzDZVHLL5yDtuKPQ==
+X-Google-Smtp-Source: ABdhPJxaBqG4DFsYcLCWvno3bHaamg3EwGl6hR804mfzJo/rqlAlnFOKP86OTA2RJ3iySYw9TMbjvw==
+X-Received: by 2002:a17:90b:314a:b0:1d9:5ccf:baab with SMTP id ip10-20020a17090b314a00b001d95ccfbaabmr25208550pjb.110.1651135309119;
+        Thu, 28 Apr 2022 01:41:49 -0700 (PDT)
+Received: from leoy-ThinkPad-X240s ([134.195.101.46])
+        by smtp.gmail.com with ESMTPSA id d7-20020a62f807000000b0050d32c878f4sm15371198pfh.114.2022.04.28.01.41.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Apr 2022 01:41:05 -0700 (PDT)
-From:   "Joseph S. Barrera III" <joebar@chromium.org>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        "Joseph S. Barrera III" <joebar@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 28 Apr 2022 01:41:48 -0700 (PDT)
+Date:   Thu, 28 Apr 2022 16:41:43 +0800
+From:   Leo Yan <leo.yan@linaro.org>
+To:     Georgi Djakov <djakov@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v1] arm64: dts: qcom: sc7180: Add mrbland dts files
-Date:   Thu, 28 Apr 2022 01:41:00 -0700
-Message-Id: <20220428014022.v1.1.I08a15a73996211d37dff16810c40ee1539658601@changeid>
-X-Mailer: git-send-email 2.31.0
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] interconnect: qcom: msm8939: Use icc_sync_state
+Message-ID: <20220428084143.GB583115@leoy-ThinkPad-X240s>
+References: <20220416012634.479617-1-leo.yan@linaro.org>
+ <05a7c1cc-c8f4-9303-2498-ba8709c72b4b@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <05a7c1cc-c8f4-9303-2498-ba8709c72b4b@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Mrbland is a trogdor-based board which may ship as the Lenovo 10e Gen 2.
-These dts files are copies from the downstream Chrome OS 5.4 kernel,
-but with the camera (sc7180-trogdor-mipi-camera.dtsi) #include removed.
+On Thu, Apr 28, 2022 at 10:19:55AM +0300, Georgi Djakov wrote:
+> On 16.04.22 4:26, Leo Yan wrote:
+> > It's fashion to use the icc_sync_state callback to notify the framework
+> > when all consumers are probed, so that the bandwidth request doesn't
+> > need to stay on maximum value.
+> > 
+> > Do the same thing for msm8939 driver.
+> 
+> I assume that you tested this with some out of tree DT? Is it public?
 
-Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
----
+Yes, Bryan is upstreaming for DT binding patch, see:
+https://lore.kernel.org/all/20220419010903.3109514-3-bryan.odonoghue@linaro.org/
 
- arch/arm64/boot/dts/qcom/Makefile             |   4 +
- .../qcom/sc7180-trogdor-mrbland-rev0-auo.dts  |  22 ++
- .../qcom/sc7180-trogdor-mrbland-rev0-boe.dts  |  22 ++
- .../dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi |  53 +++
- .../qcom/sc7180-trogdor-mrbland-rev1-auo.dts  |  22 ++
- .../qcom/sc7180-trogdor-mrbland-rev1-boe.dts  |  24 ++
- .../boot/dts/qcom/sc7180-trogdor-mrbland.dtsi | 351 ++++++++++++++++++
- 7 files changed, 498 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-auo.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-boe.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-auo.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-boe.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi
+> If the consumers are not described as such in DT and/or the support
+> in the client drivers is missing, paths might get disabled.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index f9e6343acd03..93758a62f4d7 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -75,6 +75,10 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-r9.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r4.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r5.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r9.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-mrbland-rev0-auo.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-mrbland-rev0-boe.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-mrbland-rev1-auo.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-mrbland-rev1-boe.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r1-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r2.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-auo.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-auo.dts
-new file mode 100644
-index 000000000000..2767817fb053
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-auo.dts
-@@ -0,0 +1,22 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Mrbland board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ *
-+ * SKU: 0x0 => 0
-+ *  - bits 7..4: Panel ID: 0x0 (AUO)
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor-mrbland-rev0.dtsi"
-+
-+/ {
-+	model = "Google Mrbland rev0 AUO panel board";
-+	compatible = "google,mrbland-rev0-sku0", "qcom,sc7180";
-+};
-+
-+&panel {
-+	compatible = "auo,b101uan08.3";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-boe.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-boe.dts
-new file mode 100644
-index 000000000000..711485574a03
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0-boe.dts
-@@ -0,0 +1,22 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Mrbland board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ *
-+ * SKU: 0x10 => 16
-+ *  - bits 7..4: Panel ID: 0x1 (BOE)
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor-mrbland-rev0.dtsi"
-+
-+/ {
-+	model = "Google Mrbland rev0 BOE panel board";
-+	compatible = "google,mrbland-rev0-sku16", "qcom,sc7180";
-+};
-+
-+&panel {
-+	compatible = "boe,tv101wum-n53";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi
-new file mode 100644
-index 000000000000..7bc8402c018e
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi
-@@ -0,0 +1,53 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Mrbland board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ *
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor-mrbland.dtsi"
-+
-+&avdd_lcd {
-+	gpio = <&tlmm 80 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&panel {
-+	enable-gpios = <&tlmm 76 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&v1p8_mipi {
-+	gpio = <&tlmm 81 GPIO_ACTIVE_HIGH>;
-+};
-+
-+/* PINCTRL - modifications to sc7180-trogdor-mrbland.dtsi */
-+&avdd_lcd_en {
-+	pinmux {
-+		pins = "gpio80";
-+	};
-+
-+	pinconf {
-+		pins = "gpio80";
-+	};
-+};
-+
-+&mipi_1800_en {
-+	pinmux {
-+		pins = "gpio81";
-+	};
-+
-+	pinconf {
-+		pins = "gpio81";
-+	};
-+};
-+&vdd_reset_1800 {
-+	pinmux {
-+		pins = "gpio76";
-+	};
-+
-+	pinconf {
-+		pins = "gpio76";
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-auo.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-auo.dts
-new file mode 100644
-index 000000000000..275313ef7554
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-auo.dts
-@@ -0,0 +1,22 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Mrbland board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ *
-+ * SKU: 0x600 => 1536
-+ *  - bits 11..8: Panel ID: 0x6 (AUO)
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor-mrbland.dtsi"
-+
-+/ {
-+	model = "Google Mrbland rev1+ AUO panel board";
-+	compatible = "google,mrbland-sku1536", "qcom,sc7180";
-+};
-+
-+&panel {
-+	compatible = "auo,b101uan08.3";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-boe.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-boe.dts
-new file mode 100644
-index 000000000000..87c6b6c30b5e
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland-rev1-boe.dts
-@@ -0,0 +1,24 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Mrbland board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ *
-+ * SKU: 0x300 => 768
-+ *  - bits 11..8: Panel ID: 0x3 (BOE)
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor-mrbland.dtsi"
-+
-+/ {
-+	model = "Google Mrbland (rev1 - 2) BOE panel board";
-+	/* Uses ID 768 on rev1 and 1024 on rev2+ */
-+	compatible = "google,mrbland-sku1024", "google,mrbland-sku768",
-+		"qcom,sc7180";
-+};
-+
-+&panel {
-+	compatible = "boe,tv101wum-n53";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi
-new file mode 100644
-index 000000000000..49c75990954a
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-mrbland.dtsi
-@@ -0,0 +1,351 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Mrbland board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180.dtsi"
-+
-+ap_ec_spi: &spi6 {};
-+ap_h1_spi: &spi0 {};
-+
-+#include "sc7180-trogdor.dtsi"
-+
-+/* This board only has 1 USB Type-C port. */
-+/delete-node/ &usb_c1;
-+
-+/ {
-+	avdd_lcd: avdd-lcd {
-+		compatible = "regulator-fixed";
-+		regulator-name = "avdd_lcd";
-+
-+		gpio = <&tlmm 88 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&avdd_lcd_en>;
-+
-+		vin-supply = <&pp5000_a>;
-+	};
-+
-+	avee_lcd: avee-lcd {
-+		compatible = "regulator-fixed";
-+		regulator-name = "avee_lcd";
-+
-+		gpio = <&tlmm 21 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&avee_lcd_en>;
-+
-+		vin-supply = <&pp5000_a>;
-+	};
-+
-+	v1p8_mipi: v1p8-mipi {
-+		compatible = "regulator-fixed";
-+		regulator-name = "v1p8_mipi";
-+
-+		gpio = <&tlmm 86 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&mipi_1800_en>;
-+
-+		vin-supply = <&pp3300_a>;
-+	};
-+};
-+
-+&ap_tp_i2c {
-+	status = "disabled";
-+};
-+
-+&backlight {
-+	pwms = <&cros_ec_pwm 0>;
-+};
-+
-+&camcc {
-+	status = "okay";
-+};
-+
-+&dsi0 {
-+
-+	panel: panel@0 {
-+		reg = <0>;
-+		enable-gpios = <&tlmm 87 GPIO_ACTIVE_HIGH>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&vdd_reset_1800>;
-+		avdd-supply = <&avdd_lcd>;
-+		avee-supply = <&avee_lcd>;
-+		pp1800-supply = <&v1p8_mipi>;
-+		pp3300-supply = <&pp3300_dx_edp>;
-+		backlight = <&backlight>;
-+		rotation = <270>;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			port@0 {
-+				reg = <0>;
-+				panel_in: endpoint {
-+					remote-endpoint = <&dsi0_out>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ports {
-+		port@1 {
-+			endpoint {
-+				remote-endpoint = <&panel_in>;
-+				data-lanes = <0 1 2 3>;
-+			};
-+		};
-+	};
-+};
-+
-+&gpio_keys {
-+	status = "okay";
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	ap_ts: touchscreen@5d {
-+		compatible = "goodix,gt7375p";
-+		reg = <0x5d>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
-+
-+		reset-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
-+
-+		vdd-supply = <&pp3300_ts>;
-+	};
-+};
-+
-+&pp1800_uf_cam {
-+	status = "okay";
-+};
-+
-+&pp1800_wf_cam {
-+	status = "okay";
-+};
-+
-+&pp2800_uf_cam {
-+	status = "okay";
-+};
-+
-+&pp2800_wf_cam {
-+	status = "okay";
-+};
-+
-+&wifi {
-+	qcom,ath10k-calibration-variant = "GO_MRBLAND";
-+};
-+
-+/*
-+ * No eDP on this board but it's logically the same signal so just give it
-+ * a new name and assign the proper GPIO.
-+ */
-+pp3300_disp_on: &pp3300_dx_edp {
-+	gpio = <&tlmm 85 GPIO_ACTIVE_HIGH>;
-+};
-+
-+/* PINCTRL - modifications to sc7180-trogdor.dtsi */
-+
-+/*
-+ * No eDP on this board but it's logically the same signal so just give it
-+ * a new name and assign the proper GPIO.
-+ */
-+
-+tp_en: &en_pp3300_dx_edp {
-+	pinmux {
-+		pins = "gpio85";
-+		};
-+	pinconf {
-+		pins = "gpio85";
-+	};
-+};
-+
-+/* PINCTRL - board-specific pinctrl */
-+
-+&tlmm {
-+	gpio-line-names = "HUB_RST_L",
-+			  "AP_RAM_ID0",
-+			  "AP_SKU_ID2",
-+			  "AP_RAM_ID1",
-+			  "",
-+			  "AP_RAM_ID2",
-+			  "UF_CAM_EN",
-+			  "WF_CAM_EN",
-+			  "TS_RESET_L",
-+			  "TS_INT_L",
-+			  "",
-+			  "",
-+			  "AP_EDP_BKLTEN",
-+			  "UF_CAM_MCLK",
-+			  "WF_CAM_CLK",
-+			  "",
-+			  "",
-+			  "UF_CAM_SDA",
-+			  "UF_CAM_SCL",
-+			  "WF_CAM_SDA",
-+			  "WF_CAM_SCL",
-+			  "AVEE_LCD_EN",
-+			  "",
-+			  "AMP_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "HP_IRQ",
-+			  "WF_CAM_RST_L",
-+			  "UF_CAM_RST_L",
-+			  "AP_BRD_ID2",
-+			  "",
-+			  "AP_BRD_ID0",
-+			  "AP_H1_SPI_MISO",
-+			  "AP_H1_SPI_MOSI",
-+			  "AP_H1_SPI_CLK",
-+			  "AP_H1_SPI_CS_L",
-+			  "BT_UART_CTS",
-+			  "BT_UART_RTS",
-+			  "BT_UART_TXD",
-+			  "BT_UART_RXD",
-+			  "H1_AP_INT_ODL",
-+			  "",
-+			  "UART_AP_TX_DBG_RX",
-+			  "UART_DBG_TX_AP_RX",
-+			  "HP_I2C_SDA",
-+			  "HP_I2C_SCL",
-+			  "FORCED_USB_BOOT",
-+			  "AMP_BCLK",
-+			  "AMP_LRCLK",
-+			  "AMP_DIN",
-+			  "PEN_DET_ODL",
-+			  "HP_BCLK",
-+			  "HP_LRCLK",
-+			  "HP_DOUT",
-+			  "HP_DIN",
-+			  "HP_MCLK",
-+			  "AP_SKU_ID0",
-+			  "AP_EC_SPI_MISO",
-+			  "AP_EC_SPI_MOSI",
-+			  "AP_EC_SPI_CLK",
-+			  "AP_EC_SPI_CS_L",
-+			  "AP_SPI_CLK",
-+			  "AP_SPI_MOSI",
-+			  "AP_SPI_MISO",
-+			  /*
-+			   * AP_FLASH_WP_L is crossystem ABI. Schematics
-+			   * call it BIOS_FLASH_WP_L.
-+			   */
-+			  "AP_FLASH_WP_L",
-+			  "",
-+			  "AP_SPI_CS0_L",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "WLAN_SW_CTRL",
-+			  "",
-+			  "REPORT_E",
-+			  "",
-+			  "ID0",
-+			  "",
-+			  "ID1",
-+			  "",
-+			  "",
-+			  "",
-+			  "CODEC_PWR_EN",
-+			  "HUB_EN",
-+			  "TP_EN",
-+			  "MIPI_1.8V_EN",
-+			  "VDD_RESET_1.8V",
-+			  "AVDD_LCD_EN",
-+			  "",
-+			  "AP_SKU_ID1",
-+			  "AP_RST_REQ",
-+			  "",
-+			  "AP_BRD_ID1",
-+			  "AP_EC_INT_L",
-+			  "SDM_GRFC_3",
-+			  "",
-+			  "",
-+			  "BOOT_CONFIG_4",
-+			  "BOOT_CONFIG_2",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "BOOT_CONFIG_3",
-+			  "WCI2_LTE_COEX_TXD",
-+			  "WCI2_LTE_COEX_RXD",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "FORCED_USB_BOOT_POL",
-+			  "AP_TS_PEN_I2C_SDA",
-+			  "AP_TS_PEN_I2C_SCL",
-+			  "DP_HOT_PLUG_DET",
-+			  "EC_IN_RW_ODL";
-+
-+	vdd_reset_1800: vdd-reset-1800 {
-+		pinmux {
-+			pins = "gpio87";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio87";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
-+	avdd_lcd_en: avdd-lcd-en {
-+		pinmux {
-+			pins = "gpio88";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio88";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
-+	avee_lcd_en: avee-lcd_en {
-+		pinmux {
-+			pins = "gpio21";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio21";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
-+	mipi_1800_en: mipi-1800-en {
-+		pinmux {
-+			pins = "gpio86";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio86";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+};
--- 
-2.31.0
+Indeed, when tested the mainline kernel on msm8939 (with several
+offline patches for enabling msm8939), I observed that GPU and display
+drivers are not enabled yet, so some interconnect paths are failed.
+In this case, the interconnect clock stays on maximum frequency.
 
+But I think this doesn't impact this patch; if without this patch,
+icc_sync_state() will never be called and the global variable
+'synced_state' is always false.
+
+In other words, based on this patch and after initiailize all client
+drivers, the clients' bandwdith request will be respected.
+
+Thanks,
+Leo
+
+> > Signed-off-by: Leo Yan <leo.yan@linaro.org>
+> > ---
+> >   drivers/interconnect/qcom/msm8939.c | 1 +
+> >   1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/drivers/interconnect/qcom/msm8939.c b/drivers/interconnect/qcom/msm8939.c
+> > index f9c2d7d3100d..ca5f611d33b0 100644
+> > --- a/drivers/interconnect/qcom/msm8939.c
+> > +++ b/drivers/interconnect/qcom/msm8939.c
+> > @@ -1423,6 +1423,7 @@ static struct platform_driver msm8939_noc_driver = {
+> >   	.driver = {
+> >   		.name = "qnoc-msm8939",
+> >   		.of_match_table = msm8939_noc_of_match,
+> > +		.sync_state = icc_sync_state,
+> >   	},
+> >   };
+> >   module_platform_driver(msm8939_noc_driver);
+> 
