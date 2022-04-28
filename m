@@ -2,83 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FDDE5139DC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 18:30:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 175835139E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 18:32:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235621AbiD1QeJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 12:34:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51108 "EHLO
+        id S1350059AbiD1QfE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 12:35:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350065AbiD1QeB (ORCPT
+        with ESMTP id S1350065AbiD1QfD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 12:34:01 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A0E56C96D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 09:30:45 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id j15so7520133wrb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 09:30:45 -0700 (PDT)
+        Thu, 28 Apr 2022 12:35:03 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 009257DE02;
+        Thu, 28 Apr 2022 09:31:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=KMHd5fXULhcXyAiUwOACLIbDiIltwFbphMx0p6+Bqpc=;
-        b=IlMhCUquK3302JRV+dnW8sisiWrBYKgke8Vcsjpan61x4HXqOUeMXJ1EvR38Yurf10
-         sH3zd7/SGwTh0oXmjtJex2nOM8ORWfbnqgOSuVpx+RfGFgl9ajfo7Zrnr/NS+iE85rdo
-         AbZw0oGHEj2zHmOx7VKJx+LiLoDE7DFsRbYmqhdp+PT29syjqX0ZbzDuSsUv9VnWlArf
-         yiLwTvcPA5Hrutqj/A4K+ZtU5FhV0nLSS2WWveJk6G/qWEyyMG5f0MI1fIjHglb+ABZW
-         aQYKaBd4jpDBZdZo+V7TTkDfL3hvrfgyidtMIZwDA96hZwWamWbxuLfBUmhDzf6YDSF8
-         SIxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=KMHd5fXULhcXyAiUwOACLIbDiIltwFbphMx0p6+Bqpc=;
-        b=f3J+WXcCnM+VOGdGwkZ5NEcA7fNFMLl4K+oVTCb8pTGr9IBoAYAgXBMMflk0qsBiVJ
-         982MkbhRSKGVZjOaZy1nKxkBik0RJ0YYrdQDkYS3Mf/DM0USPSl+Iz2U0r2wCpurUOXZ
-         2+V+Ybr9znxY9rFERJiJuyRYqHHtYeNjt8mCJ6SzB8RBY41z8N2F3w/40Ya9JD3QCyOM
-         YJDiFsUYlZckoeuasxZJiDCdP6HkzMt17Iw/RpFXmItjyp3SzoOwvuf8as281Rqi6BX1
-         Ai50ljlv8IXAn1m+SGwCvOL1GlgpBigISxDw5C6KPD/tIavVu3vTYV5kZoSUxlNRu7JV
-         HbmQ==
-X-Gm-Message-State: AOAM5338pt1E733ZDQaZydkLOA33zHWCx4uuuN7ZWGER9Oeh3zuXAPGY
-        Fl4Cl6L/kEHSYY/qYge+P9pqig==
-X-Google-Smtp-Source: ABdhPJyzdHvOPdycnfJ7BtT6tZsr29Nxggep8lbk5N3X/jFsaHxwjv7admh0kbjGdsP4qIdOkB5Ihg==
-X-Received: by 2002:a5d:6551:0:b0:20a:e23c:a7fa with SMTP id z17-20020a5d6551000000b0020ae23ca7famr12917464wrv.535.1651163444078;
-        Thu, 28 Apr 2022 09:30:44 -0700 (PDT)
-Received: from [192.168.0.33] (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
-        by smtp.gmail.com with ESMTPSA id j12-20020a5d564c000000b0020af46b0ff4sm247406wrw.37.2022.04.28.09.30.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Apr 2022 09:30:43 -0700 (PDT)
-Message-ID: <cce2f4b7-3620-7a33-ef21-579eff9a7dac@linaro.org>
-Date:   Thu, 28 Apr 2022 17:30:42 +0100
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651163509; x=1682699509;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=IWjeCxTCtHM7X/VtwHEV8uloK8O55Amxh8Nwcutg5+0=;
+  b=avzv8ta5vb2PbK3YUV+rTxCjSOEUZkVRclp8giAZflI+1QCtVw5DOII7
+   fQKIQdNEhmNOV6P1qere4lzBZrZ7yR9t3S2fY6xERp1ik1+JnZB9QDrmE
+   JdPiYXYI+CoEwOmQnN/VD62+CNI7M4Pg8SzI3eJiXbwE8eFMHsZRRfB5E
+   c=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 28 Apr 2022 09:31:48 -0700
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 09:31:45 -0700
+Received: from [10.110.12.199] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 28 Apr
+ 2022 09:31:44 -0700
+Message-ID: <e11455d8-78c2-68e8-215e-a4e3587f3e4a@quicinc.com>
+Date:   Thu, 28 Apr 2022 09:31:43 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v13 2/9] mfd: qcom-spmi-pmic: expose the PMIC revid
- information to clients
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCHv12 8/9] serial: qcom_geni_serial: Disable MMIO tracing for
+ geni serial
 Content-Language: en-US
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        sumit.semwal@linaro.org, amit.pundir@linaro.org,
-        john.stultz@linaro.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20220323162820.110806-1-caleb@connolly.tech>
- <20220323162820.110806-3-caleb@connolly.tech> <Yma4T1+AglaISe2l@google.com>
- <2763f103-6947-e431-cef5-e202c324d678@linaro.org>
- <Ymq9Su3UE5IYiHnI@google.com>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <Ymq9Su3UE5IYiHnI@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Greg KH <gregkh@linuxfoundation.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+CC:     <arnd@arndb.de>, <catalin.marinas@arm.com>, <rostedt@goodmis.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <maz@kernel.org>, <quic_psodagud@quicinc.com>, <will@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <cover.1651139070.git.quic_saipraka@quicinc.com>
+ <3fef68a94e4947d58a199709929d30e0e2bf2e44.1651139070.git.quic_saipraka@quicinc.com>
+ <Ympxa0ZY0VxZGEjA@kroah.com>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <Ympxa0ZY0VxZGEjA@kroah.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,62 +68,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 28/04/2022 17:14, Lee Jones wrote:
-> On Wed, 27 Apr 2022, Caleb Connolly wrote:
->> On 25/04/2022 16:03, Lee Jones wrote:
->>>
->>> On Wed, 23 Mar 2022, Caleb Connolly wrote:
->>>> From: Caleb Connolly <caleb.connolly@linaro.org>
->>>>
->>>> Some PMIC functions such as the RRADC need to be aware of the PMIC
->>>> chip revision information to implement errata or otherwise adjust
->>>> behaviour, export the PMIC information to enable this.
->>>>
->>>> This is specifically required to enable the RRADC to adjust
->>>> coefficients based on which chip fab the PMIC was produced in,
->>>> this can vary per unique device and therefore has to be read at
->>>> runtime.
->>>>
->>>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
->>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>    drivers/mfd/qcom-spmi-pmic.c      | 261 +++++++++++++++++++-----------
->>>>    include/soc/qcom/qcom-spmi-pmic.h |  60 +++++++
->>>>    2 files changed, 231 insertions(+), 90 deletions(-)
->>>>    create mode 100644 include/soc/qcom/qcom-spmi-pmic.h
+On 4/28/2022 3:50 AM, Greg KH wrote:
+> On Thu, Apr 28, 2022 at 03:25:31PM +0530, Sai Prakash Ranjan wrote:
+>> Disable MMIO tracing for geni serial driver as it is a high
+>> frequency operation for serial driver with many register reads/
+>> writes and not very useful to log all MMIO traces and prevent
+>> excessive logging.
+>>
+>> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+>> ---
+>>   drivers/tty/serial/qcom_geni_serial.c | 8 +++++++-
+>>   1 file changed, 7 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+>> index 1543a6028856..5b48e6c2bf3c 100644
+>> --- a/drivers/tty/serial/qcom_geni_serial.c
+>> +++ b/drivers/tty/serial/qcom_geni_serial.c
+>> @@ -1,5 +1,11 @@
+>>   // SPDX-License-Identifier: GPL-2.0
+>> -// Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
+>> +/*
+>> + * Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
 > 
-> [...]
-> 
->>>> +			/*
->>>> +			 * If the base USID for this PMIC hasn't probed yet
->>>> +			 * but the secondary USID has, then we need to defer
->>>> +			 * the function driver so that it will attempt to
->>>> +			 * probe again when the base USID is ready.
->>>> +			 */
->>>> +			if (pmic_addr == function_parent_usid  - (ctx->num_usids - 1))
->>>
->>> Double "  ".
->> Ack
->>>
->>> Over-bracketing of statements with matching operands.
->> I don't think x - (y - 1) is equal to x - y - 1? Or am I misunderstanding you here?
-> 
-> Can you give me an example when this would be the case?
-According to the Python interpreter:
- >>> x=7
- >>> y=4
- >>> x - y - 1
-2
- >>> x - (y - 1)
-4
+> I strongly disagree that adding a single line here warrants a copyright
+> update.  If your lawyers will sign off on this change, I am willing to
+> reconsider.
 
-C does also respect the first rule of BODMAS - parenthesis are always evaluated 
-first.
-> 
+I am not a lawyer, we can skip adding QuIC copyright here since it is 
+just one line change, but at the same time we can't add 2022 year in the 
+existing copyright. If that is fine, we can skip the copyright year 
+update entirely.
 
--- 
-Kind Regards,
-Caleb (they/he)
+---Trilok Soni
