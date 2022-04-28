@@ -2,100 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6012512907
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 03:44:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 514265129BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 05:02:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234188AbiD1Brp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Apr 2022 21:47:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49282 "EHLO
+        id S241690AbiD1DFy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Apr 2022 23:05:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbiD1Bro (ORCPT
+        with ESMTP id S241784AbiD1DFw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Apr 2022 21:47:44 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2CBF98F5C;
-        Wed, 27 Apr 2022 18:44:31 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id bo5so3011939pfb.4;
-        Wed, 27 Apr 2022 18:44:31 -0700 (PDT)
+        Wed, 27 Apr 2022 23:05:52 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D8BE99695;
+        Wed, 27 Apr 2022 20:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=iFHqCQRjOjnZR4+Edhuht6dyVV23jVkd4G8gkgGiMd8=;
-        b=KkxJxoypCAU4IHX3T8/MwB3JJzUPsS7qKN8rj1qlGEDB7aweXU/UwntjuzFNfWlov0
-         1+QgRqC5aM29/cz/twV+pwJhD6TeqZ+0l5W9cGo5LzyWga8DAKyuPclsVU7advwHfNx6
-         eYI9+cpzYcKh6pM3FwwLt8o2kdvoAMzd4demBH8aS9969MYDVElqwNKVKNc55IoJZBxC
-         4kTMrPvxGKyRFxZtamUUwNzb3b7ZEOqesOFY7mDgtO4jQ/hv3UXcUNwO7POXcYSzKJvo
-         g0Hevg2GzKUN5C1u+h9HoFNCUiyEAm7rqI9OE1hb5iXmrB35UgRXyt/YzAMAuHac8mIw
-         PX0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=iFHqCQRjOjnZR4+Edhuht6dyVV23jVkd4G8gkgGiMd8=;
-        b=Rxj7J0MJ+/oYTm26zPAUGGiQgpDkNhSOoXiPGsYhEymMKWTmglf7j3HFIgI8Q5EvW1
-         knIq1TuMh/vYSKlFpkUtBa4iHqNRXLFMr5TrNbXSN5Mf74Cy7ZlPCvntspN5nMhL1Cs9
-         8U+9fW2rjacW5N1uIxbI2HOwBwYGguay6S3h5ej98ys5oRDfCFg2PXQZgrrd+O4b6b6x
-         VbS78aY0hKVQmzYP/Srxy8n1Y+vLBlZnCvuOw5SRbXKRe4diMdnN+0R/anCBc5conu/b
-         5qhe4kEWO75bzudisEYoU5EiTLbXS7j36NG3/MatiZ9dau8kEu4eCAkfCI10iospVUhr
-         D9tg==
-X-Gm-Message-State: AOAM530w0n3otJ6KYsrF3Fkek+hJeQz/nce8fDe1do8Ms9FLVor4rbCa
-        5RLK8FYYIIfMu2GWgrPUxaU=
-X-Google-Smtp-Source: ABdhPJyLAcse4aT8yNI3XvKGkp0gEKbv+Sqha9Wd+n+TT2mpsyGXnI0AG2KhVUjMh6NJMyYFA6EcsQ==
-X-Received: by 2002:aa7:9085:0:b0:50d:35ae:271 with SMTP id i5-20020aa79085000000b0050d35ae0271mr21469622pfa.42.1651110271497;
-        Wed, 27 Apr 2022 18:44:31 -0700 (PDT)
-Received: from 9a2d8922b8f1 ([122.161.52.85])
-        by smtp.gmail.com with ESMTPSA id w137-20020a62828f000000b0050d2f9c3409sm14420842pfd.199.2022.04.27.18.44.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 18:44:31 -0700 (PDT)
-Date:   Thu, 28 Apr 2022 07:14:25 +0530
-From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] dt-bindings: I2C: Add Qualcomm Geni based QUP I2C
- bindings
-Message-ID: <20220428014425.GB72033@9a2d8922b8f1>
-References: <20220404182938.29492-1-singh.kuldeep87k@gmail.com>
- <20220404182938.29492-2-singh.kuldeep87k@gmail.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651114957; x=1682650957;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=SIYCB3bexhua9iFQzXZUTU9dplIjEghTancCIHJwJog=;
+  b=Ewpu2M7NyoPLRzZJzISU0lTVPeoW41aAZpBs31QDgsCHfO2OGweOSzlI
+   rAvyAETNMvQ83zjq5UDWFZKqLYcfnF1Z+zYHPPsIITaQpDTXj3PooiRQn
+   oD5xgB8Yw2DtUSUfzLuFQCxwM2YhEGlAEH7peCYYvcJQB8XO8WKqPpwR2
+   Y=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Apr 2022 20:02:37 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2022 20:02:35 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 27 Apr 2022 20:02:35 -0700
+Received: from [10.50.42.7] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 27 Apr
+ 2022 20:02:31 -0700
+Message-ID: <6b8b7969-56f0-d8d5-91b3-7accf066ea14@quicinc.com>
+Date:   Thu, 28 Apr 2022 08:32:28 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220404182938.29492-2-singh.kuldeep87k@gmail.com>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCHv10 0/6] lib/rwmmio/arm64: Add support to trace register
+ reads/writes
+Content-Language: en-US
+To:     Arnd Bergmann <arnd@arndb.de>
+CC:     Catalin Marinas <catalin.marinas@arm.com>,
+        gregkh <gregkh@linuxfoundation.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Marc Zyngier <maz@kernel.org>, <quic_psodagud@quicinc.com>,
+        <quic_tsoni@quicinc.com>, Steven Rostedt <rostedt@goodmis.org>,
+        Will Deacon <will@kernel.org>
+References: <cover.1644824638.git.quic_saipraka@quicinc.com>
+ <20220408111707.2488-1-quic_saipraka@quicinc.com>
+ <bb99b615-cc76-9591-a610-fb4841d41d62@quicinc.com>
+ <CAK8P3a1b0K4hJC9esuznqDdcBoX6+QqD74nVh91-iYbkZxiqbQ@mail.gmail.com>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <CAK8P3a1b0K4hJC9esuznqDdcBoX6+QqD74nVh91-iYbkZxiqbQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 04, 2022 at 11:59:34PM +0530, Kuldeep Singh wrote:
-> GENI(generic interface) based Qualcomm Universal Peripheral controller
-> can support multiple serial interfaces like SPI,UART and I2C.
-> 
-> Unlike other I2C controllers, QUP I2C bindings are present in parent
-> schema. Move it out from parent to an individual binding and let parent
-> refer to child schema later on.
-> 
-> Please note, current schema isn't complete as it misses out few
-> properties and thus, add these missing properties along the process.
-> 
-> Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
-> ---
-> v2:
-> - Change compatible from enum to const
-> - Drop clock-frequency description
-> - Sort nodes
-> ---
+On 4/27/2022 9:20 PM, Arnd Bergmann wrote:
+> On Thu, Apr 21, 2022 at 4:00 AM Sai Prakash Ranjan
+> <quic_saipraka@quicinc.com> wrote:
+>> On 4/8/2022 4:47 PM, Sai Prakash Ranjan wrote:
+>>> Gentle ping, could you please take a look at this, would appreciate your reviews.
+>>>
+>> Gentle Ping !!
+>>
+> Sorry for dropping the ball on this. I'll go through the patches again
+> now. From a new
+> look, this all seems fine, but I'll need to take a little extra time
+> to understand why we
+> are getting the warnings that you are fixing, and how one will use the
+> tracepoints
+> in the end.
+>
+>         Arnd
 
-Gentle ping to revive this thread.
-Patch 2,3,4 are accepted in this series and this one is only left.
+Thanks Arnd, I saw in other thread that you figured out the reasons for warnings.
 
-Bjorn, could you please help in picking this up if there are no further
-review comments. Thanks!
+Thanks,
+Sai
