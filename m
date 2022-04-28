@@ -2,97 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FCDB512BC9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 08:42:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B392D512BD2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 08:46:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244309AbiD1Gpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 02:45:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34204 "EHLO
+        id S244430AbiD1GtK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 02:49:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244348AbiD1Gpn (ORCPT
+        with ESMTP id S244409AbiD1GtH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 02:45:43 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D81CD9858F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 23:42:27 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id k23so7583633ejd.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 23:42:27 -0700 (PDT)
+        Thu, 28 Apr 2022 02:49:07 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1D729858A;
+        Wed, 27 Apr 2022 23:45:52 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id n185so2962312qke.5;
+        Wed, 27 Apr 2022 23:45:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=MZG22l/qdJpv+4yVtt3zGuWmyDY+DVXAkSXGCXtC6sI=;
-        b=BYvVyl2Gr8y1nPvegi1Ay7DRBXVbuAvq4T/gOFkNNcyvEDyr7TAS5T/AzubXgZjG+T
-         QkT90r04Cr7mCzmUt8haPJX83qsIBnQn0clLkizaHn1Wlp5TFEK9QoW9FM5sVreM5tH5
-         KZ/mczOmS+lOisQ32cFK4uhSYQdNp57WO0fo7hwQkmlgg6+3U4v5cj7V7j/+TL5U70UK
-         tkab1KR6cNO5XNhQuEX5jG4qDe7tv9RZsL+0ZQJUby4WU6V32wQQDYZEW4O3oWz9QhBC
-         zP1ufyD8840U9Ri0MwTwO9fDlpXNAUFBAXYXDpJqShYslRzT0aeSC1g35HFMq7kSGNI1
-         6c2w==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ozQAvh/QxaKIiwy4471nIibPkTSEzJozNZp0wEk64nc=;
+        b=LNZxey5sG/qnatBJx58qWzgHNkysC7SndnATolVVS08YKZvpglIOIuRnvE6oqscvpV
+         8K62hhNOkYOpuz9EBNiz3/iP3G+FkCTP+Miys6fk2eJy5h1YgUUMmN57RYTcKC/CR6LS
+         7opm1S5PD9PbdQ4utoal2UUS/txisW3dKsZxzHoLhho9jZM2H3dJdMw2tvvC4g67HrIK
+         E1ZmsEipY/jeZnwRNnlvNTgd0jsjbeoe+wunLITJb0hFG44lVzbrdFV8+XTLPkSOLgtW
+         Rzt++o5bAf2U5sgmcPhYgFWwOkfYpaCcmhw9ZLYxDWihOEPi6r5Z9Ve6fTksPUmP40V7
+         9aXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=MZG22l/qdJpv+4yVtt3zGuWmyDY+DVXAkSXGCXtC6sI=;
-        b=Mz6Xot4PhAmkkIn6TCOT4+JyJFz2slGaFEiHAGaMM5reMcChF0S+6/vrI/baw6VMXb
-         tXPZdyUDYArKT+hQw47OyMRT3u01fNDVMPUsIq3Kq25VVR17OUNcpVdNyjXeGE4kMFTb
-         ZY/uNYz1YP15Ty+H71kZf0SeYb0MMDIbFrdBDM3B2KicmSgHyOT7F0fTMXvMzlClVJ1v
-         2RrhYcv0EixgNzpQUpw6odiT0jWV6ox6Hz9abWt04zuNXXiVToJzv/6oWEJwBlefBf9m
-         GVroTHJ0+zRuHC0a/ikxsaRalUpUhWUZtcCCf3h4LF3lEkLbAZyZtKt8xhbOazvxHmiP
-         kKIw==
-X-Gm-Message-State: AOAM530X+5/JDxlG2WoLtqTlcYquRkfz2TMAMC/UWUec8flPKLiacJhE
-        BEPsPeAPWJrnWdUWrQPRRPZKWQ==
-X-Google-Smtp-Source: ABdhPJwmWU9ucEkFeithz9ICXEUwzhJT9n8kl51GkC3DUA2UwcMPTk41Ve4wgXPk2LkxwFwS0+dElQ==
-X-Received: by 2002:a17:907:8a11:b0:6df:db0a:e5ab with SMTP id sc17-20020a1709078a1100b006dfdb0ae5abmr30038285ejc.528.1651128146469;
-        Wed, 27 Apr 2022 23:42:26 -0700 (PDT)
-Received: from [192.168.0.159] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id cz9-20020a0564021ca900b0042617ba63b3sm968663edb.61.2022.04.27.23.42.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Apr 2022 23:42:26 -0700 (PDT)
-Message-ID: <069fa3d6-7bc7-671c-3263-f3cddc962d00@linaro.org>
-Date:   Thu, 28 Apr 2022 08:42:25 +0200
+        bh=ozQAvh/QxaKIiwy4471nIibPkTSEzJozNZp0wEk64nc=;
+        b=Nxiww1HTrTkMKNDlAyIcgRDo6VoeZiiwyeSaqAoTFX/i5RJl5HSVcXQdPMaw7NT2Wo
+         dM5ilQXQqnxRw0/mCDCBJfJTTW+7v19bhvEGNyGvENof0ezAj4p/9HPSvkkArF1QebtJ
+         4+XT2BrqQNfRawee5NbjowFqTFn7OEcAtayRfprysA9XQoumZLmaoqmq0zOoHChQFCtg
+         ubGsL2M4Mx7zOa1D/w7FjoJV0Mph9Ewf+7zGhIYUaf4prOSrY2kTn5R05k8FBw1JRngk
+         oNrHqv+3V0iD/Elioak6vtnGKZ4XINCH8fSex5AJO72dDmq1IuXw2uRBGEfFa++nf/IU
+         VRkg==
+X-Gm-Message-State: AOAM533fUkJE9vkyA4FJygxMuy6YDvBt3hVA+847S4vJe4vK4e9YIrhz
+        Ocvf6c5/ENHRqTTDfCA4QpY=
+X-Google-Smtp-Source: ABdhPJze+I/OAY2J8r4P2DbZki/nDfefrL+rDDVv+p/+5yO1DB8UCQ4mTP/YCUhjUX+5emcvEtV44g==
+X-Received: by 2002:a37:9c8b:0:b0:69f:8793:f2ef with SMTP id f133-20020a379c8b000000b0069f8793f2efmr6035949qke.300.1651128351916;
+        Wed, 27 Apr 2022 23:45:51 -0700 (PDT)
+Received: from localhost.localdomain ([193.203.214.57])
+        by smtp.gmail.com with ESMTPSA id i14-20020a05620a248e00b0069f6ab15281sm5653195qkn.52.2022.04.27.23.45.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Apr 2022 23:45:51 -0700 (PDT)
+From:   cgel.zte@gmail.com
+X-Google-Original-From: ran.jianping@zte.com.cn
+To:     agross@kernel.org
+Cc:     bjorn.andersson@linaro.org, mathieu.poirier@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ran jianping <ran.jianping@zte.com.cn>,
+        Zeal Robot <zealci@zte.com.cn>
+Subject: [PATCH] remoteproc: qcom: using pm_runtime_resume_and_get to simplify the code
+Date:   Thu, 28 Apr 2022 06:45:45 +0000
+Message-Id: <20220428064545.3850057-1-ran.jianping@zte.com.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v2 1/3] dt-bindings: power: rpmpd: Add sc8280xp RPMh
- power-domains
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220426233508.1762345-1-bjorn.andersson@linaro.org>
- <20220426233508.1762345-2-bjorn.andersson@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220426233508.1762345-2-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/04/2022 01:35, Bjorn Andersson wrote:
-> The sc8280xp has 13 power-domains controlled through the RPMh, document
-> the compatible and provide definitions for the power-domains - and their
-> active-only variants where applicable.
-> 
-> The SA8540p differs slightly in the power domains exposed, so add a
-> separate compatible for this, but reuse the constants to allow sharing
-> the DeviceTree source.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+From: ran jianping <ran.jianping@zte.com.cn>
 
+Using pm_runtime_resume_and_get() to replace pm_runtime_get_sync and
+pm_runtime_put_noidle. This change is just to simplify the code, no
+actual functional changes.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: ran jianping <ran.jianping@zte.com.cn>
+---
+ drivers/remoteproc/qcom_q6v5_adsp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
+diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+index 2f3b9f54251e..366e1d4a839a 100644
+--- a/drivers/remoteproc/qcom_q6v5_adsp.c
++++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+@@ -175,9 +175,8 @@ static int qcom_rproc_pds_enable(struct qcom_adsp *adsp, struct device **pds,
+ 
+ 	for (i = 0; i < pd_count; i++) {
+ 		dev_pm_genpd_set_performance_state(pds[i], INT_MAX);
+-		ret = pm_runtime_get_sync(pds[i]);
++		ret = pm_runtime_resume_and_get(pds[i])
+ 		if (ret < 0) {
+-			pm_runtime_put_noidle(pds[i]);
+ 			dev_pm_genpd_set_performance_state(pds[i], 0);
+ 			goto unroll_pd_votes;
+ 		}
+-- 
+2.25.1
 
-Best regards,
-Krzysztof
