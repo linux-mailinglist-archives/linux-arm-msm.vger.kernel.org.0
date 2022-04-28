@@ -2,76 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A7E5513946
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 17:59:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4ADDC513976
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 18:14:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349749AbiD1QCp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 12:02:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58624 "EHLO
+        id S1345615AbiD1QRW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 12:17:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349741AbiD1QCn (ORCPT
+        with ESMTP id S1349603AbiD1QRV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 12:02:43 -0400
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1139AF1C3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 08:59:27 -0700 (PDT)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-deb9295679so5571770fac.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 08:59:27 -0700 (PDT)
+        Thu, 28 Apr 2022 12:17:21 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34CFB5C36F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 09:14:06 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id c190-20020a1c35c7000000b0038e37907b5bso5610537wma.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 09:14:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=RA5VF4RpL+61fXTh4Gfb3qkFwZI/LPrSMrG3g+d0iY4=;
-        b=tNO44O0A62NXKxNx7Jlp/mB7cZJdyYrl8dtt4xWYmRSg6gWx9uCVh+z57vfuH1b2Uh
-         9Z8SueFxPCJ2g5ClOArf3S5f66/6YZOCXrprhfAioy3U5dBCSSndbekFjfii2DGUBqaR
-         /KPNkR4QGy3idrCl7vK8wxhlVoF+r/6BxG7qhxoLIpg96r7gJTLSMCdupHEZz+pSmn8B
-         XIr9fossAvwQR67bxd4yLMhm4qD49McjTgbOSm3xc26BsnaMnkAD/y91WnYwy+PZQiOS
-         1mKTkPYRCCvj9binmHztJiVs5/fPG7fiU7BoeI7JulJGPKgYSvymyxg3p4/C9/fsg/KI
-         8X2A==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=QfECKJ9jXKQdvjYOESszu+qVUD2KhaWOaYSTUAompe4=;
+        b=xMorN3sTWcD2nS6xKLVHbEOd8t0eOKsHByopFCTW4WhxlhE3GjuXklradLCpxaARbY
+         a9kUBZ2tzrHsX/cGw8hvtuwrYYav9abkp7XytTMgaaA7gQlZJCXHJxVdhcwPIAFmrVFO
+         SjrvDcou0KbOjl8sWiL+cAcAwXr6/q908ODz7seDE0rY4zoU77RWF1LNCCxBdqh6rird
+         /VTm/bOgzrD0TU4LvlvR1Kuct19Wv48dJNrEj8/L9SfC7wJ3VeogS1Qv2Y6MmFL66vRr
+         6UeNVr9eOlsFF8n/tRs1M3b3yhV+jJE5B1kbUmK5KArTrog03mWozcpIoRdY52NDqlyj
+         Jkfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RA5VF4RpL+61fXTh4Gfb3qkFwZI/LPrSMrG3g+d0iY4=;
-        b=bCIq35Q9ZFv/9RvZUnrE2VMMZ2PFzhmGJX2eXkXu4ag59wA2RbM3kk2OIgqoNAGKh5
-         9/0x7sU9I+NHafSuvAFJgTUFDhmn0SqaHSVBwUNHbuKUwPHdNNFum/7DzOMNlNva97CN
-         X1LsGCWiP2hC6I/ZnNqDnRXswN2y87GdK2tzibCEj49BF0+4Y1E6lJl21Voj7kwhyX8u
-         agXvNQfcvi6pWIr1tjR5kRzKjCjFZvZrDwJmeMZfv7l0ZQwsMQP+F2r5oEIzC4mfmDmz
-         1Lsy4kSvRxUccfWrW9HHQIRWM8Gqs+EdTU8eNnDMVWj6RDlK44h8ur/h1qiLbFBdMLP4
-         LO+g==
-X-Gm-Message-State: AOAM533ayIe6L/rvMqEGKEBj8dm+QKt7M4n5cZyMHtEKXvVCJ0KgLS3J
-        auFh77uE28YFZrg9bj7Eig2Rnw==
-X-Google-Smtp-Source: ABdhPJxhWKDV59y7XG07sok41TBFgDXIymy0jBtyvCQaoaeW7aHYiAkZVx9RK1PIFvCFrrvrFvDUQw==
-X-Received: by 2002:a05:6871:78b:b0:d4:2636:b26 with SMTP id o11-20020a056871078b00b000d426360b26mr14114234oap.14.1651161567048;
-        Thu, 28 Apr 2022 08:59:27 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id c30-20020a4a9c5e000000b0035e9d4fc486sm150270ook.39.2022.04.28.08.59.25
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=QfECKJ9jXKQdvjYOESszu+qVUD2KhaWOaYSTUAompe4=;
+        b=DBwQyyXlOxDH5hwuT0ynnp65yDAFFbEY5GW7VbOHsTt2U1vzvTOzBKf/Imqfn3O+8+
+         UbSaA/kCBlAzkkuGM1eh/aDazfRzRpIGlT+l9b9MMc6BWMnU7bNCjP7PF/AVPtf4+Ldd
+         F9tsrvuafxAITfmYO1QbTGIZQb9BM7p9z3g2Y7MQWZN1OJwToEiFt/SZmf9422tbj5Zx
+         Gw+wfCjtHRxpRVhn7wKlYglC/2WpPWotqlCLl9wPGkwo0V+RCl+RMrBaJ/Hatylwjm5P
+         9lGSLBUSX7rQg8nJGmjKfhMsHPmR6qhz+IvQkQ21KGBkfZDOPoymD+USdqPErfRFxlaR
+         nD0w==
+X-Gm-Message-State: AOAM531Nz0TTC1A6IH+ym4JfNOH9P+gEe3jsb+OH3QhjEGq2ay8jpioN
+        R4QSB8niz7WdVBIFTsddvtUefA==
+X-Google-Smtp-Source: ABdhPJzlbC2j7+vYKVRNIsNxsAsJs+Q2hamjZ0PlHMilu9iBBMqmDiwhSbTNYXL5bTgnoQgygiz4PA==
+X-Received: by 2002:a05:600c:1548:b0:392:8e1a:18c3 with SMTP id f8-20020a05600c154800b003928e1a18c3mr31915224wmg.102.1651162444697;
+        Thu, 28 Apr 2022 09:14:04 -0700 (PDT)
+Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
+        by smtp.gmail.com with ESMTPSA id s30-20020adf979e000000b0020adfb1292fsm227454wrb.16.2022.04.28.09.14.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Apr 2022 08:59:25 -0700 (PDT)
-Date:   Thu, 28 Apr 2022 09:01:20 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Thu, 28 Apr 2022 09:14:04 -0700 (PDT)
+Date:   Thu, 28 Apr 2022 17:14:02 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_tdas@quicinc.com
-Subject: Re: [PATCH v2 1/2] dt-bindings: clock: Add Qualcomm SC8280XP GCC
- bindings
-Message-ID: <Ymq6UOjrYgFlzl/W@ripper>
-References: <20220422230013.1332993-1-bjorn.andersson@linaro.org>
- <20220423014824.912ACC385A0@smtp.kernel.org>
- <YmNsYSxLtwLpw98t@ripper>
- <20220423031350.01299C385A0@smtp.kernel.org>
- <YmN11qt/PqogYruQ@ripper>
- <20220425223426.BE973C385A4@smtp.kernel.org>
- <3fb043e6-2748-24f8-0115-b5372c747a12@linaro.org>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        sumit.semwal@linaro.org, amit.pundir@linaro.org,
+        john.stultz@linaro.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v13 2/9] mfd: qcom-spmi-pmic: expose the PMIC revid
+ information to clients
+Message-ID: <Ymq9Su3UE5IYiHnI@google.com>
+References: <20220323162820.110806-1-caleb@connolly.tech>
+ <20220323162820.110806-3-caleb@connolly.tech>
+ <Yma4T1+AglaISe2l@google.com>
+ <2763f103-6947-e431-cef5-e202c324d678@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3fb043e6-2748-24f8-0115-b5372c747a12@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2763f103-6947-e431-cef5-e202c324d678@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -82,147 +85,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 28 Apr 08:44 PDT 2022, Dmitry Baryshkov wrote:
-
-> On 26/04/2022 01:34, Stephen Boyd wrote:
-> > Quoting Bjorn Andersson (2022-04-22 20:43:18)
-> > > On Fri 22 Apr 20:13 PDT 2022, Stephen Boyd wrote:
-> > > > 
-> > > > I'd really rather not have clock-names at all because we spend a bunch
-> > > > of time comparing strings with them when we could just as easily use
-> > > > a number.
+On Wed, 27 Apr 2022, Caleb Connolly wrote:
+> On 25/04/2022 16:03, Lee Jones wrote:
+> > 
+> > On Wed, 23 Mar 2022, Caleb Connolly wrote:
+> > > From: Caleb Connolly <caleb.connolly@linaro.org>
 > > > 
-> > > I know that you would like to get rid of the clock-names for the clock
-> > > controllers. I've looked at it since and while it will be faster to
-> > > execute I still feel that it's going to be harder to write and maintain.
+> > > Some PMIC functions such as the RRADC need to be aware of the PMIC
+> > > chip revision information to implement errata or otherwise adjust
+> > > behaviour, export the PMIC information to enable this.
 > > > 
-> > > E.g. look at gcc_pcie_4_pipe_clk_src, its parents today are
-> > > pcie_4_pipe_clk and bi_tcxo. Something I can reason about being correct
-> > > or not.
+> > > This is specifically required to enable the RRADC to adjust
+> > > coefficients based on which chip fab the PMIC was produced in,
+> > > this can vary per unique device and therefore has to be read at
+> > > runtime.
 > > > 
-> > > If we ditch the clock-names I will have:
-> > > 
-> > > static const struct clk_parent_data gcc_parent_data_14[] = {
-> > >          { .index = 30 },
-> > >          { .index = 0 },
-> > 
-> > Those numbers could have some #define.
-> > 
-> > 	{ .index = PCIE_4_PIPE_CLK_DT }
-> > 	{ .index = BI_TCXO_DT }
-> > 
-> > > };
-> > > 
-> > > Generally we would perhaps use some compile time constant, but that
-> > > won't work here because we're talking about the index in the clocks
-> > > array in the yaml.
-> > > 
-> > > 
-> > > But perhaps I'm missing something that would make this manageable?
-> > 
-> > I dunno. Maybe a macro in the dt-binding header could be used to specify
-> > the 'clocks' property of the DT node that is providing the other side?
-> > The idea is to make a bunch of macros that insert the arguments of the
-> > macro in the right place for the clocks property and then define the
-> > order of arguments otherwise. It would be similar to how
-> > CREATE_TRACE_POINTS is used in include/trace/define_trace.h
-> > 
-> > In the dt-bindings/qcom,gcc-soc.h file:
-> > 
-> > 	#ifdef IN_DTSI
-> > 
-> > 	#undef GCC_DT_NODE_CLOCKS
-> > 	#define GCC_DT_NODE_CLOCKS
-> > 		clocks = <BI_TCXO_DT>,
-> > 			 <SLEEP_CLK_DT>;
-> > 
-> > 	#endif /* IN_DTSI */
-> > 
-> > 	#define BI_TCXO_DT 0
-> > 	#define SLEEP_CLK_DT 1
+> > > Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >   drivers/mfd/qcom-spmi-pmic.c      | 261 +++++++++++++++++++-----------
+> > >   include/soc/qcom/qcom-spmi-pmic.h |  60 +++++++
+> > >   2 files changed, 231 insertions(+), 90 deletions(-)
+> > >   create mode 100644 include/soc/qcom/qcom-spmi-pmic.h
 
-BI_TCXO_DT is not the value, its the index of the entry in the clocks
-array. And the actual values of the clock controller's clocks
-property is not a property of the clock controller, but the system
-definition.
+[...]
 
-I.e. that should be clear and explicitly expressed in the dts.
+> > > +			/*
+> > > +			 * If the base USID for this PMIC hasn't probed yet
+> > > +			 * but the secondary USID has, then we need to defer
+> > > +			 * the function driver so that it will attempt to
+> > > +			 * probe again when the base USID is ready.
+> > > +			 */
+> > > +			if (pmic_addr == function_parent_usid  - (ctx->num_usids - 1))
+> > 
+> > Double "  ".
+> Ack
+> > 
+> > Over-bracketing of statements with matching operands.
+> I don't think x - (y - 1) is equal to x - y - 1? Or am I misunderstanding you here?
 
-> 
-> Isn't this being an overkill, to define exact properties in the bindings
-> header? Also this would mean that we'd have to add dt-binding headers for
-> all _consumers_ of clocks. And to make things more complex, e.g. for PCIe
-> devices different instances of the device would use different amount of
-> clocks. This would mean that we'd have to define SM8250_PCI0_CLOCKS,
-> SM8250_PCIE1_CLOCKS and SM8250_PCIE2_CLOCKS.
-> 
-> 
-> If we were to switch to this fragile path of using indices (yes I consider
-> it to be very fragile), I'd consider something like the following to work in
-> the platform dtsi file:
-> 
-> clocks =
-> BEGIN_CLOCK
-> CLOCK(BI_TCXO_DT, &bi_tcxo)
-> CLOCK(SLEEP_CLK_DT, &sleep_clk)
-> END_CLOCK;
-> 
-> While the following should give an error:
-> clocks =
-> BEGIN_CLOCK
-> CLOCK(SLEEP_CLK_DT, &sleep_clk)
-> CLOCK(BI_TCXO_DT, &bi_tcxo)
-> END_CLOCK;
-> 
-> I think we can make this error out by using some additional tool (or
-> additional preprocessor pass over the sources)
-> 
+Can you give me an example when this would be the case?
 
-Let's not invent some magical syntax for describing the clocks in the
-DT.
-
-These macros can't expand to sparse arrays anyways, so iiuc this would
-give a sense that the ordering might not be significant, when it really
-is.
-
-> > And then in the SoC.dtsi file have
-> > 
-> > 	#define IN_DTSI
-> > 	#include <dt-bindings/qcom,gcc-soc.h>
-> > 
-> > 	#define BI_TCXO_DT	&xo_board
-> > 	#define SLEEP_CLK_DT	&sleep_clk
-> > 
-> > 	...
-> > 
-> > 	clock-controller@a000000 {
-> > 		compatible = "qcom,gcc-soc";
-> > 		reg = <0xa000000 0x10000>;
-> > 		GCC_DT_NODE_CLOCKS
-> > 	};
-> > 
-> > 
-> > and then in drivers/clk/qcom/gcc-soc.c file:
-> > 
-> > 	#include <dt-bindings/qcom,gcc-soc.h>
-> > 
-> > 	static const struct clk_parent_data gcc_parent_data_14[] = {
-> > 		{ .index = PCIE_4_PIPE_CLK_DT },
-> > 		{ .index = BI_TCXO_DT },
-> > 	};
-> > 
-> > The benefit I see to this is that the index for each clock is in the
-> > header file (BI_TCXO_DT is 0) and it's next to the clocks property.
-> > Someone could still mess up the index based on where the macro is used
-> > in the clocks property though.
-> 
-> And actually might I suggest an alternative approach to manually using
-> indices everywhere? What about spending the time once during the boot to
-> convert .fw_name and clock_names to parent indices during clock registration
-> and then using them for all the further operations?
-> 
-
-I'm pretty sure that's what clk_core_fill_parent_index() already does.
-
-Regards,
-Bjorn
+-- 
+Lee Jones [李琼斯]
+Principal Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
