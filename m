@@ -2,72 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A77D2513987
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 18:16:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21D26513998
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 18:20:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349864AbiD1QTA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 12:19:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38412 "EHLO
+        id S1349906AbiD1QXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 12:23:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349899AbiD1QS7 (ORCPT
+        with ESMTP id S1349903AbiD1QXC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 12:18:59 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 615CA29808
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 09:15:43 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id g8so2250393pfh.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 09:15:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Dfa1bV+l0rTD/48Pn9eH0bLjlOwV1+aYl2ofQSrXJUM=;
-        b=hWZiuHu8JdkaW16COERrDY5bK6U72h+rWDMYgBl2WsnIVOQwa3cmfWdmXW3QL4ho3D
-         GmDWhfJ6qhqQrHlZlJGNhkQ4RDqj4dHbwdCIPbADdhn/LLzhC7ZiLboE0eHKGeypFLv4
-         cReOdJ48psk9nQNdUBp8jsYfW60zM2w7XKXMk=
+        Thu, 28 Apr 2022 12:23:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B2E1C5C85E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 09:19:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1651162786;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=vq8RC9NK7ljExipax9OnZpDPFBAwe7JTpMhljndmQRY=;
+        b=cM0oEUH8AtVPBpQ2kISTpmcxqOc9F2y8HTVj3jHYEcu6l+pXCbELA4HvLu/Azmwzq2aH1H
+        XQJcY1YhdE1aVlDA0acSKvUmWcP4OoxAAXiPO3puxpJNErjM3h7imsO0QMV/XHJImGeZ0g
+        it6096EDUV4H2KRkTcmW48rQbfSj3zA=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-657-4jG6qT6LMqKr3OmakcyekQ-1; Thu, 28 Apr 2022 12:19:45 -0400
+X-MC-Unique: 4jG6qT6LMqKr3OmakcyekQ-1
+Received: by mail-qv1-f70.google.com with SMTP id bz15-20020ad44c0f000000b0045641657fd2so4044836qvb.22
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 09:19:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Dfa1bV+l0rTD/48Pn9eH0bLjlOwV1+aYl2ofQSrXJUM=;
-        b=kSbie+qREWM7L0izq2qzOjvhdGVCilpVcPeLKZhds59z0yfeM4SSZkKsCI2nt3X+IA
-         PLbxl6USIBN5pjwD5oz1keCdzmacaK7OPC31l+5NAjgeW7+iAWxhag1REiMksM3yxrVf
-         3RdgTBrwOVnHQmwtu6temNvk1XDqMQ8bbKV3HMDAhbTDcI+4pO+ge59U+6Nf7FDnRBi2
-         dR1pB86emgJnFQpoabBPsVzJ/hOtkbeclHL5tYU2Ai6kgHIxrOxLKifQRxc9iOShQdQ/
-         aN//1cCgb0uHW4QkkgmEJERroViglNzy0DMpjVdqo8bTYD8cB8NwzJm6dgFNN3IFakML
-         1Tnw==
-X-Gm-Message-State: AOAM530iw+IVi6xicErLPatGswGz+9ZtSTCunMsELGoqCR7IYWwV+J8G
-        XCcvK9UaGyx3NdOOxBl6aRjxHpieydbjbw==
-X-Google-Smtp-Source: ABdhPJzlBNQOMivdc1V03Wr32p3jvOOeJtUJvOQ9TbIPp9SCu1XaxHBr07iH7lOg3BRvs0j4aFP0wQ==
-X-Received: by 2002:aa7:83c2:0:b0:505:723f:6ace with SMTP id j2-20020aa783c2000000b00505723f6acemr35965537pfn.86.1651162542894;
-        Thu, 28 Apr 2022 09:15:42 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:7a56:fc44:2682:8a2e])
-        by smtp.gmail.com with UTF8SMTPSA id 132-20020a62168a000000b004f40e8b3133sm293538pfw.188.2022.04.28.09.15.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Apr 2022 09:15:42 -0700 (PDT)
-Date:   Thu, 28 Apr 2022 09:15:39 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH v22 1/2] arm64: dts: qcom: sc7180-trogdor: Add nodes for
- onboard USB hub
-Message-ID: <Ymq9qzzd+OV6xjh8@google.com>
-References: <20220426170306.v22.1.I7a1a6448d50bdd38e6082204a9818c59cc7a9bfd@changeid>
- <CAD=FV=UzhOrXgB4LrHO4kaSrfw1GQJMb0RNsQXYfG5kG8EwcRA@mail.gmail.com>
+        bh=vq8RC9NK7ljExipax9OnZpDPFBAwe7JTpMhljndmQRY=;
+        b=FAVPkR4rHXYZQlbRxQMESMpHGuaf1QSfIgbPgNQ+s5rZPvwbYCKJVucbBF9b0XF8+d
+         YnfyWZMQ3ysg5vI/vwNY/0ejXRksC/jgwyQFNU8DTKDJnKNVpxGtenF1X8ye2fa+GYGY
+         G+pa0Zbse70KBQymrlBOacizhIVqG/L4ofy4ssxv0QoDYX8VmAR7aWzjXWBNyWX1m90c
+         w68+/hfuKrfw5LpiSm6jjxPE9glkrTj1+SSass6Vq/qE6uM6sAQ38QER5pfW+CNdEmgn
+         oL2eMFNysLKPQm07unQ4Xer6wEX+3v8idbPauY9TOXYq47pmsk+GE6FKeetK/SOLBcVt
+         0m4Q==
+X-Gm-Message-State: AOAM531AWwP7CIGNGS3OidiyKZTxGemJspuOMe/iAw2h5PN0L2FFTPYv
+        F7fao61VhVqocEexx1pwucYOvu7CPzlgT6NnmaAF/QC6dkE1ecEQx6kHzskcfKZqWB/gp9cr/GI
+        ADobsE76yCn7ttmxXo3D6JSgATw==
+X-Received: by 2002:a05:620a:2697:b0:699:cca7:f8b2 with SMTP id c23-20020a05620a269700b00699cca7f8b2mr20439367qkp.738.1651162784401;
+        Thu, 28 Apr 2022 09:19:44 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJz89Zo8kITvvA07ZT8XsQZFb2wfFp3rudks9OXnYWZ3EAYrQs+0vm9GqeZHvObJXgK9VgXxMg==
+X-Received: by 2002:a05:620a:2697:b0:699:cca7:f8b2 with SMTP id c23-20020a05620a269700b00699cca7f8b2mr20439351qkp.738.1651162784135;
+        Thu, 28 Apr 2022 09:19:44 -0700 (PDT)
+Received: from halaneylaptop (068-184-200-203.res.spectrum.com. [68.184.200.203])
+        by smtp.gmail.com with ESMTPSA id o14-20020a05622a138e00b002f335c3dbf2sm197795qtk.37.2022.04.28.09.19.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Apr 2022 09:19:43 -0700 (PDT)
+Date:   Thu, 28 Apr 2022 11:19:41 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] soc: qcom: rpmhpd: add sc8280xp & sa8540p rpmh
+ power-domains
+Message-ID: <20220428161941.mp53l4puglpei6kt@halaneylaptop>
+References: <20220426233508.1762345-1-bjorn.andersson@linaro.org>
+ <20220426233508.1762345-4-bjorn.andersson@linaro.org>
+ <20220427123835.hmfdu66ut3uvvtjp@halaneylaptop>
+ <Ymq3QfFnSplnEBRK@ripper>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAD=FV=UzhOrXgB4LrHO4kaSrfw1GQJMb0RNsQXYfG5kG8EwcRA@mail.gmail.com>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+In-Reply-To: <Ymq3QfFnSplnEBRK@ripper>
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,42 +83,139 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 27, 2022 at 02:05:04PM -0700, Doug Anderson wrote:
-> Hi,
+On Thu, Apr 28, 2022 at 08:48:17AM -0700, Bjorn Andersson wrote:
+> On Wed 27 Apr 05:38 PDT 2022, Andrew Halaney wrote:
 > 
-> On Tue, Apr 26, 2022 at 5:03 PM Matthias Kaehlcke <mka@chromium.org> wrote:
-> >
-> > Add nodes for the onboard USB hub on trogdor devices. Remove the
-> > 'always-on' property from the hub regulator, since the regulator
-> > is now managed by the onboard_usb_hub driver.
+> > On Tue, Apr 26, 2022 at 04:35:08PM -0700, Bjorn Andersson wrote:
+> > > The Qualcomm sc8280xp platform has 13 and the sa8540p platform has 11
+> > > power-domains. Add compatibles, the typically used ones power-domains
+> > > and their relevant active-only variants, to the RPMh power-domain
+> > > driver.
+> > > 
+> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > ---
+> > > 
+> > > Changes since v1:
+> > > - Added QPHY
+> > > - Split out sa8540
+> > > - Sorted the entries alphabetically
+> > > 
+> > >  drivers/soc/qcom/rpmhpd.c | 53 +++++++++++++++++++++++++++++++++++++++
+> > >  1 file changed, 53 insertions(+)
+> > > 
+> > > diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+> > > index f8d28e902942..05fff8691ee3 100644
+> > > --- a/drivers/soc/qcom/rpmhpd.c
+> > > +++ b/drivers/soc/qcom/rpmhpd.c
+> > > @@ -180,6 +180,36 @@ static struct rpmhpd mxc_ao = {
+> > >  	.res_name = "mxc.lvl",
+> > >  };
+> > >  
+> > > +static struct rpmhpd nsp = {
+> > > +	.pd = { .name = "nsp", },
+> > > +	.res_name = "nsp.lvl",
+> > > +};
+> > > +
+> > > +static struct rpmhpd qphy = {
+> > > +	.pd = { .name = "qphy", },
+> > > +	.res_name = "qphy.lvl",
+> > > +};
+> > > +
+> > > +/* SA8540P RPMH powerdomains */
+> > > +static struct rpmhpd *sa8540p_rpmhpds[] = {
+> > > +	[SC8280XP_CX] = &cx,
+> > > +	[SC8280XP_CX_AO] = &cx_ao,
+> > > +	[SC8280XP_EBI] = &ebi,
+> > > +	[SC8280XP_GFX] = &gfx,
+> > > +	[SC8280XP_LCX] = &lcx,
+> > > +	[SC8280XP_LMX] = &lmx,
+> > > +	[SC8280XP_MMCX] = &mmcx,
+> > > +	[SC8280XP_MMCX_AO] = &mmcx_ao,
+> > > +	[SC8280XP_MX] = &mx,
+> > > +	[SC8280XP_MX_AO] = &mx_ao,
+> > > +	[SC8280XP_NSP] = &nsp,
+> > > +};
+> > > +
+> > > +static const struct rpmhpd_desc sa8540p_desc = {
+> > > +	.rpmhpds = sa8540p_rpmhpds,
+> > > +	.num_pds = ARRAY_SIZE(sa8540p_rpmhpds),
+> > > +};
+> > > +
+> > >  /* SDM845 RPMH powerdomains */
+> > >  static struct rpmhpd *sdm845_rpmhpds[] = {
+> > >  	[SDM845_CX] = &cx_w_mx_parent,
+> > > @@ -378,10 +408,33 @@ static const struct rpmhpd_desc sc8180x_desc = {
+> > >  	.num_pds = ARRAY_SIZE(sc8180x_rpmhpds),
+> > >  };
+> > >  
+> > > +/* SC8280xp RPMH powerdomains */
+> > > +static struct rpmhpd *sc8280xp_rpmhpds[] = {
+> > > +	[SC8280XP_CX] = &cx,
+> > > +	[SC8280XP_CX_AO] = &cx_ao,
+> > > +	[SC8280XP_EBI] = &ebi,
+> > > +	[SC8280XP_GFX] = &gfx,
+> > > +	[SC8280XP_LCX] = &lcx,
+> > > +	[SC8280XP_LMX] = &lmx,
+> > > +	[SC8280XP_MMCX] = &mmcx,
+> > > +	[SC8280XP_MMCX_AO] = &mmcx_ao,
+> > > +	[SC8280XP_MX] = &mx,
+> > > +	[SC8280XP_MX_AO] = &mx_ao,
+> > > +	[SC8280XP_NSP] = &nsp,
+> > > +	[SC8280XP_QPHY] = &qphy,
+> > > +};
+> > 
+> > The commit messages mention sc8280xp having 13 power domains, but here I
+> > only count 12. Good chance I'm just missing something obvious (not
+> > familiar with using power domains or rpmh) but I thought I should
+> > highlight it in case that was an error.
+> > 
 > 
-> There are people out there that are running trogdor devices with
-> upstream Linux. There's not much we can do about it, but probably this
-> patch will cause them to fail to probe USB because they won't have
-> "CONFIG_USB_ONBOARD_HUB=y". Luckily the commit subject has "USB" in it
-> so hopefully it'll be easy to spot, but I wonder if we should add
-> something to the commit message that makes that super obvious and
-> tells them about the relevant commit, like:
+> The "typically used ones" in the commit message "captures" that. Further
+> more _AO is just a variant of the non-_AO resources, referring to votes
+> that should only apply when the CPU subsystem is not power collapsed.
 > 
-> For anyone using trogdor-based devices on Linux, it should be noted
-> that this requires "CONFIG_USB_ONBOARD_HUB=y".
+> So what you have in this list is 10 power domains.
+> 
+> I added defines for all 13 in the DT binding, so comparing with that
+> you'll see that the missing ones are DDR, MSS and XO. I don't see how we
+> would use these from Linux today. So let's postpone adding them until we
+> have a use case.
+> 
+> > I attempted to find where this sort of thing is defined downstream, but
+> > failed :(
+> > 
+> 
+> In direwolf-regulators.dtsi you'll find entries with qcom,resource-name
+> of "*.lvl". These resource names are matches against the Command DB
+> registry, which you can dump using the cmd-db file in debugfs.
+> 
+> Regards,
+> Bjorn
 
-Ok, I'll respin and add the note.
+Thanks, I really appreciate the explanation. This makes sense to me.
 
-> > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> > Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> > Depends on "usb: misc: Add onboard_usb_hub driver" [1] which landed in
-> > https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git/commit/?h=usb-testing
-> >
-> > This patch was split off the above series.
-> >
-> > [1] https://patchwork.kernel.org/project/linux-usb/list/?series=615531&state=%2A&archive=both
 > 
-> I presume it will be moderately annoying if this lands in the Qualcomm
-> branch before the driver lands in mainline? Otherwise USB will fully
-> stop working on the Qualcomm branch. Do we want to postpone landing
-> this?
+> > Thanks,
+> > Andrew
+> > 
+> > > +
+> > > +static const struct rpmhpd_desc sc8280xp_desc = {
+> > > +	.rpmhpds = sc8280xp_rpmhpds,
+> > > +	.num_pds = ARRAY_SIZE(sc8280xp_rpmhpds),
+> > > +};
+> > > +
+> > >  static const struct of_device_id rpmhpd_match_table[] = {
+> > > +	{ .compatible = "qcom,sa8540p-rpmhpd", .data = &sa8540p_desc },
+> > >  	{ .compatible = "qcom,sc7180-rpmhpd", .data = &sc7180_desc },
+> > >  	{ .compatible = "qcom,sc7280-rpmhpd", .data = &sc7280_desc },
+> > >  	{ .compatible = "qcom,sc8180x-rpmhpd", .data = &sc8180x_desc },
+> > > +	{ .compatible = "qcom,sc8280xp-rpmhpd", .data = &sc8280xp_desc },
+> > >  	{ .compatible = "qcom,sdm845-rpmhpd", .data = &sdm845_desc },
+> > >  	{ .compatible = "qcom,sdx55-rpmhpd", .data = &sdx55_desc},
+> > >  	{ .compatible = "qcom,sdx65-rpmhpd", .data = &sdx65_desc},
+> > > -- 
+> > > 2.35.1
+> > > 
+> > 
+> 
 
-Postponing the trogdor patch sounds good to me.
