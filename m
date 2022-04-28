@@ -2,265 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91316512B43
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 08:06:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D098512B8B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 08:28:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243464AbiD1GKG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 02:10:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44484 "EHLO
+        id S243904AbiD1Gbc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 02:31:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236272AbiD1GKF (ORCPT
+        with ESMTP id S243823AbiD1Gbb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 02:10:05 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25FC5972EF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 23:06:52 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id r9so3375832pjo.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 23:06:52 -0700 (PDT)
+        Thu, 28 Apr 2022 02:31:31 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F28685C37B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 23:28:15 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id a21so4355408edb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Apr 2022 23:28:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sctLFwQqS8lBCdpG9q6rO8TA4Tc3AKrhBRg23uXCJys=;
-        b=XHRkwW7A26X4pGZIk+GiBtT0kdF1Z/gHTmq8LqkyxoI7bezQhGOIujVr9O01qMfzZP
-         uCQgcy+FI09brn3nnS0bxQSB5di8DnjxnrqOISRXBA6KmPIWt0kPkzPpsayDgd5HhmkM
-         KQJolfpcuaUXHTdFU3O+gUHAuzx3/3NcCePV9/XEEXD0QC3hS8hVuLH3Y7R13PZim3RM
-         13xWJlcOQnIzTJcdfYHQiuSaZ5dzInEIWzx3+E86R9WvTER2RC48hu74uoTP5PHw/BGG
-         cKnOm8gidYzc78vKjVHQ3ObH70IYyWjsKbeRfekBLY77/dH3Fyl3X2zulXKlGGhpQ0G4
-         Zc4A==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Xf+dx9QjYu+pZFxcusNu2q2NMrhvf7rKxX/txAvOgA8=;
+        b=SmGjZc6C2GaYPE1mr+lRp6swuqnB23B7pO1RtWV7G63RcVAtguIaQW3avKvKMGr299
+         dXAmWXFp88Yfih4v23y1HF9lDEjFodDt0fFh8TaL3aFqcR48EMFLtTYkZNOlZGBz/vlq
+         BWP7DC0ht9uzC7fcj0+KgBwUbwPmMJPwzne1hyhNlfKOlIdsdt+mFTbhDg2vFKS3fNFS
+         fRdATMjOJ0jHZccl6YQZulwWZPo7q5k7jG8URtCU+a3BQiO0uMfmJfZHb2wIr0RbCVhO
+         ZB6jSaoUWxjwawIhflU+LRYStPL6YIgdUCztLfV4rtUZ8V9nA/XtV5Aw+C3+KUQkcDOd
+         37Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sctLFwQqS8lBCdpG9q6rO8TA4Tc3AKrhBRg23uXCJys=;
-        b=7zE+DtVUslT4BmqfWCXwIdBKgqLB1CuYUJQePmeou2j0ROUg9G4DMDf4pW7MvpWBFY
-         cBuwKV/b3rcKdu+4UjcWx6bpWzfkdldKOPAOWR3q2NpXth5hzd4qowAyxVeBklm3nXqK
-         bdKdS6U1JirZyuRpZWWIO43VZgk/hpqJSJ/oubdx0DewJOKvnA70vL5m54A8tD/iTtV1
-         xykWUdVROEqBXxRF5pbfAybx6DpwXq/ol/K7gfHoyRz5sNruOwVcVLIFL7FLs4QAFgEj
-         uQ+P8U1dpauYm/EJ3HlIJrE1Kt6C/vG2yYtBXnYoo8IHh5f/OZzmJATxcpYnEmEtZ4dM
-         tKWg==
-X-Gm-Message-State: AOAM532OVfdv9wsPCqRhLCEiq1+FpWeLrEZkKA02gzd8lFhHyAPMZIKh
-        A2CJIMOH+N6LknBhKfLFYm5k
-X-Google-Smtp-Source: ABdhPJwCw9OT42rCS0BWyfxA58Fomrl8+W7C0DTbnEGsPLwmIrAFnemfLavgpQmLlwFTvKlUuY+7vA==
-X-Received: by 2002:a17:902:f78d:b0:14f:ce61:eaf2 with SMTP id q13-20020a170902f78d00b0014fce61eaf2mr32635012pln.124.1651126011557;
-        Wed, 27 Apr 2022 23:06:51 -0700 (PDT)
-Received: from thinkpad ([27.111.75.196])
-        by smtp.gmail.com with ESMTPSA id s7-20020a17090a13c700b001cd60246575sm9390715pjf.17.2022.04.27.23.06.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 23:06:48 -0700 (PDT)
-Date:   Thu, 28 Apr 2022 11:36:42 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 1/5] PCI: dwc: Convert msi_irq to the array
-Message-ID: <20220428060642.GA81644@thinkpad>
-References: <20220427121653.3158569-1-dmitry.baryshkov@linaro.org>
- <20220427121653.3158569-2-dmitry.baryshkov@linaro.org>
- <20220427141329.GA4161@thinkpad>
- <b9d81916-10e6-94f9-78b2-b2198620e66a@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Xf+dx9QjYu+pZFxcusNu2q2NMrhvf7rKxX/txAvOgA8=;
+        b=L73wrA9QmsWclJnOCbshTB6QdbHgivZYakKrVYo0L0n+hn1w/ovaEQ45vuM7idl5EF
+         DNax1dqOy9JvoSNi0yGlmpatOnRXZ7HtI1O6760gND1uQaQpz7u82hphWTKmrv1NGeDf
+         DGZXKbHHwIuKpLma27oFha0wVL99z2AEKvA+BFsvFx/EgwVaI8We65XK/q1Kzv5H/1bj
+         aK7s2Zit0naNz05lD8w1JHxR80RVE90NHS62DsY6xgjnsRwU7XIwWHn7OclMKNE8I4u8
+         ywZyFRR7ldZXv5IYyGIUJErMzMhmoc0Xdvi5hWDhMb7NBR7nb0S4blSVDKRzNQOY1nTl
+         wX4A==
+X-Gm-Message-State: AOAM531xQrJbiYv/mAh/xCextMcbtrAs9jVZqcBYQwAxRU2cLee1I7I/
+        Upu1Ak/19sF0ruz4BnI49Dx8lg==
+X-Google-Smtp-Source: ABdhPJzhJ78iAFYN62jRZOQ46v7YE/NpmM9iMnwuLOFRVbW/FrLtPIu4pqBes6dv2Zk6PHzYfO78yQ==
+X-Received: by 2002:a05:6402:190a:b0:426:1d8a:55e with SMTP id e10-20020a056402190a00b004261d8a055emr5065981edz.63.1651127294534;
+        Wed, 27 Apr 2022 23:28:14 -0700 (PDT)
+Received: from [192.168.0.159] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id b16-20020a170906709000b006f3a8aac0eesm4351745ejk.0.2022.04.27.23.28.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Apr 2022 23:28:13 -0700 (PDT)
+Message-ID: <ebedcf5f-9b75-253c-f560-5ae5b8175634@linaro.org>
+Date:   Thu, 28 Apr 2022 08:28:13 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b9d81916-10e6-94f9-78b2-b2198620e66a@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v3 1/2] dt-bindings: clock: Add Qualcomm SC8280XP GCC
+ bindings
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220426232444.1761869-1-bjorn.andersson@linaro.org>
+ <20220426232444.1761869-2-bjorn.andersson@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220426232444.1761869-2-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 27, 2022 at 07:59:57PM +0300, Dmitry Baryshkov wrote:
-> On 27/04/2022 17:13, Manivannan Sadhasivam wrote:
-> > On Wed, Apr 27, 2022 at 03:16:49PM +0300, Dmitry Baryshkov wrote:
-> > > Qualcomm version of DWC PCIe controller supports more than 32 MSI
-> > > interrupts, but they are routed to separate interrupts in groups of 32
-> > > vectors. To support such configuration, change the msi_irq field into an
-> > > array. Let the DWC core handle all interrupts that were set in this
-> > > array.
-> > > 
-> > 
-> > Instead of defining it as an array, can we allocate it dynamically in the
-> > controller drivers instead? This has two benefits:
-> > 
-> > 1. There is no need of using a dedicated flag.
-> > 2. Controller drivers that don't support MSIs can pass NULL and in the core we
-> > can use platform_get_irq_byname_optional() to get supported number of MSIs from
-> > devicetree.
+On 27/04/2022 01:24, Bjorn Andersson wrote:
+> Add binding for the Qualcomm SC8280XP Global Clock controller.
 > 
-> I think using dynamic allocation would make code worse. It would add
-> additional checks here and there.
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
 > 
+> Changes since v2:
+> - Dropped clock-names, in favor of forcing implementation to rely on index
+>   based clock matching.
 
-I take back my suggestion of allocating the memory for msi_irq in controller
-drivers. It should be done in the designware-host instead.
+Implementation does not have to use clock-names, but it's useful for
+humans. You can drop it, but I think it makes life of reviewing DTS more
+difficult.
 
-We already know how many MSIs are supported by the platform using num_vectors.
-So we should just allocate msi_irqs of num_vectors length in
-dw_pcie_host_init() and populate it using platform_get_irq_byname_optional().
-
-I don't think this can make the code worse.
-
-> If you don't like this design. I have an alternative suggestion: export the
-> dw_chained_msi_irq() and move allocation of all MSIs to the pcie-qcom code.
-> Would that be better? I'm not sure whether this multi-host-IRQ design is
-> used on other DWC platforms or not.
+> - Updated descriptions for a few clocks that only had their clock names.
 > 
-
-No, I think the allocation should belong to designware-host.
-
-Thanks,
-Mani
-
-> > 
-> > Thanks,
-> > Mani
-> > 
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >   drivers/pci/controller/dwc/pci-dra7xx.c       |  2 +-
-> > >   drivers/pci/controller/dwc/pci-exynos.c       |  2 +-
-> > >   .../pci/controller/dwc/pcie-designware-host.c | 30 +++++++++++--------
-> > >   drivers/pci/controller/dwc/pcie-designware.h  |  2 +-
-> > >   drivers/pci/controller/dwc/pcie-keembay.c     |  2 +-
-> > >   drivers/pci/controller/dwc/pcie-spear13xx.c   |  2 +-
-> > >   drivers/pci/controller/dwc/pcie-tegra194.c    |  2 +-
-> > >   7 files changed, 24 insertions(+), 18 deletions(-)
-> > > 
-> > > diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
-> > > index dfcdeb432dc8..0919c96dcdbd 100644
-> > > --- a/drivers/pci/controller/dwc/pci-dra7xx.c
-> > > +++ b/drivers/pci/controller/dwc/pci-dra7xx.c
-> > > @@ -483,7 +483,7 @@ static int dra7xx_add_pcie_port(struct dra7xx_pcie *dra7xx,
-> > >   		return pp->irq;
-> > >   	/* MSI IRQ is muxed */
-> > > -	pp->msi_irq = -ENODEV;
-> > > +	pp->msi_irq[0] = -ENODEV;
-> > >   	ret = dra7xx_pcie_init_irq_domain(pp);
-> > >   	if (ret < 0)
-> > > diff --git a/drivers/pci/controller/dwc/pci-exynos.c b/drivers/pci/controller/dwc/pci-exynos.c
-> > > index 467c8d1cd7e4..4f2010bd9cd7 100644
-> > > --- a/drivers/pci/controller/dwc/pci-exynos.c
-> > > +++ b/drivers/pci/controller/dwc/pci-exynos.c
-> > > @@ -292,7 +292,7 @@ static int exynos_add_pcie_port(struct exynos_pcie *ep,
-> > >   	}
-> > >   	pp->ops = &exynos_pcie_host_ops;
-> > > -	pp->msi_irq = -ENODEV;
-> > > +	pp->msi_irq[0] = -ENODEV;
-> > >   	ret = dw_pcie_host_init(pp);
-> > >   	if (ret) {
-> > > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > index 2fa86f32d964..5d90009a0f73 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > @@ -257,8 +257,11 @@ int dw_pcie_allocate_domains(struct pcie_port *pp)
-> > >   static void dw_pcie_free_msi(struct pcie_port *pp)
-> > >   {
-> > > -	if (pp->msi_irq)
-> > > -		irq_set_chained_handler_and_data(pp->msi_irq, NULL, NULL);
-> > > +	u32 ctrl;
-> > > +
-> > > +	for (ctrl = 0; ctrl < MAX_MSI_CTRLS; ctrl++)
-> > > +		if (pp->msi_irq[ctrl])
-> > > +			irq_set_chained_handler_and_data(pp->msi_irq[ctrl], NULL, NULL);
-> > >   	irq_domain_remove(pp->msi_domain);
-> > >   	irq_domain_remove(pp->irq_domain);
-> > > @@ -368,13 +371,15 @@ int dw_pcie_host_init(struct pcie_port *pp)
-> > >   			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
-> > >   				pp->irq_mask[ctrl] = ~0;
-> > > -			if (!pp->msi_irq) {
-> > > -				pp->msi_irq = platform_get_irq_byname_optional(pdev, "msi");
-> > > -				if (pp->msi_irq < 0) {
-> > > -					pp->msi_irq = platform_get_irq(pdev, 0);
-> > > -					if (pp->msi_irq < 0)
-> > > -						return pp->msi_irq;
-> > > +			if (!pp->msi_irq[0]) {
-> > > +				int irq = platform_get_irq_byname_optional(pdev, "msi");
-> > > +
-> > > +				if (irq < 0) {
-> > > +					irq = platform_get_irq(pdev, 0);
-> > > +					if (irq < 0)
-> > > +						return irq;
-> > >   				}
-> > > +				pp->msi_irq[0] = irq;
-> > >   			}
-> > >   			pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
-> > > @@ -383,10 +388,11 @@ int dw_pcie_host_init(struct pcie_port *pp)
-> > >   			if (ret)
-> > >   				return ret;
-> > > -			if (pp->msi_irq > 0)
-> > > -				irq_set_chained_handler_and_data(pp->msi_irq,
-> > > -							    dw_chained_msi_isr,
-> > > -							    pp);
-> > > +			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
-> > > +				if (pp->msi_irq[ctrl] > 0)
-> > > +					irq_set_chained_handler_and_data(pp->msi_irq[ctrl],
-> > > +									 dw_chained_msi_isr,
-> > > +									 pp);
-> > >   			ret = dma_set_mask(pci->dev, DMA_BIT_MASK(32));
-> > >   			if (ret)
-> > > diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> > > index 7d6e9b7576be..9c1a38b0a6b3 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-designware.h
-> > > +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> > > @@ -187,7 +187,7 @@ struct pcie_port {
-> > >   	u32			io_size;
-> > >   	int			irq;
-> > >   	const struct dw_pcie_host_ops *ops;
-> > > -	int			msi_irq;
-> > > +	int			msi_irq[MAX_MSI_CTRLS];
-> > >   	struct irq_domain	*irq_domain;
-> > >   	struct irq_domain	*msi_domain;
-> > >   	u16			msi_msg;
-> > > diff --git a/drivers/pci/controller/dwc/pcie-keembay.c b/drivers/pci/controller/dwc/pcie-keembay.c
-> > > index 1ac29a6eef22..297e6e926c00 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-keembay.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-keembay.c
-> > > @@ -338,7 +338,7 @@ static int keembay_pcie_add_pcie_port(struct keembay_pcie *pcie,
-> > >   	int ret;
-> > >   	pp->ops = &keembay_pcie_host_ops;
-> > > -	pp->msi_irq = -ENODEV;
-> > > +	pp->msi_irq[0] = -ENODEV;
-> > >   	ret = keembay_pcie_setup_msi_irq(pcie);
-> > >   	if (ret)
-> > > diff --git a/drivers/pci/controller/dwc/pcie-spear13xx.c b/drivers/pci/controller/dwc/pcie-spear13xx.c
-> > > index 1569e82b5568..cc7776833810 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-spear13xx.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-spear13xx.c
-> > > @@ -172,7 +172,7 @@ static int spear13xx_add_pcie_port(struct spear13xx_pcie *spear13xx_pcie,
-> > >   	}
-> > >   	pp->ops = &spear13xx_pcie_host_ops;
-> > > -	pp->msi_irq = -ENODEV;
-> > > +	pp->msi_irq[0] = -ENODEV;
-> > >   	ret = dw_pcie_host_init(pp);
-> > >   	if (ret) {
-> > > diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-> > > index b1b5f836a806..e75712db85b0 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-tegra194.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-> > > @@ -2271,7 +2271,7 @@ static void tegra194_pcie_shutdown(struct platform_device *pdev)
-> > >   	disable_irq(pcie->pci.pp.irq);
-> > >   	if (IS_ENABLED(CONFIG_PCI_MSI))
-> > > -		disable_irq(pcie->pci.pp.msi_irq);
-> > > +		disable_irq(pcie->pci.pp.msi_irq[0]);
-> > >   	tegra194_pcie_pme_turnoff(pcie);
-> > >   	tegra_pcie_unconfig_controller(pcie);
-> > > -- 
-> > > 2.35.1
-> > > 
+>  .../bindings/clock/qcom,gcc-sc8280xp.yaml     | 129 +++++
+>  include/dt-bindings/clock/qcom,gcc-sc8280xp.h | 496 ++++++++++++++++++
+>  2 files changed, 625 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,gcc-sc8280xp.h
 > 
-> 
-> -- 
-> With best wishes
-> Dmitry
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
+> new file mode 100644
+> index 000000000000..bf4f9dd3ec85
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
+> @@ -0,0 +1,129 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,gcc-sc8280xp.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Global Clock & Reset Controller Binding for SC8280xp
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description: |
+> +  Qualcomm global clock control module which supports the clocks, resets and
+> +  power domains on SC8280xp.
+> +
+> +  See also:
+> +  - dt-bindings/clock/qcom,gcc-sc8280xp.h
+
+Still not a full path. It makes it more difficult to validate whether
+the path exists or not. You can put it in <> if you prefer to skip include.
+
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,gcc-sc8280xp
+> +
+> +  clocks:
+> +    items:
+> +      - description: XO reference clock
+> +      - description: Sleep clock
+> +      - description: UFS memory first RX symbol clock
+> +      - description: UFS memory second RX symbol clock
+> +      - description: UFS memory first TX symbol clock
+> +      - description: UFS card first RX symbol clock
+> +      - description: UFS card second RX symbol clock
+> +      - description: UFS card first TX symbol clock
+> +      - description: Primary USB SuperSpeed pipe clock
+> +      - description: USB4 PHY pipegmux clock source
+> +      - description: USB4 PHY DP gmux clock source
+> +      - description: USB4 PHY sys piegmux clock source
+> +      - description: USB4 PHY PCIe pipe clock
+> +      - description: USB4 PHY router max pipe clock
+> +      - description: Primary USB4 RX0 clock
+> +      - description: Primary USB4 RX1 clock
+> +      - description: Secondary USB SuperSpeed pipe clock
+> +      - description: Second USB4 PHY pipegmux clock source
+> +      - description: Second USB4 PHY DP gmux clock source
+> +      - description: Second USB4 PHY sys pipegmux clock source
+> +      - description: Second USB4 PHY PCIe pipe clock
+> +      - description: Second USB4 PHY router max pipe clock
+> +      - description: Secondary USB4 RX0 clock
+> +      - description: Secondary USB4 RX0 clock
+
+Duplicated name. RX1?
+
+> +      - description: Multiport USB first SupserSpeed pipe clock
+> +      - description: Multiport USB second SuperSpeed pipe clock
+> +      - description: PCIe 2a pipe clock
+> +      - description: PCIe 2b pipe clock
+> +      - description: PCIe 3a pipe clock
+> +      - description: PCIe 3b pipe clock
+> +      - description: PCIe 4 pipe clock
+> +      - description: First EMAC controller reference clock
+> +      - description: Second EMAC controller reference clock
+> +
+> +  '#clock-cells':
+> +    const: 1
+> +
+> +  '#reset-cells':
+> +    const: 1
+> +
+> +  '#power-domain-cells':
+> +    const: 1
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  protected-clocks:
+> +    description:
+> +      Protected clock specifier list as per common clock binding.
+
+No need for description. You need maxItems, though.
+
+
+Best regards,
+Krzysztof
