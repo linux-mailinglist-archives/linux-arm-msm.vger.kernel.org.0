@@ -2,208 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07E4E5138FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 17:48:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 772B45138F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 17:48:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349547AbiD1PsS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 11:48:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43496 "EHLO
+        id S1349623AbiD1Ptk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 11:49:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349591AbiD1PsQ (ORCPT
+        with ESMTP id S1349242AbiD1Ptj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 11:48:16 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA519B898C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 08:44:59 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id p12so9375495lfs.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 08:44:59 -0700 (PDT)
+        Thu, 28 Apr 2022 11:49:39 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7066C41627
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 08:46:24 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id r8so5744851oib.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 08:46:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=/eHeCrUed7+/lXNEub6C0Esktyijgekt4pzIp04f+IY=;
-        b=qmImpLMyvpPiGXndoQS4+JPohrtWd+U93ZMfCS764koCLYF+LfLEJlGCRc9bNVlkpm
-         uOAcQkxhwAbGZcQbukHvYX1u9qZlDObgKeSEvI5swYN10wSgiHjnD3d7KcLgYcx4pWbU
-         jrjnXlFa4wJ2XDgAb9SX9kDgIMhqklx/LKWPlogXMu9ef72gMDEjnT3hHgVz1JV857Za
-         +NFzlNDl7ap1vo9LVJpipW3Bqq2Eu7nGWzr9tta2O1Lgb1tZPD+t8/o+/3Bp6BWq2olQ
-         jRTjmqdnVL/mIECDN6sb3FxCPylnVKxG7suSSOMHkZvphHpXCEzXJ1a7E1zDezRg+rMh
-         BMqQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=72XL9ljJSCpyh1igSvHXXmfQ5X9YflA33+3u5daUI/Q=;
+        b=JkKdzH8ICBBnlV+qYWl8+s1yiWj+Sp1dn1ttrs9LsHxukOuc9DYojUjBHUB+7Emp+/
+         qnLwofWO/Afewv1Up5imHJxgSUuKQs03JD4f3os1S88QdSlGuAEBi2MNfRlRd41cT0dB
+         EY8x3xtSmZXYGE4R2FgC6lZB+I/VlOjR05czDNC6zsDQWfJ3VXFXEjWHEcDr4wcZAN2g
+         UtSDjrRcU4sQiv5m2qQT7+/Vh99fT+FNLVeWVgHL13jaOdcs5hCW9f+cPnQkitW8g+5W
+         +cxeGg5+nafAYEKN2h/zG39bmIF1pisSb1mRdxLAVBzhv/LFEMQR5LnBhUgnITIGMii/
+         jbVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=/eHeCrUed7+/lXNEub6C0Esktyijgekt4pzIp04f+IY=;
-        b=Tc1PqS2gNzlp/r98XL75dLZoZ4ZPPF1I2ZgzpunFpdCkGcIXsR6pQ8Y+rgS1FFDlb1
-         kzB3Mqsw2mA4cieOo76pY/fv1LiOLlVkkdRiIo/DJdgmm1+WOrsS5S+lu7MJJcuMF9F2
-         AEqFTNXMHrfJtw4ZhCjlKM8GHpBE2HPHrVjvoKpnjhLx6p5sVxqhuQ/O5KM5GnM0HloR
-         T7EOgZV30QlVSMLqnqCIzIrCMfTQM2lhHddX0v0EZHj/oJTx2e2gpgVG6Ih8aymU+biL
-         nYQkR8ncyUg2CnPeVlt9hSrjUHCeYtybpZAT0yVvY/N/EZNbn91zlDm+yzEwoLgvPLIW
-         L/Yg==
-X-Gm-Message-State: AOAM530Mu48QtQExWe8b6fwwMRioVa9/3oYTgb3TbUo/vsWk0Xl9k3pj
-        8q/eSBFJ5xa8Hay+jg0USWXCOQ==
-X-Google-Smtp-Source: ABdhPJx1R2shs/1lmY9s+F36SjRY1gPrpxivXAjchKHJsFAjhSOfHRd2WUNUy5GPegCOgB14eRmKuA==
-X-Received: by 2002:a05:6512:128d:b0:471:c860:aab3 with SMTP id u13-20020a056512128d00b00471c860aab3mr24075823lfs.361.1651160697990;
-        Thu, 28 Apr 2022 08:44:57 -0700 (PDT)
-Received: from [192.168.43.7] ([188.162.64.61])
-        by smtp.gmail.com with ESMTPSA id k7-20020a2e92c7000000b0024f1556b6basm25333ljh.92.2022.04.28.08.44.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Apr 2022 08:44:57 -0700 (PDT)
-Message-ID: <3fb043e6-2748-24f8-0115-b5372c747a12@linaro.org>
-Date:   Thu, 28 Apr 2022 18:44:54 +0300
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=72XL9ljJSCpyh1igSvHXXmfQ5X9YflA33+3u5daUI/Q=;
+        b=tgcfpCcjlqEHL/qAErp7oV21FrQ9pu41+vKA19MhEpInatNc/9EMZw8XfnFrAYeVyy
+         1s+fytmSDISD4ROYcKM/iqXeTLspqyELDyQUTJR9ASdD+b6d7szlwF+SMJP92J1DxJLi
+         UUh6gdK/0LOEF9rlqdAFuPgOl0nvt6SBZwq9q2pTa/TtjK0oDu84IRr4lZj2GOs+XUYl
+         AsolHfol+8JoxCkWN6r97U2lSmzeNfkBpaHixRkZB+RVkFKy5ctgMHFtk9AyiWGTZDzD
+         rxItxMJpMB5m+fCuvt4HPj7JTQjSbCt/llssvmXG7Vu3wUhFsXO0REIyk+sM6Wrtlch8
+         CX2Q==
+X-Gm-Message-State: AOAM531jHE57+lwrPrdf9+1G6tJN0ZHu61QQAI2PVr4KRvl0bAH59VLo
+        omJAw6INoJi6njogQiXK/9Yozw==
+X-Google-Smtp-Source: ABdhPJzPU4DOMgYNbXIxKVtSpLb8juWKCap4L4LCdbY0DlEyzGnlKd+RKNZOlV4GT7Oa3YDWgx8nEQ==
+X-Received: by 2002:a05:6808:1b14:b0:322:f715:a9d5 with SMTP id bx20-20020a0568081b1400b00322f715a9d5mr18929182oib.275.1651160783518;
+        Thu, 28 Apr 2022 08:46:23 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id u3-20020a056870d58300b000e686d1389csm2146978oao.54.2022.04.28.08.46.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Apr 2022 08:46:22 -0700 (PDT)
+Date:   Thu, 28 Apr 2022 08:48:17 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] soc: qcom: rpmhpd: add sc8280xp & sa8540p rpmh
+ power-domains
+Message-ID: <Ymq3QfFnSplnEBRK@ripper>
+References: <20220426233508.1762345-1-bjorn.andersson@linaro.org>
+ <20220426233508.1762345-4-bjorn.andersson@linaro.org>
+ <20220427123835.hmfdu66ut3uvvtjp@halaneylaptop>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v2 1/2] dt-bindings: clock: Add Qualcomm SC8280XP GCC
- bindings
-Content-Language: en-GB
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_tdas@quicinc.com
-References: <20220422230013.1332993-1-bjorn.andersson@linaro.org>
- <20220423014824.912ACC385A0@smtp.kernel.org> <YmNsYSxLtwLpw98t@ripper>
- <20220423031350.01299C385A0@smtp.kernel.org> <YmN11qt/PqogYruQ@ripper>
- <20220425223426.BE973C385A4@smtp.kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220425223426.BE973C385A4@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220427123835.hmfdu66ut3uvvtjp@halaneylaptop>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/04/2022 01:34, Stephen Boyd wrote:
-> Quoting Bjorn Andersson (2022-04-22 20:43:18)
->> On Fri 22 Apr 20:13 PDT 2022, Stephen Boyd wrote:
->>>
->>> I'd really rather not have clock-names at all because we spend a bunch
->>> of time comparing strings with them when we could just as easily use
->>> a number.
->>
->> I know that you would like to get rid of the clock-names for the clock
->> controllers. I've looked at it since and while it will be faster to
->> execute I still feel that it's going to be harder to write and maintain.
->>
->> E.g. look at gcc_pcie_4_pipe_clk_src, its parents today are
->> pcie_4_pipe_clk and bi_tcxo. Something I can reason about being correct
->> or not.
->>
->> If we ditch the clock-names I will have:
->>
->> static const struct clk_parent_data gcc_parent_data_14[] = {
->>          { .index = 30 },
->>          { .index = 0 },
-> 
-> Those numbers could have some #define.
-> 
-> 	{ .index = PCIE_4_PIPE_CLK_DT }
-> 	{ .index = BI_TCXO_DT }
-> 
->> };
->>
->> Generally we would perhaps use some compile time constant, but that
->> won't work here because we're talking about the index in the clocks
->> array in the yaml.
->>
->>
->> But perhaps I'm missing something that would make this manageable?
-> 
-> I dunno. Maybe a macro in the dt-binding header could be used to specify
-> the 'clocks' property of the DT node that is providing the other side?
-> The idea is to make a bunch of macros that insert the arguments of the
-> macro in the right place for the clocks property and then define the
-> order of arguments otherwise. It would be similar to how
-> CREATE_TRACE_POINTS is used in include/trace/define_trace.h
-> 
-> In the dt-bindings/qcom,gcc-soc.h file:
-> 
-> 	#ifdef IN_DTSI
-> 
-> 	#undef GCC_DT_NODE_CLOCKS
-> 	#define GCC_DT_NODE_CLOCKS
-> 		clocks = <BI_TCXO_DT>,
-> 			 <SLEEP_CLK_DT>;
-> 
-> 	#endif /* IN_DTSI */
-> 
-> 	#define BI_TCXO_DT 0
-> 	#define SLEEP_CLK_DT 1
+On Wed 27 Apr 05:38 PDT 2022, Andrew Halaney wrote:
 
-Isn't this being an overkill, to define exact properties in the bindings 
-header? Also this would mean that we'd have to add dt-binding headers 
-for all _consumers_ of clocks. And to make things more complex, e.g. for 
-PCIe devices different instances of the device would use different 
-amount of clocks. This would mean that we'd have to define 
-SM8250_PCI0_CLOCKS, SM8250_PCIE1_CLOCKS and SM8250_PCIE2_CLOCKS.
+> On Tue, Apr 26, 2022 at 04:35:08PM -0700, Bjorn Andersson wrote:
+> > The Qualcomm sc8280xp platform has 13 and the sa8540p platform has 11
+> > power-domains. Add compatibles, the typically used ones power-domains
+> > and their relevant active-only variants, to the RPMh power-domain
+> > driver.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> > 
+> > Changes since v1:
+> > - Added QPHY
+> > - Split out sa8540
+> > - Sorted the entries alphabetically
+> > 
+> >  drivers/soc/qcom/rpmhpd.c | 53 +++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 53 insertions(+)
+> > 
+> > diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+> > index f8d28e902942..05fff8691ee3 100644
+> > --- a/drivers/soc/qcom/rpmhpd.c
+> > +++ b/drivers/soc/qcom/rpmhpd.c
+> > @@ -180,6 +180,36 @@ static struct rpmhpd mxc_ao = {
+> >  	.res_name = "mxc.lvl",
+> >  };
+> >  
+> > +static struct rpmhpd nsp = {
+> > +	.pd = { .name = "nsp", },
+> > +	.res_name = "nsp.lvl",
+> > +};
+> > +
+> > +static struct rpmhpd qphy = {
+> > +	.pd = { .name = "qphy", },
+> > +	.res_name = "qphy.lvl",
+> > +};
+> > +
+> > +/* SA8540P RPMH powerdomains */
+> > +static struct rpmhpd *sa8540p_rpmhpds[] = {
+> > +	[SC8280XP_CX] = &cx,
+> > +	[SC8280XP_CX_AO] = &cx_ao,
+> > +	[SC8280XP_EBI] = &ebi,
+> > +	[SC8280XP_GFX] = &gfx,
+> > +	[SC8280XP_LCX] = &lcx,
+> > +	[SC8280XP_LMX] = &lmx,
+> > +	[SC8280XP_MMCX] = &mmcx,
+> > +	[SC8280XP_MMCX_AO] = &mmcx_ao,
+> > +	[SC8280XP_MX] = &mx,
+> > +	[SC8280XP_MX_AO] = &mx_ao,
+> > +	[SC8280XP_NSP] = &nsp,
+> > +};
+> > +
+> > +static const struct rpmhpd_desc sa8540p_desc = {
+> > +	.rpmhpds = sa8540p_rpmhpds,
+> > +	.num_pds = ARRAY_SIZE(sa8540p_rpmhpds),
+> > +};
+> > +
+> >  /* SDM845 RPMH powerdomains */
+> >  static struct rpmhpd *sdm845_rpmhpds[] = {
+> >  	[SDM845_CX] = &cx_w_mx_parent,
+> > @@ -378,10 +408,33 @@ static const struct rpmhpd_desc sc8180x_desc = {
+> >  	.num_pds = ARRAY_SIZE(sc8180x_rpmhpds),
+> >  };
+> >  
+> > +/* SC8280xp RPMH powerdomains */
+> > +static struct rpmhpd *sc8280xp_rpmhpds[] = {
+> > +	[SC8280XP_CX] = &cx,
+> > +	[SC8280XP_CX_AO] = &cx_ao,
+> > +	[SC8280XP_EBI] = &ebi,
+> > +	[SC8280XP_GFX] = &gfx,
+> > +	[SC8280XP_LCX] = &lcx,
+> > +	[SC8280XP_LMX] = &lmx,
+> > +	[SC8280XP_MMCX] = &mmcx,
+> > +	[SC8280XP_MMCX_AO] = &mmcx_ao,
+> > +	[SC8280XP_MX] = &mx,
+> > +	[SC8280XP_MX_AO] = &mx_ao,
+> > +	[SC8280XP_NSP] = &nsp,
+> > +	[SC8280XP_QPHY] = &qphy,
+> > +};
+> 
+> The commit messages mention sc8280xp having 13 power domains, but here I
+> only count 12. Good chance I'm just missing something obvious (not
+> familiar with using power domains or rpmh) but I thought I should
+> highlight it in case that was an error.
+> 
 
+The "typically used ones" in the commit message "captures" that. Further
+more _AO is just a variant of the non-_AO resources, referring to votes
+that should only apply when the CPU subsystem is not power collapsed.
 
-If we were to switch to this fragile path of using indices (yes I 
-consider it to be very fragile), I'd consider something like the 
-following to work in the platform dtsi file:
+So what you have in this list is 10 power domains.
 
-clocks =
-BEGIN_CLOCK
-CLOCK(BI_TCXO_DT, &bi_tcxo)
-CLOCK(SLEEP_CLK_DT, &sleep_clk)
-END_CLOCK;
+I added defines for all 13 in the DT binding, so comparing with that
+you'll see that the missing ones are DDR, MSS and XO. I don't see how we
+would use these from Linux today. So let's postpone adding them until we
+have a use case.
 
-While the following should give an error:
-clocks =
-BEGIN_CLOCK
-CLOCK(SLEEP_CLK_DT, &sleep_clk)
-CLOCK(BI_TCXO_DT, &bi_tcxo)
-END_CLOCK;
+> I attempted to find where this sort of thing is defined downstream, but
+> failed :(
+> 
 
-I think we can make this error out by using some additional tool (or 
-additional preprocessor pass over the sources)
+In direwolf-regulators.dtsi you'll find entries with qcom,resource-name
+of "*.lvl". These resource names are matches against the Command DB
+registry, which you can dump using the cmd-db file in debugfs.
 
-> And then in the SoC.dtsi file have
-> 
-> 	#define IN_DTSI
-> 	#include <dt-bindings/qcom,gcc-soc.h>
-> 
-> 	#define BI_TCXO_DT	&xo_board
-> 	#define SLEEP_CLK_DT	&sleep_clk
-> 
-> 	...
-> 
-> 	clock-controller@a000000 {
-> 		compatible = "qcom,gcc-soc";
-> 		reg = <0xa000000 0x10000>;
-> 		GCC_DT_NODE_CLOCKS
-> 	};
-> 
-> 
-> and then in drivers/clk/qcom/gcc-soc.c file:
-> 
-> 	#include <dt-bindings/qcom,gcc-soc.h>
-> 
-> 	static const struct clk_parent_data gcc_parent_data_14[] = {
-> 		{ .index = PCIE_4_PIPE_CLK_DT },
-> 		{ .index = BI_TCXO_DT },
-> 	};
-> 
-> The benefit I see to this is that the index for each clock is in the
-> header file (BI_TCXO_DT is 0) and it's next to the clocks property.
-> Someone could still mess up the index based on where the macro is used
-> in the clocks property though.
+Regards,
+Bjorn
 
-And actually might I suggest an alternative approach to manually using 
-indices everywhere? What about spending the time once during the boot to 
-convert .fw_name and clock_names to parent indices during clock 
-registration and then using them for all the further operations?
-
--- 
-With best wishes
-Dmitry
+> Thanks,
+> Andrew
+> 
+> > +
+> > +static const struct rpmhpd_desc sc8280xp_desc = {
+> > +	.rpmhpds = sc8280xp_rpmhpds,
+> > +	.num_pds = ARRAY_SIZE(sc8280xp_rpmhpds),
+> > +};
+> > +
+> >  static const struct of_device_id rpmhpd_match_table[] = {
+> > +	{ .compatible = "qcom,sa8540p-rpmhpd", .data = &sa8540p_desc },
+> >  	{ .compatible = "qcom,sc7180-rpmhpd", .data = &sc7180_desc },
+> >  	{ .compatible = "qcom,sc7280-rpmhpd", .data = &sc7280_desc },
+> >  	{ .compatible = "qcom,sc8180x-rpmhpd", .data = &sc8180x_desc },
+> > +	{ .compatible = "qcom,sc8280xp-rpmhpd", .data = &sc8280xp_desc },
+> >  	{ .compatible = "qcom,sdm845-rpmhpd", .data = &sdm845_desc },
+> >  	{ .compatible = "qcom,sdx55-rpmhpd", .data = &sdx55_desc},
+> >  	{ .compatible = "qcom,sdx65-rpmhpd", .data = &sdx65_desc},
+> > -- 
+> > 2.35.1
+> > 
+> 
