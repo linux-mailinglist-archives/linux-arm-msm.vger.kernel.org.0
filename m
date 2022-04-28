@@ -2,118 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66692513E31
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 23:52:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B25B4513F2B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 01:41:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352614AbiD1Vzk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 17:55:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57156 "EHLO
+        id S1353378AbiD1XpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 19:45:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352753AbiD1Vz0 (ORCPT
+        with ESMTP id S1353323AbiD1XpI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 17:55:26 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 939B957B1F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 14:52:05 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-2f7ca2ce255so67431307b3.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 14:52:05 -0700 (PDT)
+        Thu, 28 Apr 2022 19:45:08 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F4A668F8B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 16:41:51 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id k4so5688436plk.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 16:41:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PcHi7ONc79tcvDl17+xTZqXv6Z1wnjDOjO1qXbe8GZM=;
-        b=Wy3ZvzT5HMOC0TqIrbPMYdA0mMgd4oZgDSQMmqJI6Ct635e8/iHpaNjwdtOq2Xu3hZ
-         +2rs0708RSE8ZDb6LEVHV3IpOsRmXAjQu9RKLPpBwy7n9nBMFxrKf/rqtdOjhO1atv/K
-         gVidXHn/6SoMChngMZ4PD7eHYcKOV/EURZ3Mt5iQZzb/e9i2EgRPLyhR7cVrGVhjo0xb
-         b3zX3Ak9ipasUX579HSIkE6ewzfbjyytFFHe/PaifDrb8DuZSyeQ12ZOedKcbqh2FdEC
-         UOOSuL80MtP+qRhFN/JZuM0nrAyDfMQuKVEW8vRA32HpMENLnv4UZq5ilzJtZKKJv9AB
-         CsAg==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=utW7m7C/33mdooj3nk3P7IpydCK9PCFHBlvHF/K68Sw=;
+        b=K4RvP8gbmocGfzJ63WxyKVw0EKF7Rhmbl4JT9hpFEM3phOZseynCcE5iox5SaWfgYh
+         IZfDIMvXsuv12b/0eM5lrPnik2Z7mDD1HffXgxVTKp1JYpGmzf9bWX2DmYErAIocMQix
+         vVt9MB22w2dkB/EldMzxKMZT5aimSUUVCCV/Y=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PcHi7ONc79tcvDl17+xTZqXv6Z1wnjDOjO1qXbe8GZM=;
-        b=lG/bhyeOUd7d1CxgwbvJT3OTRhv/2Gs5dcfBydIz7GgrJDmbCree5FjFQBKX6KZiAJ
-         Kg5Y0wNwrdj0UaqolPQffULpJOCRyxIiSgdDPkxulzq9yuqUd9fd+MBt2LyjTFnNR1GF
-         7ecG+aRFzV9YmGEJp7dw20sbbYkHpp8jhpLjSGro51qaXhT7xwZiLp+KldeqG150CBnV
-         oFhkoUL9aPT9eKuzaL7va6dR4j/cMwYv3tZ4KfRPWw/l/sY7UuQhPwe4l/LjKZs7GUGn
-         6lXjO6iIUaXjn4q/iNZZooJxXEvLY5HECXNGPVxzDU6/HD0cPEDg0349OO7lg3XQVTOU
-         0uzg==
-X-Gm-Message-State: AOAM531PiLHKBmZVpfY+JqlrX5XIjf0nsojJ8NpU5Y0OCtgk/2xElfN5
-        j5C4yzsSWtpUBrDV1ZCH3qYmAfb9U48c35ScDxfi8A==
-X-Google-Smtp-Source: ABdhPJxGfqMRyMFA46Ok0JKSL5EXEsdELoZtAFWtrwE5PAns//M/eOXeeFNy61jXI50YHyTUewNSFouKHniMlNSpwEI=
-X-Received: by 2002:a81:4ed0:0:b0:2f7:cec6:e5f2 with SMTP id
- c199-20020a814ed0000000b002f7cec6e5f2mr28098943ywb.490.1651182724647; Thu, 28
- Apr 2022 14:52:04 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=utW7m7C/33mdooj3nk3P7IpydCK9PCFHBlvHF/K68Sw=;
+        b=yCSVUN9GRiSdO7mi2GAso9ubH+lOI4wsc4ic+rkGJPK0qFBXl63P+uS9vd++sd/uEG
+         x07paksgfwowTayjjG4QY42/qflRY2IWcZ0upkO2HN+xW3b54M1t7IMi82Rk7zMOC5mJ
+         rV5KxbkGA0Rb+L8FBRHtZDfz2Who8zVgUg6LzP/TTY1b4pcxS1ndqmyS81mzHK+ovhcl
+         REUnEmWfN+ej23iJ4+WR58uugzQZ4OkV8EQVbJpR0jXM7Va6X3/OaaKa5OgPzypvRiB+
+         U2PkQqZ3p9vICjzjWMiUPMGdQcUbW6nGp2Jbye8UKGX/Vz58Y9r8pV1/zYROoeaLBQ5W
+         2IHQ==
+X-Gm-Message-State: AOAM5312ct5ERCkngsJZOhGVCe/JSGkPkAhQAAWBJ30rbrjUE/O7mHWA
+        gRvWytTfGzb+M8IR3MN1cuCYCA==
+X-Google-Smtp-Source: ABdhPJziqHrLHRX+Ug6ENVOfILnYECTS9GvXBsstHePR5V/yseCcF99Z434b0Xb+pffh9RDL/GzJAg==
+X-Received: by 2002:a17:90b:1192:b0:1cb:59d0:d06f with SMTP id gk18-20020a17090b119200b001cb59d0d06fmr785553pjb.127.1651189310586;
+        Thu, 28 Apr 2022 16:41:50 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:7d14:5f45:9377:9b6a])
+        by smtp.gmail.com with UTF8SMTPSA id b10-20020a056a00114a00b004f784ba5e6asm949570pfm.17.2022.04.28.16.41.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Apr 2022 16:41:50 -0700 (PDT)
+Date:   Thu, 28 Apr 2022 16:41:48 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+        srinivas.kandagatla@linaro.org, dianders@chromium.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v12 2/4] arm64: dts: qcom: sc7280: Add secondary MI2S
+ pinmux specifications for CRD 3.0/3.1
+Message-ID: <YmsmPNTgx9Gi0qVl@google.com>
+References: <1651079383-7665-1-git-send-email-quic_srivasam@quicinc.com>
+ <1651079383-7665-3-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-References: <20220217055529.499829-1-dmitry.baryshkov@linaro.org>
- <20220217055529.499829-4-dmitry.baryshkov@linaro.org> <CAE-0n529mx1ke89iw8xXZEDcs0z84hA09B31cWeVQSTU9RAAYg@mail.gmail.com>
- <CAA8EJpq4fXHH6GEJO=m3Ckw0A2p7B_X0D3SiXi1xnJ=4VZOC=g@mail.gmail.com>
- <CAE-0n50h=REsyLsjNMaMaZtH7Dptowink7Tq0nzmBRYNas9OmQ@mail.gmail.com>
- <CAA8EJppT9O+bDjfEZv9tWCWpeCDMDPTf+VV0a0HxDw2mXhiMtw@mail.gmail.com>
- <CAE-0n522eve3K1ou-sFgNnfwtb6qSzOssB0=Ewu53PnBYkzO-g@mail.gmail.com>
- <77e7ed06-8b7a-35d9-c133-561058a9ea6d@linaro.org> <CAE-0n50NyXAYuyb0-uWfHkt56ZNZXM2aWrApoBBkbKU=++y_iQ@mail.gmail.com>
-In-Reply-To: <CAE-0n50NyXAYuyb0-uWfHkt56ZNZXM2aWrApoBBkbKU=++y_iQ@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 29 Apr 2022 00:51:53 +0300
-Message-ID: <CAA8EJprC8adq+WpNCLyeBQv=ALLtoykU1FeHf46wfCednhH9gw@mail.gmail.com>
-Subject: Re: [PATCH v5 3/5] drm/msm/dp: set stream_pixel rate directly
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1651079383-7665-3-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 29 Apr 2022 at 00:49, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Dmitry Baryshkov (2022-04-19 09:34:18)
-> > On 08/03/2022 23:46, Stephen Boyd wrote:
-> > >
-> > > Yes that's my concern. The qmp phy driver has a couple clk_set_rate()
-> > > calls in the .configure_dp_phy callback. That is called from
-> > > phy_power_on() (see qcom_qmp_phy_power_on() and qcom_qmp_phy_dp_ops).
-> > > Looking at qcom_qmp_v3_phy_configure_dp_phy() it does
-> > >
-> > >          clk_set_rate(dp_clks->dp_link_hw.clk, dp_opts->link_rate * 100000);
-> > >          clk_set_rate(dp_clks->dp_pixel_hw.clk, pixel_freq);
-> > >
-> > > and I believe the child of dp_pixel_hw is find_clock("stream_pixel").
-> > > Looks like that is DISP_CC_MDSS_DP_PIXEL_CLK which is
-> > > disp_cc_mdss_dp_pixel_clk_src for the rate settable part. That has
-> > > clk_dp_ops which is clk_rcg2_dp_set_rate() for the set rate part. That
-> > > wants the parent clk frequency to be something non-zero to use in
-> > > rational_best_approximation(). If the clk_set_rate("stream_pixel") call
-> > > is made before phy_power_on() then the parent_rate in
-> > > clk_rcg2_dp_set_rate() won't be valid and the pixel clk frequency will
-> > > be wrong.
-> >
-> >
-> > Please excuse me, I didn't have time for this patchset up to now.
->
-> No worries. I lost this in my inbox!
->
-> >
-> > I double checked the previous patch (drm/msm/dp: "inline"
-> > dp_ctrl_set_clock_rate("ctrl_link")). Note, that the OPP is set _after_
-> > the PHY is powered on and configured.
-> >
->
-> Ok. If the clk_set_rate("stream_pixel") call is made after the
-> phy_power_on() then it should be equivalent.
+On Wed, Apr 27, 2022 at 10:39:41PM +0530, Srinivasa Rao Mandadapu wrote:
+> Add drive strength property for secondary MI2S on
+> sc7280 based platforms of rev5+ (aka CRD 3.0/3.1) boards.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 
-R-B?
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
