@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58E19512B1A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 07:51:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFD73512B22
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 07:53:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233321AbiD1FzD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 01:55:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60870 "EHLO
+        id S241571AbiD1F42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 01:56:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233097AbiD1FzD (ORCPT
+        with ESMTP id S232022AbiD1F41 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 01:55:03 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9F347C250;
-        Wed, 27 Apr 2022 22:51:49 -0700 (PDT)
+        Thu, 28 Apr 2022 01:56:27 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8756B7C250;
+        Wed, 27 Apr 2022 22:53:14 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 37F12B818FC;
-        Thu, 28 Apr 2022 05:51:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB6BC385A9;
-        Thu, 28 Apr 2022 05:51:45 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3CBBFB82B2D;
+        Thu, 28 Apr 2022 05:53:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072D4C385AD;
+        Thu, 28 Apr 2022 05:53:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1651125106;
-        bh=BL/ztcIdTOHAttqORil3BUGJFYSYBXhS93ayc6l+nXE=;
+        s=korg; t=1651125191;
+        bh=lKtkYrn4+FEITxrNkaxTIFUj/JANxMH5XgcAihKDUWk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=2rK9PWY7j41JX0nmeJkE6BBYRs1hKWOhGXMrtGRYSB8txFNFL3XlocI6+ubQ/O+8J
-         t/DragmyB5XIeryU9mwNV9Fm0GJEA7fqErUp42mLVkCLZ8+SRzskjqgHOchg3WdaiK
-         hLMSHBjS85b+PVwAFaAJJMJuu6PhU3Au1bOEGx5U=
-Date:   Thu, 28 Apr 2022 07:51:39 +0200
+        b=g0GljVB0aWZgPoOHP/BiDDxothhRUBzk7FA++ZYidfpNqHrw7mDnJ2ZdjEpAndeYO
+         GkwmtrZ6g4uUa3eHN441PadRrVUR1Vui9xCZ4Py7Mx2y70WM5XWAtMyVA//jZ6FfOs
+         p5g8o6lOd2zLXJRoiWIzJhbhJ31enHYi3lyg0Ino=
+Date:   Thu, 28 Apr 2022 07:53:04 +0200
 From:   Greg KH <gregkh@linuxfoundation.org>
 To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 Cc:     arnd@arndb.de, catalin.marinas@arm.com, rostedt@goodmis.org,
@@ -39,7 +39,7 @@ Cc:     arnd@arndb.de, catalin.marinas@arm.com, rostedt@goodmis.org,
         will@kernel.org
 Subject: Re: [PATCHv11 6/6] asm-generic/io: Add logging support for MMIO
  accessors
-Message-ID: <YmorayBozWWRlTpP@kroah.com>
+Message-ID: <YmorwEGw/SATMUKt@kroah.com>
 References: <cover.1645772606.git.quic_saipraka@quicinc.com>
  <3de35c9f4a3a070d197bab499acefc709a6f5336.1645772606.git.quic_saipraka@quicinc.com>
 MIME-Version: 1.0
@@ -62,23 +62,12 @@ On Thu, Apr 28, 2022 at 09:00:13AM +0530, Sai Prakash Ranjan wrote:
 > (__DISABLE_TRACE_MMIO__) which is used to disable MMIO tracing in nVHE KVM
 > and if required can be used to disable MMIO tracing for specific drivers.
 
-This "add a build flag to a Makefile to change how a driver operates"
-feels very wrong to me given that this is now a totally new way to
-control how a driver works at build time.  That's not anything we have
-done before for drivers and if added, is only going to create much added
-complexity.
+Also, this should be split up into 2 patches, one to add the "disable
+the feature" flag, and one to enable it for the specific driver(s) you
+want.
 
-How about requiring that the #define be in the .c files, and not in the
-Makefile, as Makefile changes are much much harder to notice and review
-over time.
-
-Also, I see that this "disable the trace" feature has already been asked
-for for 2 other drivers in the Android kernel tree, why not include
-those changes here as well?  That kind of shows that this new feature is
-limited in that driver authors are already wanting it disabled, even
-before it is accepted.
-
-Because of that, who _will_ be using this feature?
+Hint, when you say "also" in a changelog text, that's a huge sign that
+it perhaps should be split up into smaller pieces.
 
 thanks,
 
