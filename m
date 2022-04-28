@@ -2,166 +2,288 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E90BE512D43
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 09:45:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BAD4512D51
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 09:48:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbiD1HsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 03:48:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41792 "EHLO
+        id S231254AbiD1HvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 03:51:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239176AbiD1HsX (ORCPT
+        with ESMTP id S232329AbiD1HvT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 03:48:23 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C59D0237CE;
-        Thu, 28 Apr 2022 00:45:08 -0700 (PDT)
+        Thu, 28 Apr 2022 03:51:19 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8DBC9D4E4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 00:48:04 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id 15so3347946pgf.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 00:48:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651131909; x=1682667909;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=/YDX52+/j/A44N39TMxngrTWx9Wn1Ivl+//mFrTAagE=;
-  b=b7npyMeSF0t/bUci2XNOTuSV8liiLwUo9J1+xPURfD76vGPsnbupdPrl
-   fCZMK3zGra9LQ1T9ny5vOfIM1GtgczuCLG9IWGwL95I6KcHeC7pO9igGV
-   qiJoFYykhDlX5nERw6yPoim44EDziQ6QmY22muESipe3hc9bkxKOw3Ooi
-   I=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 28 Apr 2022 00:45:07 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 00:45:06 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 28 Apr 2022 00:45:06 -0700
-Received: from [10.50.42.7] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 28 Apr
- 2022 00:45:03 -0700
-Message-ID: <8b0ad0da-55ab-7b8b-e4a6-cd134567fb44@quicinc.com>
-Date:   Thu, 28 Apr 2022 13:14:59 +0530
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=9KbJSxuos5zcM4hZiVHGbET3lN31A6yxd95nMYXgYAM=;
+        b=dRsK8/I/Js8kjNilnUh13u53zcFDO4NgPOOPhnPhC3xDsvysfx4KVtMGCwtjqh9dtA
+         FtL3Fe2kz4ipSCCgmGMnKOlGKT9U2AQ6RjrdIgYaRlcJYpH0yKbLQBVR1RZTZs0SrYuH
+         a4bwvidqMdRx8XzVII73AOMz6+7zKJlVDjSZL5ZyQ9Q6zBUDWIxvMzDzSwdDy7yZdvsl
+         UOyCI9YeqP8BQOV2Y9vfwDdFzAoQnTIX/dNaldc6K+D8z+mNlwCkIORcbg0nyZdcIeNc
+         UQBaX8F1pFhmL/+ydJtMwTNnJ2pLjDlSF0HK+Xqu7hWGcVUKfHLyHP4M4enuR4g5CDl3
+         a4+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9KbJSxuos5zcM4hZiVHGbET3lN31A6yxd95nMYXgYAM=;
+        b=4ow3wHc5PgEFvw6997ET2+IqlPO19HplSWR2DVZEWL0Genb+wFk7ZSUoH0m3oQ5aDi
+         J2oDA1B7BxWPQ11jUSclvUDJ/hFHsRt+hTMlCFSE7OKS95Yao8hA52llkaPskO+By8mz
+         Iu4roRHrnODIgmUK3QkPAHK0+jpsS2uBt76AT9pOfbA4amjzZqpmzCUH6iHJw6bK9D82
+         3OVElHzIiOVMSaxZNApoLiqlAcV3xFKVGWFvsi2sjQaCdAfQIlx/dwpzJZjCgvT+/jyd
+         3ONxmRaylLZR1cRs74KM+mY25FqY5pZsJ144fpgXRA6jl2AH1bAFpS2sjy2CJLteGyIj
+         elwg==
+X-Gm-Message-State: AOAM5325171kyLUXz5ZU++gYntn1iI9fH2rr8sJjoYUMjsb1P5wL565m
+        lcCrXX80t8fnLSfG2nPmhMNM
+X-Google-Smtp-Source: ABdhPJyT733B2MAVpDaFr0Wj8Wp/aEKRO7k+uKs5nt9C5bj1NKUgFmlprg01roFZfuq5A1ZIJOYylg==
+X-Received: by 2002:a63:f61:0:b0:3aa:193b:5ac5 with SMTP id 33-20020a630f61000000b003aa193b5ac5mr26727206pgp.597.1651132084125;
+        Thu, 28 Apr 2022 00:48:04 -0700 (PDT)
+Received: from thinkpad ([27.111.75.196])
+        by smtp.gmail.com with ESMTPSA id p64-20020a622943000000b004fdd5c07d0bsm20756053pfp.63.2022.04.28.00.48.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Apr 2022 00:48:03 -0700 (PDT)
+Date:   Thu, 28 Apr 2022 13:17:58 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 1/5] PCI: dwc: Convert msi_irq to the array
+Message-ID: <20220428074758.GB81644@thinkpad>
+References: <20220427121653.3158569-1-dmitry.baryshkov@linaro.org>
+ <20220427121653.3158569-2-dmitry.baryshkov@linaro.org>
+ <20220427141329.GA4161@thinkpad>
+ <b9d81916-10e6-94f9-78b2-b2198620e66a@linaro.org>
+ <20220428060642.GA81644@thinkpad>
+ <80132575-1abc-9a2e-dc73-3df72035a7d0@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCHv11 6/6] asm-generic/io: Add logging support for MMIO
- accessors
-Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>
-CC:     <arnd@arndb.de>, <catalin.marinas@arm.com>, <rostedt@goodmis.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <maz@kernel.org>, <quic_psodagud@quicinc.com>,
-        <quic_tsoni@quicinc.com>, <will@kernel.org>
-References: <cover.1645772606.git.quic_saipraka@quicinc.com>
- <3de35c9f4a3a070d197bab499acefc709a6f5336.1645772606.git.quic_saipraka@quicinc.com>
- <YmorayBozWWRlTpP@kroah.com>
- <96dc5e2e-5d88-52ce-c295-779603e668f2@quicinc.com>
- <YmpD3tIQK2iiqt46@kroah.com>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <YmpD3tIQK2iiqt46@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <80132575-1abc-9a2e-dc73-3df72035a7d0@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/28/2022 1:05 PM, Greg KH wrote:
-> On Thu, Apr 28, 2022 at 12:59:13PM +0530, Sai Prakash Ranjan wrote:
->> On 4/28/2022 11:21 AM, Greg KH wrote:
->>> On Thu, Apr 28, 2022 at 09:00:13AM +0530, Sai Prakash Ranjan wrote:
->>>> Add logging support for MMIO high level accessors such as read{b,w,l,q}
->>>> and their relaxed versions to aid in debugging unexpected crashes/hangs
->>>> caused by the corresponding MMIO operation. Also add a generic flag
->>>> (__DISABLE_TRACE_MMIO__) which is used to disable MMIO tracing in nVHE KVM
->>>> and if required can be used to disable MMIO tracing for specific drivers.
->>> This "add a build flag to a Makefile to change how a driver operates"
->>> feels very wrong to me given that this is now a totally new way to
->>> control how a driver works at build time.  That's not anything we have
->>> done before for drivers and if added, is only going to create much added
->>> complexity.
->> Not exactly, there are already many such build flags being used currently across kernel.
->>
->> Example: "-D__KVM_NVHE_HYPERVISOR__, D__KVM_VHE_HYPERVISOR__,
-> That's crazy KVM stuff, don't extrapoloate that to all kernel drivers
-> please.
+On Thu, Apr 28, 2022 at 10:43:54AM +0300, Dmitry Baryshkov wrote:
+> On 28/04/2022 09:06, Manivannan Sadhasivam wrote:
+> > On Wed, Apr 27, 2022 at 07:59:57PM +0300, Dmitry Baryshkov wrote:
+> > > On 27/04/2022 17:13, Manivannan Sadhasivam wrote:
+> > > > On Wed, Apr 27, 2022 at 03:16:49PM +0300, Dmitry Baryshkov wrote:
+> > > > > Qualcomm version of DWC PCIe controller supports more than 32 MSI
+> > > > > interrupts, but they are routed to separate interrupts in groups of 32
+> > > > > vectors. To support such configuration, change the msi_irq field into an
+> > > > > array. Let the DWC core handle all interrupts that were set in this
+> > > > > array.
+> > > > > 
+> > > > 
+> > > > Instead of defining it as an array, can we allocate it dynamically in the
+> > > > controller drivers instead? This has two benefits:
+> > > > 
+> > > > 1. There is no need of using a dedicated flag.
+> > > > 2. Controller drivers that don't support MSIs can pass NULL and in the core we
+> > > > can use platform_get_irq_byname_optional() to get supported number of MSIs from
+> > > > devicetree.
+> > > 
+> > > I think using dynamic allocation would make code worse. It would add
+> > > additional checks here and there.
+> > > 
+> > 
+> > I take back my suggestion of allocating the memory for msi_irq in controller
+> > drivers. It should be done in the designware-host instead.
+> > 
+> > We already know how many MSIs are supported by the platform using num_vectors.
+> > So we should just allocate msi_irqs of num_vectors length in
+> > dw_pcie_host_init() and populate it using platform_get_irq_byname_optional().
+> > 
+> > I don't think this can make the code worse.
+> > 
+> > > If you don't like this design. I have an alternative suggestion: export the
+> > > dw_chained_msi_irq() and move allocation of all MSIs to the pcie-qcom code.
+> > > Would that be better? I'm not sure whether this multi-host-IRQ design is
+> > > used on other DWC platforms or not.
+> > > 
+> > 
+> > No, I think the allocation should belong to designware-host.
+> 
+> Granted that at least tegra and iMX tie all MSI vectors to a single host
+> interrupt, I think it's impractical to assume that other hosts would benefit
+> from such allocation. Let's move support for split IRQs into the
+> pcie-qcom.c. We can make this generic later if any other host would use a
+> separate per-"endpoint" (per-group) IRQ.
+> 
 
-Ok :)
-
->> -D__NO_FORTIFY, -D__DISABLE_EXPORTS, -DDISABLE_BRANCH_PROFILING".
-> Those are compiler flags that affect gcc, not kernel code functionality.
->
->> It gives us even more flexibility to disable feature for multiple files under a directory
->> rather than individually cluttering each file, look at "-D__KVM_NVHE_HYPERVISOR__"
->> for files under "arch/arm64/kvm/hyp/nvhe/".
-> Again, crazy KVM stuff, do not want that for all drivers in the kernel.
->
->>> How about requiring that the #define be in the .c files, and not in the
->>> Makefile, as Makefile changes are much much harder to notice and review
->>> over time.
->> How is this cleaner, lets say we have many such drivers like all drivers under drivers/serial,
->> so we go and add #define for each of them? That looks more spread out than having all
->> such information under one file (Makefile).
-> If you have to go and add this to each and every driver, that is a HUGE
-> hint that this feature is not a good one and that no one should be using
-> it in the first place, right?
->
-> Again, this is a new way to modify driver functionality that is outside
-> of the driver itself, which is not something that I would like to see
-> added without a whole lot of discussion and planning.  To throw it in as
-> part of a kvm change is not a nice way to hide such a thing.
-
-Sure, will make the change as you suggested.
-
->> And I didn't understand how is it harder to track changes to makefile? Makefile is  part
->> of the driver directory and any changes to makefile is visible to the corresponding maintainers.
->> Do you mean something else?
-> I mean that we review driver changes all the time, and code is
-> self-contained and the functionality is only affected right now by
-> Kconfig options, and what is in the .c files itself.  You are adding a
-> new way to change functionality by adding a Makefile configuration
-> option as well.  That is a major functional change for how we do our
-> configuration logic in Linux.
-
-Ah ok, you mean like that. Sure I don't have any strong opinion, so will move it
-to the driver file.
-
->
->>> Also, I see that this "disable the trace" feature has already been asked
->>> for for 2 other drivers in the Android kernel tree, why not include
->>> those changes here as well?  That kind of shows that this new feature is
->>> limited in that driver authors are already wanting it disabled, even
->>> before it is accepted.
->> That can be done later on top of this series right? This series mainly deals with adding
->> initial support for such tracing, there could be numerous drivers who might or might
->> not want the feature which can be added onto later. We can't actually identify all
->> the driver requirements upfront. As an example, we have already used the flag to
->> disable tracing for nVHE KVM, so we know how to use the flag.
-> Again, make it explicit in the driver file itself that it is doing this,
-> not in the Makefile, and I will not have any objections.
-
-Ok, for kernel drivers I will make the define at the top of the .c driver file and include
-those 2 driver changes in the series.
-
->>> Because of that, who _will_ be using this feature?
->>>
->> Every driver except those two or few more, and it is not a bug or anything, they just want to disable it
->> to limit the logs in case of example UART driver since the reads/writes are very frequent in those cases
->> and the logs are not necessarily useful for them.
-> I have a feeling that lots more drivers will want this disabled due to
-> the noise it will cause.  The fact that we already have 2 requests to
-> change this _before_ the code is even merged is proof of that.
->
-> thanks,
->
-> greg k-h
+Okay, I'm fine with moving just the split irq handling to Qcom driver.
 
 Thanks,
-Sai
+Mani
+
+> > 
+> > Thanks,
+> > Mani
+> > 
+> > > > 
+> > > > Thanks,
+> > > > Mani
+> > > > 
+> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > ---
+> > > > >    drivers/pci/controller/dwc/pci-dra7xx.c       |  2 +-
+> > > > >    drivers/pci/controller/dwc/pci-exynos.c       |  2 +-
+> > > > >    .../pci/controller/dwc/pcie-designware-host.c | 30 +++++++++++--------
+> > > > >    drivers/pci/controller/dwc/pcie-designware.h  |  2 +-
+> > > > >    drivers/pci/controller/dwc/pcie-keembay.c     |  2 +-
+> > > > >    drivers/pci/controller/dwc/pcie-spear13xx.c   |  2 +-
+> > > > >    drivers/pci/controller/dwc/pcie-tegra194.c    |  2 +-
+> > > > >    7 files changed, 24 insertions(+), 18 deletions(-)
+> > > > > 
+> > > > > diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
+> > > > > index dfcdeb432dc8..0919c96dcdbd 100644
+> > > > > --- a/drivers/pci/controller/dwc/pci-dra7xx.c
+> > > > > +++ b/drivers/pci/controller/dwc/pci-dra7xx.c
+> > > > > @@ -483,7 +483,7 @@ static int dra7xx_add_pcie_port(struct dra7xx_pcie *dra7xx,
+> > > > >    		return pp->irq;
+> > > > >    	/* MSI IRQ is muxed */
+> > > > > -	pp->msi_irq = -ENODEV;
+> > > > > +	pp->msi_irq[0] = -ENODEV;
+> > > > >    	ret = dra7xx_pcie_init_irq_domain(pp);
+> > > > >    	if (ret < 0)
+> > > > > diff --git a/drivers/pci/controller/dwc/pci-exynos.c b/drivers/pci/controller/dwc/pci-exynos.c
+> > > > > index 467c8d1cd7e4..4f2010bd9cd7 100644
+> > > > > --- a/drivers/pci/controller/dwc/pci-exynos.c
+> > > > > +++ b/drivers/pci/controller/dwc/pci-exynos.c
+> > > > > @@ -292,7 +292,7 @@ static int exynos_add_pcie_port(struct exynos_pcie *ep,
+> > > > >    	}
+> > > > >    	pp->ops = &exynos_pcie_host_ops;
+> > > > > -	pp->msi_irq = -ENODEV;
+> > > > > +	pp->msi_irq[0] = -ENODEV;
+> > > > >    	ret = dw_pcie_host_init(pp);
+> > > > >    	if (ret) {
+> > > > > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > > > index 2fa86f32d964..5d90009a0f73 100644
+> > > > > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > > > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > > > @@ -257,8 +257,11 @@ int dw_pcie_allocate_domains(struct pcie_port *pp)
+> > > > >    static void dw_pcie_free_msi(struct pcie_port *pp)
+> > > > >    {
+> > > > > -	if (pp->msi_irq)
+> > > > > -		irq_set_chained_handler_and_data(pp->msi_irq, NULL, NULL);
+> > > > > +	u32 ctrl;
+> > > > > +
+> > > > > +	for (ctrl = 0; ctrl < MAX_MSI_CTRLS; ctrl++)
+> > > > > +		if (pp->msi_irq[ctrl])
+> > > > > +			irq_set_chained_handler_and_data(pp->msi_irq[ctrl], NULL, NULL);
+> > > > >    	irq_domain_remove(pp->msi_domain);
+> > > > >    	irq_domain_remove(pp->irq_domain);
+> > > > > @@ -368,13 +371,15 @@ int dw_pcie_host_init(struct pcie_port *pp)
+> > > > >    			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
+> > > > >    				pp->irq_mask[ctrl] = ~0;
+> > > > > -			if (!pp->msi_irq) {
+> > > > > -				pp->msi_irq = platform_get_irq_byname_optional(pdev, "msi");
+> > > > > -				if (pp->msi_irq < 0) {
+> > > > > -					pp->msi_irq = platform_get_irq(pdev, 0);
+> > > > > -					if (pp->msi_irq < 0)
+> > > > > -						return pp->msi_irq;
+> > > > > +			if (!pp->msi_irq[0]) {
+> > > > > +				int irq = platform_get_irq_byname_optional(pdev, "msi");
+> > > > > +
+> > > > > +				if (irq < 0) {
+> > > > > +					irq = platform_get_irq(pdev, 0);
+> > > > > +					if (irq < 0)
+> > > > > +						return irq;
+> > > > >    				}
+> > > > > +				pp->msi_irq[0] = irq;
+> > > > >    			}
+> > > > >    			pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
+> > > > > @@ -383,10 +388,11 @@ int dw_pcie_host_init(struct pcie_port *pp)
+> > > > >    			if (ret)
+> > > > >    				return ret;
+> > > > > -			if (pp->msi_irq > 0)
+> > > > > -				irq_set_chained_handler_and_data(pp->msi_irq,
+> > > > > -							    dw_chained_msi_isr,
+> > > > > -							    pp);
+> > > > > +			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
+> > > > > +				if (pp->msi_irq[ctrl] > 0)
+> > > > > +					irq_set_chained_handler_and_data(pp->msi_irq[ctrl],
+> > > > > +									 dw_chained_msi_isr,
+> > > > > +									 pp);
+> > > > >    			ret = dma_set_mask(pci->dev, DMA_BIT_MASK(32));
+> > > > >    			if (ret)
+> > > > > diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> > > > > index 7d6e9b7576be..9c1a38b0a6b3 100644
+> > > > > --- a/drivers/pci/controller/dwc/pcie-designware.h
+> > > > > +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> > > > > @@ -187,7 +187,7 @@ struct pcie_port {
+> > > > >    	u32			io_size;
+> > > > >    	int			irq;
+> > > > >    	const struct dw_pcie_host_ops *ops;
+> > > > > -	int			msi_irq;
+> > > > > +	int			msi_irq[MAX_MSI_CTRLS];
+> > > > >    	struct irq_domain	*irq_domain;
+> > > > >    	struct irq_domain	*msi_domain;
+> > > > >    	u16			msi_msg;
+> > > > > diff --git a/drivers/pci/controller/dwc/pcie-keembay.c b/drivers/pci/controller/dwc/pcie-keembay.c
+> > > > > index 1ac29a6eef22..297e6e926c00 100644
+> > > > > --- a/drivers/pci/controller/dwc/pcie-keembay.c
+> > > > > +++ b/drivers/pci/controller/dwc/pcie-keembay.c
+> > > > > @@ -338,7 +338,7 @@ static int keembay_pcie_add_pcie_port(struct keembay_pcie *pcie,
+> > > > >    	int ret;
+> > > > >    	pp->ops = &keembay_pcie_host_ops;
+> > > > > -	pp->msi_irq = -ENODEV;
+> > > > > +	pp->msi_irq[0] = -ENODEV;
+> > > > >    	ret = keembay_pcie_setup_msi_irq(pcie);
+> > > > >    	if (ret)
+> > > > > diff --git a/drivers/pci/controller/dwc/pcie-spear13xx.c b/drivers/pci/controller/dwc/pcie-spear13xx.c
+> > > > > index 1569e82b5568..cc7776833810 100644
+> > > > > --- a/drivers/pci/controller/dwc/pcie-spear13xx.c
+> > > > > +++ b/drivers/pci/controller/dwc/pcie-spear13xx.c
+> > > > > @@ -172,7 +172,7 @@ static int spear13xx_add_pcie_port(struct spear13xx_pcie *spear13xx_pcie,
+> > > > >    	}
+> > > > >    	pp->ops = &spear13xx_pcie_host_ops;
+> > > > > -	pp->msi_irq = -ENODEV;
+> > > > > +	pp->msi_irq[0] = -ENODEV;
+> > > > >    	ret = dw_pcie_host_init(pp);
+> > > > >    	if (ret) {
+> > > > > diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+> > > > > index b1b5f836a806..e75712db85b0 100644
+> > > > > --- a/drivers/pci/controller/dwc/pcie-tegra194.c
+> > > > > +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+> > > > > @@ -2271,7 +2271,7 @@ static void tegra194_pcie_shutdown(struct platform_device *pdev)
+> > > > >    	disable_irq(pcie->pci.pp.irq);
+> > > > >    	if (IS_ENABLED(CONFIG_PCI_MSI))
+> > > > > -		disable_irq(pcie->pci.pp.msi_irq);
+> > > > > +		disable_irq(pcie->pci.pp.msi_irq[0]);
+> > > > >    	tegra194_pcie_pme_turnoff(pcie);
+> > > > >    	tegra_pcie_unconfig_controller(pcie);
+> > > > > -- 
+> > > > > 2.35.1
+> > > > > 
+> > > 
+> > > 
+> > > -- 
+> > > With best wishes
+> > > Dmitry
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
