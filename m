@@ -2,133 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4ADDC513976
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 18:14:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4081F513983
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 18:15:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345615AbiD1QRW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 12:17:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35378 "EHLO
+        id S1349841AbiD1QSg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 12:18:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349603AbiD1QRV (ORCPT
+        with ESMTP id S1349842AbiD1QSf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 12:17:21 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34CFB5C36F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 09:14:06 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id c190-20020a1c35c7000000b0038e37907b5bso5610537wma.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 09:14:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=QfECKJ9jXKQdvjYOESszu+qVUD2KhaWOaYSTUAompe4=;
-        b=xMorN3sTWcD2nS6xKLVHbEOd8t0eOKsHByopFCTW4WhxlhE3GjuXklradLCpxaARbY
-         a9kUBZ2tzrHsX/cGw8hvtuwrYYav9abkp7XytTMgaaA7gQlZJCXHJxVdhcwPIAFmrVFO
-         SjrvDcou0KbOjl8sWiL+cAcAwXr6/q908ODz7seDE0rY4zoU77RWF1LNCCxBdqh6rird
-         /VTm/bOgzrD0TU4LvlvR1Kuct19Wv48dJNrEj8/L9SfC7wJ3VeogS1Qv2Y6MmFL66vRr
-         6UeNVr9eOlsFF8n/tRs1M3b3yhV+jJE5B1kbUmK5KArTrog03mWozcpIoRdY52NDqlyj
-         Jkfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=QfECKJ9jXKQdvjYOESszu+qVUD2KhaWOaYSTUAompe4=;
-        b=DBwQyyXlOxDH5hwuT0ynnp65yDAFFbEY5GW7VbOHsTt2U1vzvTOzBKf/Imqfn3O+8+
-         UbSaA/kCBlAzkkuGM1eh/aDazfRzRpIGlT+l9b9MMc6BWMnU7bNCjP7PF/AVPtf4+Ldd
-         F9tsrvuafxAITfmYO1QbTGIZQb9BM7p9z3g2Y7MQWZN1OJwToEiFt/SZmf9422tbj5Zx
-         Gw+wfCjtHRxpRVhn7wKlYglC/2WpPWotqlCLl9wPGkwo0V+RCl+RMrBaJ/Hatylwjm5P
-         9lGSLBUSX7rQg8nJGmjKfhMsHPmR6qhz+IvQkQ21KGBkfZDOPoymD+USdqPErfRFxlaR
-         nD0w==
-X-Gm-Message-State: AOAM531Nz0TTC1A6IH+ym4JfNOH9P+gEe3jsb+OH3QhjEGq2ay8jpioN
-        R4QSB8niz7WdVBIFTsddvtUefA==
-X-Google-Smtp-Source: ABdhPJzlbC2j7+vYKVRNIsNxsAsJs+Q2hamjZ0PlHMilu9iBBMqmDiwhSbTNYXL5bTgnoQgygiz4PA==
-X-Received: by 2002:a05:600c:1548:b0:392:8e1a:18c3 with SMTP id f8-20020a05600c154800b003928e1a18c3mr31915224wmg.102.1651162444697;
-        Thu, 28 Apr 2022 09:14:04 -0700 (PDT)
-Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
-        by smtp.gmail.com with ESMTPSA id s30-20020adf979e000000b0020adfb1292fsm227454wrb.16.2022.04.28.09.14.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Apr 2022 09:14:04 -0700 (PDT)
-Date:   Thu, 28 Apr 2022 17:14:02 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
+        Thu, 28 Apr 2022 12:18:35 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 469C327B3F;
+        Thu, 28 Apr 2022 09:15:17 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id D1095CE2C22;
+        Thu, 28 Apr 2022 16:15:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA33C385A9;
+        Thu, 28 Apr 2022 16:15:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651162514;
+        bh=ITjlQ9g4B0gG723l683GuIOlpyn+saWXawbyT3upTSg=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=gydywKUF2PJ/Z+XCGdoURVO8Xu7MmunrcWN9ck3aC2UWj3xv/rAFHrMc4EA/Rb3/g
+         dpRe75K6y46Jm5gEMux0dZl+qGHCu6SgDVHxR+6OeoY/VH6vWGB61e3ooREjaRPoDF
+         b6eNMdhrK8W0V27HcoUtdk7zEVgndcfj+zezhqU9zGS1ZJY/ORJ0RvQcYBjATn2U/0
+         IWLRejijOuO0bm5NVM0tvkj8USH6xGeqbiCQvpIz66SCo4YhlchLlGs/fWJ1TyITAE
+         YFBhzjpF20pQe0PViDJD6TjSha4laT9JglwvI1kJJTrUH2Pm2c2KBmtmc5YE+n5U8L
+         X2GQCoMzYH5vg==
+Received: by mail-pf1-f171.google.com with SMTP id i24so4653790pfa.7;
+        Thu, 28 Apr 2022 09:15:14 -0700 (PDT)
+X-Gm-Message-State: AOAM532HxKbiX8wR6Znr2RE2zqlankTqkY+dFV3AnTHHAe/wcJ+vhNDu
+        9hcEZr2hygWada0EXvOSAEnZ3Kq5LgakA2x+uw==
+X-Google-Smtp-Source: ABdhPJxWGKldChLEEW78VL6JusmO+ABexzsxV/SQewmd+Y9FRmG85Z5pK95W6eSIzbOvdvdIEpSvnklBPlyKXQUKU8s=
+X-Received: by 2002:a63:ff4b:0:b0:3aa:3083:5131 with SMTP id
+ s11-20020a63ff4b000000b003aa30835131mr29087326pgk.148.1651162513664; Thu, 28
+ Apr 2022 09:15:13 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220421102041.17345-1-johan+linaro@kernel.org>
+ <20220421102041.17345-2-johan+linaro@kernel.org> <de4f9514-5132-f208-d43f-4c50afcda203@linaro.org>
+ <YmKBgGHtfDcO1Mkg@hovoldconsulting.com> <CAA8EJpqTzcwAtxk+XtAWdZaKEx2=VduPiVBp+CWj=_C-921YJg@mail.gmail.com>
+In-Reply-To: <CAA8EJpqTzcwAtxk+XtAWdZaKEx2=VduPiVBp+CWj=_C-921YJg@mail.gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Thu, 28 Apr 2022 11:15:01 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqLmy1-=5=NpWuVo9RYBXAvLisREJoMp1cWEychGmfFN=w@mail.gmail.com>
+Message-ID: <CAL_JsqLmy1-=5=NpWuVo9RYBXAvLisREJoMp1cWEychGmfFN=w@mail.gmail.com>
+Subject: Re: [PATCH RFC 1/5] phy: qcom-qmp: add support for pipe clock muxing
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Johan Hovold <johan@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        sumit.semwal@linaro.org, amit.pundir@linaro.org,
-        john.stultz@linaro.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v13 2/9] mfd: qcom-spmi-pmic: expose the PMIC revid
- information to clients
-Message-ID: <Ymq9Su3UE5IYiHnI@google.com>
-References: <20220323162820.110806-1-caleb@connolly.tech>
- <20220323162820.110806-3-caleb@connolly.tech>
- <Yma4T1+AglaISe2l@google.com>
- <2763f103-6947-e431-cef5-e202c324d678@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2763f103-6947-e431-cef5-e202c324d678@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        PCI <linux-pci@vger.kernel.org>,
+        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 27 Apr 2022, Caleb Connolly wrote:
-> On 25/04/2022 16:03, Lee Jones wrote:
-> > 
-> > On Wed, 23 Mar 2022, Caleb Connolly wrote:
-> > > From: Caleb Connolly <caleb.connolly@linaro.org>
-> > > 
-> > > Some PMIC functions such as the RRADC need to be aware of the PMIC
-> > > chip revision information to implement errata or otherwise adjust
-> > > behaviour, export the PMIC information to enable this.
-> > > 
-> > > This is specifically required to enable the RRADC to adjust
-> > > coefficients based on which chip fab the PMIC was produced in,
-> > > this can vary per unique device and therefore has to be read at
-> > > runtime.
-> > > 
-> > > Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >   drivers/mfd/qcom-spmi-pmic.c      | 261 +++++++++++++++++++-----------
-> > >   include/soc/qcom/qcom-spmi-pmic.h |  60 +++++++
-> > >   2 files changed, 231 insertions(+), 90 deletions(-)
-> > >   create mode 100644 include/soc/qcom/qcom-spmi-pmic.h
+On Fri, Apr 22, 2022 at 5:35 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Fri, 22 Apr 2022 at 13:20, Johan Hovold <johan@kernel.org> wrote:
+> >
+> > On Thu, Apr 21, 2022 at 02:08:27PM +0300, Dmitry Baryshkov wrote:
+> > > On 21/04/2022 13:20, Johan Hovold wrote:
+> > > > Some QMP PHYs need to remux to their pipe clock input to the pipe clock
+> > > > output generated by the PHY before powering on the PHY and restore the
+> > > > default source during power down.
+> > > >
+> > > > Add support for an optional pipe clock mux which will be reparented to
+> > > > the generated pipe clock before powering on the PHY and restored to the
+> > > > default reference source on power off.
+> > > >
+> > > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
 [...]
 
-> > > +			/*
-> > > +			 * If the base USID for this PMIC hasn't probed yet
-> > > +			 * but the secondary USID has, then we need to defer
-> > > +			 * the function driver so that it will attempt to
-> > > +			 * probe again when the base USID is ready.
-> > > +			 */
-> > > +			if (pmic_addr == function_parent_usid  - (ctx->num_usids - 1))
-> > 
-> > Double "  ".
-> Ack
-> > 
-> > Over-bracketing of statements with matching operands.
-> I don't think x - (y - 1) is equal to x - y - 1? Or am I misunderstanding you here?
+> > > > +   } else {
+> > > > +           qphy->piperef_clk = of_clk_get_by_name(np, "ref");
+> > > > +           if (IS_ERR(qphy->piperef_clk)) {
+> > > > +                   ret = PTR_ERR(qphy->piperef_clk);
+> > > > +                   return dev_err_probe(dev, ret,
+> > > > +                                        "failed to get lane%d piperef_clk\n",
+> > > > +                                        id);
+> > > > +           }
+> > > > +   }
+> > > > +
+> > >
+> > > As a second thought.
+> > > This needs to be more explicit. If the chipset requires the pipe clock
+> > > remuxing, we must fail if the clocks were not provided. So depending on
+> > > the qmp instance/property the driver should either use devm_clk_get()
+> > > (instead of _optional) or skip this block completely.
+> >
+> > No, the kernel is not a DT validator (and we have the YAML bindings for
+> > that now).
+>
+> It is not about DT validation. It is about passing a correct DT. The
+> file can come up from the kernel. It can come from the older kernel.
+> OR it can come from the vendor. Or it even might be being a part of
+> firmware flashed into the device.
 
-Can you give me an example when this would be the case?
+As of dtschema 2022.03, validation of dtb's from firmware (or anywhere
+else) is supported. Of course, as the old saying goes, if it's not
+upstream, it doesn't exist. We can't control what vendors do in their
+DTs.
 
--- 
-Lee Jones [李琼斯]
-Principal Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+> So we can not assume that the DT is correct just because the in-kernel
+> DT passes YAML validation.
+
+I agree with Johan on this. In terms of ensuring correctness, the
+kernel does a horrible job. It never will be as long as it is done in
+ad hoc code.
+
+> So, as I wrote, the whole patchset needs much more care about compatibility.
+>
+> > > But this will not work with earlier DTS files.
+> >
+> > So this is not a problem (but if we really wanted to have the driver
+> > validate the DT it can be done by updating the compatible strings).
+>
+> We should not update compatible strings just because the driver
+> changes. Compat strings describe the hardware, not the Linux point of
+> view on it.
+
+Yes and no. It is the OS/client view of the h/w. If a binding is
+deemed horribly broken we could do a new compatible string and
+binding. That's not something we want to be doing frequently though.
+
+Rob
