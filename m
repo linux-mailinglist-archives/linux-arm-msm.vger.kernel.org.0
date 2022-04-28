@@ -2,125 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2D1E512EDC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 10:46:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C59BF512F13
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 10:54:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229978AbiD1Itc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 04:49:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44108 "EHLO
+        id S1344708AbiD1I4N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 04:56:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344803AbiD1Is6 (ORCPT
+        with ESMTP id S1344512AbiD1I4M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 04:48:58 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCCB1DFE0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 01:41:49 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id iq10so3727655pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 01:41:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=wIdqzQenp8zuRFBiUnNUkRO/mr/GSoN96MpP4RdC2Ks=;
-        b=xsSu5UkuQp97dr0n35uBtIUmJEnPrOq+7/Ht8m1e0fS41D6us0m0UdxZsuYoBM+4L/
-         qyYzrP9GeLa+6aX7dVwBoEiHpKMPqehEugWifRgV5H1Xq8/A/v21RTNfffson+PMEqdH
-         ejG15f5Yzg6nvPTTMcwiIaUHytZtm5yY+/LtxbPzw0uM76D3tVjrBOQScji6XW3+kpTL
-         vjfvAzqMjKj8Fa/q89vqNDEUWwEWUyLQUvoZATzyJi5sP5DWq6qEWzguM9rw0/74T0TB
-         iH8uoemrGokyoSu5V20+EEEyDMp9zy9aL9wwYjwcmevwmXTy6GdrMwzr6i10GIaKLoRl
-         RYgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wIdqzQenp8zuRFBiUnNUkRO/mr/GSoN96MpP4RdC2Ks=;
-        b=zd3a/V5b1bl6M1S6ho9Q2M/Fm4+2g3uwTyVOiX5Vj9FgWpoxgd2PfRRckdrUL2z7hm
-         tXr/Ld0qbx/zKnk+xhXuRzJXSjF5S/L49uBL8lPF191QC+JcN7K0YQG8/qcCP2m0GhtL
-         u3jCwepY0CLF4DC1myjEqJIgx7vvruZswQ4U1FJTMeR5dL84s15OfIgwHP/F/I5Y3BsE
-         0782G+Q3GFvTC+p5Yavwtvjw8Wm+1yOT/H2g9d5xDLATbDlC+RLeyX7XgvTT7rCvZx8x
-         rgK3uHyvto/c2dgi1+V5GQs3cMHhq/X5NQefHFjLt7VBhJpOtEhgqEq9A2pceKlf30sg
-         3ffA==
-X-Gm-Message-State: AOAM530rfCBTPRnUaMr5PeYNAGHGsbUwDL64oljDJlYmdK9vJ/qtTfp3
-        qG3skm1aGiCzDZVHLL5yDtuKPQ==
-X-Google-Smtp-Source: ABdhPJxaBqG4DFsYcLCWvno3bHaamg3EwGl6hR804mfzJo/rqlAlnFOKP86OTA2RJ3iySYw9TMbjvw==
-X-Received: by 2002:a17:90b:314a:b0:1d9:5ccf:baab with SMTP id ip10-20020a17090b314a00b001d95ccfbaabmr25208550pjb.110.1651135309119;
-        Thu, 28 Apr 2022 01:41:49 -0700 (PDT)
-Received: from leoy-ThinkPad-X240s ([134.195.101.46])
-        by smtp.gmail.com with ESMTPSA id d7-20020a62f807000000b0050d32c878f4sm15371198pfh.114.2022.04.28.01.41.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Apr 2022 01:41:48 -0700 (PDT)
-Date:   Thu, 28 Apr 2022 16:41:43 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Georgi Djakov <djakov@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] interconnect: qcom: msm8939: Use icc_sync_state
-Message-ID: <20220428084143.GB583115@leoy-ThinkPad-X240s>
-References: <20220416012634.479617-1-leo.yan@linaro.org>
- <05a7c1cc-c8f4-9303-2498-ba8709c72b4b@kernel.org>
+        Thu, 28 Apr 2022 04:56:12 -0400
+Received: from out203-205-251-53.mail.qq.com (out203-205-251-53.mail.qq.com [203.205.251.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FF482F3BC;
+        Thu, 28 Apr 2022 01:52:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1651135973;
+        bh=1YZv1zOYWKRjF1huRVXlo6mKgvTSjTUBeoIV4b4PtvQ=;
+        h=From:To:Cc:Subject:Date;
+        b=URXeEyQ169qjK2AVCYY0d/XzLz74WxA4OADySh5wJfWFL1b7tsqRJErCRLMGRWa3i
+         urZmdiwpEhOhm/SHyR2IqwA6zQXjFBat9JVh2BUT100b1ySEbThnPX8iygzwzkqZkN
+         1d9XcPbjR5etSyLzQwk2DSlUoHqXS9/I+4Ntrqkg=
+Received: from localhost.localdomain ([59.172.176.242])
+        by newxmesmtplogicsvrszb6.qq.com (NewEsmtp) with SMTP
+        id D3137827; Thu, 28 Apr 2022 16:52:49 +0800
+X-QQ-mid: xmsmtpt1651135969t5qiwrf7v
+Message-ID: <tencent_EDB94B1C7E14B4E1974A66FF4D2029CC6D08@qq.com>
+X-QQ-XMAILINFO: MQ+wLuVvI2LQULY0Prs9k+SYrCIJ25n+J1FFbPzFDaLOs58lBVFosbs9muNjZO
+         UkC5FRYale8I0tJQhZMnD/nNF1Vz++RhAUQPQYY1kxbAC/i3UeS57nhtQHjiGPTEXUIC9sgQ/vj0
+         6pFCBZeTgpBCCwyN7nfohxjPOPs2KV5S66KuGJph61XB3D47DQudC+wkfULr7i7INNE1IbcAKsF7
+         z5mQdiC1fpWt4ABJnM+UP82qL80FsyftAmZ4GzSIodBKxV0foXSoPbQM8pbdEXNXOj4y/nEUyNAk
+         gMXE8OR5f1XLUHxCwUC9fBFx9L94N1ar7g8mycekJj5CMpYwWzHTuWcEFfHw17iXC6+hDfWz/dzn
+         dVx/DsqNegIxEh8UznNw1NhxOVfm/tSYfGwpLNvFg24xszvB3N1Q7xVOtw/lsjitmm2Zn14N14x9
+         T0ovUmfrXcIKQwKIwjyRpU5lGFJeMu0frDtVaojrqzm1skPkmY14BSyoHwxqwbxT6GpBZZMu9rrc
+         1kSs5rUXHTxQvP2yS1cJFFrXpcMDc4Qay6bI3xKaKeVctigZKhyAwM60O5vK5rZiQYDE4yjf0KTo
+         dzfYRbMZe1T9N14lsta04Vxpl9f0TrT/Uok5hjGXJ4xhL/AYMJnUkiFyfWREVPx61+pAgwXCznmu
+         ySklUpDQultSP6YmOh+BOek5XzN8wG4JDpZCBf0iiP3QkEjOuJ/V8YumjfNpkkPczzZIBDDK+lZz
+         TBlxIecqwwT+V0thIWg8ec/eWoFmS4qJAIoBfcOvDKIdLbrYkghw3Mgw+qWt3m2hp7tRcfnq73x4
+         A1MjnJcoE2I92Gvp644tKRuTuSPpWZmLqSU3EsV9mbuuV86BnQoTjTi3s6Hh07u0XuqjUXV59qen
+         oL8kyD/o20G2Wfyn3GwLAjoH3TG7ROERDv+4RVGjWclqoPXrqlia0oNmgr5+yysKzNm0REgkYUxP
+         y0L3KWasBRa46yrBaytg==
+From:   xkernel.wang@foxmail.com
+To:     agross@kernel.org, bjorn.andersson@linaro.org, joro@8bytes.org,
+        will@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-kernel@vger.kernel.org,
+        Xiaoke Wang <xkernel.wang@foxmail.com>
+Subject: [PATCH v2] iommu/msm: add a check for the return of kzalloc()
+Date:   Thu, 28 Apr 2022 16:52:39 +0800
+X-OQ-MSGID: <20220428085239.1287-1-xkernel.wang@foxmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <05a7c1cc-c8f4-9303-2498-ba8709c72b4b@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RDNS_DYNAMIC,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 28, 2022 at 10:19:55AM +0300, Georgi Djakov wrote:
-> On 16.04.22 4:26, Leo Yan wrote:
-> > It's fashion to use the icc_sync_state callback to notify the framework
-> > when all consumers are probed, so that the bandwidth request doesn't
-> > need to stay on maximum value.
-> > 
-> > Do the same thing for msm8939 driver.
-> 
-> I assume that you tested this with some out of tree DT? Is it public?
+From: Xiaoke Wang <xkernel.wang@foxmail.com>
 
-Yes, Bryan is upstreaming for DT binding patch, see:
-https://lore.kernel.org/all/20220419010903.3109514-3-bryan.odonoghue@linaro.org/
+kzalloc() is a memory allocation function which can return NULL when
+some internal memory errors happen. So it is better to check it to
+prevent potential wrong memory access.
 
-> If the consumers are not described as such in DT and/or the support
-> in the client drivers is missing, paths might get disabled.
+Besides, to propagate the error to the caller, the type of
+insert_iommu_master() is changed to `int`. Several instructions related
+to it are also updated.
 
-Indeed, when tested the mainline kernel on msm8939 (with several
-offline patches for enabling msm8939), I observed that GPU and display
-drivers are not enabled yet, so some interconnect paths are failed.
-In this case, the interconnect clock stays on maximum frequency.
+Signed-off-by: Xiaoke Wang <xkernel.wang@foxmail.com>
+---
+ChangeLog:
+v1->v2 propagate the error to the caller.
+ drivers/iommu/msm_iommu.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-But I think this doesn't impact this patch; if without this patch,
-icc_sync_state() will never be called and the global variable
-'synced_state' is always false.
-
-In other words, based on this patch and after initiailize all client
-drivers, the clients' bandwdith request will be respected.
-
-Thanks,
-Leo
-
-> > Signed-off-by: Leo Yan <leo.yan@linaro.org>
-> > ---
-> >   drivers/interconnect/qcom/msm8939.c | 1 +
-> >   1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/drivers/interconnect/qcom/msm8939.c b/drivers/interconnect/qcom/msm8939.c
-> > index f9c2d7d3100d..ca5f611d33b0 100644
-> > --- a/drivers/interconnect/qcom/msm8939.c
-> > +++ b/drivers/interconnect/qcom/msm8939.c
-> > @@ -1423,6 +1423,7 @@ static struct platform_driver msm8939_noc_driver = {
-> >   	.driver = {
-> >   		.name = "qnoc-msm8939",
-> >   		.of_match_table = msm8939_noc_of_match,
-> > +		.sync_state = icc_sync_state,
-> >   	},
-> >   };
-> >   module_platform_driver(msm8939_noc_driver);
-> 
+diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
+index 3a38352..e3d109b 100644
+--- a/drivers/iommu/msm_iommu.c
++++ b/drivers/iommu/msm_iommu.c
+@@ -588,7 +588,7 @@ static void print_ctx_regs(void __iomem *base, int ctx)
+ 	       GET_SCTLR(base, ctx), GET_ACTLR(base, ctx));
+ }
+ 
+-static void insert_iommu_master(struct device *dev,
++static int insert_iommu_master(struct device *dev,
+ 				struct msm_iommu_dev **iommu,
+ 				struct of_phandle_args *spec)
+ {
+@@ -597,6 +597,10 @@ static void insert_iommu_master(struct device *dev,
+ 
+ 	if (list_empty(&(*iommu)->ctx_list)) {
+ 		master = kzalloc(sizeof(*master), GFP_ATOMIC);
++		if (!master) {
++			dev_err(dev, "Failed to allocate iommu_master\n");
++			return -ENOMEM;
++		}
+ 		master->of_node = dev->of_node;
+ 		list_add(&master->list, &(*iommu)->ctx_list);
+ 		dev_iommu_priv_set(dev, master);
+@@ -606,10 +610,11 @@ static void insert_iommu_master(struct device *dev,
+ 		if (master->mids[sid] == spec->args[0]) {
+ 			dev_warn(dev, "Stream ID 0x%hx repeated; ignoring\n",
+ 				 sid);
+-			return;
++			return 0;
+ 		}
+ 
+ 	master->mids[master->num_mids++] = spec->args[0];
++	return 0;
+ }
+ 
+ static int qcom_iommu_of_xlate(struct device *dev,
+@@ -629,7 +634,7 @@ static int qcom_iommu_of_xlate(struct device *dev,
+ 		goto fail;
+ 	}
+ 
+-	insert_iommu_master(dev, &iommu, spec);
++	ret = insert_iommu_master(dev, &iommu, spec);
+ fail:
+ 	spin_unlock_irqrestore(&msm_iommu_lock, flags);
+ 
+-- 
