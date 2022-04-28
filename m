@@ -2,412 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CAD6512FB0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 11:47:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D295513068
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 11:57:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229673AbiD1JrC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 05:47:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50842 "EHLO
+        id S229997AbiD1KAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 06:00:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345043AbiD1JMf (ORCPT
+        with ESMTP id S233451AbiD1J7N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 05:12:35 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4080E53E19;
-        Thu, 28 Apr 2022 02:09:21 -0700 (PDT)
+        Thu, 28 Apr 2022 05:59:13 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64F38A66DF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 02:47:22 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id r13so8440089ejd.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 02:47:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651136961; x=1682672961;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=GP4uKftYpC3kEwKu6eJMrC4aWHaCLgClKzzoqEFnCBM=;
-  b=ueRv0b2i0R5vGRXRAASpbgZ7aGN+PqsOtBRu3QpmDtvWh5HirYdfh3Gy
-   dpCpXN+Ns0bhBHtPozd8cQ5R0u8uEeOawXAvqG3lOoze7nWRJUUHB0h7D
-   iMpumRXmjTeP3JlNOIkMrzsKdiPZ2sJhhndfRhtfgNA36N3kdoCkB1g7/
-   4=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 28 Apr 2022 02:09:20 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 02:09:20 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 28 Apr 2022 02:09:19 -0700
-Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 28 Apr 2022 02:09:15 -0700
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Jiri Slaby <jirislaby@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Shanker Donthineni <shankerd@codeaurora.org>,
-        Adam Wallis <awallis@codeaurora.org>,
-        Timur Tabi <timur@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>
-Subject: [PATCHv7] tty: hvc: dcc: Bind driver to CPU core0 for reads and writes
-Date:   Thu, 28 Apr 2022 14:38:58 +0530
-Message-ID: <20220428090858.14489-1-quic_saipraka@quicinc.com>
-X-Mailer: git-send-email 2.33.1
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=wWR0SKL64pnLD+2RxbQHe5x2swIM4L4QdrFCGmGjULw=;
+        b=EdxD+YkbyRfIBBatIq1RZQMAfdzNFEx6lUYzVLMwcYkVGQQLi9LRqWdvlrpjOqRB7U
+         cQ9kqTs38/XtJ2Kc8tbUnL2na8IA/ypvLgKK69LfWdCkSNhaIOwLHJKmtRmQXPHsjFLe
+         BK5TP4gEoFOK0Ifc4Pb94CPDYEyOcZEiN9nrT4mH32ytZa5lO84tnw6k3jihSZ8ecIFV
+         pxG0hVP/atAlzbxX+ILItYGFr2cIHeMlqqnIJvIJkri4O4Mfjx4t6TFj8ZKXpIRBg4kP
+         p3eg8qu49Y5UPdJpdODj+eSauov1PrnXFLDwpaUAYRKUnKM/9g/DLWcOijW9wh1uTsPS
+         3sIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=wWR0SKL64pnLD+2RxbQHe5x2swIM4L4QdrFCGmGjULw=;
+        b=6vbxwZdKXMr1fU1ZzJ2rFkb0Ku5GWjbVGDY5cEW8xvy+rPQswxV47ICckpY+hgWAzi
+         S7FdRRywhYoMjKsBrnJuLhDgGM3X9/SOH+IxXK+AuTtMuQByiWQRvTKV6Ln9jH+hnigW
+         mSIRRpQYAi8gYAlsxfTnnnvfgwawQ+lSqdMRouCdgJLra2RYj5s3zADsoXDrJ+Wcbxx1
+         wbWQK3zP3A8laU0lJhYWpwQ7Fl+PptWWjSu+TahJiOtMYIiG5kfiWhHXV6xmE88dWCr4
+         CsJdBrDVmtZcsXGpsSAHyF0cQvEhK/YiehCy+DMQk4/CdQwsZVcOaI7F4i9Uo+YfMxMA
+         tplQ==
+X-Gm-Message-State: AOAM530vNUwUr7AHZOalciX+9Gi5cCcHh9/6jDGhUxAiXUMtd/5Hk8HQ
+        KgkI1xtSHk3H8MZzN4Yv8HevYg==
+X-Google-Smtp-Source: ABdhPJzAV1lVi1Qj3A837ST82rK8dtlvg3nSijyuX7w+cVeLMIEfPtmGM61KSFI2SrT0WVvTNB5VTw==
+X-Received: by 2002:a17:907:8a03:b0:6f3:c842:f018 with SMTP id sc3-20020a1709078a0300b006f3c842f018mr7254999ejc.277.1651139240902;
+        Thu, 28 Apr 2022 02:47:20 -0700 (PDT)
+Received: from [192.168.0.161] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id k7-20020a17090666c700b006e8688d5fcbsm8113791ejp.135.2022.04.28.02.47.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Apr 2022 02:47:20 -0700 (PDT)
+Message-ID: <dc088719-d8d6-2405-961a-1975b7f62d57@linaro.org>
+Date:   Thu, 28 Apr 2022 11:47:19 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] rpmsg: qcom_smd: Fix returning 0 if
+ irq_of_parse_and_map() fails
+Content-Language: en-US
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220423093932.32136-1-krzysztof.kozlowski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220423093932.32136-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Shanker Donthineni <shankerd@codeaurora.org>
+On 23/04/2022 11:39, Krzysztof Kozlowski wrote:
+> irq_of_parse_and_map() returns 0 on failure, so this should not be
+> passed further as error return code.
+> 
+> Fixes: 1a358d350664 ("rpmsg: qcom_smd: Fix irq_of_parse_and_map() return value")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> A fix for: https://lore.kernel.org/all/20220422105326.78713-1-krzysztof.kozlowski@linaro.org/
+> Commit sha from Bjorn's email, so might not be stable/correct.
+> 
 
-Some external debuggers do not handle reads/writes from/to DCC
-on secondary cores. Each core has its own DCC device registers,
-so when a core reads or writes from/to DCC, it only accesses
-its own DCC device. Since kernel code can run on any core,
-every time the kernel wants to write to the console, it might
-write to a different DCC.
+Bjorn,
 
-In SMP mode, external debugger creates multiple windows, and
-each window shows the DCC output only from that core's DCC.
-The result is that console output is either lost or scattered
-across windows.
+Can you pick up this one? It's for an issue in your tree, introduced
+with my previous patch.
 
-Selecting this debug option will enable code that serializes all
-console input and output to core 0. The DCC driver will create
-input and output FIFOs that all cores will use. Reads and writes
-from/to DCC are handled by a workqueue that runs only core 0.
-
-This is a debug feature to be used only in early stage development
-where debug serial console support would not be present. It disables
-PM feature like CPU hotplug and is not suitable for production
-environment.
-
-Signed-off-by: Shanker Donthineni <shankerd@codeaurora.org>
-Acked-by: Adam Wallis <awallis@codeaurora.org>
-Signed-off-by: Timur Tabi <timur@codeaurora.org>
-Signed-off-by: Elliot Berman <eberman@codeaurora.org>
-Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
----
-
-Changes in v7:
- * Update commit text to mention explicitly that this is a debug feature.
- * Update driver to print runtime warning on enabling this feature.
- * Update kconfig help text to explicitly mention that this is a debug feature. 
- * Update copyright.
-
-Changes in v6:
- * Disable CPU hotplug when CONFIG_HVC_DCC_SERIALIZE_SMP=y.
-
-Changes in v5:
- * Use get_cpu() and put_cpu() for CPU id check in preemptible context.
- * Revert back to build time Kconfig.
- * Remove unnecessary hotplug locks, they result in sleeping in atomic context bugs.
- * Add a comment for the spinlock.
-
-Changes in v4:
- * Use module parameter for runtime choice of enabling this feature.
- * Use hotplug locks to avoid race between cpu online check and work schedule.
- * Remove ifdefs and move to common ops.
- * Remove unnecessary check for this configuration.
- * Use macros for buf size instead of magic numbers.
- * v3 - https://lore.kernel.org/lkml/20211213141013.21464-1-quic_saipraka@quicinc.com/
-
-Changes in v3:
- * Handle case where core0 is not online.
-
-Changes in v2:
- * Checkpatch warning fixes.
- * Use of IS_ENABLED macros instead of ifdefs.
-
----
- drivers/tty/hvc/Kconfig   |  19 ++++
- drivers/tty/hvc/hvc_dcc.c | 194 +++++++++++++++++++++++++++++++++++++-
- 2 files changed, 209 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/tty/hvc/Kconfig b/drivers/tty/hvc/Kconfig
-index 8d60e0ff67b4..4f9264d005c0 100644
---- a/drivers/tty/hvc/Kconfig
-+++ b/drivers/tty/hvc/Kconfig
-@@ -87,6 +87,25 @@ config HVC_DCC
- 	  driver. This console is used through a JTAG only on ARM. If you don't have
- 	  a JTAG then you probably don't want this option.
- 
-+config HVC_DCC_SERIALIZE_SMP
-+	bool "Use DCC only on CPU core 0"
-+	depends on SMP && HVC_DCC
-+	help
-+	  This is a DEBUG option to serialize all console input and output to CPU 0.
-+	  Some external debuggers, do not handle reads/writes from/to DCC on more
-+	  than one CPU core. Each core has its own DCC device registers, so when a
-+	  CPU core reads or writes from/to DCC, it only accesses its own DCC device.
-+	  Since kernel code can run on any CPU core, every time the kernel wants to
-+	  write to the console, it might write to a different DCC.
-+
-+	  In SMP mode, external debuggers create multiple windows, and each window
-+	  shows the DCC output only from that core's DCC. The result is that
-+	  console output is either lost or scattered across windows.
-+
-+	  Enable this option only if you are sure that you do not need features like
-+	  CPU hotplug to work. For example, during early chipset bringups without
-+	  debug serial console support. If unsure, say N.
-+
- config HVC_RISCV_SBI
- 	bool "RISC-V SBI console support"
- 	depends on RISCV_SBI_V01
-diff --git a/drivers/tty/hvc/hvc_dcc.c b/drivers/tty/hvc/hvc_dcc.c
-index bd61f9372d83..1751108cf763 100644
---- a/drivers/tty/hvc/hvc_dcc.c
-+++ b/drivers/tty/hvc/hvc_dcc.c
-@@ -1,10 +1,15 @@
- // SPDX-License-Identifier: GPL-2.0
--/* Copyright (c) 2010, 2014 The Linux Foundation. All rights reserved.  */
-+/* Copyright (c) 2010, 2014, 2022 The Linux Foundation. All rights reserved.  */
- 
- #include <linux/console.h>
-+#include <linux/cpu.h>
-+#include <linux/cpumask.h>
- #include <linux/init.h>
-+#include <linux/kfifo.h>
- #include <linux/serial.h>
- #include <linux/serial_core.h>
-+#include <linux/smp.h>
-+#include <linux/spinlock.h>
- 
- #include <asm/dcc.h>
- #include <asm/processor.h>
-@@ -15,6 +20,15 @@
- #define DCC_STATUS_RX		(1 << 30)
- #define DCC_STATUS_TX		(1 << 29)
- 
-+#define DCC_INBUF_SIZE		128
-+#define DCC_OUTBUF_SIZE		1024
-+
-+/* Lock to serialize access to DCC fifo */
-+static DEFINE_SPINLOCK(dcc_lock);
-+
-+static DEFINE_KFIFO(inbuf, unsigned char, DCC_INBUF_SIZE);
-+static DEFINE_KFIFO(outbuf, unsigned char, DCC_OUTBUF_SIZE);
-+
- static void dcc_uart_console_putchar(struct uart_port *port, unsigned char ch)
- {
- 	while (__dcc_getstatus() & DCC_STATUS_TX)
-@@ -67,24 +81,176 @@ static int hvc_dcc_get_chars(uint32_t vt, char *buf, int count)
- 	return i;
- }
- 
-+/*
-+ * Check if the DCC is enabled. If CONFIG_HVC_DCC_SERIALIZE_SMP is enabled,
-+ * then we assume then this function will be called first on core0. That way,
-+ * dcc_core0_available will be true only if it's available on core0.
-+ */
- static bool hvc_dcc_check(void)
- {
- 	unsigned long time = jiffies + (HZ / 10);
-+	static bool dcc_core0_available;
-+
-+	/*
-+	 * If we're not on core 0, but we previously confirmed that DCC is
-+	 * active, then just return true.
-+	 */
-+	int cpu = get_cpu();
-+
-+	if (IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP) && cpu && dcc_core0_available) {
-+		put_cpu();
-+		return true;
-+	}
-+
-+	put_cpu();
- 
- 	/* Write a test character to check if it is handled */
- 	__dcc_putchar('\n');
- 
- 	while (time_is_after_jiffies(time)) {
--		if (!(__dcc_getstatus() & DCC_STATUS_TX))
-+		if (!(__dcc_getstatus() & DCC_STATUS_TX)) {
-+			dcc_core0_available = true;
- 			return true;
-+		}
- 	}
- 
- 	return false;
- }
- 
-+/*
-+ * Workqueue function that writes the output FIFO to the DCC on core 0.
-+ */
-+static void dcc_put_work(struct work_struct *work)
-+{
-+	unsigned char ch;
-+	unsigned long irqflags;
-+
-+	spin_lock_irqsave(&dcc_lock, irqflags);
-+
-+	/* While there's data in the output FIFO, write it to the DCC */
-+	while (kfifo_get(&outbuf, &ch))
-+		hvc_dcc_put_chars(0, &ch, 1);
-+
-+	/* While we're at it, check for any input characters */
-+	while (!kfifo_is_full(&inbuf)) {
-+		if (!hvc_dcc_get_chars(0, &ch, 1))
-+			break;
-+		kfifo_put(&inbuf, ch);
-+	}
-+
-+	spin_unlock_irqrestore(&dcc_lock, irqflags);
-+}
-+
-+static DECLARE_WORK(dcc_pwork, dcc_put_work);
-+
-+/*
-+ * Workqueue function that reads characters from DCC and puts them into the
-+ * input FIFO.
-+ */
-+static void dcc_get_work(struct work_struct *work)
-+{
-+	unsigned char ch;
-+	unsigned long irqflags;
-+
-+	/*
-+	 * Read characters from DCC and put them into the input FIFO, as
-+	 * long as there is room and we have characters to read.
-+	 */
-+	spin_lock_irqsave(&dcc_lock, irqflags);
-+
-+	while (!kfifo_is_full(&inbuf)) {
-+		if (!hvc_dcc_get_chars(0, &ch, 1))
-+			break;
-+		kfifo_put(&inbuf, ch);
-+	}
-+	spin_unlock_irqrestore(&dcc_lock, irqflags);
-+}
-+
-+static DECLARE_WORK(dcc_gwork, dcc_get_work);
-+
-+/*
-+ * Write characters directly to the DCC if we're on core 0 and the FIFO
-+ * is empty, or write them to the FIFO if we're not.
-+ */
-+static int hvc_dcc0_put_chars(u32 vt, const char *buf, int count)
-+{
-+	int len;
-+	unsigned long irqflags;
-+
-+	if (!IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP))
-+		return hvc_dcc_put_chars(vt, buf, count);
-+
-+	spin_lock_irqsave(&dcc_lock, irqflags);
-+	if (smp_processor_id() || (!kfifo_is_empty(&outbuf))) {
-+		len = kfifo_in(&outbuf, buf, count);
-+		spin_unlock_irqrestore(&dcc_lock, irqflags);
-+
-+		/*
-+		 * We just push data to the output FIFO, so schedule the
-+		 * workqueue that will actually write that data to DCC.
-+		 * CPU hotplug is disabled in dcc_init so CPU0 cannot be
-+		 * offlined after the cpu online check.
-+		 */
-+		if (cpu_online(0))
-+			schedule_work_on(0, &dcc_pwork);
-+
-+		return len;
-+	}
-+
-+	/*
-+	 * If we're already on core 0, and the FIFO is empty, then just
-+	 * write the data to DCC.
-+	 */
-+	len = hvc_dcc_put_chars(vt, buf, count);
-+	spin_unlock_irqrestore(&dcc_lock, irqflags);
-+
-+	return len;
-+}
-+
-+/*
-+ * Read characters directly from the DCC if we're on core 0 and the FIFO
-+ * is empty, or read them from the FIFO if we're not.
-+ */
-+static int hvc_dcc0_get_chars(u32 vt, char *buf, int count)
-+{
-+	int len;
-+	unsigned long irqflags;
-+
-+	if (!IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP))
-+		return hvc_dcc_get_chars(vt, buf, count);
-+
-+	spin_lock_irqsave(&dcc_lock, irqflags);
-+
-+	if (smp_processor_id() || (!kfifo_is_empty(&inbuf))) {
-+		len = kfifo_out(&inbuf, buf, count);
-+		spin_unlock_irqrestore(&dcc_lock, irqflags);
-+
-+		/*
-+		 * If the FIFO was empty, there may be characters in the DCC
-+		 * that we haven't read yet.  Schedule a workqueue to fill
-+		 * the input FIFO, so that the next time this function is
-+		 * called, we'll have data. CPU hotplug is disabled in dcc_init
-+		 * so CPU0 cannot be offlined after the cpu online check.
-+		 */
-+		if (!len && cpu_online(0))
-+			schedule_work_on(0, &dcc_gwork);
-+
-+		return len;
-+	}
-+
-+	/*
-+	 * If we're already on core 0, and the FIFO is empty, then just
-+	 * read the data from DCC.
-+	 */
-+	len = hvc_dcc_get_chars(vt, buf, count);
-+	spin_unlock_irqrestore(&dcc_lock, irqflags);
-+
-+	return len;
-+}
-+
- static const struct hv_ops hvc_dcc_get_put_ops = {
--	.get_chars = hvc_dcc_get_chars,
--	.put_chars = hvc_dcc_put_chars,
-+	.get_chars = hvc_dcc0_get_chars,
-+	.put_chars = hvc_dcc0_put_chars,
- };
- 
- static int __init hvc_dcc_console_init(void)
-@@ -108,6 +274,26 @@ static int __init hvc_dcc_init(void)
- 	if (!hvc_dcc_check())
- 		return -ENODEV;
- 
-+	if (IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP)) {
-+		pr_warn("\n");
-+		pr_warn("********************************************************************\n");
-+		pr_warn("**     NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE           **\n");
-+		pr_warn("**                                                                **\n");
-+		pr_warn("**  HVC_DCC_SERIALIZE_SMP SUPPORT HAS BEEN ENABLED IN THIS KERNEL **\n");
-+		pr_warn("**                                                                **\n");
-+		pr_warn("** This means that this is a DEBUG kernel and unsafe for          **\n");
-+		pr_warn("** production use and has important feature like CPU hotplug      **\n");
-+		pr_warn("** disabled.                                                      **\n");
-+		pr_warn("**                                                                **\n");
-+		pr_warn("** If you see this message and you are not debugging the          **\n");
-+		pr_warn("** kernel, report this immediately to your vendor!                **\n");
-+		pr_warn("**                                                                **\n");
-+		pr_warn("**     NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE           **\n");
-+		pr_warn("********************************************************************\n");
-+
-+		cpu_hotplug_disable();
-+	}
-+
- 	p = hvc_alloc(0, 0, &hvc_dcc_get_put_ops, 128);
- 
- 	return PTR_ERR_OR_ZERO(p);
--- 
-2.33.1
-
+Best regards,
+Krzysztof
