@@ -2,91 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 091395131A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 12:52:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D0EC51321B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 13:07:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237090AbiD1KzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 06:55:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55446 "EHLO
+        id S231404AbiD1LKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 07:10:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344476AbiD1KzJ (ORCPT
+        with ESMTP id S244584AbiD1LKn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 06:55:09 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0037489CED;
-        Thu, 28 Apr 2022 03:51:54 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A4628B82C88;
-        Thu, 28 Apr 2022 10:51:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04704C385A0;
-        Thu, 28 Apr 2022 10:51:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1651143112;
-        bh=3erY32L9hYgQLqAKAWHa/59tR5L+Qk3ytpChAIZSBnQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tuK/Y1k4Zx+cbiweMFN77l7Yt7U86pWbnwHgvtcyJakeD6ULnUIGXoLHVPBigH9ju
-         GJlqbEATOh3Vp8fPD1s/DPXpsVUeTIEvJtSYvXghU0CRXZDsuAmiTCSzN9215zppqr
-         7N69IDHIMrQmwVcV2Tw5FAx5U+g4L1w3ELH6Zf+g=
-Date:   Thu, 28 Apr 2022 12:51:49 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Cc:     arnd@arndb.de, catalin.marinas@arm.com, rostedt@goodmis.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        maz@kernel.org, quic_psodagud@quicinc.com, quic_tsoni@quicinc.com,
-        will@kernel.org
-Subject: Re: [PATCHv12 7/9] asm-generic/io: Add logging support for MMIO
- accessors
-Message-ID: <YmpxxW5CZjMVrzF0@kroah.com>
-References: <cover.1651139070.git.quic_saipraka@quicinc.com>
- <6673a2e73d3dd4c7aa01fee9b26cc4a52176ba7a.1651139070.git.quic_saipraka@quicinc.com>
+        Thu, 28 Apr 2022 07:10:43 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1FA35EDDD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 04:07:26 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id m128so8377341ybm.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 04:07:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=te4jR51DOktABWba9JV5gIXvC3eF5m98WlPewfrp0KM=;
+        b=Wty0EJAEslFPXDJcYaAdATcBRFrWXsiDclD5eXlNkLyiP2T0zLRpotF6ya4XZ0LRU7
+         D0RAp2FHcsKdKbuIrSs8SE0kW7K/PQ3JrPhlmReXypJDMElc7tNxjKdDAyFPNKRnNz8S
+         CY8Hz4hEbFhs9jC1bkhsQwc9rmAcXP+pezYp3qE9SUOFFbjxFIZDiSFMDA9kyY0kARWq
+         +RNc9sQhxYgZj0W+z+K2AHfNSNl6D8BouedXUVZwjg5VhMYOrEZUiOJ6HFy/SWm17VUr
+         8B7qBaf21ppQb/VMrYK4lBPy54/esHN3r0ejvyO8kjnUyzIXvLj9wFPGG0f+UPYl8H2M
+         uv6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=te4jR51DOktABWba9JV5gIXvC3eF5m98WlPewfrp0KM=;
+        b=0R9g5oSrGtQCwlbS/FS1i0/GB6UQ5QKqsx5Wgox1LJMfAcXzEyfjjsZ1LBCVShqT72
+         txhNg0zBx0K6/s7M7lNhiUVtcVMuNIeRjSjmDnelDCNqCQBBEQShM6fQAYg5fqLc+Ccz
+         lnQB/JwFm+bhy/fZj76/i/LJ4jSfV/RBj5YRtuveWq6cqJ02M9t9ioYcH39jTwlzb1gW
+         ggD1PkeTIXaiWdlr+nTjVcxJ/jOsQxpxEv091OG13vzxSai9m1eF4rmUkLc1Wg6n8oaX
+         c9wjoD2199jnBclJb0vbUDslx3Jq8yKx6L7LRr+fpbvfyZFjv3i/E/UJNWULjhRBpobP
+         FPbw==
+X-Gm-Message-State: AOAM531iFmzDaXoXf3/7HvXe0yzoE3V6f8MOTRzdg3kD9W+m2McRN2dh
+        ZeI860kAqyFMZwAxPErKnsInKrpbfak+zIE2ex8=
+X-Google-Smtp-Source: ABdhPJw2A3/8cs32jCXKZHRBD0PcqelpYcxhBbIyGPuzhw1jL3zipcxNHl/8thdW/mMsIlndlV9FzChhUs3/yM7ZeCI=
+X-Received: by 2002:a25:f625:0:b0:645:d7a7:f688 with SMTP id
+ t37-20020a25f625000000b00645d7a7f688mr26824245ybd.239.1651144045950; Thu, 28
+ Apr 2022 04:07:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6673a2e73d3dd4c7aa01fee9b26cc4a52176ba7a.1651139070.git.quic_saipraka@quicinc.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:7010:3e20:b0:239:636e:2d3 with HTTP; Thu, 28 Apr 2022
+ 04:07:25 -0700 (PDT)
+Reply-To: dimitryedik@gmail.com
+From:   Dimitry Edik <lsbthdwrds@gmail.com>
+Date:   Thu, 28 Apr 2022 04:07:25 -0700
+Message-ID: <CAGrL05ZgraK=cCyDSSu2fQnf1OtsX=Y17g4Qu5edgtRWxYxW1A@mail.gmail.com>
+Subject: Good day to you,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=7.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_MONEY_PERCENT,UNDISC_FREEM,UNDISC_MONEY autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:b2b listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5024]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [lsbthdwrds[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        *  3.6 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+        *  0.3 MONEY_FREEMAIL_REPTO Lots of money from someone using free
+        *      email?
+        *  0.0 T_MONEY_PERCENT X% of a lot of money for you
+        *  2.3 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 28, 2022 at 03:25:30PM +0530, Sai Prakash Ranjan wrote:
-> Add logging support for MMIO high level accessors such as read{b,w,l,q}
-> and their relaxed versions to aid in debugging unexpected crashes/hangs
-> caused by the corresponding MMIO operation.
-> 
-> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-> ---
->  include/asm-generic/io.h | 82 ++++++++++++++++++++++++++++++++++++++--
->  1 file changed, 78 insertions(+), 4 deletions(-)
-> 
-> diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-> index 7ce93aaf69f8..99090722cb4b 100644
-> --- a/include/asm-generic/io.h
-> +++ b/include/asm-generic/io.h
-> @@ -10,6 +10,7 @@
->  #include <asm/page.h> /* I/O is all done through memory accesses */
->  #include <linux/string.h> /* for memset() and memcpy() */
->  #include <linux/types.h>
-> +#include <linux/instruction_pointer.h>
->  
->  #ifdef CONFIG_GENERIC_IOMAP
->  #include <asm-generic/iomap.h>
-> @@ -61,6 +62,35 @@
->  #define __io_par(v)     __io_ar(v)
->  #endif
->  
-> +#if IS_ENABLED(CONFIG_TRACE_MMIO_ACCESS) && !(defined(__DISABLE_TRACE_MMIO__))
+Good day to you,
 
-Shouldn't you document __DISABLE_TRACE_MMIO__ somewhere?  It's not even
-in the changelog.  Put a big comment above this for what is is for and
-how to use it.  Otherwise you will forget all about this in 6 months :)
+My Name is Dimitry Edik from Russia A special assistance to my Russia
+boss who deals in oil import and export He was killed by the Ukraine
+soldiers at the border side. He supplied
+oil to the Philippines company and he was paid over 90 per cent of the
+transaction and the remaining 50 Million dollars have been paid into a
+Taiwan bank in the Philippines..i want a partner that will assist me
+with the claims. Is a (DEAL ) 40% for you and 60% for me
+I have all information for the claims.
+gKindly read and reply to me back is 100 per cent risk-free
 
-thanks,
-
-greg k-h
+Yours Sincerely
+Dimitry Edik
