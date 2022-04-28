@@ -2,65 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 175835139E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 18:32:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C8E0513A08
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 18:41:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350059AbiD1QfE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 12:35:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55354 "EHLO
+        id S1349950AbiD1QoQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 12:44:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350065AbiD1QfD (ORCPT
+        with ESMTP id S236388AbiD1QoP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 12:35:03 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 009257DE02;
-        Thu, 28 Apr 2022 09:31:48 -0700 (PDT)
+        Thu, 28 Apr 2022 12:44:15 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97FBC13D33
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 09:40:59 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id g8so2306969pfh.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 09:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651163509; x=1682699509;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=IWjeCxTCtHM7X/VtwHEV8uloK8O55Amxh8Nwcutg5+0=;
-  b=avzv8ta5vb2PbK3YUV+rTxCjSOEUZkVRclp8giAZflI+1QCtVw5DOII7
-   fQKIQdNEhmNOV6P1qere4lzBZrZ7yR9t3S2fY6xERp1ik1+JnZB9QDrmE
-   JdPiYXYI+CoEwOmQnN/VD62+CNI7M4Pg8SzI3eJiXbwE8eFMHsZRRfB5E
-   c=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 28 Apr 2022 09:31:48 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 09:31:45 -0700
-Received: from [10.110.12.199] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 28 Apr
- 2022 09:31:44 -0700
-Message-ID: <e11455d8-78c2-68e8-215e-a4e3587f3e4a@quicinc.com>
-Date:   Thu, 28 Apr 2022 09:31:43 -0700
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sXJKR00wvkycdvT6TPr1fYF0dlKSYComfBgslJPcqUg=;
+        b=Hfg37qUBoxT/tJA4PlaWnFD8Wl+VbzMwHUjbWmaMMWlsEKPNVEtP7l76W2gCu7+Le8
+         Oup0O8NwtKzNSoBod+1AY8DLacrkCvUUbKd20bSP2BjouPoU32F716V6YbrsISgwUMGp
+         jxwixxMYOx5WYtZNh7aB5HOp6OB8os5DMGwog=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sXJKR00wvkycdvT6TPr1fYF0dlKSYComfBgslJPcqUg=;
+        b=fbEOeK6wgH1DVdYhEdEOxYBqvCZUwImzmDW2xyEcHUUdzMFNFyjZtwM7di2V7LN7cN
+         TjimKq5/d6Lte6CUD9JJxIAMDv+lAzoBSUunxJpYNFsfDtXQOU1i40wnz8dAqH6o6f3y
+         ZyuefvOQzzFgo36Al8F7H1y9uZ3L9QbCwJfDsTIt+GUSCIGUHMAK39aGIzIgj5uX6WQE
+         sIFx2Fy6F0rkVEJZf66e/eHaRLZYO5l1IHevkocIH+Xqm8CuB8qgaRnbdaNUbfB/NJUy
+         8x6RmCV2WgbBOqFvVfKaHj/JKPjVLbBhsI6EhmqTWwlNZB+37YCiglcTZGVhNj7nywmk
+         wN9A==
+X-Gm-Message-State: AOAM5318qSHTQHmwvKIeNKgm0ai4A/qFeUxJUAeGsdHXfM5x8xQbEV8l
+        tfctIDbbPzC8ofk2ELcCSpyHJA==
+X-Google-Smtp-Source: ABdhPJxpf9y/5E7y7cZwrxOq+jsEgSw9EneiSRhkeaWmH1ueGxU06UYmI49wfMgvtBexQectLgslZA==
+X-Received: by 2002:a05:6a00:21c8:b0:4fd:f89f:ec0e with SMTP id t8-20020a056a0021c800b004fdf89fec0emr35535042pfj.83.1651164059069;
+        Thu, 28 Apr 2022 09:40:59 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:7a56:fc44:2682:8a2e])
+        by smtp.gmail.com with UTF8SMTPSA id n25-20020a056a00213900b0050d299f086asm329564pfj.155.2022.04.28.09.40.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Apr 2022 09:40:58 -0700 (PDT)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH v23 1/2] arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
+Date:   Thu, 28 Apr 2022 09:40:53 -0700
+Message-Id: <20220428094043.v23.1.I7a1a6448d50bdd38e6082204a9818c59cc7a9bfd@changeid>
+X-Mailer: git-send-email 2.36.0.464.gb9c8b46e94-goog
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCHv12 8/9] serial: qcom_geni_serial: Disable MMIO tracing for
- geni serial
-Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-CC:     <arnd@arndb.de>, <catalin.marinas@arm.com>, <rostedt@goodmis.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <maz@kernel.org>, <quic_psodagud@quicinc.com>, <will@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <cover.1651139070.git.quic_saipraka@quicinc.com>
- <3fef68a94e4947d58a199709929d30e0e2bf2e44.1651139070.git.quic_saipraka@quicinc.com>
- <Ympxa0ZY0VxZGEjA@kroah.com>
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <Ympxa0ZY0VxZGEjA@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,38 +70,247 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/28/2022 3:50 AM, Greg KH wrote:
-> On Thu, Apr 28, 2022 at 03:25:31PM +0530, Sai Prakash Ranjan wrote:
->> Disable MMIO tracing for geni serial driver as it is a high
->> frequency operation for serial driver with many register reads/
->> writes and not very useful to log all MMIO traces and prevent
->> excessive logging.
->>
->> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
->> ---
->>   drivers/tty/serial/qcom_geni_serial.c | 8 +++++++-
->>   1 file changed, 7 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
->> index 1543a6028856..5b48e6c2bf3c 100644
->> --- a/drivers/tty/serial/qcom_geni_serial.c
->> +++ b/drivers/tty/serial/qcom_geni_serial.c
->> @@ -1,5 +1,11 @@
->>   // SPDX-License-Identifier: GPL-2.0
->> -// Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
->> +/*
->> + * Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
-> 
-> I strongly disagree that adding a single line here warrants a copyright
-> update.  If your lawyers will sign off on this change, I am willing to
-> reconsider.
+Add nodes for the onboard USB hub on trogdor devices. Remove the
+'always-on' property from the hub regulator, since the regulator
+is now managed by the onboard_usb_hub driver.
 
-I am not a lawyer, we can skip adding QuIC copyright here since it is 
-just one line change, but at the same time we can't add 2022 year in the 
-existing copyright. If that is fine, we can skip the copyright year 
-update entirely.
+For anyone using trogdor-based devices on Linux, it should be
+noted that this requires "CONFIG_USB_ONBOARD_HUB=y".
 
----Trilok Soni
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+---
+Depends on "usb: misc: Add onboard_usb_hub driver" [1] which landed in
+https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git/commit/?h=usb-testing
+
+This patch was split off the above series.
+
+[1] https://patchwork.kernel.org/project/linux-usb/list/?series=615531&state=%2A&archive=both
+
+Changes in v23:
+- added note about enabling CONFIG_USB_ONBOARD_HUB to the commit
+  message
+
+Changes in v22:
+- none
+
+Changes in v21:
+- patch dropped from onboard_usb_hub series
+
+Changes in v20:
+- renamed hub labels to 'usb_hub_2/3_x'
+- added comment for 'regulator-boot-on' of 'pp3300_hub'
+- added 'Reviewed-by' tags from Stephen and Doug
+
+Changes in v19:
+- none
+
+Changes in v18:
+- also adjust config for pompom rev1
+
+Changes in v17:
+- none
+
+Changes in v16:
+- none
+
+Changes in v15:
+- none
+
+Changes in v14:
+- none
+
+Changes in v13:
+- none
+
+Changes in v12:
+- none
+
+Changes in v11:
+- rebased on qcom/arm64-for-5.14 (with the rest of the series)
+
+Changes in v10:
+- keep 'regulator-boot-on' property
+- updated commit message
+
+Changes in v9:
+- none
+
+Changes in v8:
+- none
+
+Changes in v7:
+- rebased on qcom/arm64-for-5.13 (with the rest of the series)
+
+Changes in v6:
+- added 'companion-hub' entry to both USB devices
+- added 'vdd-supply' also to hub@2
+
+Changes in v5:
+- patch added to the series
+
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 19 ++++++++----------
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 12 +++++------
+ .../dts/qcom/sc7180-trogdor-pompom-r1.dts     | 11 ++++------
+ .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 19 ++++++++----------
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 20 ++++++++++++++++++-
+ 5 files changed, 44 insertions(+), 37 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+index b142006478ea..caa2d3db4bc4 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+@@ -16,17 +16,6 @@ / {
+ 	compatible = "google,lazor-rev0", "qcom,sc7180";
+ };
+ 
+-&pp3300_hub {
+-	/* pp3300_l7c is used to power the USB hub */
+-	/delete-property/regulator-always-on;
+-	/delete-property/regulator-boot-on;
+-};
+-
+-&pp3300_l7c {
+-	regulator-always-on;
+-	regulator-boot-on;
+-};
+-
+ &sn65dsi86_out {
+ 	/*
+ 	 * Lane 0 was incorrectly mapped on the cable, but we've now decided
+@@ -35,3 +24,11 @@ &sn65dsi86_out {
+ 	 */
+ 	lane-polarities = <1 0>;
+ };
++
++&usb_hub_2_x {
++	 vdd-supply = <&pp3300_l7c>;
++};
++
++&usb_hub_3_x {
++	 vdd-supply = <&pp3300_l7c>;
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+index 59740799fa3a..0dc50ed62c46 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+@@ -16,13 +16,11 @@ / {
+ 	compatible = "google,lazor-rev1", "google,lazor-rev2", "qcom,sc7180";
+ };
+ 
+-&pp3300_hub {
+-	/* pp3300_l7c is used to power the USB hub */
+-	/delete-property/regulator-always-on;
+-	/delete-property/regulator-boot-on;
++
++&usb_hub_2_x {
++	 vdd-supply = <&pp3300_l7c>;
+ };
+ 
+-&pp3300_l7c {
+-	regulator-always-on;
+-	regulator-boot-on;
++&usb_hub_3_x {
++	 vdd-supply = <&pp3300_l7c>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
+index 76a130bad60a..8467ff41e6d5 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
+@@ -34,13 +34,10 @@ &pm6150_adc_tm {
+ 	/delete-node/ charger-thermistor@0;
+ };
+ 
+-&pp3300_hub {
+-	/* pp3300_l7c is used to power the USB hub */
+-	/delete-property/regulator-always-on;
+-	/delete-property/regulator-boot-on;
++&usb_hub_2_x {
++	 vdd-supply = <&pp3300_l7c>;
+ };
+ 
+-&pp3300_l7c {
+-	regulator-always-on;
+-	regulator-boot-on;
++&usb_hub_3_x {
++	 vdd-supply = <&pp3300_l7c>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
+index 457c25499863..0cbb7a68d58b 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
+@@ -43,17 +43,6 @@ &panel {
+ 	compatible = "auo,b116xa01";
+ };
+ 
+-&pp3300_hub {
+-	/* pp3300_l7c is used to power the USB hub */
+-	/delete-property/regulator-always-on;
+-	/delete-property/regulator-boot-on;
+-};
+-
+-&pp3300_l7c {
+-	regulator-always-on;
+-	regulator-boot-on;
+-};
+-
+ &sdhc_2 {
+ 	status = "okay";
+ };
+@@ -62,6 +51,14 @@ &trackpad {
+ 	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
+ };
+ 
++&usb_hub_2_x {
++	 vdd-supply = <&pp3300_l7c>;
++};
++
++&usb_hub_3_x {
++	 vdd-supply = <&pp3300_l7c>;
++};
++
+ /* PINCTRL - modifications to sc7180-trogdor.dtsi */
+ 
+ &trackpad_int_1v8_odl {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index b0efb354458c..39e1121c5d77 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -296,7 +296,7 @@ pp3300_hub: pp3300-hub-regulator {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&en_pp3300_hub>;
+ 
+-		regulator-always-on;
++		/* The BIOS leaves this regulator on */
+ 		regulator-boot-on;
+ 
+ 		vin-supply = <&pp3300_a>;
+@@ -936,6 +936,24 @@ &usb_1 {
+ 
+ &usb_1_dwc3 {
+ 	dr_mode = "host";
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	/* 2.x hub on port 1 */
++	usb_hub_2_x: hub@1 {
++		compatible = "usbbda,5411";
++		reg = <1>;
++		vdd-supply = <&pp3300_hub>;
++		companion-hub = <&usb_hub_3_x>;
++	};
++
++	/* 3.x hub on port 2 */
++	usb_hub_3_x: hub@2 {
++		compatible = "usbbda,411";
++		reg = <2>;
++		vdd-supply = <&pp3300_hub>;
++		companion-hub = <&usb_hub_2_x>;
++	};
+ };
+ 
+ &usb_1_hsphy {
+-- 
+2.36.0.464.gb9c8b46e94-goog
+
