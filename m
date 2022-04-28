@@ -2,54 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 341E2512E28
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 10:20:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B673512E2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Apr 2022 10:24:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239874AbiD1IYF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 04:24:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49582 "EHLO
+        id S243966AbiD1I12 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 04:27:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242354AbiD1IXf (ORCPT
+        with ESMTP id S234174AbiD1I11 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 04:23:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BA372A70F;
-        Thu, 28 Apr 2022 01:20:10 -0700 (PDT)
+        Thu, 28 Apr 2022 04:27:27 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D68C59D4DE;
+        Thu, 28 Apr 2022 01:24:13 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BE04B61F92;
-        Thu, 28 Apr 2022 08:20:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD006C385A0;
-        Thu, 28 Apr 2022 08:20:08 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 74A0D61F97;
+        Thu, 28 Apr 2022 08:24:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA10C385A0;
+        Thu, 28 Apr 2022 08:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1651134009;
-        bh=hUg3NqrYzpqfbxvI31DgQCZm8Qlzr2+9eyH+hO38XPI=;
+        s=korg; t=1651134252;
+        bh=7Qn4QH+TeAmEKVEjCdFVC71kSPqcGYshxtlJcIsHtmo=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tW21Ekx9h5h3RBhClupWydbxsdWCg43N6gEc3LEyky0bS/gXDJr9kTAlqvd4UKKdm
-         AovcAX9t7ccizQNKWYH4nM+pfKfcLytjEeX8sv4A6b1RBAYD6e0cmjLu17VSAZda4z
-         F2ekZ7/lZoOEvUV06mNdhydUrjwyI9qF1cvW6VYk=
-Date:   Thu, 28 Apr 2022 10:20:05 +0200
+        b=wWlT5w0nDXoBbWDRSYmJ9MTt/Ykz36DoTHIWkhyeVDYGkurfe27rq23L+lpr+3Hlc
+         eKeGyJoTE0gLRmJuA3nUNCYtaBGmRI4j87gJa27jrO6FlijfGQEO43Y0nsMbsIGWJl
+         DrN9OKf25kTv6t3fdxmZGFQ6AqrrnmkfIVkFaxyk=
+Date:   Thu, 28 Apr 2022 10:24:09 +0200
 From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Cc:     arnd@arndb.de, catalin.marinas@arm.com, rostedt@goodmis.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        maz@kernel.org, quic_psodagud@quicinc.com, quic_tsoni@quicinc.com,
-        will@kernel.org
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Marc Zyngier <maz@kernel.org>, quic_psodagud@quicinc.com,
+        quic_tsoni@quicinc.com, Will Deacon <will@kernel.org>
 Subject: Re: [PATCHv11 6/6] asm-generic/io: Add logging support for MMIO
  accessors
-Message-ID: <YmpONdU/zFhnYPgk@kroah.com>
+Message-ID: <YmpPKRB6FS/5pKjK@kroah.com>
 References: <cover.1645772606.git.quic_saipraka@quicinc.com>
  <3de35c9f4a3a070d197bab499acefc709a6f5336.1645772606.git.quic_saipraka@quicinc.com>
  <YmorayBozWWRlTpP@kroah.com>
  <96dc5e2e-5d88-52ce-c295-779603e668f2@quicinc.com>
  <YmpD3tIQK2iiqt46@kroah.com>
- <8b0ad0da-55ab-7b8b-e4a6-cd134567fb44@quicinc.com>
+ <CAK8P3a3o7BacAo1fWOLvVxyMrfNV95P1-wUB1t5deLah=nZOwg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8b0ad0da-55ab-7b8b-e4a6-cd134567fb44@quicinc.com>
+In-Reply-To: <CAK8P3a3o7BacAo1fWOLvVxyMrfNV95P1-wUB1t5deLah=nZOwg@mail.gmail.com>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -59,23 +62,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 28, 2022 at 01:14:59PM +0530, Sai Prakash Ranjan wrote:
-> > > > Also, I see that this "disable the trace" feature has already been asked
-> > > > for for 2 other drivers in the Android kernel tree, why not include
-> > > > those changes here as well?  That kind of shows that this new feature is
-> > > > limited in that driver authors are already wanting it disabled, even
-> > > > before it is accepted.
-> > > That can be done later on top of this series right? This series mainly deals with adding
-> > > initial support for such tracing, there could be numerous drivers who might or might
-> > > not want the feature which can be added onto later. We can't actually identify all
-> > > the driver requirements upfront. As an example, we have already used the flag to
-> > > disable tracing for nVHE KVM, so we know how to use the flag.
-> > Again, make it explicit in the driver file itself that it is doing this,
-> > not in the Makefile, and I will not have any objections.
+On Thu, Apr 28, 2022 at 10:18:36AM +0200, Arnd Bergmann wrote:
+> On Thu, Apr 28, 2022 at 9:35 AM Greg KH <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Thu, Apr 28, 2022 at 12:59:13PM +0530, Sai Prakash Ranjan wrote:
+> > > On 4/28/2022 11:21 AM, Greg KH wrote:
+> > > > On Thu, Apr 28, 2022 at 09:00:13AM +0530, Sai Prakash Ranjan wrote:
+> >
+> > > -D__NO_FORTIFY, -D__DISABLE_EXPORTS, -DDISABLE_BRANCH_PROFILING".
+> >
+> > Those are compiler flags that affect gcc, not kernel code functionality.
 > 
-> Ok, for kernel drivers I will make the define at the top of the .c driver file and include
-> those 2 driver changes in the series.
+> It's normal for invasive instrumentation to need flags to disable them. If you
+> look at mm/kasan/Makefile, you see
+> 
+> KASAN_SANITIZE := n
+> UBSAN_SANITIZE := n
+> KCOV_INSTRUMENT := n
+> CC_FLAGS_KASAN_RUNTIME += -DDISABLE_BRANCH_PROFILING
+> CFLAGS_REMOVE_common.o = $(CC_FLAGS_FTRACE)
+> 
+> all of which disable one of the instrumentation options, either per file
+> or per directory, in order to break recursion.
 
-Thank you, that is a much better way forward.
+That's not for logging stuff (which seems to change the functionality of
+the driver), it's for system-wide profiling/code-coverage/checking/etc
+type of stuff.
+
+Let's keep a #define at the top of the driver for the drivers that
+absolutely need this feature disabled as it is much easier to track that
+and to see how it affects things.  If you put it in a Makefile,
+reviewers will miss it and wonder what is going on.
+
+thanks,
 
 greg k-h
