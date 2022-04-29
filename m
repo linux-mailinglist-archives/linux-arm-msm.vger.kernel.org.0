@@ -2,111 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4FAE51497B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 14:36:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D57F1514981
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 14:36:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230412AbiD2Mji (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 08:39:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47836 "EHLO
+        id S230483AbiD2Mjw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 08:39:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359336AbiD2Mjh (ORCPT
+        with ESMTP id S230494AbiD2Mju (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 08:39:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E0BD04DF53
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 05:36:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1651235779;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=tmPALbAB2aFHap4uYCwyzn1Tmk9I3K+tWth9ftQrgaY=;
-        b=LQDMtLP77hzuQXESVIk5MaVW6lXHB8+k9Ok1+Z49TZMpF2doTgZBwTBUonb1MNS/+tNLO2
-        1SxLEUwNuzRqgy0YubjCLN6CnSV95o57atViqhL8zSusMAb3iz9vYZKqo55b8vV5Sj6uVJ
-        D/MEIWgOCuDm5C8OxD5qrY8mOnOKctk=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-127-VjWLqMrMMHSWRhpAfLIiqA-1; Fri, 29 Apr 2022 08:36:15 -0400
-X-MC-Unique: VjWLqMrMMHSWRhpAfLIiqA-1
-Received: by mail-qt1-f200.google.com with SMTP id r17-20020a05622a035100b002f394e60eb0so881628qtw.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 05:36:15 -0700 (PDT)
+        Fri, 29 Apr 2022 08:39:50 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B480C9B4B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 05:36:31 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id c11so788425wrn.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 05:36:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=eHBs6Wa9r1VbHh/2aicD7vVCojI5eLmVYJiucsgDFTk=;
+        b=XqZ+y6bbbSv2+K44Xm6/VbTJoc9xIp1XuWEYMITpXxYMPU9cFVPOLnVUT4NgcviQtA
+         WrRCGQYy21MIJC+ZIpySVhHvbyFGrgtvYyjQ+7gid1dXuUJW7pFE9eEzuzMmvnld4X5b
+         k7zB4O+sjQOmCFfTpmo5mN9fI6D5M9hNyfQ5CogrFytmz9ZYe3xlLLv0RXXUOO54kmea
+         LPQZvfAlXUrjM60hCjVsG/m9SxIlw7XwomTV3Do5+/X76KmpGbV5iz1W34zaISujW+O9
+         6VvLpjZZ27GZAVe3ZMwPcASx3QyQ/DEXa2gIXlkxN+IHzUU6cIn5eUEi05Z24L9H8d2g
+         2TQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=tmPALbAB2aFHap4uYCwyzn1Tmk9I3K+tWth9ftQrgaY=;
-        b=fjfkJK7a6NS/OftEgyL9zpjqCfEjtAXT/z8GFc6ZcP50+42Ikg1JG3InAzF+RBHgy1
-         5rplLcVQDo19Dul1mXcFmzeNCXZdAs1jYMy5fxWL50ydzLfz17Gekna0FOyh6ytFAyi8
-         qHBBIwS5CkXMhYf1A0semNvJxZ2i0gdaVr7lLk/+IEeX2LPkOOdspodZ3eI23TdfS01Y
-         cvAZbuAoiqUOwsaQjKdX07xBxtq6p0snUqRoVQ+z0lzUyhqrutGtZrGukM7Fzzz0zM/B
-         UZjrMZEK5AphUkIWxUug2SFvO3Pry/YejiJMdDWxBJU/b1AZs/mKyzb1pnFIjQfoGlI+
-         rXfw==
-X-Gm-Message-State: AOAM532IPyDnDlCzfDMecVdsZp8mKIl9ZQVZBT6vsFgvUWQS4KFFHeGW
-        trys2GBjnxBrE4EaRdvneuhD+QI2bc0nB32tZFAoJLLMo/sGGb+zONCApZdwqedzCrg3RvUJGkR
-        YSoFR5g4PFJD+yKZmtNfo+Kl5hw==
-X-Received: by 2002:ae9:c30d:0:b0:69e:bd20:40cc with SMTP id n13-20020ae9c30d000000b0069ebd2040ccmr22855195qkg.10.1651235775349;
-        Fri, 29 Apr 2022 05:36:15 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzR/e2gvH8C2pX3ZYsnNabO4ZISvCIsY0TiWhX1g+iYQGQTh69cKbIxck8xvTa6d132FN2MyQ==
-X-Received: by 2002:ae9:c30d:0:b0:69e:bd20:40cc with SMTP id n13-20020ae9c30d000000b0069ebd2040ccmr22855187qkg.10.1651235775101;
-        Fri, 29 Apr 2022 05:36:15 -0700 (PDT)
-Received: from halaneylaptop (068-184-200-203.res.spectrum.com. [68.184.200.203])
-        by smtp.gmail.com with ESMTPSA id h75-20020a379e4e000000b0069db8210ffbsm1383072qke.12.2022.04.29.05.36.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 05:36:14 -0700 (PDT)
-Date:   Fri, 29 Apr 2022 07:36:12 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Yang Yingliang <yangyingliang@huawei.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, mani@kernel.org,
-        lorenzo.pieralisi@arm.com
-Subject: Re: [PATCH] PCI: qcom-ep: check return value after calling
- platform_get_resource_byname()
-Message-ID: <20220429123612.sugqipgfmyy2xc6s@halaneylaptop>
-References: <20220429080740.1294797-1-yangyingliang@huawei.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=eHBs6Wa9r1VbHh/2aicD7vVCojI5eLmVYJiucsgDFTk=;
+        b=UbN9AHADNyqPAkuRGzyxNnyk86BPcM8ZM02B6tIYJ8rdscQVXN8wkvl1HMYb3JyVj7
+         qWxZlGv1jYyboy1FaGvjmzd5I49/vsHOhYPupNRgWDDqvV+QRlJbxws3GsGjAYImv5A4
+         cCqFZnQ0lG4vpe8N/bacBxgAQR87MFQw/d7ugi+KwPSxIrOYOaY6XgwW2QsbgVSYIaUS
+         Dh0IHokMe2GhyAHmSKXyHovOYw4/bcNiEaMUSJ0ZiW1U7HMR4IK2AY4u2KymE1mG2Pwb
+         ulgTHOFdIYBkXT1xp/UcMMA8kIrJPQTah1K1mlBHmztSLWp/Y5E/Dyg6H0RgtB8Syt8T
+         9fyA==
+X-Gm-Message-State: AOAM532O4PovIf8oJJ37NcttP8WA/EE/ff5LgNoQdaMll+1oS5neXEEq
+        sulwCyQnAe1fXOdXw3kfCy95OQ==
+X-Google-Smtp-Source: ABdhPJyy8JUFUfBnijB3GYFKp10PJWH4OqLaYHArQcZhhhkQ92FLDC0Q6RKTfrlQxwq7UZISf2kz9g==
+X-Received: by 2002:a05:6000:188b:b0:20c:47af:1058 with SMTP id a11-20020a056000188b00b0020c47af1058mr2787417wri.58.1651235790067;
+        Fri, 29 Apr 2022 05:36:30 -0700 (PDT)
+Received: from [192.168.0.33] (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
+        by smtp.gmail.com with ESMTPSA id g5-20020a5d5545000000b0020af6c38da3sm2334651wrw.33.2022.04.29.05.36.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Apr 2022 05:36:29 -0700 (PDT)
+Message-ID: <d4d8d158-4f59-2158-1764-0c9ac61723eb@linaro.org>
+Date:   Fri, 29 Apr 2022 13:36:28 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220429080740.1294797-1-yangyingliang@huawei.com>
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v13 2/9] mfd: qcom-spmi-pmic: expose the PMIC revid
+ information to clients
+Content-Language: en-US
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        sumit.semwal@linaro.org, amit.pundir@linaro.org,
+        john.stultz@linaro.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20220323162820.110806-1-caleb@connolly.tech>
+ <20220323162820.110806-3-caleb@connolly.tech> <Yma4T1+AglaISe2l@google.com>
+ <2763f103-6947-e431-cef5-e202c324d678@linaro.org>
+ <Ymq9Su3UE5IYiHnI@google.com>
+ <cce2f4b7-3620-7a33-ef21-579eff9a7dac@linaro.org>
+ <Ymu4jUup3YiX6p3X@google.com>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <Ymu4jUup3YiX6p3X@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 29, 2022 at 04:07:40PM +0800, Yang Yingliang wrote:
-> If platform_get_resource_byname() fails, 'mmio_res' will be set to null pointer,
-> it will cause null-ptr-deref when it used in qcom_pcie_perst_deassert(), so we
-> need check the return value.
+
+
+On 29/04/2022 11:06, Lee Jones wrote:
+> On Thu, 28 Apr 2022, Caleb Connolly wrote:
+>> On 28/04/2022 17:14, Lee Jones wrote:
+>>> On Wed, 27 Apr 2022, Caleb Connolly wrote:
+>>>> On 25/04/2022 16:03, Lee Jones wrote:
+>>>>>
+>>>>> On Wed, 23 Mar 2022, Caleb Connolly wrote:
+>>>>>> From: Caleb Connolly <caleb.connolly@linaro.org>
+>>>>>>
+>>>>>> Some PMIC functions such as the RRADC need to be aware of the PMIC
+>>>>>> chip revision information to implement errata or otherwise adjust
+>>>>>> behaviour, export the PMIC information to enable this.
+>>>>>>
+>>>>>> This is specifically required to enable the RRADC to adjust
+>>>>>> coefficients based on which chip fab the PMIC was produced in,
+>>>>>> this can vary per unique device and therefore has to be read at
+>>>>>> runtime.
+>>>>>>
+>>>>>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+>>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>>> Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>>> ---
+>>>>>>     drivers/mfd/qcom-spmi-pmic.c      | 261 +++++++++++++++++++-----------
+>>>>>>     include/soc/qcom/qcom-spmi-pmic.h |  60 +++++++
+>>>>>>     2 files changed, 231 insertions(+), 90 deletions(-)
+>>>>>>     create mode 100644 include/soc/qcom/qcom-spmi-pmic.h
+>>>
+>>> [...]
+>>>
+>>>>>> +			/*
+>>>>>> +			 * If the base USID for this PMIC hasn't probed yet
+>>>>>> +			 * but the secondary USID has, then we need to defer
+>>>>>> +			 * the function driver so that it will attempt to
+>>>>>> +			 * probe again when the base USID is ready.
+>>>>>> +			 */
+>>>>>> +			if (pmic_addr == function_parent_usid  - (ctx->num_usids - 1))
+>>>>>
+>>>>> Double "  ".
+>>>> Ack
+>>>>>
+>>>>> Over-bracketing of statements with matching operands.
+>>>> I don't think x - (y - 1) is equal to x - y - 1? Or am I misunderstanding you here?
+>>>
+>>> Can you give me an example when this would be the case?
+>> According to the Python interpreter:
+>>>>> x=7
+>>>>> y=4
+>>>>> x - y - 1
+>> 2
+>>>>> x - (y - 1)
+>> 4
+>>
+>> C does also respect the first rule of BODMAS - parenthesis are always
+>> evaluated first.
 > 
-> Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
-> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom-ep.c | 4 ++++
->  1 file changed, 4 insertions(+)
+> Fair point, well presented.
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 6ce8eddf3a37..becb0c2ff870 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -416,6 +416,10 @@ static int qcom_pcie_ep_get_io_resources(struct platform_device *pdev,
->  
->  	pcie_ep->mmio_res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
->  							 "mmio");
-> +	if (!pcie_ep->mmio_res) {
-> +		dev_err(dev, "Failed to get mmio resource\n");
-> +		return -EINVAL;
-> +	}
->  
->  	syscon = of_parse_phandle(dev->of_node, "qcom,perst-regs", 0);
->  	if (!syscon) {
-> -- 
-> 2.25.1
+> Thanks for this - I understand the problem now.
+Thanks,
+
+Could you respond to my other two points in 
+https://lore.kernel.org/linux-arm-msm/2763f103-6947-e431-cef5-e202c324d678@linaro.org/
+
+Regarding
+
+if (!of_match_device(pmic_spmi_id_table, dev))
+
+and
+
+ctx->num_usids = (long)of_device_get_match_data(&sdev->dev);
 > 
 
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-
+-- 
+Kind Regards,
+Caleb (they/he)
