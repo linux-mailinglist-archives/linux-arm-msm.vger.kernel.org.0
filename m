@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99A82515404
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 20:52:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43DA2515405
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 20:52:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378934AbiD2Sz0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1380069AbiD2Sz0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 29 Apr 2022 14:55:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35176 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380077AbiD2SzZ (ORCPT
+        with ESMTP id S1380078AbiD2SzZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 29 Apr 2022 14:55:25 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4A31CC50F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:03 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id k12so15573195lfr.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:03 -0700 (PDT)
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD961CEE33
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:04 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id h29so8336053lfj.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mNmsSu5EFMsnDMxNTzSovNKF0T/u6pITv3O7/Fgf9Jc=;
-        b=McZLPyglK/9tU+mYeWuO/1tmJahwwBbj4r7sgq0WslepjKDaME/CtmzyGsyk/VBQNu
-         NaLRMyuLPEsgsYFDvZJ3N8sm1P99XtaZgTGrTECvw4GLONdP13VhuY6RRhH3ahExtPho
-         PnHgPwe3N6BvUL5LV4le75QjdS0lbr0Ua+9uHg0koB0pLNOPJleIXBDx5G57ncei+eF8
-         F7zDQMb7Imr9GBi19tFIM6D3LSKFp1lk1PS1Yy1oYl3Sde6d/HQeaDodZ8NEfYVPY1VQ
-         tZHjvz4JnoFMUPlYB4uBZR0fcEV6Gmrh3mNPd4DfmZhqAMr1DWwsjULDLGoF5WXvnCOQ
-         HXgA==
+        bh=0sz6Xf+FMEM6Pg9TYenwhocv3Ys8GJokg7Junnjnvhs=;
+        b=P3bH5SyuxOC+W7nJIP8uFiQe8mfa57voGW/CujGwdt+uWBwVjW1y5jIQ0qwioyG8a5
+         z0XoyCQTmflVsbpvWWmnfyZSoAUrVOBSz+OUilUPh+oJKepu6NMiasv4yoF+Luv0X4eY
+         sIoQZYtzjlcbAcsQ4ks5JVCZIexkyadB/BGybVVYx8pNJaZC6briTt4ejRa8N1hqiOeZ
+         x06azzmpObZd/gZfhoKiqr4FhF8MqvQ6WRZpgNQUlgDauqHAlU+wTWl5BldqUvIpf7ZO
+         VSwKGHeA8tVyaASkzh3ReNiFVS7G7nwLykrIYgBkZmuAuWsl0A/v/Z9QwOacS3xoIF9U
+         k8lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mNmsSu5EFMsnDMxNTzSovNKF0T/u6pITv3O7/Fgf9Jc=;
-        b=1PQxMVZBa4GdtPH+veEsmlPe7hqOhFqI6NPlFqszoY140x+U0jqpKVMknymSOO+Sw1
-         X0RQH6ozAdvK/HkclYSPrB4+qsLYgh31EZCJLVfgofax6Ue0ZAnco9P5MtbF/yRt3zF3
-         3c6XY/BWkCzWpSS7Ke83+TZRe9m7A9Q1Z1q2IcTpmvGZn9dfUsUHgmgu8iNBfhOYLMBT
-         KYMXTG1y2Lo0PiStwoqrwr4E5WAnkiOBCc1AyDWYbfXedEtQ9W4B3SV4MIgMBAVKcaUe
-         hpymhv6bcPit7BV3wkF8cCkxQx68l6BJFnuD312xUfxySLqyWArV+JNn1B0wdCfRICUY
-         ezjw==
-X-Gm-Message-State: AOAM531KVi0drK5eoOs2c2rkNsU0vWE8rZrXh1rInTe7OduYHmezVQh9
-        gLUiSDOi53y5K20gR/2zijl9dg==
-X-Google-Smtp-Source: ABdhPJytbJr6ns9XOXOBR4HEVk85eizRt7BmJyw1M+DX9Ve/Bpz0VhLYSogBpCzoLFACGwmxzaJ6vg==
-X-Received: by 2002:a05:6512:3c86:b0:472:1ea6:52bb with SMTP id h6-20020a0565123c8600b004721ea652bbmr440553lfv.334.1651258321866;
-        Fri, 29 Apr 2022 11:52:01 -0700 (PDT)
+        bh=0sz6Xf+FMEM6Pg9TYenwhocv3Ys8GJokg7Junnjnvhs=;
+        b=cji89CGEx/F2XgThn8D+n2SAlIWIi+/3ypQQYqW5lcpt+lO6r5enNQnKwn8KyZK1V/
+         fA5U5JOOW1bkxrZ2TJiG+rEB+gNnLIVhxmGeeUDRqtjzzQDAsy74Jxt8u0tJbyp0S4x2
+         XN9G1XQ4ImtGTspSZ6fgjRQReTdVzbBo2XHKDOh/OQiM1fldRYavL36tlO2/mBs6jcC7
+         r9aJMStzZcGKftfdCrb+nFSKQdkcO8/zhcZRGn0Fb5Zdq6mugOh1CIrIuC/yuvygXtmS
+         AIofEzSwEcsip2TK3VnLTC7mMYkI7S8evjOWbG/j32ZuLbn7MhjC/z7sT2VASN9HH0SM
+         /ZoQ==
+X-Gm-Message-State: AOAM530RKFtAQSWVJYa5sa1oHwjIdau6FW/AC31EspTLAd6GKs+rDXsH
+        lCQroB/TkTG3Deuaf7DMMV1p9A==
+X-Google-Smtp-Source: ABdhPJyFf6J2Z655udBCglne4L6bEQy6aXnOSp8JiHE9dIuE3sE2sj/KEZZXkudFN4tE22D7lR+/zQ==
+X-Received: by 2002:ac2:5d6a:0:b0:464:efd7:f964 with SMTP id h10-20020ac25d6a000000b00464efd7f964mr433509lft.70.1651258322849;
+        Fri, 29 Apr 2022 11:52:02 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id z25-20020a19e219000000b00472230888a5sm295313lfg.121.2022.04.29.11.52.00
+        by smtp.gmail.com with ESMTPSA id z25-20020a19e219000000b00472230888a5sm295313lfg.121.2022.04.29.11.52.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 11:52:01 -0700 (PDT)
+        Fri, 29 Apr 2022 11:52:02 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Maxime Ripard <mripard@kernel.org>,
@@ -68,9 +68,9 @@ To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 Cc:     dri-devel@lists.freedesktop.org,
         linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v1 2/7] drm/probe-helper: enable and disable HPD on connectors
-Date:   Fri, 29 Apr 2022 21:51:52 +0300
-Message-Id: <20220429185157.3673633-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v1 3/7] drm/bridge_connector: rely on drm_kms_helper_poll_* for HPD enablement
+Date:   Fri, 29 Apr 2022 21:51:53 +0300
+Message-Id: <20220429185157.3673633-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220429185157.3673633-1-dmitry.baryshkov@linaro.org>
 References: <20220429185157.3673633-1-dmitry.baryshkov@linaro.org>
@@ -85,96 +85,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Intruct two drm_connector_helper_funcs: enable_hpd() and disable_hpd().
-They are called by drm_kms_helper_poll_enable() and
-drm_kms_helper_poll_disable() (and thus drm_kms_helper_poll_init() and
-drm_kms_helper_poll_fini()) respectively.
-
-This allows drivers to rely on drm_kms_helper_poll for enabling and
-disabling HPD detection rather than doing that manually.
+Use drm_connector's helpers enable_hpd and disable_hpd to enable and
+disable HPD automatically by the means of drm_kms_helper_poll_*
+functions. As the drm_bridge_connector_enable_hpd() and
+drm_bridge_connector_disable_hpd() functions are now unused, replace
+them with stubs to ease driver migration.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/drm_probe_helper.c       | 19 +++++++++++++++++++
- include/drm/drm_modeset_helper_vtables.h | 22 ++++++++++++++++++++++
- 2 files changed, 41 insertions(+)
+ drivers/gpu/drm/drm_bridge_connector.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
-index 204f6999113f..7fef16cd80ff 100644
---- a/drivers/gpu/drm/drm_probe_helper.c
-+++ b/drivers/gpu/drm/drm_probe_helper.c
-@@ -251,6 +251,12 @@ void drm_kms_helper_poll_enable(struct drm_device *dev)
- 
- 	drm_connector_list_iter_begin(dev, &conn_iter);
- 	drm_for_each_connector_iter(connector, &conn_iter) {
-+		const struct drm_connector_helper_funcs *funcs =
-+			connector->helper_private;
+diff --git a/drivers/gpu/drm/drm_bridge_connector.c b/drivers/gpu/drm/drm_bridge_connector.c
+index 60923cdfe8e1..1592da3b9403 100644
+--- a/drivers/gpu/drm/drm_bridge_connector.c
++++ b/drivers/gpu/drm/drm_bridge_connector.c
+@@ -136,6 +136,11 @@ static void drm_bridge_connector_hpd_cb(void *cb_data,
+  * This is typically used by display drivers in their resume handler.
+  */
+ void drm_bridge_connector_enable_hpd(struct drm_connector *connector)
++{
++}
++EXPORT_SYMBOL_GPL(drm_bridge_connector_enable_hpd);
 +
-+		if (funcs && funcs->enable_hpd)
-+			funcs->enable_hpd(connector);
-+
- 		if (connector->polled & (DRM_CONNECTOR_POLL_CONNECT |
- 					 DRM_CONNECTOR_POLL_DISCONNECT))
- 			poll = true;
-@@ -756,12 +762,25 @@ EXPORT_SYMBOL(drm_kms_helper_is_poll_worker);
- 
- static void drm_kms_helper_poll_disable_fini(struct drm_device *dev, bool fini)
++static void _drm_bridge_connector_enable_hpd(struct drm_connector *connector)
  {
-+	struct drm_connector *connector;
-+	struct drm_connector_list_iter conn_iter;
-+
- 	if (!dev->mode_config.poll_enabled)
- 		return;
- 
- 	if (fini)
- 		dev->mode_config.poll_enabled = false;
- 
-+	drm_connector_list_iter_begin(dev, &conn_iter);
-+	drm_for_each_connector_iter(connector, &conn_iter) {
-+		const struct drm_connector_helper_funcs *funcs =
-+			connector->helper_private;
-+
-+		if (funcs && funcs->disable_hpd)
-+			funcs->disable_hpd(connector);
-+	}
-+	drm_connector_list_iter_end(&conn_iter);
-+
- 	cancel_delayed_work_sync(&dev->mode_config.output_poll_work);
+ 	struct drm_bridge_connector *bridge_connector =
+ 		to_drm_bridge_connector(connector);
+@@ -145,7 +150,6 @@ void drm_bridge_connector_enable_hpd(struct drm_connector *connector)
+ 		drm_bridge_hpd_enable(hpd, drm_bridge_connector_hpd_cb,
+ 				      bridge_connector);
  }
- 
-diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_modeset_helper_vtables.h
-index fdfa9f37ce05..7fa67017d303 100644
---- a/include/drm/drm_modeset_helper_vtables.h
-+++ b/include/drm/drm_modeset_helper_vtables.h
-@@ -1143,6 +1143,28 @@ struct drm_connector_helper_funcs {
- 	 */
- 	void (*cleanup_writeback_job)(struct drm_writeback_connector *connector,
- 				      struct drm_writeback_job *job);
-+
-+	/**
-+	 * @enable_hpd:
-+	 *
-+	 * Enable hot-plug detection for the connector.
-+	 *
-+	 * This operation is optional.
-+	 *
-+	 * This callback is used by the drm_kms_helper_poll_enable() helpers.
-+	 */
-+	void (*enable_hpd)(struct drm_connector *connector);
-+
-+	/**
-+	 * @disable_hpd:
-+	 *
-+	 * Disable hot-plug detection for the connector.
-+	 *
-+	 * This operation is optional.
-+	 *
-+	 * This callback is used by the drm_kms_helper_poll_disable() helpers.
-+	 */
-+	void (*disable_hpd)(struct drm_connector *connector);
- };
+-EXPORT_SYMBOL_GPL(drm_bridge_connector_enable_hpd);
  
  /**
+  * drm_bridge_connector_disable_hpd - Disable hot-plug detection for the
+@@ -156,6 +160,11 @@ EXPORT_SYMBOL_GPL(drm_bridge_connector_enable_hpd);
+  * This is typically used by display drivers in their suspend handler.
+  */
+ void drm_bridge_connector_disable_hpd(struct drm_connector *connector)
++{
++}
++EXPORT_SYMBOL_GPL(drm_bridge_connector_disable_hpd);
++
++static void _drm_bridge_connector_disable_hpd(struct drm_connector *connector)
+ {
+ 	struct drm_bridge_connector *bridge_connector =
+ 		to_drm_bridge_connector(connector);
+@@ -164,7 +173,6 @@ void drm_bridge_connector_disable_hpd(struct drm_connector *connector)
+ 	if (hpd)
+ 		drm_bridge_hpd_disable(hpd);
+ }
+-EXPORT_SYMBOL_GPL(drm_bridge_connector_disable_hpd);
+ 
+ /* -----------------------------------------------------------------------------
+  * Bridge Connector Functions
+@@ -305,6 +313,8 @@ static int drm_bridge_connector_get_modes(struct drm_connector *connector)
+ static const struct drm_connector_helper_funcs drm_bridge_connector_helper_funcs = {
+ 	.get_modes = drm_bridge_connector_get_modes,
+ 	/* No need for .mode_valid(), the bridges are checked by the core. */
++	.enable_hpd = _drm_bridge_connector_enable_hpd,
++	.disable_hpd = _drm_bridge_connector_disable_hpd,
+ };
+ 
+ /* -----------------------------------------------------------------------------
 -- 
 2.35.1
 
