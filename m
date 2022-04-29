@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D58D75158C2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 01:00:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 726EB5158CB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 01:05:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381665AbiD2XDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 19:03:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34790 "EHLO
+        id S239863AbiD2XJB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 19:09:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381676AbiD2XDs (ORCPT
+        with ESMTP id S230222AbiD2XIt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 19:03:48 -0400
+        Fri, 29 Apr 2022 19:08:49 -0400
 Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E372F58E72;
-        Fri, 29 Apr 2022 16:00:28 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1737856208;
+        Fri, 29 Apr 2022 16:05:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651273229; x=1682809229;
+  t=1651273529; x=1682809529;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=858DoRS31fHhMLUp7/Yb4Lvh4eKNkn9um6ioVF9KkCw=;
-  b=ZnsBIT9NjlnZ5VndYXzEKIzkhKIbVFhFZ10UpEevvUPjzNpxION8x7ov
-   CniOhIQtss21uzI3Q/ew0HgFn2XPYey+xX+khkrwNJtgFykPjOHbxMG65
-   LM54TW4rFnjTYLiQLMLPclgEBPAUNH3tyhk02vDZEbgghGq/TrihPQlWO
-   4USM4CqCeszci3OERXXvSORacH4CFTf+sXGSchmMM6LpKV35YJ/N+lPgx
-   zDac/2Sozm1jTqwrkN53GLIJXbw2I3jKY+xosxmHP4K0rqF6QFNOFN/WM
-   Z57orgIH9Knrp/etr5OlAhjS8UYvZOTFCHZ5zVGG1Fg+lITmfHvGtpk95
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10332"; a="329741978"
+  bh=mEPSNx3MNc/ZekE9s3e3pRUa0Lo8iBRO6Gpd2edzmVs=;
+  b=Iy+gtWoOKb+jnbLDSOdftwfo4jqB7qTkilQiXZq0ABC7tGDOaZYeODDV
+   HLLeQqBFtSucNIlSgEbMXFX3cC7UqutE4lvJ4MT6KqmpipKgECM2SeAX2
+   HELiKQsqdXD6c7gh//MOVvQHA35QoyN/SO9RfHGhSAVCfntKR1FxeoEs+
+   VVSLraBa1Xg3w8kRUFcrQJpC1Bay1FoHNWcKj+BGArbOCYF+nbM1Qqi8H
+   Y0YTrVfv9SfFyn+3E8Ujw5ZWzqjL2xqPZWm8ghMEMKVj4XrBDro7RPvHW
+   ylwvKLmy9z62SdQM+iH5mxmLvM3nLeg8LgpEUPVGWQiph0hz9xpFBjuxG
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10332"; a="329743140"
 X-IronPort-AV: E=Sophos;i="5.91,186,1647327600"; 
-   d="scan'208";a="329741978"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2022 16:00:28 -0700
+   d="scan'208";a="329743140"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2022 16:05:28 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.91,186,1647327600"; 
-   d="scan'208";a="566347931"
+   d="scan'208";a="618925784"
 Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
-  by fmsmga007.fm.intel.com with ESMTP; 29 Apr 2022 16:00:24 -0700
+  by fmsmga008.fm.intel.com with ESMTP; 29 Apr 2022 16:05:24 -0700
 Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
         (envelope-from <lkp@intel.com>)
-        id 1nkZb6-0006f4-2h;
-        Fri, 29 Apr 2022 23:00:24 +0000
-Date:   Sat, 30 Apr 2022 06:59:54 +0800
+        id 1nkZfw-0006fH-6T;
+        Fri, 29 Apr 2022 23:05:24 +0000
+Date:   Sat, 30 Apr 2022 07:05:11 +0800
 From:   kernel test robot <lkp@intel.com>
 To:     Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
         agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
@@ -54,14 +54,13 @@ Cc:     kbuild-all@lists.01.org, mka@chromium.org,
         quic_saluvala@quicinc.com, quic_rjliao@quicinc.com,
         mcchou@chromium.org,
         Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
-Subject: [PATCH] Bluetooth: hci_qca: fix excluded_middle.cocci warnings
-Message-ID: <Ymxt6qICRLDgUjAA@4bf0d7f47e85>
+Subject: Re: [PATCH v1 3/3] Bluetooth: hci_qca: WAR to handle WCN6750 HW issue
+Message-ID: <202204300657.daSC8FPf-lkp@intel.com>
 References: <1651228073-1999-4-git-send-email-quic_bgodavar@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <1651228073-1999-4-git-send-email-quic_bgodavar@quicinc.com>
-X-Patchwork-Hint: ignore
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
@@ -71,36 +70,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: kernel test robot <lkp@intel.com>
+Hi Balakrishna,
 
-drivers/bluetooth/hci_qca.c:1633:42-44: WARNING !A || A && B is equivalent to !A || B
+Thank you for the patch! Perhaps something to improve:
 
-
- Condition !A || A && B is equivalent to !A || B.
-
-Generated by: scripts/coccinelle/misc/excluded_middle.cocci
-
-CC: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: kernel test robot <lkp@intel.com>
----
+[auto build test WARNING on robh/for-next]
+[also build test WARNING on bluetooth-next/master bluetooth/master linus/master v5.18-rc4 next-20220429]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
 url:    https://github.com/intel-lab-lkp/linux/commits/Balakrishna-Godavarthi/WAR-to-handle-WCN6750-hardware-issue/20220429-193129
 base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-:::::: branch date: 11 hours ago
-:::::: commit date: 11 hours ago
+config: m68k-randconfig-c003-20220428 (https://download.01.org/0day-ci/archive/20220430/202204300657.daSC8FPf-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 11.3.0
 
- drivers/bluetooth/hci_qca.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
 
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1630,7 +1630,7 @@ static int qca_regulator_init(struct hci
- 		msleep(50);
- 	}
- 
--	if (!qcadev->wlan_en || (qcadev->wlan_en && gpiod_get_value_cansleep(qcadev->wlan_en)))
-+	if (!qcadev->wlan_en || gpiod_get_value_cansleep(qcadev->wlan_en))
- 		gpiod_set_value_cansleep(qcadev->bt_en, 1);
- 
- 	if (qcadev->wlan_en && !gpiod_get_value_cansleep(qcadev->wlan_en)) {
+
+cocci warnings: (new ones prefixed by >>)
+>> drivers/bluetooth/hci_qca.c:1633:42-44: WARNING !A || A && B is equivalent to !A || B
+
+Please review and possibly fold the followup patch.
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
