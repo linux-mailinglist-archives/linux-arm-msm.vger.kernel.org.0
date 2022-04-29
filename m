@@ -2,90 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB717514E70
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 16:54:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 131FC514E9B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 17:00:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377980AbiD2O5s convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 10:57:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42466 "EHLO
+        id S1378125AbiD2PEH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 11:04:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377984AbiD2O5r (ORCPT
+        with ESMTP id S1378099AbiD2PEG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 10:57:47 -0400
-X-Greylist: delayed 242 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 29 Apr 2022 07:54:27 PDT
-Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CAB0DBE9C1;
-        Fri, 29 Apr 2022 07:54:27 -0700 (PDT)
-Received: from smtpclient.apple (p5b3d2ea3.dip0.t-ipconnect.de [91.61.46.163])
-        by mail.holtmann.org (Postfix) with ESMTPSA id B4274CED22;
-        Fri, 29 Apr 2022 16:54:26 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
-Subject: Re: [PATCH v1 3/3] Bluetooth: hci_qca: WAR to handle WCN6750 HW issue
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1651228073-1999-4-git-send-email-quic_bgodavar@quicinc.com>
-Date:   Fri, 29 Apr 2022 16:54:25 +0200
-Cc:     Andy Gross <agross@kernel.org>, robh+dt@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hedberg <johan.hedberg@gmail.com>, mka@chromium.org,
-        linux-bluetooth@vger.kernel.org, quic_hemantg@quicinc.com,
-        quic_saluvala@quicinc.com, quic_rjliao@quicinc.com,
-        mcchou@chromium.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <0D3D8346-0F64-4CAF-8BED-940F189A3E97@holtmann.org>
-References: <1651228073-1999-1-git-send-email-quic_bgodavar@quicinc.com>
- <1651228073-1999-4-git-send-email-quic_bgodavar@quicinc.com>
-To:     Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
-X-Mailer: Apple Mail (2.3696.80.82.1.1)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Fri, 29 Apr 2022 11:04:06 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 187D53152D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 08:00:48 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id bu29so14614618lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 08:00:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=NgFkGj6t89cfDU8h18lUmisWIQlxbc4WZbzdRxKCz3k=;
+        b=ZM760YPSenzfkt5aBOoPjNBgfTdCSoJabilxAb31qUx0+VOyg/Rvq1RSyyfthjlack
+         jaPIsBBJa9FfKzabWuy0hU0klkaaJiRUNTJv7viZZZ3rIniQFoc+fFS14Am0OE1OLc/8
+         qHQUXE1OjRmio8fPFYt3y9S+tyJsChNCf56o4pb1pXd4/ITENpa9rt3zTNkXtqw5c1ul
+         XWk3AaCrI/cCu7Regsnr7m0ovfUXDCv8p0BWMJ8nXO9dSNSQxNv7OCscZu/O9QL7nYIy
+         8yJGyrKCFS5u2lEMCiDxO3Lfb/VA7VYF291UArHY0SWE6DC6sZgVo2lkcoT4QCQZZcDb
+         aGgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=NgFkGj6t89cfDU8h18lUmisWIQlxbc4WZbzdRxKCz3k=;
+        b=s3ao6C2UDJIeDOyBfRI3Biw1kd+2LtnU+L+TOvi0SUCNKzvmBrfS6BLYJCMJdArY3j
+         o3KZ84VPghCFuIOoOzU6urF04Q/l0Jm1twZngekTPMERE+574m5xZY+JCm9daJvwdfMY
+         ftG1Yq2ho0QmXhRyk5sg3QQnxzW2dBMvdkncFrMZ9dOuE5S3FvnbXTJPJyCo4rm45W7a
+         4z47ZFmTecJQjCYidH2V3qMRtiJmwJdmwCAAAwCkOcE7eT/xJhhOPtwuv+Xo1bFXdnr5
+         LzNQotJkczWnnh5rCLRi7bkn0+8NOVvKHT+JD9xj7xu+CYiuytVpoqcsTH7DwdIJ8AYZ
+         drhg==
+X-Gm-Message-State: AOAM530aZpnilmuYO8KWlCtIbXVCwSmkgFN+tMItq+wPh7u3Vm6tz+Hr
+        AFJUEMKhzN6a29rmT68pEClv0QkAwsGbog==
+X-Google-Smtp-Source: ABdhPJzWIXVhuKwvYZXjinlH9r7h5lT6+559NNN6Eh6+ovZcHLnhD1b/kd0AUEPpSfSv69hOp7fAHg==
+X-Received: by 2002:a05:6512:3a89:b0:471:c6ba:c522 with SMTP id q9-20020a0565123a8900b00471c6bac522mr27979319lfu.371.1651244446464;
+        Fri, 29 Apr 2022 08:00:46 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id d19-20020a193853000000b0047210b434ffsm259348lfj.27.2022.04.29.08.00.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Apr 2022 08:00:46 -0700 (PDT)
+Message-ID: <1f013429-8a5b-47c8-a146-41bb66af3f03@linaro.org>
+Date:   Fri, 29 Apr 2022 18:00:45 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 4/4] clk: qcom: clk-krait: add apq/ipq8064 errata
+ workaround
+Content-Language: en-GB
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Sricharan R <sricharan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220429120108.9396-1-ansuelsmth@gmail.com>
+ <20220429120108.9396-5-ansuelsmth@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220429120108.9396-5-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Balakrishna,
-
-> The patch is workaround for hardware issue on WCN6750.
-> On WCN6750 sometimes observed AON power source takes 100ms
-> time to fully discharge voltage during OFF. As WCN6750 is
-> combo chip for WLAN and BT. If any of the tech area ON is
-> triggered during discharge phase, it fails to turn ON.
-> To overcome this hardware issue, During BT ON, driver check
-> for WLAN_EN pin status. If it high, it will pull BT_EN to high
-> immediately else it will wait for 100ms assuming WLAN was just
-> powered OFF and then BT_EN will be pulled to high.
+On 29/04/2022 15:01, Ansuel Smith wrote:
+> Add apq/ipq8064 errata workaround where the sec_src clock gating needs to
+> be disabled during switching. To enable this set disable_sec_src_gating
+> in the mux struct.
 > 
-> Fixes: d8f97da1b92d2 ("Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6750")
-> Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
-> Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
-> Signed-off-by: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > ---
-> drivers/bluetooth/hci_qca.c | 30 ++++++++++++++++++++++++------
-> 1 file changed, 24 insertions(+), 6 deletions(-)
+>   drivers/clk/qcom/clk-krait.c | 16 ++++++++++++++++
+>   drivers/clk/qcom/clk-krait.h |  1 +
+>   drivers/clk/qcom/krait-cc.c  |  1 +
+>   3 files changed, 18 insertions(+)
 > 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index eab34e2..c3862d1 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -219,6 +219,7 @@ struct qca_serdev {
-> 	struct hci_uart	 serdev_hu;
-> 	struct gpio_desc *bt_en;
-> 	struct gpio_desc *sw_ctrl;
-> +	struct gpio_desc *wlan_en;
-> 	struct clk	 *susclk;
-> 	enum qca_btsoc_type btsoc_type;
-> 	struct qca_power *bt_power;
+> diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
+> index 6c367ad6506a..4a9b3296c45b 100644
+> --- a/drivers/clk/qcom/clk-krait.c
+> +++ b/drivers/clk/qcom/clk-krait.c
+> @@ -18,13 +18,23 @@
+>   static DEFINE_SPINLOCK(krait_clock_reg_lock);
+>   
+>   #define LPL_SHIFT	8
+> +#define SECCLKAGD	BIT(4)
+> +
+>   static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
+>   {
+>   	unsigned long flags;
+>   	u32 regval;
+>   
+>   	spin_lock_irqsave(&krait_clock_reg_lock, flags);
+> +
+>   	regval = krait_get_l2_indirect_reg(mux->offset);
+> +
+> +	/* apq/ipq8064 Errata: disable sec_src clock gating during switch. */
+> +	if (mux->disable_sec_src_gating) {
+> +		regval |= SECCLKAGD;
+> +		krait_set_l2_indirect_reg(mux->offset, regval);
+> +	}
+> +
+>   	regval &= ~(mux->mask << mux->shift);
+>   	regval |= (sel & mux->mask) << mux->shift;
+>   	if (mux->lpl) {
+> @@ -33,6 +43,12 @@ static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
+>   	}
+>   	krait_set_l2_indirect_reg(mux->offset, regval);
+>   
+> +	/* apq/ipq8064 Errata: re-enabled sec_src clock gating. */
+> +	if (mux->disable_sec_src_gating) {
+> +		regval &= ~SECCLKAGD;
+> +		krait_set_l2_indirect_reg(mux->offset, regval);
+> +	}
+> +
+>   	/* Wait for switch to complete. */
+>   	mb();
+>   	udelay(1);
+> diff --git a/drivers/clk/qcom/clk-krait.h b/drivers/clk/qcom/clk-krait.h
+> index 9120bd2f5297..f930538c539e 100644
+> --- a/drivers/clk/qcom/clk-krait.h
+> +++ b/drivers/clk/qcom/clk-krait.h
+> @@ -15,6 +15,7 @@ struct krait_mux_clk {
+>   	u8		safe_sel;
+>   	u8		old_index;
+>   	bool		reparent;
+> +	bool		disable_sec_src_gating;
+>   
+>   	struct clk_hw	hw;
+>   	struct notifier_block   clk_nb;
+> diff --git a/drivers/clk/qcom/krait-cc.c b/drivers/clk/qcom/krait-cc.c
+> index 4d4b657d33c3..0f88bf41ec6e 100644
+> --- a/drivers/clk/qcom/krait-cc.c
+> +++ b/drivers/clk/qcom/krait-cc.c
+> @@ -138,6 +138,7 @@ krait_add_sec_mux(struct device *dev, int id, const char *s,
+>   	mux->parent_map = sec_mux_map;
+>   	mux->hw.init = &init;
+>   	mux->safe_sel = 0;
+> +	mux->disable_sec_src_gating = true;
 
-I am really against these intermixing of Bluetooth and WiFi details. There is work ongoing to do some sequence power procedure. Maybe that is something you should look into. This is a mess.
+This has to be guarded with the of_compatible checks. Otherwise you'd 
+apply this errata to all Krait CPUs, not only apq/ipq8064.
 
-And again, we are still hacking around hci_qca.c instead of writing a clean serdev only driver for this hardware. I have the feeling that nobody listens to review comments these days. It is just hacking patches together to get hardware enabled somehow and then disappear.
+At least this should be limited to krait-cc-v1 with the note that there 
+is no way to distinguish between platforms.
 
-Regards
+>   
+>   	init.name = kasprintf(GFP_KERNEL, "krait%s_sec_mux", s);
+>   	if (!init.name)
 
-Marcel
 
+-- 
+With best wishes
+Dmitry
