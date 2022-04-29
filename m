@@ -2,100 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2536651496F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 14:33:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4FAE51497B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 14:36:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359282AbiD2MgF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 08:36:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59662 "EHLO
+        id S230412AbiD2Mji (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 08:39:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359275AbiD2MgE (ORCPT
+        with ESMTP id S1359336AbiD2Mjh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 08:36:04 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C36EFC90DF;
-        Fri, 29 Apr 2022 05:32:46 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id k27so8907782edk.4;
-        Fri, 29 Apr 2022 05:32:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wjZep7+Tgf5lr7Kg5bt8mtQgziDmuU0ShQxCZx6j8dQ=;
-        b=MbPJgWF+lEghy4d5Wiupu3E2Thc8xUAOZneHtBhr4vYIpLGqh8lu2a6jTHd6QmxNbm
-         2sg6A1g2/ICL2DtYWSPDUAxx1yyC6JsyVMiqCWdyYIRMs2rmbconqcYUf38BT4H8z1WO
-         T22VeDtv6a1fA62WwZeKxV4GWUnr+uxXViRF1SN4mmAUFB/XfqGbvKaOjWcODg8cwG1j
-         npAhUGarTWUb0ZQ7d/A2cOM93B4Md0da7QW2s9bmDE1OWXxim/n43tASFU5pv7GzgVJj
-         4flLE2Dt0pOjM2tOXl/1bh2jpJPK4XXIPE0o2jltBkYZeBIDfnPzQcmroZXhkzKBPN3p
-         hmzA==
+        Fri, 29 Apr 2022 08:39:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E0BD04DF53
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 05:36:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1651235779;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=tmPALbAB2aFHap4uYCwyzn1Tmk9I3K+tWth9ftQrgaY=;
+        b=LQDMtLP77hzuQXESVIk5MaVW6lXHB8+k9Ok1+Z49TZMpF2doTgZBwTBUonb1MNS/+tNLO2
+        1SxLEUwNuzRqgy0YubjCLN6CnSV95o57atViqhL8zSusMAb3iz9vYZKqo55b8vV5Sj6uVJ
+        D/MEIWgOCuDm5C8OxD5qrY8mOnOKctk=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-127-VjWLqMrMMHSWRhpAfLIiqA-1; Fri, 29 Apr 2022 08:36:15 -0400
+X-MC-Unique: VjWLqMrMMHSWRhpAfLIiqA-1
+Received: by mail-qt1-f200.google.com with SMTP id r17-20020a05622a035100b002f394e60eb0so881628qtw.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 05:36:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wjZep7+Tgf5lr7Kg5bt8mtQgziDmuU0ShQxCZx6j8dQ=;
-        b=y5jWPZDb6MWOVByXcdGA/J+WV6/KGfcFRC6CYRCZvHZAkEbnbsbsVw2pJegQRCsPB0
-         0igspuxKgF1pd3VEUNXU/ahzTLruZR1VIFOvE8pEKzrSBw5QiX1UMygOo39vFpGjh2/i
-         MmlkRsn5wJV8zKa5DBmZg7aZkhPW/SvRzWUCZG1ISxJ70KzwRHzeqlPWUJrg2jF/3feO
-         DC941wdi3IZuaQwi45UVEr0i8SwBq+hk8zyS2xspNlOZ22S4ugC4FeUFdubflgQVeBid
-         e0Ir7e5aH9aihjezqOKtgPzErTq2hc1Fk2qQaj8l0Mnm7tSyYeLD4jXQonvYcAF+bosg
-         IGgQ==
-X-Gm-Message-State: AOAM5305HIBAQlgoyot4OS9JFXFFWTo31/52L0uNhvvx8p/IUlxrxX6f
-        jN7XlZYooaH8qzLz1m3Hn54=
-X-Google-Smtp-Source: ABdhPJzQqM5gYC/o6KCtToz3A3zuh5BarSASylRN98Q+vC0KnezUvqiQATi8io0zsBAKQP5wWQvrMA==
-X-Received: by 2002:a05:6402:2815:b0:420:c32e:ebe2 with SMTP id h21-20020a056402281500b00420c32eebe2mr40348109ede.1.1651235565228;
-        Fri, 29 Apr 2022 05:32:45 -0700 (PDT)
-Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.googlemail.com with ESMTPSA id hf27-20020a1709072c5b00b006f3ef214e33sm601176ejc.153.2022.04.29.05.32.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=tmPALbAB2aFHap4uYCwyzn1Tmk9I3K+tWth9ftQrgaY=;
+        b=fjfkJK7a6NS/OftEgyL9zpjqCfEjtAXT/z8GFc6ZcP50+42Ikg1JG3InAzF+RBHgy1
+         5rplLcVQDo19Dul1mXcFmzeNCXZdAs1jYMy5fxWL50ydzLfz17Gekna0FOyh6ytFAyi8
+         qHBBIwS5CkXMhYf1A0semNvJxZ2i0gdaVr7lLk/+IEeX2LPkOOdspodZ3eI23TdfS01Y
+         cvAZbuAoiqUOwsaQjKdX07xBxtq6p0snUqRoVQ+z0lzUyhqrutGtZrGukM7Fzzz0zM/B
+         UZjrMZEK5AphUkIWxUug2SFvO3Pry/YejiJMdDWxBJU/b1AZs/mKyzb1pnFIjQfoGlI+
+         rXfw==
+X-Gm-Message-State: AOAM532IPyDnDlCzfDMecVdsZp8mKIl9ZQVZBT6vsFgvUWQS4KFFHeGW
+        trys2GBjnxBrE4EaRdvneuhD+QI2bc0nB32tZFAoJLLMo/sGGb+zONCApZdwqedzCrg3RvUJGkR
+        YSoFR5g4PFJD+yKZmtNfo+Kl5hw==
+X-Received: by 2002:ae9:c30d:0:b0:69e:bd20:40cc with SMTP id n13-20020ae9c30d000000b0069ebd2040ccmr22855195qkg.10.1651235775349;
+        Fri, 29 Apr 2022 05:36:15 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzR/e2gvH8C2pX3ZYsnNabO4ZISvCIsY0TiWhX1g+iYQGQTh69cKbIxck8xvTa6d132FN2MyQ==
+X-Received: by 2002:ae9:c30d:0:b0:69e:bd20:40cc with SMTP id n13-20020ae9c30d000000b0069ebd2040ccmr22855187qkg.10.1651235775101;
+        Fri, 29 Apr 2022 05:36:15 -0700 (PDT)
+Received: from halaneylaptop (068-184-200-203.res.spectrum.com. [68.184.200.203])
+        by smtp.gmail.com with ESMTPSA id h75-20020a379e4e000000b0069db8210ffbsm1383072qke.12.2022.04.29.05.36.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 05:32:44 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>
-Subject: [PATCH 2/2] ARM: dts: qcom: replace gcc PXO with pxo_board fixed clock
-Date:   Fri, 29 Apr 2022 14:29:51 +0200
-Message-Id: <20220429122951.13828-3-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220429122951.13828-1-ansuelsmth@gmail.com>
-References: <20220429122951.13828-1-ansuelsmth@gmail.com>
+        Fri, 29 Apr 2022 05:36:14 -0700 (PDT)
+Date:   Fri, 29 Apr 2022 07:36:12 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Yang Yingliang <yangyingliang@huawei.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, mani@kernel.org,
+        lorenzo.pieralisi@arm.com
+Subject: Re: [PATCH] PCI: qcom-ep: check return value after calling
+ platform_get_resource_byname()
+Message-ID: <20220429123612.sugqipgfmyy2xc6s@halaneylaptop>
+References: <20220429080740.1294797-1-yangyingliang@huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220429080740.1294797-1-yangyingliang@huawei.com>
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replace gcc PXO phandle to pxo_board fixed clock declared in the dts.
-gcc driver doesn't provide PXO_SRC as it's a fixed-clock. This cause a
-kernel panic if any driver actually try to use it.
+On Fri, Apr 29, 2022 at 04:07:40PM +0800, Yang Yingliang wrote:
+> If platform_get_resource_byname() fails, 'mmio_res' will be set to null pointer,
+> it will cause null-ptr-deref when it used in qcom_pcie_perst_deassert(), so we
+> need check the return value.
+> 
+> Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
+> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 6ce8eddf3a37..becb0c2ff870 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -416,6 +416,10 @@ static int qcom_pcie_ep_get_io_resources(struct platform_device *pdev,
+>  
+>  	pcie_ep->mmio_res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
+>  							 "mmio");
+> +	if (!pcie_ep->mmio_res) {
+> +		dev_err(dev, "Failed to get mmio resource\n");
+> +		return -EINVAL;
+> +	}
+>  
+>  	syscon = of_parse_phandle(dev->of_node, "qcom,perst-regs", 0);
+>  	if (!syscon) {
+> -- 
+> 2.25.1
+> 
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index 9817448cfa95..ad30f7c8a5a7 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -784,7 +784,7 @@ tcsr: syscon@1a400000 {
- 		l2cc: clock-controller@2011000 {
- 			compatible = "qcom,kpss-gcc", "syscon";
- 			reg = <0x2011000 0x1000>;
--			clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
-+			clocks = <&gcc PLL8_VOTE>, <&pxo_board>;
- 			clock-names = "pll8_vote", "pxo";
- 			clock-output-names = "acpu_l2_aux";
- 		};
--- 
-2.34.1
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
