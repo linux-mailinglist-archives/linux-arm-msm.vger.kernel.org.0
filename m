@@ -2,133 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 125805156EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 23:32:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46E4B51570A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 23:42:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238378AbiD2VfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 17:35:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52962 "EHLO
+        id S238655AbiD2VqP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 17:46:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232254AbiD2VfS (ORCPT
+        with ESMTP id S232254AbiD2VqO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 17:35:18 -0400
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02359CEE24;
-        Fri, 29 Apr 2022 14:31:59 -0700 (PDT)
-Received: by mail-oi1-f174.google.com with SMTP id r8so9849932oib.5;
-        Fri, 29 Apr 2022 14:31:58 -0700 (PDT)
+        Fri, 29 Apr 2022 17:46:14 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D066C7893D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 14:42:53 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id bu29so16302224lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 14:42:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rfsZT6dTxDkMWDAw8DCDFhRyK+INRY0WxLhshoifq4U=;
+        b=YStOtLBTj8uJz30nwyjlpZHJaT4M85B890bYSiMZiODlzWPzUDqtj9UaBfk2gwdgVG
+         THgvu9jHdJmNCrNCE9Qxinjk34gRXkAaRGNNLzqb6hSVBKSsn6sVQ8a9Dy/IV6IxmfSM
+         DtTIgM8nwTzktM/XGxo3kJsqDefd4uoDPcP5CuVLbW5VfznfUXgy13e6FKiE8Jt6iHpg
+         jFDlkL/P4pLST2wPCnE0mMPLbyytcri6kv+OjNGqd7hXhex0LSqaN1tyNzPd8VRVt0Sd
+         5BwVkb+p5/yscEZBFvzR20ZhIiMPQ1lAy6r/NzhaM9rkzUj/JpQRqftbPGheCi8JVsOf
+         GAqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ipYeQfWFLcPKZ7mKRzp5aFzO9fJGsAJq6rg91kdXPzA=;
-        b=xlKrTCaUsbxgnOF6DptXQmqOp4N/svT47lFFGdgjszc/2ZrIvVpvtpQRXAcuuymZxQ
-         cFwxe9JQFq9QpqOwVUQeeR6K9brRjjX0iMLD5G/89zjMDxIzYxsyakPE+QU7sutMbKzY
-         EFUbHqcfbQIrE3BUAHL6MWSH+poZYmwfevu8KVekQaycBz3ic7/dg4T7DG2XH8heCiyi
-         Qttvfbhb5p3C+FSCVeEf9eskW8n4lvs3xY1/HJF9U6ggXYy+XU9vc5RE/dH5PTKgruZc
-         MeccxcoW/elegprdZVxIllhSedHmfzHrX/lPSsqMlictVfimHqZiJkcA0foPUc6R0CdK
-         w0Ug==
-X-Gm-Message-State: AOAM5306Wu8sa4IUMnOv3Cw+OeN0M4vdi3aNBj8fdvFfNPQze2DscCKR
-        Lf6Jl9OrbmaKytik97hlFasPxA3Wiw==
-X-Google-Smtp-Source: ABdhPJya/0Vf9slHqEQZMdiq4bLMSDj4AKWTrwZobUGM5btcbpe/2eQzGgdRlYsVWAAKTcIpHtNWWQ==
-X-Received: by 2002:a05:6808:219f:b0:322:9505:396d with SMTP id be31-20020a056808219f00b003229505396dmr2494199oib.141.1651267918288;
-        Fri, 29 Apr 2022 14:31:58 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id q8-20020a0568080ec800b00325cda1ffa3sm150320oiv.34.2022.04.29.14.31.57
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rfsZT6dTxDkMWDAw8DCDFhRyK+INRY0WxLhshoifq4U=;
+        b=Ez/UzF+wOviWyScOFH6OrN+QLAmbeXiOOvk6GEB8Bm8k5TOvFDW7QBiaraMsc0j0IV
+         mT3SYekfhY4igfXSGtXWshzRkS4nIRdy5JJrb2wuJxIAccN3j9nqaZo2EE9CcugZW8k6
+         cAi0dV5aY0B+7Xh7yvjQqOZrxkoXLcUWm1nCqD7lWvmnLUkFum+KkG53o58L17taTSjE
+         hU+If+1hhEhSsvcdDG7yeukCKQ+WVbYBraYh99c5cg6vtdku59o7nqQIhC6D30DCGI7Y
+         QlfZdqxhmz2/XQowuKVkwqpBvgsgqIndQWv2XHTbl8IRElbcaVs+bllp8s9AkA0iidAM
+         IYvA==
+X-Gm-Message-State: AOAM533h0TSdBms4ELjXExC4uq7Smcci+T9nte7yb2DvAFR71Y+zcGe9
+        ymea0pq0rNSJRQFp9MTwaCITig==
+X-Google-Smtp-Source: ABdhPJziFccC0MXMwUO0tViXcnZioUSJzQZ7JY0Zr3/oBNZQbAMOYmANJbOf9zvNC8M7gjZDl915HA==
+X-Received: by 2002:a05:6512:324f:b0:472:31e:7b38 with SMTP id c15-20020a056512324f00b00472031e7b38mr858786lfr.625.1651268571362;
+        Fri, 29 Apr 2022 14:42:51 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id g4-20020a19ac04000000b0047255d211f6sm30520lfc.293.2022.04.29.14.42.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 14:31:57 -0700 (PDT)
-Received: (nullmailer pid 2917268 invoked by uid 1000);
-        Fri, 29 Apr 2022 21:31:57 -0000
-Date:   Fri, 29 Apr 2022 16:31:57 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Fri, 29 Apr 2022 14:42:50 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/3] dt-bindings: arm: msm: Convert kpss-gcc driver
- Documentation to yaml
-Message-ID: <YmxZTf7w40xv/Jvs@robh.at.kernel.org>
-References: <20220429121739.28584-1-ansuelsmth@gmail.com>
- <20220429121739.28584-4-ansuelsmth@gmail.com>
- <1651247596.124069.2344494.nullmailer@robh.at.kernel.org>
- <626c0b64.1c69fb81.1b1e9.4fe6@mx.google.com>
- <5127b3b5-ad27-fd06-42b7-fdf96d0a10ea@linaro.org>
- <626c4ee8.1c69fb81.74b06.15c4@mx.google.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v5 0/7] PCI: qcom: Fix higher MSI vectors handling
+Date:   Sat, 30 Apr 2022 00:42:43 +0300
+Message-Id: <20220429214250.3728510-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <626c4ee8.1c69fb81.74b06.15c4@mx.google.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 29, 2022 at 10:45:09PM +0200, Ansuel Smith wrote:
-> On Fri, Apr 29, 2022 at 10:43:21PM +0200, Krzysztof Kozlowski wrote:
-> > On 29/04/2022 17:57, Ansuel Smith wrote:
-> > > On Fri, Apr 29, 2022 at 10:53:16AM -0500, Rob Herring wrote:
-> > >> On Fri, 29 Apr 2022 14:17:39 +0200, Ansuel Smith wrote:
-> > >>> Convert kpss-gcc driver Documentation to yaml.
-> > >>>
-> > >>> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > >>> ---
-> > >>>  .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 -------------
-> > >>>  .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 63 +++++++++++++++++++
-> > >>>  2 files changed, 63 insertions(+), 44 deletions(-)
-> > >>>  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
-> > >>>  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
-> > >>>
-> > >>
-> > >> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> > >> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> > >>
-> > >> yamllint warnings/errors:
-> > >>
-> > >> dtschema/dtc warnings/errors:
-> > >> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml: properties: '#clock-cells' is a dependency of 'clock-output-names'
-> > > 
-> > 
-> > The patches were previously sent (even as v6) and somehow the history,
-> > changelog and references disappeared...
-> > 
-> 
-> Mhh with split how this should be handled? Putting the relevant changes
-> in the cover letter?
-> 
-> > > Erm how to fix this? I can't do a 1:1 conversion if the source was
-> > > wrong and also have no bot warning.
-> > > Or I should just push an additional patch to fix this error after the
-> > > conversion?
-> > 
-> > Didn't we agree that original bindings were not in good shape? Yet the
-> > questions raised with your v6 remain actually not answered, till the bot
-> > complains.
-> > 
-> > Please do not send the bindings which do not pass dt_binding_check.
-> > 
-> > Best regards,
-> > Krzysztof
-> 
-> In v6 the last mail were with the idea of sending separate series with
-> minimal changes and it was mention that it was a good idea to send only
-> conversion and then send the changes with the conversion series.
-> 
-> Finally got the message. I should NEVER send patch with warning from
-> dt_binding_check.
+I have replied with my Tested-by to the patch at [2], which has landed
+in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
+Add support for handling MSIs from 8 endpoints"). However lately I
+noticed that during the tests I still had 'pcie_pme=nomsi', so the
+device was not forced to use higher MSI vectors.
 
-It's like sending code changes that don't compile...
+After removing this option I noticed that hight MSI vectors are not
+delivered on tested platforms. After additional research I stumbled upon
+a patch in msm-4.14 ([1]), which describes that each group of MSI
+vectors is mapped to the separate interrupt. Implement corresponding
+mapping.
 
-But I wouldn't say NEVER. If you have a warning that you think is wrong 
-or don't know how to fix, then send it and say that in the patch.
+Patchseries dependecies: [2] (landed in pci-next) and [3] (for the
+schema change).
 
-Rob
+Since we can not expect that other platforms will use multi-IRQ scheme
+for MSI mapping (e.g. iMX and Tegra map all 256 MSI interrupts to single
+IRQ), it's support is implemented directly in pcie-qcom rather than in
+the core driver.
+
+Changes since v4:
+ - Fix the minItems/maxItems properties in the YAML schema
+
+Changes since v3:
+ - Reimplement MSI handling scheme in the Qualcomm host controller
+   driver.
+
+Changes since v2:
+ - Fix and rephrase commit message for patch 2.
+
+Changes since v1:
+ - Split a huge patch into three patches as suggested by Bjorn Helgaas
+ - snps,dw-pcie removal is now part of [3]
+
+[1] https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/commit/671a3d5f129f4bfe477152292ada2194c8440d22
+[2] https://lore.kernel.org/linux-arm-msm/20211214101319.25258-1-manivannan.sadhasivam@linaro.org/
+[3] https://lore.kernel.org/linux-arm-msm/20220422211002.2012070-1-dmitry.baryshkov@linaro.org/
+
+
+Dmitry Baryshkov (7):
+  PCI: qcom: Revert "PCI: qcom: Add support for handling MSIs from 8
+    endpoints"
+  PCI: dwc: Correct msi_irq condition in dw_pcie_free_msi()
+  PCI: dwc: Add msi_host_deinit callback
+  PCI: dwc: Export several functions useful for MSI implentations
+  PCI: qcom: Handle MSI IRQs properly
+  dt-bindings: PCI: qcom: Support additional MSI interrupts
+  arm64: dts: qcom: sm8250: provide additional MSI interrupts
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  45 +++++-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  11 +-
+ .../pci/controller/dwc/pcie-designware-host.c |  72 +++++----
+ drivers/pci/controller/dwc/pcie-designware.h  |  12 ++
+ drivers/pci/controller/dwc/pcie-qcom.c        | 138 +++++++++++++++++-
+ 5 files changed, 246 insertions(+), 32 deletions(-)
+
+-- 
+2.35.1
+
