@@ -2,108 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98C2151579C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 00:01:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C77D15157CD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 00:03:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376831AbiD2WDm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 18:03:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50456 "EHLO
+        id S239592AbiD2WGG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 18:06:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378803AbiD2WDl (ORCPT
+        with ESMTP id S1350222AbiD2WF7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 18:03:41 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D1411B7AC;
-        Fri, 29 Apr 2022 15:00:14 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id c11so2567088wrn.8;
-        Fri, 29 Apr 2022 15:00:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3YvJQ8AnVTjfxXBmIcp4SKnbUwO/iQ1O2/sNT7auhlc=;
-        b=Mt/mI0/OBXBeNhi9sXshjI8jxnT5wdIT8DJ3pLbrSH5vmO4Cd5tRHisCYP9Szu+M+e
-         1i0MOQGIeOEWLLM3DbI++ffIRdM44r//1bhYJnM6WYFAHuH3hMxgSCZorYLY4YIrIBxz
-         yvbIRpUHCuKQUB09fySYM8xYFW9V6VOqhuQcuIN6uTngS6JELu22Q2qtRXnVoKAf0kHg
-         hBThL82Tc+5LAJLkfrQVwIEPTlxUkGrbzDzmTFjMCJwy4Y37aDoiJg0ZKRVbjeKb1ZnO
-         f/niq1HPBVrZPWO5rTcaDsnvzYy6UkSn5Umu4KvCn+aKuwQF4uk90AUGy+Hh2abxlefT
-         B8Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3YvJQ8AnVTjfxXBmIcp4SKnbUwO/iQ1O2/sNT7auhlc=;
-        b=7LCpfwuhKHGB/0R3Xmjmv5j3quDCJRIDKEZlqNYhJ0be1j5fKQcT1ftgmq7RtBV3LK
-         CuEf3bPK6r26peOFdJL43U0gjhlbLOIAPYVjeKkobPxioEbaKP/DtmvINZoG/yivTfvN
-         9Xq7SSEpv/L1Co5kPoshRvyvF1eWgyv9mWhopWdRr/fRTf7hQt1t6/1NZBCSegJ+UF2g
-         Vpk/nWVbuBLsrwcsG7BRIQMc6WxrW2nezDruoocdBWQ11+vLmuJInBkXDcoYmbRPXG4h
-         hcGP7al3egGdK+c8rL7/sBOIZ1ER8x/Cpb63A5wjhaCqjjDrKoyirQdJP+OGbNhL/ytP
-         1NdQ==
-X-Gm-Message-State: AOAM530FMywxX5K+jffGtbrc76UgiVxXH7Ibmx1CF3pAbdN5ZBv4bz3I
-        yZjukaq+fQM7h1kmMakmd0osIqzrQkdNpJTXPSk=
-X-Google-Smtp-Source: ABdhPJzfbZNuQ24oj/IbRhwz5VVFSzob3RDgay6MXgeZTuyPfwNUqu7QRyHY+WjpuSo4eoDsyxQebCkk3u3qwldIH24=
-X-Received: by 2002:a05:6000:18c5:b0:207:ac0d:f32 with SMTP id
- w5-20020a05600018c500b00207ac0d0f32mr789629wrq.574.1651269612858; Fri, 29 Apr
- 2022 15:00:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220429215324.3729441-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220429215324.3729441-1-dmitry.baryshkov@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 29 Apr 2022 15:00:02 -0700
-Message-ID: <CAF6AEGu+Ve1i_WHwcyXkGZKnv0aOiQNW7NCv=ToDpoorsn=TgA@mail.gmail.com>
-Subject: Re: [PATCH v2] MAINTAINERS: Add Dmitry as MSM DRM driver co-maintainer
+        Fri, 29 Apr 2022 18:05:59 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92B6CDC59B;
+        Fri, 29 Apr 2022 15:02:38 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3F147B835F1;
+        Fri, 29 Apr 2022 22:02:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB20C385A4;
+        Fri, 29 Apr 2022 22:02:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651269756;
+        bh=y1e1VCaxAZamC4kGuCyNm7/0euzVSjNbMRuTo9mAw0Y=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=X24md+kAryMr8evPBXrbn5mPQnu2YTMc65YtQb7Xjc4U5hS4vBQR5PCjnbWRryVMe
+         glqTr9cGRTGJgM9T0RXfp3T6CS8oP2NBPb4lCp851QKJEZhFMNwHznPGzYHybAt/3g
+         s44Cpj27CxjfuhnLbbBLPnCS0submunTQddW2al3vXzOlwsII1oQ9wCDS6sPAkMR7i
+         edqOOjjA5quwuU6VbklYKpB+FhCiB74rZoUj/Q1Ifl8B+yJv4UnnFBzhNRRf/4rBHx
+         gWPt3vZ6RGRb+mhavUs0uvVBlXaWXVUI1aQcePT0KqDoGTfkETAkhzOefB7ypiH/xR
+         ezM+MeAorUdMw==
+Date:   Fri, 29 Apr 2022 17:02:33 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v5 2/8] dt-bindings: PCI: qcom: Do not require resets on
+ msm8996 platforms
+Message-ID: <20220429220233.GA110383@bhelgaas>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220429213032.3724066-3-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 29, 2022 at 2:53 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> For the past several releases I have been assisting Rob by writing,
-> collecting, testing and integrating patches for non-GPU and non-core
-> parts of MSM DRM driver, while Rob is more interested in improving the
-> GPU-related part. Let's note this in the MAINTAINERS file.
->
-> While we are at it, per Rob's suggestion let's also promote Abhinav
-> Kumar to M: (as he is actively working on the driver) and switch Sean
-> Paul to R: (since he isn't doing much on msm these days).
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Sat, Apr 30, 2022 at 12:30:26AM +0300, Dmitry Baryshkov wrote:
+> On MSM8996/APQ8096 platforms the PCIe controller doesn't have any
+> resets. So move the requirement stance under the corresponding if
+> condition.
 
-Acked-by: Rob Clark <robdclark@gmail.com>
-
-> ---
->  MAINTAINERS | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 61d9f114c37f..782934f318d4 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -6254,8 +6254,9 @@ F:        drivers/gpu/drm/tiny/panel-mipi-dbi.c
->
->  DRM DRIVER FOR MSM ADRENO GPU
->  M:     Rob Clark <robdclark@gmail.com>
-> -M:     Sean Paul <sean@poorly.run>
-> -R:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-> +M:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-> +M:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> +R:     Sean Paul <sean@poorly.run>
->  L:     linux-arm-msm@vger.kernel.org
->  L:     dri-devel@lists.freedesktop.org
->  L:     freedreno@lists.freedesktop.org
-> --
-> 2.35.1
->
+Nit: Pretty sure you mean "stanza" instead of "stance".  Only
+mentioning it because I pointed it out last time but it was buried
+down in some text that I should have trimmed out.
