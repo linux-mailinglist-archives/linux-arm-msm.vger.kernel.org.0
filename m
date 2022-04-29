@@ -2,141 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A27A0514FB8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 17:38:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14F60514FC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 17:39:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378571AbiD2PlU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 11:41:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43124 "EHLO
+        id S234041AbiD2PnC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 11:43:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357715AbiD2PlR (ORCPT
+        with ESMTP id S231540AbiD2PnC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 11:41:17 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 220D5D64EC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 08:37:59 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id bn33so10965580ljb.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 08:37:59 -0700 (PDT)
+        Fri, 29 Apr 2022 11:43:02 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BE90D64EF;
+        Fri, 29 Apr 2022 08:39:43 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id i19so16140028eja.11;
+        Fri, 29 Apr 2022 08:39:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=stMkcO1S0hj0oX1Ei7gZipJbH9uphrCYExzSuAxWDnE=;
-        b=NKCCeEJE9f8DUHpV/aph0PNc62HIWap5nE7ORU3YbR6Sho4UxPWg6jrvTve8/euDHk
-         dHAoRd7oE/Af+it9j8yPKMn1GYZ+maYB4q7dWrwURUFg+UE5x6K/yaQMLmajxJBJgK0/
-         EJHIQ/TgHbR6+Q8ei5Az05eVALoN3hsUNH4E6W3RRJHkSGS73tJ5JHNTYkXfz28P7zH1
-         f5+v28UkmbcGqJUnMraOL6fsf86hxDNBXZyLj7gsHw2E2xfA5QVzcJ2aVd2c+bD8SVAZ
-         5zQkBBA+vr9rLUTl0LzSY9xkJMGKHK5TbFBKcc512vC7xThlX+V1dZ+T21KwgL4i2Z4O
-         ERwQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+mmy7RuPMU9hCC/2o2BzJ3rLqYOzAAc3YMuV1L840fY=;
+        b=i+LxBL7iEddxNdeB47NwwEeblzTlvP/xkHb3kztkrbhOeQ7NYmE/BOaMX+pYeWC7JI
+         kFidWrhpdqBmR9M6OS4sqssUmN/EbofEIc4u52ErRJ6IXhoThxZEeJFvidJHzLmwcdbt
+         C1/EeVsuvYQcRmF7YseuoTBlBSuoot2dihCCfusuEeI+NYnnSwlwRTOyc/nHIqN++YSK
+         t9R3JZgsO2jsPVvTj8BB/SJ/uk5tev642NtoR4Jh+Khofyyb5owT4ks4a0VgWzyEIHBk
+         dmhObRVcJUH40ze/gihxdQExwcLfzKYZV1NWEv4Qaum0x/BvdYh6AxlqL8JKaWbE7aSn
+         lxXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=stMkcO1S0hj0oX1Ei7gZipJbH9uphrCYExzSuAxWDnE=;
-        b=6GutYExkN3GW5mSyDiGO3+kiOH0DRSWL7ILyQeAu/+F1ToKHDRjvdcaWZ7SLUQC9RD
-         NTObGg1vPIOrP7tNYesdkoTFhF/pem4amH9eVZ0B8eeoXTfaTfP8wpJ4aClQQqa9OwOC
-         eRq6cBzTElL1m3saFXNntHLmEAyy93stDAHaupJUcKtockPO+0b6LSlhdZ38i5mcurNl
-         OP/xXK5NS6+Gf3VwWMW/kCu3M0B52NLqlBfEvGxomPzWw9tpfiBEVXe5ehafMFcTObm9
-         XkGdy+wgreDShfCzzwwERtBIXkzKonLSItuypANXluONo08bjUkcU87P7USOkNzTvCyr
-         T2DQ==
-X-Gm-Message-State: AOAM532JiToxCOAxQaLx/oGOVZxGNttc2ko/4swGn4bLEsOcgWcLqtH5
-        nSJQAa8Uae6Z4RHFku3A0s4gPQjDPCr5Og==
-X-Google-Smtp-Source: ABdhPJxetaWuG1XOD9dG5eRmAlrCUuWE+0U+tFUzXJ5T7c2By9DA0oDU9maPvnEw9MvQl/UQenQ0pw==
-X-Received: by 2002:a2e:855a:0:b0:24f:4e0:e426 with SMTP id u26-20020a2e855a000000b0024f04e0e426mr20580382ljj.330.1651246677526;
-        Fri, 29 Apr 2022 08:37:57 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 5-20020ac24d45000000b0047210300c96sm263523lfp.137.2022.04.29.08.37.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Apr 2022 08:37:57 -0700 (PDT)
-Message-ID: <82726e9e-8089-e43e-3493-8d906d3ae830@linaro.org>
-Date:   Fri, 29 Apr 2022 18:37:56 +0300
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+mmy7RuPMU9hCC/2o2BzJ3rLqYOzAAc3YMuV1L840fY=;
+        b=rzHg3kJ0phbzwerEiWFKl8aYKAFOyOTSL/Zda6J1hnLVlIDyRiArif3IQfBenHnlsS
+         +eELN8ZAqwaAWn1OeuDEfXdKP20aQN4FKbqcMpnIL4Aer2PbuX9CE77nJLZ2qK1sZDT8
+         yrBlPJJGdlpI0kH5zAHxMdIaF3+yYNb9Zn+3hTSxG3NWf/pajdhMJyN5sK7YynPO/6Aj
+         +5aTK91TYvuyiUvA2MI9hyeI2NqqKwRnYYPQOa7qWrIqHXImya8WJZUfhQn8IZRTj36w
+         ndjs2NYwwUi5uUGvckpMIUv/smSc/NlxkNezpAPQYdMJQoQF+RE2L3DRUFft5+bENbD2
+         TR2A==
+X-Gm-Message-State: AOAM530vmmoEua3Zfn0tOo3oN7/VgqbxtGVv8tbWrkTy8DwADleat7WL
+        TDve+uu2ldc84fO3ZVlMgzYkwYl5k08Zc/iW8/M=
+X-Google-Smtp-Source: ABdhPJysTx09E3S+k4vxcIhSGn2Xk6ivf6iVrOPm3PvZJQqFGajE+UPPkdSWH+q+J6XFLOdHkBSSQL/MinWpkeTpo/k=
+X-Received: by 2002:a17:907:c18:b0:6f3:9c23:20fd with SMTP id
+ ga24-20020a1709070c1800b006f39c2320fdmr23390448ejc.740.1651246782030; Fri, 29
+ Apr 2022 08:39:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v1 9/9] arm64: dts: qcom: sm8350: Add DISPCC node
-Content-Language: en-GB
-To:     Robert Foss <robert.foss@linaro.org>, bjorn.andersson@linaro.org,
-        agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org, jonathan@marek.ca,
-        tdas@codeaurora.org, anischal@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220429151247.388837-1-robert.foss@linaro.org>
- <20220429151247.388837-9-robert.foss@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220429151247.388837-9-robert.foss@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220429114330.59026-1-robimarko@gmail.com> <20220429114330.59026-5-robimarko@gmail.com>
+In-Reply-To: <20220429114330.59026-5-robimarko@gmail.com>
+From:   Jassi Brar <jassisinghbrar@gmail.com>
+Date:   Fri, 29 Apr 2022 10:39:29 -0500
+Message-ID: <CABb+yY3dPwT4ASdxHqRidRBEq19YHsp8RfAgO0tr_rZ+Dde2hA@mail.gmail.com>
+Subject: Re: [PATCH 5/6] dt-bindings: mailbox: set correct #clock-cells
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Devicetree List <devicetree@vger.kernel.org>,
+        linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/04/2022 18:12, Robert Foss wrote:
-> Add the dispcc clock-controller DT node for sm8350.
-> 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+On Fri, Apr 29, 2022 at 6:43 AM Robert Marko <robimarko@gmail.com> wrote:
+>
+> IPQ6018 and IPQ8074 require #clock-cells to be set to 1 as their APSS
+> clock driver provides multiple clock outputs.
+>
+> So allow setting 1 as #clock-cells and check that its set to 1 for IPQ6018
+> and IPQ8074, check others for 0 as its currently.
+>
+Please include qcom specific marker in the subject line.
 
-With mmcx-supply removed:
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-
-> ---
->   arch/arm64/boot/dts/qcom/sm8350.dtsi | 25 +++++++++++++++++++++++++
->   1 file changed, 25 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> index c49735d1b458..252fdef927cb 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> @@ -3,7 +3,9 @@
->    * Copyright (c) 2020, Linaro Limited
->    */
->   
-> +#include <dt-bindings/interconnect/qcom,sm8350.h>
->   #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/clock/qcom,dispcc-sm8350.h>
->   #include <dt-bindings/clock/qcom,gcc-sm8350.h>
->   #include <dt-bindings/clock/qcom,rpmh.h>
->   #include <dt-bindings/dma/qcom-gpi.h>
-> @@ -2533,6 +2535,29 @@ usb_2_dwc3: usb@a800000 {
->   			};
->   		};
->   
-> +		dispcc: clock-controller@af00000 {
-> +			compatible = "qcom,sm8350-dispcc";
-> +			reg = <0 0x0af00000 0 0x10000>;
-> +			mmcx-supply = <&mmcx_reg>;
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				 <0>,
-> +				 <0>,
-> +				 <0>,
-> +				 <0>,
-> +				 <0>,
-> +				 <0>;
-> +			clock-names = "bi_tcxo",
-> +				      "dsi0_phy_pll_out_byteclk",
-> +				      "dsi0_phy_pll_out_dsiclk",
-> +				      "dsi1_phy_pll_out_byteclk",
-> +				      "dsi1_phy_pll_out_dsiclk",
-> +				      "dp_phy_pll_link_clk",
-> +				      "dp_phy_pll_vco_div_clk";
-> +			#clock-cells = <1>;
-> +			#reset-cells = <1>;
-> +			#power-domain-cells = <1>;
-> +		};
-> +
->   		adsp: remoteproc@17300000 {
->   			compatible = "qcom,sm8350-adsp-pas";
->   			reg = <0 0x17300000 0 0x100>;
-
-
--- 
-With best wishes
-Dmitry
+thanks.
