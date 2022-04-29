@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DC9D515406
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 20:52:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A10D515408
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 20:52:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380078AbiD2Sz1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 14:55:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35180 "EHLO
+        id S1380084AbiD2Sz2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 14:55:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380082AbiD2SzZ (ORCPT
+        with ESMTP id S1380057AbiD2Sz0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 14:55:25 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CED3CCE4B1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:05 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id g16so6054111lja.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:05 -0700 (PDT)
+        Fri, 29 Apr 2022 14:55:26 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B570FCFBB3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:06 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id bu29so15669021lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AyU7BonIGwyxpeC2bOo+UtiaB+LwIrj5CM8fTIllsQE=;
-        b=P92cNaj0ZHc/r99hsBpAnOLZGkmzH1bBE9tBUT1eqad0V6Fma0kGCy/grop1zEbclq
-         WYpxnm+PON4K2dLSohp8oXPqt4qJuAbccZrNj19cNjvyhzLHshfECAZjbCdzYNOCpZdL
-         rz1ZktAIHbvYOtTHuR7Hp2VkGVWnEjzVQL7LJBL/NwDLFkHArFChkCWTFC01UlBpEKt0
-         27Xfh0xECWPOU/TwlI7ghByATy3l5HvYvdl+45uNfFZUftr4xkXKUK3OC2Xwqq6tH1rf
-         d/LbG6Q1ISIfO69URuzNhPM2PUAgekJLwr8+ZLzzgqVm2V5VJwA6cirRR4YCFs87d+c3
-         0Lgg==
+        bh=hjSZhFhF/WBNlx59PX4NcX4slNS4MZfzeRNT5ytZejs=;
+        b=k7YLfZxbvtM5355pTD0NC0W3r4ppNFyePl/eewijAPJmmPuRZOuf01TBxYpR4jnWx3
+         o2I7fMHX55U5QFrUI5pAtWxayXrJwzIq0eM5rj8COJ3eN4ijcxrW90QD33kJpDS48V7a
+         K2R7RBXdGjG281Y6ScUOryRfql9Z86/0OISsB8lxF44gU10f3CapzB+FRCIcODZE/tg0
+         4uve+Q+kV5xReWjP+2miP9fTdYh0/Wwcf/or5NFbfZqo8OJumuXlYlXbCegGluZkwaAj
+         +IchpppaHq9FhQ8LuTy6T80SMqJNME9hcJVTl6r9F4W72EuFdPPGCdPpXqHCR2/LOC26
+         YY7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AyU7BonIGwyxpeC2bOo+UtiaB+LwIrj5CM8fTIllsQE=;
-        b=6bnmBKxYFV1BTLy6/ZKsLVnqIG3+h7+qtbhQaEODnhhet7zHy30Ba6wq5gQ00qBDLf
-         ZQZBkJWY6SUYqRjjxaBXOs8xUVqAYg53z09YsMO88rErs0FW1vpylygS0YzpEI1Db2Y0
-         uMYB+OwOyGBboFDuZNQB+fDcs0znkiAH3H4z7i8fJqbCVkd27D6pLLGrOqiLf7we1tuQ
-         A8i6d2MHnkljzadVIabiX2tpVgkZeOH8dQvdfxq75Ou+EgVkEzWDwoL/dznyd74rbdhe
-         mM1qq6zCR3UX73wN4O9qjl1d7G97BPQ79hJt6Rm9KDbtg4ZSkSjaLepAaKU8oPgYFGqE
-         KnNQ==
-X-Gm-Message-State: AOAM532wem1ICKyazHwV3w++4yvQxtx3hNiKSyzOXlDpRVnr3yI6qpsZ
-        0eIqTbNxsEn1cFDenlEW9DDoJQ==
-X-Google-Smtp-Source: ABdhPJyZHl0WHe7eWa5m4Kb1bDgSwHmoXE/Zb1qZAcNGCEnxYagQPlTox6AC3dQdDtaeyeq6dSzjGQ==
-X-Received: by 2002:a2e:8917:0:b0:24f:3bb6:b399 with SMTP id d23-20020a2e8917000000b0024f3bb6b399mr382679lji.246.1651258324208;
-        Fri, 29 Apr 2022 11:52:04 -0700 (PDT)
+        bh=hjSZhFhF/WBNlx59PX4NcX4slNS4MZfzeRNT5ytZejs=;
+        b=pm3Cf7gV2kWsXJ/QvdhBfY92XkiSDZwhfvyMgoV8xG+KTxwtImIVNQ6dl7h7nYZYIt
+         ow7VvVl/omtaZIvPCGLYniEX+AwteZeP7zkktNZiw6ShOdPhb+Q1CpTYdvwGKqdAVo+d
+         LYcqQYpeQIX+tUZz/9q5S8DNnA6QyA6BNdYvgb+Clc3i6G9K1Wsw9kiy/PAz2IxcGRBy
+         16yhimy/ZNuH3Dassc9dNfSfQ0egSunsmR4FiaR66W59vzyb+ZUbeHJrd7kUIttgUr7V
+         940SekaxMzx0G/0Yrp1d4kwf3ZSsX2ImF4jbJaunjkUGJDSl5Hky9/yoNRpoWw/vUcIL
+         10nw==
+X-Gm-Message-State: AOAM5310k5ngV87n6aFuUvmKIGIOkSABZb7rFI4NE15JXUHHHwwz7fZp
+        HC8bGXFHZ8SxKMiHMTKdRf49Ag==
+X-Google-Smtp-Source: ABdhPJzzf2Gqpio3FiOmbjIAFCoKFglhxH/wJqpGfDRxpm4zP2G1J1gbWPGUhYrluI3eZC4OE/CZ4A==
+X-Received: by 2002:a05:6512:3b2a:b0:472:2c74:2b48 with SMTP id f42-20020a0565123b2a00b004722c742b48mr420328lfv.277.1651258325147;
+        Fri, 29 Apr 2022 11:52:05 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id z25-20020a19e219000000b00472230888a5sm295313lfg.121.2022.04.29.11.52.02
+        by smtp.gmail.com with ESMTPSA id z25-20020a19e219000000b00472230888a5sm295313lfg.121.2022.04.29.11.52.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 11:52:03 -0700 (PDT)
+        Fri, 29 Apr 2022 11:52:04 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Maxime Ripard <mripard@kernel.org>,
@@ -68,9 +68,9 @@ To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 Cc:     dri-devel@lists.freedesktop.org,
         linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v1 4/7] drm/imx/dcss: stop using drm_bridge_connector_en/disable_hpd()
-Date:   Fri, 29 Apr 2022 21:51:54 +0300
-Message-Id: <20220429185157.3673633-5-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v1 5/7] drm/msm/hdmi: stop using drm_bridge_connector_en/disable_hpd()
+Date:   Fri, 29 Apr 2022 21:51:55 +0300
+Message-Id: <20220429185157.3673633-6-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220429185157.3673633-1-dmitry.baryshkov@linaro.org>
 References: <20220429185157.3673633-1-dmitry.baryshkov@linaro.org>
@@ -91,61 +91,22 @@ drm_kms_poll helpers. Stop calling these functions manually.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/imx/dcss/dcss-dev.c | 4 ----
- drivers/gpu/drm/imx/dcss/dcss-kms.c | 4 ----
- 2 files changed, 8 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/imx/dcss/dcss-dev.c b/drivers/gpu/drm/imx/dcss/dcss-dev.c
-index c849533ca83e..62c5f7cd5906 100644
---- a/drivers/gpu/drm/imx/dcss/dcss-dev.c
-+++ b/drivers/gpu/drm/imx/dcss/dcss-dev.c
-@@ -254,8 +254,6 @@ int dcss_dev_suspend(struct device *dev)
- 	struct dcss_kms_dev *kms = container_of(ddev, struct dcss_kms_dev, base);
- 	int ret;
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+index cf24e68864ba..da889175dd86 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+@@ -317,8 +317,6 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
+ 		goto fail;
+ 	}
  
--	drm_bridge_connector_disable_hpd(kms->connector);
+-	drm_bridge_connector_enable_hpd(hdmi->connector);
 -
- 	drm_mode_config_helper_suspend(ddev);
- 
- 	if (pm_runtime_suspended(dev))
-@@ -289,8 +287,6 @@ int dcss_dev_resume(struct device *dev)
- 
- 	drm_mode_config_helper_resume(ddev);
- 
--	drm_bridge_connector_enable_hpd(kms->connector);
--
- 	return 0;
- }
- #endif /* CONFIG_PM_SLEEP */
-diff --git a/drivers/gpu/drm/imx/dcss/dcss-kms.c b/drivers/gpu/drm/imx/dcss/dcss-kms.c
-index 9b84df34a6a1..614073eb70b0 100644
---- a/drivers/gpu/drm/imx/dcss/dcss-kms.c
-+++ b/drivers/gpu/drm/imx/dcss/dcss-kms.c
-@@ -142,8 +142,6 @@ struct dcss_kms_dev *dcss_kms_attach(struct dcss_dev *dcss)
- 
- 	drm_kms_helper_poll_init(drm);
- 
--	drm_bridge_connector_enable_hpd(kms->connector);
--
- 	ret = drm_dev_register(drm, 0);
- 	if (ret)
- 		goto cleanup_crtc;
-@@ -153,7 +151,6 @@ struct dcss_kms_dev *dcss_kms_attach(struct dcss_dev *dcss)
- 	return kms;
- 
- cleanup_crtc:
--	drm_bridge_connector_disable_hpd(kms->connector);
- 	drm_kms_helper_poll_fini(drm);
- 	dcss_crtc_deinit(crtc, drm);
- 
-@@ -169,7 +166,6 @@ void dcss_kms_detach(struct dcss_kms_dev *kms)
- 	struct drm_device *drm = &kms->base;
- 
- 	drm_dev_unregister(drm);
--	drm_bridge_connector_disable_hpd(kms->connector);
- 	drm_kms_helper_poll_fini(drm);
- 	drm_atomic_helper_shutdown(drm);
- 	drm_crtc_vblank_off(&kms->crtc.base);
+ 	ret = msm_hdmi_hpd_enable(hdmi->bridge);
+ 	if (ret < 0) {
+ 		DRM_DEV_ERROR(&hdmi->pdev->dev, "failed to enable HPD: %d\n", ret);
 -- 
 2.35.1
 
