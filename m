@@ -2,118 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B897E51571E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 23:43:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C591E515723
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 23:44:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238710AbiD2VqU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 17:46:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57812 "EHLO
+        id S238792AbiD2Vrq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 17:47:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238667AbiD2VqS (ORCPT
+        with ESMTP id S238760AbiD2Vrp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 17:46:18 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C3B07B109
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 14:42:58 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id j4so16215894lfh.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 14:42:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ga1FXFUoff60uV1gZjfSxxZrosbrRhkS2aF6jySEeu8=;
-        b=oNLo/b51zfyFKstJMQDnjvpf9VeALmD680kH2A0067LiI5MNT51qmjn6MJaYuS1q/R
-         Uoe/MbXnUHF0H1PPc8ztQXUehiV9ADXYpyXwrAwNSegD/jRo7sNGO6aCdiVf2soPXaDk
-         keAgo8QDh0FMEJp/QeAUtHholrREcdj5IsHW9Z6dZp+Ldb7jNM7aaaa2mHXSGa+Y5k5e
-         rG06Fqdn4CRotrYldskG6W8u8bCHFknkSm8Lx6XUx38p8ODCG4Ejz5jrverngZObQ3fM
-         q6MbxTAi701l9WJkXbsIh2gyNjfzUErt6ux2beoU8nHHqe1HgWjc/u/NYOnaaWUkz4y9
-         0ClA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ga1FXFUoff60uV1gZjfSxxZrosbrRhkS2aF6jySEeu8=;
-        b=QI+o28Gse8Q5SVnLxm3UplFa+Ohinp69jBoX8rGCsIZwkAHEvBpbLtK12wCzmnUJ+2
-         fOYwVJXPaWDFQXuYAhQ8N+oPHAKWG/PwMjljgJPuz8fc3tR/TatF+FkQijF8tzPNfkdn
-         eCf0busMjfcl1mINeVHXYcd/ZNvL5gqUs+EltVQqBe26WHSoNaXE3oAenQmWK95sYlvu
-         crwYvvCYEled/BkHzI7LIEsHg+DVKTnJ13nDzdpRaLnRS7VlYM6fHrq6lNryjrwVxDnN
-         evEugnxssdmgkKRNTWV4GcBk9or0uy3R7RTUl+BuQ0p9cstxKek/7NDi8iMJN1KBXmb4
-         Gixw==
-X-Gm-Message-State: AOAM532XjfY3QRu44+quCNRNOu7nXvzmrXLHRHwcTlb+onses0IKiITd
-        OHIOYRVJ4mpyLGWw/Maf1+yMuQ==
-X-Google-Smtp-Source: ABdhPJxzORLbmlqEy7JgXTX/YqDUJtTE3Q7VB19TW6sgdWivoP2IIKBBtEOE7Gu51kNxh34lW4G4cQ==
-X-Received: by 2002:a05:6512:2216:b0:472:3e84:7c40 with SMTP id h22-20020a056512221600b004723e847c40mr869034lfu.533.1651268576680;
-        Fri, 29 Apr 2022 14:42:56 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id g4-20020a19ac04000000b0047255d211f6sm30520lfc.293.2022.04.29.14.42.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 14:42:56 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v5 7/7] arm64: dts: qcom: sm8250: provide additional MSI interrupts
-Date:   Sat, 30 Apr 2022 00:42:50 +0300
-Message-Id: <20220429214250.3728510-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220429214250.3728510-1-dmitry.baryshkov@linaro.org>
-References: <20220429214250.3728510-1-dmitry.baryshkov@linaro.org>
+        Fri, 29 Apr 2022 17:47:45 -0400
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6E1AD890A;
+        Fri, 29 Apr 2022 14:44:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651268665; x=1682804665;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=P2UJ/TZ038lSA/cIVqZWSYw3gdJ/2sLQfrgZKGge4O4=;
+  b=kfLJu83CCnSe67m4bsC2fROsc4pnT8tDL7cpphThVZ7rkvYhaV1/ah0I
+   eZ02X3c5TTkIsMqjgntK0qQ7Mp/g1lL50RLZbbkGumf/Z60wOS/gL76/N
+   HxD6TOknyPFYCFb/1wd+4dxtmzNYGfY7R9XiyDRT7oDWL/Tpe4dYXbz7u
+   QabUX7Q8pKubXkhDoYx0qpMTgrV3YrhzkUR86DH1fARkHdbi06Wmc/06E
+   SpR3oKdhBbY20WWNwJHnJdXRQw9PpBQ5YviQeOrU/CLOUIRbx3RjylnG6
+   LBebyR5TlYUzpqgeYhe1tafGXIAeWIR3XhmQhnS/4XslKEprR0zeUsHJz
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10332"; a="265625360"
+X-IronPort-AV: E=Sophos;i="5.91,186,1647327600"; 
+   d="scan'208";a="265625360"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2022 14:44:25 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,186,1647327600"; 
+   d="scan'208";a="881666036"
+Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
+  by fmsmga005.fm.intel.com with ESMTP; 29 Apr 2022 14:44:23 -0700
+Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1nkYPW-0006cz-DH;
+        Fri, 29 Apr 2022 21:44:22 +0000
+Date:   Sat, 30 Apr 2022 05:43:51 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     kbuild-all@lists.01.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_vgarodia@quicinc.com,
+        frkoenig@chromium.org, quic_dikshita@quicinc.com
+Subject: Re: [PATCH] media: venus: set ubwc configuration on specific video
+ hardware
+Message-ID: <202204300506.tuUok8FR-lkp@intel.com>
+References: <1651131248-20313-1-git-send-email-quic_vgarodia@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1651131248-20313-1-git-send-email-quic_vgarodia@quicinc.com>
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SM8250 each group of MSI interrupts is mapped to the separate host
-interrupt. Describe each of interrupts in the device tree for PCIe0
-host.
+Hi Vikash,
 
-Tested on Qualcomm RB5 platform with first group of MSI interrupts being
-used by the PME and attached ath11k WiFi chip using second group of MSI
-interrupts.
+Thank you for the patch! Yet something to improve:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+[auto build test ERROR on media-tree/master]
+[also build test ERROR on v5.18-rc4 next-20220429]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 410272a1e19b..0659ac45c651 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -1807,8 +1807,15 @@ pcie0: pci@1c00000 {
- 			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
- 
--			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
-+			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi", "msi2", "msi3", "msi4", "msi5", "msi6", "msi7", "msi8";
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 0x7>;
- 			interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+url:    https://github.com/intel-lab-lkp/linux/commits/Vikash-Garodia/media-venus-set-ubwc-configuration-on-specific-video-hardware/20220428-153510
+base:   git://linuxtv.org/media_tree.git master
+config: arm64-defconfig (https://download.01.org/0day-ci/archive/20220430/202204300506.tuUok8FR-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/22d299bea1f679d007cb71b3916bf39bb957ab66
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Vikash-Garodia/media-venus-set-ubwc-configuration-on-specific-video-hardware/20220428-153510
+        git checkout 22d299bea1f679d007cb71b3916bf39bb957ab66
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/media/platform/qcom/venus/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+   drivers/media/platform/qcom/venus/hfi_venus.c: In function 'venus_sys_set_default_properties':
+>> drivers/media/platform/qcom/venus/hfi_venus.c:997:23: error: too few arguments to function 'venus_sys_set_ubwc_config'
+     997 |                 ret = venus_sys_set_ubwc_config();
+         |                       ^~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/media/platform/qcom/venus/hfi_venus.c:907:12: note: declared here
+     907 | static int venus_sys_set_ubwc_config(struct venus_hfi_device *hdev)
+         |            ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+vim +/venus_sys_set_ubwc_config +997 drivers/media/platform/qcom/venus/hfi_venus.c
+
+   967	
+   968	static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
+   969	{
+   970		struct device *dev = hdev->core->dev;
+   971		const struct venus_resources *res = hdev->core->res;
+   972		int ret;
+   973	
+   974		ret = venus_sys_set_debug(hdev, venus_fw_debug);
+   975		if (ret)
+   976			dev_warn(dev, "setting fw debug msg ON failed (%d)\n", ret);
+   977	
+   978		/*
+   979		 * Idle indicator is disabled by default on some 4xx firmware versions,
+   980		 * enable it explicitly in order to make suspend functional by checking
+   981		 * WFI (wait-for-interrupt) bit.
+   982		 */
+   983		if (IS_V4(hdev->core) || IS_V6(hdev->core))
+   984			venus_sys_idle_indicator = true;
+   985	
+   986		ret = venus_sys_set_idle_message(hdev, venus_sys_idle_indicator);
+   987		if (ret)
+   988			dev_warn(dev, "setting idle response ON failed (%d)\n", ret);
+   989	
+   990		ret = venus_sys_set_power_control(hdev, venus_fw_low_power_mode);
+   991		if (ret)
+   992			dev_warn(dev, "setting hw power collapse ON failed (%d)\n",
+   993				 ret);
+   994	
+   995		/* For specific venus core, it is mandatory to set the UBWC configuration */
+   996		if (res->ubwc_conf) {
+ > 997			ret = venus_sys_set_ubwc_config();
+   998			if (ret)
+   999				dev_warn(dev, "setting ubwc config failed (%d)\n", ret);
+  1000		}
+  1001	
+  1002		return ret;
+  1003	}
+  1004	
+
 -- 
-2.35.1
-
+0-DAY CI Kernel Test Service
+https://01.org/lkp
