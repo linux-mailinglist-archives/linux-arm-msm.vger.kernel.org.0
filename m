@@ -2,82 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 289EB51540B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 20:52:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94EAD51541B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 20:52:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380077AbiD2Sz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 14:55:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35208 "EHLO
+        id S1380082AbiD2S4E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 14:56:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380082AbiD2Sz1 (ORCPT
+        with ESMTP id S240321AbiD2S4D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 14:55:27 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57CA7CC50F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:08 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id x33so15641540lfu.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:08 -0700 (PDT)
+        Fri, 29 Apr 2022 14:56:03 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59ADCC3E0E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:44 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id a5so5999521qvx.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=UcCYVcTme16+uWpUP90xtTFpl/uKSWYcTwwPaiNEnH4=;
-        b=qM8Xa/+knMRPfLTwlN+fR5Ci35dl6BlRHNoNMYX0hVxDfbUjon+grBnYTYSLc3wpKT
-         x4zV6cHCKHtbc51lv2Ah2HUBs9k2H86hvUof04MJ+L1RWBgmtKiX1u9XICgIb4T3AWaJ
-         m4FUPRzbY7leMHH75zT6l4BjTs5XX2FRI5CUANIwhQ7zdCt+NFhKOGFTpqUu6dfyHv6E
-         E4XiPnOg22O0wCoqh1noIhgC01FYKxIVgoGqmFMWCxjXFP/2gHCiaRjXcYzL5MMYMF4x
-         ymA6+KoQHsW5hk1e2FGsMk1QRstd2BiHSgXf9rG9TiNHEwN6aK1f8PzkltynBJS2R4sG
-         ms2Q==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=kMONR8uP8o1V9wDmONNEpi44JYnbSaTBErCeX+Ef8mM=;
+        b=MUwX5h8GHYTDN93S5LQ8HgipQCFvTgIJKkyQsoDuwUIJtqQlnvDOsWHlV05eaC8Ri/
+         aj2P8a4Y7arfynDH3NX+WbPF34XjQ5ExG7rNPjVnk7NT0K1wQZG/W0mGYL1zbl88pmsU
+         ojCPyRS//omI5vTAAO4qjW/XkOqvRD3PZzryTMb9Z7TL7+TxD2tFXUuhy+MlH5JeLgPp
+         NILsPP4yFMrqjNKkp6zOegLylz9rgNharn+C6dUtPOMv/q2zNzyoODPWGprdgL1EbxMi
+         zfz6WkTYuvk+Cpj1IWITDaZyqfbYl9YNoDgv6evqUEbZh2fhePEm38ELdY/mfd4WV6Uk
+         Abqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=UcCYVcTme16+uWpUP90xtTFpl/uKSWYcTwwPaiNEnH4=;
-        b=CWYClWhuRVE3jAst2+/fWGXCDOMP3OOfTnB/WZTVosbbLdQbiSJjjj0ipPnbkCJ/zi
-         AokhDxlzww/e5q883XA8ilHrloIh+D4ClSdXw0W7niBw14ibhi6tRmvH2smoDEj8p8xr
-         qt3zwFYBtEmSC/nnjCFP7mBT4/NPhLDGvablr+nNZc2y3cU7RtQz6GeEse/yombHZaAq
-         RhglIwk981fnsbyorRO506U+8bRbEgCaltkFgg4G8nYX4n39X3VGk+WBbt+jDShXJgVi
-         wNgadzvbvqsT1wPyBHeqyay0f1S4Ow6UYtUlntpc2Q1SZCnGpyfTKSi4yJaGaF7VV2zP
-         0vOw==
-X-Gm-Message-State: AOAM532oDz6Vo3qnuntwLWLLb0x7ufgZyaWWtxrCc2SRVN7+jjIzhI/j
-        X6tXfj/MlCJWh64kOOeK9igMHP6Pt32fjA==
-X-Google-Smtp-Source: ABdhPJxDM1J9ZFOYujHwlnlADYTDFV6bTMCQTzicA80l40xvHlgv3/pXMH1AjfPq7g134d5qn59tqw==
-X-Received: by 2002:ac2:52b4:0:b0:445:ba75:7513 with SMTP id r20-20020ac252b4000000b00445ba757513mr442866lfm.248.1651258326717;
-        Fri, 29 Apr 2022 11:52:06 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id z25-20020a19e219000000b00472230888a5sm295313lfg.121.2022.04.29.11.52.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 11:52:06 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Tomi Valkeinen <tomba@kernel.org>
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v1 7/7] drm/bridge_connector: drop drm_bridge_connector_en/disable_hpd()
-Date:   Fri, 29 Apr 2022 21:51:57 +0300
-Message-Id: <20220429185157.3673633-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220429185157.3673633-1-dmitry.baryshkov@linaro.org>
-References: <20220429185157.3673633-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=kMONR8uP8o1V9wDmONNEpi44JYnbSaTBErCeX+Ef8mM=;
+        b=3+Hus/EJCiNdZ4BJzz/aD3k5e78gjsrst8ximEqVtl1uarwf3VdSJl3X+yf1C9z0db
+         ZVePNy/YaYiJkIwYG31wSV2qtdPhc92cD+7XvE2EXGaDG/C6FFVJFIZ6KgprwMAf8uVz
+         Gx40Om9X3QRtzk3lelvQZlJcd+LCN20rfPSzYaFWN2es3jRMBFIP1v+4Oop6sR7vmew6
+         LefcSDATpAHQs8gqAVd/+6tWL1XPI31OYrXZEfPMMT4aNFQ8Z3ICLQMcnrSUgnrs+o4k
+         5ntO6KVuBhXKL7U0RNRiGRlm9KMwyJ6sTdkF04vz/K3ML5unOrzG+aZbN0ECmJeuQs+y
+         RBUQ==
+X-Gm-Message-State: AOAM533aQ9OXLyUfYRJjeUSjRXiDraRRqyrGWRaa8naAXy1CNgLjWroh
+        Ls/FuFdnUvNczzBBKgHAtmOb/rEztCMzTg==
+X-Google-Smtp-Source: ABdhPJzb5oXknS64kuiz02rv4HWvkZbDRu3ubeC0w7hDduzsE6tvZcGKS9f3Lgfwig0zajCWBQ93Gg==
+X-Received: by 2002:a05:6214:e4a:b0:446:6567:6554 with SMTP id o10-20020a0562140e4a00b0044665676554mr305731qvc.25.1651258363472;
+        Fri, 29 Apr 2022 11:52:43 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id az14-20020a05620a170e00b0069fb6140d2fsm1374694qkb.45.2022.04.29.11.52.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Apr 2022 11:52:43 -0700 (PDT)
+Message-ID: <f1a5a345-422a-e46a-3a83-2de4023762a9@linaro.org>
+Date:   Fri, 29 Apr 2022 13:52:41 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] interconnect: Restore sync state by ignoring ipa-virt in
+ provider count
+Content-Language: en-US
+To:     Georgi Djakov <djakov@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+References: <20220427013226.341209-1-swboyd@chromium.org>
+ <fb1f9a17-9b27-b0ac-124d-66644851e204@linaro.org>
+ <38149635-26ee-ab02-7c69-c5dd5f64fab5@kernel.org>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <38149635-26ee-ab02-7c69-c5dd5f64fab5@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,71 +81,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now as all drivers stopped calling drm_bridge_connector_enable_hpd() and
-drm_bridge_connector_disable_hpd() it is safe to remove them complelely.
+On 4/27/22 3:52 PM, Georgi Djakov wrote:
+> On 27.04.22 15:00, Alex Elder wrote:
+>> On 4/26/22 8:32 PM, Stephen Boyd wrote:
+>>> Ignore compatible strings for the IPA virt drivers that were removed in
+>>> commits 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0
+>>> interconnects") and 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0
+>>> interconnects") so that the sync state logic can kick in again.
+>>> Otherwise all the interconnects in the system will stay pegged at max
+>>> speeds because 'providers_count' is always going to be one larger than
+>>> the number of drivers that will ever probe on sc7180 or sdx55. This
+>>> fixes suspend on sc7180 and sdx55 devices when you don't have a
+>>> devicetree patch to remove the ipa-virt compatible node.
+>>>
+>>> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>> Cc: Doug Anderson <dianders@chromium.org>
+>>> Cc: Alex Elder <elder@linaro.org>
+>>> Cc: Taniya Das <quic_tdas@quicinc.com>
+>>> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+>>> Fixes: 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0 
+>>> interconnects")
+>>> Fixes: 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0 
+>>> interconnects")
+>>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+>>
+>> So of_count_icc_providers() counts the number of
+>> interconnect providers defined in the DTB, regardless
+>> of whether anything in the code supports it.
+> 
+> Yes, that's the case currently. There could be multiple provider drivers
+> in different modules, and the modules may be loaded even not during boot,
+> but later. So we rely on DT.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/drm_bridge_connector.c | 25 -------------------------
- include/drm/drm_bridge_connector.h     |  2 --
- 2 files changed, 27 deletions(-)
+Georgi, do you have any other ideas about how to improve this?
 
-diff --git a/drivers/gpu/drm/drm_bridge_connector.c b/drivers/gpu/drm/drm_bridge_connector.c
-index 1592da3b9403..d9c1f61b6fb6 100644
---- a/drivers/gpu/drm/drm_bridge_connector.c
-+++ b/drivers/gpu/drm/drm_bridge_connector.c
-@@ -128,18 +128,6 @@ static void drm_bridge_connector_hpd_cb(void *cb_data,
- 	drm_kms_helper_hotplug_event(dev);
- }
- 
--/**
-- * drm_bridge_connector_enable_hpd - Enable hot-plug detection for the connector
-- * @connector: The DRM bridge connector
-- *
-- * This function enables hot-plug detection for the given bridge connector.
-- * This is typically used by display drivers in their resume handler.
-- */
--void drm_bridge_connector_enable_hpd(struct drm_connector *connector)
--{
--}
--EXPORT_SYMBOL_GPL(drm_bridge_connector_enable_hpd);
--
- static void _drm_bridge_connector_enable_hpd(struct drm_connector *connector)
- {
- 	struct drm_bridge_connector *bridge_connector =
-@@ -151,19 +139,6 @@ static void _drm_bridge_connector_enable_hpd(struct drm_connector *connector)
- 				      bridge_connector);
- }
- 
--/**
-- * drm_bridge_connector_disable_hpd - Disable hot-plug detection for the
-- * connector
-- * @connector: The DRM bridge connector
-- *
-- * This function disables hot-plug detection for the given bridge connector.
-- * This is typically used by display drivers in their suspend handler.
-- */
--void drm_bridge_connector_disable_hpd(struct drm_connector *connector)
--{
--}
--EXPORT_SYMBOL_GPL(drm_bridge_connector_disable_hpd);
--
- static void _drm_bridge_connector_disable_hpd(struct drm_connector *connector)
- {
- 	struct drm_bridge_connector *bridge_connector =
-diff --git a/include/drm/drm_bridge_connector.h b/include/drm/drm_bridge_connector.h
-index 33f6c3bbdb4a..69630815fb09 100644
---- a/include/drm/drm_bridge_connector.h
-+++ b/include/drm/drm_bridge_connector.h
-@@ -10,8 +10,6 @@ struct drm_connector;
- struct drm_device;
- struct drm_encoder;
- 
--void drm_bridge_connector_enable_hpd(struct drm_connector *connector);
--void drm_bridge_connector_disable_hpd(struct drm_connector *connector);
- struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
- 						struct drm_encoder *encoder);
- 
--- 
-2.35.1
+What you say makes sense--you figure out the total number of
+providers at init time based on what's defined in DT.
+
+But when all is said and done, what if even *one* of those
+has no provider driver?  Isn't that what causes the problem
+here, that icc_sync_state assumes all providers specified in
+DT will eventually have a driver that calls icc_sync_state()?
+
+(I don't claim to know the interconnect code in detail, so
+I might not be quite understanding how this works.)
+
+					-Alex
+
+> Thanks,
+> Georgi
+> 
+>> This seems to be a more general problem, but I
+>> suppose in practice it's not likely to occur.
+>>
+>> I think your solution looks fine, but I'm interested
+>> in what Georgi has to say.
+>>
+>> Reviewed-by: Alex Elder <elder@linaro.org>
+>>
+>>
+>>> ---
+>>>   drivers/interconnect/core.c | 8 +++++++-
+>>>   1 file changed, 7 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+>>> index 9050ca1f4285..c52915a58b22 100644
+>>> --- a/drivers/interconnect/core.c
+>>> +++ b/drivers/interconnect/core.c
+>>> @@ -1087,9 +1087,15 @@ static int of_count_icc_providers(struct 
+>>> device_node *np)
+>>>   {
+>>>       struct device_node *child;
+>>>       int count = 0;
+>>> +    const struct of_device_id ignore_list[] = {
+>>> +        { .compatible = "qcom,sc7180-ipa-virt" },
+>>> +        { .compatible = "qcom,sdx55-ipa-virt" },
+>>> +        {}
+>>> +    };
+>>>       for_each_available_child_of_node(np, child) {
+>>> -        if (of_property_read_bool(child, "#interconnect-cells"))
+>>> +        if (of_property_read_bool(child, "#interconnect-cells") &&
+>>> +            likely(!of_match_node(ignore_list, child)))
+>>>               count++;
+>>>           count += of_count_icc_providers(child);
+>>>       }
+>>>
+>>> base-commit: 2fb251c265608636fc961b7d38e1a03937e57371
+>>
+> 
 
