@@ -2,74 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DAD1515013
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 17:59:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AEC7515027
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 18:02:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378694AbiD2QC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 12:02:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51148 "EHLO
+        id S1378374AbiD2QGD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 12:06:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378709AbiD2QCx (ORCPT
+        with ESMTP id S1359029AbiD2QGD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 12:02:53 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CFF08A9F2;
-        Fri, 29 Apr 2022 08:59:34 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id r13so16288027ejd.5;
-        Fri, 29 Apr 2022 08:59:34 -0700 (PDT)
+        Fri, 29 Apr 2022 12:06:03 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF8385B3D7;
+        Fri, 29 Apr 2022 09:02:43 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id iy15so5641729qvb.9;
+        Fri, 29 Apr 2022 09:02:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=CFofsZTrxzYW8g6YUhhQeEdV8aFgV5toOyemA0wEyeo=;
-        b=C1T5dB6hi7U6pTSrjv6swEvw3cKJfbF/qLcR3RQWeut5cPamNKokJimmmheEgPlWme
-         YhLG1gvP8efrP/7tMPVKf+xVQs2czDC5zN4ZYJnxWoO1gHLoxBc8QWMR3lFI90LYQ8yH
-         fQCj28jDmiK1VuQCoK5EoOCANhe/WCHl9j8GHQV/A4Xl8Q1opeoAIcJbiaOVwynM3S4S
-         3HTFpaTxyYWvEWNW/3yr5295gY4zN2rUI3gy3tGCfV8Hbdsz77I4GBBpaCCvcwP51De0
-         3k7zBeevh1t01OZgNmiTI+2opiStvubt/3Fiq7sqdh/jChNPfSbUX90AXjuRQUNAbYax
-         edhQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cYJZsvyOkea/9Q9eJc08SVbCYt0tvNcpUbqVcHGxyq4=;
+        b=jPeYnPbJRXQD0BX3W7jrdWUYJmD7N8mN6+/pC8+nlDf3j7JU8geIsPlI87igho4K1I
+         byuawC1unF1Z0oDe2W4t/5IPETGXvTeM2aq16clko+nH9SHevwesvXqYtP+0b33I5h/E
+         EBhRSIuyxAy3VKxC1elSJAPseZ2IfwKOYv88C8eOtWD4Jq0u8HxkUmT10yfwJNbEzqji
+         T4RlWfeSBVot08KfvT+eE4NwmiKr56Ya+6P38B693PvIx6nObZ/4rim4qAKCt+tlGEQ5
+         sHYyqbaZCa08RCNevQQ2OJLdHOScmSAJzBi9c8ICb+oNgxiVuzCOrY46cKB3LvMECDEF
+         rmFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CFofsZTrxzYW8g6YUhhQeEdV8aFgV5toOyemA0wEyeo=;
-        b=dEUXNf17EgTIBi1aB8MhZzAGTPe5ZhaUIbHb/dvp2qIwFgahE+TckXDJminsjU/AzI
-         Xp+xicplSYy3vEjfo09tRZwNj9bDtqluxWhKDPvytaRdPLVl4ZSB1p5iENUXuBVCcdkb
-         Y+5DnpZ7Gt1QR4DmU9iPN1xPvcY/rIRqiMjKYFliv6F5QqHojgr7vtpcngHfWpMd4AFl
-         bx12kqSvBHEcqfE8mAkuvxG9NcGG/QpqOIyX9dn1VEIPGD4IrAPeBu+llu8kN4oubq34
-         FUcn32oMsCW1pIZhTZjwMJGcpppOMdCTguH+823xZHTIUseVS7+EY5ddjL1ePeOkS+x6
-         jHmQ==
-X-Gm-Message-State: AOAM530APwPK8XfxZuAxLp/bb9xh+nfe+cG3MyBAzvM8yVPRgJRMXHPb
-        1KfvwaLOFDMmTvB32/ORh0w=
-X-Google-Smtp-Source: ABdhPJxUyrv8UAISq1M4lIXdSzVcLopFibiDLcBRyirwaUmJsMXKf5WYWap0qDwxSikXnmaJhmpYpA==
-X-Received: by 2002:a17:906:7307:b0:6da:92db:c78f with SMTP id di7-20020a170906730700b006da92dbc78fmr36910751ejc.35.1651247972842;
-        Fri, 29 Apr 2022 08:59:32 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id ia5-20020a170907a06500b006f3ef214dffsm756699ejc.101.2022.04.29.08.59.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 08:59:32 -0700 (PDT)
-Message-ID: <626c0b64.1c69fb81.1b1e9.4fe6@mx.google.com>
-X-Google-Original-Message-ID: <YmwK0aa8u7lU6lct@Ansuel-xps.>
-Date:   Fri, 29 Apr 2022 17:57:05 +0200
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/3] dt-bindings: arm: msm: Convert kpss-gcc driver
- Documentation to yaml
-References: <20220429121739.28584-1-ansuelsmth@gmail.com>
- <20220429121739.28584-4-ansuelsmth@gmail.com>
- <1651247596.124069.2344494.nullmailer@robh.at.kernel.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cYJZsvyOkea/9Q9eJc08SVbCYt0tvNcpUbqVcHGxyq4=;
+        b=Rxp+FmblwiDUTbMlYCcjeVreos6R8yk2dT+6kXBbJrupLoFNbX71WpwFcZkbinuUsc
+         PZzb0T85ZmEh26mADAIJlDTqrbuyQFQu6h5xSEq3pElC31+3agfRm4567Qt/wu7BujR7
+         jvOg2fR4hCyh+EpJE/5YljXt9sTulvhhXtGlmQYO2P0nAyfB4r3mPQgSJOAoGZILGvs0
+         LgTeD5h141efsuGRM7wrw+/Lpb9LTRvwjgABWDvEn9vJdgFAvvNj1D94cyJ8pUz+FmSr
+         8CyMkanxRfmyCTA8V91sYAiHPNrW/DpcvhwnT+9muKjyDg10gWF0P1KsIOYwqMSR8Dce
+         s6/g==
+X-Gm-Message-State: AOAM531A5z1V72hZoo9F7LvBvithioXT9TWLnDluZ6G2xp7Is0HzZT7f
+        ZDyl5M1yGu8QL64gfsbIEBPqzvPFfW4XOYFEpDQ=
+X-Google-Smtp-Source: ABdhPJzdWlVtYLa+B+4LyiD79fGPDUp75fRe3KQuWcZb2b8cU/HDhsxHqmB8kyhr4IxxVNrLEevlt1WPs9mwB1mPoIs=
+X-Received: by 2002:ad4:4f48:0:b0:458:12bb:1321 with SMTP id
+ eu8-20020ad44f48000000b0045812bb1321mr2313282qvb.50.1651248163056; Fri, 29
+ Apr 2022 09:02:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1651247596.124069.2344494.nullmailer@robh.at.kernel.org>
+References: <20220429114330.59026-1-robimarko@gmail.com> <20220429114330.59026-5-robimarko@gmail.com>
+ <CABb+yY3dPwT4ASdxHqRidRBEq19YHsp8RfAgO0tr_rZ+Dde2hA@mail.gmail.com>
+In-Reply-To: <CABb+yY3dPwT4ASdxHqRidRBEq19YHsp8RfAgO0tr_rZ+Dde2hA@mail.gmail.com>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Fri, 29 Apr 2022 18:02:32 +0200
+Message-ID: <CAOX2RU5umgktA1kWfKiuDAC-VAH0U-DrPhk8FqX-kpkQ9RTPpQ@mail.gmail.com>
+Subject: Re: [PATCH 5/6] dt-bindings: mailbox: set correct #clock-cells
+To:     Jassi Brar <jassisinghbrar@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Devicetree List <devicetree@vger.kernel.org>,
+        linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -80,54 +75,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 29, 2022 at 10:53:16AM -0500, Rob Herring wrote:
-> On Fri, 29 Apr 2022 14:17:39 +0200, Ansuel Smith wrote:
-> > Convert kpss-gcc driver Documentation to yaml.
-> > 
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > ---
-> >  .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 -------------
-> >  .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 63 +++++++++++++++++++
-> >  2 files changed, 63 insertions(+), 44 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
-> >  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
-> > 
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml: properties: '#clock-cells' is a dependency of 'clock-output-names'
+On Fri, 29 Apr 2022 at 17:39, Jassi Brar <jassisinghbrar@gmail.com> wrote:
+>
+> On Fri, Apr 29, 2022 at 6:43 AM Robert Marko <robimarko@gmail.com> wrote:
+> >
+> > IPQ6018 and IPQ8074 require #clock-cells to be set to 1 as their APSS
+> > clock driver provides multiple clock outputs.
+> >
+> > So allow setting 1 as #clock-cells and check that its set to 1 for IPQ6018
+> > and IPQ8074, check others for 0 as its currently.
+> >
+> Please include qcom specific marker in the subject line.
+Yeah, I see that I forgot to include the actual binding name.
 
-Erm how to fix this? I can't do a 1:1 conversion if the source was
-wrong and also have no bot warning.
-Or I should just push an additional patch to fix this error after the
-conversion?
-
-> 	from schema $id: http://devicetree.org/meta-schemas/clocks.yaml#
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml: ignoring, error in schema: properties
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.example.dtb: clock-controller@2011000: '#clock-cells' is a dependency of 'clock-output-names'
-> 	From schema: /usr/local/lib/python3.10/dist-packages/dtschema/schemas/clock/clock.yaml
-> Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.example.dtb:0:0: /example-0/clock-controller@2011000: failed to match any schema with compatible: ['qcom,kpss-gcc-ipq8064', 'qcom,kpss-gcc']
-> Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.example.dtb:0:0: /example-0/clock-controller@2011000: failed to match any schema with compatible: ['qcom,kpss-gcc-ipq8064', 'qcom,kpss-gcc']
-> 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/patch/
-> 
-> This check can fail if there are any dependencies. The base for a patch
-> series is generally the most recent rc1.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit.
-> 
-
--- 
-	Ansuel
+Will fixup in v2.
+Regards,
+Robert
+>
+> thanks.
