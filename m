@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D2D051583B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 00:12:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 713F0515817
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 00:12:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381392AbiD2WO1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 18:14:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58660 "EHLO
+        id S1381385AbiD2WOd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 18:14:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381377AbiD2WOZ (ORCPT
+        with ESMTP id S1381387AbiD2WOZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 29 Apr 2022 18:14:25 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83801DCAB0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 15:11:04 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id k2so12426623wrd.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 15:11:04 -0700 (PDT)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B3466A002
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 15:11:06 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id n32-20020a05600c3ba000b00393ea7192faso5469777wms.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 15:11:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZsVi2vdwtOwGHEsduLeBsYH1a8quXWrNoG55MUiyKvU=;
-        b=tXCGQNeZg2fybcmPrV9S+7vmvJ1Mh7kbdzhKPArdbp145NjkFB+0L+s48K95apj0fQ
-         ja/5h34eyQhcsdC/DmBzovrWaxz85kA2QiWjcDVJkrny2oB+Bp9bdyQm+8ZCA3OOmK6a
-         E6uZy/U2Z+YkOgiFTCNzYEOw/isG63QvvEkLf9ry4/0nUDiki7Ith7yJxSD+CVYkje2a
-         1lOXw6JaWPUS5PpEPHLb3Q1oI5Dyo3dq82r4hLUcWOrVPw9zB6OLJS5HaK/MUIG5bg84
-         La0OoNPf70MKIdpVlM7xssvMJE2i/DYWV+P5ca0b9Cpb/bGMPPtD52+erQTVlXDsZvs+
-         iTVA==
+        bh=0WEp4V6aZMyxWhcrxEKABYt19rBiXZcxvqKzE3SZIe0=;
+        b=Keg2qgtxsT0PNgxhjstP7bYXmZKcqHZMFZ6OQJGAz4/VS7eA8idH/UxV3ZZJ0ZdE19
+         aFKzPoA8oCSVmRyOjGcPEEKpK4XhyjrHZ7u7FzBWnRHoPfqJiAENT+FayNNe66CearY3
+         kGfekX4RrHA3rhlvh7ZpdBnDrUUUEVNxWprtS37MvfNbVHpwgHVcgn83++PCWMXlJa/X
+         lKKIzQmtKyfLylEBsr7GSuYv6LBI9JbI4BQI4RHn+dyS2OmYmfCu+1ospXcyL0dkBMy0
+         QYpXNZbjIpQQAl7K1bxcAs7Cb/zOad3C0AraEAxRBz4AX4Y55gbWRXiuHOBW4Mttaptk
+         ADAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZsVi2vdwtOwGHEsduLeBsYH1a8quXWrNoG55MUiyKvU=;
-        b=73Avir1MK0scC+AQX/zqvpvuXpSEJYjwwZ6Sao1FGk+aT2sNXFvXIfQ2SMycyq+D9t
-         5d5Okf2oQsBhRUf9I5Qf/xDV1yQpmmLAlE3dyQiTfi50Pn3XeV7q8aSS+LDIFQja1CoP
-         FEn6r/+IcrT7FEBJKF7hCmwMilDX7KY2hWVE3ClirGTC+o1AtmY+1SOxf5gzioZ20mS+
-         1s9f8sbJxjxzBQpJOJJw3mVAePYi2yhIVp0v4cCxFlJQWa7J2nRHZjIJvSWKxrsImw9D
-         d46610bbWWsK4LouyKPXCDS5rj7GJaaXTsS7zvhzl1HmA/b3xbV4txc2dBhQkHK2xNVl
-         s19Q==
-X-Gm-Message-State: AOAM532N3iOksl0q+Fu1FTexSwoY7M+I2ClP4w7Km+ORpI8vQtr+YG+0
-        3p2zy1G3dBS1fio0DWcWZjXG+g==
-X-Google-Smtp-Source: ABdhPJxHgZhAsngRwx8HBT2XVVHfhVYRR0+YIUabOWzqOJo3+lk66DkR3a1w/hVQjgiLod2H9fnZng==
-X-Received: by 2002:a5d:6088:0:b0:20a:e81e:c76a with SMTP id w8-20020a5d6088000000b0020ae81ec76amr840209wrt.182.1651270263144;
-        Fri, 29 Apr 2022 15:11:03 -0700 (PDT)
+        bh=0WEp4V6aZMyxWhcrxEKABYt19rBiXZcxvqKzE3SZIe0=;
+        b=azE9C8SYMiBvKTY3MF4FH4jwfzEJfYoQu55q2ung9cHIwuUyvp39oKDEkAGd4tw9YO
+         UorqdspvGVT9exmHDz+FVnM3EkowpIg1rsMnLlwEYUQ4EmK4OhOE+BG9NdnBkkMgdQXY
+         7+zuxtIROxGKIHf1zdK9o2W2gtoOJNDqadcRP+ql5pO18zgEdUL0I3Z8+e4k8tMbvNdu
+         ny4PHdisyWACiKonA5J9qQobugvpum08+XIjrOVFd2qhVDjSWhJpjA2tNF9YYx5OEL3v
+         mT+Ip67WCWdjCn8fwHBMSAnlI0Lucl7jq3HjlUH8l3wCk/sZoe/cQCRVTlfX0yk/1Pf2
+         6xLw==
+X-Gm-Message-State: AOAM533wj9yr4Rk7KNatFseLIOZ/99aOWvt0nNwAJ0UJvksy1glcrCUc
+        Sly9Wmu2Bk599r46u3+EdEp2hQ==
+X-Google-Smtp-Source: ABdhPJz08OJcXIZ9HOmIoOx8RtC+6enH4juHgqsBFwco6tpfuwvu9EuEHJWx7vowVSp6ol5iQ584dw==
+X-Received: by 2002:a05:600c:4f90:b0:392:8de8:9deb with SMTP id n16-20020a05600c4f9000b003928de89debmr933061wmq.166.1651270264475;
+        Fri, 29 Apr 2022 15:11:04 -0700 (PDT)
 Received: from localhost.localdomain (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
-        by smtp.gmail.com with ESMTPSA id q7-20020a1cf307000000b003942a244ebfsm291985wmq.4.2022.04.29.15.11.01
+        by smtp.gmail.com with ESMTPSA id q7-20020a1cf307000000b003942a244ebfsm291985wmq.4.2022.04.29.15.11.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 15:11:02 -0700 (PDT)
+        Fri, 29 Apr 2022 15:11:03 -0700 (PDT)
 From:   Caleb Connolly <caleb.connolly@linaro.org>
 To:     caleb.connolly@linaro.org, Jonathan Cameron <jic23@kernel.org>,
         Lars-Peter Clausen <lars@metafoo.de>,
@@ -61,9 +61,9 @@ To:     caleb.connolly@linaro.org, Jonathan Cameron <jic23@kernel.org>,
         linux-arm-msm@vger.kernel.org
 Cc:     Jami Kettunen <jami.kettunen@somainline.org>,
         Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [PATCH v14 07/10] arm64: dts: qcom: sdm845-oneplus: enable rradc
-Date:   Fri, 29 Apr 2022 23:09:02 +0100
-Message-Id: <20220429220904.137297-8-caleb.connolly@linaro.org>
+Subject: [PATCH v14 08/10] arm64: dts: qcom: sdm845-db845c: enable rradc
+Date:   Fri, 29 Apr 2022 23:09:03 +0100
+Message-Id: <20220429220904.137297-9-caleb.connolly@linaro.org>
 X-Mailer: git-send-email 2.36.0
 In-Reply-To: <20220429220904.137297-1-caleb.connolly@linaro.org>
 References: <20220429220904.137297-1-caleb.connolly@linaro.org>
@@ -78,18 +78,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the RRADC for the OnePlus 6.
+Enable the Round Robin ADC for the db845c.
 
 Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 4 ++++
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 07b729f9fec5..9c91ddc766af 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -461,6 +461,10 @@ pinconf {
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index 28fe45c5d516..40a290b6d4f3 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -599,6 +599,10 @@ resin {
  	};
  };
  
@@ -97,9 +97,9 @@ index 07b729f9fec5..9c91ddc766af 100644
 +	status = "okay";
 +};
 +
- &qupv3_id_1 {
- 	status = "okay";
- };
+ /* QUAT I2S Uses 4 I2S SD Lines for audio on LT9611 HDMI Bridge */
+ &q6afedai {
+ 	qi2s@22 {
 -- 
 2.36.0
 
