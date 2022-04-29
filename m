@@ -2,68 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 016FD514F3D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 17:23:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BCC4514F4C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 17:26:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378337AbiD2P0W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 11:26:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60398 "EHLO
+        id S1378393AbiD2P3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 11:29:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377916AbiD2P0W (ORCPT
+        with ESMTP id S1378375AbiD2P3d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 11:26:22 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0947AD4471
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 08:23:03 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id y76so15107621ybe.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 08:23:02 -0700 (PDT)
+        Fri, 29 Apr 2022 11:29:33 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C7877FF73
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 08:26:14 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id m23so10920460ljb.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 08:26:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZohBTUQ/LZbS+o8W/VtMK+1Flcbn9HfcCfSB3a36VjI=;
-        b=BafF1IEZ4EDjsmtHXSsqVqrWZ8g2k5/kH6HfKliDsRHA43hy2G2+BtITONBujNnLl9
-         pLCwWahreUD6kBQmDFxL/MzrUF0SJKzdT/cKllJHdTRWb5qoZklkD+LOMU/Puy0duaUM
-         tv/CORBR7bOo+VfJBEVTa+rKyibTdw/wMAm9z9NPYT9FtqdEgYGun76+4YC3DHL6w+Qv
-         ykVgZ7jE7iJiTDJpDE3DWRI2b/JThT+f6qMZa2+6nWbcBORWWE0j5suB4MoRBxf0kKra
-         AdbtXHGo3Z5u/a2Gy8oPTmfyx52K719oDWDFhyg6pDvC5WfJAH1lGIzAr7xaacOafkSE
-         /PSA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=LrmmKe5b4hTQ7hstNyuHdgEBymJxMaRBtx0nOtAIsEw=;
+        b=tubXyS2je3oB+R7Z7tN1/0tR3vck+ASnINl4mbT7F2/+HBqXIMwR+z8V3aV4NpJYtl
+         Mue1BxYKdUQWd7wSTRpMdeUI3hdipXdW7yphjYLvCTf3fLhcsYfwaJkXSS0hhCmbxlCO
+         xi3FmkALilkXMsGuYgk2/7JQ9kGmQUxoYMWhDS4E9qGa83mcE7uC1YZxarAzSeVihFYL
+         hJO8LP7d8iyJCicX8NsazoKZFm9JETxiaVzjY0M8kZJ0HHmdLCfvS8EZ78zafo1xOEy+
+         Y3BcUvPUfaM5b9GwmIT5mRUQBeYnodzXkfu/Rg5tY1FXP+mj9Gb4YmEDF1mh75K1CxLh
+         Obcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZohBTUQ/LZbS+o8W/VtMK+1Flcbn9HfcCfSB3a36VjI=;
-        b=dgnnEowFLmYGko9VXzrDby3/gxFcEZCO/Rqx87C1lSn3ptsaNarEyG4AVOgulkwf0L
-         7LbCHovDqp5YvcGA1PgshdReLrLejDCo+7o1f60YfeaCEpxng86Z8mzPCfvTW1LmlPut
-         7aB5OiYyItHDDqP9Vvv7HlecHSe1aSHLDsbJMjIBtxJ6xuO6Ej+SGVl3u+4mOaDgaW0r
-         QNne5RHGMlU3dzqoPHGOq76uXJ+duiCBoM/MPhplDuXgSnTypBSbjISXTbKxheK8oeTC
-         8ACPGFSgTgdCg1ecBCL9I2lv0mR55iAeO5qSLIolzvBE/4f1HZJmqWv/iIOSjPLmFnrG
-         dBvQ==
-X-Gm-Message-State: AOAM532zy9tz2/1+sX7prSrr7z6gyqWJ6bGDI4/+yHLdFwOiumbMnmzM
-        o0FCAsd72N21ni7Zdb0/35j6TUNuD059g/es+UXxyA==
-X-Google-Smtp-Source: ABdhPJxFUndINlvlcj6DuIlMnf+ph+4UTobF5BjRzTm793kkDfWoGguZCTA+VCrNsOiM/AOPBy7pN3PAUhJmbnr33f0=
-X-Received: by 2002:a25:a1c6:0:b0:641:5ff5:9f93 with SMTP id
- a64-20020a25a1c6000000b006415ff59f93mr36532265ybi.49.1651245782234; Fri, 29
- Apr 2022 08:23:02 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=LrmmKe5b4hTQ7hstNyuHdgEBymJxMaRBtx0nOtAIsEw=;
+        b=Wj+WXUws3X6l93xjg5YaPmRhdmGMpj76Es35wLLgSKCA61DEHKAzaN7HaQDlvB2T+F
+         g4H578HXP7VJCpfb0kuerSn/EtJZ8OxLZg+vZEs+392uW1QTrJglP04MQQiaVmCb4qZg
+         6gcDKo+jQcoNW2LukToVBxxDk4KGx0ouh81qPMDqQBhV+amVgc717oLxIBIuNlr/P2Yk
+         BL6n7p5IT6HOfDVx/ExVfrAtSxYLJO1kAzdt35FymyxPZ8dnmEnEJmU6QQCPVoQ1EpYz
+         kEzG1Uuutb8Y6Oz7uBqwtz7yNH+YCcCHoOCQhNB6nszY4vQ3dSFiVyOMPwdnULEaqLnO
+         3gTg==
+X-Gm-Message-State: AOAM530XrvQLoFgjmPTh+5phF6RcTSxid4a7QmshqxFn9SLke8QJEUff
+        vspxE168OOsVcr7JzzlVYm0kXQ==
+X-Google-Smtp-Source: ABdhPJyNLIEjI2k19H9ZTxnuPcn5H5HKicI97tGeUTo+1P93wIyIeyUbCtz/hpxYMSNW0keC3yTNvA==
+X-Received: by 2002:a2e:5c45:0:b0:24d:ae47:7a34 with SMTP id q66-20020a2e5c45000000b0024dae477a34mr24759897ljb.419.1651245972885;
+        Fri, 29 Apr 2022 08:26:12 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id 5-20020ac24d45000000b0047210300c96sm261425lfp.137.2022.04.29.08.26.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Apr 2022 08:26:12 -0700 (PDT)
+Message-ID: <15783bcf-af13-efb2-1945-e2f49b3278bc@linaro.org>
+Date:   Fri, 29 Apr 2022 18:26:11 +0300
 MIME-Version: 1.0
-References: <20220429120108.9396-1-ansuelsmth@gmail.com> <20220429120108.9396-4-ansuelsmth@gmail.com>
- <b7de49e0-c0cf-5062-8426-dcb54272d350@linaro.org> <626bff7e.1c69fb81.bdf89.4da7@mx.google.com>
-In-Reply-To: <626bff7e.1c69fb81.bdf89.4da7@mx.google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 29 Apr 2022 18:22:50 +0300
-Message-ID: <CAA8EJppzj13egBnNg=GkGV0_c_4SqZinek1Y3Byc7g2r95ff8g@mail.gmail.com>
-Subject: Re: [PATCH 3/4] clk: qcom: clk-krait: add hw_parent check for div2_round_rate
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sricharan R <sricharan@codeaurora.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v1 2/9] clk: Introduce CLK_ASSUME_ENABLED_WHEN_UNUSED
+Content-Language: en-GB
+To:     Robert Foss <robert.foss@linaro.org>, bjorn.andersson@linaro.org,
+        agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        robh+dt@kernel.org, krzk+dt@kernel.org, jonathan@marek.ca,
+        tdas@codeaurora.org, anischal@codeaurora.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Vinod Koul <vkoul@kernel.org>
+References: <20220429151247.388837-1-robert.foss@linaro.org>
+ <20220429151247.388837-2-robert.foss@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220429151247.388837-2-robert.foss@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,77 +79,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 29 Apr 2022 at 18:08, Ansuel Smith <ansuelsmth@gmail.com> wrote:
->
-> On Fri, Apr 29, 2022 at 05:53:32PM +0300, Dmitry Baryshkov wrote:
-> > On 29/04/2022 15:01, Ansuel Smith wrote:
-> > > Check if hw_parent is present before calculating the round_rate to
-> > > prevent kernel panic. On error -EINVAL is reported.
-> > >
-> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> >
-> > I see that other clock drivers do not perform this check. Which path leads
-> > to this oops?
-> >
->
-> This comes from qsdk patches so I apologize in advance about this.
+On 29/04/2022 18:12, Robert Foss wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> Some clock implementations doesn't provide means of implementing
+> is_enabled(), but still requires to be explicitly disabled when found
+> unused as part of clk_disable_unused().
+> 
+> One such set of clocks are Qualcomm's display RCGs. These can be enabled
+> and disabled automatically by the hardware, so it's not possible to
+> reliably query their configuration. Further more, these clocks need to
+> be disabled when unused, to allow them to be "parked" onto a safe
+> parent. Failure to disable the RCG results in the hardware locking up as
+> clk_disable_unused() traverses up the tree and turns off its source
+> clocks.
+> 
+> Add a new flag, CLK_ASSUME_ENABLED_BOOT, which clock drivers can use to
+> signal that these clocks should be disabled even if they don't implement
+> the is_enabled() ops.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
-Ugh. If it comes from the code authored by somebody else, it'd be
-better to note this (by using the From or Co-developed-by tags).
-At the very least (if the author is unknown) you can mention the
-origin of the patch (qsdk) in the commit message.
+I think this patch received mixed review previously. I strip it away for 
+now.
 
->
-> Anyway I'm checking the code and krait-cc is the only user of
-> krait_div2_clk_ops. That user have as parent only hfpll_something that
-> is declared by gcc. Now hfpll can also be declared in dts with a
-> dedicated driver so I wonder if the problem is there in the case when
-> hfpll is declared in dts and is probed after krait-cc. This is not the
-> case for ipq8064 but I wonder if qsdk have other krait based device that
-> have a configuration with hfpll declared in dts.
-
-On msm8974 (and maybe others) the hfpll should be driven by the
-separate hfpll driver.
-
->
-> In short you are right and in our current code the check is uselss and
-> I'm positive about dropping this patch but I do wonder if downstream
-> there is an actual use of this. Don't know how to proceed. Any hint?
-
-I'd say, let's drop it for now unless Stephen or Bjorn tell us that
-it's a valid check.
-
->
-> > > ---
-> > >   drivers/clk/qcom/clk-krait.c | 7 ++++++-
-> > >   1 file changed, 6 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
-> > > index 90046428693c..6c367ad6506a 100644
-> > > --- a/drivers/clk/qcom/clk-krait.c
-> > > +++ b/drivers/clk/qcom/clk-krait.c
-> > > @@ -84,7 +84,12 @@ EXPORT_SYMBOL_GPL(krait_mux_clk_ops);
-> > >   static long krait_div2_round_rate(struct clk_hw *hw, unsigned long rate,
-> > >                               unsigned long *parent_rate)
-> > >   {
-> > > -   *parent_rate = clk_hw_round_rate(clk_hw_get_parent(hw), rate * 2);
-> > > +   struct clk_hw *hw_parent = clk_hw_get_parent(hw);
-> > > +
-> > > +   if (!hw_parent)
-> > > +           return -EINVAL;
-> > > +
-> > > +   *parent_rate = clk_hw_round_rate(hw_parent, rate * 2);
-> > >     return DIV_ROUND_UP(*parent_rate, 2);
-> > >   }
-> >
-> >
-> > --
-> > With best wishes
-> > Dmitry
->
-> --
->         Ansuel
-
+> ---
+>   drivers/clk/clk.c            | 2 +-
+>   include/linux/clk-provider.h | 2 ++
+>   2 files changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+> index ed119182aa1b..9789ec137219 100644
+> --- a/drivers/clk/clk.c
+> +++ b/drivers/clk/clk.c
+> @@ -1284,7 +1284,7 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
+>   	 * sequence.  call .disable_unused if available, otherwise fall
+>   	 * back to .disable
+>   	 */
+> -	if (clk_core_is_enabled(core)) {
+> +	if (clk_core_is_enabled(core) || core->flags & CLK_ASSUME_ENABLED_WHEN_UNUSED) {
+>   		trace_clk_disable(core);
+>   		if (core->ops->disable_unused)
+>   			core->ops->disable_unused(core->hw);
+> diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+> index c10dc4c659e2..9038022ffebd 100644
+> --- a/include/linux/clk-provider.h
+> +++ b/include/linux/clk-provider.h
+> @@ -32,6 +32,8 @@
+>   #define CLK_OPS_PARENT_ENABLE	BIT(12)
+>   /* duty cycle call may be forwarded to the parent clock */
+>   #define CLK_DUTY_CYCLE_PARENT	BIT(13)
+> +/* assume clock is enabled if found unused in late init */
+> +#define CLK_ASSUME_ENABLED_WHEN_UNUSED	BIT(14)
+>   
+>   struct clk;
+>   struct clk_hw;
 
 
 -- 
