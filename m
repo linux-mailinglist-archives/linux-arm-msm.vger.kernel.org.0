@@ -2,101 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD0E15153AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 20:29:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA0C3515400
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 20:52:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380002AbiD2Scu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 14:32:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36542 "EHLO
+        id S1380038AbiD2SzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 14:55:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379905AbiD2Sct (ORCPT
+        with ESMTP id S1356733AbiD2SzV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 14:32:49 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C063BD39B4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:29:29 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id k23so17006827ejd.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:29:29 -0700 (PDT)
+        Fri, 29 Apr 2022 14:55:21 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C95BC3E0E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:01 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id k12so15573038lfr.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 11:52:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=1Zn4UF57t4pnfMwkACd31jjeal5RhpHnkwFarZTu/dQ=;
-        b=Yju2gP3H7feQ0jeMIY/hZkOEOoSoa00CEibfna6oVQzF9/eQ5+ytMAsdLe5WX7mHeQ
-         J61qzVV7hJgD2E7DTMm799fD1ExZWC92O5Z5MQJ3Izz75VW5dcvN/q6CSgHUbws9RglY
-         83cEuaWdBuKpqQTXIrafNSDyCsuv2Ew28D74WXz/Ik2eST10Un3FzGmvqMC8O+fYL4PC
-         8JQYD4vG/i4KtH8ZMZH0GPFGUg6Nz8RKmYkXLtDfxBXypISaZi6+WTwWX/9LGj3oj9Ql
-         L8++NV0TVRjT6Iqj0aHMEIgQOGyyJP0xnB5R1z3nGhE9kAKq1TuJQ1gQ5SW7rPZfWhCn
-         o50w==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Xwez25fKOJIvbl7FDqYv3cgN984+GGk1naedmnAxP4Y=;
+        b=f6UQK3n7miUzxs2paCC6ywUzmEX+m7QGx0RlW8FVo/fkmsFewBjKlBMwNCesVufZuu
+         4RbgPVHjkZP2+5rOxual28+DY3ujiTSbRTLt9LkUKLxJKMKlHF6fWTiS3gFjBE/uk7od
+         CfVCFSm45qg11pesASMxdEnXqyQ2QSzvGtq10iuoBCe11ykoMJmTIrWeQ08yn+LG3Eq0
+         qgev94VxC+Kabu3PrpwRpR3SNzjjz5JC7hVb7mzE6LG+wtYG0enwP/FrpwO/1IZcCgsk
+         61t5FYvPPEQjhMDWLAh76uFYRJ1Wy6KtIdrZtZ0njK3jSWMY7MvfsGfEhhlYCUQjZB2B
+         aD9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=1Zn4UF57t4pnfMwkACd31jjeal5RhpHnkwFarZTu/dQ=;
-        b=GXcnriDXXDVr/t1cpJU9hbpz2lbR9M4FydJWht4l+dCO5IV1G46+TtkjRulA5FnQeB
-         sGPu+ITiC0IWiw/jamPBmXjZfeF8xn3tBHP7U4B8tjzs8esbFlck8dL+XAYUtaycR9pt
-         ErwEgJfrDGTbjvi/LJc+DcUIwM7XZXiZ1HYe1wmpE8d6m/mly8bPolFuMGd1/ONvOZKi
-         sGMjjmqzvCwedrfbsutPt+LIsSKXAxSM7UxmDFAA8b97/WuBy4KUjOp41NqclMHItYVT
-         +O1NSMGngCwKXmzZcfornCwoNIl2pOAqG507THgs/DkNZEc14CKOXSmhsHCoDAW5O/l0
-         VDPg==
-X-Gm-Message-State: AOAM5303Q+uEgMAJRCwbOs2kYDwaa9deaDEcXVgTM2XEtzA+S+5kZC6X
-        2WM2ascWY5oXZV3BGe2kK9DgxQ==
-X-Google-Smtp-Source: ABdhPJxnnexTfm1ciFrnHmiTZVvUaiD85uL4/xEhS6m4C1gFLe/tyvaZCnOhPWZFKjyEpqAej5KZuQ==
-X-Received: by 2002:a17:907:2cc6:b0:6f0:2de3:9446 with SMTP id hg6-20020a1709072cc600b006f02de39446mr581569ejc.690.1651256968301;
-        Fri, 29 Apr 2022 11:29:28 -0700 (PDT)
-Received: from [192.168.0.175] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id h14-20020a1709070b0e00b006f3ef214db9sm858906ejl.31.2022.04.29.11.29.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Apr 2022 11:29:27 -0700 (PDT)
-Message-ID: <cbf9aad1-cbdb-8886-f979-a793b070e2a1@linaro.org>
-Date:   Fri, 29 Apr 2022 20:29:25 +0200
+        bh=Xwez25fKOJIvbl7FDqYv3cgN984+GGk1naedmnAxP4Y=;
+        b=Bw7RCQ16lRlmtejzpMf5k2dUB8kamRqi41Un4gGx76tW30G3zbwod46sSsFVq/HLlt
+         kQvmZsH4zr0KamNIHFLurhUfxl5NTL+hwVhwloCeqs2tOZZIfQ8ZMTS9Ylp5bT0qoJsz
+         PsPgSXnrFSW4XuEg2em7mrpNpDuiEDPmOqh7pF3Kkf71BpQ5t9GDjZq+Cc82hsekJllK
+         T2sKUfLWUZfJrGTK3arY8E7tepJVCZH1sgqVZ9XUtz/0a6gUWM/bLKNYXw3Hgfg24n5o
+         hR9uwYrQRopcKhTGBgtVz80C0j4+aG1jXSwe2PisD2LAAglCyPia5O32lwTmL+unssNW
+         Uiww==
+X-Gm-Message-State: AOAM530pZbz7N5WEc5wXKgbzmtqFa0FdZJlJscLlM8PvEGW+eo3yZlka
+        6gZIPJ6/ND2+aLN3IQNpeSISfw==
+X-Google-Smtp-Source: ABdhPJyOpcUR4T0Pwv1R1szusK+QmnoIsr3FyUCxNx60L0+9tc1KiURMI8qpfG2pF8k5oYd/gJbjjQ==
+X-Received: by 2002:a05:6512:6cb:b0:471:ce8a:cfaf with SMTP id u11-20020a05651206cb00b00471ce8acfafmr404904lff.635.1651258319965;
+        Fri, 29 Apr 2022 11:51:59 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id z25-20020a19e219000000b00472230888a5sm295313lfg.121.2022.04.29.11.51.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Apr 2022 11:51:59 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Tomi Valkeinen <tomba@kernel.org>
+Cc:     dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v1 0/7] drm/bridge_connector: perform HPD enablement automatically
+Date:   Fri, 29 Apr 2022 21:51:50 +0300
+Message-Id: <20220429185157.3673633-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v7 12/12] rpmsg: Fix kfree() of static memory on setting
- driver_override
-Content-Language: en-US
-To:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Stuart Yoder <stuyoder@gmail.com>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Vineeth Vijayan <vneethv@linux.ibm.com>,
-        Peter Oberparleiter <oberpar@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
-        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>
-References: <20220419113435.246203-1-krzysztof.kozlowski@linaro.org>
- <20220419113435.246203-13-krzysztof.kozlowski@linaro.org>
- <CGME20220429122942eucas1p1820d0cd17a871d4953bac2b3de1dcdd9@eucas1p1.samsung.com>
- <870885de-33f3-e0ba-4d56-71c3c993ac87@samsung.com>
- <75b94ccd-b739-2164-bc4a-20025356cc34@linaro.org>
- <6e21f7d3-49d0-eda7-7a89-0f8ac69596a4@samsung.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <6e21f7d3-49d0-eda7-7a89-0f8ac69596a4@samsung.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -104,86 +83,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/04/2022 16:51, Marek Szyprowski wrote:
-> On 29.04.2022 16:16, Krzysztof Kozlowski wrote:
->> On 29/04/2022 14:29, Marek Szyprowski wrote:
->>> On 19.04.2022 13:34, Krzysztof Kozlowski wrote:
->>>> The driver_override field from platform driver should not be initialized
->>>> from static memory (string literal) because the core later kfree() it,
->>>> for example when driver_override is set via sysfs.
->>>>
->>>> Use dedicated helper to set driver_override properly.
->>>>
->>>> Fixes: 950a7388f02b ("rpmsg: Turn name service into a stand alone driver")
->>>> Fixes: c0cdc19f84a4 ("rpmsg: Driver for user space endpoint interface")
->>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->>> This patch landed recently in linux-next as commit 42cd402b8fd4 ("rpmsg:
->>> Fix kfree() of static memory on setting driver_override"). In my tests I
->>> found that it triggers the following issue during boot of the
->>> DragonBoard410c SBC (arch/arm64/boot/dts/qcom/apq8016-sbc.dtb):
->>>
->>> ------------[ cut here ]------------
->>> DEBUG_LOCKS_WARN_ON(lock->magic != lock)
->>> WARNING: CPU: 1 PID: 8 at kernel/locking/mutex.c:582
->>> __mutex_lock+0x1ec/0x430
->>> Modules linked in:
->>> CPU: 1 PID: 8 Comm: kworker/u8:0 Not tainted 5.18.0-rc4-next-20220429 #11815
->>> Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
->>> Workqueue: events_unbound deferred_probe_work_func
->>> pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
->>> pc : __mutex_lock+0x1ec/0x430
->>> lr : __mutex_lock+0x1ec/0x430
->>> ..
->>> Call trace:
->>>    __mutex_lock+0x1ec/0x430
->>>    mutex_lock_nested+0x38/0x64
->>>    driver_set_override+0x124/0x150
->>>    qcom_smd_register_edge+0x2a8/0x4ec
->>>    qcom_smd_probe+0x54/0x80
->>>    platform_probe+0x68/0xe0
->>>    really_probe.part.0+0x9c/0x29c
->>>    __driver_probe_device+0x98/0x144
->>>    driver_probe_device+0xac/0x14c
->>>    __device_attach_driver+0xb8/0x120
->>>    bus_for_each_drv+0x78/0xd0
->>>    __device_attach+0xd8/0x180
->>>    device_initial_probe+0x14/0x20
->>>    bus_probe_device+0x9c/0xa4
->>>    deferred_probe_work_func+0x88/0xc4
->>>    process_one_work+0x288/0x6bc
->>>    worker_thread+0x248/0x450
->>>    kthread+0x118/0x11c
->>>    ret_from_fork+0x10/0x20
->>> irq event stamp: 3599
->>> hardirqs last  enabled at (3599): [<ffff80000919053c>]
->>> _raw_spin_unlock_irqrestore+0x98/0x9c
->>> hardirqs last disabled at (3598): [<ffff800009190ba4>]
->>> _raw_spin_lock_irqsave+0xc0/0xcc
->>> softirqs last  enabled at (3554): [<ffff800008010470>] _stext+0x470/0x5e8
->>> softirqs last disabled at (3549): [<ffff8000080a4514>]
->>> __irq_exit_rcu+0x180/0x1ac
->>> ---[ end trace 0000000000000000 ]---
->>>
->>> I don't see any direct relation between the $subject and the above log,
->>> but reverting the $subject on top of linux next-20220429 hides/fixes it.
->>> Maybe there is a kind of memory trashing somewhere there and your change
->>> only revealed it?
->> Thanks for the report. I think the error path of my patch is wrong - I
->> should not kfree(rpdev->driver_override) from the rpmsg code. That's the
->> only thing I see now...
->>
->> Could you test following patch and tell if it helps?
->> https://pastebin.ubuntu.com/p/rp3q9Z5fXj/
-> 
-> This doesn't help, the issue is still reported.
+From all the drivers using drm_bridge_connector only iMX/dcss and OMAP
+DRM driver do a proper work of calling
+drm_bridge_connector_en/disable_hpd() in right places. Rather than
+teaching each and every driver how to properly handle
+drm_bridge_connector's HPD, make that automatic.
 
-I think I screwed this part of code. The new helper uses device_lock()
-(the mutexes you see in backtrace) but in rpmsg it is called before
-device_register() which initializes the device.
+Add two additional drm_connector helper funcs: enable_hpd() and
+disable_hpd(). Make drm_kms_helper_poll_* functions call them (as this
+is the time where the drm_bridge_connector's functions are called by the
+drivers too).
 
-I don't have a device using qcom-smd rpmsg, so it's a bit tricky to
-reproduce.
+Dmitry Baryshkov (7):
+  drm/poll-helper: merge drm_kms_helper_poll_disable() and _fini()
+  drm/probe-helper: enable and disable HPD on connectors
+  drm/bridge_connector: rely on drm_kms_helper_poll_* for HPD enablement
+  drm/imx/dcss: stop using drm_bridge_connector_en/disable_hpd()
+  drm/msm/hdmi: stop using drm_bridge_connector_en/disable_hpd()
+  drm/omap: stop using drm_bridge_connector_en/disable_hpd()
+  drm/bridge_connector: drop drm_bridge_connector_en/disable_hpd()
 
-Best regards,
-Krzysztof
+ drivers/gpu/drm/drm_bridge_connector.c   | 23 +++----------
+ drivers/gpu/drm/drm_probe_helper.c       | 40 ++++++++++++++++++-----
+ drivers/gpu/drm/imx/dcss/dcss-dev.c      |  4 ---
+ drivers/gpu/drm/imx/dcss/dcss-kms.c      |  4 ---
+ drivers/gpu/drm/msm/hdmi/hdmi.c          |  2 --
+ drivers/gpu/drm/omapdrm/omap_drv.c       | 41 ------------------------
+ include/drm/drm_bridge_connector.h       |  2 --
+ include/drm/drm_modeset_helper_vtables.h | 22 +++++++++++++
+ 8 files changed, 58 insertions(+), 80 deletions(-)
+
+-- 
+2.35.1
+
