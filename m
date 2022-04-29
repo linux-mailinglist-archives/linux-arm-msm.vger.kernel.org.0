@@ -2,248 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 090A6515436
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 21:11:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90F9151545B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 21:19:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238044AbiD2TOa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 15:14:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45368 "EHLO
+        id S1380266AbiD2TWp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 15:22:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237181AbiD2TO2 (ORCPT
+        with ESMTP id S1380262AbiD2TWp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 15:14:28 -0400
-Received: from smtprelay-out1.synopsys.com (smtprelay-out1.synopsys.com [149.117.73.133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEA5565D0B;
-        Fri, 29 Apr 2022 12:11:05 -0700 (PDT)
-Received: from mailhost.synopsys.com (sv1-mailhost2.synopsys.com [10.205.2.132])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client CN "mailhost.synopsys.com", Issuer "SNPSica2" (verified OK))
-        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 4A1F74108E;
-        Fri, 29 Apr 2022 19:11:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-        t=1651259465; bh=qmOWliNpguN7F4MgmQxUEH3ZSIXakJCU7aEGtAeXft8=;
-        h=From:To:CC:Subject:Date:References:In-Reply-To:From;
-        b=Lxe7U3ZLcOc9bXy8rgeOFiv2ahjzYvMYpRcsi29C5pma8pqFMFXqd7IVHaGO5fHxs
-         he5e42XTWpgCkNs4opFdWbqUQE7J3wVv4+6XhZUbe7b+/7CtdQGovc4xS4/nOCOTst
-         OFawcGRu4Cx4TXeL6AEjzxGMEV2i8VVgRX3IvI3q1L59hzCT4er57KdyqI6dpQQY0X
-         D0deTOwO3hrDvqbC/1aL4wEiAxgzbx2iLV/qzqG2X12gat/Z16ovXzordxFLhTul3r
-         We9HY+vNgfT2QWdv+B/KoTUoRA1rsE7GLtmyBkgyzoM6Dhv4ryiNO9b/z9/u0Csks2
-         OMqowt6v6/xLg==
-Received: from o365relay-in.synopsys.com (us03-o365relay3.synopsys.com [10.4.161.139])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client CN "o365relay-in.synopsys.com", Issuer "Entrust Certification Authority - L1K" (verified OK))
-        by mailhost.synopsys.com (Postfix) with ESMTPS id 96305A006F;
-        Fri, 29 Apr 2022 19:11:02 +0000 (UTC)
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12lp2171.outbound.protection.outlook.com [104.47.59.171])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client CN "mail.protection.outlook.com", Issuer "DigiCert Cloud Services CA-1" (verified OK))
-        by o365relay-in.synopsys.com (Postfix) with ESMTPS id 21F6080168;
-        Fri, 29 Apr 2022 19:11:00 +0000 (UTC)
-Authentication-Results: o365relay-in.synopsys.com; dmarc=pass (p=reject dis=none) header.from=synopsys.com
-Authentication-Results: o365relay-in.synopsys.com; spf=pass smtp.mailfrom=thinhn@synopsys.com
-Authentication-Results: o365relay-in.synopsys.com;
-        dkim=pass (1024-bit key; unprotected) header.d=synopsys.com header.i=@synopsys.com header.b="gCN7XtMD";
-        dkim-atps=neutral
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EhOIN7qSkA9+ZZYPLgkbGbU14eWS41H9dButV/FkZEt4Rw+UshNO7JdDfjAsN/uhHf/RWbGmL4ZYKi/x/zy0+uoMbWDYkQAj3TORX6Ht4zX3vc3WN3pYUqRwJoP8pe0eN7ya3weTd8opAdnmj9juYbb5rcbPX9kK/Drt/+XdCrfzohC4aABEAQjnhIMrFdORz8+Jfx9HjFN/zUDyxGfzBKvsvPpdEBiY3jvdyLBaoO72MUimdEs6TPdHZpHMy+XOD1Evcy4zaWj5Q57eY5efo/jDvTz4wRC1DZAS6+exT7KC/09218bBV0JPHtV9FzEkknjeQRDQeFqyjERXeR8V1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qmOWliNpguN7F4MgmQxUEH3ZSIXakJCU7aEGtAeXft8=;
- b=frYulim7T1IQm0JmntUHX+BniiQIgOwGD6xogaDYWGKfj5cga80tJ0kYJHWLJdE6uXQIVq5i9bBekp8N0sSEx4SgnYwkr3C3RLUpxsq7y5X7TSURwjXJGUH92K1oCZkucsI5cATm5LwAaJ1cu8zCCANJA4kmjiMpAtxNlCWjQjrskedKZg+vIF7Kyk5Kkcl+gbRpcZC9uRkTsMeIGTwz4qmF3Vtrc7IdbPlxc5rc2/K4swgESKqlU7m/gLxHasNAJh6XK7Cp/G6rcdyAo7fLwV+2JofYaNkbcDQH4gZPXEQp/C0d/g+3e3qlzCbAUPGaJd+ifW7dcObqoLKJiomDsg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=synopsys.com; dmarc=pass action=none header.from=synopsys.com;
- dkim=pass header.d=synopsys.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=synopsys.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qmOWliNpguN7F4MgmQxUEH3ZSIXakJCU7aEGtAeXft8=;
- b=gCN7XtMD8S9Bml5ujy6/Et0w31ItYS4FcRieFQaDA37aRC+cc8P+yfwyd1Kkjn+vPnZNeeOt9fRt5T36TcxRyJnq6yep9G9YPYX1LFOTI+HueT/kwgw4sf/nH4Wo2rSADAcLj6kyDL5iim9R5TQEzTRmUBW1AdndUi5lL2M23tM=
-Received: from BYAPR12MB4791.namprd12.prod.outlook.com (2603:10b6:a03:10a::12)
- by BN6PR1201MB0065.namprd12.prod.outlook.com (2603:10b6:405:4e::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5186.14; Fri, 29 Apr
- 2022 19:10:56 +0000
-Received: from BYAPR12MB4791.namprd12.prod.outlook.com
- ([fe80::d7:f2c8:c731:bdba]) by BYAPR12MB4791.namprd12.prod.outlook.com
- ([fe80::d7:f2c8:c731:bdba%5]) with mapi id 15.20.5186.021; Fri, 29 Apr 2022
- 19:10:56 +0000
-X-SNPS-Relay: synopsys.com
-From:   Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-CC:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Fri, 29 Apr 2022 15:22:45 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3780CC500
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 12:19:25 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id bd19-20020a17090b0b9300b001d98af6dcd1so11332411pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 12:19:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Nbl1l94NSe3Fek2fXmDdi1dWs+tZMPUUMy0P2EiLPLg=;
+        b=e+923uX3L34JoxH8inI2ZslZuVikT2P6I5OcFSRPPg8PWVOj34lfOUIuKdw5y2eIN+
+         vGUUvNtdpS7vGCww/uqb2kGFOd9R/L99ldLU+nWZITJlCqJONw41uN3MQZD3uQ2//N+M
+         crhXv+T8QnJFSY/NAUSKR1o4ahHUVk7dBVY18=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Nbl1l94NSe3Fek2fXmDdi1dWs+tZMPUUMy0P2EiLPLg=;
+        b=mucX/MPhvHCj6w+6+fbxPJZ6tCkskeg0GxRGOd3gER1p5WgOh7iaDfSmiY1oIXvIXX
+         wUuGYas34I5fzn+hyB6TjNfTBQPiL9CtfNHj0jqxwdm7MB3FK9nRm7I5eGzCMwTs3Nt/
+         6/fsecj5ywxw03Y+yv1pzfPGfkQSC2Qo7Hsn3QOmcyP5QWidBdiqDNcjloOBte13m0i8
+         A/yYQ1WqTNZJL7RtxmRrWiwI4jIr3iuH0zfUmJP1wCXnewWBNeJFqg3gfvnqogZ0ooTx
+         EMtT9fQMbAw0MzLU0vUVxUp/BftScC4nlrJsaLJDvzJyHj8MnuXSsVZzB4qbprjRJhE5
+         9UZg==
+X-Gm-Message-State: AOAM530u7xGxODb0OH8sdI57QpuFxeWBNEzegg3UfVCO3DVkYByWhplX
+        W4+cdxfM4WTM5udKIrqrx9GdkA==
+X-Google-Smtp-Source: ABdhPJx5izOWf80ef6ldgjmrgWzIUTHlyiEV4R/ZZm5TorJpza0hZq8zsUWD1pcGPG5bzvzzP3PbRg==
+X-Received: by 2002:a17:90b:4a09:b0:1d2:de49:9be8 with SMTP id kk9-20020a17090b4a0900b001d2de499be8mr5668726pjb.68.1651259965279;
+        Fri, 29 Apr 2022 12:19:25 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:7d14:5f45:9377:9b6a])
+        by smtp.gmail.com with UTF8SMTPSA id m8-20020a17090a414800b001d81a30c437sm11380455pjg.50.2022.04.29.12.19.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Apr 2022 12:19:24 -0700 (PDT)
+Date:   Fri, 29 Apr 2022 12:19:22 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Felipe Balbi <balbi@kernel.org>,
         Stephen Boyd <swboyd@chromium.org>,
         Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
         Mathias Nyman <mathias.nyman@intel.com>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "quic_ppratap@quicinc.com" <quic_ppratap@quicinc.com>,
-        "quic_kriskura@quicinc.com" <quic_kriskura@quicinc.com>,
-        "quic_vpulyala@quicinc.com" <quic_vpulyala@quicinc.com>
-Subject: Re: [PATCH v4 0/3] Skip phy initialization for DWC3 USB Controllers
-Thread-Topic: [PATCH v4 0/3] Skip phy initialization for DWC3 USB Controllers
-Thread-Index: AQHYVTzp+nheqTmOxEObuTjVewbkqaz/84sAgAF3UoCABNaxAIABDaoA
-Date:   Fri, 29 Apr 2022 19:10:56 +0000
-Message-ID: <3c52770a-5a04-99b3-0875-d902142a336c@synopsys.com>
-References: <1650517255-4871-1-git-send-email-quic_c_sanm@quicinc.com>
- <20220425024858.GA7052@hu-pkondeti-hyd.qualcomm.com>
- <1287c649-de62-c7d8-1c1d-a30ede7505c9@synopsys.com>
- <20220429030544.GC16319@hu-pkondeti-hyd.qualcomm.com>
-In-Reply-To: <20220429030544.GC16319@hu-pkondeti-hyd.qualcomm.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=synopsys.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 5275f3a3-c90b-4271-54bf-08da2a13fcd4
-x-ms-traffictypediagnostic: BN6PR1201MB0065:EE_
-x-microsoft-antispam-prvs: <BN6PR1201MB0065E732A2586C7141ECF3B1AAFC9@BN6PR1201MB0065.namprd12.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: r2FY1idcdhboMq81nOKd3ACTei3Gn8a5LWDXrkfJEy/Cio8WX57p4ou1sKTIpajO4sAwoNmJGtN8KKLWP3Z6FknvPxD2yHbuIoDOnKtJj8sIPdwCt/X5iM7i1A7fzb6Qyo5WAbPxLycbZxlYJsSGJCcW2qh893Ge5ckz7qtYDrKI+s7c30LYj0s2BAgDm35tVRvTjjNhc/hXN1My5qqyst8PMXCt+norHoCMwy6+K9t8CFp347YTBrtVAQ2qGGLwIfDFhgkTwp+OToGy47vb2wRrvfB0ySLE45JYBSPTor/LYPK/qtyYMDK68PlkWKmIOtej61J0SudMLyKvNLCeeW4Kq3NG8w55d23cjjW4Fhluaj6/1L0cGjzBtxxwQl24tceiHOucr/HQbRKv2SKR42HudC9emIp8eZO2fWjUB1qwwiOvzs9eC5Sp+xNLzUgkoAYV5M0PyFEKiC1NjYybd1MoRLfadqhPbLOoSqsSxKH0Q5NMpNzGS/r1pskkrgftPcGrvvpOoVGdXZwS8MDHoFbzVA0eHUGktJBzkARmYcOPnn3TyZnjDGQhO7YCIZOgR8spEiU4StG/OSkOpmTy/dRzPpf2z+zxjmu5WgS0wW8NTxVl5rwl1alm9rqGYky52WgolzB+krdNtMX5Dim77uZgZPNFrVxgxMgM3XSg/QwTfCiUuIRdtBw60hMqpY99sQ7aqjcWVWJi8zJXPxGzHcYMcF9I0NJmgeDpyaGTxyAsfp5cW3KeQYpmK2ilavqQeCSvf5kmZQ/Ipcye44GYMSdinSF5xvErk3VfZh9gI4l1BpoqThiUagfryxZeujssGjksygxhi8TewVqMMx8Cv68UQyIXrccFZ3lmojEPfi0=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR12MB4791.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(508600001)(8676002)(2906002)(6506007)(110136005)(66946007)(66446008)(64756008)(2616005)(66476007)(66556008)(31686004)(4326008)(36756003)(6512007)(26005)(76116006)(38100700002)(122000001)(38070700005)(7416002)(5660300002)(54906003)(966005)(83380400001)(71200400001)(6486002)(31696002)(86362001)(186003)(8936002)(316002)(45980500001)(43740500002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?VU1ERnRuelBTZ1U0UC9GRUNGN0p6ZUE0dHhydWp3ZEI3N2VSV2lENXVxbjdy?=
- =?utf-8?B?UnJpOVVneU43RCs4SlMyR1VaQ2l0emgvVnRSRmFEUllFNmlKTzhaTE9GV1k1?=
- =?utf-8?B?dk5zWnFRYkhOVVE0WVdralcyamwvanVJL3VMMTl4VXgralg2b2szTThZWmtM?=
- =?utf-8?B?Y0wvcnNnYndCeGhjTGJDUEx4dDYzakVjZ3o1aElYU1ZTTDFveW9jTDdUQ2po?=
- =?utf-8?B?VUhiSkdmZlBLMDJ4THA2cDgvRnZUbWxDYzJLNkpRNHdjVWtxQ1BSMnptVmxQ?=
- =?utf-8?B?OHczTFN2WmJaL3BJejBDWWwrQzY3T3Z4YTlwTnBGSWdIaWpUSmlBcWx5Zld4?=
- =?utf-8?B?Ri85ajFUUzdFWDBhTmJNZ2hOQ1RZN25RNHJlVTJIVnZkS2ZGSURiQTI0emRY?=
- =?utf-8?B?cDJPUGlOcEhCRmtZV0FNbVB6aEczVkFCZGZWYTNJbkVFSkwwd1BONWhiKzdY?=
- =?utf-8?B?ejQzYmEvWXp6ZjM5WklCUEhIVU1oVllvaWY1S2U2Sy9ZYkJJYS8zUEpyL2dC?=
- =?utf-8?B?VXptYzA3a0F1WTB0NkhwMm50bTc3cnkvOGNZVks3S3BGcmFrU291bThsb3FV?=
- =?utf-8?B?OTB0V2Rxb1dlZ0pZNXNVM0NhTVhkQ0tKak5LY0hORlkwWDRZeFBtVEU0MGpY?=
- =?utf-8?B?bWZ6TFkyUGFjVjF1VThKempCU29uYTE2TmNacmNVV3l6L0hlK053aXdCZG14?=
- =?utf-8?B?cDRtSlcvQVp6aWI0RTdHQ3FXdVJUL1hXcXRxYS9OQ0tJWVNrM2owbzRwM0d3?=
- =?utf-8?B?dDVhUHhKTGh5MGlRUXlGSmdUak9oUmJnNXc2azhGSjFOb05lbjFKc2E3cG50?=
- =?utf-8?B?Q21BQVZiTUlSUVhNeU1uaE45RDhPS3V0aXordklwbTZmTjliK1ZwMlNzZWdw?=
- =?utf-8?B?NDVQR2krSzNzUEIwSGd6dThieDZ6dUxBQVY5Znlxc09TSEtGWm5ZeXJyMnk4?=
- =?utf-8?B?aE95cTZ2NWlYc1BrZG5Fb1lKUkdEUCtwVklqcFArWXhHNDRGSnRXOFRxYlVO?=
- =?utf-8?B?ei9IUURqcE1TUUM0TkxGQklSL0NhZFBNVmhJSjBuNDhZRUQ0d0xQOXFMQ1V3?=
- =?utf-8?B?dGx0RUVtVityQURzWm1xVFZXckMxdHJ0aDJ3Ymg1bXlRZFBObS9ramcvNnI2?=
- =?utf-8?B?KzBSMEltdWo5RnIrNlhNYlh0U3V6bmpaSnU0SlFSbXYwYWxTcmVxMTdSQWhm?=
- =?utf-8?B?dFAvbGlHZjdmaVlYY2gzZklmQWJuUzlQcjRXZ3NHbTQrYUJ1eFdhY1I0bndk?=
- =?utf-8?B?aEJLVnhrS2JRQU5YdTVzaXYyV1lNNUdvdExQVExNdlhnR1I1Q24wVVhOQW4x?=
- =?utf-8?B?QytIdXplVkhHRlVnVWpVK2JKUXgwaSttVE1BY0RLK0hNQksxS3BZQWxYa1BH?=
- =?utf-8?B?MVlNNEkvWExuMmw2ai9hMFhCLzdEajJKem1ON1lmRkNrQWQ1OEFnbjZHWTR3?=
- =?utf-8?B?NlNPWDlXVWdpY2l3Ky8rWEIwOHAycjRhcEp3NHdOZUNsWGtLQzlBNUROMFZT?=
- =?utf-8?B?UUsycDF4NUZEZFpkM3R4WGNxNVRQc1VNa0ZMKzNoUlhoeW9TTjRsaVF4Ym9v?=
- =?utf-8?B?OWVUeExHY3hvV2xRQ01pek5rNE9OY2JKQ3dHUTNWeVRjSTB5SnhRREgwUWNy?=
- =?utf-8?B?WWJpelo0U1l0dnY4Q1R3b1JsY2ZOdnNSQjFzeWJYUXhkbldMdWR5a05qWXlr?=
- =?utf-8?B?SUZ2RzdzRnlXQVpqOHhDbjlhK1BpT2Vjcm56MTVkWnd0eVhIY1ZZVGFzNUxm?=
- =?utf-8?B?eWRGMFhFTWdYbWQ3Q1BTKzc1aExxN1ZYR1RZaGl0bW82U0hHSWVWd2N6Rm5G?=
- =?utf-8?B?N3pBQ29UN0hIMnlwSjVJanh0RGhQeUp1R3UvQkRuaUp1Q3I1SlRvSnhSN2pt?=
- =?utf-8?B?N08vaW5OM3dtQ0h3TU5LQUUrSFFIbTNFTm5JL2xtTXRMNDlrSnBuRjNrZ1V2?=
- =?utf-8?B?ZkMvREFoUCtTNU1LK0thVUQ1Z3N5TEd3eXg2c3BMRVBvMDJqU3d3OEd1NENT?=
- =?utf-8?B?SmhFRGZNZldrMzQyazJscXFIOUVQcmd5bm5SZFh1MjFhUWZibTNJT2ZCSy9V?=
- =?utf-8?B?a3FEcWRwWlZRcU9RZ091WllTZzJGRU5kVmxVbTR5ekdwazdsa1pTcU11K3dr?=
- =?utf-8?B?YlRWUXJDZGlodUp6aStUZDJUNEVnbUtZbnlMOG1pTWs3aERjaWZIR3l4ajQv?=
- =?utf-8?B?RXhDVkc2eHFYd1NSQ2ZQa0NuUEF5SzEvWEtDbTZReTNUTjhhTEN5N0Zydjh1?=
- =?utf-8?B?NTRONDJFRDBTVEJ3TUNVa0xzMWZIK2hMM2RKS08yV3VGazJDMGxMS05FVUVB?=
- =?utf-8?B?cnAwcVFzTGdvVHMwYmRlSDR6aGFrWTNNU2U1OEUxa3Y5ZU93Vnhwdz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <CF72231FEADFF64787217C15D4BB1E41@namprd12.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ULTRA-WIDEBAND (UWB) SUBSYSTEM:" 
+        <linux-usb@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        quic_ppratap@quicinc.com, quic_kriskura@quicinc.com,
+        quic_vpulyala@quicinc.com
+Subject: Re: [PATCH v14 2/7] PM / wakeup: Add device_children_wakeup_capable()
+Message-ID: <Ymw6Og/qhg3D0mx+@google.com>
+References: <1650395470-31333-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1650395470-31333-3-git-send-email-quic_c_sanm@quicinc.com>
+ <CAJZ5v0h2ZKPN6SERPnASPywZfeOWXWncJgNZ1WZa80+=M4DCiQ@mail.gmail.com>
+ <YmL3lMaR79wPMEfY@google.com>
+ <20220425130303.GA16319@hu-pkondeti-hyd.qualcomm.com>
+ <20220429125956.GD16319@hu-pkondeti-hyd.qualcomm.com>
 MIME-Version: 1.0
-X-OriginatorOrg: synopsys.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR12MB4791.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5275f3a3-c90b-4271-54bf-08da2a13fcd4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Apr 2022 19:10:56.0396
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: c33c9f88-1eb7-4099-9700-16013fd9e8aa
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: FNyqbuWB/txkZm4dHNuoaGLMvChxKB+c4fahVRAJ6xWLws9C8YvZx7gkfUp5wkTzLaIGS0lnlFZbDOcg8qB5JA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR1201MB0065
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220429125956.GD16319@hu-pkondeti-hyd.qualcomm.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-UGF2YW4gS29uZGV0aSB3cm90ZToNCj4gSGkgVGhpbmgsDQo+IA0KPiBPbiBUdWUsIEFwciAyNiwg
-MjAyMiBhdCAwMToxMjoxN0FNICswMDAwLCBUaGluaCBOZ3V5ZW4gd3JvdGU6DQo+PiBIaSwNCj4+
-DQo+PiBQYXZhbiBLb25kZXRpIHdyb3RlOg0KPj4+IEhpIE1hdGhpYXMsDQo+Pj4NCj4+PiBPbiBU
-aHUsIEFwciAyMSwgMjAyMiBhdCAxMDozMDo1MkFNICswNTMwLCBTYW5kZWVwIE1haGVzd2FyYW0g
-d3JvdGU6DQo+Pj4+IFJ1bnRpbWUgc3VzcGVuZCBvZiBwaHkgZHJpdmVycyB3YXMgZmFpbGluZyBm
-cm9tIERXQzMgZHJpdmVyIGFzDQo+Pj4+IHJ1bnRpbWUgdXNhZ2UgdmFsdWUgaXMgMiBiZWNhdXNl
-IHRoZSBwaHkgaXMgaW5pdGlhbGl6ZWQgZnJvbQ0KPj4+PiBEV0MzIGNvcmUgYW5kIEhDRCBjb3Jl
-Lg0KPj4+PiBTb21lIGNvbnRyb2xsZXJzIGxpa2UgRFdDMyBhbmQgQ0ROUzMgbWFuYWdlIHBoeSBp
-biB0aGVpciBjb3JlIGRyaXZlcnMuDQo+Pj4+IFRoaXMgcHJvcGVydHkgY2FuIGJlIHNldCB0byBh
-dm9pZCBwaHkgaW5pdGlhbGl6YXRpb24gaW4gSENEIGNvcmUuDQo+Pj4+DQo+Pj4+IHY0Og0KPj4+
-PiBBZGRlZCB0aGUgZGV2aWNlIHRyZWUgYmluZGluZyBwYXRjaCBpbiB0aGUgc2VyaWVzLg0KPj4+
-Pg0KPj4+PiB2MzoNCj4+Pj4gQ29taW5nIGJhY2sgdG8gdGhpcyBzZXJpZXMgYmFzZWQgb24gZGlz
-Y3Vzc2lvbiBhdCBiZWxvdyB0aHJlYWQNCj4+Pj4gaHR0cHM6Ly91cmxkZWZlbnNlLmNvbS92My9f
-X2h0dHBzOi8vcGF0Y2h3b3JrLmtlcm5lbC5vcmcvcHJvamVjdC9saW51eC1hcm0tbXNtL3BhdGNo
-LzE2NDgxMDM4MzEtMTIzNDctNC1naXQtc2VuZC1lbWFpbC1xdWljX2Nfc2FubUBxdWljaW5jLmNv
-bS9fXzshIUE0RjJSOUdfcGchZnlrVE5UQnVLazljaTZ6S2RjdVFOYnVaUWRWaV9IZWtVM2pldHp1
-ZC1QUVZoYlJhVmhoWkhLejBrX0xmRzBjZ3dhWDRiUU01YkxJMGVwNnRZeWlrZ3ZZSzdiNVNkQSQg
-DQo+Pj4+IERyb3BwZWQgdGhlIGR0IGJpbmRpbmdzIFBBVENIIDEvMyBpbiB2Mg0KPj4+PiBodHRw
-czovL3VybGRlZmVuc2UuY29tL3YzL19faHR0cHM6Ly9wYXRjaHdvcmsua2VybmVsLm9yZy9wcm9q
-ZWN0L2xpbnV4LWFybS1tc20vY292ZXIvMTYzNjM1MzcxMC0yNTU4Mi0xLWdpdC1zZW5kLWVtYWls
-LXF1aWNfY19zYW5tQHF1aWNpbmMuY29tL19fOyEhQTRGMlI5R19wZyFmeWtUTlRCdUtrOWNpNnpL
-ZGN1UU5idVpRZFZpX0hla1UzamV0enVkLVBRVmhiUmFWaGhaSEt6MGtfTGZHMGNnd2FYNGJRTTVi
-TEkwZXA2dFl5aWtndmEyVlhhaE9RJCAgDQo+Pj4+DQo+Pj4+IHYyOg0KPj4+PiBVcGRhdGVkIHRo
-ZSBjb21taXQgZGVzY3JpcHRpb25zLg0KPj4+PiBDaGFuZ2VkIHN1YmplY3QgcHJlZml4IGZyb20g
-ZHdjIHRvIGR3YzMuDQo+Pj4+IEluY3JlYXNlZCBwcm9wcyBhcnJheSBzaXplLg0KPj4+Pg0KPj4+
-Pg0KPj4+PiBTYW5kZWVwIE1haGVzd2FyYW0gKDMpOg0KPj4+PiAgIGR0LWJpbmRpbmdzOiB1c2I6
-IHVzYi14aGNpOiBBZGQgYmluZGluZ3MgZm9yIHVzYi1za2lwLXBoeS1pbml0DQo+Pj4+ICAgICBw
-cm9wZXJ0eQ0KPj4+PiAgIHVzYjogaG9zdDogeGhjaS1wbGF0OiBBZGQgZGV2aWNlIHByb3BlcnR5
-IHRvIHNldCBYSENJX1NLSVBfUEhZX0lOSVQNCj4+Pj4gICAgIHF1aXJrDQo+Pj4+ICAgdXNiOiBk
-d2MzOiBob3N0OiBTZXQgdGhlIHByb3BlcnR5IHVzYi1za2lwLXBoeS1pbml0DQo+Pj4+DQo+Pj4+
-ICBEb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvdXNiL3VzYi14aGNpLnlhbWwgfCA0
-ICsrKysNCj4+Pj4gIGRyaXZlcnMvdXNiL2R3YzMvaG9zdC5jICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICB8IDQgKysrLQ0KPj4+PiAgZHJpdmVycy91c2IvaG9zdC94aGNpLXBsYXQuYyAgICAg
-ICAgICAgICAgICAgICAgICAgIHwgMyArKysNCj4+Pj4gIDMgZmlsZXMgY2hhbmdlZCwgMTAgaW5z
-ZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQ0KPj4+Pg0KPj4+DQo+Pj4gVGhpcyBpcyB0aGUgbGF0
-ZXN0IHNlcmllcyB3aXRoIGJpbmRpbmdzIGFkZGVkIGFzIHBlciBHcmVnJ3MgY29tbWVudC4gQ2Fu
-IHlvdQ0KPj4+IHBsZWFzZSBwaWNrIHVwIHRoaXMgc2VyaWVzIGlmIHlvdSBkb24ndCBoYXZlIGFu
-eSBmdXJ0aGVyIGNvbW1lbnRzLg0KPj4+DQo+Pg0KPj4gV2UndmUgaGFkIHRoaXMgY29udmVyc2F0
-aW9uIGdvaW5nIG9uIGZvciBhIHdoaWxlLiBTZWVtcyB0aGVyZSdzIG5vIGdvb2QNCj4+IG9uZSBz
-b2x1dGlvbiB3aXRoIGV2ZXJ5b25lIGZ1bGx5IGdldHRpbmcgb24tYm9hcmQuDQo+Pg0KPj4gSSd2
-ZSB0cmllZCB0byBnZXQgc29tZSBvZiB0aGUgcXVpcmtzIG91dCBiZWZvcmUgYWxzbywgYnV0IHJh
-biBpbnRvIHRoZQ0KPj4gc2FtZSBwcm9ibGVtLiBbMV0NCj4+DQo+PiBBcyBNYXRoaWFzIG5vdGVk
-IFsyXSBiZWZvcmUsIG1heWJlIHdlIGNhbiBjcmVhdGUgYSBuZXcgeGhjaS1zbnBzDQo+PiBwbGF0
-Zm9ybSBnbHVlIGRyaXZlci4NCj4+DQo+PiBUaGUgcHJvYmxlbSB3aXRoIHRoZSBjdXJyZW50IGlt
-cGxlbWVudGF0aW9uIGlzIHBhc3NpbmcgZHdjMydzIHJlbGF0ZWQNCj4+IGluZm8gdG8geGhjaS1w
-bGF0IGdlbmVyaWMgZHJpdmVyIGlzIHZlcnkgY2x1bmt5LiBXZSBjYW4gdGVhY2ggdGhlIG5ldw0K
-Pj4gZ2x1ZSBkcml2ZXIgd2l0aCBhbGwgdGhlIGluZm8gbmVjZXNzYXJ5IHRvIGRyaXZlIHRoZSBj
-b250cm9sbGVyLg0KPj4NCj4+IFdlIGNhbiBqdXN0IHBhc3MgdGhlIGNvbnRyb2xsZXIncyB2ZXJz
-aW9uIChhbmQgc3VidmVyc2lvbikgYXMgYSBwcm9wZXJ0eQ0KPj4gZm9yIHBsYXRmb3JtIGRldmlj
-ZS4gVGhpcyB3YXksIHdlIGNhbjoNCj4+DQo+PiAxKSBTZXBhcmF0ZSB0aGUgcXVpcmtzIGZyb20g
-eGhjaS1wbGF0IGdsdWUuIE1vc3QgY29tbW9uIHF1aXJrcyBjYW4gYmUNCj4+IGRldGVjdGVkIGp1
-c3QgYmFzZSBvbiB0aGUgY29udHJvbGxlcidzIHZlcnNpb24NCj4+DQo+PiAyKSBBdm9pZCBoYXZp
-bmcgdG8gY3JlYXRlIGR1cGxpY2F0ZSAic25wcywqIiBwcm9wZXJ0aWVzDQo+Pg0KPj4gMykgR2V0
-IGFjY2VzcyB0byB0aGUgY29tbW9uIHhoY2kgcXVpcmsgZmxhZ3Mgd2hpbGUgbWFpbnRhaW4gYWJz
-dHJhY3Rpb24NCj4+DQo+PiA0KSBQb3RlbnRpYWxseSBhZGQgY29tcGF0aWJpbGl0eSBzdHJpbmcg
-YXMgcGFydCBvZiB0aGUgY29udHJvbGxlcidzDQo+PiB2ZXJzaW9uIGFuZCBsZXQgdGhlIGdsdWUg
-ZHJpdmVyIGhhbmRsZSB0aGUgcmVzdA0KPj4NCj4+IDUpIFJlZHVjZSBpbnRyb2R1Y2luZyBuZXcg
-InF1aXJrcyIgaW4gdGhlIGZ1dHVyZQ0KPj4NCj4+IEkgY2FuIGdldCBzdGFydGVkIHdpdGggdGhp
-cy4gTGV0IG1lIGtub3cgaWYgeW91IGhhdmUgYW55IGNvbW1lbnQuDQo+IA0KPiBTb3JyeSwgY291
-bGQgbm90IHJlcGx5IGVhcmxpZXIuIFRoZSBwcm9wb3NhbCBzb3VuZHMgZ29vZCB0byBtZS4NCj4g
-DQo+IFRoZSB4aGNpLXBsYXQgaXMgYSB0aGluIHdyYXBwZXIsIHNvIGhhdmluZyBhIHNlcGFyYXRl
-IHdyYXBwZXIgZm9yIFNOUFMNCj4gY29udHJvbGxlciBpcyBkZWZpbml0ZWx5IG5vdCBhbiBvdmVy
-a2lsbCBhbmQgZ2l2ZXMgbG90IG9mIGZsZXhpYmlsaXR5DQo+IGluIGFic3RyYWN0aW5nIGR3YzMg
-c3BlY2lmaWNzLiBBbHNvIGR3YzMvaG9zdC5jIGJlY29tZXMganVzdCBhIHBsYXRmb3JtDQo+IGRl
-dmljZSBjcmVhdGlvbiB3cmFwcGVyIGFuZCB4SEMgc3BlY2lmaWNzIGFyZSBjb21wbGV0ZWx5IHRh
-a2VuIG91dC4NCj4gDQoNClN1cmUuIEknbGwgYmUgYXdheSBmb3IgYSBmZXcgd2Vla3MgYW5kIGNv
-bWUgYmFjayBieSB0aGUgZW5kIG9mIE1heS4gSQ0KY2FuIGRvIHRoYXQgdGhlbi4NCg0KVGhhbmtz
-LA0KVGhpbmgNCg==
+Hi Pavan,
+
+On Fri, Apr 29, 2022 at 06:29:56PM +0530, Pavan Kondeti wrote:
+> Hi Matthias,
+> 
+> On Mon, Apr 25, 2022 at 06:33:03PM +0530, Pavan Kondeti wrote:
+> > Hi Matthias,
+> > 
+> > On Fri, Apr 22, 2022 at 11:44:36AM -0700, Matthias Kaehlcke wrote:
+> > > On Fri, Apr 22, 2022 at 01:57:17PM +0200, Rafael J. Wysocki wrote:
+> > > > On Tue, Apr 19, 2022 at 9:11 PM Sandeep Maheswaram
+> > > > <quic_c_sanm@quicinc.com> wrote:
+> > > > >
+> > > > > From: Matthias Kaehlcke <mka@chromium.org>
+> > > > >
+> > > > > Add device_children_wakeup_capable() which checks whether the device itself
+> > > > > or one if its descendants is wakeup capable.
+> > > > 
+> > > > device_wakeup_path() exists for a very similar purpose.
+> > > > 
+> > > > Is it not usable for whatever you need the new function introduced here?
+> > > 
+> > > I wasn't aware of it's function, there are no doc comments and the
+> > > name isn't really self explanatory.
+> > > 
+> > > In a quick test device_wakeup_path() returned inconsistent values for the
+> > > root hub, sometimes true, others false when a wakeup capable USB device was
+> > > connected.
+> > 
+> > We will also test the same to double confirm the behavior of
+> > device_wakeup_path(). I am assuming that you checked device_wakeup_path()
+> > only during system suspend path.
+> > 
+> > Here is what I understood by looking at __device_suspend(). Please share
+> > your thoughts on this.
+> > 
+> > power.wakeup_path is set to true for the parent *after* a wakeup capable
+> > device is suspended. This means when the root hub(s) is suspended, it is
+> > propagated to xhci-plat and when xhci-plat is suspended, it is propagated
+> > to dwc3. bottom up propgation during system suspend.
+> > 
+> > I believe we can directly check something like this in the dwc3 driver
+> > instead of having another wrapper like device_children_wakeup_capable().
+> > 
+> > diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> > index 1170b80..a783257 100644
+> > --- a/drivers/usb/dwc3/core.c
+> > +++ b/drivers/usb/dwc3/core.c
+> > @@ -1878,8 +1878,14 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> >  		break;
+> >  	case DWC3_GCTL_PRTCAP_HOST:
+> >  		if (!PMSG_IS_AUTO(msg)) {
+> > +			/*
+> > +			 * Don't kill the host when dwc3 is wakeup capable and
+> > +			 * its children needs wakeup.
+> > +			 */
+> > +			if (device_may_wakeup(dwc->dev) && device_wakeup_path(dwc->dev))
+> > +				handle_it();
+> > +		} else {
+> >  			dwc3_core_exit(dwc);
+> > -			break;
+> >  		}
+> >  
+> >  		/* Let controller to suspend HSPHY before PHY driver suspends */
+> > 
+> 
+> device_wakeup_path(dwc->dev) is returning true all the time irrespective of
+> the wakeup capability (and enabled status) of the connected USB devices. That
+> is because xhci-plat device is configured to wakeup all the time. Since the
+> child is wakeup capable, its parent i.e dwc3 has device_wakeup_path() set.
+> device_children_wakeup_capable() will also suffer the problem. However,
+> 
+> device_children_wakeup_capable(&hcd->self.root_hub->dev) is what Sandeep's
+> patch is using. That is not correct. we have two root hubs (HS and SS) associated
+> with a USB3 controller and calling it on one root hub is incorrect. 
+> device_children_wakeup_capable() must be called on xhci-plat so that it covers
+> both HS and SS root hubs
+
+Thanks for pointing that out!
+
+> I am thinking of dynamically enabling/disabling xhci-plat wakeup capability so
+> that the wakeup path is correctly propagated to dwc3. something like below.
+> Does it make sense to you?
+> 
+> diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
+> index 649ffd8..be0c55b 100644
+> --- a/drivers/usb/host/xhci-plat.c
+> +++ b/drivers/usb/host/xhci-plat.c
+> @@ -412,6 +412,9 @@ static int __maybe_unused xhci_plat_suspend(struct device *dev)
+>  	struct xhci_hcd	*xhci = hcd_to_xhci(hcd);
+>  	int ret;
+>  
+> +	if (!device_wakeup_path(dev))
+> +		device_wakeup_disable(dev);
+> +
+>  	if (pm_runtime_suspended(dev))
+>  		pm_runtime_resume(dev);
+>  
+> @@ -443,6 +446,8 @@ static int __maybe_unused xhci_plat_resume(struct device *dev)
+>  	pm_runtime_set_active(dev);
+>  	pm_runtime_enable(dev);
+>  
+> +	device_wakeup_enable(dev);
+
+I think this also needs to be done conditionally, otherwise it would
+create a new wake source on every resume when wakeup is already
+enabled.
+
+Other than that this seems to do the trick and keeps the USB layer out of
+the dwc3 code.
