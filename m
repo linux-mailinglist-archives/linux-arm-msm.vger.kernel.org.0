@@ -2,150 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BEDE515077
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 18:10:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F6995150A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 18:20:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378471AbiD2QNp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 12:13:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59000 "EHLO
+        id S1378590AbiD2QXj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 12:23:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378911AbiD2QNn (ORCPT
+        with ESMTP id S234286AbiD2QXj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 12:13:43 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16C4B41631
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 09:10:23 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id a1so9628126edt.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 09:10:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=38G2yLvTesO/mAjiyLWZJ7vMR9eg3xKJsvKaGBhlj48=;
-        b=Z6/QtEfer9f+OTdeWiWLTDLQrtwaSk794Vgsbs8yANjijC/n6xI7dAdrszE6zXzZs3
-         eDk12zl2F8a46AyeYidW8tq2bsM7D0pA7biW1+/+uO/MCZkgqGi0OHA0fOrQzuzRKcVd
-         w63F5C7NaCxtPl8jO7Bxi1shpsUpt6qi/ApdE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=38G2yLvTesO/mAjiyLWZJ7vMR9eg3xKJsvKaGBhlj48=;
-        b=lL4Lo9euuXZ72BaCgcn9L0D14xDb5WmhaBb3VnbYI2g+M0GJ5lmkT1yOaCE5vmI+HS
-         yXZ1LNvj4HztMFPU5xcOhU01y0bJxtZi6sSX5twixjgC6lMzrnLA4Ioplii7fWjxPL62
-         LbBTyR2BixY3m98I6S4LStmTPlrdul1KsHkmhKN5AJpWnqZw7ziJZpgEXF4QrdRXgzP4
-         okLeTEcO76iadKMx9CDLmOU433U67i1+z+fzU/S9K9Uls9Uxsk64aMhG3CF3icfRp+Ig
-         /KK/F4leWUBNtqgQ+rIClOszTMMaBPb9euQ2qJc361kpIvFZ0wUQcG9lpoWECGe4jRZw
-         xzfg==
-X-Gm-Message-State: AOAM532YBZlju97nIo4tDfXKY6wTos0MPexBlx/bxoCJIWGYDu0Saf+1
-        OHfEjCXjBpBbodqTNrGYeDb/ZJgk+Du9Xm66
-X-Google-Smtp-Source: ABdhPJz3LdLGnhtj19yauXtBr8Vtww696Eij//J2MN0ClSzcORlLFnUwGfS20ZTISskomnoQ2XISlg==
-X-Received: by 2002:a05:6402:485:b0:425:a529:c29e with SMTP id k5-20020a056402048500b00425a529c29emr42008481edv.354.1651248621407;
-        Fri, 29 Apr 2022 09:10:21 -0700 (PDT)
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com. [209.85.221.45])
-        by smtp.gmail.com with ESMTPSA id hz12-20020a1709072cec00b006f3ef214dcbsm772049ejc.49.2022.04.29.09.10.19
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Apr 2022 09:10:20 -0700 (PDT)
-Received: by mail-wr1-f45.google.com with SMTP id c11so1570428wrn.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 09:10:19 -0700 (PDT)
-X-Received: by 2002:adf:f50d:0:b0:20a:e096:ef with SMTP id q13-20020adff50d000000b0020ae09600efmr17925110wro.679.1651248619233;
- Fri, 29 Apr 2022 09:10:19 -0700 (PDT)
+        Fri, 29 Apr 2022 12:23:39 -0400
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D0F218B03;
+        Fri, 29 Apr 2022 09:20:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651249219; x=1682785219;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=NeeAYHCb2w8hfb2CqYSw0VXn0vgeaiNaoDLMfEcGd6U=;
+  b=aRelUJHAOq5NynNFsOMgxpTUUmwyD7sqd+ssbUpr7TAdnbSWbbgoRF+e
+   jjybxaW1I/hkW+UJyaEenrpnZ/ulReHuvuDra9KfakQb3JixCSV3YJFdg
+   rPuVqJq3zu1AwWjwzlNB+Opm56Kh389PtrrMhoQDT365dKURzZBGq+k8i
+   pyRIDWbjBvgGjwn7t2ToiePiAHsrCCLDUS2m8v0HuAP85If0RCvkhjya6
+   bpdTJVxUwx4ZO+yF20xUUJKcrHHczqMNC7qNevpP7hQugtFSMMPOeE29g
+   gTL63FFWf37Wav2LvlttZ4pWeUY7wYQQlCBCEsBY8QN0VPrzZr00Ons2E
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10332"; a="248617880"
+X-IronPort-AV: E=Sophos;i="5.91,185,1647327600"; 
+   d="scan'208";a="248617880"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2022 09:20:19 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,185,1647327600"; 
+   d="scan'208";a="542671702"
+Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
+  by orsmga002.jf.intel.com with ESMTP; 29 Apr 2022 09:20:16 -0700
+Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1nkTLs-0006Tj-2q;
+        Fri, 29 Apr 2022 16:20:16 +0000
+Date:   Sat, 30 Apr 2022 00:19:15 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_vgarodia@quicinc.com, frkoenig@chromium.org,
+        quic_dikshita@quicinc.com
+Subject: Re: [PATCH] media: venus: set ubwc configuration on specific video
+ hardware
+Message-ID: <202204300037.EcG1kDyl-lkp@intel.com>
+References: <1651131248-20313-1-git-send-email-quic_vgarodia@quicinc.com>
 MIME-Version: 1.0
-References: <1651079383-7665-1-git-send-email-quic_srivasam@quicinc.com>
- <1651079383-7665-5-git-send-email-quic_srivasam@quicinc.com> <YmsrB6Q89II5w1+9@google.com>
-In-Reply-To: <YmsrB6Q89II5w1+9@google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 29 Apr 2022 09:10:06 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XxeZsiOVVBDK_vmx0nhT7roB2FqcaPXsH3+jzTHFXMxw@mail.gmail.com>
-Message-ID: <CAD=FV=XxeZsiOVVBDK_vmx0nhT7roB2FqcaPXsH3+jzTHFXMxw@mail.gmail.com>
-Subject: Re: [PATCH v12 4/4] arm64: dts: qcom: sc7280-herobrine: Add lpi
- pinmux properties for CRD 3.0/3.1
-To:     Matthias Kaehlcke <mka@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        quic_rohkumar@quicinc.com,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Judy Hsiao <judyhsiao@chromium.org>,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1651131248-20313-1-git-send-email-quic_vgarodia@quicinc.com>
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Vikash,
 
-On Thu, Apr 28, 2022 at 5:02 PM Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> On Wed, Apr 27, 2022 at 10:39:43PM +0530, Srinivasa Rao Mandadapu wrote:
-> > Add LPASS LPI pinctrl properties, which are required for Audio
-> > functionality on herobrine based platforms of rev5+
-> > (aka CRD 3.0/3.1) boards.
-> >
-> > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> > Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> > Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->
-> I'm not super firm in pinctrl territory, a few maybe silly questions
-> below.
->
-> >  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 84 +++++++++++++++++++++++
-> >  1 file changed, 84 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> > index deaea3a..dfc42df 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> > @@ -111,6 +111,90 @@ ap_ts_pen_1v8: &i2c13 {
-> >   * - If a pin is not hooked up on Qcard, it gets no name.
-> >   */
-> >
-> > +&lpass_dmic01 {
-> > +     clk {
-> > +             drive-strength = <8>;
-> > +     };
+Thank you for the patch! Yet something to improve:
 
-Ugh, I've been distracted and I hadn't realized we were back to the
-two-level syntax. Definitely not my favorite for all the reasons I
-talked about [1]. I guess you took Bjorn's silence to my response to
-mean that you should switch back to this way? :(
+[auto build test ERROR on media-tree/master]
+[also build test ERROR on v5.18-rc4 next-20220429]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-Bjorn: can you clarify?
+url:    https://github.com/intel-lab-lkp/linux/commits/Vikash-Garodia/media-venus-set-ubwc-configuration-on-specific-video-hardware/20220428-153510
+base:   git://linuxtv.org/media_tree.git master
+config: arm64-allmodconfig (https://download.01.org/0day-ci/archive/20220430/202204300037.EcG1kDyl-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project c59473aacce38cd7dd77eebceaf3c98c5707ab3b)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm64 cross compiling tool for clang build
+        # apt-get install binutils-aarch64-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/22d299bea1f679d007cb71b3916bf39bb957ab66
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Vikash-Garodia/media-venus-set-ubwc-configuration-on-specific-video-hardware/20220428-153510
+        git checkout 22d299bea1f679d007cb71b3916bf39bb957ab66
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash arch/arm64/crypto/ arch/arm64/kernel/ drivers/media/platform/qcom/venus/
 
-[1] https://lore.kernel.org/r/CAD=FV=VicFiX6QkBksZs1KLwJ5x4eCte6j5RWOBPN+WwiXm2Cw@mail.gmail.com/
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
 
-> > +};
-> > +
-> > +&lpass_dmic01_sleep {
-> > +     clk {
-> > +             drive-strength = <2>;
->
-> Does the drive strength really matter in the sleep state, is the SoC actively
-> driving the pin?
+All errors (new ones prefixed by >>):
 
-My understanding is that if a pin is left as an output in sleep state
-that there is a slight benefit to switching it to drive-strength 2.
+>> drivers/media/platform/qcom/venus/hfi_venus.c:997:35: error: too few arguments to function call, single argument 'hdev' was not specified
+                   ret = venus_sys_set_ubwc_config();
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~ ^
+   drivers/media/platform/qcom/venus/hfi_venus.c:907:12: note: 'venus_sys_set_ubwc_config' declared here
+   static int venus_sys_set_ubwc_config(struct venus_hfi_device *hdev)
+              ^
+   1 error generated.
 
 
-> > +             bias-disable;
->
-> What should this be in active/default state? If I understand correctly
-> after a transition from 'sleep' to 'default' this setting will remain,
-> since the default config doesn't specify a setting for bias.
+vim +/hdev +997 drivers/media/platform/qcom/venus/hfi_venus.c
 
-Your understanding matches mine but I haven't tested it and I remember
-sometimes being surprised in this corner of pinmux before. I think
-it's better to put the bias in the default state if it should be that
-way all the time, or have a bias in both the default and sleep state
-if they need to be different.
+   967	
+   968	static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
+   969	{
+   970		struct device *dev = hdev->core->dev;
+   971		const struct venus_resources *res = hdev->core->res;
+   972		int ret;
+   973	
+   974		ret = venus_sys_set_debug(hdev, venus_fw_debug);
+   975		if (ret)
+   976			dev_warn(dev, "setting fw debug msg ON failed (%d)\n", ret);
+   977	
+   978		/*
+   979		 * Idle indicator is disabled by default on some 4xx firmware versions,
+   980		 * enable it explicitly in order to make suspend functional by checking
+   981		 * WFI (wait-for-interrupt) bit.
+   982		 */
+   983		if (IS_V4(hdev->core) || IS_V6(hdev->core))
+   984			venus_sys_idle_indicator = true;
+   985	
+   986		ret = venus_sys_set_idle_message(hdev, venus_sys_idle_indicator);
+   987		if (ret)
+   988			dev_warn(dev, "setting idle response ON failed (%d)\n", ret);
+   989	
+   990		ret = venus_sys_set_power_control(hdev, venus_fw_low_power_mode);
+   991		if (ret)
+   992			dev_warn(dev, "setting hw power collapse ON failed (%d)\n",
+   993				 ret);
+   994	
+   995		/* For specific venus core, it is mandatory to set the UBWC configuration */
+   996		if (res->ubwc_conf) {
+ > 997			ret = venus_sys_set_ubwc_config();
+   998			if (ret)
+   999				dev_warn(dev, "setting ubwc config failed (%d)\n", ret);
+  1000		}
+  1001	
+  1002		return ret;
+  1003	}
+  1004	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
