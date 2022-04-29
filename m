@@ -2,67 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D72A5157D5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 00:04:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A6145157DF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 00:07:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239116AbiD2WHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 18:07:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37414 "EHLO
+        id S1347445AbiD2WKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 18:10:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347445AbiD2WHP (ORCPT
+        with ESMTP id S1348757AbiD2WKX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 18:07:15 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEB24DC5AC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 15:03:55 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id c190-20020a1c35c7000000b0038e37907b5bso7770458wma.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 15:03:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ngAHAx8KCTZqbA/wVhf/k9wvjiY7TwrBlQ520mj9F/4=;
-        b=aBZ84A6XYuRroZXuADMKuVKuiABfQxp6erm24iGZxALBSAsyoJg8sVqbwTb3ELkHRW
-         RTAnZ5w9yk5l2zE2KaF7KMxIaYBc7+G6wkuaXhyhsZSAAQxY4HvUgfQ0YDLjcM2n/GK4
-         EpvWmWTI+ax79bzPrVXkYY0pDp1Z4ATWp2ANK7I2teOnJ3gFwXRnSfnWMZBy/c4v2lCh
-         TD/BdAZIPm+MqCuDqSPszjMhaepnn4wYFqj0/dKRJNDHSseXLrkIAEqTtX7mX3AGdDg9
-         z9ut9RF+dMddYLFfDPzRDCr2jRUXcUvA5+VWVDxV5Rz4o+ykBIoPOLlKKL4qXs+UIJC9
-         zM4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ngAHAx8KCTZqbA/wVhf/k9wvjiY7TwrBlQ520mj9F/4=;
-        b=ZzioZY5UpUyIG1xzDD6r0Y8d7a1dHfBMeiIX1aiYMb4rzNb6X8RxlAbl+RnMWJZlZ6
-         b/LrG3HASd6Sd6BIesbOPdhlAqnKHxhbHBmLPZFB8q2zmJ+D1PNRa7F7XG2b1TCyI5Ye
-         7gQZY5XcEHjr6KxXe0lJslG9COBZdJ+HClzkslzjsPGnWJmqZNIEyhtwyNVN1bT/kx4i
-         w6Y3f5vOcpZAmkgNlRS4RlZwwP8c8XFmsqpUKgEZQ1rrrHLTJ5waZwuw3G9ZGwSNHBWP
-         /KITpw9qJWYaX0tWhW3HK8Fp1THc3Oqsd5vD9pijku4zzf46KFGkFJhzbW2t/P0fniIS
-         QX2Q==
-X-Gm-Message-State: AOAM531jOQzQ+d1tw7n9i+GTiCqYE+zqthDQJADHiW3Puk5E0U/a+ojD
-        MyOLt3OyRvoffUKdua7yCX1d/Q==
-X-Google-Smtp-Source: ABdhPJyKUSsewMfq0OpVMM/q5rmJHwonDZeVA4hBkJow4pGLOm7E+ezi81qsjihjWs3T6BQNDzW7+w==
-X-Received: by 2002:a7b:c181:0:b0:392:b34a:96a2 with SMTP id y1-20020a7bc181000000b00392b34a96a2mr877535wmi.48.1651269834379;
-        Fri, 29 Apr 2022 15:03:54 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id k15-20020adfc70f000000b0020c5253d90dsm338311wrg.89.2022.04.29.15.03.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 15:03:53 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     srinivas.kandagatla@linaro.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org
-Cc:     alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, bryan.odonoghue@linaro.org
-Subject: [PATCH v3 2/2] arm64: dts: qcom: Fix apq8016 compat string to match yaml
-Date:   Fri, 29 Apr 2022 23:03:49 +0100
-Message-Id: <20220429220349.1142759-3-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220429220349.1142759-1-bryan.odonoghue@linaro.org>
-References: <20220429220349.1142759-1-bryan.odonoghue@linaro.org>
+        Fri, 29 Apr 2022 18:10:23 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D36FAD080D;
+        Fri, 29 Apr 2022 15:07:03 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4BFF662247;
+        Fri, 29 Apr 2022 22:07:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FD9C385A4;
+        Fri, 29 Apr 2022 22:07:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651270022;
+        bh=8xHzk89/28KxKOd9SWHEJFkmLSdBWuB+K18qV4FdOQ8=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=BQvHeQUntHQ/5G/TOgsfZwLGfu8PVerEvQFyKreUqqdlthMsA/TcqxEWHkBFVQ4em
+         qLsy0ts7f6HDd0MdgAkHBlmauBRxT/AOBujC9jB2cnCkIj0/GKclP4OJUMySCBjVT9
+         YU9QaqX0PA+M8Nv2YGUYtuAUwCtsJC94CFA20UysdJFOscehgljoBZC5Bsaa80/oPv
+         wqhgi7M8NzIQbNbP1wWcJcZGU0jlzJGGs+H/jevowT3xqGKq2m1phzq+jlJbU8YDO7
+         wEBYnA0M+Uu0Gyno0TXXzgpThieOZMfuyguW8asN0g3Exj9grCH6g47Oor289cdkSc
+         1K5IZjj8ouHVw==
+Date:   Fri, 29 Apr 2022 17:07:00 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v5 1/7] PCI: qcom: Revert "PCI: qcom: Add support for
+ handling MSIs from 8 endpoints"
+Message-ID: <20220429220700.GA110578@bhelgaas>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220429214250.3728510-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,31 +63,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The documented yaml compat string for the apq8016 is
-"qcom,apq8016-lpass-cpu" not "qcom,lpass-cpu-apq8016". Looking at the other
-lpass compat strings the general form is "qcom,socnum-lpass-cpu".
+On Sat, Apr 30, 2022 at 12:42:44AM +0300, Dmitry Baryshkov wrote:
+> I have replied with my Tested-by to the patch at [2], which has landed
+> in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
+> Add support for handling MSIs from 8 endpoints"). However lately I
+> noticed that during the tests I still had 'pcie_pme=nomsi', so the
+> device was not forced to use higher MSI vectors.
+> 
+> After removing this option I noticed that hight MSI vectors are not
+> delivered on tested platforms. Additional research pointed to
+> a patch in msm-4.14 ([1]), which describes that each group of MSI
+> vectors is mapped to the separate interrupt.
+> 
+> Without these changes specifying num_verctors can lead to missing MSI
+> interrupts and thus to devices malfunction.
+> 
+> Fixes: 20f1bfb8dd62 ("PCI: qcom: Add support for handling MSIs from 8 endpoints")
 
-We need to fix both the driver and dts to match.
+20f1bfb8dd62 hasn't been merged upstream yet, so I think Lorenzo can
+just drop it from his pci/qcom branch so we don't need to clutter the
+git history with the revert.
 
-Fixes: 3761a3618f55 ("arm64: dts: qcom: add lpass node")
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index e34963505e07..452cdfbf8ef9 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1392,7 +1392,7 @@ sound: sound@7702000 {
- 
- 		lpass: audio-controller@7708000 {
- 			status = "disabled";
--			compatible = "qcom,lpass-cpu-apq8016";
-+			compatible = "qcom,apq8016-lpass-cpu";
- 
- 			/*
- 			 * Note: Unlike the name would suggest, the SEC_I2S_CLK
--- 
-2.35.1
-
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index c940e67d831c..375f27ab9403 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1593,7 +1593,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	pci->dev = dev;
+>  	pci->ops = &dw_pcie_ops;
+>  	pp = &pci->pp;
+> -	pp->num_vectors = MAX_MSI_IRQS;
+>  
+>  	pcie->pci = pci;
+>  
+> -- 
+> 2.35.1
+> 
