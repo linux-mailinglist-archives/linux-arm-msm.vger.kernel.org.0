@@ -2,63 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C78DB51572D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 23:45:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7652551576B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 23:53:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238947AbiD2Vr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 17:47:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59786 "EHLO
+        id S1351200AbiD2V4s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 17:56:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238903AbiD2Vrz (ORCPT
+        with ESMTP id S1349679AbiD2V4r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 17:47:55 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 784ADDA6ED
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 14:44:36 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id h12so8212496plf.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 14:44:36 -0700 (PDT)
+        Fri, 29 Apr 2022 17:56:47 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADDDE26549
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 14:53:27 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id s27so12029365ljd.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 14:53:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DCvRMc8O6UF6nBkCvl4Y1MaoOsMJlPHouIeSUnc6aTs=;
-        b=JZVQH/T3cyoT0a/katLDkY4iyGevcLlLIJwiaSP8CErJg4aOiipdtnT8dJfv7aoRXN
-         wIUg1EYLiGBHLjzylwG1GjgewlnQmbzr8wEdhcfjqaVUNciTVo5vdtzN434TQIzUmT4q
-         Y7aitUVOfS4XGFr7s57B9YfZi/IMFqzK2hQ90bFaIe2ZKL/crHpw88oK1J2q5w69oA4t
-         4s7OZ3c3p2XmWkXe670Z8W2SG91z8agU0Deebx57hrbsC/2Errspq6NvMUeBle2glpyJ
-         WgnRN93hqr7cqOAYn+hyIPQ4UbDSXEbM4k7xFxROiC58OLel1IgPlaHKdsmUeareSOCb
-         6LbA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mx96GF5mK2X2Q9SZlgJmIqotjYYuzoJNpzCjKgQvXXc=;
+        b=zQM1rexPb+PuCeQE3rGh8yDNn0rfbjhAYBLT/pCtmSftZ+l8negFH45+12uqdbCIq7
+         f34QunA7P3tbi4Aj6F5SfdH+TkMNhRqgq8CdqyqgPFwl9hqHQZ7aDS74hCPXut+oQ+i3
+         45IP3qxP5JBqEWQYkrdBjSgiB4DST48lDrtg5Th3IAc+pXs4CkrqjruPfX6ITKBkjQxa
+         2ER8y2fZR3jsN/0pP7bw6uMwKxUrMSLPWZPM7xcYczbEw5DmzN/0fPvwkoGqX3Ce1qpK
+         gwUO8OpBVBBZADCHddKhbknM5suUAADtHI4x/Jt6039iFbzxsJgAZwsJonAX9maOEcbq
+         uvKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DCvRMc8O6UF6nBkCvl4Y1MaoOsMJlPHouIeSUnc6aTs=;
-        b=bsuy8blHU4ztvML0B5ya4OpsC4hRG57S0XnDcvH+P/CRmkDLJDETnv/LVW7GIGRvWu
-         klWTwGel4M1P8GVPR07UGRWbxdEdnYr55Aq6cWwnoKyHDVuf4pS3F3MmRu7hDkvwajP6
-         iXQEuMMYTu4uwN/Roz2S4R0vIja3q1sES4wiNrNiISkIH+zWSz+3q8kb5pIbu71jIxkU
-         FonMEZKNL8I3S889mF5Q5mdotPQD4GCzDS03pS1UiVogyrIox+Wq68JlEnWYCpf1owST
-         f8zLowKaVY8HuQv2PshmrtmraqBnBv7c2TzffcF+6mMyBBEdATLINGt1+2iIqIOejxXN
-         fCtg==
-X-Gm-Message-State: AOAM5325d0coSgx9boDZ8H4irfCq4zVwGWCfsODZdezjcHYTgGAfvdtu
-        oqUVzV705zx0sFQjEfZWD4+UdBozD2D3nA==
-X-Google-Smtp-Source: ABdhPJw/fA7eXd0LRZFJpyBTZ/iN577TQC69lOaDivca0FPa2uG6H0qpMm0UGbESuOZjRlBG1fx3rA==
-X-Received: by 2002:a17:902:7d86:b0:156:434a:a901 with SMTP id a6-20020a1709027d8600b00156434aa901mr1074869plm.77.1651268675775;
-        Fri, 29 Apr 2022 14:44:35 -0700 (PDT)
-Received: from localhost.localdomain ([223.233.64.97])
-        by smtp.gmail.com with ESMTPSA id fv12-20020a17090b0e8c00b001cd4989fed0sm15271086pjb.28.2022.04.29.14.44.33
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mx96GF5mK2X2Q9SZlgJmIqotjYYuzoJNpzCjKgQvXXc=;
+        b=F1/GpD0J00qpiL3XNmWZbUjCGH6642y7avfPbGT7pT+RdYpnXfKdd/4cZ8HeTGHwpA
+         Mr04UP0QwXwCKg4k4edjO+04UPQLtvOi/UG3d0KYggmpVrlOTNB/DeibsMWEQ5ZIPOuB
+         bBlYpFEbpcBL+370QIXui1la1RZ175xijayjQYitLiR1c4ljRVK4UsIM1atDqtigcH8O
+         COQDX3+uP7qzIn8hadS0pvur7PZQDlHj4X+QvpdEYYkfRtqus7Gopm6HJQCfWN6PsFUJ
+         vj0EOoA41dszkzG7pAzaR0d+G1cN5xnsxZjD/24Id0vo6KdoTJ8yT8JwFJ411GuNMzcm
+         BY6w==
+X-Gm-Message-State: AOAM530YNVKpSfdCDR5nDTbG9QDnQU0zcVKqtlACz3R/ndEGnNm7KGqQ
+        Iqx4bwEEO6dFHrtUDocLyjmuWw==
+X-Google-Smtp-Source: ABdhPJxTCMaDPQsKPWv6eVS+a/KAs7Y2FdPT/TsKt8CoWZ8/JPGV9PwjBnt3nTK4XNlR4U+ne07m7Q==
+X-Received: by 2002:a2e:b8c3:0:b0:24f:3395:16e8 with SMTP id s3-20020a2eb8c3000000b0024f339516e8mr801971ljp.378.1651269206070;
+        Fri, 29 Apr 2022 14:53:26 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id 11-20020ac2568b000000b0047255d21182sm32637lfr.177.2022.04.29.14.53.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 14:44:35 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        Rob Herring <robh@kernel.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: Fix ordering of 'clocks' & 'clock-names' for sdhci nodes
-Date:   Sat, 30 Apr 2022 03:14:20 +0530
-Message-Id: <20220429214420.854335-4-bhupesh.sharma@linaro.org>
+        Fri, 29 Apr 2022 14:53:25 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Rob Clark <robdclark@gmail.com>, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2] MAINTAINERS: Add Dmitry as MSM DRM driver co-maintainer
+Date:   Sat, 30 Apr 2022 00:53:24 +0300
+Message-Id: <20220429215324.3729441-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220429214420.854335-1-bhupesh.sharma@linaro.org>
-References: <20220429214420.854335-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -70,235 +67,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since the Qualcomm sdhci-msm device-tree binding has been converted
-to yaml format, 'make dtbs_check' reports a number of issues with
-ordering of 'clocks' & 'clock-names' for sdhci nodes:
+For the past several releases I have been assisting Rob by writing,
+collecting, testing and integrating patches for non-GPU and non-core
+parts of MSM DRM driver, while Rob is more interested in improving the
+GPU-related part. Let's note this in the MAINTAINERS file.
 
- arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dtb: sdhci@7824900:
-  clock-names:0: 'iface' was expected
+While we are at it, per Rob's suggestion let's also promote Abhinav
+Kumar to M: (as he is actively working on the driver) and switch Sean
+Paul to R: (since he isn't doing much on msm these days).
 
- arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dtb: sdhci@7824900:
-  clock-names:1: 'core' was expected
-
- arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dtb: sdhci@7824900:
-  clock-names:2: 'xo' was expected
-
-Fix the same by updating the offending 'dts' files.
-
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Rob Herring <robh@kernel.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi |  8 ++++----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 12 ++++++------
- arch/arm64/boot/dts/qcom/msm8994.dtsi | 14 +++++++-------
- arch/arm64/boot/dts/qcom/qcs404.dtsi  |  6 +++---
- arch/arm64/boot/dts/qcom/sc7180.dtsi  | 12 ++++++------
- arch/arm64/boot/dts/qcom/sc7280.dtsi  | 12 ++++++------
- arch/arm64/boot/dts/qcom/sdm630.dtsi  | 14 ++++++++------
- 7 files changed, 40 insertions(+), 38 deletions(-)
+ MAINTAINERS | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 943243d5515b..8cd4c1fbca17 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -384,10 +384,10 @@ sdhc_1: sdhci@7824900 {
- 				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 61d9f114c37f..782934f318d4 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -6254,8 +6254,9 @@ F:	drivers/gpu/drm/tiny/panel-mipi-dbi.c
  
--			clocks = <&xo>,
--				 <&gcc GCC_SDCC1_AHB_CLK>,
--				 <&gcc GCC_SDCC1_APPS_CLK>;
--			clock-names = "xo", "iface", "core";
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
-+				 <&xo>;
-+			clock-names = "iface", "core", "xo";
- 			max-frequency = <384000000>;
- 			mmc-ddr-1_8v;
- 			mmc-hs200-1_8v;
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 05472510e29d..76bbf7984a62 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1472,10 +1472,10 @@ sdhc_1: sdhci@7824000 {
- 			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
--			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
--				 <&gcc GCC_SDCC1_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
- 				 <&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			mmc-ddr-1_8v;
- 			bus-width = <8>;
- 			non-removable;
-@@ -1490,10 +1490,10 @@ sdhc_2: sdhci@7864000 {
- 			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
--			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
--				 <&gcc GCC_SDCC2_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-+				 <&gcc GCC_SDCC2_APPS_CLK>,
- 				 <&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			bus-width = <4>;
- 			status = "disabled";
- 		};
-diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index 367ed913902c..3c0df737fa92 100644
---- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -467,10 +467,10 @@ sdhc1: sdhci@f9824900 {
- 				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 
--			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
--			         <&gcc GCC_SDCC1_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
- 				 <&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on &sdc1_rclk_on>;
-@@ -490,10 +490,10 @@ sdhc2: sdhci@f98a4900 {
- 				<GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 
--			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
--				<&gcc GCC_SDCC2_AHB_CLK>,
--				<&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-+				 <&gcc GCC_SDCC2_APPS_CLK>,
-+				 <&xo_board>;
-+			clock-names = "iface", "core", "xo";
- 
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on>;
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index bc446c6002d0..3d6b88aedff2 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -798,10 +798,10 @@ sdcc1: sdcc@7804000 {
- 				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 
--			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
--				 <&gcc GCC_SDCC1_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
- 				 <&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 
- 			status = "disabled";
- 		};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index b6df3186e94c..8b4d7d83e582 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -704,10 +704,10 @@ sdhc_1: sdhci@7c4000 {
- 					<GIC_SPI 644 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 
--			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
--				 <&gcc GCC_SDCC1_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
- 				 <&rpmhcc RPMH_CXO_CLK>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			interconnects = <&aggre1_noc MASTER_EMMC 0 &mc_virt SLAVE_EBI1 0>,
- 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_EMMC_CFG 0>;
- 			interconnect-names = "sdhc-ddr","cpu-sdhc";
-@@ -2594,10 +2594,10 @@ sdhc_2: sdhci@8804000 {
- 					<GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 
--			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
--				 <&gcc GCC_SDCC2_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-+				 <&gcc GCC_SDCC2_APPS_CLK>,
- 				 <&rpmhcc RPMH_CXO_CLK>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 
- 			interconnects = <&aggre1_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
- 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDCC_2 0>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index ccf5e95071f9..11270d90e1cc 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -873,10 +873,10 @@ sdhc_1: sdhci@7c4000 {
- 				     <GIC_SPI 656 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 
--			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
--				 <&gcc GCC_SDCC1_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
- 				 <&rpmhcc RPMH_CXO_CLK>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			interconnects = <&aggre1_noc MASTER_SDCC_1 0 &mc_virt SLAVE_EBI1 0>,
- 					<&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_SDCC_1 0>;
- 			interconnect-names = "sdhc-ddr","cpu-sdhc";
-@@ -2950,10 +2950,10 @@ sdhc_2: sdhci@8804000 {
- 				     <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 
--			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
--				 <&gcc GCC_SDCC2_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-+				 <&gcc GCC_SDCC2_APPS_CLK>,
- 				 <&rpmhcc RPMH_CXO_CLK>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
- 			interconnects = <&aggre1_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
- 					<&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_SDCC_2 0>;
- 			interconnect-names = "sdhc-ddr","cpu-sdhc";
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index db18b35d4a7d..65c4e955893b 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1278,10 +1278,12 @@ sdhc_2: sdhci@c084000 {
- 			interrupt-names = "hc_irq", "pwr_irq";
- 
- 			bus-width = <4>;
--			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
--					<&gcc GCC_SDCC2_AHB_CLK>,
-+
-+			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-+					<&gcc GCC_SDCC2_APPS_CLK>,
- 					<&xo_board>;
--			clock-names = "core", "iface", "xo";
-+			clock-names = "iface", "core", "xo";
-+
- 
- 			interconnects = <&a2noc 3 &a2noc 10>,
- 					<&gnoc 0 &cnoc 28>;
-@@ -1330,11 +1332,11 @@ sdhc_1: sdhci@c0c4000 {
- 					<GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 
--			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
--				 <&gcc GCC_SDCC1_AHB_CLK>,
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
- 				 <&xo_board>,
- 				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
--			clock-names = "core", "iface", "xo", "ice";
-+			clock-names = "iface", "core", "xo", "ice";
- 
- 			interconnects = <&a2noc 2 &a2noc 10>,
- 					<&gnoc 0 &cnoc 27>;
+ DRM DRIVER FOR MSM ADRENO GPU
+ M:	Rob Clark <robdclark@gmail.com>
+-M:	Sean Paul <sean@poorly.run>
+-R:	Abhinav Kumar <quic_abhinavk@quicinc.com>
++M:	Abhinav Kumar <quic_abhinavk@quicinc.com>
++M:	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
++R:	Sean Paul <sean@poorly.run>
+ L:	linux-arm-msm@vger.kernel.org
+ L:	dri-devel@lists.freedesktop.org
+ L:	freedreno@lists.freedesktop.org
 -- 
 2.35.1
 
