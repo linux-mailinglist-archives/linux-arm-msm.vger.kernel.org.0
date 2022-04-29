@@ -2,65 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1377D5154FD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 21:57:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BB1F515515
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 22:03:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352482AbiD2UBC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 16:01:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33344 "EHLO
+        id S1380491AbiD2UGT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 16:06:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380454AbiD2UBB (ORCPT
+        with ESMTP id S1359680AbiD2UGR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 16:01:01 -0400
+        Fri, 29 Apr 2022 16:06:17 -0400
 Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7523EA888F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 12:57:39 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id w1so15856232lfa.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 12:57:39 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E3437BE8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 13:02:58 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id w19so15855952lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 13:02:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=eClHtbNiyjfQMFNU+LbIHUtg8OiaLij9Jf6MKVBO3/w=;
-        b=O1EtoYK8JCQCkenpxDnCOCsTYxo0VODpEHOyZTQhHF1TGIPTVGLEpB9oTJBCQwCHcw
-         nL5RYgymewRJddvp0vTxXU89g46rHg/An+VRKc20cW4Da6S////L2BBH1ubC0HulOMjY
-         ADpOrnFgcrthGZK3nSq3f8pVdIML3q9Md5ZnR9agV07Y4G8Ntj5YJmGqKIUcWFP0tumR
-         C3yJ2j3hk4Q8yaa4dFnqNLBB5dhHDWTkJZlGqwLqyTcGMhKW9T/pD/YmQzUzz97jegC+
-         AbjiPx7q0m0jHX/+QA9wHP2b31f7z+W39EhE9+fbUljLk7VXjtjIqDqYpMsDN4HeBZv1
-         y8jQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=KQmxhazXdwnOp329/F1Ja7jyqqhUxCgPrYWsGjeTXIc=;
+        b=iXmqBaaXqlKaQSe9e+eDS2qIkibjeUzGFeUyCfxVi9CLrBblDdj08s6+qhf8y/kvrK
+         28+qhq1ZnMJlMjY0o9tkaSl6NwwE649lA/mMOQfTzF3LOy1sxE+CWrvgdbDY0n53WMbF
+         s2EahFFoFkBXooc1kbqtJdr96HYtUdn0lhn6k9veI0zoavK61y0lrP4oZsNKiRVVjZLR
+         o+SzC4RIqNPy8GNEGZ5rBzN5kSNhaxtym2oZ6uB1AybXbUfUn0/IPdf9c4zldmPckDNf
+         RmhZnJOtjTRc5ZYYH+kg2dFMf4j41EnGdrXPUmlpZnNTP9PW369qqsfvGCsod5QZmvZb
+         KgEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eClHtbNiyjfQMFNU+LbIHUtg8OiaLij9Jf6MKVBO3/w=;
-        b=H1WsEOejx/fArr1B0QZd62xvJD7a9968tUG0qpO7E9Fvi0o6tjgqtS27ePE3YH+Viw
-         DXEjdiT2CfHxz2AIkZICO2OAyDsUjB72M1Sv2oxaoczIzlTB1fEnFUfhmEkBJOUOj8QY
-         Vcj6ejAci5Z2mA5UUFzmSEUAF/3n3GJ4GLt6P8cjXFyquKBVdCn7tajrZu23QEFLOsPr
-         S96NTc5h+ZovgFKnhAvznlmOARsPYRlRwmeZOYAgIDUtiYrTSXIsDsnEQ8PNMHnH9HLN
-         plwlUyjd9SicqO5YP2I+YnLgX0+bmWk0aETwJibCdd8LLPsKzgTQaWxwf90JoJ1OXmgM
-         bmbg==
-X-Gm-Message-State: AOAM532QzfqD2lFt0tJAVtkLDqMpdwjcapYAjCjQ6LB/TnkQzGwAgADS
-        BfRfJkXMim05/2jE+YE8RsFdzA==
-X-Google-Smtp-Source: ABdhPJwSQtm1XQHdRHRT3NywhR9YSG/M+3nXg2H7ZIiOA8iyPR2tX8KWIRRjEJh+CAquDpPqswQddA==
-X-Received: by 2002:a05:6512:12c8:b0:471:c14e:1edf with SMTP id p8-20020a05651212c800b00471c14e1edfmr665903lfg.144.1651262257796;
-        Fri, 29 Apr 2022 12:57:37 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j17-20020ac253b1000000b0047255d2118csm10601lfh.187.2022.04.29.12.57.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 12:57:37 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-Subject: [RFC PATCH v2 5/5] drm/msm/dp: Implement hpd_notify()
-Date:   Fri, 29 Apr 2022 22:57:31 +0300
-Message-Id: <20220429195731.3716446-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220429195731.3716446-1-dmitry.baryshkov@linaro.org>
-References: <20220429195731.3716446-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=KQmxhazXdwnOp329/F1Ja7jyqqhUxCgPrYWsGjeTXIc=;
+        b=2vxFRozl+6Pe1VdSdmqm5DYX4OUtFfZmgOT8YHyVdfnxk2ldmD6EwBcPUGdfNPym5s
+         3vIIRLyOdOpzvUX8/k3PtVgMc3Ih2WTl7DrU6zinx1AXJacjoP/hMTqGpMz05oBEERL8
+         xxTlDb/W5JmeYrZMJQbfogHlNqCLzojQBA+nNLdBgaX+Mqce6/kKLML6glNpTmLK3I4h
+         Nh/6n+V8DxJTgB/Qn521mYnn0qBLPK90MOedrpjz5cNMsgvQCGRemfP0Z5ZYSZ75lQuX
+         hg54z6+l2WbfGTAC7ePFXGPjGL6FGNlEe8WBHRbQpQwW0n+e47pskz+f1P5x6zn5SMYK
+         yFWg==
+X-Gm-Message-State: AOAM530XeoqGde8f75N9qSoNi2k+H6xct4eZOsfn2MJx50u5fNhWXkjq
+        LS+J2ukyiF+q6OYAN6y12br52A==
+X-Google-Smtp-Source: ABdhPJzTflMpQAiH/7EilkMJgrNGIiLGV1NMfKNCAQP/p7Nw14KfwZcLtAZpNzfHS0uD61orjYUdDw==
+X-Received: by 2002:a19:5f05:0:b0:46b:a5f2:5fab with SMTP id t5-20020a195f05000000b0046ba5f25fabmr647096lfb.8.1651262576888;
+        Fri, 29 Apr 2022 13:02:56 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id v16-20020ac25590000000b0047255d211d4sm11889lfg.259.2022.04.29.13.02.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Apr 2022 13:02:56 -0700 (PDT)
+Message-ID: <522388b9-310d-25dd-1688-4bb715b594c0@linaro.org>
+Date:   Fri, 29 Apr 2022 23:02:55 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v4 2/8] dt-bindings: pci/qcom,pcie: resets are not defined
+ for msm8996
+Content-Language: en-GB
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20220428143508.GA12269@bhelgaas>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220428143508.GA12269@bhelgaas>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,122 +85,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 28/04/2022 17:35, Bjorn Helgaas wrote:
+> Unlike the other patches in this series, this subject line mentions a
+> problem (actually, I don't even know whether it's a *problem* or just
+> a statement of fact), but doesn't say what this patch does.
+> 
+> Based on the patch, I guess this does something like:
+> 
+>    Require resets except for MSM8996/APQ8096
 
-The Qualcomm DisplayPort driver contains traces of the necessary
-plumbing to hook up USB HPD, in the form of the dp_hpd module and the
-dp_usbpd_cb struct. Use this as basis for implementing the
-hpd_notify() callback, by amending the dp_hpd module with the
-missing logic.
+Ack
 
-Overall the solution is similar to what's done downstream, but upstream
-all the code to disect the HPD notification lives on the calling side of
-drm_connector_oob_hotplug_event().
+> 
+> I don't know whether you're changing the prefix convention for this
+> file, or just didn't look to see how it was done in the past, but it's
+> nice to have some consistency:
 
-drm_connector_oob_hotplug_event() performs the lookup of the
-drm_connector based on fwnode, hence the need to assign the fwnode in
-dp_drm_connector_init().
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-[DB: rebased to use drm_bridge_connector]
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 23 +++++++++++++++++++++++
- drivers/gpu/drm/msm/dp/dp_display.h |  1 +
- drivers/gpu/drm/msm/dp/dp_drm.c     |  3 +++
- drivers/gpu/drm/msm/dp/dp_drm.h     |  2 ++
- 4 files changed, 29 insertions(+)
+Ack
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 454c21e702ae..35004640d42a 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -83,6 +83,8 @@ struct dp_display_private {
- 	bool hpd_irq_on;
- 	bool audio_supported;
- 
-+	bool connected;
-+
- 	struct drm_device *drm_dev;
- 	struct platform_device *pdev;
- 	struct dentry *root;
-@@ -1272,6 +1274,7 @@ static int dp_display_probe(struct platform_device *pdev)
- 	if (!desc)
- 		return -EINVAL;
- 
-+	dp->dp_display.dev = &pdev->dev;
- 	dp->pdev = pdev;
- 	dp->name = "drm_dp";
- 	dp->dp_display.connector_type = desc->connector_type;
-@@ -1761,3 +1764,23 @@ void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
- 	dp_display->dp_mode.h_active_low =
- 		!!(dp_display->dp_mode.drm_mode.flags & DRM_MODE_FLAG_NHSYNC);
- }
-+
-+void dp_bridge_hpd_notify(struct drm_bridge *bridge,
-+			  enum drm_connector_status status)
-+{
-+	struct msm_dp_bridge *dp_bridge = to_dp_bridge(bridge);
-+	struct msm_dp *dp = dp_bridge->dp_display;
-+	struct dp_display_private *dp_display = container_of(dp, struct dp_display_private, dp_display);
-+
-+	drm_dbg_dp(dp_display->drm_dev, "status: %d connected: %d\n", status, dp_display->connected);
-+
-+	if (!dp_display->connected && status == connector_status_connected) {
-+		dp_display->connected = true;
-+		dp_display_usbpd_configure(dp_display);
-+	} else if (status != connector_status_connected) {
-+		dp_display->connected = false;
-+		dp_display_usbpd_disconnect(dp_display);
-+	} else {
-+		dp_display_usbpd_attention(dp_display);
-+	}
-+}
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-index 4f9fe4d7610b..2d2614bc5a14 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.h
-+++ b/drivers/gpu/drm/msm/dp/dp_display.h
-@@ -11,6 +11,7 @@
- #include "disp/msm_disp_snapshot.h"
- 
- struct msm_dp {
-+	struct device *dev;
- 	struct drm_device *drm_dev;
- 	struct device *codec_dev;
- 	struct drm_bridge *bridge;
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-index 62d58b9c4647..821cfd37b1fb 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.c
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-@@ -68,6 +68,7 @@ static const struct drm_bridge_funcs dp_bridge_ops = {
- 	.mode_valid   = dp_bridge_mode_valid,
- 	.get_modes    = dp_bridge_get_modes,
- 	.detect       = dp_bridge_detect,
-+	.hpd_notify   = dp_bridge_hpd_notify,
- };
- 
- struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
-@@ -138,6 +139,8 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
- 	if (IS_ERR(connector))
- 		return connector;
- 
-+	connector->fwnode = fwnode_handle_get(dev_fwnode(dp_display->dev));
-+
- 	drm_connector_attach_encoder(connector, dp_display->encoder);
- 
- 	return connector;
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.h b/drivers/gpu/drm/msm/dp/dp_drm.h
-index f4b1ed1e24f7..3b7480a86844 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.h
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.h
-@@ -32,5 +32,7 @@ enum drm_mode_status dp_bridge_mode_valid(struct drm_bridge *bridge,
- void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
- 			const struct drm_display_mode *mode,
- 			const struct drm_display_mode *adjusted_mode);
-+void dp_bridge_hpd_notify(struct drm_bridge *bridge,
-+			  enum drm_connector_status status);
- 
- #endif /* _DP_DRM_H_ */
+> 
+>    $ git log --oneline Documentation/devicetree/bindings/pci/qcom,pcie.txt
+>    f52d2a0f0d32 dt-bindings: pci: qcom: Document PCIe bindings for SM8150 SoC
+>    dddb4efa5192 dt-bindings: pci: qcom: Document PCIe bindings for SM8450
+>    45a3ec891370 PCI: qcom: Add sc8180x compatible
+>    320e10986ef7 dt-bindings: PCI: update references to Designware schema
+>    9f7368ff1210 dt-bindings: pci: qcom: Document PCIe bindings for IPQ6018 SoC
+>    c9f04600026f dt-bindings: PCI: qcom: Document ddrss_sf_tbu clock for sm8250
+>    458168247ccc dt-bindings: pci: qcom: Document PCIe bindings for SM8250 SoC
+>    d511580ea9c2 dt-bindings: PCI: qcom: Add ipq8064 rev 2 variant
+>    b11b8cc161de dt-bindings: PCI: qcom: Add ext reset
+>    736ae5c91712 dt-bindings: PCI: qcom: Add missing clks
+>    5d28bee7c91e dt-bindings: PCI: qcom: Add support for SDM845 PCIe
+>    29a50257a9d6 dt-bindings: PCI: qcom: Add QCS404 to the binding
+>    f625b1ade245 PCI: qcom: Add missing supplies required for msm8996
+>    8baf0151cd4b dt-bindings: PCI: qcom: Add support for IPQ8074
+>    90d52d57ccac PCI: qcom: Add support for IPQ4019 PCIe controller
+>    d0491fc39bdd PCI: qcom: Add support for MSM8996 PCIe controller
+>    845d5ca26647 PCI: qcom: Document PCIe devicetree bindings
+> 
+> Including both "pci" and "pcie" in the prefix seems like overkill.
+> 
+> On Thu, Apr 28, 2022 at 02:41:07PM +0300, Dmitry Baryshkov wrote:
+>> On MSM8996/APQ8096 platforms the PCIe controller doesn't have any
+>> resets. So move the requirement stance under the corresponding if
+>> condition.
+> 
+> s/stance/stanza/
+> 
+>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   .../devicetree/bindings/pci/qcom,pcie.yaml         | 14 ++++++++++++--
+>>   1 file changed, 12 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> index 16f765e96128..ce4f53cdaba0 100644
+>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> @@ -114,8 +114,6 @@ required:
+>>     - interrupt-map
+>>     - clocks
+>>     - clock-names
+>> -  - resets
+>> -  - reset-names
+>>   
+>>   allOf:
+>>     - $ref: /schemas/pci/pci-bus.yaml#
+>> @@ -504,6 +502,18 @@ allOf:
+>>         required:
+>>           - power-domains
+>>   
+>> +  - if:
+>> +      not:
+>> +        properties:
+>> +          compatibles:
+>> +            contains:
+>> +              enum:
+>> +                - qcom,pcie-msm8996
+>> +    then:
+>> +      required:
+>> +        - resets
+>> +        - reset-names
+>> +
+>>   unevaluatedProperties: false
+>>   
+>>   examples:
+>> -- 
+>> 2.35.1
+>>
+
+
 -- 
-2.35.1
-
+With best wishes
+Dmitry
