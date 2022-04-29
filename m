@@ -2,79 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BB1F515515
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 22:03:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C7A25155FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 22:43:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380491AbiD2UGT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 16:06:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43194 "EHLO
+        id S1354492AbiD2Uqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 16:46:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359680AbiD2UGR (ORCPT
+        with ESMTP id S231142AbiD2Uqs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 16:06:17 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E3437BE8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 13:02:58 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id w19so15855952lfu.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 13:02:58 -0700 (PDT)
+        Fri, 29 Apr 2022 16:46:48 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74A6E83B35
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 13:43:24 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id p4so10410750edx.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 13:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=KQmxhazXdwnOp329/F1Ja7jyqqhUxCgPrYWsGjeTXIc=;
-        b=iXmqBaaXqlKaQSe9e+eDS2qIkibjeUzGFeUyCfxVi9CLrBblDdj08s6+qhf8y/kvrK
-         28+qhq1ZnMJlMjY0o9tkaSl6NwwE649lA/mMOQfTzF3LOy1sxE+CWrvgdbDY0n53WMbF
-         s2EahFFoFkBXooc1kbqtJdr96HYtUdn0lhn6k9veI0zoavK61y0lrP4oZsNKiRVVjZLR
-         o+SzC4RIqNPy8GNEGZ5rBzN5kSNhaxtym2oZ6uB1AybXbUfUn0/IPdf9c4zldmPckDNf
-         RmhZnJOtjTRc5ZYYH+kg2dFMf4j41EnGdrXPUmlpZnNTP9PW369qqsfvGCsod5QZmvZb
-         KgEQ==
+        bh=RFeCzEomR01P4Iurfe/8OSxLzfXWqbIy0F1CUspNK8M=;
+        b=v1yZucKYkugM/zGaSOyBd81xiVlhfI2Elx6X5x8u85wIAS89Z3Clr2gymkiZKcLPmh
+         NcrQOlIl+D8kjmgsHrGuaS2C0HzPrkC646HrE9VIxDrbqh25uLqg4KB9SdO/q6v13v70
+         62MwlzoJtAIoSOKYClqR7QewHFJOLFs4hK5z8RtBzCXNT8n+0PQ3mnkWpfDrO7T918NQ
+         FdQ/YFiOHwmgn8gbxJzzWGwHLIN+q3bQKv+ufRfqZeBnHVmBF6dhAtfXnK6O1ulkfnOF
+         6HUznDTtKWpIgG0aajYEC6v3uADt9+J3RFSjCoUWyVUL5x93vnCsCUx9xYx8yoAFe6xq
+         p5zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=KQmxhazXdwnOp329/F1Ja7jyqqhUxCgPrYWsGjeTXIc=;
-        b=2vxFRozl+6Pe1VdSdmqm5DYX4OUtFfZmgOT8YHyVdfnxk2ldmD6EwBcPUGdfNPym5s
-         3vIIRLyOdOpzvUX8/k3PtVgMc3Ih2WTl7DrU6zinx1AXJacjoP/hMTqGpMz05oBEERL8
-         xxTlDb/W5JmeYrZMJQbfogHlNqCLzojQBA+nNLdBgaX+Mqce6/kKLML6glNpTmLK3I4h
-         Nh/6n+V8DxJTgB/Qn521mYnn0qBLPK90MOedrpjz5cNMsgvQCGRemfP0Z5ZYSZ75lQuX
-         hg54z6+l2WbfGTAC7ePFXGPjGL6FGNlEe8WBHRbQpQwW0n+e47pskz+f1P5x6zn5SMYK
-         yFWg==
-X-Gm-Message-State: AOAM530XeoqGde8f75N9qSoNi2k+H6xct4eZOsfn2MJx50u5fNhWXkjq
-        LS+J2ukyiF+q6OYAN6y12br52A==
-X-Google-Smtp-Source: ABdhPJzTflMpQAiH/7EilkMJgrNGIiLGV1NMfKNCAQP/p7Nw14KfwZcLtAZpNzfHS0uD61orjYUdDw==
-X-Received: by 2002:a19:5f05:0:b0:46b:a5f2:5fab with SMTP id t5-20020a195f05000000b0046ba5f25fabmr647096lfb.8.1651262576888;
-        Fri, 29 Apr 2022 13:02:56 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v16-20020ac25590000000b0047255d211d4sm11889lfg.259.2022.04.29.13.02.56
+        bh=RFeCzEomR01P4Iurfe/8OSxLzfXWqbIy0F1CUspNK8M=;
+        b=N+hh4AqHWzcksF4FmnWndvVVwGvZlNoBd67GRbISAturWsxtXZ2+6z4ohYP6Agz99u
+         fvvoTDIRXBCv25i2VDVhC2kYV4Sc6p1vvo2i8l08FfwYTLqmYYAtI3rBDLtxuy4KT56C
+         ZQSOPxy9Ti24vOqxjjIwqa8XzakYUXI22WVVqOp1KauOPjqOfMlfdJoJrI/vWvTHU2oQ
+         cTlEm8eN2tZITlBbfDYPI3CbNQBZGuqI8b8y8C1JRKoJVxCFiRXCsZHOeXTybG9CF2FM
+         tNz5LbXw3edPrwEqjARC0IYjsnJOttj5glnU//fOQfzpIshfnRz+2bywtfBN4aFe7lSO
+         JyXA==
+X-Gm-Message-State: AOAM532xnoVwKvJubKp/tUiiQ0rU3JEB6tQg2dqkb6VC+nEYm0q0g0cR
+        DVETbqYzc/sVGGL6TwVnpQkG2w==
+X-Google-Smtp-Source: ABdhPJzntXk/PHgiGtHQ3kxR3eQvdcy0ZHkg0LXbRjyo/oh9jXVtBHhNj3yoNUGZN38QCdL/tgcB+Q==
+X-Received: by 2002:aa7:d609:0:b0:425:d94b:4119 with SMTP id c9-20020aa7d609000000b00425d94b4119mr1065999edr.282.1651265002934;
+        Fri, 29 Apr 2022 13:43:22 -0700 (PDT)
+Received: from [192.168.0.176] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id y5-20020a056402170500b0042617ba63d3sm3382801edu.93.2022.04.29.13.43.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Apr 2022 13:02:56 -0700 (PDT)
-Message-ID: <522388b9-310d-25dd-1688-4bb715b594c0@linaro.org>
-Date:   Fri, 29 Apr 2022 23:02:55 +0300
+        Fri, 29 Apr 2022 13:43:22 -0700 (PDT)
+Message-ID: <5127b3b5-ad27-fd06-42b7-fdf96d0a10ea@linaro.org>
+Date:   Fri, 29 Apr 2022 22:43:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v4 2/8] dt-bindings: pci/qcom,pcie: resets are not defined
- for msm8996
-Content-Language: en-GB
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 3/3] dt-bindings: arm: msm: Convert kpss-gcc driver
+ Documentation to yaml
+Content-Language: en-US
+To:     Ansuel Smith <ansuelsmth@gmail.com>, Rob Herring <robh@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20220428143508.GA12269@bhelgaas>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220428143508.GA12269@bhelgaas>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20220429121739.28584-1-ansuelsmth@gmail.com>
+ <20220429121739.28584-4-ansuelsmth@gmail.com>
+ <1651247596.124069.2344494.nullmailer@robh.at.kernel.org>
+ <626c0b64.1c69fb81.1b1e9.4fe6@mx.google.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <626c0b64.1c69fb81.1b1e9.4fe6@mx.google.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -85,97 +83,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/04/2022 17:35, Bjorn Helgaas wrote:
-> Unlike the other patches in this series, this subject line mentions a
-> problem (actually, I don't even know whether it's a *problem* or just
-> a statement of fact), but doesn't say what this patch does.
-> 
-> Based on the patch, I guess this does something like:
-> 
->    Require resets except for MSM8996/APQ8096
-
-Ack
-
-> 
-> I don't know whether you're changing the prefix convention for this
-> file, or just didn't look to see how it was done in the past, but it's
-> nice to have some consistency:
-
-
-Ack
-
-> 
->    $ git log --oneline Documentation/devicetree/bindings/pci/qcom,pcie.txt
->    f52d2a0f0d32 dt-bindings: pci: qcom: Document PCIe bindings for SM8150 SoC
->    dddb4efa5192 dt-bindings: pci: qcom: Document PCIe bindings for SM8450
->    45a3ec891370 PCI: qcom: Add sc8180x compatible
->    320e10986ef7 dt-bindings: PCI: update references to Designware schema
->    9f7368ff1210 dt-bindings: pci: qcom: Document PCIe bindings for IPQ6018 SoC
->    c9f04600026f dt-bindings: PCI: qcom: Document ddrss_sf_tbu clock for sm8250
->    458168247ccc dt-bindings: pci: qcom: Document PCIe bindings for SM8250 SoC
->    d511580ea9c2 dt-bindings: PCI: qcom: Add ipq8064 rev 2 variant
->    b11b8cc161de dt-bindings: PCI: qcom: Add ext reset
->    736ae5c91712 dt-bindings: PCI: qcom: Add missing clks
->    5d28bee7c91e dt-bindings: PCI: qcom: Add support for SDM845 PCIe
->    29a50257a9d6 dt-bindings: PCI: qcom: Add QCS404 to the binding
->    f625b1ade245 PCI: qcom: Add missing supplies required for msm8996
->    8baf0151cd4b dt-bindings: PCI: qcom: Add support for IPQ8074
->    90d52d57ccac PCI: qcom: Add support for IPQ4019 PCIe controller
->    d0491fc39bdd PCI: qcom: Add support for MSM8996 PCIe controller
->    845d5ca26647 PCI: qcom: Document PCIe devicetree bindings
-> 
-> Including both "pci" and "pcie" in the prefix seems like overkill.
-> 
-> On Thu, Apr 28, 2022 at 02:41:07PM +0300, Dmitry Baryshkov wrote:
->> On MSM8996/APQ8096 platforms the PCIe controller doesn't have any
->> resets. So move the requirement stance under the corresponding if
->> condition.
-> 
-> s/stance/stanza/
-> 
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../devicetree/bindings/pci/qcom,pcie.yaml         | 14 ++++++++++++--
->>   1 file changed, 12 insertions(+), 2 deletions(-)
+On 29/04/2022 17:57, Ansuel Smith wrote:
+> On Fri, Apr 29, 2022 at 10:53:16AM -0500, Rob Herring wrote:
+>> On Fri, 29 Apr 2022 14:17:39 +0200, Ansuel Smith wrote:
+>>> Convert kpss-gcc driver Documentation to yaml.
+>>>
+>>> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+>>> ---
+>>>  .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 -------------
+>>>  .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 63 +++++++++++++++++++
+>>>  2 files changed, 63 insertions(+), 44 deletions(-)
+>>>  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
+>>>  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
+>>>
 >>
->> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> index 16f765e96128..ce4f53cdaba0 100644
->> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> @@ -114,8 +114,6 @@ required:
->>     - interrupt-map
->>     - clocks
->>     - clock-names
->> -  - resets
->> -  - reset-names
->>   
->>   allOf:
->>     - $ref: /schemas/pci/pci-bus.yaml#
->> @@ -504,6 +502,18 @@ allOf:
->>         required:
->>           - power-domains
->>   
->> +  - if:
->> +      not:
->> +        properties:
->> +          compatibles:
->> +            contains:
->> +              enum:
->> +                - qcom,pcie-msm8996
->> +    then:
->> +      required:
->> +        - resets
->> +        - reset-names
->> +
->>   unevaluatedProperties: false
->>   
->>   examples:
->> -- 
->> 2.35.1
+>> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+>> on your patch (DT_CHECKER_FLAGS is new in v5.13):
 >>
+>> yamllint warnings/errors:
+>>
+>> dtschema/dtc warnings/errors:
+>> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml: properties: '#clock-cells' is a dependency of 'clock-output-names'
+> 
 
+The patches were previously sent (even as v6) and somehow the history,
+changelog and references disappeared...
 
--- 
-With best wishes
-Dmitry
+> Erm how to fix this? I can't do a 1:1 conversion if the source was
+> wrong and also have no bot warning.
+> Or I should just push an additional patch to fix this error after the
+> conversion?
+
+Didn't we agree that original bindings were not in good shape? Yet the
+questions raised with your v6 remain actually not answered, till the bot
+complains.
+
+Please do not send the bindings which do not pass dt_binding_check.
+
+Best regards,
+Krzysztof
