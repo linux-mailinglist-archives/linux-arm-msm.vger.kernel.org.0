@@ -2,153 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F6995150A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 18:20:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E053151512C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 18:53:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378590AbiD2QXj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 12:23:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59486 "EHLO
+        id S1379346AbiD2Q4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 12:56:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234286AbiD2QXj (ORCPT
+        with ESMTP id S1379341AbiD2Q4q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 12:23:39 -0400
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D0F218B03;
-        Fri, 29 Apr 2022 09:20:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651249219; x=1682785219;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=NeeAYHCb2w8hfb2CqYSw0VXn0vgeaiNaoDLMfEcGd6U=;
-  b=aRelUJHAOq5NynNFsOMgxpTUUmwyD7sqd+ssbUpr7TAdnbSWbbgoRF+e
-   jjybxaW1I/hkW+UJyaEenrpnZ/ulReHuvuDra9KfakQb3JixCSV3YJFdg
-   rPuVqJq3zu1AwWjwzlNB+Opm56Kh389PtrrMhoQDT365dKURzZBGq+k8i
-   pyRIDWbjBvgGjwn7t2ToiePiAHsrCCLDUS2m8v0HuAP85If0RCvkhjya6
-   bpdTJVxUwx4ZO+yF20xUUJKcrHHczqMNC7qNevpP7hQugtFSMMPOeE29g
-   gTL63FFWf37Wav2LvlttZ4pWeUY7wYQQlCBCEsBY8QN0VPrzZr00Ons2E
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10332"; a="248617880"
-X-IronPort-AV: E=Sophos;i="5.91,185,1647327600"; 
-   d="scan'208";a="248617880"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2022 09:20:19 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,185,1647327600"; 
-   d="scan'208";a="542671702"
-Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
-  by orsmga002.jf.intel.com with ESMTP; 29 Apr 2022 09:20:16 -0700
-Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nkTLs-0006Tj-2q;
-        Fri, 29 Apr 2022 16:20:16 +0000
-Date:   Sat, 30 Apr 2022 00:19:15 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_vgarodia@quicinc.com, frkoenig@chromium.org,
-        quic_dikshita@quicinc.com
-Subject: Re: [PATCH] media: venus: set ubwc configuration on specific video
- hardware
-Message-ID: <202204300037.EcG1kDyl-lkp@intel.com>
-References: <1651131248-20313-1-git-send-email-quic_vgarodia@quicinc.com>
+        Fri, 29 Apr 2022 12:56:46 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88D50DA6EB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 09:53:26 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id m62so4939665wme.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 09:53:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=gF0XSQXvhEerOtZQE67Fv/RM3gJgfWvh3o2fwzeA8OY=;
+        b=hELuasXky3HZCxMFNpSgD5FdIPEXNRdTxdKAxbkPN05aGII+4JoICUbBkMAlUTurAQ
+         L6rq3PGkAHUUnTQyc77gwoC8jb5v/4xaWEPra41O5oJAGpi+LgDune8CEKlVMPUtHY5P
+         O/eEEHdM+XZr2XIG5aK+qgjTUCrdJ2kHBbMajpFupqsvaP9vRtzwB0Uz4+Gf5AIA7gk1
+         KPjzG5830EmbPOv1yaRsPTilWcM1cjJVjRJl5rDGhF8BxYtXAaIZptSN0yV0YbnkLHQr
+         wwI4EMsxsemAwyf5szkcjYyIShJriszMFsxF7nBAvq0Ooi0nz6OicKvtuEQr7uHCvJX5
+         ePBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=gF0XSQXvhEerOtZQE67Fv/RM3gJgfWvh3o2fwzeA8OY=;
+        b=SYMBIFC7cGc052MD2vanHIyNt55YC++19melzMh0q3QTOnj0XhtxDfiMSxdNAHwbXh
+         wZ2NFIwiJustajGSoeDSMS0V6POxdvwlWJtuzPdoalXS4KOJp8ezjr//5RN3WXszcTQx
+         3xVOZmNQNohfODjrVsruRYceSm/lALYLLLb2+u4n4qNw5yXTvNyEg76VEa2tDJt//CLS
+         8GWtXNXKOz0iscHkUKdiM6tBiUD6UvZz/DoWEt++jVlw/lfTM/8QCtpzswIMVZmjoaLZ
+         dA5BmlB5jf+JTbT3+JhutF+Em5qhAy/DSGx0PE7vjjGQ1cBIPPpOqhgjrO/09eK2x1uB
+         45rQ==
+X-Gm-Message-State: AOAM533WJ2UhiM8SBUvbMARcbtG002q7IvJNEaPNfIc4IIDYoQvUHlfn
+        lLH64/0IjMlX9SXkWMHvLlmT/g==
+X-Google-Smtp-Source: ABdhPJx4wGrPBGJPFmNxW8tuM/QQdlgSJgzr9IKK/k91ySYvrwxQTmHM+rRPDy4KJY2hydWvfeXNAg==
+X-Received: by 2002:a05:600c:3547:b0:393:eee3:39df with SMTP id i7-20020a05600c354700b00393eee339dfmr3998609wmq.181.1651251205114;
+        Fri, 29 Apr 2022 09:53:25 -0700 (PDT)
+Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id o11-20020a05600c4fcb00b00391447f7fd4sm3642655wmq.24.2022.04.29.09.53.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Apr 2022 09:53:24 -0700 (PDT)
+Message-ID: <e368b193-48f9-c8b8-ea70-59bf7ea7304a@linaro.org>
+Date:   Fri, 29 Apr 2022 17:53:23 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1651131248-20313-1-git-send-email-quic_vgarodia@quicinc.com>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] misc: fastrpc: fix an incorrect NULL check on list
+ iterator
+Content-Language: en-US
+To:     Xiaomeng Tong <xiam0nd.tong@gmail.com>
+Cc:     amahesh@qti.qualcomm.com, arnd@arndb.de,
+        gregkh@linuxfoundation.org, jorge.ramirez-ortiz@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+References: <20220327062202.5720-1-xiam0nd.tong@gmail.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20220327062202.5720-1-xiam0nd.tong@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vikash,
-
-Thank you for the patch! Yet something to improve:
-
-[auto build test ERROR on media-tree/master]
-[also build test ERROR on v5.18-rc4 next-20220429]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Vikash-Garodia/media-venus-set-ubwc-configuration-on-specific-video-hardware/20220428-153510
-base:   git://linuxtv.org/media_tree.git master
-config: arm64-allmodconfig (https://download.01.org/0day-ci/archive/20220430/202204300037.EcG1kDyl-lkp@intel.com/config)
-compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project c59473aacce38cd7dd77eebceaf3c98c5707ab3b)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm64 cross compiling tool for clang build
-        # apt-get install binutils-aarch64-linux-gnu
-        # https://github.com/intel-lab-lkp/linux/commit/22d299bea1f679d007cb71b3916bf39bb957ab66
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Vikash-Garodia/media-venus-set-ubwc-configuration-on-specific-video-hardware/20220428-153510
-        git checkout 22d299bea1f679d007cb71b3916bf39bb957ab66
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash arch/arm64/crypto/ arch/arm64/kernel/ drivers/media/platform/qcom/venus/
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> drivers/media/platform/qcom/venus/hfi_venus.c:997:35: error: too few arguments to function call, single argument 'hdev' was not specified
-                   ret = venus_sys_set_ubwc_config();
-                         ~~~~~~~~~~~~~~~~~~~~~~~~~ ^
-   drivers/media/platform/qcom/venus/hfi_venus.c:907:12: note: 'venus_sys_set_ubwc_config' declared here
-   static int venus_sys_set_ubwc_config(struct venus_hfi_device *hdev)
-              ^
-   1 error generated.
 
 
-vim +/hdev +997 drivers/media/platform/qcom/venus/hfi_venus.c
+On 27/03/2022 07:22, Xiaomeng Tong wrote:
+> The bug is here:
+> 	if (!buf) {
+> 
+> The list iterator value 'buf' will *always* be set and non-NULL
+> by list_for_each_entry(), so it is incorrect to assume that the
+> iterator value will be NULL if the list is empty (in this case, the
+> check 'if (!buf) {' will always be false and never exit expectly).
+> 
+> To fix the bug, use a new variable 'iter' as the list iterator,
+> while use the original variable 'buf' as a dedicated pointer to
+> point to the found element.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 2419e55e532de ("misc: fastrpc: add mmap/unmap support")
+> Signed-off-by: Xiaomeng Tong <xiam0nd.tong@gmail.com>
+LGTM,
 
-   967	
-   968	static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
-   969	{
-   970		struct device *dev = hdev->core->dev;
-   971		const struct venus_resources *res = hdev->core->res;
-   972		int ret;
-   973	
-   974		ret = venus_sys_set_debug(hdev, venus_fw_debug);
-   975		if (ret)
-   976			dev_warn(dev, "setting fw debug msg ON failed (%d)\n", ret);
-   977	
-   978		/*
-   979		 * Idle indicator is disabled by default on some 4xx firmware versions,
-   980		 * enable it explicitly in order to make suspend functional by checking
-   981		 * WFI (wait-for-interrupt) bit.
-   982		 */
-   983		if (IS_V4(hdev->core) || IS_V6(hdev->core))
-   984			venus_sys_idle_indicator = true;
-   985	
-   986		ret = venus_sys_set_idle_message(hdev, venus_sys_idle_indicator);
-   987		if (ret)
-   988			dev_warn(dev, "setting idle response ON failed (%d)\n", ret);
-   989	
-   990		ret = venus_sys_set_power_control(hdev, venus_fw_low_power_mode);
-   991		if (ret)
-   992			dev_warn(dev, "setting hw power collapse ON failed (%d)\n",
-   993				 ret);
-   994	
-   995		/* For specific venus core, it is mandatory to set the UBWC configuration */
-   996		if (res->ubwc_conf) {
- > 997			ret = venus_sys_set_ubwc_config();
-   998			if (ret)
-   999				dev_warn(dev, "setting ubwc config failed (%d)\n", ret);
-  1000		}
-  1001	
-  1002		return ret;
-  1003	}
-  1004	
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+> --- >   drivers/misc/fastrpc.c | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index aa1682b94a23..45aaf54a7560 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -1353,17 +1353,18 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl,
+>   				   struct fastrpc_req_munmap *req)
+>   {
+>   	struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
+> -	struct fastrpc_buf *buf, *b;
+> +	struct fastrpc_buf *buf = NULL, *iter, *b;
+>   	struct fastrpc_munmap_req_msg req_msg;
+>   	struct device *dev = fl->sctx->dev;
+>   	int err;
+>   	u32 sc;
+>   
+>   	spin_lock(&fl->lock);
+> -	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
+> -		if ((buf->raddr == req->vaddrout) && (buf->size == req->size))
+> +	list_for_each_entry_safe(iter, b, &fl->mmaps, node) {
+> +		if ((iter->raddr == req->vaddrout) && (iter->size == req->size)) {
+> +			buf = iter;
+>   			break;
+> -		buf = NULL;
+> +		}
+>   	}
+>   	spin_unlock(&fl->lock);
+>   
