@@ -2,66 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5731A515775
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 23:56:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98C2151579C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 00:01:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355526AbiD2WAF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 18:00:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41892 "EHLO
+        id S1376831AbiD2WDm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 18:03:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349516AbiD2WAE (ORCPT
+        with ESMTP id S1378803AbiD2WDl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 18:00:04 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8171DDBD36;
-        Fri, 29 Apr 2022 14:56:45 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id x77so6133419qkb.3;
-        Fri, 29 Apr 2022 14:56:45 -0700 (PDT)
+        Fri, 29 Apr 2022 18:03:41 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D1411B7AC;
+        Fri, 29 Apr 2022 15:00:14 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id c11so2567088wrn.8;
+        Fri, 29 Apr 2022 15:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=2IktU5cP8TErB1eZzzrdy5caCFWOk6wLxe2djT+xI+E=;
-        b=dJVWNiS90V1EftStrt0mAwxui8nKAeifH+Yp7HEV1Q0sIG7lBUrOUmfCBx9zMSGgD8
-         8Ni371s2KYzh6tw445SNe9CLkuuHhudAH3qm2d1JsawE1r+5Rh/Erm49luXVnoGflgzU
-         9nDVO5Gi3aURYAEQPKgyEo6UBpgTVNBW3JPr753/2g6pmyy5SBELD+JJphQAW2Mq8g42
-         tnNiJabRG55VaXVg6GfCX+OP379Zxc2m+1etTWPgc3/5zu6XgM/NaxW4Hsf9BxZloZ01
-         hiKDPIrVZXfb4qAAI2LmzitQnBsxng2bhNEcxjo2wDvklCi9mVp7sJSae8rMn/Yyru11
-         ccNA==
+        bh=3YvJQ8AnVTjfxXBmIcp4SKnbUwO/iQ1O2/sNT7auhlc=;
+        b=Mt/mI0/OBXBeNhi9sXshjI8jxnT5wdIT8DJ3pLbrSH5vmO4Cd5tRHisCYP9Szu+M+e
+         1i0MOQGIeOEWLLM3DbI++ffIRdM44r//1bhYJnM6WYFAHuH3hMxgSCZorYLY4YIrIBxz
+         yvbIRpUHCuKQUB09fySYM8xYFW9V6VOqhuQcuIN6uTngS6JELu22Q2qtRXnVoKAf0kHg
+         hBThL82Tc+5LAJLkfrQVwIEPTlxUkGrbzDzmTFjMCJwy4Y37aDoiJg0ZKRVbjeKb1ZnO
+         f/niq1HPBVrZPWO5rTcaDsnvzYy6UkSn5Umu4KvCn+aKuwQF4uk90AUGy+Hh2abxlefT
+         B8Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=2IktU5cP8TErB1eZzzrdy5caCFWOk6wLxe2djT+xI+E=;
-        b=xRaqRQdB1sHK9n30RwhyiKkRSCjbpCyj6CD0q91bejKBip4iCSCsBfR8YDjMWSDWhW
-         c6xlJGhhQUy/EPNFICaO4dupbZNQGITiHSB8E8wm2FoH0wr4FP0iX/JxlVqYoj5+rIEs
-         VtMKwdb03CqFfVpIRRGXFy8QfU/ygWiO7OzwPJbwgszgRxnoDPLSRnM64d91zh/p2r4T
-         5PcrmRyP3grCF/N9ozxvuvuD2zwbA6SYZvXNbIym+LrOvrufSuLjOdDd3hkBJUUe1xJa
-         ryObI1WjlMVc5loxtQvQNr30EOU7QJbIy1r1FFaR0tRXBqkNYGKa1DWkJx3kne/qQZYW
-         H/ew==
-X-Gm-Message-State: AOAM5324mW7bhS2iTF19S9s/mN0FF0Qb1oF0vyR04QgorzVNc1b8Ow/3
-        iBM8hzhAfYuYyhNMFI5N236O58rxoiKI6WmMm2m5fqbjoGrZ0g==
-X-Google-Smtp-Source: ABdhPJxxTKocEmDRUVcm9VX7Omzv2dfX1hAPvyXANayJ6pDdW2hd3aw1MQyLYwzHXagxbCxLS4+BgOq6f8je5bz6HmQ=
-X-Received: by 2002:a05:620a:1a01:b0:69c:fda:7404 with SMTP id
- bk1-20020a05620a1a0100b0069c0fda7404mr910750qkb.522.1651269404666; Fri, 29
- Apr 2022 14:56:44 -0700 (PDT)
+        bh=3YvJQ8AnVTjfxXBmIcp4SKnbUwO/iQ1O2/sNT7auhlc=;
+        b=7LCpfwuhKHGB/0R3Xmjmv5j3quDCJRIDKEZlqNYhJ0be1j5fKQcT1ftgmq7RtBV3LK
+         CuEf3bPK6r26peOFdJL43U0gjhlbLOIAPYVjeKkobPxioEbaKP/DtmvINZoG/yivTfvN
+         9Xq7SSEpv/L1Co5kPoshRvyvF1eWgyv9mWhopWdRr/fRTf7hQt1t6/1NZBCSegJ+UF2g
+         Vpk/nWVbuBLsrwcsG7BRIQMc6WxrW2nezDruoocdBWQ11+vLmuJInBkXDcoYmbRPXG4h
+         hcGP7al3egGdK+c8rL7/sBOIZ1ER8x/Cpb63A5wjhaCqjjDrKoyirQdJP+OGbNhL/ytP
+         1NdQ==
+X-Gm-Message-State: AOAM530FMywxX5K+jffGtbrc76UgiVxXH7Ibmx1CF3pAbdN5ZBv4bz3I
+        yZjukaq+fQM7h1kmMakmd0osIqzrQkdNpJTXPSk=
+X-Google-Smtp-Source: ABdhPJzfbZNuQ24oj/IbRhwz5VVFSzob3RDgay6MXgeZTuyPfwNUqu7QRyHY+WjpuSo4eoDsyxQebCkk3u3qwldIH24=
+X-Received: by 2002:a05:6000:18c5:b0:207:ac0d:f32 with SMTP id
+ w5-20020a05600018c500b00207ac0d0f32mr789629wrq.574.1651269612858; Fri, 29 Apr
+ 2022 15:00:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220429114330.59026-1-robimarko@gmail.com> <20220429114330.59026-2-robimarko@gmail.com>
- <1b545fbb-eaca-fb98-f77a-15326a7a2e4e@linaro.org>
-In-Reply-To: <1b545fbb-eaca-fb98-f77a-15326a7a2e4e@linaro.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Fri, 29 Apr 2022 23:56:33 +0200
-Message-ID: <CAOX2RU4KiKxCSMGDu+=FZqkdRia0MSBcz-eMn0kGpJ5ABxdkSg@mail.gmail.com>
-Subject: Re: [PATCH 2/6] clk: qcom: Add DT bindings for IPQ8074 APSS clock controller
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        jassisinghbrar@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20220429215324.3729441-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220429215324.3729441-1-dmitry.baryshkov@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 29 Apr 2022 15:00:02 -0700
+Message-ID: <CAF6AEGu+Ve1i_WHwcyXkGZKnv0aOiQNW7NCv=ToDpoorsn=TgA@mail.gmail.com>
+Subject: Re: [PATCH v2] MAINTAINERS: Add Dmitry as MSM DRM driver co-maintainer
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -73,42 +68,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 29 Apr 2022 at 22:46, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Fri, Apr 29, 2022 at 2:53 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> On 29/04/2022 13:43, Robert Marko wrote:
-> > Add DT-binding for the IPQ8074 APSS clock controller.
-> >
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> For the past several releases I have been assisting Rob by writing,
+> collecting, testing and integrating patches for non-GPU and non-core
+> parts of MSM DRM driver, while Rob is more interested in improving the
+> GPU-related part. Let's note this in the MAINTAINERS file.
 >
-> These are dt-bindings, so prefix the title matching dt-bindings
-> subsystem and remove "DT bindings" words form the title. Instead "Add
-> clock ID headers for..."
+> While we are at it, per Rob's suggestion let's also promote Abhinav
+> Kumar to M: (as he is actively working on the driver) and switch Sean
+> Paul to R: (since he isn't doing much on msm these days).
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Ok, sorry for the mess-up, will fix up v2.
+Acked-by: Rob Clark <robdclark@gmail.com>
 
+> ---
+>  MAINTAINERS | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 >
-> > ---
-> >  include/dt-bindings/clock/qcom,apss-ipq8074.h | 14 ++++++++++++++
-> >  1 file changed, 14 insertions(+)
-> >  create mode 100644 include/dt-bindings/clock/qcom,apss-ipq8074.h
-> >
-> > diff --git a/include/dt-bindings/clock/qcom,apss-ipq8074.h b/include/dt-bindings/clock/qcom,apss-ipq8074.h
-> > new file mode 100644
-> > index 000000000000..df07766b0146
-> > --- /dev/null
-> > +++ b/include/dt-bindings/clock/qcom,apss-ipq8074.h
-> > @@ -0,0 +1,14 @@
-> > +/* SPDX-License-Identifier: GPL-2.0 */
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 61d9f114c37f..782934f318d4 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -6254,8 +6254,9 @@ F:        drivers/gpu/drm/tiny/panel-mipi-dbi.c
 >
-> This should be licensed the same as bindings, so GPL|BSD, unless it's a
-> derivative of some other work?
-
-It's derivated from IPQ6018 PLL bindings which are marked GPL-2.0 so I
-decided to keep that.
-
-Regards,
-Robert
+>  DRM DRIVER FOR MSM ADRENO GPU
+>  M:     Rob Clark <robdclark@gmail.com>
+> -M:     Sean Paul <sean@poorly.run>
+> -R:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+> +M:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+> +M:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +R:     Sean Paul <sean@poorly.run>
+>  L:     linux-arm-msm@vger.kernel.org
+>  L:     dri-devel@lists.freedesktop.org
+>  L:     freedreno@lists.freedesktop.org
+> --
+> 2.35.1
 >
-> Best regards,
-> Krzysztof
