@@ -2,170 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 131FC514E9B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 17:00:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E50BB514EB6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 17:08:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378125AbiD2PEH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 11:04:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38140 "EHLO
+        id S1357086AbiD2PML (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 11:12:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378099AbiD2PEG (ORCPT
+        with ESMTP id S1377609AbiD2PMH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 11:04:06 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 187D53152D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 08:00:48 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id bu29so14614618lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 08:00:48 -0700 (PDT)
+        Fri, 29 Apr 2022 11:12:07 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 854F1D3DBB;
+        Fri, 29 Apr 2022 08:08:48 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id k23so16041214ejd.3;
+        Fri, 29 Apr 2022 08:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=NgFkGj6t89cfDU8h18lUmisWIQlxbc4WZbzdRxKCz3k=;
-        b=ZM760YPSenzfkt5aBOoPjNBgfTdCSoJabilxAb31qUx0+VOyg/Rvq1RSyyfthjlack
-         jaPIsBBJa9FfKzabWuy0hU0klkaaJiRUNTJv7viZZZ3rIniQFoc+fFS14Am0OE1OLc/8
-         qHQUXE1OjRmio8fPFYt3y9S+tyJsChNCf56o4pb1pXd4/ITENpa9rt3zTNkXtqw5c1ul
-         XWk3AaCrI/cCu7Regsnr7m0ovfUXDCv8p0BWMJ8nXO9dSNSQxNv7OCscZu/O9QL7nYIy
-         8yJGyrKCFS5u2lEMCiDxO3Lfb/VA7VYF291UArHY0SWE6DC6sZgVo2lkcoT4QCQZZcDb
-         aGgw==
+        d=gmail.com; s=20210112;
+        h=message-id:date:from:to:cc:subject:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=YIbyjT2r8wxH+pr14y5kI8od4cD/5ycplR/r+25iEl8=;
+        b=K3Y+8q27h7ihuxGrjMIxMcJ/S+nNEulEnI0sV5WSPp2LcCV/WklX+FRXv+wJRUKgiu
+         7r6R7gaFUxTNnDkaPnbGCqDRNWBFgl+J6cLEnA1+dtae2nKecCdQ4F0xEu919rv3AWV2
+         GnL9ZDK3OMEg12DbidXjINsmf8mGJ/t2vKSdbDIl9bzHw/rJQ9LnmXrqaQIQkwnMymAi
+         mYeiSlbLFpY0+uXxeID+C7H7VwwGj03I6VyjZvILZqY1v7ig6NfpLPWzMtm/l+r+C53I
+         6mtYQFy7UiBlrbn3vWFECKMSnSp5JyJf9oHv9GgvFAbCM126cZ7I3W0SZCKuf4Cioxew
+         kWcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=NgFkGj6t89cfDU8h18lUmisWIQlxbc4WZbzdRxKCz3k=;
-        b=s3ao6C2UDJIeDOyBfRI3Biw1kd+2LtnU+L+TOvi0SUCNKzvmBrfS6BLYJCMJdArY3j
-         o3KZ84VPghCFuIOoOzU6urF04Q/l0Jm1twZngekTPMERE+574m5xZY+JCm9daJvwdfMY
-         ftG1Yq2ho0QmXhRyk5sg3QQnxzW2dBMvdkncFrMZ9dOuE5S3FvnbXTJPJyCo4rm45W7a
-         4z47ZFmTecJQjCYidH2V3qMRtiJmwJdmwCAAAwCkOcE7eT/xJhhOPtwuv+Xo1bFXdnr5
-         LzNQotJkczWnnh5rCLRi7bkn0+8NOVvKHT+JD9xj7xu+CYiuytVpoqcsTH7DwdIJ8AYZ
-         drhg==
-X-Gm-Message-State: AOAM530aZpnilmuYO8KWlCtIbXVCwSmkgFN+tMItq+wPh7u3Vm6tz+Hr
-        AFJUEMKhzN6a29rmT68pEClv0QkAwsGbog==
-X-Google-Smtp-Source: ABdhPJzWIXVhuKwvYZXjinlH9r7h5lT6+559NNN6Eh6+ovZcHLnhD1b/kd0AUEPpSfSv69hOp7fAHg==
-X-Received: by 2002:a05:6512:3a89:b0:471:c6ba:c522 with SMTP id q9-20020a0565123a8900b00471c6bac522mr27979319lfu.371.1651244446464;
-        Fri, 29 Apr 2022 08:00:46 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id d19-20020a193853000000b0047210b434ffsm259348lfj.27.2022.04.29.08.00.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Apr 2022 08:00:46 -0700 (PDT)
-Message-ID: <1f013429-8a5b-47c8-a146-41bb66af3f03@linaro.org>
-Date:   Fri, 29 Apr 2022 18:00:45 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH 4/4] clk: qcom: clk-krait: add apq/ipq8064 errata
- workaround
-Content-Language: en-GB
-To:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=YIbyjT2r8wxH+pr14y5kI8od4cD/5ycplR/r+25iEl8=;
+        b=YaZdxb/+zLxlpfbUxtt8y5M9cFWHN5rKwzUS9bkW2/UeGuSx6SHpCX4vk1kU4DP2y3
+         MJnmrojmqnHDgrc7cfysxORNhLGEkkA8gvX1ficvU7r9l4PyUgIGH1qZYsD8jMspiBk6
+         kLOowVvPg1jTHnRDwU3jvf4Bjw7B+o6g8/DAvc/ogM7njK21azB6QJ/DXEUT2202eWBn
+         Z8vh2IrZRefZCfN4jB84o+CDf/2y8uDC7Xn7blXGeHMC4ewSTmkGFhgZLnUUWaVbudNY
+         7bLtWG8ESfS16fWvpw5USse7Mmzc9wyPLTS+5QoR1OxnLTlDiRCbHMD6F3wmzWP6gtiv
+         Cg/Q==
+X-Gm-Message-State: AOAM532vvVTrZxuAXaL4CjvANKKChUjl++xNobCrWJTPr8SmokjTKqPi
+        gViA+aeiB9V8iwt+YhU0HNI=
+X-Google-Smtp-Source: ABdhPJxbo2NZJ6x8JvhZu+IyZH+PQVEUqNSClptl9EFVeswh4NnNBZ+1BT0dCnE5Jtmv5bQELzkJvQ==
+X-Received: by 2002:a17:907:3f0f:b0:6f3:8e24:e9e6 with SMTP id hq15-20020a1709073f0f00b006f38e24e9e6mr26322806ejc.128.1651244926786;
+        Fri, 29 Apr 2022 08:08:46 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.gmail.com with ESMTPSA id jz24-20020a17090775f800b006f3ef214de1sm715201ejc.71.2022.04.29.08.08.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Apr 2022 08:08:46 -0700 (PDT)
+Message-ID: <626bff7e.1c69fb81.bdf89.4da7@mx.google.com>
+X-Google-Original-Message-ID: <Ymv+6382seBj563N@Ansuel-xps.>
+Date:   Fri, 29 Apr 2022 17:06:19 +0200
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
         Sricharan R <sricharan@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/4] clk: qcom: clk-krait: add hw_parent check for
+ div2_round_rate
 References: <20220429120108.9396-1-ansuelsmth@gmail.com>
- <20220429120108.9396-5-ansuelsmth@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220429120108.9396-5-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ <20220429120108.9396-4-ansuelsmth@gmail.com>
+ <b7de49e0-c0cf-5062-8426-dcb54272d350@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b7de49e0-c0cf-5062-8426-dcb54272d350@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/04/2022 15:01, Ansuel Smith wrote:
-> Add apq/ipq8064 errata workaround where the sec_src clock gating needs to
-> be disabled during switching. To enable this set disable_sec_src_gating
-> in the mux struct.
+On Fri, Apr 29, 2022 at 05:53:32PM +0300, Dmitry Baryshkov wrote:
+> On 29/04/2022 15:01, Ansuel Smith wrote:
+> > Check if hw_parent is present before calculating the round_rate to
+> > prevent kernel panic. On error -EINVAL is reported.
+> > 
+> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->   drivers/clk/qcom/clk-krait.c | 16 ++++++++++++++++
->   drivers/clk/qcom/clk-krait.h |  1 +
->   drivers/clk/qcom/krait-cc.c  |  1 +
->   3 files changed, 18 insertions(+)
+> I see that other clock drivers do not perform this check. Which path leads
+> to this oops?
+>
+
+This comes from qsdk patches so I apologize in advance about this.
+
+Anyway I'm checking the code and krait-cc is the only user of
+krait_div2_clk_ops. That user have as parent only hfpll_something that
+is declared by gcc. Now hfpll can also be declared in dts with a
+dedicated driver so I wonder if the problem is there in the case when
+hfpll is declared in dts and is probed after krait-cc. This is not the
+case for ipq8064 but I wonder if qsdk have other krait based device that
+have a configuration with hfpll declared in dts.
+
+In short you are right and in our current code the check is uselss and
+I'm positive about dropping this patch but I do wonder if downstream
+there is an actual use of this. Don't know how to proceed. Any hint?
+
+> > ---
+> >   drivers/clk/qcom/clk-krait.c | 7 ++++++-
+> >   1 file changed, 6 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
+> > index 90046428693c..6c367ad6506a 100644
+> > --- a/drivers/clk/qcom/clk-krait.c
+> > +++ b/drivers/clk/qcom/clk-krait.c
+> > @@ -84,7 +84,12 @@ EXPORT_SYMBOL_GPL(krait_mux_clk_ops);
+> >   static long krait_div2_round_rate(struct clk_hw *hw, unsigned long rate,
+> >   				  unsigned long *parent_rate)
+> >   {
+> > -	*parent_rate = clk_hw_round_rate(clk_hw_get_parent(hw), rate * 2);
+> > +	struct clk_hw *hw_parent = clk_hw_get_parent(hw);
+> > +
+> > +	if (!hw_parent)
+> > +		return -EINVAL;
+> > +
+> > +	*parent_rate = clk_hw_round_rate(hw_parent, rate * 2);
+> >   	return DIV_ROUND_UP(*parent_rate, 2);
+> >   }
 > 
-> diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
-> index 6c367ad6506a..4a9b3296c45b 100644
-> --- a/drivers/clk/qcom/clk-krait.c
-> +++ b/drivers/clk/qcom/clk-krait.c
-> @@ -18,13 +18,23 @@
->   static DEFINE_SPINLOCK(krait_clock_reg_lock);
->   
->   #define LPL_SHIFT	8
-> +#define SECCLKAGD	BIT(4)
-> +
->   static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
->   {
->   	unsigned long flags;
->   	u32 regval;
->   
->   	spin_lock_irqsave(&krait_clock_reg_lock, flags);
-> +
->   	regval = krait_get_l2_indirect_reg(mux->offset);
-> +
-> +	/* apq/ipq8064 Errata: disable sec_src clock gating during switch. */
-> +	if (mux->disable_sec_src_gating) {
-> +		regval |= SECCLKAGD;
-> +		krait_set_l2_indirect_reg(mux->offset, regval);
-> +	}
-> +
->   	regval &= ~(mux->mask << mux->shift);
->   	regval |= (sel & mux->mask) << mux->shift;
->   	if (mux->lpl) {
-> @@ -33,6 +43,12 @@ static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
->   	}
->   	krait_set_l2_indirect_reg(mux->offset, regval);
->   
-> +	/* apq/ipq8064 Errata: re-enabled sec_src clock gating. */
-> +	if (mux->disable_sec_src_gating) {
-> +		regval &= ~SECCLKAGD;
-> +		krait_set_l2_indirect_reg(mux->offset, regval);
-> +	}
-> +
->   	/* Wait for switch to complete. */
->   	mb();
->   	udelay(1);
-> diff --git a/drivers/clk/qcom/clk-krait.h b/drivers/clk/qcom/clk-krait.h
-> index 9120bd2f5297..f930538c539e 100644
-> --- a/drivers/clk/qcom/clk-krait.h
-> +++ b/drivers/clk/qcom/clk-krait.h
-> @@ -15,6 +15,7 @@ struct krait_mux_clk {
->   	u8		safe_sel;
->   	u8		old_index;
->   	bool		reparent;
-> +	bool		disable_sec_src_gating;
->   
->   	struct clk_hw	hw;
->   	struct notifier_block   clk_nb;
-> diff --git a/drivers/clk/qcom/krait-cc.c b/drivers/clk/qcom/krait-cc.c
-> index 4d4b657d33c3..0f88bf41ec6e 100644
-> --- a/drivers/clk/qcom/krait-cc.c
-> +++ b/drivers/clk/qcom/krait-cc.c
-> @@ -138,6 +138,7 @@ krait_add_sec_mux(struct device *dev, int id, const char *s,
->   	mux->parent_map = sec_mux_map;
->   	mux->hw.init = &init;
->   	mux->safe_sel = 0;
-> +	mux->disable_sec_src_gating = true;
-
-This has to be guarded with the of_compatible checks. Otherwise you'd 
-apply this errata to all Krait CPUs, not only apq/ipq8064.
-
-At least this should be limited to krait-cc-v1 with the note that there 
-is no way to distinguish between platforms.
-
->   
->   	init.name = kasprintf(GFP_KERNEL, "krait%s_sec_mux", s);
->   	if (!init.name)
-
+> 
+> -- 
+> With best wishes
+> Dmitry
 
 -- 
-With best wishes
-Dmitry
+	Ansuel
