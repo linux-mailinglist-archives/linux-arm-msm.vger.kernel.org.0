@@ -2,67 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 882515148CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 14:04:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E26A8514912
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 14:20:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358842AbiD2MIE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 08:08:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49776 "EHLO
+        id S233129AbiD2MXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 08:23:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358868AbiD2MHx (ORCPT
+        with ESMTP id S236207AbiD2MXd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 08:07:53 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CE5BC866F;
-        Fri, 29 Apr 2022 05:04:33 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id e23so8798386eda.11;
-        Fri, 29 Apr 2022 05:04:33 -0700 (PDT)
+        Fri, 29 Apr 2022 08:23:33 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 619301581C;
+        Fri, 29 Apr 2022 05:20:15 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id m20so15068357ejj.10;
+        Fri, 29 Apr 2022 05:20:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=EC9ILjDGL3YF8DKjgFAU1/3Xp1zrJQq7k7xRaKAybfM=;
-        b=D+iWrmXg19BEad+DLw8cIOPvJlYhItIDdZqTuyZybVcCxroDVkJ97vSPWnwlIXwFzU
-         ZoRoSZ/QLyhOkA1/okvQYXbeS90QiZqtfXswQyGvnOLSCUxkP73g0hpbfXHVl6Ko9mRP
-         XW0nnV3XtvgwPyrBDeDzXEYk3wBi3l7c1qsPEXFIYtTGlAFFbmZPiHRQySrwoAQafHnP
-         J9/baeXOH7Wlw8dN6g1QerJ50e1CTkvwjgHq31SVWWNu1A8JfcXKuEsNgIq6RySt6xVi
-         gGq9zm9cfe15HzTLnjoMOa7nYcWIwT1cyfvIo/V45ODkiltO5AH5fFPQ0+klLrKRUHcV
-         KZPw==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l7dL/+VZLaVUt5wUNxW4Ik+wlho9LkARjWYWndO/Mro=;
+        b=PY/65KPfyC8yRsWjvXlITjG7mJeESXMzEUiATZTp88CKL6xH4FPzUig3zy0Ooi+Iza
+         sffwJUrhwqDBIogUAMj979EMMaMa1nDWLKgaN9t/zzAxdcJ6AEd8FS0iTZZGlsFnwR/p
+         e3d1Si1roOHer+nKrUog2XMLP5JA0Pa5CKTrJlqfPOJ0K5y5eMdVPkhaxSN4pEVlPCY3
+         tj9IBYoFw6LWAgfY/5HJ03EmfXflyS4SPQHMo5NakqekM0MoJbhe0Z7K5aSa2g/cCtRd
+         KC6283ZRvtn8HO9YRm6ZAzfm0pD4kei7EOzvpjzGbWDEF7xX+pn5oqmVTD+poSdcpC8F
+         qNQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EC9ILjDGL3YF8DKjgFAU1/3Xp1zrJQq7k7xRaKAybfM=;
-        b=jesgliccKwrpcTjZKtUJgEFUwFZQ04d8gPxQujDBT0dcFqzP90FNUqefngEEzitWr+
-         biXC+uSX24UkmVlZKMmEYVGtpLUwohiwcCe17mLc7aRlRHqEaLXplN608JEAmR+wSbMg
-         9mm49bTREi48lpsZblKUTkq/Khx/hdJyJZk2oHIR2in+PUeJe5WizJl9AOz22yArkDdY
-         79fkL2gAARpjfXjgf8gVLRy7g5WdEbCoHvjEX4mSrsVtemDytVK6CBOpNcdFH50BH6rq
-         4upHuTuAoqjTGJpF+DxJiA+moaV2rEKbR0Y9gssLHbgYhU21k35+wxl/mrwwN5bzw4E9
-         UURQ==
-X-Gm-Message-State: AOAM532P9r6PwR2+gG8lddQULMo0Vy00gX/kBSzzFEHLjWTUwbqfpvk+
-        1o/plEQdXzxxmV3ofmMUJwLb1Qfmjqs=
-X-Google-Smtp-Source: ABdhPJx1+RF5T8GZpmW1o93stK0/PvpCeUxoJ0xeV0iatikrqIWy41vwCDxagNkza9zDakDxP7aiDA==
-X-Received: by 2002:a05:6402:254a:b0:424:1ed9:e173 with SMTP id l10-20020a056402254a00b004241ed9e173mr41785315edb.276.1651233871725;
-        Fri, 29 Apr 2022 05:04:31 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l7dL/+VZLaVUt5wUNxW4Ik+wlho9LkARjWYWndO/Mro=;
+        b=rv+YvHkdfVsBCCFXwyB/0oabHn1uxiFrBm1ZT1RMBkCFXcua9T1Dp/T+8RwdPB8sp6
+         uDX06aaObQ+o3idjF68xF6DTKfw5WX/KHP119KAWtyNvtjLNu9ahBvbBo+wlI85okh3h
+         aAkwvZ84WQoTyVdGSZhYtj4OmZbCgyuO9ajQFBFuRXW0o81JGbIomNIHasSwC/AFIoEe
+         k8dMMy2MvQK3ibo6CJ40gR9RHtIi0bW9tCpFMl1lSiCoQvNPSvI14uQ8rxRW98hM+M47
+         WEPrTp8tvhG89Prp/3vl42+TaYavEvlzyLmzfP7/og3D43pYHZVgztn5fjE9X7Q3o86J
+         z3Lg==
+X-Gm-Message-State: AOAM533MKM+gKzgM3rhniJfjPxsQtKhsSk1KVGENyx72jtXS/GkoHBxG
+        J/hBZYXwF5gWFcXN9DIabdJfWSoYeBA=
+X-Google-Smtp-Source: ABdhPJxGrtVVGu869LXVrVu8bVEy2calmisJ4Jv4hPwq7maHZolNdLun7MI5qvCzu80eyQoOfW2/dg==
+X-Received: by 2002:a17:907:94ca:b0:6da:e637:fa42 with SMTP id dn10-20020a17090794ca00b006dae637fa42mr36277625ejc.347.1651234813770;
+        Fri, 29 Apr 2022 05:20:13 -0700 (PDT)
 Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.googlemail.com with ESMTPSA id eo9-20020a1709069b0900b006f3ef214e02sm581338ejc.104.2022.04.29.05.04.30
+        by smtp.googlemail.com with ESMTPSA id rb48-20020a170907693000b006f3ef214e10sm602694ejc.118.2022.04.29.05.20.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 05:04:31 -0700 (PDT)
+        Fri, 29 Apr 2022 05:20:13 -0700 (PDT)
 From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
-        Sricharan R <sricharan@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>
-Subject: [PATCH 4/4] clk: qcom: clk-krait: add apq/ipq8064 errata workaround
-Date:   Fri, 29 Apr 2022 14:01:08 +0200
-Message-Id: <20220429120108.9396-5-ansuelsmth@gmail.com>
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH 0/3] Krait Documentation conversion
+Date:   Fri, 29 Apr 2022 14:17:36 +0200
+Message-Id: <20220429121739.28584-1-ansuelsmth@gmail.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220429120108.9396-1-ansuelsmth@gmail.com>
-References: <20220429120108.9396-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,82 +74,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add apq/ipq8064 errata workaround where the sec_src clock gating needs to
-be disabled during switching. To enable this set disable_sec_src_gating
-in the mux struct.
+This series convert the krait-cc and the kpps-acc/gcc Documentation to
+yaml.
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- drivers/clk/qcom/clk-krait.c | 16 ++++++++++++++++
- drivers/clk/qcom/clk-krait.h |  1 +
- drivers/clk/qcom/krait-cc.c  |  1 +
- 3 files changed, 18 insertions(+)
+This series comes form a split of a bigger series that got too big and
+now hard to review.
 
-diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
-index 6c367ad6506a..4a9b3296c45b 100644
---- a/drivers/clk/qcom/clk-krait.c
-+++ b/drivers/clk/qcom/clk-krait.c
-@@ -18,13 +18,23 @@
- static DEFINE_SPINLOCK(krait_clock_reg_lock);
- 
- #define LPL_SHIFT	8
-+#define SECCLKAGD	BIT(4)
-+
- static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
- {
- 	unsigned long flags;
- 	u32 regval;
- 
- 	spin_lock_irqsave(&krait_clock_reg_lock, flags);
-+
- 	regval = krait_get_l2_indirect_reg(mux->offset);
-+
-+	/* apq/ipq8064 Errata: disable sec_src clock gating during switch. */
-+	if (mux->disable_sec_src_gating) {
-+		regval |= SECCLKAGD;
-+		krait_set_l2_indirect_reg(mux->offset, regval);
-+	}
-+
- 	regval &= ~(mux->mask << mux->shift);
- 	regval |= (sel & mux->mask) << mux->shift;
- 	if (mux->lpl) {
-@@ -33,6 +43,12 @@ static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
- 	}
- 	krait_set_l2_indirect_reg(mux->offset, regval);
- 
-+	/* apq/ipq8064 Errata: re-enabled sec_src clock gating. */
-+	if (mux->disable_sec_src_gating) {
-+		regval &= ~SECCLKAGD;
-+		krait_set_l2_indirect_reg(mux->offset, regval);
-+	}
-+
- 	/* Wait for switch to complete. */
- 	mb();
- 	udelay(1);
-diff --git a/drivers/clk/qcom/clk-krait.h b/drivers/clk/qcom/clk-krait.h
-index 9120bd2f5297..f930538c539e 100644
---- a/drivers/clk/qcom/clk-krait.h
-+++ b/drivers/clk/qcom/clk-krait.h
-@@ -15,6 +15,7 @@ struct krait_mux_clk {
- 	u8		safe_sel;
- 	u8		old_index;
- 	bool		reparent;
-+	bool		disable_sec_src_gating;
- 
- 	struct clk_hw	hw;
- 	struct notifier_block   clk_nb;
-diff --git a/drivers/clk/qcom/krait-cc.c b/drivers/clk/qcom/krait-cc.c
-index 4d4b657d33c3..0f88bf41ec6e 100644
---- a/drivers/clk/qcom/krait-cc.c
-+++ b/drivers/clk/qcom/krait-cc.c
-@@ -138,6 +138,7 @@ krait_add_sec_mux(struct device *dev, int id, const char *s,
- 	mux->parent_map = sec_mux_map;
- 	mux->hw.init = &init;
- 	mux->safe_sel = 0;
-+	mux->disable_sec_src_gating = true;
- 
- 	init.name = kasprintf(GFP_KERNEL, "krait%s_sec_mux", s);
- 	if (!init.name)
+While they are still more or less wrong and doesn't really reflect real
+driver implementation, they are converted to prepare for a fixup later
+when dts and driver are finally fixed. For now make a 1:1 conversion.
+
+Ansuel Smith (3):
+  dt-bindings: clock: Convert qcom,krait-cc to yaml
+  dt-bindings: arm: msm: Convert kpss-acc driver Documentation to yaml
+  dt-bindings: arm: msm: Convert kpss-gcc driver Documentation to yaml
+
+ .../bindings/arm/msm/qcom,kpss-acc.txt        | 49 ----------
+ .../bindings/arm/msm/qcom,kpss-acc.yaml       | 94 +++++++++++++++++++
+ .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 ---------
+ .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 63 +++++++++++++
+ .../bindings/clock/qcom,krait-cc.txt          | 34 -------
+ .../bindings/clock/qcom,krait-cc.yaml         | 59 ++++++++++++
+ 6 files changed, 216 insertions(+), 127 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.txt
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.yaml
+
 -- 
 2.34.1
 
