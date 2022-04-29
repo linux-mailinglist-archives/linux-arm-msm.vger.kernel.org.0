@@ -2,140 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 39AF4514A84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 15:30:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 872FE514C91
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 16:16:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359791AbiD2NdS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 09:33:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59152 "EHLO
+        id S1377159AbiD2OT5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 10:19:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347736AbiD2NdR (ORCPT
+        with ESMTP id S235473AbiD2OT4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 09:33:17 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F2B761612;
-        Fri, 29 Apr 2022 06:29:59 -0700 (PDT)
+        Fri, 29 Apr 2022 10:19:56 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9475B8BF68
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 07:16:36 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id g6so15759398ejw.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 07:16:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651238999; x=1682774999;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Btlb4CgDcjwJRkvMOtx4nRpvsq3KlJpwPzQzTvO4w5A=;
-  b=LjZuKR0mlBMz9t/Day16yvgV7GMZrm4UhDstX6/Wlt0UnFo0FUTZqM4J
-   TN6+SJSwd8mnbqRlpFOpo6hSocDY4oduT2r5zv4eb+GyXgwh6ZgVRHyds
-   X8Ew6tgQO8WKduBLUUSYaQOvPVs1zOywUu1kkOwFocJsbVbT10YGeGIQm
-   s=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 29 Apr 2022 06:29:59 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2022 06:29:58 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 29 Apr 2022 06:29:58 -0700
-Received: from [10.50.11.55] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 29 Apr
- 2022 06:29:52 -0700
-Message-ID: <498791a7-cc9c-536a-0859-b03a332dc922@quicinc.com>
-Date:   Fri, 29 Apr 2022 18:59:48 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=UdINARUtzcFoW7h6RyjDI8lgOBSw6WOSOqD14X2CFJU=;
+        b=R3GZ3IwUpu5UUm3UrgEWZ4yVRf5jvXz7GwFUllasFjFFL0aBEmLKNpewMp+KpvazTf
+         g8p8hr+kOKGqyfgS7Y6uQhzrVoBaclahGzEyJPahetcB4lmaLSZiOEXz2JI6zFxDHQpC
+         maW0lcQI5+oePb8/E6eX0hAdKzV8yvr+mZ4vk1i/OguhilfBrgpfSdkLeZzOH/QGszCI
+         RH2NayuUkJaUmwHXmH4I6VtjsZF4R1jZUbZ8lGtIMUIXu5uVYHzuEr+3e8Zq7RWXMNWD
+         XG+381AkVI2TTgKMvdTb9CLibCPzJlooCB/siw0KduRzu5GuQpMZWdmfj293jx06HRzp
+         Ng6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=UdINARUtzcFoW7h6RyjDI8lgOBSw6WOSOqD14X2CFJU=;
+        b=LDa3AbtyX7ZaPWzd6lFx5Itpnx5iX+x8tKevwkKdCkm0xq2rotiIhCmu6Q4ivVOaxj
+         ZSaJAJn+8oREogmMk+0118IdkI15+j3CGX6zZFZgkJvfM9asQUeaHijuRJDO0xsMaWGO
+         yhAOykHGqyKCzvbt0HA0bWnnedZo82Yarc6/aAhCRYDLZ/CfEPWQ4f1is0UQg9tfH0jk
+         61tLH2+PDvvy6mIJo5GvNXSvsz7W/ZBrXKYy4GEuwcDz2HRVR9mVwj1fb2tDFOfsgYOo
+         WB/UBDt1mMTtOVyNNW9DbMGeBHi2obH210gVFHAOni3E/WTeU9mpEORMmy2fgCE9NKRH
+         JyhA==
+X-Gm-Message-State: AOAM532dzauRptlVwTjhBRu+e2mQQjI3w5x5YTVM01kG9mXgdM0xHW1d
+        Z0xeEjy+GdtQ4zUoe2zy5SJD2Q==
+X-Google-Smtp-Source: ABdhPJykYBCwe9aQMDhIZ8XGDNf9p2LGcca3xyCDUbkpjt15wUq7VCOYejWxIXJEzJpfvaAJeCOHOw==
+X-Received: by 2002:a17:907:6d12:b0:6f3:d304:e259 with SMTP id sa18-20020a1709076d1200b006f3d304e259mr10624053ejc.110.1651241795135;
+        Fri, 29 Apr 2022 07:16:35 -0700 (PDT)
+Received: from [192.168.0.170] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id j12-20020a50ed0c000000b0042617ba63d4sm2982642eds.94.2022.04.29.07.16.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Apr 2022 07:16:34 -0700 (PDT)
+Message-ID: <75b94ccd-b739-2164-bc4a-20025356cc34@linaro.org>
+Date:   Fri, 29 Apr 2022 16:16:32 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCHv13 9/9] soc: qcom: geni: Disable MMIO tracing for GENI SE
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v7 12/12] rpmsg: Fix kfree() of static memory on setting
+ driver_override
 Content-Language: en-US
-To:     Steven Rostedt <rostedt@goodmis.org>
-CC:     <arnd@arndb.de>, <catalin.marinas@arm.com>,
-        <gregkh@linuxfoundation.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <maz@kernel.org>, <quic_psodagud@quicinc.com>,
-        <quic_tsoni@quicinc.com>, <will@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <cover.1651149615.git.quic_saipraka@quicinc.com>
- <3b2fb1e02f7a9836b2388b9f2ce2184c5a0cd444.1651149615.git.quic_saipraka@quicinc.com>
- <20220428092959.175b48ae@gandalf.local.home>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <20220428092959.175b48ae@gandalf.local.home>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+To:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     Stuart Yoder <stuyoder@gmail.com>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Vineeth Vijayan <vneethv@linux.ibm.com>,
+        Peter Oberparleiter <oberpar@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>
+References: <20220419113435.246203-1-krzysztof.kozlowski@linaro.org>
+ <20220419113435.246203-13-krzysztof.kozlowski@linaro.org>
+ <CGME20220429122942eucas1p1820d0cd17a871d4953bac2b3de1dcdd9@eucas1p1.samsung.com>
+ <870885de-33f3-e0ba-4d56-71c3c993ac87@samsung.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <870885de-33f3-e0ba-4d56-71c3c993ac87@samsung.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Steve,
-
-On 4/28/2022 6:59 PM, Steven Rostedt wrote:
-> On Thu, 28 Apr 2022 18:14:12 +0530
-> Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
->
->> Disable MMIO tracing for geni serial engine driver as it is a
->> high frequency operation with many register reads/writes and
->> not very useful to log all MMIO traces and prevent excessive
->> logging.
-> This states what it does but does not really state why. Are you using MMIO
-> tracing in other locations and this is causing too much noise?
-> What is the real issue. Just saying "excessive logging" is not sufficient.
-> That would be a reason to disable function tracing ;-)
->
-> -- Steve
->
-
-Disabling MMIO trace is what it does and why it does is to prevent excessive logging.
-I will add more details on why preventing excessive logging is required here.
-
-It is quite known that any access over serial console would involve a lot of TX and RX
-register accesses (and few others), so these MMIO read/write trace events in these
-drivers cause a lot of unwanted noise because of the high frequency of such operations
-and is not very useful tracing these events for such driver. And we want to enable these
-trace events on development devices(maybe not production devices) where performance
-also really matters since we want to debug and track any crashes with such register
-accesses on these devices and not just something which runs with every debug option
-out there (meaning we enable this MMIO tracing with almost on par production kernels).
-And these traces of such driver add additional overhead both in terms of memory and
-CPU cycles.
-
-And also one more reason is that if we try to display trace buffer containing these register
-trace events onto serial console, then it would also involve register accesses from these
-drivers which would lead to recursive tracing.
-
-I will update the commit text adding these details and since we got your attention, can you
-also please look at patch 5 [1] which was updated based on your previous review comments.
-If you could review/ack them, then Arnd can take this series into his tree once I post the next
-version with these updated commit text.
-
-[1] https://lore.kernel.org/lkml/9827bae40f6f319f294d06859c9e3c7442f067f2.1651149615.git.quic_saipraka@quicinc.com/
-
-Thanks,
-Sai
-
->> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
->> ---
->>   drivers/soc/qcom/qcom-geni-se.c | 3 +++
->>   1 file changed, 3 insertions(+)
+On 29/04/2022 14:29, Marek Szyprowski wrote:
+> Hi Krzysztof,
+> 
+> On 19.04.2022 13:34, Krzysztof Kozlowski wrote:
+>> The driver_override field from platform driver should not be initialized
+>> from static memory (string literal) because the core later kfree() it,
+>> for example when driver_override is set via sysfs.
 >>
->> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
->> index 28a8c0dda66c..a0ceeede450f 100644
->> --- a/drivers/soc/qcom/qcom-geni-se.c
->> +++ b/drivers/soc/qcom/qcom-geni-se.c
->> @@ -1,6 +1,9 @@
->>   // SPDX-License-Identifier: GPL-2.0
->>   // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
->>   
->> +/* Disable MMIO tracing to prevent excessive logging of unwanted MMIO traces */
->> +#define __DISABLE_TRACE_MMIO__
->> +
->>   #include <linux/acpi.h>
->>   #include <linux/clk.h>
->>   #include <linux/slab.h>
+>> Use dedicated helper to set driver_override properly.
+>>
+>> Fixes: 950a7388f02b ("rpmsg: Turn name service into a stand alone driver")
+>> Fixes: c0cdc19f84a4 ("rpmsg: Driver for user space endpoint interface")
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> This patch landed recently in linux-next as commit 42cd402b8fd4 ("rpmsg: 
+> Fix kfree() of static memory on setting driver_override"). In my tests I 
+> found that it triggers the following issue during boot of the 
+> DragonBoard410c SBC (arch/arm64/boot/dts/qcom/apq8016-sbc.dtb):
+> 
+> ------------[ cut here ]------------
+> DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+> WARNING: CPU: 1 PID: 8 at kernel/locking/mutex.c:582 
+> __mutex_lock+0x1ec/0x430
+> Modules linked in:
+> CPU: 1 PID: 8 Comm: kworker/u8:0 Not tainted 5.18.0-rc4-next-20220429 #11815
+> Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
+> Workqueue: events_unbound deferred_probe_work_func
+> pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> pc : __mutex_lock+0x1ec/0x430
+> lr : __mutex_lock+0x1ec/0x430
+> ..
+> Call trace:
+>   __mutex_lock+0x1ec/0x430
+>   mutex_lock_nested+0x38/0x64
+>   driver_set_override+0x124/0x150
+>   qcom_smd_register_edge+0x2a8/0x4ec
+>   qcom_smd_probe+0x54/0x80
+>   platform_probe+0x68/0xe0
+>   really_probe.part.0+0x9c/0x29c
+>   __driver_probe_device+0x98/0x144
+>   driver_probe_device+0xac/0x14c
+>   __device_attach_driver+0xb8/0x120
+>   bus_for_each_drv+0x78/0xd0
+>   __device_attach+0xd8/0x180
+>   device_initial_probe+0x14/0x20
+>   bus_probe_device+0x9c/0xa4
+>   deferred_probe_work_func+0x88/0xc4
+>   process_one_work+0x288/0x6bc
+>   worker_thread+0x248/0x450
+>   kthread+0x118/0x11c
+>   ret_from_fork+0x10/0x20
+> irq event stamp: 3599
+> hardirqs last  enabled at (3599): [<ffff80000919053c>] 
+> _raw_spin_unlock_irqrestore+0x98/0x9c
+> hardirqs last disabled at (3598): [<ffff800009190ba4>] 
+> _raw_spin_lock_irqsave+0xc0/0xcc
+> softirqs last  enabled at (3554): [<ffff800008010470>] _stext+0x470/0x5e8
+> softirqs last disabled at (3549): [<ffff8000080a4514>] 
+> __irq_exit_rcu+0x180/0x1ac
+> ---[ end trace 0000000000000000 ]---
+> 
+> I don't see any direct relation between the $subject and the above log, 
+> but reverting the $subject on top of linux next-20220429 hides/fixes it. 
+> Maybe there is a kind of memory trashing somewhere there and your change 
+> only revealed it?
 
+Thanks for the report. I think the error path of my patch is wrong - I
+should not kfree(rpdev->driver_override) from the rpmsg code. That's the
+only thing I see now...
+
+Could you test following patch and tell if it helps?
+https://pastebin.ubuntu.com/p/rp3q9Z5fXj/
+
+-----
+
+diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
+index 3e81642238d2..1e2ad944e2ec 100644
+--- a/drivers/rpmsg/rpmsg_internal.h
++++ b/drivers/rpmsg/rpmsg_internal.h
+@@ -102,11 +102,7 @@ static inline int
+rpmsg_ctrldev_register_device(struct rpmsg_device *rpdev)
+        if (ret)
+                return ret;
+
+-       ret = rpmsg_register_device(rpdev);
+-       if (ret)
+-               kfree(rpdev->driver_override);
+-
+-       return ret;
++       return rpmsg_register_device(rpdev);
+ }
+
+ #endif
+diff --git a/drivers/rpmsg/rpmsg_ns.c b/drivers/rpmsg/rpmsg_ns.c
+index 8eb8f328237e..f26078467899 100644
+--- a/drivers/rpmsg/rpmsg_ns.c
++++ b/drivers/rpmsg/rpmsg_ns.c
+@@ -31,11 +31,7 @@ int rpmsg_ns_register_device(struct rpmsg_device *rpdev)
+        rpdev->src = RPMSG_NS_ADDR;
+        rpdev->dst = RPMSG_NS_ADDR;
+
+-       ret = rpmsg_register_device(rpdev);
+-       if (ret)
+-               kfree(rpdev->driver_override);
+-
+-       return ret;
++       return rpmsg_register_device(rpdev);
+ }
+ EXPORT_SYMBOL(rpmsg_ns_register_device);
