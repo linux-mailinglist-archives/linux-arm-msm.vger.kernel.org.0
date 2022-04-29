@@ -2,97 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 872FE514C91
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 16:16:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12579514DC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 16:43:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377159AbiD2OT5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 10:19:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54934 "EHLO
+        id S1377834AbiD2Op1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 10:45:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235473AbiD2OT4 (ORCPT
+        with ESMTP id S1376832AbiD2OpK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 10:19:56 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9475B8BF68
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 07:16:36 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id g6so15759398ejw.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 07:16:36 -0700 (PDT)
+        Fri, 29 Apr 2022 10:45:10 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D98A560AAA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 07:41:43 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id m23so10766824ljb.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 07:41:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=UdINARUtzcFoW7h6RyjDI8lgOBSw6WOSOqD14X2CFJU=;
-        b=R3GZ3IwUpu5UUm3UrgEWZ4yVRf5jvXz7GwFUllasFjFFL0aBEmLKNpewMp+KpvazTf
-         g8p8hr+kOKGqyfgS7Y6uQhzrVoBaclahGzEyJPahetcB4lmaLSZiOEXz2JI6zFxDHQpC
-         maW0lcQI5+oePb8/E6eX0hAdKzV8yvr+mZ4vk1i/OguhilfBrgpfSdkLeZzOH/QGszCI
-         RH2NayuUkJaUmwHXmH4I6VtjsZF4R1jZUbZ8lGtIMUIXu5uVYHzuEr+3e8Zq7RWXMNWD
-         XG+381AkVI2TTgKMvdTb9CLibCPzJlooCB/siw0KduRzu5GuQpMZWdmfj293jx06HRzp
-         Ng6A==
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=v2gZtm1Y9EnOM5Lz97MhvmGZH6fMaQCNcq4ssrGXHvA=;
+        b=ClMCvVPqnQvsDrQSnAHoGq7Vw5jDkH20m6A/jFylwgb5q97jAdRdcW5Tq/ZaNiH+Cp
+         yIg47tN6GtmlTBH5mtys7w9mDlDFu5S/h+p9aL/puwS8bYuXt/nFHomvmU3LgQAF6YSY
+         r037KVH5Hozn7/KWxmUuGVfe2fRViCWWRM0skggmZKD3leNVKeniAzLHjebi28EOK5Nr
+         n6giekI/b+HkE2c8faKP8PebkDDPCvZNdKFVksYUzucQrGdb9y63esEM2xL1deU8a37x
+         p1AI8Br8SMlk0CuUVXdCLcjGT+EQfv9Pw3SDNLA28y2JJrwSVpHcX1QA+HZAnMN07QBG
+         NwjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+         :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=UdINARUtzcFoW7h6RyjDI8lgOBSw6WOSOqD14X2CFJU=;
-        b=LDa3AbtyX7ZaPWzd6lFx5Itpnx5iX+x8tKevwkKdCkm0xq2rotiIhCmu6Q4ivVOaxj
-         ZSaJAJn+8oREogmMk+0118IdkI15+j3CGX6zZFZgkJvfM9asQUeaHijuRJDO0xsMaWGO
-         yhAOykHGqyKCzvbt0HA0bWnnedZo82Yarc6/aAhCRYDLZ/CfEPWQ4f1is0UQg9tfH0jk
-         61tLH2+PDvvy6mIJo5GvNXSvsz7W/ZBrXKYy4GEuwcDz2HRVR9mVwj1fb2tDFOfsgYOo
-         WB/UBDt1mMTtOVyNNW9DbMGeBHi2obH210gVFHAOni3E/WTeU9mpEORMmy2fgCE9NKRH
-         JyhA==
-X-Gm-Message-State: AOAM532dzauRptlVwTjhBRu+e2mQQjI3w5x5YTVM01kG9mXgdM0xHW1d
-        Z0xeEjy+GdtQ4zUoe2zy5SJD2Q==
-X-Google-Smtp-Source: ABdhPJykYBCwe9aQMDhIZ8XGDNf9p2LGcca3xyCDUbkpjt15wUq7VCOYejWxIXJEzJpfvaAJeCOHOw==
-X-Received: by 2002:a17:907:6d12:b0:6f3:d304:e259 with SMTP id sa18-20020a1709076d1200b006f3d304e259mr10624053ejc.110.1651241795135;
-        Fri, 29 Apr 2022 07:16:35 -0700 (PDT)
-Received: from [192.168.0.170] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id j12-20020a50ed0c000000b0042617ba63d4sm2982642eds.94.2022.04.29.07.16.33
+        bh=v2gZtm1Y9EnOM5Lz97MhvmGZH6fMaQCNcq4ssrGXHvA=;
+        b=LsfvTiKOV/fAdV9x5gdZcOHVUVEOLMK9tjNCjMJuZnkvFnUHdJRuxRp5VZG8K7MTb7
+         86ylUE2R/+6qJHqfTLEUwNtHWG3tSEDZqcTkrL/g2RKQ4giImFkSkPu7I4235bZW1blb
+         wzg0x+si8h5N73bfK3dCmaMW81qSgSNDy59Mmrt4EqCKkoO8WYTYdf5WPeD/e2/0y3Ar
+         4CeKDMWVVcbWDSdvxiaG60uAv5Ip7azkCSveQq1haLsOP/tijZ3owUaeS7hP9+s9jTsx
+         Rg7+17VYqaW6/DxAtjlSAfB5MZnnOSBfaQ24iDKJCUT1aZhwTL6jJMaHt0/hHSvA7ylJ
+         dCzg==
+X-Gm-Message-State: AOAM530/VtmyBD6sNqPQiU19F5Mhby72SPVLP0CkFpW8HLWErDV1tqal
+        Wm6wYbe6HNKYkUVuaapAwQ3gxg==
+X-Google-Smtp-Source: ABdhPJx293qUvuCappYWJV4aCE2Kp2oJ/m2hcMh6SW9WP1q60AEQCRl17k3YoPhVKTLl4IVO2KI5Mg==
+X-Received: by 2002:a2e:8e98:0:b0:24f:15e9:ed39 with SMTP id z24-20020a2e8e98000000b0024f15e9ed39mr14240296ljk.460.1651243302165;
+        Fri, 29 Apr 2022 07:41:42 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id h7-20020ac24d27000000b004720819b691sm255343lfk.130.2022.04.29.07.41.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Apr 2022 07:16:34 -0700 (PDT)
-Message-ID: <75b94ccd-b739-2164-bc4a-20025356cc34@linaro.org>
-Date:   Fri, 29 Apr 2022 16:16:32 +0200
+        Fri, 29 Apr 2022 07:41:41 -0700 (PDT)
+Message-ID: <beb3bd74-a550-b0c1-b6bd-99536dc9b2e1@linaro.org>
+Date:   Fri, 29 Apr 2022 17:41:40 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v7 12/12] rpmsg: Fix kfree() of static memory on setting
- driver_override
-Content-Language: en-US
-To:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Stuart Yoder <stuyoder@gmail.com>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 2/4] clk: qcom: clk-krait: unlock spin after mux
+ completion
+Content-Language: en-GB
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Vineeth Vijayan <vneethv@linux.ibm.com>,
-        Peter Oberparleiter <oberpar@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
-        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>
-References: <20220419113435.246203-1-krzysztof.kozlowski@linaro.org>
- <20220419113435.246203-13-krzysztof.kozlowski@linaro.org>
- <CGME20220429122942eucas1p1820d0cd17a871d4953bac2b3de1dcdd9@eucas1p1.samsung.com>
- <870885de-33f3-e0ba-4d56-71c3c993ac87@samsung.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <870885de-33f3-e0ba-4d56-71c3c993ac87@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Sricharan R <sricharan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220429120108.9396-1-ansuelsmth@gmail.com>
+ <20220429120108.9396-3-ansuelsmth@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220429120108.9396-3-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -103,113 +81,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/04/2022 14:29, Marek Szyprowski wrote:
-> Hi Krzysztof,
+On 29/04/2022 15:01, Ansuel Smith wrote:
+> Unlock spinlock after the mux switch is completed to prevent any corner
+> case of mux request while the switch still needs to be done.
 > 
-> On 19.04.2022 13:34, Krzysztof Kozlowski wrote:
->> The driver_override field from platform driver should not be initialized
->> from static memory (string literal) because the core later kfree() it,
->> for example when driver_override is set via sysfs.
->>
->> Use dedicated helper to set driver_override properly.
->>
->> Fixes: 950a7388f02b ("rpmsg: Turn name service into a stand alone driver")
->> Fixes: c0cdc19f84a4 ("rpmsg: Driver for user space endpoint interface")
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Fixes: 4d7dc77babfe ("clk: qcom: Add support for Krait clocks")
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+>   drivers/clk/qcom/clk-krait.c | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
 > 
-> This patch landed recently in linux-next as commit 42cd402b8fd4 ("rpmsg: 
-> Fix kfree() of static memory on setting driver_override"). In my tests I 
-> found that it triggers the following issue during boot of the 
-> DragonBoard410c SBC (arch/arm64/boot/dts/qcom/apq8016-sbc.dtb):
-> 
-> ------------[ cut here ]------------
-> DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-> WARNING: CPU: 1 PID: 8 at kernel/locking/mutex.c:582 
-> __mutex_lock+0x1ec/0x430
-> Modules linked in:
-> CPU: 1 PID: 8 Comm: kworker/u8:0 Not tainted 5.18.0-rc4-next-20220429 #11815
-> Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
-> Workqueue: events_unbound deferred_probe_work_func
-> pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> pc : __mutex_lock+0x1ec/0x430
-> lr : __mutex_lock+0x1ec/0x430
-> ..
-> Call trace:
->   __mutex_lock+0x1ec/0x430
->   mutex_lock_nested+0x38/0x64
->   driver_set_override+0x124/0x150
->   qcom_smd_register_edge+0x2a8/0x4ec
->   qcom_smd_probe+0x54/0x80
->   platform_probe+0x68/0xe0
->   really_probe.part.0+0x9c/0x29c
->   __driver_probe_device+0x98/0x144
->   driver_probe_device+0xac/0x14c
->   __device_attach_driver+0xb8/0x120
->   bus_for_each_drv+0x78/0xd0
->   __device_attach+0xd8/0x180
->   device_initial_probe+0x14/0x20
->   bus_probe_device+0x9c/0xa4
->   deferred_probe_work_func+0x88/0xc4
->   process_one_work+0x288/0x6bc
->   worker_thread+0x248/0x450
->   kthread+0x118/0x11c
->   ret_from_fork+0x10/0x20
-> irq event stamp: 3599
-> hardirqs last  enabled at (3599): [<ffff80000919053c>] 
-> _raw_spin_unlock_irqrestore+0x98/0x9c
-> hardirqs last disabled at (3598): [<ffff800009190ba4>] 
-> _raw_spin_lock_irqsave+0xc0/0xcc
-> softirqs last  enabled at (3554): [<ffff800008010470>] _stext+0x470/0x5e8
-> softirqs last disabled at (3549): [<ffff8000080a4514>] 
-> __irq_exit_rcu+0x180/0x1ac
-> ---[ end trace 0000000000000000 ]---
-> 
-> I don't see any direct relation between the $subject and the above log, 
-> but reverting the $subject on top of linux next-20220429 hides/fixes it. 
-> Maybe there is a kind of memory trashing somewhere there and your change 
-> only revealed it?
+> diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
+> index 59f1af415b58..90046428693c 100644
+> --- a/drivers/clk/qcom/clk-krait.c
+> +++ b/drivers/clk/qcom/clk-krait.c
+> @@ -32,11 +32,16 @@ static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
+>   		regval |= (sel & mux->mask) << (mux->shift + LPL_SHIFT);
+>   	}
+>   	krait_set_l2_indirect_reg(mux->offset, regval);
+> -	spin_unlock_irqrestore(&krait_clock_reg_lock, flags);
+>   
+>   	/* Wait for switch to complete. */
+>   	mb();
+>   	udelay(1);
+> +
+> +	/*
+> +	 * Unlock now to make sure the mux register is not
+> +	 * modified while switching to the new parent.
+> +	 */
+> +	spin_unlock_irqrestore(&krait_clock_reg_lock, flags);
+>   }
+>   
+>   static int krait_mux_set_parent(struct clk_hw *hw, u8 index)
 
-Thanks for the report. I think the error path of my patch is wrong - I
-should not kfree(rpdev->driver_override) from the rpmsg code. That's the
-only thing I see now...
 
-Could you test following patch and tell if it helps?
-https://pastebin.ubuntu.com/p/rp3q9Z5fXj/
-
------
-
-diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
-index 3e81642238d2..1e2ad944e2ec 100644
---- a/drivers/rpmsg/rpmsg_internal.h
-+++ b/drivers/rpmsg/rpmsg_internal.h
-@@ -102,11 +102,7 @@ static inline int
-rpmsg_ctrldev_register_device(struct rpmsg_device *rpdev)
-        if (ret)
-                return ret;
-
--       ret = rpmsg_register_device(rpdev);
--       if (ret)
--               kfree(rpdev->driver_override);
--
--       return ret;
-+       return rpmsg_register_device(rpdev);
- }
-
- #endif
-diff --git a/drivers/rpmsg/rpmsg_ns.c b/drivers/rpmsg/rpmsg_ns.c
-index 8eb8f328237e..f26078467899 100644
---- a/drivers/rpmsg/rpmsg_ns.c
-+++ b/drivers/rpmsg/rpmsg_ns.c
-@@ -31,11 +31,7 @@ int rpmsg_ns_register_device(struct rpmsg_device *rpdev)
-        rpdev->src = RPMSG_NS_ADDR;
-        rpdev->dst = RPMSG_NS_ADDR;
-
--       ret = rpmsg_register_device(rpdev);
--       if (ret)
--               kfree(rpdev->driver_override);
--
--       return ret;
-+       return rpmsg_register_device(rpdev);
- }
- EXPORT_SYMBOL(rpmsg_ns_register_device);
+-- 
+With best wishes
+Dmitry
