@@ -2,79 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A33CA514030
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 03:20:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 219B65140C8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 05:07:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346055AbiD2BXa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 21:23:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55378 "EHLO
+        id S235573AbiD2DJP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 23:09:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348211AbiD2BX1 (ORCPT
+        with ESMTP id S234945AbiD2DJN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 21:23:27 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6513DDA
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 18:20:10 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-e93ff05b23so6847876fac.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 18:20:10 -0700 (PDT)
+        Thu, 28 Apr 2022 23:09:13 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F5DDBB913;
+        Thu, 28 Apr 2022 20:05:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=R5FcMtHB95cGY7bqn/aaSoN9px3b2CiohH6o45BGCPc=;
-        b=lZBTXOPrH/HQgFZDRSQ+AY62amn6CUuRdEyr0/a9qQawZ8dn6Y8nRvZzaR1iK2ozO7
-         6mw9RcrYRHZ9w2BVpwK9G+Sj5UUYxHSHVOXXHhOKX8o+doQRJh5wqTflrmbRz4qbM6hE
-         38duCGZLzGB7Qd7BtMXXTK5L2cdjP9J3cD6GQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=R5FcMtHB95cGY7bqn/aaSoN9px3b2CiohH6o45BGCPc=;
-        b=q2wSFUFQOLIzZRRZ4a4hKPVDRYD6fGkIZP47pNNV3p31Kc5fjrGjvuawzqDzclDX4v
-         1kWqLnetBtsdFhOranjwHH+/QYgiZAXhMc7LL234Jgloy2Z7GVawb60n67Eo3nyMYTAv
-         IqzYBv/om1153XJH4q3Czep4jkXyLfV/d5BVi+USJwzK9QH1LCRcwu6iOY91gmd9o2oI
-         VwiRTKn8Bi83YCxmHzTfBXWhM3Vg/j+yvDF/k9RGg0DqB4dpAUuNBemBXASy0kKWs6IX
-         oDLYe/iGAKATGo3bT6JPXZJpRWAQpsRvj98qtJfjJ1+DFCVFnYYkj3GJRn1FZgG7o+eo
-         nd6w==
-X-Gm-Message-State: AOAM5327yOVibzkBpNCK5Jz7iUYklj3yhzIN5mGXn4Do6PgODREr9GU5
-        zy5hExr0Wf9xAwPXjpXCYi/S/b8yUONmxTqnYU9N1g==
-X-Google-Smtp-Source: ABdhPJyct3+Dz7vTxA3RPk3QX+auuKudDLIw7X3JH0Xeh4QWS37W/QrLu0SWV9IQXMUw1wOemKuBCG9GS9ciqmqkCmc=
-X-Received: by 2002:a05:6870:15ca:b0:e9:551:6d1c with SMTP id
- k10-20020a05687015ca00b000e905516d1cmr371956oad.193.1651195210193; Thu, 28
- Apr 2022 18:20:10 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 28 Apr 2022 18:20:09 -0700
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651201556; x=1682737556;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=n9GSRz3I8hm7PZYmgP8cDouLfs9ShB/oLPDbfepHXII=;
+  b=DduetlMwvcRqsyDCyUfX/nMyXYAf04xHOYwwVTMlkrARy145HY5+DOSV
+   hgbO741rfYrG12/CYxbDbcNAyrR6M5l9N7wjBbN84Bv2xtsEs+8mlHua1
+   cnTZKvsDlj3jneySSjwUEB2LA+Pc0aEsruQBAxgECKzvXZUTyW2iSVQoW
+   U=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 28 Apr 2022 20:05:55 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 20:05:55 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 28 Apr 2022 20:05:54 -0700
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 28 Apr 2022 20:05:48 -0700
+Date:   Fri, 29 Apr 2022 08:35:44 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "quic_ppratap@quicinc.com" <quic_ppratap@quicinc.com>,
+        "quic_kriskura@quicinc.com" <quic_kriskura@quicinc.com>,
+        "quic_vpulyala@quicinc.com" <quic_vpulyala@quicinc.com>
+Subject: Re: [PATCH v4 0/3] Skip phy initialization for DWC3 USB Controllers
+Message-ID: <20220429030544.GC16319@hu-pkondeti-hyd.qualcomm.com>
+References: <1650517255-4871-1-git-send-email-quic_c_sanm@quicinc.com>
+ <20220425024858.GA7052@hu-pkondeti-hyd.qualcomm.com>
+ <1287c649-de62-c7d8-1c1d-a30ede7505c9@synopsys.com>
 MIME-Version: 1.0
-In-Reply-To: <20220217055529.499829-4-dmitry.baryshkov@linaro.org>
-References: <20220217055529.499829-1-dmitry.baryshkov@linaro.org> <20220217055529.499829-4-dmitry.baryshkov@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 28 Apr 2022 18:20:09 -0700
-Message-ID: <CAE-0n53wAqV3ttugY+VR_zxdZGZGjbitWOppk1zF-Rp-buiNaA@mail.gmail.com>
-Subject: Re: [PATCH v5 3/5] drm/msm/dp: set stream_pixel rate directly
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <1287c649-de62-c7d8-1c1d-a30ede7505c9@synopsys.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-02-16 21:55:27)
-> The only clock for which we set the rate is the "stream_pixel". Rather
-> than storing the rate and then setting it by looping over all the
-> clocks, set the clock rate directly.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+Hi Thinh,
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+On Tue, Apr 26, 2022 at 01:12:17AM +0000, Thinh Nguyen wrote:
+> Hi,
+> 
+> Pavan Kondeti wrote:
+> > Hi Mathias,
+> > 
+> > On Thu, Apr 21, 2022 at 10:30:52AM +0530, Sandeep Maheswaram wrote:
+> >> Runtime suspend of phy drivers was failing from DWC3 driver as
+> >> runtime usage value is 2 because the phy is initialized from
+> >> DWC3 core and HCD core.
+> >> Some controllers like DWC3 and CDNS3 manage phy in their core drivers.
+> >> This property can be set to avoid phy initialization in HCD core.
+> >>
+> >> v4:
+> >> Added the device tree binding patch in the series.
+> >>
+> >> v3:
+> >> Coming back to this series based on discussion at below thread
+> >> https://urldefense.com/v3/__https://patchwork.kernel.org/project/linux-arm-msm/patch/1648103831-12347-4-git-send-email-quic_c_sanm@quicinc.com/__;!!A4F2R9G_pg!fykTNTBuKk9ci6zKdcuQNbuZQdVi_HekU3jetzud-PQVhbRaVhhZHKz0k_LfG0cgwaX4bQM5bLI0ep6tYyikgvYK7b5SdA$ 
+> >> Dropped the dt bindings PATCH 1/3 in v2
+> >> https://urldefense.com/v3/__https://patchwork.kernel.org/project/linux-arm-msm/cover/1636353710-25582-1-git-send-email-quic_c_sanm@quicinc.com/__;!!A4F2R9G_pg!fykTNTBuKk9ci6zKdcuQNbuZQdVi_HekU3jetzud-PQVhbRaVhhZHKz0k_LfG0cgwaX4bQM5bLI0ep6tYyikgva2VXahOQ$  
+> >>
+> >> v2:
+> >> Updated the commit descriptions.
+> >> Changed subject prefix from dwc to dwc3.
+> >> Increased props array size.
+> >>
+> >>
+> >> Sandeep Maheswaram (3):
+> >>   dt-bindings: usb: usb-xhci: Add bindings for usb-skip-phy-init
+> >>     property
+> >>   usb: host: xhci-plat: Add device property to set XHCI_SKIP_PHY_INIT
+> >>     quirk
+> >>   usb: dwc3: host: Set the property usb-skip-phy-init
+> >>
+> >>  Documentation/devicetree/bindings/usb/usb-xhci.yaml | 4 ++++
+> >>  drivers/usb/dwc3/host.c                             | 4 +++-
+> >>  drivers/usb/host/xhci-plat.c                        | 3 +++
+> >>  3 files changed, 10 insertions(+), 1 deletion(-)
+> >>
+> > 
+> > This is the latest series with bindings added as per Greg's comment. Can you
+> > please pick up this series if you don't have any further comments.
+> > 
+> 
+> We've had this conversation going on for a while. Seems there's no good
+> one solution with everyone fully getting on-board.
+> 
+> I've tried to get some of the quirks out before also, but ran into the
+> same problem. [1]
+> 
+> As Mathias noted [2] before, maybe we can create a new xhci-snps
+> platform glue driver.
+> 
+> The problem with the current implementation is passing dwc3's related
+> info to xhci-plat generic driver is very clunky. We can teach the new
+> glue driver with all the info necessary to drive the controller.
+> 
+> We can just pass the controller's version (and subversion) as a property
+> for platform device. This way, we can:
+> 
+> 1) Separate the quirks from xhci-plat glue. Most common quirks can be
+> detected just base on the controller's version
+> 
+> 2) Avoid having to create duplicate "snps,*" properties
+> 
+> 3) Get access to the common xhci quirk flags while maintain abstraction
+> 
+> 4) Potentially add compatibility string as part of the controller's
+> version and let the glue driver handle the rest
+> 
+> 5) Reduce introducing new "quirks" in the future
+> 
+> I can get started with this. Let me know if you have any comment.
+
+Sorry, could not reply earlier. The proposal sounds good to me.
+
+The xhci-plat is a thin wrapper, so having a separate wrapper for SNPS
+controller is definitely not an overkill and gives lot of flexibility
+in abstracting dwc3 specifics. Also dwc3/host.c becomes just a platform
+device creation wrapper and xHC specifics are completely taken out.
+
+Thanks,
+Pavan
+
+
