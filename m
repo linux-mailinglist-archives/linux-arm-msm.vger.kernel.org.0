@@ -2,172 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 593F9514EC8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 17:11:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A81CF514EC1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 17:11:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378133AbiD2PPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 11:15:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34860 "EHLO
+        id S238261AbiD2POq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 11:14:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378132AbiD2PPJ (ORCPT
+        with ESMTP id S1378112AbiD2POn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 11:15:09 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D9FCD4462;
-        Fri, 29 Apr 2022 08:11:50 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id l7so16066738ejn.2;
-        Fri, 29 Apr 2022 08:11:50 -0700 (PDT)
+        Fri, 29 Apr 2022 11:14:43 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D396D4476
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 08:11:24 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id n14so14552803lfu.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 08:11:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=SAsWIU2W3p7Q0ZXwzZUArSy317phcc7hhmyzyg+rjOE=;
-        b=LmHXoutrrKYA3NkvsF48dfb6fC6YhTRK1ftbNp4Gzpzi14cOaEzW3e9qqS1aYaPg6x
-         seWl5AUFEMU133I7Bo7NfL3WDL7fHEgWifWGj9kUEOdNJBkZsrydw9KmcwPC8sJjfPDi
-         3blnJu3dmZQvjRAwKsupb5f3lKmeSRR2VsMyKQ70aVa5uEC084uOLB7hSSVbCovLldr1
-         Uu5gwB08c70O5Z96MvTQayLOYGOf2AAgHdQ2O4LPoT49Bw3RC6Ul9B6uiR1IQrfrlhAG
-         6FlG0yRd8MVlzkuC90iI6kk3pXf0kp/A+Ok7WKhnrMtEAjCrimqxv1V2bO7CIUQyx+9b
-         PZIA==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=TvFsyI7NAksekaViwUx4f2psKYTKDusGU6diNyW4wEY=;
+        b=T8o72y8HKqohLMREw3MtTyqotxs7B5HFBhFLyKmIfaTKxZBXu3ZutL0Azktumql+b5
+         4pG5NpDWFKiFDQ/LQrOkkRzRjQQEH7WrNV9Dzvqi5uslhe85raPC2PNEwxQWMwSdKLaO
+         rBXloVU9g6kkznIBzursT9frKbk8tXM5outfJOSwUdjcjyU7M8MASSYi9udAUWb2JnPX
+         8IE8WLsna9DNKNt0MrnaCBVVhsJNp2FlRs5DL8COBeTLr1jHddjAbDoMk9VbGWWKCsgh
+         svs8h7vojmZkbRP3cIw0c0Bhg5cYnssId94RwzAcqvNZrt0+nvYzwI9pvAZgpEl/JqWU
+         7diw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=SAsWIU2W3p7Q0ZXwzZUArSy317phcc7hhmyzyg+rjOE=;
-        b=O4jGzsc6TMreRcNHx6W1Sdy5G3SmvYBmEbtgxHlWOX5XSR1A8EB/ap1j44BaWgVGIu
-         TLlRQpsq+3JVQOUErQP1wN+SogEW6NB+pN6VbVwSXuJxT2ZdMJAD6K7mu/BXP0lK+t2T
-         sb7cTwH/RwiPLmO9jgt/S+F6JnaTIydbKNbrFCQ0aeVzMcpFDkm2eJmto2v2uHD5Z4KU
-         C1sMNb/SFkbqrH/6zFvHpdM6Y83JzCnLCXlIDQn0pJ5zwIU5Lrwu5d1djq7bPhk4srX6
-         swa+8zuDsRELPoR0g23GehoRi/pNk5TYV3BLroW3AAu11mGcQWeBjl0iokuMYeOhlZHe
-         7GHg==
-X-Gm-Message-State: AOAM532RTg4WkYUFs1fVS+NuKFZytMMgWUQIZD0vBbYLjuwyFOm2m9Ga
-        qzTWTGZ3IATWlETNHUhVnMk=
-X-Google-Smtp-Source: ABdhPJwTJtflClacx/dV6nHIRCHf6sS/C3krPJR9QkVUVkmk10jnwAYw/sT7Gv6/SRP0OpjpC18FyQ==
-X-Received: by 2002:a17:907:3e8c:b0:6f4:7bb:d548 with SMTP id hs12-20020a1709073e8c00b006f407bbd548mr1254390ejc.695.1651245108994;
-        Fri, 29 Apr 2022 08:11:48 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id zd21-20020a17090698d500b006f3ef214e4csm720411ejb.178.2022.04.29.08.11.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 08:11:48 -0700 (PDT)
-Message-ID: <626c0034.1c69fb81.d55d4.4f09@mx.google.com>
-X-Google-Original-Message-ID: <Ymv/oshQ1tmxwSDR@Ansuel-xps.>
-Date:   Fri, 29 Apr 2022 17:09:22 +0200
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sricharan R <sricharan@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/4] clk: qcom: clk-krait: add apq/ipq8064 errata
- workaround
-References: <20220429120108.9396-1-ansuelsmth@gmail.com>
- <20220429120108.9396-5-ansuelsmth@gmail.com>
- <1f013429-8a5b-47c8-a146-41bb66af3f03@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=TvFsyI7NAksekaViwUx4f2psKYTKDusGU6diNyW4wEY=;
+        b=R1tW6IKAsi/Aq8DRFXzTGr6Mqu6IHxpf3sM+ZSpJKTaC3ulixZq+8S+eBAyTYNgpI6
+         PM/hma0ZuEJ7e2HvrViYhTJ7aiEag8vfslncF9iDUVIqzPnfgFGAJkP0jUlDAQWakQqn
+         XJW5YXiAIOUqdPZ3F6Hr+Cng5f+1vsPiHSL4jHHUxKBfVTXVMgfgyJLlw9al5+BAuYjM
+         9xMaC2BxEkD5Kif0F+QFC9a+Spanc+ghk1Vy1lAwNs/Xkh6OLTc6AJXU+f9T9cm5Uv6M
+         s+eDAkvbQwnOHf/KKtLLyGIscVnsF9RE9eRRuMdQQufO1rdN2KSq1dK/VQHk6MOMXurJ
+         /V4Q==
+X-Gm-Message-State: AOAM531ru+4bPJeNeklvQqxGB9G4LdqYCI0DHQY93KUxbJcJLdnl4JW7
+        Ny+smx+PceOkVKUDDb27GtI9YA==
+X-Google-Smtp-Source: ABdhPJxRjwQAnlbxeqaHOGvshYhAXFOvclIamfeS7o45Me22vXNEXn5PNl4tpW2ISRMWPCvf3MslZQ==
+X-Received: by 2002:ac2:4c53:0:b0:471:a9db:5d15 with SMTP id o19-20020ac24c53000000b00471a9db5d15mr28179347lfk.634.1651245083092;
+        Fri, 29 Apr 2022 08:11:23 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id l6-20020a2e9086000000b0024f3d1daf04sm286705ljg.140.2022.04.29.08.11.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Apr 2022 08:11:22 -0700 (PDT)
+Message-ID: <f260cf81-9db9-710b-1242-45a232e7c7c4@linaro.org>
+Date:   Fri, 29 Apr 2022 18:11:21 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1f013429-8a5b-47c8-a146-41bb66af3f03@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 2/2] ARM: dts: qcom: replace gcc PXO with pxo_board fixed
+ clock
+Content-Language: en-GB
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220429122951.13828-1-ansuelsmth@gmail.com>
+ <20220429122951.13828-3-ansuelsmth@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220429122951.13828-3-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 29, 2022 at 06:00:45PM +0300, Dmitry Baryshkov wrote:
-> On 29/04/2022 15:01, Ansuel Smith wrote:
-> > Add apq/ipq8064 errata workaround where the sec_src clock gating needs to
-> > be disabled during switching. To enable this set disable_sec_src_gating
-> > in the mux struct.
-> > 
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > ---
-> >   drivers/clk/qcom/clk-krait.c | 16 ++++++++++++++++
-> >   drivers/clk/qcom/clk-krait.h |  1 +
-> >   drivers/clk/qcom/krait-cc.c  |  1 +
-> >   3 files changed, 18 insertions(+)
-> > 
-> > diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
-> > index 6c367ad6506a..4a9b3296c45b 100644
-> > --- a/drivers/clk/qcom/clk-krait.c
-> > +++ b/drivers/clk/qcom/clk-krait.c
-> > @@ -18,13 +18,23 @@
-> >   static DEFINE_SPINLOCK(krait_clock_reg_lock);
-> >   #define LPL_SHIFT	8
-> > +#define SECCLKAGD	BIT(4)
-> > +
-> >   static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
-> >   {
-> >   	unsigned long flags;
-> >   	u32 regval;
-> >   	spin_lock_irqsave(&krait_clock_reg_lock, flags);
-> > +
-> >   	regval = krait_get_l2_indirect_reg(mux->offset);
-> > +
-> > +	/* apq/ipq8064 Errata: disable sec_src clock gating during switch. */
-> > +	if (mux->disable_sec_src_gating) {
-> > +		regval |= SECCLKAGD;
-> > +		krait_set_l2_indirect_reg(mux->offset, regval);
-> > +	}
-> > +
-> >   	regval &= ~(mux->mask << mux->shift);
-> >   	regval |= (sel & mux->mask) << mux->shift;
-> >   	if (mux->lpl) {
-> > @@ -33,6 +43,12 @@ static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
-> >   	}
-> >   	krait_set_l2_indirect_reg(mux->offset, regval);
-> > +	/* apq/ipq8064 Errata: re-enabled sec_src clock gating. */
-> > +	if (mux->disable_sec_src_gating) {
-> > +		regval &= ~SECCLKAGD;
-> > +		krait_set_l2_indirect_reg(mux->offset, regval);
-> > +	}
-> > +
-> >   	/* Wait for switch to complete. */
-> >   	mb();
-> >   	udelay(1);
-> > diff --git a/drivers/clk/qcom/clk-krait.h b/drivers/clk/qcom/clk-krait.h
-> > index 9120bd2f5297..f930538c539e 100644
-> > --- a/drivers/clk/qcom/clk-krait.h
-> > +++ b/drivers/clk/qcom/clk-krait.h
-> > @@ -15,6 +15,7 @@ struct krait_mux_clk {
-> >   	u8		safe_sel;
-> >   	u8		old_index;
-> >   	bool		reparent;
-> > +	bool		disable_sec_src_gating;
-> >   	struct clk_hw	hw;
-> >   	struct notifier_block   clk_nb;
-> > diff --git a/drivers/clk/qcom/krait-cc.c b/drivers/clk/qcom/krait-cc.c
-> > index 4d4b657d33c3..0f88bf41ec6e 100644
-> > --- a/drivers/clk/qcom/krait-cc.c
-> > +++ b/drivers/clk/qcom/krait-cc.c
-> > @@ -138,6 +138,7 @@ krait_add_sec_mux(struct device *dev, int id, const char *s,
-> >   	mux->parent_map = sec_mux_map;
-> >   	mux->hw.init = &init;
-> >   	mux->safe_sel = 0;
-> > +	mux->disable_sec_src_gating = true;
+On 29/04/2022 15:29, Ansuel Smith wrote:
+> Replace gcc PXO phandle to pxo_board fixed clock declared in the dts.
+> gcc driver doesn't provide PXO_SRC as it's a fixed-clock. This cause a
+> kernel panic if any driver actually try to use it.
 > 
-> This has to be guarded with the of_compatible checks. Otherwise you'd apply
-> this errata to all Krait CPUs, not only apq/ipq8064.
-> 
-> At least this should be limited to krait-cc-v1 with the note that there is
-> no way to distinguish between platforms.
->
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 
-Mhh can't i check the machine compatible directly to limit this to
-apq/ipq8064?
+Fixes: 40cf5c884a96 ("ARM: dts: qcom: add L2CC and RPM for IPQ8064")
 
-> >   	init.name = kasprintf(GFP_KERNEL, "krait%s_sec_mux", s);
-> >   	if (!init.name)
+It would be nice if you add Fixes tags to your patches in future. Fixes 
+tags allow picking up patches for stable/LTS trees.
+
+For these two patches I'd suggest reordering them. A fix should go first 
+(you'll have to define pxa_board label in it). It can then be accepted 
+into other kernel without dependency on the other patch.
+
+The gcc patch will come next, it will define cxo_board label and use 
+both clocks in the gcc node. It is not fixing a bug, so there is no need 
+about backporting it.
+
+Generic rule: fixes go first (in the patch series), so that they have 
+minimum inter-dependencies.
+
+> ---
+>   arch/arm/boot/dts/qcom-ipq8064.dtsi | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> 
-> -- 
-> With best wishes
-> Dmitry
+> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> index 9817448cfa95..ad30f7c8a5a7 100644
+> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> @@ -784,7 +784,7 @@ tcsr: syscon@1a400000 {
+>   		l2cc: clock-controller@2011000 {
+>   			compatible = "qcom,kpss-gcc", "syscon";
+>   			reg = <0x2011000 0x1000>;
+> -			clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
+> +			clocks = <&gcc PLL8_VOTE>, <&pxo_board>;
+>   			clock-names = "pll8_vote", "pxo";
+>   			clock-output-names = "acpu_l2_aux";
+>   		};
+
 
 -- 
-	Ansuel
+With best wishes
+Dmitry
