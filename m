@@ -2,123 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 090FA51565A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 23:02:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12CC7515695
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 23:16:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230517AbiD2VFa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 17:05:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43770 "EHLO
+        id S237277AbiD2VT0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 17:19:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378579AbiD2VF3 (ORCPT
+        with ESMTP id S236580AbiD2VTZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 17:05:29 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79941D3DAD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 14:02:10 -0700 (PDT)
+        Fri, 29 Apr 2022 17:19:25 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F13E7CDD6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 14:15:57 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id gh6so17751430ejb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 14:15:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651266130; x=1682802130;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=7KZOUPszHZtEf2cG9unXjNPKVInGhLk0ydDvXgNUdUU=;
-  b=nqGPaghyv0DHtL5Meg5keKJ4SjD2Fe8PpTGwPVb8yRvPocEvwKf5B0ik
-   yCYIhQroVfPOYk/makDkXw/SGZmAvJQWOSs5Wa4rVywELnnjEpsvELnaO
-   teyVS3HnIMsJtN56ao94wCWw+Kj2MkFVf49jwjluVBAe2GZwT9CPwbb/F
-   Y=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 29 Apr 2022 14:02:10 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2022 14:02:10 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 29 Apr 2022 14:02:09 -0700
-Received: from [10.38.245.205] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 29 Apr
- 2022 14:02:08 -0700
-Message-ID: <a40691ac-6803-93e8-23dd-dfad18a7bb42@quicinc.com>
-Date:   Fri, 29 Apr 2022 14:02:06 -0700
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=oPrD1XGbang8k816Th3p/Nj4GCK9njWNLC8Vq1NS2RE=;
+        b=neKGjTr3n7UAuvdKqKsheFhLwxkLfP+/N0vjjiQyv2/cFbVSYm5LdaK5tZSnUHtE+Z
+         Ua/Q/0uGmfGWSkHKWJ5UVm3vkrMZEs9BcfZifPyIzgnRQr4nPUSz9qrOQbLhWJLk5fPc
+         rbrcWW5IOhv4fWg7XvP1mw/43vATHVzH33yr7Hve3ZwVxnJJIZ4DAQxOdwZbcFE3ChL8
+         Mc2igNBA/d0Ye3C5aP7VrSbaFyDMrKFKXTZGqfA7yPvhbtij2YH1l9vthfY/7p/UExV1
+         6bEttc8q12ICPUX+3aswm0yQcSu4oIHQIIha8E2rLbunU2CQ8i25q75pBWwIjhlmmVfW
+         5+AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=oPrD1XGbang8k816Th3p/Nj4GCK9njWNLC8Vq1NS2RE=;
+        b=Mwt9cV4S9oIbgNcIuOOFabprZopv1VruRyIwjLPDtfOd6GlH7iH1Cg8pJtHUNM7KeS
+         9CWQmL6Gd5PYanqAJLXX9aXlsnqjoau48L4d5fJlP3yBCI9NwG2i6bqsNPKEpKgzL0eC
+         zprh8wfsfOh6x4vFG3voyVOVMZjyL5b8etB6sgAjFK875n+/Is2wr9HMlgEqeAiXLWw2
+         +O7Ht/bQwBZhfXPD5cBrraE7IMl/VnDQIoQnvL9CgfwTGSJp+GisGkUlo1aW1rC8Tyyd
+         lnjLQnwig032TYtiMg8CvdeRyEpPhZh9frrBiWi4Eqs/t4bMrnB72vaeTOJsW3/bR7Ck
+         9/8Q==
+X-Gm-Message-State: AOAM531NdFqJRpTJLWZYBajAtFW0xQh6RGUGLMwCL+8PkNcDUQqhIouw
+        Dl7LQkqLSppC3F0JhzZM9xXaeQ==
+X-Google-Smtp-Source: ABdhPJw0F/QZ+C/PT+4+BxxppDaR/sWurRfERZJALzRtLZQbYQEulUbEO8LcZnG45RXaA27Pl9DsAQ==
+X-Received: by 2002:a17:907:97cc:b0:6df:83bc:314c with SMTP id js12-20020a17090797cc00b006df83bc314cmr1109329ejc.587.1651266955853;
+        Fri, 29 Apr 2022 14:15:55 -0700 (PDT)
+Received: from [192.168.0.176] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id ze16-20020a170906ef9000b006f3ef214e37sm977203ejb.157.2022.04.29.14.15.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Apr 2022 14:15:55 -0700 (PDT)
+Message-ID: <0555284c-41db-9b52-ceb5-0625c77f99ac@linaro.org>
+Date:   Fri, 29 Apr 2022 23:15:54 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [Freedreno] [RFC PATCH v2 0/5] drm/msm/dp: implement HPD
- notifications handling
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 6/6] dt-bindings: power: supply: qcom,pmi8998-charger:
+ add bindings for smb2 driver
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>
-References: <20220429195731.3716446-1-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220429195731.3716446-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     Amit Pundir <amit.pundir@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+References: <20220428104233.2980806-1-caleb.connolly@linaro.org>
+ <20220428104233.2980806-7-caleb.connolly@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220428104233.2980806-7-caleb.connolly@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adding kuogee to keep him in the loop to review/test these.
+On 28/04/2022 12:42, Caleb Connolly wrote:
+> Add devicetree bindings for the Qualcomm PMI8998/PM660 SMB2 charger
+> driver.
+> 
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 
-Thanks
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Abhinav
 
-On 4/29/2022 12:57 PM, Dmitry Baryshkov wrote:
-> USB altmodes code would send OOB notifications to the drm_connector
-> specified in the device tree. However as the MSM DP driver uses
-> drm_bridge_connector, there is no way to receive these event directly.
-> Implement a bridge between oob_hotplug_event and drm_bridge's hpd_notify
-> and use it to deliver altmode messages to the MSM DP driver.
-> 
-> Note, I left the original 'bool connected' field to be used by the
-> notifiers. However I think that it should be replaced in favour of using
-> the dp->hpd_state properly.
-> 
-> Changes since RFC v1:
->   - Incorporated old patch dropping old usbpd code. Most of it remained
->     unused.
-> 
-> Bjorn Andersson (2):
->    drm: Add HPD state to drm_connector_oob_hotplug_event()
->    drm/msm/dp: Implement hpd_notify()
-> 
-> Dmitry Baryshkov (3):
->    drm/bridge_connector: stop filtering events in
->      drm_bridge_connector_hpd_cb()
->    drm/bridge_connector: implement oob_hotplug_event
->    drm/msm/dp: remove most of usbpd-related remains
-> 
->   drivers/gpu/drm/drm_bridge_connector.c   | 17 ++++--
->   drivers/gpu/drm/drm_connector.c          |  6 +-
->   drivers/gpu/drm/i915/display/intel_dp.c  | 17 +++++-
->   drivers/gpu/drm/i915/i915_drv.h          |  3 +
->   drivers/gpu/drm/msm/Makefile             |  1 -
->   drivers/gpu/drm/msm/dp/dp_ctrl.h         |  1 -
->   drivers/gpu/drm/msm/dp/dp_debug.c        |  6 +-
->   drivers/gpu/drm/msm/dp/dp_debug.h        |  4 +-
->   drivers/gpu/drm/msm/dp/dp_display.c      | 65 +++++++++-----------
->   drivers/gpu/drm/msm/dp/dp_display.h      |  1 +
->   drivers/gpu/drm/msm/dp/dp_drm.c          |  3 +
->   drivers/gpu/drm/msm/dp/dp_drm.h          |  2 +
->   drivers/gpu/drm/msm/dp/dp_hpd.c          | 67 --------------------
->   drivers/gpu/drm/msm/dp/dp_hpd.h          | 78 ------------------------
->   drivers/gpu/drm/msm/dp/dp_panel.h        |  1 -
->   drivers/gpu/drm/msm/dp/dp_power.c        |  2 +-
->   drivers/gpu/drm/msm/dp/dp_power.h        |  3 +-
->   drivers/usb/typec/altmodes/displayport.c | 10 +--
->   include/drm/drm_connector.h              |  6 +-
->   19 files changed, 82 insertions(+), 211 deletions(-)
->   delete mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.c
->   delete mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.h
-> 
+Best regards,
+Krzysztof
