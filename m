@@ -2,73 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E053151512C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 18:53:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5699F515240
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 19:32:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379346AbiD2Q4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 12:56:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56732 "EHLO
+        id S1379666AbiD2RfR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 13:35:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379341AbiD2Q4q (ORCPT
+        with ESMTP id S1379682AbiD2RfP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 12:56:46 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88D50DA6EB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 09:53:26 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id m62so4939665wme.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 09:53:26 -0700 (PDT)
+        Fri, 29 Apr 2022 13:35:15 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A29B1DA72
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 10:31:55 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id bq30so15281666lfb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 10:31:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=gF0XSQXvhEerOtZQE67Fv/RM3gJgfWvh3o2fwzeA8OY=;
-        b=hELuasXky3HZCxMFNpSgD5FdIPEXNRdTxdKAxbkPN05aGII+4JoICUbBkMAlUTurAQ
-         L6rq3PGkAHUUnTQyc77gwoC8jb5v/4xaWEPra41O5oJAGpi+LgDune8CEKlVMPUtHY5P
-         O/eEEHdM+XZr2XIG5aK+qgjTUCrdJ2kHBbMajpFupqsvaP9vRtzwB0Uz4+Gf5AIA7gk1
-         KPjzG5830EmbPOv1yaRsPTilWcM1cjJVjRJl5rDGhF8BxYtXAaIZptSN0yV0YbnkLHQr
-         wwI4EMsxsemAwyf5szkcjYyIShJriszMFsxF7nBAvq0Ooi0nz6OicKvtuEQr7uHCvJX5
-         ePBA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N0kkFtjr8AAODbzY6xXTEuPCKSjxOceWVMdgDTFE29s=;
+        b=mgIC9mziFYsMyFAHOYErUONAUawV3Zg6+lF8pT/M6IY7fvSpudmNbt4xMfL1Vd2RZx
+         GRbqYgrUPkpUb1qIgmFCl6xJfsXc+8QBV/bZoVyuCFU9lyvOvItgw59wlPOkLOyEx1eF
+         NBBZ6U0kEq0EsOP1AclJls1dMXQKtiyFRh/C0aj18X2kqqSZfC5FI+dlQF6XC7Lnst0D
+         GVthXsYt+FAc9t+OJroj/dn/jrsfrIz35QU/yHkVBuNOUt7r5YqIBqhYCUWp2leSjIGF
+         AXZ0AZePI0Yg/9Yp6om1xQ5NmkFLw6YKQZQtDp/u5C92+dDSXqKCEwCSytQZPNLzqGNl
+         2jvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=gF0XSQXvhEerOtZQE67Fv/RM3gJgfWvh3o2fwzeA8OY=;
-        b=SYMBIFC7cGc052MD2vanHIyNt55YC++19melzMh0q3QTOnj0XhtxDfiMSxdNAHwbXh
-         wZ2NFIwiJustajGSoeDSMS0V6POxdvwlWJtuzPdoalXS4KOJp8ezjr//5RN3WXszcTQx
-         3xVOZmNQNohfODjrVsruRYceSm/lALYLLLb2+u4n4qNw5yXTvNyEg76VEa2tDJt//CLS
-         8GWtXNXKOz0iscHkUKdiM6tBiUD6UvZz/DoWEt++jVlw/lfTM/8QCtpzswIMVZmjoaLZ
-         dA5BmlB5jf+JTbT3+JhutF+Em5qhAy/DSGx0PE7vjjGQ1cBIPPpOqhgjrO/09eK2x1uB
-         45rQ==
-X-Gm-Message-State: AOAM533WJ2UhiM8SBUvbMARcbtG002q7IvJNEaPNfIc4IIDYoQvUHlfn
-        lLH64/0IjMlX9SXkWMHvLlmT/g==
-X-Google-Smtp-Source: ABdhPJx4wGrPBGJPFmNxW8tuM/QQdlgSJgzr9IKK/k91ySYvrwxQTmHM+rRPDy4KJY2hydWvfeXNAg==
-X-Received: by 2002:a05:600c:3547:b0:393:eee3:39df with SMTP id i7-20020a05600c354700b00393eee339dfmr3998609wmq.181.1651251205114;
-        Fri, 29 Apr 2022 09:53:25 -0700 (PDT)
-Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id o11-20020a05600c4fcb00b00391447f7fd4sm3642655wmq.24.2022.04.29.09.53.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Apr 2022 09:53:24 -0700 (PDT)
-Message-ID: <e368b193-48f9-c8b8-ea70-59bf7ea7304a@linaro.org>
-Date:   Fri, 29 Apr 2022 17:53:23 +0100
+        bh=N0kkFtjr8AAODbzY6xXTEuPCKSjxOceWVMdgDTFE29s=;
+        b=mjVaTULMUN/pZwpNoq7ad3jxHxi1s+/AlduwRxpkn0aUjJZo2FpLgYfFThw/x0z642
+         IGJLlPVSeBaSJ0Pdj7yxt9NpnbdSEmBILmzpCBwSQ1B10y0TuVngBhaFXHSoNmOBp0yi
+         ehz5WpCcnnEUyjeiztP1CmjPnFYrwXvqAYoNA1iCFXPGKUUYqeTRow5lbZXIzId3eH5K
+         XWltASDQm+LcHf3G2wGSy6fG9tCF+4OV3SJ5HKAahnWWzr3l8+pQ+kiUkyE1JLQuzEx8
+         tTNzf9lpE8HjWC+U/WUxK6VRlb2KsuU+BHds1eDGISFzVpETliDZVyepTXuiC7qfT2kW
+         OEGw==
+X-Gm-Message-State: AOAM530nfYR3NiHhnzx1wTDIsDVl2/t2v8wRwuozxVqNQpJHnCO5xZ5t
+        bpVD37N2VNh36l944M4LDfOzibltPKJp7Q==
+X-Google-Smtp-Source: ABdhPJw8gix5aeuUfeN7PkSk0yv5kUFc9OzEkRCT9VAiDCM3AZPANunBQCFwT38GwbnX95LzdG/twg==
+X-Received: by 2002:a05:6512:3052:b0:472:7f8:f344 with SMTP id b18-20020a056512305200b0047207f8f344mr222161lfb.380.1651253513254;
+        Fri, 29 Apr 2022 10:31:53 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id h7-20020ac24d27000000b004720819b691sm284731lfk.130.2022.04.29.10.31.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Apr 2022 10:31:52 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Rob Clark <robdclark@gmail.com>, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH] MAINTAINERS: Add Dmitry as MSM DRM driver co-maintainer
+Date:   Fri, 29 Apr 2022 20:31:51 +0300
+Message-Id: <20220429173151.3645415-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] misc: fastrpc: fix an incorrect NULL check on list
- iterator
-Content-Language: en-US
-To:     Xiaomeng Tong <xiam0nd.tong@gmail.com>
-Cc:     amahesh@qti.qualcomm.com, arnd@arndb.de,
-        gregkh@linuxfoundation.org, jorge.ramirez-ortiz@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-References: <20220327062202.5720-1-xiam0nd.tong@gmail.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20220327062202.5720-1-xiam0nd.tong@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,55 +68,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+For the past several releases I have been assisting Rob by writing,
+collecting, testing and integrating patches for non-GPU and non-core
+parts of MSM DRM driver, while Rob is more interested in improving the
+GPU-related part. Let's note this in the MAINTAINERS file.
 
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-On 27/03/2022 07:22, Xiaomeng Tong wrote:
-> The bug is here:
-> 	if (!buf) {
-> 
-> The list iterator value 'buf' will *always* be set and non-NULL
-> by list_for_each_entry(), so it is incorrect to assume that the
-> iterator value will be NULL if the list is empty (in this case, the
-> check 'if (!buf) {' will always be false and never exit expectly).
-> 
-> To fix the bug, use a new variable 'iter' as the list iterator,
-> while use the original variable 'buf' as a dedicated pointer to
-> point to the found element.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 2419e55e532de ("misc: fastrpc: add mmap/unmap support")
-> Signed-off-by: Xiaomeng Tong <xiam0nd.tong@gmail.com>
-LGTM,
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 61d9f114c37f..3d7c7d6b0346 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -6255,6 +6255,7 @@ F:	drivers/gpu/drm/tiny/panel-mipi-dbi.c
+ DRM DRIVER FOR MSM ADRENO GPU
+ M:	Rob Clark <robdclark@gmail.com>
+ M:	Sean Paul <sean@poorly.run>
++M:	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+ R:	Abhinav Kumar <quic_abhinavk@quicinc.com>
+ L:	linux-arm-msm@vger.kernel.org
+ L:	dri-devel@lists.freedesktop.org
+-- 
+2.35.1
 
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
-> --- >   drivers/misc/fastrpc.c | 9 +++++----
->   1 file changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index aa1682b94a23..45aaf54a7560 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -1353,17 +1353,18 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl,
->   				   struct fastrpc_req_munmap *req)
->   {
->   	struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
-> -	struct fastrpc_buf *buf, *b;
-> +	struct fastrpc_buf *buf = NULL, *iter, *b;
->   	struct fastrpc_munmap_req_msg req_msg;
->   	struct device *dev = fl->sctx->dev;
->   	int err;
->   	u32 sc;
->   
->   	spin_lock(&fl->lock);
-> -	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
-> -		if ((buf->raddr == req->vaddrout) && (buf->size == req->size))
-> +	list_for_each_entry_safe(iter, b, &fl->mmaps, node) {
-> +		if ((iter->raddr == req->vaddrout) && (iter->size == req->size)) {
-> +			buf = iter;
->   			break;
-> -		buf = NULL;
-> +		}
->   	}
->   	spin_unlock(&fl->lock);
->   
