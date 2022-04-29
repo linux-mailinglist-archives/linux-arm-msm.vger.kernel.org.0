@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B25B4513F2B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 01:41:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28724513F54
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Apr 2022 02:02:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353378AbiD1XpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Apr 2022 19:45:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55140 "EHLO
+        id S1345432AbiD2AFf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Apr 2022 20:05:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353323AbiD1XpI (ORCPT
+        with ESMTP id S232521AbiD2AFe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Apr 2022 19:45:08 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F4A668F8B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 16:41:51 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id k4so5688436plk.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 16:41:51 -0700 (PDT)
+        Thu, 28 Apr 2022 20:05:34 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2914C8BF12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 17:02:18 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id 15so5245117pgf.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Apr 2022 17:02:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=utW7m7C/33mdooj3nk3P7IpydCK9PCFHBlvHF/K68Sw=;
-        b=K4RvP8gbmocGfzJ63WxyKVw0EKF7Rhmbl4JT9hpFEM3phOZseynCcE5iox5SaWfgYh
-         IZfDIMvXsuv12b/0eM5lrPnik2Z7mDD1HffXgxVTKp1JYpGmzf9bWX2DmYErAIocMQix
-         vVt9MB22w2dkB/EldMzxKMZT5aimSUUVCCV/Y=
+        bh=DdpIeo8qDKopW17YMaGsDZHWirrUhQn+EdqCQKX/F4k=;
+        b=BNy9maSppmO/FsAEqCGLKcsJ/KWQmkD7l5ZkZrBA8xfFM1MNp2DS92V31mDrnU7QAS
+         sNhze6l0Psf882dKi8FXTYIEoeRJsamv38Lm0qsnTbPNkv/Ik14cp2rY+nPIpvyrXFq+
+         oUjAftH1nynlCSPCa/41WBbze9CuCB9NOtPdg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=utW7m7C/33mdooj3nk3P7IpydCK9PCFHBlvHF/K68Sw=;
-        b=yCSVUN9GRiSdO7mi2GAso9ubH+lOI4wsc4ic+rkGJPK0qFBXl63P+uS9vd++sd/uEG
-         x07paksgfwowTayjjG4QY42/qflRY2IWcZ0upkO2HN+xW3b54M1t7IMi82Rk7zMOC5mJ
-         rV5KxbkGA0Rb+L8FBRHtZDfz2Who8zVgUg6LzP/TTY1b4pcxS1ndqmyS81mzHK+ovhcl
-         REUnEmWfN+ej23iJ4+WR58uugzQZ4OkV8EQVbJpR0jXM7Va6X3/OaaKa5OgPzypvRiB+
-         U2PkQqZ3p9vICjzjWMiUPMGdQcUbW6nGp2Jbye8UKGX/Vz58Y9r8pV1/zYROoeaLBQ5W
-         2IHQ==
-X-Gm-Message-State: AOAM5312ct5ERCkngsJZOhGVCe/JSGkPkAhQAAWBJ30rbrjUE/O7mHWA
-        gRvWytTfGzb+M8IR3MN1cuCYCA==
-X-Google-Smtp-Source: ABdhPJziqHrLHRX+Ug6ENVOfILnYECTS9GvXBsstHePR5V/yseCcF99Z434b0Xb+pffh9RDL/GzJAg==
-X-Received: by 2002:a17:90b:1192:b0:1cb:59d0:d06f with SMTP id gk18-20020a17090b119200b001cb59d0d06fmr785553pjb.127.1651189310586;
-        Thu, 28 Apr 2022 16:41:50 -0700 (PDT)
+        bh=DdpIeo8qDKopW17YMaGsDZHWirrUhQn+EdqCQKX/F4k=;
+        b=dU8Lq8X7Hf40iSODrYfVrbdAFLGJ1EWGUlx+VDlnk1ZWOOnqErPDpphumrOcdn6Xry
+         NX47zijKQtk248csGCvo2o1bjo118+p/qG14aVcfIr3Ao72p4+nlcugi7i/O2DSjfSUg
+         rQaqLxOt/4IM4R2uVf488siwSMecDt28uCuiooQB8ulk0t/ulhenY82XUD1kazZM4PJm
+         Vcv29GQU12q8770B5bl0BlKuBRRQjMsFU5aekPFMpAwfx2X3IAV31OVaYdhR0ahAZWKt
+         yU+mfr5WaaVMlMYDtCdOGN1ZHYGliksji7qOCz4CaTvkpv5cm+6eWyp6YNMYltaaC8+2
+         ek/g==
+X-Gm-Message-State: AOAM531mQ9zrzv4sjZoOzx2ZD614gwqLYrPSqaR2y9cwsZb4pcK/B7O3
+        1o/NXjEUagZkHrVCjdOMdlDSng==
+X-Google-Smtp-Source: ABdhPJzMGvektFu4NiNVjiGTUQyk/nKjasrvQhNAKir0f4xmYhQeaY8OqySQJHYDmHR2vr594Vy6QA==
+X-Received: by 2002:a05:6a00:2181:b0:4f6:f1b1:1ba7 with SMTP id h1-20020a056a00218100b004f6f1b11ba7mr37393271pfi.73.1651190537681;
+        Thu, 28 Apr 2022 17:02:17 -0700 (PDT)
 Received: from localhost ([2620:15c:202:201:7d14:5f45:9377:9b6a])
-        by smtp.gmail.com with UTF8SMTPSA id b10-20020a056a00114a00b004f784ba5e6asm949570pfm.17.2022.04.28.16.41.49
+        by smtp.gmail.com with UTF8SMTPSA id c5-20020a17090a1d0500b001cd4989ff69sm7686510pjd.48.2022.04.28.17.02.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Apr 2022 16:41:50 -0700 (PDT)
-Date:   Thu, 28 Apr 2022 16:41:48 -0700
+        Thu, 28 Apr 2022 17:02:17 -0700 (PDT)
+Date:   Thu, 28 Apr 2022 17:02:15 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
@@ -54,15 +54,15 @@ Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         srinivas.kandagatla@linaro.org, dianders@chromium.org,
         swboyd@chromium.org, judyhsiao@chromium.org,
         Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v12 2/4] arm64: dts: qcom: sc7280: Add secondary MI2S
- pinmux specifications for CRD 3.0/3.1
-Message-ID: <YmsmPNTgx9Gi0qVl@google.com>
+Subject: Re: [PATCH v12 4/4] arm64: dts: qcom: sc7280-herobrine: Add lpi
+ pinmux properties for CRD 3.0/3.1
+Message-ID: <YmsrB6Q89II5w1+9@google.com>
 References: <1651079383-7665-1-git-send-email-quic_srivasam@quicinc.com>
- <1651079383-7665-3-git-send-email-quic_srivasam@quicinc.com>
+ <1651079383-7665-5-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1651079383-7665-3-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1651079383-7665-5-git-send-email-quic_srivasam@quicinc.com>
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -73,12 +73,131 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 27, 2022 at 10:39:41PM +0530, Srinivasa Rao Mandadapu wrote:
-> Add drive strength property for secondary MI2S on
-> sc7280 based platforms of rev5+ (aka CRD 3.0/3.1) boards.
+On Wed, Apr 27, 2022 at 10:39:43PM +0530, Srinivasa Rao Mandadapu wrote:
+> Add LPASS LPI pinctrl properties, which are required for Audio
+> functionality on herobrine based platforms of rev5+
+> (aka CRD 3.0/3.1) boards.
 > 
 > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 > Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 > Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+I'm not super firm in pinctrl territory, a few maybe silly questions
+below.
+
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 84 +++++++++++++++++++++++
+>  1 file changed, 84 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> index deaea3a..dfc42df 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> @@ -111,6 +111,90 @@ ap_ts_pen_1v8: &i2c13 {
+>   * - If a pin is not hooked up on Qcard, it gets no name.
+>   */
+>  
+> +&lpass_dmic01 {
+> +	clk {
+> +		drive-strength = <8>;
+> +	};
+> +};
+> +
+> +&lpass_dmic01_sleep {
+> +	clk {
+> +		drive-strength = <2>;
+
+Does the drive strength really matter in the sleep state, is the SoC actively
+driving the pin?
+
+> +		bias-disable;
+
+What should this be in active/default state? If I understand correctly
+after a transition from 'sleep' to 'default' this setting will remain,
+since the default config doesn't specify a setting for bias.
+
+> +	};
+> +
+> +	data {
+> +		pull-down;
+
+Same here, I think the pull-down will still be enabled after a switch from
+'sleep' to 'default'.
+
+If I'm not mistaken then the rest of the pins also need to be reviewed.
+
+> +	};
+> +};
+> +
+> +&lpass_dmic23 {
+> +	clk {
+> +		drive-strength = <8>;
+> +	};
+> +};
+> +
+> +&lpass_dmic23_sleep {
+> +	clk {
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	data {
+> +		pull-down;
+> +	};
+> +};
+> +
+> +&lpass_rx_swr {
+> +	clk {
+> +		drive-strength = <2>;
+> +		slew-rate = <1>;
+> +		bias-disable;
+> +	};
+> +
+> +	data {
+> +		drive-strength = <2>;
+> +		slew-rate = <1>;
+> +		bias-bus-hold;
+> +	};
+> +};
+> +
+> +&lpass_rx_swr_sleep {
+> +	clk {
+> +		drive-strength = <2>;
+> +		bias-pull-down;
+> +	};
+> +
+> +	data {
+> +		drive-strength = <2>;
+> +		bias-pull-down;
+> +	};
+> +};
+> +
+> +&lpass_tx_swr {
+> +	clk {
+> +		drive-strength = <2>;
+> +		slew-rate = <1>;
+> +		bias-disable;
+> +	};
+> +
+> +	data {
+> +		slew-rate = <1>;
+> +		bias-bus-hold;
+> +	};
+> +};
+> +
+> +&lpass_tx_swr_sleep {
+> +	clk {
+> +		drive-strength = <2>;
+> +		bias-pull-down;
+> +	};
+> +
+> +	data {
+> +		bias-bus-hold;
+> +	};
+> +};
+> +
+>  &mi2s1_data0 {
+>  	drive-strength = <6>;
+>  	bias-disable;
+> -- 
+> 2.7.4
+> 
