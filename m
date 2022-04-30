@@ -2,118 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8794A515D85
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 15:26:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C444515DA8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 15:36:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382689AbiD3N3u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 09:29:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42440 "EHLO
+        id S229535AbiD3Njp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 09:39:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381853AbiD3N3s (ORCPT
+        with ESMTP id S1382824AbiD3NjO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Apr 2022 09:29:48 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B8EB2A277
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 06:26:26 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-2ebf4b91212so110402127b3.8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 06:26:26 -0700 (PDT)
+        Sat, 30 Apr 2022 09:39:14 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC98BE41
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 06:35:52 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id s27so13553597ljd.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 06:35:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=h+wRFsVZ4K28MiXgknTEFp0527Wz31nnhpmKvMdFtgk=;
-        b=ji5KO51EY5LxDOubII9v4JSPit0qIQjkf8NUlScorihNIE6nP0d0Qh5Cz0owzhVU74
-         GdXFtfh28zCFspiOgM99RsCqArXnIfHT6Rae7/NdmIhQ95wE0dfdAIS09Agz+GGLieYM
-         etnZK2EvBfJBadrpwr6E/io9TK2XCE6iNBs/vjrwMqvgrjTjgm0jY0JETyu1xx/02lsf
-         OUvSlEAkMv1imeI+vA5rkuXXGeMZ+cVrwlCTJY+ZG6nRIWcVUcDHKWtSMF06KTI2ctMC
-         j0JQpn84qQ445V6zQawb0i2nAhdNhoOtwVfH0DBFlMayQUU5LQaGevx3CM68osTEqlNJ
-         bi1A==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=iFd3GeSeIxlhnThIEOE0AizZsykGoTGqF7fBHefKcRw=;
+        b=Yr3jeQ0YjWaMXpO8OQ1W8EZfdyqJVppd6BhrmMbbvqLP6S68HZZwKkRIGYf/qV4dul
+         4tSM8t5PhEMHmFvJxCgcOfOycXb3VPC2jFS1TEFNpOwsIHLh+2GgoT1GqcGpd3dyJ57W
+         uiPLQbMfEaN95s8/7JTye6E5Mm91v8JTXIjRYw+zsaVTuQVj1XFWMeGeM6meUp9F6Xmj
+         Anq5Qavha3apIlnPE6w9suHpOo7vTCSfTjkMlJ/M4qUj8lXfKlwgWBLI67R14M6Xwql0
+         6KW0oLcXMv87mPpVMpf0ns2D+x26Ece7Jzjy7EAI89JSntU4q3hjjWUXRf+fhMWEGK7S
+         DBng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=h+wRFsVZ4K28MiXgknTEFp0527Wz31nnhpmKvMdFtgk=;
-        b=z6NGuzlPPgLacuA1xSYWn48eOpthR0F83cwJj0LQe4OR4h10/UZsYxqUnzqz1jlmgw
-         r6Pq0jCAVmR85ztBRF/kxMd5txUnKjl5dSUj1iHcWE1w/wqt2L2wOb6rmJ4DS14LFVAy
-         kT3UNzP3WHEBeuaHx+8tslwAIhJ3Snb3vZCb/q1TQpkU7w/913v4gqvcMhHvUNdwniLI
-         tUtCV6fk1RZTSjqfCg6a0BYDzUn7tVJM2nYF4kjT4opGVetjdg8tDxI2w9i0bUpX47+C
-         G7TK+kaktqsRrE8MWsZAnJAjBr/6P6juBlFoi4ARtQRdegrKzJJFm/VTDCIXnCcKpMNj
-         Yjqw==
-X-Gm-Message-State: AOAM533bSrI010FIhG5DDbWYTA8X/Bpi0VKK0nzQgH9CfLHF1JNChYy1
-        JFdT5OH1RrMgolGZcsYJj5lgvTjxwIR04yqyarawUw==
-X-Google-Smtp-Source: ABdhPJw4GuoBaYZh8SAqU4j8Z/SJ+zQke6niVNaDkfVTu7Qhqks8WxByWajFA90117xorxLrPccJGKqHgW/ROJz8MvE=
-X-Received: by 2002:a81:3252:0:b0:2f6:b826:2286 with SMTP id
- y79-20020a813252000000b002f6b8262286mr3797367ywy.289.1651325185841; Sat, 30
- Apr 2022 06:26:25 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=iFd3GeSeIxlhnThIEOE0AizZsykGoTGqF7fBHefKcRw=;
+        b=kwMaP3TptbD05iW4CkcsaoQm6Z2QJyuTskhqocUS0MTDjFieSb3xl7n/zKuIfkPZwe
+         +lIOWFj46b7GLZn77LSkaqxej9ZrPxrQT2AsmtCRJo88bkEifH8XzYERx2P1sWd+q1un
+         eD/2HrQZYQ+gXSu5KFlkIX9qkEpmKfmHa8j8gHXYOnrLar+k10kGUsMEkECqr8GlVBaF
+         An8Y72wO/ceEqBTWWBaVJ18O//O93P3GZwUZzOiJUPcRRxMwrnjyui7B3Ct2Ih0W80a3
+         YFxkrNjDSDUoxqhyjYvsXAWKmGT/d9UfhtjWEjrEUQzYKhI+WcOR/3BMMxndSkEWIRkj
+         KD2w==
+X-Gm-Message-State: AOAM533Y/R3WeT6wkd/q7+fqliQuxhYuEULUvWwc7g/ELvxdvohnd42E
+        qJ3AOexmVjrMw4cobgOHcrb9Lw==
+X-Google-Smtp-Source: ABdhPJzNLw1eQyaosYQdzqMuY+hEWVebXW38tY390DGAvqBSK2Y0QLCP3hM9BFw9y1b5xpiCcdKFZQ==
+X-Received: by 2002:a2e:a58a:0:b0:24f:328f:3a5c with SMTP id m10-20020a2ea58a000000b0024f328f3a5cmr2566255ljp.25.1651325751235;
+        Sat, 30 Apr 2022 06:35:51 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id v20-20020ac25594000000b0047255d211ffsm193099lfg.302.2022.04.30.06.35.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Apr 2022 06:35:50 -0700 (PDT)
+Message-ID: <45513aa3-cc0b-2952-a282-94829021f552@linaro.org>
+Date:   Sat, 30 Apr 2022 16:35:50 +0300
 MIME-Version: 1.0
-References: <20220430055118.1947-1-ansuelsmth@gmail.com> <20220430055118.1947-3-ansuelsmth@gmail.com>
-In-Reply-To: <20220430055118.1947-3-ansuelsmth@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v2] drm/msm/dpu: Clean up CRC debug logs
+Content-Language: en-GB
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        quic_aravindh@quicinc.com, quic_abhinavk@quicinc.com,
+        Rob Clark <robdclark@chromium.org>
+References: <20220430005210.339-1-quic_jesszhan@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 30 Apr 2022 16:26:15 +0300
-Message-ID: <CAA8EJprqUg4_0yFU1nsV3c-7JH1VTgVE=hyDVWz+Z4BtkRktbQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] ARM: dts: qcom: add syscon and cxo/pxo clock to
- gcc node for ipq8064
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20220430005210.339-1-quic_jesszhan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 30 Apr 2022 at 15:59, Ansuel Smith <ansuelsmth@gmail.com> wrote:
->
-> Add syscon compatible required for tsens driver to correctly probe driver
-> and access the reg. Also add cxo and pxo tag and declare them as gcc clock
-> now requires them for the ipq8064 gcc driver that has now been modernized.
->
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+On 30/04/2022 03:52, Jessica Zhang wrote:
+> Currently, dpu_hw_lm_collect_misr returns EINVAL if CRC is disabled.
+> This causes a lot of spam in the DRM debug logs as it's called for every
+> vblank.
+> 
+> Instead of returning EINVAL when CRC is disabled in
+> dpu_hw_lm_collect_misr, let's return ENODATA and add an extra ENODATA check
+> before the debug log in dpu_crtc_get_crc.
+> 
+> Changes since V1:
+> - Added reported-by and suggested-by tags
+> 
+> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Suggested-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> Tested-by: Jessica Zhang <quic_jesszhan@quicinc.com> # RB5  (qrb5165)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+
 > ---
->  arch/arm/boot/dts/qcom-ipq8064.dtsi | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> index e6ca8d1d1c5f..ad30f7c8a5a7 100644
-> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> @@ -298,7 +298,7 @@ smem: smem@41000000 {
->         };
->
->         clocks {
-> -               cxo_board {
-> +               cxo_board: cxo_board {
->                         compatible = "fixed-clock";
->                         #clock-cells = <0>;
->                         clock-frequency = <25000000>;
-> @@ -736,7 +736,9 @@ tsens_calib_backup: calib_backup@410 {
->                 };
->
->                 gcc: clock-controller@900000 {
-> -                       compatible = "qcom,gcc-ipq8064";
-> +                       compatible = "qcom,gcc-ipq8064", "syscon";
-> +                       clocks = <&pxo_board>, <&cxo_board>;
-> +                       clock-names = "pxo", "cxo";
->                         reg = <0x00900000 0x4000>;
->                         #clock-cells = <1>;
->                         #reset-cells = <1>;
-> --
-> 2.34.1
->
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 3 ++-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c | 2 +-
+>   2 files changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 7763558ef566..16ba9f9b9a78 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -204,7 +204,8 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
+>   		rc = m->hw_lm->ops.collect_misr(m->hw_lm, &crcs[i]);
+>   
+>   		if (rc) {
+> -			DRM_DEBUG_DRIVER("MISR read failed\n");
+> +			if (rc != -ENODATA)
+> +				DRM_DEBUG_DRIVER("MISR read failed\n");
+>   			return rc;
+>   		}
+>   	}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> index 86363c0ec834..462f5082099e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> @@ -138,7 +138,7 @@ static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 *misr_value)
+>   	ctrl = DPU_REG_READ(c, LM_MISR_CTRL);
+>   
+>   	if (!(ctrl & LM_MISR_CTRL_ENABLE))
+> -		return -EINVAL;
+> +		return -ENODATA;
+>   
+>   	if (!(ctrl & LM_MISR_CTRL_STATUS))
+>   		return -EINVAL;
 
 
 -- 
