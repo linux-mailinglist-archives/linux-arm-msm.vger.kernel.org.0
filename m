@@ -2,355 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF733516021
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 21:34:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01702516054
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 22:22:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244710AbiD3Th0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 15:37:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58120 "EHLO
+        id S245035AbiD3UZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 16:25:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244646AbiD3ThZ (ORCPT
+        with ESMTP id S243477AbiD3UZX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Apr 2022 15:37:25 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D18DD4AE20
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 12:34:01 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 17so14192425lji.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 12:34:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=UnE+PxMjNQxznrPiP9ilgjlD5E706JH8Np36aK30mBE=;
-        b=p98EiB7J4QlUIgrOREYncurzGzla//JE5yJnez9c8jgD7+nW417+QX/+lkiMOQJJVi
-         1vwvTByXfSMj26D4vcGc92RzNd4+hJ0SSlh2LOCH5bQGSJyHC1Vm5WasI1uTsMYW+9br
-         iZWFrHYjaXMwm9uZ2zCnPXG+/nryDO+R3OhIIIywZyyzT8LmbIvp2PwTsMKwbtQROz0H
-         iSsju6ZzK/sa5f5+tsBCk3pZHYo0ftqxd6tLsvNqRGdGzViwCR7X0tgn6nAccFcwswdA
-         6xUB1Ujlv7Cx8SOyBWf8U+LOT5LSM5g5eD8nCdy+rooprlHIX68pM57tBeZEyyW1rTQK
-         ApsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=UnE+PxMjNQxznrPiP9ilgjlD5E706JH8Np36aK30mBE=;
-        b=5a9PFZk+SEbFKeI6A4iHMIxLNP7cy0q2oyPjq5U2kfosMY/VU4XMA3Fif19vBDKxwQ
-         390NMUawtsuOCqlyilEVr9jHILttGhI78DX/T4MTYJdOSDSiANnewyvs0hr+Kux6h4pR
-         wiMGLD1Sueq/53rfggF2s1h0GTTdK3CqdKxNnv3vyBt6f3EvJ7NICle35Hsh/hXfSmBa
-         ic+kmcEfLhdEP6+E+GqZcxWA1UznAm7W3YKVsZ+EZ37KE8ZI/CkR6hX0S7u1w5t+HKdr
-         jjv4O3qFJGYZFBgU51Nl67Cp1Uq6f0HOVEe5Raf5NVBU6Xa5Sm/f0WPov4MjfI49JyNG
-         NGzA==
-X-Gm-Message-State: AOAM530AID2SnKFa7lqCKv3psOOmZa16UANDJl3w2lRVrbpxpSnQByTa
-        kHcXBITGI2fE04OQ9b87Oy53Sw==
-X-Google-Smtp-Source: ABdhPJzhPLWRpIf0sDXy+U/g999jW8WL53W0lLzW8ieWTJH9ufc+2xKqEUO0f/o3Xup47gQr/iWnnQ==
-X-Received: by 2002:a05:651c:549:b0:24f:51da:6e1b with SMTP id q9-20020a05651c054900b0024f51da6e1bmr506089ljp.389.1651347240165;
-        Sat, 30 Apr 2022 12:34:00 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id w24-20020ac24438000000b0047255d2113dsm257255lfl.108.2022.04.30.12.33.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Apr 2022 12:33:59 -0700 (PDT)
-Message-ID: <7e066b7f-943a-6a5e-7383-a05794d207dc@linaro.org>
-Date:   Sat, 30 Apr 2022 22:33:59 +0300
+        Sat, 30 Apr 2022 16:25:23 -0400
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D152749C97;
+        Sat, 30 Apr 2022 13:22:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651350120; x=1682886120;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=6jbPuSw3k3iSchP4UYOMtIzdN+2guCWB74XjbgdKQmk=;
+  b=U2xI56JngC392/wQAFogyJlvzOL28C8Eed83qS3J4ORg58rzewAJiJyi
+   +B5uyG5ZKh6tDOKPoLvgh7jDVaeGBPji4H/e/q77YtIFydvh9FKV+rEvV
+   b/PCAn6k8G3riBlL8p9+561S6uIlyz4X51vXj8BAZZEPXksbSD6Gi/fIx
+   SG75kGhbEk09o5e11ak7WnrmnKoYD7yYZeC2rcJ6128CPXyQn6nTmCyCk
+   uuAMICUh9oaT57RcF2Z8dSaRdhNXx68ncq8e2zRfgIxdwn50hvQPq8qnx
+   jqmvRYqpCQak/wMbkwYiLa0JLMSbhDyAfpizA36eB5YHRtwAdgIKsh69D
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10333"; a="327438660"
+X-IronPort-AV: E=Sophos;i="5.91,189,1647327600"; 
+   d="scan'208";a="327438660"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2022 13:22:00 -0700
+X-IronPort-AV: E=Sophos;i="5.91,189,1647327600"; 
+   d="scan'208";a="809591388"
+Received: from punajuuri.fi.intel.com (HELO paasikivi.fi.intel.com) ([10.237.72.43])
+  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2022 13:21:56 -0700
+Received: from paasikivi.fi.intel.com (localhost [127.0.0.1])
+        by paasikivi.fi.intel.com (Postfix) with SMTP id 9F2D220423;
+        Sat, 30 Apr 2022 23:21:24 +0300 (EEST)
+Date:   Sat, 30 Apr 2022 23:21:24 +0300
+From:   Sakari Ailus <sakari.ailus@linux.intel.com>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+        swboyd@chromium.org,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        freedreno@lists.freedesktop.org,
+        Saravana Kannan <saravanak@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Daniel Scally <djrscally@gmail.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] device property: Fix recent breakage of
+ fwnode_get_next_parent_dev()
+Message-ID: <Ym2aRE/CkLsuJYzM@paasikivi.fi.intel.com>
+References: <20220429164325.1.I2a3b980ea051e59140227999f0f0ca16f1125768@changeid>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH 1/3] dt-bindings: display: msm: Add binding for MSM8996
- DPU
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220430161529.605843-1-konrad.dybcio@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220430161529.605843-1-konrad.dybcio@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220429164325.1.I2a3b980ea051e59140227999f0f0ca16f1125768@changeid>
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/04/2022 19:15, Konrad Dybcio wrote:
-> Add yaml binding for MSM8996 DPU.
+On Fri, Apr 29, 2022 at 04:43:47PM -0700, Douglas Anderson wrote:
+> Due to a subtle typo, instead of commit 87ffea09470d ("device
+> property: Introduce fwnode_for_each_parent_node()") being a no-op
+> change, it ended up causing the display on my sc7180-trogdor-lazor
+> device from coming up unless I added "fw_devlink=off" to my kernel
+> command line. Fix the typo.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Fixes: 87ffea09470d ("device property: Introduce fwnode_for_each_parent_node()")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+
+Good catch, thanks!
+
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+
 > ---
->   .../bindings/display/msm/dpu-msm8996.yaml     | 221 ++++++++++++++++++
->   1 file changed, 221 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-msm8996.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-msm8996.yaml b/Documentation/devicetree/bindings/display/msm/dpu-msm8996.yaml
-> new file mode 100644
-> index 000000000000..10b02423224d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dpu-msm8996.yaml
-> @@ -0,0 +1,221 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dpu-msm8996.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Display DPU dt properties for MSM8996 target
-> +
-> +maintainers:
-> +  - Konrad Dybcio <konrad.dybcio@somainline.org>
-> +
-> +description: |
-> +  Device tree bindings for MSM Mobile Display Subsystem (MDSS) that
-> +  encapsulates sub-blocks like DPU display controller, DSI interfaces, etc.
-> +  Device tree bindings of MDSS and DPU are mentioned for MSM8996 target.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,msm8996-mdss
-
-With the unified MDSS driver there is no need to describe a separate 
-mdss bindings. Let's skip this part for now.
-
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  reg-names:
-> +    const: mdss
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    items:
-> +      - description: Display AHB clock
-> +      - description: Display core clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: iface
-> +      - const: core
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  interrupt-controller: true
-> +
-> +  "#address-cells": true
-> +
-> +  "#size-cells": true
-> +
-> +  "#interrupt-cells":
-> +    const: 1
-> +
-> +  iommus:
-> +    items:
-> +      - description: Phandle to mdp_smmu node with SID mask for Hard-Fail port0
-> +
-> +  ranges: true
-> +
-> +patternProperties:
-> +  "^display-controller@[0-9a-f]+$":
-> +    type: object
-> +    description: Node containing the properties of DPU.
-> +
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - const: qcom,msm8996-dpu
-
-Okay. So, this is the most interesting part. Unlike MSM8998, which is 
-supported in the mdp5 driver, but was not used in the upstream DTS 
-files, for the MSM8996 the MDP5 part is described, used and widely 
-tested. And, unfortunately, the bindings use solely the generic 
-"qcom,mdp5" compat.
-
-I would suggest the following plan:
-- Define a binding using both "qcom,msm8996-dpu" and "qcom,mdp5" 
-strings. Make sure that it is fully backwards-compatible with older dts.
-
-- Update msm8996.dtsi to follow new binding.
-
-- Let's have a Kconfig flip switch selecting which driver to be used for 
-8996/8998.
-
-
-> +
-> +      reg:
-> +        items:
-> +          - description: Address offset and size for mdp register set
-> +          - description: Address offset and size for vbif register set
-> +          - description: Address offset and size for non-realtime vbif register set
-> +
-> +      reg-names:
-> +        items:
-> +          - const: mdp
-> +          - const: vbif
-> +          - const: vbif_nrt
-> +
-> +      clocks:
-> +        items:
-> +          - description: Display ahb clock
-> +          - description: Display axi clock
-> +          - description: Display core clock
-> +          - description: Display iommu clock
-> +          - description: Display vsync clock
-> +
-> +      clock-names:
-> +        items:
-> +          - const: iface
-> +          - const: bus
-> +          - const: core
-> +          - const: iommu
-> +          - const: vsync
-> +
-> +      interrupts:
-> +        maxItems: 1
-> +
-> +      power-domains:
-> +        maxItems: 1
-> +
-> +      operating-points-v2: true
-> +      ports:
-> +        $ref: /schemas/graph.yaml#/properties/ports
-> +        description: |
-> +          Contains the list of output ports from DPU device. These ports
-> +          connect to interfaces that are external to the DPU hardware,
-> +          such as DSI, DP etc. Each output port contains an endpoint that
-> +          describes how it is connected to an external interface.
-> +
-> +        properties:
-> +          port@0:
-> +            $ref: /schemas/graph.yaml#/properties/port
-> +            description: DPU_INTF3 (HDMI)
-> +
-> +          port@1:
-> +            $ref: /schemas/graph.yaml#/properties/port
-> +            description: DPU_INTF1 (DSI0)
-> +
-> +        required:
-> +          - port@0
-> +          - port@1
-> +
-> +    required:
-> +      - compatible
-> +      - reg
-> +      - reg-names
-> +      - clocks
-> +      - interrupts
-> +      - power-domains
-> +      - operating-points-v2
-> +      - ports
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - power-domains
-> +  - clocks
-> +  - interrupts
-> +  - interrupt-controller
-> +  - iommus
-> +  - ranges
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/power/qcom-rpmpd.h>
-> +
-> +    mdss: display-subsystem@900000 {
-> +        compatible = "qcom,msm8996-mdss";
-> +        reg = <0x00900000 0x1000>;
-> +        reg-names = "mdss";
-> +
-> +        power-domains = <&mmcc MDSS_GDSC>;
-> +
-> +        clocks = <&mmcc MDSS_AHB_CLK>, <&mmcc MDSS_MDP_CLK>;
-> +        clock-names = "iface", "core";
-> +
-> +        assigned-clocks = <&mmcc MDSS_MDP_CLK>;
-> +        assigned-clock-rates = <300000000>;
-
-This should not be necessary.
-
-> +
-> +        interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-> +        interrupt-controller;
-> +        #interrupt-cells = <1>;
-> +
-> +        iommus = <&mdp_smmu 0>;
-> +
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-> +        ranges;
-> +
-> +        display-controller@901000 {
-> +            compatible = "qcom,msm8996-dpu";
-> +            reg = <0x00901000 0x90000>,
-> +                  <0x009b0000 0x1040>,
-> +                  <0x009b8000 0x1040>;
-> +            reg-names = "mdp", "vbif", "vbif_nrt";
-> +
-> +            clocks = <&mmcc MDSS_AHB_CLK>,
-> +              <&mmcc MDSS_AXI_CLK>,
-> +              <&mmcc MDSS_MDP_CLK>,
-> +              <&mmcc SMMU_MDP_AXI_CLK>,
-> +              <&mmcc MDSS_VSYNC_CLK>;
-> +            clock-names = "iface", "bus", "core", "iommu", "vsync";
-> +
-> +            assigned-clocks = <&mmcc MDSS_MDP_CLK>,
-> +                  <&mmcc MDSS_VSYNC_CLK>;
-> +            assigned-clock-rates = <412500000>, <19200000>;
-
-MDP_CLK here should not be neccessary after Vinod Polimera's patches.
-
-> +
-> +            operating-points-v2 = <&mdp_opp_table>;
-> +            power-domains = <&rpmpd MSM8996_VDDMX>;
-> +
-> +            interrupt-parent = <&mdss>;
-> +            interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +            ports {
-> +              #address-cells = <1>;
-> +              #size-cells = <0>;
-> +
-> +              port@0 {
-> +                reg = <0>;
-> +                dpu_intf3_out: endpoint {
-> +                  remote-endpoint = <&hdmi_in>;
-> +                };
-> +              };
-> +
-> +              port@1 {
-> +                reg = <1>;
-> +                dpu_intf1_out: endpoint {
-> +                  remote-endpoint = <&dsi0_in>;
-> +                };
-> +              };
-> +            };
-> +        };
-> +    };
-> +...
-
+>  drivers/base/property.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/base/property.c b/drivers/base/property.c
+> index 36401cfe432c..52e85dcb20b5 100644
+> --- a/drivers/base/property.c
+> +++ b/drivers/base/property.c
+> @@ -600,7 +600,7 @@ struct device *fwnode_get_next_parent_dev(struct fwnode_handle *fwnode)
+>  	struct device *dev;
+>  
+>  	fwnode_for_each_parent_node(fwnode, parent) {
+> -		dev = get_dev_from_fwnode(fwnode);
+> +		dev = get_dev_from_fwnode(parent);
+>  		if (dev) {
+>  			fwnode_handle_put(parent);
+>  			return dev;
 
 -- 
-With best wishes
-Dmitry
+Sakari Ailus
