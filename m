@@ -2,95 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11396515D88
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 15:27:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94FA8515D0C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 14:53:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359327AbiD3NaW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 09:30:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44426 "EHLO
+        id S234126AbiD3M4j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 08:56:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238390AbiD3NaQ (ORCPT
+        with ESMTP id S229831AbiD3M4i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Apr 2022 09:30:16 -0400
-X-Greylist: delayed 43879 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 30 Apr 2022 06:26:44 PDT
-Received: from spiderman.my-portal.gr (spiderman.my-portal.gr [144.76.89.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E672635DC4;
-        Sat, 30 Apr 2022 06:26:44 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by spiderman.my-portal.gr (Postfix) with ESMTP id 06BDDE7B50F;
-        Tue, 26 Apr 2022 01:59:45 +0300 (EEST)
-X-Virus-Scanned: Debian amavisd-new at spiderman.my-portal.gr
-Received: from spiderman.my-portal.gr ([127.0.0.1])
-        by localhost (spiderman.my-portal.gr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id oGsCGVyA5pyF; Tue, 26 Apr 2022 01:59:44 +0300 (EEST)
-Received: from www.hotelartemision.gr (localhost [127.0.0.1])
-        (Authenticated sender: info@hotelartemision.gr)
-        by spiderman.my-portal.gr (Postfix) with ESMTPA id DF9C9E79769;
-        Tue, 26 Apr 2022 00:10:23 +0300 (EEST)
-Received: from 209.107.210.62
-        (SquirrelMail authenticated user info@hotelartemision.gr)
-        by www.hotelartemision.gr with HTTP;
-        Mon, 25 Apr 2022 21:10:28 -0000
-Message-ID: <673c688bea437d65e20731991b094957.squirrel@www.hotelartemision.gr>
-Date:   Mon, 25 Apr 2022 21:10:28 -0000
-Subject: RE:
-From:   "Mackenzie Scott" <info@hotelartemision.gr>
-Reply-To: "Mackenzie Scott" <info@ebumk.com.br>
-User-Agent: SquirrelMail/1.4.23 [SVN]
+        Sat, 30 Apr 2022 08:56:38 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 652DE60AA6;
+        Sat, 30 Apr 2022 05:53:17 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id dk23so20055662ejb.8;
+        Sat, 30 Apr 2022 05:53:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mAQMceYOTyepNyy81qetN6xjIgF24kvDcmdMEakHKdA=;
+        b=VDQiZ9gle0DYIu1HeD8kYTH7Q0GdjrSCveevSvIMnCmpzxrj5oYVykEkKFcUS5qJuw
+         v4dpV7ydmobrQXwA6g1NvIhZXri40c7gherhrlOO2p3adabtYe575xvIoNeiBXwShelk
+         40XgCUm4vsIv3qLrfAbg9u/6xvGTVm6hqLIOsFkhpcFpFLuz3ul1IjYxwz4npthkwe+G
+         /dw1Nf5Z1rbY2MKl2CDfcWjw4QMVaYbl86AmKNPO/jG0NoCjxUhFwA0ULIYqUq/TCYQe
+         fj0D3OnXRwKjgfQ7C0BAs9tQm7S0H5eF2r87Vjiuhc0bVyxmL9LUf9DqqLPfZcyCBDgO
+         I70Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mAQMceYOTyepNyy81qetN6xjIgF24kvDcmdMEakHKdA=;
+        b=BJylXI/2gCxam/yFGnVpD8Oi2Sob7k2L5g10ddSC7yMcK2h7vkVEv9RTH4dgksmCeW
+         xdfj+aR8G3sQIRWp+5DVKmeTstlHpCHtcU6mlJmw9+y9YScKsJ/NEV9c+els6HpDW9IZ
+         pmykwaqGSCpTN0pn2GwS9DSgNeYlJz76PmDk/WNGbUOqxM+Yr2Ap+yUM9Rm3h/Xs4i5c
+         Om5PePaMAsD6orq4EPa1OB0rwnv9wmi7BORyES8yVQw8CZHz1KVE60lDNV2EeeMOxAvs
+         Q0wdkWs3dJPXPlI53vEMkPVTPr3PYbR5u9xE1iC7VzCz0Z0Cn1DIjubJqu5oAk1642ea
+         n0LQ==
+X-Gm-Message-State: AOAM533UOcnhi+Jqa7ZQB9jQw7bA7Jd21Stm2TcIrZP8BFiysUFoVx94
+        CMZ+C6COFU41JsJpua0SGtJ9QJK0dE4=
+X-Google-Smtp-Source: ABdhPJwApadsEjI+8tlebGbQqspwcBB/aD15404MIyeQLr5Rc9ZTI73JUP9ssVlMGbeiJGf/5b1ViA==
+X-Received: by 2002:a17:907:7f08:b0:6f3:8c69:1779 with SMTP id qf8-20020a1709077f0800b006f38c691779mr3660647ejc.414.1651323195618;
+        Sat, 30 Apr 2022 05:53:15 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.googlemail.com with ESMTPSA id jl25-20020a17090775d900b006f3ef214dc5sm1597209ejc.43.2022.04.30.05.53.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 Apr 2022 05:53:15 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Sricharan R <sricharan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>
+Subject: [PATCH v2 0/3] Small fixes/improvement for hfpll and krait
+Date:   Sat, 30 Apr 2022 07:44:55 +0200
+Message-Id: <20220430054458.31321-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain;charset=iso-8859-1
 Content-Transfer-Encoding: 8bit
-X-Priority: 3 (Normal)
-Importance: Normal
-X-Spam-Status: No, score=3.4 required=5.0 tests=BAYES_50,LOTS_OF_MONEY,
-        MISSING_HEADERS,REPLYTO_WITHOUT_TO_CC,SPF_FAIL,SPF_HELO_NONE
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ***
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series has small fixes/improvement to the hfpll and krait clk
+driver.
 
+This comes from another series that got split to better facilitate the
+merge since it was grown to 21 patches and was getting hard to review.
 
+For hfpll, a conversion to read_poll macro and introduction
+of a timeout to prevent a stall.
+For krait, a fix for the mux sel logic and an introduction for
+8064 errata.
 
-Xin chào,
+v2:
+- Drop patch add hw_parent check for div2_round_rate
+- Add extra comments for errata patch
 
-Tôi là Mackenzie Scott, v&#7907; c&#361; c&#7911;a ng&#432;&#7901;i sáng
-l&#7853;p kiêm Giám &#273;&#7889;c &#273;i&#7873;u hành Amazon (Jeff
-Bezos).
-Tôi quyên góp 4 t&#7927; &#273;ô la cho các t&#7893; ch&#7913;c t&#7915;
-thi&#7879;n, cá nhân và tr&#432;&#7901;ng cao &#273;&#7859;ng trên toàn
-c&#7847;u t&#7915; Qu&#7929; c&#7911;a Scott, &#273;&#7875; h&#7895;
-tr&#7907; ngay l&#7853;p t&#7913;c cho nh&#7919;ng ng&#432;&#7901;i
-b&#7883; thi&#7879;t h&#7841;i v&#7873; kinh t&#7871; do &#273;&#7841;i
-d&#7883;ch COVID-19 và b&#7841;n là m&#7897;t trong nh&#7919;ng
-ng&#432;&#7901;i may m&#7855;n chi&#7871;n th&#7855;ng.
-Tôi có m&#7897;t kho&#7843;n tài tr&#7907; tr&#7883; giá $ 100,800,000 cho
-b&#7841;n và c&#7897;ng &#273;&#7891;ng c&#7911;a b&#7841;n.
-Liên h&#7879; v&#7899;i tôi &#273;&#7875; bi&#7871;t thêm thông tin
-n&#7871;u b&#7841;n quan tâm.
+Ansuel Smith (3):
+  clk: qcom: clk-hfpll: use poll_timeout macro
+  clk: qcom: clk-krait: unlock spin after mux completion
+  clk: qcom: clk-krait: add apq/ipq8064 errata workaround
 
-Trân tr&#7885;ng
-Mackenzie Scott
+ drivers/clk/qcom/clk-hfpll.c | 15 +++++++++------
+ drivers/clk/qcom/clk-krait.c | 23 ++++++++++++++++++++++-
+ drivers/clk/qcom/clk-krait.h |  1 +
+ drivers/clk/qcom/krait-cc.c  |  8 ++++++++
+ 4 files changed, 40 insertions(+), 7 deletions(-)
 
-
-
-
-
-
-Hello,
-
-I am Mackenzie Scott, ex-wife of Amazon founder and CEO(Jeff Bezos).
-I'm donating $ 4 billion to charities, individuals and colleges across the
-Globe from the Scott's Foundation, to provide immediate support to people
-suffering economically from the  COVID-19 pandemic and you are one of the
-lucky winners.
-I have a donation grant worth $100,800,000 for you and your community.
-Contact me for more information if you are interested.
-
-Best regards
-Mackenzie Scott
+-- 
+2.34.1
 
