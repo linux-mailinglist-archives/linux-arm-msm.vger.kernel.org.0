@@ -2,163 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73D85515D7E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 15:25:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70765515D82
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 15:26:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382662AbiD3N25 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 09:28:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39144 "EHLO
+        id S241955AbiD3N3U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 09:29:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231395AbiD3N2w (ORCPT
+        with ESMTP id S1345995AbiD3N3T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Apr 2022 09:28:52 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 482732A277
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 06:25:29 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-2f7d7e3b5bfso110358867b3.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 06:25:29 -0700 (PDT)
+        Sat, 30 Apr 2022 09:29:19 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84B5836169
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 06:25:56 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-2ebf4b91212so110395247b3.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 06:25:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=3KdH4A/ZIDn5iuBBsHJpj90JbgUsoauLAn0Cyltu/wo=;
-        b=ZAqsmHWcvQoTKbn3/olPYcBsf4oSR7+H6NzpjY2hOfVYJoxtv4I8ztsVWQzD96C5c4
-         0e5kjEEJ/skZZk3TCb4aPYieTeX7AX2BkcYpefa/WTKkDcoviN+8kgCTBxTpOyl6cA9/
-         +JbZ90+YCM51mBFxlFPPpWIYSGOFxMFkj5k+E3UDy6/4tWQrj1GQZd8j8Gl2xHTijGjy
-         G/I6qClpb2aALae2Jdyb+8oGvwEd5/ioLsgHOKub5vaCnwkOiTGfnSrLj+boA1oOrF9Y
-         ckiXh3fh1UVFsvZptRpSEC2PcqR12sHLK9rjr3zg0AeDDKYZbVyJgjwQjCVSojSfpcSz
-         gPrw==
+        bh=64feOhocvLGn2fJsVd3fjrvb0tRje9mApVjwOF26BKs=;
+        b=azUNnWcXCkr97DjIquiDIVbjSMXybkEmBz92ZEbhQT7Qicj/5fgDg4zJHbM2MoRkEk
+         EinO0l6MFR1UyE2W8rteWaAsShr/qYH0PeEnHTPhR5GJ3gLF8/AYyPtaPlPyl5O/8pa/
+         ClRNPRLvdQUVQ612nCoTt8v0EnY5c+8kYc/3X15ClSfxF9RMjhQlnervWD+Ne20R+5Ft
+         XHNI4SJCW34yasJkOfLrCYRdPEpupz0QRTBp4SugOonFsT2SLhwlysc9VE9P5wi+g3xZ
+         gmmq/YxQeblZwcLayc9HmNM3JEj/e8h6PcJoNRizeU8m1lu9QBAqGWEFwV+DMioCkmA+
+         3D9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=3KdH4A/ZIDn5iuBBsHJpj90JbgUsoauLAn0Cyltu/wo=;
-        b=KUt/H2DdjQ6ppTBHjc0+bPOkZdeVNA4OT7EEe/PRfdRYTgvfUbWXfmmeKTtO+45tbr
-         nlbQ10I+kYaqMExqA6u0Bi8ZNtg6uouTHdiYI4SJcGjU+9QevkOjk57cRIzj93SiuxqV
-         QDtsx/j8JcyLM4OXanKjpRsjwwQUZ67q3cPHV+xA+W15GjNfr0KfJX3awzH/3CBjoeX9
-         YqtKfgqY6MJmrXW7dDHRmMn08Srbep8ih/txXNxhWIuLB5K0qE5mMkExH4SQgmPYhLpz
-         gKoOZKKasXlnNhqfic7fwaLTcSHdzvGOc+Pl+1nKQ9mHhL94aAZfKLqLAgIqDh5NkeFr
-         1jxA==
-X-Gm-Message-State: AOAM531H78MSnOABPmkjudqwknbjK9ccIdhbjsMiCG3kCF/QyB93XgRQ
-        v9yk/l/U2K1l0eTGwc7R7OUAtVax0LYxA/xLM0ZvrScWho4WWA==
-X-Google-Smtp-Source: ABdhPJztvdu1Zcgh8IaCcX/bj94Ep7ne8TT8XdYs5FK9IQt76Wo/NTxuk7LXWJqqFg4WpLwr2xzmYE5xQkeXiBcNWF0=
-X-Received: by 2002:a81:1d4e:0:b0:2f7:be8b:502e with SMTP id
- d75-20020a811d4e000000b002f7be8b502emr3980575ywd.278.1651325128489; Sat, 30
- Apr 2022 06:25:28 -0700 (PDT)
+        bh=64feOhocvLGn2fJsVd3fjrvb0tRje9mApVjwOF26BKs=;
+        b=I26WapNJWT52KdQx0FP/GsP92I7Vr9O4vwWFfDjQ9Tgrf/msEleNnGTbzoPsQr1Kj8
+         z9qZXISgWfIaiHlfWU1BlBH24zT7+I4Cl98x1hTCbOs2orFpyG4Nnpa0GKODEJtLR9LZ
+         FrPp5KjBlQDWFbsq+fMDTewcnDjGcimIvOu/ihxGhZtfNp1R3BnmOS3UUjnswIfgW179
+         pKliA8oWvqo5/ZiX2ql0ZtSIY1SpqfgSG2HyBuMWDkNITCSQSCvxyHg3smIH/yEEO9bm
+         gsgfjJEZuAiH4BW+ZIjz8dFiE6Ad4l8C6NFGQSZd6glaahjFrgFix1S15JHFkT1hY05W
+         wt+A==
+X-Gm-Message-State: AOAM531G18EzGtMUvhpucg6qxHaPs7zivOLpNwWXMKfVRr8uQBiyGfxF
+        37Jf0T52Y+hGoZpcdRtwrW3ImyiGua6+sLco45HIa9R7VCBU2A==
+X-Google-Smtp-Source: ABdhPJxoi3jJZl7joWc/2nnCDUb8N5KSDQA9caiC10LPVX4ArV5FkST7tiOSOjorT56fLrnw7cJe/TJuYyR9luW9+0Y=
+X-Received: by 2002:a81:4c11:0:b0:2d1:1925:cd70 with SMTP id
+ z17-20020a814c11000000b002d11925cd70mr3781507ywa.101.1651325155685; Sat, 30
+ Apr 2022 06:25:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220430054458.31321-1-ansuelsmth@gmail.com> <20220430054458.31321-4-ansuelsmth@gmail.com>
-In-Reply-To: <20220430054458.31321-4-ansuelsmth@gmail.com>
+References: <20220430055118.1947-1-ansuelsmth@gmail.com> <20220430055118.1947-2-ansuelsmth@gmail.com>
+In-Reply-To: <20220430055118.1947-2-ansuelsmth@gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 30 Apr 2022 16:25:17 +0300
-Message-ID: <CAA8EJpowg9u-U3gTjPOU0ae08TeeXFnGmYNK0Mt8j9UQk2WENw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] clk: qcom: clk-krait: add apq/ipq8064 errata workaround
+Date:   Sat, 30 Apr 2022 16:25:45 +0300
+Message-ID: <CAA8EJpoxddxoWnX+aQbzeAQH_g04WsDqtQcY9vyu-XGJLfibkA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] ARM: dts: qcom: replace gcc PXO with pxo_board
+ fixed clock
 To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sricharan R <sricharan@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 30 Apr 2022 at 15:53, Ansuel Smith <ansuelsmth@gmail.com> wrote:
+On Sat, 30 Apr 2022 at 15:59, Ansuel Smith <ansuelsmth@gmail.com> wrote:
 >
-> Add apq/ipq8064 errata workaround where the sec_src clock gating needs to
-> be disabled during switching. krait-cc compatible is not enough to
-> handle this and limit this workaround to apq/ipq8064. We check machine
-> compatible to handle this.
+> Replace gcc PXO phandle to pxo_board fixed clock declared in the dts.
+> gcc driver doesn't provide PXO_SRC as it's a fixed-clock. This cause a
+> kernel panic if any driver actually try to use it.
 >
+> Fixes: 40cf5c884a96 ("ARM: dts: qcom: add L2CC and RPM for IPQ8064")
 > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 > ---
->  drivers/clk/qcom/clk-krait.c | 16 ++++++++++++++++
->  drivers/clk/qcom/clk-krait.h |  1 +
->  drivers/clk/qcom/krait-cc.c  |  8 ++++++++
->  3 files changed, 25 insertions(+)
+>  arch/arm/boot/dts/qcom-ipq8064.dtsi | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
-> index 90046428693c..45da736bd5f4 100644
-> --- a/drivers/clk/qcom/clk-krait.c
-> +++ b/drivers/clk/qcom/clk-krait.c
-> @@ -18,13 +18,23 @@
->  static DEFINE_SPINLOCK(krait_clock_reg_lock);
+> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> index 996f4458d9fc..e6ca8d1d1c5f 100644
+> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> @@ -304,7 +304,7 @@ cxo_board {
+>                         clock-frequency = <25000000>;
+>                 };
 >
->  #define LPL_SHIFT      8
-> +#define SECCLKAGD      BIT(4)
-> +
->  static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
->  {
->         unsigned long flags;
->         u32 regval;
->
->         spin_lock_irqsave(&krait_clock_reg_lock, flags);
-> +
->         regval = krait_get_l2_indirect_reg(mux->offset);
-> +
-> +       /* apq/ipq8064 Errata: disable sec_src clock gating during switch. */
-> +       if (mux->disable_sec_src_gating) {
-> +               regval |= SECCLKAGD;
-> +               krait_set_l2_indirect_reg(mux->offset, regval);
-> +       }
-> +
->         regval &= ~(mux->mask << mux->shift);
->         regval |= (sel & mux->mask) << mux->shift;
->         if (mux->lpl) {
-> @@ -33,6 +43,12 @@ static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
->         }
->         krait_set_l2_indirect_reg(mux->offset, regval);
->
-> +       /* apq/ipq8064 Errata: re-enabled sec_src clock gating. */
-> +       if (mux->disable_sec_src_gating) {
-> +               regval &= ~SECCLKAGD;
-> +               krait_set_l2_indirect_reg(mux->offset, regval);
-> +       }
-> +
->         /* Wait for switch to complete. */
->         mb();
->         udelay(1);
-> diff --git a/drivers/clk/qcom/clk-krait.h b/drivers/clk/qcom/clk-krait.h
-> index 9120bd2f5297..f930538c539e 100644
-> --- a/drivers/clk/qcom/clk-krait.h
-> +++ b/drivers/clk/qcom/clk-krait.h
-> @@ -15,6 +15,7 @@ struct krait_mux_clk {
->         u8              safe_sel;
->         u8              old_index;
->         bool            reparent;
-> +       bool            disable_sec_src_gating;
->
->         struct clk_hw   hw;
->         struct notifier_block   clk_nb;
-> diff --git a/drivers/clk/qcom/krait-cc.c b/drivers/clk/qcom/krait-cc.c
-> index 4d4b657d33c3..cfd961d5cc45 100644
-> --- a/drivers/clk/qcom/krait-cc.c
-> +++ b/drivers/clk/qcom/krait-cc.c
-> @@ -139,6 +139,14 @@ krait_add_sec_mux(struct device *dev, int id, const char *s,
->         mux->hw.init = &init;
->         mux->safe_sel = 0;
->
-> +       /* Checking for qcom,krait-cc-v1 or qcom,krait-cc-v2 is not
-> +        * enough to limit this to apq/ipq8064. Directly check machine
-> +        * compatible to correctly handle this errata.
-> +        */
-> +       if (of_machine_is_compatible("qcom,ipq8064") ||
-> +           of_machine_is_compatible("qcom,apq8064"))
-> +               mux->disable_sec_src_gating = true;
-> +
->         init.name = kasprintf(GFP_KERNEL, "krait%s_sec_mux", s);
->         if (!init.name)
->                 return -ENOMEM;
+> -               pxo_board {
+> +               pxo_board: pxo_board {
+>                         compatible = "fixed-clock";
+>                         #clock-cells = <0>;
+>                         clock-frequency = <25000000>;
+> @@ -782,7 +782,7 @@ tcsr: syscon@1a400000 {
+>                 l2cc: clock-controller@2011000 {
+>                         compatible = "qcom,kpss-gcc", "syscon";
+>                         reg = <0x2011000 0x1000>;
+> -                       clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
+> +                       clocks = <&gcc PLL8_VOTE>, <&pxo_board>;
+>                         clock-names = "pll8_vote", "pxo";
+>                         clock-output-names = "acpu_l2_aux";
+>                 };
 > --
 > 2.34.1
 >
