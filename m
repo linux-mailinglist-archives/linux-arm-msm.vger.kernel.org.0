@@ -2,216 +2,260 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F6B4515D50
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 15:09:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0C9E515CAB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 14:13:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382667AbiD3NNP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 09:13:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49798 "EHLO
+        id S237918AbiD3MQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 08:16:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382659AbiD3NNN (ORCPT
+        with ESMTP id S231203AbiD3MQz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Apr 2022 09:13:13 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F31482D02;
-        Sat, 30 Apr 2022 06:09:51 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id p18so11896552edr.7;
-        Sat, 30 Apr 2022 06:09:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=3P6gFLiLHpQOXPwOnJdtu8LsXK946l+L0SXzplHXgp8=;
-        b=A2zQVsk6TsPWFFnKRLzrD/HI3vGHQL6AVekVCNp500SknGG8SJwz7kyiJrvA19EShI
-         BNLPMmTKIeNYoM41oByYLvde4UGaWMc2tYI4swETHVbaT+110s4N2rW4HtT0AkQqwgcg
-         6g4P2bCl4tWQf3CHllg+3VcNxxdsEKJuUGSWm/3lrydS56ig/rf1Z/h7qjdfsfu68zv3
-         wwNUX8OSrEuZa5pgRoqW9YsfimCitya3OdMFujgs9WeaPLqRgpWQRsOYk8qrH/WzaxbH
-         eWZ2WTaKxAFrS4PQquJe2V2vvHteqNqF7y1hJGibl08BKdS0sADiZicXmAclcH2bgZnu
-         qQDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3P6gFLiLHpQOXPwOnJdtu8LsXK946l+L0SXzplHXgp8=;
-        b=bm1LRLhmXFWousbf4UyBf/BrjS4mPuFx+42eo0+sglVyXUQCC685O5eYYaXvHPhF4a
-         iLRbhl/+Mt0cHueRYoEVjytCUdMPSFForGZp9t0mr7xSYZonHD+ldRjXE5aGPc1X7gYc
-         Y3lbOzRWkJdbjogSzooMWlszoeYQTv3XT1AsH19OLvc7ruuXMBKIoJu8wB8LljTovJW5
-         0R28F6fR1sXd6gwFMmV1ZnYk3HIWKhpEoQBkYKBm9wo+xgBoNntxqWLjMI1cOGQQjhcv
-         9Yz/cwQL4X2DPFtj9djyKifDMmUZwf6TBz/fhiddDBY91S6ODWnDNB8RiDxvuY3BseWO
-         iarA==
-X-Gm-Message-State: AOAM531JN4hG6jZ6QRHVM+hIT5SsCPssh+qpSTBoksRUWAzBdnhIQd1m
-        fG4rvvUr8Zp2DkFrE+jqh6A=
-X-Google-Smtp-Source: ABdhPJx2qDGExsPDlSuKlEw7Cpu8Sx2qH4tTWnvkjIQ9BFGSbprqbq1Qr0JkUcxBM7IZ2RjZDFTROg==
-X-Received: by 2002:aa7:c49a:0:b0:425:d526:98ad with SMTP id m26-20020aa7c49a000000b00425d52698admr4312411edq.352.1651324189976;
-        Sat, 30 Apr 2022 06:09:49 -0700 (PDT)
-Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.googlemail.com with ESMTPSA id u5-20020a056402064500b0042617ba63a0sm4142404edx.42.2022.04.30.06.09.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Apr 2022 06:09:49 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
+        Sat, 30 Apr 2022 08:16:55 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F3815DA15
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 05:13:32 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id DC5AD3F7B7;
+        Sat, 30 Apr 2022 14:13:29 +0200 (CEST)
+Date:   Sat, 30 Apr 2022 14:13:28 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Pavel Machek <pavel@ucw.cz>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>, linux-leds@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH v2 3/3] dt-bindings: arm: msm: Convert kpss-gcc driver Documentation to yaml
-Date:   Sat, 30 Apr 2022 08:01:25 +0200
-Message-Id: <20220430060125.9124-4-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220430060125.9124-1-ansuelsmth@gmail.com>
-References: <20220430060125.9124-1-ansuelsmth@gmail.com>
+        linux-doc@vger.kernel.org, linux-pwm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v14 1/2] dt-bindings: leds: Add Qualcomm Light Pulse
+ Generator binding
+Message-ID: <20220430121328.35cycpztigw3v7q3@SoMainline.org>
+References: <20220303214300.59468-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220303214300.59468-1-bjorn.andersson@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert kpss-gcc driver Documentation to yaml.
-Add #clock-cells additional binding to required bindings and example
-as it's a required binding for clock-output-names.
+On 2022-03-03 13:42:59, Bjorn Andersson wrote:
+> This adds the binding document describing the three hardware blocks
+> related to the Light Pulse Generator found in a wide range of Qualcomm
+> PMICs.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> ---
+> 
+> Changes since v13:
+> - None
+> 
+> Changes since v12:
+> - None
+> 
+>  .../bindings/leds/leds-qcom-lpg.yaml          | 173 ++++++++++++++++++
+>  1 file changed, 173 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> new file mode 100644
+> index 000000000000..336bd8e10efd
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> @@ -0,0 +1,173 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Light Pulse Generator
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description: >
+> +  The Qualcomm Light Pulse Generator consists of three different hardware blocks;
+> +  a ramp generator with lookup table, the light pulse generator and a three
+> +  channel current sink. These blocks are found in a wide range of Qualcomm PMICs.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,pm8150b-lpg
+> +      - qcom,pm8150l-lpg
+> +      - qcom,pm8916-pwm
+> +      - qcom,pm8941-lpg
+> +      - qcom,pm8994-lpg
+> +      - qcom,pmc8180c-lpg
+> +      - qcom,pmi8994-lpg
+> +      - qcom,pmi8998-lpg
+> +
+> +  "#pwm-cells":
+> +    const: 2
+> +
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 0
+> +
+> +  qcom,power-source:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      power-source used to drive the output, as defined in the datasheet.
+> +      Should be specified if the TRILED block is present
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 ------------
- .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 68 +++++++++++++++++++
- 2 files changed, 68 insertions(+), 44 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
- create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
+Upon closer inspection this is only true if the TRILED block also has a
+SRC register which appears to be optional.  Is it worth mentioning that
+here too?
 
-diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
-deleted file mode 100644
-index e628758950e1..000000000000
---- a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
-+++ /dev/null
-@@ -1,44 +0,0 @@
--Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)
--
--PROPERTIES
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: should be one of the following. The generic compatible
--			"qcom,kpss-gcc" should also be included.
--			"qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc"
--			"qcom,kpss-gcc-apq8064", "qcom,kpss-gcc"
--			"qcom,kpss-gcc-msm8974", "qcom,kpss-gcc"
--			"qcom,kpss-gcc-msm8960", "qcom,kpss-gcc"
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: base address and size of the register region
--
--- clocks:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: reference to the pll parents.
--
--- clock-names:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be "pll8_vote", "pxo".
--
--- clock-output-names:
--	Usage: required
--	Value type: <string>
--	Definition: Name of the output clock. Typically acpu_l2_aux indicating
--		    an L2 cache auxiliary clock.
--
--Example:
--
--	l2cc: clock-controller@2011000 {
--		compatible = "qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc";
--		reg = <0x2011000 0x1000>;
--		clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
--		clock-names = "pll8_vote", "pxo";
--		clock-output-names = "acpu_l2_aux";
--	};
-diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
-new file mode 100644
-index 000000000000..20ee182eb16f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
-@@ -0,0 +1,68 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/arm/msm/qcom,kpss-gcc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)
-+
-+maintainers:
-+  - Ansuel Smith <ansuelsmth@gmail.com>
-+
-+description: |
-+  Krait Processor Sub-system (KPSS) Global Clock Controller (GCC). Used
-+  to control L2 mux (in the current implementation).
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - qcom,kpss-gcc-ipq8064
-+          - qcom,kpss-gcc-apq8064
-+          - qcom,kpss-gcc-msm8974
-+          - qcom,kpss-gcc-msm8960
-+      - const: qcom,kpss-gcc
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    items:
-+      - description: phandle to pll8_vote
-+      - description: phandle to pxo_board
-+
-+  clock-names:
-+    items:
-+      - const: pll8_vote
-+      - const: pxo
-+
-+  clock-output-names:
-+    const: acpu_l2_aux
-+
-+  '#clock-cells':
-+    const: 0
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - clock-output-names
-+  - '#clock-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-+
-+    clock-controller@2011000 {
-+      compatible = "qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc";
-+      reg = <0x2011000 0x1000>;
-+      clocks = <&gcc PLL8_VOTE>, <&pxo_board>;
-+      clock-names = "pll8_vote", "pxo";
-+      clock-output-names = "acpu_l2_aux";
-+      #clock-cells = <0>;
-+    };
-+...
-+
--- 
-2.34.1
+- Marijn
 
+> +    enum: [0, 1, 3]
+> +
+> +  qcom,dtest:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> +    description: >
+> +      A list of integer pairs, where each pair represent the dtest line the
+> +      particular channel should be connected to and the flags denoting how the
+> +      value should be outputed, as defined in the datasheet. The number of
+> +      pairs should be the same as the number of channels.
+> +    items:
+> +      items:
+> +        - description: dtest line to attach
+> +        - description: flags for the attachment
+> +
+> +  multi-led:
+> +    type: object
+> +    $ref: leds-class-multicolor.yaml#
+> +    properties:
+> +      "#address-cells":
+> +        const: 1
+> +
+> +      "#size-cells":
+> +        const: 0
+> +
+> +    patternProperties:
+> +      "^led@[0-9a-f]$":
+> +        type: object
+> +        $ref: common.yaml#
+> +
+> +patternProperties:
+> +  "^led@[0-9a-f]$":
+> +    type: object
+> +    $ref: common.yaml#
+> +
+> +    properties:
+> +      reg: true
+> +
+> +    required:
+> +      - reg
+> +
+> +required:
+> +  - compatible
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/leds/common.h>
+> +
+> +    led-controller {
+> +      compatible = "qcom,pmi8994-lpg";
+> +
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +
+> +      qcom,power-source = <1>;
+> +
+> +      qcom,dtest = <0 0>,
+> +                   <0 0>,
+> +                   <0 0>,
+> +                   <4 1>;
+> +
+> +      led@1 {
+> +        reg = <1>;
+> +        color = <LED_COLOR_ID_GREEN>;
+> +        function = LED_FUNCTION_INDICATOR;
+> +        function-enumerator = <1>;
+> +      };
+> +
+> +      led@2 {
+> +        reg = <2>;
+> +        color = <LED_COLOR_ID_GREEN>;
+> +        function = LED_FUNCTION_INDICATOR;
+> +        function-enumerator = <0>;
+> +        default-state = "on";
+> +      };
+> +
+> +      led@3 {
+> +        reg = <3>;
+> +        color = <LED_COLOR_ID_GREEN>;
+> +        function = LED_FUNCTION_INDICATOR;
+> +        function-enumerator = <2>;
+> +      };
+> +
+> +      led@4 {
+> +        reg = <4>;
+> +        color = <LED_COLOR_ID_GREEN>;
+> +        function = LED_FUNCTION_INDICATOR;
+> +        function-enumerator = <3>;
+> +      };
+> +    };
+> +  - |
+> +    #include <dt-bindings/leds/common.h>
+> +
+> +    led-controller {
+> +      compatible = "qcom,pmi8994-lpg";
+> +
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +
+> +      qcom,power-source = <1>;
+> +
+> +      multi-led {
+> +        color = <LED_COLOR_ID_RGB>;
+> +        function = LED_FUNCTION_STATUS;
+> +
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        led@1 {
+> +          reg = <1>;
+> +          color = <LED_COLOR_ID_RED>;
+> +        };
+> +
+> +        led@2 {
+> +          reg = <2>;
+> +          color = <LED_COLOR_ID_GREEN>;
+> +        };
+> +
+> +        led@3 {
+> +          reg = <3>;
+> +          color = <LED_COLOR_ID_BLUE>;
+> +        };
+> +      };
+> +    };
+> +  - |
+> +    pwm-controller {
+> +      compatible = "qcom,pm8916-pwm";
+> +      #pwm-cells = <2>;
+> +    };
+> +...
+> -- 
+> 2.33.1
+> 
