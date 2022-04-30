@@ -2,45 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F3AF515EFD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 18:16:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00A9E515F05
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 18:23:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243091AbiD3QTT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 12:19:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41130 "EHLO
+        id S243175AbiD3Q0x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 12:26:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243120AbiD3QTR (ORCPT
+        with ESMTP id S243147AbiD3Q0w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Apr 2022 12:19:17 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AB323A5F3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 09:15:53 -0700 (PDT)
+        Sat, 30 Apr 2022 12:26:52 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E641B5F8D0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 09:23:30 -0700 (PDT)
 Received: from localhost.localdomain (abxh26.neoplus.adsl.tpnet.pl [83.9.1.26])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 2F59E3F724;
-        Sat, 30 Apr 2022 18:15:46 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id A908E3F722;
+        Sat, 30 Apr 2022 18:23:23 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
         angelogioacchino.delregno@somainline.org,
         marijn.suijten@somainline.org, jamipkettunen@somainline.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] drm/msm/disp: dpu1: Properly sort qcm2290_dpu_caps
-Date:   Sat, 30 Apr 2022 18:15:27 +0200
-Message-Id: <20220430161529.605843-3-konrad.dybcio@somainline.org>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: msm8996-tone: Drop cont_splash_mem region
+Date:   Sat, 30 Apr 2022 18:23:19 +0200
+Message-Id: <20220430162319.607629-1-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.35.2
-In-Reply-To: <20220430161529.605843-1-konrad.dybcio@somainline.org>
-References: <20220430161529.605843-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
@@ -51,55 +44,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Due to MSM8998 support having been stuck in review for so long,
-another struct was added nearby, which confused git and resulted
-in the definitions not being sorted alphabetically. Fix it.
+Tone does not have a functioning bootloader framebuffer and Linux allocates
+the DRM framebuffer dynamically. Free up 36 MiB of precious RAM by removing
+this reservation.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 22 +++++++++----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 0a217b5172bd..6e904d28824c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -254,6 +254,17 @@ static const struct dpu_caps msm8998_dpu_caps = {
- 	.max_vdeci_exp = MAX_VERT_DECIMATION,
- };
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+index fe57c0c35c5e..ce434c11c059 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+@@ -33,11 +33,6 @@ ramoops@a7f00000 {
+ 			ecc-size = <16>;
+ 		};
  
-+static const struct dpu_caps qcm2290_dpu_caps = {
-+	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-+	.max_mixer_blendstages = 0x4,
-+	.smart_dma_rev = DPU_SSPP_SMART_DMA_V2,
-+	.ubwc_version = DPU_HW_UBWC_VER_20,
-+	.has_dim_layer = true,
-+	.has_idle_pc = true,
-+	.max_linewidth = 2160,
-+	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-+};
-+
- static const struct dpu_caps sdm845_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
-@@ -417,17 +428,6 @@ static const struct dpu_mdp_cfg msm8998_mdp[] = {
- 	},
- };
- 
--static const struct dpu_caps qcm2290_dpu_caps = {
--	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
--	.max_mixer_blendstages = 0x4,
--	.smart_dma_rev = DPU_SSPP_SMART_DMA_V2,
--	.ubwc_version = DPU_HW_UBWC_VER_20,
--	.has_dim_layer = true,
--	.has_idle_pc = true,
--	.max_linewidth = 2160,
--	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
--};
+-		cont_splash_mem: memory@83401000 {
+-			reg = <0 0x83401000 0 0x23ff000>;
+-			no-map;
+-		};
 -
- static const struct dpu_mdp_cfg sdm845_mdp[] = {
- 	{
- 	.name = "top_0", .id = MDP_TOP,
+ 		zap_shader_region: gpu@90400000 {
+ 			compatible = "shared-dma-pool";
+ 			reg = <0x0 0x90400000 0x0 0x2000>;
 -- 
 2.35.2
 
