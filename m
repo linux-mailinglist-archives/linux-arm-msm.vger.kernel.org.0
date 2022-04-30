@@ -2,110 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7524515E6D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 16:52:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8356515E72
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 16:54:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242584AbiD3OzQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 10:55:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42002 "EHLO
+        id S243996AbiD3O5q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 10:57:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382867AbiD3OzM (ORCPT
+        with ESMTP id S239766AbiD3O5p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Apr 2022 10:55:12 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6445E340FA
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 07:51:50 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E34F23F685;
-        Sat, 30 Apr 2022 16:51:46 +0200 (CEST)
-Date:   Sat, 30 Apr 2022 16:51:45 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Pavel Machek <pavel@ucw.cz>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Doug Anderson <dianders@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-pwm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v14 2/2] leds: Add driver for Qualcomm LPG
-Message-ID: <20220430145145.2zlxahmtjwyzezkg@SoMainline.org>
-References: <20220303214300.59468-1-bjorn.andersson@linaro.org>
- <20220303214300.59468-2-bjorn.andersson@linaro.org>
- <20220430123502.7od55knvxkw3sv6s@SoMainline.org>
+        Sat, 30 Apr 2022 10:57:45 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8DE7506DA
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 07:54:23 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id m20so20370482ejj.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 07:54:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=dWEd/3Nb8Itqg/tkRZgxGxUockibAnTciuG63bql54k=;
+        b=d/UySQ4Cy6RXYaosrLS19vyorEgZ2IWJtJ79R3CH69wMgohLp+v3oQoBy269ff9lEE
+         nG/pMy6GMo9nngY9QlisyBNq/X/dOFJbPjkrpykreKKv0D9UeZvey2ch6aUC+Dz8VRbi
+         aJB86ZTsYQZvQUlPsHn1iFI/UpI287KSq+cdxtYbvQMPMgh250DIBXFRuhKex/em9+4h
+         LaZpqadMABxMLJhe6iQ9jFemV/xKIpbdeyWSQ5/MT/K+2sUvBORAZ2mz9KF37VUIFXS5
+         i79gGYTgymoGOyGv2Uutu2xNWJspRVRxJcgpPRN4IG0AalqrQEFV5wxmxFNHE7vos3Tr
+         K02g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=dWEd/3Nb8Itqg/tkRZgxGxUockibAnTciuG63bql54k=;
+        b=uImtSoaWuS38IzSVvP4lPIzisLFEECn3Sa7REEtunT3c1SU/DJfk7NjaIdn5u8uy5T
+         S/8P2VMq93tGRrzrZqJDPawXYKITT279rBX8M2Fp9aI3etk3Q/PpzpUoOxJT+XQiBFhg
+         FbPXdsvIT0+LK9DqFMQCyPgs5UYeBGtEGGVyP/wSNo42HfdeewfuQL1hBabJtwhJcSVm
+         K/807b/pE12ElUeD/2TotZVttHpHFYZc5ghJF51pv9f7PAL3ELuPqdVdP+squp6Blby2
+         5Oyhxn1i9Nx4eUtVstUfOGtYYMDkiY0il9/ebWwAUBbKyDj1bW/g0U1zwn4Aed7YDArf
+         yq/g==
+X-Gm-Message-State: AOAM5311UdIXrJyn5mIpbleDUqIZp1d8LJ9oVcDe3NDT+StknbTLnLOa
+        M3RudXJdC5H/lpDVLIha7YQcJQ==
+X-Google-Smtp-Source: ABdhPJyxP22ZX1yTun8Doyf2QTaUGaMugN0I6TjhJMr0c/d74Bak0nsBk+dqYlWLcpkAPwMntTqW2w==
+X-Received: by 2002:a17:907:7fa8:b0:6f3:e975:abfa with SMTP id qk40-20020a1709077fa800b006f3e975abfamr4002499ejc.86.1651330462301;
+        Sat, 30 Apr 2022 07:54:22 -0700 (PDT)
+Received: from [192.168.0.180] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id a25-20020a056402169900b0042617ba63c8sm4223267edv.82.2022.04.30.07.54.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Apr 2022 07:54:21 -0700 (PDT)
+Message-ID: <8ca89d2b-e3cd-8565-aba7-e7b0215664f2@linaro.org>
+Date:   Sat, 30 Apr 2022 16:54:20 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220430123502.7od55knvxkw3sv6s@SoMainline.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v5 6/7] dt-bindings: PCI: qcom: Support additional MSI
+ interrupts
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220429214250.3728510-1-dmitry.baryshkov@linaro.org>
+ <20220429214250.3728510-7-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220429214250.3728510-7-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-04-30 14:35:04, Marijn Suijten wrote:
-[..]
-> > +static int lpg_add_led(struct lpg *lpg, struct device_node *np)
-> > +{
-> > +	struct led_init_data init_data = {};
-> > +	struct led_classdev *cdev;
-> > +	struct device_node *child;
-> > +	struct mc_subled *info;
-> > +	struct lpg_led *led;
-> > +	const char *state;
-> > +	int num_channels;
-> > +	u32 color = 0;
-> > +	int ret;
-> > +	int i;
-> > +
-> > +	ret = of_property_read_u32(np, "color", &color);
-> > +	if (ret < 0 && ret != -EINVAL) {
-> > +		dev_err(lpg->dev, "failed to parse \"color\" of %pOF\n", np);
-> > +		return ret;
-> > +	}
-> > +
-> > +	if (color == LED_COLOR_ID_RGB)
-> > +		num_channels = of_get_available_child_count(np);
-> > +	else
-> > +		num_channels = 1;
-> > +
-> > +	led = devm_kzalloc(lpg->dev, struct_size(led, channels, num_channels), GFP_KERNEL);
-> > +	if (!led)
-> > +		return -ENOMEM;
-> > +
-> > +	led->lpg = lpg;
-> > +	led->num_channels = num_channels;
-> > +
-> > +	if (color == LED_COLOR_ID_RGB) {
-> > +		info = devm_kcalloc(lpg->dev, num_channels, sizeof(*info), GFP_KERNEL);
-> > +		if (!info)
-> > +			return -ENOMEM;
-> > +		i = 0;
-> > +		for_each_available_child_of_node(np, child) {
-> > +			ret = lpg_parse_channel(lpg, child, &led->channels[i]);
-> > +			if (ret < 0)
-> > +				return ret;
-> > +
-> > +			info[i].color_index = led->channels[i]->color;
-> > +			info[i].intensity = 0;
+On 29/04/2022 23:42, Dmitry Baryshkov wrote:
+> On Qualcomm platforms each group of 32 MSI vectors is routed to the
+> separate GIC interrupt. Document mapping of additional interrupts.
 > 
-> This struct also has a "channel" field that doesn't seem to be used
-> anywhere.  Should we still initialize it to something sensible, or is it
-> better reported upstream for removal?
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Never mind the second bit: lp552[13] uses the `channel` field internally
-to store a custom index.  This LPG driver simply iterates over all the
-led channels (stored in the LPG struct, with all necessary info) in the
-same order as the subleds in the multicolor led device, so it's most
-likely of no use for us.
 
-- Marijn
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+
+Best regards,
+Krzysztof
