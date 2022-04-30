@@ -2,74 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A74B5515E3E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 16:41:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5514F515E4E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 16:43:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238704AbiD3OoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 10:44:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49372 "EHLO
+        id S242473AbiD3Oqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 10:46:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233917AbiD3OoT (ORCPT
+        with ESMTP id S242458AbiD3Oqp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Apr 2022 10:44:19 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93E576351B
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 07:40:57 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id gh6so20455863ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 07:40:57 -0700 (PDT)
+        Sat, 30 Apr 2022 10:46:45 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9E666351B
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 07:43:23 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id a1so12078971edt.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 07:43:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :references:from:in-reply-to:content-transfer-encoding;
-        bh=LokzJDa2Xe7TuFMhmFuD4DahOkDLaGkiEOATNl7BNRY=;
-        b=SAIr1Da3H8/px5lgkHUteAvg3wWIR5C1ZP8E41UVrymDvA/1L4ndQ/hLupOphy7M7E
-         pW8QZmVCDnkeHJrIffY5IhnABxkHC4DwBUgr29crPVwCRYC8d9FZkb1H8fkX93t19wQP
-         Yp0PgSiwFkOa0QnKI5dSOIbyffkpPJCet9U8YQ/2xDKTzJ5Ca/MdE7Ls3eAJknOo8I3T
-         JCOEprgLFd3oQyXol40btbAlYMjf2pv98uQXhRAbV5ZcwnTZX96ev0I37xj/FFgSQCGX
-         OGSBBQXXxDl6Q48hle/4n/t1aTHeOp+E1BJWIDubE4ALMg9FUoPKr0QpzIET+K4IRCqE
-         qKQQ==
+        bh=Ae7sNcHPWMn0vQt8ktazZVFlpIwIv2WIixfHk4+kCCs=;
+        b=R03VAAwVTDiVdVvlB4UrMenl7xp/UpjZLcoRbp4/jp5vDn6wjTFrjllooWfuKDUy4C
+         mNrMBFMThe2AtywO46d5WROs0dtF4F6lMQm6Hvp1jC4xDt4EViOJ5quaGM2kSY1C16gy
+         9r8ojzX34iXZKf1bql7rTKVqClqgIvmFa8JfGZRyZZR2nR/8eumAWVKR6P7PPwnz9lZu
+         MdBjsLya7QzRlZmWxmf9TWxTXZsIDmmIA3G6lMhapcvM/479Kg+UBhtoxzJ4WZymeqkP
+         4fesp6bFshwwuUpjHQvYyUj3LLLG4Sjsa64FPNPrgw/RBjnFI1Oirhl8n3eCs8Y251BU
+         11fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=LokzJDa2Xe7TuFMhmFuD4DahOkDLaGkiEOATNl7BNRY=;
-        b=TQxe9hjlXWpIQGbBsuLLKTVvgi4Uxh/wM++9A4uDJ7rUDFBf5kG3mJ98CHjA6NLT9f
-         8q/+yNoQR6Oj9zt/plQx4RIwM/O9hGkifMqeW/2K0L7DaU9xwV/RO4Dwp5qDHxIhpzXP
-         mpRGy/iGcrFPxfpxUC/ywBHYP6EUo+9BY+qmIOYYUktqimh3tKYkLnFs4IaJzVV3XNw+
-         +I9vUB+7OV4D0fPItuyHM0NKiANF32ch5QtPc6K9v7WPub+gGkYsLlo1DL2gvdjjllEj
-         kxWndLAzslU7LER08OZ9L0hAJIryV/98Ixr7zPw2xOvOQg0EweU5UGChtwl20Ig73xfM
-         IQwg==
-X-Gm-Message-State: AOAM530GBJXgEMvHq49mUm8kL33/B1BVsi0rcUf/DV2cyqlxC0HkhUvH
-        e74T42Y8CYxeZ7Kz90+Kf/YdHohY+O1uWw==
-X-Google-Smtp-Source: ABdhPJyiS+KNBRI3C8ryizI2zQv/To0znPNYuAakl7DG82X4EjBVXi7pNBCQhfq0oVkdGuvKoOFGzw==
-X-Received: by 2002:a17:906:9b93:b0:6da:6388:dc57 with SMTP id dd19-20020a1709069b9300b006da6388dc57mr4002977ejc.338.1651329656122;
-        Sat, 30 Apr 2022 07:40:56 -0700 (PDT)
+        bh=Ae7sNcHPWMn0vQt8ktazZVFlpIwIv2WIixfHk4+kCCs=;
+        b=CJ0kvWrTjSwWYDWhpGFvCVzhx6RnRUt1VJRTH8jRJu36N4HwkSx7wlL0zMm/QVjEfQ
+         2xGdePiCT2W9zc1QPTzA+7sjZWXHg9bV9nyeK3nLRHcFS3nOFsaFGKadkja3XNGzbZmT
+         7aa4aw8N2Yqtc7GaCuEXLhUHj3T5kmdjl5bLQibk4ewlQXx45Hp2y/ruI6mgCKm74XY6
+         /9Wlml5OLpKnpp/Mt1YVCuhLdqvk8NxfUVXas4Dmf+z68pP0Us4yCeYsAkvkylkAzvqE
+         hYIPPi0ExpBc0cO/3mecIhj0uX7HNTZZHU5O7q6oSDR75Nnuuv24yPg0e3WQKA+aSTEY
+         6RRA==
+X-Gm-Message-State: AOAM533swR7rqfEHXWZTiqFGYVSXfPBedyW4ZGhagzR1YQzrbq8pZUWY
+        b/j9/qvGPgVoxS/FPsganvGKsQ==
+X-Google-Smtp-Source: ABdhPJw/sjjJ325eTLjgrvQ2SuNf9g5yd69OBocxHWeT36O4SGf1AKPyCMPkC1ksmQ5yoT6VPZtWwQ==
+X-Received: by 2002:aa7:cb4d:0:b0:425:e24f:96ba with SMTP id w13-20020aa7cb4d000000b00425e24f96bamr4755602edt.214.1651329802286;
+        Sat, 30 Apr 2022 07:43:22 -0700 (PDT)
 Received: from [192.168.0.180] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id qs24-20020a170906459800b006f3ef214e19sm1682904ejc.127.2022.04.30.07.40.55
+        by smtp.gmail.com with ESMTPSA id ck13-20020a0564021c0d00b00427afbbf5e8sm527102edb.11.2022.04.30.07.43.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Apr 2022 07:40:55 -0700 (PDT)
-Message-ID: <fec305d1-d4b3-3f9d-bc31-bc33490d1ad7@linaro.org>
-Date:   Sat, 30 Apr 2022 16:40:54 +0200
+        Sat, 30 Apr 2022 07:43:21 -0700 (PDT)
+Message-ID: <62709b53-392f-2463-8124-e109f2d810dd@linaro.org>
+Date:   Sat, 30 Apr 2022 16:43:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH v2 3/3] dt-bindings: arm: msm: Convert kpss-gcc driver
- Documentation to yaml
+Subject: Re: [PATCH 2/2] dt-bindings: mtd: qcom_nandc: document
+ qcom,boot_pages binding
 Content-Language: en-US
 To:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20220430060125.9124-1-ansuelsmth@gmail.com>
- <20220430060125.9124-4-ansuelsmth@gmail.com>
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220429211630.7812-1-ansuelsmth@gmail.com>
+ <20220429211630.7812-3-ansuelsmth@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220430060125.9124-4-ansuelsmth@gmail.com>
+In-Reply-To: <20220429211630.7812-3-ansuelsmth@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,45 +83,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/04/2022 08:01, Ansuel Smith wrote:
-> Convert kpss-gcc driver Documentation to yaml.
-> Add #clock-cells additional binding to required bindings and example
-> as it's a required binding for clock-output-names.
+On 29/04/2022 23:16, Ansuel Smith wrote:
+> Document new qcom,boot_pages binding used to apply special
+> read/write configuration to boot pages.
+> 
+> QCOM apply a special configuration where spare data is not protected
+> by ECC for some special pages (used for boot partition). Add
+> Documentation on how to declare these special pages.
 > 
 > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  .../devicetree/bindings/mtd/qcom,nandc.yaml         | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> index 84ad7ff30121..ef243109689d 100644
+> --- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> +++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+> @@ -78,6 +78,17 @@ allOf:
+>              Must contain the ADM data type CRCI block instance number
+>              specified for the NAND controller on the given platform
+>  
+> +        qcom,boot_pages:
 
+No underscores in property names.
 
-(...)
-
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - qcom,kpss-gcc-ipq8064
-> +          - qcom,kpss-gcc-apq8064
-> +          - qcom,kpss-gcc-msm8974
-> +          - qcom,kpss-gcc-msm8960
-> +      - const: qcom,kpss-gcc
+> +          $ref: /schemas/types.yaml#/definitions/uint32-array
+> +          description:
+> +            Some special page used by boot partition have spare data
+> +            not protected by ECC. Use this to declare these special page
+> +            by defining first the offset and then the size.
 > +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    items:
-> +      - description: phandle to pll8_vote
-> +      - description: phandle to pxo_board
-> +
-> +  clock-names:
-> +    items:
-> +      - const: pll8_vote
-> +      - const: pxo
-> +
-> +  clock-output-names:
-> +    const: acpu_l2_aux
+> +            It's in the form of <offset1 size1 offset2 size2 offset3 ...>
 
-It does not make sense having a constant output name. What is the
-meaning this property in such case? The original binding did not enforce it.
+Then it look like uint32-matrix.
 
+> +
+> +            Refer to the ipq8064 example on how to use this special binding.
+
+Property does not look valid for other variants, so it should be made
+false for them (in allOf:if:then).
+
+> +
+>    - if:
+>        properties:
+>          compatible:
+> @@ -135,6 +146,8 @@ examples:
+>          nand-ecc-strength = <4>;
+>          nand-bus-width = <8>;
+>  
+> +        qcom,boot_pages = <0x0 0x58a0000>;
+> +
+>          partitions {
+>            compatible = "fixed-partitions";
+>            #address-cells = <1>;
 
 
 Best regards,
