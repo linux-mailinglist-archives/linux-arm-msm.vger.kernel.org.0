@@ -2,58 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F9DC515E66
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 16:50:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A74B5515E3E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 16:41:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382881AbiD3OyJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 10:54:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37280 "EHLO
+        id S238704AbiD3OoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 10:44:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382878AbiD3OyD (ORCPT
+        with ESMTP id S233917AbiD3OoT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Apr 2022 10:54:03 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 852C213D28;
-        Sat, 30 Apr 2022 07:50:41 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id z19so12051821edx.9;
-        Sat, 30 Apr 2022 07:50:41 -0700 (PDT)
+        Sat, 30 Apr 2022 10:44:19 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93E576351B
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 07:40:57 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id gh6so20455863ejb.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 07:40:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=35Z38xa8v30mqUUeSUS3HbNABmBpHeiUXWnZOefNVTM=;
-        b=AR2MkGG+6LI/m1uDVb5qrF6f8++OLChjDqjv9zvDtU0K8sydE53k6ynYldLCk9Uw4w
-         WCvHLH2Bd1oZPk6oYS7zTDOr9lFULgdb0RfyyM786u/NGGZFyzGGUxvLJAsXSXtSQjJp
-         +NqUjG7HrKkL9Otj+U2+VkPAV+ZMkPdpuS9TJrAoQEdqipbnGmEkzbC1/DIxrjk6FA0W
-         aOtxjISyVu+ZzYkhReLkOxZ43PuZzfBnOnMXFIwbY+8ET+b3Z8jdqCmHFLZq6Glk0o0A
-         vrSg/Ptj5oaHklp5WZ5CPjMBI/6obfc+qESRnAqvs6XCDbwOrry99T/taxgcp99Z/hZH
-         ftJg==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=LokzJDa2Xe7TuFMhmFuD4DahOkDLaGkiEOATNl7BNRY=;
+        b=SAIr1Da3H8/px5lgkHUteAvg3wWIR5C1ZP8E41UVrymDvA/1L4ndQ/hLupOphy7M7E
+         pW8QZmVCDnkeHJrIffY5IhnABxkHC4DwBUgr29crPVwCRYC8d9FZkb1H8fkX93t19wQP
+         Yp0PgSiwFkOa0QnKI5dSOIbyffkpPJCet9U8YQ/2xDKTzJ5Ca/MdE7Ls3eAJknOo8I3T
+         JCOEprgLFd3oQyXol40btbAlYMjf2pv98uQXhRAbV5ZcwnTZX96ev0I37xj/FFgSQCGX
+         OGSBBQXXxDl6Q48hle/4n/t1aTHeOp+E1BJWIDubE4ALMg9FUoPKr0QpzIET+K4IRCqE
+         qKQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=35Z38xa8v30mqUUeSUS3HbNABmBpHeiUXWnZOefNVTM=;
-        b=2J8SWQk3VV/Jah0txgiTcQa83ammW7Pe8vCKDNh+Iy/DwHs4QH12B87EVtrLsRFP/i
-         Al8ewAtRbzGodqD1CaT6+ESLzXZ0jifW6uddc7KnYYRNf0NrWhsH4+qUzaJJTYk7flMc
-         KWsYVj2qISsa031EZXlnzt898/nYQj7oBY8czlcQh+HxI6dLF93i4EmGeVCOliBDYURu
-         SodKvHI/d64/bi0xRW87Wn363uB1WP+vwtWjHfvFyXKXd3clfg5hWtkNy2IanqC7I3rx
-         bFeAUuM0vBAFRR4jq6kvawcR4zZv27jpddul/U/EpMbnaQhp2RbuPwwoZLWyqNFzZ7XQ
-         hhOQ==
-X-Gm-Message-State: AOAM5332oVBFMqD5GBibsT2qOcx6Qa0817wQO87MMdP4AbKaUD0YJQ6r
-        1Op0K4vJr+ijM7rFrAX6U10=
-X-Google-Smtp-Source: ABdhPJzhsoUpvtx4Z6JBYZ5oCMOo5p1WBt6jwZmgE1ZSbLsuBNCk1iQaRSqqVpYgKD2KqRzyv3qhlA==
-X-Received: by 2002:a05:6402:2547:b0:426:1763:4c5b with SMTP id l7-20020a056402254700b0042617634c5bmr4857413edb.176.1651330239860;
-        Sat, 30 Apr 2022 07:50:39 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id e25-20020a056402149900b0042617ba63d5sm4172358edv.95.2022.04.30.07.50.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Apr 2022 07:50:39 -0700 (PDT)
-Message-ID: <626d4cbf.1c69fb81.e6965.76b4@mx.google.com>
-X-Google-Original-Message-ID: <YmzoYl90+KVdkrPA@Ansuel-xps.>
-Date:   Sat, 30 Apr 2022 09:42:26 +0200
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=LokzJDa2Xe7TuFMhmFuD4DahOkDLaGkiEOATNl7BNRY=;
+        b=TQxe9hjlXWpIQGbBsuLLKTVvgi4Uxh/wM++9A4uDJ7rUDFBf5kG3mJ98CHjA6NLT9f
+         8q/+yNoQR6Oj9zt/plQx4RIwM/O9hGkifMqeW/2K0L7DaU9xwV/RO4Dwp5qDHxIhpzXP
+         mpRGy/iGcrFPxfpxUC/ywBHYP6EUo+9BY+qmIOYYUktqimh3tKYkLnFs4IaJzVV3XNw+
+         +I9vUB+7OV4D0fPItuyHM0NKiANF32ch5QtPc6K9v7WPub+gGkYsLlo1DL2gvdjjllEj
+         kxWndLAzslU7LER08OZ9L0hAJIryV/98Ixr7zPw2xOvOQg0EweU5UGChtwl20Ig73xfM
+         IQwg==
+X-Gm-Message-State: AOAM530GBJXgEMvHq49mUm8kL33/B1BVsi0rcUf/DV2cyqlxC0HkhUvH
+        e74T42Y8CYxeZ7Kz90+Kf/YdHohY+O1uWw==
+X-Google-Smtp-Source: ABdhPJyiS+KNBRI3C8ryizI2zQv/To0znPNYuAakl7DG82X4EjBVXi7pNBCQhfq0oVkdGuvKoOFGzw==
+X-Received: by 2002:a17:906:9b93:b0:6da:6388:dc57 with SMTP id dd19-20020a1709069b9300b006da6388dc57mr4002977ejc.338.1651329656122;
+        Sat, 30 Apr 2022 07:40:56 -0700 (PDT)
+Received: from [192.168.0.180] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id qs24-20020a170906459800b006f3ef214e19sm1682904ejc.127.2022.04.30.07.40.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Apr 2022 07:40:55 -0700 (PDT)
+Message-ID: <fec305d1-d4b3-3f9d-bc31-bc33490d1ad7@linaro.org>
+Date:   Sat, 30 Apr 2022 16:40:54 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 3/3] dt-bindings: arm: msm: Convert kpss-gcc driver
+ Documentation to yaml
+Content-Language: en-US
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -61,79 +66,61 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] dt-bindings: arm: msm: Convert kpss-gcc driver
- Documentation to yaml
 References: <20220430060125.9124-1-ansuelsmth@gmail.com>
  <20220430060125.9124-4-ansuelsmth@gmail.com>
- <fec305d1-d4b3-3f9d-bc31-bc33490d1ad7@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fec305d1-d4b3-3f9d-bc31-bc33490d1ad7@linaro.org>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220430060125.9124-4-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Apr 30, 2022 at 04:40:54PM +0200, Krzysztof Kozlowski wrote:
-> On 30/04/2022 08:01, Ansuel Smith wrote:
-> > Convert kpss-gcc driver Documentation to yaml.
-> > Add #clock-cells additional binding to required bindings and example
-> > as it's a required binding for clock-output-names.
-> > 
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+On 30/04/2022 08:01, Ansuel Smith wrote:
+> Convert kpss-gcc driver Documentation to yaml.
+> Add #clock-cells additional binding to required bindings and example
+> as it's a required binding for clock-output-names.
 > 
-> 
-> (...)
-> 
-> > +properties:
-> > +  compatible:
-> > +    items:
-> > +      - enum:
-> > +          - qcom,kpss-gcc-ipq8064
-> > +          - qcom,kpss-gcc-apq8064
-> > +          - qcom,kpss-gcc-msm8974
-> > +          - qcom,kpss-gcc-msm8960
-> > +      - const: qcom,kpss-gcc
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  clocks:
-> > +    items:
-> > +      - description: phandle to pll8_vote
-> > +      - description: phandle to pxo_board
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: pll8_vote
-> > +      - const: pxo
-> > +
-> > +  clock-output-names:
-> > +    const: acpu_l2_aux
-> 
-> It does not make sense having a constant output name. What is the
-> meaning this property in such case? The original binding did not enforce it.
-> 
-> 
-> 
-> Best regards,
-> Krzysztof
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 
-Mh. Should I just drop the const and put a description referring to an
-advised name? The driver with the kpss-gcc hardcode the name to
-acpu_l2_aux that's why I thought it was a correct conversion using a
-const but I assume this is another problem of not making a correct 1:1
-conversion and adding fixes on pure conversion.
-Think I should drop it and put a description to it. (and then later fix
-it when I will push the other series with all the tweaks)
 
-What do you think?
+(...)
 
--- 
-	Ansuel
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,kpss-gcc-ipq8064
+> +          - qcom,kpss-gcc-apq8064
+> +          - qcom,kpss-gcc-msm8974
+> +          - qcom,kpss-gcc-msm8960
+> +      - const: qcom,kpss-gcc
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    items:
+> +      - description: phandle to pll8_vote
+> +      - description: phandle to pxo_board
+> +
+> +  clock-names:
+> +    items:
+> +      - const: pll8_vote
+> +      - const: pxo
+> +
+> +  clock-output-names:
+> +    const: acpu_l2_aux
+
+It does not make sense having a constant output name. What is the
+meaning this property in such case? The original binding did not enforce it.
+
+
+
+Best regards,
+Krzysztof
