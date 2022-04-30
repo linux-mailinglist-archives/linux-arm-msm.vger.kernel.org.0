@@ -2,101 +2,286 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1F56515EAD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 17:31:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FE96515EF4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 18:15:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382962AbiD3Peb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 11:34:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52554 "EHLO
+        id S243062AbiD3QTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 12:19:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382964AbiD3Pe2 (ORCPT
+        with ESMTP id S243048AbiD3QTE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Apr 2022 11:34:28 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F2A123BC2;
-        Sat, 30 Apr 2022 08:31:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651332665; x=1682868665;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=Vdib3cq/uwHeVpO2OCfkLwJ2zzwCNhQe5GD7ZRnG7fg=;
-  b=kvoFAhfSRCyD46HXsV+O1fILUR2iavwSvdbwrLage59KB6PZZybNOAQV
-   8EVzCS3OqskGjTZE2aWKEuomt72KW1HWUqCj9Weqca+x1MwV8E4ctdQNu
-   8qmrEcZRL7tQU+wF1rrOD1x8DQ9ntFpwcCDG6v3n5jfsAlp7Pm4DwllZk
-   8=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 30 Apr 2022 08:31:01 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2022 08:31:01 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Sat, 30 Apr 2022 08:31:01 -0700
-Received: from kaushalk-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Sat, 30 Apr 2022 08:30:57 -0700
-From:   Kaushal Kumar <quic_kaushalk@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <manivannan.sadhasivam@linaro.org>,
-        "Kaushal Kumar" <quic_kaushalk@quicinc.com>
-Subject: [PATCH 4/4] ARM: dts: qcom: sdx65-mtp: Enable QPIC NAND support
-Date:   Sat, 30 Apr 2022 08:30:10 -0700
-Message-ID: <1651332610-6334-5-git-send-email-quic_kaushalk@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1651332610-6334-1-git-send-email-quic_kaushalk@quicinc.com>
-References: <1651332610-6334-1-git-send-email-quic_kaushalk@quicinc.com>
+        Sat, 30 Apr 2022 12:19:04 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B11A2FFFB
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 09:15:42 -0700 (PDT)
+Received: from localhost.localdomain (abxh26.neoplus.adsl.tpnet.pl [83.9.1.26])
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 918503F720;
+        Sat, 30 Apr 2022 18:15:39 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] dt-bindings: display: msm: Add binding for MSM8996 DPU
+Date:   Sat, 30 Apr 2022 18:15:25 +0200
+Message-Id: <20220430161529.605843-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.35.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable QPIC NAND devicetree node for Qualcomm SDX65-MTP board.
+Add yaml binding for MSM8996 DPU.
 
-Signed-off-by: Kaushal Kumar <quic_kaushalk@quicinc.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm/boot/dts/qcom-sdx65-mtp.dts | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ .../bindings/display/msm/dpu-msm8996.yaml     | 221 ++++++++++++++++++
+ 1 file changed, 221 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-msm8996.yaml
 
-diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-index 5c5fcb0..3628104 100644
---- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-+++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-@@ -72,6 +72,21 @@
- 	status = "ok";
- };
- 
-+&qpic_nand {
-+	status = "ok";
+diff --git a/Documentation/devicetree/bindings/display/msm/dpu-msm8996.yaml b/Documentation/devicetree/bindings/display/msm/dpu-msm8996.yaml
+new file mode 100644
+index 000000000000..10b02423224d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/dpu-msm8996.yaml
+@@ -0,0 +1,221 @@
++# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/msm/dpu-msm8996.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+	nand@0 {
-+		reg = <0>;
++title: Qualcomm Display DPU dt properties for MSM8996 target
 +
-+		nand-ecc-strength = <4>;
-+		nand-ecc-step-size = <512>;
-+		nand-bus-width = <8>;
-+		/* ico and efs2 partitions are secured */
-+		secure-regions = /bits/ 64 <0x500000 0x500000
-+					    0xa00000 0xb00000>;
-+	};
-+};
++maintainers:
++  - Konrad Dybcio <konrad.dybcio@somainline.org>
 +
- &apps_rsc {
- 	pmx65-rpmh-regulators {
- 		compatible = "qcom,pmx65-rpmh-regulators";
++description: |
++  Device tree bindings for MSM Mobile Display Subsystem (MDSS) that
++  encapsulates sub-blocks like DPU display controller, DSI interfaces, etc.
++  Device tree bindings of MDSS and DPU are mentioned for MSM8996 target.
++
++properties:
++  compatible:
++    items:
++      - const: qcom,msm8996-mdss
++
++  reg:
++    maxItems: 1
++
++  reg-names:
++    const: mdss
++
++  power-domains:
++    maxItems: 1
++
++  clocks:
++    items:
++      - description: Display AHB clock
++      - description: Display core clock
++
++  clock-names:
++    items:
++      - const: iface
++      - const: core
++
++  interrupts:
++    maxItems: 1
++
++  interrupt-controller: true
++
++  "#address-cells": true
++
++  "#size-cells": true
++
++  "#interrupt-cells":
++    const: 1
++
++  iommus:
++    items:
++      - description: Phandle to mdp_smmu node with SID mask for Hard-Fail port0
++
++  ranges: true
++
++patternProperties:
++  "^display-controller@[0-9a-f]+$":
++    type: object
++    description: Node containing the properties of DPU.
++
++    properties:
++      compatible:
++        items:
++          - const: qcom,msm8996-dpu
++
++      reg:
++        items:
++          - description: Address offset and size for mdp register set
++          - description: Address offset and size for vbif register set
++          - description: Address offset and size for non-realtime vbif register set
++
++      reg-names:
++        items:
++          - const: mdp
++          - const: vbif
++          - const: vbif_nrt
++
++      clocks:
++        items:
++          - description: Display ahb clock
++          - description: Display axi clock
++          - description: Display core clock
++          - description: Display iommu clock
++          - description: Display vsync clock
++
++      clock-names:
++        items:
++          - const: iface
++          - const: bus
++          - const: core
++          - const: iommu
++          - const: vsync
++
++      interrupts:
++        maxItems: 1
++
++      power-domains:
++        maxItems: 1
++
++      operating-points-v2: true
++      ports:
++        $ref: /schemas/graph.yaml#/properties/ports
++        description: |
++          Contains the list of output ports from DPU device. These ports
++          connect to interfaces that are external to the DPU hardware,
++          such as DSI, DP etc. Each output port contains an endpoint that
++          describes how it is connected to an external interface.
++
++        properties:
++          port@0:
++            $ref: /schemas/graph.yaml#/properties/port
++            description: DPU_INTF3 (HDMI)
++
++          port@1:
++            $ref: /schemas/graph.yaml#/properties/port
++            description: DPU_INTF1 (DSI0)
++
++        required:
++          - port@0
++          - port@1
++
++    required:
++      - compatible
++      - reg
++      - reg-names
++      - clocks
++      - interrupts
++      - power-domains
++      - operating-points-v2
++      - ports
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - power-domains
++  - clocks
++  - interrupts
++  - interrupt-controller
++  - iommus
++  - ranges
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
++
++    mdss: display-subsystem@900000 {
++        compatible = "qcom,msm8996-mdss";
++        reg = <0x00900000 0x1000>;
++        reg-names = "mdss";
++
++        power-domains = <&mmcc MDSS_GDSC>;
++
++        clocks = <&mmcc MDSS_AHB_CLK>, <&mmcc MDSS_MDP_CLK>;
++        clock-names = "iface", "core";
++
++        assigned-clocks = <&mmcc MDSS_MDP_CLK>;
++        assigned-clock-rates = <300000000>;
++
++        interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
++        interrupt-controller;
++        #interrupt-cells = <1>;
++
++        iommus = <&mdp_smmu 0>;
++
++        #address-cells = <1>;
++        #size-cells = <1>;
++        ranges;
++
++        display-controller@901000 {
++            compatible = "qcom,msm8996-dpu";
++            reg = <0x00901000 0x90000>,
++                  <0x009b0000 0x1040>,
++                  <0x009b8000 0x1040>;
++            reg-names = "mdp", "vbif", "vbif_nrt";
++
++            clocks = <&mmcc MDSS_AHB_CLK>,
++              <&mmcc MDSS_AXI_CLK>,
++              <&mmcc MDSS_MDP_CLK>,
++              <&mmcc SMMU_MDP_AXI_CLK>,
++              <&mmcc MDSS_VSYNC_CLK>;
++            clock-names = "iface", "bus", "core", "iommu", "vsync";
++
++            assigned-clocks = <&mmcc MDSS_MDP_CLK>,
++                  <&mmcc MDSS_VSYNC_CLK>;
++            assigned-clock-rates = <412500000>, <19200000>;
++
++            operating-points-v2 = <&mdp_opp_table>;
++            power-domains = <&rpmpd MSM8996_VDDMX>;
++
++            interrupt-parent = <&mdss>;
++            interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
++
++            ports {
++              #address-cells = <1>;
++              #size-cells = <0>;
++
++              port@0 {
++                reg = <0>;
++                dpu_intf3_out: endpoint {
++                  remote-endpoint = <&hdmi_in>;
++                };
++              };
++
++              port@1 {
++                reg = <1>;
++                dpu_intf1_out: endpoint {
++                  remote-endpoint = <&dsi0_in>;
++                };
++              };
++            };
++        };
++    };
++...
 -- 
-2.7.4
+2.35.2
 
