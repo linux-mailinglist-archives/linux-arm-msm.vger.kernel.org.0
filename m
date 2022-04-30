@@ -2,272 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8D61515C23
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 12:06:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B041D515C56
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 12:48:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382563AbiD3KJe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 06:09:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41690 "EHLO
+        id S237975AbiD3Kvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 06:51:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382574AbiD3KJd (ORCPT
+        with ESMTP id S237909AbiD3Kvo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Apr 2022 06:09:33 -0400
-X-Greylist: delayed 547 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 30 Apr 2022 03:06:09 PDT
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFDED23BEA;
-        Sat, 30 Apr 2022 03:06:08 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C1EDB3F735;
-        Sat, 30 Apr 2022 12:06:06 +0200 (CEST)
-Date:   Sat, 30 Apr 2022 12:06:05 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Pavel Machek <pavel@ucw.cz>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-pwm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v14 1/2] dt-bindings: leds: Add Qualcomm Light Pulse
- Generator binding
-Message-ID: <20220430100605.vn4wf33mft3vdm5w@SoMainline.org>
-References: <20220303214300.59468-1-bjorn.andersson@linaro.org>
+        Sat, 30 Apr 2022 06:51:44 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09F09549A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 03:48:22 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id j4so17977584lfh.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 03:48:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jWp20FUjFEijENLW1jgAj2gw68XIVADTXOMKS9xgjoY=;
+        b=cgzQY8Q64Q67uW86YHlg0bfLxKzVbDGY698MRQjXg3sdZdn3FlVzRJkurCkWNjwdBq
+         Nw/KO7x04JZrsZO6o1w1Okb+L+HeOY40QrjtOyPSGdqhKmryE1GzTjQaSyLmsIPvwRSz
+         IC31O9JdbC6Cn3bNbEFXmz/Fq0wwj0L9x25etBCvDqakuLNXRotON+r4LoW5Zkp2BwZt
+         hWbZeG0wB70kYxqxBGXkgDoVGevxAOQ67z+3/5aEQzvhV/zSYV1r7M+3olb4Ku1yfKgt
+         R/zLZPaEs41qOZXvOF5npwUJBlYtwnXDTs7XugUdUT+ZrMeywW+hp+8uPg0/dhHP/zJ3
+         ClZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jWp20FUjFEijENLW1jgAj2gw68XIVADTXOMKS9xgjoY=;
+        b=L5IDvAyBfJt/PR19rKI9xZ1BLP3lWG74Wk349d3hoi5TtYz0hXAHsKcoGqxmV96xzs
+         l8FI64/Nw/q0QBbsnIHo13Qq90zxU6ksy/ExqLwT5gJJMlFQSu5asCMmvdGYAttotPPV
+         6y8AdnWw88/HcqGfjPjAZdg33mVtx5nZv66rnGcIcORH7hF/k27bPtYMOvCRXubYS7yG
+         /16vodg6Hore4igaN2yTLwUmTw9rh+xjY+MMQ7d+ZfQndQmIh/JZroKQWYIWUVK8rXEX
+         uxPFD5hWseD+RIra0y8TH2Fdbq/p9pSx3xsbukNIYmA/hRCfzfNfO6n6TrzzxMKLsBeF
+         ZQ4w==
+X-Gm-Message-State: AOAM533HIWutg/ItGd8uqjTF56da0JMBoQwoSnXDeGcCdnO3zmnyTZ3O
+        2ikTIIjqJoQdgpnV61Bjbwc/Lw==
+X-Google-Smtp-Source: ABdhPJw+A9ODuR0yLPkkt2fiEjJKwxD3Hn49sKAuSccnhcMm14Xdy0Pi8D800lFTTOxQGh1mjIs0jQ==
+X-Received: by 2002:a05:6512:b9d:b0:472:687:50ca with SMTP id b29-20020a0565120b9d00b00472068750camr2638797lfv.466.1651315701200;
+        Sat, 30 Apr 2022 03:48:21 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id z13-20020a2e8e8d000000b0024f3d1daeeasm510841ljk.114.2022.04.30.03.48.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 Apr 2022 03:48:20 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        kernel test robot <lkp@intel.com>
+Subject: [PATCH] drm/msm: add missing include to msm_drv.c
+Date:   Sat, 30 Apr 2022 13:48:20 +0300
+Message-Id: <20220430104820.3782290-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220303214300.59468-1-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-03-03 13:42:59, Bjorn Andersson wrote:
-> This adds the binding document describing the three hardware blocks
-> related to the Light Pulse Generator found in a wide range of Qualcomm
-> PMICs.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
+Add explicit include of drm_bridge.h to the msm_drm.c to fix the
+following warning:
 
-Apart the nits below:
+drivers/gpu/drm/msm/msm_drv.c:236:17: error: implicit declaration of function 'drm_bridge_remove'; did you mean 'drm_bridge_detach'? [-Werror=implicit-function-declaration]
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
-> 
-> Changes since v13:
-> - None
-> 
-> Changes since v12:
-> - None
-> 
->  .../bindings/leds/leds-qcom-lpg.yaml          | 173 ++++++++++++++++++
->  1 file changed, 173 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> new file mode 100644
-> index 000000000000..336bd8e10efd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> @@ -0,0 +1,173 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Light Pulse Generator
-> +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description: >
-> +  The Qualcomm Light Pulse Generator consists of three different hardware blocks;
-> +  a ramp generator with lookup table, the light pulse generator and a three
-> +  channel current sink. These blocks are found in a wide range of Qualcomm PMICs.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,pm8150b-lpg
-> +      - qcom,pm8150l-lpg
-> +      - qcom,pm8916-pwm
-> +      - qcom,pm8941-lpg
-> +      - qcom,pm8994-lpg
-> +      - qcom,pmc8180c-lpg
-> +      - qcom,pmi8994-lpg
-> +      - qcom,pmi8998-lpg
-> +
-> +  "#pwm-cells":
-> +    const: 2
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
-> +
-> +  qcom,power-source:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description:
-> +      power-source used to drive the output, as defined in the datasheet.
-> +      Should be specified if the TRILED block is present
-> +    enum: [0, 1, 3]
-> +
-> +  qcom,dtest:
-> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> +    description: >
-> +      A list of integer pairs, where each pair represent the dtest line the
-> +      particular channel should be connected to and the flags denoting how the
-> +      value should be outputed, as defined in the datasheet. The number of
+Fixes: d28ea556267c ("drm/msm: properly add and remove internal bridges")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/msm_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Nit: I think outputed is with double-t, though just using "output" here
-should work as well.
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 4f3dce334553..4a3dda23e3e0 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -11,6 +11,7 @@
+ #include <linux/uaccess.h>
+ #include <uapi/linux/sched/types.h>
+ 
++#include <drm/drm_bridge.h>
+ #include <drm/drm_drv.h>
+ #include <drm/drm_file.h>
+ #include <drm/drm_ioctl.h>
+-- 
+2.35.1
 
-> +      pairs should be the same as the number of channels.
-> +    items:
-> +      items:
-> +        - description: dtest line to attach
-> +        - description: flags for the attachment
-> +
-> +  multi-led:
-
-As mentioned on IRC, doesn't this need an @[0-9a-f] designator, as
-specified in leds-class-multicolor.yaml and to match `#address-cells` on
-this level?  Same for the examples.
-
-> +    type: object
-> +    $ref: leds-class-multicolor.yaml#
-> +    properties:
-> +      "#address-cells":
-> +        const: 1
-> +
-> +      "#size-cells":
-> +        const: 0
-> +
-> +    patternProperties:
-> +      "^led@[0-9a-f]$":
-> +        type: object
-> +        $ref: common.yaml#
-
-I'm not familiar enough with DT bindings - doesn't this need the
-requirements for `reg` just like the identical patternProperties for
-led@ below?
-
-> +
-> +patternProperties:
-> +  "^led@[0-9a-f]$":
-> +    type: object
-> +    $ref: common.yaml#
-> +
-> +    properties:
-> +      reg: true
-> +
-> +    required:
-> +      - reg
-> +
-> +required:
-> +  - compatible
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/leds/common.h>
-> +
-> +    led-controller {
-> +      compatible = "qcom,pmi8994-lpg";
-> +
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +
-> +      qcom,power-source = <1>;
-> +
-> +      qcom,dtest = <0 0>,
-> +                   <0 0>,
-> +                   <0 0>,
-> +                   <4 1>;
-> +
-> +      led@1 {
-> +        reg = <1>;
-> +        color = <LED_COLOR_ID_GREEN>;
-> +        function = LED_FUNCTION_INDICATOR;
-> +        function-enumerator = <1>;
-> +      };
-> +
-> +      led@2 {
-> +        reg = <2>;
-> +        color = <LED_COLOR_ID_GREEN>;
-> +        function = LED_FUNCTION_INDICATOR;
-> +        function-enumerator = <0>;
-> +        default-state = "on";
-> +      };
-> +
-> +      led@3 {
-> +        reg = <3>;
-> +        color = <LED_COLOR_ID_GREEN>;
-> +        function = LED_FUNCTION_INDICATOR;
-> +        function-enumerator = <2>;
-> +      };
-> +
-> +      led@4 {
-> +        reg = <4>;
-> +        color = <LED_COLOR_ID_GREEN>;
-> +        function = LED_FUNCTION_INDICATOR;
-> +        function-enumerator = <3>;
-> +      };
-> +    };
-> +  - |
-> +    #include <dt-bindings/leds/common.h>
-> +
-> +    led-controller {
-> +      compatible = "qcom,pmi8994-lpg";
-> +
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +
-> +      qcom,power-source = <1>;
-> +
-> +      multi-led {
-> +        color = <LED_COLOR_ID_RGB>;
-> +        function = LED_FUNCTION_STATUS;
-> +
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        led@1 {
-> +          reg = <1>;
-> +          color = <LED_COLOR_ID_RED>;
-> +        };
-> +
-> +        led@2 {
-> +          reg = <2>;
-> +          color = <LED_COLOR_ID_GREEN>;
-> +        };
-> +
-> +        led@3 {
-> +          reg = <3>;
-> +          color = <LED_COLOR_ID_BLUE>;
-> +        };
-> +      };
-> +    };
-> +  - |
-> +    pwm-controller {
-> +      compatible = "qcom,pm8916-pwm";
-> +      #pwm-cells = <2>;
-> +    };
-> +...
-> -- 
-> 2.33.1
-> 
