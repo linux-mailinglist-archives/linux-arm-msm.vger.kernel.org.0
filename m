@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E1EA515F31
+	by mail.lfdr.de (Postfix) with ESMTP id 3644C515F30
 	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 18:26:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383065AbiD3Q1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Apr 2022 12:27:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33520 "EHLO
+        id S1383023AbiD3Q1k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Apr 2022 12:27:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1383058AbiD3Q1g (ORCPT
+        with ESMTP id S1383067AbiD3Q1g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sat, 30 Apr 2022 12:27:36 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738A85F8F3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Apr 2022 09:24:11 -0700 (PDT)
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B7865FF29;
+        Sat, 30 Apr 2022 09:24:13 -0700 (PDT)
 Received: from localhost.localdomain (abxh26.neoplus.adsl.tpnet.pl [83.9.1.26])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 87DFB3F728;
-        Sat, 30 Apr 2022 18:24:09 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id C8D743F722;
+        Sat, 30 Apr 2022 18:24:10 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -30,55 +30,86 @@ Cc:     martin.botka@somainline.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 11/14] arm64: dts: qcom: msm8998-oneplus: Add clocks & GDSC to simplefb
-Date:   Sat, 30 Apr 2022 18:23:49 +0200
-Message-Id: <20220430162353.607709-11-konrad.dybcio@somainline.org>
+Subject: [PATCH 12/14] arm64: dts: qcom: msm8998*: Clean up #includes
+Date:   Sat, 30 Apr 2022 18:23:50 +0200
+Message-Id: <20220430162353.607709-12-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.35.2
 In-Reply-To: <20220430162353.607709-1-konrad.dybcio@somainline.org>
 References: <20220430162353.607709-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is required to keep the display working with MMCC enabled until proper
-panel support is in place.
+Sort the includes and remove unused ones.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- .../arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts           | 3 +--
+ arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi                 | 2 +-
+ arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi | 8 +++-----
+ 3 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
-index 501771068938..467974cb43f9 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
-@@ -32,6 +32,19 @@ framebuffer0: framebuffer@9d400000 {
- 			height = <1920>;
- 			stride = <(1080 * 4)>;
- 			format = "a8r8g8b8";
-+			/*
-+			* That's a lot of clocks, but it's necessary due
-+			* to unused clk cleanup & no panel driver yet..
-+			*/
-+			clocks = <&mmcc MDSS_AHB_CLK>,
-+				 <&mmcc MDSS_AXI_CLK>,
-+				 <&mmcc MDSS_VSYNC_CLK>,
-+				 <&mmcc MDSS_MDP_CLK>,
-+				 <&mmcc MDSS_BYTE0_CLK>,
-+				 <&mmcc MDSS_BYTE0_INTF_CLK>,
-+				 <&mmcc MDSS_PCLK0_CLK>,
-+				 <&mmcc MDSS_ESC0_CLK>;
-+			power-domains = <&mmcc MDSS_GDSC>;
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
+index 56bcd4a1ddb1..f61ea651b0eb 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
++++ b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
+@@ -6,11 +6,10 @@
  
+ /dts-v1/;
+ 
+-#include "msm8998-mtp.dtsi"
+-
+ #include <dt-bindings/input/input.h>
+ #include <dt-bindings/leds/common.h>
+ #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
++#include "msm8998-mtp.dtsi"
+ 
+ / {
+ 	model = "F(x)tec Pro1 (QX1000)";
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+index 8368af2d78e1..9d505a2a2652 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+@@ -2,9 +2,9 @@
+ /* Copyright (c) 2016, The Linux Foundation. All rights reserved. */
+ 
+ #include "msm8998.dtsi"
++#include "pm8005.dtsi"
+ #include "pm8998.dtsi"
+ #include "pmi8998.dtsi"
+-#include "pm8005.dtsi"
+ 
+ / {
+ 	aliases {
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
+index 08fe7c00b5ff..58ffdd2c33fb 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
+@@ -5,15 +5,13 @@
+  * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
+  */
+ 
++#include <dt-bindings/input/input.h>
++#include <dt-bindings/leds/common.h>
++#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+ #include "msm8998.dtsi"
+ #include "pm8005.dtsi"
+ #include "pm8998.dtsi"
+ #include "pmi8998.dtsi"
+-#include <dt-bindings/input/input.h>
+-#include <dt-bindings/leds/common.h>
+-#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+-#include <dt-bindings/sound/qcom,q6afe.h>
+-#include <dt-bindings/sound/qcom,q6asm.h>
+ 
+ / {
+ 	/* required for bootloader to select correct board */
 -- 
 2.35.2
 
