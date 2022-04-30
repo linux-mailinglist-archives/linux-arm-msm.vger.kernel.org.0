@@ -2,191 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E94D51598B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 03:18:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47A205159FE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Apr 2022 05:09:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381984AbiD3BVo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Apr 2022 21:21:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58170 "EHLO
+        id S240478AbiD3DMn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Apr 2022 23:12:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381980AbiD3BVm (ORCPT
+        with ESMTP id S238217AbiD3DMm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Apr 2022 21:21:42 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8164D3DAF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Apr 2022 18:18:20 -0700 (PDT)
-Received: from [192.168.1.101] (abxh26.neoplus.adsl.tpnet.pl [83.9.1.26])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A164C3F84D;
-        Sat, 30 Apr 2022 03:18:15 +0200 (CEST)
-Message-ID: <dc1ac42a-a97f-979e-e65b-03251a261daa@somainline.org>
-Date:   Sat, 30 Apr 2022 03:18:13 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH V5] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
+        Fri, 29 Apr 2022 23:12:42 -0400
+Received: from esa.hc3962-90.iphmx.com (esa.hc3962-90.iphmx.com [216.71.140.77])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4BB71C92A;
+        Fri, 29 Apr 2022 20:09:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qccesdkim1;
+  t=1651288161; x=1651892961;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=+FhrTvrmgWsdoimTGOQvO3IpYD3NdD3NdAWR0lsodHg=;
+  b=ryjyoX0JdDL0hgikQLfbu3Lk/BN9HTXgfNW6xFAjZyStP99G/z7t8H9L
+   2ZYj+IrbUnNscno4NiQNXRGK39/3rjm5qNPrDo7MV3lHgiwvfH8g6DHkh
+   bZMYgji1Os9cH6BUGydzL+LaLrLaJrvzaLAINzrjSrJYeawROKiz3OXcB
+   8=;
+Received: from mail-mw2nam10lp2106.outbound.protection.outlook.com (HELO NAM10-MW2-obe.outbound.protection.outlook.com) ([104.47.55.106])
+  by ob1.hc3962-90.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2022 03:09:19 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=BQM3c6IO1kDkLz/1x8APPCUrW9PYDLxLcn9N7nEvn7w0K5B0uxMxdt4bMiooKmfV2OyZNwAxNqofHZEsosvfrDBl9YXZUch2BvMmJZ0auTheivY/SUcpmmoicd0N7QGpvu4sD2GVMfee0IklFoecESW2IfaDiTloZGg39O6kaB/r7DxncJjpk+VPe/SXGbZpudtIagaADMSNirMGU4Cg+Uj1KjZJ+CrsDIrdAGybv/dI8bHbtK2jwlFUjEe23lQCnPhc+lvGnBzP9Ny6oKXMwtT0rnbGoaeQSVU6/jtf12VpKdy691QOpmEY6sZ5tHomUAp/8sKCBPrW2tdepTU0VA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+FhrTvrmgWsdoimTGOQvO3IpYD3NdD3NdAWR0lsodHg=;
+ b=JS/TMrRcMeW3RfnK0aKGfA+9iMBaob+9lDERIGJWbivzCE/pMbrqXjTpUIIalPDf6B3ss9wMDU98drNFE++0iSW8P8ToKXOhHNvWNmjuZI2TNJ7xCfjw/rCcVXkpWymM4Wdo2Fsd7Ay94HhmDi5TS46EFZxCaYtNIDPAeYUCf72IBZw2q1jQBZ9tFg6Ec/v7wavvN5i+CLdjmM6oq9NNigCyDZeJYfJ6qp+O6c0s5IQABJhQOkSWPtWYFXQGLlGiB0QNXvCkok784hL/R5gk8o9XNnvJ+Bwz2WmxHy7wVqBr6TYBFCF1BMvF8E8IZghxcJ6O1P1+HChUOPYcZFJKIw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quicinc.com; dmarc=pass action=none header.from=quicinc.com;
+ dkim=pass header.d=quicinc.com; arc=none
+Received: from SJ0PR02MB7135.namprd02.prod.outlook.com (2603:10b6:a03:298::16)
+ by BY5PR02MB6369.namprd02.prod.outlook.com (2603:10b6:a03:1b0::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5186.15; Sat, 30 Apr
+ 2022 03:09:14 +0000
+Received: from SJ0PR02MB7135.namprd02.prod.outlook.com
+ ([fe80::b8d0:d109:cc6c:1034]) by SJ0PR02MB7135.namprd02.prod.outlook.com
+ ([fe80::b8d0:d109:cc6c:1034%9]) with mapi id 15.20.5206.014; Sat, 30 Apr 2022
+ 03:09:14 +0000
+From:   "Balakrishna Godavarthi (QUIC)" <quic_bgodavar@quicinc.com>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        "Balakrishna Godavarthi (QUIC)" <quic_bgodavar@quicinc.com>
+CC:     Andy Gross <agross@kernel.org>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        "mka@chromium.org" <mka@chromium.org>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        "Hemant Gupta (QUIC)" <quic_hemantg@quicinc.com>,
+        "Sai Teja Aluvala (Temp) (QUIC)" <quic_saluvala@quicinc.com>,
+        quic_rjliao <quic_rjliao@quicinc.com>,
+        "mcchou@chromium.org" <mcchou@chromium.org>
+Subject: RE: [PATCH v1 3/3] Bluetooth: hci_qca: WAR to handle WCN6750 HW issue
+Thread-Topic: [PATCH v1 3/3] Bluetooth: hci_qca: WAR to handle WCN6750 HW
+ issue
+Thread-Index: AQHYW7ySCA0NvGHfjEC8q8sCBgrRua0G+o+AgADNSyA=
+Date:   Sat, 30 Apr 2022 03:09:14 +0000
+Message-ID: <SJ0PR02MB713538E5BBB40CDEF2E050A0F8FF9@SJ0PR02MB7135.namprd02.prod.outlook.com>
+References: <1651228073-1999-1-git-send-email-quic_bgodavar@quicinc.com>
+ <1651228073-1999-4-git-send-email-quic_bgodavar@quicinc.com>
+ <0D3D8346-0F64-4CAF-8BED-940F189A3E97@holtmann.org>
+In-Reply-To: <0D3D8346-0F64-4CAF-8BED-940F189A3E97@holtmann.org>
+Accept-Language: en-US
 Content-Language: en-US
-To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, adrian.hunter@intel.com,
-        ulf.hansson@linaro.org, p.zabel@pengutronix.de, chris@printf.net,
-        venkatg@codeaurora.org, gdjakov@mm-sol.com,
-        quic_asutoshd@quicinc.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rampraka@quicinc.com,
-        quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com
-References: <1650816153-23797-1-git-send-email-quic_c_sbhanu@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <1650816153-23797-1-git-send-email-quic_c_sbhanu@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=quicinc.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 696bbcca-4c96-487a-8102-08da2a56ce5a
+x-ms-traffictypediagnostic: BY5PR02MB6369:EE_
+x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
+x-microsoft-antispam-prvs: <BY5PR02MB6369396B0E9256A25988EFFD84FF9@BY5PR02MB6369.namprd02.prod.outlook.com>
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 8UnU692rGaw5coOirloXC4vtUV1w3Z3FDWOQDT9qNUjz8uXhYAM5p+PDixy3qZUw2OrMVCqg2tHgjFSoI9WR8IqOnMcjdVAmgHgp3AJZURycTHMVjRuL8e/6kdJeWF/34KjB47ynl68xTFEtN+icRuPCoNmaH0ohRe82mhp56cyMSkM2og7JiRvRzuGrOPeMs8vaquRg3mcFrK/vcWMNmfnyue6qr+rROXmPgCamY/SZU2LT4SuexucPWRAOGx5D2uu/ptL30ctNnoLzlsjVVm0pma4lGbob7VR5x8qaK2zn2HbdF3wIBWkZcZFhg3dw4MS1qfyStUiNKEfiWemQP7TCi7Xpmpay0WkzbixPX7G1xeEs+hfxZ4qb3/36UeVQCqXP3bEmr544ql9ZY3yJUKByiOLjqo5+ehcxWjaQ6ZYMVZLuKz9wSMhgQpvVwEZbPUXPpt+VhkN0nIHA4nx+PfioU9HdyUudnJM0lKsMQ55OTKa3JQrSOWRqbYad7/c5Bw2OTwaMdbJGZCzzfbq5lVh3K6iNciyBUrKh1hilHZekJwXMt6Ugc6KHVrcslOAp0aZ2DE8Gagf3r1kkF9lme4NJ5R9OHn9eghccUkCbHY4A3qWtDKydqAfkFs29NeFa712UDxcllgS7oev7WbeucXjpi5F4YAD0GhkbTU8DFtjH1dHJ0gAfHfb35Fc8FrcGt9ilBUs23Def0QtubLanAg==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR02MB7135.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(110136005)(122000001)(7416002)(38100700002)(508600001)(8936002)(55016003)(66476007)(71200400001)(64756008)(4326008)(66946007)(66446008)(8676002)(76116006)(316002)(38070700005)(54906003)(9686003)(6506007)(33656002)(2906002)(7696005)(26005)(53546011)(186003)(52536014)(83380400001)(5660300002)(86362001)(66556008);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?c8I0BMyGFutlh+6MWwJ+DhUa/qM/XSUpJWnUjQv0aRjTButsLu9RsuTM08Ji?=
+ =?us-ascii?Q?N3AYWfoCDl7gFiHUh49MPcnMymGzi3SjQ6f/2CNgAdC6AqP45eFveosaIEUW?=
+ =?us-ascii?Q?rNElTapzZB+zjHj29AfFwdUeaCnrXfeRnVciZol7SA0z2UtxjWt6vO4FUfdb?=
+ =?us-ascii?Q?2JP+fFNgR2EcLG4IfUDiNT+K9CvgzkUS0PLi80VAwm/RTyMADEYNx321Mn3s?=
+ =?us-ascii?Q?yL9hFC/k0oRfRY7T6p08Xzh34mCMadkyCaldOpbvTxOE4qLwtkYs+Sp1j1L+?=
+ =?us-ascii?Q?KtXv6EaYUIPPLY6wEtAB9/yixjGHM4QjQFikL/RAwLZLr2C25l0yd26D3jVt?=
+ =?us-ascii?Q?OvdmjfYui8BjH6dcxfkcjbz2uxkE8x5bjOa/+0LA3zbzZfWx/Hh1b0zoJx1S?=
+ =?us-ascii?Q?7NNzKtdeeY19ORZ6aqclZt02dSWrP3PNR5qzo6QEPLom5am2DZF0dxLsCYrN?=
+ =?us-ascii?Q?h6sTXgyfnIstJJCKfiDaaemAyR1l2LCpDIifExVa6KE7ZBchvyy9vVAEtkTh?=
+ =?us-ascii?Q?wTB0jHfLXFRoy9WUfmTLeS/R45kuWBTgrrDy34oK3CuOtzR9t+mwQuXRa4UI?=
+ =?us-ascii?Q?g4+WbhkUBz8M/ibQL/GGCv6qn+Et4GGPFD7XKGlKkMYe0hsRW1VUwqmxlIoo?=
+ =?us-ascii?Q?a0XtOn+9luVp8YT9U+1Lhn07ZHC6k0+FRP8A50I142D7M5b+/0A7lUcbLLIu?=
+ =?us-ascii?Q?6/M8cHUVtn2yVZbE0R5t1LArHs+/A/h/+FnYBIq9esD93m7HyhOtk5YAmfwN?=
+ =?us-ascii?Q?EL2FVWXMyIODZeB5NrM8xDQAse+9IITr2WPx08mmT6YGlcSw4Jx3oEfLJ3RN?=
+ =?us-ascii?Q?LpuQvJyF37XM8RkkR2D/N3bjn7h+xgLKmhus0j1NZ6rYIJmn4MNs3PFDwizG?=
+ =?us-ascii?Q?gGIrmUR1nhcbfCr3DyURnH9VltZrl23FCtaNkEmekbYcp8Ow5qnxq8ezW9Au?=
+ =?us-ascii?Q?r+T2NPsBKHNrRJxJxcKHFoagSTRC+erxfUT1OpnRhxF8Va/AclJMUa7sKIq+?=
+ =?us-ascii?Q?dLkayOdT+YPseCDLYKZ3gSkafxjrHslSvwBmRPU7L9wdv3LFQRmPjV6JzkEh?=
+ =?us-ascii?Q?45EEifiY9/E/93QYOZUgL5lsUBS9tj8hRT2xZBmtLs7T0mjFPLSFGbkVgH0v?=
+ =?us-ascii?Q?YH9+8K9lfiFRumTwROKzCiNdml827bC/bvVOr8EGCeZVdyrWTthkHEOW9r89?=
+ =?us-ascii?Q?eOwd696s+HYV5I/RoqLwh3atM+62y049JFgRTkO7dOLA04cXqCb/lt1CPkor?=
+ =?us-ascii?Q?PKiA2Paf2OYs5+hWz0pEfMLPysXVhnAtJ7r31hs/PlpTfNF8+t5LrzDuRnTL?=
+ =?us-ascii?Q?5dBCgPCisLU+s7YpUMxTemgwEnVxaWAB/Q+oKT15mTDKaD9IDLNAndETtTHI?=
+ =?us-ascii?Q?0JL6OytY9SdahJwTuwHLCEXNGgi6HDlNQq1CX7laedHNfyKbWGoaAHHneisM?=
+ =?us-ascii?Q?/g82B++BhfD5nRImD1WeG1F3JN5S9dGDA/+Jgwdg+jO88CAUpXhRW8pLPpia?=
+ =?us-ascii?Q?Ggc94gR8+Uunau78lIDto0kj619L8773t8HxZ7evyM1HvvIqF88kUvdddyS4?=
+ =?us-ascii?Q?3ll79N8PuAwMGx2Wr9T+cObjMBkU5UY7i3H0ekr70MNaU9EjR0P6l2rx5fJE?=
+ =?us-ascii?Q?t1bd/+1JJzcyccUTycVpLzC3Khjyi93gLkUCk7NGaypeJRDih4qfzTLe6u+m?=
+ =?us-ascii?Q?CjtNK2MrPiLZw3GnExHVKrBX5him9N3pBv/nf9eNN50BG7TjVs/Ryp7ioWve?=
+ =?us-ascii?Q?PkcCM7xY5w=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: quicinc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR02MB7135.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 696bbcca-4c96-487a-8102-08da2a56ce5a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Apr 2022 03:09:14.3313
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 94zx8/nSYfJPqJC7GUTv8tl6U39/9NWByWZKbVcVzAeUvxTex7uWksdywDL0yf6l3+YYqdqmTlZE5mSICDe/WItMCIkc2AMWKgJv7bOtrvg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR02MB6369
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Marcel,
 
+-----Original Message-----
+From: Marcel Holtmann <marcel@holtmann.org>=20
+Sent: Friday, April 29, 2022 8:24 PM
+To: Balakrishna Godavarthi (QUIC) <quic_bgodavar@quicinc.com>
+Cc: Andy Gross <agross@kernel.org>; robh+dt@kernel.org; bjorn.andersson@lin=
+aro.org; linux-arm-msm@vger.kernel.org; devicetree@vger.kernel.org; linux-k=
+ernel@vger.kernel.org; Johan Hedberg <johan.hedberg@gmail.com>; mka@chromiu=
+m.org; linux-bluetooth@vger.kernel.org; Hemant Gupta (QUIC) <quic_hemantg@q=
+uicinc.com>; Sai Teja Aluvala (Temp) (QUIC) <quic_saluvala@quicinc.com>; qu=
+ic_rjliao <quic_rjliao@quicinc.com>; mcchou@chromium.org
+Subject: Re: [PATCH v1 3/3] Bluetooth: hci_qca: WAR to handle WCN6750 HW is=
+sue
 
-On 24.04.2022 18:02, Shaik Sajida Bhanu wrote:
-> Reset GCC_SDCC_BCR register before every fresh initilazation. This will
-> reset whole SDHC-msm controller, clears the previous power control
-> states and avoids, software reset timeout issues as below.
-> 
-> [ 5.458061][ T262] mmc1: Reset 0x1 never completed.
-> [ 5.462454][ T262] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
-> [ 5.469065][ T262] mmc1: sdhci: Sys addr: 0x00000000 | Version: 0x00007202
-> [ 5.475688][ T262] mmc1: sdhci: Blk size: 0x00000000 | Blk cnt: 0x00000000
-> [ 5.482315][ T262] mmc1: sdhci: Argument: 0x00000000 | Trn mode: 0x00000000
-> [ 5.488927][ T262] mmc1: sdhci: Present: 0x01f800f0 | Host ctl: 0x00000000
-> [ 5.495539][ T262] mmc1: sdhci: Power: 0x00000000 | Blk gap: 0x00000000
-> [ 5.502162][ T262] mmc1: sdhci: Wake-up: 0x00000000 | Clock: 0x00000003
-> [ 5.508768][ T262] mmc1: sdhci: Timeout: 0x00000000 | Int stat: 0x00000000
-> [ 5.515381][ T262] mmc1: sdhci: Int enab: 0x00000000 | Sig enab: 0x00000000
-> [ 5.521996][ T262] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
-> [ 5.528607][ T262] mmc1: sdhci: Caps: 0x362dc8b2 | Caps_1: 0x0000808f
-> [ 5.535227][ T262] mmc1: sdhci: Cmd: 0x00000000 | Max curr: 0x00000000
-> [ 5.541841][ T262] mmc1: sdhci: Resp[0]: 0x00000000 | Resp[1]: 0x00000000
-> [ 5.548454][ T262] mmc1: sdhci: Resp[2]: 0x00000000 | Resp[3]: 0x00000000
-> [ 5.555079][ T262] mmc1: sdhci: Host ctl2: 0x00000000
-> [ 5.559651][ T262] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP-----------
-> [ 5.566621][ T262] mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg: 0x6000642c | DLL cfg2: 0x0020a000
-> [ 5.575465][ T262] mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl: 0x00010800 | DDR cfg: 0x80040873
-> [ 5.584658][ T262] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
-> 
-> Fixes: 0eb0d9f4de34 ("mmc: sdhci-msm: Initial support for Qualcomm chipsets")
-> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-> Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Hi Balakrishna,
+
+> The patch is workaround for hardware issue on WCN6750.
+> On WCN6750 sometimes observed AON power source takes 100ms time to=20
+> fully discharge voltage during OFF. As WCN6750 is combo chip for WLAN=20
+> and BT. If any of the tech area ON is triggered during discharge=20
+> phase, it fails to turn ON.
+> To overcome this hardware issue, During BT ON, driver check for=20
+> WLAN_EN pin status. If it high, it will pull BT_EN to high immediately=20
+> else it will wait for 100ms assuming WLAN was just powered OFF and=20
+> then BT_EN will be pulled to high.
+>=20
+> Fixes: d8f97da1b92d2 ("Bluetooth: hci_qca: Add support for QTI=20
+> Bluetooth chip wcn6750")
+> Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+> Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
+> Signed-off-by: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
 > ---
-> 
-Looks like this fixes SDHCI init problems on MSM8996 SONY Tone!
+> drivers/bluetooth/hci_qca.c | 30 ++++++++++++++++++++++++------
+> 1 file changed, 24 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c=20
+> index eab34e2..c3862d1 100644
+> --- a/drivers/bluetooth/hci_qca.c
+> +++ b/drivers/bluetooth/hci_qca.c
+> @@ -219,6 +219,7 @@ struct qca_serdev {
+> 	struct hci_uart	 serdev_hu;
+> 	struct gpio_desc *bt_en;
+> 	struct gpio_desc *sw_ctrl;
+> +	struct gpio_desc *wlan_en;
+> 	struct clk	 *susclk;
+> 	enum qca_btsoc_type btsoc_type;
+> 	struct qca_power *bt_power;
 
-Tested-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+I am really against these intermixing of Bluetooth and WiFi details. There =
+is work ongoing to do some sequence power procedure. Maybe that is somethin=
+g you should look into. This is a mess.
 
-Konrad
-> Changes since V4:
-> 	- Called reset_control_put() in error path.
-> 
-> Changes since V3:
-> 	- Used reset controller local variable as suggested by
-> 	  Bjorn Andersson.
-> 	- Passed NULL as a parameter to
-> 	  devm_reset_control_get_optional_exclusive() as suggested by
-> 	  Bjorn Andersson.
-> 	- Replaced devm_reset_control_get_optional_exclusive() with
-> 	  reset_control_get_optional_exclusive() and called
-> 	  reset_control_put() before returning to clear the reset
-> 	  controller as suggested by Bjorn Andersson.
-> 
-> Changes since V2:
-> 	- Dropped new line after fixes tag as suggested by Bjorn
-> 	  Andersson.
-> 	- Passed device structure instead of passing platform_device
-> 	  structure as a argument for sdhci_msm_gcc_reset() as suggested
-> 	  by Bjorn Andersson.
-> 	- Replaced dev_err() with dev_err_probe() as suggested by Bjorn
-> 	  Andersson.
-> 
-> Changes since V1:
-> 	- Added fixes tag as suggested by Ulf Hansson.
-> 	- Replaced devm_reset_control_get() with
-> 	  devm_reset_control_get_optional_exclusive() as suggested by
-> 	  Ulf Hansson.
-> ---
->  drivers/mmc/host/sdhci-msm.c | 42 ++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 42 insertions(+)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 50c71e0..ff9f5b6 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -17,6 +17,7 @@
->  #include <linux/regulator/consumer.h>
->  #include <linux/interconnect.h>
->  #include <linux/pinctrl/consumer.h>
-> +#include <linux/reset.h>
->  
->  #include "sdhci-pltfm.h"
->  #include "cqhci.h"
-> @@ -2482,6 +2483,43 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
->  	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
->  }
->  
-> +static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
-> +{
-> +	struct reset_control *reset;
-> +	int ret = 0;
-> +
-> +	reset = reset_control_get_optional_exclusive(dev, NULL);
-> +	if (IS_ERR(reset))
-> +		return dev_err_probe(dev, PTR_ERR(reset),
-> +				"unable to acquire core_reset\n");
-> +
-> +	if (!reset)
-> +		return ret;
-> +
-> +	ret = reset_control_assert(reset);
-> +	if (ret) {
-> +		reset_control_put(reset);
-> +		return dev_err_probe(dev, ret, "core_reset assert failed\n");
-> +	}
-> +
-> +	/*
-> +	 * The hardware requirement for delay between assert/deassert
-> +	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
-> +	 * ~125us (4/32768). To be on the safe side add 200us delay.
-> +	 */
-> +	usleep_range(200, 210);
-> +
-> +	ret = reset_control_deassert(reset);
-> +	if (ret) {
-> +		reset_control_put(reset);
-> +		return dev_err_probe(dev, ret, "core_reset deassert failed\n");
-> +	}
-> +
-> +	usleep_range(200, 210);
-> +	reset_control_put(reset);
-> +
-> +	return ret;
-> +}
->  
->  static int sdhci_msm_probe(struct platform_device *pdev)
->  {
-> @@ -2529,6 +2567,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->  
->  	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
->  
-> +	ret = sdhci_msm_gcc_reset(&pdev->dev, host);
-> +	if (ret)
-> +		goto pltfm_free;
-> +
->  	/* Setup SDCC bus voter clock. */
->  	msm_host->bus_clk = devm_clk_get(&pdev->dev, "bus");
->  	if (!IS_ERR(msm_host->bus_clk)) {
-> 
+And again, we are still hacking around hci_qca.c instead of writing a clean=
+ serdev only driver for this hardware. I have the feeling that nobody liste=
+ns to review comments these days. It is just hacking patches together to ge=
+t hardware enabled somehow and then disappear.
+
+[Bala]: We are working on serdev like driver for our QCA platform.  We are =
+in initial stages of discussion, and soon we will start the driver developm=
+ent work.=20
+In mean to stop stability or functional issues we are trying to add these H=
+ACKs in QCA driver.
+
+Regards
+
+Marcel
+
