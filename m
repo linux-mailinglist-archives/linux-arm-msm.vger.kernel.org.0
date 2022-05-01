@@ -2,69 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37554516798
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 May 2022 21:56:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 097315167A3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 May 2022 22:06:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354165AbiEAT7u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 May 2022 15:59:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49594 "EHLO
+        id S1353607AbiEAUKG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 May 2022 16:10:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354255AbiEAT7t (ORCPT
+        with ESMTP id S245668AbiEAUKF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 May 2022 15:59:49 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2986D101F8
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 May 2022 12:56:23 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 4so16263093ljw.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 May 2022 12:56:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5DlnFpstvVMz8ogimO7x7gnGg9U0guhBg0Tjc/KXhlQ=;
-        b=b7jWpei29YU5OfV5sSEGuU3Lr3PRYKjuI+fR0O/yy8nmUmSq2gX+O3I6GcLmfKpjiM
-         Ou9HAly9xpOn3meBlDcW9Jp56KR01IEPWRX+mHDVUW55eS0v+znn+ixCjyow/aifjPO1
-         8va8Mxg7HXRvjQAjmkrCbVNfGriyhbNrVPYmiKUYccQCrO+hHsWOFYAqXTfCIfaYE10T
-         zZEbyLyYfkIYNkoajMJWTBt/Gx9MP82Rp6mCnjOcyX8mnHm9X7VFBGo+KJt7JRixj1kT
-         6nfNfL28U+N0pgTbJBDQ6VFmjfe1ooUqd794GES90X5she3pVOQE7BtniwVldTOYu8/T
-         FCSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5DlnFpstvVMz8ogimO7x7gnGg9U0guhBg0Tjc/KXhlQ=;
-        b=k0JnHhSgcUz/aSFq952y2rI3xMniqdvzik8yQ1eqAR1xBt9XW9j8feiIPE39CKU3Ni
-         iBsbrq98KDQOhENHX4/GqY5xqQecw2ovWwqZyxrvArgrXAbwQowo1TUDd4gNUb/msz/8
-         dcvKdOMZM5z/TaXtiOkVUfaXMSNI/1WyzGp+PxSA2hZSjdfANtJ6mqpbKJpZFxksK/tG
-         SJS8xKfsJGDILv99WIvQ1Es47I0B1Xm3mnsjqYpzbHB5hdTucJSmZqpQhUh6b7w8o3lX
-         xN+wNn38V8ZH40kbza5p8CPCxo8HsXu2Ll8WEC/c/FU79+iixISeWcWpQHio74WEy5MS
-         bJUg==
-X-Gm-Message-State: AOAM532qgX8X2KM0+yRp+eOb/g5kcly2z5lDRhagft7amkvoF45LyUnE
-        wdvXz/eRwTTm8+hBDY0u7TFG8g==
-X-Google-Smtp-Source: ABdhPJxTR22A6LrOaxFBr0FK9ToieYi7wenTTj8MjU1NRUjDGzWYFvz2eYLWRTSLSXUg6hgIi9XVgA==
-X-Received: by 2002:a05:651c:890:b0:248:5819:b949 with SMTP id d16-20020a05651c089000b002485819b949mr6188460ljq.476.1651434981563;
-        Sun, 01 May 2022 12:56:21 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p3-20020a19f003000000b0047255d211b7sm517580lfc.230.2022.05.01.12.56.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 May 2022 12:56:21 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
+        Sun, 1 May 2022 16:10:05 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0DB0329B7
+        for <linux-arm-msm@vger.kernel.org>; Sun,  1 May 2022 13:06:38 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 34AB43F3E7;
+        Sun,  1 May 2022 22:06:37 +0200 (CEST)
+Date:   Sun, 1 May 2022 22:06:35 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org, kernel test robot <lkp@intel.com>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH] drm/msm/dsi: pll_7nm:  remove unsupported dividers for DSI pixel clock
-Date:   Sun,  1 May 2022 22:56:20 +0300
-Message-Id: <20220501195620.4135080-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+        Sean Paul <sean@poorly.run>
+Subject: Re: [Freedreno] [PATCH v2] drm/msm/dsi: use RMW cycles in
+ dsi_update_dsc_timing
+Message-ID: <20220501200635.ekl3fw47dv2zytt3@SoMainline.org>
+References: <20220430175533.3817792-1-dmitry.baryshkov@linaro.org>
+ <20220430185807.yn2j2coyc77qzx2o@SoMainline.org>
+ <b4a3bfed-a842-b4ee-d9a5-5adf5b59c09b@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b4a3bfed-a842-b4ee-d9a5-5adf5b59c09b@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,46 +52,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove dividers that are not recommended for DSI DPHY mode when setting
-up the clock tree for the DSI pixel clock.
+On 2022-04-30 12:25:57, Abhinav Kumar wrote:
+> 
+> 
+> On 4/30/2022 11:58 AM, Marijn Suijten wrote:
+> > On 2022-04-30 20:55:33, Dmitry Baryshkov wrote:
+> >> The downstream uses read-modify-write for updating command mode
+> >> compression registers. Let's follow this approach. This also fixes the
+> >> following warning:
+> >>
+> >> drivers/gpu/drm/msm/dsi/dsi_host.c:918:23: warning: variable 'reg_ctrl' set but not used [-Wunused-but-set-variable]
+> >>
+> >> Reported-by: kernel test robot <lkp@intel.com>
+> >> Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
+> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > 
+> > I pointed this out in review multiple times, so you'll obviously get my:
+> > 
+> > Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > 
+> > (But are you sure there's nothing else to clear in the 1st CTRL
+> > register, only the lowest 16 bits?  That should mean `reg` never
+> > contains anything in 0xffff0000)
+> 
+> The top 16 bits contain information for stream 1.
+> 
+> Stream 1 is unused. And whatever is the reset value we should retain that.
+> 
+> So this patch is correct.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+I was not debating the correctness of this patch, quite the contrary:
+it's already much better than it was before.
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 6e506feb111f..66ed1919a1db 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -586,7 +586,7 @@ static int dsi_7nm_set_usecase(struct msm_dsi_phy *phy)
- static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provided_clocks)
- {
- 	char clk_name[32], parent[32], vco_name[32];
--	char parent2[32], parent3[32], parent4[32];
-+	char parent2[32];
- 	struct clk_init_data vco_init = {
- 		.parent_data = &(const struct clk_parent_data) {
- 			.fw_name = "ref",
-@@ -687,15 +687,13 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
- 		snprintf(clk_name, 32, "dsi%d_pclk_mux", pll_7nm->phy->id);
- 		snprintf(parent, 32, "dsi%d_pll_bit_clk", pll_7nm->phy->id);
- 		snprintf(parent2, 32, "dsi%d_pll_by_2_bit_clk", pll_7nm->phy->id);
--		snprintf(parent3, 32, "dsi%d_pll_out_div_clk", pll_7nm->phy->id);
--		snprintf(parent4, 32, "dsi%d_pll_post_out_div_clk", pll_7nm->phy->id);
- 
- 		hw = devm_clk_hw_register_mux(dev, clk_name,
- 					((const char *[]){
--					parent, parent2, parent3, parent4
--					}), 4, 0, pll_7nm->phy->base +
-+					parent, parent2,
-+					}), 2, 0, pll_7nm->phy->base +
- 					REG_DSI_7nm_PHY_CMN_CLK_CFG1,
--					0, 2, 0, NULL);
-+					0, 1, 0, NULL);
- 		if (IS_ERR(hw)) {
- 			ret = PTR_ERR(hw);
- 			goto fail;
--- 
-2.35.1
+I'm simply asking whether we should prevent `reg` (not `reg_ctrl`!)
+from having anything in the top 16 bits, which would overwrite the reset
+value for stream 1 which you correctly say should be retained as it is.
+It seems unlikely that this happens, but better be safe than sorry?
 
+Looking at the DSI register definition for DSC [1] again, I wonder if
+there's support for defining a common bitfield layout and reusing it
+thrice: the two channels for CMD mode and a single use for VIDEO.  Don't
+think that'd make the kernel code better though if even possible at all.
+
+[1]: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/14967/diffs
+
+- Marijn
+
+> > 
+> > However, this seems to indicate that the DSC patch series has been
+> > approved and merged somehow??
+> > 
+> >> ---
+> >>
+> >> Changes since v1:
+> >>   - Fix c&p error and apply mask clear to reg_ctrl2 instead of reg_ctrl
+> >>     (Abhinav)
+> >>
+> >> ---
+> >>   drivers/gpu/drm/msm/dsi/dsi_host.c | 5 ++++-
+> >>   1 file changed, 4 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >> index c983698d1384..a95d5df52653 100644
+> >> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >> @@ -961,10 +961,13 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+> >>   		reg_ctrl = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL);
+> >>   		reg_ctrl2 = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2);
+> >>   
+> >> +		reg_ctrl &= ~0xffff;
+> >>   		reg_ctrl |= reg;
+> >> +
+> >> +		reg_ctrl2 &= ~DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH__MASK;
+> >>   		reg_ctrl2 |= DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH(bytes_in_slice);
+> >>   
+> >> -		dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg);
+> >> +		dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg_ctrl);
+> >>   		dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
+> >>   	} else {
+> >>   		dsi_write(msm_host, REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
+> >> -- 
+> >> 2.35.1
+> >>
