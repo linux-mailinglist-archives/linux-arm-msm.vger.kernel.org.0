@@ -2,74 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FB855164E6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 May 2022 17:15:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C02BA51668F
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 May 2022 19:15:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348016AbiEAPPw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 May 2022 11:15:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54314 "EHLO
+        id S1344436AbiEARSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 May 2022 13:18:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235718AbiEAPPv (ORCPT
+        with ESMTP id S231591AbiEARSh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 May 2022 11:15:51 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6EC16347
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 May 2022 08:12:25 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 16so15813050lju.13
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 May 2022 08:12:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QgI1RLE4QjZBMdfYSm+1pfZAQh9ERx+LC2dX8V73DIk=;
-        b=Sk5V9+hcGZ2vhjdPvbMVdA2+0QSRX1JUp4+W00RgJTYiFeJzairgk6e+bRMqd5TTpx
-         t7dupZa/pDOL2bo2/Rh1F5D1OwYXlchvU/px8KGfuosWGXERh744o3ETZ3ktbDOhELR3
-         6lqzQiKrlgx7U4+eysp3o/9fRYtUEv6G9j53fgiappsQgPdPIsevbIha1gX+BLGaULt6
-         Uv1vqxxRJp38wJjIY2NyrgF/AiP/IlQUlsEA87onHuioBp+JczYNU0k7e/8Dbu4jq6ZR
-         7pVejmb0NAH7cmk1DX/iV9AQw2UoabyeBQGLQv3Kbf39BJFMe+Ea6aa31Ve+/gY4K4gn
-         xPbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QgI1RLE4QjZBMdfYSm+1pfZAQh9ERx+LC2dX8V73DIk=;
-        b=T9p0rHTRlYaCm8W2an0bk4EoJC7it7qRjRjYQs9S916ONDWwvC1HhOb/m3Xhe1MdQn
-         CjUvO+TXkGhYojhr8ryaV21wwDoQfv22h+MP2wX38zyNjEMo41mCpOWBQI6V6+vCEzU0
-         ox/oIcUiu7beHjqm8xj6RQDIVGiB18i/0Km2By1zO7lTxiixXcTCsZZnNK8T6NSZk31t
-         ns0WiIfR0d1NZKcbPZt75U6Ujf4rufZ2sbe3XEepRes7B1jRJgxafWInJojjDL1raueJ
-         Mq8yelJLjBVsHmf9oDUPipN7P+MLVFsJQfD17ga2G2EmVKLrBg11MxsSRy3mquXaAYXG
-         2zgQ==
-X-Gm-Message-State: AOAM531RHPV37FHtpVZiintpu4GgY/hi9SDQkSRGIvEF/FA7Ri0hukDJ
-        QilJ49Fhvj359bSTJn+eYuWT5w==
-X-Google-Smtp-Source: ABdhPJyc3fJfnPgQHWznkOtDdnF03pldZtT/k0xHZMBcfFyaS2gkFMw+G1J2k5EXTxVwhD08Qnwz4Q==
-X-Received: by 2002:a05:651c:54a:b0:250:5b67:b7b6 with SMTP id q10-20020a05651c054a00b002505b67b7b6mr565451ljp.305.1651417944069;
-        Sun, 01 May 2022 08:12:24 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id l16-20020ac25550000000b0047255d210dbsm461975lfk.10.2022.05.01.08.12.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 May 2022 08:12:23 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 3/3] drm/panel: drop DSC pps pointer
-Date:   Sun,  1 May 2022 18:12:20 +0300
-Message-Id: <20220501151220.3999164-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220501151220.3999164-1-dmitry.baryshkov@linaro.org>
-References: <20220501151220.3999164-1-dmitry.baryshkov@linaro.org>
+        Sun, 1 May 2022 13:18:37 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7BD7273C;
+        Sun,  1 May 2022 10:15:11 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 440A660F55;
+        Sun,  1 May 2022 17:15:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3251C385AA;
+        Sun,  1 May 2022 17:15:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651425310;
+        bh=q81KPxQv/DdTYHvhbWpl5nvlycZTC4H7TFOwPSGsIA8=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=grgoDSHwp9dLge/VniJoEBVxekD00weuqGxY4sFGueaucI/NH2Y5NVilOTGOQMUv+
+         RdcgEn87Zx0hk2+gf1D5PXQiQ6JpqSJgQ26kGhQRHW/4SU2tBHT81Y3CxP9SRhkh3N
+         CxxAqrdE2sdMmLyPZOKz7QUPfvuPiZsmDR24gE+TVSBvnJ3Fze/DJOpL3QTzdoB2yd
+         ug7kzcop05tPIOAlePmR2RMrQMui8n943xGKt7l7hU559HWBxRKYDRPHk/PaGNuRFv
+         8mijEru5ngNclm6us8517QdOfPVZ6oZ817hW+pDtL0LPFotbN+YKbLXXidqYSDzVGb
+         5oOrdHfjiMKrA==
+Date:   Sun, 1 May 2022 18:23:23 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Subject: Re: [PATCH v14 01/10] spmi: add a helper to look up an SPMI device
+ from a device node
+Message-ID: <20220501182323.7b672d8a@jic23-huawei>
+In-Reply-To: <20220429220904.137297-2-caleb.connolly@linaro.org>
+References: <20220429220904.137297-1-caleb.connolly@linaro.org>
+        <20220429220904.137297-2-caleb.connolly@linaro.org>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,32 +66,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Complete the move of DSC data pointer from struct drm_panel to struct
-mipi_dsi_device.
+On Fri, 29 Apr 2022 23:08:56 +0100
+Caleb Connolly <caleb.connolly@linaro.org> wrote:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- include/drm/drm_panel.h | 7 -------
- 1 file changed, 7 deletions(-)
+> The helper function spmi_device_from_of() takes a device node and
+> returns the SPMI device associated with it.
+> This is like of_find_device_by_node but for SPMI devices.
+> 
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org> 
 
-diff --git a/include/drm/drm_panel.h b/include/drm/drm_panel.h
-index d279ee455f01..1ba2d424a53f 100644
---- a/include/drm/drm_panel.h
-+++ b/include/drm/drm_panel.h
-@@ -179,13 +179,6 @@ struct drm_panel {
- 	 * Panel entry in registry.
- 	 */
- 	struct list_head list;
--
--	/**
--	 * @dsc:
--	 *
--	 * Panel DSC pps payload to be sent
--	 */
--	struct drm_dsc_config *dsc;
- };
- 
- void drm_panel_init(struct drm_panel *panel, struct device *dev,
--- 
-2.35.1
+Stephen, are you fine with this addition to spmi?
+
+Given bulk of this series in in IIO I'm planning to pick up once
+everyone is happy with it.
+
+Thanks,
+
+Jonathan
+
+
+> ---
+>  drivers/spmi/spmi.c  | 17 +++++++++++++++++
+>  include/linux/spmi.h |  3 +++
+>  2 files changed, 20 insertions(+)
+> 
+> diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+> index b37ead9e2fad..a456ce5141e1 100644
+> --- a/drivers/spmi/spmi.c
+> +++ b/drivers/spmi/spmi.c
+> @@ -386,6 +386,23 @@ static struct bus_type spmi_bus_type = {
+>  	.uevent		= spmi_drv_uevent,
+>  };
+>  
+> +/**
+> + * spmi_device_from_of() - get the associated SPMI device from a device node
+> + *
+> + * @np:		device node
+> + *
+> + * Returns the struct spmi_device associated with a device node or NULL.
+> + */
+> +struct spmi_device *spmi_device_from_of(struct device_node *np)
+> +{
+> +	struct device *dev = bus_find_device_by_of_node(&spmi_bus_type, np);
+> +
+> +	if (dev)
+> +		return to_spmi_device(dev);
+> +	return NULL;
+> +}
+> +EXPORT_SYMBOL_GPL(spmi_device_from_of);
+> +
+>  /**
+>   * spmi_controller_alloc() - Allocate a new SPMI device
+>   * @ctrl:	associated controller
+> diff --git a/include/linux/spmi.h b/include/linux/spmi.h
+> index 729bcbf9f5ad..eac1956a8727 100644
+> --- a/include/linux/spmi.h
+> +++ b/include/linux/spmi.h
+> @@ -164,6 +164,9 @@ static inline void spmi_driver_unregister(struct spmi_driver *sdrv)
+>  	module_driver(__spmi_driver, spmi_driver_register, \
+>  			spmi_driver_unregister)
+>  
+> +struct device_node;
+> +
+> +struct spmi_device *spmi_device_from_of(struct device_node *np);
+>  int spmi_register_read(struct spmi_device *sdev, u8 addr, u8 *buf);
+>  int spmi_ext_register_read(struct spmi_device *sdev, u8 addr, u8 *buf,
+>  			   size_t len);
 
