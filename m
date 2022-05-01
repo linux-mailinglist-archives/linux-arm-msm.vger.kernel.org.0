@@ -2,68 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1DE7516395
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 May 2022 12:10:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D8825163A8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 May 2022 12:34:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240778AbiEAKN6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 May 2022 06:13:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53230 "EHLO
+        id S1343519AbiEAKiC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 May 2022 06:38:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243262AbiEAKNx (ORCPT
+        with ESMTP id S229728AbiEAKh7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 May 2022 06:13:53 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DADA13DCF
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 May 2022 03:10:27 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id x17so20935500lfa.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 May 2022 03:10:27 -0700 (PDT)
+        Sun, 1 May 2022 06:37:59 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BD6CBF4E
+        for <linux-arm-msm@vger.kernel.org>; Sun,  1 May 2022 03:34:33 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id i27so23053108ejd.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 May 2022 03:34:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=TI23wKQEneJ5WP1153aFPWXvGTv0wcRzY+mGykcwofk=;
-        b=d1bvtS0N6dIqktEIIlNJ2QBhXBskRsIxYdnDTi+Gw/NPPipud0ttUypiQi8R58saKo
-         C6ll9v/V66B/hYdcuXt1pVaBcszyIhQVkT9cL0xcibHBmXLBJM2I8XwhLqgZmAdW8lBG
-         m/d8bcYuccTPhc6hDMOQO81EtBHiNAhm3ECQsdF47/Svv8q73Z2VOdoWgdyRqF2b7v2R
-         HR09XTKEKRAZNvbo6RATSTuiEVeffmLQMasRekRTFwJ/V9qVpvlOHFKTmgEuiLW6jEet
-         eWhDslj6rgJmnSj8L0KHYuWAULNrZACTERSr3XAZHtz9g8Jy9AP7brV9b06ferjUPpwm
-         PW+Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Cp7/o6x5IzdrJbmJy3xqPuHx+JaFO1sYCDgkJSh0CjQ=;
+        b=lRUnRnElduCIHzH2HCmBQKpbPMKJplrJTWLK3nlYHZEzMU1pMnrAqF9Lzz9+dKPIje
+         xkcB7rLy23kfMNWttlsYJGyPyQgR3FcMq6EyQqbFe+6WIjgCv28J21pA/NhfmcH9rpv9
+         fIMXYWW/f5omnPuLmdxanIRO0RBrA0rhFctJW16EWdCVC4geXUDy2l3eBJLJx4n7dqw8
+         X034WxW7aIUREWHWoeyYzIflzjYY5jNV2EWo61pW4IWW+gxQqPc4ruf50+NcmiWhB2By
+         0CuyOxshcyC4XY7nyqRjVDr1XaNzzuFnFD7Ntqk7pb+sLJ5zyZsU0Tp+pVsJRUmHKn76
+         9JFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TI23wKQEneJ5WP1153aFPWXvGTv0wcRzY+mGykcwofk=;
-        b=0NgA9g53Io8+9coLc5J0nFEXv2hiuqV0KXRDhxjURm8nAZ9dbPQcqXOrVX3CWUsMrd
-         32KuqBKXS514vvvgBDch66HsT48xrBTQzKl10lkhymY2SgviP5tM67AHwyLBcPqQ/mWq
-         jFcpbLYl1f/FJoiZWtjyKKkynUVI/5m2yN6/wk8KYkHYR0uJW6dB25HkESqB7hgfl3hF
-         6t9kQutJ+EDkHB3i0zmWuKrgUlBhgsUAoKbqyDKYG8aY3rdl/jSkLgnTTt2kZe+egUxC
-         l3HhbqzqIzamKRzOnH+HxJZG5LiH7o5LCxeloImB9fpB+6+lsQvEYT7sWhbdn3LGMBZm
-         lHZA==
-X-Gm-Message-State: AOAM5330VlQ1rspzhmkKK7KF2wTAMmK6S/wtXa5ZkmJ3DQ+AnLxj2fM2
-        QYkN5ZuKA6kR4N5xko9P9g5DMbRU0K22JQ==
-X-Google-Smtp-Source: ABdhPJy+qSaB35tEuaZl8E2U/QytPoM+/Y5D8MZQVYBje/2lYI6+egHRI7TBm7Y965f4DOZEmRk0cQ==
-X-Received: by 2002:a05:6512:3d13:b0:472:5d8d:5202 with SMTP id d19-20020a0565123d1300b004725d8d5202mr3298812lfv.331.1651399825737;
-        Sun, 01 May 2022 03:10:25 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h7-20020a2ea487000000b0024f3d1dae7csm766412lji.4.2022.05.01.03.10.25
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Cp7/o6x5IzdrJbmJy3xqPuHx+JaFO1sYCDgkJSh0CjQ=;
+        b=BpY27SvRwyxl0f+/7/nv3JXpKCSHbwGpCTNb/4DmVWWKRAraWJa8LL75LRgAZfk1Yw
+         BcAvlCJiW7b0j0k2+JVvezRChl5qUIFuz5QaGSvxIf8X2uSjgRxXaNeBqiKEL4+NehiG
+         3wnjnmYNcuIirJ1EdknPFqGGCLZNqsuRenFxWoAaU4nVc/y+7jFl2crULp5kyErMgVlu
+         wifrbtwjDezvxyyGVoftKg4mW6w3aI5LYG7RWbX03zOAQvZkXeuW09XnHx35XfKHLLhG
+         ErkzN7Dit63X4ZWLXGc6y1w+egsKZF5WUpA95rhN+UHzOVJqPJjlsgrmJ6GGRdvrOPdG
+         drog==
+X-Gm-Message-State: AOAM530sPlg8bYHp4QLHm0QjqSgWubokXSRUVOnG1TDRBtdHTLjqeCYm
+        RqFpMBjE7i2GVP+SgkV12XP90q5vDS11aA==
+X-Google-Smtp-Source: ABdhPJwv+vVoRb9P/PghU+aWHDJQi4gjxoCN9SWVZ4Ok6tA0pak1jR6F73PxC22SovUKL1Q3a1g77w==
+X-Received: by 2002:a17:907:9710:b0:6f3:6e7e:d5bd with SMTP id jg16-20020a170907971000b006f36e7ed5bdmr6946306ejc.252.1651401271825;
+        Sun, 01 May 2022 03:34:31 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id gv49-20020a1709072bf100b006f3ef214e35sm2443733ejc.155.2022.05.01.03.34.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 May 2022 03:10:25 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Sun, 01 May 2022 03:34:31 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Jassi Brar <jassisinghbrar@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Tushar Khandelwal <Tushar.Khandelwal@arm.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Robin Murphy <robin.murphy@arm.com>
-Subject: [PATCH 3/3] drm/msm: Stop using iommu_present()
-Date:   Sun,  1 May 2022 13:10:22 +0300
-Message-Id: <20220501101022.3931295-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220501101022.3931295-1-dmitry.baryshkov@linaro.org>
-References: <20220501101022.3931295-1-dmitry.baryshkov@linaro.org>
+        Peng Fan <peng.fan@nxp.com>, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] mailbox: correct kerneldoc
+Date:   Sun,  1 May 2022 12:34:27 +0200
+Message-Id: <20220501103428.111286-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,41 +79,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Even if some IOMMU has registered itself on the platform "bus", that
-doesn't necessarily mean it provides translation for the device we
-care about. Replace iommu_present() with a more appropriate check.
+Correct kerneldoc warnings like:
 
-On Qualcomm platforms the IOMMU can be specified either for the MDP/DPU
-device or for its parent MDSS device depending on the actual platform.
-Check both of them, since that is how both DPU and MDP5 drivers work.
+  drivers/mailbox/arm_mhu_db.c:47:
+    warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
+  drivers/mailbox/qcom-ipcc.c:58:
+    warning: Function parameter or member 'num_chans' not described in 'qcom_ipcc'
 
-Co-developed-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/gpu/drm/msm/msm_drv.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/mailbox/arm_mhu_db.c | 2 +-
+ drivers/mailbox/arm_mhuv2.c  | 3 ++-
+ drivers/mailbox/qcom-ipcc.c  | 3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 4a3dda23e3e0..a37a3bbc04d9 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -266,8 +266,14 @@ bool msm_use_mmu(struct drm_device *dev)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
+diff --git a/drivers/mailbox/arm_mhu_db.c b/drivers/mailbox/arm_mhu_db.c
+index 8674153cc893..aa0a4d83880f 100644
+--- a/drivers/mailbox/arm_mhu_db.c
++++ b/drivers/mailbox/arm_mhu_db.c
+@@ -44,7 +44,7 @@ struct arm_mhu {
+ };
  
--	/* a2xx comes with its own MMU */
--	return priv->is_a2xx || iommu_present(&platform_bus_type);
-+	/*
-+	 * a2xx comes with its own MMU
-+	 * On other platforms IOMMU can be declared specified either for the
-+	 * MDP/DPU device or for its parent, MDSS device.
-+	 */
-+	return priv->is_a2xx ||
-+		device_iommu_mapped(dev->dev) ||
-+		device_iommu_mapped(dev->dev->parent);
- }
- 
- static int msm_init_vram(struct drm_device *dev)
+ /**
+- * ARM MHU Mailbox allocated channel information
++ * struct mhu_db_channel - ARM MHU Mailbox allocated channel information
+  *
+  * @mhu: Pointer to parent mailbox device
+  * @pchan: Physical channel within which this doorbell resides in
+diff --git a/drivers/mailbox/arm_mhuv2.c b/drivers/mailbox/arm_mhuv2.c
+index d997f8ebfa98..a47aef8df52f 100644
+--- a/drivers/mailbox/arm_mhuv2.c
++++ b/drivers/mailbox/arm_mhuv2.c
+@@ -160,7 +160,8 @@ enum mhuv2_frame {
+  * struct mhuv2 - MHUv2 mailbox controller data
+  *
+  * @mbox:	Mailbox controller belonging to the MHU frame.
+- * @send/recv:	Base address of the register mapping region.
++ * @send:	Base address of the register mapping region.
++ * @recv:	Base address of the register mapping region.
+  * @frame:	Frame type: RECEIVER_FRAME or SENDER_FRAME.
+  * @irq:	Interrupt.
+  * @windows:	Channel windows implemented by the platform.
+diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+index c5d963222014..881706da59c0 100644
+--- a/drivers/mailbox/qcom-ipcc.c
++++ b/drivers/mailbox/qcom-ipcc.c
+@@ -41,9 +41,10 @@ struct qcom_ipcc_chan_info {
+  * @dev:		Device associated with this instance
+  * @base:		Base address of the IPCC frame associated to APSS
+  * @irq_domain:		The irq_domain associated with this instance
+- * @chan:		The mailbox channels array
++ * @chans:		The mailbox channels array
+  * @mchan:		The per-mailbox channel info array
+  * @mbox:		The mailbox controller
++ * @num_chans:		Number of @chans elements
+  * @irq:		Summary irq
+  */
+ struct qcom_ipcc {
 -- 
-2.35.1
+2.32.0
 
