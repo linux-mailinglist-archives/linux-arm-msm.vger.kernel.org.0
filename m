@@ -2,75 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFD73516767
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 May 2022 21:22:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1D92516788
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 May 2022 21:42:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240971AbiEATZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 May 2022 15:25:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49006 "EHLO
+        id S237507AbiEATpa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 May 2022 15:45:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353330AbiEATZX (ORCPT
+        with ESMTP id S1352969AbiEATp3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 May 2022 15:25:23 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F2BAB1E9
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 May 2022 12:21:56 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id g16so10762217lja.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 May 2022 12:21:56 -0700 (PDT)
+        Sun, 1 May 2022 15:45:29 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 124D810FD9
+        for <linux-arm-msm@vger.kernel.org>; Sun,  1 May 2022 12:42:03 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id y32so22256241lfa.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 May 2022 12:42:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=98VvuWwg/UxrQVt2tP9Y2pnp9hUtu4rLQ2/MrJ26H6s=;
-        b=I7mNaEFXNCYCWXzOtGVI1HrPvMMAT/hHlPRz1bDl+xKSWvsvUNmlmnQ7JDJjtDHVcR
-         gcdnu0oQIU4O//KnikbqmA0pmBmlMwB6SDRAtKYvXLEq7htKg6P66vm6FezOEOUBfuq8
-         qYna20ICU9xPA2q9jN9WNunZ3k7mY9p71BpcuqskRm46pwSsTxoXu6nKQJg/vcLGWBcm
-         cJ2uSh3MO/OL79QVJErC5qiAS5gVLSGG1sOZV/5CT9ql3IHoFu3/lXmQZNGZsBgKiDP7
-         79pewyPEsbJfb2xQx+rDYKqeIG42E6lSBP5pcvt2Z8Hti7EfDM6Wy77KIu+8Qa/KjajK
-         /S+Q==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Sb18QTlst2GMPixG5lE6GOjj3E96mmvATu5tTksShfU=;
+        b=TPihLFQQ4TWDX9nyo9eCksuPePuKQj3FzZ/C87BLTD8aIaShyo2SlgnTcXqOpZtcS+
+         Dn7LNhJBtTFkm8uEQxw1I+4HIzocK/AR5JyyNhoaX4yQkIJOz2UWuUdAdTxjn2FOMO8M
+         0EMZ5vxdxu54t7qriPzXmDNxxqas6rRXAMVaDCMZDQ3SLK4sM/OCsbfAMYu/8QcLk0TD
+         VwB2JQdzRdqvdKGtE8yYGKNGa+KKJMVLDmMG5dGoYr2wPhr2tyuaK8sbZb8ytksO+oK2
+         dAcKPBJAkWvMCyQGsIJ35FBMZ15N7dT67NfDyJm2cBwk5k/wjvZQqhKe1phZ9JMYHeWZ
+         GJ8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=98VvuWwg/UxrQVt2tP9Y2pnp9hUtu4rLQ2/MrJ26H6s=;
-        b=LJXjwxPjJbSFthrJEx0S+GSdnMf7U2ZPfovDlMbKEByQfgA/3AWm7XqOnGM5EEpNEq
-         V3k6dEgAesEk+CNc9WPKarX6lJ/IJoP1vJwM9C4SO5CUO7hhEaEBfOcBvu9OzKTQxvRZ
-         OX6szR9He1khR9eMUPEvYTA+EXux+/fb/OpqYTSmL+XIC5lTnyCsJRO8OLiLyZAad7v9
-         cp5mUe+Y8Lf7HJ1eChgVdgXYFm+W6yWkDFBo8HL+n8ftGxWI0WImhYbbofddHRWtxkq4
-         kN6ldwUl8UIhk8sH5D4u134kgI1LbE3xuOV8kl0zDCWqPifNs0g9rIlUY1eyEj7miKVw
-         t4mA==
-X-Gm-Message-State: AOAM531Bbyb51O5OgAN/gVKz1NFF12wTlu41cj+FHNRB0H66tMu3U6zY
-        dykzEmoH6ZY+1dSHoGPEogxIOg==
-X-Google-Smtp-Source: ABdhPJx1RcSL/luCsLjf2Z3nE1TeQ+8hyPrnqShPCdxPrjcr/FBJDj3AW/JAHIGZt5NPAfyl7+SfxA==
-X-Received: by 2002:a05:651c:893:b0:249:4023:3818 with SMTP id d19-20020a05651c089300b0024940233818mr6350659ljq.44.1651432914827;
-        Sun, 01 May 2022 12:21:54 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id q3-20020a2e8743000000b0024f3d1daee6sm865928ljj.110.2022.05.01.12.21.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 May 2022 12:21:54 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Cc:     Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: [PATCH v4 5/5] PCI: qcom: Drop manual pipe_clk_src handling
-Date:   Sun,  1 May 2022 22:21:49 +0300
-Message-Id: <20220501192149.4128158-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220501192149.4128158-1-dmitry.baryshkov@linaro.org>
-References: <20220501192149.4128158-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Sb18QTlst2GMPixG5lE6GOjj3E96mmvATu5tTksShfU=;
+        b=SnvDVIGfnVIUk5xyKnidpEtWZwkPXWzRIId8dgQAkhhKrEXzuH5gNaDvrUdq3dLqhe
+         9Cru4G/+rTYl+Hk2GlJGmuFZHfJJLhuwjU0I7+pdFGuIdKUvRW3TPoaxF6hvgjA2ACeE
+         PQBKrvudjFk60WH9dfvBjfTo+F8GS962DXjytca/X8uJpMyw0CpEbGFGzPRQE2kdwPHE
+         rYS6/JTL5qLFSiYuG8UHl5aw6LZUQvXbQgjB2+L7wOWeTJM6KThFqv1IPOyOgFKKN3/M
+         Y26MwmyuLvwD1A7Q/V3n+BHGllI5IA+KiD/SSs0t6ovh3zS1e6krmmacbJUduCJajJZE
+         bOoQ==
+X-Gm-Message-State: AOAM53275EowtpZwSwRY/C3M4QOBzzxYCx1T5WZpKsOTSuKRH/9agYUI
+        1QEYgUM9scr7IEsTRyqGahlmcQ==
+X-Google-Smtp-Source: ABdhPJytmnEVlN3dum4EEXcube6P1OlhJMzZ/zB9pTJSGUqHDLak5XL2jo+QmoYS/dUC1eYNua8nsw==
+X-Received: by 2002:a05:6512:1085:b0:472:1013:aac7 with SMTP id j5-20020a056512108500b004721013aac7mr7136469lfg.463.1651434121431;
+        Sun, 01 May 2022 12:42:01 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id z1-20020a2eb521000000b0024f3d1dae97sm869668ljm.31.2022.05.01.12.42.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 01 May 2022 12:42:00 -0700 (PDT)
+Message-ID: <1c66890b-6736-61ef-7d16-619f90ced4a0@linaro.org>
+Date:   Sun, 1 May 2022 22:41:59 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v3 0/2] spmi: pmic-arb: Add support for PMIC v7
+Content-Language: en-GB
+To:     Vinod Koul <vkoul@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        David Collins <quic_collinsd@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        David Dai <daidavid1@codeaurora.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220201134108.2677578-1-vkoul@kernel.org>
+ <YhUVAwtfjuIdKrRQ@matsya>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YhUVAwtfjuIdKrRQ@matsya>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,131 +80,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Manual reparenting of pipe_clk_src is being replaced with the parking of
-the clock with clk_disable()/clk_enable(). Drop redundant code letting
-the pipe clock driver park the clock to the safe bi_tcxo parent
-automatically.
+On 22/02/2022 19:53, Vinod Koul wrote:
+> On 01-02-22, 19:11, Vinod Koul wrote:
+>> Hello,
+>>
+>> The is version 3 of support for PMIC v7. I have added a new property
+>> qcom,bus-id for supporting v7 and then add driver changes for v7
+>>
+>> This depends on yaml conversion patch:
+>> https://lore.kernel.org/linux-arm-msm/20211227170151.73116-1-david@ixit.cz/
+> 
+> Any feedback on this...
 
-Cc: Prasad Malisetty <quic_pmaliset@quicinc.com>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 39 +-------------------------
- 1 file changed, 1 insertion(+), 38 deletions(-)
+Another gracious reminder about these patches. At this moment this is 
+one of the important pieces lacking for the full SM8450 support in the 
+upstream kernel.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index a6becafb6a77..b48c899bcc97 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -164,9 +164,6 @@ struct qcom_pcie_resources_2_7_0 {
- 	int num_clks;
- 	struct regulator_bulk_data supplies[2];
- 	struct reset_control *pci_reset;
--	struct clk *pipe_clk_src;
--	struct clk *phy_pipe_clk;
--	struct clk *ref_clk_src;
- };
- 
- union qcom_pcie_resources {
-@@ -192,7 +189,6 @@ struct qcom_pcie_ops {
- 
- struct qcom_pcie_cfg {
- 	const struct qcom_pcie_ops *ops;
--	unsigned int pipe_clk_need_muxing:1;
- 	unsigned int has_tbu_clk:1;
- 	unsigned int has_ddrss_sf_tbu_clk:1;
- 	unsigned int has_aggre0_clk:1;
-@@ -1158,20 +1154,6 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
- 	if (ret < 0)
- 		return ret;
- 
--	if (pcie->cfg->pipe_clk_need_muxing) {
--		res->pipe_clk_src = devm_clk_get(dev, "pipe_mux");
--		if (IS_ERR(res->pipe_clk_src))
--			return PTR_ERR(res->pipe_clk_src);
--
--		res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
--		if (IS_ERR(res->phy_pipe_clk))
--			return PTR_ERR(res->phy_pipe_clk);
--
--		res->ref_clk_src = devm_clk_get(dev, "ref");
--		if (IS_ERR(res->ref_clk_src))
--			return PTR_ERR(res->ref_clk_src);
--	}
--
- 	return 0;
- }
- 
-@@ -1189,10 +1171,6 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
- 		return ret;
- 	}
- 
--	/* Set TCXO as clock source for pcie_pipe_clk_src */
--	if (pcie->cfg->pipe_clk_need_muxing)
--		clk_set_parent(res->pipe_clk_src, res->ref_clk_src);
--
- 	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
- 	if (ret < 0)
- 		goto err_disable_regulators;
-@@ -1254,18 +1232,8 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
- 	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
- 
- 	clk_bulk_disable_unprepare(res->num_clks, res->clks);
--	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
--}
- 
--static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
--{
--	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
--
--	/* Set pipe clock as clock source for pcie_pipe_clk_src */
--	if (pcie->cfg->pipe_clk_need_muxing)
--		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
--
--	return 0;
-+	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
- }
- 
- static int qcom_pcie_link_up(struct dw_pcie *pci)
-@@ -1441,7 +1409,6 @@ static const struct qcom_pcie_ops ops_2_7_0 = {
- 	.init = qcom_pcie_init_2_7_0,
- 	.deinit = qcom_pcie_deinit_2_7_0,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
--	.post_init = qcom_pcie_post_init_2_7_0,
- };
- 
- /* Qcom IP rev.: 1.9.0 */
-@@ -1450,7 +1417,6 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
- 	.init = qcom_pcie_init_2_7_0,
- 	.deinit = qcom_pcie_deinit_2_7_0,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
--	.post_init = qcom_pcie_post_init_2_7_0,
- 	.config_sid = qcom_pcie_config_sid_sm8250,
- };
- 
-@@ -1488,7 +1454,6 @@ static const struct qcom_pcie_cfg sm8250_cfg = {
- static const struct qcom_pcie_cfg sm8450_pcie0_cfg = {
- 	.ops = &ops_1_9_0,
- 	.has_ddrss_sf_tbu_clk = true,
--	.pipe_clk_need_muxing = true,
- 	.has_aggre0_clk = true,
- 	.has_aggre1_clk = true,
- };
-@@ -1496,14 +1461,12 @@ static const struct qcom_pcie_cfg sm8450_pcie0_cfg = {
- static const struct qcom_pcie_cfg sm8450_pcie1_cfg = {
- 	.ops = &ops_1_9_0,
- 	.has_ddrss_sf_tbu_clk = true,
--	.pipe_clk_need_muxing = true,
- 	.has_aggre1_clk = true,
- };
- 
- static const struct qcom_pcie_cfg sc7280_cfg = {
- 	.ops = &ops_1_9_0,
- 	.has_tbu_clk = true,
--	.pipe_clk_need_muxing = true,
- };
- 
- static const struct dw_pcie_ops dw_pcie_ops = {
+> 
+>>
+>> Changes since v2:
+>>   - Drop yaml conversion patch
+>>   - Fix author for spmi patch
+>> Changes since v1:
+>>   - Add yaml conversion patch and new binding
+>>   - fix driver bug report by Jonathan
+>>
+>> David Collins (1):
+>>    spmi: pmic-arb: Add support for PMIC v7
+>>
+>> Vinod Koul (1):
+>>    dt-bindings: spmi: Add qcom,bus-id
+>>
+>>   .../bindings/spmi/qcom,spmi-pmic-arb.yaml     |  11 +
+>>   drivers/spmi/spmi-pmic-arb.c                  | 233 ++++++++++++++++--
+>>   2 files changed, 225 insertions(+), 19 deletions(-)
+>>
+>> -- 
+>> 2.31.1
+> 
+
+
 -- 
-2.35.1
-
+With best wishes
+Dmitry
