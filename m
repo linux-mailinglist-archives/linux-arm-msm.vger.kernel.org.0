@@ -2,121 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 552EB51649C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 May 2022 15:28:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7DF15164E7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 May 2022 17:15:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243688AbiEANb5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 May 2022 09:31:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38286 "EHLO
+        id S1348024AbiEAPPv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 May 2022 11:15:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237373AbiEANb4 (ORCPT
+        with ESMTP id S234579AbiEAPPu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 May 2022 09:31:56 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03EDB3299E;
-        Sun,  1 May 2022 06:28:30 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id x52so8917905pfu.11;
-        Sun, 01 May 2022 06:28:30 -0700 (PDT)
+        Sun, 1 May 2022 11:15:50 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C2C9632E
+        for <linux-arm-msm@vger.kernel.org>; Sun,  1 May 2022 08:12:23 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id q14so15814315ljc.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 May 2022 08:12:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id;
-        bh=x+vci/WgeFLOKqYpeTUy1SURtAS8ymBmeID88rAjgkc=;
-        b=bM8iqxP4M9Z194v2N+8fzrKbhIUmYbFhD5PD/psBUU4LAYGEduO+ctl5Vq5fmJn3tL
-         GKZzVDz+toPsKUYHhtTL6PCtbsDSEgmc4L9HQxSBTd0muq8GOwjCktlcdvB19nN9vYt3
-         azAKSdiMTYT7vy2jZPdXkhesSJweTCbQIC8u8dtep/lbnvjAPVsW1h9ikPjxT5ZodDyj
-         pBrNN6Y8NzJ9p/RY6gsAp5AjaUdklNYeuG7imrVtRIQjRjSu/TtBmNqIptBaCbxasYju
-         u59C2FFF0vNYEluUavlH2QxrP14cGLsuDtB3UpT2NGjZAyUBm8RRo+ComzIci+RpDtUX
-         ds+g==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bcp90gaPZLzvVD4QztWlFtHIaIGASrYLr4Z5ANOtEbg=;
+        b=lKnZjMgrJdGl9HP0JnYC9LYTnOiNOrDjnSOhuibPINeJ8AumJGsZKdLIzQ/Km3d+VO
+         p9cDZGdyiINY7KsZzFUAASrG4xP2YxRMAxEmcakBd5DTmOOZdPH9AX8NJraF508LB1tT
+         hrkl6vV9nUNlNfsuyZ29rgBk8C5KeJDTFswg56dOq0vuidD9Sabbm3grEe7GWdin8lYx
+         xcEbtizWOqcnotUEk3mqaizkOD4jL4YspRz/YO+xwtG8G7PARMH1lHNg/+/s7fxmU8mb
+         0KFC6x+btQw0jpjfLMC3tS9dpMnUV0hRo1NMcrLRbJSJP600cQGOXoTac6OfYSyj5ooj
+         jA5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=x+vci/WgeFLOKqYpeTUy1SURtAS8ymBmeID88rAjgkc=;
-        b=Wpy8ZSr1s0ItmQuw0bVVRXgZn0nYvurpMtglV7xRxYjcabjMoDHwkzFDPofiKmJDzz
-         La1gKaPO83V6+LkPmPZYuXxy7wGnNc1rTZDImiMTrHz0OPu+94zc44HDSbysjClrolqW
-         LRU2+mE4LPPjaPGZRSuBphuG9pyaiBRUhtanAYlmGGBR0zvL8t3zoX1hmp2IkcOHjORs
-         KPtq+XkJbeF0rKbkpQ4gZAEAPvTcTWrHpnuqHVuQhGeVxEvQUCednYzxLuelxD25IUqa
-         cV70UC5eCKgr/EECxkcWHRwAd4widdQaYJ0zV83wcFoOGOUMpU1At/ntdupEumNEq3wg
-         Lthg==
-X-Gm-Message-State: AOAM53134ovYnIjytgoEGT4nGRYeSsy1woh09xtpUHZOJiUlGd7exySf
-        9QdrhWRyn0AJvLmcSnM6PxqGE0oHVKECVjQ0
-X-Google-Smtp-Source: ABdhPJzEhlGOrpTMwLWuERZKarhCsmpznSPi4Fgvsc3is6rS2xJrZLchrffVrkCQe5f9WqywiWcfqQ==
-X-Received: by 2002:a63:1c0d:0:b0:3ab:1a76:953f with SMTP id c13-20020a631c0d000000b003ab1a76953fmr6142860pgc.73.1651411710432;
-        Sun, 01 May 2022 06:28:30 -0700 (PDT)
-Received: from localhost.localdomain ([122.233.238.54])
-        by smtp.gmail.com with ESMTPSA id y5-20020a170902864500b0015e8d4eb229sm2877019plt.115.2022.05.01.06.28.27
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bcp90gaPZLzvVD4QztWlFtHIaIGASrYLr4Z5ANOtEbg=;
+        b=QysS/SSLwp4vOFX2CLJ1pGX7zQ0AGgYq8SnQuGmf0Gd3a3u7bSH/ANAt/3L3nOsr5i
+         3nzVa5iSJsE5Ra1vvc0DWqb2n/M17j6/C+QMhAblvMntxaVf+VffDZIK9A7LzwnCLunU
+         csDk3Q8FX9Y/e8C4ZwmVs5BMDJENkpNY2mQaiz8pI6xIhlBuWt0GDMltd2GpPcuBR0qn
+         LBj38Ogeb5eMjb1toGCXFxFJkBh4NmwhOLAsPElbNqsgW3Eib6SjDfjK789llkpvXg5W
+         QLu+sKNb9cv0b+sucZ2bc2ChY8Bz/mNeiHgJ6Cy9ce7WyVXLuMLdupoVGNORPUR+WwEE
+         Q57w==
+X-Gm-Message-State: AOAM531QjR6yXA9HDum+50OO8Ty8cnYcw0uzJnJwK6HbL0UsFGDPSDkj
+        LRhVKfcjVw+yROzjtVE1FO0c0A==
+X-Google-Smtp-Source: ABdhPJwy3LKBmD0zbYUKLq70u5uq7jRovsAeKwEnH4chta+EQoxhvuNX/52f0cVP3W3Wp+06QV2Qhw==
+X-Received: by 2002:a2e:b557:0:b0:247:e509:4a50 with SMTP id a23-20020a2eb557000000b00247e5094a50mr5770859ljn.72.1651417941572;
+        Sun, 01 May 2022 08:12:21 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id l16-20020ac25550000000b0047255d210dbsm461975lfk.10.2022.05.01.08.12.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 May 2022 06:28:30 -0700 (PDT)
-From:   Xiaomeng Tong <xiam0nd.tong@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, joro@8bytes.org,
-        will@kernel.org, sricharan@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-kernel@vger.kernel.org,
-        Xiaomeng Tong <xiam0nd.tong@gmail.com>, stable@vger.kernel.org
-Subject: [PATCH v2] iommu: fix an incorrect NULL check on list iterator
-Date:   Sun,  1 May 2022 21:28:23 +0800
-Message-Id: <20220501132823.12714-1-xiam0nd.tong@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        Sun, 01 May 2022 08:12:21 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 0/3] drm: move dsc data pointer from drm_panel to mipi_dsi_device
+Date:   Sun,  1 May 2022 18:12:17 +0300
+Message-Id: <20220501151220.3999164-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The bug is here:
-	if (!iommu || iommu->dev->of_node != spec->np) {
+To properly support DSC the sink driver (panel) has to pass DSC pps data
+to the source (DSI host). The commit 0f40ba48de3b ("drm/msm/dsi: Pass
+DSC params to drm_panel") added a pointer to the DSC data to the struct
+drm_panel. However this is not the ideal solution.
 
-The list iterator value 'iommu' will *always* be set and non-NULL by
-list_for_each_entry(), so it is incorrect to assume that the iterator
-value will be NULL if the list is empty or no element is found (in fact,
-it will point to a invalid structure object containing HEAD).
+First, this leaves DSC-supporting DSI sink bridges (like ANX7625 which
+support DSC decoding on the MIPI DSI inputs).
 
-To fix the bug, use a new value 'iter' as the list iterator, while use
-the old value 'iommu' as a dedicated variable to point to the found one,
-and remove the unneeded check for 'iommu->dev->of_node != spec->np'
-outside the loop.
+Second, this does not play well with the panel_bridge. Drivers depending
+solely on the bridge chains will still have to lookup panel and fetch
+data from it.
 
-Cc: stable@vger.kernel.org
-Fixes: f78ebca8ff3d6 ("iommu/msm: Add support for generic master bindings")
-Signed-off-by: Xiaomeng Tong <xiam0nd.tong@gmail.com>
----
-changes since v1:
- - add a new iter variable (suggested by Joerg Roedel)
+Last, but not least, the DSC data is not relevant for the wide variety
+of panels including DPI and LVDS panels.
 
-v1: https://lore.kernel.org/all/20220327053558.2821-1-xiam0nd.tong@gmail.com/
----
- drivers/iommu/msm_iommu.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+To solve all these problems, move struct drm_dsc_config pointer from
+struct drm_panel to struct mipi_host_device. This way MIPI DSI host
+driver receives DSC data during attach callback without additional
+lookups.
 
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index 3a38352b603f..41a3231a6d13 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -615,16 +615,17 @@ static void insert_iommu_master(struct device *dev,
- static int qcom_iommu_of_xlate(struct device *dev,
- 			       struct of_phandle_args *spec)
- {
--	struct msm_iommu_dev *iommu;
-+	struct msm_iommu_dev *iommu = NULL, *iter;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&msm_iommu_lock, flags);
--	list_for_each_entry(iommu, &qcom_iommu_devices, dev_node)
--		if (iommu->dev->of_node == spec->np)
-+	list_for_each_entry(iter, &qcom_iommu_devices, dev_node)
-+		if (iter->dev->of_node == spec->np) {
-+			iommu = iter;
- 			break;
-+		}
- 
--	if (!iommu || iommu->dev->of_node != spec->np) {
-+	if (!iommu) {
- 		ret = -ENODEV;
- 		goto fail;
- 	}
+Dependencies: this depends on the MSM DRM DSC patchset [1] being pulled
+in through the MSM DRM tree.
+
+[1] https://patchwork.freedesktop.org/series/102262/
+
+Dmitry Baryshkov (3):
+  drm/mipi-dsi: pass DSC data through the struct mipi_dsi_device
+  drm/msm/dsi: fetch DSC pps payload from struct mipi_dsi_device
+  drm/panel: drop DSC pps pointer
+
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 25 +++++++++++--------------
+ include/drm/drm_mipi_dsi.h         |  2 ++
+ include/drm/drm_panel.h            |  7 -------
+ 3 files changed, 13 insertions(+), 21 deletions(-)
+
 -- 
-2.17.1
+2.35.1
 
