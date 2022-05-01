@@ -2,74 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E1F25162C7
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 May 2022 10:34:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFF38516391
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 May 2022 12:10:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245558AbiEAIhW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 May 2022 04:37:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48672 "EHLO
+        id S243325AbiEAKNz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 May 2022 06:13:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245472AbiEAIhU (ORCPT
+        with ESMTP id S242720AbiEAKNw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 May 2022 04:37:20 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3DE948307
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 May 2022 01:33:55 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id k23so22824513ejd.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 May 2022 01:33:55 -0700 (PDT)
+        Sun, 1 May 2022 06:13:52 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55B8C5FA8
+        for <linux-arm-msm@vger.kernel.org>; Sun,  1 May 2022 03:10:25 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id n14so20912903lfu.13
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 May 2022 03:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=juphbGtVRI7AgwIBx/gVkRn1JsqVAIzvaH2H1Ynllr4=;
-        b=Ink2fnHkVWHDhPUFXh+DIhg9JOPJqIFKPZidd0JPdal2U+pv+v44Rrrq2/+XykLTUC
-         yiYFlX95J2ma8UL59qsoWaNO+5mj9DOQZZv7ZyOBoG0wXBU8HiaZydTfzKaZR1JfAKjZ
-         ZMgmAizrjpzSZwwM5qmeChXnYGKGWJGbSn0Jb2ktSExcVYcgtGtO9aWPpneL+0PSJWsT
-         hZzEnFGlo55eHclKU+tDgSkMwrzaUXbHRcd4Y+7SzjjLkW1jnyEtokp+ryzytujT0qlt
-         n0zmdzgN/evgrXCOsiFOodHpK6p5MUBcUJGFmNWutvGWTDtN7W/2D4pLVYqEVhn1xo5J
-         EoAg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=G27wgdd/ZwvOWQ526mQM89rV7+V8FgRW2sR7NATsocw=;
+        b=kU7AbjSRYqZGWt/IVMwirjrR6WpiCwboMH7bfBW5Rbpiby5hLkOivzIvjZ48wggzwm
+         6AIffeWAwUsAeYXghedDZ9aAo0r6mXKoIv5vT6MpGL1TR45V9yNW12ayqvq24ZeZ2vEq
+         sJHCqB06x+AJ4oaxHOJ1YNP8CIYuPTSUioee+YWuvYHyC2flphjSGKyzBu2cvxs6DpoT
+         Vt0veVNY19khJQrPMl2Bo+eZFMBgq4btzYntwMjbIf9SJdXo6Bf6SiL+RynUYXjIaONu
+         Dcp85ceB/yXnWmwQ7NjTbd7QlzulLQNZ0bOgB64mY8a7wQvRrqPidA5yZxSmNUgYSE2d
+         BOqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=juphbGtVRI7AgwIBx/gVkRn1JsqVAIzvaH2H1Ynllr4=;
-        b=Qqq0iUeM7UoJB7M1bZrkOV+uNRwq/xPJKBesXstcNHtTu2sWKR1jT0a6HxHzSsnoXQ
-         USt/WTpubCXW4zbYgSsN6ArZfPlZGOsLAdIuMCttgIFaWyRiAaPD3BL60e3/Uc0w3Puc
-         4ar92XsCZPl2azoifJefyvjX+729Ou1BQ++nOsc4vXejy16yZhpLh6tA/bLG2e0HeI69
-         YffxXwXknb+9OpRlTmlq4Ncn+6PC8U5WvcmDnjV+i8IF2iK/TzIsW7qLseR1pwKT8Vz/
-         0ZJSrAqfxAUpxXKJw6kvZL025E5aLs0nKrs3En23EoGcVW43u9TBkN82PYLsj4ktrjiJ
-         foTQ==
-X-Gm-Message-State: AOAM533JqHya4iQmUeDs2UAOnSrMvz1EMxl3zEuCLb2i6X+LLIZNdTbA
-        +ac4hHqSQwhuRl3nqsaOrElJRw==
-X-Google-Smtp-Source: ABdhPJxAWLnuoKSS1igYp6oJJh+6W/c2qh9JvOdGJryIMghe4U60loFIZvJD6/J0AKyCZMskknqNKw==
-X-Received: by 2002:a17:907:7da2:b0:6f4:1b12:fea3 with SMTP id oz34-20020a1709077da200b006f41b12fea3mr5239590ejc.95.1651394034166;
-        Sun, 01 May 2022 01:33:54 -0700 (PDT)
-Received: from [192.168.0.182] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id og10-20020a1709071dca00b006f3ef214dccsm2364144ejc.50.2022.05.01.01.33.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 May 2022 01:33:53 -0700 (PDT)
-Message-ID: <9d40d129-1ab8-fb2b-48cd-7f206da45632@linaro.org>
-Date:   Sun, 1 May 2022 10:33:52 +0200
+        bh=G27wgdd/ZwvOWQ526mQM89rV7+V8FgRW2sR7NATsocw=;
+        b=SRwj7MeN+IC9WzYKSMr5pTrSL2W0DlAJp0cOOqn/bqEsjLsSzPkHSyat25mJCluTDO
+         RtM9b7LuJFqfHW/NI9ElDP9W3vsByOWK7o90ry+vkPilzc5eDFA7n0iTRYMPItQipjJL
+         C3GQEHarp3O8X+QWY++hcX9N0s1CYaVWlJEmU27qnzvRhqrI3DZ7nYk3uHyqLAP7A3Ot
+         itrwLCxk23wS6cpBdz5ngtQen+Joh89QB7fAaaXZuRIdMFGFJwu1FyT6D8YuOzqLUHrw
+         /t1UF1virkyaqRG/ouBjeKjxcmJBjGAxlaw7EOovNoXRlOg25o6O0L8EjZbVH96UVOn3
+         U3lQ==
+X-Gm-Message-State: AOAM530uAj/56cA51pErdHQI8BUfppCtP9wcwI1ZedBQwfVs8NfIt241
+        olD633WZBILM2OS5/L9nuCnUbA==
+X-Google-Smtp-Source: ABdhPJxrVlSOlP2q+CFvx6DhukQA7dZ/3Eu8p4Ke5TIuXemYFkOZUSArjyxTEullMVARludl7N4Igw==
+X-Received: by 2002:a05:6512:3e13:b0:471:f6a9:85d3 with SMTP id i19-20020a0565123e1300b00471f6a985d3mr5796824lfv.120.1651399823711;
+        Sun, 01 May 2022 03:10:23 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id h7-20020a2ea487000000b0024f3d1dae7csm766412lji.4.2022.05.01.03.10.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 May 2022 03:10:23 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Robin Murphy <robin.murphy@arm.com>
+Subject: [PATCH 0/3] drm/msm: fixes for KMS iommu handling
+Date:   Sun,  1 May 2022 13:10:19 +0300
+Message-Id: <20220501101022.3931295-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 1/5] dt-bindings: thermal: tsens: Add ipq8074 compatible
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, amitk@kernel.org,
-        thara.gopinath@linaro.org, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220430205101.459782-1-robimarko@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220430205101.459782-1-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,60 +74,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/04/2022 22:50, Robert Marko wrote:
-> Qualcomm IPQ8074 has tsens v2.3.0 block, though unlike existing v2 IP it
-> only uses one IRQ, so tsens v2 compatible cannot be used as the fallback.
-> 
-> We also have to make sure that correct interrupts are set according to
-> compatibles, so populate interrupt information per compatibles.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> ---
->  .../bindings/thermal/qcom-tsens.yaml          | 79 ++++++++++++++++---
->  1 file changed, 68 insertions(+), 11 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> index b6406bcc683f..44ebdfd4560a 100644
-> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> @@ -56,22 +56,19 @@ properties:
->                - qcom,sm8350-tsens
->            - const: qcom,tsens-v2
->  
-> +      - description: v2 of TSENS with combined interrupt
-> +        items:
+This series started from the applied and then reverted [2] patch by
+Robin Murphy [1]. After the MDSS rework [3] has landed it is now
+possible to reapply the extended version of the original patch. While we
+are at it, also rework the IOMMU init code for DPU and MDP5 drivers.
 
-It's just an enum, no list here.
+For MDP5 this moves iommu_domain_alloc() call and removes struct
+mdp5_cfg_platform remains.
 
-> +          - enum:
-> +              - qcom,ipq8074-tsens
-> +
->    reg:
->      items:
->        - description: TM registers
->        - description: SROT registers
->  
-> -  interrupts:
-> -    minItems: 1
-> -    items:
-> -      - description: Combined interrupt if upper or lower threshold crossed
-> -      - description: Interrupt if critical threshold crossed
-> +  interrupts: true
+For DPU this allows specifying the iommus = <...> either in the DPU
+device (like all DPU devices do) or in the MDSS device (like MDP5
+devices do).
 
-minItems: 1
-maxItems: 2
+[1] https://patchwork.freedesktop.org/patch/480707/
+[2] https://patchwork.freedesktop.org/patch/482453/
+[3] https://patchwork.freedesktop.org/series/98525/
 
->  
-> -  interrupt-names:
-> -    minItems: 1
-> -    items:
-> -      - const: uplow
-> -      - const: critical
-> +  interrupt-names: true
+Dmitry Baryshkov (3):
+  drm/msm/dpu: check both DPU and MDSS devices for the IOMMU
+  drm/msm/mdp5: move iommu_domain_alloc() call close to its usage
+  drm/msm: Stop using iommu_present()
 
-minItems: 1
-maxItems: 2
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 14 +++++++++++---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 16 ----------------
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h |  6 ------
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  6 ++++--
+ drivers/gpu/drm/msm/msm_drv.c            | 10 ++++++++--
+ 5 files changed, 23 insertions(+), 29 deletions(-)
 
-
-Best regards,
-Krzysztof
+-- 
+2.35.1
