@@ -2,77 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE27A516C4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 10:43:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16569516D0D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 11:07:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242390AbiEBIq4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 04:46:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40094 "EHLO
+        id S1384083AbiEBJKh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 05:10:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231499AbiEBIqz (ORCPT
+        with ESMTP id S1352964AbiEBJKd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 04:46:55 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B441A6587
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 01:43:26 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id EAF663EC9D;
-        Mon,  2 May 2022 10:43:23 +0200 (CEST)
-Date:   Mon, 2 May 2022 10:43:22 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH v2] drm/msm/dsi: use RMW cycles in dsi_update_dsc_timing
-Message-ID: <20220502084322.nvj7rnhnemewmil6@SoMainline.org>
-References: <20220430175533.3817792-1-dmitry.baryshkov@linaro.org>
- <20220430185807.yn2j2coyc77qzx2o@SoMainline.org>
- <02114b24-f954-f145-4918-01cc3def65ac@linaro.org>
- <20220501204102.3xijmadbcrxwyu3x@SoMainline.org>
- <4e308633-cb0d-7050-9ee0-421190683eac@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4e308633-cb0d-7050-9ee0-421190683eac@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        Mon, 2 May 2022 05:10:33 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65EE7101EF;
+        Mon,  2 May 2022 02:07:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651482425; x=1683018425;
+  h=from:to:cc:subject:date:message-id;
+  bh=HQG74NJRhQ+XyNcexY0rYhzhOkUH/q42PoZmlkKsxG0=;
+  b=wEqzgqJfVy/jj7h9IKTGCzPQjeduOUEHkGL16+PT9drMWHHudisZt2Fs
+   A/m/yaUUPIoUXwQRtHUbNApafwH2GofK790tnuuP15PAdcwuJENLXP86q
+   XEqg+Kk2X/+X9HpLVCHJlCWWjoJsJQRi0jMB0f4jOXlQ+EKXKinLy2j1P
+   E=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 02 May 2022 02:07:03 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 May 2022 02:07:01 -0700
+X-QCInternal: smtphost
+Received: from hu-rohiagar-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.106.138])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 02 May 2022 14:36:43 +0530
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id 40B7E3BE1; Mon,  2 May 2022 14:36:42 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        gregkh@linuxfoundation.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v2 0/4] Devicetree updates for Interconnect, USB3 and PHY support
+Date:   Mon,  2 May 2022 14:36:31 +0530
+Message-Id: <1651482395-29443-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-05-02 01:44:20, Dmitry Baryshkov wrote:
-> [sni[
-> > In any case, given that you've already sent this patch and another three
-> > patches [2] fixing/cleaning up the series tells me it's far from ready.
-> > Most of this should just be handled - or have been handled - in review
-> > and amended?
-> 
-> During the review time we agreed that [2] would come as a separate 
-> change It is an API change that would make using panel-bridge easier, 
-> but isn't otherwise required.
-> 
-> I have been working towards more logical drm_bridge/drm_bridge_connector 
-> chains employing panel-bridge and display-connector where required, [2] 
-> is a part of that effort (as well as few other patches that hit 
-> dri-devel in the last few days).
+Hello,
 
-I understand what is going on now.  Since the DSC patches have already
-been queued up in the 5.19 pull I won't hurry to review them; rather
-will go over them when time allows me to play with the many phones here
-that require DSC for the screen to work.  I've been told the series
-didn't result in positive screen output way back in its infancy, but
-I'll re-evaluate and send fixes or improvements if/when necessary.
+This series adds the devicetree nodes to support the interconnect, USB3 and PHY support.
 
-- Marijn
+Changes from v1:
+ - Addressed Krzysztof's comments.
+ - Rebased on top of 5.18-rc5.
+
+Thanks,
+Rohit.
+
+Rohit Agarwal (4):
+  ARM: dts: qcom: sdx65: Add interconnect nodes
+  dt-bindings: usb: qcom,dwc3: Add binding for SDX65
+  ARM: dts: qcom: sdx65: Add USB3 and PHY support
+  ARM: dts: qcom: sdx65-mtp: Enable USB3 and PHY support
+
+ .../devicetree/bindings/usb/qcom,dwc3.yaml         |   1 +
+ arch/arm/boot/dts/qcom-sdx65-mtp.dts               |  29 +++++-
+ arch/arm/boot/dts/qcom-sdx65.dtsi                  | 108 +++++++++++++++++++++
+ 3 files changed, 134 insertions(+), 4 deletions(-)
+
+-- 
+2.7.4
+
