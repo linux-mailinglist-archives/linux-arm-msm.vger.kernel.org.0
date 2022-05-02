@@ -2,67 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F3D151787C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 22:47:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E29415178B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 23:00:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377995AbiEBUvX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 16:51:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39710 "EHLO
+        id S1381890AbiEBVDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 17:03:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230295AbiEBUvW (ORCPT
+        with ESMTP id S234261AbiEBVDf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 16:51:22 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0BDB60FD
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 13:47:52 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id z8so16398881oix.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 13:47:52 -0700 (PDT)
+        Mon, 2 May 2022 17:03:35 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C5D6454;
+        Mon,  2 May 2022 14:00:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=TBXtHVCDgkha/h8EfsB/475w9tiwkpoYNEwBRkAE28Q=;
-        b=nlwo0h4uJ3b9sJudkA4OAqMVOoDVvYkR7QwkYtkpoxqAfflehecyGBcje5DXj3uDvn
-         l5czy/KAeS6W1newa/ZkeMvseIB6+8VOK2MFZbySZyoia8d4VI5D18CIKZLV5edA0lIp
-         vyP1NUNeTVfaqy4I6z8iUxqG9yEe0tX3ECR88=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=TBXtHVCDgkha/h8EfsB/475w9tiwkpoYNEwBRkAE28Q=;
-        b=q/tgvpu2FRSlv8A/Ti9MqY2TQVE8J/+ZBAFjpzc5cW8vjKCKZ9b8UktWvmy9KU9tgC
-         Ny9xwra63mPnCFER18PiWC5t2lZKd0Neic48YSHqxbN5JW0GqUueCioHZ6sxb4yGMSLO
-         zrB8MEc22Z8ZWcei2BbJWEZFs2i5+OSC47KpardK5JuvmMnV3pDtKsuMnewwzw4X0KyV
-         lTnLeIzHvtaTT3Xj8XtteVA2FOq48TJP2daOiea0RLjflYuShg1lYs9I4/fqBgtuOxaD
-         b0NKHwS55IQZOKBiuEcwbbiwx0Irfs1oINErOWhdHacVLvIO9CvVg9eBYouZmvI5En7S
-         YLfQ==
-X-Gm-Message-State: AOAM53398EJvqxkuf2KWKurbzffab4BTOruZA94O5PjIVVBxc2VurHEM
-        M8gcNfBL89bhSleocu5gmNMHGLcZ55YRNBDTMyPKSA==
-X-Google-Smtp-Source: ABdhPJwJZV4OIei+weQ172CpfVAhfT8STbQ4S9q4PIxCXEbnTrZydvgCzRN89/H2aDd28y5efxt2iRIr5LHChV0JNLc=
-X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
- n62-20020acabd41000000b002ecff42814fmr469774oif.63.1651524472308; Mon, 02 May
- 2022 13:47:52 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 2 May 2022 13:47:51 -0700
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651525204; x=1683061204;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=zu7mdohhKFWKbyI0Gp/N4VTeyUSB2x81E4KWajsI5PA=;
+  b=FL7469V2p5MjN2TmHH1Ipk9Gj5KZSLWMmAD2mpEIBiNJtWttj30o+rzc
+   GXcfgvgehO0sbyKW0hpGPQl7vN9G2R7ubtbfixZiN73WytstBR9LbZr4L
+   E6dMkaA6NuyBG9kemOrwvpJ4qd7BQ2bjD4J7cTD4gm9ihoVGUE6YEtYjK
+   Q=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 02 May 2022 14:00:04 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 May 2022 14:00:03 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 2 May 2022 14:00:03 -0700
+Received: from [10.110.10.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 2 May 2022
+ 14:00:01 -0700
+Message-ID: <672e7dac-fe3b-591f-6837-3ce06a0b44c2@quicinc.com>
+Date:   Mon, 2 May 2022 13:59:51 -0700
 MIME-Version: 1.0
-In-Reply-To: <20220501195620.4135080-1-dmitry.baryshkov@linaro.org>
-References: <20220501195620.4135080-1-dmitry.baryshkov@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Mon, 2 May 2022 13:47:51 -0700
-Message-ID: <CAE-0n51uV-BpuPSrTFiN2wvzh3+==WMU85j8kdi-td0X4xs8kg@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dsi: pll_7nm: remove unsupported dividers for DSI
- pixel clock
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH v4 5/5] drm/msm/dp: Implement hpd_notify()
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Stephen Boyd <swboyd@chromium.org>, <linux-kernel@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <intel-gfx@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, <linux-usb@vger.kernel.org>
+References: <20220502165316.4167199-1-bjorn.andersson@linaro.org>
+ <20220502165316.4167199-6-bjorn.andersson@linaro.org>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <20220502165316.4167199-6-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,41 +83,140 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-05-01 12:56:20)
-> Remove dividers that are not recommended for DSI DPHY mode when setting
 
-Is "DPHY" intentional or just "PHY" should be here?
-
-> up the clock tree for the DSI pixel clock.
+On 5/2/2022 9:53 AM, Bjorn Andersson wrote:
+> The Qualcomm DisplayPort driver contains traces of the necessary
+> plumbing to hook up USB HPD, in the form of the dp_hpd module and the
+> dp_usbpd_cb struct. Use this as basis for implementing the
+> hpd_notify() callback, by amending the dp_hpd module with the
+> missing logic.
 >
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Overall the solution is similar to what's done downstream, but upstream
+> all the code to disect the HPD notification lives on the calling side of
+> drm_connector_oob_hotplug_event().
+>
+> drm_connector_oob_hotplug_event() performs the lookup of the
+> drm_connector based on fwnode, hence the need to assign the fwnode in
+> dp_drm_connector_init().
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
-
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
 >
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> index 6e506feb111f..66ed1919a1db 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> @@ -687,15 +687,13 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
->                 snprintf(clk_name, 32, "dsi%d_pclk_mux", pll_7nm->phy->id);
->                 snprintf(parent, 32, "dsi%d_pll_bit_clk", pll_7nm->phy->id);
->                 snprintf(parent2, 32, "dsi%d_pll_by_2_bit_clk", pll_7nm->phy->id);
-> -               snprintf(parent3, 32, "dsi%d_pll_out_div_clk", pll_7nm->phy->id);
-> -               snprintf(parent4, 32, "dsi%d_pll_post_out_div_clk", pll_7nm->phy->id);
+> Changes since v3:
+> - Implements hpd_notify instead of oob_hotplug_event
+> - Rebased on new cleanup patch from Dmitry
+> - Set hpd_state to ST_MAINLINK_READY when dp_display_usbpd_configure() succeeds
 >
->                 hw = devm_clk_hw_register_mux(dev, clk_name,
->                                         ((const char *[]){
-> -                                       parent, parent2, parent3, parent4
-> -                                       }), 4, 0, pll_7nm->phy->base +
-> +                                       parent, parent2,
-> +                                       }), 2, 0, pll_7nm->phy->base +
->                                         REG_DSI_7nm_PHY_CMN_CLK_CFG1,
-> -                                       0, 2, 0, NULL);
-> +                                       0, 1, 0, NULL);
+>   drivers/gpu/drm/msm/dp/dp_display.c | 26 ++++++++++++++++++++++++++
+>   drivers/gpu/drm/msm/dp/dp_display.h |  1 +
+>   drivers/gpu/drm/msm/dp/dp_drm.c     |  3 +++
+>   drivers/gpu/drm/msm/dp/dp_drm.h     |  2 ++
+>   4 files changed, 32 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index b447446d75e9..080294ac6144 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -83,6 +83,8 @@ struct dp_display_private {
+>   	bool hpd_irq_on;
+>   	bool audio_supported;
+>   
+> +	bool connected;
+> +
+>   	struct drm_device *drm_dev;
+>   	struct platform_device *pdev;
+>   	struct dentry *root;
+> @@ -1271,6 +1273,7 @@ static int dp_display_probe(struct platform_device *pdev)
+>   	if (!desc)
+>   		return -EINVAL;
+>   
+> +	dp->dp_display.dev = &pdev->dev;
+>   	dp->pdev = pdev;
+>   	dp->name = "drm_dp";
+>   	dp->dp_display.connector_type = desc->connector_type;
+> @@ -1760,3 +1763,26 @@ void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
+>   	dp_display->dp_mode.h_active_low =
+>   		!!(dp_display->dp_mode.drm_mode.flags & DRM_MODE_FLAG_NHSYNC);
+>   }
+> +
+> +void dp_bridge_hpd_notify(struct drm_bridge *bridge,
+> +			  enum drm_connector_status status)
+> +{
+> +	struct msm_dp_bridge *dp_bridge = to_dp_bridge(bridge);
+> +	struct msm_dp *dp = dp_bridge->dp_display;
+> +	struct dp_display_private *dp_display = container_of(dp, struct dp_display_private, dp_display);
+> +	int ret;
+> +
+> +	drm_dbg_dp(dp_display->drm_dev, "status: %d connected: %d\n", status, dp_display->connected);
+> +
+> +	if (!dp_display->connected && status == connector_status_connected) {
+> +		dp_display->connected = true;
+> +		ret = dp_display_usbpd_configure(dp_display);
+> +		if (!ret)
+> +			dp_display->hpd_state = ST_MAINLINK_READY;
+> +	} else if (status != connector_status_connected) {
+> +		dp_display->connected = false;
+> +		dp_display_notify_disconnect(dp_display);
+> +	} else {
+> +		dp_display_usbpd_attention(dp_display);
+> +	}
+> +}
 
-Can you followup with a patch to move to clk_parent_data instead of
-strings?
+I would assume dp_bridge_hpd_notify() will server same purpose as 
+dp_display_irq_handler() if hpd_notification is enabled.
+
+In that case, should dp_bridge_hpd_notify() add 
+EV_HPD_PLUG_INT/EV_IRQ_HPD_INT/EV_HPD_UNPLUG_INT
+
+into event q to kick off corresponding 
+dp_hpd_plug_handle()/dp_irq_hpd_handle()/dp_hpd_unplug_handle()?
+
+By the way, I am going to test this patch out.
+
+Any patches I have to pull in before apply this serial patches?
+
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> index 4f9fe4d7610b..2d2614bc5a14 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+> @@ -11,6 +11,7 @@
+>   #include "disp/msm_disp_snapshot.h"
+>   
+>   struct msm_dp {
+> +	struct device *dev;
+>   	struct drm_device *drm_dev;
+>   	struct device *codec_dev;
+>   	struct drm_bridge *bridge;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> index 62d58b9c4647..821cfd37b1fb 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> @@ -68,6 +68,7 @@ static const struct drm_bridge_funcs dp_bridge_ops = {
+>   	.mode_valid   = dp_bridge_mode_valid,
+>   	.get_modes    = dp_bridge_get_modes,
+>   	.detect       = dp_bridge_detect,
+> +	.hpd_notify   = dp_bridge_hpd_notify,
+>   };
+>   
+>   struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
+> @@ -138,6 +139,8 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
+>   	if (IS_ERR(connector))
+>   		return connector;
+>   
+> +	connector->fwnode = fwnode_handle_get(dev_fwnode(dp_display->dev));
+> +
+>   	drm_connector_attach_encoder(connector, dp_display->encoder);
+>   
+>   	return connector;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.h b/drivers/gpu/drm/msm/dp/dp_drm.h
+> index f4b1ed1e24f7..3b7480a86844 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.h
+> @@ -32,5 +32,7 @@ enum drm_mode_status dp_bridge_mode_valid(struct drm_bridge *bridge,
+>   void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
+>   			const struct drm_display_mode *mode,
+>   			const struct drm_display_mode *adjusted_mode);
+> +void dp_bridge_hpd_notify(struct drm_bridge *bridge,
+> +			  enum drm_connector_status status);
+>   
+>   #endif /* _DP_DRM_H_ */
