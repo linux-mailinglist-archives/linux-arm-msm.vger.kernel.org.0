@@ -2,53 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 566A451798F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 23:58:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2156C5179B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 00:06:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378311AbiEBWBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 18:01:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46294 "EHLO
+        id S230311AbiEBWJz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 18:09:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1387789AbiEBV7w (ORCPT
+        with ESMTP id S1358256AbiEBWHn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 17:59:52 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FB5D63E2
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 14:56:19 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 607113F549;
-        Mon,  2 May 2022 23:56:17 +0200 (CEST)
-Date:   Mon, 2 May 2022 23:56:16 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        Mon, 2 May 2022 18:07:43 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1680011175
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 15:02:45 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 17so20017458lji.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 15:02:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=DRg345qlmHZAutVgm3n8hsU+OaMYpjvZXMdM8MOZnjo=;
+        b=ga3FaG/X/ohjFMc4Jujlc2ehmmBpUcz2YJkY3fsJ2gyyb7p5hEbT98qbNLFwL8OYp4
+         RE6Q1ZWxI2k5jUmRfvnLsWAn7XmAo9br8fsMyjpckUVbYialm6bA9iuxQWNywMB7IW4A
+         z6GinRfsS7w52iylRW23sd/cvPHWm86Fsk7OSbkRmZVkiXJRHs2irI+h2hj+Fn34QgDl
+         LK2WF+scf4icvuUIe7tYyegROsLIw4YfQA7k1u8vFEctfDHb6sORERCBpcVrVT/qS35d
+         LY9E0FucDPXtrMsCmaPWF7c6QmcpFnOmAHi4174dVN5CXEcQDdPIrdchKzV8w4Ca7leK
+         3qiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=DRg345qlmHZAutVgm3n8hsU+OaMYpjvZXMdM8MOZnjo=;
+        b=rXRVZOlEJ7f+sLvlmYg93VptjOoDK4bwHLH6sHHQZDbWObN9ICq2v/yjULXyyTIkdL
+         4zJ71Qd2xiI8RAieE1NMbjUFMCanzOr9+YxXZLillwolLLWxc8xCbzDXUuyb1HifatV8
+         CLikL/H521kOF95p7ijoG1GFXrQj2UcFoQKlbCt9E1H7NgXKU7rXRKWUTllCdM4+mL+I
+         5EP1drXfIsXk8RI/MVfVAGwgUH7y6by5mrTr3EXtj1qBzvIgBiHCqhuAseYQ0JqH+0Ex
+         H5xuwW8ZqzM0DU3hVRMBNLzihiBqjhoA6d09gvMDrJl7qqxOwDi2icj35n99y2oVPhE5
+         I2aw==
+X-Gm-Message-State: AOAM530HKJgnZ7+Y00uHDXzTY2j3RLqIzgWViLVrHx/wgsdAd0O1ObSl
+        8ttedHub2ltQ5yWFosjCgSFqb1HGFlmRqg==
+X-Google-Smtp-Source: ABdhPJy6WNB6x1qrzJ4sPQwweY1VOjh4o2BX1ltnVAoPkxi15Di0ZVsfPq77IUaAOO6EguhKxxYqzQ==
+X-Received: by 2002:a2e:8317:0:b0:24f:1578:2872 with SMTP id a23-20020a2e8317000000b0024f15782872mr8548271ljh.129.1651528963403;
+        Mon, 02 May 2022 15:02:43 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id g9-20020ac25389000000b0047255d21127sm803876lfh.86.2022.05.02.15.02.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 May 2022 15:02:42 -0700 (PDT)
+Message-ID: <f01f5ace-4ae9-2b65-2ce8-fb2cdc0a5af1@linaro.org>
+Date:   Tue, 3 May 2022 01:02:42 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH] drm/msm/dsi: pll_7nm: remove unsupported dividers for DSI
+ pixel clock
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>
 Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        freedreno@lists.freedesktop.org, kernel test robot <lkp@intel.com>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>
-Subject: Re: [Freedreno] [PATCH v2] drm/msm/dsi: use RMW cycles in
- dsi_update_dsc_timing
-Message-ID: <20220502215616.jwpi3dr6ryembsfr@SoMainline.org>
-References: <20220430175533.3817792-1-dmitry.baryshkov@linaro.org>
- <20220430185807.yn2j2coyc77qzx2o@SoMainline.org>
- <b4a3bfed-a842-b4ee-d9a5-5adf5b59c09b@quicinc.com>
- <20220501200635.ekl3fw47dv2zytt3@SoMainline.org>
- <d6a78564-745c-7301-1b57-efc35757fbfd@quicinc.com>
- <20220502083442.t365cfmivlga557g@SoMainline.org>
- <f8986d6d-2c2b-a0a0-d63c-d4670f6864ff@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f8986d6d-2c2b-a0a0-d63c-d4670f6864ff@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20220501195620.4135080-1-dmitry.baryshkov@linaro.org>
+ <CAE-0n51uV-BpuPSrTFiN2wvzh3+==WMU85j8kdi-td0X4xs8kg@mail.gmail.com>
+ <20220502214235.s5plebunh4ttjhge@SoMainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220502214235.s5plebunh4ttjhge@SoMainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,76 +83,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-05-02 13:02:09, Dmitry Baryshkov wrote:
-> [snip]
-> > How would you represent this in XML?  I was hoping for a method that
-> > allows to construct the value in a generic way, without register names,
-> > and then simply have a "register macro" that moves (and perhaps masks)
-> > the preconstructed value into the right place.  A bit like how `enum`s
-> > are currently set up in XML, but with bit ranges for the values and
-> > macros to set a value.
-> > 
-> > I think I've _partially_ found what I was looking for: a `<bitset>`.
-> > However, I don't know if we can utilize this multiple times within a
-> > single `reg32`, once with an offset for stream1.  Alas, it's just
-> > bikeshedding at this point.
+On 03/05/2022 00:42, Marijn Suijten wrote:
+> On 2022-05-02 13:47:51, Stephen Boyd wrote:
+>> Quoting Dmitry Baryshkov (2022-05-01 12:56:20)
+>>> Remove dividers that are not recommended for DSI DPHY mode when setting
+>>
+>> Is "DPHY" intentional or just "PHY" should be here?
+>>
+>>> up the clock tree for the DSI pixel clock.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>
+>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>>
+>>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 10 ++++------
+>>>   1 file changed, 4 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>>> index 6e506feb111f..66ed1919a1db 100644
+>>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>>> @@ -687,15 +687,13 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
+>>>                  snprintf(clk_name, 32, "dsi%d_pclk_mux", pll_7nm->phy->id);
+>>>                  snprintf(parent, 32, "dsi%d_pll_bit_clk", pll_7nm->phy->id);
+>>>                  snprintf(parent2, 32, "dsi%d_pll_by_2_bit_clk", pll_7nm->phy->id);
+>>> -               snprintf(parent3, 32, "dsi%d_pll_out_div_clk", pll_7nm->phy->id);
+>>> -               snprintf(parent4, 32, "dsi%d_pll_post_out_div_clk", pll_7nm->phy->id);
+>>>
+>>>                  hw = devm_clk_hw_register_mux(dev, clk_name,
+>>>                                          ((const char *[]){
+>>> -                                       parent, parent2, parent3, parent4
+>>> -                                       }), 4, 0, pll_7nm->phy->base +
+>>> +                                       parent, parent2,
+>>> +                                       }), 2, 0, pll_7nm->phy->base +
+>>>                                          REG_DSI_7nm_PHY_CMN_CLK_CFG1,
+>>> -                                       0, 2, 0, NULL);
+>>> +                                       0, 1, 0, NULL);
+>>
+>> Can you followup with a patch to move to clk_parent_data instead of
+>> strings?
 > 
-> Unfortunately the following naïve patch doesn't work, stream1 bits are 
-> still defined in the 0:15 bit space. One would have to modify rnn tool 
-> to make sure that it takes into account the low/high parts of the 
-> bitfield when generating offsets/masks.
-> 
-> diff --git a/src/freedreno/registers/dsi/dsi.xml 
-> b/src/freedreno/registers/dsi/dsi.xml
-> index f2eef4ff41ae..b0166628ad0a 100644
-> --- a/src/freedreno/registers/dsi/dsi.xml
-> +++ b/src/freedreno/registers/dsi/dsi.xml
-> @@ -361,22 +361,19 @@ 
-> xsi:schemaLocation="http://nouveau.freedesktop.org/ rules-ng.xsd">
->                  <bitfield name="MAJOR" low="24" high="31" type="uint"/>
->          </reg32>
->          <reg32 offset="0x002d4" name="CPHY_MODE_CTRL"/>
-> -       <reg32 offset="0x0029c" name="VIDEO_COMPRESSION_MODE_CTRL">
-> -               <bitfield name="WC" low="16" high="31" type="uint"/>
-> +       <bitset name="COMPRESSION_MODE_CTRL" inline="true">
->                  <bitfield name="DATATYPE" low="8" high="13" type="uint"/>
->                  <bitfield name="PKT_PER_LINE" low="6" high="7" 
-> type="uint"/>
->                  <bitfield name="EOL_BYTE_NUM" low="4" high="5" 
-> type="uint"/>
->                  <bitfield name="EN" pos="0" type="boolean"/>
-> +       </bitset>
-> +       <reg32 offset="0x0029c" name="VIDEO_COMPRESSION_MODE_CTRL">
-> +               <bitfield name="WC" low="16" high="31" type="uint"/>
-> +               <bitfield name="STREAM0" low="0" high="15" 
-> type="COMPRESSION_MODE_CTRL"/>
->          </reg32>
->          <reg32 offset="0x002a4" name="COMMAND_COMPRESSION_MODE_CTRL">
-> -               <bitfield name="STREAM1_DATATYPE" low="24" high="29" 
-> type="uint"/>
-> -               <bitfield name="STREAM1_PKT_PER_LINE" low="22" high="23" 
-> type="uint"/>
-> -               <bitfield name="STREAM1_EOL_BYTE_NUM" low="20" high="21" 
-> type="uint"/>
-> -               <bitfield name="STREAM1_EN" pos="16" type="boolean"/>
-> -               <bitfield name="STREAM0_DATATYPE" low="8" high="13" 
-> type="uint"/>
-> -               <bitfield name="STREAM0_PKT_PER_LINE" low="6" high="7" 
-> type="uint"/>
-> -               <bitfield name="STREAM0_EOL_BYTE_NUM" low="4" high="5" 
-> type="uint"/>
-> -               <bitfield name="STREAM0_EN" pos="0" type="boolean"/>
-> +               <bitfield name="STREAM1" low="16" high="31" 
-> type="COMPRESSION_MODE_CTRL"/>
-> +               <bitfield name="STREAM0" low="0" high="15" 
-> type="COMPRESSION_MODE_CTRL"/>
->          </reg32>
->          <reg32 offset="0x002a8" name="COMMAND_COMPRESSION_MODE_CTRL2">
->                  <bitfield name="STREAM1_SLICE_WIDTH" low="16" high="31" 
-> type="uint"/>
+> Dmitry and I discussed this a while ago, and I actually have patches in
+> progress converting this.  Dmitry, if you haven't started on the
+> conversion yet, perhaps it's efficient if I respin my efforts and submit
+> them soon?
 
-This is approximately what I was aiming for.  `inline="true"` does
-"inline" all the individual bitfields so that they're prefixed with the
-reg32+bitfield name again, right?  That's what I wanted to avoid :)
+Yes, please. I'm under the pile of other things. Your patches will be 
+appreciated. You don't have to convert all PHYs at once.
 
-- Marijn
+-- 
+With best wishes
+Dmitry
