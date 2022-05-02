@@ -2,133 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F6BD516D08
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 11:07:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7696516D22
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 11:14:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384093AbiEBJKg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 05:10:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46448 "EHLO
+        id S1379434AbiEBJSB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 05:18:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349144AbiEBJKd (ORCPT
+        with ESMTP id S234028AbiEBJSB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 05:10:33 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 005939FDC;
-        Mon,  2 May 2022 02:07:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651482425; x=1683018425;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=Z6gNoqhmJqY/KPhur4zfZOo/YinQ5sHtg1CcDq7XhqU=;
-  b=FAJFEKQSjo1oJnRkDX7/pJiq3iZNIy6M0j1E5NLd46Q0nhGMtU1uMXq8
-   iuFESH6pbnwMX/OGpT8zX851LYxklvYXiJB1y3IcV71MaXLhxuURAk0HK
-   +ZR6013vaJZTl9Zko08YxcudxOisrK+UKC7v2SAUB7HQq9lv93baIbCGZ
-   w=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 02 May 2022 02:07:05 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 May 2022 02:07:03 -0700
-X-QCInternal: smtphost
-Received: from hu-rohiagar-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.106.138])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 02 May 2022 14:36:45 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
-        id 640073BE1; Mon,  2 May 2022 14:36:44 +0530 (+0530)
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        gregkh@linuxfoundation.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Subject: [PATCH v2 4/4] ARM: dts: qcom: sdx65-mtp: Enable USB3 and PHY support
-Date:   Mon,  2 May 2022 14:36:35 +0530
-Message-Id: <1651482395-29443-5-git-send-email-quic_rohiagar@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1651482395-29443-1-git-send-email-quic_rohiagar@quicinc.com>
-References: <1651482395-29443-1-git-send-email-quic_rohiagar@quicinc.com>
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        Mon, 2 May 2022 05:18:01 -0400
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AB0B369F3;
+        Mon,  2 May 2022 02:14:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651482873; x=1683018873;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=mrdpF69sgCUgjY0iIsOoVsoDaXbqkIBauMYAKitutdM=;
+  b=JNJYTZG8707V5b7Jy7pWVWbh+VGMqUgPve7/Su6NUyU00zEZxvlRxjH8
+   jbd12ck9w0WDdGtLkePR1M1Ly/Kkrwdhvq/IQgXzFcpTXnqmjHKvVjc5/
+   WNelm2BWICOXw1jsbUk2Z+xWfiha1bOruXmjv8oAbC4JBzNRY2Jw10whV
+   LJnLSX2DukS0ADPEmg8R1n4vx1qQOxNEmd69ewvPzlKHNhdEnZAyw6c3k
+   Yfm9oZz6OlX+EzJ2QGiXiAKIYkGh6l9m5qGkWvmU27c7TY6PH/HTyUYU+
+   KkpUHgJOOJlJWTJ9cQcQrZLX+/cFqvfu2On+I0eTupldqJ2J3r9kIKcNl
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10334"; a="247714633"
+X-IronPort-AV: E=Sophos;i="5.91,190,1647327600"; 
+   d="scan'208";a="247714633"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 May 2022 02:14:32 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,190,1647327600"; 
+   d="scan'208";a="886465610"
+Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
+  by fmsmga005.fm.intel.com with ESMTP; 02 May 2022 02:14:29 -0700
+Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1nlS8T-0009RP-5Y;
+        Mon, 02 May 2022 09:14:29 +0000
+Date:   Mon, 2 May 2022 17:13:53 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Xiaomeng Tong <xiam0nd.tong@gmail.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, joro@8bytes.org, will@kernel.org,
+        sricharan@codeaurora.org
+Cc:     kbuild-all@lists.01.org, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        Xiaomeng Tong <xiam0nd.tong@gmail.com>, stable@vger.kernel.org
+Subject: Re: [PATCH v2] iommu: fix an incorrect NULL check on list iterator
+Message-ID: <202205021754.GETHfNnS-lkp@intel.com>
+References: <20220501131259.11529-1-xiam0nd.tong@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220501131259.11529-1-xiam0nd.tong@gmail.com>
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the support for USB3 controller, QMP PHY and HS PHY on SDX65 MTP.
+Hi Xiaomeng,
 
-Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
----
- arch/arm/boot/dts/qcom-sdx65-mtp.dts | 29 +++++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+Thank you for the patch! Yet something to improve:
 
-diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-index 79dc31a..6920524 100644
---- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-+++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-@@ -123,7 +123,7 @@
- 			regulator-max-microvolt = <1300000>;
- 		};
- 
--		ldo1 {
-+		vreg_l1b_1p2: ldo1 {
- 			regulator-min-microvolt = <1200000>;
- 			regulator-max-microvolt = <1200000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-@@ -141,13 +141,13 @@
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
--		ldo4 {
-+		vreg_l4b_0p88: ldo4 {
- 			regulator-min-microvolt = <880000>;
- 			regulator-max-microvolt = <912000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
--		ldo5 {
-+		vreg_l5b_1p8: ldo5 {
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-@@ -177,7 +177,7 @@
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
--		ldo10 {
-+		vreg_l10b_3p08: ldo10 {
- 			regulator-min-microvolt = <3088000>;
- 			regulator-max-microvolt = <3088000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-@@ -244,3 +244,24 @@
- 		};
- 	};
- };
-+
-+&usb {
-+	status = "okay";
-+};
-+
-+&usb_dwc3 {
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_hsphy {
-+	status = "okay";
-+	vdda-pll-supply = <&vreg_l4b_0p88>;
-+	vdda33-supply = <&vreg_l10b_3p08>;
-+	vdda18-supply = <&vreg_l5b_1p8>;
-+};
-+
-+&usb_qmpphy {
-+	status = "okay";
-+	vdda-phy-supply = <&vreg_l4b_0p88>;
-+	vdda-pll-supply = <&vreg_l1b_1p2>;
-+};
+[auto build test ERROR on joro-iommu/next]
+[also build test ERROR on v5.18-rc5 next-20220429]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Xiaomeng-Tong/iommu-fix-an-incorrect-NULL-check-on-list-iterator/20220501-211400
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/joro/iommu.git next
+config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20220502/202205021754.GETHfNnS-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/99e334beef5d5be25ed19d3142d16000f0a1986d
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Xiaomeng-Tong/iommu-fix-an-incorrect-NULL-check-on-list-iterator/20220501-211400
+        git checkout 99e334beef5d5be25ed19d3142d16000f0a1986d
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+   drivers/iommu/msm_iommu.c: In function 'qcom_iommu_of_xlate':
+>> drivers/iommu/msm_iommu.c:629:17: error: 'ret' undeclared (first use in this function); did you mean 'net'?
+     629 |                 ret = -ENODEV;
+         |                 ^~~
+         |                 net
+   drivers/iommu/msm_iommu.c:629:17: note: each undeclared identifier is reported only once for each function it appears in
+   drivers/iommu/msm_iommu.c:638:1: error: control reaches end of non-void function [-Werror=return-type]
+     638 | }
+         | ^
+   cc1: some warnings being treated as errors
+
+
+vim +629 drivers/iommu/msm_iommu.c
+
+f78ebca8ff3d61 Sricharan R   2016-06-13  614  
+f78ebca8ff3d61 Sricharan R   2016-06-13  615  static int qcom_iommu_of_xlate(struct device *dev,
+f78ebca8ff3d61 Sricharan R   2016-06-13  616  			       struct of_phandle_args *spec)
+f78ebca8ff3d61 Sricharan R   2016-06-13  617  {
+99e334beef5d5b Xiaomeng Tong 2022-05-01  618  	struct msm_iommu_dev *iommu = NULL, *iter;
+f78ebca8ff3d61 Sricharan R   2016-06-13  619  	unsigned long flags;
+f78ebca8ff3d61 Sricharan R   2016-06-13  620  
+f78ebca8ff3d61 Sricharan R   2016-06-13  621  	spin_lock_irqsave(&msm_iommu_lock, flags);
+99e334beef5d5b Xiaomeng Tong 2022-05-01  622  	list_for_each_entry(iter, &qcom_iommu_devices, dev_node)
+99e334beef5d5b Xiaomeng Tong 2022-05-01  623  		if (iter->dev->of_node == spec->np) {
+99e334beef5d5b Xiaomeng Tong 2022-05-01  624  			iommu = iter;
+f78ebca8ff3d61 Sricharan R   2016-06-13  625  			break;
+99e334beef5d5b Xiaomeng Tong 2022-05-01  626  		}
+f78ebca8ff3d61 Sricharan R   2016-06-13  627  
+99e334beef5d5b Xiaomeng Tong 2022-05-01  628  	if (!iommu) {
+f78ebca8ff3d61 Sricharan R   2016-06-13 @629  		ret = -ENODEV;
+f78ebca8ff3d61 Sricharan R   2016-06-13  630  		goto fail;
+f78ebca8ff3d61 Sricharan R   2016-06-13  631  	}
+f78ebca8ff3d61 Sricharan R   2016-06-13  632  
+bb5bdc5ab7f133 Xiaoke Wang   2022-04-28  633  	ret = insert_iommu_master(dev, &iommu, spec);
+f78ebca8ff3d61 Sricharan R   2016-06-13  634  fail:
+f78ebca8ff3d61 Sricharan R   2016-06-13  635  	spin_unlock_irqrestore(&msm_iommu_lock, flags);
+f78ebca8ff3d61 Sricharan R   2016-06-13  636  
+f78ebca8ff3d61 Sricharan R   2016-06-13  637  	return ret;
+f78ebca8ff3d61 Sricharan R   2016-06-13  638  }
+f78ebca8ff3d61 Sricharan R   2016-06-13  639  
+
 -- 
-2.7.4
-
+0-DAY CI Kernel Test Service
+https://01.org/lkp
