@@ -2,165 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D757E5178F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 23:18:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69BB151795A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 23:42:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231814AbiEBVWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 17:22:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55546 "EHLO
+        id S1387724AbiEBVqJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 17:46:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230422AbiEBVWQ (ORCPT
+        with ESMTP id S1351705AbiEBVqI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 17:22:16 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77FDBC3A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 14:18:45 -0700 (PDT)
-Received: from [192.168.1.101] (abxh26.neoplus.adsl.tpnet.pl [83.9.1.26])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Mon, 2 May 2022 17:46:08 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8524F69
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 14:42:38 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 1B8673F585;
-        Mon,  2 May 2022 23:18:43 +0200 (CEST)
-Message-ID: <5007e01d-03b0-1bab-6dae-8b24a369aee5@somainline.org>
-Date:   Mon, 2 May 2022 23:18:42 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: add uart20 node
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 766C23F353;
+        Mon,  2 May 2022 23:42:36 +0200 (CEST)
+Date:   Mon, 2 May 2022 23:42:35 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>
-References: <20220501195458.4134911-1-dmitry.baryshkov@linaro.org>
- <6b0ef19b-a45b-ae6f-9f6f-41e72f2c71fd@somainline.org>
- <CAA8EJpqeR8FF7V1fdyWtQsU3xnFw5+4obBSndb3wS+H8Xgu8Rw@mail.gmail.com>
- <CAA8EJpoZaWXhD7aq4fR+6atJ6oMRNmA=8GJFmtXOSSbrBez53g@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <CAA8EJpoZaWXhD7aq4fR+6atJ6oMRNmA=8GJFmtXOSSbrBez53g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm/msm/dsi: pll_7nm: remove unsupported dividers for
+ DSI pixel clock
+Message-ID: <20220502214235.s5plebunh4ttjhge@SoMainline.org>
+References: <20220501195620.4135080-1-dmitry.baryshkov@linaro.org>
+ <CAE-0n51uV-BpuPSrTFiN2wvzh3+==WMU85j8kdi-td0X4xs8kg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n51uV-BpuPSrTFiN2wvzh3+==WMU85j8kdi-td0X4xs8kg@mail.gmail.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2022-05-02 13:47:51, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2022-05-01 12:56:20)
+> > Remove dividers that are not recommended for DSI DPHY mode when setting
+> 
+> Is "DPHY" intentional or just "PHY" should be here?
+> 
+> > up the clock tree for the DSI pixel clock.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> 
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> 
+> >  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 10 ++++------
+> >  1 file changed, 4 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> > index 6e506feb111f..66ed1919a1db 100644
+> > --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> > +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> > @@ -687,15 +687,13 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
+> >                 snprintf(clk_name, 32, "dsi%d_pclk_mux", pll_7nm->phy->id);
+> >                 snprintf(parent, 32, "dsi%d_pll_bit_clk", pll_7nm->phy->id);
+> >                 snprintf(parent2, 32, "dsi%d_pll_by_2_bit_clk", pll_7nm->phy->id);
+> > -               snprintf(parent3, 32, "dsi%d_pll_out_div_clk", pll_7nm->phy->id);
+> > -               snprintf(parent4, 32, "dsi%d_pll_post_out_div_clk", pll_7nm->phy->id);
+> >
+> >                 hw = devm_clk_hw_register_mux(dev, clk_name,
+> >                                         ((const char *[]){
+> > -                                       parent, parent2, parent3, parent4
+> > -                                       }), 4, 0, pll_7nm->phy->base +
+> > +                                       parent, parent2,
+> > +                                       }), 2, 0, pll_7nm->phy->base +
+> >                                         REG_DSI_7nm_PHY_CMN_CLK_CFG1,
+> > -                                       0, 2, 0, NULL);
+> > +                                       0, 1, 0, NULL);
+> 
+> Can you followup with a patch to move to clk_parent_data instead of
+> strings?
 
+Dmitry and I discussed this a while ago, and I actually have patches in
+progress converting this.  Dmitry, if you haven't started on the
+conversion yet, perhaps it's efficient if I respin my efforts and submit
+them soon?
 
-On 2.05.2022 21:49, Dmitry Baryshkov wrote:
-> On Mon, 2 May 2022 at 22:01, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> On Mon, 2 May 2022 at 20:59, Konrad Dybcio <konrad.dybcio@somainline.org> wrote:
->>>
->>>
->>>
->>> On 1.05.2022 21:54, Dmitry Baryshkov wrote:
->>>> Add device tree node for uart20, which is typically used for Bluetooth attachment.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> Reviewed-by: Vinod Koul <vkoul@kernel.org>
->>>> ---
->>>>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 22 ++++++++++++++++++++++
->>>>  1 file changed, 22 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>>> index 4fcb6e2b096b..8b9d9c2cd02c 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>>> @@ -996,6 +996,19 @@ spi20: spi@894000 {
->>>>                               status = "disabled";
->>>>                       };
->>>>
->>>> +                     uart20: serial@894000 {
->>> I think it should come before SPI alphabetically?
->>
->> Argh. I sorted it using the label!
->>
->>>
->>>> +                             compatible = "qcom,geni-uart";
->>>> +                             reg = <0 0x00894000 0 0x4000>;
->>>> +                             clock-names = "se";
->>>> +                             clocks = <&gcc GCC_QUPV3_WRAP2_S5_CLK>;
->>>> +                             pinctrl-names = "default";
->>>> +                             pinctrl-0 = <&qup_uart20_default>;
->>> No sleep state?
->>
->> No, uarts do not provide a sleep state.
-> 
-> I've checked other dts. Usually the sleep state is provided by the
-> board dts rather than the SoC's dtsi.
-Weird. Perhaps we could consider centralizing that, since it's common(-ish) in the end?
-
-
-> 
->>
->>>
->>>> +                             interrupts = <GIC_SPI 587 IRQ_TYPE_LEVEL_HIGH>;
->>>> +                             #address-cells = <1>;
->>>> +                             #size-cells = <0>;
->>>> +                             status = "disabled";
->>>> +                     };
->>>> +
->>>>                       i2c21: i2c@898000 {
->>>>                               compatible = "qcom,geni-i2c";
->>>>                               reg = <0x0 0x00898000 0x0 0x4000>;
->>>> @@ -2757,6 +2770,15 @@ qup_uart7_tx: qup-uart7-tx {
->>>>                               drive-strength = <2>;
->>>>                               bias-disable;
->>>>                       };
->>>> +
->>>> +                     qup_uart20_default: qup-uart20-default {
->>>> +                             mux {
->>> Please drop the unnecessary mux{} here.
->>
->> Ack.
->>
->>>
->>>> +                                     pins = "gpio76", "gpio77",
->>>> +                                             "gpio78", "gpio79";
->>> I think these could fit into a single 100-char-long line>?
->>
->> I'll check.
->>
->>>
->>>> +                                     function = "qup20";
->>> Are there no default properties for this setup? I think boards that don't use standard Qualcomm connectivity setups (like Bluetooth on this specific UART) are rather scarce and it'd be more convenient to keep a standard setting here and override it where need be instead of copy-pasting the same thing over and over in 95-100% of the boards.
->>
->> I see your point. Let's do this.
-> 
-> Well, comparing with other SoC dtsi shows that most of them declare
-> pins&functions in the dtsi and leave bias/ details to the board.dts
-> (despite code duplication). So let's follow that approach.
-Eh, you're right, but I'd still argue it's really a thing that used to be more relevant in the past though, especially as newer devices seem to get closer and closer to Qualcomm reference designs.. Maybe Bjorn could give some input on this matter?
-
-Konrad
-
-> 
->>
->>>
->>> Konrad
->>>
->>>> +                             };
->>>> +                     };
->>>> +
->>>>               };
->>>>
->>>>               apps_smmu: iommu@15000000 {
->>>>
->>
->>
->>
->> --
->> With best wishes
->> Dmitry
-> 
-> 
-> 
+- Marijn
