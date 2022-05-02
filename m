@@ -2,57 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E451517817
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 22:27:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16B775177DA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 22:18:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1387383AbiEBUan (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 16:30:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57290 "EHLO
+        id S1387271AbiEBUWG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 16:22:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382969AbiEBUam (ORCPT
+        with ESMTP id S1387268AbiEBUWF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 16:30:42 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 842199FE2;
-        Mon,  2 May 2022 13:27:12 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id p18so17844740edr.7;
-        Mon, 02 May 2022 13:27:12 -0700 (PDT)
+        Mon, 2 May 2022 16:22:05 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D1C8DF09
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 13:18:35 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id l18so29756220ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 13:18:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:cc:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OAT/69wtRvffN89vC/NPyLjFTXggz4+XzDvpqQchKZY=;
-        b=ZcvUi6TuwK26g91Wj+BvOBvLkRS94l9430HQO9Evx23oGlUQUwiM6EAtJ8xNLHowPI
-         mzffkJfkvuli2lMkWMQvt0t2os+zeKmDan94eeKbiMPrd9pkb38RNFZ63UVdP4aGnMNx
-         qJhVD6u6kosJmBSKPQS2Fe0/hhrIR483kNVdAoRII7mzG+Y7MbQ4FTn9+cXOxyhZArbK
-         ZbBtWI1anOlcbRILbG7LW2IEzQoFdzVve4X1P97neVIhR0s99jZlDnUwFbM7mZYeNVJQ
-         +Z93Q4GpFI5wCA9VtGDBg6AZG1qrBbjYA6Zzx92OshkCiJaWyCPk7GFQfY6SB0MfPB0g
-         Aubw==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=jDGt1toRucqj+cK6LtNSDQpKseZ2xT2PNfCkDdoqIXE=;
+        b=toBxE4V5+mFB5bvYet/OhPmOhK4Dutdz6f3lm5zbVetmSHCSlhSLvBVNiz8TAwVzXN
+         aePuCPComJN8lKFroxUwx9Htebi/8fzhYomJ9Gsa/PNEG64fr9+oaVlGQlZivSwaGgdl
+         5rY2/534CchDq7QF40I+nmtdZDV9nWUoHPb+G9bhMWCijpAzr4kuz/gJ62/Lg07Ijqmh
+         hIqlhmZbE4q1LXe//1okxmwS4XpZFKQXb+lPF0FUCG/uIEHQ9ALZuS9DXRy8L8v5K3Zi
+         yRiNkbam2C3XZ3Zn1P0+JsqSo2Sx9dDlRTl605GlmE3dHi5CmXdlSjIRp4vOKbV9TV9A
+         DRHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OAT/69wtRvffN89vC/NPyLjFTXggz4+XzDvpqQchKZY=;
-        b=8FZXwy6fqqTiAdWVojFu79C7EhX5ecMwslFgsPfz1luUf+mREoHTGnDWZiwRiRRkhH
-         A6fORbZbk9JPMemc07dpPc3PAPnZOZAzQYHfGhjsDh4xm165jBxslVST9JDExQ/9aWKF
-         V614HV3Pj56nvj3nXqEDe1ARrJCvDAA00SPihta4fIzKmrBvAQ5yKny3M8xV7XbWhgFK
-         /4iqwkyaHzjyQ49qNdRASQu17xkG6O6uE816HoDFyStZKP031zNjP5zlEpc7pqZYxdG3
-         GSFmqJEpxX/FFog/+PVJoU3uYh+txsONqle+q69GaxiKwZGjtDnamCpv1kdDrSKWIk5G
-         B0xQ==
-X-Gm-Message-State: AOAM532dqvY1ZY3Vc0Fp0p5DcyiIXPMnuc/K6GLlZK6gU/zdXB2+n9xs
-        tkBmFurht6SFnoQMNoiMgTg=
-X-Google-Smtp-Source: ABdhPJxODcFVbGH31VOkUTUnzD2LetaTmezsuSwjzyi7qh/PBLv/FTPz30bmyJeVSg8Xe5f/ZplNfg==
-X-Received: by 2002:a05:6402:335:b0:425:e3e0:5a90 with SMTP id q21-20020a056402033500b00425e3e05a90mr14497509edw.14.1651523230760;
-        Mon, 02 May 2022 13:27:10 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id e19-20020a056402105300b0042617ba6384sm7034024edu.14.2022.05.02.13.27.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 May 2022 13:27:10 -0700 (PDT)
-Message-ID: <62703e9e.1c69fb81.23bb7.9395@mx.google.com>
-X-Google-Original-Message-ID: <YnA11BpBNqgolvXs@Ansuel-xps.>
-Date:   Mon, 2 May 2022 21:49:40 +0200
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=jDGt1toRucqj+cK6LtNSDQpKseZ2xT2PNfCkDdoqIXE=;
+        b=W2FzkHomPaEuXZx3ashJQBRLU50m0RgFehVfc22WGjOmu5MhXmU/rx4piF2og7Kgjf
+         hQg1v8OMo80NGeIQWNdoDDIp12SDrPScHSF6yP1gR+n6050ZMlpO4P9uh6LSBppasW4U
+         J0ruKZIszG86nMQfKuL47+JN3UZzWk+S9or5Jxy8+WwBnpaq/NrNrl35lszcR3PNbIhG
+         wgG0Z4JZDzL3A6N/OwD9u64QY0oayZcB+KCypfZCnJGJ/8FzNhl1T4TRiFQtDIL/cXnG
+         RkjVjS9jO/pjo08f9reGYVA6B2ZVpnVqy48v6f2aMqRxHFNVKvtE1OvwM3E8j9WdBlUC
+         RkbQ==
+X-Gm-Message-State: AOAM530AFKg08sqJIqQOIYZOxmcRvLpPhrWiPDrL6jRtmjcRFWZon6+T
+        uQ8o2JaqQs9UCmdgS6nzCbHyAQ==
+X-Google-Smtp-Source: ABdhPJwAYb0fylLmk7MP2C/59GviEWpwlDWkT4/97mN4Lqiw2X3v8TDzbdRlW7U5Ma537L+RGk5mfg==
+X-Received: by 2002:a17:907:c0d:b0:6f3:ed89:d9c with SMTP id ga13-20020a1709070c0d00b006f3ed890d9cmr12526499ejc.502.1651522713790;
+        Mon, 02 May 2022 13:18:33 -0700 (PDT)
+Received: from [192.168.0.197] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id d12-20020a50fb0c000000b0042617ba6399sm7002590edq.35.2022.05.02.13.18.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 May 2022 13:18:33 -0700 (PDT)
+Message-ID: <b3bda9d7-2c50-547d-35ab-510ecab4f7d2@linaro.org>
+Date:   Mon, 2 May 2022 22:18:31 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 3/3] dt-bindings: arm: msm: Convert kpss-gcc driver
+ Documentation to yaml
+Content-Language: en-US
+To:     Ansuel Smith <ansuelsmth@gmail.com>
 Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -61,79 +66,58 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] dt-bindings: arm: msm: Convert kpss-gcc driver
- Documentation to yaml
 References: <20220430060125.9124-1-ansuelsmth@gmail.com>
  <20220430060125.9124-4-ansuelsmth@gmail.com>
  <fec305d1-d4b3-3f9d-bc31-bc33490d1ad7@linaro.org>
  <626d4cbf.1c69fb81.e6965.76b4@mx.google.com>
  <0711b822-506b-7b90-6b63-50c5c0ce4f6e@linaro.org>
  <626fb971.1c69fb81.fcab0.5f71@mx.google.com>
- <b3bda9d7-2c50-547d-35ab-510ecab4f7d2@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b3bda9d7-2c50-547d-35ab-510ecab4f7d2@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <626fb971.1c69fb81.fcab0.5f71@mx.google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 02, 2022 at 10:18:31PM +0200, Krzysztof Kozlowski wrote:
-> On 02/05/2022 12:40, Ansuel Smith wrote:
-> > 
-> > The idea is that you put the clk name in 'clock-output-names' and the
-> > driver needs to have support for it (and set the clk name based on the
-> > name defined in the dts)
-> > 
-> > This driver doesn't have support for it and is actually hardcoded.
-> > So you are right and I should just drop it.
-> > 
-> > But now another question... Since #clock-cells was added as a
-> > requirement for clock-output-names, should I drop also that?
-> > 
-> > In theory #clock-cells should always be declared for clock providers, is
-> > it right to add it in the conversion commit or I should put this change
-> > in another commit? (since it's now an addition and now something required
-> > to fix a bot warning)
+On 02/05/2022 12:40, Ansuel Smith wrote:
 > 
-> These are not the best bindings to convert, if you are not into the qcom
-> DTS and drivers. :)
->
-
-As I said some times ago main problem of these thing is that they are
-ancient and they were not in a good state from the start. So it's hard
-to fix this in a sane way. (i'm trying tho so sorry for any mess i'm
-making in the process)
-
-> It looks like the bindings were added to match current Linux
-> implementation and in this implementation the device is not used in DTS
-> as a clock provider (even though it registers a clock) but as a syscon.
-> I am not even sure if it is used as a clock provider outside of DTS
-> (through using a fixed clock name in some clock consumer).
+> The idea is that you put the clk name in 'clock-output-names' and the
+> driver needs to have support for it (and set the clk name based on the
+> name defined in the dts)
 > 
-> Probably this should be made either a proper clock controller or
-> something stripped down to the point matching current usage (accepting
-> the fact that bindings are incomplete). Anyway your choice should be
-> made according to how this device and its driver fit to entire system.
-> IOW, it's not a simple binding conversion and you should not just
-> convert it to make dtbs_check happy.
-
-I wonder if I should just drop this patch from the series and push it
-later in another series as a rework directly (with also the other
-relevant changes to fix the current problem we have with all the dts).
-
-The intention of this series was to try to push small changes that could
-be merged in a short time.
-
+> This driver doesn't have support for it and is actually hardcoded.
+> So you are right and I should just drop it.
 > 
-> Best regards,
-> Krzysztof
+> But now another question... Since #clock-cells was added as a
+> requirement for clock-output-names, should I drop also that?
+> 
+> In theory #clock-cells should always be declared for clock providers, is
+> it right to add it in the conversion commit or I should put this change
+> in another commit? (since it's now an addition and now something required
+> to fix a bot warning)
 
--- 
-	Ansuel
+These are not the best bindings to convert, if you are not into the qcom
+DTS and drivers. :)
+
+It looks like the bindings were added to match current Linux
+implementation and in this implementation the device is not used in DTS
+as a clock provider (even though it registers a clock) but as a syscon.
+I am not even sure if it is used as a clock provider outside of DTS
+(through using a fixed clock name in some clock consumer).
+
+Probably this should be made either a proper clock controller or
+something stripped down to the point matching current usage (accepting
+the fact that bindings are incomplete). Anyway your choice should be
+made according to how this device and its driver fit to entire system.
+IOW, it's not a simple binding conversion and you should not just
+convert it to make dtbs_check happy.
+
+Best regards,
+Krzysztof
