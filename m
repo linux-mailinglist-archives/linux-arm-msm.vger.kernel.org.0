@@ -2,74 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E00D517000
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 15:06:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E022351705F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 15:32:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235034AbiEBNKC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 09:10:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40014 "EHLO
+        id S1385321AbiEBNfy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 09:35:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234924AbiEBNKC (ORCPT
+        with ESMTP id S1385301AbiEBNfn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 09:10:02 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4766219291
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 06:06:33 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id r8so15135018oib.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 06:06:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=YpduY3LUujj9agt2pyGYTYUcOltpq+QJYgSduqrfP7U=;
-        b=GV90JjF4D7CFDFpMIEVMlD+rNmMAkAKeJwY/3MeT+jIh15ZtQsFlSqF5wddudZNkWc
-         9kolMChs2vjLRYPHYp/aV6Hlpu5E74JJuZoVvrn0VwIEyVwaR6maMvZyBJ9w3IJMtU0F
-         YcnzHjtir5Wlt6tZttOiyM/fEZ+wrsYEXsuW7I5S3pbWOMA4DWg5tnqjTC/t3eOMNs6U
-         uhGa5aeDiMN79Zwujw9ofbp23NpfxJFfr8GHXk3bJpL9rNKmOGjTG5c5CAMdd2B5tivi
-         HLSvfp0IAZuUNSI9UMuaVbeDYcPcUpP0nVMYyPNv+bjr5H/MEXs1Hbz25qwArp3voUdW
-         oW/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=YpduY3LUujj9agt2pyGYTYUcOltpq+QJYgSduqrfP7U=;
-        b=a65Zb+OqFqbXWpInVPa5SvSopduYlBGro1gVlkwqoiJKWRPS+8SbAPG+8Ics/mCNze
-         52zkhN1KW02muJE4rHgXJOG357tMlRqzKxo6/2qaB9Q2opSBX2b+PFabld3A++QMzhtu
-         9ovziawPS9+TPCiLQYp/dlwL83t2CpwODl5xv23rwJz1Bxuybgl6FEk+AlsShm2uL1SN
-         VYZbyO8iNkiHB6UKJS6HRmVSzFE+HY5sPYFvgxy0kA9t8hJH9RHSvcN6+9DjSMrx4X1i
-         mQ+j6PzGZIVMoTZ/gxSqBIx5k3odn5J+R/PgvWWrqS+hkeG4N4HfKYYI2ga0vH3DkdKt
-         Lobw==
-X-Gm-Message-State: AOAM533lVXDlWt+tc65+GLBC5TfGSVQ5YTp3n10kVw0QTXLbhas+/xBr
-        zeJHbGqeSt+fDjaIcYRQ6zQqhN14kXQgeHiL
-X-Google-Smtp-Source: ABdhPJy6gYlkrEw3HdhYgJS+i0PI5/yd6+OPCsHSn/J3tWNjwTbyMiQZ+NvTBxbS58riCDUPJjLlbg==
-X-Received: by 2002:a05:6808:2097:b0:326:c73:10c6 with SMTP id s23-20020a056808209700b003260c7310c6mr1321633oiw.182.1651496792671;
-        Mon, 02 May 2022 06:06:32 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id i13-20020a54408d000000b00325cda1ffb9sm2282403oii.56.2022.05.02.06.06.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 May 2022 06:06:31 -0700 (PDT)
-Date:   Mon, 2 May 2022 06:08:18 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v3 1/3] regulator: dt-bindings: qcom,rpmh: update
- maintainers
-Message-ID: <Ym/XwheROw9Y1JGx@ripper>
-References: <20220426105501.73200-1-krzysztof.kozlowski@linaro.org>
- <20220426105501.73200-2-krzysztof.kozlowski@linaro.org>
- <YmlIDn1aHSrcoeoJ@sirena.org.uk>
+        Mon, 2 May 2022 09:35:43 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EDDAAE43;
+        Mon,  2 May 2022 06:32:11 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 13A2BB817B6;
+        Mon,  2 May 2022 13:32:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECBCC385AC;
+        Mon,  2 May 2022 13:32:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651498328;
+        bh=6xMJIjb4ThOhMwQf4r65Gq5uouG0yeD4uluNZN0RTbE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=TCbtJlTSB3NOJlzOSZiaZnpwrjj0DIJBaqTQfxlAzOKmdq7Cc8d3FcYwCjPC/6C86
+         KUWM3imIKqPGY8rCBzbqF/dQ6dCGQR/R9+4Kmo1if5gLxOrf6Usm5hXRewHOzSy5fh
+         PZ+8eHapkPliNKvtsUKACoPKLHlq16tLeRWWlLc6MVN7+CzHDZrtf48iXmWHLCyAKQ
+         kSO0xD4l53iToxEkZRQcGdUV76UeOEMxNilOutJwWsyIG8VuA2rUfcHz6JrwyVvIZu
+         39Rl9x0K8kswL7kV8TyLYEkAOa5a1HjyYjwYD78Zqd4wAGRlfQnonZSojcHjJXejKe
+         6F3EaHrtB4XCA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1nlW9m-00014x-Qj; Mon, 02 May 2022 15:32:07 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v2 0/2] phy: qcom-qmp: pipe clock fixes
+Date:   Mon,  2 May 2022 15:31:28 +0200
+Message-Id: <20220502133130.4125-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YmlIDn1aHSrcoeoJ@sirena.org.uk>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,15 +59,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 27 Apr 06:41 PDT 2022, Mark Brown wrote:
+This series fixes a pipe clock imbalance on PHY power-on failures and
+renames some error labels in order to improve readability and avoid
+future bugs in the same category.
 
-> On Tue, Apr 26, 2022 at 12:54:59PM +0200, Krzysztof Kozlowski wrote:
-> 
-> >  maintainers:
-> > -  - David Collins <collinsd@codeaurora.org>
-> > +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> > +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> Bjorn, are you OK with this?
+Both patches can be applied for -next.
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Johan
+
+Changes in v2:
+ - drop kernel doc fix which has been applied
+ - split pipe-clock fix from error label rename and rename also the
+   remaining labels in qcom_qmp_phy_com_init() in a separate patch
+
+Johan Hovold (2):
+  phy: qcom-qmp: fix pipe-clock imbalance on power-on failure
+  phy: qcom-qmp: rename error labels
+
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
+
+-- 
+2.35.1
+
