@@ -2,57 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7634B51725C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 17:18:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BA96517275
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 17:25:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1385702AbiEBPV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 11:21:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54878 "EHLO
+        id S1352580AbiEBP2X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 11:28:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359468AbiEBPV6 (ORCPT
+        with ESMTP id S1351340AbiEBP2W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 11:21:58 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20000AE67;
-        Mon,  2 May 2022 08:18:29 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C41AAB817F3;
-        Mon,  2 May 2022 15:18:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CDAC385AE;
-        Mon,  2 May 2022 15:18:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651504706;
-        bh=aKNyZRP8Tj7zWsOrH52i+puSxFw0UBh5g0Pz7+RWRkM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=aRscoBun45cHQnjh2BCYs4BEGQ+qEQ8bXUw9VO6m3WLpalk9JAKzHpF9UR9enp9BE
-         v0Pk2DxHXKMaEOcu52EqSp3TQ/UR1hewrY5La/bgVN1dAX5irq0msFURjZAuPSTA0/
-         ozKLosBS4vaNvF1NrJx+fNcHgI8BHNNqMPGzkkKmS+EZJNCrrwgXuNIjwRykDMX3Q+
-         1FtlIdVVPVsryMqZ5Sg1YHUlTR5zqYCCQfDBZo4HIamVcOao2ccDzXUPJLJ/h0yoN0
-         qkI4kUSPML3yOCF/4koul+DVwBcLmU3lFb5CLfjuZuPh1lzCfmKi0+LEOtb/Q58Afj
-         +aFkGlXxWMLlQ==
-Date:   Mon, 2 May 2022 08:18:24 -0700
-From:   Nathan Chancellor <nathan@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Georgi Djakov <djakov@kernel.org>, linux-kernel@vger.kernel.org,
-        patches@lists.linux.dev, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Alex Elder <elder@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-Subject: Re: [PATCH] interconnect: Restore sync state by ignoring ipa-virt in
- provider count
-Message-ID: <Ym/2QJeGHDoZSw8o@dev-arch.thelio-3990X>
-References: <20220427013226.341209-1-swboyd@chromium.org>
+        Mon, 2 May 2022 11:28:22 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CFF813D34
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 08:24:53 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 17so18802837lji.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 08:24:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=GRaa0IiGsjCYmH9IwV7aIzgjHqX454NWT5gLXScXiHU=;
+        b=CsAv3+Khoia2wgEVvUV/D779w3tRK1DYekDG+/77k7W/MYStUKX0gTl682kNcwi7Ow
+         PNUG3vJ625UTDhjsApZ9NJFbWjSfIHmVsgWcf5zuMxnAF6IbjZZiY4HdRiZ2JakkpXTx
+         evkOGvPCsTlTl8P27h6JF0Asg/tkTdlv7MYyDc5zyIYTcYqwxldakyUWeh8hfs/YM0zd
+         TQe/xkxsbYn0I+zm6SNiwsPM3Z+G1k1vR/0gso6PbAdhM41VbOJbzEQTtm+ydeRgqWf+
+         /wDIEqXAeIPlOS8apErrkM3F/LO1OUwzgWZSZ/yMoAQgzafee4uT+VcD1ig5yhE+eX/V
+         PR3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=GRaa0IiGsjCYmH9IwV7aIzgjHqX454NWT5gLXScXiHU=;
+        b=HsmM5/iXephkjtZxQcRG9boSFQZWdsX5ICNmRsLCb0CzKNmj7LZCBuxD1QT6jNe86v
+         s2NgLwElX9XYFKuj8j5vzj+AVaOsv0W41qRUhcTu+Ytwb8MBaw2ZIlvtXwb+Vmb1vND2
+         TDv3qI/BoiJIQxg6fI80PNC6iGAsAvkPp6nNhB9Kf9ih8bYMdh3zstYTuB+KlHxz+lO4
+         5MQjbNBHYXH3NX9HgIhERKSePk+7qEEJMRoK+maO5YjaS4kWIbRrcj2DX7WVmMDL5ZB9
+         ZbQvdpf5obOUDPB5kI65NdiH+JKfILeF5TUtFp4rbNr9dFlNQpLdk6ytx3xMom+0SkD4
+         REjQ==
+X-Gm-Message-State: AOAM5318ygu7+CmRbZrdJy+P3O+dO0jJSDyAlgRsh2Tjm/EmxSmparek
+        S59yL0wmks0GrcGfYMqv/qjHfg==
+X-Google-Smtp-Source: ABdhPJwViR/s5Vc8H+a2CdDxIHduCqP768i3THr5TaDpMEBdWpUPn6TM16Fxzt+97n77JvDmHMfpuA==
+X-Received: by 2002:a2e:84d0:0:b0:24f:13ac:e5ed with SMTP id q16-20020a2e84d0000000b0024f13ace5edmr7465890ljh.175.1651505091708;
+        Mon, 02 May 2022 08:24:51 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id f15-20020ac24e4f000000b0047255d2111fsm725236lfr.78.2022.05.02.08.24.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 May 2022 08:24:51 -0700 (PDT)
+Message-ID: <ce73d203-f40a-e12f-1e1a-7a60c250b68d@linaro.org>
+Date:   Mon, 2 May 2022 18:24:50 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220427013226.341209-1-swboyd@chromium.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v4 2/5] clk: qcom: regmap: add pipe clk implementation
+Content-Language: en-GB
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pci@vger.kernel.org
+References: <20220501192149.4128158-1-dmitry.baryshkov@linaro.org>
+ <20220501192149.4128158-3-dmitry.baryshkov@linaro.org>
+ <20220502101053.GF5053@thinkpad>
+ <c47616bf-a0c3-3ad5-c3e2-ba2ae33110d0@linaro.org>
+ <20220502111004.GH5053@thinkpad>
+ <29819e6d-9aa1-aca9-0ff6-b81098077f28@linaro.org>
+ <20220502150611.GF98313@thinkpad>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220502150611.GF98313@thinkpad>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -61,40 +90,110 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
-
-On Tue, Apr 26, 2022 at 06:32:26PM -0700, Stephen Boyd wrote:
-> Ignore compatible strings for the IPA virt drivers that were removed in
-> commits 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0
-> interconnects") and 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0
-> interconnects") so that the sync state logic can kick in again.
-> Otherwise all the interconnects in the system will stay pegged at max
-> speeds because 'providers_count' is always going to be one larger than
-> the number of drivers that will ever probe on sc7180 or sdx55. This
-> fixes suspend on sc7180 and sdx55 devices when you don't have a
-> devicetree patch to remove the ipa-virt compatible node.
+On 02/05/2022 18:06, Manivannan Sadhasivam wrote:
+> On Mon, May 02, 2022 at 02:18:26PM +0300, Dmitry Baryshkov wrote:
+>> On 02/05/2022 14:10, Manivannan Sadhasivam wrote:
+>>> On Mon, May 02, 2022 at 01:35:34PM +0300, Dmitry Baryshkov wrote:
+>>>
+>>> [...]
+>>>
+>>>>>> +static int pipe_is_enabled(struct clk_hw *hw)
+>>>>>> +{
+>>>>>> +	struct clk_regmap_pipe *pipe = to_clk_regmap_pipe(hw);
+>>>>>> +	struct clk_regmap *clkr = to_clk_regmap(hw);
+>>>>>> +	unsigned int mask = GENMASK(pipe->width + pipe->shift - 1, pipe->shift);
+>>>>>> +	unsigned int val;
+>>>>>> +
+>>>>>> +	regmap_read(clkr->regmap, pipe->reg, &val);
+>>>>>> +	val = (val & mask) >> pipe->shift;
+>>>>>> +
+>>>>>> +	WARN_ON(unlikely(val != pipe->enable_val && val != pipe->disable_val));
+>>>>>> +
+>>>>>> +	return val == pipe->enable_val;
+>>>>>
+>>>>> Selecting the clk parents in the enable/disable callback seems fine to me but
+>>>>> the way it is implemented doesn't look right.
+>>>>>
+>>>>> First this "pipe_clksrc" is a mux clk by design, since we can only select the
+>>>>> parent. But you are converting it to a gate clk now.
+>>>>>
+>>>>> Instead of that, my proposal would be to make this clk a composite one i.e,.
+>>>>> gate clk + mux clk. So even though the gate clk here would be a hack, we are
+>>>>> not changing the definition of mux clk.
+>>>>
+>>>> This is what I had before, in revisions 1-3. Which proved to work, but is
+>>>> problematic a bit.
+>>>>
+>>>> In the very end, it is not easily possible to make a difference between a
+>>>> clock reparented to the bi_tcxo and a disabled clock. E.g. if some user
+>>>> reparents the clock to the tcxo, then the driver will consider the clock
+>>>> disabled, but the clock framework will think that the clock is still
+>>>> enabled.
+>>>
+>>> I don't understand this. How can you make this clock disabled? It just has 4
+>>> parents, right?
+>>
+>> It has 4 parents. It uses just two of them (pipe and tcxo).
+>>
+>> And like the clk_rcg2_safe clock we'd like to say that these clocks are
+>> disabled by reparenting ("parking") them to the tcxo source. Yes, this makes
+>> a lot of code simpler. The clock framework will switch the clock to the
+>> "safe" state instead of disabling it during the unused clocks evaporation.
+>> The PHY can just disable the gcc_pcie_N_pipe_clock, which will end up in
+>> parking this clock to a safe state too, etc.
 > 
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Doug Anderson <dianders@chromium.org>
-> Cc: Alex Elder <elder@linaro.org>
-> Cc: Taniya Das <quic_tdas@quicinc.com>
-> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
-> Fixes: 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0 interconnects")
-> Fixes: 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0 interconnects")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> If I get the logic behind this "parking" thing right, then it is required
+> for producing a stable pipe_clk from GCC when the PHY is about to initialize.
+> Also to make sure that there is no glitch observed on pipe_clk while
+> initializing the PHY. And once it is powered ON properly, the pipe_clksrc
+> should be used as the parent for pipe_clk.
+> 
+> So with that logic, we cannot say that this clk is disabled.
 
-This patch as commit ad3cc2f05fda ("interconnect: Restore sync state by
-ignoring ipa-virt in provider count") in -next causes the following
-build warning when CONFIG_OF is disabled because of_match_node is just
-NULL:
+Yes. It is not technically disabled. But as I said, it serves a good 
+abstraction, as a clock is a good as being disabled.
 
-drivers/interconnect/core.c:1090:28: warning: unused variable 'ignore_list' [-Wunused-variable]
-        const struct of_device_id ignore_list[] = {
-                                  ^
-1 warning generated.
+> 
+> Please correct me if my understanding is wrong.
+> 
+> Thanks,
+> Mani
+> 
+>>
+>>>
+>>>>
+>>>> Thus we have to remove "safe" clock (bi_tcxo) from the list of parents. In
+>>>> case of pipe clocks (and ufs symbol clocks) this will leave us with just a
+>>>> single possible parent. Then having the mux part just doesn't make sense. It
+>>>> is just a gated clock. And this simplified a lot of things.
+>>>>
+>>>>>
+>>>>> So you can introduce a new ops like "clk_regmap_mux_gate_ops" and implement the
+>>>>> parent switching logic in the enable/disable callbacks. Additional benefit of
+>>>>> this ops is, in the future we can also support "gate + mux" clks easily.
+>>>>
+>>>> If the need arises, we can easily resurrect the regmap_mux_safe patchset,
+>>>> fix the race pointed out by Johan, remove extra src-val mapping for safe
+>>>> value and use it for such clocks. I can post it separately, if you wish. But
+>>>> I'm not sure that it makes sense to use it for single-parent clocks.
+>>>>
+>>>>>
+>>>>> Also, please don't use the "enable_val/disable_val" members. It should be
+>>>>> something like "mux_sel_pre/mux_sel_post".
+>>>>
+>>>> Why? Could you please elaborate?
+>>>>
+>>>
+>>> It aligns with my question above. I don't see how this clk can be
+>>> enabled/disabled.
+>>
+>> I see. Let's settle on the first question then.
+>>
+>> -- 
+>> With best wishes
+>> Dmitry
 
-Should it just be marked as __maybe_unused or is there a different fix
-that would be more appropriate?
 
-Cheers,
-Nathan
+-- 
+With best wishes
+Dmitry
