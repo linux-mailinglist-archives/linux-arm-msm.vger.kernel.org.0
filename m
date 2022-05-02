@@ -2,61 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE3A851715E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 16:15:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D1355171F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 16:49:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1385551AbiEBOTK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 10:19:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56584 "EHLO
+        id S1381971AbiEBOwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 10:52:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1385646AbiEBOTB (ORCPT
+        with ESMTP id S1350573AbiEBOw3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 10:19:01 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C88CC13EB1;
-        Mon,  2 May 2022 07:15:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651500932; x=1683036932;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=yTX41JeraCfRTBjir39mA80cBsGj5BQ5Wv3IptkAcz0=;
-  b=iBgwut29F8PS3+mmIrxPRUEMapnzLDUT1FXsEeSyjAYoFKsRUepTc0d9
-   F3JRFq6vFzMZzlYw2wCh8B3iwHz/85IoGVqGM4LMCvB2cOmaSxA8qyLlc
-   q80b8335NO9WyXK2fKOZXxKpmysx1ibyas3Sw2ssa5ps962kSyiu8ra8h
-   c=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 02 May 2022 07:15:31 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 May 2022 07:15:11 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 2 May 2022 07:15:10 -0700
-Received: from kaushalk-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 2 May 2022 07:15:07 -0700
-From:   Kaushal Kumar <quic_kaushalk@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <manivannan.sadhasivam@linaro.org>,
-        "Kaushal Kumar" <quic_kaushalk@quicinc.com>
-Subject: [PATCH v2 4/4] ARM: dts: qcom: sdx65-mtp: Enable QPIC NAND support
-Date:   Mon, 2 May 2022 07:14:38 -0700
-Message-ID: <1651500878-10244-5-git-send-email-quic_kaushalk@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1651500878-10244-1-git-send-email-quic_kaushalk@quicinc.com>
-References: <1651500878-10244-1-git-send-email-quic_kaushalk@quicinc.com>
+        Mon, 2 May 2022 10:52:29 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BE6F767D
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 07:49:00 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 10161B81058
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 14:48:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DF5C385AC;
+        Mon,  2 May 2022 14:48:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651502937;
+        bh=9X9z5TvQoUjbxi6rKPmowVKgzDu6PM48zx9rvEJBf6Q=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nPsV/cQQBj0VbmXxqJWFWqyIVN0/CqEta8vfdFUaNFQA6ApmeUVimOePm/Op4eBuk
+         iM7Pwr2kMwbSSNURic4F5CnD7ojiRrosu2rP11Wv6CNK5eelIxa60cKLmTI8RnqOkC
+         ABDSAqiT/wUJmU3gqD07I9MKi9i0gQ+2lmyzxq/VwRHbdUcLPN087X+fzjtHnXS353
+         Eb/0Pnhe0NfHePCCOPWJHmmGcDbkm9Yds3fgWsMxzxK3GXiZeFll1LKWBl8Z+raqms
+         1NTxi6VZnah8f1jo3jZxIRHlvx6F4PQa6nqRRbNmzlqid7hz7q35iWAwXlrlP/yf19
+         +2bbv1+rJGEjw==
+Date:   Mon, 2 May 2022 20:18:51 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Daniele Palmas <dnlplm@gmail.com>
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/1] bus: mhi: pci_generic: add Telit FN990
+Message-ID: <20220502144851.GC98313@thinkpad>
+References: <20220502112036.443618-1-dnlplm@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220502112036.443618-1-dnlplm@gmail.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -65,39 +53,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable QPIC NAND devicetree node for Qualcomm SDX65-MTP board.
+On Mon, May 02, 2022 at 01:20:36PM +0200, Daniele Palmas wrote:
+> Add Telit FN990:
+> 
+> 01:00.0 Unassigned class [ff00]: Qualcomm Device 0308
+>         Subsystem: Device 1c5d:2010
+> 
+> Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
 
-Signed-off-by: Kaushal Kumar <quic_kaushalk@quicinc.com>
----
- arch/arm/boot/dts/qcom-sdx65-mtp.dts | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Applied to mhi-next!
 
-diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-index 153ad2a..b0027c1 100644
---- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-+++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-@@ -249,6 +249,21 @@
- 	status = "ok";
- };
- 
-+&qpic_nand {
-+	status = "ok";
-+
-+	nand@0 {
-+		reg = <0>;
-+
-+		nand-ecc-strength = <4>;
-+		nand-ecc-step-size = <512>;
-+		nand-bus-width = <8>;
-+		/* ico and efs2 partitions are secured */
-+		secure-regions = /bits/ 64 <0x500000 0x500000
-+					    0xa00000 0xb00000>;
-+	};
-+};
-+
- &usb {
- 	status = "okay";
- };
--- 
-2.7.4
+Thanks,
+Mani
 
+> ---
+>  drivers/bus/mhi/host/pci_generic.c | 41 ++++++++++++++++++++++++++++++
+>  1 file changed, 41 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index d0a7b5d3c01e..24c94c23d78b 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -489,6 +489,44 @@ static const struct mhi_pci_dev_info mhi_telit_fn980_hw_v1_info = {
+>  	.sideband_wake = false,
+>  };
+>  
+> +static const struct mhi_channel_config mhi_telit_fn990_channels[] = {
+> +	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 64, 1),
+> +	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 64, 1),
+> +	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
+> +	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
+> +	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+> +};
+> +
+> +static struct mhi_event_config mhi_telit_fn990_events[] = {
+> +	MHI_EVENT_CONFIG_CTRL(0, 128),
+> +	MHI_EVENT_CONFIG_DATA(1, 128),
+> +	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> +	MHI_EVENT_CONFIG_HW_DATA(3, 2048, 101)
+> +};
+> +
+> +static const struct mhi_controller_config modem_telit_fn990_config = {
+> +	.max_channels = 128,
+> +	.timeout_ms = 20000,
+> +	.num_channels = ARRAY_SIZE(mhi_telit_fn990_channels),
+> +	.ch_cfg = mhi_telit_fn990_channels,
+> +	.num_events = ARRAY_SIZE(mhi_telit_fn990_events),
+> +	.event_cfg = mhi_telit_fn990_events,
+> +};
+> +
+> +static const struct mhi_pci_dev_info mhi_telit_fn990_info = {
+> +	.name = "telit-fn990",
+> +	.config = &modem_telit_fn990_config,
+> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +	.dma_data_width = 32,
+> +	.sideband_wake = false,
+> +	.mru_default = 32768,
+> +};
+> +
+>  /* Keep the list sorted based on the PID. New VID should be added as the last entry */
+>  static const struct pci_device_id mhi_pci_id_table[] = {
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+> @@ -501,6 +539,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>  		.driver_data = (kernel_ulong_t) &mhi_telit_fn980_hw_v1_info },
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
+>  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
+> +	/* Telit FN990 */
+> +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2010),
+> +		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+>  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
+>  	{ PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
+> -- 
+> 2.32.0
+> 
