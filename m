@@ -2,92 +2,251 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EB85516E53
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 12:45:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5E2C516E63
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 12:49:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384604AbiEBKtF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 06:49:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35082 "EHLO
+        id S1384630AbiEBKxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 06:53:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1384592AbiEBKtC (ORCPT
+        with ESMTP id S1343937AbiEBKxP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 06:49:02 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D58013D02;
-        Mon,  2 May 2022 03:45:33 -0700 (PDT)
+        Mon, 2 May 2022 06:53:15 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA7652DF7
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 03:49:46 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id z16so11999888pfh.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 03:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651488333; x=1683024333;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=6iHGRSOgrWXi0lQ9VNy7cHosK8o01EFmqWMART4qQrI=;
-  b=ll2ABofMad8pYBHtFeiIGD5ASJ7A6qz93HZQky0+yCRPL2OU5R/T0FqN
-   yQ7S+4w2t+b/Cg6mcNVDkClhh59YToA0RVnKuhHGxFbWdgj4CDi/sCbbM
-   0/aP6PYYLTfItjJkn02qMk5UOLWbv+F9p6Do+lo/W0ElPnwIE4wNEQpAL
-   E=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 02 May 2022 03:45:33 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 May 2022 03:45:31 -0700
-X-QCInternal: smtphost
-Received: from hu-vnivarth-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.111.166])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 02 May 2022 16:15:20 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
-        id 38FAD3D9A; Mon,  2 May 2022 16:15:19 +0530 (+0530)
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        gregkh@linuxfoundation.org, jirislaby@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-serial@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: [PATCH 2/2] tty: serial: qcom_geni_serial: Disable MMIO tracing
-Date:   Mon,  2 May 2022 16:15:14 +0530
-Message-Id: <1651488314-19382-3-git-send-email-quic_vnivarth@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1651488314-19382-1-git-send-email-quic_vnivarth@quicinc.com>
-References: <1651488314-19382-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kB296adCBokDtwhYAZfTdKhO1gXvsxNQMsNoB2OGC7c=;
+        b=OIHjaef/QU40O/tOvAAabg1Woe4yXMwUYgqjUjVUZoHiRX9SgDRhcBZfeJmVJK0Z73
+         1WzItlLVhczV/OWy5ZCZWMU0SOGUaK2J5Sv3PM2hYn/UseLqmi2gn56yx4y3DNJDK1JI
+         Bf/wQ2iqi3qkHmBpZ1RZiKKpUu7rOcG1K8fgjtEBMBmgI43KDzvS3Nn+vBAjTNoP2YUA
+         Ji+bAIZJ8/fHrxMx1WmGtrAjmGmFVOaN0chHHlDQRBeT9fWTyXFwwlZfdUO7VZL4za9y
+         tcFbP2OtAFZVUOG57s0Ypj3EGKuuF9iKtPfaR1W6ipf0TrfhhDaAFLq8nCtb4UA3leC8
+         jrYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kB296adCBokDtwhYAZfTdKhO1gXvsxNQMsNoB2OGC7c=;
+        b=y+3jsZGW/b+FuxTzJ+b6rEbxiQC7n3kKXf3/WxOMUABYykINfwyA3qUqCMeK2kKOPE
+         mT4fEpkSGePplDU0Ow+RyqWDVKOVA+etcYf/NtOEpZaDXm8ojzH3BwFt1bpHlmhoQzKf
+         wWYMCTQkrLh1z0Usu57a7Em+xmejfc0O4FJMX5Yl3oVvWkDo4deNXAWM4s+F5ZcYNl9M
+         9I1KlTOb8dimVHHTyrCgrJpxO57Lzqu1j6UQvhGuIfp9RyRXLVr7xTKFdFF0ThaHFILj
+         0VM+EAjcac0ILnOMuBLfAa8lTEg9PIgk2OUvo3wpCh0iQ0GDmzQHdE176yCXYJHe7Gqc
+         PrIQ==
+X-Gm-Message-State: AOAM533yNBkFy/FUl/CNI6TjYhyRZAg7XhAOEStVJKSynQb79x6NCESc
+        t9qTmNisvsb7xgU8QtMp0t6wIbjU+PIl
+X-Google-Smtp-Source: ABdhPJwvfWoHeyH/n5sROeTB85MmcMWARDf2WBXyWL6u1OhBesg840IyZtqPsc3vz95189dY+6EfcA==
+X-Received: by 2002:aa7:9109:0:b0:50a:78c8:8603 with SMTP id 9-20020aa79109000000b0050a78c88603mr10956697pfh.77.1651488586110;
+        Mon, 02 May 2022 03:49:46 -0700 (PDT)
+Received: from localhost.localdomain ([27.111.75.99])
+        by smtp.gmail.com with ESMTPSA id q12-20020a63f94c000000b003c14af50635sm11030090pgk.77.2022.05.02.03.49.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 May 2022 03:49:45 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com
+Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2] PCI: qcom-ep: Move enable/disable resources code to common functions
+Date:   Mon,  2 May 2022 16:19:38 +0530
+Message-Id: <20220502104938.97033-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Register read/write tracing is causing excessive
-logging and filling the rtb buffer and effecting
-performance.
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Disabled MMIO tracing to disable register
-read/write tracing.
+Remove code duplication by moving the code related to enabling/disabling
+the resources (PHY, CLK, Reset) to common functions so that they can be
+called from multiple places.
 
-Signed-off-by: Visweswara Tanuku <quic_vtanuku@quicinc.com>
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+[mani: renamed the functions and reworded the commit message]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index f496102..aa8facb 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1,5 +1,11 @@
- // SPDX-License-Identifier: GPL-2.0
--// Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
-+/*
-+ * Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+/* Disable MMIO tracing */
-+#define __DISABLE_TRACE_MMIO__
+Changes in v2:
+
+* Used qcom_pcie_disable_resources() in qcom_pcie_ep_remove() as noted by
+  Dmitry.
+
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 91 ++++++++++++-----------
+ 1 file changed, 46 insertions(+), 45 deletions(-)
+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index 6ce8eddf3a37..ec99116ad05c 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -223,11 +223,8 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
+ 	disable_irq(pcie_ep->perst_irq);
+ }
  
- #include <linux/clk.h>
- #include <linux/console.h>
+-static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
++static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+ {
+-	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
+-	struct device *dev = pci->dev;
+-	u32 val, offset;
+ 	int ret;
+ 
+ 	ret = clk_bulk_prepare_enable(ARRAY_SIZE(qcom_pcie_ep_clks),
+@@ -247,6 +244,38 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+ 	if (ret)
+ 		goto err_phy_exit;
+ 
++	return 0;
++
++err_phy_exit:
++	phy_exit(pcie_ep->phy);
++err_disable_clk:
++	clk_bulk_disable_unprepare(ARRAY_SIZE(qcom_pcie_ep_clks),
++				   qcom_pcie_ep_clks);
++
++	return ret;
++}
++
++static void qcom_pcie_disable_resources(struct qcom_pcie_ep *pcie_ep)
++{
++	phy_power_off(pcie_ep->phy);
++	phy_exit(pcie_ep->phy);
++	clk_bulk_disable_unprepare(ARRAY_SIZE(qcom_pcie_ep_clks),
++				   qcom_pcie_ep_clks);
++}
++
++static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
++{
++	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
++	struct device *dev = pci->dev;
++	u32 val, offset;
++	int ret;
++
++	ret = qcom_pcie_enable_resources(pcie_ep);
++	if (ret) {
++		dev_err(dev, "Failed to enable resources: %d\n", ret);
++		return ret;
++	}
++
+ 	/* Assert WAKE# to RC to indicate device is ready */
+ 	gpiod_set_value_cansleep(pcie_ep->wake, 1);
+ 	usleep_range(WAKE_DELAY_US, WAKE_DELAY_US + 500);
+@@ -335,7 +364,7 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+ 	ret = dw_pcie_ep_init_complete(&pcie_ep->pci.ep);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to complete initialization: %d\n", ret);
+-		goto err_phy_power_off;
++		goto err_disable_resources;
+ 	}
+ 
+ 	/*
+@@ -355,13 +384,8 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+ 
+ 	return 0;
+ 
+-err_phy_power_off:
+-	phy_power_off(pcie_ep->phy);
+-err_phy_exit:
+-	phy_exit(pcie_ep->phy);
+-err_disable_clk:
+-	clk_bulk_disable_unprepare(ARRAY_SIZE(qcom_pcie_ep_clks),
+-				   qcom_pcie_ep_clks);
++err_disable_resources:
++	qcom_pcie_disable_resources(pcie_ep);
+ 
+ 	return ret;
+ }
+@@ -376,10 +400,7 @@ static void qcom_pcie_perst_assert(struct dw_pcie *pci)
+ 		return;
+ 	}
+ 
+-	phy_power_off(pcie_ep->phy);
+-	phy_exit(pcie_ep->phy);
+-	clk_bulk_disable_unprepare(ARRAY_SIZE(qcom_pcie_ep_clks),
+-				   qcom_pcie_ep_clks);
++	qcom_pcie_disable_resources(pcie_ep);
+ 	pcie_ep->link_status = QCOM_PCIE_EP_LINK_DISABLED;
+ }
+ 
+@@ -643,43 +664,26 @@ static int qcom_pcie_ep_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = clk_bulk_prepare_enable(ARRAY_SIZE(qcom_pcie_ep_clks),
+-				      qcom_pcie_ep_clks);
+-	if (ret)
++	ret = qcom_pcie_enable_resources(pcie_ep);
++	if (ret) {
++		dev_err(dev, "Failed to enable resources: %d\n", ret);
+ 		return ret;
+-
+-	ret = qcom_pcie_ep_core_reset(pcie_ep);
+-	if (ret)
+-		goto err_disable_clk;
+-
+-	ret = phy_init(pcie_ep->phy);
+-	if (ret)
+-		goto err_disable_clk;
+-
+-	/* PHY needs to be powered on for dw_pcie_ep_init() */
+-	ret = phy_power_on(pcie_ep->phy);
+-	if (ret)
+-		goto err_phy_exit;
++	}
+ 
+ 	ret = dw_pcie_ep_init(&pcie_ep->pci.ep);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to initialize endpoint: %d\n", ret);
+-		goto err_phy_power_off;
++		goto err_disable_resources;
+ 	}
+ 
+ 	ret = qcom_pcie_ep_enable_irq_resources(pdev, pcie_ep);
+ 	if (ret)
+-		goto err_phy_power_off;
++		goto err_disable_resources;
+ 
+ 	return 0;
+ 
+-err_phy_power_off:
+-	phy_power_off(pcie_ep->phy);
+-err_phy_exit:
+-	phy_exit(pcie_ep->phy);
+-err_disable_clk:
+-	clk_bulk_disable_unprepare(ARRAY_SIZE(qcom_pcie_ep_clks),
+-				   qcom_pcie_ep_clks);
++err_disable_resources:
++	qcom_pcie_disable_resources(pcie_ep);
+ 
+ 	return ret;
+ }
+@@ -691,10 +695,7 @@ static int qcom_pcie_ep_remove(struct platform_device *pdev)
+ 	if (pcie_ep->link_status == QCOM_PCIE_EP_LINK_DISABLED)
+ 		return 0;
+ 
+-	phy_power_off(pcie_ep->phy);
+-	phy_exit(pcie_ep->phy);
+-	clk_bulk_disable_unprepare(ARRAY_SIZE(qcom_pcie_ep_clks),
+-				   qcom_pcie_ep_clks);
++	qcom_pcie_disable_resources(pcie_ep);
+ 
+ 	return 0;
+ }
 -- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
+2.25.1
 
