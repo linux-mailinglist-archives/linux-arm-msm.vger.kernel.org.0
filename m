@@ -2,69 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42CEC516BFC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 10:24:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 972A7516C1B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 10:34:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359278AbiEBI1v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 04:27:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45048 "EHLO
+        id S1383790AbiEBIiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 04:38:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379079AbiEBI1v (ORCPT
+        with ESMTP id S231486AbiEBIiT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 04:27:51 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B6514B1D3
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 01:24:23 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 17so17545336lji.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 01:24:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=K7s59/Q17Za6lJHQStBvDJic0/FOMAAkP8fNiF1n5RU=;
-        b=rKwwxI4qcnZjlYF1CIXizaLM0mRyTT3aNe6ZMZpubtf31o5Lel5CdUNlQiobr/uitA
-         QmhE9hlCPMEjiK3yvipxDRQsv/E8qT20nIg24rLZaSLWyKoJGuaNSFwPkNN5l0+Dcm9h
-         lo+joRO6K/bFoqVxa7+RyQaWzb3LY6f4jX/n9elPRxJpLu6uI5xbb746n1ASEEi/l4Kz
-         DUdq8Wl3MWpsGn5yenuNdBRhUARySy/2NqaS9g7viu3cxujCFPI7BuND0s4Ax1Vgzy9Q
-         sZpxNOqesqOt21ER+EdFaQL9grOoptsjXrU7ZI96SRcD6P6zUFK+HewGJVYk31B8p4nh
-         e53Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=K7s59/Q17Za6lJHQStBvDJic0/FOMAAkP8fNiF1n5RU=;
-        b=2bzgLOHdLpX3UODGT7FpGr03Z5RigfZMLmgw8SsYzKCgbUjC0dGWhDRGWI6CFmYc2z
-         jEy6EDoUyV5AlS+TizviHjlc5ahtsASjRHHQWl+W12BHt45j80hqomjykbYTntDJu7w6
-         Tqwx3ag/cSO1z8hWOVELiPsGRmzTj4ra/HU/UQkNzatjDiqnr5x8qffLKsEegf8B+H3n
-         9gIKyVWmpV8R6y7PqIVd/GKNIzgshyM2jKF4WyIwgdtLq2M722uHE1/UyQ0pf8K6I7oz
-         q/9snARfNz0rU1fP9+pEzlbPCgpxCRQGrDMQ9qj2SQgl0e4hvQJgNq/ClXfcgp+5AWAs
-         wZYg==
-X-Gm-Message-State: AOAM531c5Ph66Lpy+92hfnIx3Y/znxsqqJhbRcyCXOACwMcRaQlrijIU
-        fSh+8nvZZ3emENSBtHzHI3BOHw==
-X-Google-Smtp-Source: ABdhPJzCKDUJ9dajLmL2juVoQAnLpONDDplg6cI7LPzhbPdaUY7FmF9Lu77YXD0cgh7lE49BERTIBg==
-X-Received: by 2002:a2e:8657:0:b0:24f:14b6:4556 with SMTP id i23-20020a2e8657000000b0024f14b64556mr6931890ljj.369.1651479861379;
-        Mon, 02 May 2022 01:24:21 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id z22-20020ac25df6000000b0047255d21166sm643562lfq.149.2022.05.02.01.24.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 May 2022 01:24:21 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
+        Mon, 2 May 2022 04:38:19 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4C0418395
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 01:34:47 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5CA023F398;
+        Mon,  2 May 2022 10:34:44 +0200 (CEST)
+Date:   Mon, 2 May 2022 10:34:42 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org, kernel test robot <lkp@intel.com>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, kernel test robot <lkp@intel.com>
-Subject: [PATCH] drm/msm/dpu: don't access mode pointer before it is set
-Date:   Mon,  2 May 2022 11:24:20 +0300
-Message-Id: <20220502082420.48409-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+        Sean Paul <sean@poorly.run>
+Subject: Re: [Freedreno] [PATCH v2] drm/msm/dsi: use RMW cycles in
+ dsi_update_dsc_timing
+Message-ID: <20220502083442.t365cfmivlga557g@SoMainline.org>
+References: <20220430175533.3817792-1-dmitry.baryshkov@linaro.org>
+ <20220430185807.yn2j2coyc77qzx2o@SoMainline.org>
+ <b4a3bfed-a842-b4ee-d9a5-5adf5b59c09b@quicinc.com>
+ <20220501200635.ekl3fw47dv2zytt3@SoMainline.org>
+ <d6a78564-745c-7301-1b57-efc35757fbfd@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d6a78564-745c-7301-1b57-efc35757fbfd@quicinc.com>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,40 +54,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move the initializer for the mode variable to the declaration point to
-remove unitialized variable access from the DEBUG_DPU macro. This fixes
-the following warning:
+On 2022-05-01 16:56:45, Abhinav Kumar wrote:
+> [snip]
+> Wouln't this macro already make sure that 'reg' doesnt have anything in 
+> the top 16 bits? Its doing a & with 0x00003f00
 
-drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c:250:37: note: initialize the variable 'mode' to silence this warning
+Like I said, it is unlikely that this happens, only if someone starts
+changing the code that assigns to `reg` which is unlikely to pass review
+anyway.
 
-Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+> [snip]
+> We can have a common bitfield layout for the two channels for command mode.
+> 
+> So we can do something like below for common fields:
+> 
+> -static inline uint32_t 
+> DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(uint32_t val)
+> +static inline uint32_t 
+> DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM_DATATYPE(uint32_t val, uint32_t 
+> stream_id)
+>   {
+> -       return ((val) << 
+> DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE__SHIFT) & 
+> DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE__MASK;
+> +       return ((val) << 
+> (DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE__SHIFT + (stream_id 
+> * 16)) & DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE__MASK;
+>   }
+> 
+> Video mode can also use all of these except for WC as that field is not 
+> present for cmd modes.
+> 
+> This can go as a separate change .
+> 
+> I can push this and perhaps get a Tested-by from Vinod as I dont have a 
+> setup to re-validate this.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index f4a79715a02e..4829d1ce0cf8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -247,7 +247,7 @@ static int dpu_encoder_phys_wb_atomic_check(
- 		struct drm_connector_state *conn_state)
- {
- 	struct drm_framebuffer *fb;
--	const struct drm_display_mode *mode;
-+	const struct drm_display_mode *mode = &crtc_state->mode;
- 
- 	DPU_DEBUG("[atomic_check:%d, \"%s\",%d,%d]\n",
- 			phys_enc->wb_idx, mode->name, mode->hdisplay, mode->vdisplay);
-@@ -256,7 +256,6 @@ static int dpu_encoder_phys_wb_atomic_check(
- 		return 0;
- 
- 	fb = conn_state->writeback_job->fb;
--	mode = &crtc_state->mode;
- 
- 	if (!conn_state || !conn_state->connector) {
- 		DPU_ERROR("invalid connector state\n");
--- 
-2.35.1
+How would you represent this in XML?  I was hoping for a method that
+allows to construct the value in a generic way, without register names,
+and then simply have a "register macro" that moves (and perhaps masks)
+the preconstructed value into the right place.  A bit like how `enum`s
+are currently set up in XML, but with bit ranges for the values and
+macros to set a value.
 
+I think I've _partially_ found what I was looking for: a `<bitset>`.
+However, I don't know if we can utilize this multiple times within a
+single `reg32`, once with an offset for stream1.  Alas, it's just
+bikeshedding at this point.
+
+- Marijn
