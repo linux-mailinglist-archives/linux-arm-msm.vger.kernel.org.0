@@ -2,103 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B11345175A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 19:17:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99C3F5175C1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 19:29:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386641AbiEBRVZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 13:21:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59266 "EHLO
+        id S237020AbiEBRct (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 13:32:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386631AbiEBRVX (ORCPT
+        with ESMTP id S235761AbiEBRcr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 13:21:23 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 023DAB1DA
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 10:17:54 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id bv19so28978104ejb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 10:17:53 -0700 (PDT)
+        Mon, 2 May 2022 13:32:47 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10CE4A1A1;
+        Mon,  2 May 2022 10:29:18 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id v10so12147840pgl.11;
+        Mon, 02 May 2022 10:29:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1z2xMYMcF+/vzx55XisKKTVU2oHyYL+qwW8wjgY4MBM=;
-        b=h7ETZog5UHxteO1Z4h2PQhLAnYd04U27aV7xua2b9cSc5JO0KVa2cLDc2aULBEc47h
-         +7xyK8zFhDozHC0NcaeSq+yPdzfKw4I8tQVfSymv2wxIgRPY9qzGbN+uEr/z0UuA/uBu
-         l+56NhBePzsTzScSOKtKGJ1236TPfg9G/Bhqs=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oyJeFqHoGWWfsmN7ZUpT0hPaBi24D+V4aGuy1zcw08U=;
+        b=gkB3nWHWQfhKPTtg6lYd+R/7QE9aVQPHgvJtP+ctJQ0SBARAm7Sc7BRdc6cdk3juc9
+         ZJdHsXlMexuGv8fVXyAYNdbL/cNP1soLaojegZvIp/Awj7Dhg00wO+PQQf+HTXhpWFWX
+         BzndP2dJuMu3QU8Y6BoKOlHozEp6gaKV1lw3z1bfaBfebkKOXlj5HP4RJe6UhiYNu+qs
+         MMEwC3mX6ypQIuWLK1Sb966deUIyH3tr6ez3WGKHDXFNwUe3FH5Y5b+JZ2sfCfzm9yhJ
+         v1Pq1TmVb6qarjhBSpK1euW2N1S6uD9l+AbLaWM12sudV1HwnJTQ/3xjJhXnxN3lX6bR
+         FOXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1z2xMYMcF+/vzx55XisKKTVU2oHyYL+qwW8wjgY4MBM=;
-        b=LV0gLjhmvf71xHwd7fMblDw1dsbM7B6V3WWkCyFICvkCY4JQsSPVt+RoSbJyZIjwkI
-         LgK9hwYQLxVd214TzvsmUGxJBIQQXYQYWdFlDQE1iAjBu3SA4u9JEZOUkdkL8yIVmu8t
-         /l7PkvTI0HQZtRZAhQWkeMatqHBrUYu7QjgNc0XvxnDLT8un8xdNhvET20gDYH/nC9mf
-         j/a6Y4ErvKbfy1CmayetG1IsQ/LBzRGzZeLnlA/GCRXGwIyQ6HzshLacXWnKgvvYuBDa
-         3yYtKyQUgdKqk+oNvawu9I8dO4ZLQIlPv68i3/HSIAe8oKZwHp8yIIkyvUkzrbIwjq58
-         ETxw==
-X-Gm-Message-State: AOAM533myBzJXb6PosVvy9RivYOCBbr1vAHAlRwl42mz6xaCdO5sIdlF
-        83pAojyhnS6ve5J2vf7sPdEpRemHpIR4YUh8
-X-Google-Smtp-Source: ABdhPJzHY5e0YdOLj56SSZMjWCzq9O9kXHcUjeekxjvvkvhQMxX1EPjaPI4ZKLhgfwdeg+g20KCAHg==
-X-Received: by 2002:a17:906:1ec3:b0:6cf:d118:59e2 with SMTP id m3-20020a1709061ec300b006cfd11859e2mr12100720ejj.767.1651511872128;
-        Mon, 02 May 2022 10:17:52 -0700 (PDT)
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com. [209.85.221.43])
-        by smtp.gmail.com with ESMTPSA id e16-20020a50fb90000000b0042617ba63d7sm6839469edq.97.2022.05.02.10.17.51
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 May 2022 10:17:51 -0700 (PDT)
-Received: by mail-wr1-f43.google.com with SMTP id e24so20343506wrc.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 10:17:51 -0700 (PDT)
-X-Received: by 2002:a05:6000:2c1:b0:20c:5e37:3ed1 with SMTP id
- o1-20020a05600002c100b0020c5e373ed1mr5787424wry.342.1651511870901; Mon, 02
- May 2022 10:17:50 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oyJeFqHoGWWfsmN7ZUpT0hPaBi24D+V4aGuy1zcw08U=;
+        b=0fYRCwmXX1AiBwJYQM/ACIEaTvQOisgZPbuLZpPF6Ej8kXT+6j2/Hi52bRiMkJ1Nd2
+         YDVr64cTAoy67NEPrAT0gXmO4wZ4yJzICFmsbvEaJfcTyG2HZF0zZ4/E9vSEdmwS60o3
+         mTCO6QQ6EY7P3t5C4OorWxBYFN0cPZBJQZFCFxC4g3e14x4W5vMpqAZX+ECd9SYKZKFX
+         5r5fvviiLXlYm779A15vETvH4AusqWPfs2bBFH/COpRtgK2f8POjen25DDaIduUl0EBx
+         x0MEZFXT2VEDq8vvtEgF3DEqhTGj9UV1irTHcbcknFyX+lA25h7hSIyVMj+Qt16A49yM
+         Qwjg==
+X-Gm-Message-State: AOAM530B3Mb0LFjOyzSSi5CnEF/l0aWyc4xn7UuQunoXKwqa4tomagCW
+        ZNTtAdLq7/ZVB3U11t74sJU=
+X-Google-Smtp-Source: ABdhPJyHf2OnaMoWX9/L1t52Z6eiweABLqlfrwiAvsNXVNVXwVpwyq5gx/jIDQrFotPphBbhdWbNHw==
+X-Received: by 2002:a63:1c0d:0:b0:3ab:1a76:953f with SMTP id c13-20020a631c0d000000b003ab1a76953fmr10499701pgc.73.1651512557459;
+        Mon, 02 May 2022 10:29:17 -0700 (PDT)
+Received: from localhost ([172.19.27.22])
+        by smtp.gmail.com with ESMTPSA id j14-20020aa7800e000000b0050dc762816bsm4942208pfi.69.2022.05.02.10.29.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 May 2022 10:29:16 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Limit command submission when no IOMMU
+Date:   Mon,  2 May 2022 10:29:08 -0700
+Message-Id: <20220502172908.3569799-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-References: <20220430011402.1.If7c3471db53bea55213f7bcf17e9043084d3ac0c@changeid>
- <20220430011402.5.I93d9a95aa7299f48ec081845ed29a1128f2ebe32@changeid>
-In-Reply-To: <20220430011402.5.I93d9a95aa7299f48ec081845ed29a1128f2ebe32@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 2 May 2022 10:17:39 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VF5KJ1wc2V-MxgtJz+DVb7BFCieWoNaYVES-wbq6QwMQ@mail.gmail.com>
-Message-ID: <CAD=FV=VF5KJ1wc2V-MxgtJz+DVb7BFCieWoNaYVES-wbq6QwMQ@mail.gmail.com>
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: sc7180: Add kingoftown dts files
-To:     "Joseph S. Barrera III" <joebar@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+From: Rob Clark <robdclark@chromium.org>
 
-On Sat, Apr 30, 2022 at 1:19 AM Joseph S. Barrera III
-<joebar@chromium.org> wrote:
->
-> Kingoftown is a trogdor-based board. These dts files are copies from
-> the downstream Chrome OS 5.4 kernel, but with downstream bits removed.
+Running the GPU without an IOMMU is not really a supported (or sane)
+configuration.  Yet it can be useful during SoC bringup (ie. if the
+iommu driver doesn't work yet).
 
-Actually for kingoftown no downstream bits were removed.
+Lets limit it to users who already have /dev/mem access, to avoid the
+chance that a user accidentially configures kernel without IOMMU
+support.
 
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_gem_submit.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-> Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
-> ---
->
->  arch/arm64/boot/dts/qcom/Makefile             |   2 +
->  .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  44 ++++
->  .../dts/qcom/sc7180-trogdor-kingoftown-r1.dts |  17 ++
->  .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   | 223 ++++++++++++++++++
->  4 files changed, 286 insertions(+)
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 23b68bc945f6..9cd8c8708990 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -734,6 +734,11 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 	if (args->pad)
+ 		return -EINVAL;
+ 
++	if (unlikely(!ctx->aspace) && !capable(CAP_SYS_RAWIO)) {
++		DRM_ERROR_RATELIMITED("IOMMU support or CAP_SYS_RAWIO required!\n");
++		return -EPERM;
++	}
++
+ 	/* for now, we just have 3d pipe.. eventually this would need to
+ 	 * be more clever to dispatch to appropriate gpu module:
+ 	 */
+-- 
+2.35.1
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
