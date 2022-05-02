@@ -2,81 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66534517559
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 19:04:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A60E517562
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 19:08:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386451AbiEBRIC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 13:08:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46960 "EHLO
+        id S243713AbiEBRLw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 13:11:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386459AbiEBRIA (ORCPT
+        with ESMTP id S243526AbiEBRLv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 13:08:00 -0400
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0477D26E4;
-        Mon,  2 May 2022 10:04:30 -0700 (PDT)
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-e93bbb54f9so14818811fac.12;
-        Mon, 02 May 2022 10:04:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sZqvkkRDCdorFRZtCcuZ+8QHBB5xU6cFlN1q+kyC+GU=;
-        b=beWatmc7g13JjCqJs1mDyuJ991P9RFpWQshurtXVWzj+tMb6oYsQKQtsH+95eHMQu6
-         IxyIiKF4wNBN74zbbLF4DYCsdG4hy3G9KPW5jpIVcsPbdTGUU8OU/rSzvTpi5zSzkHAR
-         hqds55q7zOX3yV1ve1vvCxcsnD6JmSRcjjlDmCI+Bn5KHGac33R38kMrZkPFXs48FSs9
-         loWW1aBFswxKefVjOM4OQHnafKmEKhd8khqd+pk2kqo0XSul4hv5Qi25G3IbpuMWovmV
-         UgGZCCgK43VUQJR6h08jqCURPqXaEQHBV00zDfFiDhEHFtAQstIca1ZH4drN0vcxPlyi
-         fZSg==
-X-Gm-Message-State: AOAM531RRQaL2qoA0vlgukOzVPCerTbmBnmerrcXFbAHu6sDDw+zr7bF
-        Gt7UrWgCwT4ObXWV7RepxlVtOgUITw==
-X-Google-Smtp-Source: ABdhPJw4D0yfe3Fz0McLxXba8QUskqPgAj+qjdP3d+lHF74ObtMt4NNeJRgeQ9fSvANifBABZ4ZBiA==
-X-Received: by 2002:a05:6870:4201:b0:e6:47c4:e104 with SMTP id u1-20020a056870420100b000e647c4e104mr32155oac.257.1651511069314;
-        Mon, 02 May 2022 10:04:29 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id m4-20020a056870194400b000e686d13883sm6038754oak.29.2022.05.02.10.04.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 May 2022 10:04:28 -0700 (PDT)
-Received: (nullmailer pid 1339087 invoked by uid 1000);
-        Mon, 02 May 2022 17:04:27 -0000
-Date:   Mon, 2 May 2022 12:04:27 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     krzysztof.kozlowski+dt@linaro.org, ulf.hansson@linaro.org,
-        linux-kernel@vger.kernel.org, robin.murphy@arm.com,
-        robh+dt@kernel.org, agross@kernel.org, bhupesh.sharma@linaro.org,
-        adrian.hunter@intel.com, linux-arm-kernel@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        joro@8bytes.org, will@kernel.org, iommu@lists.linux-foundation.org
-Subject: Re: [PATCH 1/4] dt-bindings: mmc: sdhci-msm: Document the SDX65
- compatible
-Message-ID: <YnAPGwCHA66V6+NW@robh.at.kernel.org>
-References: <1651480665-14978-1-git-send-email-quic_rohiagar@quicinc.com>
- <1651480665-14978-2-git-send-email-quic_rohiagar@quicinc.com>
+        Mon, 2 May 2022 13:11:51 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ED2F39B;
+        Mon,  2 May 2022 10:08:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651511302; x=1683047302;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=YxMwazIs3JHWvmg0sZ7e6pACUOmz5SX3WI8OaEep6Fs=;
+  b=JhKzthEglKM+HwGJsEjDEYXrEfrlo5znfvCTgDnuIKvx9GNfU3UOmTnL
+   hdr5flqXzu7/wY4l03Gb3tOFcZmOFqnzYY2McKgaD4mVJXgi5SAKEYTjT
+   gXjOdgkb3XfxBUB+El4LKEBgbqWv8xF9uDsrmyU/Me+u+c955elOunTBX
+   Q=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 02 May 2022 10:08:22 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 May 2022 10:08:21 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 2 May 2022 10:08:21 -0700
+Received: from kaushalk-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 2 May 2022 10:08:18 -0700
+From:   Kaushal Kumar <quic_kaushalk@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <manivannan.sadhasivam@linaro.org>,
+        "Kaushal Kumar" <quic_kaushalk@quicinc.com>
+Subject: [PATCH v3 0/4] Add QPIC BAM and QPIC NAND devicetree support for SDX65
+Date:   Mon, 2 May 2022 10:08:02 -0700
+Message-ID: <1651511286-18690-1-git-send-email-quic_kaushalk@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1651480665-14978-2-git-send-email-quic_rohiagar@quicinc.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 02 May 2022 14:07:42 +0530, Rohit Agarwal wrote:
-> The SDHCI controller on SDX65 is based on MSM SDHCI v5 IP. Hence,
-> document the compatible with "qcom,sdhci-msm-v5" as the fallback.
-> 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+Hello,
 
-Acked-by: Rob Herring <robh@kernel.org>
+This series adds and enables devicetree nodes for QPIC BAM
+and QPIC NAND for Qualcomm SDX65 platform.
+
+Changes since v2:
+ - Modify status as "okay" for the nodes added for sdx65-mtp.
+
+Changes since v1:
+ - Sort the nodes added for sdx65-mtp in alphabetical order.
+ - Rebased on top of 5.18-rc5.
+
+Kaushal Kumar (4):
+  ARM: dts: qcom: sdx65: Add QPIC BAM support
+  ARM: dts: qcom: sdx65: Add QPIC NAND support
+  ARM: dts: qcom: sdx65-mtp: Enable QPIC BAM support
+  ARM: dts: qcom: sdx65-mtp: Enable QPIC NAND support
+
+ arch/arm/boot/dts/qcom-sdx65-mtp.dts | 27 +++++++++++++++++++++++----
+ arch/arm/boot/dts/qcom-sdx65.dtsi    | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+), 4 deletions(-)
+
+--
+2.7.4
+
