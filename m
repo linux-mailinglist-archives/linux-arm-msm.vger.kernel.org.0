@@ -2,114 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1817B517637
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 20:00:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76069517671
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 20:21:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343577AbiEBSDa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 14:03:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57948 "EHLO
+        id S244716AbiEBSYd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 14:24:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244313AbiEBSDa (ORCPT
+        with ESMTP id S244656AbiEBSYc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 14:03:30 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70B7ADEF2;
-        Mon,  2 May 2022 11:00:00 -0700 (PDT)
-Received: from [192.168.1.101] (abxh26.neoplus.adsl.tpnet.pl [83.9.1.26])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 124193F361;
-        Mon,  2 May 2022 19:59:58 +0200 (CEST)
-Message-ID: <6b0ef19b-a45b-ae6f-9f6f-41e72f2c71fd@somainline.org>
-Date:   Mon, 2 May 2022 19:59:57 +0200
+        Mon, 2 May 2022 14:24:32 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85B056597
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 11:21:00 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id k23so29303254ejd.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 11:21:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=iItLeslMywWC75aXdXtU8Z+zXUhrV2MK1NBIxn2y2rs=;
+        b=ememrw3mrzB87tbxst36sFZrP2L0uucEvly20Ws+EZFhF/pddU8fYcS7JEFCJUP+CL
+         j+lGzY0fHbbQlSfH/ikTqPNafPooCBizg2Lq9AZYjeVZogIOGaFAnJ3yMaO2I572f1ch
+         BtyoIhO+5B1oarNj/H8Of44qF1QB2Fofx3dByrN7GaTI3ePDmN7+tFLZvrpg0GfxKYO/
+         Mn+Iv+6XPWcVY0artXR54yqQe0UEBo/Glqd773ezVvZaOxm3dOP1zOCExI2ZvwQfQy0s
+         IClGWaKHCqD2zLbNOmB55lYjCMsm4C6vMLQl59E+qbMAufvlFzNaLZTja1LW/8VSq9Ap
+         H3PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=iItLeslMywWC75aXdXtU8Z+zXUhrV2MK1NBIxn2y2rs=;
+        b=YiW2DvxbGV7K0eZRrwzgqcTHDs3oDKWqM1FHoRrCaMZeAyd+JAPZiDlbTXgYGb6Hq1
+         4mpzlrTzSuq/rOi7pKj49Wku9FYD4IpiAYnIhtz9uI359oio9kUMQb6DlqIFFqjK6ykp
+         3XrDK6/FoJ4hygXxrL4hprCSxFPRv2yK/MQn1o5l67ZSzBkm+hXc/LFiZhrhTsAegGPs
+         W7BOLN368KudqEuf8vMJJRj5b4U+TexLOJf/K/kV9p+m5H1mXdbl2Ul5KEQUC7/Zv6nt
+         5QVxRJvX4DJtE0s5ovv+065lqHasZLvooPmIQRBayCfoBqjOSuGKyHnfFhqbgnrznZU8
+         xbrw==
+X-Gm-Message-State: AOAM530wkKfb3CdjWKOzIJEJbwa/0cXwNx2DAxQW/XCkG1D3z5y6TFMC
+        g9HeSZLalDO4IYcq1gBnDtIAuw==
+X-Google-Smtp-Source: ABdhPJxQs/h1jEPNSvWXNsY4p7A5yQi5Z4mXw2JDkI9IDc2ziVO/mSYH8FV79HltN8p7CElqnuj0Zg==
+X-Received: by 2002:a17:906:c110:b0:6e0:dc2a:3393 with SMTP id do16-20020a170906c11000b006e0dc2a3393mr12215880ejc.512.1651515659085;
+        Mon, 02 May 2022 11:20:59 -0700 (PDT)
+Received: from [192.168.0.196] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id y20-20020aa7ce94000000b0042617ba63a3sm7009742edv.45.2022.05.02.11.20.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 May 2022 11:20:58 -0700 (PDT)
+Message-ID: <717f54e9-9ca9-9ab1-2f03-2edfd7e684d1@linaro.org>
+Date:   Mon, 2 May 2022 20:20:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: add uart20 node
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 3/4] soc: qcom: icc-bwmon: Add bandwidth monitoring driver
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>
-References: <20220501195458.4134911-1-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220501195458.4134911-1-dmitry.baryshkov@linaro.org>
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Thara Gopinath <thara.gopinath@linaro.org>
+References: <20220502174046.139234-1-krzysztof.kozlowski@linaro.org>
+ <20220502174046.139234-4-krzysztof.kozlowski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220502174046.139234-4-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 02/05/2022 19:40, Krzysztof Kozlowski wrote:
+> Bandwidth monitoring h/w sits between various subsytems like cpu, gpu
+> etc and ddr subsystem. This h/w can be configured to monitor the data
+> traffic between ddr and other subsytems. The bandwidth values obtained
+> from this monitoring is used to bump up or down the corresponding
+> interconnect speeds.
 
 
-On 1.05.2022 21:54, Dmitry Baryshkov wrote:
-> Add device tree node for uart20, which is typically used for Bluetooth attachment.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 4fcb6e2b096b..8b9d9c2cd02c 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -996,6 +996,19 @@ spi20: spi@894000 {
->  				status = "disabled";
->  			};
->  
-> +			uart20: serial@894000 {
-I think it should come before SPI alphabetically?
+(...)
 
-> +				compatible = "qcom,geni-uart";
-> +				reg = <0 0x00894000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP2_S5_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_uart20_default>;
-No sleep state?
-
-> +				interrupts = <GIC_SPI 587 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				status = "disabled";
-> +			};
 > +
->  			i2c21: i2c@898000 {
->  				compatible = "qcom,geni-i2c";
->  				reg = <0x0 0x00898000 0x0 0x4000>;
-> @@ -2757,6 +2770,15 @@ qup_uart7_tx: qup-uart7-tx {
->  				drive-strength = <2>;
->  				bias-disable;
->  			};
-> +
-> +			qup_uart20_default: qup-uart20-default {
-> +				mux {
-Please drop the unnecessary mux{} here.
+> +MODULE_AUTHOR("Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>")
 
-> +					pins = "gpio76", "gpio77",
-> +						"gpio78", "gpio79";
-I think these could fit into a single 100-char-long line>?
+I should have checked last minute changes if they compile...
 
-> +					function = "qup20";
-Are there no default properties for this setup? I think boards that don't use standard Qualcomm connectivity setups (like Bluetooth on this specific UART) are rather scarce and it'd be more convenient to keep a standard setting here and override it where need be instead of copy-pasting the same thing over and over in 95-100% of the boards.
 
-Konrad
+> +MODULE_DESCRIPTION("QCOM BWMON driver");
+> +MODULE_LICENSE("GPL");
 
-> +				};
-> +			};
-> +
->  		};
->  
->  		apps_smmu: iommu@15000000 {
-> 
+
+Best regards,
+Krzysztof
