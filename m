@@ -2,110 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3982A517422
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 18:19:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C9135174DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 18:46:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236481AbiEBQXS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 12:23:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36698 "EHLO
+        id S1386472AbiEBQsc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 12:48:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234189AbiEBQXR (ORCPT
+        with ESMTP id S1386441AbiEBQsD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 12:23:17 -0400
+        Mon, 2 May 2022 12:48:03 -0400
 Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1416E0D1
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 09:19:48 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA53B10FEA;
+        Mon,  2 May 2022 09:44:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651508388; x=1683044388;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=m79NQdP0qPoQxsIecBh0qrDXW2e18c/ca/bhuLWolMY=;
-  b=pWCSSQxn+c4eVjW8NeQKyc9VVdT6KzNP0sIwKACjUOhjkmt8LyZsNMkv
-   +NPNtYgtT+Zkp7BOHJt2lEK7UeSZhEwtPFFUvaQtHidUPtzsWku5anwRA
-   KtqA/LjPTW+qZoyh6wVNJJ16z4Sdwz4gUL9ZieScuFX9ixCcU3ky3AamJ
-   4=;
+  t=1651509868; x=1683045868;
+  h=from:to:cc:subject:date:message-id;
+  bh=/hBP51dakvyFvptK3SaVoqwhUb9b+sUY7FBEgdyP/G0=;
+  b=he2bz44j29Gw2C0tHNXGGlhlU+u6i0iN3aeUwULoDYFqlWO0FYXPnFaO
+   BKeROB7G3cDytkmTaEf2clhUPaM+oYXUKPk/+lGCeBv+YXB3KwFKTFJDq
+   MoQ2lstz006XEq+Ly4J3mAW9gVHvNKVdP35ofGq8pqky7QhwSNHkDaYHZ
+   A=;
 Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 02 May 2022 09:19:48 -0700
+  by alexa-out.qualcomm.com with ESMTP; 02 May 2022 09:44:27 -0700
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 May 2022 09:19:47 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 2 May 2022 09:19:47 -0700
-Received: from [10.38.244.235] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 2 May 2022
- 09:19:44 -0700
-Message-ID: <fb4cce22-803c-37f3-aabe-2b353c3cc66b@quicinc.com>
-Date:   Mon, 2 May 2022 09:19:42 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm/dpu: don't access mode pointer before it is set
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     kernel test robot <lkp@intel.com>, David Airlie <airlied@linux.ie>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220502082420.48409-1-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220502082420.48409-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 May 2022 09:44:25 -0700
+X-QCInternal: smtphost
+Received: from vpolimer-linux.qualcomm.com ([10.204.67.235])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 02 May 2022 22:14:11 +0530
+Received: by vpolimer-linux.qualcomm.com (Postfix, from userid 463814)
+        id 8727E28A6; Mon,  2 May 2022 22:14:09 +0530 (IST)
+From:   Vinod Polimera <quic_vpolimer@quicinc.com>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_kalyant@quicinc.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org
+Subject: [PATCH v2] drm/msm/disp/dpu1: avoid clearing hw interrupts if hw_intr is null during drm uninit
+Date:   Mon,  2 May 2022 22:14:06 +0530
+Message-Id: <1651509846-4842-1-git-send-email-quic_vpolimer@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+If edp modeset init is failed due to panel being not ready and
+probe defers during drm bind, avoid clearing irqs and derefernce
+hw_intr when hw_intr is null.
 
+BUG: Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
 
-On 5/2/2022 1:24 AM, Dmitry Baryshkov wrote:
-> Move the initializer for the mode variable to the declaration point to
-> remove unitialized variable access from the DEBUG_DPU macro. This fixes
-> the following warning:
-> 
-> drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c:250:37: note: initialize the variable 'mode' to silence this warning
-> 
-> Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Thanks,
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-> index f4a79715a02e..4829d1ce0cf8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-> @@ -247,7 +247,7 @@ static int dpu_encoder_phys_wb_atomic_check(
->   		struct drm_connector_state *conn_state)
->   {
->   	struct drm_framebuffer *fb;
-> -	const struct drm_display_mode *mode;
-> +	const struct drm_display_mode *mode = &crtc_state->mode;
->   
->   	DPU_DEBUG("[atomic_check:%d, \"%s\",%d,%d]\n",
->   			phys_enc->wb_idx, mode->name, mode->hdisplay, mode->vdisplay);
-> @@ -256,7 +256,6 @@ static int dpu_encoder_phys_wb_atomic_check(
->   		return 0;
->   
->   	fb = conn_state->writeback_job->fb;
-> -	mode = &crtc_state->mode;
->   
->   	if (!conn_state || !conn_state->connector) {
->   		DPU_ERROR("invalid connector state\n");
+Call trace:
+ dpu_core_irq_uninstall+0x50/0xb0
+ dpu_irq_uninstall+0x18/0x24
+ msm_drm_uninit+0xd8/0x16c
+ msm_drm_bind+0x580/0x5fc
+ try_to_bring_up_master+0x168/0x1c0
+ __component_add+0xb4/0x178
+ component_add+0x1c/0x28
+ dp_display_probe+0x38c/0x400
+ platform_probe+0xb0/0xd0
+ really_probe+0xcc/0x2c8
+ __driver_probe_device+0xbc/0xe8
+ driver_probe_device+0x48/0xf0
+ __device_attach_driver+0xa0/0xc8
+ bus_for_each_drv+0x8c/0xd8
+ __device_attach+0xc4/0x150
+ device_initial_probe+0x1c/0x28
+
+Changes in V2:
+- Update commit message and coreect fixes tag.
+
+Fixes: f25f656608e3 ("drm/msm/dpu: merge struct dpu_irq into struct dpu_hw_intr")
+Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+index c515b7c..ab28577 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+@@ -599,6 +599,9 @@ void dpu_core_irq_uninstall(struct dpu_kms *dpu_kms)
+ {
+ 	int i;
+ 
++	if (!dpu_kms->hw_intr)
++		return;
++
+ 	pm_runtime_get_sync(&dpu_kms->pdev->dev);
+ 	for (i = 0; i < dpu_kms->hw_intr->total_irqs; i++)
+ 		if (!list_empty(&dpu_kms->hw_intr->irq_cb_tbl[i]))
+-- 
+2.7.4
+
