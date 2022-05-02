@@ -2,77 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16BD9516DFB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 12:14:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B5D5516E23
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 12:29:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384420AbiEBKR1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 06:17:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51336 "EHLO
+        id S238169AbiEBKdH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 06:33:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1384412AbiEBKR1 (ORCPT
+        with ESMTP id S1384722AbiEBKcY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 06:17:27 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 902282DB
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 03:13:58 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id o69so10934327pjo.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 03:13:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=shQaSnVKrqLWN+k12ZUY2V1AzAclSYo5tWPsZzLNBLA=;
-        b=pS3BqZc8mAM7Phnolkqy2kMdrOUg+Gtz6Qfk9PjaDjnjYphg5T+RoV3b1QbSQVw0Mr
-         JKRGSpVps1LJOxQpSIE2VCruMP5ZhF9lTkk5y24jk53TbenBp2Anm4F8cj8WVVLnCWGU
-         Xy/zpc1RmgpEsei+UiiA9pK5EeCwbrp3g4tDQ5XDDh3L8Pewn+X7nUZwtp6Io+5+HOyg
-         G2Vztq9b4oVnfJ6fhT0iYPuSKhlripCHsQB0T0zigFMm9vw8/V33pAn9vbBfWJQVV8RT
-         bdE4UfTzSMw/nEfq3DZlxPvj/9EmN88JKqyq/vZtA1xZnknByZP5D/rBMyBtvMB/K9P5
-         NucQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=shQaSnVKrqLWN+k12ZUY2V1AzAclSYo5tWPsZzLNBLA=;
-        b=e+G+BrCHXiL/2oZJWiY0ohJ4M6JANWsixGDjAri6kQDm7O9sgQW1V8ZOFwIYLXbS1t
-         a+/FmMjxiqFNtIYD8sCiR8LG/rDaWGSpFj6vOBuwvZg/ImnmSMGvlkd0ZxCg2Gw/DMtM
-         /sCy0ig6onaSEG7TuK4j+hubJcnr+K7mGc+GK8jjEb3TqKGQSIGp3juc2bGYZT/cXyaC
-         DV80Vt0f2id0lTTt++bMg8hJ9BSjEpvs61enoAv83v+/RLuC8ePgzTeSggU4whI5/Nd4
-         GRU4lstQPp/cFixG8mhxswBYlPK0YNfRFMiNpwcK/NK+cTj9YBKd1qt2uM3QpRaxYd4g
-         N4Ww==
-X-Gm-Message-State: AOAM533KBNxmoAoJn2B6189vfNQzbmAc2DwXHDl/zKzgmEJA8ksd4bp+
-        XP7STPIjy1OEMguFnS7SBaO9
-X-Google-Smtp-Source: ABdhPJypXvSZ+mgeJ4qYVZ6Fb2Ofaqaydtbaex/sRoKKzbN9j2KnL+nAlW+5+cpikuAeSsmh2bs8kQ==
-X-Received: by 2002:a17:903:283:b0:152:157:eb7 with SMTP id j3-20020a170903028300b0015201570eb7mr517950plr.109.1651486438040;
-        Mon, 02 May 2022 03:13:58 -0700 (PDT)
-Received: from thinkpad ([27.111.75.99])
-        by smtp.gmail.com with ESMTPSA id j16-20020aa783d0000000b0050dc76281b8sm4495916pfn.146.2022.05.02.03.13.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 May 2022 03:13:57 -0700 (PDT)
-Date:   Mon, 2 May 2022 15:43:51 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 2 May 2022 06:32:24 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04AD81FCD9;
+        Mon,  2 May 2022 03:27:41 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 40C02B815E9;
+        Mon,  2 May 2022 10:27:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045F8C385AC;
+        Mon,  2 May 2022 10:27:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651487259;
+        bh=R56O39Gq1VR272NSCyjIJ7OwI2OeAY/9yHGTpdl3FnM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=RRMmbNpW+fg48uBABCutnJSZ+LegyqtECzIqxyK2iDimwkVb3JgHfB/2Rc9wRRyD2
+         4yiUiiWp5HUPHfBS0w4UzrAnCHcuqpJ3p29cJQR6/5mAScHqAB9GD2a96hcM/EkppX
+         9hbOK/3mCLCc+IlKaCOIo4sMPGPYgYrPluRV/PnV8xJbcPYu+fqGXr+MxRMtdB1zKy
+         qcsR3MCDOlD7SqK/bhoY1CfhGGy7rWy+/sXDXu2yZu377O+fI8d9rJibq54MfCsmwl
+         aHqHScZRDBVrXNLgnu2FVWHSjF5xeNypFF+jLrjyjZeI6HYX7YFkma3gSV2rUFT9e0
+         VW8ge73V+Z98Q==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1nlTHF-0004NJ-HI; Mon, 02 May 2022 12:27:37 +0200
+Date:   Mon, 2 May 2022 12:27:37 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: Re: [PATCH v4 1/5] PCI: qcom: Remove unnecessary pipe_clk handling
-Message-ID: <20220502101351.GG5053@thinkpad>
-References: <20220501192149.4128158-1-dmitry.baryshkov@linaro.org>
- <20220501192149.4128158-2-dmitry.baryshkov@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, Evan Green <evgreen@chromium.org>
+Subject: Re: [PATCH 2/2] phy: qcom-qmp: fix pipe-clock imbalance on power-on
+ failure
+Message-ID: <Ym+yGa0xT82d9XOf@hovoldconsulting.com>
+References: <20220420152331.5527-1-johan+linaro@kernel.org>
+ <20220420152331.5527-3-johan+linaro@kernel.org>
+ <Ym+t5YVL8HdJaBl4@matsya>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220501192149.4128158-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <Ym+t5YVL8HdJaBl4@matsya>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,142 +64,95 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 01, 2022 at 10:21:45PM +0300, Dmitry Baryshkov wrote:
-> QMP PHY driver already does clk_prepare_enable()/_disable() pipe_clk.
-> Remove extra calls to enable/disable this clock from the PCIe driver, so
-> that the PHY driver can manage the clock on its own.
+On Mon, May 02, 2022 at 03:39:41PM +0530, Vinod Koul wrote:
+> On 20-04-22, 17:23, Johan Hovold wrote:
+> > Make sure to disable the pipe clock also if ufs-reset deassertion fails
+> > during power on.
+> > 
+> > Note that the ufs-reset is asserted in qcom_qmp_phy_com_exit().
+> > 
+> > Fixes: c9b589791fc1 ("phy: qcom: Utilize UFS reset controller")
+> > Cc: Evan Green <evgreen@chromium.org>
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >  drivers/phy/qualcomm/phy-qcom-qmp.c | 14 +++++++-------
+> >  1 file changed, 7 insertions(+), 7 deletions(-)
+> > 
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > index 8c2300bfe489..7d2d1ab061f7 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > @@ -5375,14 +5375,14 @@ static int qcom_qmp_phy_power_on(struct phy *phy)
+> >  		if (ret) {
+> >  			dev_err(qmp->dev, "lane%d reset deassert failed\n",
+> >  				qphy->index);
+> > -			goto err_lane_rst;
+> > +			return ret;
 > 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 44 ++------------------------
->  1 file changed, 3 insertions(+), 41 deletions(-)
+> This can be skipped if we retain the err_lane_rst label
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 57636246cecc..a6becafb6a77 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -128,7 +128,6 @@ struct qcom_pcie_resources_2_3_2 {
->  	struct clk *master_clk;
->  	struct clk *slave_clk;
->  	struct clk *cfg_clk;
-> -	struct clk *pipe_clk;
->  	struct regulator_bulk_data supplies[QCOM_PCIE_2_3_2_MAX_SUPPLY];
->  };
->  
-> @@ -165,7 +164,6 @@ struct qcom_pcie_resources_2_7_0 {
->  	int num_clks;
->  	struct regulator_bulk_data supplies[2];
->  	struct reset_control *pci_reset;
-> -	struct clk *pipe_clk;
->  	struct clk *pipe_clk_src;
->  	struct clk *phy_pipe_clk;
->  	struct clk *ref_clk_src;
-> @@ -597,8 +595,7 @@ static int qcom_pcie_get_resources_2_3_2(struct qcom_pcie *pcie)
->  	if (IS_ERR(res->slave_clk))
->  		return PTR_ERR(res->slave_clk);
->  
-> -	res->pipe_clk = devm_clk_get(dev, "pipe");
-> -	return PTR_ERR_OR_ZERO(res->pipe_clk);
-> +	return 0;
->  }
->  
->  static void qcom_pcie_deinit_2_3_2(struct qcom_pcie *pcie)
-> @@ -613,13 +610,6 @@ static void qcom_pcie_deinit_2_3_2(struct qcom_pcie *pcie)
->  	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
->  }
->  
-> -static void qcom_pcie_post_deinit_2_3_2(struct qcom_pcie *pcie)
-> -{
-> -	struct qcom_pcie_resources_2_3_2 *res = &pcie->res.v2_3_2;
-> -
-> -	clk_disable_unprepare(res->pipe_clk);
-> -}
-> -
->  static int qcom_pcie_init_2_3_2(struct qcom_pcie *pcie)
->  {
->  	struct qcom_pcie_resources_2_3_2 *res = &pcie->res.v2_3_2;
-> @@ -694,22 +684,6 @@ static int qcom_pcie_init_2_3_2(struct qcom_pcie *pcie)
->  	return ret;
->  }
->  
-> -static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
-> -{
-> -	struct qcom_pcie_resources_2_3_2 *res = &pcie->res.v2_3_2;
-> -	struct dw_pcie *pci = pcie->pci;
-> -	struct device *dev = pci->dev;
-> -	int ret;
-> -
-> -	ret = clk_prepare_enable(res->pipe_clk);
-> -	if (ret) {
-> -		dev_err(dev, "cannot prepare/enable pipe clock\n");
-> -		return ret;
-> -	}
-> -
-> -	return 0;
-> -}
-> -
->  static int qcom_pcie_get_resources_2_4_0(struct qcom_pcie *pcie)
->  {
->  	struct qcom_pcie_resources_2_4_0 *res = &pcie->res.v2_4_0;
-> @@ -1198,8 +1172,7 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
->  			return PTR_ERR(res->ref_clk_src);
->  	}
->  
-> -	res->pipe_clk = devm_clk_get(dev, "pipe");
-> -	return PTR_ERR_OR_ZERO(res->pipe_clk);
-> +	return 0;
->  }
->  
->  static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
-> @@ -1292,14 +1265,7 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
->  	if (pcie->cfg->pipe_clk_need_muxing)
->  		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
->  
-> -	return clk_prepare_enable(res->pipe_clk);
-> -}
-> -
-> -static void qcom_pcie_post_deinit_2_7_0(struct qcom_pcie *pcie)
-> -{
-> -	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> -
-> -	clk_disable_unprepare(res->pipe_clk);
-> +	return 0;
->  }
->  
->  static int qcom_pcie_link_up(struct dw_pcie *pci)
-> @@ -1449,9 +1415,7 @@ static const struct qcom_pcie_ops ops_1_0_0 = {
->  static const struct qcom_pcie_ops ops_2_3_2 = {
->  	.get_resources = qcom_pcie_get_resources_2_3_2,
->  	.init = qcom_pcie_init_2_3_2,
-> -	.post_init = qcom_pcie_post_init_2_3_2,
->  	.deinit = qcom_pcie_deinit_2_3_2,
-> -	.post_deinit = qcom_pcie_post_deinit_2_3_2,
->  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
->  };
->  
-> @@ -1478,7 +1442,6 @@ static const struct qcom_pcie_ops ops_2_7_0 = {
->  	.deinit = qcom_pcie_deinit_2_7_0,
->  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
->  	.post_init = qcom_pcie_post_init_2_7_0,
-> -	.post_deinit = qcom_pcie_post_deinit_2_7_0,
->  };
->  
->  /* Qcom IP rev.: 1.9.0 */
-> @@ -1488,7 +1451,6 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
->  	.deinit = qcom_pcie_deinit_2_7_0,
->  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
->  	.post_init = qcom_pcie_post_init_2_7_0,
-> -	.post_deinit = qcom_pcie_post_deinit_2_7_0,
->  	.config_sid = qcom_pcie_config_sid_sm8250,
->  };
->  
-> -- 
-> 2.35.1
+> >  		}
+> >  	}
+> >  
+> >  	ret = clk_prepare_enable(qphy->pipe_clk);
+> >  	if (ret) {
+> >  		dev_err(qmp->dev, "pipe_clk enable failed err=%d\n", ret);
+> > -		goto err_clk_enable;
+> > +		goto err_reset_lane;
+> >  	}
+> >  
+> >  	/* Tx, Rx, and PCS configurations */
+> > @@ -5433,7 +5433,7 @@ static int qcom_qmp_phy_power_on(struct phy *phy)
+> >  
+> >  	ret = reset_control_deassert(qmp->ufs_reset);
+> >  	if (ret)
+> > -		goto err_lane_rst;
+> > +		goto err_disable_pipe_clk;
 > 
+> this is the actual fix...
+
+Right, but with a one-line fix this would read
+
+	goto err_pcs_ready;
+
+which makes no sense at all. Is that really what you prefer?
+
+Renaming just this one and the below one, would leave the error labels
+named using two different schemes, which also isn't very nice, but
+perhaps ok.
+
+> >  
+> >  	qcom_qmp_phy_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl,
+> >  			       cfg->pcs_misc_tbl_num);
+> > @@ -5472,17 +5472,17 @@ static int qcom_qmp_phy_power_on(struct phy *phy)
+> >  					 PHY_INIT_COMPLETE_TIMEOUT);
+> >  		if (ret) {
+> >  			dev_err(qmp->dev, "phy initialization timed-out\n");
+> > -			goto err_pcs_ready;
+> > +			goto err_disable_pipe_clk;
+> 
+> same rename here
+> 
+> >  		}
+> >  	}
+> >  	return 0;
+> >  
+> > -err_pcs_ready:
+> > +err_disable_pipe_clk:
+> >  	clk_disable_unprepare(qphy->pipe_clk);
+> > -err_clk_enable:
+> > +err_reset_lane:
+> >  	if (cfg->has_lane_rst)
+> >  		reset_control_assert(qphy->lane_rst);
+> > -err_lane_rst:
+> > +
+> >  	return ret;
+> 
+> while I feel the names given by this patch are better, they should not
+> be in a fix patch. We should just add the one line fix here and do
+> renames later
+
+I'll respin if you prefer, just want to double check that you really
+want a one line fix (i.e. goto err_pcs_ready).
+
+Johan
