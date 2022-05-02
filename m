@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95BBC5176E8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 20:53:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EED2351770D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 21:01:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229841AbiEBS4a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 14:56:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33800 "EHLO
+        id S1387005AbiEBTEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 15:04:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiEBS4a (ORCPT
+        with ESMTP id S1386994AbiEBTEx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 14:56:30 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DA2E6243
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 11:53:00 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id f38so27629565ybi.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 11:53:00 -0700 (PDT)
+        Mon, 2 May 2022 15:04:53 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C35864F6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 12:01:24 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-2ec42eae76bso158165427b3.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 12:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=16c6LoufbePye4HWJelwY8ht2KeqIsEnJnUl7uB1SQc=;
-        b=jqr/xBWlNNErNwhynK5voUQvHR1NxmJKCd1Z7Qaq7g8Fb/GQwUCF9IIYtRUdR4YEr1
-         nynxZJexdSKlnY74XeujEogng80z2pYDihQOFgV9ELs3hmMgVY2onPj671j5ddbgB9BG
-         5/73p2GcfcxDWOy7wLz3h8l2tfPvAvPrDCQ+BE6Xk/5o0lgsvz3nCKU4AYeAVLlonsSL
-         Z2JmYA8dzKlG1beSvj5MMiTcw+WRqp7qLXLSERFy0/KcT8VMBSgKEIVz69YMhpgFGSjJ
-         vtGTnIbSnPEYsaroJpHICAhU/ENy4/ZJoL9sDV2o5RbMXmPW+qBFDmoBLK9/uwqgjrJy
-         fY4A==
+         :cc:content-transfer-encoding;
+        bh=AC0EeKmdD/wVz7MSLZ/h0yiSs6sEJRzxBmAWAP1+gLM=;
+        b=WNqdk/HayGYvvD78D8U73C49lNe6YaKCBv4ArxjZNpn2oWWIEHIsxOeMcFAvy8zrOI
+         bulK1HmtpQFrmpZ1IzpxWnpM5X3UedfgyhemcCBPfVAtK4NYJzdnujw1/appDkxvAkpw
+         2oAckt8rnItfE96eclwaEKN1wBW1/VcsrvfhP89WnxB+OpgiE+NODkMCo85NqTsqndul
+         qlUAswh3IYLO/xStX9jhIw21HgTUWpedgpdbr32B+3aA1/4ImCjTyb8h/jWqfdFUK8x/
+         Qsi7Hdmcf5HO+SONaDrdWIVRDgcZgGUMQvUyEommUNQjsxh3PoIayToQOnHGRCpJNo6N
+         pJLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=16c6LoufbePye4HWJelwY8ht2KeqIsEnJnUl7uB1SQc=;
-        b=3FUP25hFZcd1hC1VXeCKZBGPV+XiVu3UYuDcOJr/vPOpHC8llS9aZZILvHk+/VDHuf
-         a7Xzv5KXEw161dJGFU30YL32XnQjkZxr3PTnHaN2zWIuO5kSejnKCbVGVlQg5low/811
-         WlhvoQh7pcEjzOi4LbJEltqGPxGD/WBzOBli1PkCI0WFtFzTZRfffuKqDxAqpqcjbgFm
-         P+kJ5JB5SMyMh3rK9IFf/jgnDyuO//GAhhWd7X6vgbP2it9jvTb/GIqW52uAX+W695wn
-         eYZwep6KXHXos8jA4jo17JcoBYEMu+fo7loDmQdK/ops66atxbt/9SvbPbqSCLpyVQJj
-         LBUA==
-X-Gm-Message-State: AOAM530bg1CqGqwzYtBOw97lzFTTubAuM8ZCnblCNIZBa150zBBdVI4V
-        80+1dJLzWp0iTbdIboR1H4omQ1ctW0SW7y+V3u2grA==
-X-Google-Smtp-Source: ABdhPJzU+LBvikaPdp/AbP+b+aZ/afUryXUeK+51Yu6+TQyUdZFvwMSvJ2yZNRnIbcwvzfRr0QLLkvsrGpaMC605bhw=
-X-Received: by 2002:a25:84c1:0:b0:63e:7733:f95a with SMTP id
- x1-20020a2584c1000000b0063e7733f95amr10517577ybm.234.1651517579694; Mon, 02
- May 2022 11:52:59 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=AC0EeKmdD/wVz7MSLZ/h0yiSs6sEJRzxBmAWAP1+gLM=;
+        b=xZcJDMEWngZG84yaUhTSq++X6yiGlZB2pzUwUDGJJejmI49yFmfp5d/p9YYsW0Zbn4
+         Wt1RqAIMcSG0XPqE8OkGySyKNssvJdkw/tkei/2+sD/0q+9Glk7WUfDXieicQ6bJaPcN
+         ZpiDotW0mZoQePo9E2D3ueXT3erhb2AuEw34IgcOpaGpg92v8aynUiAFMOa3zxJbcLLS
+         Dq6YcUoXYmVOY3C4Zvgr3PnBxIJ4IocFXer469dOqketx6yadUlh2H6FkAirIv8XliQL
+         KMLMuddViTtp/u4MmdsyZJFxq/UJXoTqQ00CKxUW+hhhVOFhZ+52alg2htZHzfJyXc0D
+         WZhg==
+X-Gm-Message-State: AOAM532bza3Z7u2UxQPIAY2IXEZ9lBZT8oNgsNwdQzl2nF6mlCvNkO7k
+        1oDuB1QNWMMgccvoQSiy8b3iHMPPyQFE6sz/myptCw==
+X-Google-Smtp-Source: ABdhPJy/C0gQDMibcNI6GSVb0H9Uz0+HUuH3G2FQPbsmsIja9PVwDOFJHPrVOHPcd00s+q/RfeUIdKK97HQSMWzBSgU=
+X-Received: by 2002:a81:492:0:b0:2f7:ce87:c324 with SMTP id
+ 140-20020a810492000000b002f7ce87c324mr12569218ywe.359.1651518083662; Mon, 02
+ May 2022 12:01:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220501195042.4132724-1-dmitry.baryshkov@linaro.org> <4824d621-5840-6535-dc8f-1f20ee35d96b@somainline.org>
-In-Reply-To: <4824d621-5840-6535-dc8f-1f20ee35d96b@somainline.org>
+References: <20220501195458.4134911-1-dmitry.baryshkov@linaro.org> <6b0ef19b-a45b-ae6f-9f6f-41e72f2c71fd@somainline.org>
+In-Reply-To: <6b0ef19b-a45b-ae6f-9f6f-41e72f2c71fd@somainline.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 2 May 2022 21:52:48 +0300
-Message-ID: <CAA8EJpoGWuSKE0B7np-M1JnHJ3z+_85thg_firRS_BBS06W=TA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: add ITS device tree node
+Date:   Mon, 2 May 2022 22:01:12 +0300
+Message-ID: <CAA8EJpqeR8FF7V1fdyWtQsU3xnFw5+4obBSndb3wS+H8Xgu8Rw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: add uart20 node
 To:     Konrad Dybcio <konrad.dybcio@somainline.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -60,6 +60,7 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Vinod Koul <vkoul@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -70,68 +71,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2 May 2022 at 20:55, Konrad Dybcio <konrad.dybcio@somainline.org> wrote:
+On Mon, 2 May 2022 at 20:59, Konrad Dybcio <konrad.dybcio@somainline.org> w=
+rote:
 >
 >
 >
-> On 1.05.2022 21:50, Dmitry Baryshkov wrote:
-> > Add device tree node corresponding to the ITS part of GICv3.
+> On 1.05.2022 21:54, Dmitry Baryshkov wrote:
+> > Add device tree node for uart20, which is typically used for Bluetooth =
+attachment.
 > >
 > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > > Reviewed-by: Vinod Koul <vkoul@kernel.org>
 > > ---
-> Hi,
->
-> please keep the properties order coherent with other nodes, so:
->
-> [compatible]
-> [reg]
-> [various props]
-> [#-cells]
-> [ranges]
-> [status]
->
+> >  arch/arm64/boot/dts/qcom/sm8450.dtsi | 22 ++++++++++++++++++++++
+> >  1 file changed, 22 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts=
+/qcom/sm8450.dtsi
+> > index 4fcb6e2b096b..8b9d9c2cd02c 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> > @@ -996,6 +996,19 @@ spi20: spi@894000 {
+> >                               status =3D "disabled";
+> >                       };
+> >
+> > +                     uart20: serial@894000 {
+> I think it should come before SPI alphabetically?
 
-Never memorized the order. Thanks for the pointer!
+Argh. I sorted it using the label!
+
+>
+> > +                             compatible =3D "qcom,geni-uart";
+> > +                             reg =3D <0 0x00894000 0 0x4000>;
+> > +                             clock-names =3D "se";
+> > +                             clocks =3D <&gcc GCC_QUPV3_WRAP2_S5_CLK>;
+> > +                             pinctrl-names =3D "default";
+> > +                             pinctrl-0 =3D <&qup_uart20_default>;
+> No sleep state?
+
+No, uarts do not provide a sleep state.
+
+>
+> > +                             interrupts =3D <GIC_SPI 587 IRQ_TYPE_LEVE=
+L_HIGH>;
+> > +                             #address-cells =3D <1>;
+> > +                             #size-cells =3D <0>;
+> > +                             status =3D "disabled";
+> > +                     };
+> > +
+> >                       i2c21: i2c@898000 {
+> >                               compatible =3D "qcom,geni-i2c";
+> >                               reg =3D <0x0 0x00898000 0x0 0x4000>;
+> > @@ -2757,6 +2770,15 @@ qup_uart7_tx: qup-uart7-tx {
+> >                               drive-strength =3D <2>;
+> >                               bias-disable;
+> >                       };
+> > +
+> > +                     qup_uart20_default: qup-uart20-default {
+> > +                             mux {
+> Please drop the unnecessary mux{} here.
+
+Ack.
+
+>
+> > +                                     pins =3D "gpio76", "gpio77",
+> > +                                             "gpio78", "gpio79";
+> I think these could fit into a single 100-char-long line>?
+
+I'll check.
+
+>
+> > +                                     function =3D "qup20";
+> Are there no default properties for this setup? I think boards that don't=
+ use standard Qualcomm connectivity setups (like Bluetooth on this specific=
+ UART) are rather scarce and it'd be more convenient to keep a standard set=
+ting here and override it where need be instead of copy-pasting the same th=
+ing over and over in 95-100% of the boards.
+
+I see your point. Let's do this.
 
 >
 > Konrad
 >
-> >  arch/arm64/boot/dts/qcom/sm8450.dtsi | 10 ++++++++++
-> >  1 file changed, 10 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > index 3e4c710d3275..4fcb6e2b096b 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > @@ -2865,6 +2865,9 @@ apps_smmu: iommu@15000000 {
-> >
-> >               intc: interrupt-controller@17100000 {
-> >                       compatible = "arm,gic-v3";
-> > +                     #address-cells = <2>;
-> > +                     #size-cells = <2>;
-> > +                     ranges;
-> >                       #interrupt-cells = <3>;
-> >                       interrupt-controller;
-> >                       #redistributor-regions = <1>;
-> > @@ -2872,6 +2875,13 @@ intc: interrupt-controller@17100000 {
-> >                       reg = <0x0 0x17100000 0x0 0x10000>,     /* GICD */
-> >                             <0x0 0x17180000 0x0 0x200000>;    /* GICR * 8 */
-> >                       interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
-> > +
-> > +                     gic_its: msi-controller@17140000 {
-> > +                             compatible = "arm,gic-v3-its";
-> > +                             msi-controller;
-> > +                             #msi-cells = <1>;
-> > +                             reg = <0x0 0x17140000 0x0 0x20000>;
+> > +                             };
 > > +                     };
+> > +
 > >               };
 > >
-> >               timer@17420000 {
+> >               apps_smmu: iommu@15000000 {
 > >
 
 
 
--- 
+--=20
 With best wishes
 Dmitry
