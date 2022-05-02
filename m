@@ -2,49 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D1355171F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 16:49:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 964DE5171FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 16:52:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381971AbiEBOwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 10:52:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58740 "EHLO
+        id S238492AbiEBO4S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 10:56:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350573AbiEBOw3 (ORCPT
+        with ESMTP id S238315AbiEBO4R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 10:52:29 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BE6F767D
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 07:49:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 10161B81058
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 14:48:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DF5C385AC;
-        Mon,  2 May 2022 14:48:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651502937;
-        bh=9X9z5TvQoUjbxi6rKPmowVKgzDu6PM48zx9rvEJBf6Q=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nPsV/cQQBj0VbmXxqJWFWqyIVN0/CqEta8vfdFUaNFQA6ApmeUVimOePm/Op4eBuk
-         iM7Pwr2kMwbSSNURic4F5CnD7ojiRrosu2rP11Wv6CNK5eelIxa60cKLmTI8RnqOkC
-         ABDSAqiT/wUJmU3gqD07I9MKi9i0gQ+2lmyzxq/VwRHbdUcLPN087X+fzjtHnXS353
-         Eb/0Pnhe0NfHePCCOPWJHmmGcDbkm9Yds3fgWsMxzxK3GXiZeFll1LKWBl8Z+raqms
-         1NTxi6VZnah8f1jo3jZxIRHlvx6F4PQa6nqRRbNmzlqid7hz7q35iWAwXlrlP/yf19
-         +2bbv1+rJGEjw==
-Date:   Mon, 2 May 2022 20:18:51 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Daniele Palmas <dnlplm@gmail.com>
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/1] bus: mhi: pci_generic: add Telit FN990
-Message-ID: <20220502144851.GC98313@thinkpad>
-References: <20220502112036.443618-1-dnlplm@gmail.com>
+        Mon, 2 May 2022 10:56:17 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87D0FE020
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 07:52:46 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id m23so18650429ljb.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 07:52:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=5mU+x5phfs6TkoFX/3hGSGNzgl4TidwNO0cOjmLK/1M=;
+        b=uriH/E0P1D9cKFPUof9iU13dysS/RcyIHstR9630ImQUt2P8DHXAi1bXIwph2gth3d
+         Xpa3zC2NZLOBav26TnSLZegiFzK5mqpir+Pxf4ZQsZ11yBZtXtIDYz9xFM99hs8Glm/e
+         7vEwdCp3lwJF2kYxvw75y+Gjssh0KTSAP3FnFkriznrMX1k+BPTB7UN3TzFYpg3Aoif+
+         kIBV1myMMkU0WRGw08vRHmseVeHRUBdBt70zsHoVkYT1zoBR7juWiN+7FIMq23t5WB+K
+         QsXGKNu0tPIXmeYh0TyKMdEbSHzlIOxmNnhZkov041se1rE3cZCrFVRaxHUDiLL9N7uC
+         n2kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=5mU+x5phfs6TkoFX/3hGSGNzgl4TidwNO0cOjmLK/1M=;
+        b=tXghM6vMBZkQlib2OACJlyeebcybHxZ5R06TmiiNk/9cWLpv1ynEg/I3nrYv10H1Q3
+         1xm7RWJ9tIUtR4UlzmXKpT8C+xXtEA1ONOYrsEMeCMzFWdtQtsIFasF232yWg2F5/ums
+         pNdZbHRjipMBu6jWIlutPGdem2qgIhu9rXwSRWdwLfDEWZf6R82SpQkM6hnkG0XUaTKc
+         H3tT2lNeoCsIXlp9pf/50jdM7wFBXZXApPWntobB4IkieyLTT8em6MaLOEhjJW9TIx0D
+         cyUZ+9oBjH4FvQj/lLdUTGgLwZEgZrk4vrYRipzacocazx7EYsipdajM7DL0XhaJNaWL
+         m1AA==
+X-Gm-Message-State: AOAM530nwoi5UIfSZMNvVhJ9/rZquBHr4H0mTKal/BbiHlT1D36faRiu
+        gtKKQ4nMUb432aBN/ch23WsBeQ==
+X-Google-Smtp-Source: ABdhPJzgxOYIh+RpMUmSMXbxi+l33O2qgtdR8GVbfhZn2kyl7HUppIWE1iF5SQVSt7WN9VRE86PDTg==
+X-Received: by 2002:a2e:9ecf:0:b0:24b:156c:7101 with SMTP id h15-20020a2e9ecf000000b0024b156c7101mr7678103ljk.526.1651503164344;
+        Mon, 02 May 2022 07:52:44 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id q30-20020ac2511e000000b0047255d21105sm716215lfb.52.2022.05.02.07.52.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 May 2022 07:52:44 -0700 (PDT)
+Message-ID: <b963c013-c371-7686-481e-65c3e869a4e9@linaro.org>
+Date:   Mon, 2 May 2022 17:52:42 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220502112036.443618-1-dnlplm@gmail.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v1 4/9] clk: qcom: add support for SM8350 GPUCC
+Content-Language: en-GB
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzk+dt@kernel.org, jonathan@marek.ca, tdas@codeaurora.org,
+        anischal@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220429151247.388837-1-robert.foss@linaro.org>
+ <20220429151247.388837-4-robert.foss@linaro.org>
+ <c0a5df00-dda5-3fe4-161f-a4ffda28077a@linaro.org>
+ <CAG3jFyuTnaET53q_eS3wLe6bBObWnz25rTgMX9d+MbKDWzkhtQ@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAG3jFyuTnaET53q_eS3wLe6bBObWnz25rTgMX9d+MbKDWzkhtQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -53,82 +81,745 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 02, 2022 at 01:20:36PM +0200, Daniele Palmas wrote:
-> Add Telit FN990:
+On 02/05/2022 16:50, Robert Foss wrote:
+> On Fri, 29 Apr 2022 at 17:31, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> On 29/04/2022 18:12, Robert Foss wrote:
+>>> From: Jonathan Marek <jonathan@marek.ca>
+>>>
+>>> The GPUCC manages the clocks for the Adreno GPU found on the
+>>> sm8350 SoCs.
+>>>
+>>> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+>>> ---
+>>>    drivers/clk/qcom/Kconfig        |   8 +
+>>>    drivers/clk/qcom/Makefile       |   1 +
+>>>    drivers/clk/qcom/gpucc-sm8350.c | 640 ++++++++++++++++++++++++++++++++
+>>>    3 files changed, 649 insertions(+)
+>>>    create mode 100644 drivers/clk/qcom/gpucc-sm8350.c
+>>>
+>>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+>>> index e27f37ac2d9c..9b1f54e634b9 100644
+>>> --- a/drivers/clk/qcom/Kconfig
+>>> +++ b/drivers/clk/qcom/Kconfig
+>>> @@ -703,6 +703,14 @@ config SM_GPUCC_8250
+>>>          Say Y if you want to support graphics controller devices and
+>>>          functionality such as 3D graphics.
+>>>
+>>> +config SM_GPUCC_8350
+>>> +     tristate "SM8350 Graphics Clock Controller"
+>>> +     select SM_GCC_8350
+>>> +     help
+>>> +       Support for the graphics clock controller on SM8350 devices.
+>>> +       Say Y if you want to support graphics controller devices and
+>>> +       functionality such as 3D graphics.
+>>> +
+>>>    config SM_VIDEOCC_8150
+>>>        tristate "SM8150 Video Clock Controller"
+>>>        select SM_GCC_8150
+>>> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+>>> index dff6aeb980e6..e1b7e49c8da4 100644
+>>> --- a/drivers/clk/qcom/Makefile
+>>> +++ b/drivers/clk/qcom/Makefile
+>>> @@ -100,6 +100,7 @@ obj-$(CONFIG_SM_GCC_8450) += gcc-sm8450.o
+>>>    obj-$(CONFIG_SM_GPUCC_6350) += gpucc-sm6350.o
+>>>    obj-$(CONFIG_SM_GPUCC_8150) += gpucc-sm8150.o
+>>>    obj-$(CONFIG_SM_GPUCC_8250) += gpucc-sm8250.o
+>>> +obj-$(CONFIG_SM_GPUCC_8350) += gpucc-sm8350.o
+>>>    obj-$(CONFIG_SM_VIDEOCC_8150) += videocc-sm8150.o
+>>>    obj-$(CONFIG_SM_VIDEOCC_8250) += videocc-sm8250.o
+>>>    obj-$(CONFIG_SPMI_PMIC_CLKDIV) += clk-spmi-pmic-div.o
+>>> diff --git a/drivers/clk/qcom/gpucc-sm8350.c b/drivers/clk/qcom/gpucc-sm8350.c
+>>> new file mode 100644
+>>> index 000000000000..d6098fd5e12f
+>>> --- /dev/null
+>>> +++ b/drivers/clk/qcom/gpucc-sm8350.c
+>>> @@ -0,0 +1,640 @@
+>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>> +/*
+>>> + * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
+>>> + */
+>>> +
+>>> +#include <linux/clk.h>
+>>> +#include <linux/err.h>
+>>> +#include <linux/kernel.h>
+>>> +#include <linux/module.h>
+>>> +#include <linux/of_device.h>
+>>> +#include <linux/of.h>
+>>> +#include <linux/regmap.h>
+>>> +
+>>> +#include <dt-bindings/clock/qcom,gpucc-sm8350.h>
+>>> +
+>>> +#include "clk-alpha-pll.h"
+>>> +#include "clk-branch.h"
+>>> +#include "clk-pll.h"
+>>> +#include "clk-rcg.h"
+>>> +#include "clk-regmap.h"
+>>> +#include "common.h"
+>>> +#include "clk-regmap-mux.h"
+>>> +#include "clk-regmap-divider.h"
+>>> +#include "gdsc.h"
+>>> +#include "reset.h"
+>>> +
+>>> +enum {
+>>> +     P_BI_TCXO,
+>>> +     P_GPLL0_OUT_MAIN,
+>>> +     P_GPLL0_OUT_MAIN_DIV,
+>>> +     P_GPU_CC_PLL0_OUT_MAIN,
+>>> +     P_GPU_CC_PLL1_OUT_MAIN,
+>>> +};
+>>> +
+>>> +static struct pll_vco lucid_5lpe_vco[] = {
+>>> +     { 249600000, 1750000000, 0 },
+>>> +};
+>>> +
+>>> +static const struct alpha_pll_config gpu_cc_pll0_config = {
+>>> +     .l = 0x18,
+>>> +     .alpha = 0x6000,
+>>> +     .config_ctl_val = 0x20485699,
+>>> +     .config_ctl_hi_val = 0x00002261,
+>>> +     .config_ctl_hi1_val = 0x2A9A699C,
+>>> +     .test_ctl_val = 0x00000000,
+>>> +     .test_ctl_hi_val = 0x00000000,
+>>> +     .test_ctl_hi1_val = 0x01800000,
+>>> +     .user_ctl_val = 0x00000000,
+>>> +     .user_ctl_hi_val = 0x00000805,
+>>> +     .user_ctl_hi1_val = 0x00000000,
+>>> +};
+>>> +
+>>> +static struct clk_alpha_pll gpu_cc_pll0 = {
+>>> +     .offset = 0x0,
+>>> +     .vco_table = lucid_5lpe_vco,
+>>> +     .num_vco = ARRAY_SIZE(lucid_5lpe_vco),
+>>> +     .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID],
+>>> +     .clkr = {
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_pll0",
+>>> +                     .parent_data = &(const struct clk_parent_data){
+>>> +                             .fw_name = "bi_tcxo",
+>>> +                             .name = "bi_tcxo",
+>>
+>> We are introducing new driver without previous non-dts bindings, so
+>> there is no need for .name fields.
 > 
-> 01:00.0 Unassigned class [ff00]: Qualcomm Device 0308
->         Subsystem: Device 1c5d:2010
-> 
-> Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+> Just to be clear, the '.name' field should only be removed for clk_parent_data?
 
-Applied to mhi-next!
+Yes. The .fw_name references the name from dts "clock-names" array. 
+.name predates that and uses the global system clock names. It should 
+not be used if all dts files for the platform were using clock-names.
 
-Thanks,
-Mani
+> 
+> 
+>>
+>>> +                     },
+>>> +                     .num_parents = 1,
+>>> +                     .ops = &clk_alpha_pll_lucid_5lpe_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static const struct alpha_pll_config gpu_cc_pll1_config = {
+>>> +     .l = 0x1A,
+>>> +     .alpha = 0xAAA,
+>>> +     .config_ctl_val = 0x20485699,
+>>> +     .config_ctl_hi_val = 0x00002261,
+>>> +     .config_ctl_hi1_val = 0x2A9A699C,
+>>> +     .test_ctl_val = 0x00000000,
+>>> +     .test_ctl_hi_val = 0x00000000,
+>>> +     .test_ctl_hi1_val = 0x01800000,
+>>> +     .user_ctl_val = 0x00000000,
+>>> +     .user_ctl_hi_val = 0x00000805,
+>>> +     .user_ctl_hi1_val = 0x00000000,
+>>> +};
+>>> +
+>>> +static struct clk_alpha_pll gpu_cc_pll1 = {
+>>> +     .offset = 0x100,
+>>> +     .vco_table = lucid_5lpe_vco,
+>>> +     .num_vco = ARRAY_SIZE(lucid_5lpe_vco),
+>>> +     .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID],
+>>> +     .clkr = {
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_pll1",
+>>> +                     .parent_data = &(const struct clk_parent_data){
+>>> +                             .fw_name = "bi_tcxo",
+>>> +                             .name = "bi_tcxo",
+>>> +                     },
+>>> +                     .num_parents = 1,
+>>> +                     .ops = &clk_alpha_pll_lucid_5lpe_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static const struct parent_map gpu_cc_parent_map_0[] = {
+>>> +     { P_BI_TCXO, 0 },
+>>> +     { P_GPU_CC_PLL0_OUT_MAIN, 1 },
+>>> +     { P_GPU_CC_PLL1_OUT_MAIN, 3 },
+>>> +     { P_GPLL0_OUT_MAIN, 5 },
+>>> +     { P_GPLL0_OUT_MAIN_DIV, 6 },
+>>> +};
+>>> +
+>>> +static const struct clk_parent_data gpu_cc_parent_data_0[] = {
+>>> +     { .fw_name = "bi_tcxo", .name = "bi_tcxo" },
+>>> +     { .hw = &gpu_cc_pll0.clkr.hw },
+>>> +     { .hw = &gpu_cc_pll1.clkr.hw },
+>>> +     { .fw_name = "gcc_gpu_gpll0_clk_src" },
+>>> +     { .fw_name = "gcc_gpu_gpll0_div_clk_src" },
+>>> +};
+>>> +
+>>> +static const struct parent_map gpu_cc_parent_map_1[] = {
+>>> +     { P_BI_TCXO, 0 },
+>>> +     { P_GPU_CC_PLL1_OUT_MAIN, 3 },
+>>> +     { P_GPLL0_OUT_MAIN, 5 },
+>>> +     { P_GPLL0_OUT_MAIN_DIV, 6 },
+>>> +};
+>>> +
+>>> +static const struct clk_parent_data gpu_cc_parent_data_1[] = {
+>>> +     { .fw_name = "bi_tcxo", .name = "bi_tcxo" },
+>>> +     { .hw = &gpu_cc_pll1.clkr.hw },
+>>> +     { .fw_name = "gcc_gpu_gpll0_clk_src" },
+>>> +     { .fw_name = "gcc_gpu_gpll0_div_clk_src" },
+>>> +};
+>>> +
+>>> +static const struct freq_tbl ftbl_gpu_cc_gmu_clk_src[] = {
+>>> +     F(19200000, P_BI_TCXO, 1, 0, 0),
+>>> +     F(200000000, P_GPLL0_OUT_MAIN_DIV, 1.5, 0, 0),
+>>> +     F(500000000, P_GPU_CC_PLL1_OUT_MAIN, 1, 0, 0),
+>>> +     { }
+>>> +};
+>>> +
+>>> +static struct clk_rcg2 gpu_cc_gmu_clk_src = {
+>>> +     .cmd_rcgr = 0x1120,
+>>> +     .mnd_width = 0,
+>>> +     .hid_width = 5,
+>>> +     .parent_map = gpu_cc_parent_map_0,
+>>> +     .freq_tbl = ftbl_gpu_cc_gmu_clk_src,
+>>> +     .clkr.hw.init = &(struct clk_init_data){
+>>> +             .name = "gpu_cc_gmu_clk_src",
+>>> +             .parent_data = gpu_cc_parent_data_0,
+>>> +             .num_parents = 5,
+>>
+>> Could you please use ARRAY_SIZE()
+> 
+> Ack.
+> 
+>>
+>>> +             .flags = CLK_SET_RATE_PARENT,
+>>> +             .ops = &clk_rcg2_ops,
+>>> +     },
+>>> +};
+>>> +
+>>> +static const struct freq_tbl ftbl_gpu_cc_hub_clk_src[] = {
+>>> +     F(150000000, P_GPLL0_OUT_MAIN_DIV, 2, 0, 0),
+>>> +     F(240000000, P_GPLL0_OUT_MAIN, 2.5, 0, 0),
+>>> +     F(300000000, P_GPLL0_OUT_MAIN, 2, 0, 0),
+>>> +     { }
+>>> +};
+>>> +
+>>> +static struct clk_rcg2 gpu_cc_hub_clk_src = {
+>>> +     .cmd_rcgr = 0x117c,
+>>> +     .mnd_width = 0,
+>>> +     .hid_width = 5,
+>>> +     .parent_map = gpu_cc_parent_map_1,
+>>> +     .freq_tbl = ftbl_gpu_cc_hub_clk_src,
+>>> +     .clkr.hw.init = &(struct clk_init_data){
+>>> +             .name = "gpu_cc_hub_clk_src",
+>>> +             .parent_data = gpu_cc_parent_data_1,
+>>> +             .num_parents = 4,
+>>> +             .flags = CLK_SET_RATE_PARENT,
+>>> +             .ops = &clk_rcg2_ops,
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_regmap_div gpu_cc_hub_ahb_div_clk_src = {
+>>> +     .reg = 0x11c0,
+>>> +     .shift = 0,
+>>> +     .width = 4,
+>>> +     .clkr.hw.init = &(struct clk_init_data) {
+>>> +             .name = "gpu_cc_hub_ahb_div_clk_src",
+>>> +             .parent_data = &(const struct clk_parent_data){
+>>> +                     .hw = &gpu_cc_hub_clk_src.clkr.hw,
+>>> +             },
+>>> +             .num_parents = 1,
+>>> +             .flags = CLK_SET_RATE_PARENT,
+>>> +             .ops = &clk_regmap_div_ro_ops,
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_regmap_div gpu_cc_hub_cx_int_div_clk_src = {
+>>> +     .reg = 0x11bc,
+>>> +     .shift = 0,
+>>> +     .width = 4,
+>>> +     .clkr.hw.init = &(struct clk_init_data) {
+>>> +             .name = "gpu_cc_hub_cx_int_div_clk_src",
+>>> +             .parent_data = &(const struct clk_parent_data){
+>>> +                     .hw = &gpu_cc_hub_clk_src.clkr.hw,
+>>> +             },
 
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 41 ++++++++++++++++++++++++++++++
->  1 file changed, 41 insertions(+)
+BTW: could you please also switch to parent_hws in such places?
+
+>>> +             .num_parents = 1,
+>>> +             .flags = CLK_SET_RATE_PARENT,
+>>> +             .ops = &clk_regmap_div_ro_ops,
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_ahb_clk = {
+>>> +     .halt_reg = 0x1078,
+>>> +     .halt_check = BRANCH_HALT_DELAY,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1078,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_ahb_clk",
+>>> +                     .parent_data = &(const struct clk_parent_data){
+>>> +                             .hw = &gpu_cc_hub_ahb_div_clk_src.clkr.hw,
+>>> +                     },
+>>> +                     .num_parents = 1,
+>>> +                     .flags = CLK_SET_RATE_PARENT,
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_cb_clk = {
+>>> +     .halt_reg = 0x1170,
+>>> +     .halt_check = BRANCH_HALT,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1170,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_cb_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_crc_ahb_clk = {
+>>> +     .halt_reg = 0x107c,
+>>> +     .halt_check = BRANCH_HALT_VOTED,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x107c,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_crc_ahb_clk",
+>>> +                     .parent_data = &(const struct clk_parent_data){
+>>> +                             .hw = &gpu_cc_hub_ahb_div_clk_src.clkr.hw,
+>>> +                     },
+>>> +                     .num_parents = 1,
+>>> +                     .flags = CLK_SET_RATE_PARENT,
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_cx_apb_clk = {
+>>> +     .halt_reg = 0x1088,
+>>> +     .halt_check = BRANCH_HALT_VOTED,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1088,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_cx_apb_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_cx_gmu_clk = {
+>>> +     .halt_reg = 0x1098,
+>>> +     .halt_check = BRANCH_HALT,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1098,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_cx_gmu_clk",
+>>> +                     .parent_data = &(const struct clk_parent_data){
+>>> +                             .hw = &gpu_cc_gmu_clk_src.clkr.hw,
+>>> +                     },
+>>> +                     .num_parents = 1,
+>>> +                     .flags = CLK_SET_RATE_PARENT,
+>>> +                     .ops = &clk_branch2_aon_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_cx_qdss_at_clk = {
+>>> +     .halt_reg = 0x1080,
+>>> +     .halt_check = BRANCH_HALT_VOTED,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1080,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_cx_qdss_at_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_cx_qdss_trig_clk = {
+>>> +     .halt_reg = 0x1094,
+>>> +     .halt_check = BRANCH_HALT_VOTED,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1094,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_cx_qdss_trig_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_cx_qdss_tsctr_clk = {
+>>> +     .halt_reg = 0x1084,
+>>> +     .halt_check = BRANCH_HALT_VOTED,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1084,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_cx_qdss_tsctr_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_cx_snoc_dvm_clk = {
+>>> +     .halt_reg = 0x108c,
+>>> +     .halt_check = BRANCH_HALT_VOTED,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x108c,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_cx_snoc_dvm_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_cxo_aon_clk = {
+>>> +     .halt_reg = 0x1004,
+>>> +     .halt_check = BRANCH_HALT_VOTED,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1004,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_cxo_aon_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_cxo_clk = {
+>>> +     .halt_reg = 0x109c,
+>>> +     .halt_check = BRANCH_HALT,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x109c,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_cxo_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_freq_measure_clk = {
+>>> +     .halt_reg = 0x120c,
+>>> +     .halt_check = BRANCH_HALT,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x120c,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_freq_measure_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_gx_gmu_clk = {
+>>> +     .halt_reg = 0x1064,
+>>> +     .halt_check = BRANCH_HALT,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1064,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_gx_gmu_clk",
+>>> +                     .parent_data = &(const struct clk_parent_data){
+>>> +                             .hw = &gpu_cc_gmu_clk_src.clkr.hw,
+>>> +                     },
+>>> +                     .num_parents = 1,
+>>> +                     .flags = CLK_SET_RATE_PARENT,
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_gx_qdss_tsctr_clk = {
+>>> +     .halt_reg = 0x105c,
+>>> +     .halt_check = BRANCH_HALT_VOTED,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x105c,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_gx_qdss_tsctr_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_gx_vsense_clk = {
+>>> +     .halt_reg = 0x1058,
+>>> +     .halt_check = BRANCH_HALT_VOTED,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1058,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_gx_vsense_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_hlos1_vote_gpu_smmu_clk = {
+>>> +     .halt_reg = 0x5000,
+>>> +     .halt_check = BRANCH_HALT_VOTED,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x5000,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_hlos1_vote_gpu_smmu_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_hub_aon_clk = {
+>>> +     .halt_reg = 0x1178,
+>>> +     .halt_check = BRANCH_HALT,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1178,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_hub_aon_clk",
+>>> +                     .parent_data = &(const struct clk_parent_data){
+>>> +                             .hw = &gpu_cc_hub_clk_src.clkr.hw,
+>>> +                     },
+>>> +                     .num_parents = 1,
+>>> +                     .flags = CLK_SET_RATE_PARENT,
+>>> +                     .ops = &clk_branch2_aon_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_hub_cx_int_clk = {
+>>> +     .halt_reg = 0x1204,
+>>> +     .halt_check = BRANCH_HALT,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1204,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_hub_cx_int_clk",
+>>> +                     .parent_data = &(const struct clk_parent_data){
+>>> +                             .hw = &gpu_cc_hub_cx_int_div_clk_src.clkr.hw,
+>>> +                     },
+>>> +                     .num_parents = 1,
+>>> +                     .flags = CLK_SET_RATE_PARENT,
+>>> +                     .ops = &clk_branch2_aon_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_mnd1x_0_gfx3d_clk = {
+>>> +     .halt_reg = 0x802c,
+>>> +     .halt_check = BRANCH_HALT,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x802c,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_mnd1x_0_gfx3d_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_mnd1x_1_gfx3d_clk = {
+>>> +     .halt_reg = 0x8030,
+>>> +     .halt_check = BRANCH_HALT,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x8030,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_mnd1x_1_gfx3d_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct clk_branch gpu_cc_sleep_clk = {
+>>> +     .halt_reg = 0x1090,
+>>> +     .halt_check = BRANCH_HALT_VOTED,
+>>> +     .clkr = {
+>>> +             .enable_reg = 0x1090,
+>>> +             .enable_mask = BIT(0),
+>>> +             .hw.init = &(struct clk_init_data){
+>>> +                     .name = "gpu_cc_sleep_clk",
+>>> +                     .ops = &clk_branch2_ops,
+>>> +             },
+>>> +     },
+>>> +};
+>>> +
+>>> +static struct gdsc gpu_cx_gdsc = {
+>>> +     .gdscr = 0x106c,
+>>> +     .gds_hw_ctrl = 0x1540,
+>>> +     .pd = {
+>>> +             .name = "gpu_cx_gdsc",
+>>> +     },
+>>> +     .pwrsts = PWRSTS_OFF_ON,
+>>> +     .flags = VOTABLE,
+>>> +};
+>>> +
+>>> +static struct gdsc gpu_gx_gdsc = {
+>>> +     .gdscr = 0x100c,
+>>> +     // sw-reset = 0x1008,
+>>> +     // domain-addr = 0x158c,
+>>> +     .clamp_io_ctrl = 0x1508, // real?
+>>
+>> Should this be fixed or removed?
 > 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index d0a7b5d3c01e..24c94c23d78b 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -489,6 +489,44 @@ static const struct mhi_pci_dev_info mhi_telit_fn980_hw_v1_info = {
->  	.sideband_wake = false,
->  };
->  
-> +static const struct mhi_channel_config mhi_telit_fn990_channels[] = {
-> +	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 64, 1),
-> +	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 64, 1),
-> +	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
-> +	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
-> +	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
-> +};
-> +
-> +static struct mhi_event_config mhi_telit_fn990_events[] = {
-> +	MHI_EVENT_CONFIG_CTRL(0, 128),
-> +	MHI_EVENT_CONFIG_DATA(1, 128),
-> +	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> +	MHI_EVENT_CONFIG_HW_DATA(3, 2048, 101)
-> +};
-> +
-> +static const struct mhi_controller_config modem_telit_fn990_config = {
-> +	.max_channels = 128,
-> +	.timeout_ms = 20000,
-> +	.num_channels = ARRAY_SIZE(mhi_telit_fn990_channels),
-> +	.ch_cfg = mhi_telit_fn990_channels,
-> +	.num_events = ARRAY_SIZE(mhi_telit_fn990_events),
-> +	.event_cfg = mhi_telit_fn990_events,
-> +};
-> +
-> +static const struct mhi_pci_dev_info mhi_telit_fn990_info = {
-> +	.name = "telit-fn990",
-> +	.config = &modem_telit_fn990_config,
-> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +	.dma_data_width = 32,
-> +	.sideband_wake = false,
-> +	.mru_default = 32768,
-> +};
-> +
->  /* Keep the list sorted based on the PID. New VID should be added as the last entry */
->  static const struct pci_device_id mhi_pci_id_table[] = {
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
-> @@ -501,6 +539,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  		.driver_data = (kernel_ulong_t) &mhi_telit_fn980_hw_v1_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
->  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
-> +	/* Telit FN990 */
-> +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2010),
-> +		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
->  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
->  	{ PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
-> -- 
-> 2.32.0
+> Looking at downstream & sm8250, I think this should be removed.
+
+But sm8250 has clamp_io_ctrl.
+
 > 
+>>
+>>> +     .pd = {
+>>> +             .name = "gpu_gx_gdsc",
+>>> +             .power_on = gdsc_gx_do_nothing_enable,
+>>> +     },
+>>> +     .pwrsts = PWRSTS_OFF_ON,
+>>> +     .flags = AON_RESET | POLL_CFG_GDSCR,
+>>
+>> Comparing this with other gpucc drivers, don't we need CLAMP_IO here?
+> 
+> Agreed.
+> 
+>>
+>>> +};
+>>> +
+>>> +static struct clk_regmap *gpu_cc_sm8350_clocks[] = {
+>>> +     [GPU_CC_AHB_CLK] = &gpu_cc_ahb_clk.clkr,
+>>> +     [GPU_CC_CB_CLK] = &gpu_cc_cb_clk.clkr,
+>>> +     [GPU_CC_CRC_AHB_CLK] = &gpu_cc_crc_ahb_clk.clkr,
+>>> +     [GPU_CC_CX_APB_CLK] = &gpu_cc_cx_apb_clk.clkr,
+>>> +     [GPU_CC_CX_GMU_CLK] = &gpu_cc_cx_gmu_clk.clkr,
+>>> +     [GPU_CC_CX_QDSS_AT_CLK] = &gpu_cc_cx_qdss_at_clk.clkr,
+>>> +     [GPU_CC_CX_QDSS_TRIG_CLK] = &gpu_cc_cx_qdss_trig_clk.clkr,
+>>> +     [GPU_CC_CX_QDSS_TSCTR_CLK] = &gpu_cc_cx_qdss_tsctr_clk.clkr,
+>>> +     [GPU_CC_CX_SNOC_DVM_CLK] = &gpu_cc_cx_snoc_dvm_clk.clkr,
+>>> +     [GPU_CC_CXO_AON_CLK] = &gpu_cc_cxo_aon_clk.clkr,
+>>> +     [GPU_CC_CXO_CLK] = &gpu_cc_cxo_clk.clkr,
+>>> +     [GPU_CC_FREQ_MEASURE_CLK] = &gpu_cc_freq_measure_clk.clkr,
+>>> +     [GPU_CC_GMU_CLK_SRC] = &gpu_cc_gmu_clk_src.clkr,
+>>> +     [GPU_CC_GX_GMU_CLK] = &gpu_cc_gx_gmu_clk.clkr,
+>>> +     [GPU_CC_GX_QDSS_TSCTR_CLK] = &gpu_cc_gx_qdss_tsctr_clk.clkr,
+>>> +     [GPU_CC_GX_VSENSE_CLK] = &gpu_cc_gx_vsense_clk.clkr,
+>>> +     [GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK] = &gpu_cc_hlos1_vote_gpu_smmu_clk.clkr,
+>>> +     [GPU_CC_HUB_AHB_DIV_CLK_SRC] = &gpu_cc_hub_ahb_div_clk_src.clkr,
+>>> +     [GPU_CC_HUB_AON_CLK] = &gpu_cc_hub_aon_clk.clkr,
+>>> +     [GPU_CC_HUB_CLK_SRC] = &gpu_cc_hub_clk_src.clkr,
+>>> +     [GPU_CC_HUB_CX_INT_CLK] = &gpu_cc_hub_cx_int_clk.clkr,
+>>> +     [GPU_CC_HUB_CX_INT_DIV_CLK_SRC] = &gpu_cc_hub_cx_int_div_clk_src.clkr,
+>>> +     [GPU_CC_MND1X_0_GFX3D_CLK] = &gpu_cc_mnd1x_0_gfx3d_clk.clkr,
+>>> +     [GPU_CC_MND1X_1_GFX3D_CLK] = &gpu_cc_mnd1x_1_gfx3d_clk.clkr,
+>>> +     [GPU_CC_PLL0] = &gpu_cc_pll0.clkr,
+>>> +     [GPU_CC_PLL1] = &gpu_cc_pll1.clkr,
+>>> +     [GPU_CC_SLEEP_CLK] = &gpu_cc_sleep_clk.clkr,
+>>> +};
+>>> +
+>>> +static const struct qcom_reset_map gpu_cc_sm8350_resets[] = {
+>>> +     [GPUCC_GPU_CC_ACD_BCR] = { 0x1160 },
+>>> +     [GPUCC_GPU_CC_CB_BCR] = { 0x116c },
+>>> +     [GPUCC_GPU_CC_CX_BCR] = { 0x1068 },
+>>> +     [GPUCC_GPU_CC_FAST_HUB_BCR] = { 0x1174 },
+>>> +     [GPUCC_GPU_CC_GFX3D_AON_BCR] = { 0x10a0 },
+>>> +     [GPUCC_GPU_CC_GMU_BCR] = { 0x111c },
+>>> +     [GPUCC_GPU_CC_GX_BCR] = { 0x1008 },
+>>> +     [GPUCC_GPU_CC_XO_BCR] = { 0x1000 },
+>>> +};
+>>> +
+>>> +static struct gdsc *gpu_cc_sm8350_gdscs[] = {
+>>> +     [GPU_CX_GDSC] = &gpu_cx_gdsc,
+>>> +     [GPU_GX_GDSC] = &gpu_gx_gdsc,
+>>> +};
+>>> +
+>>> +static const struct regmap_config gpu_cc_sm8350_regmap_config = {
+>>> +     .reg_bits = 32,
+>>> +     .reg_stride = 4,
+>>> +     .val_bits = 32,
+>>> +     .max_register = 0x8030,
+>>> +     .fast_io = true,
+>>> +};
+>>> +
+>>> +static const struct qcom_cc_desc gpu_cc_sm8350_desc = {
+>>> +     .config = &gpu_cc_sm8350_regmap_config,
+>>> +     .clks = gpu_cc_sm8350_clocks,
+>>> +     .num_clks = ARRAY_SIZE(gpu_cc_sm8350_clocks),
+>>> +     .resets = gpu_cc_sm8350_resets,
+>>> +     .num_resets = ARRAY_SIZE(gpu_cc_sm8350_resets),
+>>> +     .gdscs = gpu_cc_sm8350_gdscs,
+>>> +     .num_gdscs = ARRAY_SIZE(gpu_cc_sm8350_gdscs),
+>>> +};
+>>> +
+>>> +static const struct of_device_id gpu_cc_sm8350_match_table[] = {
+>>> +     { .compatible = "qcom,sm8350-gpucc" },
+>>> +     { }
+>>> +};
+>>> +MODULE_DEVICE_TABLE(of, gpu_cc_sm8350_match_table);
+>>> +
+>>> +static int gpu_cc_sm8350_probe(struct platform_device *pdev)
+>>> +{
+>>> +     struct regmap *regmap;
+>>> +
+>>> +     regmap = qcom_cc_map(pdev, &gpu_cc_sm8350_desc);
+>>> +     if (IS_ERR(regmap)) {
+>>> +             dev_err(&pdev->dev, "Failed to map gpu cc registers\n");
+>>> +             return PTR_ERR(regmap);
+>>> +     }
+>>> +
+>>> +     clk_lucid_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
+>>> +     clk_lucid_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
+>>> +
+>>> +     return qcom_cc_really_probe(pdev, &gpu_cc_sm8350_desc, regmap);
+>>> +}
+>>> +
+>>> +static struct platform_driver gpu_cc_sm8350_driver = {
+>>> +     .probe = gpu_cc_sm8350_probe,
+>>> +     .driver = {
+>>> +             .name = "sm8350-gpucc",
+>>> +             .of_match_table = gpu_cc_sm8350_match_table,
+>>> +     },
+>>> +};
+>>> +
+>>> +static int __init gpu_cc_sm8350_init(void)
+>>> +{
+>>> +     return platform_driver_register(&gpu_cc_sm8350_driver);
+>>> +}
+>>> +subsys_initcall(gpu_cc_sm8350_init);
+>>> +
+>>> +static void __exit gpu_cc_sm8350_exit(void)
+>>> +{
+>>> +     platform_driver_unregister(&gpu_cc_sm8350_driver);
+>>> +}
+>>> +module_exit(gpu_cc_sm8350_exit);
+>>> +
+>>> +MODULE_DESCRIPTION("QTI GPU_CC SM8350 Driver");
+>>> +MODULE_LICENSE("GPL v2");
+>>
+>>
+>> --
+>> With best wishes
+>> Dmitry
+
+
+-- 
+With best wishes
+Dmitry
