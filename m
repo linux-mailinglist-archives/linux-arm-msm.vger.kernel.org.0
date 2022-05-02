@@ -2,171 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C76A2516EBE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 13:18:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D61E2516ED1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 May 2022 13:23:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380202AbiEBLV6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 May 2022 07:21:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35302 "EHLO
+        id S1352647AbiEBL05 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 May 2022 07:26:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231325AbiEBLV5 (ORCPT
+        with ESMTP id S229831AbiEBL04 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 May 2022 07:21:57 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B27E7BC17
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 04:18:28 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 16so17961067lju.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 04:18:28 -0700 (PDT)
+        Mon, 2 May 2022 07:26:56 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C6612AD1
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 May 2022 04:23:27 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id g20so16230377edw.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 May 2022 04:23:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=TotUOUOYG1IlyrXP9/XB6b/aq6YmW9z2gThsa334rwM=;
-        b=R15p0KXa6CKtjtdQ99ASAXTnpiAMzCJL6HoDIsDp0m62PcFxz6N1FcRedsynqS/0Hr
-         1OQ9IdR/Tf10/kqi8vrseJZDEKDn/LXpvKJR6uppBHwu7SaIil/SuOFANADNPsnYW4ro
-         X/rTgXYNG98abuF6MHZfJR6JY6Z/GTSST8bJoptsAAZfQE9MIDpWhIWF03bOr5/czG9l
-         laOl3k/hwlnG9jGKaLMU0Bw5bSUjIi0RXaC6abyicksyQ42ZCoR2ouHAbV5axLBVt6gs
-         m5ICsgTPhhWYWvtnPw8SVe5iMJ+vys6enDsEyk0+H5rM6wAv1H8hqI2XCqr3alaKXc4W
-         4nvg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fGKU4iEA70MctaOu47KUgwC5u/x0dsROSJOX3ncjBgg=;
+        b=ds5QQYv0f2l6x9LITobsOg7ado/meKLpOpptbRRS6ekPaZX7VSink6r47fXVQNaKyu
+         uL0TaP6eBXzRv7jacLZJE3t+myznOHWb7wjRACrfLugGxI4zP0TZ2tO9k+kpda33W+qx
+         O8yseL5qEnjqfCxDz6lMD1nwvn62N6gKNkWTHjYUxl8l4Wmtss4zE89mHIS4A/0yM3ap
+         rnnVnZn1bT8h/Yl0RZfRxz0U677z8YjdoZy2F6gNIPRe57Zm+3WpeeSLHCy26OGDrCRg
+         13rE+TJmr4rKb9LT/QLg9hm0J/pQjVChpS2vHld2KxfdSnztUMaIedwH04/EOxRCBt0D
+         fShg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=TotUOUOYG1IlyrXP9/XB6b/aq6YmW9z2gThsa334rwM=;
-        b=2BR4cAK/8jDFBGeI7FKOkfTD+Lz20wdVXxdZuiwOtDQZGKmKgZJt45qmdDPqv8mFgW
-         O+7VUV8ND780b282wm7FQIea8gwmyjYqt1QztlcpuuyKDfjQF54mKSBtjW8JmvT2xD6S
-         DfS1pu7WdcZPnve9pkcNGRg5uPa10EvbxlopEvGCxzVJ7gdwKtonUIDXF4WyatwE1+ms
-         m8KDhfdklXozqj03nHkx94bLghXRp7TZOOTTpQuH2/gFPohwkBJnjji0D6/9PLIfsngi
-         8xWEOz2NOXqfbFJa4Ql6Iuzxpgopb7aBj+l2f4nnHgdIPGZsxVDXwtK52GJuVpBrBVWu
-         wEcw==
-X-Gm-Message-State: AOAM530PVcS2Hqgw5H73zZQmClBIrJz/81aOsn9id5eKtHKlvMLhXLpy
-        TJSPeOd84I7a4oTHVqdVwP80EA==
-X-Google-Smtp-Source: ABdhPJz7OsceSRMLM8FKgIVwURJKiA4EzOrQCM7nPmxNRRBzlns1LFyOJGywdpfMK19+tYljy7sBxA==
-X-Received: by 2002:a05:651c:1214:b0:24f:72c:d102 with SMTP id i20-20020a05651c121400b0024f072cd102mr7522557lja.377.1651490307062;
-        Mon, 02 May 2022 04:18:27 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id t24-20020ac24c18000000b0047255d21162sm672686lfq.145.2022.05.02.04.18.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 May 2022 04:18:26 -0700 (PDT)
-Message-ID: <29819e6d-9aa1-aca9-0ff6-b81098077f28@linaro.org>
-Date:   Mon, 2 May 2022 14:18:26 +0300
+        bh=fGKU4iEA70MctaOu47KUgwC5u/x0dsROSJOX3ncjBgg=;
+        b=cjqTuKqnHhrWGqf7f8sxfjImTnPuKfJnjHT95wRzFm+DPlSZrG+DuPlErd2MpK/CDd
+         qLsi/FkeAyfK6LhXMCjaZEZ+ZpfeHdGgfNVwLSLRATnYLZps0IeOk1zGVQIv9rJmJ3O0
+         p9+Ny5MzK+YR3TzwwS+ElzSIlWwkD6qldAyud/qqypyYZMoxGbt/l8VIVBWvIoue3U57
+         2HC3Q1nTV7vj6eenUTTeEn7jGhM55bFmpXVqe9kK8m5XvhYg8+8U6R0NaVtr6F3yhCfb
+         p6ZlO02Vvd4wj5jylZAWWPb3KlttLO42bcFN71TQzyKJbhLBKWR6lpYxQW8ontC2i+bV
+         9f4A==
+X-Gm-Message-State: AOAM532xAxVUQIbTAfngXTErWcJ5ulPT+tBUOyeotMObWdI2IL3bNAoq
+        gkdwb0M1nKaCrEGk+Xj2sIQ=
+X-Google-Smtp-Source: ABdhPJwCmF8eBtE7Q3YCW0PsES8Ml8GEGBoz6uS9Q0MvEKU7RTWHrLI/I88Au8MAlXc+KVjMj3nlrg==
+X-Received: by 2002:a05:6402:2554:b0:423:f3e3:81da with SMTP id l20-20020a056402255400b00423f3e381damr12823233edb.87.1651490606100;
+        Mon, 02 May 2022 04:23:26 -0700 (PDT)
+Received: from ThinkStation-P340.. (static-82-85-31-68.clienti.tiscali.it. [82.85.31.68])
+        by smtp.gmail.com with ESMTPSA id u26-20020aa7d99a000000b0042617ba63b7sm6659104eds.65.2022.05.02.04.23.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 May 2022 04:23:25 -0700 (PDT)
+From:   Daniele Palmas <dnlplm@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        Daniele Palmas <dnlplm@gmail.com>
+Subject: [PATCH 1/1] bus: mhi: pci_generic: add Telit FN990
+Date:   Mon,  2 May 2022 13:20:36 +0200
+Message-Id: <20220502112036.443618-1-dnlplm@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v4 2/5] clk: qcom: regmap: add pipe clk implementation
-Content-Language: en-GB
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-References: <20220501192149.4128158-1-dmitry.baryshkov@linaro.org>
- <20220501192149.4128158-3-dmitry.baryshkov@linaro.org>
- <20220502101053.GF5053@thinkpad>
- <c47616bf-a0c3-3ad5-c3e2-ba2ae33110d0@linaro.org>
- <20220502111004.GH5053@thinkpad>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220502111004.GH5053@thinkpad>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_RANDOM_ENVFROM,
+        HK_RANDOM_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/05/2022 14:10, Manivannan Sadhasivam wrote:
-> On Mon, May 02, 2022 at 01:35:34PM +0300, Dmitry Baryshkov wrote:
-> 
-> [...]
-> 
->>>> +static int pipe_is_enabled(struct clk_hw *hw)
->>>> +{
->>>> +	struct clk_regmap_pipe *pipe = to_clk_regmap_pipe(hw);
->>>> +	struct clk_regmap *clkr = to_clk_regmap(hw);
->>>> +	unsigned int mask = GENMASK(pipe->width + pipe->shift - 1, pipe->shift);
->>>> +	unsigned int val;
->>>> +
->>>> +	regmap_read(clkr->regmap, pipe->reg, &val);
->>>> +	val = (val & mask) >> pipe->shift;
->>>> +
->>>> +	WARN_ON(unlikely(val != pipe->enable_val && val != pipe->disable_val));
->>>> +
->>>> +	return val == pipe->enable_val;
->>>
->>> Selecting the clk parents in the enable/disable callback seems fine to me but
->>> the way it is implemented doesn't look right.
->>>
->>> First this "pipe_clksrc" is a mux clk by design, since we can only select the
->>> parent. But you are converting it to a gate clk now.
->>>
->>> Instead of that, my proposal would be to make this clk a composite one i.e,.
->>> gate clk + mux clk. So even though the gate clk here would be a hack, we are
->>> not changing the definition of mux clk.
->>
->> This is what I had before, in revisions 1-3. Which proved to work, but is
->> problematic a bit.
->>
->> In the very end, it is not easily possible to make a difference between a
->> clock reparented to the bi_tcxo and a disabled clock. E.g. if some user
->> reparents the clock to the tcxo, then the driver will consider the clock
->> disabled, but the clock framework will think that the clock is still
->> enabled.
-> 
-> I don't understand this. How can you make this clock disabled? It just has 4
-> parents, right?
+Add Telit FN990:
 
-It has 4 parents. It uses just two of them (pipe and tcxo).
+01:00.0 Unassigned class [ff00]: Qualcomm Device 0308
+        Subsystem: Device 1c5d:2010
 
-And like the clk_rcg2_safe clock we'd like to say that these clocks are 
-disabled by reparenting ("parking") them to the tcxo source. Yes, this 
-makes a lot of code simpler. The clock framework will switch the clock 
-to the "safe" state instead of disabling it during the unused clocks 
-evaporation. The PHY can just disable the gcc_pcie_N_pipe_clock, which 
-will end up in parking this clock to a safe state too, etc.
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+---
+ drivers/bus/mhi/host/pci_generic.c | 41 ++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-> 
->>
->> Thus we have to remove "safe" clock (bi_tcxo) from the list of parents. In
->> case of pipe clocks (and ufs symbol clocks) this will leave us with just a
->> single possible parent. Then having the mux part just doesn't make sense. It
->> is just a gated clock. And this simplified a lot of things.
->>
->>>
->>> So you can introduce a new ops like "clk_regmap_mux_gate_ops" and implement the
->>> parent switching logic in the enable/disable callbacks. Additional benefit of
->>> this ops is, in the future we can also support "gate + mux" clks easily.
->>
->> If the need arises, we can easily resurrect the regmap_mux_safe patchset,
->> fix the race pointed out by Johan, remove extra src-val mapping for safe
->> value and use it for such clocks. I can post it separately, if you wish. But
->> I'm not sure that it makes sense to use it for single-parent clocks.
->>
->>>
->>> Also, please don't use the "enable_val/disable_val" members. It should be
->>> something like "mux_sel_pre/mux_sel_post".
->>
->> Why? Could you please elaborate?
->>
-> 
-> It aligns with my question above. I don't see how this clk can be
-> enabled/disabled.
-
-I see. Let's settle on the first question then.
-
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index d0a7b5d3c01e..24c94c23d78b 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -489,6 +489,44 @@ static const struct mhi_pci_dev_info mhi_telit_fn980_hw_v1_info = {
+ 	.sideband_wake = false,
+ };
+ 
++static const struct mhi_channel_config mhi_telit_fn990_channels[] = {
++	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
++	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 32, 0),
++	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 64, 1),
++	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 64, 1),
++	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
++	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
++	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
++	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
++	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
++	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
++};
++
++static struct mhi_event_config mhi_telit_fn990_events[] = {
++	MHI_EVENT_CONFIG_CTRL(0, 128),
++	MHI_EVENT_CONFIG_DATA(1, 128),
++	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
++	MHI_EVENT_CONFIG_HW_DATA(3, 2048, 101)
++};
++
++static const struct mhi_controller_config modem_telit_fn990_config = {
++	.max_channels = 128,
++	.timeout_ms = 20000,
++	.num_channels = ARRAY_SIZE(mhi_telit_fn990_channels),
++	.ch_cfg = mhi_telit_fn990_channels,
++	.num_events = ARRAY_SIZE(mhi_telit_fn990_events),
++	.event_cfg = mhi_telit_fn990_events,
++};
++
++static const struct mhi_pci_dev_info mhi_telit_fn990_info = {
++	.name = "telit-fn990",
++	.config = &modem_telit_fn990_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.sideband_wake = false,
++	.mru_default = 32768,
++};
++
+ /* Keep the list sorted based on the PID. New VID should be added as the last entry */
+ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+@@ -501,6 +539,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fn980_hw_v1_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
++	/* Telit FN990 */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2010),
++		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
+ 	{ PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
 -- 
-With best wishes
-Dmitry
+2.32.0
+
