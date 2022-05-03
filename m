@@ -2,203 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 59041518E0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 22:08:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 884AE518F1D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 22:42:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242197AbiECUM2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 May 2022 16:12:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46472 "EHLO
+        id S236162AbiECUn3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 May 2022 16:43:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242251AbiECUMV (ORCPT
+        with ESMTP id S230391AbiECUn2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 May 2022 16:12:21 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2100D40A37;
-        Tue,  3 May 2022 13:08:25 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id kq17so35482515ejb.4;
-        Tue, 03 May 2022 13:08:25 -0700 (PDT)
+        Tue, 3 May 2022 16:43:28 -0400
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62662338B6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 13:39:53 -0700 (PDT)
+Received: by mail-qk1-x72b.google.com with SMTP id w3so6886226qkb.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 May 2022 13:39:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7ksfYzQBn7UrcwfXPR8oQDY9eW9oGago9RfblkVMga0=;
-        b=VcB/8mDr7B/QpyxZzzrObUbZ+95m4H+eIVF/wEma6mOfotaINcmvoWBAhG1PaSEjai
-         mohNNrU2nw7CAvy+27KSzxaRXMbiOrnhRdKUysTaJ3IXDRt+e84c3VQCRUBPulxrThc5
-         GwNixJ9GVCt4MGP/diptbCKM1Pd7lYH3qHuL83P3qm1xdI1+NJOqmmPZWJOU3zCenliB
-         fmRDUhJ5U1cJsUaLAEcbNqxTLXkBpdHFKpLxtsY4UyIQdDWCxjJooTMDkmldF1RHaR9q
-         yONE3sqt/2TeYVltjmIXBSJ75aCWT6wOMwNw638qoDJ+n+C5JxNCK7wUqp18eWZkLoHR
-         OPRg==
+        d=marek-ca.20210112.gappssmtp.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=CF1rRZMBdGFikP/j43V46JlTy9v9S59RO3PJDooXZCk=;
+        b=s4MMs4b32ZZlqeuY7DthE+KfUczBMMggh5ly/jPZxCKBUh11m+/esR549euW/Q7UY8
+         NVlyl1RSnMXxUjsoElM0SIYxLJexmAeA7Mam8Ofsk/zZJVMK2ulqDKbTAw8USZ1OP00S
+         KSGN3LqcSwpTSBJWQG3sNs5jlms2w6iWNECQ73xaHxG5yMlNdbOOHQ/RPyTKUEQ2Dn+1
+         GXsgLUpy5eHISipD2maX85qvG2d184/ss3Vejuub114MCzJi/N9OPmJqJQ1IokBSuskl
+         kH7k4tU6Aem/mtTobdtDvKpNCEdBwAhPtd2S0hFO7Gdfb2jETPvquu8Qk1ZKJ0B36pk2
+         aNiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7ksfYzQBn7UrcwfXPR8oQDY9eW9oGago9RfblkVMga0=;
-        b=g8lHItXs+/GGCp0Xp1D0d/JAlSapbNYavaAf+CuN2ts8/28PRwVjslEM1G4zAvXLK+
-         31CEM/FJrYVCepl7Uo8PU/4e+uXlDWqNe2mXqeqG/t3pHIb9Mg4CN9jxgjaV1ngnjxEQ
-         vcBoSRr7HplKfkziuWIT0O0ByhlzI7SwE6hMAUboBUDDR8uHxBSq9EU6SUx4g8xnwn2K
-         x+x/LVJgqK9rNlmfUtxcsLyBlczgCyf0GOmlad1fWQSZSxtSdvpbmutTZ6w2IkmXGt3L
-         6BatYILZ3IyTl8Eys0c1r2I8yoEq71yBqbDqNBfocRL5qQSXhjlSC/e55dkRx0+YHk1A
-         4Fmw==
-X-Gm-Message-State: AOAM533QZthNlyuQJfpwORSN23BHiiSLJQS3KW+nXcecR/LNY7IwkPE6
-        +8LhsIc879uyCe5vVlxsr+Sv+vUFJrQVdw==
-X-Google-Smtp-Source: ABdhPJw/HLcxIahYk3IaAToNtTuBPKVfrMwHL4jiawxkpG0W6d5ff3I+os9AXFjZIPLhgpVAvN9UAg==
-X-Received: by 2002:a17:906:58c7:b0:6da:955b:d300 with SMTP id e7-20020a17090658c700b006da955bd300mr17111983ejs.481.1651608503681;
-        Tue, 03 May 2022 13:08:23 -0700 (PDT)
-Received: from fedora.robimarko.hr (dh207-96-149.xnet.hr. [88.207.96.149])
-        by smtp.googlemail.com with ESMTPSA id ml11-20020a170906cc0b00b006f3ef214e59sm4967466ejb.191.2022.05.03.13.08.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 May 2022 13:08:23 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     amitk@kernel.org, thara.gopinath@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v4 5/5] arm64: dts: ipq8074: add thermal nodes
-Date:   Tue,  3 May 2022 22:08:13 +0200
-Message-Id: <20220503200813.4020698-5-robimarko@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220503200813.4020698-1-robimarko@gmail.com>
-References: <20220503200813.4020698-1-robimarko@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=CF1rRZMBdGFikP/j43V46JlTy9v9S59RO3PJDooXZCk=;
+        b=l0iAtgOgUAV0QGO17+XO0hZ7PosKXrV4wwDEA2C86zirEQKd8SxdI2sP+lZ1jOii4y
+         XjLRYffS2O67fpX6g0J/AM3s5mcJhYlUtCqOOY3IdTd5AteC9zPB5WHnAytky3Mp1tof
+         9iJq6C41kVGp8PRiPxLEOHJxrOFYwWC3FnqAkHoTrPP7LEGBD7XhNId6RXR12oKT1EWm
+         YIL+XX8Zc0r8BIeHSBoet/cgBgG9RNoS1MU7Kxcizf7+xdwX8hSCdCMprhmxAb94x185
+         K92gr+/4GiNtt9MTeYkP7fet2eWVBucsy0gYVGoDG/B0ptKvlPADLpq2yU1jIq814yRq
+         p1Ag==
+X-Gm-Message-State: AOAM532nQeLyuU1LILpakXLGM2lsKCi6HlK2Y701J0xOB526N7BPRABF
+        eDSyh76U7U0w6XURvkQWxT9szA==
+X-Google-Smtp-Source: ABdhPJxqJm0wwuWGMwBvmBmgvducSLG4QQzA7m59lPsrpRYVx2+ZymLmVLU1Tjr0wZ0b/FZ5UPc6cQ==
+X-Received: by 2002:a05:620a:d87:b0:67b:3105:4f7f with SMTP id q7-20020a05620a0d8700b0067b31054f7fmr13658867qkl.230.1651610392536;
+        Tue, 03 May 2022 13:39:52 -0700 (PDT)
+Received: from [192.168.0.189] (modemcable134.222-177-173.mc.videotron.ca. [173.177.222.134])
+        by smtp.gmail.com with ESMTPSA id y8-20020ae9f408000000b0069fc13ce20fsm6271493qkl.64.2022.05.03.13.39.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 May 2022 13:39:51 -0700 (PDT)
+Subject: Re: [PATCH v2 4/8] clk: qcom: add support for SM8350 GPUCC
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>
+Cc:     agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        robh+dt@kernel.org, krzk+dt@kernel.org, tdas@codeaurora.org,
+        anischal@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20220503130448.520470-1-robert.foss@linaro.org>
+ <20220503130448.520470-4-robert.foss@linaro.org>
+ <YnFkn3CMS+VdJ9u7@builder.lan>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <e7935b8e-1e4c-a424-7d77-307e346f507f@marek.ca>
+Date:   Tue, 3 May 2022 16:39:41 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <YnFkn3CMS+VdJ9u7@builder.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ8074 has a tsens v2.3.0 peripheral which monitors
-temperatures around the various subsystems on the
-die.
+On 5/3/22 1:21 PM, Bjorn Andersson wrote:
+> On Tue 03 May 08:04 CDT 2022, Robert Foss wrote:
+> 
+>> From: Jonathan Marek <jonathan@marek.ca>
+>>
+>> The GPUCC manages the clocks for the Adreno GPU found on the
+>> sm8350 SoCs.
+>>
+> 
+> If the patch is authored by Jonathan, we need Jonathan's S-o-b as well.
+> 
 
-So lets add the tsens and thermal zone nodes, passive
-CPU cooling will come in later patches after CPU frequency
-scaling is supported.
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 96 +++++++++++++++++++++++++++
- 1 file changed, 96 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index afbae86cf6d3..76e02490b968 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -332,6 +332,16 @@ prng: rng@e3000 {
- 			status = "disabled";
- 		};
- 
-+		tsens: thermal-sensor@4a9000 {
-+			compatible = "qcom,ipq8074-tsens";
-+			reg = <0x4a9000 0x1000>, /* TM */
-+			      <0x4a8000 0x1000>; /* SROT */
-+			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "combined";
-+			#qcom,sensors = <16>;
-+			#thermal-sensor-cells = <1>;
-+		};
-+
- 		cryptobam: dma-controller@704000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x00704000 0x20000>;
-@@ -1092,4 +1102,90 @@ wifi: wifi@c0000000 {
- 			status = "disabled";
- 		};
- 	};
-+
-+	thermal-zones {
-+		nss-top-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 4>;
-+		};
-+
-+		nss0-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 5>;
-+		};
-+
-+		nss1-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 6>;
-+		};
-+
-+		wcss-phya0-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 7>;
-+		};
-+
-+		wcss-phya1-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 8>;
-+		};
-+
-+		cpu0_thermal: cpu0-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 9>;
-+		};
-+
-+		cpu1_thermal: cpu1-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 10>;
-+		};
-+
-+		cpu2_thermal: cpu2-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 11>;
-+		};
-+
-+		cpu3_thermal: cpu3-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 12>;
-+		};
-+
-+		cluster_thermal: cluster-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 13>;
-+		};
-+
-+		wcss-phyb0-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 14>;
-+		};
-+
-+		wcss-phyb1-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&tsens 15>;
-+		};
-+	};
- };
--- 
-2.35.1
-
+(but I didn't change much from downstream, I never submitted this patch 
+so didn't clean up things like using ARRAY_SIZE, etc.)
