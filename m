@@ -2,69 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBA5951921F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 01:04:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 297EF51923F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 01:21:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233383AbiECXI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 May 2022 19:08:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53332 "EHLO
+        id S244200AbiECXZM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 May 2022 19:25:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233290AbiECXI0 (ORCPT
+        with ESMTP id S237650AbiECXZK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 May 2022 19:08:26 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C66318B26
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 16:04:52 -0700 (PDT)
+        Tue, 3 May 2022 19:25:10 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E720F1FCC1
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 16:21:35 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id o69so15302973pjo.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 May 2022 16:21:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651619092; x=1683155092;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=+vRMP2zM5ewDvjjz9re2aVDrEL6FpvDwlwE5L0GniEM=;
-  b=QJhIIvNt4Pwg7NIZnGNMJs/TtCtJB3dzgMC9w7Nw3IyhR18zC7yNxbgP
-   0n1rOYI93x5Nv4GXDFXJi+gp9c9Ll4e2ayfeBOG3LXZC8dBHJ7oNZ4+pE
-   KJx44At6W5mnR5ZeNC4ZLJLA25WoecHiGkIXTtyVbiLtUR92BygJp3R/8
-   4=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 May 2022 16:04:52 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 May 2022 16:04:52 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 3 May 2022 16:04:51 -0700
-Received: from [10.38.244.235] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 3 May 2022
- 16:04:49 -0700
-Message-ID: <124c0533-8f98-e459-c7d4-b9b3d86effc2@quicinc.com>
-Date:   Tue, 3 May 2022 16:04:47 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 07/25] drm/msm/dpu: drop dpu_plane_pipe function
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dCyuL8rj9y1A8bDYJ8Ok6fBVOndsrzjav6d8Lz8t4jk=;
+        b=YVlF//VOfLdFfTHNcRkc8XnlCRMWvCRgRFOyO0OlWHfVA/1hmWIyQ24dRLBvLTt/09
+         RixtWaNqCQvHR/DAubbDesLZC/lrn90ebAgeglGtOHCwyOkla9KZHMkdEOVb0RCDldeW
+         Lc+nC8AdLpuEBt9M3EzTa/k7Hb47M7gokTp/M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dCyuL8rj9y1A8bDYJ8Ok6fBVOndsrzjav6d8Lz8t4jk=;
+        b=VhgNL6RWUgj95dJz8TW3NxWViCAKCSC1g9fOCTTINPPr3DFf1Z5OCbJIXOKOuvLhrQ
+         y3sW/GyX3YB+NRgREaaWtQZA9KyGOxVMOyNjd8vvoqo8x8vEURWYrVvJEj69Y+5LCizV
+         65f4xe5Jb7RHMz+09cEPVGqkFmRW2KEQjbdkTXeJ+zCedL3qir7IgOdtcYEMuuGRKVoU
+         0pdy8QT0CCdulsq0k2LgKb+40+Nal7Lh0ofgu4CL6ydHaYGf4cy7E6S1+40m26NbKj+j
+         aXYSwqZ7MNPYRguIL9+wYL/1Rj3UfStLzO3TIc9BLy3Fuy4DdcXlh80yF+I3U2H2wLFm
+         lbzA==
+X-Gm-Message-State: AOAM532BYDu1qlucfMBgllEopywUy9BonLKYrmYy7oATf+Cgmi0/VV+R
+        B6jd5tN6i7hjytgq7Lt7RhgZ6Q==
+X-Google-Smtp-Source: ABdhPJya1M18CBF7DP0IaMvzRvqWs1ZQknQS2KXlRom+8Op79bVXXJtl3EZCPPX8Tq6isGWo5p1MvQ==
+X-Received: by 2002:a17:90a:1944:b0:1d9:7cf8:5457 with SMTP id 4-20020a17090a194400b001d97cf85457mr7232685pjh.112.1651620095171;
+        Tue, 03 May 2022 16:21:35 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:93ca:84cb:c452:c0a3])
+        by smtp.gmail.com with ESMTPSA id s12-20020a17090302cc00b0015e8d4eb2e2sm6872180plk.300.2022.05.03.16.21.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 May 2022 16:21:34 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Lyude Paul <lyude@redhat.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Maxime Ripard <maxime@cerno.tech>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Hsin-Yi Wang <hsinyi@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
- <20220209172520.3719906-8-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220209172520.3719906-8-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        David Airlie <airlied@linux.ie>,
+        Imre Deak <imre.deak@intel.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
+        <ville.syrjala@linux.intel.com>, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm: Document that power requirements for DP AUX transfers
+Date:   Tue,  3 May 2022 16:21:08 -0700
+Message-Id: <20220503162033.1.Ia8651894026707e4fa61267da944ff739610d180@changeid>
+X-Mailer: git-send-email 2.36.0.464.gb9c8b46e94-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,78 +80,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+When doing DP AUX transfers there are two actors that need to be
+powered in order for the DP AUX transfer to work: the DP source and
+the DP sync. Commit bacbab58f09d ("drm: Mention the power state
+requirement on side-channel operations") added some documentation
+saying that the DP source is required to power itself up (if needed)
+to do AUX transfers. However, that commit doesn't talk anything about
+the DP sink.
 
+For full fledged DP the sink isn't really a problem. It's expected
+that if an external DP monitor isn't plugged in that attempting to do
+AUX transfers won't work. It's also expected that if a DP monitor is
+plugged in (and thus asserting HPD) that it AUX transfers will work.
 
-On 2/9/2022 9:25 AM, Dmitry Baryshkov wrote:
-> There no more need for the dpu_plane_pipe() function, crtc code can
-> access pstate->pipe_hw.idx directly.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+When we're looking at eDP, however, things are less obvious. Let's add
+some documentation about expectations. Here's what we'll say:
 
-Perhaps this can be squashed with the previous change.
+1. We don't expect the DP AUX transfer function to power on an eDP
+panel. If an eDP panel is physically connected but powered off then it
+makes sense for the transfer to fail.
 
-Otherwise,
+2. We'll document that the official way to power on a panel is via the
+bridge chain, specifically by making sure that the panel's prepare
+function has been called (which is called by
+panel_bridge_pre_enable()). It's already specified in the kernel doc
+of drm_panel_prepare() that this is the way to power the panel on and
+also that after this call "it is possible to communicate with any
+integrated circuitry via a command bus."
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 4 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 5 -----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h | 7 -------
->   3 files changed, 2 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 5fc338ef3460..d21791db6ab1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -364,7 +364,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
->   		pstate = to_dpu_plane_state(state);
->   		fb = state->fb;
->   
-> -		sspp_idx = dpu_plane_pipe(plane);
-> +		sspp_idx = pstate->pipe_hw->idx;
->   		set_bit(sspp_idx, fetch_active);
->   
->   		DRM_DEBUG_ATOMIC("crtc %d stage:%d - plane %d sspp %d fb %d\n",
-> @@ -1112,7 +1112,7 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
->   		pstates[cnt].dpu_pstate = to_dpu_plane_state(pstate);
->   		pstates[cnt].drm_pstate = pstate;
->   		pstates[cnt].stage = pstate->normalized_zpos;
-> -		pstates[cnt].pipe_id = dpu_plane_pipe(plane);
-> +		pstates[cnt].pipe_id = to_dpu_plane_state(pstate)->pipe_hw->idx;
->   
->   		if (pipe_staged[pstates[cnt].pipe_id]) {
->   			multirect_plane[multirect_count].r0 =
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index ca194cd83cd0..d1f9b4bc10ac 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -1391,11 +1391,6 @@ static const struct drm_plane_helper_funcs dpu_plane_helper_funcs = {
->   		.atomic_update = dpu_plane_atomic_update,
->   };
->   
-> -enum dpu_sspp dpu_plane_pipe(struct drm_plane *plane)
-> -{
-> -	return plane ? to_dpu_plane(plane)->pipe : SSPP_NONE;
-> -}
-> -
->   /* initialize plane */
->   struct drm_plane *dpu_plane_init(struct drm_device *dev,
->   		uint32_t pipe, enum drm_plane_type type,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> index aa9478b475d4..d745cde4ea77 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> @@ -54,13 +54,6 @@ struct dpu_multirect_plane_states {
->   #define to_dpu_plane_state(x) \
->   	container_of(x, struct dpu_plane_state, base)
->   
-> -/**
-> - * dpu_plane_pipe - return sspp identifier for the given plane
-> - * @plane:   Pointer to DRM plane object
-> - * Returns: sspp identifier of the given plane
-> - */
-> -enum dpu_sspp dpu_plane_pipe(struct drm_plane *plane);
-> -
->   /**
->    * dpu_plane_flush - final plane operations before commit flush
->    * @plane: Pointer to drm plane structure
+3. We'll also document that for code running in the panel driver
+itself that it is legal for the panel driver to power itself up
+however it wants (it doesn't need to officially call
+drm_panel_pre_enable()) and then it can do AUX bus transfers. This is
+currently the way that edp-panel works when it's running atop the DP
+AUX bus.
+
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+ include/drm/display/drm_dp_helper.h | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/include/drm/display/drm_dp_helper.h b/include/drm/display/drm_dp_helper.h
+index dca40a045dd6..e5165b708a40 100644
+--- a/include/drm/display/drm_dp_helper.h
++++ b/include/drm/display/drm_dp_helper.h
+@@ -370,9 +370,17 @@ struct drm_dp_aux {
+ 	 * helpers assume this is the case.
+ 	 *
+ 	 * Also note that this callback can be called no matter the
+-	 * state @dev is in. Drivers that need that device to be powered
+-	 * to perform this operation will first need to make sure it's
+-	 * been properly enabled.
++	 * state @dev is in and also no matter what state the panel is
++	 * in. It's expected:
++	 * - If the @dev providing the AUX bus is currently unpowered then
++	 *   it will power itself up for the transfer.
++	 * - If we're on eDP and the panel is not in a state where it can
++	 *   respond (it's not powered or it's in a low power state) then this
++	 *   function will return an error (but not crash). Note that if a
++	 *   panel driver is initiating a DP AUX transfer it may power itself
++	 *   up however it wants. All other code should ensure that the
++	 *   pre_enable() bridge chain (which eventually calls the panel
++	 *   prepare function) has powered the panel.
+ 	 */
+ 	ssize_t (*transfer)(struct drm_dp_aux *aux,
+ 			    struct drm_dp_aux_msg *msg);
+-- 
+2.36.0.464.gb9c8b46e94-goog
+
