@@ -2,77 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C984518B2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 19:35:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 964DD518B3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 19:40:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240473AbiECRjM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 May 2022 13:39:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51730 "EHLO
+        id S240507AbiECRoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 May 2022 13:44:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240547AbiECRjE (ORCPT
+        with ESMTP id S240511AbiECRoT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 May 2022 13:39:04 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B00C7205D3
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 10:35:30 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id i25-20020a9d6259000000b00605df9afea7so11758957otk.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 May 2022 10:35:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=QfFh0JorF10YS8jRL4ot/BDPWmDj6EZaL7oZvjv3Y4g=;
-        b=ZmPQGGxZ1xNN/3ZnxABfH+S4dxGHSOp4xV35ALw7zVi0fEbQqhjvdLL33LibysCLc6
-         gndVhg10yKBFoPGn++Q1Bjr1fGYAHLH89H69AumHDYCEvZRTJkLZcFWHu1rS6kS4yt/H
-         YNtgfRTi1E3KvA/oPx/GVRJbBIYkaRYcUNaf8iq16nd6zoyd3HL9LbytMd4ijZ/qh6Qb
-         +JLlP7UrqDZMTfq7gBD/ige/UEfSJ2LGEGUUSGqjNmG2qNuwFB0M0hJO/mgp78zhmprQ
-         E/RjYf8s4qXceb2u7XoFE4QwO1sKpOYyOUSz+epbIY/4EcjmqfjflN10M/9hu4sOOPSf
-         euXg==
+        Tue, 3 May 2022 13:44:19 -0400
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99FF512AFF;
+        Tue,  3 May 2022 10:40:46 -0700 (PDT)
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-e656032735so17943098fac.0;
+        Tue, 03 May 2022 10:40:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=QfFh0JorF10YS8jRL4ot/BDPWmDj6EZaL7oZvjv3Y4g=;
-        b=50OThWVZBIdu5Dj7mSXpFBrDdyTyOudZwFSwCwRAEaAutHH4brrEPLWJpYVWzfgZlF
-         d8zYun5qBxaHbJHXwV3eyJxJtIMQ1ef6FypKjKQzjhaGHhYhfL+UzOxbjKpg+pzGRJK3
-         kjx1luZdmGfGKFrDSJowWOUu/I1yXzKxDcDcWmQj7ht9XY7HaU15OqpKTZSer1UrLG/6
-         7xIgOSmtaqOQgykMSXezhCjh2hQioVGO6XRyxo1Z2R1fpcveDQ5OtpUqKIRxCI2yfAA5
-         Juubqbh7XeqShmM/IqysOQ5Ml9UlD7KUd1LT627f4BmC64q/qeEoencTTRqpKhUwAkFf
-         34bQ==
-X-Gm-Message-State: AOAM531kBsmPM0PD57+6Lth9DRnoJRj8prorksFVUjePITvC9AWBHeTv
-        dJGVaxa5P2okk4X4JcCQfLwGSQ==
-X-Google-Smtp-Source: ABdhPJxT1Ilrm5hn2NJmQeaKaOKr12fYEZTHVrzNifiz+9FWtgnvvqVNJXC95vLYjSotHlZFpe8Z6w==
-X-Received: by 2002:a9d:480e:0:b0:606:59b:2b2 with SMTP id c14-20020a9d480e000000b00606059b02b2mr5490428otf.277.1651599329952;
-        Tue, 03 May 2022 10:35:29 -0700 (PDT)
-Received: from [192.168.11.16] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id p203-20020acaf1d4000000b00325cda1ffacsm3507693oih.43.2022.05.03.10.35.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 May 2022 10:35:29 -0700 (PDT)
-Message-ID: <c9da618b-8910-d878-cb78-6304c687f725@kali.org>
-Date:   Tue, 3 May 2022 12:35:27 -0500
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=siZbujmt7vQ4sJ6au98I9XS8Yd5ti5LrSFfgPvyl/Ks=;
+        b=twyXSGciQ7SVvWIiSYJbj9styw3utP/G4GjbrWLKPCL/WVB33tsCeiUuwzCVs6NHWN
+         IXXeTqeCzaAUixfqPhy54q8m71D13DLXnEvXlaw7YXgQE/NqM9Naf+VXIjaLokJvmK50
+         A36peKSS8AS2M3hH+KdPKgsMeOcm/qGqFc1plv7QoW6lypKTdIlc7svxL36ja26xj6RM
+         u5dpMsP7wh+V+mAxSGW3pDGzKwkFa2rk5JUx81q9/sZhbAyVGUK4Ee8Cl4ZW+8ug7Znr
+         4x2/uPrZ7fPLxyShycNeqt/vio/UB+sKntNA3sC1492QqPYcAMyaJW8OIX+ufEfdCgRA
+         bn1g==
+X-Gm-Message-State: AOAM533y1/HUA1roYVE2WZzqU+1pAtQMPcwQVp3Eo3xnL3mrASZC6k3I
+        R35uB31kR/+K1W/bnTRjMCQcnw394g==
+X-Google-Smtp-Source: ABdhPJzpflgXomVrdFYXYUdqw9hHS6rHrJtqr24Xyl8vzUSWNJXHoFjlcuTfg2aWHr0L51sMSGCOzA==
+X-Received: by 2002:a05:6870:340e:b0:ec:c40f:e630 with SMTP id g14-20020a056870340e00b000ecc40fe630mr2124593oah.144.1651599645934;
+        Tue, 03 May 2022 10:40:45 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id r7-20020a056870878700b000e686d1386csm7158390oam.6.2022.05.03.10.40.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 May 2022 10:40:45 -0700 (PDT)
+Received: (nullmailer pid 3932684 invoked by uid 1000);
+        Tue, 03 May 2022 17:40:44 -0000
+Date:   Tue, 3 May 2022 12:40:44 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: arm: msm: Add sc8180x and sc8280xp LLCC
+ compatibles
+Message-ID: <YnFpHPmIn7lufCbn@robh.at.kernel.org>
+References: <20220502215406.612967-1-bjorn.andersson@linaro.org>
+ <20220502215406.612967-2-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.8.1
-Subject: Re: [PATCH] PCI: qcom: Remove ddrss_sf_tbu clock from sc8180x
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220331013415.592748-1-bjorn.andersson@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <20220331013415.592748-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220502215406.612967-2-bjorn.andersson@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,49 +68,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 3/30/22 8:34 PM, Bjorn Andersson wrote:
-> The Qualcomm SC8180X platform was piggy backing on the SM8250
-> qcom_pcie_cfg, but the platform doesn't have the ddrss_sf_tbu clock, so
-> it now fails to probe due to the missing clock.
->
-> Give SC8180X its own qcom_pcie_cfg, without the ddrss_sf_tbu flag set.
->
-> Fixes: 0614f98bbb9f ("PCI: qcom: Add ddrss_sf_tbu flag")
+On Mon, 02 May 2022 14:54:05 -0700, Bjorn Andersson wrote:
+> Add compatibles for the SC8180X and SC8280XP platforms to the existing
+> LLCC binding.
+> 
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->   drivers/pci/controller/dwc/pcie-qcom.c | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 6ab90891801d..816028c0f6ed 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1550,6 +1550,11 @@ static const struct qcom_pcie_cfg sc7280_cfg = {
->   	.pipe_clk_need_muxing = true,
->   };
->   
-> +static const struct qcom_pcie_cfg sc8180x_cfg = {
-> +	.ops = &ops_1_9_0,
-> +	.has_tbu_clk = true,
-> +};
-> +
->   static const struct dw_pcie_ops dw_pcie_ops = {
->   	.link_up = qcom_pcie_link_up,
->   	.start_link = qcom_pcie_start_link,
-> @@ -1656,7 +1661,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->   	{ .compatible = "qcom,pcie-qcs404", .data = &ipq4019_cfg },
->   	{ .compatible = "qcom,pcie-sdm845", .data = &sdm845_cfg },
->   	{ .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
-> -	{ .compatible = "qcom,pcie-sc8180x", .data = &sm8250_cfg },
-> +	{ .compatible = "qcom,pcie-sc8180x", .data = &sc8180x_cfg },
->   	{ .compatible = "qcom,pcie-sm8450-pcie0", .data = &sm8450_pcie0_cfg },
->   	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &sm8450_pcie1_cfg },
->   	{ .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
+> 
+> Changes since v1:
+> - Picked up Krzysztof's ack
+> 
+>  Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
-Hi Bjorn,
-
-Tested on the Lenovo Flex 5G and fixes the issue I saw.
-
-Tested-by: Steev Klimaszewski <steev@kali.org>
-
+Acked-by: Rob Herring <robh@kernel.org>
