@@ -2,550 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C68A517EFC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 09:33:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DECD5182C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 12:57:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231913AbiECHhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 May 2022 03:37:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49704 "EHLO
+        id S234532AbiECLAq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 May 2022 07:00:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231830AbiECHhC (ORCPT
+        with ESMTP id S234502AbiECLAn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 May 2022 03:37:02 -0400
-Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A53137A1A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 00:33:30 -0700 (PDT)
-Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-e2442907a1so16455269fac.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 May 2022 00:33:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8o0C2gjFqAcxMw11ZMv1RJhJlOaExSJ64lIhblQWfws=;
-        b=lXTE9sxcWhhbdk92o5fmhgd7S6BZZn8IrV7fAgNfQRMAy8gYvIUopnsukDlQZwk3sh
-         bSUz8biuThWxBQoQWVwP42cfgHyiXYRnNMs66n1/T596YR7Ke4Jr69iyln+VhGJ1ngm8
-         NtUm8/AuWYQMDGGeXY5k+cSe3eDbrhQ0/QXHCVfg8FzEFBiZgD9XDiKq+WW+4Jz+wAwK
-         A+Au0qiOj9qT4pjm3MC9BfCQ1+ZNZwgmEHVE3Qd9q0kEWcnbJ2W2z5Nr5ygQ+P3eT8n8
-         RCXJFQAvp8Kt+39H/LA3+cUkPTkxsUoy9YP05e5ald7IKoRvnAtrcYIIkt5gKsgsFC/c
-         SiPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8o0C2gjFqAcxMw11ZMv1RJhJlOaExSJ64lIhblQWfws=;
-        b=p/e0XY0cOa5y00GnCsXcQfR5tSkmFUyhb2SBS6JtHTsIODVBY+WhWLixV7mtxj+2OY
-         vouqYoOyNPOWgNuVDSJm3zIgbGaQC95Nl26DnK3tVCFEFdDa0EZbCqY5ynPqIHhZ41mh
-         BIddkPqpUmXSQ2V49LAb3BNbx+AhMfCf32ekoi+cKQB1PpY911VW9Djx++pcOak+c6Of
-         edb2dPm3YPpb3dKwaA/SlfxJqIQFQZIgsgQ6/aftu8cZeSCYUBVCPf+h59mQT2LVHnEw
-         /A0WNMPVNGmdi8i2YUvSZI3Oki/JJ/GmNUOAJhsZITl/vh9GMF9wBtVYFgq+NTKJIk0l
-         42fA==
-X-Gm-Message-State: AOAM533OWjRxBkzql0uLXgEjLd3PMdvtr4jciVJbTjr3+BXgaGyP0/zl
-        P85ggh412kaHVeFsPUDIQxchAt5yPIjijGxzS4JC5Q==
-X-Google-Smtp-Source: ABdhPJzUutyif87QHgKGdmTTISX4skx9CBm4o9F6ukqL/MIXC+iAt+1EAKBPHPoLN0tcvA2kL78Hu+EbVWHCacupEY0=
-X-Received: by 2002:a05:6870:65a0:b0:ed:a635:eee9 with SMTP id
- fp32-20020a05687065a000b000eda635eee9mr1253334oab.48.1651563209616; Tue, 03
- May 2022 00:33:29 -0700 (PDT)
+        Tue, 3 May 2022 07:00:43 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2E32224973
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 03:57:11 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C20391042;
+        Tue,  3 May 2022 03:57:10 -0700 (PDT)
+Received: from [10.57.80.111] (unknown [10.57.80.111])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 73ADE3F73D;
+        Tue,  3 May 2022 03:57:08 -0700 (PDT)
+Message-ID: <20803530-822d-86fa-d418-b4b7756aac0c@arm.com>
+Date:   Tue, 3 May 2022 11:57:02 +0100
 MIME-Version: 1.0
-References: <20220429220833.873672-1-bhupesh.sharma@linaro.org>
- <20220429220833.873672-2-bhupesh.sharma@linaro.org> <1651505609.486882.1161774.nullmailer@robh.at.kernel.org>
-In-Reply-To: <1651505609.486882.1161774.nullmailer@robh.at.kernel.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Tue, 3 May 2022 13:03:18 +0530
-Message-ID: <CAH=2Ntxn8cb4YPYkwzro47zpcDVL5_dbaZ-_P1+vi8=ydX+Y+Q@mail.gmail.com>
-Subject: Re: [PATCH 1/4] dt-bindings: mmc/sdhci-msm: Convert bindings to yaml
-To:     Rob Herring <robh@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        linux-mmc@vger.kernel.org, agross@kernel.org,
-        bhupesh.linux@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 2/3] drm/msm/mdp5: move iommu_domain_alloc() call close to
+ its usage
+Content-Language: en-GB
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20220501101022.3931295-1-dmitry.baryshkov@linaro.org>
+ <20220501101022.3931295-3-dmitry.baryshkov@linaro.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <20220501101022.3931295-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-9.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On 2022-05-01 11:10, Dmitry Baryshkov wrote:
+> Move iommu_domain_alloc() in front of adress space/IOMMU initialization.
+> This allows us to drop final bits of struct mdp5_cfg_platform which
+> remained from the pre-DT days.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 16 ----------------
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h |  6 ------
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  6 ++++--
+>   3 files changed, 4 insertions(+), 24 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+> index 1bf9ff5dbabc..714effb967ff 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+> @@ -1248,8 +1248,6 @@ static const struct mdp5_cfg_handler cfg_handlers_v3[] = {
+>   	{ .revision = 3, .config = { .hw = &sdm630_config } },
+>   };
+>   
+> -static struct mdp5_cfg_platform *mdp5_get_config(struct platform_device *dev);
+> -
+>   const struct mdp5_cfg_hw *mdp5_cfg_get_hw_config(struct mdp5_cfg_handler *cfg_handler)
+>   {
+>   	return cfg_handler->config.hw;
+> @@ -1274,10 +1272,8 @@ struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
+>   		uint32_t major, uint32_t minor)
+>   {
+>   	struct drm_device *dev = mdp5_kms->dev;
+> -	struct platform_device *pdev = to_platform_device(dev->dev);
+>   	struct mdp5_cfg_handler *cfg_handler;
+>   	const struct mdp5_cfg_handler *cfg_handlers;
+> -	struct mdp5_cfg_platform *pconfig;
+>   	int i, ret = 0, num_handlers;
+>   
+>   	cfg_handler = kzalloc(sizeof(*cfg_handler), GFP_KERNEL);
+> @@ -1320,9 +1316,6 @@ struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
+>   	cfg_handler->revision = minor;
+>   	cfg_handler->config.hw = mdp5_cfg;
+>   
+> -	pconfig = mdp5_get_config(pdev);
+> -	memcpy(&cfg_handler->config.platform, pconfig, sizeof(*pconfig));
+> -
+>   	DBG("MDP5: %s hw config selected", mdp5_cfg->name);
+>   
+>   	return cfg_handler;
+> @@ -1333,12 +1326,3 @@ struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
+>   
+>   	return ERR_PTR(ret);
+>   }
+> -
+> -static struct mdp5_cfg_platform *mdp5_get_config(struct platform_device *dev)
+> -{
+> -	static struct mdp5_cfg_platform config = {};
+> -
+> -	config.iommu = iommu_domain_alloc(&platform_bus_type);
+> -
+> -	return &config;
+> -}
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h
+> index 6b03d7899309..c2502cc33864 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h
+> @@ -104,14 +104,8 @@ struct mdp5_cfg_hw {
+>   	uint32_t max_clk;
+>   };
+>   
+> -/* platform config data (ie. from DT, or pdata) */
+> -struct mdp5_cfg_platform {
+> -	struct iommu_domain *iommu;
+> -};
+> -
+>   struct mdp5_cfg {
+>   	const struct mdp5_cfg_hw *hw;
+> -	struct mdp5_cfg_platform platform;
+>   };
+>   
+>   struct mdp5_kms;
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> index 9b7bbc3adb97..1c67c2c828cd 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> @@ -558,6 +558,7 @@ static int mdp5_kms_init(struct drm_device *dev)
+>   	struct msm_gem_address_space *aspace;
+>   	int irq, i, ret;
+>   	struct device *iommu_dev;
+> +	struct iommu_domain *iommu;
+>   
+>   	ret = mdp5_init(to_platform_device(dev->dev), dev);
+>   
+> @@ -601,14 +602,15 @@ static int mdp5_kms_init(struct drm_device *dev)
+>   	}
+>   	mdelay(16);
+>   
+> -	if (config->platform.iommu) {
+> +	iommu = iommu_domain_alloc(&platform_bus_type);
 
-On Mon, 2 May 2022 at 21:03, Rob Herring <robh@kernel.org> wrote:
->
-> On Sat, 30 Apr 2022 03:38:30 +0530, Bhupesh Sharma wrote:
-> > Convert Qualcomm sdhci-msm devicetree binding to YAML.
-> >
-> > Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Rob Herring <robh@kernel.org>
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  .../devicetree/bindings/mmc/sdhci-msm.txt     | 123 -----------
-> >  .../devicetree/bindings/mmc/sdhci-msm.yaml    | 192 ++++++++++++++++++
-> >  2 files changed, 192 insertions(+), 123 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> >  create mode 100644 Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> >
->
-> Running 'make dtbs_check' with the schema in this patch gives the
-> following warnings. Consider if they are expected or the schema is
-> incorrect. These may not be new warnings.
->
-> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> This will change in the future.
+To preempt the next change down the line as well, could this be 
+rearranged to work as iommu_domain_alloc(iommu_dev->bus)?
 
-As noted in the cover-letter accompanying the patch:
+> +	if (iommu) {
+>   		struct msm_mmu *mmu;
+>   
+>   		iommu_dev = &pdev->dev;
+>   		if (!dev_iommu_fwspec_get(iommu_dev))
 
-This patchset is dependent on the qcom dts fixes sent via a separate
-patchset (see [1]), to make sure that the 'make dtbs_check' and
-'make dt_binding_check' work well and Rob's bot is happy as well.
+The fwspec helpers are more of an internal thing between the IOMMU 
+drivers and the respective firmware code - I'd rather that external API 
+users stuck consistently to using device_iommu_mapped() (it should give 
+the same result).
 
-[1]. https://lore.kernel.org/linux-arm-msm/20220429214420.854335-1-bhupesh.sharma@linaro.org/
+Otherwise, thanks for sorting this out!
 
-Thanks,
-Bhupesh
+Robin.
 
-
-> Full log is available here: https://patchwork.ozlabs.org/patch/
->
->
-> sdcc@7804000: clock-names:0: 'iface' was expected
->         arch/arm64/boot/dts/qcom/qcs404-evb-1000.dtb
->         arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb
->
-> sdcc@7804000: clock-names:1: 'core' was expected
->         arch/arm64/boot/dts/qcom/qcs404-evb-1000.dtb
->         arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb
->
-> sdhci@7824000: clock-names:0: 'iface' was expected
->         arch/arm64/boot/dts/qcom/apq8016-sbc.dtb
->         arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dtb
->         arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dtb
->         arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dtb
->         arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dtb
->         arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dtb
->         arch/arm64/boot/dts/qcom/msm8916-mtp.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dtb
->         arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dtb
->         arch/arm/boot/dts/qcom-apq8016-sbc.dtb
->         arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dtb
->
-> sdhci@7824000: clock-names:1: 'core' was expected
->         arch/arm64/boot/dts/qcom/apq8016-sbc.dtb
->         arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dtb
->         arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dtb
->         arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dtb
->         arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dtb
->         arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dtb
->         arch/arm64/boot/dts/qcom/msm8916-mtp.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dtb
->         arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dtb
->         arch/arm/boot/dts/qcom-apq8016-sbc.dtb
->         arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dtb
->
-> sdhci@7824900: clock-names:0: 'iface' was expected
->         arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb
->         arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dtb
->         arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dtb
->         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dtb
->         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtb
->         arch/arm/boot/dts/qcom-ipq4018-jalapeno.dtb
->         arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1-c1.dtb
->         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dtb
->         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dtb
->         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dtb
->         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dtb
->
-> sdhci@7824900: clock-names:1: 'core' was expected
->         arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb
->         arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dtb
->         arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dtb
->         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dtb
->         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtb
->         arch/arm/boot/dts/qcom-ipq4018-jalapeno.dtb
->         arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1-c1.dtb
->         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dtb
->         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dtb
->         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dtb
->         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dtb
->
-> sdhci@7824900: clock-names:2: 'xo' was expected
->         arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb
->         arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dtb
->         arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dtb
->
-> sdhci@7864000: clock-names:0: 'iface' was expected
->         arch/arm64/boot/dts/qcom/apq8016-sbc.dtb
->         arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dtb
->         arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dtb
->         arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dtb
->         arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dtb
->         arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dtb
->         arch/arm64/boot/dts/qcom/msm8916-mtp.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dtb
->         arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dtb
->         arch/arm/boot/dts/qcom-apq8016-sbc.dtb
->         arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dtb
->
-> sdhci@7864000: clock-names:1: 'core' was expected
->         arch/arm64/boot/dts/qcom/apq8016-sbc.dtb
->         arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dtb
->         arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dtb
->         arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dtb
->         arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dtb
->         arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dtb
->         arch/arm64/boot/dts/qcom/msm8916-mtp.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dtb
->         arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dtb
->         arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dtb
->         arch/arm/boot/dts/qcom-apq8016-sbc.dtb
->         arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dtb
->
-> sdhci@7c4000: clock-names:0: 'iface' was expected
->         arch/arm64/boot/dts/qcom/sc7180-idp.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r4.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7280-crd.dtb
->         arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dtb
->         arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7280-idp2.dtb
->         arch/arm64/boot/dts/qcom/sc7280-idp.dtb
->
-> sdhci@7c4000: clock-names:1: 'core' was expected
->         arch/arm64/boot/dts/qcom/sc7180-idp.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r4.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7280-crd.dtb
->         arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dtb
->         arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7280-idp2.dtb
->         arch/arm64/boot/dts/qcom/sc7280-idp.dtb
->
-> sdhci@8804000: clock-names:0: 'iface' was expected
->         arch/arm64/boot/dts/qcom/sc7180-idp.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r4.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7280-crd.dtb
->         arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dtb
->         arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7280-idp2.dtb
->         arch/arm64/boot/dts/qcom/sc7280-idp.dtb
->
-> sdhci@8804000: clock-names:1: 'core' was expected
->         arch/arm64/boot/dts/qcom/sc7180-idp.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r4.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dtb
->         arch/arm64/boot/dts/qcom/sc7280-crd.dtb
->         arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dtb
->         arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb
->         arch/arm64/boot/dts/qcom/sc7280-idp2.dtb
->         arch/arm64/boot/dts/qcom/sc7280-idp.dtb
->
-> sdhci@8804000: clocks: [[13, 70], [13, 71]] is too short
->         arch/arm/boot/dts/qcom-sdx55-mtp.dtb
->         arch/arm/boot/dts/qcom-sdx55-t55.dtb
->         arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dtb
->
-> sdhci@c084000: clock-names:0: 'iface' was expected
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dtb
->         arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dtb
->         arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb
->
-> sdhci@c084000: clock-names:1: 'core' was expected
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dtb
->         arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dtb
->         arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb
->
-> sdhci@c0c4000: clock-names:0: 'iface' was expected
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dtb
->         arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dtb
->         arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb
->
-> sdhci@c0c4000: clock-names:1: 'core' was expected
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dtb
->         arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dtb
->         arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb
->
-> sdhci@c0c4000: interconnect-names:0: 'sdhc-ddr' was expected
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dtb
->         arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dtb
->         arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb
->
-> sdhci@c0c4000: interconnect-names:1: 'cpu-sdhc' was expected
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dtb
->         arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dtb
->         arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dtb
->         arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb
->
-> sdhci@f9824900: clock-names:0: 'iface' was expected
->         arch/arm64/boot/dts/qcom/apq8094-sony-xperia-kitakami-karin_windy.dtb
->         arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dtb
->         arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dtb
->         arch/arm64/boot/dts/qcom/msm8992-msft-lumia-octagon-talkman.dtb
->         arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dtb
->         arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dtb
->         arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dtb
->         arch/arm/boot/dts/qcom-apq8026-lg-lenok.dtb
->         arch/arm/boot/dts/qcom-apq8074-dragonboard.dtb
->         arch/arm/boot/dts/qcom-apq8084-ifc6540.dtb
->         arch/arm/boot/dts/qcom-apq8084-mtp.dtb
->         arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dtb
->         arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dtb
->         arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dtb
->         arch/arm/boot/dts/qcom-msm8974-samsung-klte.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dtb
->
-> sdhci@f9824900: clock-names:1: 'core' was expected
->         arch/arm64/boot/dts/qcom/apq8094-sony-xperia-kitakami-karin_windy.dtb
->         arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dtb
->         arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dtb
->         arch/arm64/boot/dts/qcom/msm8992-msft-lumia-octagon-talkman.dtb
->         arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dtb
->         arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dtb
->         arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dtb
->         arch/arm/boot/dts/qcom-apq8026-lg-lenok.dtb
->         arch/arm/boot/dts/qcom-apq8074-dragonboard.dtb
->         arch/arm/boot/dts/qcom-apq8084-ifc6540.dtb
->         arch/arm/boot/dts/qcom-apq8084-mtp.dtb
->         arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dtb
->         arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dtb
->         arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dtb
->         arch/arm/boot/dts/qcom-msm8974-samsung-klte.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dtb
->
-> sdhci@f9824900: clock-names:3: 'ice' was expected
->         arch/arm/boot/dts/qcom-msm8974-samsung-klte.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dtb
->
-> sdhci@f9824900: clock-names:4: 'bus' was expected
->         arch/arm/boot/dts/qcom-msm8974-samsung-klte.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dtb
->
-> sdhci@f9864900: clock-names:0: 'iface' was expected
->         arch/arm/boot/dts/qcom-apq8026-lg-lenok.dtb
->         arch/arm/boot/dts/qcom-apq8074-dragonboard.dtb
->         arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dtb
->         arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dtb
->         arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dtb
->         arch/arm/boot/dts/qcom-msm8974-samsung-klte.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dtb
->
-> sdhci@f9864900: clock-names:1: 'core' was expected
->         arch/arm/boot/dts/qcom-apq8026-lg-lenok.dtb
->         arch/arm/boot/dts/qcom-apq8074-dragonboard.dtb
->         arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dtb
->         arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dtb
->         arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dtb
->         arch/arm/boot/dts/qcom-msm8974-samsung-klte.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dtb
->
-> sdhci@f98a4900: clock-names:0: 'iface' was expected
->         arch/arm64/boot/dts/qcom/apq8094-sony-xperia-kitakami-karin_windy.dtb
->         arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dtb
->         arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dtb
->         arch/arm64/boot/dts/qcom/msm8992-msft-lumia-octagon-talkman.dtb
->         arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dtb
->         arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dtb
->         arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dtb
->         arch/arm/boot/dts/qcom-apq8026-lg-lenok.dtb
->         arch/arm/boot/dts/qcom-apq8074-dragonboard.dtb
->         arch/arm/boot/dts/qcom-apq8084-ifc6540.dtb
->         arch/arm/boot/dts/qcom-apq8084-mtp.dtb
->         arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dtb
->         arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dtb
->         arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dtb
->         arch/arm/boot/dts/qcom-msm8974-samsung-klte.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dtb
->
-> sdhci@f98a4900: clock-names:1: 'core' was expected
->         arch/arm64/boot/dts/qcom/apq8094-sony-xperia-kitakami-karin_windy.dtb
->         arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dtb
->         arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dtb
->         arch/arm64/boot/dts/qcom/msm8992-msft-lumia-octagon-talkman.dtb
->         arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dtb
->         arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dtb
->         arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dtb
->         arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dtb
->         arch/arm/boot/dts/qcom-apq8026-lg-lenok.dtb
->         arch/arm/boot/dts/qcom-apq8074-dragonboard.dtb
->         arch/arm/boot/dts/qcom-apq8084-ifc6540.dtb
->         arch/arm/boot/dts/qcom-apq8084-mtp.dtb
->         arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dtb
->         arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dtb
->         arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dtb
->         arch/arm/boot/dts/qcom-msm8974-samsung-klte.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dtb
->         arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dtb
->
+>   			iommu_dev = iommu_dev->parent;
+>   
+> -		mmu = msm_iommu_new(iommu_dev, config->platform.iommu);
+> +		mmu = msm_iommu_new(iommu_dev, iommu);
+>   
+>   		aspace = msm_gem_address_space_create(mmu, "mdp5",
+>   			0x1000, 0x100000000 - 0x1000);
