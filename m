@@ -2,176 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DECD5182C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 12:57:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C73351834C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 13:33:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234532AbiECLAq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 May 2022 07:00:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33004 "EHLO
+        id S234689AbiECLgu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 May 2022 07:36:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234502AbiECLAn (ORCPT
+        with ESMTP id S230514AbiECLgu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 May 2022 07:00:43 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2E32224973
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 03:57:11 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C20391042;
-        Tue,  3 May 2022 03:57:10 -0700 (PDT)
-Received: from [10.57.80.111] (unknown [10.57.80.111])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 73ADE3F73D;
-        Tue,  3 May 2022 03:57:08 -0700 (PDT)
-Message-ID: <20803530-822d-86fa-d418-b4b7756aac0c@arm.com>
-Date:   Tue, 3 May 2022 11:57:02 +0100
+        Tue, 3 May 2022 07:36:50 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5209C261C;
+        Tue,  3 May 2022 04:33:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651577597; x=1683113597;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=o23VYzBAw21sFAspLxcuTiAZCy5akFiprfgj/fLVtaE=;
+  b=cg64EZ6rPVx0PAjVS/V3Q7vXwmpZchuxJgRrW/aEtQCTxtTUAdpAKW+A
+   AQvjrZCoNVF3pQh1ANORaJvVTV+1YCkPVYb0Fn9fADy+EzmXnj3jbF9pF
+   4ZhZQz2KkUBA9xDN4W1gDCPk78nJfiaCXLAWwb1vo+TEkHDp35kOj3Gyc
+   k=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 03 May 2022 04:33:17 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 May 2022 04:33:16 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 3 May 2022 04:33:16 -0700
+Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 3 May 2022 04:33:13 -0700
+From:   Taniya Das <quic_tdas@quicinc.com>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>
+Subject: [PATCH v4] arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio clock controllers
+Date:   Tue, 3 May 2022 17:02:46 +0530
+Message-ID: <20220503113246.13857-1-quic_tdas@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH 2/3] drm/msm/mdp5: move iommu_domain_alloc() call close to
- its usage
-Content-Language: en-GB
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220501101022.3931295-1-dmitry.baryshkov@linaro.org>
- <20220501101022.3931295-3-dmitry.baryshkov@linaro.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <20220501101022.3931295-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-9.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-05-01 11:10, Dmitry Baryshkov wrote:
-> Move iommu_domain_alloc() in front of adress space/IOMMU initialization.
-> This allows us to drop final bits of struct mdp5_cfg_platform which
-> remained from the pre-DT days.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 16 ----------------
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h |  6 ------
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  6 ++++--
->   3 files changed, 4 insertions(+), 24 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-> index 1bf9ff5dbabc..714effb967ff 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-> @@ -1248,8 +1248,6 @@ static const struct mdp5_cfg_handler cfg_handlers_v3[] = {
->   	{ .revision = 3, .config = { .hw = &sdm630_config } },
->   };
->   
-> -static struct mdp5_cfg_platform *mdp5_get_config(struct platform_device *dev);
-> -
->   const struct mdp5_cfg_hw *mdp5_cfg_get_hw_config(struct mdp5_cfg_handler *cfg_handler)
->   {
->   	return cfg_handler->config.hw;
-> @@ -1274,10 +1272,8 @@ struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
->   		uint32_t major, uint32_t minor)
->   {
->   	struct drm_device *dev = mdp5_kms->dev;
-> -	struct platform_device *pdev = to_platform_device(dev->dev);
->   	struct mdp5_cfg_handler *cfg_handler;
->   	const struct mdp5_cfg_handler *cfg_handlers;
-> -	struct mdp5_cfg_platform *pconfig;
->   	int i, ret = 0, num_handlers;
->   
->   	cfg_handler = kzalloc(sizeof(*cfg_handler), GFP_KERNEL);
-> @@ -1320,9 +1316,6 @@ struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
->   	cfg_handler->revision = minor;
->   	cfg_handler->config.hw = mdp5_cfg;
->   
-> -	pconfig = mdp5_get_config(pdev);
-> -	memcpy(&cfg_handler->config.platform, pconfig, sizeof(*pconfig));
-> -
->   	DBG("MDP5: %s hw config selected", mdp5_cfg->name);
->   
->   	return cfg_handler;
-> @@ -1333,12 +1326,3 @@ struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
->   
->   	return ERR_PTR(ret);
->   }
-> -
-> -static struct mdp5_cfg_platform *mdp5_get_config(struct platform_device *dev)
-> -{
-> -	static struct mdp5_cfg_platform config = {};
-> -
-> -	config.iommu = iommu_domain_alloc(&platform_bus_type);
-> -
-> -	return &config;
-> -}
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h
-> index 6b03d7899309..c2502cc33864 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h
-> @@ -104,14 +104,8 @@ struct mdp5_cfg_hw {
->   	uint32_t max_clk;
->   };
->   
-> -/* platform config data (ie. from DT, or pdata) */
-> -struct mdp5_cfg_platform {
-> -	struct iommu_domain *iommu;
-> -};
-> -
->   struct mdp5_cfg {
->   	const struct mdp5_cfg_hw *hw;
-> -	struct mdp5_cfg_platform platform;
->   };
->   
->   struct mdp5_kms;
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> index 9b7bbc3adb97..1c67c2c828cd 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> @@ -558,6 +558,7 @@ static int mdp5_kms_init(struct drm_device *dev)
->   	struct msm_gem_address_space *aspace;
->   	int irq, i, ret;
->   	struct device *iommu_dev;
-> +	struct iommu_domain *iommu;
->   
->   	ret = mdp5_init(to_platform_device(dev->dev), dev);
->   
-> @@ -601,14 +602,15 @@ static int mdp5_kms_init(struct drm_device *dev)
->   	}
->   	mdelay(16);
->   
-> -	if (config->platform.iommu) {
-> +	iommu = iommu_domain_alloc(&platform_bus_type);
+Add the low pass audio clock controller device nodes. Keep the lpasscc
+clock node disabled and enabled for lpass pil based devices.
 
-To preempt the next change down the line as well, could this be 
-rearranged to work as iommu_domain_alloc(iommu_dev->bus)?
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+---
+[v4]
+ * Mark lpasscc[lpasscc@3000000] device node as "disabled".
 
-> +	if (iommu) {
->   		struct msm_mmu *mmu;
->   
->   		iommu_dev = &pdev->dev;
->   		if (!dev_iommu_fwspec_get(iommu_dev))
+[v3]
+ * Fix unwanted extra spaces in reg property.
+ * Fix lpass_aon node clock phandle <&lpasscc> to <&lpasscore>
 
-The fwspec helpers are more of an internal thing between the IOMMU 
-drivers and the respective firmware code - I'd rather that external API 
-users stuck consistently to using device_iommu_mapped() (it should give 
-the same result).
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 44 ++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-Otherwise, thanks for sorting this out!
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index f0b64be63c21..477a754741a1 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -8,6 +8,8 @@
+ #include <dt-bindings/clock/qcom,dispcc-sc7280.h>
+ #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+ #include <dt-bindings/clock/qcom,gpucc-sc7280.h>
++#include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
++#include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
+ #include <dt-bindings/clock/qcom,videocc-sc7280.h>
+ #include <dt-bindings/gpio/gpio.h>
+@@ -1978,6 +1980,48 @@
+ 			clocks = <&gcc GCC_CFG_NOC_LPASS_CLK>;
+ 			clock-names = "iface";
+ 			#clock-cells = <1>;
++			status = "disabled";
++		};
++
++		lpass_audiocc: clock-controller@3300000 {
++			compatible = "qcom,sc7280-lpassaudiocc";
++			reg = <0 0x03300000 0 0x30000>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>,
++			       <&lpass_aon LPASS_AON_CC_MAIN_RCG_CLK_SRC>;
++			clock-names = "bi_tcxo", "lpass_aon_cc_main_rcg_clk_src";
++			power-domains = <&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
++			#clock-cells = <1>;
++			#power-domain-cells = <1>;
++		};
++
++		lpass_aon: clock-controller@3380000 {
++			compatible = "qcom,sc7280-lpassaoncc";
++			reg = <0 0x03380000 0 0x30000>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>,
++			       <&rpmhcc RPMH_CXO_CLK_A>,
++			       <&lpasscore LPASS_CORE_CC_CORE_CLK>;
++			clock-names = "bi_tcxo", "bi_tcxo_ao", "iface";
++			#clock-cells = <1>;
++			#power-domain-cells = <1>;
++		};
++
++		lpasscore: clock-controller@3900000 {
++			compatible = "qcom,sc7280-lpasscorecc";
++			reg = <0 0x03900000 0 0x50000>;
++			clocks =  <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "bi_tcxo";
++			power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>;
++			#clock-cells = <1>;
++			#power-domain-cells = <1>;
++		};
++
++		lpass_hm: clock-controller@3c00000 {
++			compatible = "qcom,sc7280-lpasshm";
++			reg = <0 0x3c00000 0 0x28>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "bi_tcxo";
++			#clock-cells = <1>;
++			#power-domain-cells = <1>;
+ 		};
 
-Robin.
+ 		lpass_ag_noc: interconnect@3c40000 {
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
->   			iommu_dev = iommu_dev->parent;
->   
-> -		mmu = msm_iommu_new(iommu_dev, config->platform.iommu);
-> +		mmu = msm_iommu_new(iommu_dev, iommu);
->   
->   		aspace = msm_gem_address_space_create(mmu, "mdp5",
->   			0x1000, 0x100000000 - 0x1000);
