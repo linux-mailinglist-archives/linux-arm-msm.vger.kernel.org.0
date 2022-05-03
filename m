@@ -2,70 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAD30518FFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 23:22:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2CC2519024
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 23:36:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242761AbiECVV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 May 2022 17:21:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33686 "EHLO
+        id S242914AbiECVii (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 May 2022 17:38:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242741AbiECVVT (ORCPT
+        with ESMTP id S229451AbiECVii (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 May 2022 17:21:19 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDF0E4091C
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 14:17:45 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id s11-20020a4ab54b000000b0035f0178dfcfso943930ooo.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 May 2022 14:17:45 -0700 (PDT)
+        Tue, 3 May 2022 17:38:38 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B62892F03B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 14:35:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JBcUXt5dt4Py/iqZdre4Zy424VTqJ8vz54Hn9FgKdxs=;
-        b=G8KQVq6J/KLIzXxh/gCjlEbeH5myusk0qfSJ+kOnrXRM6suRjc/cRd11ipsFif0iW8
-         5Sa8FtrQt7pm0l0ckHDYes4z463oi5Id1/KwoUukneYOQvjP+sDXHJGMqnhE9nzj8LDQ
-         VJDg34XWtAhhbrtEtRs2IVEWoImvmCpAry2xND3O/uhLuqJD98jPC225AlIH+ACitKL5
-         ZEci23lUxJLDLh9I5BPhR+t7lasdKgR79DkpBuHpfcyVmh4FkY6F8MPrw9KhSuoBrZYA
-         Zp8YDqZ61rwpDe4AG7P8aYaH9wWdC1QSeG1cnZlUBXpKK2ZnuqoyFE45WxmzBKoLD7lM
-         e5IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JBcUXt5dt4Py/iqZdre4Zy424VTqJ8vz54Hn9FgKdxs=;
-        b=i3iLEM/tBstzT5qBC9FwlJKEb+jWFmmfitFsHRqvq2JeplLGbRHWS7j65usqj/sZA+
-         2/MahOpGCK0WjZOMkauFcMnRrD2x1DLVV3q1lR3BUlbVbibyxeME8Bqk2udczPALyTK+
-         6aq3a2ZA+UObVnRpiq3buMvfBfMMy8dDtHQqyBM/iA4eKpVtIgBG8kvwkX89TKkbNrBJ
-         ryJgkGDjVPwQeAVGd2UUhVmuP/YTUab4FhCBQVO17odkBnZ4xjzZUfCs+pkJdAKFZ6vb
-         0tL5igSLvoQJdReERKqwEt02U5t6TMGqOTaqFAMylmRzOT8DamgSoL9tqSO/y3vPq0wd
-         NYrw==
-X-Gm-Message-State: AOAM530AHqj5UhFzivDyfREd4no/tPp4BOyodBZorcM8z3YudywxzvoG
-        1gVXWX98lyc6uD/cxKN733qY3Q==
-X-Google-Smtp-Source: ABdhPJyf2RQj+l4lDSS1iSQb6aXRzO2rbt5RlRQcGdLnQvfRr5ayUX2SKaYBWt2w5H2xWB0bVkYeVA==
-X-Received: by 2002:a4a:8242:0:b0:33a:336b:8a00 with SMTP id t2-20020a4a8242000000b0033a336b8a00mr6358546oog.72.1651612665125;
-        Tue, 03 May 2022 14:17:45 -0700 (PDT)
-Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id b3-20020a056830104300b0060603221263sm4305906otp.51.2022.05.03.14.17.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 May 2022 14:17:44 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Georgi Djakov <djakov@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 4/4] interconnect: qcom: sc8180x: Mark some BCMs keepalive
-Date:   Tue,  3 May 2022 14:19:25 -0700
-Message-Id: <20220503211925.1022169-5-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220503211925.1022169-1-bjorn.andersson@linaro.org>
-References: <20220503211925.1022169-1-bjorn.andersson@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651613701; x=1683149701;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=b4/Uh/Pw2Zu7mxF1EPADNd1UTadTaPNoZ7cI7q3eRGw=;
+  b=yk//w5CJutMbbOEH7rs2Basruuvj8ND1ZOAofB5fgczL0piLGGo1KINE
+   cX+EWLrDVMi6jaYOQsx/tqvUL3Pho4vEtSm24GdkdSwhQ85wgxbpapEmf
+   wU7k0SjnBaJ9ZupxlI6lE6CPNNAtwq1YVfTbY27XtRwreKhDAD1hokgKr
+   8=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 May 2022 14:35:00 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 May 2022 14:35:00 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 3 May 2022 14:34:59 -0700
+Received: from [10.38.244.235] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 3 May 2022
+ 14:34:57 -0700
+Message-ID: <df93e33b-fa5a-af29-1be5-76262a17ce0a@quicinc.com>
+Date:   Tue, 3 May 2022 14:34:55 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 04/25] drm/msm/dpu: move SSPP debugfs creation to
+ dpu_kms.c
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
+ <20220209172520.3719906-5-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220209172520.3719906-5-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,92 +73,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In line with other platforms, mark BCMs controlling paths between the
-CPU, AOSS, GIC and memory as keepalive.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/interconnect/qcom/sc8180x.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/sc8180x.c b/drivers/interconnect/qco=
-m/sc8180x.c
-index 86500d05caa3..1a9a39ab9c05 100644
---- a/drivers/interconnect/qcom/sc8180x.c
-+++ b/drivers/interconnect/qcom/sc8180x.c
-@@ -173,29 +173,29 @@ DEFINE_QNODE(slv_qup_core_1, SC8180X_SLAVE_QUP_CORE_1=
-, 1, 4);
- DEFINE_QNODE(slv_qup_core_2, SC8180X_SLAVE_QUP_CORE_2, 1, 4);
-=20
- DEFINE_QBCM(bcm_acv, "ACV", false, &slv_ebi);
--DEFINE_QBCM(bcm_mc0, "MC0", false, &slv_ebi);
--DEFINE_QBCM(bcm_sh0, "SH0", false, &slv_qns_llcc);
-+DEFINE_QBCM(bcm_mc0, "MC0", true, &slv_ebi);
-+DEFINE_QBCM(bcm_sh0, "SH0", true, &slv_qns_llcc);
- DEFINE_QBCM(bcm_mm0, "MM0", false, &slv_qns_mem_noc_hf);
- DEFINE_QBCM(bcm_co0, "CO0", false, &slv_qns_cdsp_mem_noc);
- DEFINE_QBCM(bcm_ce0, "CE0", false, &mas_qxm_crypto);
--DEFINE_QBCM(bcm_cn0, "CN0", false, &mas_qnm_snoc, &slv_qhs_a1_noc_cfg, &sl=
-v_qhs_a2_noc_cfg, &slv_qhs_ahb2phy_refgen_center, &slv_qhs_ahb2phy_refgen_e=
-ast, &slv_qhs_ahb2phy_refgen_west, &slv_qhs_ahb2phy_south, &slv_qhs_aop, &s=
-lv_qhs_aoss, &slv_qhs_camera_cfg, &slv_qhs_clk_ctl, &slv_qhs_compute_dsp, &=
-slv_qhs_cpr_cx, &slv_qhs_cpr_mmcx, &slv_qhs_cpr_mx, &slv_qhs_crypto0_cfg, &=
-slv_qhs_ddrss_cfg, &slv_qhs_display_cfg, &slv_qhs_emac_cfg, &slv_qhs_glm, &=
-slv_qhs_gpuss_cfg, &slv_qhs_imem_cfg, &slv_qhs_ipa, &slv_qhs_mnoc_cfg, &slv=
-_qhs_npu_cfg, &slv_qhs_pcie0_cfg, &slv_qhs_pcie1_cfg, &slv_qhs_pcie2_cfg, &=
-slv_qhs_pcie3_cfg, &slv_qhs_pdm, &slv_qhs_pimem_cfg, &slv_qhs_prng, &slv_qh=
-s_qdss_cfg, &slv_qhs_qspi_0, &slv_qhs_qspi_1, &slv_qhs_qupv3_east0, &slv_qh=
-s_qupv3_east1, &slv_qhs_qupv3_west, &slv_qhs_sdc2, &slv_qhs_sdc4, &slv_qhs_=
-security, &slv_qhs_snoc_cfg, &slv_qhs_spss_cfg, &slv_qhs_tcsr, &slv_qhs_tlm=
-m_east, &slv_qhs_tlmm_south, &slv_qhs_tlmm_west, &slv_qhs_tsif, &slv_qhs_uf=
-s_card_cfg, &slv_qhs_ufs_mem0_cfg, &slv_qhs_ufs_mem1_cfg, &slv_qhs_usb3_0, =
-&slv_qhs_usb3_1, &slv_qhs_usb3_2, &slv_qhs_venus_cfg, &slv_qhs_vsense_ctrl_=
-cfg, &slv_srvc_cnoc);
-+DEFINE_QBCM(bcm_cn0, "CN0", true, &mas_qnm_snoc, &slv_qhs_a1_noc_cfg, &slv=
-_qhs_a2_noc_cfg, &slv_qhs_ahb2phy_refgen_center, &slv_qhs_ahb2phy_refgen_ea=
-st, &slv_qhs_ahb2phy_refgen_west, &slv_qhs_ahb2phy_south, &slv_qhs_aop, &sl=
-v_qhs_aoss, &slv_qhs_camera_cfg, &slv_qhs_clk_ctl, &slv_qhs_compute_dsp, &s=
-lv_qhs_cpr_cx, &slv_qhs_cpr_mmcx, &slv_qhs_cpr_mx, &slv_qhs_crypto0_cfg, &s=
-lv_qhs_ddrss_cfg, &slv_qhs_display_cfg, &slv_qhs_emac_cfg, &slv_qhs_glm, &s=
-lv_qhs_gpuss_cfg, &slv_qhs_imem_cfg, &slv_qhs_ipa, &slv_qhs_mnoc_cfg, &slv_=
-qhs_npu_cfg, &slv_qhs_pcie0_cfg, &slv_qhs_pcie1_cfg, &slv_qhs_pcie2_cfg, &s=
-lv_qhs_pcie3_cfg, &slv_qhs_pdm, &slv_qhs_pimem_cfg, &slv_qhs_prng, &slv_qhs=
-_qdss_cfg, &slv_qhs_qspi_0, &slv_qhs_qspi_1, &slv_qhs_qupv3_east0, &slv_qhs=
-_qupv3_east1, &slv_qhs_qupv3_west, &slv_qhs_sdc2, &slv_qhs_sdc4, &slv_qhs_s=
-ecurity, &slv_qhs_snoc_cfg, &slv_qhs_spss_cfg, &slv_qhs_tcsr, &slv_qhs_tlmm=
-_east, &slv_qhs_tlmm_south, &slv_qhs_tlmm_west, &slv_qhs_tsif, &slv_qhs_ufs=
-_card_cfg, &slv_qhs_ufs_mem0_cfg, &slv_qhs_ufs_mem1_cfg, &slv_qhs_usb3_0, &=
-slv_qhs_usb3_1, &slv_qhs_usb3_2, &slv_qhs_venus_cfg, &slv_qhs_vsense_ctrl_c=
-fg, &slv_srvc_cnoc);
- DEFINE_QBCM(bcm_mm1, "MM1", false, &mas_qxm_camnoc_hf0_uncomp, &mas_qxm_ca=
-mnoc_hf1_uncomp, &mas_qxm_camnoc_sf_uncomp, &mas_qxm_camnoc_hf0, &mas_qxm_c=
-amnoc_hf1, &mas_qxm_mdp0, &mas_qxm_mdp1);
- DEFINE_QBCM(bcm_qup0, "QUP0", false, &mas_qup_core_0, &mas_qup_core_1, &ma=
-s_qup_core_2);
- DEFINE_QBCM(bcm_sh2, "SH2", false, &slv_qns_gem_noc_snoc);
- DEFINE_QBCM(bcm_mm2, "MM2", false, &mas_qxm_camnoc_sf, &mas_qxm_rot, &mas_=
-qxm_venus0, &mas_qxm_venus1, &mas_qxm_venus_arm9, &slv_qns2_mem_noc);
--DEFINE_QBCM(bcm_sh3, "SH3", false, &mas_acm_apps);
-+DEFINE_QBCM(bcm_sh3, "SH3", true, &mas_acm_apps);
- DEFINE_QBCM(bcm_sn0, "SN0", false, &slv_qns_gemnoc_sf);
- DEFINE_QBCM(bcm_sn1, "SN1", false, &slv_qxs_imem);
--DEFINE_QBCM(bcm_sn2, "SN2", false, &slv_qns_gemnoc_gc);
-+DEFINE_QBCM(bcm_sn2, "SN2", true, &slv_qns_gemnoc_gc);
- DEFINE_QBCM(bcm_co2, "CO2", false, &mas_qnm_npu);
- DEFINE_QBCM(bcm_ip0, "IP0", false, &slv_ipa_core_slave);
--DEFINE_QBCM(bcm_sn3, "SN3", false, &slv_srvc_aggre1_noc, &slv_qns_cnoc);
-+DEFINE_QBCM(bcm_sn3, "SN3", true, &slv_srvc_aggre1_noc, &slv_qns_cnoc);
- DEFINE_QBCM(bcm_sn4, "SN4", false, &slv_qxs_pimem);
- DEFINE_QBCM(bcm_sn8, "SN8", false, &slv_xs_pcie_0, &slv_xs_pcie_1, &slv_xs=
-_pcie_2, &slv_xs_pcie_3);
- DEFINE_QBCM(bcm_sn9, "SN9", false, &mas_qnm_aggre1_noc);
- DEFINE_QBCM(bcm_sn11, "SN11", false, &mas_qnm_aggre2_noc);
- DEFINE_QBCM(bcm_sn14, "SN14", false, &slv_qns_pcie_mem_noc);
--DEFINE_QBCM(bcm_sn15, "SN15", false, &mas_qnm_gemnoc);
-+DEFINE_QBCM(bcm_sn15, "SN15", true, &mas_qnm_gemnoc);
-=20
- static struct qcom_icc_bcm * const aggre1_noc_bcms[] =3D {
- 	&bcm_sn3,
---=20
-2.35.1
+On 2/9/2022 9:24 AM, Dmitry Baryshkov wrote:
+> As SSPP blocks are now visible through dpu_kms->rm.sspp_blocks, move
+> SSPP debugfs creation from dpu_plane to dpu_kms.
+> 
 
+Change is fine by itself, but is it really needed?
+Wouldnt it be better to keep dpu_debugfs_sspp_init in dpu_plane.c?
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  1 -
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 19 +++++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 16 ----------------
+>   3 files changed, 19 insertions(+), 17 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> index f805c30643b1..674f311f99b4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> @@ -415,7 +415,6 @@ struct dpu_hw_pipe *dpu_hw_sspp_init(enum dpu_sspp idx,
+>    */
+>   void dpu_hw_sspp_destroy(struct dpu_hw_pipe *ctx);
+>   
+> -void dpu_debugfs_sspp_init(struct dpu_kms *dpu_kms, struct dentry *debugfs_root);
+>   int _dpu_hw_sspp_init_debugfs(struct dpu_hw_pipe *hw_pipe, struct dpu_kms *kms, struct dentry *entry);
+>   
+>   #endif /*_DPU_HW_SSPP_H */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 4d2b75f3bc89..8196b11fe2f3 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -259,6 +259,25 @@ void dpu_debugfs_create_regset32(const char *name, umode_t mode,
+>   	debugfs_create_file(name, mode, parent, regset, &dpu_fops_regset32);
+>   }
+>   
+> +static void dpu_debugfs_sspp_init(struct dpu_kms *dpu_kms, struct dentry *debugfs_root)
+> +{
+> +	struct dentry *entry = debugfs_create_dir("sspp", debugfs_root);
+> +	int i;
+> +
+> +	if (IS_ERR(entry))
+> +		return;
+> +
+> +	for (i = SSPP_NONE; i < SSPP_MAX; i++) {
+> +		struct dpu_hw_pipe *pipe_hw;
+> +
+> +		if (!dpu_kms->rm.sspp_blks[i - SSPP_NONE])
+> +			continue;
+> +
+> +		pipe_hw = to_dpu_hw_pipe(dpu_kms->rm.sspp_blks[i - SSPP_NONE]);
+> +		_dpu_hw_sspp_init_debugfs(pipe_hw, dpu_kms, entry);
+> +	}
+> +}
+> +
+>   static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
+>   {
+>   	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 146dbccd79cd..37742f74a7bf 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -1359,22 +1359,6 @@ void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool enable)
+>   	_dpu_plane_set_qos_ctrl(plane, enable, DPU_PLANE_QOS_PANIC_CTRL);
+>   	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+>   }
+> -
+> -/* SSPP live inside dpu_plane private data only. Enumerate them here. */
+> -void dpu_debugfs_sspp_init(struct dpu_kms *dpu_kms, struct dentry *debugfs_root)
+> -{
+> -	struct drm_plane *plane;
+> -	struct dentry *entry = debugfs_create_dir("sspp", debugfs_root);
+> -
+> -	if (IS_ERR(entry))
+> -		return;
+> -
+> -	drm_for_each_plane(plane, dpu_kms->dev) {
+> -		struct dpu_plane *pdpu = to_dpu_plane(plane);
+> -
+> -		_dpu_hw_sspp_init_debugfs(pdpu->pipe_hw, dpu_kms, entry);
+> -	}
+> -}
+>   #endif
+>   
+>   static bool dpu_plane_format_mod_supported(struct drm_plane *plane,
