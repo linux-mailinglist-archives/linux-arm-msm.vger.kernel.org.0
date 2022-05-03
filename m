@@ -2,71 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 019A3518B13
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 19:27:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C984518B2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 19:35:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240351AbiECRbY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 May 2022 13:31:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45072 "EHLO
+        id S240473AbiECRjM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 May 2022 13:39:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240359AbiECRbX (ORCPT
+        with ESMTP id S240547AbiECRjE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 May 2022 13:31:23 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D34D73DDE0
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 10:27:49 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-d6e29fb3d7so17826133fac.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 May 2022 10:27:49 -0700 (PDT)
+        Tue, 3 May 2022 13:39:04 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B00C7205D3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 10:35:30 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id i25-20020a9d6259000000b00605df9afea7so11758957otk.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 May 2022 10:35:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GiDmkd6XuqThs4HFUR/z2IY+5TaIpRlZZuzKQVJMQSQ=;
-        b=iKpAcaR3ZIEHJzgosS5umMsBITErH9PsIh1LOOZtpnsgkbyzkfOBUMp4c0k3m45SOe
-         ISlOoCuWkTg8GqmwbMDX8I8KYDI4UHLy9m6KOdg0HUNre0FuIklM2ZBa4/HkWJER+tva
-         mPQXraMUJRMhKPR0z1XY51MaCyrXv7dzCLVzKcFJFAgeW/b2VW0y51tmm/ZthMXDvsRS
-         ubgOX/mZJn118Oj+ZK6H+pCFV5kbc3IaZ3aQosXLHC8p+fA+hUxM8sxsbQ9Py2kYU0cN
-         yiMI7zKD/mP5c14pprXrpCiWIQ9yb2JdgxoAU1uxUbf65GcOfRHPN7IYNTmNMEgbTdce
-         3+Xw==
+        d=kali.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=QfFh0JorF10YS8jRL4ot/BDPWmDj6EZaL7oZvjv3Y4g=;
+        b=ZmPQGGxZ1xNN/3ZnxABfH+S4dxGHSOp4xV35ALw7zVi0fEbQqhjvdLL33LibysCLc6
+         gndVhg10yKBFoPGn++Q1Bjr1fGYAHLH89H69AumHDYCEvZRTJkLZcFWHu1rS6kS4yt/H
+         YNtgfRTi1E3KvA/oPx/GVRJbBIYkaRYcUNaf8iq16nd6zoyd3HL9LbytMd4ijZ/qh6Qb
+         +JLlP7UrqDZMTfq7gBD/ige/UEfSJ2LGEGUUSGqjNmG2qNuwFB0M0hJO/mgp78zhmprQ
+         E/RjYf8s4qXceb2u7XoFE4QwO1sKpOYyOUSz+epbIY/4EcjmqfjflN10M/9hu4sOOPSf
+         euXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GiDmkd6XuqThs4HFUR/z2IY+5TaIpRlZZuzKQVJMQSQ=;
-        b=Gf+kg0PdvOZT15jN0BrRgVlnXqLt3tIKWu39ahs48oR+wMK/Nf3QoMVxLI2i3p+Hag
-         4n9+gR+M1rziMoq4pBNNK6Kt61/4BFIx1DvrKaw4aLUaz8D/7VB3z42foZy6v2BbBZP+
-         DvKFOVhUM4PHfOTOvQSAxe/SePh6+BhFulBmmfQ4qSX16hwKdz9fAFy8ZCM1xhyIAmB7
-         DGQElWjlfnKkfea9QriLiDnyvexBCOBk5G6oS/uNOUQw5d2QsSR6QRbfTB5xZD0bTBQO
-         010rH/3krCnKzVc50fbs+4wWk/sGm5wjKivhul1QevbPVPIWiBjuB6M+4FOPwt07oEaV
-         lxrA==
-X-Gm-Message-State: AOAM531p7uXIoL1Kks8HaQjjHy++HY14B+j0G8nxd94HnHTZEddOQYmG
-        9spgf6BvsTd7XAmD2fRrVpKZuQ==
-X-Google-Smtp-Source: ABdhPJy9mynMQRqNpxS+jRVFv9yYAa3f3I1JGltk29Z+pcuQXfmF5wAaEK8KsCPIUxzrSCa7Yp2muQ==
-X-Received: by 2002:a05:6870:6087:b0:e1:dc8b:56ba with SMTP id t7-20020a056870608700b000e1dc8b56bamr2180822oae.22.1651598869224;
-        Tue, 03 May 2022 10:27:49 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a8-20020a4ad5c8000000b0035eb4e5a6c6sm5096138oot.28.2022.05.03.10.27.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 May 2022 10:27:48 -0700 (PDT)
-Date:   Tue, 3 May 2022 12:27:43 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org, jonathan@marek.ca,
-        tdas@codeaurora.org, anischal@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: sm8350: Add DISPCC node
-Message-ID: <YnFmD8pEmPxpXex7@builder.lan>
-References: <20220503130448.520470-1-robert.foss@linaro.org>
- <20220503130448.520470-8-robert.foss@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QfFh0JorF10YS8jRL4ot/BDPWmDj6EZaL7oZvjv3Y4g=;
+        b=50OThWVZBIdu5Dj7mSXpFBrDdyTyOudZwFSwCwRAEaAutHH4brrEPLWJpYVWzfgZlF
+         d8zYun5qBxaHbJHXwV3eyJxJtIMQ1ef6FypKjKQzjhaGHhYhfL+UzOxbjKpg+pzGRJK3
+         kjx1luZdmGfGKFrDSJowWOUu/I1yXzKxDcDcWmQj7ht9XY7HaU15OqpKTZSer1UrLG/6
+         7xIgOSmtaqOQgykMSXezhCjh2hQioVGO6XRyxo1Z2R1fpcveDQ5OtpUqKIRxCI2yfAA5
+         Juubqbh7XeqShmM/IqysOQ5Ml9UlD7KUd1LT627f4BmC64q/qeEoencTTRqpKhUwAkFf
+         34bQ==
+X-Gm-Message-State: AOAM531kBsmPM0PD57+6Lth9DRnoJRj8prorksFVUjePITvC9AWBHeTv
+        dJGVaxa5P2okk4X4JcCQfLwGSQ==
+X-Google-Smtp-Source: ABdhPJxT1Ilrm5hn2NJmQeaKaOKr12fYEZTHVrzNifiz+9FWtgnvvqVNJXC95vLYjSotHlZFpe8Z6w==
+X-Received: by 2002:a9d:480e:0:b0:606:59b:2b2 with SMTP id c14-20020a9d480e000000b00606059b02b2mr5490428otf.277.1651599329952;
+        Tue, 03 May 2022 10:35:29 -0700 (PDT)
+Received: from [192.168.11.16] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id p203-20020acaf1d4000000b00325cda1ffacsm3507693oih.43.2022.05.03.10.35.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 May 2022 10:35:29 -0700 (PDT)
+Message-ID: <c9da618b-8910-d878-cb78-6304c687f725@kali.org>
+Date:   Tue, 3 May 2022 12:35:27 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220503130448.520470-8-robert.foss@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.8.1
+Subject: Re: [PATCH] PCI: qcom: Remove ddrss_sf_tbu clock from sc8180x
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220331013415.592748-1-bjorn.andersson@linaro.org>
+From:   Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <20220331013415.592748-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,70 +80,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 03 May 08:04 CDT 2022, Robert Foss wrote:
 
-> Add the dispcc clock-controller DT node for sm8350.
-> 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 3/30/22 8:34 PM, Bjorn Andersson wrote:
+> The Qualcomm SC8180X platform was piggy backing on the SM8250
+> qcom_pcie_cfg, but the platform doesn't have the ddrss_sf_tbu clock, so
+> it now fails to probe due to the missing clock.
+>
+> Give SC8180X its own qcom_pcie_cfg, without the ddrss_sf_tbu flag set.
+>
+> Fixes: 0614f98bbb9f ("PCI: qcom: Add ddrss_sf_tbu flag")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm8350.dtsi | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> index 52428b6df64e..94c2519e9f48 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> @@ -3,7 +3,9 @@
->   * Copyright (c) 2020, Linaro Limited
->   */
->  
-> +#include <dt-bindings/interconnect/qcom,sm8350.h>
-
-This looks unrelated.
-
-Rest looks good.
-
-Regards,
-Bjorn
-
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/clock/qcom,dispcc-sm8350.h>
->  #include <dt-bindings/clock/qcom,gcc-sm8350.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
->  #include <dt-bindings/dma/qcom-gpi.h>
-> @@ -2525,6 +2527,31 @@ usb_2_dwc3: usb@a800000 {
->  			};
->  		};
->  
-> +		dispcc: clock-controller@af00000 {
-> +			compatible = "qcom,sm8350-dispcc";
-> +			reg = <0 0x0af00000 0 0x10000>;
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				 <0>,
-> +				 <0>,
-> +				 <0>,
-> +				 <0>,
-> +				 <0>,
-> +				 <0>;
-> +			clock-names = "bi_tcxo",
-> +				      "dsi0_phy_pll_out_byteclk",
-> +				      "dsi0_phy_pll_out_dsiclk",
-> +				      "dsi1_phy_pll_out_byteclk",
-> +				      "dsi1_phy_pll_out_dsiclk",
-> +				      "dp_phy_pll_link_clk",
-> +				      "dp_phy_pll_vco_div_clk";
-> +			#clock-cells = <1>;
-> +			#reset-cells = <1>;
-> +			#power-domain-cells = <1>;
+>   drivers/pci/controller/dwc/pcie-qcom.c | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 6ab90891801d..816028c0f6ed 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1550,6 +1550,11 @@ static const struct qcom_pcie_cfg sc7280_cfg = {
+>   	.pipe_clk_need_muxing = true,
+>   };
+>   
+> +static const struct qcom_pcie_cfg sc8180x_cfg = {
+> +	.ops = &ops_1_9_0,
+> +	.has_tbu_clk = true,
+> +};
 > +
-> +			power-domains = <&rpmhpd SM8350_MMCX>;
-> +			power-domain-names = "mmcx";
-> +		};
-> +
->  		adsp: remoteproc@17300000 {
->  			compatible = "qcom,sm8350-adsp-pas";
->  			reg = <0 0x17300000 0 0x100>;
-> -- 
-> 2.34.1
-> 
+>   static const struct dw_pcie_ops dw_pcie_ops = {
+>   	.link_up = qcom_pcie_link_up,
+>   	.start_link = qcom_pcie_start_link,
+> @@ -1656,7 +1661,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>   	{ .compatible = "qcom,pcie-qcs404", .data = &ipq4019_cfg },
+>   	{ .compatible = "qcom,pcie-sdm845", .data = &sdm845_cfg },
+>   	{ .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
+> -	{ .compatible = "qcom,pcie-sc8180x", .data = &sm8250_cfg },
+> +	{ .compatible = "qcom,pcie-sc8180x", .data = &sc8180x_cfg },
+>   	{ .compatible = "qcom,pcie-sm8450-pcie0", .data = &sm8450_pcie0_cfg },
+>   	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &sm8450_pcie1_cfg },
+>   	{ .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
+
+Hi Bjorn,
+
+Tested on the Lenovo Flex 5G and fixes the issue I saw.
+
+Tested-by: Steev Klimaszewski <steev@kali.org>
+
