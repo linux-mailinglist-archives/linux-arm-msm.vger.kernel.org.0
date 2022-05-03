@@ -2,226 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81F6951891D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 17:53:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3ED8E518928
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 17:54:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238723AbiECP4f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 May 2022 11:56:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40468 "EHLO
+        id S238998AbiECP5f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 May 2022 11:57:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234395AbiECP4e (ORCPT
+        with ESMTP id S236407AbiECP5e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 May 2022 11:56:34 -0400
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ADD63B283;
-        Tue,  3 May 2022 08:53:01 -0700 (PDT)
-Received: by mail-ot1-f41.google.com with SMTP id g11-20020a9d648b000000b00605e4278793so10945295otl.7;
-        Tue, 03 May 2022 08:53:01 -0700 (PDT)
+        Tue, 3 May 2022 11:57:34 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1E133B2BA;
+        Tue,  3 May 2022 08:54:01 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id j8so15296548pll.11;
+        Tue, 03 May 2022 08:54:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=o6MKZ6EdwZOffehvzKxtwmorygtElybKIQWosDARmac=;
+        b=N9wn5tt042Vo6cF/rgCW+QiLyhKSHaRhaGnf/ly5tJzrALccDaY48Pj0CZQcA+XoTM
+         t7Bta1Aox/z58eYkQy4R3M4vjuQd1RrX1oRwofU/CeGJ1oP/ZidYv2zQg43gPbfoYnf9
+         QpANmnxjro+gjCJn7YaJMqXUNkFfVdaLyyfZHem4NmA/mD/uEOzaPLWAyQMDvgXoYfru
+         nFsdRAh7bGHmDPuYe1pcJfWoDz4lELSkKdA02tAn8JQKpBFLM7PRETxc0V9X41d0vzkD
+         S6kGFL0gPIVqKrpb6ciCqfsFzAGSewC4l4Hqly2b6FpsMJcKBb3iVSYmXJWtXWPNQyFl
+         LSMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=O/VorzOR56WTDjehRhSMK8LAzwC+xTJ10pdPBqWQa/w=;
-        b=JZyHccr1b8zVoj8k8ZWNVOsTF+2phSSt2BweSTj0RWC7GPaVX7PtrzE7Py9xbuPJjN
-         OncER3USBLVb9KFtXFk5vDVqx8Gs5VPjdCHkyCRCSMu1/1B4iaXLDsL7NVUR/TwkyD+g
-         lDF6KMV4NDZQLQHdIg3xfCtKqsKgMadaAgVXTwY1clegkrFs5CD0gygp01NDTS1AWSYs
-         UQir/yoRYHvW7UKR9CH1tCHbEekLrPrf9pkH0CWEwCvtEUQHmDEqqbkgN9C3a9UVltnL
-         VOBUpt8BZVm9LKmm+iHdncLQ+/rejpzWj++vmmTQa9h+Bvyu0M27Uwbs4Iad14Y7hUAl
-         QXrw==
-X-Gm-Message-State: AOAM532GPNyU4qC59fMDNGZ9kahhhHd1tJ9PECKy+a+023lQM0FkOXFk
-        jdDtVO6j4lsX9X8UofaXxQ==
-X-Google-Smtp-Source: ABdhPJw1G98NTO6a1c3CpiXHWrP6FSOoG8WJv5RMlXbGCgu1vAO2Tm+NHbG7kF7E7UVgPTuww9cgbQ==
-X-Received: by 2002:a9d:7e87:0:b0:605:fa3c:95ba with SMTP id m7-20020a9d7e87000000b00605fa3c95bamr6021382otp.66.1651593180862;
-        Tue, 03 May 2022 08:53:00 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id g14-20020a05683030ae00b0060603221239sm4038007ots.9.2022.05.03.08.53.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 May 2022 08:53:00 -0700 (PDT)
-Received: (nullmailer pid 3768349 invoked by uid 1000);
-        Tue, 03 May 2022 15:52:59 -0000
-Date:   Tue, 3 May 2022 10:52:59 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, amitk@kernel.org,
-        rafael@kernel.org, daniel.lezcano@linaro.org, rui.zhang@intel.com,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/5] dt-bindings: thermal: tsens: Add ipq8074
- compatible
-Message-ID: <YnFP2x113LdM5p3Q@robh.at.kernel.org>
-References: <20220501182200.47328-1-robimarko@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=o6MKZ6EdwZOffehvzKxtwmorygtElybKIQWosDARmac=;
+        b=RKlkKvIjesY4/w60cr95sZAAwb1u1JoGLZwc5NiS5Eq5j17s9FLeJ5kU1ETPm3YEmR
+         0Sb3BgoyZNSrwu7EqA4a6aTnUNwd6AuI7JW0Na98TVlZv2ppRZJEKgq8KxY8C3SxGgOn
+         tmAJwUl6wQoAyL5dAs/lX729V5ZHMfCd1CA9WZVIE054eU+txXcCuN7qAIXKrz9GH6oN
+         Uznz1sdpvyJSyvRwRNVco1uZP6uitoskTCfmwbIlU0vk0mM2jX4WYMk8rY5q6Iu/cltK
+         kUQ+pUhYVU11tGO0HFm/iGn2WvzjRtKPwY9TkTFKy1LSFbV5mSHYjZWpY8ReI20GaHSI
+         QN9Q==
+X-Gm-Message-State: AOAM530at+QVaTFb8Qa2TF+QpebFmsO+Kcsk1JXjlIUWHJuX4+85L6/u
+        3Kxt0ibD1PUYOiLOBqSSMi08VAm3iOKrz3PeypI=
+X-Google-Smtp-Source: ABdhPJxH2Zx9sWLWrIYKsCaXKwgvdgawQ08skaiwUhzBeEbbEJlNhkElWWFw4EqmfxQMYAQmKl9U7TSQsPYxgvJ+Kdc=
+X-Received: by 2002:a17:902:6ac7:b0:150:24d6:b2ee with SMTP id
+ i7-20020a1709026ac700b0015024d6b2eemr17508346plt.168.1651593241176; Tue, 03
+ May 2022 08:54:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220501182200.47328-1-robimarko@gmail.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
+ <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org> <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
+ <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org> <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
+ <606cc762-a0c2-49a4-3e5d-d2dbd4595bc7@linaro.org> <CAD=FV=W_SA-3PfDFi-Gkjk9pew5bchFNjQhXX8MkZyuy5UohEQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=W_SA-3PfDFi-Gkjk9pew5bchFNjQhXX8MkZyuy5UohEQ@mail.gmail.com>
+From:   =?UTF-8?Q?Krzysztof_Koz=C5=82owski?= <k.kozlowski.k@gmail.com>
+Date:   Tue, 3 May 2022 17:53:50 +0200
+Message-ID: <CAJKOXPdt5WTg4VU-TEW3dmPHR76dKg63XVxRQfa7ZSKc_jz6Ag@mail.gmail.com>
+Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 01, 2022 at 08:21:56PM +0200, Robert Marko wrote:
-> Qualcomm IPQ8074 has tsens v2.3.0 block, though unlike existing v2 IP it
-> only uses one IRQ, so tsens v2 compatible cannot be used as the fallback.
-> 
-> We also have to make sure that correct interrupts are set according to
-> compatibles, so populate interrupt information per compatibles.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> ---
-> Changes in v2:
-> * No need for a list in compatible check
-> * Specify minItems and maxItems for interrupt and interrupt-names
-> ---
->  .../bindings/thermal/qcom-tsens.yaml          | 74 +++++++++++++++++--
->  1 file changed, 67 insertions(+), 7 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> index b6406bcc683f..e9b85c99bb60 100644
-> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> @@ -56,6 +56,10 @@ properties:
->                - qcom,sm8350-tsens
->            - const: qcom,tsens-v2
->  
-> +      - description: v2 of TSENS with combined interrupt
-> +        enum:
-> +          - qcom,ipq8074-tsens
-> +
->    reg:
->      items:
->        - description: TM registers
-> @@ -63,15 +67,11 @@ properties:
->  
->    interrupts:
->      minItems: 1
-> -    items:
-> -      - description: Combined interrupt if upper or lower threshold crossed
-> -      - description: Interrupt if critical threshold crossed
-> +    maxItems: 2
->  
->    interrupt-names:
->      minItems: 1
-> -    items:
-> -      - const: uplow
-> -      - const: critical
-> +    maxItems: 2
->  
->    nvmem-cells:
->      minItems: 1
-> @@ -125,21 +125,66 @@ allOf:
->        properties:
->          interrupts:
->            maxItems: 1
+On Tue, 19 Apr 2022 at 18:55, Doug Anderson <dianders@chromium.org> wrote:
 
-You can drop 'maxItems' as it is implied by 'items' length.
+> > Except shuffling the compatibles in bindings, you are changing the
+> > meaning of final "google,lazor" compatible. The bootloader works as
+> > expected - from most specific (rev5-sku6) to most generic compatible
+> > (google,lazor) but why do you need to advertise the latest rev as
+> > "google,lazor"? Why the bootloader on latest rev (e.g. rev7) cannot bind
+> > to rev7 compatible?
+>
+> The problem really comes along when a board strapped as -rev8 comes
+> along that is a board spin (and thus a new revision) but "should" be
+> invisible to software. Since it should be invisible to software we
+> want it to boot without any software changes. As per my previous mail,
+> sometimes HW guys make these changes without first consulting software
+> (since it's invisible to SW!) and we want to make sure that they're
+> still going to strap as "-rev8".
 
-> +          items:
-> +            - description: Combined interrupt if upper or lower threshold crossed
->          interrupt-names:
->            maxItems: 1
+If you want to boot it without any SW changes, do not change the SW.
+Do not change the DTB. If you admit that you want to change DTB, so
+the SW, sure, change it and accept the outcome - you have a new
+compatible. This new compatible can be or might be not compatible with
+rev7. Up to you.
 
-ditto
+>
+> So what happens with this -rev8 board? The bootloader will check and
+> it won't see any device tree that advertises "google,lazor-rev8",
+> right?
 
-> +          items:
-> +            - const: uplow
->  
-> -    else:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,msm8953-tsens
-> +              - qcom,msm8996-tsens
-> +              - qcom,msm8998-tsens
-> +              - qcom,sc7180-tsens
-> +              - qcom,sc7280-tsens
-> +              - qcom,sc8180x-tsens
-> +              - qcom,sdm630-tsens
-> +              - qcom,sdm845-tsens
-> +              - qcom,sm8150-tsens
-> +              - qcom,sm8250-tsens
-> +              - qcom,sm8350-tsens
-> +              - qcom,tsens-v2
-> +    then:
->        properties:
->          interrupts:
->            minItems: 2
+Your bootloader looks for a specific rev8, which is not compatible
+with rev7 (or is it? I lost the point of your example), and you ship
+it with a DTB which has rev7, but not rev8. You control both pieces -
+bootloader and DTB. You cannot put incompatible pieces of firmware
+(one behaving entirely different than other) and expect proper output.
+This is why you also have bindings.
 
-Same for minItems.
+> If _all_ lazor revisions all include the "google,lazor"
+> compatible then the bootloader won't have any way to know which to
+> pick. The bootloader _doesn't_ have the smarts to know that "-rev7" is
+> closest to "-rev8".
 
-> +          items:
-> +            - description: Combined interrupt if upper or lower threshold crossed
-> +            - description: Interrupt if critical threshold crossed
->          interrupt-names:
->            minItems: 2
+rev7 the next in the compatible list, isn't it? So bootloader picks up
+the fallback...
 
-ditto
+> It'll just randomly pick one of the "google,lazor"
+> boards. :( This is why we only advertise "google,lazor" for the newest
+> device tree.
+>
+> Yes, I agree it's not beautiful but it's what we ended up with. I
+> don't think we want to compromise on the ability to boot new revisions
+> without software changes because that will just incentivize people to
+> not increment the board revision. The only other option would be to
+> make the bootloader smart enough to pick the "next revision down" but
+> so far they haven't been willing to do that.
 
-> +          items:
-> +            - const: uplow
-> +            - const: critical
->  
->    - if:
->        properties:
->          compatible:
->            contains:
->              enum:
-> +              - qcom,ipq8074-tsens
-> +    then:
-> +      properties:
-> +        interrupts:
-> +          maxItems: 1
+Just choose the fallback and follow Devicetree spec...
 
-ditto
+> I guess the question, though, is what action should be taken. I guess
+> options are:
+>
+> 1. Say that the above requirement that new "invisible" HW revs can
+> boot w/ no software changes is not a worthy requirement. Personally, I
+> wouldn't accept this option.
+>
+> 2. Ignore. Don't try to document top level compatible for these devices.
+>
+> 3. Document the compatible and accept that it's going to shuffle around a lot.
+>
+> 4. Try again to get the bootloader to match earlier revisions as fallbacks.
+>
+>
+> > > Now we can certainly argue back and forth above the above scheme and
+> > > how it's terrible and/or great, but it definitely works pretty well
+> > > and it's what we've been doing for a while now. Before that we used to
+> > > proactively add a whole bunch of "future" revisions "just in case".
+> > > That was definitely worse and had the same problem that we'd have to
+> > > shuffle compatibles. See, for instance `rk3288-veyron-jerry.dts`.
+> > >
+> > > One thing we _definitely_ don't want to do is to give HW _any_
+> > > incentive to make board spins _without_ changing the revision. HW
+> > > sometimes makes spins without first involving software and if it
+> > > doesn't boot because they updated the board ID then someone in China
+> > > will just put the old ID in and ship it off. That's bad.
+> > >
+> > > --
+> > >
+> > > But I guess this doesn't answer your question: how can userspace
+> > > identify what board this is running? I don't have an answer to that,
+> > > but I guess I'd say that the top-level "compatible" isn't really it.
+> >
+> > It can, the same as bootloader, by looking at the most specific
+> > compatible (rev7).
+> >
+> > > If nothing else, I think just from the definition it's not guaranteed
+> > > to be right, is it? From the spec: "Specifies a list of platform
+> > > architectures with which this platform is compatible." The key thing
+> > > is "a list". If this can be a list of things then how can you use it
+> > > to uniquely identify what one board you're on?
+> >
+> > The most specific compatible identifies or, like recently Rob confirmed
+> > in case of Renesas, the list of compatibles:
+> > https://lore.kernel.org/linux-devicetree/Yk2%2F0Jf151gLuCGz@robh.at.kernel.org/
+>
+> I'm confused. If the device tree contains the compatibles:
+>
+> "google,lazor-rev4", "google,lazor-rev3", "google,lazor", "qualcomm,sc7180"
+>
+> You want to know what board you're on and you look at the compatible,
+> right? You'll decide that you're on a "google,lazor-rev4" which is the
+> most specific compatible. ...but you could have booted a
+> "google,lazor-rev3". How do you know?
 
-> +          items:
-> +            - description: Combined interrupt if upper, lower or critical thresholds crossed
-> +        interrupt-names:
-> +          maxItems: 1
+Applying the wrong DTB on the wrong device will always give you the
+wrong answer. You can try too boot google,lazor-rev3 on x86 PC and it
+does not make it a google,lazor-rev3...
 
-ditto
-
-> +          items:
-> +            - const: combined
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,ipq8074-tsens
->                - qcom,tsens-v0_1
->                - qcom,tsens-v1
->                - qcom,tsens-v2
-> @@ -222,4 +267,19 @@ examples:
->             #qcom,sensors = <13>;
->             #thermal-sensor-cells = <1>;
->      };
-> +
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    // Example 4 (for any IPQ8074 based SoC-s):
-> +    tsens4: thermal-sensor@4a9000 {
-> +           compatible = "qcom,ipq8074-tsens";
-> +           reg = <0x4a9000 0x1000>,
-> +                 <0x4a8000 0x1000>;
-> +
-> +           interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
-> +           interrupt-names = "combined";
-> +
-> +           #qcom,sensors = <16>;
-> +           #thermal-sensor-cells = <1>;
-> +    };
->  ...
-> -- 
-> 2.35.1
-> 
-> 
+Best regards,
+Krzysztof
