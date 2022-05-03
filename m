@@ -2,97 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 884AE518F1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 22:42:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D927F518F3C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 May 2022 22:45:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236162AbiECUn3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 May 2022 16:43:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48620 "EHLO
+        id S240944AbiECUrT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 May 2022 16:47:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230391AbiECUn2 (ORCPT
+        with ESMTP id S240426AbiECUrQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 May 2022 16:43:28 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62662338B6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 13:39:53 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id w3so6886226qkb.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 May 2022 13:39:53 -0700 (PDT)
+        Tue, 3 May 2022 16:47:16 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F2742C114
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 13:43:43 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id x17so32253004lfa.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 May 2022 13:43:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20210112.gappssmtp.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=CF1rRZMBdGFikP/j43V46JlTy9v9S59RO3PJDooXZCk=;
-        b=s4MMs4b32ZZlqeuY7DthE+KfUczBMMggh5ly/jPZxCKBUh11m+/esR549euW/Q7UY8
-         NVlyl1RSnMXxUjsoElM0SIYxLJexmAeA7Mam8Ofsk/zZJVMK2ulqDKbTAw8USZ1OP00S
-         KSGN3LqcSwpTSBJWQG3sNs5jlms2w6iWNECQ73xaHxG5yMlNdbOOHQ/RPyTKUEQ2Dn+1
-         GXsgLUpy5eHISipD2maX85qvG2d184/ss3Vejuub114MCzJi/N9OPmJqJQ1IokBSuskl
-         kH7k4tU6Aem/mtTobdtDvKpNCEdBwAhPtd2S0hFO7Gdfb2jETPvquu8Qk1ZKJ0B36pk2
-         aNiQ==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BZXNy598rjzssFVD4qqnZnAbN1Mi7pj3r4jBP97stCk=;
+        b=aFed9C8zIczapSE4riexLt2XAw8h3LYQtY5IQY+ksLkEQDCcFzc3V2U5C6ZMNPZ7n7
+         68cmZlUPlcNdgurL+47g3j2gXWj4TOkuqvnfAD7dCX0oaFic5IVB8WTPSo1TJuXuS9Bn
+         esBKOdtY7tZdfwmU8BbKO4h4toxuHjZcJh//BAJskyrJWgwIUTcmtNB+Nki2SAt1A0f5
+         je/otKYLIQsudjFd94fhdlWhb7X9bf4Xk8Yb2Z319l+5BmthjB4mwdtyMa2U54SY/E8y
+         gQJapgBBtiSqPqupZVt0Ly9ligt/FhpgKarnSDDrtt37sqkElSdhHayhWX0I+qS6ni0l
+         Tdzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=CF1rRZMBdGFikP/j43V46JlTy9v9S59RO3PJDooXZCk=;
-        b=l0iAtgOgUAV0QGO17+XO0hZ7PosKXrV4wwDEA2C86zirEQKd8SxdI2sP+lZ1jOii4y
-         XjLRYffS2O67fpX6g0J/AM3s5mcJhYlUtCqOOY3IdTd5AteC9zPB5WHnAytky3Mp1tof
-         9iJq6C41kVGp8PRiPxLEOHJxrOFYwWC3FnqAkHoTrPP7LEGBD7XhNId6RXR12oKT1EWm
-         YIL+XX8Zc0r8BIeHSBoet/cgBgG9RNoS1MU7Kxcizf7+xdwX8hSCdCMprhmxAb94x185
-         K92gr+/4GiNtt9MTeYkP7fet2eWVBucsy0gYVGoDG/B0ptKvlPADLpq2yU1jIq814yRq
-         p1Ag==
-X-Gm-Message-State: AOAM532nQeLyuU1LILpakXLGM2lsKCi6HlK2Y701J0xOB526N7BPRABF
-        eDSyh76U7U0w6XURvkQWxT9szA==
-X-Google-Smtp-Source: ABdhPJxqJm0wwuWGMwBvmBmgvducSLG4QQzA7m59lPsrpRYVx2+ZymLmVLU1Tjr0wZ0b/FZ5UPc6cQ==
-X-Received: by 2002:a05:620a:d87:b0:67b:3105:4f7f with SMTP id q7-20020a05620a0d8700b0067b31054f7fmr13658867qkl.230.1651610392536;
-        Tue, 03 May 2022 13:39:52 -0700 (PDT)
-Received: from [192.168.0.189] (modemcable134.222-177-173.mc.videotron.ca. [173.177.222.134])
-        by smtp.gmail.com with ESMTPSA id y8-20020ae9f408000000b0069fc13ce20fsm6271493qkl.64.2022.05.03.13.39.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 May 2022 13:39:51 -0700 (PDT)
-Subject: Re: [PATCH v2 4/8] clk: qcom: add support for SM8350 GPUCC
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>
-Cc:     agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org, tdas@codeaurora.org,
-        anischal@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20220503130448.520470-1-robert.foss@linaro.org>
- <20220503130448.520470-4-robert.foss@linaro.org>
- <YnFkn3CMS+VdJ9u7@builder.lan>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <e7935b8e-1e4c-a424-7d77-307e346f507f@marek.ca>
-Date:   Tue, 3 May 2022 16:39:41 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        bh=BZXNy598rjzssFVD4qqnZnAbN1Mi7pj3r4jBP97stCk=;
+        b=stf++q1QHLHn4P8Y1XurXXKpxYAExIjohBR+xXGu8skHtPqUMmDj2au/sZGRlhZtxK
+         toebDwpHb87yh3IIYEqXecTm+wpFUUTT44C8Sy+THEj7pmTZMYwb25QIsfW3QBMZBV4u
+         KlPENLsUatrkwaOiSV8ws0zUgp7+asY6ttOALI0CDfz0m4caXpqoU2k+J+0d0u0j4uCa
+         dWdEcAvyigSpTDmw4ii3QgOXPSQpYERD8SPyP2UYdjb5tqiXKaD4Okx61sbQd/ZuYjvO
+         TWb6FvpoYwQnvLqbjvg5OQ+KzIx/6lKoZjCSbtNFWf7SB2jB9KLau1isW42DXerDaeae
+         cgQg==
+X-Gm-Message-State: AOAM532mYUwIn9WsmGXgHKiRPiDTjD2b/84qp+SQdaYaOYT3L6gd09Oh
+        ATxpR578Yrb/IWxOi0Bgvhki6Q==
+X-Google-Smtp-Source: ABdhPJz6J5roxRVpi41gL6zeVD4OzrjgvjOG0MNPEhPP+HQNkQ/eKSYLNbmKQDvh4Lzaa/I+Gt7ptQ==
+X-Received: by 2002:a05:6512:a85:b0:473:bb9e:fc51 with SMTP id m5-20020a0565120a8500b00473bb9efc51mr278231lfu.31.1651610621680;
+        Tue, 03 May 2022 13:43:41 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id 5-20020a2eb945000000b0024f3d1dae81sm1462085ljs.9.2022.05.03.13.43.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 May 2022 13:43:41 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: [PATCH] drm/msm/dsi: fix address for second DSI PHY on SDM660
+Date:   Tue,  3 May 2022 23:43:40 +0300
+Message-Id: <20220503204340.935532-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-In-Reply-To: <YnFkn3CMS+VdJ9u7@builder.lan>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/3/22 1:21 PM, Bjorn Andersson wrote:
-> On Tue 03 May 08:04 CDT 2022, Robert Foss wrote:
-> 
->> From: Jonathan Marek <jonathan@marek.ca>
->>
->> The GPUCC manages the clocks for the Adreno GPU found on the
->> sm8350 SoCs.
->>
-> 
-> If the patch is authored by Jonathan, we need Jonathan's S-o-b as well.
-> 
+Correct a typo in the address of the second DSI PHY in the SDM660 device
+config.
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Fixes: 694dd304cc29 ("drm/msm/dsi: Add phy configuration for SDM630/636/660")
+Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-(but I didn't change much from downstream, I never submitted this patch 
-so didn't clean up things like using ARRAY_SIZE, etc.)
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+index 75557ac99adf..8199c53567f4 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+@@ -1062,7 +1062,7 @@ const struct msm_dsi_phy_cfg dsi_phy_14nm_660_cfgs = {
+ 	},
+ 	.min_pll_rate = VCO_MIN_RATE,
+ 	.max_pll_rate = VCO_MAX_RATE,
+-	.io_start = { 0xc994400, 0xc996000 },
++	.io_start = { 0xc994400, 0xc996400 },
+ 	.num_dsi_phy = 2,
+ };
+ 
+-- 
+2.35.1
+
