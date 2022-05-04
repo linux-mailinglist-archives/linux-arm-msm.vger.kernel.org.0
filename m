@@ -2,69 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C132519267
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 01:40:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96E105193A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 03:47:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244338AbiECXoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 May 2022 19:44:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56584 "EHLO
+        id S245489AbiEDBvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 May 2022 21:51:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244333AbiECXn6 (ORCPT
+        with ESMTP id S245360AbiEDBvL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 May 2022 19:43:58 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A64825D6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 16:40:24 -0700 (PDT)
+        Tue, 3 May 2022 21:51:11 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7729A31238
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 18:47:34 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id x23so10860268pff.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 May 2022 18:47:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651621224; x=1683157224;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=gLxi3hSAGzUXIcIBMnsOL9IDLdKVO76+Gch6gUEtubg=;
-  b=CgxaG6RSyzeNO3WBzF93hU/vdTLLpcBV7rxRo3GHi5NLLU53sPSOc19l
-   VMiWl/0kY0NUz3uG3dKpV7ws8sN4ZpvCdHQJceSBnpZK19tdBhaHEbedy
-   tykumk4Qxw7oVJdliGcRUmrDq3KVyMODPso/shXwPzD9KBBeGFUmvJIrd
-   I=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 May 2022 16:40:24 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 May 2022 16:40:23 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 3 May 2022 16:40:23 -0700
-Received: from [10.38.244.235] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 3 May 2022
- 16:40:20 -0700
-Message-ID: <8e7dc3a8-c1d1-df90-3861-e3309d7ae0b9@quicinc.com>
-Date:   Tue, 3 May 2022 16:40:18 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 08/25] drm/msm/dpu: get rid of cached flush_mask
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sclcWESS1vfOtw+/lNSZNu/Le9PHpJZ15I1QqAAnvbk=;
+        b=aAevwHR9bd3JwLUN2/LQ5c9sjKYomRXHOOzT8MO771crgcUz3lq0Os/XqytwNxvtUl
+         OUsDFPJQodMi3Gdr6qEsX6JPLYzpX2mmV6xIquzdXHmOBlRoXebJSJEipFEaZ36NWHtd
+         8ThHw67NIdrIhrBqNV3S6GthwijgxDY2pMUM4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sclcWESS1vfOtw+/lNSZNu/Le9PHpJZ15I1QqAAnvbk=;
+        b=ABA6PF/3yiYun7uRurMj6yHRKFBKXVMhrKXAP96CpkPHBBJpWCCZY+kzYNhXh21BJr
+         z18es5FYenRNf9izUBYjhlsNQgPOv/KoQycZXP/zYZhHujw2sID0/XBA2+Ggo/oEErEJ
+         oJYRn5Gvq1m4yL98CsjcKw7HoFGVe1++g5gTUc8kU7PbONvAkWfCtBuT+e6mqW9yaZl9
+         0s6ktzv1Y1Bo3NbSCPuitLZDtEYwLxNKkRalz0QEeLWpoRht4jjFWKe721HOM7Qe8xPz
+         cbnB0jG5s1VBk9SUAKv8gdxk0X7DRVAVfHljDiec8R6L42iFDDX4juiTMtNG10XiinVk
+         Maiw==
+X-Gm-Message-State: AOAM532uk43o3C/UNYjDMj/3smKES/brmsvOgFk717AxKFIlD2m9pTRJ
+        3TRKrnLFhfhmZTkz8Txxl9JrJg==
+X-Google-Smtp-Source: ABdhPJzUPi96Fjb/DQUWQvNyerGs6VtmC5g6wU2czv4Ww7LsLvQHH1GWpZX27vEgkGgQ9anjBam12g==
+X-Received: by 2002:a05:6a00:140f:b0:4e0:6995:9c48 with SMTP id l15-20020a056a00140f00b004e069959c48mr18620378pfu.59.1651628852898;
+        Tue, 03 May 2022 18:47:32 -0700 (PDT)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id v24-20020a170902e8d800b0015ea8b4b8f3sm3957768plg.263.2022.05.03.18.47.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 May 2022 18:47:32 -0700 (PDT)
+From:   Kees Cook <keescook@chromium.org>
+To:     "Gustavo A . R . Silva" <gustavoars@kernel.org>
+Cc:     Kees Cook <keescook@chromium.org>,
+        Alexei Starovoitov <ast@kernel.org>,
+        alsa-devel@alsa-project.org, Al Viro <viro@zeniv.linux.org.uk>,
+        Andrew Gabbasov <andrew_gabbasov@mentor.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Andy Lavr <andy.lavr@gmail.com>,
+        Arend van Spriel <aspriel@gmail.com>,
+        Baowen Zheng <baowen.zheng@corigine.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
- <20220209172520.3719906-9-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220209172520.3719906-9-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+        Bradley Grove <linuxdrivers@attotech.com>,
+        brcm80211-dev-list.pdl@broadcom.com,
+        Christian Brauner <brauner@kernel.org>,
+        =?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        Chris Zankel <chris@zankel.net>,
+        Cong Wang <cong.wang@bytedance.com>,
+        Daniel Axtens <dja@axtens.net>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Dan Williams <dan.j.williams@intel.com>,
+        David Gow <davidgow@google.com>,
+        David Howells <dhowells@redhat.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+        devicetree@vger.kernel.org, Dexuan Cui <decui@microsoft.com>,
+        Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
+        Eli Cohen <elic@nvidia.com>,
+        Eric Dumazet <edumazet@google.com>,
+        Eric Paris <eparis@parisplace.org>,
+        Eugeniu Rosca <erosca@de.adit-jv.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Francis Laniel <laniel_francis@privacyrequired.com>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Franky Lin <franky.lin@broadcom.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Gregory Greenman <gregory.greenman@intel.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Hante Meuleman <hante.meuleman@broadcom.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Hulk Robot <hulkci@huawei.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        James Morris <jmorris@namei.org>,
+        Jarkko Sakkinen <jarkko@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Johannes Berg <johannes.berg@intel.com>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        John Keeping <john@metanate.com>,
+        Juergen Gross <jgross@suse.com>, Kalle Valo <kvalo@kernel.org>,
+        Keith Packard <keithp@keithp.com>, keyrings@vger.kernel.org,
+        kunit-dev@googlegroups.com,
+        Kuniyuki Iwashima <kuniyu@amazon.co.jp>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Leon Romanovsky <leon@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux1394-devel@lists.sourceforge.net,
+        linux-afs@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-hardening@vger.kernel.org, linux-hyperv@vger.kernel.org,
+        linux-integrity@vger.kernel.org, linux-rdma@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-security-module@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
+        linux-xtensa@linux-xtensa.org, llvm@lists.linux.dev,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Louis Peens <louis.peens@corigine.com>,
+        Luca Coelho <luciano.coelho@intel.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Marc Dionne <marc.dionne@auristor.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Mark Brown <broonie@kernel.org>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Max Filippov <jcmvbkbc@gmail.com>,
+        Mimi Zohar <zohar@linux.ibm.com>,
+        Muchun Song <songmuchun@bytedance.com>,
+        Nathan Chancellor <nathan@kernel.org>, netdev@vger.kernel.org,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        =?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Paul Moore <paul@paul-moore.com>,
+        Rich Felker <dalias@aerifal.cx>,
+        Rob Herring <robh+dt@kernel.org>,
+        Russell King <linux@armlinux.org.uk>, selinux@vger.kernel.org,
+        "Serge E. Hallyn" <serge@hallyn.com>,
+        SHA-cyfmac-dev-list@infineon.com,
+        Simon Horman <simon.horman@corigine.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Stefan Richter <stefanr@s5r6.in-berlin.de>,
+        Steffen Klassert <steffen.klassert@secunet.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Stephen Smalley <stephen.smalley.work@gmail.com>,
+        Tadeusz Struk <tadeusz.struk@linaro.org>,
+        Takashi Iwai <tiwai@suse.com>, Tom Rix <trix@redhat.com>,
+        Udipto Goswami <quic_ugoswami@quicinc.com>,
+        Vincenzo Frascino <vincenzo.frascino@arm.com>,
+        wcn36xx@lists.infradead.org, Wei Liu <wei.liu@kernel.org>,
+        xen-devel@lists.xenproject.org,
+        Xiu Jianfeng <xiujianfeng@huawei.com>,
+        Yang Yingliang <yangyingliang@huawei.com>
+Subject: [PATCH 00/32] Introduce flexible array struct memcpy() helpers
+Date:   Tue,  3 May 2022 18:44:09 -0700
+Message-Id: <20220504014440.3697851-1-keescook@chromium.org>
+X-Mailer: git-send-email 2.32.0
+MIME-Version: 1.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6778; h=from:subject; bh=NBPx/kHPxccGjkqS1SEj//lWw761DgDLlzW6gj8lDu4=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBicdqAMDKbiuLQ8pX7zUwKdz8OKsd8xesPXEJn90lJ iEErvqmJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYnHagAAKCRCJcvTf3G3AJjEaD/ sFb+hZKXd2lFEv0+WnlWvb0j4ta2t/UZVhsNUWQNDJHAVtv+Zlu02MxnR0jdR0CBnsA3iKMPIFMmfD pdgs6dba5/tH1Iyi6jW+wJXwtek/3ey7ygj+u19Odj4PSt0QygwmNm6MjSvTES52gqKWv74MU5t5xz L/SasXg+UAUYtWgal3FtLixo//9nvHNO1pQXa0nIFsWFnV/HFJgtQ4lutI26Hj2oKn8G30z3GHGSn4 1IRXOAidSEkPmoGdbgk1b5NrcIB4dDVp1bZOWVQ48/ez1pipyXC5BUmkDkC/X1S5WnuU0ZQ0UW1Grm 3khhO+QcGTzdaxvhpnGpJechhRJETE1ML25oQrj3M1NNy97RDl4CAzoWJillKIvj0+U+3eRoIKQc09 jVarH3JkPknzz7xPutFPSXX+ZRRa9ZIrntaHAJu8fM/gDMHvlhMmoSO/MpZW8uL4xNo34dAwBiIsfO 3kXWSB5poclt6J8JY4UGRwxeS2Ccjolknj9sm/IfEioLedUmK04grKYVaFhwm/AgWMQXfLQYxU4UVg LzieTWMmZ+uNuV5sEynHPDSzGXpTKhNmWdH0WmkjYCGd9FIF8ySFxwKVRfGpnPqbVGVOMqmYz9piV5 jE5S5aSXLfYPuj0uiXQg9UZZfkTvEGuBLHq71VsZwciiyvWRhtAG4UU4gmcQ==
+X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,328 +170,134 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
+This is the next phase of memcpy() buffer bounds checking[1], which
+starts by adding a new set of helpers to address common code patterns
+that result in memcpy() usage that can't be easily verified by the
+compiler (i.e. dynamic bounds due to flexible arrays). The runtime WARN
+from memcpy has been posted before, but now there's more context around
+alternatives for refactoring false positives, etc.
 
-On 2/9/2022 9:25 AM, Dmitry Baryshkov wrote:
-> Instead of querying the CTL for the flush mask (for SSPP, LM or DSPP),
-> storing the mask in the mixer configuration and then pushing the mask to
-> the CTL, tell CTL to cache the flush in place.
-> 
+The core of this series is patches 2 (flex_array.h), 3 (flex_array
+KUnit), and 4 (runtime memcpy WARN). Patch 1 is a fix to land before 4
+(and I can send separately), and everything else are examples of what the
+conversions look like for one of the helpers, mem_to_flex_dup(). These
+will need to land via their respective trees, but they all depend on
+patch 2, which I'm hoping to land in the coming merge window.
 
-This follows the pattern of other update_pending_flush_*** ops which we 
-have so this is fine.
+I'm happy to also point out that the conversions (patches 5+) are actually
+a net reduction in lines of code:
+ 49 files changed, 154 insertions(+), 244 deletions(-)
 
-This change can go in independent of this series. no need to wait.
+Anyway, please let me know what you think. And apologies in advance
+if this is spammy; the CC list got rather large due to the "treewide"
+nature of the example conversions.
 
-Apart from a minor comments nit below,
+Also available here:
+https://git.kernel.org/pub/scm/linux/kernel/git/kees/linux.git/log/?h=flexcpy/next-20220502
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c   | 25 ++-----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h   |  1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 78 +++++++++-------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h | 35 +++++++---
->   4 files changed, 66 insertions(+), 73 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index d21791db6ab1..e6c33022d560 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -396,7 +396,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
->   			_dpu_crtc_setup_blend_cfg(mixer + lm_idx,
->   						pstate, format);
->   
-> -			mixer[lm_idx].flush_mask |= ctl->ops.get_bitmask_sspp(ctl, sspp_idx);
-> +			mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(mixer[lm_idx].lm_ctl, sspp_idx);
->   
->   			if (bg_alpha_enable && !format->alpha_enable)
->   				mixer[lm_idx].mixer_op_mode = 0;
-> @@ -430,7 +430,6 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
->   
->   	for (i = 0; i < cstate->num_mixers; i++) {
->   		mixer[i].mixer_op_mode = 0;
-> -		mixer[i].flush_mask = 0;
->   		if (mixer[i].lm_ctl->ops.clear_all_blendstages)
->   			mixer[i].lm_ctl->ops.clear_all_blendstages(
->   					mixer[i].lm_ctl);
-> @@ -447,17 +446,14 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
->   
->   		lm->ops.setup_alpha_out(lm, mixer[i].mixer_op_mode);
->   
-> -		mixer[i].flush_mask |= ctl->ops.get_bitmask_mixer(ctl,
-> -			mixer[i].hw_lm->idx);
-> -
->   		/* stage config flush mask */
-> -		ctl->ops.update_pending_flush(ctl, mixer[i].flush_mask);
-> +		ctl->ops.update_pending_flush_mixer(ctl,
-> +			mixer[i].hw_lm->idx);
->   
-> -		DRM_DEBUG_ATOMIC("lm %d, op_mode 0x%X, ctl %d, flush mask 0x%x\n",
-> +		DRM_DEBUG_ATOMIC("lm %d, op_mode 0x%X, ctl %d\n",
->   			mixer[i].hw_lm->idx - LM_0,
->   			mixer[i].mixer_op_mode,
-> -			ctl->idx - CTL_0,
-> -			mixer[i].flush_mask);
-> +			ctl->idx - CTL_0);
->   
->   		ctl->ops.setup_blendstage(ctl, mixer[i].hw_lm->idx,
->   			&stage_cfg);
-> @@ -701,16 +697,9 @@ static void _dpu_crtc_setup_cp_blocks(struct drm_crtc *crtc)
->   			dspp->ops.setup_pcc(dspp, &cfg);
->   		}
->   
-> -		mixer[i].flush_mask |= ctl->ops.get_bitmask_dspp(ctl,
-> -			mixer[i].hw_dspp->idx);
-> -
->   		/* stage config flush mask */
-> -		ctl->ops.update_pending_flush(ctl, mixer[i].flush_mask);
-> -
-> -		DRM_DEBUG_ATOMIC("lm %d, ctl %d, flush mask 0x%x\n",
-> -			mixer[i].hw_lm->idx - DSPP_0,
-> -			ctl->idx - CTL_0,
-> -			mixer[i].flush_mask);
-> +		ctl->ops.update_pending_flush_dspp(ctl,
-> +			mixer[i].hw_dspp->idx);
->   	}
->   }
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> index b8785c394fcc..9f87fc32b1bb 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> @@ -95,7 +95,6 @@ struct dpu_crtc_mixer {
->   	struct dpu_hw_ctl *lm_ctl;
->   	struct dpu_hw_dspp *hw_dspp;
->   	u32 mixer_op_mode;
-> -	u32 flush_mask;
->   };
->   
->   /**
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index 02da9ecf71f1..8dc59659bd18 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -139,92 +139,84 @@ static inline void dpu_hw_ctl_trigger_flush(struct dpu_hw_ctl *ctx)
->   	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
->   }
->   
-> -static uint32_t dpu_hw_ctl_get_bitmask_sspp(struct dpu_hw_ctl *ctx,
-> +static void dpu_hw_ctl_update_pending_flush_sspp(struct dpu_hw_ctl *ctx,
->   	enum dpu_sspp sspp)
->   {
-> -	uint32_t flushbits = 0;
-> -
->   	switch (sspp) {
->   	case SSPP_VIG0:
-> -		flushbits =  BIT(0);
-> +		ctx->pending_flush_mask |=  BIT(0);
->   		break;
->   	case SSPP_VIG1:
-> -		flushbits = BIT(1);
-> +		ctx->pending_flush_mask |= BIT(1);
->   		break;
->   	case SSPP_VIG2:
-> -		flushbits = BIT(2);
-> +		ctx->pending_flush_mask |= BIT(2);
->   		break;
->   	case SSPP_VIG3:
-> -		flushbits = BIT(18);
-> +		ctx->pending_flush_mask |= BIT(18);
->   		break;
->   	case SSPP_RGB0:
-> -		flushbits = BIT(3);
-> +		ctx->pending_flush_mask |= BIT(3);
->   		break;
->   	case SSPP_RGB1:
-> -		flushbits = BIT(4);
-> +		ctx->pending_flush_mask |= BIT(4);
->   		break;
->   	case SSPP_RGB2:
-> -		flushbits = BIT(5);
-> +		ctx->pending_flush_mask |= BIT(5);
->   		break;
->   	case SSPP_RGB3:
-> -		flushbits = BIT(19);
-> +		ctx->pending_flush_mask |= BIT(19);
->   		break;
->   	case SSPP_DMA0:
-> -		flushbits = BIT(11);
-> +		ctx->pending_flush_mask |= BIT(11);
->   		break;
->   	case SSPP_DMA1:
-> -		flushbits = BIT(12);
-> +		ctx->pending_flush_mask |= BIT(12);
->   		break;
->   	case SSPP_DMA2:
-> -		flushbits = BIT(24);
-> +		ctx->pending_flush_mask |= BIT(24);
->   		break;
->   	case SSPP_DMA3:
-> -		flushbits = BIT(25);
-> +		ctx->pending_flush_mask |= BIT(25);
->   		break;
->   	case SSPP_CURSOR0:
-> -		flushbits = BIT(22);
-> +		ctx->pending_flush_mask |= BIT(22);
->   		break;
->   	case SSPP_CURSOR1:
-> -		flushbits = BIT(23);
-> +		ctx->pending_flush_mask |= BIT(23);
->   		break;
->   	default:
->   		break;
->   	}
-> -
-> -	return flushbits;
->   }
->   
-> -static uint32_t dpu_hw_ctl_get_bitmask_mixer(struct dpu_hw_ctl *ctx,
-> +static void dpu_hw_ctl_update_pending_flush_mixer(struct dpu_hw_ctl *ctx,
->   	enum dpu_lm lm)
->   {
-> -	uint32_t flushbits = 0;
-> -
->   	switch (lm) {
->   	case LM_0:
-> -		flushbits = BIT(6);
-> +		ctx->pending_flush_mask |= BIT(6);
->   		break;
->   	case LM_1:
-> -		flushbits = BIT(7);
-> +		ctx->pending_flush_mask |= BIT(7);
->   		break;
->   	case LM_2:
-> -		flushbits = BIT(8);
-> +		ctx->pending_flush_mask |= BIT(8);
->   		break;
->   	case LM_3:
-> -		flushbits = BIT(9);
-> +		ctx->pending_flush_mask |= BIT(9);
->   		break;
->   	case LM_4:
-> -		flushbits = BIT(10);
-> +		ctx->pending_flush_mask |= BIT(10);
->   		break;
->   	case LM_5:
-> -		flushbits = BIT(20);
-> +		ctx->pending_flush_mask |= BIT(20);
->   		break;
->   	default:
-> -		return -EINVAL;
-> +		break;
->   	}
->   
-> -	flushbits |= CTL_FLUSH_MASK_CTL;
-> -
-> -	return flushbits;
-> +	ctx->pending_flush_mask |= CTL_FLUSH_MASK_CTL;
->   }
->   
->   static void dpu_hw_ctl_update_pending_flush_intf(struct dpu_hw_ctl *ctx,
-> @@ -262,29 +254,25 @@ static void dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
->   	ctx->pending_flush_mask |= BIT(MERGE_3D_IDX);
->   }
->   
-> -static uint32_t dpu_hw_ctl_get_bitmask_dspp(struct dpu_hw_ctl *ctx,
-> +static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
->   	enum dpu_dspp dspp)
->   {
-> -	uint32_t flushbits = 0;
-> -
->   	switch (dspp) {
->   	case DSPP_0:
-> -		flushbits = BIT(13);
-> +		ctx->pending_flush_mask |= BIT(13);
->   		break;
->   	case DSPP_1:
-> -		flushbits = BIT(14);
-> +		ctx->pending_flush_mask |= BIT(14);
->   		break;
->   	case DSPP_2:
-> -		flushbits = BIT(15);
-> +		ctx->pending_flush_mask |= BIT(15);
->   		break;
->   	case DSPP_3:
-> -		flushbits = BIT(21);
-> +		ctx->pending_flush_mask |= BIT(21);
->   		break;
->   	default:
-> -		return 0;
-> +		break;
->   	}
-> -
-> -	return flushbits;
->   }
->   
->   static u32 dpu_hw_ctl_poll_reset_status(struct dpu_hw_ctl *ctx, u32 timeout_us)
-> @@ -592,9 +580,9 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
->   	ops->wait_reset_status = dpu_hw_ctl_wait_reset_status;
->   	ops->clear_all_blendstages = dpu_hw_ctl_clear_all_blendstages;
->   	ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
-> -	ops->get_bitmask_sspp = dpu_hw_ctl_get_bitmask_sspp;
-> -	ops->get_bitmask_mixer = dpu_hw_ctl_get_bitmask_mixer;
-> -	ops->get_bitmask_dspp = dpu_hw_ctl_get_bitmask_dspp;
-> +	ops->update_pending_flush_sspp = dpu_hw_ctl_update_pending_flush_sspp;
-> +	ops->update_pending_flush_mixer = dpu_hw_ctl_update_pending_flush_mixer;
-> +	ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
->   	if (cap & BIT(DPU_CTL_FETCH_ACTIVE))
->   		ops->set_active_pipes = dpu_hw_ctl_set_fetch_pipe_active;
->   };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> index 806c171e5df2..84e8167c23a1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> @@ -110,6 +110,32 @@ struct dpu_hw_ctl_ops {
->   	void (*update_pending_flush_merge_3d)(struct dpu_hw_ctl *ctx,
->   		enum dpu_merge_3d blk);
->   
-> +	/**
-> +	 * OR in the given flushbits to the cached pending_flush_mask
-> +	 * No effect on hardware
-flush bits for SSPP
+-Kees
 
-> +	 * @ctx       : ctl path ctx pointer
-> +	 * @blk       : SSPP block index
-> +	 */
-> +	void (*update_pending_flush_sspp)(struct dpu_hw_ctl *ctx,
-> +		enum dpu_sspp blk);
-> +
-> +	/**
-> +	 * OR in the given flushbits to the cached pending_flush_mask
-> +	 * No effect on hardware
-> +	 * @ctx       : ctl path ctx pointer
-> +	 * @blk       : LM block index
-> +	 */
-flush bits for blend stages
-> +	void (*update_pending_flush_mixer)(struct dpu_hw_ctl *ctx,
-> +		enum dpu_lm blk);
-> +
-> +	/**
-> +	 * OR in the given flushbits to the cached pending_flush_mask
-> +	 * No effect on hardware
-flush bits for DSPP
-> +	 * @ctx       : ctl path ctx pointer
-> +	 * @blk       : DSPP block index
-> +	 */
-> +	void (*update_pending_flush_dspp)(struct dpu_hw_ctl *ctx,
-> +		enum dpu_dspp blk);
->   	/**
->   	 * Write the value of the pending_flush_mask to hardware
->   	 * @ctx       : ctl path ctx pointer
-> @@ -144,15 +170,6 @@ struct dpu_hw_ctl_ops {
->   	 */
->   	int (*wait_reset_status)(struct dpu_hw_ctl *ctx);
->   
-> -	uint32_t (*get_bitmask_sspp)(struct dpu_hw_ctl *ctx,
-> -		enum dpu_sspp blk);
-> -
-> -	uint32_t (*get_bitmask_mixer)(struct dpu_hw_ctl *ctx,
-> -		enum dpu_lm blk);
-> -
-> -	uint32_t (*get_bitmask_dspp)(struct dpu_hw_ctl *ctx,
-> -		enum dpu_dspp blk);
-> -
->   	/**
->   	 * Set all blend stages to disabled
->   	 * @ctx       : ctl path ctx pointer
+[1] https://lwn.net/Articles/864521/
+
+Kees Cook (32):
+  netlink: Avoid memcpy() across flexible array boundary
+  Introduce flexible array struct memcpy() helpers
+  flex_array: Add Kunit tests
+  fortify: Add run-time WARN for cross-field memcpy()
+  brcmfmac: Use mem_to_flex_dup() with struct brcmf_fweh_queue_item
+  iwlwifi: calib: Prepare to use mem_to_flex_dup()
+  iwlwifi: calib: Use mem_to_flex_dup() with struct iwl_calib_result
+  iwlwifi: mvm: Use mem_to_flex_dup() with struct ieee80211_key_conf
+  p54: Use mem_to_flex_dup() with struct p54_cal_database
+  wcn36xx: Use mem_to_flex_dup() with struct wcn36xx_hal_ind_msg
+  nl80211: Use mem_to_flex_dup() with struct cfg80211_cqm_config
+  cfg80211: Use mem_to_flex_dup() with struct cfg80211_bss_ies
+  mac80211: Use mem_to_flex_dup() with several structs
+  af_unix: Use mem_to_flex_dup() with struct unix_address
+  802/garp: Use mem_to_flex_dup() with struct garp_attr
+  802/mrp: Use mem_to_flex_dup() with struct mrp_attr
+  net/flow_offload: Use mem_to_flex_dup() with struct flow_action_cookie
+  firewire: Use __mem_to_flex_dup() with struct iso_interrupt_event
+  afs: Use mem_to_flex_dup() with struct afs_acl
+  ASoC: sigmadsp: Use mem_to_flex_dup() with struct sigmadsp_data
+  soc: qcom: apr: Use mem_to_flex_dup() with struct apr_rx_buf
+  atags_proc: Use mem_to_flex_dup() with struct buffer
+  Bluetooth: Use mem_to_flex_dup() with struct
+    hci_op_configure_data_path
+  IB/hfi1: Use mem_to_flex_dup() for struct tid_rb_node
+  Drivers: hv: utils: Use mem_to_flex_dup() with struct cn_msg
+  ima: Use mem_to_flex_dup() with struct modsig
+  KEYS: Use mem_to_flex_dup() with struct user_key_payload
+  selinux: Use mem_to_flex_dup() with xfrm and sidtab
+  xtensa: Use mem_to_flex_dup() with struct property
+  usb: gadget: f_fs: Use mem_to_flex_dup() with struct ffs_buffer
+  xenbus: Use mem_to_flex_dup() with struct read_buffer
+  esas2r: Use __mem_to_flex() with struct atto_ioctl
+
+ arch/arm/kernel/atags_proc.c                  |  12 +-
+ arch/xtensa/platforms/xtfpga/setup.c          |   9 +-
+ drivers/firewire/core-cdev.c                  |   7 +-
+ drivers/hv/hv_utils_transport.c               |   7 +-
+ drivers/infiniband/hw/hfi1/user_exp_rcv.c     |   7 +-
+ drivers/infiniband/hw/hfi1/user_exp_rcv.h     |   4 +-
+ drivers/net/wireless/ath/wcn36xx/smd.c        |   8 +-
+ drivers/net/wireless/ath/wcn36xx/smd.h        |   4 +-
+ .../broadcom/brcm80211/brcmfmac/fweh.c        |  11 +-
+ drivers/net/wireless/intel/iwlwifi/dvm/agn.h  |   2 +-
+ .../net/wireless/intel/iwlwifi/dvm/calib.c    |  23 +-
+ .../net/wireless/intel/iwlwifi/dvm/ucode.c    |   8 +-
+ drivers/net/wireless/intel/iwlwifi/mvm/sta.c  |   8 +-
+ drivers/net/wireless/intersil/p54/eeprom.c    |   8 +-
+ drivers/net/wireless/intersil/p54/p54.h       |   4 +-
+ drivers/scsi/esas2r/atioctl.h                 |   1 +
+ drivers/scsi/esas2r/esas2r_ioctl.c            |  11 +-
+ drivers/soc/qcom/apr.c                        |  12 +-
+ drivers/usb/gadget/function/f_fs.c            |  11 +-
+ drivers/xen/xenbus/xenbus_dev_frontend.c      |  12 +-
+ fs/afs/internal.h                             |   4 +-
+ fs/afs/xattr.c                                |   7 +-
+ include/keys/user-type.h                      |   4 +-
+ include/linux/flex_array.h                    | 637 ++++++++++++++++++
+ include/linux/fortify-string.h                |  70 +-
+ include/linux/of.h                            |   3 +-
+ include/linux/string.h                        |   1 +
+ include/net/af_unix.h                         |  14 +-
+ include/net/bluetooth/hci.h                   |   4 +-
+ include/net/cfg80211.h                        |   4 +-
+ include/net/flow_offload.h                    |   4 +-
+ include/net/garp.h                            |   4 +-
+ include/net/mac80211.h                        |   4 +-
+ include/net/mrp.h                             |   4 +-
+ include/uapi/linux/connector.h                |   4 +-
+ include/uapi/linux/firewire-cdev.h            |   4 +-
+ include/uapi/linux/netlink.h                  |   1 +
+ include/uapi/linux/stddef.h                   |  14 +
+ include/uapi/linux/xfrm.h                     |   4 +-
+ lib/Kconfig.debug                             |  12 +-
+ lib/Makefile                                  |   1 +
+ lib/flex_array_kunit.c                        | 523 ++++++++++++++
+ net/802/garp.c                                |   9 +-
+ net/802/mrp.c                                 |   9 +-
+ net/bluetooth/hci_request.c                   |   9 +-
+ net/core/flow_offload.c                       |   7 +-
+ net/mac80211/cfg.c                            |  22 +-
+ net/mac80211/ieee80211_i.h                    |  12 +-
+ net/netlink/af_netlink.c                      |   5 +-
+ net/unix/af_unix.c                            |   7 +-
+ net/wireless/core.h                           |   4 +-
+ net/wireless/nl80211.c                        |  15 +-
+ net/wireless/scan.c                           |  21 +-
+ security/integrity/ima/ima_modsig.c           |  12 +-
+ security/keys/user_defined.c                  |   7 +-
+ security/selinux/ss/sidtab.c                  |   9 +-
+ security/selinux/xfrm.c                       |   7 +-
+ sound/soc/codecs/sigmadsp.c                   |  11 +-
+ 58 files changed, 1409 insertions(+), 253 deletions(-)
+ create mode 100644 include/linux/flex_array.h
+ create mode 100644 lib/flex_array_kunit.c
+
+-- 
+2.32.0
+
