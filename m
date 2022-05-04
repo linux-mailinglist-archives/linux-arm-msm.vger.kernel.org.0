@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16A9D519A2F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 10:43:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2D65519A2E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 10:43:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346612AbiEDIqk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 04:46:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44152 "EHLO
+        id S1346565AbiEDIqj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 04:46:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346583AbiEDIqT (ORCPT
+        with ESMTP id S1346612AbiEDIqa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 04:46:19 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5208924F00
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 01:42:39 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id i62so639933pgd.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 01:42:39 -0700 (PDT)
+        Wed, 4 May 2022 04:46:30 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E36A124F19
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 01:42:42 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id z5-20020a17090a468500b001d2bc2743c4so700333pjf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 01:42:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Lvh8lsyZI2oOoPbP4vLClIs3xvhFZ7I9YPmzR8c3w2E=;
-        b=NYFadom5yTD0av27VsfrNnLB0FSMla8Eyol+HQOl1TO8/PsX+7YjyaZ+EQDMhp0h0t
-         ov5kKvlLuCRTu7NNbJt6iDPdHNQ8fzTa8H5tYfcnz5cxwYcgo1nFTl1qBVdesQk1kWyX
-         3rDuJzUSwUkppZqQg+EZ2fFcITZHFr9QqTn5jhppHjFOX/T0sPsQtiY6KGqAYRcEc1Hx
-         SOVkICj3hfDeU+HNiRnMQsvtLfm2/04gGqtqeN3c2/KKKqV/VhwnR2EhQ2wvF2vhSxfn
-         4//r3aqI6BRDyMXCYjSD3gqmNMZ59t9KMZxgp04PJB+g44WWVj2a3glFZBRYkGwTzutu
-         nVeQ==
+        bh=Up2fAJgMf0kaWNX6KayG2iG4ovLjRNyGdehP+ZCx6XI=;
+        b=HHk0bHFYywL5PAJAJwPZ0gk/mxn9hJlTjL41vCuaNhVHit5I9mPsTeZ8XzcOWQqkXr
+         9ZD5YiD9SDEBjtG+bxFVjBkhe1gxl8cBKvWcRiiUce7JyJ8GrZuOdvkNunKFRmAvhkKp
+         tIpohSy2GqAxbEIZ8KzFVEHa4qWsXVx9v8NQOOe98oOQOw7m6tcozsZFhGDgWAQJfY+i
+         ACxR4TWkNeE6ZTkTTJa/JrP8Ktk36rauMwsPPwv1oTnRFtW3W7QTjFhs5f/RB8ZCeOkG
+         I8NC7rccUW5Fa7M92lNT7Ft6lLuw7R+E4v6tFVatg372Kj5SbChJkZBdG/FAzDhTT3qj
+         FASw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Lvh8lsyZI2oOoPbP4vLClIs3xvhFZ7I9YPmzR8c3w2E=;
-        b=r17Pwr/9j4ce3/QkGTbQuWDIyQ1b3rvcxFfOcMtN1TJXrXDiL/nbx2GdAB+EMMZSVG
-         D+elv8MBGLFa+DUViqzAeOQHpr8swpv29ACDAV09FHjZrtMPzptFR3HZtTGzxHetUCp1
-         y8PDldntGDckJj44W0NDZ+JIgq4VAb8K/NX5FkwYvwT0m8/YQ73wvK/lfhtiNw2YHiBh
-         AHSjNohEw6uywnWa3HmdvCTi2/ElnVtu+sfIKlfpzlpnCe7WwNlx1Yyxun/aM38CEM1I
-         6vjKXhxiOPAGy0+67oGV7CISr/bxRMLfQZu8WJPwe6Ny9iR0qXzuflt/9yesAr5pyxya
-         Vnhg==
-X-Gm-Message-State: AOAM5331WOCvQ0BY8kzq0iMvBRdcFgVoiwjmtaPZMgivx6NitFyPP6Sk
-        1gcvBfLH/iIauo5ZFjuS2Sflq0r23F4W
-X-Google-Smtp-Source: ABdhPJzwWYoSc49RrdrDrqn/x1A0CuBSs67vodfr9CgMS7tS+dOWsYs1nsMhdPXeqUcPHLLn77XHtA==
-X-Received: by 2002:a05:6a00:e14:b0:4fe:3cdb:23f with SMTP id bq20-20020a056a000e1400b004fe3cdb023fmr20209744pfb.86.1651653758017;
-        Wed, 04 May 2022 01:42:38 -0700 (PDT)
+        bh=Up2fAJgMf0kaWNX6KayG2iG4ovLjRNyGdehP+ZCx6XI=;
+        b=pDVekoAPJFth2Dw+ySAaE8d7+pqjLxvFQpa2JQDfQ3sKMkgkA/SOupr6ucjBDbbVsu
+         J6AH1b3alMCMkH/ztmqAywo9HwWMIFYkmrfBtvs2SgTbqsQMUuGDSpoK1jgmWx9Lbq6l
+         RcCrXfJKIaLoT2Zl+AAsH1nSpnECPCgo6+w4c4Rp04mgBqQF5jtl49jSGpTzY+XMl2It
+         rvm54Q3sPQxfacg7wuii3Zm/bLke+Pohn9edOT4g1hdLL01mtwSh3Ic4TcxWwRmv3lJr
+         O5GlwRZr5KhpJ5CibGGoFB0HIqj80nYBea+MyBcDkyQW4ehmdPfNdwJCRGYUPh4JwWX/
+         hF9Q==
+X-Gm-Message-State: AOAM531quUjpD9psbSpSSphZkhLOjnMOvhplTvdV/gTV0gZAsxVR/9gz
+        sMxVE7ujv5z23IT41qZtM7Ae
+X-Google-Smtp-Source: ABdhPJxlKxetsi90KaLcM4uKZj9hOlXD5OcsWlwJitZdBW2rjKRg25l1Wz7uvsglmvayy3XHnoKW2Q==
+X-Received: by 2002:a17:90b:2311:b0:1d9:277e:edad with SMTP id mt17-20020a17090b231100b001d9277eedadmr9202775pjb.190.1651653762213;
+        Wed, 04 May 2022 01:42:42 -0700 (PDT)
 Received: from localhost.localdomain ([27.111.75.248])
-        by smtp.gmail.com with ESMTPSA id i10-20020a170902c94a00b0015e8d4eb278sm1386561pla.194.2022.05.04.01.42.34
+        by smtp.gmail.com with ESMTPSA id i10-20020a170902c94a00b0015e8d4eb278sm1386561pla.194.2022.05.04.01.42.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 May 2022 01:42:37 -0700 (PDT)
+        Wed, 04 May 2022 01:42:41 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     martin.petersen@oracle.com, jejb@linux.ibm.com
 Cc:     avri.altman@wdc.com, alim.akhtar@samsung.com,
@@ -55,11 +55,10 @@ Cc:     avri.altman@wdc.com, alim.akhtar@samsung.com,
         quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
         linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
         bvanassche@acm.org, ahalaney@redhat.com,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bean Huo <beanhuo@micron.com>
-Subject: [PATCH v3 4/5] scsi: ufs: core: Remove redundant wmb() in ufshcd_send_command()
-Date:   Wed,  4 May 2022 14:12:11 +0530
-Message-Id: <20220504084212.11605-5-manivannan.sadhasivam@linaro.org>
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 5/5] scsi: ufs: qcom: Enable RPM_AUTOSUSPEND for runtime PM
+Date:   Wed,  4 May 2022 14:12:12 +0530
+Message-Id: <20220504084212.11605-6-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220504084212.11605-1-manivannan.sadhasivam@linaro.org>
 References: <20220504084212.11605-1-manivannan.sadhasivam@linaro.org>
@@ -75,45 +74,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The wmb() inside ufshcd_send_command() is added to make sure that the
-doorbell is committed immediately. This leads to couple of expectations:
+In order to allow the block devices to enter autosuspend mode during
+runtime, thereby allowing the ufshcd host driver to also runtime suspend,
+let's make use of the RPM_AUTOSUSPEND flag.
 
-1. The doorbell write should complete before the function return.
-2. The doorbell write should not cross the function boundary.
+Without this flag, userspace needs to enable the autosuspend feature of
+the block devices through sysfs.
 
-2nd expectation is fullfilled by the Linux memory model as there is a
-guarantee that the critical section won't cross the unlock (release)
-operation.
-
-1st expectation is not really needed here as there is no following read/
-write that depends on the doorbell to be complete implicitly. Even if the
-doorbell write is in a CPUs Write Buffer (WB), wmb() won't flush it. And
-there is no real need of a WB flush here as well.
-
-So let's get rid of the wmb() that seems redundant.
-
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Acked-by: Bean Huo <beanhuo@micron.com>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/scsi/ufs/ufshcd.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/scsi/ufs/ufs-qcom.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index 9349557b8a01..ec514a6c5393 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -2116,9 +2116,6 @@ void ufshcd_send_command(struct ufs_hba *hba, unsigned int task_tag)
- 	__set_bit(task_tag, &hba->outstanding_reqs);
- 	ufshcd_writel(hba, 1 << task_tag, REG_UTP_TRANSFER_REQ_DOOR_BELL);
- 	spin_unlock_irqrestore(&hba->outstanding_lock, flags);
--
--	/* Make sure that doorbell is committed immediately */
--	wmb();
- }
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index b718c38fccc9..358fa8ce51b8 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -876,6 +876,7 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
+ 	hba->caps |= UFSHCD_CAP_WB_EN;
+ 	hba->caps |= UFSHCD_CAP_CRYPTO;
+ 	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
++	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
  
- /**
+ 	if (host->hw_ver.major >= 0x2) {
+ 		host->caps = UFS_QCOM_CAP_QUNIPRO |
 -- 
 2.25.1
 
