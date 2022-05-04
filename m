@@ -2,231 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49946519E10
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 13:32:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AC3F519E49
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 13:44:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235987AbiEDLgE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 07:36:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46266 "EHLO
+        id S1348943AbiEDLsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 07:48:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233521AbiEDLgD (ORCPT
+        with ESMTP id S232957AbiEDLsH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 07:36:03 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEA0A1A826;
-        Wed,  4 May 2022 04:32:27 -0700 (PDT)
+        Wed, 4 May 2022 07:48:07 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F29052B1A7;
+        Wed,  4 May 2022 04:44:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651663947; x=1683199947;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=W3uhH8QSuWoqMo3coiHySJmLORQN/e2Vzk0NgNP+CjA=;
-  b=LZ56+HYU8cdvk0GHiFLS76PXwRJ9I31BJJo8j/et3gF62jOPfIkula/T
-   42EVG2N9zjqh3OPsoKcd0turk/k8bfEnSVqjySGDZLWgu/WMdOeyO4IF9
-   JTyTcgjGJNE2odxSC/IaYEUd5Qwl/terOJCgMVGUjVwrfOy8NrF3SZPkI
-   w=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 04 May 2022 04:32:27 -0700
+  t=1651664672; x=1683200672;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=HUmOySrek83JyA60T2ruN8YBYq+9g1QPXzAagsL8W7U=;
+  b=d6qXcdphK0fPVj2+0exJILZKc8/jp9NPKr+8WU6I3UpOE0T2zAWkKRY0
+   /egXRZtafJegVLz+TJNoEhn+Fa4OTJCDmXhj2LSA1cHL+2IgrPMm9MAsd
+   9BKW0WrRLgWjh60b2rO7C0wmSApLBaxZKcFmKf6KAN296olH6Sj/rEKKH
+   I=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 04 May 2022 04:44:31 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 May 2022 04:32:27 -0700
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 May 2022 04:44:31 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 4 May 2022 04:32:26 -0700
-Received: from [10.50.60.188] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 4 May 2022
- 04:32:22 -0700
-Message-ID: <95c828ce-e0c8-adde-84da-bc37c215aaf1@quicinc.com>
-Date:   Wed, 4 May 2022 17:02:18 +0530
+ 15.2.986.22; Wed, 4 May 2022 04:44:31 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 4 May 2022 04:44:27 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v11 00/12] Add soundcard support for sc7280 based platforms.
+Date:   Wed, 4 May 2022 17:13:57 +0530
+Message-ID: <1651664649-25290-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCHv14 0/9] lib/rwmmio/arm64: Add support to trace register
- reads/writes
-Content-Language: en-US
-To:     <arnd@arndb.de>, <catalin.marinas@arm.com>, <rostedt@goodmis.org>
-CC:     <gregkh@linuxfoundation.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <maz@kernel.org>, <quic_psodagud@quicinc.com>,
-        <quic_tsoni@quicinc.com>, <will@kernel.org>
-References: <cover.1651663123.git.quic_saipraka@quicinc.com>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <cover.1651663123.git.quic_saipraka@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Arnd,
+This patch set is to add bolero digital macros, WCD and maxim codecs nodes
+for audio on sc7280 based platforms.
 
-On 5/4/2022 4:58 PM, Sai Prakash Ranjan wrote:
-> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
-> are typically used to read/write from/to memory mapped registers
-> and can cause hangs or some undefined behaviour in following cases,
->
-> * If the access to the register space is unclocked, for example: if
->    there is an access to multimedia(MM) block registers without MM
->    clocks.
->
-> * If the register space is protected and not set to be accessible from
->    non-secure world, for example: only EL3 (EL: Exception level) access
->    is allowed and any EL2/EL1 access is forbidden.
->
-> * If xPU(memory/register protection units) is controlling access to
->    certain memory/register space for specific clients.
->
-> and more...
->
-> Such cases usually results in instant reboot/SErrors/NOC or interconnect
-> hangs and tracing these register accesses can be very helpful to debug
-> such issues during initial development stages and also in later stages.
->
-> So use ftrace trace events to log such MMIO register accesses which
-> provides rich feature set such as early enablement of trace events,
-> filtering capability, dumping ftrace logs on console and many more.
->
-> Sample output:
->
-> rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
-> rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
-> rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
-> rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
->
-> This series is a follow-up for the series [1] and a recent series [2] making use
-> of both.
->
-> [1] https://lore.kernel.org/lkml/cover.1536430404.git.saiprakash.ranjan@codeaurora.org/
-> [2] https://lore.kernel.org/lkml/1604631386-178312-1-git-send-email-psodagud@codeaurora.org/
->
-> Note in v4 version, Arnd suggested to benchmark and compare size with callback
-> based implementation, please see [3] for more details on that with brief comparison below.
->
->
-> **Inline version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
-> $ size vmlinux
->     text           data             bss     dec             hex         filename
->   23884219        14284468         532568 38701255        24e88c7        vmlinux
->
-> **Callback version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
-> $ size vmlinux
->      text          data             bss     dec             hex        filename
->   24108179        14279596         532568 38920343        251e097       vmlinux
->
-> $ ./scripts/bloat-o-meter inline-vmlinux callback-vmlinux
-> add/remove: 8/3 grow/shrink: 4889/89 up/down: 242244/-11564 (230680)
-> Total: Before=25812612, After=26043292, chg +0.89%
->
-> [3] https://lore.kernel.org/lkml/466449a1-36da-aaa9-7e4f-477f36b52c9e@quicinc.com/
->
-> Changes in v14:
->   * Add more description to disabling MMIO traces in geni serial drivers (Steve).
->
-> Changes in v13:
->   * Remove the copyright update as one line change doesn't warrant it (Greg and Lawyers :))
->   * Update the comment about disabling MMIO traces in geni se and uart drivers.
->   * Add description for the build time flag to asm-generic/io.h.
->
-> Changes in v12:
->   * Split the generic flag addition patch (Greg).
->   * Move the flag from makefile to driver .c file (Greg).
->
-> Changes in v11:
->   * Use unsigned long for caller ip and current ip addr (Steven Rostedt).
->   * Include review tags from Arnd.
->
-> Changes in v10:
->   * Use GENMASK(31, 0) for -Woverflow warning in irqchip tegra driver (Marc).
->   * Convert ETM4x ARM64 driver to use asm-generic IO memory barriers (Catalin).
->   * Collect ack from Catalin for arm64 change.
->
-> Changes in v9:
->   * Use TRACE_EVENT_CLASS for rwmmio_write and post_write (Steven Rostedt).
->
-> Changes in v8:
->   * Fix build error reported by kernel test robot.
->
-> Changes in v7:
->   * Use lib/ instead of kernel/trace/ based on review comment by Steven Rostedt.
->
-> Changes in v6:
->   * Implemented suggestions by Arnd Bergmann:
->     - Use arch independent IO barriers in arm64/asm
->     - Add ARCH_HAVE_TRACE_MMIO_ACCESS
->     - Add post read and post write logging support
->     - Remove tracepoint_active check
->   * Fix build error reported by kernel test robot.
->
-> Changes in v5:
->   * Move arm64 to use asm-generic provided high level MMIO accessors (Arnd).
->   * Add inline logging for MMIO relaxed and non-relaxed accessors.
->   * Move nVHE KVM comment to makefile (Marc).
->   * Fix overflow warning due to switch to inline accessors instead of macro.
->   * Modify trace event field to include caller and parent details for more detailed logs.
->
-> Changes in v4:
->   * Drop dynamic debug based filter support since that will be developed later with
->     the help from Steven (Ftrace maintainer).
->   * Drop value passed to writel as it is causing hangs when tracing is enabled.
->   * Code cleanup for trace event as suggested by Steven for earlier version.
->   * Fixed some build errors reported by 0-day bot.
->
-> Changes in v3:
->   * Create a generic mmio header for instrumented version (Earlier suggested in [1]
->     by Will Deacon and recently [2] by Greg to have a generic version first).
->   * Add dynamic debug support to filter out traces which can be very useful for targeted
->     debugging specific to subsystems or drivers.
->   * Few modifications to the rwmmio trace event fields to include the mmio width and print
->     addresses in hex.
->   * Rewrote commit msg to explain some more about usecases.
->
-> Prasad Sodagudi (1):
->    lib: Add register read/write tracing support
->
-> Sai Prakash Ranjan (8):
->    arm64: io: Use asm-generic high level MMIO accessors
->    coresight: etm4x: Use asm-generic IO memory barriers
->    irqchip/tegra: Fix overflow implicit truncation warnings
->    drm/meson: Fix overflow implicit truncation warnings
->    KVM: arm64: Add a flag to disable MMIO trace for nVHE KVM
->    asm-generic/io: Add logging support for MMIO accessors
->    serial: qcom_geni_serial: Disable MMIO tracing for geni serial
->    soc: qcom: geni: Disable MMIO tracing for GENI SE
->
->   arch/Kconfig                                  |  3 +
->   arch/arm64/Kconfig                            |  1 +
->   arch/arm64/include/asm/io.h                   | 41 ++------
->   arch/arm64/kvm/hyp/nvhe/Makefile              |  7 +-
->   drivers/gpu/drm/meson/meson_viu.c             | 22 ++---
->   .../coresight/coresight-etm4x-core.c          |  8 +-
->   drivers/hwtracing/coresight/coresight-etm4x.h |  8 +-
->   drivers/irqchip/irq-tegra.c                   | 10 +-
->   drivers/soc/qcom/qcom-geni-se.c               |  3 +
->   drivers/tty/serial/qcom_geni_serial.c         |  3 +
->   include/asm-generic/io.h                      | 91 ++++++++++++++++-
->   include/trace/events/rwmmio.h                 | 97 +++++++++++++++++++
->   lib/Kconfig                                   |  7 ++
->   lib/Makefile                                  |  2 +
->   lib/trace_readwrite.c                         | 47 +++++++++
->   15 files changed, 288 insertions(+), 62 deletions(-)
->   create mode 100644 include/trace/events/rwmmio.h
->   create mode 100644 lib/trace_readwrite.c
->
+This patch set depends on:
+    -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638259
+    -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=601249
+    -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=634597
+    -- https://patchwork.kernel.org/project/linux-clk/list/?series=637999
+    -- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638002
 
-Could you take first 4 patches which are independent and not related to MMIO tracing?
-And the rest can be taken once we get ack from Steve for the tracing part.
+Changes Since V10:
+    -- Modify digital macro codecs pin control labels.
+    -- Updated dependency list.
+Changes Since V9:
+    -- Move wcd codec and digital codec nodes to sc7280-qcard file.
+    -- Modify the reg property as per link number in sound node.
+    -- Fix the us-euro pin control usage in wcd codec node.
+    -- Move wcd pin control nodes to specific crd board files.
+    -- Sort max98360a codec node in alphabetical order.
+    -- Modify the commit messages.
+Changes Since V8:
+    -- Split patches as per sc7280 CRD revision 3, 4 and 5 boards.
+    -- Add corresponding dt nodes for herobrine crd boards.
+    -- Update dai-link node names as per dt-bindings in sound node.
+    -- Add reg property in sound node as per dt-bindings which was removed in previous series.
+    -- Fix typo errors.
+    -- Update wcd codec pin control properties in board specific files.
+Changes Since V7:
+    -- Remove redundant interrupt names in soundwire node.
+    -- Fix typo errors.
+    -- Remove redundant reg property in sound node.
+    -- Rebased on top of latest kernel tip.
+Changes Since V6:
+    -- Modify link-names and audio routing in a sound node.
+    -- Move amp_en pin control node to appropriate consumer patch.
+    -- Split patches as per digital macro codecs and board specific codecs and sort it.
+    -- Modify label and node names to lpass specific.
+Changes Since V5:
+    -- Move soc specific bolero digital codec nodes to soc specific file.
+    -- Bring wcd938x codec reset pin control and US/EURO HS selection nodes from other series.
+    -- Change node name and remove redundant status property in sound node.
+Changes Since V4:
+    -- Update nodes in sorting order.
+    -- Update DTS node names as per dt-bindings.
+    -- Update Node properties in proper order.
+    -- Update missing pinctrl properties like US/EURO HS selection, wcd reset control.
+    -- Remove redundant labels.
+    -- Remove unused size cells and address cells in tx macro node.
+    -- Keep all same nodes at one place, which are defined in same file.
+    -- Add max98360a codec node to herobrine board specific targets.
+Changes Since V3:
+    -- Move digital codec macro nodes to board specific dtsi file.
+    -- Update pin controls in lpass cpu node.
+    -- Update dependency patch list.
+    -- Create patches on latest kernel.
+Changes Since V2:
+    -- Add power domains to digital codec macro nodes.
+    -- Change clock node usage in lpass cpu node.
+    -- Add codec mem clock to lpass cpu node.
+    -- Modify the node names to be generic.
+    -- Move sound and codec nodes to root node.
+    -- sort dai links as per reg.
+    -- Fix typo errors.
+Changes Since V1:
+    -- Update the commit message of cpu node patch.
+    -- Add gpio control property to support Euro headset in wcd938x node.
+    -- Fix clock properties in lpass cpu and digital codec macro node.
 
-Thanks,
-Sai
+Srinivasa Rao Mandadapu (12):
+  arm64: dts: qcom: sc7280: Add nodes for soundwire and va tx rx digital
+    macro codecs
+  arm64: dts: qcom: sc7280: Enable digital codecs and soundwire for CRD
+    1.0/2.0 and IDP boards
+  arm64: dts: qcom: sc7280: Enable digital codecs and soundwire for CRD
+    3.0/3.1
+  arm64: dts: qcom: sc7280: Add wcd9385 codec node for CRD 1.0/2.0 and
+    IDP boards
+  arm64: dts: qcom: sc7280: Add wcd9385 codec node for CRD 3.0/3.1
+  arm64: dts: qcom: sc7280: Add max98360a codec for CRD 1.0/2.0 and IDP
+    boards
+  arm64: dts: qcom: sc7280: herobrine: Add max98360a codec node
+  arm64: dts: qcom: sc7280: Add lpass cpu node
+  arm64: dts: qcom: sc7280: Enable lpass cpu node for CRD 1.0/2.0 and
+    IDP boards.
+  arm64: dts: qcom: sc7280: Enable lpass cpu node for CRD 3.0/3.1
+  arm64: dts: qcom: sc7280: Add sound node for CRD 1.0/2.0 and IDP
+    boards
+  arm64: dts: qcom: sc7280: Add sound node for CRD 3.0/3.1
+
+ arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts        |  37 ++++
+ arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 150 +++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi    |   8 +
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi          | 218 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi        |  75 ++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi              | 190 +++++++++++++++++++
+ 6 files changed, 678 insertions(+)
+
+-- 
+2.7.4
+
