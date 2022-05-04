@@ -2,51 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 452CD51AFF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 23:00:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB1CA51B040
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 23:17:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378464AbiEDVDp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 17:03:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49686 "EHLO
+        id S1378544AbiEDVV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 17:21:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343672AbiEDVDo (ORCPT
+        with ESMTP id S1357448AbiEDVV0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 17:03:44 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBB3A517FD;
-        Wed,  4 May 2022 14:00:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 96C5FB8293F;
-        Wed,  4 May 2022 21:00:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4714DC385A4;
-        Wed,  4 May 2022 21:00:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651698005;
-        bh=5Nf3iyTvgGnwT20t1hf3sHDL9Ia6CNjfhok9FG1zJ9Y=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=aiFVKPs62c0odAocD0BRu2jLYyKCUrTTOPiJvbDNsUrPmaaG13/o+l14i0ovljyNe
-         mSBkFdQgO6z4Ocz6x/poZ4hRcYR8J/bK5UkxqFiTXtgqdpFMqjKPDkdNSKte7GUE6F
-         dqva4pjX5ji5KNg8Z6Cok/D68R+QLrQ0cfUbZbPDxwflGV11D82H2qv2xiVqrjU/MF
-         Roiz18j6W3OYH+VxsqZfdYg0Kt9Av+46hCRcnHbZnp5v/hsIVCBnbxNH7sdIj886s6
-         HsZSOtr3QcXrRp6zBQdy70ybPeVcuJ6Vtsn5guB4vSJTZJLJ6F6bRG0CCqcz6Usa7h
-         EBhLOWD71+d2A==
-From:   Mark Brown <broonie@kernel.org>
-To:     linux-kernel@vger.kernel.org, krzysztof.kozlowski@linaro.org,
-        linux-arm-msm@vger.kernel.org, lgirdwood@gmail.com,
-        devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, krzysztof.kozlowski+dt@linaro.org
-In-Reply-To: <20220426105501.73200-1-krzysztof.kozlowski@linaro.org>
-References: <20220426105501.73200-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v3 0/3] regulator: dt-bindings: qcom,rpmh: minor cleanups and extend supplies
-Message-Id: <165169800298.1752583.17813272460576782096.b4-ty@kernel.org>
-Date:   Wed, 04 May 2022 22:00:02 +0100
+        Wed, 4 May 2022 17:21:26 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37DC24D9FB
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 14:17:49 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id cq17-20020a17090af99100b001dc0386cd8fso2318219pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 14:17:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8el4Rk0mk4LC6bzVxN9Wiyp6vHwSjolb835IADqSIQA=;
+        b=Y5V6GbrOtAzxivDyfLt5L5uZBXZlDDFBVcmRvZ3OOddanp56F72NsQK+Qec3PrNyH8
+         3SyQOe7yX5XMzvHZZbFpU3shQgwuqE6Ur9/o9SiEi5lTQpRUBzF2JCLai3oDiAyr1EOb
+         4usgamJAanu8dWMORqEYK6u7oaqD4PI1x3w/I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8el4Rk0mk4LC6bzVxN9Wiyp6vHwSjolb835IADqSIQA=;
+        b=YqMRG90oUlS7g/G/YIzyCVGcpjbKoHJ3jIQvA+4b3GlyaOsyYomrbixMCE21eyOMCy
+         X2QkMHi/aMdt4mVozBrZxR9b3WHW+igUYQy72gf2jPydMN1hC8MAcGMiV4Dex7Kl9vE3
+         vp45tFJ9hSwBTssySaDQW4P31vw6cIAzct8RduJCMaJV47TZ5AIhj5klrawr8Rsomwrj
+         YF6SAlH3QQXfW8/mF/daXfDn5HblwEwA49rZMtvruiddAGpCHp5n1njubWVpQS2lZBmL
+         nkYldO0KJUYV2B4HNSNwBL8smfzieRv+AfFgBAVlmlUq7QxtiPBfUvq5I7x6HDdPEtCN
+         N05g==
+X-Gm-Message-State: AOAM532LSPdtaCiHBCl72skdaeaSutR5YKGaCgAbCzJN3hnlAL/v0W9g
+        GAY/uKbMraPi5Ik3mmJ+dPHcXw==
+X-Google-Smtp-Source: ABdhPJwhlBxZacPgfc5H9mWbA5FH2eaEZzDvZ33SWLjd1tzJzoZhiR0LdHYinUeTZ9WuECufN0sw3A==
+X-Received: by 2002:a17:902:d4ce:b0:15e:90f7:5bf7 with SMTP id o14-20020a170902d4ce00b0015e90f75bf7mr21335093plg.98.1651699068765;
+        Wed, 04 May 2022 14:17:48 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:35b6:c77b:be04:3bd5])
+        by smtp.gmail.com with UTF8SMTPSA id o4-20020a17090ab88400b001dbf2aac185sm3739324pjr.1.2022.05.04.14.17.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 May 2022 14:17:48 -0700 (PDT)
+Date:   Wed, 4 May 2022 14:17:46 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+        srinivas.kandagatla@linaro.org, dianders@chromium.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v11 02/12] arm64: dts: qcom: sc7280: Enable digital
+ codecs and soundwire for CRD 1.0/2.0 and IDP boards
+Message-ID: <YnLteplwGCBheObA@google.com>
+References: <1651664649-25290-1-git-send-email-quic_srivasam@quicinc.com>
+ <1651664649-25290-3-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1651664649-25290-3-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -55,46 +73,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 26 Apr 2022 12:54:58 +0200, Krzysztof Kozlowski wrote:
-> Extend the RPMH regulator bindings with minor fixes and adding narrow supply
-> matching.
+On Wed, May 04, 2022 at 05:13:59PM +0530, Srinivasa Rao Mandadapu wrote:
+> Enable rx, tx and va macro codecs and soundwire nodes on revision 3,
+> 4 (aka CRD 1.0 and 2.0) and IDP boards.
 > 
-> Changes since v2
-> ================
-> 1. Remove "defs" method, because schema nows allows unevaluatedProperties
->    without references to other schemas.
-> 2. Include maintainer change patch, previously sent separately.
-> 
-> [...]
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 
-Applied to
+Please make sure to collect tags, for v10 you already had:
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
-
-Thanks!
-
-[1/3] regulator: dt-bindings: qcom,rpmh: update maintainers
-      commit: a6d889a8fdbb8cb4b0d01f30f93357f3ffd61f06
-[2/3] regulator: dt-bindings: qcom,rpmh: document supplies per variant
-      commit: ba5d99609a5e6a3d0d9ac2574250208457d839cc
-[3/3] regulator: dt-bindings: qcom,rpmh: document vdd-l7-bob-supply on PMR735A
-      commit: e84f3c41a583408c7c67ed7824a7ff14ff40d045
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
