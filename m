@@ -2,78 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4038051B061
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 23:22:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A71F051B0AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 23:32:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234443AbiEDVZm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 17:25:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39226 "EHLO
+        id S1354824AbiEDVg0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 17:36:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237058AbiEDVZl (ORCPT
+        with ESMTP id S240385AbiEDVgZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 17:25:41 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B7784E38C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 14:22:03 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-2f863469afbso30129457b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 14:22:03 -0700 (PDT)
+        Wed, 4 May 2022 17:36:25 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BCB251307
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 14:32:48 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id 15so2158114pgf.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 14:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Tx3mYhVLEABySlfxpbH37Ic7LnqQbPKrBTTlaZOMkPc=;
-        b=G1OpEkn1BESEXlXxdMXC13Qnm60u5Uwth9X0JfnzP05QCviFzpL2dEIAwOPhBFTBGu
-         QzH9jtW1H4xyIwtfrt+wLLOsaDg3pqvDmwwpBD99h4VYqO91HS+yYY1UJl2A7zV6QAxE
-         D3RHXAsBqChJHeyJEcmKERWZDs7UemA1RqJnt0Hvs49iPa2sQlMXNOPI2Ws0UAemENIC
-         pFyCE20wljRiW1UBlpYCXcuN3qV3BK9EQjwtHVC+rko2X42WfBhbDbIlt5OwYZyf7sIG
-         t5Nf16FEFI+Vgwr50JZFUFOFib15101a2sfcCF4oqpseiej3c3Ty5DzIUbdGgRWRBwWX
-         QUlA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=WjEPs1op8LxvfkfWukwIS5BU2GeJEGL3fw9qBagDE0I=;
+        b=N39qyWd0B9QXcrtEOgpz+XlRsSUtsOaISsV//j38XXGM2Hz30Y3BuDkZPsjNuL9JlH
+         VmfX4usEBxTLo/kc3iHbcTUXTBYqZ085pa+hYck48mTkCv2C8SrIGBPWgRNOExixQcYZ
+         6mA+JXh8aMwkih5IYrvVTvRd04xT0A6AqAZ0I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Tx3mYhVLEABySlfxpbH37Ic7LnqQbPKrBTTlaZOMkPc=;
-        b=nfB3d5gIpxfrciNlIrxHgd2So93cgc+M5DQhqbv78o9936S9e0CIsLpDps0IDsZ5VP
-         SkHmapu018Ti+nuT+uyMQZItVCd10MGHS2tlCrhjF7M0DLxhPVk11lkXhuX9/ZmyOEin
-         sR8D1H5LeO9b0Iy7Vuq42B08WgZWki/p8cyhUahl3N5lEsiF4fC+iIiemV/lwR0sFbh5
-         ZG/MnYQ+uNwYwvxKzvABD3h1Md0bgdUK2hSjcjpfvL6/QIsMR61aLW8EW39BVX2DtpSV
-         jBJr7auBvZjqesDsLQaMly88RBZL1BOy2yCfECXDNYMQ9sUrP2zvGLrsGBniAbC6w5gX
-         4W5Q==
-X-Gm-Message-State: AOAM530g4GMAHOgDkXQkiM+/Mev95MOtQsp5bi6Zi0kL7kAI1OXatMOp
-        UeH++gaf7XC4snJO7QdrHPjwVE9MHhf3d0OCnxt6vQ==
-X-Google-Smtp-Source: ABdhPJy9GQmBn09i2jD7Kpuz51ZHerGYLe0ZaUG6+YCgtLjqcq581mHgtYfCJS9Ait9lKNH808GM1rsVRxkBaX0KK/U=
-X-Received: by 2002:a0d:e5c6:0:b0:2f8:c866:7af9 with SMTP id
- o189-20020a0de5c6000000b002f8c8667af9mr21645142ywe.268.1651699322764; Wed, 04
- May 2022 14:22:02 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=WjEPs1op8LxvfkfWukwIS5BU2GeJEGL3fw9qBagDE0I=;
+        b=oiqlP+HR5A0dLYMOuVmnVYxZXuQ9n6ZcwaQpuOjCHEIPMTw4yzZT6GNKzy5Lm3jrfx
+         q3ht6bzjcdeB/Rr5QHoyIOP7Gy3ug4aOZKZPjWJ4ceYJPFfQPeRZm9oCoh3Z9x6qTZ9h
+         gZJ3MdS0vyS6i5rPJicf9Ufa575f3wBvvqJfBibGVhiVwWZFiVkEa+v/iAZbWYeZwViu
+         NDl9Ljq0u/9Wwtn9O62aR/QWYqOLMddv1QNlUqmnoHxfASl+nXyA5zIPlWjdwB9NiXnF
+         ATVMhT4NnxEHXZWqumvb+qGb0Lw1Luv3s2PAp2y7jo9Q/6L92GUxQxPURE6v1RklKBx+
+         6Zgg==
+X-Gm-Message-State: AOAM531e+K8AIVGiXkiaREYWW/ErAsKS8i2RJ1xB+CKiMFlkoiovNuZR
+        iWbZF2cAYKVZuUqoH4w+l/hrQA==
+X-Google-Smtp-Source: ABdhPJxwBSF1pIaHNG1nGISIY7eznOLyP5goqHIsXBFpaErUNk/5iojUC7knD+9FCtCBOkmQbxSiDA==
+X-Received: by 2002:a62:bd14:0:b0:50d:4bec:ff78 with SMTP id a20-20020a62bd14000000b0050d4becff78mr22482662pff.71.1651699967711;
+        Wed, 04 May 2022 14:32:47 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:35b6:c77b:be04:3bd5])
+        by smtp.gmail.com with UTF8SMTPSA id m31-20020a63581f000000b003c2677c9c9esm3905015pgb.67.2022.05.04.14.32.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 May 2022 14:32:47 -0700 (PDT)
+Date:   Wed, 4 May 2022 14:32:46 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+        srinivas.kandagatla@linaro.org, dianders@chromium.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v11 04/12] arm64: dts: qcom: sc7280: Add wcd9385 codec
+ node for CRD 1.0/2.0 and IDP boards
+Message-ID: <YnLw/tw1FzAPtKSo@google.com>
+References: <1651664649-25290-1-git-send-email-quic_srivasam@quicinc.com>
+ <1651664649-25290-5-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-References: <20220419141846.598305-1-maz@kernel.org> <CACRpkda3L_itpqcnPq6xDoJtNHt8NuvE1MZk1bCNR+u2KKUpBA@mail.gmail.com>
- <874k2kccse.wl-maz@kernel.org>
-In-Reply-To: <874k2kccse.wl-maz@kernel.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 4 May 2022 23:21:51 +0200
-Message-ID: <CACRpkdb32NuJ8jdsk6ox7ViVjK=9WWWavS=aYcoWTCbaO3WkTg@mail.gmail.com>
-Subject: Re: [PATCH v3 00/10] gpiolib: Handle immutable irq_chip structures
-To:     Marc Zyngier <maz@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     linux-kernel@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Joey Gouly <joey.gouly@arm.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, kernel-team@android.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1651664649-25290-5-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,22 +73,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Apr 23, 2022 at 12:30 PM Marc Zyngier <maz@kernel.org> wrote:
+On Wed, May 04, 2022 at 05:14:01PM +0530, Srinivasa Rao Mandadapu wrote:
+> Add wcd9385 codec node for audio use case on sc7280 based platforms
+> of revision 3, 4 (aka CRD 1.0 and 2.0) and IDP boards.
+> Add tlmm gpio property for switching CTIA/OMTP Headset.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 
-> > Bartosz: if you're happy with this can you apply it to an immutable branch
-> > from v5.18-rc1 and merge that into the GPIO for-next and then I can also
-> > pull that into pinctrl?
->
-> For what it is worth, I've pushed this branch into irqchip-next.
->
-> You can pick it up from:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log/?h=irq/gpio-immutable
+Carrying over from v10:
 
-Bartosz are you pulling this? Most of the changes are in GPIO.
-Patches have started to arrive that go on top of these changes
-so would be nice to have it in both GPIO and pin control as a
-baseline.
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 
-Yours,
-Linus Walleij
+Coming back to my earlier comments about per-patch change logs:
+
+The cover letter change log looks like this:
+
+Changes Since V10:
+ -- Modify digital macro codecs pin control labels.
+ -- Updated dependency list.
+
+Changes Since V9:
+ -- Move wcd codec and digital codec nodes to sc7280-qcard file.
+ -- Modify the reg property as per link number in sound node.
+ -- Fix the us-euro pin control usage in wcd codec node.
+ -- Move wcd pin control nodes to specific crd board files.
+ -- Sort max98360a codec node in alphabetical order.
+ -- Modify the commit messages.
+
+...
+
+There is no mention in which patches changes were made, in some cases
+you can guess it, in others not, in any case you are placing the
+burden to figure that out on the reviewers even though you already
+have that information. So please send future series (this one is
+hopefully close to landing) with per-patch change logs.
