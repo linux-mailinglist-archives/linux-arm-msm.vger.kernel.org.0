@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A588F51AC12
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 20:02:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 896AF51AC14
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 20:02:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376392AbiEDSGQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 14:06:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47836 "EHLO
+        id S1359540AbiEDSGR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 14:06:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357782AbiEDSGJ (ORCPT
+        with ESMTP id S1354593AbiEDSGJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 4 May 2022 14:06:09 -0400
-Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A15CB50042
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 10:21:22 -0700 (PDT)
-Received: by mail-oo1-xc36.google.com with SMTP id f6-20020a4ace86000000b0035f083d2216so300810oos.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 10:21:22 -0700 (PDT)
+Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA8455004A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 10:21:23 -0700 (PDT)
+Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-edeb6c3642so1851743fac.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 10:21:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=D67xxsOmDc+8e4U34erMwd0+oeSj+9iMffLFWurK75A=;
-        b=pFZ5gsS+V2/McNEzMjJ2PCTzZUOkiYFbx54V6u+Tr2/PZrUNGJkbejK75hV0iZmloX
-         IK88gYrwWOlJVubbzPQakaGtZg038E/SmTi32VlOmN66/DPude/cCIouLuivjBq0Ik5+
-         MzbLSVtcdX+0/V0G3Qe2izfxTyq/ZYJlH08NjAup5yQ+wV2Er/cKTIMFN0bsglk1X3kN
-         8XePRSJL1djOrAGlYh3/+fi1gOVqm2cRCC39lamBtvaL9+/7r6+TFzI9MKPxtsktESqQ
-         67rDAxrguBdCzRFJVlXDzeaStnICAeWXmZjYyYvXrqNkjrBGLDhSOwzjXlVhkYnw0Pqq
-         tXkg==
+        bh=ZmRbNBzAEK7nTpF2DKzIaN1kRakiyBKxMy+YQVSVh5E=;
+        b=yAvRbAlkPr8Jzb4l0UpneZzaDJdYwkhb2RnvdJ+aTfJseTXylFi/+zmo9RSGszpjU8
+         wFdFWpehVeNtEdYCHlkxMnSeVEGdRxmj5iCgQiCHjM6GfwjM2cvLsZuWVB1Aiuo+9yuK
+         mWhiX6ttpuntFCGu3rgrTq0p4X0EEcan44lht33uAtbbUn4yLJ4UgPiT2ctYJHRJ8xAw
+         o5w5OGiJleO7x6fDqoiW17S2EAykYt6RILsWz89gnDw7r83628l92hngfffYPPdb7BDH
+         y+gyM4Q844sR++Cg7MBihoXp/B/ACFMN8r5zx/N1sgRBb7e0SYad+DL89TyV42uxnglA
+         Pekw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=D67xxsOmDc+8e4U34erMwd0+oeSj+9iMffLFWurK75A=;
-        b=cFVTLm0S0VCZBQX9u2TlHE4vnUQVMNcZudbgpvtBG9fO/8GHmTsATxe1DYiSI8t7WU
-         n6uQsqgpvsRMkIzdutO17TEBsPu1zXrbidZdoOvpp/78rDlBap7LkSyGYM8lx5rufHVi
-         BIiKqb312+vSqPHdaETTCg8opaBwTeWps1heAjXfABFJ8U+G3ZrUibY8VoUfsar75SWN
-         vBZluxU3C5K9OU4l4JkcjVWMNhCbbGvw4kq9slgJ37r/oOvHv4nKBLKLrNSUq660tJHu
-         4LLhrllnSFqajFT1DlS+/7kXnfs+UU2mTty/ZroXl7IrdzdIIc7p/qmGgMuKYsmad7wH
-         Jf0A==
-X-Gm-Message-State: AOAM533UDY4v6AykeUldbw50GGselzWUdk67+6DyfL/kobVJ5N/HmUtv
-        iDEz6TePf80laOMQQuXFAD2EjA==
-X-Google-Smtp-Source: ABdhPJwlLU2uM3Rne7tAPGdFSZ0UBcyawiH2dokXvMOVV8bbrcEMMP7yfPfur/DaCD5gO9wtPD3OeA==
-X-Received: by 2002:a4a:d48c:0:b0:35e:aa26:b720 with SMTP id o12-20020a4ad48c000000b0035eaa26b720mr7601735oos.12.1651684882013;
-        Wed, 04 May 2022 10:21:22 -0700 (PDT)
+        bh=ZmRbNBzAEK7nTpF2DKzIaN1kRakiyBKxMy+YQVSVh5E=;
+        b=cHjCAgt3BmhNFFBtVVgx7BUKDpJxuZlKlgjcEKNwSZ9wulyZnpf1sogsqeoQIDLrq1
+         BWR4Bl/XLIX+aSUyj2Wcy7m1EAYYsleDi0Pv/iePAaEvz2vp2Kjx8PuYXjnqpegz9KRy
+         yEhh8IB1MDYpQ/9kJ5THqI9Ejf8crsbzkxMU1XiTg9F4gk0MvuPmgGGI8Ul5FeyxPMzx
+         HP5IMEhpWc9ujZpZyzsxz2cyG43GBc8ogxfHNBfRj1h4T+tB+jkXvTYRqMJpzFPSo9q8
+         KcHhVgN2JhymdFQePngOmzQp1TsbMummgHj3F6V2ixvlDibkZDiLdvO99PROPWauh/EM
+         73Aw==
+X-Gm-Message-State: AOAM531wEvSvH/A/1wOAa+JWDFUZwcCB65mrn6iD9DgeFf7r9irQhPxL
+        iiL8bnjiyDqikDhO6W0dbybiUQ==
+X-Google-Smtp-Source: ABdhPJxxcyxm+F7rrHuzAUwUhJGHaziLUYHGqN9C+FhBD04Kw1m6G39L3ybdAvemqUTi3b3R5jDobw==
+X-Received: by 2002:a05:6870:208:b0:e6:134b:1b04 with SMTP id j8-20020a056870020800b000e6134b1b04mr256893oad.85.1651684883032;
+        Wed, 04 May 2022 10:21:23 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a7-20020a056870b14700b000ead8b89484sm5785452oal.5.2022.05.04.10.21.21
+        by smtp.gmail.com with ESMTPSA id a7-20020a056870b14700b000ead8b89484sm5785452oal.5.2022.05.04.10.21.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 May 2022 10:21:21 -0700 (PDT)
+        Wed, 04 May 2022 10:21:22 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] soc: qcom: rpmhpd: Add sc8280xp and sa8540p
-Date:   Wed,  4 May 2022 12:21:07 -0500
-Message-Id: <165168485226.3730817.13906711801851498920.b4-ty@linaro.org>
+To:     Douglas Anderson <dianders@chromium.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     matvore@chromium.org, Andy Gross <agross@kernel.org>,
+        "Reviewed-by : Stephen Boyd" <swboyd@chromium.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH] soc: qcom: socinfo: Add another ID for sc7180
+Date:   Wed,  4 May 2022 12:21:08 -0500
+Message-Id: <165168485227.3730817.11549721304895378126.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220426233508.1762345-1-bjorn.andersson@linaro.org>
-References: <20220426233508.1762345-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20220502173338.1.I26eca1856f99e6160d30de6d50ecab60e6226354@changeid>
+References: <20220502173338.1.I26eca1856f99e6160d30de6d50ecab60e6226354@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -74,25 +73,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 26 Apr 2022 16:35:05 -0700, Bjorn Andersson wrote:
-> Add compatibles and power-domain definitions for the sc8280xp and sa8540p
-> platforms.
+On Mon, 2 May 2022 17:33:45 -0700, Douglas Anderson wrote:
+> It appears the some sc7180 devices, like the one in my
+> sc7180-trogdor-homestar, report an ID of 407 instead of 425. Add
+> another ID into the list.
 > 
-> Bjorn Andersson (3):
->   dt-bindings: power: rpmpd: Add sc8280xp RPMh power-domains
->   soc: qcom: rpmhpd: Don't warn about sparse rpmhpd arrays
->   soc: qcom: rpmhpd: add sc8280xp & sa8540p rpmh power-domains
 > 
-> [...]
 
 Applied, thanks!
 
-[1/3] dt-bindings: power: rpmpd: Add sc8280xp RPMh power-domains
-      commit: dbfb5f94e084287f0a3f23d14ef6692c43c98855
-[2/3] soc: qcom: rpmhpd: Don't warn about sparse rpmhpd arrays
-      commit: af77132e9d2bc8ca477003fef15e2c677ae958b1
-[3/3] soc: qcom: rpmhpd: add sc8280xp & sa8540p rpmh power-domains
-      commit: f68f1cb3437d338ee88a9fc05acd19dacdb9aabd
+[1/1] soc: qcom: socinfo: Add another ID for sc7180
+      commit: c35886d605604e0b03cdd835ae3249dc1fe0cc2a
 
 Best regards,
 -- 
