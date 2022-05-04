@@ -2,154 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 695465196F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 07:43:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D72FF519741
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 08:12:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344686AbiEDFqw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 01:46:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54278 "EHLO
+        id S1344814AbiEDGQa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 02:16:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230474AbiEDFqv (ORCPT
+        with ESMTP id S234368AbiEDGQ3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 01:46:51 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 545CD2610B;
-        Tue,  3 May 2022 22:43:16 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D7F9360B6B;
-        Wed,  4 May 2022 05:43:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1EF2C385A5;
-        Wed,  4 May 2022 05:42:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651642995;
-        bh=JrTxy6eXsiDtGM/F/9OTUVdSC11/W1yM6qcTiJhEEWY=;
-        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-        b=ptNmZdYs+o6KHSEb902G1QgyncrLgIYxwRjyZ9+W9VTxnFGJHKAdTcbe0JtEXzd4l
-         aYwCxztA+GFA6BxNwpRJ+fwdrhYF+K4ZZZLdzPKi8lBBWFO/VNZwdIAlyDMFIxmOWz
-         hAmvQ+5DrbHNQghYSGB1afStWvfnMlPcYreVpeGPzS9YPA/9Y4p/yFDlQcLqjzbi/7
-         oTPIz0yt7M1rWvdVDxqtNaenj2/snIMXH2fVjjBqgI4xeMRFMaS+uomXQ38nO6fIxg
-         l9QT60aMp2PNBolRmvUG9+MmaPk4GD+QjG/dwTaQmabfDmxvYb7M7hfSFb2fcWpc9I
-         jV5YMv8gNlmpA==
-From:   Kalle Valo <kvalo@kernel.org>
-To:     Kees Cook <keescook@chromium.org>
-Cc:     "Gustavo A . R . Silva" <gustavoars@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, wcn36xx@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        Alexei Starovoitov <ast@kernel.org>,
-        alsa-devel@alsa-project.org, Al Viro <viro@zeniv.linux.org.uk>,
-        Andrew Gabbasov <andrew_gabbasov@mentor.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Andy Lavr <andy.lavr@gmail.com>,
-        Arend van Spriel <aspriel@gmail.com>,
-        Baowen Zheng <baowen.zheng@corigine.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-        Bradley Grove <linuxdrivers@attotech.com>,
-        brcm80211-dev-list.pdl@broadcom.com,
-        Christian Brauner <brauner@kernel.org>,
-        Christian =?utf-8?Q?G=C3=B6ttsche?= <cgzones@googlemail.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        Chris Zankel <chris@zankel.net>,
-        Cong Wang <cong.wang@bytedance.com>,
-        Daniel Axtens <dja@axtens.net>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Dan Williams <dan.j.williams@intel.com>,
-        David Gow <davidgow@google.com>,
-        David Howells <dhowells@redhat.com>,
-        Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-        devicetree@vger.kernel.org, Dexuan Cui <decui@microsoft.com>,
-        Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
-        Eli Cohen <elic@nvidia.com>,
-        Eric Paris <eparis@parisplace.org>,
-        Eugeniu Rosca <erosca@de.adit-jv.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Francis Laniel <laniel_francis@privacyrequired.com>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Franky Lin <franky.lin@broadcom.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Gregory Greenman <gregory.greenman@intel.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Hante Meuleman <hante.meuleman@broadcom.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Hulk Robot <hulkci@huawei.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        James Morris <jmorris@namei.org>,
-        Jarkko Sakkinen <jarkko@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Johannes Berg <johannes.berg@intel.com>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        John Keeping <john@metanate.com>,
-        Juergen Gross <jgross@suse.com>,
-        Keith Packard <keithp@keithp.com>, keyrings@vger.kernel.org,
-        kunit-dev@googlegroups.com,
-        Kuniyuki Iwashima <kuniyu@amazon.co.jp>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Leon Romanovsky <leon@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux1394-devel@lists.sourceforge.net,
-        linux-afs@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-hardening@vger.kernel.org, linux-hyperv@vger.kernel.org,
-        linux-integrity@vger.kernel.org, linux-rdma@vger.kernel.org,
-        linux-scsi@vger.kernel.org, linux-security-module@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-xtensa@linux-xtensa.org,
-        llvm@lists.linux.dev, Louis Peens <louis.peens@corigine.com>,
-        Luca Coelho <luciano.coelho@intel.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Marc Dionne <marc.dionne@auristor.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Mark Brown <broonie@kernel.org>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Max Filippov <jcmvbkbc@gmail.com>,
-        Mimi Zohar <zohar@linux.ibm.com>,
-        Muchun Song <songmuchun@bytedance.com>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Nuno =?utf-8?Q?S=C3=A1?= <nuno.sa@analog.com>,
-        Paul Moore <paul@paul-moore.com>,
-        Rich Felker <dalias@aerifal.cx>,
-        Rob Herring <robh+dt@kernel.org>,
-        Russell King <linux@armlinux.org.uk>, selinux@vger.kernel.org,
-        "Serge E. Hallyn" <serge@hallyn.com>,
-        SHA-cyfmac-dev-list@infineon.com,
-        Simon Horman <simon.horman@corigine.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Stefan Richter <stefanr@s5r6.in-berlin.de>,
-        Steffen Klassert <steffen.klassert@secunet.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Stephen Smalley <stephen.smalley.work@gmail.com>,
-        Tadeusz Struk <tadeusz.struk@linaro.org>,
-        Takashi Iwai <tiwai@suse.com>, Tom Rix <trix@redhat.com>,
-        Udipto Goswami <quic_ugoswami@quicinc.com>,
-        Vincenzo Frascino <vincenzo.frascino@arm.com>,
-        Wei Liu <wei.liu@kernel.org>, xen-devel@lists.xenproject.org,
-        Xiu Jianfeng <xiujianfeng@huawei.com>,
-        Yang Yingliang <yangyingliang@huawei.com>
-Subject: Re: [PATCH 10/32] wcn36xx: Use mem_to_flex_dup() with struct wcn36xx_hal_ind_msg
-References: <20220504014440.3697851-1-keescook@chromium.org>
-        <20220504014440.3697851-11-keescook@chromium.org>
-Date:   Wed, 04 May 2022 08:42:46 +0300
-In-Reply-To: <20220504014440.3697851-11-keescook@chromium.org> (Kees Cook's
-        message of "Tue, 3 May 2022 18:44:19 -0700")
-Message-ID: <8735hpc0q1.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 4 May 2022 02:16:29 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FAB415A13
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 23:12:54 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id p10so596252lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 May 2022 23:12:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=2tuqEYU8OdIQxZ+rdModr4KYTKneYsLdEMUMbVDbBTk=;
+        b=BWUeIlVpukCSflMHB1tgYceEosqVc9oe/jVXzIYsrusbl87pNjhYnDjv9qEL0oLhwn
+         aa5UjM1m72/z0Hga1RJHxiWZAKJqXW7wF3rMzST8CqwYHbsHDVJmbnoWbRlJOuZlx6tU
+         ySVvgdDG7ZICzvh3u7mvZrki7RSf7Jlvyp9n+9KOD688mckez/KQg0eVURkS5L/boK+e
+         IbT0Ut7YD4VLvL2Hh6VnoxQu4td6H/Fr3wJXIwAUC0p64RQorCh9AzQc5A4aFkxjWj4X
+         zV3ANrN2TxFoRJ8c3bWK+NaiHY6YqPwSlTVWKpnmiPXr/oEYIm7X6CGb+/md6PS/104Z
+         VzNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=2tuqEYU8OdIQxZ+rdModr4KYTKneYsLdEMUMbVDbBTk=;
+        b=rN5WGWoOYQfuWLdFGxzwZvH/3a7asHu1QEJlHXn00pntWNViF0BzoCQGPkfWpQNRbH
+         wp67utfz2BSJTd7+FZGQTK2kbckXuRWida9TIsnumd9H2KqGR839vLiG+xxYd6oxoRH9
+         VJ0j3b19frTj9qj0NJ0u8h1bU2sUiBL5+sX2vCm96nCbnqKUZkJ0HLdMy4TvP/VpW0aF
+         VzKB/cXsDQ4IP/ctVWSBcjsjsZ4VAcYWiTzENNZZ9UNGCUtSq5edUw0DHxy0o0EBcjZR
+         H/m4xp5dl7oM+PiP2h6ZFA8a7QLmWrT3cI4G8C5QFWv7X6yl3CX2Q/gJBhXiMQoOyTqy
+         y4HA==
+X-Gm-Message-State: AOAM532v+fy6MIQWDQZcMWsM3rrQ9PB45ZCt3TVTL6fBzNuWtNERPpJ/
+        iY5e0bVe40bRVZJjCi+jokf8rw==
+X-Google-Smtp-Source: ABdhPJwS/7njQpo3DbfyMqUKtFd3wGDymfnni39lsDf6ApW3pU5xpDjIEk2egMPRoKYUqDcviFdi4w==
+X-Received: by 2002:a05:6512:118b:b0:46b:a9ae:3a3b with SMTP id g11-20020a056512118b00b0046ba9ae3a3bmr13477930lfr.188.1651644772957;
+        Tue, 03 May 2022 23:12:52 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id c3-20020ac25303000000b0047255d210f9sm1119231lfh.40.2022.05.03.23.12.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 May 2022 23:12:52 -0700 (PDT)
+Message-ID: <031fccd7-0082-8284-967d-285525a64394@linaro.org>
+Date:   Wed, 4 May 2022 09:12:51 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH] drm: Document that power requirements for DP AUX
+ transfers
+Content-Language: en-GB
+To:     Douglas Anderson <dianders@chromium.org>,
+        dri-devel@lists.freedesktop.org
+Cc:     Lyude Paul <lyude@redhat.com>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Maxime Ripard <maxime@cerno.tech>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Hsin-Yi Wang <hsinyi@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Imre Deak <imre.deak@intel.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        linux-kernel@vger.kernel.org
+References: <20220503162033.1.Ia8651894026707e4fa61267da944ff739610d180@changeid>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220503162033.1.Ia8651894026707e4fa61267da944ff739610d180@changeid>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -158,41 +89,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kees Cook <keescook@chromium.org> writes:
+On 04/05/2022 02:21, Douglas Anderson wrote:
+> When doing DP AUX transfers there are two actors that need to be
+> powered in order for the DP AUX transfer to work: the DP source and
+> the DP sync.
 
-> As part of the work to perform bounds checking on all memcpy() uses,
-> replace the open-coded a deserialization of bytes out of memory into a
-> trailing flexible array by using a flex_array.h helper to perform the
-> allocation, bounds checking, and copying.
->
-> Cc: Loic Poulain <loic.poulain@linaro.org>
-> Cc: Kalle Valo <kvalo@kernel.org>
-> Cc: "David S. Miller" <davem@davemloft.net>
-> Cc: Eric Dumazet <edumazet@google.com>
-> Cc: Jakub Kicinski <kuba@kernel.org>
-> Cc: Paolo Abeni <pabeni@redhat.com>
-> Cc: wcn36xx@lists.infradead.org
-> Cc: linux-wireless@vger.kernel.org
-> Cc: netdev@vger.kernel.org
-> Signed-off-by: Kees Cook <keescook@chromium.org>
+Nit: sink
 
-[...]
+> Commit bacbab58f09d ("drm: Mention the power state
+> requirement on side-channel operations") added some documentation
+> saying that the DP source is required to power itself up (if needed)
+> to do AUX transfers. However, that commit doesn't talk anything about
+> the DP sink.
+> 
+> For full fledged DP the sink isn't really a problem. It's expected
+> that if an external DP monitor isn't plugged in that attempting to do
+> AUX transfers won't work. It's also expected that if a DP monitor is
+> plugged in (and thus asserting HPD) that it AUX transfers will work.
 
-> --- a/drivers/net/wireless/ath/wcn36xx/smd.h
-> +++ b/drivers/net/wireless/ath/wcn36xx/smd.h
-> @@ -46,8 +46,8 @@ struct wcn36xx_fw_msg_status_rsp {
->  
->  struct wcn36xx_hal_ind_msg {
->  	struct list_head list;
-> -	size_t msg_len;
-> -	u8 msg[];
-> +	DECLARE_FLEX_ARRAY_ELEMENTS_COUNT(size_t, msg_len);
-> +	DECLARE_FLEX_ARRAY_ELEMENTS(u8, msg);
+then
 
-This affects readability quite a lot and tbh I don't like it. Isn't
-there any simpler way to solve this?
+> 
+> When we're looking at eDP, however, things are less obvious. Let's add
+> some documentation about expectations. Here's what we'll say:
+> 
+> 1. We don't expect the DP AUX transfer function to power on an eDP
+> panel. If an eDP panel is physically connected but powered off then it
+> makes sense for the transfer to fail.
+> 
+> 2. We'll document that the official way to power on a panel is via the
+> bridge chain, specifically by making sure that the panel's prepare
+> function has been called (which is called by
+> panel_bridge_pre_enable()). It's already specified in the kernel doc
+> of drm_panel_prepare() that this is the way to power the panel on and
+> also that after this call "it is possible to communicate with any
+> integrated circuitry via a command bus."
+> 
+> 3. We'll also document that for code running in the panel driver
+> itself that it is legal for the panel driver to power itself up
+> however it wants (it doesn't need to officially call
+> drm_panel_pre_enable()) and then it can do AUX bus transfers. This is
+> currently the way that edp-panel works when it's running atop the DP
+> AUX bus.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+> 
+>   include/drm/display/drm_dp_helper.h | 14 +++++++++++---
+>   1 file changed, 11 insertions(+), 3 deletions(-)
+> 
+> diff --git a/include/drm/display/drm_dp_helper.h b/include/drm/display/drm_dp_helper.h
+> index dca40a045dd6..e5165b708a40 100644
+> --- a/include/drm/display/drm_dp_helper.h
+> +++ b/include/drm/display/drm_dp_helper.h
+> @@ -370,9 +370,17 @@ struct drm_dp_aux {
+>   	 * helpers assume this is the case.
+>   	 *
+>   	 * Also note that this callback can be called no matter the
+> -	 * state @dev is in. Drivers that need that device to be powered
+> -	 * to perform this operation will first need to make sure it's
+> -	 * been properly enabled.
+> +	 * state @dev is in and also no matter what state the panel is
+> +	 * in. It's expected:
+> +	 * - If the @dev providing the AUX bus is currently unpowered then
+> +	 *   it will power itself up for the transfer.
+> +	 * - If we're on eDP and the panel is not in a state where it can
+> +	 *   respond (it's not powered or it's in a low power state) then this
+> +	 *   function will return an error (but not crash). Note that if a
+> +	 *   panel driver is initiating a DP AUX transfer it may power itself
+> +	 *   up however it wants. All other code should ensure that the
+> +	 *   pre_enable() bridge chain (which eventually calls the panel
+> +	 *   prepare function) has powered the panel.
+>   	 */
+>   	ssize_t (*transfer)(struct drm_dp_aux *aux,
+>   			    struct drm_dp_aux_msg *msg);
+
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+With best wishes
+Dmitry
