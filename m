@@ -2,168 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CE0F519512
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 03:58:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF16C51954F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 04:02:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343813AbiEDCCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 May 2022 22:02:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46454 "EHLO
+        id S232584AbiEDCFn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 May 2022 22:05:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343890AbiEDCBz (ORCPT
+        with ESMTP id S1344015AbiEDCCn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 May 2022 22:01:55 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEEAA45052
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 May 2022 18:57:46 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id l11-20020a17090a49cb00b001d923a9ca99so38716pjm.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 May 2022 18:57:46 -0700 (PDT)
+        Tue, 3 May 2022 22:02:43 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D9BC2610B;
+        Tue,  3 May 2022 18:58:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rmxrp/UxOFb8piH92Vxf3rNJk8bX2cfzoG0Wa8qHsPs=;
-        b=M/yQls1bpyaiOjU76efK5Yp3KeWPaKFU4zmgVp0hnDPVEvcbG0Yr2VZsk9GtUI6EW2
-         P3x8PrWJUASQzTlrmV7uEWLEbManT0y+Zg+pt3XuYEBjyOBd/MkDra9+mVvndIuuMdNV
-         ADaMqJRFecvzQ2p2BbgcShyTVJWmeZm5rse6o=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rmxrp/UxOFb8piH92Vxf3rNJk8bX2cfzoG0Wa8qHsPs=;
-        b=FUyVSg/nZwoxHSUbj5BBBBjICgem2Zk6u0xj18RAFlxsHCIX0uJPuFx5kM7j6V9m4C
-         TYEkPzQhKAJmoHMDn6NB9pTSlR1osuNnVVzSvvHLXQ3T9zEMesXQTnHdMYUvT50wH3iW
-         Yfh6DZDx40DPrLTC7N/I0UaoP4otQS8lbqHqoG18xKHhkwQ/4pV6y7rsVBah9qMJBfWL
-         S/VPgrzOys8XScMRkmm09wDl2GABwko2H8N1kGSWczHw7ow56ZJ8G2wQmJaFpuZLT5W1
-         MGTLi8uvRRoSB8R/Nia2ezX49ZizLU/LS8rNUMZHiCbbFD95CSq/QOHUDhcSGztBNvUN
-         ehBw==
-X-Gm-Message-State: AOAM532pMBXxhzzFtRyeeDQH5ymAM+HJtwT+4ie/cT0zzg1rDYHvPzuG
-        zq8WuiPncl8DmztjZW7aF/P/LQ==
-X-Google-Smtp-Source: ABdhPJw5UH+zE7V//6n7buLSwyzvbe4dXHNIfzHZYUp5Gsqm2kqmkk896GY+p9QRLPq6Ee7dPP32pg==
-X-Received: by 2002:a17:902:d1cd:b0:15d:1483:6ed6 with SMTP id g13-20020a170902d1cd00b0015d14836ed6mr20296811plb.58.1651629466374;
-        Tue, 03 May 2022 18:57:46 -0700 (PDT)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id q3-20020a17090311c300b0015e8d4eb2e9sm6671462plh.307.2022.05.03.18.57.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 May 2022 18:57:45 -0700 (PDT)
-From:   Kees Cook <keescook@chromium.org>
-To:     "Gustavo A . R . Silva" <gustavoars@kernel.org>
-Cc:     Kees Cook <keescook@chromium.org>,
-        Bradley Grove <linuxdrivers@attotech.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-scsi@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>,
-        alsa-devel@alsa-project.org, Al Viro <viro@zeniv.linux.org.uk>,
-        Andrew Gabbasov <andrew_gabbasov@mentor.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Andy Lavr <andy.lavr@gmail.com>,
-        Arend van Spriel <aspriel@gmail.com>,
-        Baowen Zheng <baowen.zheng@corigine.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-        brcm80211-dev-list.pdl@broadcom.com,
-        Christian Brauner <brauner@kernel.org>,
-        =?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        Chris Zankel <chris@zankel.net>,
-        Cong Wang <cong.wang@bytedance.com>,
-        Daniel Axtens <dja@axtens.net>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Dan Williams <dan.j.williams@intel.com>,
-        David Gow <davidgow@google.com>,
-        David Howells <dhowells@redhat.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-        devicetree@vger.kernel.org, Dexuan Cui <decui@microsoft.com>,
-        Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
-        Eli Cohen <elic@nvidia.com>,
-        Eric Dumazet <edumazet@google.com>,
-        Eric Paris <eparis@parisplace.org>,
-        Eugeniu Rosca <erosca@de.adit-jv.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Francis Laniel <laniel_francis@privacyrequired.com>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Franky Lin <franky.lin@broadcom.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Gregory Greenman <gregory.greenman@intel.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Hante Meuleman <hante.meuleman@broadcom.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Hulk Robot <hulkci@huawei.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        James Morris <jmorris@namei.org>,
-        Jarkko Sakkinen <jarkko@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Johannes Berg <johannes.berg@intel.com>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        John Keeping <john@metanate.com>,
-        Juergen Gross <jgross@suse.com>, Kalle Valo <kvalo@kernel.org>,
-        Keith Packard <keithp@keithp.com>, keyrings@vger.kernel.org,
-        kunit-dev@googlegroups.com,
-        Kuniyuki Iwashima <kuniyu@amazon.co.jp>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Leon Romanovsky <leon@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux1394-devel@lists.sourceforge.net,
-        linux-afs@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-hardening@vger.kernel.org, linux-hyperv@vger.kernel.org,
-        linux-integrity@vger.kernel.org, linux-rdma@vger.kernel.org,
-        linux-security-module@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-wireless@vger.kernel.org, linux-xtensa@linux-xtensa.org,
-        llvm@lists.linux.dev, Loic Poulain <loic.poulain@linaro.org>,
-        Louis Peens <louis.peens@corigine.com>,
-        Luca Coelho <luciano.coelho@intel.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Marc Dionne <marc.dionne@auristor.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Mark Brown <broonie@kernel.org>,
-        Max Filippov <jcmvbkbc@gmail.com>,
-        Mimi Zohar <zohar@linux.ibm.com>,
-        Muchun Song <songmuchun@bytedance.com>,
-        Nathan Chancellor <nathan@kernel.org>, netdev@vger.kernel.org,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        =?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Paul Moore <paul@paul-moore.com>,
-        Rich Felker <dalias@aerifal.cx>,
-        Rob Herring <robh+dt@kernel.org>,
-        Russell King <linux@armlinux.org.uk>, selinux@vger.kernel.org,
-        "Serge E. Hallyn" <serge@hallyn.com>,
-        SHA-cyfmac-dev-list@infineon.com,
-        Simon Horman <simon.horman@corigine.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Stefan Richter <stefanr@s5r6.in-berlin.de>,
-        Steffen Klassert <steffen.klassert@secunet.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Stephen Smalley <stephen.smalley.work@gmail.com>,
-        Tadeusz Struk <tadeusz.struk@linaro.org>,
-        Takashi Iwai <tiwai@suse.com>, Tom Rix <trix@redhat.com>,
-        Udipto Goswami <quic_ugoswami@quicinc.com>,
-        Vincenzo Frascino <vincenzo.frascino@arm.com>,
-        wcn36xx@lists.infradead.org, Wei Liu <wei.liu@kernel.org>,
-        xen-devel@lists.xenproject.org,
-        Xiu Jianfeng <xiujianfeng@huawei.com>,
-        Yang Yingliang <yangyingliang@huawei.com>
-Subject: [PATCH 32/32] esas2r: Use __mem_to_flex() with struct atto_ioctl
-Date:   Tue,  3 May 2022 18:44:41 -0700
-Message-Id: <20220504014440.3697851-33-keescook@chromium.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220504014440.3697851-1-keescook@chromium.org>
-References: <20220504014440.3697851-1-keescook@chromium.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651629532; x=1683165532;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=SfFRyNG4hERL+TTomH08jiy/yMmdir6j259/R+4NcYg=;
+  b=KXHFtCFAw1/YNdZS5bSmXPkpPbq1Ttr6ag/99PSHTabw2v+00+Tz0VK8
+   2UTFkcEv1sxw6sOM0UwC5C/OyxXAGdG3EJ2VS62cU6YMqWZi9Y3eEpEUi
+   KsdISC+kGoGPMXd72f35yC0FJWzCa+zBAbvLBNyy/p0I/O77taN08jBK6
+   U=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 May 2022 18:58:51 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 May 2022 18:58:51 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 3 May 2022 18:58:51 -0700
+Received: from [10.50.60.188] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 3 May 2022
+ 18:58:48 -0700
+Message-ID: <c2ede158-3c50-9de5-653f-607377a01992@quicinc.com>
+Date:   Wed, 4 May 2022 07:28:43 +0530
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1840; h=from:subject; bh=wclXkCNzL8tWkFiLRsyBirHZGs1pS2ud8xMfF2Bbgys=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBicdqIM8CXiBVoq1vvnq9rbFmtFRUsN4irOoYa4gS1 0IJEQ2KJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYnHaiAAKCRCJcvTf3G3AJgOdD/ sEBkA9QLnBKc64IqIq4YxEg4VNWAmPZGOznytqC/Owjod/71puJ/xtUz+R2WjO80ATXotNqfvtWe/d 9/yCjwl54Xp//OjYlRlQVLKBx2Q11FBqi4MBsooAiVirzGDDTHxmU1iuq6Wz2ZIdZlghDO60VBIerY f7y/tG7dD7LIfF4hLq69yeIQaG4gx8rz9gY1ntSTDKIZg+3A+cCuG7GHCLE4hzM9XcCNdcjNHkLLzM U6m0NaS7W7NFnR0mxnwloGXZVChfb884A/O/wC2lhgRNoxndIkrhF+x2NIhSvpQQmje9R235snuAfX mTZgHUaiYXSuSt8YrUbWAYgqP95oux1CHcGbFo6OSfvzri3R22Sizw6iJPckU4HcHFbxLD7v2eEMVp 3ECGtyv2+WAG63yJy/2YJm4mTGZKQM9ZC/lL6nR/U6EYIjrevoE7kTnSKMDTU+PS27rxgE+Rh1Hg9K ipwZmZh4bV/Xed50s1aJAocNChxua0lDl5jjP3QaZBpQGTlt8ls0YY8i1DswPFLAiSj88j/CGJOPOK +82q4/Et8Wn6QjhXmaRuef6bFcOHFRRdfpp1PZEOD91CPvnpq0Q9e/WXiAbsnkg/diZHdL5A9LVD0O L6xVqhkIsupraaLBcdxfoyPChtyfc0T1x/f55UeM/J7IkMaJAzAUEKGWn+Gg==
-X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH 2/2] soc: qcom: llcc: Add sc8180x and sc8280xp
+ configurations
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20220502215406.612967-1-bjorn.andersson@linaro.org>
+ <20220502215406.612967-3-bjorn.andersson@linaro.org>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <20220502215406.612967-3-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -171,57 +70,122 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As part of the work to perform bounds checking on all memcpy() uses,
-replace the open-coded a deserialization of bytes out of memory into a
-trailing flexible array by using a flex_array.h helper to perform the
-allocation, bounds checking, and copying. This requires adding the
-flexible array explicitly.
+On 5/3/2022 3:24 AM, Bjorn Andersson wrote:
+> Add LLCC configuration data for the SC8180X and SC8280XP platforms,
+> based on the downstream tables.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>
+> Changs since v1:
+> - Updated tables according to documentation - thanks Sai!
+>
+>   drivers/soc/qcom/llcc-qcom.c       | 60 ++++++++++++++++++++++++++++++
+>   include/linux/soc/qcom/llcc-qcom.h |  2 +
+>   2 files changed, 62 insertions(+)
+>
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 85ba8209b182..4b143cf7b4ce 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -130,6 +130,50 @@ static const struct llcc_slice_config sc7280_data[] =  {
+>   	{ LLCC_MODPE,    29, 64,  1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
+>   };
+>   
+> +static const struct llcc_slice_config sc8180x_data[] = {
+> +	{ LLCC_CPUSS,    1, 6144,  1, 1, 0xfff, 0x0,   0, 0, 0, 1, 1 },
+> +	{ LLCC_VIDSC0,   2, 512,   2, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_VIDSC1,   3, 512,   2, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_AUDIO,    6, 1024,  1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_MDMHPGRW, 7, 3072,  1, 1, 0x3ff, 0xc00, 0, 0, 0, 1, 0 },
+> +	{ LLCC_MDM,      8, 3072,  1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_MODHW,    9, 1024,  1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_CMPT,     10, 6144, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_GPUHTW,   11, 1024, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_GPU,      12, 5120, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_MMUHWT,   13, 1024, 1, 1, 0xfff, 0x0,   0, 0, 0, 0, 1 },
+> +	{ LLCC_CMPTDMA,  15, 6144, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_DISP,     16, 6144, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_VIDFW,    17, 1024, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_MDMHPFX,  20, 1024, 2, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_MDMPNG,   21, 1024, 0, 1, 0xc,   0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_AUDHW,    22, 1024, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_NPU,      23, 6144, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_WLHW,     24, 6144, 1, 1, 0xfff, 0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_MODPE,    29, 512,  1, 1, 0xc,   0x0,   0, 0, 0, 1, 0 },
+> +	{ LLCC_APTCM,    30, 512,  3, 1, 0x0,   0x1,   1, 0, 0, 1, 0 },
+> +	{ LLCC_WRCACHE,  31, 128,  1, 1, 0xfff, 0x0,   0, 0, 0, 0, 0 },
+> +};
+> +
+> +static const struct llcc_slice_config sc8280xp_data[] = {
+> +	{ LLCC_CPUSS,    1,  6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 1, 0 },
+> +	{ LLCC_VIDSC0,   2,  512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> +	{ LLCC_AUDIO,    6,  1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
+> +	{ LLCC_CMPT,     10, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
+> +	{ LLCC_GPUHTW,   11, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> +	{ LLCC_GPU,      12, 4096, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 1 },
+> +	{ LLCC_MMUHWT,   13, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+> +	{ LLCC_DISP,     16, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> +	{ LLCC_AUDHW,    22, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> +	{ LLCC_DRE,      26, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> +	{ LLCC_CVP,      28, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> +	{ LLCC_APTCM,    30, 1024, 3, 1, 0x0,   0x1, 1, 0, 0, 1, 0, 0 },
+> +	{ LLCC_WRCACHE,  31, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+> +	{ LLCC_CVPFW,    32, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> +	{ LLCC_CPUSS1,   33, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> +	{ LLCC_CPUHWT,   36, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+> +};
+> +
+>   static const struct llcc_slice_config sdm845_data[] =  {
+>   	{ LLCC_CPUSS,    1,  2816, 1, 0, 0xffc, 0x2,   0, 0, 1, 1, 1 },
+>   	{ LLCC_VIDSC0,   2,  512,  2, 1, 0x0,   0x0f0, 0, 0, 1, 1, 0 },
+> @@ -276,6 +320,20 @@ static const struct qcom_llcc_config sc7280_cfg = {
+>   	.reg_offset	= llcc_v1_2_reg_offset,
+>   };
+>   
+> +static const struct qcom_llcc_config sc8180x_cfg = {
+> +	.sct_data	= sc8180x_data,
+> +	.size		= ARRAY_SIZE(sc8180x_data),
+> +	.need_llcc_cfg	= true,
+> +	.reg_offset	= llcc_v1_2_reg_offset,
+> +};
+> +
+> +static const struct qcom_llcc_config sc8280xp_cfg = {
+> +	.sct_data	= sc8280xp_data,
+> +	.size		= ARRAY_SIZE(sc8280xp_data),
+> +	.need_llcc_cfg	= true,
+> +	.reg_offset	= llcc_v1_2_reg_offset,
+> +};
+> +
+>   static const struct qcom_llcc_config sdm845_cfg = {
+>   	.sct_data	= sdm845_data,
+>   	.size		= ARRAY_SIZE(sdm845_data),
+> @@ -741,6 +799,8 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>   static const struct of_device_id qcom_llcc_of_match[] = {
+>   	{ .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfg },
+>   	{ .compatible = "qcom,sc7280-llcc", .data = &sc7280_cfg },
+> +	{ .compatible = "qcom,sc8180x-llcc", .data = &sc8180x_cfg },
+> +	{ .compatible = "qcom,sc8280xp-llcc", .data = &sc8280xp_cfg },
+>   	{ .compatible = "qcom,sdm845-llcc", .data = &sdm845_cfg },
+>   	{ .compatible = "qcom,sm6350-llcc", .data = &sm6350_cfg },
+>   	{ .compatible = "qcom,sm8150-llcc", .data = &sm8150_cfg },
+> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
+> index 0bc21ee58fac..9ed5384c5ca1 100644
+> --- a/include/linux/soc/qcom/llcc-qcom.h
+> +++ b/include/linux/soc/qcom/llcc-qcom.h
+> @@ -29,6 +29,8 @@
+>   #define LLCC_AUDHW       22
+>   #define LLCC_NPU         23
+>   #define LLCC_WLHW        24
+> +#define LLCC_PIMEM       25
+> +#define LLCC_DRE         26
+>   #define LLCC_CVP         28
+>   #define LLCC_MODPE       29
+>   #define LLCC_APTCM       30
 
-Cc: Bradley Grove <linuxdrivers@attotech.com>
-Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: linux-scsi@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
----
- drivers/scsi/esas2r/atioctl.h      |  1 +
- drivers/scsi/esas2r/esas2r_ioctl.c | 11 +++++++----
- 2 files changed, 8 insertions(+), 4 deletions(-)
+Reviewed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 
-diff --git a/drivers/scsi/esas2r/atioctl.h b/drivers/scsi/esas2r/atioctl.h
-index ff2ad9b38575..dd3437412ffc 100644
---- a/drivers/scsi/esas2r/atioctl.h
-+++ b/drivers/scsi/esas2r/atioctl.h
-@@ -831,6 +831,7 @@ struct __packed atto_hba_trace {
- 	u32 total_length;
- 	u32 trace_mask;
- 	u8 reserved2[48];
-+	u8 contents[];
- };
- 
- #define ATTO_FUNC_SCSI_PASS_THRU     0x04
-diff --git a/drivers/scsi/esas2r/esas2r_ioctl.c b/drivers/scsi/esas2r/esas2r_ioctl.c
-index 08f4e43c7d9e..9310b54b1575 100644
---- a/drivers/scsi/esas2r/esas2r_ioctl.c
-+++ b/drivers/scsi/esas2r/esas2r_ioctl.c
-@@ -947,11 +947,14 @@ static int hba_ioctl_callback(struct esas2r_adapter *a,
- 					break;
- 				}
- 
--				memcpy(trc + 1,
--				       a->fw_coredump_buff + offset,
--				       len);
-+				if (__mem_to_flex(hi, data.trace.contents,
-+						  data_length,
-+						  a->fw_coredump_buff + offset,
-+						  len)) {
-+					hi->status = ATTO_STS_INV_FUNC;
-+					break;
-+				}
- 
--				hi->data_length = len;
- 			} else if (trc->trace_func == ATTO_TRC_TF_RESET) {
- 				memset(a->fw_coredump_buff, 0,
- 				       ESAS2R_FWCOREDUMP_SZ);
--- 
-2.32.0
+(Note: LLCC_PIMEM isn't used now, but I guess doesn't hurt much to be included in header)
 
+Thanks,
+Sai
