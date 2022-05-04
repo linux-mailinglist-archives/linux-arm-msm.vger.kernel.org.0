@@ -2,101 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C6B7851B429
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 02:09:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCDFA51B3FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 02:08:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243273AbiEEAEv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S242314AbiEEAEv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 4 May 2022 20:04:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41472 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234224AbiEDX5a (ORCPT
+        with ESMTP id S1383722AbiEDX7x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 19:57:30 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D06914EF66
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 16:53:52 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id q8so2781395oif.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 16:53:52 -0700 (PDT)
+        Wed, 4 May 2022 19:59:53 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53BCE522D7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 16:56:15 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id t6so3991088wra.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 16:56:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=ampHH5WJLIBWSsxWwzVjbk5pO9UBFxn81pZ6QIDzZtY=;
-        b=FNIAYmcejzHfmZlCiIHYgT6erzQSC9gmgFmOiY6jxN7WvOxDyBQzTWQXuf0QQSLa76
-         OjSO2mcjza7TfryU2Yt8mJxkT+qWMSaleALBlY7mfzTxVPd1JjVxyw0EBBmPWGPP2G3/
-         EjJyRmLlkni3UqZSkuePTk9fUuzh8hCavLsGDVWv86trmI+S5ZFLXA2M/ALU/OX9/Dog
-         FVBSuENuyzE6Zj/zsEo0v3B7v/NSoUlBUw+9pnAspgHs/c6uItO7g+7oIPUnQ5P8rHEg
-         Uw50ND4b7eJCcoszBXUiYPFOBzRcktyN3Nzu2+vze2IYlqC3egzGpfENgoTcj3C+TYFW
-         rVYA==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bKdTjovqsCdX72d9roGYbZa4UTuliACzSNBJY8i+zFk=;
+        b=EA5zOF2CgBRM3KEnU1EvIVrVSK8lAaSe1mJheFenRg/fxUSAdgPxWJPZ260gEnWjKZ
+         ga9zu0kWaYJdhmnW5NcahZvlB3K9cUqIJBxrZUMnHORXjCFp4+DxOmpSBv8kw1tD+qFI
+         TsHcVzj6NygsHPQ70CeCqnZBqiDGgbyb+Q4Xw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=ampHH5WJLIBWSsxWwzVjbk5pO9UBFxn81pZ6QIDzZtY=;
-        b=EIwMNRUDFLAww7er9GByrCNxurgpDKc3gDIpcQaExJVvOdOg0AWn707wPQnplV6KWy
-         AVXyFMCgOF8syLqtKswbkzK+L1VcKEV1pTKp3OKg7gWndazI5G4t7r+XAQXHGfDiGPH4
-         pyvFnxdtC2+saNGbsYt6DWnvfoLNiP7akFPfWT8y//SUjVa1dVjY/CqbKPxX6QM/Q1Oh
-         0H5iUrX+8nDQVCTtK9vUsv2yvqA1BRRAuvB06PiY5udCYGQwlvgQhMcC/cVvZ5mifjFI
-         i+nU0O4aR7v3xQxXr4I2rFW1pkaGFnflu/Zo4Lx2dSUrbz7eNP+mAgiUhQmPYumFSZZO
-         HljA==
-X-Gm-Message-State: AOAM532KXCfYeWO88Zz2wFpcJxd/eQCrBySFP3SMykJyiChenQy5bbKP
-        FTDc2a2KZ3qkzwTgmKKGKIMWx9mg9hijvpr3FzU=
-X-Google-Smtp-Source: ABdhPJwYlgNc/5bis71DucVvd+ZioHPl83VcBeyXc51mm1mJBTXR/7J8yaMUf518PLLny14+iH6/by9bmkLUTmJvSMI=
-X-Received: by 2002:a05:6808:2019:b0:326:6d24:dfd9 with SMTP id
- q25-20020a056808201900b003266d24dfd9mr1003508oiw.183.1651708432083; Wed, 04
- May 2022 16:53:52 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bKdTjovqsCdX72d9roGYbZa4UTuliACzSNBJY8i+zFk=;
+        b=7Tcbj/uy3L88ul7HTCqy3oRNCn5ThA1STPARLpVQ0foyKDP+VBAPw+jOJeJfwKPSj1
+         ApoLhUDiqNlKRYeZEWIppCo9ygs50TZqI1aydbs/YkBTCgHqg5c1wO2IXw+OWucQCpZP
+         RGOgxNOAOK/uK0WGXNuecRwV/3jjmr4tgdrnsxqVsxPpUv8MtH+yBT4DBo1wjDxgLovE
+         u8+HXL21dOj7k+vJwE0JjG5wPiiO660Fuq9J6Lhu4E74Qk0gKzzyCS2124CEDhLac7k5
+         tcpiLxdtyDZvjqdrV8bDMaeejOGMK0PEoE9KkafgH6OE2ECWdfJmMdtWrPY90p4IPQsL
+         MUCw==
+X-Gm-Message-State: AOAM5322Uu5wp2jFgHgEbKXs+deaJ1dnFbG001U3esnnbt4BNlr/Hqt2
+        SfQYbN9Rh4NNkMzEGYTxJl9ovKmp20xNoYT0h6jYAg==
+X-Google-Smtp-Source: ABdhPJyy6isOT7IY1zukIUAQclCqJeMt+peKPjxTLWrRh+Oi9q1PWYXtgZwYoMvGpfavLyv6J0lLTj/7IawTpAuezyQ=
+X-Received: by 2002:adf:fb03:0:b0:20a:e253:b8c7 with SMTP id
+ c3-20020adffb03000000b0020ae253b8c7mr17853079wrr.119.1651708573697; Wed, 04
+ May 2022 16:56:13 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a05:6802:1a9:0:0:0:0 with HTTP; Wed, 4 May 2022 16:53:51
- -0700 (PDT)
-Reply-To: ortegainvestmmentforrealinvest@gmail.com
-From:   Info <joybhector64@gmail.com>
-Date:   Thu, 5 May 2022 05:23:51 +0530
-Message-ID: <CAP7KLYhOuoEX9VpuWFzfxXW3-SdA7X=MyCKJ7oAAs4__V29BXQ@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
+References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
+ <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org> <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
+ <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org> <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
+ <606cc762-a0c2-49a4-3e5d-d2dbd4595bc7@linaro.org> <CAD=FV=W_SA-3PfDFi-Gkjk9pew5bchFNjQhXX8MkZyuy5UohEQ@mail.gmail.com>
+ <CAJKOXPdt5WTg4VU-TEW3dmPHR76dKg63XVxRQfa7ZSKc_jz6Ag@mail.gmail.com>
+ <CAD=FV=XQqQSQDNh-zXqEQkwsrax5Qb3OtfKZoQLkncJj_4mcQw@mail.gmail.com> <daf66d41-42ac-50dc-3f8d-c261da8e452d@linaro.org>
+In-Reply-To: <daf66d41-42ac-50dc-3f8d-c261da8e452d@linaro.org>
+From:   Julius Werner <jwerner@chromium.org>
+Date:   Wed, 4 May 2022 16:56:01 -0700
+Message-ID: <CAODwPW-0O16AkkYORovPHSESNfOe46639Wu2-QSsKxdx3fJs7A@mail.gmail.com>
+Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        =?UTF-8?Q?Krzysztof_Koz=C5=82owski?= <k.kozlowski.k@gmail.com>,
+        Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:242 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5009]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [joybhector64[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [joybhector64[at]gmail.com]
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.5 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+X-Spam-Status: No, score=-9.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        USER_IN_DEF_SPF_WL autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
--- 
-I am an investor. I came from the USA and I have many investments all
-over the world.
+Trying to chime in here from the firmware development side of this
+issue to help clarify what Doug is asking for. We have the fundamental
+problem that we have several different board revisions that we _think_
+should be 100% compatible for kernel and userspace, so for various
+practical reasons (easier to maintain in the source, limiting kernel
+image size by not having to bundle the same DTB multiple times under a
+different name), we want to use the same DTB for all of them. Just
+saying "well, you should treat each revision as incompatible to all
+the others from the start then" doesn't scale (we have a lot of
+revisions, and in the vast majority of cases they are just as
+compatible as we initially expect them to be).
 
-I want you to partner with me to invest in your country I am into many
-investment such as real Estate or buying of properties i can also
-invest money in any of existing business with equity royalty or by %
-percentage so on,
-Warm regards
+However, we also can't just exhaustively enumerate all revision
+numbers that are compatible with this DTB, because we don't know in
+advance how many we'll build. For again various practical reasons
+(bundling, signing, testing), it would cost a lot of extra effort and
+friction to rebuild a new kernel image just to add a new compatible
+string to the list every time the factory updates the revision number.
+An earlier hacky solution we had for this is to just define a bunch of
+extra revision compatible strings in advance even though they don't
+exist yet (e.g. you can still see this in
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/arch/arm/boot/dts/tegra124-nyan-blaze.dts
+-- I believe there were only actually ever 3 or 4 Blaze revisions, the
+other compatible strings defined there never existed as physical
+boards). This is cumbersome and hacky and also doesn't really scale
+(particularly when we need to add SKU as another dimension into the
+string), so we needed to come up with something more manageable.
+
+Our solution is to use "google,lazor" as the stand-in compatible
+string for "all Lazor boards compatible with the latest revision".
+When a compatibility break happens at some point in the Lazor series
+(say between rev3 and rev4), we'll change the compatible string in the
+old rev3 DTB to no longer include "google,lazor" but to instead list
+all specific revision numbers ("google,lazor-rev0", ...,
+"google-lazor-rev3") exhaustively (at this point we can do it, because
+at this point we know we're not going to build any new boards
+compatible with that old layout in the future). The new rev4 DTB will
+then list "google,lazor" and again remain valid for all future
+revisions we build, until the next compatibility break.
+
+You are correct that this ends up changing the meaning of
+"google,lazor" at some point, but it's really the only good way I can
+see how to solve this within our practical constraints. I also don't
+really see a practical concern with that, since our firmware matching
+algorithm (and I believe this is the standard other bootloaders like
+U-Boot also follow) will look for the more specific string with the
+explicit revision number first, before falling back to the generic
+one. So whenever we decide to change the meaning of the latter in the
+kernel, we also make sure to provide matches for all the specific
+revisions that previously used the generic match, so that they will
+pick up those instead and there's no chance of them getting confused
+by the change in meaning. While it is perhaps a bit unorthodox, I
+think it is practical, safe, and I don't really see a practical
+alternative for our use case.
