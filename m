@@ -2,83 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B945F51B3A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 01:40:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED5B751B3A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 01:42:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229633AbiEDXmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 19:42:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55216 "EHLO
+        id S1359698AbiEDXl4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 19:41:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381863AbiEDXlq (ORCPT
+        with ESMTP id S1381179AbiEDXiD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 19:41:46 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 465C01ADAB
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 16:38:09 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id g20so3392627edw.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 16:38:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YXeq/XPiJwEkXU3dI75Tl8dYba/oZ3LQ1VjEhaH9Vwg=;
-        b=F8ZAHz6WSgNmgenOXICnR5VtLZmMglppgmbrbMqwX6PNKEjGhmfLbTITzRwZBewfUH
-         /b5EfJyVCZr6ehKbYwB5lu3juAduuJ9CSsx6et/o9QODUmwNkM5rS8cqpMUwF6jSf0r6
-         C//ckdHWg9VL4W9ByKAQIt66nwfQW6b5QZvls=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YXeq/XPiJwEkXU3dI75Tl8dYba/oZ3LQ1VjEhaH9Vwg=;
-        b=k2PC0Dfl1bYOON0gmWXkiQbivZb5qbcEU6L2Gbt/3s45HcKWPUtH4pWqFY2cXqbBaB
-         l88WtLUYniqCMReKijI0TA8YRE6FSRjBm3+kb9tafPGNcyJQB6YTC4q4YthkaZ2/8HDC
-         F/rISckgOEAoSGTGmbXmL2XFqjIklu+Iny+ynNoLdI1ob3aRPcsDOAmZkfqQP7888+Fb
-         nLyOK62XWoB/xdQh3nucjQ9Kb3IPB5IrVu28CB9Ccg2Q2Ygn1QuDLjlDTOc6OV4JzaOf
-         ddk2eb7gsEmFdgxjWcuZbufju4CkmZXNwlEvQlG2dfmcjkeV60tJzz6HxML7Fc2Pcmp8
-         BIkw==
-X-Gm-Message-State: AOAM533OolO9q5scvvIB4W9KSZqNE1aR3Ejlsrfclc+Vl8jO6sJsC5aP
-        t1uFTHWHthULZB5Dz7rCPWvzBkTBET9HcaZ8U8Y=
-X-Google-Smtp-Source: ABdhPJwmRt2YbXsPGpCM0Kp/yAB+zPXb1cTkNWmdmNFu0RIV5j9anOhMRhS//8yOxSgbtsys62y1nw==
-X-Received: by 2002:aa7:df0a:0:b0:425:d4bf:539 with SMTP id c10-20020aa7df0a000000b00425d4bf0539mr26373481edy.24.1651707487638;
-        Wed, 04 May 2022 16:38:07 -0700 (PDT)
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com. [209.85.221.49])
-        by smtp.gmail.com with ESMTPSA id e1-20020a1709062c0100b006f3ef214dafsm113237ejh.21.2022.05.04.16.38.06
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 May 2022 16:38:06 -0700 (PDT)
-Received: by mail-wr1-f49.google.com with SMTP id x18so3981635wrc.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 16:38:06 -0700 (PDT)
-X-Received: by 2002:a05:6000:c7:b0:20a:d8c1:d044 with SMTP id
- q7-20020a05600000c700b0020ad8c1d044mr18472545wrx.422.1651707485535; Wed, 04
- May 2022 16:38:05 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220504154909.1.Iaebd35e60160fc0f2a50fac3a0bf3b298c0637c8@changeid>
- <CAA8EJpqfKKELrkRS89ssDU_bP67_sJ06B6VGGSmR_=D4bV-wZg@mail.gmail.com>
-In-Reply-To: <CAA8EJpqfKKELrkRS89ssDU_bP67_sJ06B6VGGSmR_=D4bV-wZg@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 4 May 2022 16:37:52 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VEHn6QxhN9c6xaceaXBwre4K0Tvnr-ESd+SOqL9D4ZHw@mail.gmail.com>
-Message-ID: <CAD=FV=VEHn6QxhN9c6xaceaXBwre4K0Tvnr-ESd+SOqL9D4ZHw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Fix shutdown
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+        Wed, 4 May 2022 19:38:03 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E38E1EEC0;
+        Wed,  4 May 2022 16:34:26 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9AAD361CFE;
+        Wed,  4 May 2022 23:34:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1B9C385A4;
+        Wed,  4 May 2022 23:34:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651707264;
+        bh=rg7gAW6bX54fvgfTyj+iLNX8iI1sLhWyZHkaZSInPKI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=rr/VhCUks/jvvIukLEQ8hvouelHSSI+9oZesVy9WjHsFReyAH53SdMAhNcNxTncRh
+         AeNcfpQbGYHxmfRd7jiZWMjG0UbB4TKauYhVIbCXLf6VkMiM+KTnvLtKq+XumdW3b5
+         5XsvfgT+eqRG0aM2cOon7t/TFhjG0ZcaDmVjSrCT8tVFYMC+NZbIz/9jgmtLbpb2XF
+         jXkHA/11zXgPOkzwOz9hKL1cmOdu/0VL29aSmhBA26JK83Tblanq8QYFCE42J8CQ6Y
+         8C4e2ka/Vcj7axXhNyNWWZ2uF0Rop6olk1luKtEofCYGXG5sML5MH30Czl0f2TcCS9
+         K08sslbYEpn+w==
+Date:   Wed, 4 May 2022 18:43:24 -0500
+From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
+To:     Paul Moore <paul@paul-moore.com>
+Cc:     Kees Cook <keescook@chromium.org>,
+        Steffen Klassert <steffen.klassert@secunet.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
+        Stephen Smalley <stephen.smalley.work@gmail.com>,
+        Eric Paris <eparis@parisplace.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Xiu Jianfeng <xiujianfeng@huawei.com>,
+        Christian =?iso-8859-1?Q?G=F6ttsche?= <cgzones@googlemail.com>,
+        netdev@vger.kernel.org, selinux@vger.kernel.org,
+        Alexei Starovoitov <ast@kernel.org>,
+        alsa-devel@alsa-project.org, Al Viro <viro@zeniv.linux.org.uk>,
+        Andrew Gabbasov <andrew_gabbasov@mentor.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Andy Lavr <andy.lavr@gmail.com>,
+        Arend van Spriel <aspriel@gmail.com>,
+        Baowen Zheng <baowen.zheng@corigine.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>, Lv Ruyi <lv.ruyi@zte.com.cn>,
-        Sean Paul <sean@poorly.run>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Xu Wang <vulab@iscas.ac.cn>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+        Bradley Grove <linuxdrivers@attotech.com>,
+        brcm80211-dev-list.pdl@broadcom.com,
+        Christian Brauner <brauner@kernel.org>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        Chris Zankel <chris@zankel.net>,
+        Cong Wang <cong.wang@bytedance.com>,
+        Daniel Axtens <dja@axtens.net>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Dan Williams <dan.j.williams@intel.com>,
+        David Gow <davidgow@google.com>,
+        David Howells <dhowells@redhat.com>,
+        Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+        devicetree@vger.kernel.org, Dexuan Cui <decui@microsoft.com>,
+        Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
+        Eli Cohen <elic@nvidia.com>,
+        Eric Dumazet <edumazet@google.com>,
+        Eugeniu Rosca <erosca@de.adit-jv.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Francis Laniel <laniel_francis@privacyrequired.com>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Franky Lin <franky.lin@broadcom.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Gregory Greenman <gregory.greenman@intel.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Hante Meuleman <hante.meuleman@broadcom.com>,
+        Hulk Robot <hulkci@huawei.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        James Morris <jmorris@namei.org>,
+        Jarkko Sakkinen <jarkko@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Johannes Berg <johannes.berg@intel.com>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        John Keeping <john@metanate.com>,
+        Juergen Gross <jgross@suse.com>, Kalle Valo <kvalo@kernel.org>,
+        Keith Packard <keithp@keithp.com>, keyrings@vger.kernel.org,
+        kunit-dev@googlegroups.com,
+        Kuniyuki Iwashima <kuniyu@amazon.co.jp>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Leon Romanovsky <leon@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux1394-devel@lists.sourceforge.net,
+        linux-afs@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-hardening@vger.kernel.org, linux-hyperv@vger.kernel.org,
+        linux-integrity@vger.kernel.org, linux-rdma@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-security-module@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
+        linux-xtensa@linux-xtensa.org, llvm@lists.linux.dev,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Louis Peens <louis.peens@corigine.com>,
+        Luca Coelho <luciano.coelho@intel.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Marc Dionne <marc.dionne@auristor.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Mark Brown <broonie@kernel.org>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Max Filippov <jcmvbkbc@gmail.com>,
+        Mimi Zohar <zohar@linux.ibm.com>,
+        Muchun Song <songmuchun@bytedance.com>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rich Felker <dalias@aerifal.cx>,
+        Rob Herring <robh+dt@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        "Serge E. Hallyn" <serge@hallyn.com>,
+        SHA-cyfmac-dev-list@infineon.com,
+        Simon Horman <simon.horman@corigine.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Stefan Richter <stefanr@s5r6.in-berlin.de>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Tadeusz Struk <tadeusz.struk@linaro.org>,
+        Takashi Iwai <tiwai@suse.com>, Tom Rix <trix@redhat.com>,
+        Udipto Goswami <quic_ugoswami@quicinc.com>,
+        Vincenzo Frascino <vincenzo.frascino@arm.com>,
+        wcn36xx@lists.infradead.org, Wei Liu <wei.liu@kernel.org>,
+        xen-devel@lists.xenproject.org,
+        Yang Yingliang <yangyingliang@huawei.com>
+Subject: Re: [PATCH 28/32] selinux: Use mem_to_flex_dup() with xfrm and sidtab
+Message-ID: <20220504234324.GA12556@embeddedor>
+References: <20220504014440.3697851-1-keescook@chromium.org>
+ <20220504014440.3697851-29-keescook@chromium.org>
+ <CAHC9VhT5Y=ENiSyb=S-NVbGX63sLOv4nVuR_GS-yww6tiz0wYA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHC9VhT5Y=ENiSyb=S-NVbGX63sLOv4nVuR_GS-yww6tiz0wYA@mail.gmail.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,44 +159,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Paul,
 
-On Wed, May 4, 2022 at 4:29 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Thu, 5 May 2022 at 01:49, Douglas Anderson <dianders@chromium.org> wrote:
-> >
-> > When rebooting on my sc7280-herobrine based device, I got a
-> > crash. Upon debugging, I found that I was in msm_drv_shutdown() and my
-> > "pdev" was the one associated with mdss_probe().
-> >
-> > From source, I found that mdss_probe() has the line:
-> >   platform_set_drvdata(pdev, mdss);
-> > ...where "mdss" is of type "struct msm_mdss *".msm_drv_probe
-> >
-> > Also from source, I saw that in msm_drv_shutdown() we have the line:
-> >   struct msm_drm_private *priv = platform_get_drvdata(pdev);
-> >
-> > This is a mismatch and is the root of the problem.
-> >
-> > Further digging made it apparent that msm_drv_shutdown() is only
-> > supposed to be used for parts of the msm display framework that also
-> > call msm_drv_probe() but mdss_probe() doesn't call
-> > msm_drv_probe(). Let's remove the shutdown functon from msm_mdss.c.
-> >
-> > Digging a little further, code inspection found that two drivers that
-> > use msm_drv_probe() weren't calling msm_drv_shutdown(). Let's add it
-> > to them.
-> >
-> > Fixes: ecb23f2e3009 ("drm/msm: split the main platform driver")
->
-> More likely:
-> Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
+On Wed, May 04, 2022 at 06:57:28PM -0400, Paul Moore wrote:
+> On Tue, May 3, 2022 at 9:57 PM Kees Cook <keescook@chromium.org> wrote:
 
-Oh, I see! The commit I tagged is the one that set the shutdown in
-msm_mdss.c, but at the time of that commit it actually _did_ call
-msm_drv_probe().
+[..]
 
-v2 coming right up.
+> > +++ b/include/uapi/linux/xfrm.h
+> > @@ -31,9 +31,9 @@ struct xfrm_id {
+> >  struct xfrm_sec_ctx {
+> >         __u8    ctx_doi;
+> >         __u8    ctx_alg;
+> > -       __u16   ctx_len;
+> > +       __DECLARE_FLEX_ARRAY_ELEMENTS_COUNT(__u16, ctx_len);
+> >         __u32   ctx_sid;
+> > -       char    ctx_str[0];
+> > +       __DECLARE_FLEX_ARRAY_ELEMENTS(char, ctx_str);
+> >  };
+> 
+> While I like the idea of this in principle, I'd like to hear about the
+> testing you've done on these patches.  A previous flex array
+> conversion in the audit uapi headers ended up causing a problem with
 
--Doug
+I'm curious about which commit caused those problems...?
+
+Thanks
+--
+Gustavo
+
+> GCC12 and SWIG; while it was a SWIG problem and not a kernel header
+> problem that was thin consolation for those with broken builds.
