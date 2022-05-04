@@ -2,77 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11AAE51AD1B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 20:41:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9525F51AD23
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 20:44:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355848AbiEDSov (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 14:44:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42976 "EHLO
+        id S245582AbiEDSrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 14:47:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236247AbiEDSot (ORCPT
+        with ESMTP id S1377109AbiEDSrw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 14:44:49 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 696876462
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 11:41:12 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id i10so3814445lfg.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 11:41:12 -0700 (PDT)
+        Wed, 4 May 2022 14:47:52 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A65064EF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 11:44:13 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id v66so2074456oib.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 11:44:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=wTxln7YGVkX89i8PG0IKXfsso9aaC9QMWGmO6EX/EGY=;
-        b=z2Ctxr3w9cDEGS/IXiaRNEtZDn6Wv0POATksyAG9keUZE2UBpjRpqxqEhe03gIVezk
-         JUHIQzyf/0MFa26gN3hi0g8FHd/HHXCynEgpy2M5H7LEO8cPdG9LbSNWy4iMxvJh/joQ
-         KVsH9tDJmcqntkqGTL3cxSgFiPZgi+CX0jvzztvuwLE5KOCWpXjvHU8Nm3OXF7d/+Kop
-         MaDt4RjNKWP6xsVrGhiEed3Zu7Y1eH3v+cMbJ04VzT7yPGJHlsXkTiyp1XYyofqvPaQi
-         QbrsqXxwYv8AvPL0L/DqQxBoG7tz9RBWjz0w9SJu5p2yT+8+8vehbDyH1X46CuUQ+MW9
-         mCgg==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=Krvi/HpwBHAesm89MfsfOEIVsDIyjC5WrgT/4s6KRVQ=;
+        b=Oao9pys9XD8VYE1VlkOYBz1163LoVqK0zQTXLcgwltnMASr9kfj9/M4WPVNS3hAy7A
+         X01TWIvf5m/gbtLzupZrqcJ7u1D7aKzJ2VgI4+xF1TS+ioPlz0/Be3OZU5VRk4tIzZN8
+         lj+SykAlqKoIZtcW8FCGRyjQK8KNyIQujQAuw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=wTxln7YGVkX89i8PG0IKXfsso9aaC9QMWGmO6EX/EGY=;
-        b=6GW7in7ib5a6w6D0mIVCRpqVsbm5rSg3GE1GXWLEBpT4T/3JLfanUoawvio/0151MT
-         8Xdc969IeyC6JK24dN39YHt8SEeKmbUqvQTT23ESyKZB2w4dlvhvT/QCVwdptBgoa+t4
-         Q6cJaIu64N5a2ETBhf5LFGpf7dyHrgvNICwkTyNJHNUoMads1eUhICcvUe/+rsQ8Bjrf
-         ltGID3QynstVAtIctPRC+ffz8H8MthOLypugAvV7oBfDzGOKyvo5zLTlE9PpYRD6Mozd
-         x/Hd3sfGPF4CSvoDcUCaySsVdtvTp0l8RUnCQUxiHzYqoHZWa5vRmvr3i7Fv9b7tZSCL
-         SrMQ==
-X-Gm-Message-State: AOAM5301E7qJJClZ9bppaYhT2HL6Gm1sDJdAnpoiZXWOtrq1qXRDuECy
-        IqEEugcyPZk/KiTpTYc0Ad9NGQ==
-X-Google-Smtp-Source: ABdhPJy4zg1hpUl4Auyu5EEfhi6Mx+a0yiiys0cRdUGvJh5KnPLpnHF/RaEZ9+x6pGoF15y0uGxIGA==
-X-Received: by 2002:a05:6512:683:b0:473:a110:e52 with SMTP id t3-20020a056512068300b00473a1100e52mr8290893lfe.412.1651689670755;
-        Wed, 04 May 2022 11:41:10 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s15-20020ac25fef000000b0047255d2115esm1274090lfg.141.2022.05.04.11.41.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 May 2022 11:41:10 -0700 (PDT)
-Message-ID: <aa898db3-c52f-61d5-6a55-0d8b836343fb@linaro.org>
-Date:   Wed, 4 May 2022 21:41:09 +0300
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=Krvi/HpwBHAesm89MfsfOEIVsDIyjC5WrgT/4s6KRVQ=;
+        b=bozAUiZdtWOMx97cELihXCkyVhavRNnKEeKuJneSDTDss2Pymu36gGuMfMualutp2f
+         sA864i+LyzZZntC6BSXiRS+I24zmfNUsE/DI0zbl9fGgSIuyueVzGzojga8FoG5lChm0
+         hWnhdIAWwGYDixuTA3hLeAh1yjz45yCnG0D8YYrFjICU5lgnqss0bTW7DLIX+CRLCHPq
+         GQabxFGP180YXDWFmc/Jo5nEWRcWmskcwAOzYwrDw1F4FOLLVMKRqH7gm5g9viTkmHCM
+         dzCFl34qvX068zKbntxuhK3mfAovI6xtmmDzX0uzGK1hunCyQvxIpN0CUbLHTlvtOkTR
+         z9nw==
+X-Gm-Message-State: AOAM5333W3YXBrmvWQ/vsDYuVs1Gqpk/vlt7kxWRLDfsppnm6gfDECWR
+        a51w1g8G+GlL6qpE3Fjnpl0Fkl19+wKbjR02Acli0g==
+X-Google-Smtp-Source: ABdhPJzN6Wlws2ejvXzwfKhDTAuq/vO3u/Y7SEw5cpP2kVU87jhPZQDlvf6Baumo+WHVMuuIUelVblPIYt8pNdViXkE=
+X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
+ n62-20020acabd41000000b002ecff42814fmr440284oif.63.1651689852377; Wed, 04 May
+ 2022 11:44:12 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 4 May 2022 14:44:11 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH] drm/msm: Limit command submission when no IOMMU
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220502172908.3569799-1-robdclark@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220502172908.3569799-1-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <1651595136-24312-1-git-send-email-quic_khsieh@quicinc.com>
+References: <1651595136-24312-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 4 May 2022 14:44:11 -0400
+Message-ID: <CAE-0n50P4G1gwKmdzKR-ezHwmN3_BfBC5eWTC852oww75Zen6g@mail.gmail.com>
+Subject: Re: [PATCH v3] drm/msm/dp: fix event thread stuck in wait_event after kthread_stop()
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
+        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
+        dianders@chromium.org, dmitry.baryshkov@linaro.org,
+        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,43 +71,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/05/2022 20:29, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Running the GPU without an IOMMU is not really a supported (or sane)
-> configuration.  Yet it can be useful during SoC bringup (ie. if the
-> iommu driver doesn't work yet).
-> 
-> Lets limit it to users who already have /dev/mem access, to avoid the
-> chance that a user accidentially configures kernel without IOMMU
-> support.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+Quoting Kuogee Hsieh (2022-05-03 09:25:36)
+> Event thread supposed to exit from its while loop after kthread_stop().
+> However there may has possibility that event thread is pending in the
+> middle of wait_event due to condition checking never become true.
+> To make sure event thread exit its loop after kthread_stop(), this
+> patch OR kthread_should_stop() into wait_event's condition checking
+> so that event thread will exit its loop after kernal_stop().
+>
+> Changes in v2:
+> --  correct spelling error at commit title
+>
+> Changes in v3:
+> -- remove unnecessary parenthesis
+> -- while(1) to replace while (!kthread_should_stop())
+>
+> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fixes: 570d3e5d28db ("drm/msm/dp: stop event kernel thread when DP unbind")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/msm_gem_submit.c | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> index 23b68bc945f6..9cd8c8708990 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -734,6 +734,11 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
->   	if (args->pad)
->   		return -EINVAL;
->   
-> +	if (unlikely(!ctx->aspace) && !capable(CAP_SYS_RAWIO)) {
-> +		DRM_ERROR_RATELIMITED("IOMMU support or CAP_SYS_RAWIO required!\n");
-> +		return -EPERM;
-> +	}
-> +
->   	/* for now, we just have 3d pipe.. eventually this would need to
->   	 * be more clever to dispatch to appropriate gpu module:
->   	 */
 
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
