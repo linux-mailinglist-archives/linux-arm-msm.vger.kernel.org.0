@@ -2,72 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DADF51AD14
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 20:38:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5BBC51AD18
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 20:38:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377081AbiEDSlp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 14:41:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34388 "EHLO
+        id S1377128AbiEDSlu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 14:41:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377102AbiEDSiX (ORCPT
+        with ESMTP id S237545AbiEDSlp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 14:38:23 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44CD5201BB
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 11:28:41 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id 88-20020a9d0ee1000000b005d0ae4e126fso1442913otj.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 11:28:41 -0700 (PDT)
+        Wed, 4 May 2022 14:41:45 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C320E2AF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 11:38:08 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id w19so3815926lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 11:38:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=TQPIA3VoumXyz1RrJSRcgA9lX+Pt6VG1KcKf5rCLbxQ=;
-        b=y1IysrpGVOmONLnNwZEc588WNAHRPAVbFpbSh/tJ4Au9pwjAy+vAt6bt+DJFv/wPCj
-         y9n5yzmHwrbKGHGMfUf7W/KJd+IFmpwCMHVhCkYNtZo3mdz1V/opKepzQdrFWSaUWUlt
-         Q70UsdaJdM4/hzlkecq9pUbmdwSoE3i7m7s9GewikuTR9bPIqoPmZXHhpPr+gC72pR/p
-         Z29aM2mn1GTHHp5RBCcB8Wzf5wtwdcen1Du1C6BZYvk2ehSnXJPFYMcW3fAiLbQqiG2a
-         0seyeIzRe4cMUdCb2YpX/yt9KfODo/fC4RvdEplUg9NtsQHmYnhP3ofpAuk4FEYS1i7w
-         YVBA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=VDj+h4V23SXKlruYDD3RGIbbcHLL5wjAWDq/F5foLqE=;
+        b=fxjXjRbPxX0+juWMAepDKZlUcCaSCPxxuzNTXL/t1cwBxfS5s2tjysAoHlG3Z67/7R
+         XL2oup6dBfxm30lTRgo8OIwVvvc3Wey04GuG7Vb/BzbHV9UwXBemXCx5r2q6SqEAqeEU
+         D9vmaG0dBfIjkmy51e5WuulFFGzZ6A/ZTJDV1vQbEiBil8Up9kTCSI2yPBj/jPtV4ZT3
+         OeV0t8JKfTeTvqiCBUVYCb6xBarrjSwc+726v+pjx1/wKJS2WyK3HVpGymESkVavXbMg
+         BM1/r/DDv2pCN+hcuanvYGk/YgHOCr5bcy6DFbmISlx+GYBjpT5NZ6l1mlj4J8qDjXus
+         1KmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=TQPIA3VoumXyz1RrJSRcgA9lX+Pt6VG1KcKf5rCLbxQ=;
-        b=iP5Q3Vj3rl4woi1XDCvWIz/ZZ9JGGlQfYb/+WgcX2lH71Vq9f1z6W9FEqIbLcolsi8
-         1t8z9qhYy77PT8hlT7kkVeNvuaPelgftaQBAPfyhz3YQeR/znHTpQ9QhLlAV3sdUAd3e
-         t8RLAH1w2e32k41RNWPVGlrylsEZDlAa/wxrhkUl2XUG6X6CmnDErcl38XL9qa74YcoB
-         1u+ZqMnkOg6Kr1ecxG8v025B7Knf6345y/7Y+R7ofV1rkjlOvPLB7xgBLFJFUJq0uy1X
-         QBV4hbkaSNEwJL2DQEdE0pbBSn2D5Z57bcLLfBBNhhvIkyus/WIbp53p9m0DO2WNPECT
-         lMWw==
-X-Gm-Message-State: AOAM530S4zHaXwgkW1h1PKsw74Db/csYuIAI97PNG9hGEiYAbBAK+Sny
-        9eT01cmK8NrO+5WgKeH+FTXFDA==
-X-Google-Smtp-Source: ABdhPJxYkiegcJ9IRk6D1ytXYH8Rm5Z9s0sDkK09+L3SZz4yCj9MynlTPJUgbX3gQGvlpBMyFfR0+A==
-X-Received: by 2002:a9d:2621:0:b0:606:254a:bc78 with SMTP id a30-20020a9d2621000000b00606254abc78mr4469271otb.57.1651688920275;
-        Wed, 04 May 2022 11:28:40 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id y14-20020a0568302a0e00b006060322123fsm3783845otu.15.2022.05.04.11.28.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 May 2022 11:28:39 -0700 (PDT)
-Date:   Wed, 4 May 2022 11:30:25 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        matvore@chromium.org, Andy Gross <agross@kernel.org>,
-        "Reviewed-by : Stephen Boyd" <swboyd@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: (subset) [PATCH] soc: qcom: socinfo: Add another ID for sc7180
-Message-ID: <YnLGQWPmcJo73vtu@ripper>
-References: <20220502173338.1.I26eca1856f99e6160d30de6d50ecab60e6226354@changeid>
- <165168485227.3730817.11549721304895378126.b4-ty@linaro.org>
- <CAD=FV=WkJu8s5EmwJke49TPZ8CU8kD-CMcQi-9a3oUMqz9yBrQ@mail.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=VDj+h4V23SXKlruYDD3RGIbbcHLL5wjAWDq/F5foLqE=;
+        b=ADxYYZDTFhxrNMHWbtVDzcs3IgRmZGvL29Tom1H5rTveZ0VqbqhLgVliXVnblBPjYQ
+         o5ajQUfxVFcrZYDQnp5ScmPqOxhdtz1NyuIYnINwRm3WdcUTdh282zzf4P4EJO9Qop43
+         ReiJZrjHCA76SACLHrNif1lQbLj6nsx8AZVgcp1udLx0FjWwGYu1sy+X8CCq0sE+/tnD
+         E3svrDYvP7ohbuPl1YdlNlHfMvFUjxOBSTaqYImdHOiVm0372PtqdGHHEea83LH2pvfQ
+         BmGzMrIc9b9VDn8U5DFXlxv3HLOrjIjHmJ97yVH/mZ3SSO1MxBu7acx0tkwEW7PtPpA7
+         doaQ==
+X-Gm-Message-State: AOAM5309K1njBQxiZ4/ZXxfly8Fr7/6RVcL1Zx+FdNbIOLNAGgxpNwrB
+        /rImYvgB2GJSFdNsKWx4E4q6hw==
+X-Google-Smtp-Source: ABdhPJyI5erUXW0RKxsHAT4wZDIOhnHXaMT1ZI70tUjd1MU7r4fGr09Jg5RPwZvekympeq5jP9071g==
+X-Received: by 2002:a05:6512:22cf:b0:473:a41f:155f with SMTP id g15-20020a05651222cf00b00473a41f155fmr7171873lfu.227.1651689487107;
+        Wed, 04 May 2022 11:38:07 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id y20-20020ac24214000000b0047255d21168sm1270671lfh.151.2022.05.04.11.38.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 May 2022 11:38:06 -0700 (PDT)
+Message-ID: <834eeda0-12b0-3f16-8ca2-89175c1de186@linaro.org>
+Date:   Wed, 4 May 2022 21:38:05 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=WkJu8s5EmwJke49TPZ8CU8kD-CMcQi-9a3oUMqz9yBrQ@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v3] drm/msm/dp: fix event thread stuck in wait_event after
+ kthread_stop()
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1651595136-24312-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1651595136-24312-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,41 +80,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 04 May 10:51 PDT 2022, Doug Anderson wrote:
-
-> Hi,
+On 03/05/2022 19:25, Kuogee Hsieh wrote:
+> Event thread supposed to exit from its while loop after kthread_stop().
+> However there may has possibility that event thread is pending in the
+> middle of wait_event due to condition checking never become true.
+> To make sure event thread exit its loop after kthread_stop(), this
+> patch OR kthread_should_stop() into wait_event's condition checking
+> so that event thread will exit its loop after kernal_stop().
 > 
-> On Wed, May 4, 2022 at 10:21 AM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Mon, 2 May 2022 17:33:45 -0700, Douglas Anderson wrote:
-> > > It appears the some sc7180 devices, like the one in my
-> > > sc7180-trogdor-homestar, report an ID of 407 instead of 425. Add
-> > > another ID into the list.
-> > >
-> > >
-> >
-> > Applied, thanks!
-> >
-> > [1/1] soc: qcom: socinfo: Add another ID for sc7180
-> >       commit: c35886d605604e0b03cdd835ae3249dc1fe0cc2a
+> Changes in v2:
+> --  correct spelling error at commit title
 > 
-> Hmm. Did you see the responses from Sai [1] about this? He seemed to
-> indicate that there might be some issue here because he thought 407
-> was supposed to be a different SoC. Are we sure we want to land this
-> patch while we're sorting it out?
+> Changes in v3:
+> -- remove unnecessary parenthesis
+> -- while(1) to replace while (!kthread_should_stop())
 > 
+> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fixes: 570d3e5d28db ("drm/msm/dp: stop event kernel thread when DP unbind")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-I stared at the thread but didn't see his reply for some reason.
+Let's do it properly:
 
-Congrats on the getting the random SoC in your device ;) As this was the
-top patch on drivers-for-5.19, I just popped that off and pushed the
-branch again.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Let me know when you've figured the numbering out (and if it turns out
-to be the mobile id I wouldn't mind carrying that in the table)
+> ---
+>   drivers/gpu/drm/msm/dp/dp_display.c | 13 +++++++++----
+>   1 file changed, 9 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index c388323..da5c03a 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1103,15 +1103,20 @@ static int hpd_event_thread(void *data)
+>   
+>   	dp_priv = (struct dp_display_private *)data;
+>   
+> -	while (!kthread_should_stop()) {
+> +	while (1) {
+>   		if (timeout_mode) {
+>   			wait_event_timeout(dp_priv->event_q,
+> -				(dp_priv->event_pndx == dp_priv->event_gndx),
+> -						EVENT_TIMEOUT);
+> +				(dp_priv->event_pndx == dp_priv->event_gndx) ||
+> +					kthread_should_stop(), EVENT_TIMEOUT);
+>   		} else {
+>   			wait_event_interruptible(dp_priv->event_q,
+> -				(dp_priv->event_pndx != dp_priv->event_gndx));
+> +				(dp_priv->event_pndx != dp_priv->event_gndx) ||
+> +					kthread_should_stop());
+>   		}
+> +
+> +		if (kthread_should_stop())
+> +			break;
+> +
+>   		spin_lock_irqsave(&dp_priv->event_lock, flag);
+>   		todo = &dp_priv->event_list[dp_priv->event_gndx];
+>   		if (todo->delay) {
 
-Regards,
-Bjorn
 
-> [1] https://lore.kernel.org/r/13819b2d-26f0-14f4-9cb9-affb6b18f13d@quicinc.com/
+-- 
+With best wishes
+Dmitry
