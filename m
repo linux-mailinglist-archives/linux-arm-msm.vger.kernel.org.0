@@ -2,154 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 18D2051B3E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 02:08:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6B7851B429
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 02:09:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235246AbiEEAEx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 20:04:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55794 "EHLO
+        id S243273AbiEEAEv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 20:04:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354904AbiEDXnO (ORCPT
+        with ESMTP id S234224AbiEDX5a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 19:43:14 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B92201B4
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 16:39:37 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id p8so2312044pfh.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 16:39:37 -0700 (PDT)
+        Wed, 4 May 2022 19:57:30 -0400
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D06914EF66
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 16:53:52 -0700 (PDT)
+Received: by mail-oi1-x242.google.com with SMTP id q8so2781395oif.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 16:53:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZcjXks/OZvIeQ48LeUZ4ev10sgtmh+A/DjFdnPkrArc=;
-        b=bkT3tVCvUqtfkwZTFOYCuIFr5GfsuH2RuNfy5q7qIlKAzjusR5Eitvd1OX4suoZW+0
-         wTAkdVmqLOABMMkpP3JAuJb+PjizMv8UVdZ21s4mXhiWgcKp+C/qfOQUTtlzKfgeY2NC
-         uKsJAWTey0OhoScc3BvWdUAr/VUBoVav0ZvLI=
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=ampHH5WJLIBWSsxWwzVjbk5pO9UBFxn81pZ6QIDzZtY=;
+        b=FNIAYmcejzHfmZlCiIHYgT6erzQSC9gmgFmOiY6jxN7WvOxDyBQzTWQXuf0QQSLa76
+         OjSO2mcjza7TfryU2Yt8mJxkT+qWMSaleALBlY7mfzTxVPd1JjVxyw0EBBmPWGPP2G3/
+         EjJyRmLlkni3UqZSkuePTk9fUuzh8hCavLsGDVWv86trmI+S5ZFLXA2M/ALU/OX9/Dog
+         FVBSuENuyzE6Zj/zsEo0v3B7v/NSoUlBUw+9pnAspgHs/c6uItO7g+7oIPUnQ5P8rHEg
+         Uw50ND4b7eJCcoszBXUiYPFOBzRcktyN3Nzu2+vze2IYlqC3egzGpfENgoTcj3C+TYFW
+         rVYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZcjXks/OZvIeQ48LeUZ4ev10sgtmh+A/DjFdnPkrArc=;
-        b=EGLr10xryH1NlHxIvU4oXJQtFAjuObM01tqpL4jP9xXmgv2+wzYtEmgjRbJCuzwEbD
-         3ifJdBWay2YEW4o1Ubki3275mihpHeDUFg0SRzCd55A6bRNfp/Xl1xFCly6h+Ms7kPXI
-         ileafNAIUFBLw7Bjot/eE+d1MV6+ApPqR5lJtpdBAYD8XagYPWiSqGvRaKukE549+z94
-         A9M3iXz9kDpEjZHVPzutbl3P17RHN0aN5Knod8Ml61wTAiqD8onXRBV3i5KOULP0Y+ri
-         P1c/6eGgTp0gIIrENeYwvmg2RMLyzifFIkgFesvhbnTqYT3qNg8CJZ4hw6Wh7Xp0Y0m2
-         BfFA==
-X-Gm-Message-State: AOAM531gD4jNgbBYCrrwvcUfO/w8u7ufRsw0QJxp5T5bFji8lhPbfSm5
-        h3Yt/gQMBK6S0XX7QEoNqLRa7g==
-X-Google-Smtp-Source: ABdhPJydJo1xmGq3cPW9J7N2vJNGEG+YilKeqMLd+36+LvTQilr9AnAml998OgsrGgm+ZXNXvZOYHQ==
-X-Received: by 2002:a63:8348:0:b0:3c6:6c7:9e40 with SMTP id h69-20020a638348000000b003c606c79e40mr2040249pge.224.1651707577099;
-        Wed, 04 May 2022 16:39:37 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:1da3:6a8e:557c:da09])
-        by smtp.gmail.com with ESMTPSA id p1-20020a170902e74100b0015e8d4eb1bbsm65321plf.5.2022.05.04.16.39.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 May 2022 16:39:36 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Xu Wang <vulab@iscas.ac.cn>, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] drm/msm: Fix shutdown
-Date:   Wed,  4 May 2022 16:39:30 -0700
-Message-Id: <20220504163900.v2.1.Iaebd35e60160fc0f2a50fac3a0bf3b298c0637c8@changeid>
-X-Mailer: git-send-email 2.36.0.464.gb9c8b46e94-goog
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=ampHH5WJLIBWSsxWwzVjbk5pO9UBFxn81pZ6QIDzZtY=;
+        b=EIwMNRUDFLAww7er9GByrCNxurgpDKc3gDIpcQaExJVvOdOg0AWn707wPQnplV6KWy
+         AVXyFMCgOF8syLqtKswbkzK+L1VcKEV1pTKp3OKg7gWndazI5G4t7r+XAQXHGfDiGPH4
+         pyvFnxdtC2+saNGbsYt6DWnvfoLNiP7akFPfWT8y//SUjVa1dVjY/CqbKPxX6QM/Q1Oh
+         0H5iUrX+8nDQVCTtK9vUsv2yvqA1BRRAuvB06PiY5udCYGQwlvgQhMcC/cVvZ5mifjFI
+         i+nU0O4aR7v3xQxXr4I2rFW1pkaGFnflu/Zo4Lx2dSUrbz7eNP+mAgiUhQmPYumFSZZO
+         HljA==
+X-Gm-Message-State: AOAM532KXCfYeWO88Zz2wFpcJxd/eQCrBySFP3SMykJyiChenQy5bbKP
+        FTDc2a2KZ3qkzwTgmKKGKIMWx9mg9hijvpr3FzU=
+X-Google-Smtp-Source: ABdhPJwYlgNc/5bis71DucVvd+ZioHPl83VcBeyXc51mm1mJBTXR/7J8yaMUf518PLLny14+iH6/by9bmkLUTmJvSMI=
+X-Received: by 2002:a05:6808:2019:b0:326:6d24:dfd9 with SMTP id
+ q25-20020a056808201900b003266d24dfd9mr1003508oiw.183.1651708432083; Wed, 04
+ May 2022 16:53:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Received: by 2002:a05:6802:1a9:0:0:0:0 with HTTP; Wed, 4 May 2022 16:53:51
+ -0700 (PDT)
+Reply-To: ortegainvestmmentforrealinvest@gmail.com
+From:   Info <joybhector64@gmail.com>
+Date:   Thu, 5 May 2022 05:23:51 +0530
+Message-ID: <CAP7KLYhOuoEX9VpuWFzfxXW3-SdA7X=MyCKJ7oAAs4__V29BXQ@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:242 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5009]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [joybhector64[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [joybhector64[at]gmail.com]
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.5 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When rebooting on my sc7280-herobrine based device, I got a
-crash. Upon debugging, I found that I was in msm_drv_shutdown() and my
-"pdev" was the one associated with mdss_probe().
-
-From source, I found that mdss_probe() has the line:
-  platform_set_drvdata(pdev, mdss);
-...where "mdss" is of type "struct msm_mdss *".
-
-Also from source, I saw that in msm_drv_shutdown() we have the line:
-  struct msm_drm_private *priv = platform_get_drvdata(pdev);
-
-This is a mismatch and is the root of the problem.
-
-Further digging made it apparent that msm_drv_shutdown() is only
-supposed to be used for parts of the msm display framework that also
-call msm_drv_probe() but mdss_probe() doesn't call
-msm_drv_probe(). Let's remove the shutdown functon from msm_mdss.c.
-
-Digging a little further, code inspection found that two drivers that
-use msm_drv_probe() weren't calling msm_drv_shutdown(). Let's add it
-to them.
-
-Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
-
-Changes in v2:
-- Fixed the Fixes tag.
-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 1 +
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 1 +
- drivers/gpu/drm/msm/msm_mdss.c           | 1 -
- 3 files changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 143d6643be53..2b9d931474e0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1350,6 +1350,7 @@ MODULE_DEVICE_TABLE(of, dpu_dt_match);
- static struct platform_driver dpu_driver = {
- 	.probe = dpu_dev_probe,
- 	.remove = dpu_dev_remove,
-+	.shutdown = msm_drv_shutdown,
- 	.driver = {
- 		.name = "msm_dpu",
- 		.of_match_table = dpu_dt_match,
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 9b7bbc3adb97..3d5621a68f85 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -1009,6 +1009,7 @@ MODULE_DEVICE_TABLE(of, mdp5_dt_match);
- static struct platform_driver mdp5_driver = {
- 	.probe = mdp5_dev_probe,
- 	.remove = mdp5_dev_remove,
-+	.shutdown = msm_drv_shutdown,
- 	.driver = {
- 		.name = "msm_mdp",
- 		.of_match_table = mdp5_dt_match,
-diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index 20f154dda9cf..0454a571adf7 100644
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -397,7 +397,6 @@ MODULE_DEVICE_TABLE(of, mdss_dt_match);
- static struct platform_driver mdss_platform_driver = {
- 	.probe      = mdss_probe,
- 	.remove     = mdss_remove,
--	.shutdown   = msm_drv_shutdown,
- 	.driver     = {
- 		.name   = "msm-mdss",
- 		.of_match_table = mdss_dt_match,
 -- 
-2.36.0.464.gb9c8b46e94-goog
+I am an investor. I came from the USA and I have many investments all
+over the world.
 
+I want you to partner with me to invest in your country I am into many
+investment such as real Estate or buying of properties i can also
+invest money in any of existing business with equity royalty or by %
+percentage so on,
+Warm regards
