@@ -2,65 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3A3551A12B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 15:41:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37FFC51A13A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 15:45:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350749AbiEDNpJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 09:45:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34868 "EHLO
+        id S1350786AbiEDNtT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 09:49:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350741AbiEDNpJ (ORCPT
+        with ESMTP id S1350807AbiEDNtH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 09:45:09 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A36F2C64D
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 06:41:33 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 55C18CE262A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 13:41:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B0EC385A5;
-        Wed,  4 May 2022 13:41:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651671689;
-        bh=8izgCIj9I2NmuN+VVbgtEFpR/n2CW+64r3eJYl8w76E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mnlDB4YdFdEbEmBQ1KPloG1YeaejdTprTQukTlTESxwdn0Kz2RmClFa4yUd5nzfFL
-         Z0lg8FDOI9Fesg06rFk1ngwCPN+Uhv4ZLfOTL3puKtPFLVM+drz960NnQjPv67XhcE
-         MDlrMJ4K97CTIeLg9ZmBf28L4YzD90QLb8rXvaYOc80yQzfVAQXc/lB+F7VP0/KB1D
-         fBO1Kokm8d5r+tUfcwMhZ2JB2pdwy+sjjPB/htLiW+hKgZsECQY0RF9Piip7VxI4Iw
-         f9pBEQ8F6x+zBI7dSc+eG9knthSLHsI16U78NFDEMc2P7GBfmh0NMQPQgNxlAOSr4R
-         O6SwAGFYbTI4w==
-Date:   Wed, 4 May 2022 19:11:25 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org, kernel test robot <lkp@intel.com>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>
-Subject: Re: [Freedreno] [PATCH v2] drm/msm/dsi: use RMW cycles in
- dsi_update_dsc_timing
-Message-ID: <YnKChRtWhgxbOx4V@matsya>
-References: <20220430175533.3817792-1-dmitry.baryshkov@linaro.org>
- <20220430185807.yn2j2coyc77qzx2o@SoMainline.org>
- <02114b24-f954-f145-4918-01cc3def65ac@linaro.org>
- <20220501204102.3xijmadbcrxwyu3x@SoMainline.org>
- <4e308633-cb0d-7050-9ee0-421190683eac@linaro.org>
- <20220502084322.nvj7rnhnemewmil6@SoMainline.org>
+        Wed, 4 May 2022 09:49:07 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15F2B13D15
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 06:45:29 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id m20so2961430ejj.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 06:45:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Uv7Hp42LV/vTpm+weT4So5OI48akf0l91Vs3/APjQVg=;
+        b=nkKNa9OSox+I2AggVlih55mls2Es/JkmCEZAwb77r66baliDbgU8EDdLzRGFczo0yP
+         FSgfD+O+c4tXzxuOhPQHxvOUlJ9D5AQyRZZw0NkeftBD0NlLvEyt0MjIhMJ+lu1gyRhR
+         iFOd5IJGpYOdHePtcc3S7VnKeBkakc2CkiZbc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Uv7Hp42LV/vTpm+weT4So5OI48akf0l91Vs3/APjQVg=;
+        b=nDTZ94vtSmVhUyki5gVHNqCkx/+E4Ge3mXxJasThBgGY/CmkDCi08ZOLSSDfVF0k4b
+         CbXwBZDR7/gwSQ2uKzRRmnrkNKwBC/H2d/halpHDN77xwMMQHZFMLv2JRYRL/JJx3BXc
+         B2Su4HUPm4/oW5V8K9E/nPRsZi8NPD3vwhYqXslv8+PlHMGObEweIXvFzNunOj4ZZvBA
+         KKVEEiuuEjFbXHVSQibF9X5+RJynJNDyxaG1TCA9vWHdIn+o5vhvnnN6v45uBsH6OyOe
+         2dGqr7CLGHsecQnpiCNfljSg7yqHu5TdkktIQhMVite39tZQrQK0n0as78lLzySeYK+c
+         6X2w==
+X-Gm-Message-State: AOAM530JtqSEWQW8oYN/Lxv/DwrqvD+PYAwymdJWr27WCpVE5xVc9dp+
+        CUqzqES5IgjQ12CPmTojR8JGnqA0KOAt3QZqw5k=
+X-Google-Smtp-Source: ABdhPJxRUobTSjrzR2sE34dEgl9B/Co90DietxhzN1SFbe/QNIWw3Lr8wPSfqTuu3AIkQyykhGFCvg==
+X-Received: by 2002:a17:906:3918:b0:6e0:5bbd:bf33 with SMTP id f24-20020a170906391800b006e05bbdbf33mr19408678eje.764.1651671927385;
+        Wed, 04 May 2022 06:45:27 -0700 (PDT)
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com. [209.85.221.44])
+        by smtp.gmail.com with ESMTPSA id jl6-20020a17090775c600b006f3ef214e64sm5664817ejc.202.2022.05.04.06.45.26
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 May 2022 06:45:26 -0700 (PDT)
+Received: by mail-wr1-f44.google.com with SMTP id w4so2081817wrg.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 06:45:26 -0700 (PDT)
+X-Received: by 2002:a05:6000:c7:b0:20a:d8c1:d044 with SMTP id
+ q7-20020a05600000c700b0020ad8c1d044mr16774023wrx.422.1651671925564; Wed, 04
+ May 2022 06:45:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220502084322.nvj7rnhnemewmil6@SoMainline.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <1645509309-16142-1-git-send-email-quic_c_skakit@quicinc.com>
+In-Reply-To: <1645509309-16142-1-git-send-email-quic_c_skakit@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 4 May 2022 06:45:11 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U9XfOancqNOGCWKEkP2jD4CHw6NHY8mdALG7D-7OLMTw@mail.gmail.com>
+Message-ID: <CAD=FV=U9XfOancqNOGCWKEkP2jD4CHw6NHY8mdALG7D-7OLMTw@mail.gmail.com>
+Subject: Re: [PATCH V4 0/4] Add PM8350C PMIC PWM support for backlight
+To:     Satya Priya <quic_c_skakit@quicinc.com>,
+        Pavel Machek <pavel@ucw.cz>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-leds@vger.kernel.org,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,20 +80,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02-05-22, 10:43, Marijn Suijten wrote:
-> On 2022-05-02 01:44:20, Dmitry Baryshkov wrote:
-> that require DSC for the screen to work.  I've been told the series
-> didn't result in positive screen output way back in its infancy, but
+Pavel,
 
-I would be intrested to hear about that. I have only pixel3 at my
-disposal so tested on that. I would be willing to help with more testing
-efforts.
+On Mon, Feb 21, 2022 at 9:55 PM Satya Priya <quic_c_skakit@quicinc.com> wrote:
+>
+> This series depends on [1], which adds driver for Qualcomm LPG.
+>
+> [1] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=615848
+>
+> Satya Priya (4):
+>   dt-bindings: leds: Add pm8350c pmic support
+>   leds: Add pm8350c support to Qualcomm LPG driver
+>   arm64: dts: qcom: pm8350c: Add pwm support
+>   arm64: dts: qcom: Enable pm8350c pwm for sc7280-idp2
 
-Also, to get DSC to work, the panel needs to be set as well...
+I see Bjorn's patch in your tree. Thanks!
 
-> I'll re-evaluate and send fixes or improvements if/when necessary.
+...could you add patch #1 and #2 from this series too? They are both
+small and ready to go.
 
-That would be nice
-
--- 
-~Vinod
+-Doug
