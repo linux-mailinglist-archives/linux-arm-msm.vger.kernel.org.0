@@ -2,100 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B969519D85
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 13:01:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 711C7519DC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 13:17:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234082AbiEDLF1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 07:05:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40038 "EHLO
+        id S1348643AbiEDLUe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 07:20:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348461AbiEDLF0 (ORCPT
+        with ESMTP id S1348641AbiEDLUc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 07:05:26 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3E96E237D7;
-        Wed,  4 May 2022 04:01:50 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5EA481042;
-        Wed,  4 May 2022 04:01:50 -0700 (PDT)
-Received: from [10.57.1.74] (unknown [10.57.1.74])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5EBBB3FA50;
-        Wed,  4 May 2022 04:01:48 -0700 (PDT)
-Message-ID: <93f0e003-e9ce-c37f-e603-ddf22ffec0d6@arm.com>
-Date:   Wed, 4 May 2022 12:01:46 +0100
+        Wed, 4 May 2022 07:20:32 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3298C25C75;
+        Wed,  4 May 2022 04:16:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651663017; x=1683199017;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=VbYp5d90PobBGlzPAbHMWBCdiIutMJ1ffEXTJd2VBQo=;
+  b=dG8EmLyvXmRoCD5j8MT7lbsG9ScZUij+Rk1fnvIYk0GHcoTD7Pk2cgCG
+   zDbqmi4JB0MAUgsSqZXrYOg0aSFmnKKdCxkp/rdv4Yq+lNsSQGrB2IYoe
+   GCf4/Y5zdwtEYD4WhHnNnkGuNEIWgwCKWrbkXREULFOTY3gGjJnqOA+pW
+   s=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 04 May 2022 04:16:57 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 May 2022 04:16:56 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 4 May 2022 04:16:55 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 4 May 2022 04:16:52 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v13 0/4] Add lpass pin control support for audio on sc7280 based targets
+Date:   Wed, 4 May 2022 16:46:23 +0530
+Message-ID: <1651662987-11704-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.8.1
-Subject: Re: [PATCH v3] coresight: core: Fix coresight device probe failure
- issue
-To:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>
-References: <20220309142206.15632-1-quic_jinlmao@quicinc.com>
- <a1790ad9-b5e0-9a00-debc-fc8ef2c757cb@arm.com>
- <9cbb2e86-640f-4b5d-22ff-00c63a1b9743@quicinc.com>
- <99845680-c2a5-2538-a57c-6fbf395faa8b@arm.com>
- <0ef5aa68-fc1c-6f0b-a1cb-46c5548952db@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <0ef5aa68-fc1c-6f0b-a1cb-46c5548952db@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-9.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/03/2022 08:52, Jinlong Mao wrote:
-> 
-> On 3/15/2022 4:42 PM, Suzuki K Poulose wrote:
->> On 15/03/2022 08:36, Jinlong Mao wrote:
->>> On 3/10/2022 5:10 PM, Suzuki K Poulose wrote:
->>>> Hi Jinlong
->>>>
->>>>
->>>> On 09/03/2022 14:22, Mao Jinlong wrote:
->>>>> It is possibe that probe failure issue happens when the device
->>>>> and its child_device's probe happens at the same time.
->>>>> In coresight_make_links, has_conns_grp is true for parent, but
->>>>> has_conns_grp is false for child device as has_conns_grp is set
->>>>> to true in coresight_create_conns_sysfs_group. The probe of parent
->>>>> device will fail at this condition. Add has_conns_grp check for
->>>>> child device before make the links and make the process from
->>>>> device_register to connection_create be atomic to avoid this
->>>>> probe failure issue.
->>>>>
->>>>> Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
->>>>> Suggested-by: Mike Leach <mike.leach@linaro.org>
->>>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>>>
->>>> Thanks for the rework. The patch looks good to me.
->>>>
->>>> Suzuki
->>> Thanks Suzuki.
->>>
->>> Hi Mathieu & Mike,
->>>
->>> Could you please help to review and provide your comments for the 
->>> PATCH V3 ?
->>
->> Thats what I just said above. The patch looks good to me, I can queue
->> this in the next cycle.
+This patch set is to add lpass pin control support for Audio over I2S,
+wcd codec and digital mics.
 
-Queued here:
+Changes Since V12:
+    -- Split common lpass lpi pin control nodes to functionality specific nodes.
+    -- Move common pin control properties to corresponding default nodes.
+Changes Since V11:
+    -- Move CRD specific pinmux nodes to crd specific file.
+Changes Since V10:
+    -- Add lpass lpi pinmux and MI2S pinmux support for rev5+ boards.
+    -- Remove dependency patches link in the cover-letter as it is merged.
+Changes Since V9:
+    -- Remove redundant prefix in node name.
+Changes Since V8:
+    -- Modify label and node names to lpass specific.
+    -- Sort nodes as per node names and kind of nodes like pinctrl and device nodes.
+Changes Since V7:
+    -- Sort mi2s pincontrol nodes as per node name.
+    -- Fix typo errors.
+Changes Since V6:
+    -- Move amp_en node to corresponding consumer patch.
+    -- Update label and node names.
+    -- Remove redundant drive-strengths.
+    -- Remove herobrine crd specific mi2s configuration.
+Changes Since V5:
+    -- Remove redundant function property in amp_en node.
+    -- Move board specific properties of lpass pin control node to board specific file.
+    -- Remove redundant properties in pin control nodes.
+    -- Move wcd938x codec reset and CTIA/OMTP pin control patches to other series.
+Changes Since V4:
+    -- Add primary and secondary I2S pinmux nodes for herobrine specific targets.
+Changes Since V3:
+    -- Add pinctrl nodes for wcd codec reset and CTIA/OMTP headset selection.
+Changes Since V2:
+    -- Move lpass pin control node to main dtsi file.
+    -- Sort nodes alphabetically.
+    -- Remove redundant wcd reset gpio nodes.
+    -- Remove redundant input-enable field in dmic pin control nodes.
+    -- Update amp_en node. 
+    -- Fix typo errors.
+    -- Modify node names.
+    -- Create patches on latest kernel.    
+Changes Since V1:
+    -- Merge pinmux and pinconf properties in amp_en and wcd pin reset node.
+    -- Split common i2s pin control nodes to functionality specific nodes.
+    -- Move board specific properties to board specific dtsi file.
+    -- Update dmic pin control node name.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/coresight/linux.git/commit/?h=next&id=8c1d3f79d9ca48e406b78e90e94cf09a8c076bf2
+Srinivasa Rao Mandadapu (4):
+  arm64: dts: qcom: sc7280: Add pinmux for I2S speaker and Headset
+  arm64: dts: qcom: sc7280: Add secondary MI2S pinmux specifications for
+    CRD 3.0/3.1
+  arm64: dts: qcom: sc7280: add lpass lpi pin controller node
+  arm64: dts: qcom: sc7280-herobrine: Add lpi pinmux properties for CRD
+    3.0/3.1
 
-Cheers
-Suzuki
+ arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts |  77 +++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi          |  78 +++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi              | 131 ++++++++++++++++++++++
+ 3 files changed, 286 insertions(+)
+
+-- 
+2.7.4
+
