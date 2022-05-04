@@ -2,65 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA8E851A2EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 17:02:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FC5851A341
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 17:08:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351716AbiEDPFn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 11:05:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53690 "EHLO
+        id S1351932AbiEDPMJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 11:12:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350502AbiEDPFj (ORCPT
+        with ESMTP id S1351918AbiEDPMG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 11:05:39 -0400
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB251C125;
-        Wed,  4 May 2022 08:02:03 -0700 (PDT)
-Received: by mail-oi1-f174.google.com with SMTP id v66so1444797oib.3;
-        Wed, 04 May 2022 08:02:03 -0700 (PDT)
+        Wed, 4 May 2022 11:12:06 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FC9737BFA
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 08:08:28 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id c11so1645450plg.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 08:08:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Qb+1GrJs8SRgE6Wq+GlmzxuejfTqdKZ3b89DzJavSQw=;
+        b=QW7CQXai9IiD71Wvf+o2VYxsrI+DMXmN1vsS0b5DV0rtrX+G8r3eGzQnrLgcSNLS6o
+         18VjexLmt9t17aqS0qc4jCF5CPslGIy/SB1vEauI+iOiw3aemKigwzjm7wU//Osg3Pbt
+         9wMF/4HUhAaX0invtmDD41DdrKFbACP1VK8u0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=1bUzFIcnTpP1YHwMyCBy1/Dkz2nFJvraPhMKAf/6334=;
-        b=ZsEkxSfoYU2pRaPZABV/vJS0HO1RGWOcgiA7L9r8aox59PYXSG2Y9jz8PB8OiKVn9w
-         ZjFmHBlEGUTBGnTV2RLbtoBvo0DR7+7GuIkwkTytEExAdqoGGCVBAQ8llWMqkorYeN5O
-         TGQusbfh8JLORw57GYhN16mI92MzRUwuzTOVuCPcSnZ4SK9IPht2KV46JsLpiSsrK0QL
-         o5c1t+N6EAYlVrTiTljKWVjbiOp8T7TV9XkTwiNsS4P5jAayLDipvymk5SAimMJraMAB
-         XR6kY0Qlh8/zcwrPJqBgud6RjANBAIkJUfD99yzEO60URmX/D1RWSdYSpk8+uAg4Qbp0
-         mc0A==
-X-Gm-Message-State: AOAM532UaArgtx0PHtOxllURUb9/zoRZBgDSGimA9ZwLJPNJqz34fMB3
-        UY9+Qm6o5ayxYj58npZA6g==
-X-Google-Smtp-Source: ABdhPJwDUQBUsjncC53awzHGrsJgLkC6MgScQXjD0f1Bqi4PdHsw0mbDyGSi1wjcQvxhHX0kRG9tGQ==
-X-Received: by 2002:a05:6808:ab2:b0:326:149b:64ff with SMTP id r18-20020a0568080ab200b00326149b64ffmr1673071oij.147.1651676523124;
-        Wed, 04 May 2022 08:02:03 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id d38-20020a9d2929000000b00606387601a2sm1652344otb.34.2022.05.04.08.02.02
+        bh=Qb+1GrJs8SRgE6Wq+GlmzxuejfTqdKZ3b89DzJavSQw=;
+        b=CO606/GBtBtbb15hNEGZjxeuBxhSt+jJBZKxBh86aGZ/vGbbH5QftOGSsR5UzVxxx+
+         zJuYy1YLfezueRQdZqvCOWQE1ET8L3jCz/2b08zDysiv8YSo39gMs5SItYhEPiYCTms8
+         is5O/Yo7nlOY1BwvmA2rPdX6W+1wlSWHKniZWAUu5mCOw92maVEYWowIWu1dHE+Jaeox
+         q5rtVBscXreUtNRITlEx6ETqn5Z4QeAF+ewX+9mDqyoVJWKqMnVkfy+gR+sKEHlRFjuW
+         ZNIsh07+Zr6QQwHiuJiijHG6JtMFUgcO2VWA4sX21B9E5VxxP1toilXUTItRNYGb1z9c
+         JFUA==
+X-Gm-Message-State: AOAM530oQCf3c2yQyEy2ZiB6jHTCA56tTZN2yQ6Qe6o5hA9B32meUx8v
+        RYAbJ9tc21AkWYJ2kxlA621sPg==
+X-Google-Smtp-Source: ABdhPJxppSZTl5CKjnq8a5hBmltXmdlckYUA+zJjxmwbiUJP9s+fG0NYe/ezZfchAEYBzvKm6cdN0g==
+X-Received: by 2002:a17:90a:e7d2:b0:1dc:3762:c72d with SMTP id kb18-20020a17090ae7d200b001dc3762c72dmr10809021pjb.243.1651676908004;
+        Wed, 04 May 2022 08:08:28 -0700 (PDT)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id q10-20020a170902bd8a00b0015e8d4eb2c8sm8430976pls.274.2022.05.04.08.08.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 May 2022 08:02:02 -0700 (PDT)
-Received: (nullmailer pid 1705139 invoked by uid 1000);
-        Wed, 04 May 2022 15:02:02 -0000
-Date:   Wed, 4 May 2022 10:02:01 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Taniya Das <quic_tdas@quicinc.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette =?iso-8859-1?Q?=A0?= 
-        <mturquette@baylibre.com>, Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v1 1/3] dt-bindings: clock: Add resets for LPASS audio
- clock controller for SC7280
-Message-ID: <YnKVaXqHOSM9PByW@robh.at.kernel.org>
-References: <20220503164635.23876-1-quic_tdas@quicinc.com>
- <20220503164635.23876-2-quic_tdas@quicinc.com>
+        Wed, 04 May 2022 08:08:27 -0700 (PDT)
+Date:   Wed, 4 May 2022 08:08:26 -0700
+From:   Kees Cook <keescook@chromium.org>
+To:     Kalle Valo <kvalo@kernel.org>
+Cc:     "Gustavo A . R . Silva" <gustavoars@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, wcn36xx@lists.infradead.org,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+        Alexei Starovoitov <ast@kernel.org>,
+        alsa-devel@alsa-project.org, Al Viro <viro@zeniv.linux.org.uk>,
+        Andrew Gabbasov <andrew_gabbasov@mentor.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Andy Lavr <andy.lavr@gmail.com>,
+        Arend van Spriel <aspriel@gmail.com>,
+        Baowen Zheng <baowen.zheng@corigine.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+        Bradley Grove <linuxdrivers@attotech.com>,
+        brcm80211-dev-list.pdl@broadcom.com,
+        Christian Brauner <brauner@kernel.org>,
+        Christian =?iso-8859-1?Q?G=F6ttsche?= <cgzones@googlemail.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        Chris Zankel <chris@zankel.net>,
+        Cong Wang <cong.wang@bytedance.com>,
+        Daniel Axtens <dja@axtens.net>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Dan Williams <dan.j.williams@intel.com>,
+        David Gow <davidgow@google.com>,
+        David Howells <dhowells@redhat.com>,
+        Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+        devicetree@vger.kernel.org, Dexuan Cui <decui@microsoft.com>,
+        Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
+        Eli Cohen <elic@nvidia.com>,
+        Eric Paris <eparis@parisplace.org>,
+        Eugeniu Rosca <erosca@de.adit-jv.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Francis Laniel <laniel_francis@privacyrequired.com>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Franky Lin <franky.lin@broadcom.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Gregory Greenman <gregory.greenman@intel.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Hante Meuleman <hante.meuleman@broadcom.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Hulk Robot <hulkci@huawei.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        James Morris <jmorris@namei.org>,
+        Jarkko Sakkinen <jarkko@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Johannes Berg <johannes.berg@intel.com>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        John Keeping <john@metanate.com>,
+        Juergen Gross <jgross@suse.com>,
+        Keith Packard <keithp@keithp.com>, keyrings@vger.kernel.org,
+        kunit-dev@googlegroups.com,
+        Kuniyuki Iwashima <kuniyu@amazon.co.jp>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Leon Romanovsky <leon@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux1394-devel@lists.sourceforge.net,
+        linux-afs@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-hardening@vger.kernel.org, linux-hyperv@vger.kernel.org,
+        linux-integrity@vger.kernel.org, linux-rdma@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-security-module@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-xtensa@linux-xtensa.org,
+        llvm@lists.linux.dev, Louis Peens <louis.peens@corigine.com>,
+        Luca Coelho <luciano.coelho@intel.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Mark Brown <broonie@kernel.org>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Max Filippov <jcmvbkbc@gmail.com>,
+        Mimi Zohar <zohar@linux.ibm.com>,
+        Muchun Song <songmuchun@bytedance.com>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+        Paul Moore <paul@paul-moore.com>,
+        Rich Felker <dalias@aerifal.cx>,
+        Rob Herring <robh+dt@kernel.org>,
+        Russell King <linux@armlinux.org.uk>, selinux@vger.kernel.org,
+        "Serge E. Hallyn" <serge@hallyn.com>,
+        SHA-cyfmac-dev-list@infineon.com,
+        Simon Horman <simon.horman@corigine.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Stefan Richter <stefanr@s5r6.in-berlin.de>,
+        Steffen Klassert <steffen.klassert@secunet.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Stephen Smalley <stephen.smalley.work@gmail.com>,
+        Tadeusz Struk <tadeusz.struk@linaro.org>,
+        Takashi Iwai <tiwai@suse.com>, Tom Rix <trix@redhat.com>,
+        Udipto Goswami <quic_ugoswami@quicinc.com>,
+        Vincenzo Frascino <vincenzo.frascino@arm.com>,
+        Wei Liu <wei.liu@kernel.org>, xen-devel@lists.xenproject.org,
+        Xiu Jianfeng <xiujianfeng@huawei.com>,
+        Yang Yingliang <yangyingliang@huawei.com>
+Subject: Re: [PATCH 10/32] wcn36xx: Use mem_to_flex_dup() with struct
+ wcn36xx_hal_ind_msg
+Message-ID: <202205040730.161645EC@keescook>
+References: <20220504014440.3697851-1-keescook@chromium.org>
+ <20220504014440.3697851-11-keescook@chromium.org>
+ <8735hpc0q1.fsf@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220503164635.23876-2-quic_tdas@quicinc.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+In-Reply-To: <8735hpc0q1.fsf@kernel.org>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,72 +171,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 03, 2022 at 10:16:33PM +0530, Taniya Das wrote:
-> Add support for LPASS audio clock gating for RX/TX/SWA core bus clocks
-> for SC7280. Update reg property min/max items in YAML schema.
+On Wed, May 04, 2022 at 08:42:46AM +0300, Kalle Valo wrote:
+> Kees Cook <keescook@chromium.org> writes:
 > 
-> Fixes: 57405b795504 ("dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7280").
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> ---
->  .../bindings/clock/qcom,sc7280-lpasscorecc.yaml        | 10 ++++++++--
->  include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h   |  5 +++++
->  2 files changed, 13 insertions(+), 2 deletions(-)
+> > As part of the work to perform bounds checking on all memcpy() uses,
+> > replace the open-coded a deserialization of bytes out of memory into a
+> > trailing flexible array by using a flex_array.h helper to perform the
+> > allocation, bounds checking, and copying.
+> >
+> > Cc: Loic Poulain <loic.poulain@linaro.org>
+> > Cc: Kalle Valo <kvalo@kernel.org>
+> > Cc: "David S. Miller" <davem@davemloft.net>
+> > Cc: Eric Dumazet <edumazet@google.com>
+> > Cc: Jakub Kicinski <kuba@kernel.org>
+> > Cc: Paolo Abeni <pabeni@redhat.com>
+> > Cc: wcn36xx@lists.infradead.org
+> > Cc: linux-wireless@vger.kernel.org
+> > Cc: netdev@vger.kernel.org
+> > Signed-off-by: Kees Cook <keescook@chromium.org>
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-> index bad9135489de..f74d9c1cb11d 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-> @@ -38,8 +38,12 @@ properties:
->    '#power-domain-cells':
->      const: 1
+> [...]
 > 
-> +  '#reset-cells':
-> +    const: 1
-> +
->    reg:
-> -    maxItems: 1
-> +    minItems: 1
-> +    maxItems: 2
+> > --- a/drivers/net/wireless/ath/wcn36xx/smd.h
+> > +++ b/drivers/net/wireless/ath/wcn36xx/smd.h
+> > @@ -46,8 +46,8 @@ struct wcn36xx_fw_msg_status_rsp {
+> >  
+> >  struct wcn36xx_hal_ind_msg {
+> >  	struct list_head list;
+> > -	size_t msg_len;
+> > -	u8 msg[];
+> > +	DECLARE_FLEX_ARRAY_ELEMENTS_COUNT(size_t, msg_len);
+> > +	DECLARE_FLEX_ARRAY_ELEMENTS(u8, msg);
+> 
+> This affects readability quite a lot and tbh I don't like it. Isn't
+> there any simpler way to solve this?
 
-When more than 1, you need to define what each entry is.
+Similar to how I plumbed member names into __mem_to_flex(), I could do
+the same for __mem_to_flex_dup(). That way if the struct member aliases
+(DECLARE_FLEX...)  aren't added, the longer form of the helper could
+be used. Instead of:
 
-> 
->  required:
->    - compatible
-> @@ -116,13 +120,15 @@ examples:
->      #include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
->      lpass_audiocc: clock-controller@3300000 {
->        compatible = "qcom,sc7280-lpassaudiocc";
-> -      reg = <0x3300000 0x30000>;
-> +      reg = <0x3300000 0x30000>,
-> +            <0x32a9000 0x1000>;
->        clocks = <&rpmhcc RPMH_CXO_CLK>,
->                 <&lpass_aon LPASS_AON_CC_MAIN_RCG_CLK_SRC>;
->        clock-names = "bi_tcxo", "lpass_aon_cc_main_rcg_clk_src";
->        power-domains = <&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
->        #clock-cells = <1>;
->        #power-domain-cells = <1>;
-> +      #reset-cells = <1>;
->      };
-> 
->    - |
-> diff --git a/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h b/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
-> index 20ef2ea673f3..22dcd47d4513 100644
-> --- a/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
-> +++ b/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
-> @@ -24,6 +24,11 @@
->  #define LPASS_AUDIO_CC_RX_MCLK_CLK			14
->  #define LPASS_AUDIO_CC_RX_MCLK_CLK_SRC			15
-> 
-> +/* LPASS AUDIO CC CSR */
-> +#define LPASS_AUDIO_SWR_RX_CGCR				0
-> +#define LPASS_AUDIO_SWR_TX_CGCR				1
-> +#define LPASS_AUDIO_SWR_WSA_CGCR			2
-> +
->  /* LPASS_AON_CC clocks */
->  #define LPASS_AON_CC_PLL				0
->  #define LPASS_AON_CC_PLL_OUT_EVEN			1
-> --
-> 2.17.1
-> 
-> 
+	if (mem_to_flex_dup(&msg_ind, buf, len, GFP_ATOMIC)) {
+
+it would be:
+
+	if (__mem_to_flex_dup(&msg_ind, /* self */, msg,
+			      msg_len, buf, len, GFP_ATOMIC)) {
+
+This was how I'd written the helpers in an earlier version, but it
+seemed much cleaner to avoid repeating structure layout details at each
+call site.
+
+I couldn't find any other way to encode the needed information. It'd be
+wonderful if C would let us do:
+
+	struct wcn36xx_hal_ind_msg {
+		struct list_head list;
+		size_t msg_len;
+		u8 msg[msg_len];
+	}
+
+And provide some kind of interrogation:
+
+	__builtin_flex_array_member(msg_ind) -> msg_ind->msg
+	__builtin_flex_array_count(msg_ind)  -> msg_ind->msg_len
+
+My hope would be to actually use the member aliases to teach things like
+-fsanitize=array-bounds about flexible arrays. If it encounters a
+structure with the aliases, it could add the instrumentation to do the
+bounds checking of things like:
+
+	msg_ind->msg[42]; /* check that 42 is < msg_ind->msg_len */
+
+I also wish I could find a way to make the proposed macros "forward
+portable" into proposed C syntax above, but this eluded me as well.
+For example:
+
+	struct wcn36xx_hal_ind_msg {
+		size_t msg_len;
+		struct list_head list;
+		BOUNDED_FLEX_ARRAY(u8, msg, msg_len);
+	}
+
+	#ifdef CC_HAS_DYNAMIC_ARRAY_LEN
+	# define BOUNDED_FLEX_ARRAY(type, name, bounds)	type name[bounds]
+	#else
+	# define BOUNDED_FLEX_ARRAY(type, name, bounds)			\
+		magic_alias_of msg_len __flex_array_elements_count;	\
+		union {							\
+			type name[];					\
+			type __flex_array_elements[];			\
+		}
+	#endif
+
+But I couldn't sort out the "magic_alias_of" syntax that wouldn't force
+structures into having the count member immediately before the flex
+array, which would impose more limitations on where this could be
+used...
+
+Anyway, I'm open to ideas on how to improve this!
+
+-Kees
+
+-- 
+Kees Cook
