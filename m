@@ -2,68 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E74351A19D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 15:58:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AC1551A1DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 16:09:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350999AbiEDOBo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 10:01:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48324 "EHLO
+        id S1351095AbiEDONO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 10:13:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351074AbiEDOBa (ORCPT
+        with ESMTP id S1351102AbiEDONN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 10:01:30 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1040B43EEE;
-        Wed,  4 May 2022 06:57:14 -0700 (PDT)
+        Wed, 4 May 2022 10:13:13 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F52741F82
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 07:09:36 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id c15so1803050ljr.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 07:09:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651672634; x=1683208634;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=32DTrSFoB5STaJHIEVVCzkYM4SEkuLUEXAmueS3X3EM=;
-  b=gqeg60DssZMNFWEvyuQCw0W/iXy1fk51OdlNw+eEvDcUsGUNDEqxsGlp
-   HFO7gBmqSKiE1H632NXmKYfL4uhkrN3RwfK6C4ajqLDmOY2hQ6YDqNZwu
-   2FzORgxmLzZ5LyZ8BsWHSyfcCqRc3K3J6T7P60BQPmgWbu64gjxS+sKh+
-   4=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 04 May 2022 06:57:13 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 May 2022 06:57:12 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 4 May 2022 06:56:52 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 4 May 2022 06:56:46 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, Linus Walleij <linus.walleij@linaro.org>,
-        <linux-gpio@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH 2/2] pinctrl: qcom: sc7280: Add lpi pinctrl variant data structure for adsp based targets
-Date:   Wed, 4 May 2022 19:26:20 +0530
-Message-ID: <1651672580-18952-3-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1651672580-18952-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1651672580-18952-1-git-send-email-quic_srivasam@quicinc.com>
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=EXxGrmQdSrMAdgM6NKkZr+YUm7PNfDBSQKuYDgtFekk=;
+        b=v5L6+vlO1JziId6xo4NIZ1qZpZX5de3qvCDfydB6T6nKaixiak/bCnImso2ZrwciFg
+         uem5dH/3BIj33AF3fymM9Dm++rCBnCYYLQ+sduXiCLoAmYfafjEJQKkNxmMD2075jHdD
+         fEd1nJHbUIH3bYTGWGfnoKgr+NUlNkEfB+wUOrZkWoS65Fm9x5XKa3uff2dmBH5sQyu9
+         UeBWF48DCNw40us6UlvkExdtpTC+rP6IDuPt60vjuAYoLAfdDi6YOgXxiBK1jB0sY9K0
+         I9qLLlHLg8TxHmEQPvXXuD+PRIPSanEd/dk9eSD3r3/cYrB42TILanCZbXkMw/7j/Ffb
+         xu7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EXxGrmQdSrMAdgM6NKkZr+YUm7PNfDBSQKuYDgtFekk=;
+        b=vk4wCFKg50RZMm7GUSSD6blsrzD44w+HS8ozgmpaDjaQQHZTDc+BZRoH1FlPtx3y37
+         HbwxSgMVT6gLT3ftXm4IxMIErydLxWjkeclIk1U402nKrvo0yr/EodWBCTAYTssLX/ge
+         q3ZMdkMLE2nbQPfHSgk19IKbBiJ/6x67rV17py0PASInorhhA5pJm9bqnFIpz5xXrP4/
+         DDgQeGMfqSGlttZFfcQvS32L2kDfh7V1U69GMDKFZ+1Ah2xIVgWRd3UWW58mwIP4imb1
+         3akRb69u9vIsouO9u1bFDdbX2kC2ZwvRP2JIF2Oe0I+hCQ6qepxmaBf9ZVGzZ5n0uSZ3
+         wDjw==
+X-Gm-Message-State: AOAM531AeMkciKceIttGAmurHzyXnhz0algoGUyD6oxEU5playfiZLFX
+        bRwi1qCUBVRD6BC7c/g+PbWfDYN/6WfJkOZImxvy8Q==
+X-Google-Smtp-Source: ABdhPJxbrzddvy2FPwyfMsPdzhIS4LXL0C4hUf6AFGOm/2YPmtbyftB56FzxJVYzEacQw0HiNcK/2AxUn68tYGi/Syk=
+X-Received: by 2002:a2e:8798:0:b0:24f:12ec:5268 with SMTP id
+ n24-20020a2e8798000000b0024f12ec5268mr12082888lji.367.1651673374744; Wed, 04
+ May 2022 07:09:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+References: <20220223125536.230224-1-shawn.guo@linaro.org>
+In-Reply-To: <20220223125536.230224-1-shawn.guo@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 4 May 2022 16:08:58 +0200
+Message-ID: <CAPDyKFpTyj86deODjOLwVoWM_PoK8458xYY=kn0srEGYZj9+mQ@mail.gmail.com>
+Subject: Re: [PATCH v6 0/3] Add Qualcomm MPM irqchip driver support
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Marc Zyngier <maz@kernel.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Valentin Schneider <valentin.schneider@arm.com>,
+        Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,48 +75,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible string and lpi pinctrl variant data structure for adsp enabled
-sc7280 platforms.
+On Wed, 23 Feb 2022 at 13:57, Shawn Guo <shawn.guo@linaro.org> wrote:
+>
+> It starts from updating cpu_pm to support CPU_LAST_PM_ENTER (and
+> CPU_FIRST_PM_EXIT) event, and then adds DT binding and driver support
+> for Qualcomm MPM (MSM Power Manager) interrupt controller.
+>
+> Changes for v6:
+> - Add new event CPU_LAST_PM_ENTER (and CPU_FIRST_PM_EXIT) in cpu_pm
+> - Drop vendor driver notes from commit log
+> - Check NULL mpm_gic_map instead to save the use of MPM_NO_PARENT_IRQ
+> - Add lock protection for register read in qcom_mpm_handler()
+> - Return IRQ_NONE if there is no pending interrupt
+> - Drop IRQF_TRIGGER_RISING flag from devm_request_irq() call since it's
+>   being specified in DT
+> - Drop dev_set_drvdata() call which is a leftover from previous version
+> - Fix dt_binding_check errors reported by upgraded dtschema
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+My apologies for the late reply to this series. FYI, I fully agree
+with the responses from Sudeep, etc, that have been made on this
+series.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-index 2add9a4..c9e85d9 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-@@ -134,6 +134,16 @@ static const struct lpi_function sc7280_functions[] = {
- 	LPI_FUNCTION(wsa_swr_data),
- };
- 
-+static const struct lpi_pinctrl_variant_data sc7280_adsp_lpi_data = {
-+	.pins = sc7280_lpi_pins,
-+	.npins = ARRAY_SIZE(sc7280_lpi_pins),
-+	.groups = sc7280_groups,
-+	.ngroups = ARRAY_SIZE(sc7280_groups),
-+	.functions = sc7280_functions,
-+	.nfunctions = ARRAY_SIZE(sc7280_functions),
-+	.is_clk_optional = false,
-+};
-+
- static const struct lpi_pinctrl_variant_data sc7280_lpi_data = {
- 	.pins = sc7280_lpi_pins,
- 	.npins = ARRAY_SIZE(sc7280_lpi_pins),
-@@ -149,6 +159,10 @@ static const struct of_device_id lpi_pinctrl_of_match[] = {
- 	       .compatible = "qcom,sc7280-lpass-lpi-pinctrl",
- 	       .data = &sc7280_lpi_data,
- 	},
-+	{
-+		.compatible = "qcom,sc7280-lpass-adsp-lpi-pinctrl",
-+		.data = &sc7280_adsp_lpi_data,
-+	},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
--- 
-2.7.4
+The proper thing is to use genpd on/off notifiers, which should get
+fired if you model the PM domain topology correctly in DT - and use
+PSCI OSI.
 
+That said, please keep me posted when/if you submit a new version for
+this. I will make sure to pay more attention next time.
+
+Kind regards
+Uffe
+
+>
+> Changes for v5:
+> - Drop inline attributes and let compiler to decide
+> - Use _irqsave/_irqrestore flavour for spin lock
+> - Assignment on a single for irq_resolve_mapping() call
+> - Add documentation to explain vMPM ownership transition
+> - Move MPM pin map data into device tree and so use a generic compatible
+> - Drop the code that counts CPUs in PM and use CPU_CLUSTER_PM_ENTER
+>   notification instead
+>
+> Changes for v4:
+> - Add the missing include of <linux/interrupt.h> to fix build errors
+>   on arm architecture.
+> - Leave IRQCHIP_PLATFORM_DRIVER infrastructural unchanged, and use
+>   of_find_device_by_node() to get platform_device pointer.
+>
+> Changes for v3:
+> - Support module build
+> - Use relaxed accessors
+> - Add barrier call to ensure MMIO write completes
+> - Use d->chip_data to pass driver private data
+> - Use raw spinlock
+> - USe BIT() for bit shift
+> - Create a single irq domain to cover both types of MPM pins
+> - Call irq_resolve_mapping() to find out Linux irq number
+> - Save the use of ternary conditional operator and use switch/case for
+>   .irq_set_type call
+> - Drop unnecessary .irq_disable hook
+> - Align qcom_mpm_chip and qcom_mpm_ops members vertically
+> - Use helper irq_domain_translate_twocell()
+> - Move mailbox requesting forward in probe function
+> - Improve the documentation on qcm2290_gic_pins[]
+> - Use IRQCHIP_PLATFORM_DRIVER infrastructural
+> - Use cpu_pm notifier instead of .suspend_late hook to write MPM for
+>   sleep, so that MPM can be set up for both suspend and idle context.
+>   The TIMER0/1 setup is currently omitted for idle use case though,
+>   as I haven't been able to successfully test the idle context.
+>
+> Shawn Guo (3):
+>   PM: cpu: Add CPU_LAST_PM_ENTER and CPU_FIRST_PM_EXIT support
+>   dt-bindings: interrupt-controller: Add Qualcomm MPM support
+>   irqchip: Add Qualcomm MPM controller driver
+>
+>  .../interrupt-controller/qcom,mpm.yaml        |  96 ++++
+>  drivers/irqchip/Kconfig                       |   8 +
+>  drivers/irqchip/Makefile                      |   1 +
+>  drivers/irqchip/qcom-mpm.c                    | 439 ++++++++++++++++++
+>  include/linux/cpu_pm.h                        |  15 +
+>  kernel/cpu_pm.c                               |  33 +-
+>  6 files changed, 590 insertions(+), 2 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
+>  create mode 100644 drivers/irqchip/qcom-mpm.c
+>
+> --
+> 2.25.1
+>
