@@ -2,109 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C68751A54E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 18:20:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F339951A55D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 18:23:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353283AbiEDQXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 12:23:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56976 "EHLO
+        id S1353374AbiEDQ1G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 12:27:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353255AbiEDQXc (ORCPT
+        with ESMTP id S1353370AbiEDQ1G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 12:23:32 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68B4B46B08
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 09:19:55 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id s12-20020a4aeacc000000b0035ebb6d1a5fso275872ooh.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 09:19:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=dbVLoGLvvdOw9abtQc9gMQO+m9oCoAXtfZ2W1vRohYs=;
-        b=Xl0uRWlbqSeaYgNid5Xu5/x9v7F3s8ycxvRHbVXBkc4EaIyf8JUvW+LZrrYwSj84wg
-         Uq7G3EQ7sfke3vOYEhCzmHNBYlM17MnW/uzSzv8nP+Tgohzev8jDZ4W4W+ZpfkD5laux
-         TTWySJmTsuGHMjO6dYe3e5VgCshw5h1EZOVlcUeqYNJD3PLb9aNoiXxgfVGYXIq9x0Ke
-         9KbzEgVsafGZtNYX7X5WKx/E4i8ciZRLG3KL0RyAn8/Jojrnpcg3wnLSWw/fw9jjwlt9
-         22y/68iKAzVgHEYk66WuPBR+IfJBlguzT1rrJfY+btECbT13qFzxAIxq0ipFpCOz2iPI
-         tCRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=dbVLoGLvvdOw9abtQc9gMQO+m9oCoAXtfZ2W1vRohYs=;
-        b=GZRxBAig/Y+mEMrnFlkNuACfdNKgvQtrv4YFQ3nZZnxf0+3yaefqu4bvolWVbr6TYS
-         hFYbu3RBfev5cir6SfYzqbNGOHB/PB0EPx6XSyx/d6WOT2iRsBGXKrGXYR3f+2gdqEKi
-         F9cWtoLn6BQ3Oyl54fTEKbKLsthi6LkRoSqFJ79xq5v5v5oUQ5MFgDFFEopKxMDcTQht
-         uJCYrxT60BqZ7fXLBIvcxAMus0t2Ghci74YCUgFpjb7KkledRKLW4N+RNu1T+18G+Jl3
-         tSZ5ZROFAf/9X3q5yS/hLqfzqtxlCRRg1DoQk7Ar1mOxtO1jwvf2VXwdopfE37FGJUWi
-         a3Dw==
-X-Gm-Message-State: AOAM531FtJ2UlA45mz6agnyN0wQz/k2jQngmaqvlCEPN6FY0NmNcq5yg
-        ugFHmcAObCzfi9vFBqczF23/YQ==
-X-Google-Smtp-Source: ABdhPJyyqUME15QFq+hLqomIxwFjEJTKjoS8Pdb8JTFULASh6I8vEFeva5aVv9Q+SPjB3A5zoW/eKg==
-X-Received: by 2002:a4a:3546:0:b0:35e:cecd:c81d with SMTP id w6-20020a4a3546000000b0035ececdc81dmr7461215oog.79.1651681194666;
-        Wed, 04 May 2022 09:19:54 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id z4-20020a056870514400b000edae17a8cesm3104330oak.3.2022.05.04.09.19.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 May 2022 09:19:54 -0700 (PDT)
-Date:   Wed, 4 May 2022 09:21:39 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Pavel Machek <pavel@ucw.cz>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-pwm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v14 1/2] dt-bindings: leds: Add Qualcomm Light Pulse
- Generator binding
-Message-ID: <YnKoEyEtFP3TBxkg@ripper>
-References: <20220303214300.59468-1-bjorn.andersson@linaro.org>
- <20220504072435.GB8204@duo.ucw.cz>
+        Wed, 4 May 2022 12:27:06 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71E9E45AC4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 09:23:29 -0700 (PDT)
+Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 0EAC43F8C2;
+        Wed,  4 May 2022 18:23:27 +0200 (CEST)
+Message-ID: <600d13cc-962a-bb6c-6e43-c56fd63b9591@somainline.org>
+Date:   Wed, 4 May 2022 18:23:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220504072435.GB8204@duo.ucw.cz>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.8.1
+Subject: Re: [PATCH v3 4/6] clk: qcom: add support for SM8350 DISPCC
+To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
+        jonathan@marek.ca, tdas@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20220504122725.179262-1-robert.foss@linaro.org>
+ <20220504122725.179262-5-robert.foss@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220504122725.179262-5-robert.foss@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 04 May 00:24 PDT 2022, Pavel Machek wrote:
 
-> Hi!
-> 
-> > This adds the binding document describing the three hardware blocks
-> > related to the Light Pulse Generator found in a wide range of Qualcomm
-> > PMICs.
-> 
-> Sorry for the delays. I have collected tested/review tags and push the
-> result to:
-> 
-> To gitolite.kernel.org:pub/scm/linux/kernel/git/pavel/linux-leds.git
->    312310928417..24e2d05d1b68  for-next -> for-next
-> 
+On 04/05/2022 14:27, Robert Foss wrote:
+> From: Jonathan Marek <jonathan@marek.ca>
+>
+> Add support to the SM8350 display clock controller by extending the SM8250
+> display clock controller, which is almost identical but has some minor
+> differences.
+>
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>
+> Changes since v1
+>   - Remove comment - Dmitry
+>
+> Changes since v2
+>   - Add my SoB - Bjorn
+>   - Remove CLK_ASSUME_ENABLED_WHEN_UNUSED flag
+>
+>
+>   drivers/clk/qcom/Kconfig         |  4 +--
+>   drivers/clk/qcom/dispcc-sm8250.c | 60 +++++++++++++++++++++++++++++++-
+>   2 files changed, 61 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index 9b1f54e634b9..1752ca0ee405 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -609,11 +609,11 @@ config SM_DISPCC_6125
+>   	  splash screen
+>   
+>   config SM_DISPCC_8250
+> -	tristate "SM8150 and SM8250 Display Clock Controller"
+> +	tristate "SM8150/SM8250/SM8350 Display Clock Controller"
+>   	depends on SM_GCC_8150 || SM_GCC_8250
 
-Much appreciated, this will unblock a few different use cases for us -
-perhaps the most important one backlight control on devices such as the
-Lenovo Flex 5G :)
+|| SM_GCC_8350?
 
-> I'll need to check pattern usage in the driver, and there are some
-> small fixes needed as evidenced in the reviews.
-> 
+sidenote: also || SC_GCC_8180X in a separate patch?
 
-I will go through the Marijn's feedback in detail and am looking forward
-to hear from you on the pattern front, and will look into preparing
-incremental patches for the changes needed.
+>   	help
+>   	  Support for the display clock controller on Qualcomm Technologies, Inc
+> -	  SM8150 and SM8250 devices.
+> +	  SM8150/SM8250/SM8350 devices.
+>   	  Say Y if you want to support display devices and functionality such as
+>   	  splash screen.
+>   
+> diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
+> index db9379634fb2..8e6cb990e387 100644
+> --- a/drivers/clk/qcom/dispcc-sm8250.c
+> +++ b/drivers/clk/qcom/dispcc-sm8250.c
+> @@ -43,6 +43,10 @@ static struct pll_vco vco_table[] = {
+>   	{ 249600000, 2000000000, 0 },
+>   };
+>   
+> +static struct pll_vco lucid_5lpe_vco[] = {
+> +	{ 249600000, 1750000000, 0 },
+> +};
+> +
+>   static struct alpha_pll_config disp_cc_pll0_config = {
+>   	.l = 0x47,
+>   	.alpha = 0xE000,
+> @@ -1228,6 +1232,7 @@ static const struct of_device_id disp_cc_sm8250_match_table[] = {
+>   	{ .compatible = "qcom,sc8180x-dispcc" },
+>   	{ .compatible = "qcom,sm8150-dispcc" },
+>   	{ .compatible = "qcom,sm8250-dispcc" },
+> +	{ .compatible = "qcom,sm8350-dispcc" },
+>   	{ }
+>   };
+>   MODULE_DEVICE_TABLE(of, disp_cc_sm8250_match_table);
+> @@ -1258,7 +1263,7 @@ static int disp_cc_sm8250_probe(struct platform_device *pdev)
+>   		return PTR_ERR(regmap);
+>   	}
+>   
+> -	/* note: trion == lucid, except for the prepare() op */
+> +	/* Apply differences for SM8150 and SM8350 */
+>   	BUILD_BUG_ON(CLK_ALPHA_PLL_TYPE_TRION != CLK_ALPHA_PLL_TYPE_LUCID);
+>   	if (of_device_is_compatible(pdev->dev.of_node, "qcom,sc8180x-dispcc") ||
+>   	    of_device_is_compatible(pdev->dev.of_node, "qcom,sm8150-dispcc")) {
+> @@ -1270,6 +1275,59 @@ static int disp_cc_sm8250_probe(struct platform_device *pdev)
+>   		disp_cc_pll1_config.config_ctl_hi1_val = 0x00000024;
+>   		disp_cc_pll1_config.user_ctl_hi1_val = 0x000000D0;
+>   		disp_cc_pll1_init.ops = &clk_alpha_pll_trion_ops;
+> +	} else if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8350-dispcc")) {
+> +		static struct clk_rcg2 * const rcgs[] = {
+> +			&disp_cc_mdss_byte0_clk_src,
+> +			&disp_cc_mdss_byte1_clk_src,
+> +			&disp_cc_mdss_dp_aux1_clk_src,
+> +			&disp_cc_mdss_dp_aux_clk_src,
+> +			&disp_cc_mdss_dp_link1_clk_src,
+> +			&disp_cc_mdss_dp_link_clk_src,
+> +			&disp_cc_mdss_dp_pixel1_clk_src,
+> +			&disp_cc_mdss_dp_pixel2_clk_src,
+> +			&disp_cc_mdss_dp_pixel_clk_src,
+> +			&disp_cc_mdss_esc0_clk_src,
+> +			&disp_cc_mdss_mdp_clk_src,
+> +			&disp_cc_mdss_pclk0_clk_src,
+> +			&disp_cc_mdss_pclk1_clk_src,
+> +			&disp_cc_mdss_rot_clk_src,
+> +			&disp_cc_mdss_vsync_clk_src,
+> +		};
+> +		static struct clk_regmap_div * const divs[] = {
+> +			&disp_cc_mdss_byte0_div_clk_src,
+> +			&disp_cc_mdss_byte1_div_clk_src,
+> +			&disp_cc_mdss_dp_link1_div_clk_src,
+> +			&disp_cc_mdss_dp_link_div_clk_src,
+> +		};
+> +		unsigned int i;
+> +		static bool offset_applied;
+> +
+> +		/* only apply the offsets once (in case of deferred probe) */
+> +		if (!offset_applied) {
+> +			for (i = 0; i < ARRAY_SIZE(rcgs); i++)
+> +				rcgs[i]->cmd_rcgr -= 4;
+> +
+> +			for (i = 0; i < ARRAY_SIZE(divs); i++) {
+> +				divs[i]->reg -= 4;
+> +				divs[i]->width = 4;
+> +			}
+> +
+> +			disp_cc_mdss_ahb_clk.halt_reg -= 4;
+> +			disp_cc_mdss_ahb_clk.clkr.enable_reg -= 4;
+> +
+> +			offset_applied = true;
+> +		}
+> +
+> +		disp_cc_mdss_ahb_clk_src.cmd_rcgr = 0x22a0;
+> +
+> +		disp_cc_pll0_config.config_ctl_hi1_val = 0x2A9A699C;
 
-Thanks,
-Bjorn
+Lowercase hex, also below.
+
+
+> +		disp_cc_pll0_config.test_ctl_hi1_val = 0x01800000;
+> +		disp_cc_pll0_init.ops = &clk_alpha_pll_lucid_5lpe_ops;
+> +		disp_cc_pll0.vco_table = lucid_5lpe_vco;
+> +		disp_cc_pll1_config.config_ctl_hi1_val = 0x2A9A699C;
+> +		disp_cc_pll1_config.test_ctl_hi1_val = 0x01800000;
+> +		disp_cc_pll1_init.ops = &clk_alpha_pll_lucid_5lpe_ops;
+> +		disp_cc_pll1.vco_table = lucid_5lpe_vco;
+>   	}
+>   
+>   	clk_lucid_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
+Konrad
+>
