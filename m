@@ -2,67 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9525F51AD23
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 20:44:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69F6551ADB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 21:22:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245582AbiEDSrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 14:47:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44698 "EHLO
+        id S1343561AbiEDTZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 15:25:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377109AbiEDSrw (ORCPT
+        with ESMTP id S234639AbiEDTZo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 14:47:52 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A65064EF
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 11:44:13 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id v66so2074456oib.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 11:44:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=Krvi/HpwBHAesm89MfsfOEIVsDIyjC5WrgT/4s6KRVQ=;
-        b=Oao9pys9XD8VYE1VlkOYBz1163LoVqK0zQTXLcgwltnMASr9kfj9/M4WPVNS3hAy7A
-         X01TWIvf5m/gbtLzupZrqcJ7u1D7aKzJ2VgI4+xF1TS+ioPlz0/Be3OZU5VRk4tIzZN8
-         lj+SykAlqKoIZtcW8FCGRyjQK8KNyIQujQAuw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=Krvi/HpwBHAesm89MfsfOEIVsDIyjC5WrgT/4s6KRVQ=;
-        b=bozAUiZdtWOMx97cELihXCkyVhavRNnKEeKuJneSDTDss2Pymu36gGuMfMualutp2f
-         sA864i+LyzZZntC6BSXiRS+I24zmfNUsE/DI0zbl9fGgSIuyueVzGzojga8FoG5lChm0
-         hWnhdIAWwGYDixuTA3hLeAh1yjz45yCnG0D8YYrFjICU5lgnqss0bTW7DLIX+CRLCHPq
-         GQabxFGP180YXDWFmc/Jo5nEWRcWmskcwAOzYwrDw1F4FOLLVMKRqH7gm5g9viTkmHCM
-         dzCFl34qvX068zKbntxuhK3mfAovI6xtmmDzX0uzGK1hunCyQvxIpN0CUbLHTlvtOkTR
-         z9nw==
-X-Gm-Message-State: AOAM5333W3YXBrmvWQ/vsDYuVs1Gqpk/vlt7kxWRLDfsppnm6gfDECWR
-        a51w1g8G+GlL6qpE3Fjnpl0Fkl19+wKbjR02Acli0g==
-X-Google-Smtp-Source: ABdhPJzN6Wlws2ejvXzwfKhDTAuq/vO3u/Y7SEw5cpP2kVU87jhPZQDlvf6Baumo+WHVMuuIUelVblPIYt8pNdViXkE=
-X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
- n62-20020acabd41000000b002ecff42814fmr440284oif.63.1651689852377; Wed, 04 May
- 2022 11:44:12 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 4 May 2022 14:44:11 -0400
+        Wed, 4 May 2022 15:25:44 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 773514B40C;
+        Wed,  4 May 2022 12:22:07 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 484A01042;
+        Wed,  4 May 2022 12:22:07 -0700 (PDT)
+Received: from bogus (unknown [10.57.1.45])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5D54F3FA35;
+        Wed,  4 May 2022 12:22:04 -0700 (PDT)
+Date:   Wed, 4 May 2022 20:21:59 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Shawn Guo <shawn.guo@linaro.org>, Marc Zyngier <maz@kernel.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Valentin Schneider <valentin.schneider@arm.com>,
+        Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 0/3] Add Qualcomm MPM irqchip driver support
+Message-ID: <20220504192159.gw5sccasbdmqz4dt@bogus>
+References: <20220223125536.230224-1-shawn.guo@linaro.org>
+ <CAPDyKFpTyj86deODjOLwVoWM_PoK8458xYY=kn0srEGYZj9+mQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <1651595136-24312-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1651595136-24312-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 4 May 2022 14:44:11 -0400
-Message-ID: <CAE-0n50P4G1gwKmdzKR-ezHwmN3_BfBC5eWTC852oww75Zen6g@mail.gmail.com>
-Subject: Re: [PATCH v3] drm/msm/dp: fix event thread stuck in wait_event after kthread_stop()
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dianders@chromium.org, dmitry.baryshkov@linaro.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFpTyj86deODjOLwVoWM_PoK8458xYY=kn0srEGYZj9+mQ@mail.gmail.com>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,24 +51,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-05-03 09:25:36)
-> Event thread supposed to exit from its while loop after kthread_stop().
-> However there may has possibility that event thread is pending in the
-> middle of wait_event due to condition checking never become true.
-> To make sure event thread exit its loop after kthread_stop(), this
-> patch OR kthread_should_stop() into wait_event's condition checking
-> so that event thread will exit its loop after kernal_stop().
->
-> Changes in v2:
-> --  correct spelling error at commit title
->
-> Changes in v3:
-> -- remove unnecessary parenthesis
-> -- while(1) to replace while (!kthread_should_stop())
->
-> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Fixes: 570d3e5d28db ("drm/msm/dp: stop event kernel thread when DP unbind")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
+On Wed, May 04, 2022 at 04:08:58PM +0200, Ulf Hansson wrote:
+> On Wed, 23 Feb 2022 at 13:57, Shawn Guo <shawn.guo@linaro.org> wrote:
+> >
+> > It starts from updating cpu_pm to support CPU_LAST_PM_ENTER (and
+> > CPU_FIRST_PM_EXIT) event, and then adds DT binding and driver support
+> > for Qualcomm MPM (MSM Power Manager) interrupt controller.
+> >
+> > Changes for v6:
+> > - Add new event CPU_LAST_PM_ENTER (and CPU_FIRST_PM_EXIT) in cpu_pm
+> > - Drop vendor driver notes from commit log
+> > - Check NULL mpm_gic_map instead to save the use of MPM_NO_PARENT_IRQ
+> > - Add lock protection for register read in qcom_mpm_handler()
+> > - Return IRQ_NONE if there is no pending interrupt
+> > - Drop IRQF_TRIGGER_RISING flag from devm_request_irq() call since it's
+> >   being specified in DT
+> > - Drop dev_set_drvdata() call which is a leftover from previous version
+> > - Fix dt_binding_check errors reported by upgraded dtschema
+> 
+> My apologies for the late reply to this series. FYI, I fully agree
+> with the responses from Sudeep, etc, that have been made on this
+> series.
+> 
+> The proper thing is to use genpd on/off notifiers, which should get
+> fired if you model the PM domain topology correctly in DT - and use
+> PSCI OSI.
+> 
+> That said, please keep me posted when/if you submit a new version for
+> this. I will make sure to pay more attention next time.
+> 
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+[1] is the latest I believe. It now implements power domain as I requested and
+I was happy with that version.
+
+-- 
+Regards,
+Sudeep
+
+[1] https://lore.kernel.org/lkml/20220308080534.3384532-1-shawn.guo@linaro.org
