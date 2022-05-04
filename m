@@ -2,71 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AC1551A1DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 16:09:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 172EC51A296
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 16:51:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351095AbiEDONO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 10:13:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57660 "EHLO
+        id S1351494AbiEDOzN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 10:55:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351102AbiEDONN (ORCPT
+        with ESMTP id S1351624AbiEDOzL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 10:13:13 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F52741F82
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 07:09:36 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id c15so1803050ljr.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 07:09:36 -0700 (PDT)
+        Wed, 4 May 2022 10:55:11 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F073620F69
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 07:51:34 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id y3so3329878ejo.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 07:51:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EXxGrmQdSrMAdgM6NKkZr+YUm7PNfDBSQKuYDgtFekk=;
-        b=v5L6+vlO1JziId6xo4NIZ1qZpZX5de3qvCDfydB6T6nKaixiak/bCnImso2ZrwciFg
-         uem5dH/3BIj33AF3fymM9Dm++rCBnCYYLQ+sduXiCLoAmYfafjEJQKkNxmMD2075jHdD
-         fEd1nJHbUIH3bYTGWGfnoKgr+NUlNkEfB+wUOrZkWoS65Fm9x5XKa3uff2dmBH5sQyu9
-         UeBWF48DCNw40us6UlvkExdtpTC+rP6IDuPt60vjuAYoLAfdDi6YOgXxiBK1jB0sY9K0
-         I9qLLlHLg8TxHmEQPvXXuD+PRIPSanEd/dk9eSD3r3/cYrB42TILanCZbXkMw/7j/Ffb
-         xu7A==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=cYJgw3JrzjheaMSkC8T0ZAyp66ftKZO5asTk62SBmuM=;
+        b=H75kTBx+3WzDC6XxgjXF3qW5QWn7yE/eHSFoVd8PDQtLFrPjeh9pQ9SmlUUY8TvS+P
+         LUX+TpdG0dJF3Qi1XTrguq1eIHKI6abFWfbBBdvCrjIhRX/6mWZuQO5udAO0KWK+xQ/s
+         1NHJFjmuBXiL8ZWHv3LXuDvs58WxCijv/qsiGfHVzVTC0bwfiNWrAkfJFlmu8NK9Kq6t
+         Cs3qEUG19OSsfP1JUUwMvwnP9JgcoCs3hLUj+PWZLpblZ2gn25YBuamsxpHmdN76/ir/
+         vj2LDSuMa660VGPvILBILNlPNAJnlzHnbNGWvfEmwO8H51tlE/uEvFneYqULz6xM6Eei
+         jkvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EXxGrmQdSrMAdgM6NKkZr+YUm7PNfDBSQKuYDgtFekk=;
-        b=vk4wCFKg50RZMm7GUSSD6blsrzD44w+HS8ozgmpaDjaQQHZTDc+BZRoH1FlPtx3y37
-         HbwxSgMVT6gLT3ftXm4IxMIErydLxWjkeclIk1U402nKrvo0yr/EodWBCTAYTssLX/ge
-         q3ZMdkMLE2nbQPfHSgk19IKbBiJ/6x67rV17py0PASInorhhA5pJm9bqnFIpz5xXrP4/
-         DDgQeGMfqSGlttZFfcQvS32L2kDfh7V1U69GMDKFZ+1Ah2xIVgWRd3UWW58mwIP4imb1
-         3akRb69u9vIsouO9u1bFDdbX2kC2ZwvRP2JIF2Oe0I+hCQ6qepxmaBf9ZVGzZ5n0uSZ3
-         wDjw==
-X-Gm-Message-State: AOAM531AeMkciKceIttGAmurHzyXnhz0algoGUyD6oxEU5playfiZLFX
-        bRwi1qCUBVRD6BC7c/g+PbWfDYN/6WfJkOZImxvy8Q==
-X-Google-Smtp-Source: ABdhPJxbrzddvy2FPwyfMsPdzhIS4LXL0C4hUf6AFGOm/2YPmtbyftB56FzxJVYzEacQw0HiNcK/2AxUn68tYGi/Syk=
-X-Received: by 2002:a2e:8798:0:b0:24f:12ec:5268 with SMTP id
- n24-20020a2e8798000000b0024f12ec5268mr12082888lji.367.1651673374744; Wed, 04
- May 2022 07:09:34 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=cYJgw3JrzjheaMSkC8T0ZAyp66ftKZO5asTk62SBmuM=;
+        b=5/nVlJY5MKotUEKs4ykAlxMu1X1VdNshhRf8RNV/DQwHVrbynt1rhPqgBWaqaeXY8Q
+         l/79y2qFOGVi8pVd4Pbw0m9ftW9IHDx0hAbf7KVbNKA7BumcvJL/XIL7OTLtikC2OFg/
+         EZy78lXMo2FUU7kDuV1WJjyVM3jiErQj0/clYWoBxhW+7KbU7y/XDd3dX52gPrSkLA+R
+         xlbjC7Ce9tiN56h46Ft4E68u44MmmSb/1MAJnAWm+c650YCFnQpvoooUW2Dud4aGKbOs
+         TCYwlrn+m5pugsrW+ZbD8RrjeAVmCeVpXvVdpUD8A2aLwWuYiCqo891XJyI470skL3o0
+         PG+A==
+X-Gm-Message-State: AOAM532jdQFRt5qaR/HCoMXFDoZDUxJK/7dMva8/osAcDRc8reSQPk/U
+        jEapkbsPwCaQwK3bOpVDs6dkEA==
+X-Google-Smtp-Source: ABdhPJxC0DkmJtm9E7WLHBAIaUioMyP95DMDV8glNckHR3aXksxxgX+GOy3tzzYIShnFkq+DIVsAdw==
+X-Received: by 2002:a17:907:2ce3:b0:6f3:a4c4:100a with SMTP id hz3-20020a1709072ce300b006f3a4c4100amr20450011ejc.218.1651675893381;
+        Wed, 04 May 2022 07:51:33 -0700 (PDT)
+Received: from [192.168.0.215] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id d11-20020a056402078b00b0042617ba63c0sm9212407edy.74.2022.05.04.07.51.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 May 2022 07:51:32 -0700 (PDT)
+Message-ID: <782aaf8b-3e9e-acc1-88f8-d4d8ecbab3a0@linaro.org>
+Date:   Wed, 4 May 2022 16:51:31 +0200
 MIME-Version: 1.0
-References: <20220223125536.230224-1-shawn.guo@linaro.org>
-In-Reply-To: <20220223125536.230224-1-shawn.guo@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 4 May 2022 16:08:58 +0200
-Message-ID: <CAPDyKFpTyj86deODjOLwVoWM_PoK8458xYY=kn0srEGYZj9+mQ@mail.gmail.com>
-Subject: Re: [PATCH v6 0/3] Add Qualcomm MPM irqchip driver support
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Marc Zyngier <maz@kernel.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Valentin Schneider <valentin.schneider@arm.com>,
-        Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 1/4] dt-bindings: interconnect: Add SC8180X QUP0 virt
+ provider
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220503211925.1022169-1-bjorn.andersson@linaro.org>
+ <20220503211925.1022169-2-bjorn.andersson@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220503211925.1022169-2-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,90 +80,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 23 Feb 2022 at 13:57, Shawn Guo <shawn.guo@linaro.org> wrote:
->
-> It starts from updating cpu_pm to support CPU_LAST_PM_ENTER (and
-> CPU_FIRST_PM_EXIT) event, and then adds DT binding and driver support
-> for Qualcomm MPM (MSM Power Manager) interrupt controller.
->
-> Changes for v6:
-> - Add new event CPU_LAST_PM_ENTER (and CPU_FIRST_PM_EXIT) in cpu_pm
-> - Drop vendor driver notes from commit log
-> - Check NULL mpm_gic_map instead to save the use of MPM_NO_PARENT_IRQ
-> - Add lock protection for register read in qcom_mpm_handler()
-> - Return IRQ_NONE if there is no pending interrupt
-> - Drop IRQF_TRIGGER_RISING flag from devm_request_irq() call since it's
->   being specified in DT
-> - Drop dev_set_drvdata() call which is a leftover from previous version
-> - Fix dt_binding_check errors reported by upgraded dtschema
+On 03/05/2022 23:19, Bjorn Andersson wrote:
+> Add compatible for the QUP0 BCM provider found in SC8180X.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-My apologies for the late reply to this series. FYI, I fully agree
-with the responses from Sudeep, etc, that have been made on this
-series.
 
-The proper thing is to use genpd on/off notifiers, which should get
-fired if you model the PM domain topology correctly in DT - and use
-PSCI OSI.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-That said, please keep me posted when/if you submit a new version for
-this. I will make sure to pay more attention next time.
 
-Kind regards
-Uffe
-
->
-> Changes for v5:
-> - Drop inline attributes and let compiler to decide
-> - Use _irqsave/_irqrestore flavour for spin lock
-> - Assignment on a single for irq_resolve_mapping() call
-> - Add documentation to explain vMPM ownership transition
-> - Move MPM pin map data into device tree and so use a generic compatible
-> - Drop the code that counts CPUs in PM and use CPU_CLUSTER_PM_ENTER
->   notification instead
->
-> Changes for v4:
-> - Add the missing include of <linux/interrupt.h> to fix build errors
->   on arm architecture.
-> - Leave IRQCHIP_PLATFORM_DRIVER infrastructural unchanged, and use
->   of_find_device_by_node() to get platform_device pointer.
->
-> Changes for v3:
-> - Support module build
-> - Use relaxed accessors
-> - Add barrier call to ensure MMIO write completes
-> - Use d->chip_data to pass driver private data
-> - Use raw spinlock
-> - USe BIT() for bit shift
-> - Create a single irq domain to cover both types of MPM pins
-> - Call irq_resolve_mapping() to find out Linux irq number
-> - Save the use of ternary conditional operator and use switch/case for
->   .irq_set_type call
-> - Drop unnecessary .irq_disable hook
-> - Align qcom_mpm_chip and qcom_mpm_ops members vertically
-> - Use helper irq_domain_translate_twocell()
-> - Move mailbox requesting forward in probe function
-> - Improve the documentation on qcm2290_gic_pins[]
-> - Use IRQCHIP_PLATFORM_DRIVER infrastructural
-> - Use cpu_pm notifier instead of .suspend_late hook to write MPM for
->   sleep, so that MPM can be set up for both suspend and idle context.
->   The TIMER0/1 setup is currently omitted for idle use case though,
->   as I haven't been able to successfully test the idle context.
->
-> Shawn Guo (3):
->   PM: cpu: Add CPU_LAST_PM_ENTER and CPU_FIRST_PM_EXIT support
->   dt-bindings: interrupt-controller: Add Qualcomm MPM support
->   irqchip: Add Qualcomm MPM controller driver
->
->  .../interrupt-controller/qcom,mpm.yaml        |  96 ++++
->  drivers/irqchip/Kconfig                       |   8 +
->  drivers/irqchip/Makefile                      |   1 +
->  drivers/irqchip/qcom-mpm.c                    | 439 ++++++++++++++++++
->  include/linux/cpu_pm.h                        |  15 +
->  kernel/cpu_pm.c                               |  33 +-
->  6 files changed, 590 insertions(+), 2 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
->  create mode 100644 drivers/irqchip/qcom-mpm.c
->
-> --
-> 2.25.1
->
+Best regards,
+Krzysztof
