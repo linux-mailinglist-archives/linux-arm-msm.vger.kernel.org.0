@@ -2,67 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A4CC51B1E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 00:31:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A1AE51B244
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 00:49:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379031AbiEDWet (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 18:34:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51428 "EHLO
+        id S1359166AbiEDWxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 18:53:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379030AbiEDWes (ORCPT
+        with ESMTP id S237092AbiEDWxJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 18:34:48 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A6A22B1A9
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 15:31:09 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id x18so2731587plg.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 15:31:09 -0700 (PDT)
+        Wed, 4 May 2022 18:53:09 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12A8553726
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 15:49:31 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id t13so2263964pgn.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 15:49:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=V4mcraihi9SrpCHC2jZoMr5aDTcAHssWAbY6f0fZueQ=;
-        b=RAWjYXrFLWLiT/sTepot+yp0Rawj48PXvecgBtpOgZCatOrIyduZDIHLEe30f5joku
-         aUOCgu9eKHYniNrqwX/TmFmc99JjM8WXdb5RX5pJ2X42hherVXdL5ME52oRBdTD01aPy
-         ZaEjDc+VZBH6DQLBqS95L4XLkQZ3e7rF1TI88=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dijXTkiQHrfrlF4ID+znm8V5fZSPJC1gmyuClDGbRpM=;
+        b=KnQUKihb/oVI0KbzvzptyFH6gHyzwx78tuSQzyxRYYtkAIdDOZTWZhlQZhLFlBeWOp
+         j8RKG5i1b4ugEU754VQCuM8t49ONqK8c8R+I2vGT2BEGRs92ej0IZ2N9VXvkWqu4ClDi
+         Diq2ZeuXYyv4WvhnGPBn1lRcHUKVUIOCL2kVU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=V4mcraihi9SrpCHC2jZoMr5aDTcAHssWAbY6f0fZueQ=;
-        b=2EiVdJ+D5LJulRjMmNzzo68M8W2lvtWS986mvYxwNKaU+BYhwCwH0t5WG/Htt9VFSB
-         hp620uQnbqqfrK5wRdlKJUgTdyAJTSZZ7X76hD+9giq7pO0QAXX5qS+edwaRRbzDNMOy
-         /aUsC/X2mRw8P4K1Bny4JekEuSEGL41l9SuQsixRjBiEMn2vdl3xXpXj4+kWEp+Nypvj
-         OBxQmLVL39kLSJ7JuOOuo1hdfpm+54j5/Tmq9YOX2Dnf08id6SanmeSjBn0y6wSV8ek1
-         vjiAyEhz3UWD9e65Kkrl7UiPZgNvk9i03zI+jqkS/XekIpZSfU3H64rab0IRoL5vrGuU
-         B9Rg==
-X-Gm-Message-State: AOAM533WBZdVXW/1dQRzS5ivLpj6t9Cu4MeQOWQQtlEgnjd9HTqRcmzx
-        z5QeCD4Z9TK8iHfBOJjIS7On+Q==
-X-Google-Smtp-Source: ABdhPJyweJp6nGpMCJB6yHstmRUwk1LDnj+lQaH63hw1ifrVEHV1WkcGLOB3NcwSQd7lafQS0UOhvQ==
-X-Received: by 2002:a17:902:d510:b0:15e:afc4:85a0 with SMTP id b16-20020a170902d51000b0015eafc485a0mr13862867plg.64.1651703468915;
-        Wed, 04 May 2022 15:31:08 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:827b:7f14:bb7e:2898])
-        by smtp.gmail.com with UTF8SMTPSA id i9-20020aa79089000000b0050dc76281ffsm8617857pfa.217.2022.05.04.15.31.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 May 2022 15:31:08 -0700 (PDT)
-Date:   Wed, 4 May 2022 15:31:07 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v13 4/4] arm64: dts: qcom: sc7280-herobrine: Add lpi
- pinmux properties for CRD 3.0/3.1
-Message-ID: <YnL+qwoSHt/95PcU@google.com>
-References: <1651662987-11704-1-git-send-email-quic_srivasam@quicinc.com>
- <1651662987-11704-5-git-send-email-quic_srivasam@quicinc.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dijXTkiQHrfrlF4ID+znm8V5fZSPJC1gmyuClDGbRpM=;
+        b=2iLnh4BJ9Xv3qODBV9FBQ1vqDrP1paKBDYJdVM52ysaI7am5dxuI1eIjhtO/MIn20p
+         gwiUa10+3c7/fq+04076kdz2ZclSq0orpIqy9b4ogBPnxh1zXn5QLoMi0uVybNj9R4RO
+         VVAzOirI64VX4vPBVNkJ1AeDGwwZPt4+xPyhzAn1IAzIxPww4Vn4iQzmM0UaKT+l9BEZ
+         XqYT5QnJ2mvOL0jKaRPKQsjdwwlRuFABwTnXKO5RSKBRJ/FVWJBUVkQ3lYFf0XiJaRMk
+         lmm+aeis0Dkh2hDDoQiVQTU7X+jTew5/B2yhvlm96EAkomHL0cQipZO2AenkYDC68btN
+         o15Q==
+X-Gm-Message-State: AOAM530NRzAspWAGcNI5+Qt0LWutRiakwTMXM9tbE2Wmr7UbIA1DlYlR
+        bfFKKbsNwSCCvknaZo+PcHzFGg==
+X-Google-Smtp-Source: ABdhPJyMiDyPd/6VfPLzI/BKb/Du4iDMHhjPft3yL/BkGqSeg5FtyrDZBqihX1qBl5TEhX24E/4+wA==
+X-Received: by 2002:a05:6a02:19c:b0:3aa:1bf8:7388 with SMTP id bj28-20020a056a02019c00b003aa1bf87388mr19780091pgb.455.1651704571489;
+        Wed, 04 May 2022 15:49:31 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:1da3:6a8e:557c:da09])
+        by smtp.gmail.com with ESMTPSA id s21-20020aa78295000000b0050dc76281b7sm9034473pfm.145.2022.05.04.15.49.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 May 2022 15:49:31 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>, Lv Ruyi <lv.ruyi@zte.com.cn>,
+        Sean Paul <sean@poorly.run>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Xu Wang <vulab@iscas.ac.cn>, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm: Fix shutdown
+Date:   Wed,  4 May 2022 15:49:26 -0700
+Message-Id: <20220504154909.1.Iaebd35e60160fc0f2a50fac3a0bf3b298c0637c8@changeid>
+X-Mailer: git-send-email 2.36.0.464.gb9c8b46e94-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1651662987-11704-5-git-send-email-quic_srivasam@quicinc.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -73,113 +77,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 04, 2022 at 04:46:27PM +0530, Srinivasa Rao Mandadapu wrote:
-> Add LPASS LPI pinctrl properties, which are required for Audio
-> functionality on herobrine based platforms of rev5+
-> (aka CRD 3.0/3.1) boards.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 63 +++++++++++++++++++++++
->  1 file changed, 63 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> index deaea3a..dc61bad 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-> @@ -110,6 +110,69 @@ ap_ts_pen_1v8: &i2c13 {
->   * - If a pin is totally internal to Qcard then it gets Qcard name.
->   * - If a pin is not hooked up on Qcard, it gets no name.
->   */
-> +&lpass_dmic01_clk {
-> +	drive-strength = <8>;
-> +	bias-disable;
-> +};
-> +
-> +&lpass_dmic01_data {
-> +	bias-pull-down;
-> +};
-> +
-> +&lpass_dmic01_clk_sleep {
-> +	drive-strength = <2>;
-> +};
+When rebooting on my sc7280-herobrine based device, I got a
+crash. Upon debugging, I found that I was in msm_drv_shutdown() and my
+"pdev" was the one associated with mdss_probe().
 
-should be after 'lpass_dmic01_clk'
+From source, I found that mdss_probe() has the line:
+  platform_set_drvdata(pdev, mdss);
+...where "mdss" is of type "struct msm_mdss *".
 
-> +
-> +&lpass_dmic23_clk {
-> +	drive-strength = <8>;
-> +	bias-disable;
-> +};
-> +
-> +&lpass_dmic23_data {
-> +	bias-pull-down;
-> +};
-> +
-> +&lpass_dmic23_clk_sleep {
-> +	drive-strength = <2>;
-> +};
+Also from source, I saw that in msm_drv_shutdown() we have the line:
+  struct msm_drm_private *priv = platform_get_drvdata(pdev);
 
-see above
+This is a mismatch and is the root of the problem.
 
-> +
-> +&lpass_rx_swr_clk {
-> +	drive-strength = <2>;
-> +	slew-rate = <1>;
-> +	bias-disable;
-> +};
-> +
-> +&lpass_rx_swr_data {
-> +	drive-strength = <2>;
-> +	slew-rate = <1>;
-> +	bias-bus-hold;
-> +};
-> +
-> +&lpass_rx_swr_clk_sleep {
-> +	drive-strength = <2>;
+Further digging made it apparent that msm_drv_shutdown() is only
+supposed to be used for parts of the msm display framework that also
+call msm_drv_probe() but mdss_probe() doesn't call
+msm_drv_probe(). Let's remove the shutdown functon from msm_mdss.c.
 
-drive strengh is the same as for 'lpass_rx_swr_clk', can be omitted?
+Digging a little further, code inspection found that two drivers that
+use msm_drv_probe() weren't calling msm_drv_shutdown(). Let's add it
+to them.
 
-> +	bias-pull-down;
-> +};
+Fixes: ecb23f2e3009 ("drm/msm: split the main platform driver")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-see 'lpass_dmic23_clk_sleep'
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 1 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 1 +
+ drivers/gpu/drm/msm/msm_mdss.c           | 1 -
+ 3 files changed, 2 insertions(+), 1 deletion(-)
 
-> +
-> +&lpass_rx_swr_data_sleep {
-> +	drive-strength = <2>;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 143d6643be53..2b9d931474e0 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -1350,6 +1350,7 @@ MODULE_DEVICE_TABLE(of, dpu_dt_match);
+ static struct platform_driver dpu_driver = {
+ 	.probe = dpu_dev_probe,
+ 	.remove = dpu_dev_remove,
++	.shutdown = msm_drv_shutdown,
+ 	.driver = {
+ 		.name = "msm_dpu",
+ 		.of_match_table = dpu_dt_match,
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index 9b7bbc3adb97..3d5621a68f85 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -1009,6 +1009,7 @@ MODULE_DEVICE_TABLE(of, mdp5_dt_match);
+ static struct platform_driver mdp5_driver = {
+ 	.probe = mdp5_dev_probe,
+ 	.remove = mdp5_dev_remove,
++	.shutdown = msm_drv_shutdown,
+ 	.driver = {
+ 		.name = "msm_mdp",
+ 		.of_match_table = mdp5_dt_match,
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index 20f154dda9cf..0454a571adf7 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -397,7 +397,6 @@ MODULE_DEVICE_TABLE(of, mdss_dt_match);
+ static struct platform_driver mdss_platform_driver = {
+ 	.probe      = mdss_probe,
+ 	.remove     = mdss_remove,
+-	.shutdown   = msm_drv_shutdown,
+ 	.driver     = {
+ 		.name   = "msm-mdss",
+ 		.of_match_table = mdss_dt_match,
+-- 
+2.36.0.464.gb9c8b46e94-goog
 
-is drive strength really needed here?
-
-> +	bias-pull-down;
-> +};
-> +
-> +&lpass_tx_swr_clk {
-> +	drive-strength = <2>;
-> +	slew-rate = <1>;
-> +	bias-disable;
-> +};
-> +
-> +&lpass_tx_swr_data {
-> +	slew-rate = <1>;
-> +	bias-bus-hold;
-> +};
-> +
-> +&lpass_tx_swr_clk_sleep {
-> +	drive-strength = <2>;
-
-is drive strength really needed here?
-
-> +	bias-pull-down;
-> +};
-
-see 'lpass_dmic23_clk_sleep'
-
->  
->  &mi2s1_data0 {
->  	drive-strength = <6>;
-> -- 
-> 2.7.4
-> 
