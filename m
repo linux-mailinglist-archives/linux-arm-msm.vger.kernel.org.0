@@ -2,78 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C5A1D519982
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 10:18:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CE7E519A1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 10:42:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346169AbiEDIVg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 04:21:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48704 "EHLO
+        id S1346498AbiEDIp6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 04:45:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346152AbiEDIVe (ORCPT
+        with ESMTP id S1346507AbiEDIp5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 04:21:34 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCCF922BE7
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 01:17:58 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id k23so1434400ejd.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 01:17:58 -0700 (PDT)
+        Wed, 4 May 2022 04:45:57 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01E772496B
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 01:42:22 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id g3so646555pgg.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 01:42:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=db4sc5OrkSnoCCAKUJDacMNlzRQIVW40R0PO9szPpSw=;
-        b=KGe1IO2UQP6MpGQv+BVltLwD9dOiM7SMH1UbK9CnTQOl8t4b+rgRa096yc/0T7rmKA
-         y4oqULZRKgXEJPdnA3ilr+g5cu2qvVA5dzvUCafkP9P707OmXoqXiEMtwAhajmTmt0PS
-         KU/6xKMRuHuk9OIBNjRd9S3KDEJZWEC6AzacTw2JmJrfullQbhFYGNYdc9y2VrE8H/5J
-         YHrzlSbNL9zKcrExFI4EZ86BsbykSMrQxsaWyQ0dWcmiIGEZzZDQipfsiZuLy/kWjZBG
-         EHKb13kDDn51oBgLLUkxYjvTF49F7jioGbJWceAIxfNwjzcIooOE+UYYN27V6vJeY3vy
-         GHMw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=etgYlkH3k2xXRU0EPxeVLwk/8dv8OjRMpkT84HZHGoM=;
+        b=z1AO52bLTWmTJ8A7Q6s3QcGmTgAdj0o7TNsqfNXXAmUq8DvJHiILWvfwru19sfhbJ5
+         5cAdlKhpx7fcCGwB0UveWcFIV1wnkIm5wd1h75Lri4h6nIcwvKxR5YmE4oUuImB1M6ZV
+         uoV39+ELAre9YhW4MTrmF4DrOHcTwBC+vKeDBcJHhXexd4MbifLsrKBESSl9ebyZhmWV
+         +7b8O/Iv/k+g4Mlmkk896ZNWqK3g40oPPpy2yJ5DoRbYOC7+bpga7xskzruUIaojD/bv
+         lLWVeTTOXZIsQCGNmQQ+6OrZAH9kkYCeRUz2kAKtKGljvKRAEvC/RFNUldjTFV/dI2mr
+         lg4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=db4sc5OrkSnoCCAKUJDacMNlzRQIVW40R0PO9szPpSw=;
-        b=YK7ET/h9K6II5I86sLQ4zeWwZu753dG/MB35ZorlwxtTwiVfUWmRWeSNB4zWVrQTDg
-         LoYisvrEJbS4Pc/j3bCMn5cdTwvPAXIFpCC6ZJDpBcxtMV1AYVqrJ+gq9vme6uEhQVzr
-         QeJzn0JiHLCG3LDpQGj5gDLHduXIKcglmU9bDfwyNyWF/1azs5AG/buevS7NuV3Przqi
-         lfibL34nI77L5jLIsCX+D7MxxuRorxsaZsBSgOLlO/S7aXDmPRaHyybKxN8BamDGmUJD
-         mUYbxcNotEebywnV7VU90VmOMrMn9qGGFqbxZfAyg3IHgoJbhDKHIRp2fSzcNEVWUqAn
-         aSpw==
-X-Gm-Message-State: AOAM530f7CidiRIwIvc9mjw2kaCrBGEmvOGcB+esUjMUOUzw2k2w8/O0
-        bk0Y4JiIoVqYqNqABNye063VDg==
-X-Google-Smtp-Source: ABdhPJykdvNWku+TlTP7WoUCk8uQAX3gxkIBwzvlnxQzOMfyQc/XrabUiCA6VmEEOpKo+JqKj41WNA==
-X-Received: by 2002:a17:907:7ea6:b0:6f4:9d64:8e20 with SMTP id qb38-20020a1709077ea600b006f49d648e20mr5150330ejc.634.1651652278223;
-        Wed, 04 May 2022 01:17:58 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id l21-20020a056402345500b0042617ba6393sm8781322edc.29.2022.05.04.01.17.57
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=etgYlkH3k2xXRU0EPxeVLwk/8dv8OjRMpkT84HZHGoM=;
+        b=PMln4ZhnVoXLNlTKpaUQF18d26BjCAqAlfQH08wR+TZXF8tiiq6uX/xvqT9Zo/oIIf
+         LRX4RYFzMYeNYzeqmc83ZpTj8SzSlTzNzQLIJSR/yB3/iCHUppKy3rd0KGcUJlGI0SnI
+         NFgn/BaiWekO7QKqiroHxmyRIlqGn6z37em5LUlW7LlQknwK3R8UN9mtoWhDpSpS7Sc/
+         Gl2DOuFiyHg1NRtaO5V4wJuuKrBI9A9N8yL7+XXFrAufGmpaw1jj9oSRcUXWam21DHDx
+         5yZWJZIyme8z8/3JYiXcGNKdgdppzzMbsncnXBWjgRUzBFRsz618W8En+hosT7XBpwiS
+         bqSA==
+X-Gm-Message-State: AOAM532F9tlmkIsDf+jQTRW4OtnzP2QZW5Eh39F9XZTBvd3NAM1NCLKO
+        n1jZojXW5gYePvxT1Egkl1dU
+X-Google-Smtp-Source: ABdhPJx49Z+kce5s/YOsUZbN8QNh0gOcYuyEbYmWwzEjaux7d1kzE1ne3dcS8k+Pyq/HTyfRJ9WQCg==
+X-Received: by 2002:a05:6a00:298a:b0:50e:8e3:b673 with SMTP id cj10-20020a056a00298a00b0050e08e3b673mr7996582pfb.28.1651653741451;
+        Wed, 04 May 2022 01:42:21 -0700 (PDT)
+Received: from localhost.localdomain ([27.111.75.248])
+        by smtp.gmail.com with ESMTPSA id i10-20020a170902c94a00b0015e8d4eb278sm1386561pla.194.2022.05.04.01.42.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 May 2022 01:17:57 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>
-Subject: [PATCH v2 5/5] arm64: dts: qcom: sdm845: Add CPU BWMON
-Date:   Wed,  4 May 2022 10:17:35 +0200
-Message-Id: <20220504081735.26906-6-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220504081735.26906-1-krzysztof.kozlowski@linaro.org>
-References: <20220504081735.26906-1-krzysztof.kozlowski@linaro.org>
+        Wed, 04 May 2022 01:42:20 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     martin.petersen@oracle.com, jejb@linux.ibm.com
+Cc:     avri.altman@wdc.com, alim.akhtar@samsung.com,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bvanassche@acm.org, ahalaney@redhat.com,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 0/5] Qcom UFS driver updates
+Date:   Wed,  4 May 2022 14:12:07 +0530
+Message-Id: <20220504084212.11605-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,87 +72,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for CPU-memory BWMON device (bandwidth monitoring) on
-SDM845.
+Hi,
 
-Co-developed-by: Thara Gopinath <thara.gopinath@linaro.org>
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 60 ++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+This series has some cleanups and updates to the Qcom UFS driver. There
+is also a patch that removes the redundant wmb() from
+ufshcd_send_command() in ufshcd driver.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 692cf4be4eef..bd4577f0a92f 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2026,6 +2026,66 @@ llcc: system-cache-controller@1100000 {
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		pmu@1436400 {
-+			compatible = "qcom,sdm845-cpu-bwmon";
-+			reg = <0 0x01436400 0 0x600>;
-+
-+			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-+					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
-+			interconnect-names = "ddr", "l3c";
-+
-+			operating-points-v2 = <&cpu_bwmon_opp_table>;
-+
-+			cpu_bwmon_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				/*
-+				 * The interconnect paths bandwidths calculated
-+				 * from msm-4.9 downstream kernel:
-+				 *  - the gladiator_noc-mem_noc from bandwidth
-+				 *    table of qcom,llccbw (property qcom,bw-tbl);
-+				 *    bus width: 4 bytes;
-+				 *  - the OSM L3 from bandiwdth table of
-+				 *    qcom,cpu4-l3lat-mon (qcom,core-dev-table);
-+				 *    bus width: 16 bytes;
-+				 */
-+				opp-0 {
-+					opp-peak-kBps = <800000 4800000>;
-+					opp-avg-kBps = <800000 4800000>;
-+				};
-+				opp-1 {
-+					opp-peak-kBps = <1804000 9216000>;
-+					opp-avg-kBps = <1804000 9216000>;
-+				};
-+				opp-2 {
-+					opp-peak-kBps = <2188000 11980800>;
-+					opp-avg-kBps = <2188000 11980800>;
-+				};
-+				opp-3 {
-+					opp-peak-kBps = <3072000 15052800>;
-+					opp-avg-kBps = <3072000 15052800>;
-+				};
-+				opp-4 {
-+					opp-peak-kBps = <4068000 19353600>;
-+					opp-avg-kBps = <4068000 19353600>;
-+				};
-+				opp-5 {
-+					opp-peak-kBps = <5412000 20889600>;
-+					opp-avg-kBps = <5412000 20889600>;
-+				};
-+				opp-6 {
-+					opp-peak-kBps = <6220000 22425600>;
-+					opp-avg-kBps = <6220000 22425600>;
-+				};
-+				opp-7 {
-+					opp-peak-kBps = <7216000 25497600>;
-+					opp-avg-kBps = <7216000 25497600>;
-+				};
-+			};
-+		};
-+
- 		pcie0: pci@1c00000 {
- 			compatible = "qcom,pcie-sdm845";
- 			reg = <0 0x01c00000 0 0x2000>,
+All these patches are tested on Qualcomm Robotics RB3 platform.
+
+Thanks,
+Mani
+
+Changes in v3:
+
+* Removed check for EPROBE_DEFER and used the return value from dev_err_probe
+* Collected Reviewed-by and Acked-by tags
+
+Changes in v2:
+
+* Used dev_err_probe() instead of dev_err().
+* Removed the wmb() from ufs_qcom_dev_ref_clk_ctrl() as that is not required.
+* Added Reviewed-by tag from Bart for patch 4/5.
+
+Manivannan Sadhasivam (5):
+  scsi: ufs: qcom: Fix acquiring the optional reset control line
+  scsi: ufs: qcom: Simplify handling of devm_phy_get()
+  scsi: ufs: qcom: Add a readl() to make sure ref_clk gets enabled
+  scsi: ufs: core: Remove redundant wmb() in ufshcd_send_command()
+  scsi: ufs: qcom: Enable RPM_AUTOSUSPEND for runtime PM
+
+ drivers/scsi/ufs/ufs-qcom.c | 45 +++++++++++++------------------------
+ drivers/scsi/ufs/ufshcd.c   |  3 ---
+ 2 files changed, 15 insertions(+), 33 deletions(-)
+
 -- 
-2.32.0
+2.25.1
 
