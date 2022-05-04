@@ -2,45 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7274451A546
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 18:19:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C68751A54E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 18:20:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353326AbiEDQXI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 12:23:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56604 "EHLO
+        id S1353283AbiEDQXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 12:23:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353283AbiEDQXH (ORCPT
+        with ESMTP id S1353255AbiEDQXc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 12:23:07 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A480646B10
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 09:19:30 -0700 (PDT)
-Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9B8B33F7E2;
-        Wed,  4 May 2022 18:19:28 +0200 (CEST)
-Message-ID: <0509ed44-903d-8167-bba2-ea176984d5ad@somainline.org>
-Date:   Wed, 4 May 2022 18:19:28 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.8.1
-Subject: Re: [PATCH v1 3/5] arm64: dts: qcom: sdm630: fix the qusb2phy ref
- clock
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wed, 4 May 2022 12:23:32 -0400
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68B4B46B08
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 09:19:55 -0700 (PDT)
+Received: by mail-oo1-xc32.google.com with SMTP id s12-20020a4aeacc000000b0035ebb6d1a5fso275872ooh.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 09:19:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=dbVLoGLvvdOw9abtQc9gMQO+m9oCoAXtfZ2W1vRohYs=;
+        b=Xl0uRWlbqSeaYgNid5Xu5/x9v7F3s8ycxvRHbVXBkc4EaIyf8JUvW+LZrrYwSj84wg
+         Uq7G3EQ7sfke3vOYEhCzmHNBYlM17MnW/uzSzv8nP+Tgohzev8jDZ4W4W+ZpfkD5laux
+         TTWySJmTsuGHMjO6dYe3e5VgCshw5h1EZOVlcUeqYNJD3PLb9aNoiXxgfVGYXIq9x0Ke
+         9KbzEgVsafGZtNYX7X5WKx/E4i8ciZRLG3KL0RyAn8/Jojrnpcg3wnLSWw/fw9jjwlt9
+         22y/68iKAzVgHEYk66WuPBR+IfJBlguzT1rrJfY+btECbT13qFzxAIxq0ipFpCOz2iPI
+         tCRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dbVLoGLvvdOw9abtQc9gMQO+m9oCoAXtfZ2W1vRohYs=;
+        b=GZRxBAig/Y+mEMrnFlkNuACfdNKgvQtrv4YFQ3nZZnxf0+3yaefqu4bvolWVbr6TYS
+         hFYbu3RBfev5cir6SfYzqbNGOHB/PB0EPx6XSyx/d6WOT2iRsBGXKrGXYR3f+2gdqEKi
+         F9cWtoLn6BQ3Oyl54fTEKbKLsthi6LkRoSqFJ79xq5v5v5oUQ5MFgDFFEopKxMDcTQht
+         uJCYrxT60BqZ7fXLBIvcxAMus0t2Ghci74YCUgFpjb7KkledRKLW4N+RNu1T+18G+Jl3
+         tSZ5ZROFAf/9X3q5yS/hLqfzqtxlCRRg1DoQk7Ar1mOxtO1jwvf2VXwdopfE37FGJUWi
+         a3Dw==
+X-Gm-Message-State: AOAM531FtJ2UlA45mz6agnyN0wQz/k2jQngmaqvlCEPN6FY0NmNcq5yg
+        ugFHmcAObCzfi9vFBqczF23/YQ==
+X-Google-Smtp-Source: ABdhPJyyqUME15QFq+hLqomIxwFjEJTKjoS8Pdb8JTFULASh6I8vEFeva5aVv9Q+SPjB3A5zoW/eKg==
+X-Received: by 2002:a4a:3546:0:b0:35e:cecd:c81d with SMTP id w6-20020a4a3546000000b0035ececdc81dmr7461215oog.79.1651681194666;
+        Wed, 04 May 2022 09:19:54 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id z4-20020a056870514400b000edae17a8cesm3104330oak.3.2022.05.04.09.19.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 May 2022 09:19:54 -0700 (PDT)
+Date:   Wed, 4 May 2022 09:21:39 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Pavel Machek <pavel@ucw.cz>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220503220927.960821-1-dmitry.baryshkov@linaro.org>
- <20220503220927.960821-4-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220503220927.960821-4-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        Jonathan Corbet <corbet@lwn.net>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-pwm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v14 1/2] dt-bindings: leds: Add Qualcomm Light Pulse
+ Generator binding
+Message-ID: <YnKoEyEtFP3TBxkg@ripper>
+References: <20220303214300.59468-1-bjorn.andersson@linaro.org>
+ <20220504072435.GB8204@duo.ucw.cz>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220504072435.GB8204@duo.ucw.cz>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -49,35 +79,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed 04 May 00:24 PDT 2022, Pavel Machek wrote:
 
-On 04/05/2022 00:09, Dmitry Baryshkov wrote:
-> According to the downstram DT file, the qusb2phy ref clock should be
-> GCC_RX0_USB2_CLKREF_CLK, not GCC_RX1_USB2_CLKREF_CLK.
->
-> Fixes: c65a4ed2ea8b ("arm64: dts: qcom: sdm630: Add USB configuration")
-> Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> Hi!
+> 
+> > This adds the binding document describing the three hardware blocks
+> > related to the Light Pulse Generator found in a wide range of Qualcomm
+> > PMICs.
+> 
+> Sorry for the delays. I have collected tested/review tags and push the
+> result to:
+> 
+> To gitolite.kernel.org:pub/scm/linux/kernel/git/pavel/linux-leds.git
+>    312310928417..24e2d05d1b68  for-next -> for-next
+> 
 
-So it always worked by miracle, as bootloader left it on. Nice catch.
+Much appreciated, this will unblock a few different use cases for us -
+perhaps the most important one backlight control on devices such as the
+Lenovo Flex 5G :)
 
+> I'll need to check pattern usage in the driver, and there are some
+> small fixes needed as evidenced in the reviews.
+> 
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+I will go through the Marijn's feedback in detail and am looking forward
+to hear from you on the pattern front, and will look into preparing
+incremental patches for the changes needed.
 
->   arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> index 45eaaa6a4a74..d8c3d2569340 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> @@ -1262,7 +1262,7 @@ qusb2phy: phy@c012000 {
->   			#phy-cells = <0>;
->   
->   			clocks = <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-> -				<&gcc GCC_RX1_USB2_CLKREF_CLK>;
-> +				<&gcc GCC_RX0_USB2_CLKREF_CLK>;
->   			clock-names = "cfg_ahb", "ref";
->   
->   			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
->
+Thanks,
+Bjorn
