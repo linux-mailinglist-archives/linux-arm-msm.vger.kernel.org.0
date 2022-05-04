@@ -2,70 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B597C51A79F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 19:04:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C30C51AB88
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 May 2022 19:48:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354434AbiEDRFV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 13:05:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50156 "EHLO
+        id S1358904AbiEDRsP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 13:48:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356217AbiEDRE6 (ORCPT
+        with ESMTP id S1359513AbiEDRoW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 13:04:58 -0400
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA8D650469
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 09:53:58 -0700 (PDT)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-deb9295679so1764543fac.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 09:53:58 -0700 (PDT)
+        Wed, 4 May 2022 13:44:22 -0400
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B8D652B31
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 10:07:33 -0700 (PDT)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-edf3b6b0f2so1422858fac.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 10:07:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=2klMetXGa1eUlKZSFzvlKnCFZIMh5g+h156STL277cU=;
-        b=xwSoPZhK4O9KfF0E9rB8njkdJRtTwkZ4NR9LCTG0wMvOKwKndxeRPvixpmBIcXqHdY
-         qnYVcoFOds+xnLyeSRi6JCoJvovK5Ont8ITuL89eG48BDLXzDfbI7+wpAhSS4VqLEciS
-         /ExulmzKoBHM1in91h9JtnFioxJJ+rQ4dOTGBUTyPiyzOCm25ErpRvSq4X/7e5xg6frM
-         hsHarDuHST1RgfinipAKy/JnsW5bKxiotUgLWcM9FS5fR3VZ2LAqpOXfbkI13sUKo+bm
-         O6AUeLw1hRpkjAOw9PYtndBN0mDjRpFPXAzA4IvNiK6aP9CHCbcgb7OCexn1diIWIYGI
-         x2OA==
+        bh=XsBuK9C0iTZ23AvndsVmxmsweL3NkKIVBO/JwZ4kCTI=;
+        b=HicliRiyqx34J8hoRZNyl8nYFnYudMYsszZHmDL17H5hi9vPEYGzOyzPs6BR5Pf5kO
+         rBpUH2oNEE4Y4kgNyxxsvzyEXS/GeLs3pWr9Vdrr//YevpnvzD+eaWLcTeRg7aHoHJtf
+         qmDSMskOLukbvAdTNrra//dYt366Ni/xN36gJogRiKRMhVrEnNZR50LASXSAD/U9zbAJ
+         o7uvjn04PXd/FL9jVgGi0ncdDbjomr+FGZP91wN4hIJbJOnQMnyUDaZems1B1CPxWI7H
+         W9jJdGHFTUbgkcxxCT5VqA7usqgnpdK268BTLf74J0PSu6hvcGONIkUQXWbo5dm6K6bo
+         bqQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=2klMetXGa1eUlKZSFzvlKnCFZIMh5g+h156STL277cU=;
-        b=C61MzWdxufuVh6vhlbicyAc9VE0KM0I9bKtwbH49bV5AkViu/A6GXOsVEdLOBwiPoe
-         nJcl9yi1K9r3uR65PqEtHkto96B3vEu8p4gQBt92pFQ5G+cZtIqQkOYrVSUfKTmqDzR9
-         oXaI5wFte/AYXHNXBHyOCSWQ5RC8aHkPhfv7zXyQydUQwlq7tBUmoYN28jbvKnnHgXAi
-         zMXd5/Mqq1S5uzrHNcSo0XYSG1tuyh4EyCWAReJjpeI6abJEgZQT3oBgtFMdbq6Sa2Gi
-         Y94Amol8tkxAGJZ8OllYhV/nqeSLNvP3fbsKoD8naK6jhquSPznIoM3b5HIoYcRbp19i
-         9+ow==
-X-Gm-Message-State: AOAM531EZc3mltAHnij0oFG9JjfANmHVjz4gFGQstz6b5M9Rg7XttQl2
-        tQV5eHGAAvJdiKGbSrRUrqDlSA==
-X-Google-Smtp-Source: ABdhPJyocyOzuasLctGeqNeBJMplgmBUpdNyW29oi9jqBr4TwlqaFgI/BnBfrAb7QdBgNToE3dbmIQ==
-X-Received: by 2002:a05:6870:b6aa:b0:ed:a7de:cc26 with SMTP id cy42-20020a056870b6aa00b000eda7decc26mr169045oab.259.1651683237792;
-        Wed, 04 May 2022 09:53:57 -0700 (PDT)
+        bh=XsBuK9C0iTZ23AvndsVmxmsweL3NkKIVBO/JwZ4kCTI=;
+        b=JdmJU5Fa213b+gLWj/NEcbL/oV5TGOBulroloK1kPNm7T4stsG5X2uF7BjctI1L5Ri
+         EzGNWCwtm9BLbskb38bdMJ/l0XKbn1b2ZQbnzzElKvzV7SjkMvh/p3CQ/On7S87VwKfT
+         xa1r7OvZAb0L3AweEg4jXWA5/PIuh0VC1nYG2V84UEC/yo6y5UuNfODk/CvzIGIiD8UH
+         OJTCfQXuQ8L1O5MnsT9dU7tcKjwz5opn2xCYTf0dgE+FwmO8S+GB25U1q9JHiV1zm6dJ
+         ouLciaQPr/vAYwt8+1oIOXlXu4s+xhRwCBWRMJIUBuRAz/pdfT1pelruWT080hm2v0DO
+         MtSQ==
+X-Gm-Message-State: AOAM531Kkh1muVPiKWhONgHYuVhPFhFgfdyOVlg/t/V1oBHvY1b9Ai5e
+        HpZKEfOVDLJSakoj7qKlKVTO6Q==
+X-Google-Smtp-Source: ABdhPJxg9/v0pCSGZ8BwTRKwaGvr6w8CT865Zhn8XA0POsMWJXyMxLfaaotxF7Mh9pvucduHkgRFdw==
+X-Received: by 2002:a05:6870:7084:b0:ed:d709:34be with SMTP id v4-20020a056870708400b000edd70934bemr236034oae.4.1651684052484;
+        Wed, 04 May 2022 10:07:32 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id r42-20020a056808212a00b00325cda1ff85sm4484697oiw.4.2022.05.04.09.53.56
+        by smtp.gmail.com with ESMTPSA id e63-20020a9d2ac5000000b006060322124fsm5232500otb.31.2022.05.04.10.07.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 May 2022 09:53:57 -0700 (PDT)
-Date:   Wed, 4 May 2022 11:53:54 -0500
+        Wed, 04 May 2022 10:07:31 -0700 (PDT)
+Date:   Wed, 4 May 2022 12:07:27 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        patches@lists.linux.dev, Alex Elder <elder@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Subject: Re: [PATCH] clk: qcom: rpmh: Set wake/sleep state for BCM clks
-Message-ID: <YnKvoh+h07at8b65@builder.lan>
-References: <20220412194505.614002-1-swboyd@chromium.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        quic_rohkumar@quicinc.com,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v12 4/4] arm64: dts: qcom: sc7280-herobrine: Add lpi
+ pinmux properties for CRD 3.0/3.1
+Message-ID: <YnKyzxPEolSVUhqD@builder.lan>
+References: <1651079383-7665-1-git-send-email-quic_srivasam@quicinc.com>
+ <1651079383-7665-5-git-send-email-quic_srivasam@quicinc.com>
+ <YmsrB6Q89II5w1+9@google.com>
+ <CAD=FV=XxeZsiOVVBDK_vmx0nhT7roB2FqcaPXsH3+jzTHFXMxw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220412194505.614002-1-swboyd@chromium.org>
+In-Reply-To: <CAD=FV=XxeZsiOVVBDK_vmx0nhT7roB2FqcaPXsH3+jzTHFXMxw@mail.gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,80 +84,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 12 Apr 14:45 CDT 2022, Stephen Boyd wrote:
+On Fri 29 Apr 11:10 CDT 2022, Doug Anderson wrote:
 
-> Set the wake and sleep state for BCM clks here, not just the active
-> state, as the active only state is dropped when CPUs go to deep idle.
-> This ensures the clk is always on when the driver thinks it is on.
+> Hi,
 > 
-> This was found by inspection, and could very well be incorrect if the
-> RPMh hardware copies over the active only state to the sleep and wake
-> states.
+> On Thu, Apr 28, 2022 at 5:02 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+> >
+> > On Wed, Apr 27, 2022 at 10:39:43PM +0530, Srinivasa Rao Mandadapu wrote:
+> > > Add LPASS LPI pinctrl properties, which are required for Audio
+> > > functionality on herobrine based platforms of rev5+
+> > > (aka CRD 3.0/3.1) boards.
+> > >
+> > > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> > > Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> > > Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> >
+> > I'm not super firm in pinctrl territory, a few maybe silly questions
+> > below.
+> >
+> > >  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 84 +++++++++++++++++++++++
+> > >  1 file changed, 84 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> > > index deaea3a..dfc42df 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> > > @@ -111,6 +111,90 @@ ap_ts_pen_1v8: &i2c13 {
+> > >   * - If a pin is not hooked up on Qcard, it gets no name.
+> > >   */
+> > >
+> > > +&lpass_dmic01 {
+> > > +     clk {
+> > > +             drive-strength = <8>;
+> > > +     };
+> 
+> Ugh, I've been distracted and I hadn't realized we were back to the
+> two-level syntax. Definitely not my favorite for all the reasons I
+> talked about [1]. I guess you took Bjorn's silence to my response to
+> mean that you should switch back to this way? :(
+> 
+> Bjorn: can you clarify?
 > 
 
-Taking another look at this patch and now it makes perfect sense to me.
-Sorry for not grasping the problem earlier.
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+I didn't think through the fact that &mi2s0_state was specified in the
+.dtsi and as such will be partially be overridden by the baord dts.
 
 
-Will you take this in fixes, or do you want me to pick it for 5.19?
+I do prefer the two level style and describing full "states", but as you
+say whenever we provide something that will have to be overwritten it's
+suboptimal.
 
-> Cc: Alex Elder <elder@linaro.org>
-> Cc: Taniya Das <quic_tdas@quicinc.com>
-> Fixes: 04053f4d23a4 ("clk: qcom: clk-rpmh: Add IPA clock support")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/clk/qcom/clk-rpmh.c | 19 ++++++++++++-------
->  1 file changed, 12 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-> index aed907982344..29da1ffd10cf 100644
-> --- a/drivers/clk/qcom/clk-rpmh.c
-> +++ b/drivers/clk/qcom/clk-rpmh.c
-> @@ -260,6 +260,7 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
->  	struct tcs_cmd cmd = { 0 };
->  	u32 cmd_state;
->  	int ret = 0;
-> +	enum rpmh_state state;
->  
->  	mutex_lock(&rpmh_clk_lock);
->  	if (enable) {
-> @@ -274,15 +275,19 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
->  		cmd.addr = c->res_addr;
->  		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
->  
-> -		ret = clk_rpmh_send(c, RPMH_ACTIVE_ONLY_STATE, &cmd, enable);
-> -		if (ret) {
-> -			dev_err(c->dev, "set active state of %s failed: (%d)\n",
-> -				c->res_name, ret);
-> -		} else {
-> -			c->last_sent_aggr_state = cmd_state;
-> +		for (state = RPMH_SLEEP_STATE; state <= RPMH_ACTIVE_ONLY_STATE; state++) {
-> +			ret = clk_rpmh_send(c, state, &cmd, enable);
-
-Nit. We only need to pass the positive enable on the last iteration here...
+As such, I think your flattened model is preferred in this case - but it
+makes me dislike the partial definition between the dtsi and dts even
+more (but I don't have any better suggestion).
 
 Regards,
 Bjorn
 
-> +			if (ret) {
-> +				dev_err(c->dev, "set %s state of %s failed: (%d)\n",
-> +					!state ? "sleep" :
-> +					state == RPMH_WAKE_ONLY_STATE	?
-> +					"wake" : "active", c->res_name, ret);
-> +				goto out;
-> +			}
->  		}
-> +		c->last_sent_aggr_state = cmd_state;
->  	}
-> -
-> +out:
->  	mutex_unlock(&rpmh_clk_lock);
->  
->  	return ret;
+> [1] https://lore.kernel.org/r/CAD=FV=VicFiX6QkBksZs1KLwJ5x4eCte6j5RWOBPN+WwiXm2Cw@mail.gmail.com/
 > 
-> base-commit: 3123109284176b1532874591f7c81f3837bbdc17
-> -- 
-> https://chromeos.dev
+> > > +};
+> > > +
+> > > +&lpass_dmic01_sleep {
+> > > +     clk {
+> > > +             drive-strength = <2>;
+> >
+> > Does the drive strength really matter in the sleep state, is the SoC actively
+> > driving the pin?
 > 
+> My understanding is that if a pin is left as an output in sleep state
+> that there is a slight benefit to switching it to drive-strength 2.
+> 
+> 
+> > > +             bias-disable;
+> >
+> > What should this be in active/default state? If I understand correctly
+> > after a transition from 'sleep' to 'default' this setting will remain,
+> > since the default config doesn't specify a setting for bias.
+> 
+> Your understanding matches mine but I haven't tested it and I remember
+> sometimes being surprised in this corner of pinmux before. I think
+> it's better to put the bias in the default state if it should be that
+> way all the time, or have a bias in both the default and sleep state
+> if they need to be different.
