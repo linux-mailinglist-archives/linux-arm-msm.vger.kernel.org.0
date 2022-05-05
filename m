@@ -2,72 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EA3651C156
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 15:51:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C68951C1B2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 15:57:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380114AbiEENy3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 09:54:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39348 "EHLO
+        id S1346749AbiEEN5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 09:57:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380127AbiEENx5 (ORCPT
+        with ESMTP id S1379246AbiEEN5u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 09:53:57 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD48A583BC
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 06:50:12 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id b18so7587012lfv.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 06:50:12 -0700 (PDT)
+        Thu, 5 May 2022 09:57:50 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAC3F57154
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 06:54:09 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id y19so5704728ljd.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 06:54:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4TMEXMjLJmLbEp82QyGh3Ohj7SMwYayrIWMx4meas6A=;
-        b=mq46J0H/IjNAIDz8bE6PrQuyTKG1597bUo+Deucv2qyqHWQbgksoq7fvxfIFGSD4VH
-         Yvwuj4IBetARd3HxM7F45rEYRocIgBGSKM7ZUa8EuA6u3Bm24A7NtIKh7VEWeRwfdx1T
-         OQTAyrtqFKNcG2RwP9jzeANvrP/kWSfE9uvMzG7heqPMz+ppsyDUXaAJQX0KEkS0oo1u
-         ruYl8LKRZv7Ri5T+/L+tUV4/ZF5czKHuZObBBTypUTi3vY7w5QSqcPWmXT2u3ST+xXJF
-         ws9ekV5CouCMxIrErUSJfoLMVxRhO+3mLMUQBV721oUJPx4QFrLWyrfwLFNr452ElBiY
-         kRXQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SxpW3jQfQRJuzP0YaVQ3Gyvey8yuBaVOYp4o4X4T9zc=;
+        b=Mf8uiALjSdPsSvTCptWwY1VHfnuotSMm721a+9uwmXe5hBKiriK4tFI8AgZbOf5/lR
+         aeMw411CB7PhNymVv9hRt6GWg7GN4WSmR3KUPH0GperVoMEWbhKplXr90TH25J5jIeYj
+         5cDKNmPKaMTQiaiYm/Ix3znDKfqdsbAxhJLGPN/KrCfyepFBUao2m+cBQrmlWlZyWT79
+         mHxI17uheLzmtCN12YpJYjbdeBoVrhS6HacKOF/Olb0Wzmk3ivmwxe9dnCiUwB+jh9Lw
+         9pGrc8AOH8d1FXciKhOSHacBsC+ah4UmBpN9Hg1gXm70GQQpSfrDtFmd1pasPvitFQE4
+         1sBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4TMEXMjLJmLbEp82QyGh3Ohj7SMwYayrIWMx4meas6A=;
-        b=jw3GsVe5zLWV/XeVjMKAiCOoYOhyfHHv3TfijvIUUHRi5kDc+szDstwf2wMr+e7KlT
-         KItJWpT83zEb/cyk430JJQ/45L62jrPx7TvsIh6ZO7JaLcdOKoLJHDaEIHUtFf9mMpfO
-         qt3iGAdkC7deMdXnyqtOeik7PRyKXP6whrxGdR+NiLb2/YfcZQyM4sIlZsBLzLv79nYL
-         u1w/LEXeu9V22nanXFjL+O5er2oQzPXF7y7Z76vTwCLS5E7xvhhoouDel4zJRC2hFwj9
-         1p2aMjqB1u3p6RDLJDL4+eaHsnnnNudSjDFfihYhVRSKcHA0C0L9d2lIAkarEBrIr3Rt
-         S+5w==
-X-Gm-Message-State: AOAM530qJPKS2wWyaabGFhr3Fej4X191qQ2ydewE61/e+xtF5f5cYmo9
-        cE5LW33FYWGFMS1EgWwItqKN0Q==
-X-Google-Smtp-Source: ABdhPJy4OvbVt3GEoZrJDhM4UmwcIpYhzXR+SeylsTgUHNK2EM6X9YusgMqR1gXPROkM/kerD31MAA==
-X-Received: by 2002:a05:6512:1395:b0:446:d382:79a5 with SMTP id p21-20020a056512139500b00446d38279a5mr17647734lfa.210.1651758610739;
-        Thu, 05 May 2022 06:50:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SxpW3jQfQRJuzP0YaVQ3Gyvey8yuBaVOYp4o4X4T9zc=;
+        b=uc952NiasjNqrzEpsKZMSlCgEwMJeElEO3fF5Kubyoz3Iu3o4LXH/61MY07iH+zISM
+         Cb5F3BA79k6SLObSckRENi1w2qzu0xfnbh054lzj1YiMdKPul2mOKSkSo6AHxzEfMMY3
+         GUDGfqEhcrneY7myfgBlrhbQtTUc3h64ZGtZiL91ojEZih9yfvhjbi/pxSsTG5rqBV99
+         DF5lgL4yWQSIAFizargg8Liu8OrfTr1eQHNMWK9AVgqpOuJnGn1/Rl3QMQsPEsfTnuoE
+         r8iBlYUJawUp+NVb/mnTGnQ98MFNHng/0KvQdMCAlxW/J2UonTqCEo/ICf8J5SnXEClM
+         qxSQ==
+X-Gm-Message-State: AOAM533+i4TVyhvQcbgPakksX+lP+r3NsYGS2Ka77JMpOmIbxiZEz1og
+        nVno9dk86uIqJlaU6uji1Tr5zQ==
+X-Google-Smtp-Source: ABdhPJxKgq8lst4mQr1wDvUGKp7wtQoV6Z07DBPyUVJgE7KdYio9PLwT6GmCdo1ru40/y0Gf4ujOzA==
+X-Received: by 2002:a05:651c:887:b0:247:f630:d069 with SMTP id d7-20020a05651c088700b00247f630d069mr16784652ljq.514.1651758848324;
+        Thu, 05 May 2022 06:54:08 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c17-20020a2ea791000000b0024f3d1dae96sm210935ljf.30.2022.05.05.06.50.10
+        by smtp.gmail.com with ESMTPSA id z24-20020ac25df8000000b0047255d211ccsm221788lfq.251.2022.05.05.06.54.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 May 2022 06:50:10 -0700 (PDT)
+        Thu, 05 May 2022 06:54:07 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 2/2] drm/msm/mdp4: get rid of struct mdp4_platform_config
-Date:   Thu,  5 May 2022 16:50:08 +0300
-Message-Id: <20220505135008.1351533-3-dmitry.baryshkov@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v7 0/7] PCI: qcom: Fix higher MSI vectors handling
+Date:   Thu,  5 May 2022 16:54:00 +0300
+Message-Id: <20220505135407.1352382-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220505135008.1351533-1-dmitry.baryshkov@linaro.org>
-References: <20220505135008.1351533-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,100 +77,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Struct mdp4_platform_config is a relict from the DT-conversion time.
-Move the max_clk field to the mdp4_kms_init(), the place where it is
-used and drop the struct mdp4_platform_config and the mdp4_get_config()
-function.
+I have replied with my Tested-by to the patch at [2], which has landed
+in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
+Add support for handling MSIs from 8 endpoints"). However lately I
+noticed that during the tests I still had 'pcie_pme=nomsi', so the
+device was not forced to use higher MSI vectors.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 21 ++++++---------------
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h |  5 -----
- 2 files changed, 6 insertions(+), 20 deletions(-)
+After removing this option I noticed that hight MSI vectors are not
+delivered on tested platforms. After additional research I stumbled upon
+a patch in msm-4.14 ([1]), which describes that each group of MSI
+vectors is mapped to the separate interrupt. Implement corresponding
+mapping.
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-index 1fba6ab06eb1..ccde710c63fa 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-@@ -13,8 +13,6 @@
- #include "msm_mmu.h"
- #include "mdp4_kms.h"
- 
--static struct mdp4_platform_config *mdp4_get_config(struct platform_device *dev);
--
- static int mdp4_hw_init(struct msm_kms *kms)
- {
- 	struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(kms));
-@@ -384,7 +382,6 @@ static void read_mdp_hw_revision(struct mdp4_kms *mdp4_kms,
- static int mdp4_kms_init(struct drm_device *dev)
- {
- 	struct platform_device *pdev = to_platform_device(dev->dev);
--	struct mdp4_platform_config *config = mdp4_get_config(pdev);
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct mdp4_kms *mdp4_kms;
- 	struct msm_kms *kms = NULL;
-@@ -392,6 +389,10 @@ static int mdp4_kms_init(struct drm_device *dev)
- 	struct msm_gem_address_space *aspace;
- 	int irq, ret;
- 	u32 major, minor;
-+	unsigned long max_clk;
-+
-+	/* TODO: Chips that aren't apq8064 have a 200 Mhz max_clk */
-+	max_clk = 266667000;
- 
- 	mdp4_kms = kzalloc(sizeof(*mdp4_kms), GFP_KERNEL);
- 	if (!mdp4_kms) {
-@@ -459,7 +460,7 @@ static int mdp4_kms_init(struct drm_device *dev)
- 		goto fail;
- 	}
- 
--	clk_set_rate(mdp4_kms->clk, config->max_clk);
-+	clk_set_rate(mdp4_kms->clk, max_clk);
- 
- 	read_mdp_hw_revision(mdp4_kms, &major, &minor);
- 
-@@ -479,7 +480,7 @@ static int mdp4_kms_init(struct drm_device *dev)
- 			ret = PTR_ERR(mdp4_kms->lut_clk);
- 			goto fail;
- 		}
--		clk_set_rate(mdp4_kms->lut_clk, config->max_clk);
-+		clk_set_rate(mdp4_kms->lut_clk, max_clk);
- 	}
- 
- 	pm_runtime_enable(dev->dev);
-@@ -552,16 +553,6 @@ static int mdp4_kms_init(struct drm_device *dev)
- 	return ret;
- }
- 
--static struct mdp4_platform_config *mdp4_get_config(struct platform_device *dev)
--{
--	static struct mdp4_platform_config config = {};
--
--	/* TODO: Chips that aren't apq8064 have a 200 Mhz max_clk */
--	config.max_clk = 266667000;
--
--	return &config;
--}
--
- static const struct dev_pm_ops mdp4_pm_ops = {
- 	.prepare = msm_pm_prepare,
- 	.complete = msm_pm_complete,
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
-index 7cc549b6a82b..01179e764a29 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
-@@ -42,11 +42,6 @@ struct mdp4_kms {
- };
- #define to_mdp4_kms(x) container_of(x, struct mdp4_kms, base)
- 
--/* platform config data (ie. from DT, or pdata) */
--struct mdp4_platform_config {
--	uint32_t max_clk;
--};
--
- static inline void mdp4_write(struct mdp4_kms *mdp4_kms, u32 reg, u32 data)
- {
- 	msm_writel(data, mdp4_kms->mmio + reg);
+Since we can not expect that other platforms will use multi-IRQ scheme
+for MSI mapping (e.g. iMX and Tegra map all 256 MSI interrupts to single
+IRQ), it's support is implemented directly in pcie-qcom rather than in
+the core driver.
+
+The first patch in the series is a revert of  [2] (landed in pci-next).
+Either both patches should be applied or both should be dropped.
+
+Patchseries dependecies: [3] (for the schema change).
+
+Changes since v6:
+ - Fix indentation of the arguments as requested by Stanimir
+
+Changes since v5:
+ - Fixed commit subject and in-comment code according to Bjorn's
+   suggestion,
+ - Changed variable idx to i to follow dw_handle_msi_irq() style.
+
+Changes since v4:
+ - Fix the minItems/maxItems properties in the YAML schema.
+
+Changes since v3:
+ - Reimplement MSI handling scheme in the Qualcomm host controller
+   driver.
+
+Changes since v2:
+ - Fix and rephrase commit message for patch 2.
+
+Changes since v1:
+ - Split a huge patch into three patches as suggested by Bjorn Helgaas
+ - snps,dw-pcie removal is now part of [3]
+
+[1] https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/commit/671a3d5f129f4bfe477152292ada2194c8440d22
+[2] https://lore.kernel.org/linux-arm-msm/20211214101319.25258-1-manivannan.sadhasivam@linaro.org/
+[3] https://lore.kernel.org/linux-arm-msm/20220422211002.2012070-1-dmitry.baryshkov@linaro.org/
+
+
+Dmitry Baryshkov (7):
+  PCI: qcom: Revert "PCI: qcom: Add support for handling MSIs from 8
+    endpoints"
+  PCI: dwc: Correct msi_irq condition in dw_pcie_free_msi()
+  PCI: dwc: Add msi_host_deinit callback
+  PCI: dwc: Export several functions useful for MSI implentations
+  PCI: qcom: Handle MSIs routed to multiple GIC interrupts
+  dt-bindings: PCI: qcom: Support additional MSI interrupts
+  arm64: dts: qcom: sm8250: provide additional MSI interrupts
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  45 +++++-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  11 +-
+ .../pci/controller/dwc/pcie-designware-host.c |  72 +++++----
+ drivers/pci/controller/dwc/pcie-designware.h  |  12 ++
+ drivers/pci/controller/dwc/pcie-qcom.c        | 138 +++++++++++++++++-
+ 5 files changed, 246 insertions(+), 32 deletions(-)
+
 -- 
 2.35.1
 
