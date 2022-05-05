@@ -2,418 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 874FA51C672
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 19:44:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B33551C6AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 20:02:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377079AbiEERrX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 13:47:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40890 "EHLO
+        id S1382953AbiEESGY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 14:06:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382861AbiEERrO (ORCPT
+        with ESMTP id S1347541AbiEESGX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 13:47:14 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89D5327B2A
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 10:43:33 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id cq17-20020a17090af99100b001dc0386cd8fso4721440pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 10:43:33 -0700 (PDT)
+        Thu, 5 May 2022 14:06:23 -0400
+Received: from esa.hc3962-90.iphmx.com (esa.hc3962-90.iphmx.com [216.71.142.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC9674BFFC;
+        Thu,  5 May 2022 11:02:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NQfFt3HaBAioonm8VTKsJgtS3lpy2wAUQ+cM79qV71A=;
-        b=WHGV30FcJ9QXGwlNy9NQ818aOd+zCCtzQKwWTfDpfgjIqf5UNb3qWYknniF19FbsJe
-         emGjDd/ktzn3hm/eJHzC6cQQb5LwUHkE3jqc8T6j0VhoBFR3ZCKZime2om2p0xd5Bkgh
-         ++s2BwD37u/uwZm0J+c3U9wLnn+1Paa0O7/MM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NQfFt3HaBAioonm8VTKsJgtS3lpy2wAUQ+cM79qV71A=;
-        b=ho2i8vicZ8fU97nBDKGTR+nyOe7zI1Gduv4/xXCE0Jwcyoza5l/26cIZR0SlqPhA3H
-         VXXF+Zb/IVv+XH3ImREW0CuZRjaEH9dw+IM/pSOEG1IOtJp+lsDu4tTU+2WXyKyZoGXu
-         UXi1ngV3vt6hBOBt4r2VevZ0FUgP4nr+/VJaQ8yZ5JNyhtos7Wps+wZtLJJsNtDgTpvj
-         A/SpE23y5yKc8KH4QPsaPVFAE/DkBMgZurhDd4UkRYG3MVeWr+JwOiuUQUpnOFRtnMkG
-         Wli3lslZJ4cH2Wdg/BHo5LCIoztr3HtHNTsprXxb1RVoE7u/fLfbvDDvKwoO1QwFpk10
-         U1ug==
-X-Gm-Message-State: AOAM532A4eHHIxj1raqVsSbNYLeLJ6s7B8/rtuDP/FYU8IdPxOD7pySR
-        ax2nJTY06A+RIublFzSxuUKtAA==
-X-Google-Smtp-Source: ABdhPJwlqXlYXMIoPvcPQ7XNSTA0WwLa3NuXxMOnM6dQT57CNuqNMtwVV0GrdF3vKHAUD/4oLacCyQ==
-X-Received: by 2002:a17:902:ab04:b0:156:1517:411a with SMTP id ik4-20020a170902ab0400b001561517411amr28286302plb.128.1651772613049;
-        Thu, 05 May 2022 10:43:33 -0700 (PDT)
-Received: from joebar-glaptop.lan (c-71-202-34-56.hsd1.ca.comcast.net. [71.202.34.56])
-        by smtp.gmail.com with ESMTPSA id a6-20020a636606000000b003c60b1f0dbasm1599928pgc.35.2022.05.05.10.43.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 May 2022 10:43:32 -0700 (PDT)
-From:   "Joseph S. Barrera III" <joebar@chromium.org>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        "Joseph S. Barrera III" <joebar@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v4 5/5] arm64: dts: qcom: sc7180: Add kingoftown dts files
-Date:   Thu,  5 May 2022 10:41:16 -0700
-Message-Id: <20220505104024.v4.5.Ib62291487a664a65066d18a3e83c5428a6d2cc6c@changeid>
-X-Mailer: git-send-email 2.31.0
-In-Reply-To: <20220505104024.v4.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid>
-References: <20220505104024.v4.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid>
+  d=qti.qualcomm.com; i=@qti.qualcomm.com; q=dns/txt;
+  s=qccesdkim1; t=1651773763; x=1652378563;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=w2Dhjxc8SU3O8N73+tskpToAYvxA0GTbivDl538Kjlw=;
+  b=OW4MHs2pOk8Aht2I7ptbsYzWKaOfEZK2u3ioycaTjQlOaqamxD6T6aSv
+   HPXNoJ7Brk7RMqkj8ipkpzOpcxGM+rYWldPRWzuB5JXNk7Ja1APZaIL2B
+   i4RI7X27sRxsdN1cnkC+3BqT++D8I3/L5iVmSA6e3oZqfRwJnM7MkUkhQ
+   4=;
+Received: from mail-bn8nam11lp2177.outbound.protection.outlook.com (HELO NAM11-BN8-obe.outbound.protection.outlook.com) ([104.47.58.177])
+  by ob1.hc3962-90.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 18:02:40 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Ml6IoHHDssQY+37GBU7gigkiKlNYwRxqzaZkgh+0r+aKqRbTgBf9hkV/sg8cQsUz8Agn/YwKt3zguvERFtSDn0lS4AhhF5BL9Rymqv55YT6jpW/j8B9E4D5acS412j9XbHuXefMErXlmKljjcZ5raGyyrcW3JqA/NzSYh5Sc3OfrrKhjxRqYDBhWdFIOmngdINqHclXG4T3qrhTy7tpxMp6d9jhbNtR2x7nS//lwqAXr0r1a1orN7hWqNYI0eKKqvQzW58Bv0ibudCBjRd0iZ2NUsPclDZDK2CCkZntL6uuWf7GJ8yLTAgqSOul3iVpEbMSHoO6i/obaQXGOiX7X0g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=w2Dhjxc8SU3O8N73+tskpToAYvxA0GTbivDl538Kjlw=;
+ b=PP9KZ3k3ztSo6VTghyQ8wCFd2QdUTDGKXt1N1b6VJnMSuNPZ0ZP+y0jtgpSW3SDvl30fnUqwsKjjvqbHzGhvjUbsfAuWTSyz7PFf2k0MyXkdG97W6di2F4fdK6NCTIp7Ls0ZG3aXXDJCp9CWexTYbE6+x2/oJsS6K7tDqboFUb7ykMfrlzoPwkkvVjE+PI12DnKydJEy+qwIGBXm34EN2foBZklpPT+5RsTdpQbTkKh8la6ZeBdCO73ed1TcHOijdn52UUpE0kUCA8DIDKnO0MFBUdWSC4KEe1/K6xP05VBXHDSeSCGRIuHKlY6JOBGtFmzRfDNYt3q15xTqa2MMsg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=qti.qualcomm.com; dmarc=pass action=none
+ header.from=qti.qualcomm.com; dkim=pass header.d=qti.qualcomm.com; arc=none
+Received: from MW4PR02MB7186.namprd02.prod.outlook.com (2603:10b6:303:73::6)
+ by DM6PR02MB4236.namprd02.prod.outlook.com (2603:10b6:5:9a::30) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5186.15; Thu, 5 May
+ 2022 18:02:36 +0000
+Received: from MW4PR02MB7186.namprd02.prod.outlook.com
+ ([fe80::1d18:abb7:c311:543f]) by MW4PR02MB7186.namprd02.prod.outlook.com
+ ([fe80::1d18:abb7:c311:543f%4]) with mapi id 15.20.5206.025; Thu, 5 May 2022
+ 18:02:36 +0000
+From:   Sankeerth Billakanti <sbillaka@qti.qualcomm.com>
+To:     Doug Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+CC:     "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        "linux-phy@lists.infradead.org" <linux-phy@lists.infradead.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH 1/2] dt-bindings: msm/dp: List supplies in the bindings
+Thread-Topic: [PATCH 1/2] dt-bindings: msm/dp: List supplies in the bindings
+Thread-Index: AQHYWOh0LkcVWva+fESk6uZPP3V7t60BIRCAgAABL4CAD35OcA==
+Date:   Thu, 5 May 2022 18:02:36 +0000
+Message-ID: <MW4PR02MB718610FAA14F966ADE1B1585E1C29@MW4PR02MB7186.namprd02.prod.outlook.com>
+References: <20220425210643.2420919-1-dianders@chromium.org>
+ <20220425140619.1.Ibfde5a26a7182c4b478d570c23d2649823ac2cce@changeid>
+ <CAE-0n51eZpAKprRQ0HqjLciF_BVQHBDN8SMFNVmmOd=B9UBEzg@mail.gmail.com>
+ <CAD=FV=WmVK3wTQf_EAxSi0WPXedSFGCsKdyqRnHsskmMYTHDQA@mail.gmail.com>
+In-Reply-To: <CAD=FV=WmVK3wTQf_EAxSi0WPXedSFGCsKdyqRnHsskmMYTHDQA@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=qti.qualcomm.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 59c32a7a-1777-41da-3fb4-08da2ec16fd6
+x-ms-traffictypediagnostic: DM6PR02MB4236:EE_
+x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
+x-microsoft-antispam-prvs: <DM6PR02MB42368F11FB19802F38FF07B7E1C29@DM6PR02MB4236.namprd02.prod.outlook.com>
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: /TdcQy4gImfMcSpzBrB9qk/xNVRW8u8xTMEQLlHO8Wm11JLjndkX97NCcl5UhzBdMl76eKAOyrdsNgjRnnaxiDh+pO6pi1ZJVr1tb0iM+QWxGaWIC9CWkZsVj2sqgW3kLDo+cLgpJJqIgdpn4lkkzZYAZ7llIHUa2ZS3g/gwHXTTHXwPoitP8i0cFJeYv+BWYg1LFLDTebTz1bbJTtqeNMGM9B0u1FeiTXRLDPLkeTVy+rrDYAFuv3bjzZ1IvAEX7Hdmmzgv+w8Itc9XXumSV9NDqHUyIKIIsPfR2IEy0UncspXrus4qYteJwEN+7OYg/jNTBLfyaeucUFJjRZVNCPGKdrVf2WBw4LboJKWGerWbAofghiXTTqE66vE9hApqmlK3WnblbEw78IDQWim8G2Ix/A58IBU9arT6fZodqXeHvntyoStGl15xg8hqJH/pCQxQmlmtrepOAEXqOUQi7nOUC1qhdboybQT4QZglgAua1+u5SUHDRWwksMKS+03I+H4QqCRhLr/HiwL4h7NBibQe//Xo0KZzlOudvRCxe56/Ipvyx/DX0Ua2y+t7UivlGMAJfJQerL6DouJq0DA8jj226ZhGM7Hixq22tW4vmR3H1oyeVkLuDkMEgXW9bO9jHLqUfjrkzp8Tp0s2vh/u94YWZEq27X93zI5RzBFnsOMm2Hs/2bX5Oa4DIfhA/1mxDWmTpFjtWiJJOqrxW1imRg==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW4PR02MB7186.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(9686003)(54906003)(110136005)(508600001)(6506007)(7696005)(55016003)(186003)(66556008)(26005)(66946007)(66446008)(8676002)(64756008)(66476007)(4326008)(86362001)(52536014)(2906002)(71200400001)(76116006)(5660300002)(7416002)(8936002)(33656002)(38100700002)(122000001)(38070700005)(316002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bjdrOGc1Z3cyWExaQXRVMmhIdFRPa1VoNlY4bGUzQ0diNnFsdWhkVi9zNGpy?=
+ =?utf-8?B?UmtmWFBNTW5RU3oxaWxhS0dqMTYyR3lObnVRZUFpU0c3VHdQT0J0Qm5HZTFk?=
+ =?utf-8?B?YWo4Z3h0ZVZMZEJxL1d1UXFKSklqdllRSXdLVHY4WEVXcDJvU1pKMjFZRFk2?=
+ =?utf-8?B?RUpqcWJkRzZuYS9zUFZXSVl4dFFxekhCU2NBRnUyTkgrd0NKWCtkb3dZT21B?=
+ =?utf-8?B?QW01N3BvQXc1VFZjRjNpM0pqenU2Z3Vkd1NkKytGU2xmd0N6UWU2RXhpRzhN?=
+ =?utf-8?B?MERIV09qYjJQcWtFU0RQRitYQ3d3UXhIb1JIVkRPK0N6cHllbzFlZ3FUNlRS?=
+ =?utf-8?B?RUFmQkpneHB5enJRcVBoVG5WZVZhTzZUcG1kNnRwdU1pWDU4cjhOemVSaC9X?=
+ =?utf-8?B?ZlNRTFllYVJ2S1hremRyTW1scXRrQVpmMTY2eDEyNGVtZmpXUk1Ca1pPY0ta?=
+ =?utf-8?B?MVhTcEVYRExwL0FQNnJwN2FRVUlzZzR1Rk90V3JUUVNpc2JYZ2w1dkdobXRO?=
+ =?utf-8?B?c3dxcGtyUWErS0E3eXE0K2IraU5QYjEzUmpabkE1dE9Dd2RGby9QdkdSMmtq?=
+ =?utf-8?B?ekxvWm55V1VycktpdC94bXU4TFJQbXUwU2lncjZOaUxLK2NXcFRsZkZlR3VF?=
+ =?utf-8?B?Sy8wanJhNklrMUhwY2FOaFlNY0pBT1BzbkJ2Z01pNUowbkUrRmRRTlNUeXBZ?=
+ =?utf-8?B?UkZJN1B5c2dTVmthV3h5Nlkwb25La09keEdpMllNSWNraXNhRk5BNnY1NnFD?=
+ =?utf-8?B?cmRuMG4zTGVJM1Avb3p3ZXhHQTJidW4wU0dlQUR0NDdkZzgrTFNPZXNyYlNh?=
+ =?utf-8?B?bURUNXRHZXBPQ2RSQmIwM3R3SHFkbnlHMzRLZUNDVlM4TkpxZld2Yk54WDBN?=
+ =?utf-8?B?cmowRDFNZHgzNUYrWTA2ZWd1SStVTlJZT1dVRG9OTWZyMHE1MG15Nkh6WUhJ?=
+ =?utf-8?B?Sng5NFU4WWJhaWVSL3JienBOaUhZdCs5K3RHWFArK1g0LzRmWGRmRnpvK3RF?=
+ =?utf-8?B?ZEl3M3R5dVp3RUxDV3h1NHhmcWZrajREekpEbDRSajUzdFpJT2JZbk5FdFZo?=
+ =?utf-8?B?NDJGVUxnMVROLzhSYTBRYWRBVU9DNVZCbVNDbVAydzE3RCt0S3IzVlJTUEVv?=
+ =?utf-8?B?ajViRnp1cCtUanJEMHRYQ1A4dTV3VXhIMWtQSW9jMVk3RDR6RER4cTlBeGxT?=
+ =?utf-8?B?bWQ4ZndHamNZdHRWWVdzdURMR3kvRUkxQXVmVUxRSXo2SHh6TGdvcGZtTWJX?=
+ =?utf-8?B?MGtCQU5zVmNJb2JzQVlyRGJDekpKRm5ndEtpL3owVkhQQm0ydUhnYWhFNXB0?=
+ =?utf-8?B?MzEzbUErMG5UQlhPUWs2bWFwQ1YwTVB0WVBBZVFpdU5LSGFqajFraW5Ha2ZJ?=
+ =?utf-8?B?R2RRT2ZGcVdEclpNd0pEM01VWE91VU9XNmJQRW5SaU5GY2NKUjFsTlp4eHB0?=
+ =?utf-8?B?VVBSdXEzWUtGbjg0bUd3cVZoSnlTUjZwNHZDZEZXY05JVDlKSlkzaXkxMUtG?=
+ =?utf-8?B?REdWNjVUWDhQcUZPbW0yMzMyeWtjNSsxd094NFYvWXlhOWs2U0w1c1FacTRE?=
+ =?utf-8?B?K2JNcEhmaUxBK2ErTkpsY2M1UGFmK3VVTlVqWFpmam5uN05rcDBNWnc2ZFNu?=
+ =?utf-8?B?eGd2blBsdXFYV3l6b0VLbUVQT21na3A3N1ZVd0FLNmhmRTl0Zk15QWU2Y3Fh?=
+ =?utf-8?B?NWU2NG85cUNTd0dETmFmUnYrYk1EQ0dBWHcvZVZOWUR2R3NIcmsxN1J5MHNn?=
+ =?utf-8?B?RmYvUlNGd3NhYnZSUkE0WXQ5WFZMSGd3a3VDZS9ad2thdHJLT3VmbHQySjNM?=
+ =?utf-8?B?eXlsMSttTGpBN1g4Ymt2b090ZTNITVFQTHFPaldKN2NTRURlL2VSVzNrNGZQ?=
+ =?utf-8?B?Yk42L29wRmVVVVVMU1VrdHE3OTFpVGFZSG5uTVUwUDhTT2JXRGZsR0Yway8z?=
+ =?utf-8?B?ZjBEUTRRYitzMXo0dlRjTGMreUhWSVR1VG8vWUszdjVobUNaeUcwd09Kakkz?=
+ =?utf-8?B?Rjh1Si9lM1E2UHU4YkFRYThZMzNJQW9DZnFPUjdVSTJIdnB1a3dCZU9ndmhO?=
+ =?utf-8?B?YVY2MHVHTmlzNmZEK1dXc3BpZk9LcTV3bXNTOUdhV1pKM1BGckFXbzYxYUhQ?=
+ =?utf-8?B?ZWlLNTN2MjYxY29HT05zL21iZHFzWmZHQzVUS05zaXFlZHlqQWI3NWlOMlYz?=
+ =?utf-8?B?TklzQ0Q4bTRyNmNQam1tN1lvNmd5azV3VHFSTGovTlZWeDB3aXpSMVl3NWQ1?=
+ =?utf-8?B?OEd0alJVZnE4WklqeWNwdHVNTmx3MXdubFhab3p3TVIyN000NkRzaEgrK1l0?=
+ =?utf-8?B?cVlQNmp2UnJCZHJ1TVRsWXF3Mm51R3BqOWxldFJpQTY5MXBvaHBFSkZwS2t0?=
+ =?utf-8?Q?xmlcNWsUIf7czekU=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-OriginatorOrg: qti.qualcomm.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MW4PR02MB7186.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 59c32a7a-1777-41da-3fb4-08da2ec16fd6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 May 2022 18:02:36.5599
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: cjMMG2nUGtN151hr3ZCJwQ7/f2X4qdDdO2Y5iuaHwYwoZHuGt1zTdtrvlstT7Fx5DUECXjGF6U6Yp7OqaMaeb69wTACBvVbhsgglc8FvFqs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR02MB4236
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kingoftown is a trogdor-based board. These dts files are unchanged copies
-from the downstream Chrome OS 5.4 kernel.
-
-Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
-
-Changes in v4:
-- Fixed description (no downstream bits removed).
-- Added missing version history.
-
-Changes in v3:
-- None
-
-Changes in v2:
-- First inclusion in series.
-
- arch/arm64/boot/dts/qcom/Makefile             |   2 +
- .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  44 ++++
- .../dts/qcom/sc7180-trogdor-kingoftown-r1.dts |  17 ++
- .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   | 223 ++++++++++++++++++
- 4 files changed, 286 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index dc26704dfe34..a9f2ad013179 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -60,6 +60,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r4.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-kingoftown-r0.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-kingoftown-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r0.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1-kb.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
-new file mode 100644
-index 000000000000..85aec1be98fc
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Kingoftown board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180.dtsi"
-+#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
-+#include "sc7180-trogdor-kingoftown.dtsi"
-+
-+/ {
-+	model = "Google Kingoftown (rev0)";
-+	compatible = "google,kingoftown-rev0", "qcom,sc7180";
-+};
-+
-+/*
-+ * In rev1+, the enable pin of pp3300_fp_tp will be tied to pp1800_l10a
-+ * power rail instead, since kingoftown does not have FP.
-+ */
-+&pp3300_fp_tp {
-+	gpio = <&tlmm 74 GPIO_ACTIVE_HIGH>;
-+	enable-active-high;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&en_fp_rails>;
-+};
-+
-+&tlmm {
-+	en_fp_rails: en-fp-rails {
-+		pinmux {
-+			pins = "gpio74";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio74";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
-new file mode 100644
-index 000000000000..2be9138ba89f
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
-@@ -0,0 +1,17 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Kingoftown board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180.dtsi"
-+#include "sc7180-trogdor-parade-ps8640.dtsi"
-+#include "sc7180-trogdor-kingoftown.dtsi"
-+
-+/ {
-+	model = "Google Kingoftown (rev1+)";
-+	compatible = "google,kingoftown", "qcom,sc7180";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-new file mode 100644
-index 000000000000..e7503a5b0403
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-@@ -0,0 +1,223 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Kingoftown board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+ap_ec_spi: &spi6 {};
-+ap_h1_spi: &spi0 {};
-+
-+#include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-lte-sku.dtsi"
-+
-+&alc5682 {
-+	compatible = "realtek,rt5682s";
-+	realtek,dmic1-clk-pin = <2>;
-+	realtek,dmic-clk-rate-hz = <2048000>;
-+};
-+
-+ap_ts_pen_1v8: &i2c4 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	ap_ts: touchscreen@10 {
-+		compatible = "elan,ekth3500";
-+		reg = <0x10>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
-+
-+		vcc33-supply = <&pp3300_ts>;
-+
-+		reset-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
-+	};
-+};
-+
-+&keyboard_controller {
-+	function-row-physmap = <
-+		MATRIX_KEY(0x00, 0x02, 0)       /* T1 */
-+		MATRIX_KEY(0x03, 0x02, 0)       /* T2 */
-+		MATRIX_KEY(0x02, 0x02, 0)       /* T3 */
-+		MATRIX_KEY(0x01, 0x02, 0)       /* T4 */
-+		MATRIX_KEY(0x03, 0x04, 0)       /* T5 */
-+		MATRIX_KEY(0x02, 0x04, 0)       /* T6 */
-+		MATRIX_KEY(0x01, 0x04, 0)       /* T7 */
-+		MATRIX_KEY(0x02, 0x09, 0)       /* T8 */
-+		MATRIX_KEY(0x01, 0x09, 0)       /* T9 */
-+		MATRIX_KEY(0x00, 0x04, 0)       /* T10 */
-+	>;
-+	linux,keymap = <
-+		MATRIX_KEY(0x00, 0x02, KEY_BACK)
-+		MATRIX_KEY(0x03, 0x02, KEY_REFRESH)
-+		MATRIX_KEY(0x02, 0x02, KEY_ZOOM)
-+		MATRIX_KEY(0x01, 0x02, KEY_SCALE)
-+		MATRIX_KEY(0x03, 0x04, KEY_SYSRQ)
-+		MATRIX_KEY(0x02, 0x04, KEY_BRIGHTNESSDOWN)
-+		MATRIX_KEY(0x01, 0x04, KEY_BRIGHTNESSUP)
-+		MATRIX_KEY(0x02, 0x09, KEY_MUTE)
-+		MATRIX_KEY(0x01, 0x09, KEY_VOLUMEDOWN)
-+		MATRIX_KEY(0x00, 0x04, KEY_VOLUMEUP)
-+
-+		CROS_STD_MAIN_KEYMAP
-+	>;
-+};
-+
-+&panel {
-+	compatible = "edp-panel";
-+};
-+
-+&pp3300_dx_edp {
-+	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&sound {
-+	compatible = "google,sc7180-trogdor";
-+	model = "sc7180-rt5682s-max98357a-1mic";
-+};
-+
-+&wifi {
-+	qcom,ath10k-calibration-variant = "GO_KINGOFTOWN";
-+};
-+
-+/* PINCTRL - modifications to sc7180-trogdor.dtsi */
-+
-+&en_pp3300_dx_edp {
-+	pinmux {
-+		pins = "gpio67";
-+	};
-+
-+	pinconf {
-+		pins = "gpio67";
-+	};
-+};
-+
-+/* PINCTRL - board-specific pinctrl */
-+
-+&tlmm {
-+	gpio-line-names = "TP_INT_L",		/* 0 */
-+			  "AP_RAM_ID0",
-+			  "AP_SKU_ID2",
-+			  "AP_RAM_ID1",
-+			  "",
-+			  "AP_RAM_ID2",
-+			  "AP_TP_I2C_SDA",
-+			  "AP_TP_I2C_SCL",
-+			  "TS_RESET_L",
-+			  "TS_INT_L",
-+			  "",			/* 10 */
-+			  "EDP_BRIJ_IRQ",
-+			  "AP_EDP_BKLTEN",
-+			  "",
-+			  "",
-+			  "EDP_BRIJ_I2C_SDA",
-+			  "EDP_BRIJ_I2C_SCL",
-+			  "HUB_RST_L",
-+			  "",
-+			  "",
-+			  "",			/* 20 */
-+			  "",
-+			  "",
-+			  "AMP_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "HP_IRQ",
-+			  "",
-+			  "",			/* 30 */
-+			  "AP_BRD_ID2",
-+			  "BRIJ_SUSPEND",
-+			  "AP_BRD_ID0",
-+			  "AP_H1_SPI_MISO",
-+			  "AP_H1_SPI_MOSI",
-+			  "AP_H1_SPI_CLK",
-+			  "AP_H1_SPI_CS_L",
-+			  "BT_UART_CTS",
-+			  "BT_UART_RTS",
-+			  "BT_UART_TXD",	/* 40 */
-+			  "BT_UART_RXD",
-+			  "H1_AP_INT_ODL",
-+			  "",
-+			  "UART_AP_TX_DBG_RX",
-+			  "UART_DBG_TX_AP_RX",
-+			  "HP_I2C_SDA",
-+			  "HP_I2C_SCL",
-+			  "FORCED_USB_BOOT",
-+			  "AMP_BCLK",
-+			  "AMP_LRCLK",		/* 50 */
-+			  "AMP_DIN",
-+			  "",
-+			  "HP_BCLK",
-+			  "HP_LRCLK",
-+			  "HP_DOUT",
-+			  "HP_DIN",
-+			  "HP_MCLK",
-+			  "AP_SKU_ID0",
-+			  "AP_EC_SPI_MISO",
-+			  "AP_EC_SPI_MOSI",	/* 60 */
-+			  "AP_EC_SPI_CLK",
-+			  "AP_EC_SPI_CS_L",
-+			  "AP_SPI_CLK",
-+			  "AP_SPI_MOSI",
-+			  "AP_SPI_MISO",
-+			  /*
-+			   * AP_FLASH_WP_L is crossystem ABI. Schematics
-+			   * call it BIOS_FLASH_WP_L.
-+			   */
-+			  "AP_FLASH_WP_L",
-+			  "EN_PP3300_DX_EDP",
-+			  "AP_SPI_CS0_L",
-+			  "",
-+			  "",			/* 70 */
-+			  "",
-+			  "",
-+			  "",
-+			  "EN_FP_RAILS",
-+			  "UIM2_DATA",
-+			  "UIM2_CLK",
-+			  "UIM2_RST",
-+			  "UIM2_PRESENT_L",
-+			  "UIM1_DATA",
-+			  "UIM1_CLK",		/* 80 */
-+			  "UIM1_RST",
-+			  "",
-+			  "CODEC_PWR_EN",
-+			  "HUB_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "AP_SKU_ID1",		/* 90 */
-+			  "AP_RST_REQ",
-+			  "",
-+			  "AP_BRD_ID1",
-+			  "AP_EC_INT_L",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",			/* 100 */
-+			  "",
-+			  "",
-+			  "",
-+			  "EDP_BRIJ_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",			/* 110 */
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "AP_TS_PEN_I2C_SDA",
-+			  "AP_TS_PEN_I2C_SCL",
-+			  "DP_HOT_PLUG_DET",
-+			  "EC_IN_RW_ODL";
-+};
--- 
-2.31.0
-
+SGkgRG91ZywNCg0KPj4NCj4+IFF1b3RpbmcgRG91Z2xhcyBBbmRlcnNvbiAoMjAyMi0wNC0yNSAx
+NDowNjo0MikNCj4+ID4gV2UncmUgc3VwcG9zZWQgdG8gbGlzdCB0aGUgc3VwcGxpZXMgaW4gdGhl
+IGR0IGJpbmRpbmdzIGJ1dCB0aGVyZSBhcmUNCj4+ID4gbm9uZSBpbiB0aGUgRFAgY29udHJvbGxl
+ciBiaW5kaW5ncy4gTG9va2luZyBhdCB0aGUgTGludXggZHJpdmVyIGFuZA0KPj4gPiBleGlzdGlu
+ZyBkZXZpY2UgdHJlZXMsIHdlIGNhbiBzZWUgdGhhdCB0d28gc3VwcGxpZXMgYXJlIGV4cGVjdGVk
+Og0KPj4gPiAtIHZkZGEtMHA5LXN1cHBseQ0KPj4gPiAtIHZkZGEtMXAyLXN1cHBseQ0KPj4gPg0K
+Pj4gPiBMZXQncyBsaXN0IHRoZW0gYm90aCBpbiB0aGUgYmluZGluZ3MuIE5vdGUgdGhhdCB0aGUg
+ZGF0YXNoZWV0IGZvcg0KPj4gPiBzYzcyODAgZG9lc24ndCBkZXNjcmliZSB0aGVzZSBzdXBwbGll
+cyB2ZXJ5IHZlcmJvc2VseS4gRm9yIHRoZSAwcDkNCj4+ID4gc3VwcGx5LCBmb3IgaW5zdGFuY2Us
+IGl0IHNheXMgIlBvd2VyIGZvciBlRFAgMC45IFYgY2lyY3VpdHMiLiBUaGlzDQo+PiA+IHRoaXMg
+aXMgb2J2aW91cyBmcm9tIHRoZSBwcm9wZXJ0eSBuYW1lLCB3ZSBkb24ndCBib3RoZXIgY2x1dHRl
+cmluZw0KPj4gPiB0aGUgYmluZGluZ3Mgd2l0aCBhIGRlc2NyaXB0aW9uLg0KPj4gPg0KPj4gPiBT
+aWduZWQtb2ZmLWJ5OiBEb3VnbGFzIEFuZGVyc29uIDxkaWFuZGVyc0BjaHJvbWl1bS5vcmc+DQo+
+PiA+IC0tLQ0KPj4gPg0KPj4gPiAgLi4uL2RldmljZXRyZWUvYmluZGluZ3MvZGlzcGxheS9tc20v
+ZHAtY29udHJvbGxlci55YW1sICAgICAgfCA2ICsrKysrKw0KPj4gPiAgMSBmaWxlIGNoYW5nZWQs
+IDYgaW5zZXJ0aW9ucygrKQ0KPj4gPg0KPj4gPiBkaWZmIC0tZ2l0DQo+PiA+IGEvRG9jdW1lbnRh
+dGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2Rpc3BsYXkvbXNtL2RwLWNvbnRyb2xsZXIueWFtbA0K
+Pj4gPiBiL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9kaXNwbGF5L21zbS9kcC1j
+b250cm9sbGVyLnlhbWwNCj4+ID4gaW5kZXggY2QwNWNmZDc2NTM2Li5kYmEzMTEwOGRiNTEgMTAw
+NjQ0DQo+PiA+IC0tLQ0KPj4gPiBhL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9k
+aXNwbGF5L21zbS9kcC1jb250cm9sbGVyLnlhbWwNCj4+ID4gKysrIGIvRG9jdW1lbnRhdGlvbi9k
+ZXZpY2V0cmVlL2JpbmRpbmdzL2Rpc3BsYXkvbXNtL2RwLWNvbnRyb2xsZXIueWENCj4+ID4gKysr
+IG1sDQo+PiA+IEBAIC03Niw2ICs3Niw5IEBAIHByb3BlcnRpZXM6DQo+PiA+ICAgICIjc291bmQt
+ZGFpLWNlbGxzIjoNCj4+ID4gICAgICBjb25zdDogMA0KPj4gPg0KPj4gPiArICB2ZGRhLTBwOS1z
+dXBwbHk6IHRydWUNCj4+ID4gKyAgdmRkYS0xcDItc3VwcGx5OiB0cnVlDQo+PiA+ICsNCj4+ID4g
+ICAgcG9ydHM6DQo+PiA+ICAgICAgJHJlZjogL3NjaGVtYXMvZ3JhcGgueWFtbCMvcHJvcGVydGll
+cy9wb3J0cw0KPj4gPiAgICAgIHByb3BlcnRpZXM6DQo+PiA+IEBAIC0xMzcsNiArMTQwLDkgQEAg
+ZXhhbXBsZXM6DQo+PiA+DQo+PiA+ICAgICAgICAgIHBvd2VyLWRvbWFpbnMgPSA8JnJwbWhwZCBT
+QzcxODBfQ1g+Ow0KPj4gPg0KPj4gPiArICAgICAgICB2ZGRhLTBwOS1zdXBwbHkgPSA8JnZkZGFf
+dXNiX3NzX2RwX2NvcmU+Ow0KPj4NCj4+IEhhdmluZyAnYScgaW4gJ3ZkZGEnIHR5cGljYWxseSBt
+ZWFucyAnYW5hbG9nJyBmb3IgJ2FuYWxvZycgY2lyY3VpdHMsDQo+PiBzbyBJJ2QgZXhwZWN0IHRo
+aXMgdG8gb25seSBtYXR0ZXIgZm9yIHRoZSBwaHkgdGhhdCBjb250YWlucyB0aGUgYW5hbG9nDQo+
+PiBjaXJjdWl0cnkuIEl0IHdvdWxkIGJlIGdyZWF0IHRvIHJlbW92ZSB0aGUgcmVndWxhdG9yIGNv
+ZGUgZnJvbQ0KPj4gZHJpdmVycy9ncHUvZHJtL21zbS9kcC9kcF9wb3dlci5jIGFuZCBtb3ZlIHRo
+ZSByZWd1bGF0b3Jfc2V0X2xvYWQoKQ0KPj4gY2FsbCB0byB0aGUgcGh5IGRyaXZlciBpZiBwb3Nz
+aWJsZS4gSG9wZWZ1bGx5IHFjb20gZm9sa3MgY2FuIGhlbHANCj4+IGNsYXJpZnkgaGVyZS4NCj4N
+Cj5JbnRlcmVzdGluZy4gT2RkbHkgZW5vdWdoLCB0aGUgc2M3MjgwIGRhdGFzaGVldCBkb2Vzbid0
+IGxpc3QgdGhlICJfQSIuDQo+SXQgY2FsbHMgdGhlc2UgIlZERF9WUkVGXzBQOSIgYW5kICJWRERf
+VlJFRl8xUDIiLiBIb3dldmVyLCBvbiB0aGUNCj5zY2hlbWF0aWMgaW4gZnJvbnQgb2YgbWUgc29t
+ZW9uZSBsYWJlbGVkIHRoZXNlIHBpbnMgb24gdGhlIHNjNzI4MCB3aXRoIHRoZQ0KPiJBIi4gLi4u
+YW5kIHRoZSBkcml2ZXIgbG9va3MgZm9yIGEgc3VwcGx5IHdpdGggdGhlICJhIi4gOi0vDQo+DQo+
+SXQgd291bGQgYmUgZ29vZCB0byBnZXQgY2xhcmlmaWNhdGlvbiBmcm9tIHNvbWVvbmUgd2l0aCBi
+ZXR0ZXIgaW5mb3JtYXRpb24uDQo+DQo+LURvdWcNCg0KT3VyIGludGVybmFsIHBvd2VyIGdyaWQg
+ZG9jdW1lbnRzIGxpc3QgdGhlIHJlZ3VsYXRvcnMgYXMgVkREX0FfKl8xUDIgYW5kIFZERF9BXypf
+MFA5DQpmb3IgYWxsIHRoZSBwbGF0Zm9ybXMuDQoNClNvLCBhcyBhIHByYWN0aWNlLCB3ZSBwdXQg
+dGhlIHNhbWUgbmFtZSBpbiB0aGUgRFQgZmlsZXMuIEhlbmNlLA0KDQpSZXZpZXdlZC1ieTogU2Fu
+a2VlcnRoIEJpbGxha2FudGkgPHF1aWNfc2JpbGxha2FAcXVpY2luYy5jb20+DQoNClRoYW5rIHlv
+dSwNClNhbmtlZXJ0aCANCg==
