@@ -2,77 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F93251BAA1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 10:37:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8554951BAF2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 10:49:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234643AbiEEIl3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 04:41:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52348 "EHLO
+        id S1346404AbiEEIwk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 04:52:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232576AbiEEIl2 (ORCPT
+        with ESMTP id S1350432AbiEEIwi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 04:41:28 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3726349913
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 01:37:48 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id c190-20020a1c35c7000000b0038e37907b5bso4666701wma.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 01:37:48 -0700 (PDT)
+        Thu, 5 May 2022 04:52:38 -0400
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3C2E4AE28
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 01:48:59 -0700 (PDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id w187so6497211ybe.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 01:48:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=9EomTWkj5HWC9HSFz6GdVw86QRTFm3rQMXGeFndUEdo=;
-        b=DUptQS/O9Q9UJj2AG3SWh55ruJHnywPhx/EXPb+RdE3NWXQmZIx59cIEnjfZs/nr9a
-         0YfhyYJnC8KD40HohtTDj8tAVeC1HxqJsBLxwcD1TNVDivMXJ6Tz0EJaCgroMQoqLO6I
-         +TNKnxiLtOJmgPFcI0dPUhHbtnABXshfU7Cj3mSgGhtnKVYSMdVm0sxd1WuzPXmcxYLx
-         pD+10fA+N6xPCBVCtsr3etbuoWEUUSrM4lwc+aXPZTtLMhwUriSxnnsguENZpdMOmBO1
-         CcDiIpBKdd5SWaITnfa5Cj07T3/a5oCoHh9dxSFz13iquxp4nY3lOD/uoJki5IfLMhwK
-         56Dg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=op5ROKe2ZN3R178e7Bu8w5MlRYrTA2IJQ63KYbg67x0=;
+        b=PlQULGTSlWNcIR7xPZDYQG2Pa8eSpGTcolUplNhYBX/Nm4Yp95pd7BYFPUtf606YSc
+         19v4xDJJ2QlHi9c8bGxAbCXYQTQFHyq7pIKSguxg/MgiGd+KOBZ7oKl2NdmUibY6Sga2
+         MSDvMGQuMD8pP62o08MoI5rkuY46WTL0P2XwhogDtkZ5lpbSBYjW6bByhbP82EHKj60n
+         /sxfuNmOh7XcwQ+qGNS0gqxZL8TM0VC0Wc5XhwryNxv4NFtWsGrgUKaoA4YKSvNS5SOv
+         Wj2zJRTpSCu/batd46b1k2S5otWGZzb/W54OY1D0r1ia/0C5CXDbiTQnhZhnstTJryTU
+         8RfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=9EomTWkj5HWC9HSFz6GdVw86QRTFm3rQMXGeFndUEdo=;
-        b=TiNIi2d4L7ykekfeO0Tia0jNGKerC9HXfiVBbc2J74D+hmeWH1PcYbRuprVjnaAHYd
-         mPxQhYWAzfcq/4Dc/OwqFaD5p8See52hvHxIL4RR/crRq61NHM63CNJOWmyKLfdKarET
-         hh6owWqiJ8+UrmJTjbbkrFvjr7waQG0pME2QWNF9t59hb2bRTPII3fQ8QgKgujtKHzU+
-         Y+vIbw7/GMl0JKyxLn/VScLQCroSMjBx3hWHX1Ab9HJaAS99dkxLJFL8F0FYdONpB1jG
-         nknjYMdwtXBgERXhXQ4F1oYRrxdSCWLPfQ+W6NBxf+d/Zawx7FRkaHqWKCoFxlFBdTd5
-         Gc4Q==
-X-Gm-Message-State: AOAM5310TrzDXtVjVu5kfdt9kU0mMK8WJAHEWOgNUgyDMaiPzQpk4TH5
-        dtKJBU3WtT8usQsSC7Q16naLkA==
-X-Google-Smtp-Source: ABdhPJzpvOP08C0LQGFGRn3if9YYgSMu9dpR5z5GqutXqQm2XV6HiPCKizP8Z9CqOapQ59H/GpJYZw==
-X-Received: by 2002:a05:600c:4f55:b0:393:f140:d386 with SMTP id m21-20020a05600c4f5500b00393f140d386mr3456815wmq.80.1651739866814;
-        Thu, 05 May 2022 01:37:46 -0700 (PDT)
-Received: from [192.168.0.217] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id ba28-20020a0560001c1c00b0020c5253d8c8sm688756wrb.20.2022.05.05.01.37.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 May 2022 01:37:46 -0700 (PDT)
-Message-ID: <7316927c-3068-90b6-3500-bf759bb46493@linaro.org>
-Date:   Thu, 5 May 2022 10:37:45 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=op5ROKe2ZN3R178e7Bu8w5MlRYrTA2IJQ63KYbg67x0=;
+        b=Q9ihC9KesYJnU0XI/qyeUodweZf7NJ+FjWo3ldGbE+IiFQG2ZqZ6if/vWq5GaFzk7V
+         LmVEA9P0XTJ/TJpGO7R5GpHSVR2nHenJu2w8UwnTcD8jMZPJ5GB0sFSe0WKTgCrMGDdQ
+         KPwrsW5BHKfpbyL9CIQYz4mcYdUpwLzEixxkA0Xmd2ADIxukP6M4CmCSy/UOKEW+XqTv
+         qzmSGFdeid7UPG7d/C+jcZ/meE3gvxehjJiB2tjXjpBC/wBfjjfez/67ujUHuaD8ON7D
+         aMyuDz9vLSpT32yMmpdIihWgdlGl5ZTdxCRKIp3Juve2AMXIGsho82jfwLboEruwx/gR
+         fKXQ==
+X-Gm-Message-State: AOAM5330vz1xPkoZ6Zp3OdMXw+XV43B+U0Hfs+sh5cujMEZKAb6mrRd4
+        9e2nR48f84HX9lxk/sXzS1fO91wZM2qq2uzxYjEMWw==
+X-Google-Smtp-Source: ABdhPJz2AMrVv3CJIjrI6pJqL+b8hzT+Mj4fdxway48kUTXDu4QxBUWQrSy+dKStzWQ5d1zkk8f5o+rC9IbeqBsiFQ8=
+X-Received: by 2002:a25:3455:0:b0:648:44db:51e0 with SMTP id
+ b82-20020a253455000000b0064844db51e0mr19579704yba.314.1651740539255; Thu, 05
+ May 2022 01:48:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v2 5/6] dt-bindings: mailbox: qcom: set correct
- #clock-cells
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, jassisinghbrar@gmail.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-        dmitry.baryshkov@linaro.org
-References: <20220503195605.4015616-1-robimarko@gmail.com>
- <20220503195605.4015616-5-robimarko@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220503195605.4015616-5-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+References: <20220505015528.344-1-quic_jesszhan@quicinc.com> <CAF6AEGt1uFAgAo1+sp7KbamTb4DAn_MU-NR+UvGHLUGfm3oQ=A@mail.gmail.com>
+In-Reply-To: <CAF6AEGt1uFAgAo1+sp7KbamTb4DAn_MU-NR+UvGHLUGfm3oQ=A@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 5 May 2022 11:48:48 +0300
+Message-ID: <CAA8EJpraDRzBevNPC6H9ZAaLAXFq2aOkdoD9NGo-DpgsXoCm=g@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/mdp5: Return error code in mdp5_pipe_release
+ when deadlock is detected
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>, quic_aravindh@quicinc.com,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,47 +72,134 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/05/2022 21:56, Robert Marko wrote:
-> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-> index 3b5ba7ecc19d..1f803925867e 100644
-> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-> @@ -50,7 +50,7 @@ properties:
->      const: 1
->  
->    '#clock-cells':
-> -    const: 0
-> +    enum: [0, 1]
->  
->    clock-names:
->      minItems: 2
-> @@ -96,6 +96,22 @@ allOf:
->        properties:
->          clocks:
->            maxItems: 3
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          enum:
-> +            - qcom,ipq6018-apcs-apps-global
-> +            - qcom,ipq8074-apcs-apps-global
-> +    then:
-> +      properties:
-> +        '#clock-cells':
-> +          const: 1
-> +
+On Thu, 5 May 2022 at 05:06, Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Wed, May 4, 2022 at 6:55 PM Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+> >
+> > mdp5_get_global_state runs the risk of hitting a -EDEADLK when acquiring
+> > the modeset lock, but currently mdp5_pipe_release doesn't check for if
+> > an error is returned. Because of this, there is a possibility of
+> > mdp5_pipe_release hitting a NULL dereference error.
+> >
+> > To avoid this, let's have mdp5_pipe_release check if
+> > mdp5_get_global_state returns an error and propogate that error.
+> >
+> > Changes since v1:
+> > - Separated declaration and initialization of *new_state to avoid
+> >   compiler warning
+> > - Fixed some spelling mistakes in commit message
+> >
+>
+> Note that mdp5_mixer_release() needs the same treatment.. one more comment below
+>
+> > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> > ---
+> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c  | 15 +++++++++++----
+> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h  |  2 +-
+> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 20 ++++++++++++++++----
+> >  3 files changed, 28 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
+> > index ba6695963aa6..97887a2be082 100644
+> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
+> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
+> > @@ -119,18 +119,23 @@ int mdp5_pipe_assign(struct drm_atomic_state *s, struct drm_plane *plane,
+> >         return 0;
+> >  }
+> >
+> > -void mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe)
+> > +int mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe)
+> >  {
+> >         struct msm_drm_private *priv = s->dev->dev_private;
+> >         struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+> >         struct mdp5_global_state *state = mdp5_get_global_state(s);
+> > -       struct mdp5_hw_pipe_state *new_state = &state->hwpipe;
+> > +       struct mdp5_hw_pipe_state *new_state;
+> >
+> >         if (!hwpipe)
+> > -               return;
+> > +               return -EINVAL;
+>
+> At least per the current code, !hwpipe is "normal".. I think that fits
+> the model of things like kfree(NULL), so lets make this just return 0
 
-If there is a respin, please drop this blank line.
+Especially since we release the r_hwpipe w/o additional check. And
+r_hwpipe frequently is NULL.
 
-> +    else:
-> +      properties:
-> +        '#clock-cells':
-> +          const: 0
-> +
->  examples:
->  
->    # Example apcs with msm8996
+>
+> > +
+> > +       if (IS_ERR(state))
+> > +               return PTR_ERR(state);
+> > +
+> > +       new_state = &state->hwpipe;
+> >
+> >         if (WARN_ON(!new_state->hwpipe_to_plane[hwpipe->idx]))
+> > -               return;
+> > +               return -EINVAL;
+> >
+> >         DBG("%s: release from plane %s", hwpipe->name,
+> >                 new_state->hwpipe_to_plane[hwpipe->idx]->name);
+> > @@ -141,6 +146,8 @@ void mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe)
+> >         }
+> >
+> >         new_state->hwpipe_to_plane[hwpipe->idx] = NULL;
+> > +
+> > +       return 0;
+> >  }
+> >
+> >  void mdp5_pipe_destroy(struct mdp5_hw_pipe *hwpipe)
+> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h
+> > index 9b26d0761bd4..cca67938cab2 100644
+> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h
+> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h
+> > @@ -37,7 +37,7 @@ int mdp5_pipe_assign(struct drm_atomic_state *s, struct drm_plane *plane,
+> >                      uint32_t caps, uint32_t blkcfg,
+> >                      struct mdp5_hw_pipe **hwpipe,
+> >                      struct mdp5_hw_pipe **r_hwpipe);
+> > -void mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe);
+> > +int mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe);
+> >
+> >  struct mdp5_hw_pipe *mdp5_pipe_init(enum mdp5_pipe pipe,
+> >                 uint32_t reg_offset, uint32_t caps);
+> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+> > index 228b22830970..979458482841 100644
+> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+> > @@ -311,12 +311,24 @@ static int mdp5_plane_atomic_check_with_state(struct drm_crtc_state *crtc_state,
+> >                                 mdp5_state->r_hwpipe = NULL;
+> >
+> >
+> > -                       mdp5_pipe_release(state->state, old_hwpipe);
+> > -                       mdp5_pipe_release(state->state, old_right_hwpipe);
+> > +                       ret = mdp5_pipe_release(state->state, old_hwpipe);
+> > +                       if (ret)
+> > +                               return ret;
+> > +
+> > +                       ret = mdp5_pipe_release(state->state, old_right_hwpipe);
+> > +                       if (ret)
+> > +                               return ret;
+> > +
+> >                 }
+> >         } else {
+> > -               mdp5_pipe_release(state->state, mdp5_state->hwpipe);
+> > -               mdp5_pipe_release(state->state, mdp5_state->r_hwpipe);
+> > +               ret = mdp5_pipe_release(state->state, mdp5_state->hwpipe);
+> > +               if (ret)
+> > +                       return ret;
+> > +
+> > +               ret = mdp5_pipe_release(state->state, mdp5_state->r_hwpipe);
+> > +               if (ret)
+> > +                       return ret;
+> > +
+> >                 mdp5_state->hwpipe = mdp5_state->r_hwpipe = NULL;
+> >         }
+> >
+> > --
+> > 2.35.1
+> >
 
 
-Best regards,
-Krzysztof
+
+-- 
+With best wishes
+Dmitry
