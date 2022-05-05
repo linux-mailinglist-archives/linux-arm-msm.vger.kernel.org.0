@@ -2,89 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8727851C5E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 19:14:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E16251C5F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 19:18:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238631AbiEERRf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 13:17:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38770 "EHLO
+        id S243956AbiEERWe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 13:22:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382582AbiEERRe (ORCPT
+        with ESMTP id S230244AbiEERWd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 13:17:34 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84A965D187;
-        Thu,  5 May 2022 10:13:53 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1EE6861EDF;
-        Thu,  5 May 2022 17:13:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C79C385A4;
-        Thu,  5 May 2022 17:13:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651770832;
-        bh=4Cw2v6gdwkXljm2f8UrPWlUHep2z7zYACGpDeVD+35M=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UOOFj9t9lLuJHoacWEg5paZ2PXpqB2J56xRUC4oWfs5KoGF86XoZgBffPber8YJ10
-         AlE/FF6HAJIytHkfFVbVjeoyOuqW0JdXGjqQ3odpkKfQVN3lYYrNKPKOsAirDu40hI
-         A6Okk4m+aFTpXJs6oeOTjTrQLO379rwX3R0/og5wiGpDs+mT4NyXc5ZUml/PUJF386
-         SurtgZjdmvc2N8buL0CKoj1ofOoA5C9cA+quUTbllndOW0LJqyhBvjqb3iWPOb/OiX
-         vO3GmrUK33DWYh3M91SzF9TOYnk/VfqkdJCGegOXHKi1Jy9dEa0VTQ2Myk1+NKqlp3
-         zhuDwpvIZWDiw==
-Date:   Thu, 5 May 2022 18:13:47 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 5 May 2022 13:22:33 -0400
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCB595C767;
+        Thu,  5 May 2022 10:18:49 -0700 (PDT)
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-d39f741ba0so4829984fac.13;
+        Thu, 05 May 2022 10:18:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=i1FuK5FUH4jQkE/QUvHNMXEN4JGRJ3wRdrdO6vSKNH8=;
+        b=m8LPjnSlH3DuHRLFRjSW5bgP0CKJKjjX2wBLRb1NaFfDwLGraoW+6gjkH+F6vv9nn9
+         F6yRROLmTN7+ARrliG7r68aiFmNcY5/NvMSCTDg++JFr5IIGCJTqU3hwFWicU3EOqxcV
+         Zb3oEeQ+gHMPWiMAd/Th2+hQlUOMOUvwkm0iO/E4KxuUPF19kwf9TJ2kLerf0zdcUv2w
+         XXCDR5dGm4HSPlvmQC91wJOkhcc/mp8aOPje7WMm23V4i9FtzJobF3m2uFsvqWKA7jRs
+         PL34ZF0K0dtXgxIdPk7jpArLzMKRp8PSbKEwzzNCL3ZeURNRCweCD1uOqddFdyUUAgt2
+         F9QA==
+X-Gm-Message-State: AOAM530vO8dULrz2ox69eQqRRSsvJ06HORoiZZUByvtYHMC/VtfioZYN
+        I558ho+3L5AsST97J30llA3ou0UvqA==
+X-Google-Smtp-Source: ABdhPJxzT+pTHTDszz2pfvOrtWv4acL4k7h/zqwbkBsyulCWx6EVuH+/tZ8j1qKsMV5Psl7R+xn3XA==
+X-Received: by 2002:a05:6870:a70a:b0:d9:aea4:a62 with SMTP id g10-20020a056870a70a00b000d9aea40a62mr2853687oam.143.1651771129040;
+        Thu, 05 May 2022 10:18:49 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id u6-20020a4ad0c6000000b0035eb4e5a6d4sm959505oor.42.2022.05.05.10.18.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 May 2022 10:18:48 -0700 (PDT)
+Received: (nullmailer pid 4062673 invoked by uid 1000);
+        Thu, 05 May 2022 17:18:47 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] spi: dt-bindings: qcom,spi-geni-qcom: allow three
- interconnects
-Message-ID: <YnQFy96kjgmlSgDB@sirena.org.uk>
-References: <20220505065233.28476-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="27YKxtB+W51W2fUF"
-Content-Disposition: inline
-In-Reply-To: <20220505065233.28476-1-krzysztof.kozlowski@linaro.org>
-X-Cookie: Adapt.  Enjoy.  Survive.
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        devicetree@vger.kernel.org
+In-Reply-To: <20220505134408.4124575-1-vladimir.zapolskiy@linaro.org>
+References: <20220505121213.4121802-2-vladimir.zapolskiy@linaro.org> <20220505134408.4124575-1-vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH v4 1/7] dt-bindings: clock: add QCOM SM8450 camera clock bindings
+Date:   Thu, 05 May 2022 12:18:47 -0500
+Message-Id: <1651771127.625482.4062672.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 05 May 2022 16:44:08 +0300, Vladimir Zapolskiy wrote:
+> The change adds device tree bindings for camera clock controller
+> found on SM8450 SoC.
+> 
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+> Changes from v3 to v4:
+> * renamed a filename in $id value after the rename of the file itself
+> 
+> Changes from v2 to v3:
+> * renamed files to match the compatible value "qcom,sm8450-camcc",
+> * fixed a typo in a usage example found in the yaml file.
+> 
+> Changes from v1 to v2:
+> * updated qcom,camcc-sm8450.yaml according to review comments from Rob,
+> * changed qcom,camcc-sm8450.h license to dual one.
+> 
+> .../bindings/clock/qcom,sm8450-camcc.yaml     |  89 ++++++++++
+>  include/dt-bindings/clock/qcom,sm8450-camcc.h | 159 ++++++++++++++++++
+>  2 files changed, 248 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,sm8450-camcc.h
+> 
 
---27YKxtB+W51W2fUF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-On Thu, May 05, 2022 at 08:52:33AM +0200, Krzysztof Kozlowski wrote:
-> Recent Qualcomm Geni SPI nodes, e.g. on SM8450, come also with three
-> interconnects.  This fixes dtbs_check warnings like:
+yamllint warnings/errors:
 
-Acked-by: Mark Brown <broonie@kernel.org>
+dtschema/dtc warnings/errors:
+Error: Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.example.dts:30.34-35 syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:364: Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.example.dtb] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1401: dt_binding_check] Error 2
 
---27YKxtB+W51W2fUF
-Content-Type: application/pgp-signature; name="signature.asc"
+doc reference errors (make refcheckdocs):
 
------BEGIN PGP SIGNATURE-----
+See https://patchwork.ozlabs.org/patch/
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmJ0BcoACgkQJNaLcl1U
-h9CWXwf+PpSWEjCCcXFisV3Uq8feNv9iLaRSWwAvqMI76vND/kUcEAjVbOuf7fz4
-gED3jM5cY1KGncVvwoY7gWjQaP+SRQDdmGPUjoXl/X5cgNSQW6+oYOzuplcMZXrm
-HKThWqlVKr9uYlYJzV1FPdV4OQd9sLLUQF/w0LjgDqkzW64UmLwfyD76Sfex9A/8
-ncliJYQqgaAjD0pUum5ECcaex06AHmrhdm58gHG8YgdUkkRSPZhaVDAgy1+8eeoR
-PzbVw31OYr0GzrAvgXWLnjCWbxD9WewHW6g5TDL3h3IARMxlLSmRV0gV+F5ewQAy
-WYsoeZYVX/x5e8EjnP2afdloEB+0sQ==
-=Yxe0
------END PGP SIGNATURE-----
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
---27YKxtB+W51W2fUF--
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
