@@ -2,101 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D6D051CB9B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 23:50:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13F6851CBCE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 00:02:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344061AbiEEVyL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 17:54:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46598 "EHLO
+        id S239829AbiEEWFl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 18:05:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245484AbiEEVyK (ORCPT
+        with ESMTP id S237116AbiEEWFl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 17:54:10 -0400
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 146EA3B547;
-        Thu,  5 May 2022 14:50:29 -0700 (PDT)
-Received: by mail-ot1-f41.google.com with SMTP id c5-20020a9d75c5000000b00605ff3b9997so3818460otl.0;
-        Thu, 05 May 2022 14:50:29 -0700 (PDT)
+        Thu, 5 May 2022 18:05:41 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F9D81EEF0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 15:02:00 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id c11so7731239wrn.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 15:02:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PVdKjf8r7i6549fCuW/sK3U25vWwNJcaPF1ncZ/jgok=;
+        b=Og5DterDsqKhQM9M9XE9Bsi4p0a52NHWGdItH2txILHAxhjdz7dY/XULcCXBcV2Ss5
+         eW0PvEzfa/T6ioIxYTa6bGbtFWWHFjwsRLQ/MRhaaQjyFTxR5A7TDuTnI99M3M4VdBhx
+         HgWpAABKDBL/TC6T+GNfqhtA+CNoZ4zfJHWisZ320DBh/AMx1JgGgjoE7lg+ugaQnsmG
+         abmasT+nYYGAN3Esw6hnZ15UYusipa83DWfc+w3NskeW5nahF5THYjP48M/zh+EpTyMj
+         oIuM0a1hNolrbJPRafHLJ3u80X5OsSSWf/JJ05ervvcETB2WykVYU4tZLPmLkFdHr+NA
+         jtLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GamJ/l/RmrXyjJkKVpT8+cS0nZD1kxYuueRTHFM/AHw=;
-        b=VbFOItWulArwv2vuf/0enxVGbegr/tRx3sd+43cgFcpR8lVc8bMEOfoCrzYy++a/ds
-         XXjtQd7pCex/bBrx8DQDrq5MNTFAtAJmy3wn5hDNG09RpXTF7hEhUMiMhLYriuXDRBmY
-         Z/3HfuI0d6mzveX9uEWEiTlg1GGw49FfshBgg5IbJi8vUxHlJ/TYW4D9NlpHyLyKtWtr
-         NLMJTdtvvwmQLbNizV9pjkdiCxFmPmUprj7Df8Gi1yQPOm3mf/vtj88xqj/NpXK0CeNA
-         7+H7dACBbn64qJqoIs0pZbBPfY6DPkQppr4AqW2lXru4yLOqnHC+TRRXpOwuhY7ubanR
-         co7Q==
-X-Gm-Message-State: AOAM532fUc5Vu7JXrROznkD/2KiJdi12hfJxXmZXuIhAhUC4sp9PIbVl
-        wk4ijOAXMbvJsb22BObTLmdRCMhMDQ==
-X-Google-Smtp-Source: ABdhPJyw2OZojfrwTZkE7UzCEPW3jLRPRO22Xs230qHkYMlb7hwvfUIyusCROmwP5/ICTt+T/CITTw==
-X-Received: by 2002:a9d:1b6a:0:b0:605:5d7d:92cd with SMTP id l97-20020a9d1b6a000000b006055d7d92cdmr92930otl.121.1651787428366;
-        Thu, 05 May 2022 14:50:28 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id cv39-20020a056870c6a700b000e686d13889sm918111oab.35.2022.05.05.14.50.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 May 2022 14:50:27 -0700 (PDT)
-Received: (nullmailer pid 253104 invoked by uid 1000);
-        Thu, 05 May 2022 21:50:27 -0000
-Date:   Thu, 5 May 2022 16:50:27 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH v5 1/7] dt-bindings: clock: add QCOM SM8450 camera clock
- bindings
-Message-ID: <YnRGoypIFbV5S3c/@robh.at.kernel.org>
-References: <20220505121213.4121802-2-vladimir.zapolskiy@linaro.org>
- <20220505181317.4125934-1-vladimir.zapolskiy@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PVdKjf8r7i6549fCuW/sK3U25vWwNJcaPF1ncZ/jgok=;
+        b=YXrsqOlU5wk5+0XAjEyyyW/L7NYSg+l8eOxfjbTbsbXFJrqMjB9lwcwNUjS5IEzTYp
+         ggU873HhnIN14sSoRQFDMD8pyxxbxbXjNOEk87A/kMzVDtDLEGfDJ72ewyEmB06UCIi8
+         SFz4NRfxBEuY6ymGHSNSdNwEVzbZ3SuryOJEROwFNcad51ZD7kpFWYMAEUfWjG0KmJCH
+         IXLThKqqu5JTZ3wPwhOyg8xFCM84dLO1jdMxlr40B7MTl12Gqrw1ghy6yvZhgE5yS+it
+         WXAOG4e3+5FQ71vZDvt7KAfy6ByKLrztfjQjwNeD0g2CuBpPUj6fgJ2GbpTowfuk5Wc7
+         evGg==
+X-Gm-Message-State: AOAM531K3I6r0KxaJj28cHNoSfYUu3AO/FBrV6AFzJVCYZnnTS65LNCo
+        LVUJNT82iP1pTDaGKWkf8GCMee1w9CnirWl8tgs=
+X-Google-Smtp-Source: ABdhPJxsPeyGHFJPjwM4JN0d564Eg0zZwZY5Wto8oWZpbih/FBmmM++aIDeXLzeBb8d6eOwV8Q6uDG+PO7UvDhevFqg=
+X-Received: by 2002:a05:6000:719:b0:20c:7894:22e1 with SMTP id
+ bs25-20020a056000071900b0020c789422e1mr144542wrb.93.1651788118866; Thu, 05
+ May 2022 15:01:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220505181317.4125934-1-vladimir.zapolskiy@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+References: <20220505214051.155-1-quic_jesszhan@quicinc.com>
+In-Reply-To: <20220505214051.155-1-quic_jesszhan@quicinc.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 5 May 2022 15:01:45 -0700
+Message-ID: <CAF6AEGsFAkozD1j+padLREzGWNyzq8eVM9YxsX4=P4SROJ_0wA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] drm/msm/mdp5: Return error code in
+ mdp5_pipe_release when deadlock is detected
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>, quic_aravindh@quicinc.com,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 05, 2022 at 09:13:17PM +0300, Vladimir Zapolskiy wrote:
-> The change adds device tree bindings for camera clock controller
-> found on SM8450 SoC.
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+On Thu, May 5, 2022 at 2:41 PM Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>
+> mdp5_get_global_state runs the risk of hitting a -EDEADLK when acquiring
+> the modeset lock, but currently mdp5_pipe_release doesn't check for if
+> an error is returned. Because of this, there is a possibility of
+> mdp5_pipe_release hitting a NULL dereference error.
+>
+> To avoid this, let's have mdp5_pipe_release check if
+> mdp5_get_global_state returns an error and propogate that error.
+>
+> Changes since v1:
+> - Separated declaration and initialization of *new_state to avoid
+>   compiler warning
+> - Fixed some spelling mistakes in commit message
+>
+> Changes since v2:
+> - Return 0 in case where hwpipe is NULL as this is considered normal
+>   behavior
+> - Added 2nd patch in series to fix a similar NULL dereference issue in
+>   mdp5_mixer_release
+>
+> Reported-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+
+Fixes: 7907a0d77cb4 ("drm/msm/mdp5: Use the new private_obj state")
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+
 > ---
-> Changes from v4 to v5:
-> * fixed a typo in a usage example found in the yaml file.
-> 
-> Changes from v3 to v4:
-> * renamed a filename in $id value after the rename of the file itself.
-> 
-> Changes from v2 to v3:
-> * renamed files to match the compatible value "qcom,sm8450-camcc",
-> * fixed a typo in a usage example found in the yaml file.
-> 
-> Changes from v1 to v2:
-> * updated qcom,camcc-sm8450.yaml according to review comments from Rob,
-> * changed qcom,camcc-sm8450.h license to dual one.
-
-Please don't send 1 patch of a new version. Send the entire series. 
-Otherwise tools and maintainers get confused.
-
-Sending 3 versions in a day isn't great either. Give folks time to 
-review all the patches.
-
-Every version you've sent until this one has had errors you should have 
-found yourself at least after the first time. My bot is not a free 
-testing service, it runs on my machines and I review the emails before 
-sending.
-
-Rob
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c  | 15 +++++++++++----
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h  |  2 +-
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 20 ++++++++++++++++----
+>  3 files changed, 28 insertions(+), 9 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
+> index ba6695963aa6..a4f5cb90f3e8 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
+> @@ -119,18 +119,23 @@ int mdp5_pipe_assign(struct drm_atomic_state *s, struct drm_plane *plane,
+>         return 0;
+>  }
+>
+> -void mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe)
+> +int mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe)
+>  {
+>         struct msm_drm_private *priv = s->dev->dev_private;
+>         struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+>         struct mdp5_global_state *state = mdp5_get_global_state(s);
+> -       struct mdp5_hw_pipe_state *new_state = &state->hwpipe;
+> +       struct mdp5_hw_pipe_state *new_state;
+>
+>         if (!hwpipe)
+> -               return;
+> +               return 0;
+> +
+> +       if (IS_ERR(state))
+> +               return PTR_ERR(state);
+> +
+> +       new_state = &state->hwpipe;
+>
+>         if (WARN_ON(!new_state->hwpipe_to_plane[hwpipe->idx]))
+> -               return;
+> +               return -EINVAL;
+>
+>         DBG("%s: release from plane %s", hwpipe->name,
+>                 new_state->hwpipe_to_plane[hwpipe->idx]->name);
+> @@ -141,6 +146,8 @@ void mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe)
+>         }
+>
+>         new_state->hwpipe_to_plane[hwpipe->idx] = NULL;
+> +
+> +       return 0;
+>  }
+>
+>  void mdp5_pipe_destroy(struct mdp5_hw_pipe *hwpipe)
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h
+> index 9b26d0761bd4..cca67938cab2 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h
+> @@ -37,7 +37,7 @@ int mdp5_pipe_assign(struct drm_atomic_state *s, struct drm_plane *plane,
+>                      uint32_t caps, uint32_t blkcfg,
+>                      struct mdp5_hw_pipe **hwpipe,
+>                      struct mdp5_hw_pipe **r_hwpipe);
+> -void mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe);
+> +int mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe);
+>
+>  struct mdp5_hw_pipe *mdp5_pipe_init(enum mdp5_pipe pipe,
+>                 uint32_t reg_offset, uint32_t caps);
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+> index 228b22830970..979458482841 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+> @@ -311,12 +311,24 @@ static int mdp5_plane_atomic_check_with_state(struct drm_crtc_state *crtc_state,
+>                                 mdp5_state->r_hwpipe = NULL;
+>
+>
+> -                       mdp5_pipe_release(state->state, old_hwpipe);
+> -                       mdp5_pipe_release(state->state, old_right_hwpipe);
+> +                       ret = mdp5_pipe_release(state->state, old_hwpipe);
+> +                       if (ret)
+> +                               return ret;
+> +
+> +                       ret = mdp5_pipe_release(state->state, old_right_hwpipe);
+> +                       if (ret)
+> +                               return ret;
+> +
+>                 }
+>         } else {
+> -               mdp5_pipe_release(state->state, mdp5_state->hwpipe);
+> -               mdp5_pipe_release(state->state, mdp5_state->r_hwpipe);
+> +               ret = mdp5_pipe_release(state->state, mdp5_state->hwpipe);
+> +               if (ret)
+> +                       return ret;
+> +
+> +               ret = mdp5_pipe_release(state->state, mdp5_state->r_hwpipe);
+> +               if (ret)
+> +                       return ret;
+> +
+>                 mdp5_state->hwpipe = mdp5_state->r_hwpipe = NULL;
+>         }
+>
+> --
+> 2.35.1
+>
