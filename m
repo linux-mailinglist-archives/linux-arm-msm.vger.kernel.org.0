@@ -2,41 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6BFE51C531
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 18:33:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 585A551C548
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 18:45:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381023AbiEEQg6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 12:36:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60774 "EHLO
+        id S1377122AbiEEQsl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 12:48:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349984AbiEEQg4 (ORCPT
+        with ESMTP id S231702AbiEEQsk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 12:36:56 -0400
+        Thu, 5 May 2022 12:48:40 -0400
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772B1541A4;
-        Thu,  5 May 2022 09:33:16 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8CE3140D2;
+        Thu,  5 May 2022 09:45:00 -0700 (PDT)
 Received: from localhost.localdomain (unknown [10.0.11.2])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 96EA3CEB69;
-        Thu,  5 May 2022 16:32:43 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id E078FCEB6A;
+        Thu,  5 May 2022 16:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1651768364; bh=W0T8MsmE33FXKnUsBsvXhWW/m3Eju1Zg595SCArEpYM=;
+        t=1651769069; bh=0xFfXxhaakUSdwQJ4McjhfUEVogdCXDlcNEi2e5reQ0=;
         h=From:To:Cc:Subject:Date;
-        b=D9mDis5XW7mFgrcWlEcld/KIuqc9zjp5Sirn/86radN0pHBBqdtPrmTmUvHMbLLqX
-         MaNVW29wS2I96P1iX+dSho9vKnOv1l1jnD0S7ets9gm7/oIsYXEhLz5RnPphgGzfMj
-         LNfth7bdyJj5XSK7M4xaHI+zgxThoFAKtWR1rcEQ=
+        b=KSO19uWkd1/Mmzje9o5Bv+NvyzaFuzO8IH5MpkNLFXZSJfY6+1xOfaRfb+jDnLtk6
+         Xk7+Mlq8HDz3P/KDE+wQ49soY0mnLZF4/LlL8LU0KP0HkahGat/z4YnIQuN1FIcXM2
+         tQmwXhKWw+qRgy1tibq5IUA/NS7/bVN991P+mTec=
 From:   Luca Weiss <luca@z3ntu.xyz>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        =?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@collabora.com>,
         Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] ARM: dts: qcom: msm8974-FP2: Add notification LED
-Date:   Thu,  5 May 2022 18:30:29 +0200
-Message-Id: <20220505163029.6541-1-luca@z3ntu.xyz>
+Subject: [PATCH] ARM: dts: qcom: msm8974-hammerhead: Add notification LED
+Date:   Thu,  5 May 2022 18:43:37 +0200
+Message-Id: <20220505164336.13210-1-luca@z3ntu.xyz>
 X-Mailer: git-send-email 2.36.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=2.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
@@ -49,21 +51,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-FP2 has a RGB LED connected to the TRILED and hence channels 7, 6 and
+From: André Almeida <andrealmeid@collabora.com>
+
+Nexus 5 has a RGB LED connected to the TRILED and hence channels 7, 6 and
 5 of the LPG. Add a node describing this.
 
 Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Signed-off-by: André Almeida <andrealmeid@collabora.com>
 ---
 This patch depends on the PM8941 LPG patch:
 https://lore.kernel.org/linux-arm-msm/20220504205411.1510667-1-bjorn.andersson@linaro.org/
 
- .../dts/qcom-msm8974pro-fairphone-fp2.dts     | 30 +++++++++++++++++++
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 30 +++++++++++++++++++
  1 file changed, 30 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-index 0700a0008caa..0fad82fc9e03 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
+diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+index 9493886a5c0d..94f3149d9f87 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
 @@ -3,6 +3,7 @@
  #include "qcom-pm8841.dtsi"
  #include "qcom-pm8941.dtsi"
@@ -72,7 +77,7 @@ index 0700a0008caa..0fad82fc9e03 100644
  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
  
  / {
-@@ -162,6 +163,35 @@ gpio_keys_pin_a: gpio-keys-active {
+@@ -313,6 +314,35 @@ otg {
  	};
  };
  
@@ -105,9 +110,9 @@ index 0700a0008caa..0fad82fc9e03 100644
 +	};
 +};
 +
- &pronto {
- 	status = "okay";
- 
+ &rpm_requests {
+ 	pm8841-regulators {
+ 		compatible = "qcom,rpm-pm8841-regulators";
 -- 
 2.36.0
 
