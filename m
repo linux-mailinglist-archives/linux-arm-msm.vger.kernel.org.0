@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 992DB51B480
+	by mail.lfdr.de (Postfix) with ESMTP id E25B251B481
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 02:16:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230169AbiEEATu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 20:19:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40916 "EHLO
+        id S229512AbiEEATv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 20:19:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230091AbiEEATt (ORCPT
+        with ESMTP id S230044AbiEEATt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 4 May 2022 20:19:49 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90BB74C40F
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4C494C410
         for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 17:16:08 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id j4so4963643lfh.8
+Received: by mail-lf1-x136.google.com with SMTP id h29so4988844lfj.2
         for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 17:16:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=u1oDjcUyt+XUVjgyrGdMzbLDFCsXlZDQVUok8w5uQW0=;
-        b=CQHMq/8CJlJKPUyQiDirAGtcF7+a+yuxuXiVjjHRQt2RNB20u+FGulytwVJDIvTC59
-         GQXorniYjsNwFo44ZQmuYrBwWQzVUEQR9gMLr2bbkFwajZzXLt1tShVpzvMnnZC0tDfB
-         zmMJdTlL8z/gcp4YUHsqOnVp+2igTvkpZk6dnQMWKNdAdrFsAD7D679GHXtk9XhKa4uI
-         U2nvRnX1Di2ZcwPwAFTacp8ojuASJQLXAoNXcebEWPSKy5AlQYnY5zTo/VVnu/1aOmOU
-         Py0pLZsUqHkoc06iMLw0oR9bbPfVkOxhINndThGZkgcQ5ZBGvv8tqPFAoMsiAgGlh7yd
-         L0Zw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=c6BZ7IebefRthM/nq1GeRPMj1Jfg2tTeYdhhJgi+YZc=;
+        b=cpM1sATn9RUViJ1Bic7cx1LRL5UPGi6fxqpEieurV0Bsb5T/fFkJpcbQ+ePtVEBZKb
+         akl4IUYvuuDmGtdEsD+IAuGIUUXtird5hqRDZ6BacP8sCRacTOri8m0KOzicuPOdK10k
+         k2DKqA54+95QRLCaOrjwNEi58WMiRjOkSjb9Oe4ywfJ3UuVrY9vEQg/VLbqGi9mFXoDx
+         xjGVqMX4WF1Ale+soM4Xt1pPsjlVDLCATB9g8VwNJF0AaBYnRsqmt1lJmR236qv5Z43X
+         gxyVi9xyFoDLtAiTDG3tmfEoIi49vs0dyAu/mPx16FD10APgnyV4ohM1/sP92tiFJ5Rj
+         eviw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=u1oDjcUyt+XUVjgyrGdMzbLDFCsXlZDQVUok8w5uQW0=;
-        b=ShmUY8HiwO89QrZwqmMbimG0IdzW2W+NtOcPKEludPtx53ZXFrzbST9OToDdly5u7N
-         OniCRZM8naUcN2+EBDH5icazaUm5Lo+jRJ1muYMaLkeLQzDsBRl0GbMyiEfT1N1ZnikJ
-         KzImHEhYoXFcmm2cPiilj7NQ2MOwur5BAHPz+O71U5Ox9aawoGY1NW+qz6YbPNFMQX0k
-         vzgFvvJqYYAqCFIPfdTCM6lHG0CpjCK8lTtlYWMQvEtemQ9JUq0yD03xEgJN18D+OLDp
-         2bR6ZaRXj8+mdom/y88rVCByCZ85co98IMTesZ1vOo/DLGC0WzdcMiBqTtTkNZ/mn9+G
-         a8tg==
-X-Gm-Message-State: AOAM531d0UIUxgFaVjlPE2JzvLcolo8uLDrLc7t3s1wUFdjgg6WDV585
-        B4dodU45kuSnjkXn5m3v4Wsymw==
-X-Google-Smtp-Source: ABdhPJyOFcMiCTxFiESBlHbtybCGQflPnHtvNynjnT2Q8APsdSngeAVyRhsSyiUanGlZdzyOpSVD8w==
-X-Received: by 2002:a05:6512:b0b:b0:44a:f4a5:b519 with SMTP id w11-20020a0565120b0b00b0044af4a5b519mr16033374lfu.287.1651709766535;
-        Wed, 04 May 2022 17:16:06 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=c6BZ7IebefRthM/nq1GeRPMj1Jfg2tTeYdhhJgi+YZc=;
+        b=EcywWZIgELhit4Rv/R1BBYvArDZ6o28/kwVlIlSBpLi08hOYoXNrW4Xr/Bj98nbNpx
+         LGaOZZku1s9pp0qeE1lfdKBy3kZZCaHWvVfPjtNiY/k9ps7DtvLdU7HzuKmYBiiuOJ2i
+         MAv0G+XmdTSdoO8AbzXg2UepIORaTWRmPPKfPRwsEB1AALuINhbfm18IIKH9ggdfnu5X
+         9J35PwLkMG23OGnKsBiVPpH8M4R2ABOE10OF11rm2KDJJiV4l/qyyon0N3GMjMkDGC6d
+         hMgpkHtVZhe/e062HJiGN4/7at0NzAtxf30RWczMZFaKTLcI322B89B+Dbb0KRWfINWx
+         yCEg==
+X-Gm-Message-State: AOAM530bPmblNkkDuOJ0GvZe0Q3oP/E4+ZAkAZvDUbaX3D7LC5bF7dPv
+        hA6ZM7lEYSZSeFY0zR1vdgj26A==
+X-Google-Smtp-Source: ABdhPJxYtgU3N55D/VVUNnbpsOw/zycbxS6tYCG4Ppx3nvIcbx7NYbNwi0Hmse3nHEeZJ472gaFN/A==
+X-Received: by 2002:ac2:544a:0:b0:471:f568:59d6 with SMTP id d10-20020ac2544a000000b00471f56859d6mr16053392lfn.492.1651709767179;
+        Wed, 04 May 2022 17:16:07 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u24-20020ac25198000000b0047255d211b0sm6714lfi.223.2022.05.04.17.16.05
+        by smtp.gmail.com with ESMTPSA id u24-20020ac25198000000b0047255d211b0sm6714lfi.223.2022.05.04.17.16.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 04 May 2022 17:16:06 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -58,10 +58,12 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org,
         Robin Murphy <robin.murphy@arm.com>
-Subject: [PATCH v2 0/5] drm/msm: fixes for KMS iommu handling
-Date:   Thu,  5 May 2022 03:16:00 +0300
-Message-Id: <20220505001605.1268483-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 1/5] drm/msm/dpu: check both DPU and MDSS devices for the IOMMU
+Date:   Thu,  5 May 2022 03:16:01 +0300
+Message-Id: <20220505001605.1268483-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220505001605.1268483-1-dmitry.baryshkov@linaro.org>
+References: <20220505001605.1268483-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -74,42 +76,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series started from the applied and then reverted [2] patch by
-Robin Murphy [1]. After the MDSS rework [3] has landed it is now
-possible to reapply the extended version of the original patch. While we
-are at it, also rework the IOMMU init code for DPU and MDP5 drivers.
+Follow the lead of MDP5 driver and check both DPU and MDSS devices for
+the IOMMU specifiers.
 
-For MDP5 this moves iommu_domain_alloc() call and removes struct
-mdp5_cfg_platform remains.
+Historically DPU devices had IOMMU specified in the MDSS device tree
+node, but as some of MDP5 devices are being converted to the supported
+by the DPU driver, the driver should adapt and check both devices.
 
-For DPU this allows specifying the iommus = <...> either in the DPU
-device (like all DPU devices do) or in the MDSS device (like MDP5
-devices do).
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-Changes since v1:
- - Move aspace init to common helper
- - Use device_iommu_mapped() rather than semi-internal
-   dev_iommu_fwspec_get() (suggested by Robin Murphy)
-
-[1] https://patchwork.freedesktop.org/patch/480707/
-[2] https://patchwork.freedesktop.org/patch/482453/
-[3] https://patchwork.freedesktop.org/series/98525/
-
-Dmitry Baryshkov (5):
-  drm/msm/dpu: check both DPU and MDSS devices for the IOMMU
-  drm/msm/mdp5: move iommu_domain_alloc() call close to its usage
-  drm/msm: Stop using iommu_present()
-  drm/msm: move KMS aspace init to the separate helper
-  drm/msm: switch msm_kms_init_aspace() to use device_iommu_mapped()
-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 24 ++---------
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 16 --------
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h |  6 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 31 +++-----------
- drivers/gpu/drm/msm/msm_drv.c            | 51 +++++++++++++++++++++++-
- drivers/gpu/drm/msm/msm_drv.h            |  1 +
- 6 files changed, 59 insertions(+), 70 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 143d6643be53..5ccda0766f6c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -1004,14 +1004,22 @@ static int _dpu_kms_mmu_init(struct dpu_kms *dpu_kms)
+ 	struct msm_mmu *mmu;
+ 	struct device *dpu_dev = dpu_kms->dev->dev;
+ 	struct device *mdss_dev = dpu_dev->parent;
++	struct device *iommu_dev;
+ 
+ 	domain = iommu_domain_alloc(&platform_bus_type);
+ 	if (!domain)
+ 		return 0;
+ 
+-	/* IOMMUs are a part of MDSS device tree binding, not the
+-	 * MDP/DPU device. */
+-	mmu = msm_iommu_new(mdss_dev, domain);
++	/*
++	 * IOMMUs can be a part of MDSS device tree binding, or the
++	 * MDP/DPU device.
++	 */
++	if (dev_iommu_fwspec_get(dpu_dev))
++		iommu_dev = dpu_dev;
++	else
++		iommu_dev = mdss_dev;
++
++	mmu = msm_iommu_new(iommu_dev, domain);
+ 	if (IS_ERR(mmu)) {
+ 		iommu_domain_free(domain);
+ 		return PTR_ERR(mmu);
 -- 
 2.35.1
 
