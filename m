@@ -1,98 +1,111 @@
 Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D35EF51B98E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 10:03:56 +0200 (CEST)
+Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
+	by mail.lfdr.de (Postfix) with ESMTP id 8826351B9AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 10:09:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243832AbiEEIFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 04:05:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37642 "EHLO
+        id S244398AbiEEINQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 04:13:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234300AbiEEIFU (ORCPT
+        with ESMTP id S235053AbiEEINO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 04:05:20 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1CA713DEC;
-        Thu,  5 May 2022 01:01:39 -0700 (PDT)
-Received: from g550jk.localnet (2a02-8388-6582-fe80-a2a8-cdff-fe22-cbb7.cable.dynamic.v6.surfer.at [IPv6:2a02:8388:6582:fe80:a2a8:cdff:fe22:cbb7])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 2315ACEB6A;
-        Thu,  5 May 2022 08:01:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1651737698; bh=IeUnsl/ixvyKvO7e0dLvzAvRdi8rGkqnV1VZTnCfw3Y=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=WgZjuED8hDVTn1wD7M5Pe+DThGDFjqMIu9n8J/6bHOybfVLuL9WFzzRHu/QnRU0tI
-         CILVuo7mJGH7ccM9vX/mZ3/6U11LE+9cbJ1cKFTf7hNzQj13PA5WEMr5L191hgWkBJ
-         dIc1fsZ0iJeBhI4sU8NBTDejayL62WRgWgc/LM68=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH 1/2] ARM: dts: qcom: Add LPG node to pm8941
-Date:   Thu, 05 May 2022 10:01:37 +0200
-Message-ID: <12122358.O9o76ZdvQC@g550jk>
-In-Reply-To: <20220504205411.1510667-1-bjorn.andersson@linaro.org>
-References: <20220504205411.1510667-1-bjorn.andersson@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        Thu, 5 May 2022 04:13:14 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F4A83A19C;
+        Thu,  5 May 2022 01:09:36 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0F5A561D4D;
+        Thu,  5 May 2022 08:09:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D57BC385A8;
+        Thu,  5 May 2022 08:09:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651738175;
+        bh=AxkyhWsY0UHLjBXjb82tMurMjw8wJrl0qgnK1/vTnuc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=dcsZoR/C2yudiaDq/2t8TpOhuKv/LqvbG6v9dDjDvenLYUQCJuKp99ebMfwb504nU
+         QN1pKCkszu1h342LDPq6+R3zbKw+jj4CuDstMZdFLOgLmRbLcV9QO+A7pnFzL8yLtr
+         TlybH2TGe/OBc1vSiy1B1SGnDSyQRxijfFqgrqpKAjIVT2avyyHbh9/XlB0nNQPylg
+         WCtcjIoPzrYg4/PLGZytfFJwRXX8jNb14QnMB/AHvgkEv5GsDkXdhMx2z5R6/YsCXr
+         MnbA1C6CuPb+PRRAC8WZ8oxGacS7GRlVZg7CCM66CH7IwO7gpR3aWP3XFSAcJG89sv
+         ag6TmTrCaHk1g==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1nmWYG-0098wB-OL; Thu, 05 May 2022 09:09:32 +0100
+Date:   Thu, 05 May 2022 09:09:32 +0100
+Message-ID: <8735ho8koz.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bartosz Golaszewski <brgl@bgdev.pl>, linux-kernel@vger.kernel.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Joey Gouly <joey.gouly@arm.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, kernel-team@android.com
+Subject: Re: [PATCH v3 00/10] gpiolib: Handle immutable irq_chip structures
+In-Reply-To: <CACRpkdb32NuJ8jdsk6ox7ViVjK=9WWWavS=aYcoWTCbaO3WkTg@mail.gmail.com>
+References: <20220419141846.598305-1-maz@kernel.org>
+        <CACRpkda3L_itpqcnPq6xDoJtNHt8NuvE1MZk1bCNR+u2KKUpBA@mail.gmail.com>
+        <874k2kccse.wl-maz@kernel.org>
+        <CACRpkdb32NuJ8jdsk6ox7ViVjK=9WWWavS=aYcoWTCbaO3WkTg@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: linus.walleij@linaro.org, brgl@bgdev.pl, linux-kernel@vger.kernel.org, thierry.reding@gmail.com, joey.gouly@arm.com, jonathanh@nvidia.com, marcan@marcan.st, sven@svenpeter.dev, alyssa@rosenzweig.io, bjorn.andersson@linaro.org, agross@kernel.org, jeffrey.l.hugo@gmail.com, tglx@linutronix.de, Basavaraj.Natikar@amd.com, Shyam-sundar.S-k@amd.com, andy.shevchenko@gmail.com, linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-
-On Mittwoch, 4. Mai 2022 22:54:10 CEST Bjorn Andersson wrote:
-> The PM8941 contains 8 LPG channels, as well as TRILED and LUT blocks.
-> Add a node for these.
+On Wed, 04 May 2022 22:21:51 +0100,
+Linus Walleij <linus.walleij@linaro.org> wrote:
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  arch/arm/boot/dts/qcom-pm8941.dtsi | 9 +++++++++
->  1 file changed, 9 insertions(+)
+> On Sat, Apr 23, 2022 at 12:30 PM Marc Zyngier <maz@kernel.org> wrote:
 > 
-> diff --git a/arch/arm/boot/dts/qcom-pm8941.dtsi
-> b/arch/arm/boot/dts/qcom-pm8941.dtsi index cdd2bdb77b32..7881a071b372
-> 100644
-> --- a/arch/arm/boot/dts/qcom-pm8941.dtsi
-> +++ b/arch/arm/boot/dts/qcom-pm8941.dtsi
-> @@ -144,6 +144,15 @@ pm8941_1: pm8941@1 {
->  		#address-cells = <1>;
->  		#size-cells = <0>;
+> > > Bartosz: if you're happy with this can you apply it to an immutable branch
+> > > from v5.18-rc1 and merge that into the GPIO for-next and then I can also
+> > > pull that into pinctrl?
+> >
+> > For what it is worth, I've pushed this branch into irqchip-next.
+> >
+> > You can pick it up from:
+> >
+> > https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log/?h=irq/gpio-immutable
 > 
-> +		pm8941_lpg: lpg {
-> +			compatible = "qcom,pm8941-lpg";
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
+> Bartosz are you pulling this? Most of the changes are in GPIO.
+> Patches have started to arrive that go on top of these changes
+> so would be nice to have it in both GPIO and pin control as a
+> baseline.
 
-Just curious, why doesn't pm8941 have #pwm-cells = <2>; like the other lpg 
-nodes in [0]?
-Other than that, the node works fine on pm8941. Will send a patch for enabling 
-notification LED on msm8974-FP2 soon.
+I'm happy to queue things on top of my series if that helps.
 
-Regards
-Luca
+	M.
 
-[0] https://lore.kernel.org/linux-arm-msm/20220505022706.1692554-2-bjorn.andersson@linaro.org/
-
-
-> +
-> +			status = "disabled";
-> +		};
-> +
->  		pm8941_wled: wled@d800 {
->  			compatible = "qcom,pm8941-wled";
->  			reg = <0xd800>;
-
-
-
-
+-- 
+Without deviation from the norm, progress is not possible.
