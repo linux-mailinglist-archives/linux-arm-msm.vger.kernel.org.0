@@ -2,124 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8182751CB96
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 23:45:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D6D051CB9B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 23:50:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386152AbiEEVtD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 17:49:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43324 "EHLO
+        id S1344061AbiEEVyL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 17:54:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386118AbiEEVs5 (ORCPT
+        with ESMTP id S245484AbiEEVyK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 17:48:57 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C82EE214
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 14:45:14 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id gh6so11170000ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 14:45:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9a49K+nsIpClkkZJMCjWXi8/OJdtqcmRhzbltH+MvOc=;
-        b=kp3l63ItWPcoj3mIJFjL1IS0DRKLyCgq8rg4f+5Xx4U7BSNFu/vpr3X3kPrINxWG1y
-         d4JS+qP+fmnZlhoPr5rrxuKxTeRFD8zpP3dHL+NRp/2aruwblCvzL3UEjWgzvScPOgHO
-         OoIyC3l+RahxKrVlyOwHDLG9nq+F4L/tutw2U=
+        Thu, 5 May 2022 17:54:10 -0400
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 146EA3B547;
+        Thu,  5 May 2022 14:50:29 -0700 (PDT)
+Received: by mail-ot1-f41.google.com with SMTP id c5-20020a9d75c5000000b00605ff3b9997so3818460otl.0;
+        Thu, 05 May 2022 14:50:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9a49K+nsIpClkkZJMCjWXi8/OJdtqcmRhzbltH+MvOc=;
-        b=jsk6Gz5l1NLOEOVt6oBKwOgFD4MNzPDoNkfGhYTy90+ZS/zc/65+0U03yVVZP14fYq
-         8/x43bUytZf7/YiOvUc+xovKReZUrrD+zkIqIE+tWpg+8DTNph1GBw4I+XDVANow5dzD
-         i9cnLoDiHwQCtSQyNlLTbpD7yI0l0w4KmBkfV4gClOU1404ngem2osXZawWiimpZ454n
-         WDZh2FIiuxJE4LZXBSU11JnwwWYJfQS4NCz2D69/fkF8iGuc6INwe/pJ2OvyyIj9elHO
-         r30zJj/QCuulyWIyssLPpZlIaP3nCcazuBjRDPvwRyhcssIHNVWo++Bgk6AuLyOKOdwA
-         uEQQ==
-X-Gm-Message-State: AOAM532Y5OCVXJNsbicdc4blk8Cz43IidA63j0a9xYtK4w1fBDHs/4xP
-        le4Lu+fvUHSzwshdDiKY2UymYWqHoC9CmpQUzRw=
-X-Google-Smtp-Source: ABdhPJxdqhFG+u40j51SPqZ7BYNhgcXKk1XEPfD8K3fAOHR4DM0+neRP6qfNtRKFRfXml+uXBXKAfg==
-X-Received: by 2002:a17:907:97d4:b0:6f4:c876:6f6b with SMTP id js20-20020a17090797d400b006f4c8766f6bmr157799ejc.627.1651787112946;
-        Thu, 05 May 2022 14:45:12 -0700 (PDT)
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com. [209.85.221.43])
-        by smtp.gmail.com with ESMTPSA id zd9-20020a17090698c900b006f3ef214e28sm1216556ejb.142.2022.05.05.14.45.12
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 May 2022 14:45:12 -0700 (PDT)
-Received: by mail-wr1-f43.google.com with SMTP id x18so7733998wrc.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 14:45:12 -0700 (PDT)
-X-Received: by 2002:a5d:42c8:0:b0:20a:d91f:87b5 with SMTP id
- t8-20020a5d42c8000000b0020ad91f87b5mr103577wrr.301.1651787111509; Thu, 05 May
- 2022 14:45:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220505104024.v4.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid>
-In-Reply-To: <20220505104024.v4.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 5 May 2022 14:44:58 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Vb8EJJakDYkZLiAEqU1iFUfU4oNwAbTqiH9dM7Ph0BxQ@mail.gmail.com>
-Message-ID: <CAD=FV=Vb8EJJakDYkZLiAEqU1iFUfU4oNwAbTqiH9dM7Ph0BxQ@mail.gmail.com>
-Subject: Re: [PATCH v4 1/5] arm64: dts: qcom: sc7180: Add wormdingler dts files
-To:     "Joseph S. Barrera III" <joebar@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Alexandru M Stan <amstan@chromium.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=GamJ/l/RmrXyjJkKVpT8+cS0nZD1kxYuueRTHFM/AHw=;
+        b=VbFOItWulArwv2vuf/0enxVGbegr/tRx3sd+43cgFcpR8lVc8bMEOfoCrzYy++a/ds
+         XXjtQd7pCex/bBrx8DQDrq5MNTFAtAJmy3wn5hDNG09RpXTF7hEhUMiMhLYriuXDRBmY
+         Z/3HfuI0d6mzveX9uEWEiTlg1GGw49FfshBgg5IbJi8vUxHlJ/TYW4D9NlpHyLyKtWtr
+         NLMJTdtvvwmQLbNizV9pjkdiCxFmPmUprj7Df8Gi1yQPOm3mf/vtj88xqj/NpXK0CeNA
+         7+H7dACBbn64qJqoIs0pZbBPfY6DPkQppr4AqW2lXru4yLOqnHC+TRRXpOwuhY7ubanR
+         co7Q==
+X-Gm-Message-State: AOAM532fUc5Vu7JXrROznkD/2KiJdi12hfJxXmZXuIhAhUC4sp9PIbVl
+        wk4ijOAXMbvJsb22BObTLmdRCMhMDQ==
+X-Google-Smtp-Source: ABdhPJyw2OZojfrwTZkE7UzCEPW3jLRPRO22Xs230qHkYMlb7hwvfUIyusCROmwP5/ICTt+T/CITTw==
+X-Received: by 2002:a9d:1b6a:0:b0:605:5d7d:92cd with SMTP id l97-20020a9d1b6a000000b006055d7d92cdmr92930otl.121.1651787428366;
+        Thu, 05 May 2022 14:50:28 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id cv39-20020a056870c6a700b000e686d13889sm918111oab.35.2022.05.05.14.50.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 May 2022 14:50:27 -0700 (PDT)
+Received: (nullmailer pid 253104 invoked by uid 1000);
+        Thu, 05 May 2022 21:50:27 -0000
+Date:   Thu, 5 May 2022 16:50:27 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: Re: [PATCH v5 1/7] dt-bindings: clock: add QCOM SM8450 camera clock
+ bindings
+Message-ID: <YnRGoypIFbV5S3c/@robh.at.kernel.org>
+References: <20220505121213.4121802-2-vladimir.zapolskiy@linaro.org>
+ <20220505181317.4125934-1-vladimir.zapolskiy@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220505181317.4125934-1-vladimir.zapolskiy@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Thu, May 5, 2022 at 10:43 AM Joseph S. Barrera III
-<joebar@chromium.org> wrote:
->
-> Wormdingler is a trogdor-based board, shipping to customers as the
-> Lenovo IdeaPad Chromebook Duet 3. These dts files are copies from
-> the downstream Chrome OS 5.4 kernel, but with the camera
-> (sc7180-trogdor-mipi-camera.dtsi) #include removed.
->
-> Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
->
+On Thu, May 05, 2022 at 09:13:17PM +0300, Vladimir Zapolskiy wrote:
+> The change adds device tree bindings for camera clock controller
+> found on SM8450 SoC.
+> 
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 > ---
->
-> Changes in v4:
-> - Cleaned up rt5682s files
-> - Restored camcc definition
-> - Added missing version history
->
-> Changes in v3:
-> - Removed camcc definition
->
-> Changes in v2:
-> - Word wrapped patch description.
-> - Removed "Author" from patch description.
-> - Fixed whitespace around "en_pp3300_dx_edp"
->
->  arch/arm64/boot/dts/qcom/Makefile             |   6 +
->  .../sc7180-trogdor-wormdingler-rev0-boe.dts   |  22 +
->  .../sc7180-trogdor-wormdingler-rev0-inx.dts   |  22 +
->  .../qcom/sc7180-trogdor-wormdingler-rev0.dtsi |  53 +++
->  ...0-trogdor-wormdingler-rev1-boe-rt5682s.dts |  29 ++
->  .../sc7180-trogdor-wormdingler-rev1-boe.dts   |  28 ++
->  ...0-trogdor-wormdingler-rev1-inx-rt5682s.dts |  29 ++
->  .../sc7180-trogdor-wormdingler-rev1-inx.dts   |  22 +
->  .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  | 417 ++++++++++++++++++
->  9 files changed, 628 insertions(+)
+> Changes from v4 to v5:
+> * fixed a typo in a usage example found in the yaml file.
+> 
+> Changes from v3 to v4:
+> * renamed a filename in $id value after the rename of the file itself.
+> 
+> Changes from v2 to v3:
+> * renamed files to match the compatible value "qcom,sm8450-camcc",
+> * fixed a typo in a usage example found in the yaml file.
+> 
+> Changes from v1 to v2:
+> * updated qcom,camcc-sm8450.yaml according to review comments from Rob,
+> * changed qcom,camcc-sm8450.h license to dual one.
 
-This series looks great now to me now. Bjorn: if you agree and if it's
-not too land to land these for 5.19 that'd be wonderful. Otherwise I
-guess we've snooze for the next 4.5-5.5 weeks... ;-)
+Please don't send 1 patch of a new version. Send the entire series. 
+Otherwise tools and maintainers get confused.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Sending 3 versions in a day isn't great either. Give folks time to 
+review all the patches.
+
+Every version you've sent until this one has had errors you should have 
+found yourself at least after the first time. My bot is not a free 
+testing service, it runs on my machines and I review the emails before 
+sending.
+
+Rob
