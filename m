@@ -2,66 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F387151BC1E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 11:29:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AC8C51BC48
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 11:37:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354205AbiEEJcX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 05:32:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43600 "EHLO
+        id S1353877AbiEEJlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 05:41:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353765AbiEEJcN (ORCPT
+        with ESMTP id S1353961AbiEEJlC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 05:32:13 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5357651597;
-        Thu,  5 May 2022 02:27:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651742856; x=1683278856;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=uWBR6titPQdeRI1EGg6pVahafsNMqeBXceToFWnqAF4=;
-  b=SPFOw4PSG9CGQiQuDJ/IWcMVQjvTa5gUriMH8V5O8u1OW/3Th1Duvajx
-   I5oG3mLSwgbxUL/7kjv9GPz/dlEAarXhHA+xhR5iCIiRnlhenmVZnmksV
-   aOiDRlP3QYXwzGmYYXuSjfM4YPrn/pSU8kKR5T/0oGfQQI7shsZMWhjgF
-   s=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 05 May 2022 02:27:36 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 02:27:36 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 5 May 2022 02:27:15 -0700
-Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 5 May 2022 02:27:11 -0700
-From:   Satya Priya <quic_c_skakit@quicinc.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
-        <quic_jprakash@quicinc.com>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Subject: [PATCH V11 9/9] arm64: dts: qcom: sc7280: Add pm8008 support for sc7280-idp
-Date:   Thu, 5 May 2022 14:55:39 +0530
-Message-ID: <1651742739-12338-10-git-send-email-quic_c_skakit@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1651742739-12338-1-git-send-email-quic_c_skakit@quicinc.com>
-References: <1651742739-12338-1-git-send-email-quic_c_skakit@quicinc.com>
+        Thu, 5 May 2022 05:41:02 -0400
+Received: from extserv.mm-sol.com (ns.mm-sol.com [37.157.136.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 087744EDDC;
+        Thu,  5 May 2022 02:37:21 -0700 (PDT)
+Received: from [192.168.1.17] (hst-208-205.medicom.bg [84.238.208.205])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        (Authenticated sender: svarbanov@mm-sol.com)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id D6D74D2AC;
+        Thu,  5 May 2022 12:37:18 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1651743439; bh=ctf6YGQiT338dLkbd6KPaHUQix/iMCjR+IHG51+mthw=;
+        h=Date:Subject:To:Cc:From:From;
+        b=GRzW46ynLtX4Vc/Hwx21Qr9q7kv2AGRmn0pMfp/ZssZlvuLMP5FDqmKUm1soT6nvZ
+         pW6AjI/M4tSiCE+7Bn839yOsn4aL+cru1gS8xmupd9QazJYwG3EGRXMqNrq2TBaxvj
+         R2jn8iN6B0i09R4dhvIruYo/07lO5odYwSXUCB0ouYmq7TNfPgsE958oHlvI1air5j
+         DSB40rwkRanenjVIQEzz91gdDA43vN1zIBN8nRxl68BhLe+Z+t0lVhZ38pLF7DBht/
+         n3pvkLeo9jTxdb7VZZlSXbCeqTZJyfUID7hzTrp81kFfeRkE9gJOHk/mze2NURtAjS
+         keD7xur1ptVJg==
+Message-ID: <404693dd-c201-ffab-ab3c-b2ba84f8fc4c@mm-sol.com>
+Date:   Thu, 5 May 2022 12:37:14 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v6 4/7] PCI: dwc: Export several functions useful for MSI
+ implentations
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220505091231.1308963-1-dmitry.baryshkov@linaro.org>
+ <20220505091231.1308963-5-dmitry.baryshkov@linaro.org>
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+In-Reply-To: <20220505091231.1308963-5-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -70,110 +66,147 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add pm8008 infra and regulators support for sc7280 idp.
+Hi Dmitry,
 
-Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
----
-Changes in V11:
- - Add ldos and parent supplies directly under pm8008@8 node.
+Just conding style issues below.
 
-Changes in V10:
- - None.
+On 5/5/22 12:12, Dmitry Baryshkov wrote:
+> Supporting multiple MSI interrupts on Qualcomm hardware would benefit
+> from having these functions being exported rather than static. Note that
+> both designware and qcom driver can not be built as modules, so no need
+> to use EXPORT_SYMBOL here.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../pci/controller/dwc/pcie-designware-host.c | 62 ++++++++++++-------
+>  drivers/pci/controller/dwc/pcie-designware.h  | 11 ++++
+>  2 files changed, 49 insertions(+), 24 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 92dcaeabe2bf..c3b8ab278a00 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -255,7 +255,39 @@ int dw_pcie_allocate_domains(struct pcie_port *pp)
+>  	return 0;
+>  }
+>  
+> -static void dw_pcie_free_msi(struct pcie_port *pp)
+> +int dw_pcie_allocate_msi(struct pcie_port *pp)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	int ret;
+> +
+> +	ret = dw_pcie_allocate_domains(pp);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (pp->msi_irq > 0)
+> +		irq_set_chained_handler_and_data(pp->msi_irq,
+> +				dw_chained_msi_isr,
+> +				pp);
 
-Changes in V9:
- - Added interrupts properties.
+Could you please align 2nd and 3rd function arguments to the open brace
+here and on all other places ...
 
-Changes in V8:
- - Add an extra phandle "pm8008_bus" and then include pm8008 dtsi files inside it.
- - Remove output-high from pm8008_active node.
+> +
+> +	ret = dma_set_mask(pci->dev, DMA_BIT_MASK(32));
+> +	if (ret)
+> +		dev_warn(pci->dev, "Failed to set DMA mask to 32-bit. Devices with only 32-bit MSI support may not work properly\n");
+> +
+> +	pp->msi_data = dma_map_single_attrs(pci->dev, &pp->msi_msg,
+> +			sizeof(pp->msi_msg),
+> +			DMA_FROM_DEVICE,
+> +			DMA_ATTR_SKIP_CPU_SYNC);
 
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 66 ++++++++++++++++++++++++++++++++
- 1 file changed, 66 insertions(+)
+ditto
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 6a14259..e336f26 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -271,6 +271,63 @@
- 	};
- };
- 
-+pm8008_bus: &i2c1 {
-+	status = "okay";
-+};
-+
-+#include "pm8008.dtsi"
-+
-+&pm8008 {
-+	interrupt-parent = <&tlmm>;
-+	interrupts = <24 IRQ_TYPE_EDGE_RISING>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pm8008_active>;
-+
-+	reset-gpios = <&pm8350c_gpios 4 GPIO_ACTIVE_LOW>;
-+
-+	vdd_l1_l2-supply = <&vreg_s8b_1p2>;
-+	vdd_l3_l4-supply = <&vreg_s1b_1p8>;
-+	vdd_l5-supply = <&vreg_bob>;
-+	vdd_l6-supply = <&vreg_bob>;
-+	vdd_l7-supply = <&vreg_bob>;
-+};
-+
-+&pm8008_l1 {
-+	regulator-min-microvolt = <950000>;
-+	regulator-max-microvolt = <1300000>;
-+};
-+
-+&pm8008_l2 {
-+	regulator-min-microvolt = <950000>;
-+	regulator-max-microvolt = <1250000>;
-+};
-+
-+&pm8008_l3 {
-+	regulator-min-microvolt = <1650000>;
-+	regulator-max-microvolt = <3000000>;
-+};
-+
-+&pm8008_l4 {
-+	regulator-min-microvolt = <1504000>;
-+	regulator-max-microvolt = <1600000>;
-+};
-+
-+&pm8008_l5 {
-+	regulator-min-microvolt = <2600000>;
-+	regulator-max-microvolt = <3000000>;
-+};
-+
-+&pm8008_l6 {
-+	regulator-min-microvolt = <2600000>;
-+	regulator-max-microvolt = <3000000>;
-+};
-+
-+&pm8008_l7 {
-+	regulator-min-microvolt = <3000000>;
-+	regulator-max-microvolt = <3544000>;
-+};
-+
- &qfprom {
- 	vcc-supply = <&vreg_l1c_1p8>;
- };
-@@ -383,6 +440,15 @@
- 	drive-strength = <2>;
- };
- 
-+&pm8350c_gpios {
-+	pm8008_active: pm8008-active {
-+		pins = "gpio4";
-+		function = "normal";
-+		bias-disable;
-+		power-source = <0>;
-+	};
-+};
-+
- &qspi_cs0 {
- 	bias-disable;
- };
+> +	ret = dma_mapping_error(pci->dev, pp->msi_data);
+> +	if (ret) {
+> +		dev_err(pci->dev, "Failed to map MSI data\n");
+> +		pp->msi_data = 0;
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +void dw_pcie_free_msi(struct pcie_port *pp)
+>  {
+>  	if (pp->msi_irq > 0)
+>  		irq_set_chained_handler_and_data(pp->msi_irq, NULL, NULL);
+> @@ -357,6 +389,9 @@ int dw_pcie_host_init(struct pcie_port *pp)
+>  			return -EINVAL;
+>  		}
+>  
+> +		/* this can be overridden by msi_host_init() if necessary */
+> +		pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
+> +
+>  		if (pp->ops->msi_host_init) {
+>  			ret = pp->ops->msi_host_init(pp);
+>  			if (ret < 0)
+> @@ -377,30 +412,9 @@ int dw_pcie_host_init(struct pcie_port *pp)
+>  				}
+>  			}
+>  
+> -			pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
+> -
+> -			ret = dw_pcie_allocate_domains(pp);
+> -			if (ret)
+> +			ret = dw_pcie_allocate_msi(pp);
+> +			if (ret < 0)
+>  				return ret;
+> -
+> -			if (pp->msi_irq > 0)
+> -				irq_set_chained_handler_and_data(pp->msi_irq,
+> -							    dw_chained_msi_isr,
+> -							    pp);
+> -
+> -			ret = dma_set_mask(pci->dev, DMA_BIT_MASK(32));
+> -			if (ret)
+> -				dev_warn(pci->dev, "Failed to set DMA mask to 32-bit. Devices with only 32-bit MSI support may not work properly\n");
+> -
+> -			pp->msi_data = dma_map_single_attrs(pci->dev, &pp->msi_msg,
+> -						      sizeof(pp->msi_msg),
+> -						      DMA_FROM_DEVICE,
+> -						      DMA_ATTR_SKIP_CPU_SYNC);
+> -			if (dma_mapping_error(pci->dev, pp->msi_data)) {
+> -				dev_err(pci->dev, "Failed to map MSI data\n");
+> -				pp->msi_data = 0;
+> -				goto err_free_msi;
+> -			}
+>  		}
+>  	}
+>  
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index e1c48b71e0d2..f72447f15dc5 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -374,6 +374,8 @@ void dw_pcie_host_deinit(struct pcie_port *pp);
+>  int dw_pcie_allocate_domains(struct pcie_port *pp);
+>  void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus, unsigned int devfn,
+>  				       int where);
+> +int dw_pcie_allocate_msi(struct pcie_port *pp);
+> +void dw_pcie_free_msi(struct pcie_port *pp);
+>  #else
+>  static inline irqreturn_t dw_handle_msi_irq(struct pcie_port *pp)
+>  {
+> @@ -403,6 +405,15 @@ static inline void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus,
+>  {
+>  	return NULL;
+>  }
+> +
+> +static int dw_pcie_allocate_msi(struct pcie_port *pp)
+> +{
+> +	return -EINVAL;
+> +}
+> +
+> +static void dw_pcie_free_msi(struct pcie_port *pp)
+> +{
+> +}
+>  #endif
+>  
+>  #ifdef CONFIG_PCIE_DW_EP
+
 -- 
-2.7.4
-
+regards,
+Stan
