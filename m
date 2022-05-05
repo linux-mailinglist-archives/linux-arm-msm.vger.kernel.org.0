@@ -2,62 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 746A451B5DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 04:28:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B323D51B628
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 04:54:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239008AbiEEC3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 May 2022 22:29:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34658 "EHLO
+        id S240072AbiEEC4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 May 2022 22:56:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239339AbiEEC3E (ORCPT
+        with ESMTP id S236164AbiEEC4x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 May 2022 22:29:04 -0400
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C53F12AE4
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 19:25:26 -0700 (PDT)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-e2fa360f6dso3042714fac.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 19:25:26 -0700 (PDT)
+        Wed, 4 May 2022 22:56:53 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 539014EA18
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 May 2022 19:53:15 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id l16so3101893oil.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 May 2022 19:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=28CuiJ6+N6QUrU1lecqpYcX63v6ThU0X4857o5oV5io=;
-        b=zYYJ4gxCz7Rlz1zA3z1mWjWcihgkxm223I46Ok5Nm9lfnRKOyEEWMzZ6+ESXn97qlW
-         IV5hv9zyswRHnyt0KToA+32MD4BUanp/HMkpULfd1PsPCV9/mXLgQzydj1pmum//cPww
-         KK1AFty7kGbDelttsupxw2rFMxaAHA3iETvL5zL0yV6FW7hfRxgKNaL5sh3FpCd3rSfo
-         ZCSH59wvQxiEHX/iwhgUVeQUFOq4dNKe8BTMTlFm+6F2CUmxrMYfZG6RKf+wmHgr8uTT
-         9CInciSk2RVv4qadDtYCs9fBq0QFLbQiaZCQa8Km2Ae9CxJJvxSGT699bM0dtGdb7wQg
-         kibQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5JtMcRY+9JipAU8C1bkMSmvF0PCdAKtGbjYynT12iIQ=;
+        b=s/7YYm+ykBqWwHsrdfzUnctOAAIiD3SMSXkA5/lNxfZqFYKJnzyeuwCq4vXUdN1MA1
+         hScfyde5HQZDEe9qcmDEyqMr+l0PTrsXmTnzahIoQzDcN+uXZleuWB+C+KRc4sBHtkjZ
+         D63o+e94E4iV/kRbgx/Y6n3mCBqBXwAPbkKcs9fbq+VPacbTageksLm54LucC+k7egry
+         eq10zmOlBy/XDA3wk9K+1mPx3CM1tDOGee5ZfipVtj5MlQPXzqc0+Oc2lGOgMXoOqdHj
+         7lmD/TKbcoYxcGMGuIQIiQ3j4JFDJKF+S65M385CpZKMi255Wi+xJ68jN1MHYDvv1KHT
+         B0RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=28CuiJ6+N6QUrU1lecqpYcX63v6ThU0X4857o5oV5io=;
-        b=dOH6eGz5fvs0Za+P4usd6r/bg267DZjRCDWm3wGAr30ABF21FcppL3OwZDc+P5WVB6
-         cQK15HJ+oXbO/RCIFQX/9oOBDaF3RY+rgYrhFD/R9AcLoJCGzjK/UzqthbBKx03/H2C+
-         5ltgOrP2Sx2Mn0x0Cu1RenG9UkRlw7XfaYElYT8JRSQQ3/RjIYWXcA0vuh2pg6SWSoXi
-         h83TmR6qOvcDgvJoOckkZGoMEO98lEBf5CVffdvzZ/QwPxwafZMHZNwQLjbGtGQkxgB6
-         udkS+jTLlPz3MKy9QMstYy+keq55l0As/EOyBI7yDnyJ0106NM2YcVgRLnBkbdb6Eikq
-         hJAA==
-X-Gm-Message-State: AOAM53153qb2opZ+tFwbRJjU53RSO5I1t+wsZpf1V3683u5JMotMsD+g
-        12UsrcJAxSVVKOd4rE4wYBurAQ==
-X-Google-Smtp-Source: ABdhPJxktucYGoCB9lE0eXnZHIeEufCSHbz5dVcWr/o3lmQYRbhh11iXphH+jQ0Mt95gTCSGsIkxWg==
-X-Received: by 2002:a05:6870:1807:b0:d7:2a4c:14b8 with SMTP id t7-20020a056870180700b000d72a4c14b8mr1217692oaf.97.1651717526028;
-        Wed, 04 May 2022 19:25:26 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5JtMcRY+9JipAU8C1bkMSmvF0PCdAKtGbjYynT12iIQ=;
+        b=XMaqzIKaBR4fra8TXKJJ7kpVJtG69c6EQjYT9y/dsAnucBG3MisYsKpNPC0AN0XL1y
+         18T1jXQenX1U7ynAK1OYTlBENmFlfE1gLNGxvBGgLg1gG9bn8LtvR7Jg+LB9YMiSBQXP
+         S7ej9tG4y9guF1Wjz/qZ2Q9T0Nh5GXmidtzAvqp0hRHw8hrvH/R+B3dtUA2fPeDUf8Rv
+         4UXqgtr6wIB1oaZhYYmD3ebkEbL6v3JbP46EcCoCTwrJo3+ymNEtmjjTX0aoS1/kyvbf
+         izWsm2CmrjVXTImJ22bJvf17uPZlTmaTECUgS3xkpnoXX/GI98LP7Ykfod4J6E6/gY2u
+         m2Gw==
+X-Gm-Message-State: AOAM533EU17fujEI5/TSFn2BGqjTy+e6E1biPe93qRyqIjrrBGEZzUFB
+        6ZBVaEjuV7JYhYA36T+MdeQs6Q==
+X-Google-Smtp-Source: ABdhPJxdPv1yS48+PtUC0XC2ujBEDklgGUJAlp2EVPL/sKrWpGR5jQTUNF2lsFYfn4x5wW42fwqKvA==
+X-Received: by 2002:a05:6808:20a0:b0:326:5283:7614 with SMTP id s32-20020a05680820a000b0032652837614mr1344376oiw.55.1651719194711;
+        Wed, 04 May 2022 19:53:14 -0700 (PDT)
 Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id n8-20020a0568080a0800b00325cda1ff8csm238296oij.11.2022.05.04.19.25.25
+        by smtp.gmail.com with ESMTPSA id 1-20020aca2801000000b00325cda1ff95sm242572oix.20.2022.05.04.19.53.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 May 2022 19:25:25 -0700 (PDT)
+        Wed, 04 May 2022 19:53:13 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 4/4] arm64: dts: qcom: db820c: Add user LEDs
-Date:   Wed,  4 May 2022 19:27:06 -0700
-Message-Id: <20220505022706.1692554-5-bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v4 0/2] clk: qcom: SC8280XP GCC
+Date:   Wed,  4 May 2022 19:54:55 -0700
+Message-Id: <20220505025457.1693716-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220505022706.1692554-1-bjorn.andersson@linaro.org>
-References: <20220505022706.1692554-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -70,92 +72,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The db820c has 4 "user LEDs", all connected to the PMI8994. The first
-three are connected to the three current sinks provided by the TRILED
-and the fourth is connected to MPP2.
+This adds binding and driver for the Global Clock Controller (GCC) found in the
+Qualcomm SC8280XP platform.
 
-By utilizing the DTEST bus the MPP is fed the control signal from the
-fourth LPG block, providing a consistent interface to the user.
+Bjorn Andersson (2):
+  dt-bindings: clock: Add Qualcomm SC8280XP GCC bindings
+  clk: qcom: add sc8280xp GCC driver
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/apq8096-db820c.dts | 56 +++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+ .../bindings/clock/qcom,gcc-sc8280xp.yaml     |  128 +
+ drivers/clk/qcom/Kconfig                      |    9 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/gcc-sc8280xp.c               | 7488 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sc8280xp.h |  496 ++
+ 5 files changed, 8122 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sc8280xp.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-sc8280xp.h
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-index 56e54ce4d10e..e9039e68a095 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-@@ -10,6 +10,7 @@
- #include "pmi8994.dtsi"
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/sound/qcom,q6afe.h>
- #include <dt-bindings/sound/qcom,q6asm.h>
-@@ -683,6 +684,61 @@ pinconf {
- 	};
- };
- 
-+&pmi8994_lpg {
-+	qcom,power-source = <1>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pmi8994_mpp2_userled4>;
-+
-+	qcom,dtest = <0 0>,
-+		     <0 0>,
-+		     <0 0>,
-+		     <4 1>;
-+
-+	status = "okay";
-+
-+	led@1 {
-+		reg = <1>;
-+		color = <LED_COLOR_ID_GREEN>;
-+		function = LED_FUNCTION_HEARTBEAT;
-+		function-enumerator = <1>;
-+
-+		linux,default-trigger = "heartbeat";
-+		default-state = "on";
-+	};
-+
-+	led@2 {
-+		reg = <2>;
-+		color = <LED_COLOR_ID_GREEN>;
-+		function = LED_FUNCTION_HEARTBEAT;
-+		function-enumerator = <0>;
-+	};
-+
-+	led@3 {
-+		reg = <3>;
-+		color = <LED_COLOR_ID_GREEN>;
-+		function = LED_FUNCTION_HEARTBEAT;
-+		function-enumerator = <2>;
-+	};
-+
-+	led@4 {
-+		reg = <4>;
-+		color = <LED_COLOR_ID_GREEN>;
-+		function = LED_FUNCTION_HEARTBEAT;
-+		function-enumerator = <3>;
-+	};
-+};
-+
-+&pmi8994_mpps {
-+	pmi8994_mpp2_userled4: mpp2-userled4-state {
-+		pins = "mpp2";
-+		function = "sink";
-+
-+		output-low;
-+		qcom,dtest = <4>;
-+	};
-+};
-+
- &pmi8994_spmi_regulators {
- 	vdd_s2-supply = <&vph_pwr>;
- 
 -- 
 2.35.1
 
