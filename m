@@ -2,79 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E586F51C286
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 16:26:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BD6C51C2DA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 16:46:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380625AbiEEO3b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 10:29:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54730 "EHLO
+        id S231311AbiEEOuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 10:50:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353436AbiEEO3U (ORCPT
+        with ESMTP id S1345436AbiEEOuG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 10:29:20 -0400
-Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09D5213D65;
-        Thu,  5 May 2022 07:25:41 -0700 (PDT)
-Received: by mail-oo1-f53.google.com with SMTP id y22-20020a4acb96000000b0035eb01f5b65so746999ooq.5;
-        Thu, 05 May 2022 07:25:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=k6D1plv7qfy/cJKu1iXxkRk8eZlvR6Mt/KnTOaxH5/k=;
-        b=PuhK6pIP6hai6x1fyFSD7xZk6elZTwmnNnfpKiMv/MCP3y9yjO+iNVs6ozIavMIhVO
-         UPxe+YZ+kPKextQjGEbeUsHjalE+wJCKqMQev/kpEHgLqkQFvuga4RH7fNN6q2hPGUQt
-         afh6k6PVih5r/8XJzZLi6y4qxXOeN8EDZ5JQfL1D0O3DBbHcDSyZEC78f0yoUAsYibTV
-         5B3M27zFReh0SMAaydujWbhi77rIe5bElAU2v+B/biMTKgsYoaOh5aPD7qA0/mhIlp9Y
-         USkvrZEJrOlXcRviSq4ZOAOw/gyf78KYsm0/EKgyhg8LwNBGpGxpijWhziBDqvBq173h
-         XG2w==
-X-Gm-Message-State: AOAM530V0xgA6LB1Xsk1S5/dKGs034K8qpS2F1Vz08NAiU6H2/uVpxG9
-        joSvjvzGiSpyScelds1sCw==
-X-Google-Smtp-Source: ABdhPJyvL3Edq6MwGudS9eLrFjC4KG9919dpALhLQH5iF+EbqD3voYoBtYa8TcDugNLOoZCq33ZNeQ==
-X-Received: by 2002:a4a:be8a:0:b0:35e:9d51:2359 with SMTP id o10-20020a4abe8a000000b0035e9d512359mr9334293oop.6.1651760740243;
-        Thu, 05 May 2022 07:25:40 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id 15-20020a54418f000000b00325cda1ff8dsm691889oiy.12.2022.05.05.07.25.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 May 2022 07:25:39 -0700 (PDT)
-Received: (nullmailer pid 3831239 invoked by uid 1000);
-        Thu, 05 May 2022 14:25:39 -0000
-Date:   Thu, 5 May 2022 09:25:39 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 1/6] dt-bindings: nvmem: qfprom: add IPQ8064 and SDM630
- compatibles
-Message-ID: <YnPeY46mKSM4wbWq@robh.at.kernel.org>
-References: <20220505113802.243301-1-krzysztof.kozlowski@linaro.org>
+        Thu, 5 May 2022 10:50:06 -0400
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82FBD56FA9;
+        Thu,  5 May 2022 07:46:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651761986; x=1683297986;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=4+kd0vjMMPtv/zM2IFvgaogRom6Tf4HdZlD6H0t9CP0=;
+  b=Ng+++amhxRW65S0WX6OwPnkGPAAStAPxP9QzbcUWX3nVZ9Ah7nh/YHgg
+   LriHlkvBX59+vsKlpkxtwwktXhcDj0c8bS9KY7DhVwJVHWtv1gjKTZSPW
+   1nXTyT2rRCe1gzRla6Y1u/Pz1Gd3xDddos05u4IH33dHvdBKrZ4Wtqz7z
+   exTwS8Zlvediw4HLL04KJ4B+R8wTd107+K1V+fP58gQTkS+wsblSoUkOS
+   RjfSo7a4xmLx/dpkVaQxTnPtClbFkGA4C+7mbFuoJsr8fWLW+cpYvdi3e
+   4/SKAECS3pIfFNjhFCab4JzQLkI/r9qi/Byyn9RQpbnjPZi+k5AkBcoWD
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10338"; a="267727466"
+X-IronPort-AV: E=Sophos;i="5.91,201,1647327600"; 
+   d="scan'208";a="267727466"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 07:46:26 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,201,1647327600"; 
+   d="scan'208";a="568618280"
+Received: from stinkpipe.fi.intel.com (HELO stinkbox) ([10.237.72.51])
+  by fmsmga007.fm.intel.com with SMTP; 05 May 2022 07:46:20 -0700
+Received: by stinkbox (sSMTP sendmail emulation); Thu, 05 May 2022 17:46:19 +0300
+Date:   Thu, 5 May 2022 17:46:19 +0300
+From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To:     Lyude Paul <lyude@redhat.com>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Maxime Ripard <maxime@cerno.tech>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Hsin-Yi Wang <hsinyi@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Imre Deak <imre.deak@intel.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] drm: Document that power requirements for DP AUX
+ transfers
+Message-ID: <YnPjO4kbjezQl5Da@intel.com>
+References: <20220503162033.1.Ia8651894026707e4fa61267da944ff739610d180@changeid>
+ <YnJv3B/85hTz54SC@intel.com>
+ <CAD=FV=WndmKuEB0=OVQP9YuJaSmD0uxkNs5LE0wWsFj7gBvhBA@mail.gmail.com>
+ <1c6c9fde6e85f09cc89ea8dc6e8716fef58f3ee1.camel@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20220505113802.243301-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1c6c9fde6e85f09cc89ea8dc6e8716fef58f3ee1.camel@redhat.com>
+X-Patchwork-Hint: comment
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 05 May 2022 13:37:57 +0200, Krzysztof Kozlowski wrote:
-> Document compatibles for QFPROM used on IPQ8064 and SDM630.  They are
-> compatible with generic QFPROM fallback.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+On Wed, May 04, 2022 at 02:10:08PM -0400, Lyude Paul wrote:
+> On Wed, 2022-05-04 at 09:04 -0700, Doug Anderson wrote:
+> > Hi,
+> > 
+> > On Wed, May 4, 2022 at 5:21 AM Ville Syrjälä
+> > <ville.syrjala@linux.intel.com> wrote:
+> > > 
+> > > On Tue, May 03, 2022 at 04:21:08PM -0700, Douglas Anderson wrote:
+> > > > When doing DP AUX transfers there are two actors that need to be
+> > > > powered in order for the DP AUX transfer to work: the DP source and
+> > > > the DP sync. Commit bacbab58f09d ("drm: Mention the power state
+> > > > requirement on side-channel operations") added some documentation
+> > > > saying that the DP source is required to power itself up (if needed)
+> > > > to do AUX transfers. However, that commit doesn't talk anything about
+> > > > the DP sink.
+> > > > 
+> > > > For full fledged DP the sink isn't really a problem. It's expected
+> > > > that if an external DP monitor isn't plugged in that attempting to do
+> > > > AUX transfers won't work. It's also expected that if a DP monitor is
+> > > > plugged in (and thus asserting HPD) that it AUX transfers will work.
+> > > > 
+> > > > When we're looking at eDP, however, things are less obvious. Let's add
+> > > > some documentation about expectations. Here's what we'll say:
+> > > > 
+> > > > 1. We don't expect the DP AUX transfer function to power on an eDP
+> > > > panel. If an eDP panel is physically connected but powered off then it
+> > > > makes sense for the transfer to fail.
+> > > 
+> > > I don't agree with this. I think the panel should just get powred up
+> > > for AUX transfers.
+> > 
+> > That's definitely a fair thing to think about and I have at times
+> > thought about trying to make it work that way. It always ends up
+> > hitting a roadblock.
 
-Acked-by: Rob Herring <robh@kernel.org>
+How do you even probe the panel initially if you can't power it on
+without doing some kind of full modeset/etc.?
+
+> > 
+> > The biggest roadblock that I recall is that to make this work then
+> > you'd have to somehow ensure that the bridge chain's pre_enable() call
+> > was made as part of the AUX transfer, right? Since the transfer
+> > function can be called in any context at all, we have to coordinate
+> > this with DRM. If, for instance, DRM is mid way through powering the
+> > panel down then we need to wait for DRM to fully finish powering down,
+> > then we need to power the panel back up. I don't believe that we can
+> > just force the panel to stay on if DRM is turning it off because of
+> > panel power sequencing requirements. At least I know it would have the
+> > potential to break "samsung-atna33xc20.c" which absolutely needs to
+> > see the panel power off after it's been disabled.
+> > 
+> > We also, I believe, need to handle the fact that the bridge chain may
+> > not have even been created yet. We do AUX transfers to read the EDID
+> > and also to setup the backlight in the probe function of panel-edp. At
+> > that point the panel hasn't been linked into the chain. We had _long_
+> > discussions [1] about moving these out of probe and decided that we
+> > could move the EDID read to be later but that it was going to really
+> > ugly to move the AUX backlight later. The backlight would end up
+> > popping up at some point in time later (the first call to panel
+> > prepare() or maybe get_modes()) and that seemed weird.
+> > 
+> > [1]
+> > https://lore.kernel.org/lkml/CAD=FV=U5-sTDLYdkeJWLAOG-0wgxR49VxtwUyUO7z2PuibLGsg@mail.gmail.com/
+> > 
+> > 
+> > > Otherwise you can't trust that eg. the /dev/aux
+> > > stuff is actually usable.
+> > 
+> > Yeah, it's been on my mind to talk more about /dev/aux. I think
+> > /dev/aux has some problems, at least with eDP. Specifically:
+> > 
+> > 1. Even if we somehow figure out how to power the panel on as part of
+> > the aux transfer, we actually _still_ not guaranteed to be able to
+> > talk to it as far as I understand. My colleague reported to me that on
+> > a system he was working with that had PSR (panel self refresh) that
+> > when the panel was powered on but in PSR mode that it wouldn't talk
+> > over AUX. Assuming that this is correct then I guess we'd also have to
+> > do even more coordination with DRM to exit PSR and block future
+> > transitions of PSR. (NOTE: it's always possible that my colleague ran
+> > into some other bug and that panels are _supposed_ to be able to talk
+> > in PSR. If you think this is the case, I can always try to dig more).
+> 
+> TBH - the coordination with drm I don't think would be the difficult part, as
+> we'd just need to add some sort of property (ideally invisible to userspace)
+> that can be used in an atomic commit to disable PSR - similar to how we enable
+> CRC readback from sysfs in the majority of DRM drivers. That being said
+> though, I think we can just leave the work of solving this problem up to
+> whoever ends up needing this to work.
+
+The driver should just disable/prevent PSR when doing AUX if the hardware
+can't guarantee the PSR and AUX won't interfere with each other.
+
+For i915 we have no problems with powering the panel on for AUX, but
+there is still a race with PSR vs. AUX because both use the same hardware
+internally. I've been nagging at people to fix this for i915 but I don't 
+think it still got done :( Originally we were supposed to get a hardware
+mutex for this but that plan got scrapped for some reason.
+
+> 
+> > 
+> > 2. I'm not totally convinced that it's a great idea, at least for eDP,
+> > for userspace to be mucking with /dev/aux. For DP's case I guess
+> > /dev/aux is essentially enabling userspace drivers to do things like
+> > update firmware on DP monitors or play with the backlight. I guess we
+> > decided that we didn't want to add drivers in the kernel to handle
+> > this type of stuff so we left it for userspace? For eDP, though, there
+> 
+> The main reason DP AUX got exposed to userspace in the first place was for
+> usecases like fwupd,
+
+My memory says the original reason was debugging. Or at least I had
+no idea fwupd had started to use this until I saw some weird looking
+DPCD addresses in some debug log.
+
+But I suppose it's possible there were already plans for firmware
+updates and whatnot and it just wasn't being discussed when this was
+being developed.
+
+-- 
+Ville Syrjälä
+Intel
