@@ -2,76 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87ADC51C197
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 15:57:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A55D51C221
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 16:15:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378972AbiEEN6G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 09:58:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45822 "EHLO
+        id S1351853AbiEEOTT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 10:19:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380215AbiEEN54 (ORCPT
+        with ESMTP id S240196AbiEEOSe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 09:57:56 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D91C5838A
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 06:54:15 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id w1so7620698lfa.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 06:54:14 -0700 (PDT)
+        Thu, 5 May 2022 10:18:34 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 481585A08B;
+        Thu,  5 May 2022 07:14:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ga1FXFUoff60uV1gZjfSxxZrosbrRhkS2aF6jySEeu8=;
-        b=HqtBxH5cgnwk2AXkHYpVdor7Rm42tGQblkJFAZxuyl8hQ30ETSRxqdIqIzIatbxkOs
-         2R+9DFiKi51SWqIWuhl12AHDKroYO11I3DG9TBBbMIPNGcEVxJskeE/0j1Hadqz/tKto
-         KzkHbao4eAPSqskuCoMVQJbRhAV1J4YmaCEHmEv571hKSjWAbUl0QYqIsqcnhKQisZtV
-         vzHGJ8u7YjTPo/dF/FmJN55OJTY2oodK0raaIU8IH4NxGWIsUB7U4Y63RsD/RmGPxm0x
-         34e3l+g1GgjFTUivgQVoIvtMND5QIMZGZVSyN8N2uKJ9ejtkQG5HbyJngICed8L47SvF
-         4fGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ga1FXFUoff60uV1gZjfSxxZrosbrRhkS2aF6jySEeu8=;
-        b=eOHKCOzYDWUt0zLb2zeIEywsgYNo+YCVhtXGUOrrdo5PgZCfyeOTiX0+uN3QySjNPN
-         LLhqzsvQPY7+DtoknJ4TNxkO20TGbJp7qu4/WRQhud0rAt7CSqKkZUZcG2UJRhMCWos/
-         n9ZoGlOZkD2XKXxIACYYz9DylqxcJgwX/c9OQ5c85LDv0/f3SsvgyBUuLHCiuNevfPqJ
-         nkGACvcYu+6RBK6Zxos8yFIfiOMs0WNgjaGD1p/kiIsL6Y2/G1ldjjEYuk1SneHsOUl6
-         uQWASNiS0yfPXImqTQBcv2a/iaJNIFtd86O7a9jGUJ+BgIz8A6JDuC/2pkwajQMuHgr1
-         RaMg==
-X-Gm-Message-State: AOAM533UMnILJIHpzQjz8kFJ10L5DSq7KLTMpaXSJuO5S6evE1BMqWfh
-        4NDUSo7QxkEjZqd/5F9YISc5xfKCE0dBFQ==
-X-Google-Smtp-Source: ABdhPJxSGX1JSHzeX+qRrsxkEbH/xHwodlR7dA1YqAjB/aWgGqnRvW4paLGu592eXFspLvlIgJjbXw==
-X-Received: by 2002:a05:6512:507:b0:471:eccf:2370 with SMTP id o7-20020a056512050700b00471eccf2370mr18044883lfb.368.1651758853390;
-        Thu, 05 May 2022 06:54:13 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id z24-20020ac25df8000000b0047255d211ccsm221788lfq.251.2022.05.05.06.54.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 May 2022 06:54:13 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v7 7/7] arm64: dts: qcom: sm8250: provide additional MSI interrupts
-Date:   Thu,  5 May 2022 16:54:07 +0300
-Message-Id: <20220505135407.1352382-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220505135407.1352382-1-dmitry.baryshkov@linaro.org>
-References: <20220505135407.1352382-1-dmitry.baryshkov@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651760093; x=1683296093;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=1QeWKZKXMa6Yso2QWy5AgePC5WLU/2DhcKlxt+f67nE=;
+  b=HcdNuBgvvCuVLNAGDJefLubNAaAMkEGZAzRKkx9Mbdhmb9z7LRAwRTCU
+   EAF+creWN34mKGA5QaBvqvJccHJFxPRSh9OX3XlFkuU8GadEb5afyW6nX
+   11Cl1oTUVnGvRxWBewkygrvFPvXnUQg95urS3hy8B2cwv9kHQTOSOzqSD
+   4=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 05 May 2022 07:14:52 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 07:14:52 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 5 May 2022 07:14:51 -0700
+Received: from [10.216.34.221] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 5 May 2022
+ 07:14:47 -0700
+Message-ID: <7ccbbc02-a3bb-f42e-13b2-abb84693f1da@quicinc.com>
+Date:   Thu, 5 May 2022 19:44:44 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v13 3/4] arm64: dts: qcom: sc7280: add lpass lpi pin
+ controller node
+Content-Language: en-US
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1651662987-11704-1-git-send-email-quic_srivasam@quicinc.com>
+ <1651662987-11704-4-git-send-email-quic_srivasam@quicinc.com>
+ <YnL3m1gzggaSZ+c5@google.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <YnL3m1gzggaSZ+c5@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,41 +75,239 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SM8250 each group of MSI interrupts is mapped to the separate host
-interrupt. Describe each of interrupts in the device tree for PCIe0
-host.
 
-Tested on Qualcomm RB5 platform with first group of MSI interrupts being
-used by the PME and attached ath11k WiFi chip using second group of MSI
-interrupts.
-
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 410272a1e19b..0659ac45c651 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -1807,8 +1807,15 @@ pcie0: pci@1c00000 {
- 			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
- 
--			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
-+			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi", "msi2", "msi3", "msi4", "msi5", "msi6", "msi7", "msi8";
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 0x7>;
- 			interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
--- 
-2.35.1
-
+On 5/5/2022 3:30 AM, Matthias Kaehlcke wrote:
+Thanks for your time Matthias!!!
+> On Wed, May 04, 2022 at 04:46:26PM +0530, Srinivasa Rao Mandadapu wrote:
+>> Add LPASS LPI pinctrl node required for Audio functionality on sc7280
+>> based platforms.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> Please remove my tag for now, the patch changed quite a bit since the
+> last version.
+Okay. Will remove it.
+>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 64 ++++++++++++++++++++++
+>>   arch/arm64/boot/dts/qcom/sc7280.dtsi     | 91 ++++++++++++++++++++++++++++++++
+>>   2 files changed, 155 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> index 754da58..fb0e313 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> @@ -367,6 +367,70 @@
+>>   	bias-disable;
+>>   };
+>>   
+>> +&lpass_dmic01_clk {
+>> +	drive-strength = <8>;
+>> +	bias-disable;
+>> +};
+>> +
+>> +&lpass_dmic01_data {
+>> +	bias-pull-down;
+>> +};
+>> +
+>> +&lpass_dmic01_clk_sleep {
+>> +	drive-strength = <2>;
+>> +};
+> Should be after 'lpass_dmic01_clk', not only because of alphanumerical sorting
+> order, but also because the two belong together.
+Okay. Will sort accordingly.
+>
+>> +
+>> +&lpass_dmic23_clk {
+>> +	drive-strength = <8>;
+>> +	bias-disable;
+>> +};
+>> +
+>> +&lpass_dmic23_data {
+>> +	bias-pull-down;
+>> +};
+>> +
+>> +&lpass_dmic23_clk_sleep {
+>> +	drive-strength = <2>;
+>> +};
+> ditto
+Okay.
+>
+>> +
+>> +&lpass_rx_swr_clk {
+>> +	drive-strength = <2>;
+>> +	slew-rate = <1>;
+>> +	bias-disable;
+>> +};
+>> +
+>> +&lpass_rx_swr_data {
+>> +	drive-strength = <2>;
+>> +	slew-rate = <1>;
+>> +	bias-bus-hold;
+>> +};
+>> +
+>> +&lpass_rx_swr_clk_sleep {
+>> +	drive-strength = <2>;
+> The drive strength is the same as for 'lpass_rx_swr_clk', so I think you
+> could omit it?
+Okay. will remove it and re post.
+>
+>> +	bias-pull-down;
+>> +};
+> fix sorting order
+Okay. Will sort accordingly.
+>
+>> +
+>> +&lpass_rx_swr_data_sleep {
+>> +	drive-strength = <2>;
+> drive strength not needed?
+Okay.
+>
+>> +	bias-pull-down;
+>> +};
+>> +
+>> +&lpass_tx_swr_clk {
+>> +	drive-strength = <2>;
+>> +	slew-rate = <1>;
+>> +	bias-disable;
+>> +};
+>> +
+>> +&lpass_tx_swr_data {
+>> +	slew-rate = <1>;
+>> +	bias-bus-hold;
+>> +};
+>> +
+>> +&lpass_tx_swr_clk_sleep {
+>> +	drive-strength = <2>;
+> drive strength not needed?
+Okay.
+>
+>> +	bias-pull-down;
+>> +};
+> fix sorting order
+Okay. Will sort accordingly.
+>
+>> +
+>>   &mi2s1_data0 {
+>>   	drive-strength = <6>;
+>>   	bias-disable;
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index c5b6b46..c961ca1 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -2224,6 +2224,97 @@
+>>   			qcom,bcm-voters = <&apps_bcm_voter>;
+>>   		};
+>>   
+>> +		lpass_tlmm: pinctrl@33c0000 {
+>> +			compatible = "qcom,sc7280-lpass-lpi-pinctrl";
+>> +			reg = <0 0x033c0000 0x0 0x20000>,
+>> +				<0 0x03550000 0x0 0x10000>;
+>> +			gpio-controller;
+>> +			#gpio-cells = <2>;
+>> +			gpio-ranges = <&lpass_tlmm 0 0 15>;
+>> +
+>> +			#clock-cells = <1>;
+>> +
+>> +			lpass_dmic01_clk: dmic01-clk {
+>> +				pins = "gpio6";
+>> +				function = "dmic1_clk";
+>> +			};
+>> +
+>> +			lpass_dmic01_data: dmic01-data {
+>> +				pins = "gpio7";
+>> +				function = "dmic1_data";
+>> +			};
+>> +
+>> +			lpass_dmic01_clk_sleep: dmic01-clk-sleep {
+>> +				pins = "gpio6";
+>> +				function = "dmic1_clk";
+>> +			};
+> fix sorting order
+Okay. Will sort accordingly.
+>
+>> +
+>> +			lpass_dmic01_data_sleep: dmic01-data-sleep {
+>> +				pins = "gpio7";
+>> +				function = "dmic1_data";
+>> +			};
+>> +
+>> +			lpass_dmic23_clk: dmic23-clk {
+>> +				pins = "gpio8";
+>> +				function = "dmic2_clk";
+>> +			};
+>> +
+>> +			lpass_dmic23_data: dmic23-data {
+>> +				pins = "gpio9";
+>> +				function = "dmic2_data";
+>> +			};
+>> +
+>> +			lpass_dmic23_clk_sleep: dmic23-clk-sleep {
+>> +				pins = "gpio8";
+>> +				function = "dmic2_clk";
+>> +			};
+> fix sorting order
+Okay. Will sort accordingly.
+>
+>> +
+>> +			lpass_dmic23_data_sleep: dmic23-data-sleep {
+>> +				pins = "gpio9";
+>> +				function = "dmic2_data";
+>> +			};
+>> +
+>> +			lpass_rx_swr_clk: rx-swr-clk {
+>> +				pins = "gpio3";
+>> +				function = "swr_rx_clk";
+>> +			};
+>> +
+>> +			lpass_rx_swr_data: rx-swr-data {
+>> +				pins = "gpio4", "gpio5";
+>> +				function = "swr_rx_data";
+>> +			};
+>> +
+>> +			lpass_rx_swr_clk_sleep: rx-swr-clk-sleep {
+>> +				pins = "gpio3";
+>> +				function = "swr_rx_clk";
+>> +			};
+> fix sorting order
+Okay. Will sort accordingly.
+>
+>> +
+>> +			lpass_rx_swr_data_sleep: rx-swr-data-sleep {
+>> +				pins = "gpio4", "gpio5";
+>> +				function = "swr_rx_data";
+>> +			};
+>> +
+>> +			lpass_tx_swr_clk: tx-swr-clk {
+>> +				pins = "gpio0";
+>> +				function = "swr_tx_clk";
+>> +			};
+>> +
+>> +			lpass_tx_swr_data: tx-swr-data {
+>> +				pins = "gpio1", "gpio2", "gpio14";
+>> +				function = "swr_tx_data";
+>> +			};
+>> +
+>> +			lpass_tx_swr_clk_sleep: tx-swr-clk-sleep {
+>> +				pins = "gpio0";
+>> +				function = "swr_tx_clk";
+>> +			};
+> fix sorting order
+Okay. Will sort accordingly.
+>
+>> +
+>> +			lpass_tx_swr_data_sleep: tx-swr-data-sleep {
+>> +				pins = "gpio1", "gpio2", "gpio14";
+>> +				function = "swr_tx_data";
+>> +			};
+>> +		};
+>> +
+>>   		gpu: gpu@3d00000 {
+>>   			compatible = "qcom,adreno-635.0", "qcom,adreno";
+>>   			reg = <0 0x03d00000 0 0x40000>,
+>> -- 
+>> 2.7.4
+>>
