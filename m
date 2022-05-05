@@ -2,70 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9818A51BE63
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 13:50:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FD0A51BEF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 14:12:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229934AbiEELxy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 07:53:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55228 "EHLO
+        id S244504AbiEEMP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 08:15:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355943AbiEELxu (ORCPT
+        with ESMTP id S1359776AbiEEMP7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 07:53:50 -0400
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B23F55419E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 04:50:10 -0700 (PDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-2f7bb893309so45196437b3.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 04:50:10 -0700 (PDT)
+        Thu, 5 May 2022 08:15:59 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 263406452
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 05:12:19 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id h29so7146114lfj.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 05:12:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=knsgBaKDxBJq/+C6n1oHiCqqmfyfeBuftY53CndmalY=;
-        b=SM44piqvB6PrqrAPdDmOVBPGUpMa6VQ7GR8bQzSv1SAhXkySLDsDAdJ1VPRLvQaFBh
-         Ol610ebhZ+uieFD0VVnK0iIXig38NNJ7QfhIpSgyIX9m8CFDrfyiOpzJd8n/swZmaveG
-         1uBUJtsKAyBZ0+Ib5c2TBLU4prjlN3/Uq40WI5YCc1Qs8jb/M8d/4c5rpiSRbghAFNih
-         WDOSHN0LeV4DZnB8kqjWTOPOmsKY+SSfNM4XYiM3q/GyQK8rmIZgXbWtIXFp0TfqqehL
-         RHhZ/wT373IXw0lC+GIWCCdcbp0bHi3TajHb2P2R8AzQSD1nX4WofKxKkgAh8j2aLr6L
-         iznA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FCmEORJ79JaFBJp01cOo66V/j5K6NsPzrCaoVLHV8uM=;
+        b=mJwZZijSjo3iT07/6cFx7QtkDcTqNxobCxeeoAljZn3mFKRY8TpF+fF5Ow2R+tHw7Y
+         JXgqwrQATPW+NYq77BopXhpFDUdXofruEVve2BxKpPXE5FJYfBZNHBj96j8DeksZSAn0
+         AKQBquFA20Cq+fwQq1iGEnQwfngrwcoHJYfbm8RG1Nidn7asHl8eLVUxsrXi0/pv+EuT
+         87ZbQ18PufajTxySNoIGzfCWQGzFaAOJrLrrR45jpUbO2eV8+4S3DLNFR2C3Ou3LmZhd
+         RxsbImTHZI+uKk1nDq4U7PuelnnsFpAU5pF3xAEY6AkyQwdbdr8z6f/0M0AnpowWIu3c
+         Rthg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=knsgBaKDxBJq/+C6n1oHiCqqmfyfeBuftY53CndmalY=;
-        b=WwODVue/G2Hey5LdMOvz6BFaRWi+n6e7qtLlbdNBacrzm+L04Fe8Bso0H7K3/V7vIf
-         BO5qXElyq+7PxpnTrIAuzmvk0L1apsbcpw0UHoAaM2iHFvVY4bs4uJ03MXvttM3n1+Pf
-         3oDjGFWGg5hYKjOwO+wDFVljxywpBIdp+6mqZ+toHvS4tF+p5SGZwqr020YQ8V+ddURv
-         PndPkssDbnCj2lGcgLIr5C1NGrehAtJd0EfkyN+obRzuQ6kA+xImu/uJUjrsod2YbCtW
-         P3sAtngw7fTCtfdd601960xrjXFWjyr2p39dyoFqfNk7ZsfwFJ6/9bVTmE0d0yXtye6H
-         dUEg==
-X-Gm-Message-State: AOAM53055VnqzIGRMedmn8bSTuUKLtAKxBAEfx+sGFARGrAfB5hX9p0A
-        dnLKEHQMwGT41nN7SRj4xdzfzSgYYNXK+xOUFEnedg==
-X-Google-Smtp-Source: ABdhPJzb1tD2LmJ8tp6RbAhJBJCOjfLazkH7aZEB+Qz4bVwRprWKluCD0K9DoGQLFrhgFdl9XVrkJbPy20dGBz6VuDk=
-X-Received: by 2002:a81:3252:0:b0:2f6:b826:2286 with SMTP id
- y79-20020a813252000000b002f6b8262286mr23062193ywy.289.1651751410012; Thu, 05
- May 2022 04:50:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FCmEORJ79JaFBJp01cOo66V/j5K6NsPzrCaoVLHV8uM=;
+        b=PNtWrUdlJlCPWv6owqG5n7KW6OqH1gAx36/N1TPTHfdZnIBorTZpcc9Spby1auPRhS
+         SAg/TrfwC7QERv9z8nFpOBwvRRy5oOIuaVBgMKHqJyH1DVBqlQkEKz9w8ub6QVhOwlWV
+         imJM7HTmyh9Mk/rUiBkWQ2ubWbKnR0FsIWRkilph/7fP/EgJ1vz0KNlChxnPLNFTnpy8
+         Eaq09aCngtF7wJG0r7tohGBtYTTnXbzVA7W3t5iQBHwjh8rh94wQdx6F9G38kAXuvN3c
+         EXit/tb7p/8frcmdJdjJYYncqGIwTMcdcA5teElSaxPC4yfXAmO+BTdjtyiW+AR7bOVC
+         rboA==
+X-Gm-Message-State: AOAM531UbER9TVv5jIKYlvW09syRDGXWHewdLBDHD6yoHt5QaBSSRd1H
+        QwPV/FXOfw4LUFCLf4pCFzux3g==
+X-Google-Smtp-Source: ABdhPJwnalSgWGgapjxaS0gv7BNmLdZZv6SNBYzEWRArgTbl/EVYgSdineOR+WJFHpJ+X8DmZzOw5Q==
+X-Received: by 2002:a05:6512:158e:b0:472:5a6a:446c with SMTP id bp14-20020a056512158e00b004725a6a446cmr15335220lfb.408.1651752737334;
+        Thu, 05 May 2022 05:12:17 -0700 (PDT)
+Received: from localhost.localdomain (mobile-access-5672eb-224.dhcp.inet.fi. [86.114.235.224])
+        by smtp.gmail.com with ESMTPSA id g20-20020a056512119400b0047255d211fesm187454lfr.301.2022.05.05.05.12.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 May 2022 05:12:16 -0700 (PDT)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v3 0/7] clk: qcom: add camera clock controller driver for SM8450 SoC
+Date:   Thu,  5 May 2022 15:12:11 +0300
+Message-Id: <20220505121213.4121802-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-References: <20220505001605.1268483-1-dmitry.baryshkov@linaro.org>
- <20220505001605.1268483-6-dmitry.baryshkov@linaro.org> <91f3c385-9d6d-faef-384e-1d87e507c1f2@arm.com>
-In-Reply-To: <91f3c385-9d6d-faef-384e-1d87e507c1f2@arm.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 5 May 2022 14:49:59 +0300
-Message-ID: <CAA8EJpqj-fBuRasV-sDUVrCX_yASbZCA9d20T7bojzS46-F8_Q@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] drm/msm: switch msm_kms_init_aspace() to use device_iommu_mapped()
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,80 +71,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 5 May 2022 at 13:27, Robin Murphy <robin.murphy@arm.com> wrote:
->
-> On 2022-05-05 01:16, Dmitry Baryshkov wrote:
-> > Change msm_kms_init_aspace() to use generic function
-> > device_iommu_mapped() instead of the fwnode-specific interface
-> > dev_iommu_fwspec_get(). While we are at it, stop referencing
-> > platform_bus_type directly and use the bus of the IOMMU device.
->
-> FWIW, I'd have squashed these changes across the previous patches, such
-> that the dodgy fwspec calls are never introduced in the first place, but
-> it's your driver, and if that's the way you want to work it and Rob's
-> happy with it too, then fine by me.
+The patchset adds support of a camera clock controller found on
+QCOM SM8450 SoC, noticeably a camcc pll2 is a new "rivian evo"
+type of pll, its generic support is added in the series.
 
-I thought about this. But as the calls were already there (in the
-mdp5), it was easier for me to merge the code and to update it
-afterwards.
+Note that SM8450 ES variant has a slightly different configurtion,
+the published version is intended to support SM8450 CS SoC.
 
->
-> For the end result,
->
-> Reviewed-by: Robin Murphy <robin.murphy@arm.com>
->
-> I'm guessing MDP4 could probably use msm_kms_init_aspace() now as well,
-> but unless there's any other reason to respin this series, that's
-> something we could do as a follow-up. Thanks for sorting this out!
+Changes from v2 to v3:
+* fixed a typo in a usage example found in yaml file,
+* renamed dt related files to match the compatible "qcom,sm8450-camcc",
+* minor fixes in the driver per review requests from Bjorn,
+* added Bjorn's tag to a change of exported symbols namespace.
 
-Not really. MDP4 doesn't have the parent MDSS device, so it doesn't
-need all these troubles.
+Changes from v1 to v2:
+* updated qcom,camcc-sm8450.yaml according to review comments from Rob,
+* changed qcom,camcc-sm8450.h licence to dual one,
+* disabled camcc device tree node by default,
+* added Stephen's tag,
+* rebased the series on top of clk-for-5.18
 
->
-> Robin.
->
-> > Suggested-by: Robin Murphy <robin.murphy@arm.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/msm_drv.c | 14 +++++++-------
-> >   1 file changed, 7 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> > index 98ae0036ab57..2fc3f820cd59 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > @@ -272,21 +272,21 @@ struct msm_gem_address_space *msm_kms_init_aspace(struct drm_device *dev)
-> >       struct device *mdss_dev = mdp_dev->parent;
-> >       struct device *iommu_dev;
-> >
-> > -     domain = iommu_domain_alloc(&platform_bus_type);
-> > -     if (!domain) {
-> > -             drm_info(dev, "no IOMMU, fallback to phys contig buffers for scanout\n");
-> > -             return NULL;
-> > -     }
-> > -
-> >       /*
-> >        * IOMMUs can be a part of MDSS device tree binding, or the
-> >        * MDP/DPU device.
-> >        */
-> > -     if (dev_iommu_fwspec_get(mdp_dev))
-> > +     if (device_iommu_mapped(mdp_dev))
-> >               iommu_dev = mdp_dev;
-> >       else
-> >               iommu_dev = mdss_dev;
-> >
-> > +     domain = iommu_domain_alloc(iommu_dev->bus);
-> > +     if (!domain) {
-> > +             drm_info(dev, "no IOMMU, fallback to phys contig buffers for scanout\n");
-> > +             return NULL;
-> > +     }
-> > +
-> >       mmu = msm_iommu_new(iommu_dev, domain);
-> >       if (IS_ERR(mmu)) {
-> >               iommu_domain_free(domain);
+Vladimir Zapolskiy (7):
+  dt-bindings: clock: add QCOM SM8450 camera clock bindings
+  arm64: dts: qcom: sm8450: Add description of camera clock controller
+  clk: qcom: clk-alpha-pll: fix clk_trion_pll_configure description
+  clk: qcom: clk-alpha-pll: limit exported symbols to GPL licensed code
+  clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces
+  clk: qcom: clk-alpha-pll: add Rivian EVO PLL configuration interfaces
+  clk: qcom: add camera clock controller driver for SM8450 SoC
 
-
+ .../bindings/clock/qcom,sm8450-camcc.yaml     |   89 +
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |   20 +
+ drivers/clk/qcom/Kconfig                      |    7 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/camcc-sm8450.c               | 2859 +++++++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.c              |  145 +-
+ drivers/clk/qcom/clk-alpha-pll.h              |   11 +-
+ include/dt-bindings/clock/qcom,sm8450-camcc.h |  159 +
+ 8 files changed, 3285 insertions(+), 6 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+ create mode 100644 drivers/clk/qcom/camcc-sm8450.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8450-camcc.h
 
 -- 
-With best wishes
-Dmitry
+2.33.0
+
