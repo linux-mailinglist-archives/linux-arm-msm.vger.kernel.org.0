@@ -2,171 +2,407 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A492A51CBD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 00:02:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EAC9D51CBFD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 00:15:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345140AbiEEWGA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 18:06:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54124 "EHLO
+        id S1386245AbiEEWTU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 18:19:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237116AbiEEWF7 (ORCPT
+        with ESMTP id S1386226AbiEEWTT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 18:05:59 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8128B1EEF0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 15:02:18 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id i5so7725107wrc.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 15:02:18 -0700 (PDT)
+        Thu, 5 May 2022 18:19:19 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B73B17AB5
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 15:15:37 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id bu29so9763837lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 15:15:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EleMdFDe6EPpi491MtMNfJ19qgZxHUEIp+inkKcil6A=;
-        b=n5E9Nbyo+PSl7ny53DlxqRQONdh91E2WDDyqPIyjac+SlPaZR9OTfVVnc3/H04FL/p
-         1kVQsfHxJfhQy32wSTPoNE16Ec/8Hr5SbVKle9MOrwmohgYxR1Eks3s4LVSMU+mRdYvq
-         gPRafTyANi4TbuKIc909Ol89AQDZ62zCAfknHxYXYK9MLEQrG/dn4p5+5ZegHcmwnw0P
-         xqx/98SdDi4tTDeEciMzuCVy+AeBDHkW0/wHcm97+IrfuHumV6lWmaOYLm56AUO3YPvO
-         qyuO6BcCyjIEExXiy7dUwDfWixL1zVUhcsFrwDEnkvGH9i/5qUsNycwoUIsVvZoW04H0
-         AgPA==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Lqcknj0Fhwjp1vZIi9MHLDg7nfP2JTAZQGlFN2i0zNk=;
+        b=Ard7Co07CDgxfsruqLpz2aoKNu1kCYClEyluri6yKW8ftrpj2lAoOorDi+I+5LAS1T
+         K1W3QNUz4GvEYSqv+HSC4RBjPwumT8XrKqKfUPKexhgjQUO9VHwikIlPbopbL0HtRTEm
+         RUJdyRD+tfSlndjuQZrqrndDW2YnWpY/8fqnnZv52fp54VdUG/ZD3PliO5m/nnTo7XlM
+         D1xeuLlxcBVi5YqfYwe4obk75tm811X+cwv5BcH8Ap4fqDoBotWUJcixG7bIKL5GKgV4
+         D2hYPbEJBKj3jzt5pKFX7GwmWBlITO5fsxG7d1aLxQk08mv1ZGNRYmLJt7sVDYEu+21q
+         Evlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EleMdFDe6EPpi491MtMNfJ19qgZxHUEIp+inkKcil6A=;
-        b=IYTIxxKF9iCNuJc6hlBU6qeseZsRekKkxjK4r7gMREZ37V0vhEzKs2T318nUlJ2uiY
-         s/mSuvXQve1g33l54U60GM0epxdDxW0jAJrA0jmCvEyXRNPucaCB6tnBNphLIJ2Kd9RN
-         lBq+Xb9RECP2caFQANZf4iARKxik0ozzNWmocCCrSjXGGT78Agi8p3D7G5GEtZL0O4DJ
-         cEXGJfw6tPj7q5oXkjh/rJPBgSkCYqmWnxWUs0w023sJd23hPPEUPmDR7gJOMdfpLc/E
-         OLiNwko5b8fQ1Ye5rmbUZYcLdCMwIM+NZl4qA9J5KLrsr09AoRTNPiHbqkwomv3LGPEr
-         Z6ig==
-X-Gm-Message-State: AOAM531M53SzsWwVIcV+WMHU/JZ8tf49IBaEoEbfeXwcE30gYrMHZF45
-        cE2YuBKRu9z5W3spatp+KxEYPcpFJkPpcjH4TUM3iRPoPQM=
-X-Google-Smtp-Source: ABdhPJyULR+SgnNGt8xSulu/YA0/ogrI5ZQfEF1P2TBrdzY1YBKESg9LPequ1dxB0dxdDfkxzJd2+PMitC8Wb4Rt/dg=
-X-Received: by 2002:adf:fec2:0:b0:20c:6ffb:9598 with SMTP id
- q2-20020adffec2000000b0020c6ffb9598mr153645wrs.418.1651788136913; Thu, 05 May
- 2022 15:02:16 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Lqcknj0Fhwjp1vZIi9MHLDg7nfP2JTAZQGlFN2i0zNk=;
+        b=GEfgOGgu7qg0grN/ILj7Vd+2e9viFRW0Sjb063y2eRY3PmjczQ5z2WcKiHlhuNSVTD
+         gzTFK1o4Qcheo2bEl4LNcvqJG2jysZK7/gsokGktppkPytQujlxYUydQEds9svzFYUm3
+         4o3qzIijAcOO8CQ1nURZnJtxaBWO4dfxVP582WNwa0Z6xKGkS57WWKXR6viwF1FLvbPE
+         v14mG8H7uUHLAd4gSYuaJ4ctDuTehHVuswAMfwdZMVhTaHIU7FVCVRZdvlSQZzDw9hjR
+         P4+UQDS1bwhqWZeKn7tILcZA3GpqO55GdS5S3zry2qze5B0v0RW9b6CgZy7o2EreAshd
+         bZuw==
+X-Gm-Message-State: AOAM531sAyID4+HCFESbKYpMFjr/ORRxA1DCNkZP2ceGOrvst4FA3mPD
+        NnuBJi/laKQoAR5EQS6487ROtw==
+X-Google-Smtp-Source: ABdhPJwtqbuUV3yB/o1tOo57YszZMQs0RX9gWn16sFP/IFR8RYcG91DEAJp1qgoI7zJ72TzqVneT8Q==
+X-Received: by 2002:a05:6512:12c9:b0:473:c33e:a65b with SMTP id p9-20020a05651212c900b00473c33ea65bmr298075lfg.285.1651788935516;
+        Thu, 05 May 2022 15:15:35 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id k16-20020ac24f10000000b0047255d211d4sm387658lfr.259.2022.05.05.15.15.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 May 2022 15:15:35 -0700 (PDT)
+Message-ID: <03024c6d-bd85-8878-4e1f-f17376b5894a@linaro.org>
+Date:   Fri, 6 May 2022 01:15:34 +0300
 MIME-Version: 1.0
-References: <20220505214051.155-1-quic_jesszhan@quicinc.com> <20220505214051.155-2-quic_jesszhan@quicinc.com>
-In-Reply-To: <20220505214051.155-2-quic_jesszhan@quicinc.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 5 May 2022 15:02:04 -0700
-Message-ID: <CAF6AEGucMA0eQWd-r5uvktoge=y-WQ5Cfvab4kLaJXAsFsX05w@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] drm/msm/mdp5: Return error code in
- mdp5_mixer_release when deadlock is detected
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH] drm: Document that power requirements for DP AUX
+ transfers
+Content-Language: en-GB
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        Lyude Paul <lyude@redhat.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Hsin-Yi Wang <hsinyi@chromium.org>,
         dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>, quic_aravindh@quicinc.com,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Stephen Boyd <swboyd@chromium.org>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Maxime Ripard <maxime@cerno.tech>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+References: <20220503162033.1.Ia8651894026707e4fa61267da944ff739610d180@changeid>
+ <YnJv3B/85hTz54SC@intel.com>
+ <CAD=FV=WndmKuEB0=OVQP9YuJaSmD0uxkNs5LE0wWsFj7gBvhBA@mail.gmail.com>
+ <1c6c9fde6e85f09cc89ea8dc6e8716fef58f3ee1.camel@redhat.com>
+ <YnPjO4kbjezQl5Da@intel.com>
+ <CAD=FV=XbZEagm5qR207mcVm1Ry=bGeuRAqTYx3SBoZfyo6fSkg@mail.gmail.com>
+ <YnPoYsnx7IeBfJ5D@intel.com>
+ <CAD=FV=WxxEGM4cLBHGMeRBFDAXGJJF105kLZ588JSFJRg8PM8A@mail.gmail.com>
+ <CAA8EJppSof0wZ9nph8v_2pgRZj2BJiZ1hTBfLgQ+CFsT+h_dyQ@mail.gmail.com>
+ <CAD=FV=WuAV-mrm0Bokqyyn7UgP5-jyNdhh8e4rqJibJ0Kutp_Q@mail.gmail.com>
+ <CAA8EJpq=u0FF7wJ0hJv=Q-NhpUU_pnQxy5PX06DZUq5v5evydg@mail.gmail.com>
+ <CAD=FV=XXLB90KOMvnWTTPyNNcCCVo+gja+2_iSGPnfu77wzknA@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAD=FV=XXLB90KOMvnWTTPyNNcCCVo+gja+2_iSGPnfu77wzknA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 5, 2022 at 2:41 PM Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->
-> There is a possibility for mdp5_get_global_state to return
-> -EDEADLK when acquiring the modeset lock, but currently global_state in
-> mdp5_mixer_release doesn't check for if an error is returned.
->
-> To avoid a NULL dereference error, let's have mdp5_mixer_release
-> check if an error is returned and propagate that error.
->
-> Reported-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+On 06/05/2022 00:24, Doug Anderson wrote:
+> Hi,
+> 
+> On Thu, May 5, 2022 at 1:56 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> On Thu, 5 May 2022 at 23:21, Doug Anderson <dianders@chromium.org> wrote:
+>>>
+>>> Hi,
+>>>
+>>> On Thu, May 5, 2022 at 1:10 PM Dmitry Baryshkov
+>>> <dmitry.baryshkov@linaro.org> wrote:
+>>>>
+>>>> On Thu, 5 May 2022 at 18:53, Doug Anderson <dianders@chromium.org> wrote:
+>>>>>
+>>>>> Hi,
+>>>>>
+>>>>> On Thu, May 5, 2022 at 8:29 AM Ville Syrjälä
+>>>>> <ville.syrjala@linux.intel.com> wrote:
+>>>>>>
+>>>>>> On Thu, May 05, 2022 at 08:00:20AM -0700, Doug Anderson wrote:
+>>>>>>> Hi,
+>>>>>>>
+>>>>>>> On Thu, May 5, 2022 at 7:46 AM Ville Syrjälä
+>>>>>>> <ville.syrjala@linux.intel.com> wrote:
+>>>>>>>>
+>>>>>>>> On Wed, May 04, 2022 at 02:10:08PM -0400, Lyude Paul wrote:
+>>>>>>>>> On Wed, 2022-05-04 at 09:04 -0700, Doug Anderson wrote:
+>>>>>>>>>> Hi,
+>>>>>>>>>>
+>>>>>>>>>> On Wed, May 4, 2022 at 5:21 AM Ville Syrjälä
+>>>>>>>>>> <ville.syrjala@linux.intel.com> wrote:
+>>>>>>>>>>>
+>>>>>>>>>>> On Tue, May 03, 2022 at 04:21:08PM -0700, Douglas Anderson wrote:
+>>>>>>>>>>>> When doing DP AUX transfers there are two actors that need to be
+>>>>>>>>>>>> powered in order for the DP AUX transfer to work: the DP source and
+>>>>>>>>>>>> the DP sync. Commit bacbab58f09d ("drm: Mention the power state
+>>>>>>>>>>>> requirement on side-channel operations") added some documentation
+>>>>>>>>>>>> saying that the DP source is required to power itself up (if needed)
+>>>>>>>>>>>> to do AUX transfers. However, that commit doesn't talk anything about
+>>>>>>>>>>>> the DP sink.
+>>>>>>>>>>>>
+>>>>>>>>>>>> For full fledged DP the sink isn't really a problem. It's expected
+>>>>>>>>>>>> that if an external DP monitor isn't plugged in that attempting to do
+>>>>>>>>>>>> AUX transfers won't work. It's also expected that if a DP monitor is
+>>>>>>>>>>>> plugged in (and thus asserting HPD) that it AUX transfers will work.
+>>>>>>>>>>>>
+>>>>>>>>>>>> When we're looking at eDP, however, things are less obvious. Let's add
+>>>>>>>>>>>> some documentation about expectations. Here's what we'll say:
+>>>>>>>>>>>>
+>>>>>>>>>>>> 1. We don't expect the DP AUX transfer function to power on an eDP
+>>>>>>>>>>>> panel. If an eDP panel is physically connected but powered off then it
+>>>>>>>>>>>> makes sense for the transfer to fail.
+>>>>>>>>>>>
+>>>>>>>>>>> I don't agree with this. I think the panel should just get powred up
+>>>>>>>>>>> for AUX transfers.
+>>>>>>>>>>
+>>>>>>>>>> That's definitely a fair thing to think about and I have at times
+>>>>>>>>>> thought about trying to make it work that way. It always ends up
+>>>>>>>>>> hitting a roadblock.
+>>>>>>>>
+>>>>>>>> How do you even probe the panel initially if you can't power it on
+>>>>>>>> without doing some kind of full modeset/etc.?
+>>>>>>>
+>>>>>>> It's not that we can't power it on without a full modeset. It' that at
+>>>>>>> panel probe time all the DRM components haven't been hooked together
+>>>>>>> yet, so the bridge chain isn't available yet. The panel can power
+>>>>>>> itself on, though. This is why the documentation I added says: "if a
+>>>>>>> panel driver is initiating a DP AUX transfer it may power itself up
+>>>>>>> however it wants"
+>>>>>>>
+>>>>>>>
+>>>>>>>>>> The biggest roadblock that I recall is that to make this work then
+>>>>>>>>>> you'd have to somehow ensure that the bridge chain's pre_enable() call
+>>>>>>>>>> was made as part of the AUX transfer, right? Since the transfer
+>>>>>>>>>> function can be called in any context at all, we have to coordinate
+>>>>>>>>>> this with DRM. If, for instance, DRM is mid way through powering the
+>>>>>>>>>> panel down then we need to wait for DRM to fully finish powering down,
+>>>>>>>>>> then we need to power the panel back up. I don't believe that we can
+>>>>>>>>>> just force the panel to stay on if DRM is turning it off because of
+>>>>>>>>>> panel power sequencing requirements. At least I know it would have the
+>>>>>>>>>> potential to break "samsung-atna33xc20.c" which absolutely needs to
+>>>>>>>>>> see the panel power off after it's been disabled.
+>>>>>>>>>>
+>>>>>>>>>> We also, I believe, need to handle the fact that the bridge chain may
+>>>>>>>>>> not have even been created yet. We do AUX transfers to read the EDID
+>>>>>>>>>> and also to setup the backlight in the probe function of panel-edp. At
+>>>>>>>>>> that point the panel hasn't been linked into the chain. We had _long_
+>>>>>>>>>> discussions [1] about moving these out of probe and decided that we
+>>>>>>>>>> could move the EDID read to be later but that it was going to really
+>>>>>>>>>> ugly to move the AUX backlight later. The backlight would end up
+>>>>>>>>>> popping up at some point in time later (the first call to panel
+>>>>>>>>>> prepare() or maybe get_modes()) and that seemed weird.
+>>>>>>>>>>
+>>>>>>>>>> [1]
+>>>>>>>>>> https://lore.kernel.org/lkml/CAD=FV=U5-sTDLYdkeJWLAOG-0wgxR49VxtwUyUO7z2PuibLGsg@mail.gmail.com/
+>>>>>>>>>>
+>>>>>>>>>>
+>>>>>>>>>>> Otherwise you can't trust that eg. the /dev/aux
+>>>>>>>>>>> stuff is actually usable.
+>>>>>>>>>>
+>>>>>>>>>> Yeah, it's been on my mind to talk more about /dev/aux. I think
+>>>>>>>>>> /dev/aux has some problems, at least with eDP. Specifically:
+>>>>>>>>>>
+>>>>>>>>>> 1. Even if we somehow figure out how to power the panel on as part of
+>>>>>>>>>> the aux transfer, we actually _still_ not guaranteed to be able to
+>>>>>>>>>> talk to it as far as I understand. My colleague reported to me that on
+>>>>>>>>>> a system he was working with that had PSR (panel self refresh) that
+>>>>>>>>>> when the panel was powered on but in PSR mode that it wouldn't talk
+>>>>>>>>>> over AUX. Assuming that this is correct then I guess we'd also have to
+>>>>>>>>>> do even more coordination with DRM to exit PSR and block future
+>>>>>>>>>> transitions of PSR. (NOTE: it's always possible that my colleague ran
+>>>>>>>>>> into some other bug and that panels are _supposed_ to be able to talk
+>>>>>>>>>> in PSR. If you think this is the case, I can always try to dig more).
+>>>>>>>>>
+>>>>>>>>> TBH - the coordination with drm I don't think would be the difficult part, as
+>>>>>>>>> we'd just need to add some sort of property (ideally invisible to userspace)
+>>>>>>>>> that can be used in an atomic commit to disable PSR - similar to how we enable
+>>>>>>>>> CRC readback from sysfs in the majority of DRM drivers. That being said
+>>>>>>>>> though, I think we can just leave the work of solving this problem up to
+>>>>>>>>> whoever ends up needing this to work.
+>>>>>>>>
+>>>>>>>> The driver should just disable/prevent PSR when doing AUX if the hardware
+>>>>>>>> can't guarantee the PSR and AUX won't interfere with each other.
+>>>>>>>
+>>>>>>> OK, fair enough. If we can solve the PSR problem that would be great.
+>>>>>>>
+>>>>>>>
+>>>>>>>> For i915 we have no problems with powering the panel on for AUX, but
+>>>>>>>> there is still a race with PSR vs. AUX because both use the same hardware
+>>>>>>>> internally. I've been nagging at people to fix this for i915 but I don't
+>>>>>>>> think it still got done :( Originally we were supposed to get a hardware
+>>>>>>>> mutex for this but that plan got scrapped for some reason.
+>>>>>>>
+>>>>>>> I haven't looked at the i915 DRM code much, but my understanding is
+>>>>>>> that it's more of an "all in one" approach. The one driver pretty much
+>>>>>>> handles everything itself. That means that powering the panel up isn't
+>>>>>>> too hard. Is that right?
+>>>>>>
+>>>>>> Yeah, we don't have too many "helpful" abstractions in the way ;)
+>>>>>>
+>>>>>>>>>> for userspace to be mucking with /dev/aux. For DP's case I guess
+>>>>>>>>>> /dev/aux is essentially enabling userspace drivers to do things like
+>>>>>>>>>> update firmware on DP monitors or play with the backlight. I guess we
+>>>>>>>>>> decided that we didn't want to add drivers in the kernel to handle
+>>>>>>>>>> this type of stuff so we left it for userspace? For eDP, though, there
+>>>>>>>>>
+>>>>>>>>> The main reason DP AUX got exposed to userspace in the first place was for
+>>>>>>>>> usecases like fwupd,
+>>>>>>>>
+>>>>>>>> My memory says the original reason was debugging. Or at least I had
+>>>>>>>> no idea fwupd had started to use this until I saw some weird looking
+>>>>>>>> DPCD addresses in some debug log.
+>>>>>>>>
+>>>>>>>> But I suppose it's possible there were already plans for firmware
+>>>>>>>> updates and whatnot and it just wasn't being discussed when this was
+>>>>>>>> being developed.
+>>>>>>>
+>>>>>>> If it's just for debugging, I'd argue that leaving it as-is should be
+>>>>>>> fine. Someone poking around with their system can find a way to make
+>>>>>>> sure that the panel stays on.
+>>>>>>
+>>>>>> That could require altering the state of the system quite a bit, which
+>>>>>> may defeat the purpose.
+>>>>>
+>>>>> It does? In my experience you just need to make sure that the panel is
+>>>>> turned on. ...or are you saying that you'd use this for debugging a
+>>>>> case where the system isn't probing properly?
+>>>>>
+>>>>> If things are truly in bad shape, at least on boards using device tree
+>>>>> it's easy to tweak the device tree to force a regulator to stay on. I
+>>>>> suppose we could also add a "debugfs" entry for the panel that also
+>>>>> forces it to be powered on.
+>>>>>
+>>>>>
+>>>>>>   At least I would not be willing to accept such
+>>>>>> a limitation.
+>>>>>
+>>>>> Hmm, so where does that leave us? Are you against landing this patch?
+>>>>> I've done a lot of cleanups recently and I just don't think I have the
+>>>>> time to rework all the AUX transfer functions and figure out how to
+>>>>> power the panel. It also seems like a lot of added complexity for a
+>>>>> debug path.
+>>>>
+>>>> If my 2c counts, I support landing this patch. It clearly documents
+>>>> current behaviour and expectations.
+>>>>
+>>>> If that helps,
+>>>> Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>
+>>>> As for the /dev/aux, question, I think we can make the following plan work:
+>>>> - Document that eDP panel power up can be handled by using the
+>>>> pm_runtime API (which is the case for both panel-edp and atna33xc20)).
+>>>> I think this is a sensible requirement anyway. And both panels show
+>>>> how to handle different poweron/poweroff timings.
+>>>> - Make drm_dp_aux_dev_get_by_minor() pm_runtime_get() the attached panel.
+>>>
+>>> This matches what you suggested previously, but I still think it has a
+>>> potential problem as I talked about in the my previous (very long)
+>>> reply [1]. The relevant part was:
+>>>
+>>>> Now, despite the fact that the generic eDP panel code doesn't follow
+>>>> the "strict"ness I just described, the _other_ DP panel I worked on
+>>>> recently (samsung-atna33xc20) does. In testing we found that this
+>>>> panel would sometimes (like 1 in 20 times?) crash if you ever stopped
+>>>> outputting data to the display and then started again. You absolutely
+>>>> needed to fully power cycle the display each time. I tried to document
+>>>> this to the best of my ability in atana33xc20_unprepare(). There's
+>>>> also a WARN_ON() in atana33xc20_enable() trying to detect if someone
+>>>> is doing something the panel driver doesn't expect.
+>>>
+>>> Specifically, I think you could get in trouble if you did:
+>>>
+>>> a) drm wants to power down the panel.
+>>>
+>>> b) drm calls the panel's disable() function
+>>>
+>>> c) we start an aux transfer and grab a runtime pm reference
+>>>
+>>> d) drm calls the panel's unprepare() function => atana33xc20_unprepare()
+>>>
+>>> e) atana33xc20_unprepare()'s pm_runtime_put_sync_suspend() _won't_
+>>> power off the panel (we still have the reference from step c), even
+>>> though it needs to.
+>>>
+>>> f) we'll finish an aux transfer and, presumably, call
+>>> pm_runtime_put_autosuspend()
+>>>
+>>> g) drm wants to power the panel back up
+>>>
+>>> h) drm calls the panel's prepare() function, but power wasn't properly cycled
+>>
+>> Why? We'd need to extend the prepare() function with the flag
+>> data_was_on, which is set in the enable() and cleared in the suspend
+>> path. If we see this flag in the prepare() callback, we should
+>> forcibly power cycle the panel by toggling the regulator. Yes, this
+>> will cause additional wait.
+>>
+>> Another option might be to toggle the autosuspend support. Let the
+>> disable() call pm_runtime_dont_autosuspend() (which would turn all
+>> autosuspend calls into plain pm_runtime_put()) and allow it again in
+>> the resume(). I'm not 100% sure that this will work, but it looks like
+>> it should.
+> 
+> It turns out, though, that we _want_ autosuspend sometimes, even when
+> the panel is disabled. Specifically, if the panel is disabled and then
+> atana33xc20_get_modes() gets called then we _don't_ want to fully
+> power the panel off. It's expected that there will be a future call to
+> prepare() soon after the get_modes() and we don't want a full power
+> cycle (500 ms) there. This mechanism is also fully allowed by the eDP
+> spec. The only time we _need_ a full power cycle is after disable().
 
-Fixes: 7907a0d77cb4 ("drm/msm/mdp5: Use the new private_obj state")
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+Yes. That's why I proposed to put pm_runtime_dont_autosuspend() call to 
+the disable(). So that after get_modes() there will be no power cycle, 
+but only after disable() call.
 
-> ---
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c  | 10 ++++++++--
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.c | 15 +++++++++++----
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.h |  4 ++--
->  3 files changed, 21 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> index b966cd69f99d..fe2922c8d21b 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> @@ -612,9 +612,15 @@ static int mdp5_crtc_setup_pipeline(struct drm_crtc *crtc,
->                 if (ret)
->                         return ret;
->
-> -               mdp5_mixer_release(new_crtc_state->state, old_mixer);
-> +               ret = mdp5_mixer_release(new_crtc_state->state, old_mixer);
-> +               if (ret)
-> +                       return ret;
-> +
->                 if (old_r_mixer) {
-> -                       mdp5_mixer_release(new_crtc_state->state, old_r_mixer);
-> +                       ret = mdp5_mixer_release(new_crtc_state->state, old_r_mixer);
-> +                       if (ret)
-> +                               return ret;
-> +
->                         if (!need_right_mixer)
->                                 pipeline->r_mixer = NULL;
->                 }
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.c
-> index 954db683ae44..2536def2a000 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.c
-> @@ -116,21 +116,28 @@ int mdp5_mixer_assign(struct drm_atomic_state *s, struct drm_crtc *crtc,
->         return 0;
->  }
->
-> -void mdp5_mixer_release(struct drm_atomic_state *s, struct mdp5_hw_mixer *mixer)
-> +int mdp5_mixer_release(struct drm_atomic_state *s, struct mdp5_hw_mixer *mixer)
->  {
->         struct mdp5_global_state *global_state = mdp5_get_global_state(s);
-> -       struct mdp5_hw_mixer_state *new_state = &global_state->hwmixer;
-> +       struct mdp5_hw_mixer_state *new_state;
->
->         if (!mixer)
-> -               return;
-> +               return 0;
-> +
-> +       if (IS_ERR(global_state))
-> +               return PTR_ERR(global_state);
-> +
-> +       new_state = &global_state->hwmixer;
->
->         if (WARN_ON(!new_state->hwmixer_to_crtc[mixer->idx]))
-> -               return;
-> +               return -EINVAL;
->
->         DBG("%s: release from crtc %s", mixer->name,
->             new_state->hwmixer_to_crtc[mixer->idx]->name);
->
->         new_state->hwmixer_to_crtc[mixer->idx] = NULL;
-> +
-> +       return 0;
->  }
->
->  void mdp5_mixer_destroy(struct mdp5_hw_mixer *mixer)
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.h
-> index 43c9ba43ce18..545ee223b9d7 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.h
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.h
-> @@ -30,7 +30,7 @@ void mdp5_mixer_destroy(struct mdp5_hw_mixer *lm);
->  int mdp5_mixer_assign(struct drm_atomic_state *s, struct drm_crtc *crtc,
->                       uint32_t caps, struct mdp5_hw_mixer **mixer,
->                       struct mdp5_hw_mixer **r_mixer);
-> -void mdp5_mixer_release(struct drm_atomic_state *s,
-> -                       struct mdp5_hw_mixer *mixer);
-> +int mdp5_mixer_release(struct drm_atomic_state *s,
-> +                      struct mdp5_hw_mixer *mixer);
->
->  #endif /* __MDP5_LM_H__ */
-> --
-> 2.35.1
->
+> 
+> In any case, we can come up with complex ways to solve this, but I'm
+> still just not convinced that it's worth it. There's no valid use case
+> other than debugging. IMO if we're poking around and want to read DP
+> registers while the panel is on then it works just fine. A user doing
+> this can ensure that the panel is on while poking. Certainly I've done
+> that and it wasn't a big imposition.
+> 
+> If someone wants to submit patches to attempt this then I'm happy to
+> test them, but I feel like it's adding complexity for very little
+> value. The way it works now is simple / understandable and mathes my
+> intuition from other busses, like i2c. The bus is just responsible for
+> powering itself, not the devices on the bus. It has also long been
+> documented since commit 83127f67e450 ("drm/panel: Flesh out
+> kerneldoc") in 2016 that the way to turn on a panel for communication
+> over the command bus is via drm_panel_prepare(). I don't think we need
+> to change this.
+
+Yes.
+
+
+>> The second option leaves a possible window for the panel issues if the
+>> userspace AUX transfer is ongoing while the panel is being unprepared
+>> and then prepared again. In this case it will never be power cycled.
+>> However after some thought I think this is correct. You wouldn't like
+>> to power cycle a panel while you are e.g. updating the firmware.
+> 
+> As per my earlier responses, nothing we are doing here solves the
+> firmware update anyway. Even if we automatically power the panel for
+> the duration of a single aux transfer, nothing prevents the panel from
+> turning off between transfers. There's no API to "keep the power on
+> until I say stop". You certainly wouldn't want a panel to turn off
+> midway through a firmware update. IMO if we want to use this for
+> firmware update, we either need an special way to force the panel on
+> (in which case, we don't need to worry about it in the aux transfer
+> function) or (better IMO) we need to manage the firmware update in the
+> panel driver and prevent some type of sysfs interface to provide the
+> new firmware and kick off the update. Presumably having this managed
+> by the panel driver would be best because the panel driver could know
+> to, for instance, re-read the EDID after the firmware update took
+> place.
+
+That's why I suggested pm_runtime_get()'ting the panel from 
+drm_dp_aux_dev_get_by_minor(). This way the whole userspace session will 
+be protected.
+
+But as you said, this becomes more and more complex with little added value.
+
+-- 
+With best wishes
+Dmitry
