@@ -2,208 +2,362 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B33551C6AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 20:02:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4637D51C6D8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 20:13:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382953AbiEESGY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 14:06:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54164 "EHLO
+        id S1383047AbiEESRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 14:17:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347541AbiEESGX (ORCPT
+        with ESMTP id S1383056AbiEESRY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 14:06:23 -0400
-Received: from esa.hc3962-90.iphmx.com (esa.hc3962-90.iphmx.com [216.71.142.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC9674BFFC;
-        Thu,  5 May 2022 11:02:43 -0700 (PDT)
+        Thu, 5 May 2022 14:17:24 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F311D5C66B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 11:13:39 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id h29so8815812lfj.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 11:13:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=qti.qualcomm.com; i=@qti.qualcomm.com; q=dns/txt;
-  s=qccesdkim1; t=1651773763; x=1652378563;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=w2Dhjxc8SU3O8N73+tskpToAYvxA0GTbivDl538Kjlw=;
-  b=OW4MHs2pOk8Aht2I7ptbsYzWKaOfEZK2u3ioycaTjQlOaqamxD6T6aSv
-   HPXNoJ7Brk7RMqkj8ipkpzOpcxGM+rYWldPRWzuB5JXNk7Ja1APZaIL2B
-   i4RI7X27sRxsdN1cnkC+3BqT++D8I3/L5iVmSA6e3oZqfRwJnM7MkUkhQ
-   4=;
-Received: from mail-bn8nam11lp2177.outbound.protection.outlook.com (HELO NAM11-BN8-obe.outbound.protection.outlook.com) ([104.47.58.177])
-  by ob1.hc3962-90.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 18:02:40 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Ml6IoHHDssQY+37GBU7gigkiKlNYwRxqzaZkgh+0r+aKqRbTgBf9hkV/sg8cQsUz8Agn/YwKt3zguvERFtSDn0lS4AhhF5BL9Rymqv55YT6jpW/j8B9E4D5acS412j9XbHuXefMErXlmKljjcZ5raGyyrcW3JqA/NzSYh5Sc3OfrrKhjxRqYDBhWdFIOmngdINqHclXG4T3qrhTy7tpxMp6d9jhbNtR2x7nS//lwqAXr0r1a1orN7hWqNYI0eKKqvQzW58Bv0ibudCBjRd0iZ2NUsPclDZDK2CCkZntL6uuWf7GJ8yLTAgqSOul3iVpEbMSHoO6i/obaQXGOiX7X0g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=w2Dhjxc8SU3O8N73+tskpToAYvxA0GTbivDl538Kjlw=;
- b=PP9KZ3k3ztSo6VTghyQ8wCFd2QdUTDGKXt1N1b6VJnMSuNPZ0ZP+y0jtgpSW3SDvl30fnUqwsKjjvqbHzGhvjUbsfAuWTSyz7PFf2k0MyXkdG97W6di2F4fdK6NCTIp7Ls0ZG3aXXDJCp9CWexTYbE6+x2/oJsS6K7tDqboFUb7ykMfrlzoPwkkvVjE+PI12DnKydJEy+qwIGBXm34EN2foBZklpPT+5RsTdpQbTkKh8la6ZeBdCO73ed1TcHOijdn52UUpE0kUCA8DIDKnO0MFBUdWSC4KEe1/K6xP05VBXHDSeSCGRIuHKlY6JOBGtFmzRfDNYt3q15xTqa2MMsg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=qti.qualcomm.com; dmarc=pass action=none
- header.from=qti.qualcomm.com; dkim=pass header.d=qti.qualcomm.com; arc=none
-Received: from MW4PR02MB7186.namprd02.prod.outlook.com (2603:10b6:303:73::6)
- by DM6PR02MB4236.namprd02.prod.outlook.com (2603:10b6:5:9a::30) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5186.15; Thu, 5 May
- 2022 18:02:36 +0000
-Received: from MW4PR02MB7186.namprd02.prod.outlook.com
- ([fe80::1d18:abb7:c311:543f]) by MW4PR02MB7186.namprd02.prod.outlook.com
- ([fe80::1d18:abb7:c311:543f%4]) with mapi id 15.20.5206.025; Thu, 5 May 2022
- 18:02:36 +0000
-From:   Sankeerth Billakanti <sbillaka@qti.qualcomm.com>
-To:     Doug Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>
-CC:     "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "linux-phy@lists.infradead.org" <linux-phy@lists.infradead.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Subject: RE: [PATCH 1/2] dt-bindings: msm/dp: List supplies in the bindings
-Thread-Topic: [PATCH 1/2] dt-bindings: msm/dp: List supplies in the bindings
-Thread-Index: AQHYWOh0LkcVWva+fESk6uZPP3V7t60BIRCAgAABL4CAD35OcA==
-Date:   Thu, 5 May 2022 18:02:36 +0000
-Message-ID: <MW4PR02MB718610FAA14F966ADE1B1585E1C29@MW4PR02MB7186.namprd02.prod.outlook.com>
-References: <20220425210643.2420919-1-dianders@chromium.org>
- <20220425140619.1.Ibfde5a26a7182c4b478d570c23d2649823ac2cce@changeid>
- <CAE-0n51eZpAKprRQ0HqjLciF_BVQHBDN8SMFNVmmOd=B9UBEzg@mail.gmail.com>
- <CAD=FV=WmVK3wTQf_EAxSi0WPXedSFGCsKdyqRnHsskmMYTHDQA@mail.gmail.com>
-In-Reply-To: <CAD=FV=WmVK3wTQf_EAxSi0WPXedSFGCsKdyqRnHsskmMYTHDQA@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=qti.qualcomm.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 59c32a7a-1777-41da-3fb4-08da2ec16fd6
-x-ms-traffictypediagnostic: DM6PR02MB4236:EE_
-x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
-x-microsoft-antispam-prvs: <DM6PR02MB42368F11FB19802F38FF07B7E1C29@DM6PR02MB4236.namprd02.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: /TdcQy4gImfMcSpzBrB9qk/xNVRW8u8xTMEQLlHO8Wm11JLjndkX97NCcl5UhzBdMl76eKAOyrdsNgjRnnaxiDh+pO6pi1ZJVr1tb0iM+QWxGaWIC9CWkZsVj2sqgW3kLDo+cLgpJJqIgdpn4lkkzZYAZ7llIHUa2ZS3g/gwHXTTHXwPoitP8i0cFJeYv+BWYg1LFLDTebTz1bbJTtqeNMGM9B0u1FeiTXRLDPLkeTVy+rrDYAFuv3bjzZ1IvAEX7Hdmmzgv+w8Itc9XXumSV9NDqHUyIKIIsPfR2IEy0UncspXrus4qYteJwEN+7OYg/jNTBLfyaeucUFJjRZVNCPGKdrVf2WBw4LboJKWGerWbAofghiXTTqE66vE9hApqmlK3WnblbEw78IDQWim8G2Ix/A58IBU9arT6fZodqXeHvntyoStGl15xg8hqJH/pCQxQmlmtrepOAEXqOUQi7nOUC1qhdboybQT4QZglgAua1+u5SUHDRWwksMKS+03I+H4QqCRhLr/HiwL4h7NBibQe//Xo0KZzlOudvRCxe56/Ipvyx/DX0Ua2y+t7UivlGMAJfJQerL6DouJq0DA8jj226ZhGM7Hixq22tW4vmR3H1oyeVkLuDkMEgXW9bO9jHLqUfjrkzp8Tp0s2vh/u94YWZEq27X93zI5RzBFnsOMm2Hs/2bX5Oa4DIfhA/1mxDWmTpFjtWiJJOqrxW1imRg==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW4PR02MB7186.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(9686003)(54906003)(110136005)(508600001)(6506007)(7696005)(55016003)(186003)(66556008)(26005)(66946007)(66446008)(8676002)(64756008)(66476007)(4326008)(86362001)(52536014)(2906002)(71200400001)(76116006)(5660300002)(7416002)(8936002)(33656002)(38100700002)(122000001)(38070700005)(316002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bjdrOGc1Z3cyWExaQXRVMmhIdFRPa1VoNlY4bGUzQ0diNnFsdWhkVi9zNGpy?=
- =?utf-8?B?UmtmWFBNTW5RU3oxaWxhS0dqMTYyR3lObnVRZUFpU0c3VHdQT0J0Qm5HZTFk?=
- =?utf-8?B?YWo4Z3h0ZVZMZEJxL1d1UXFKSklqdllRSXdLVHY4WEVXcDJvU1pKMjFZRFk2?=
- =?utf-8?B?RUpqcWJkRzZuYS9zUFZXSVl4dFFxekhCU2NBRnUyTkgrd0NKWCtkb3dZT21B?=
- =?utf-8?B?QW01N3BvQXc1VFZjRjNpM0pqenU2Z3Vkd1NkKytGU2xmd0N6UWU2RXhpRzhN?=
- =?utf-8?B?MERIV09qYjJQcWtFU0RQRitYQ3d3UXhIb1JIVkRPK0N6cHllbzFlZ3FUNlRS?=
- =?utf-8?B?RUFmQkpneHB5enJRcVBoVG5WZVZhTzZUcG1kNnRwdU1pWDU4cjhOemVSaC9X?=
- =?utf-8?B?ZlNRTFllYVJ2S1hremRyTW1scXRrQVpmMTY2eDEyNGVtZmpXUk1Ca1pPY0ta?=
- =?utf-8?B?MVhTcEVYRExwL0FQNnJwN2FRVUlzZzR1Rk90V3JUUVNpc2JYZ2w1dkdobXRO?=
- =?utf-8?B?c3dxcGtyUWErS0E3eXE0K2IraU5QYjEzUmpabkE1dE9Dd2RGby9QdkdSMmtq?=
- =?utf-8?B?ekxvWm55V1VycktpdC94bXU4TFJQbXUwU2lncjZOaUxLK2NXcFRsZkZlR3VF?=
- =?utf-8?B?Sy8wanJhNklrMUhwY2FOaFlNY0pBT1BzbkJ2Z01pNUowbkUrRmRRTlNUeXBZ?=
- =?utf-8?B?UkZJN1B5c2dTVmthV3h5Nlkwb25La09keEdpMllNSWNraXNhRk5BNnY1NnFD?=
- =?utf-8?B?cmRuMG4zTGVJM1Avb3p3ZXhHQTJidW4wU0dlQUR0NDdkZzgrTFNPZXNyYlNh?=
- =?utf-8?B?bURUNXRHZXBPQ2RSQmIwM3R3SHFkbnlHMzRLZUNDVlM4TkpxZld2Yk54WDBN?=
- =?utf-8?B?cmowRDFNZHgzNUYrWTA2ZWd1SStVTlJZT1dVRG9OTWZyMHE1MG15Nkh6WUhJ?=
- =?utf-8?B?Sng5NFU4WWJhaWVSL3JienBOaUhZdCs5K3RHWFArK1g0LzRmWGRmRnpvK3RF?=
- =?utf-8?B?ZEl3M3R5dVp3RUxDV3h1NHhmcWZrajREekpEbDRSajUzdFpJT2JZbk5FdFZo?=
- =?utf-8?B?NDJGVUxnMVROLzhSYTBRYWRBVU9DNVZCbVNDbVAydzE3RCt0S3IzVlJTUEVv?=
- =?utf-8?B?ajViRnp1cCtUanJEMHRYQ1A4dTV3VXhIMWtQSW9jMVk3RDR6RER4cTlBeGxT?=
- =?utf-8?B?bWQ4ZndHamNZdHRWWVdzdURMR3kvRUkxQXVmVUxRSXo2SHh6TGdvcGZtTWJX?=
- =?utf-8?B?MGtCQU5zVmNJb2JzQVlyRGJDekpKRm5ndEtpL3owVkhQQm0ydUhnYWhFNXB0?=
- =?utf-8?B?MzEzbUErMG5UQlhPUWs2bWFwQ1YwTVB0WVBBZVFpdU5LSGFqajFraW5Ha2ZJ?=
- =?utf-8?B?R2RRT2ZGcVdEclpNd0pEM01VWE91VU9XNmJQRW5SaU5GY2NKUjFsTlp4eHB0?=
- =?utf-8?B?VVBSdXEzWUtGbjg0bUd3cVZoSnlTUjZwNHZDZEZXY05JVDlKSlkzaXkxMUtG?=
- =?utf-8?B?REdWNjVUWDhQcUZPbW0yMzMyeWtjNSsxd094NFYvWXlhOWs2U0w1c1FacTRE?=
- =?utf-8?B?K2JNcEhmaUxBK2ErTkpsY2M1UGFmK3VVTlVqWFpmam5uN05rcDBNWnc2ZFNu?=
- =?utf-8?B?eGd2blBsdXFYV3l6b0VLbUVQT21na3A3N1ZVd0FLNmhmRTl0Zk15QWU2Y3Fh?=
- =?utf-8?B?NWU2NG85cUNTd0dETmFmUnYrYk1EQ0dBWHcvZVZOWUR2R3NIcmsxN1J5MHNn?=
- =?utf-8?B?RmYvUlNGd3NhYnZSUkE0WXQ5WFZMSGd3a3VDZS9ad2thdHJLT3VmbHQySjNM?=
- =?utf-8?B?eXlsMSttTGpBN1g4Ymt2b090ZTNITVFQTHFPaldKN2NTRURlL2VSVzNrNGZQ?=
- =?utf-8?B?Yk42L29wRmVVVVVMU1VrdHE3OTFpVGFZSG5uTVUwUDhTT2JXRGZsR0Yway8z?=
- =?utf-8?B?ZjBEUTRRYitzMXo0dlRjTGMreUhWSVR1VG8vWUszdjVobUNaeUcwd09Kakkz?=
- =?utf-8?B?Rjh1Si9lM1E2UHU4YkFRYThZMzNJQW9DZnFPUjdVSTJIdnB1a3dCZU9ndmhO?=
- =?utf-8?B?YVY2MHVHTmlzNmZEK1dXc3BpZk9LcTV3bXNTOUdhV1pKM1BGckFXbzYxYUhQ?=
- =?utf-8?B?ZWlLNTN2MjYxY29HT05zL21iZHFzWmZHQzVUS05zaXFlZHlqQWI3NWlOMlYz?=
- =?utf-8?B?TklzQ0Q4bTRyNmNQam1tN1lvNmd5azV3VHFSTGovTlZWeDB3aXpSMVl3NWQ1?=
- =?utf-8?B?OEd0alJVZnE4WklqeWNwdHVNTmx3MXdubFhab3p3TVIyN000NkRzaEgrK1l0?=
- =?utf-8?B?cVlQNmp2UnJCZHJ1TVRsWXF3Mm51R3BqOWxldFJpQTY5MXBvaHBFSkZwS2t0?=
- =?utf-8?Q?xmlcNWsUIf7czekU=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=54HlQahs7v/blRgjoGh4iXCzqR9zYxLOvL2RN5Pe+60=;
+        b=kYG/mGl9/Y9QAuGEzTJEo0DgHj8x1Je+8X4Cdgaz7wG774fHGAeoNR+chumLZ0RLKX
+         cMTneap/WCcZ6JP6igNc5gSjOkZ/BWD4WmKku1ntFv1cRCUsUmTm9vD0Jk+Sm9FRtulz
+         QmjVkMfTfdrUhlVmxS1MMr8RSUum/cYJhQmngwms32lS48bzi2K2eAdmUmO9uopB7zbk
+         tlU7LxmuPPfBXJ48xvrAIW1nYaLobVlBpNDgsoZC/2zRb2IvsSc8hCxLBnslgSHJgnPA
+         K72YsENonxNqHrHstUPC3nERPRBd8ST153I+a7M4fYiuAX9onOQzAzBoiOhZgrsNnc5p
+         ad0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=54HlQahs7v/blRgjoGh4iXCzqR9zYxLOvL2RN5Pe+60=;
+        b=YdqGtALWtIXhGgsE2pM0oVPHoupCeG20WOzd6Tn74+lBACYhoBTg4ufmbfuhrkjSrE
+         lW2qK6nJ9R31q+Ndo65fDK/RAi3RHjxn141COO6LD/glY2rzDAAVDckwVMD9Y44XV8U0
+         8VbtUOR/lQbf01EdmY0YJODIPOaUYfVMJYq2HVWgQT4LqYBJZn1oQzo51wgZ3mEjtwDC
+         tzRE2iWiSI+jRH8Hkaxf/zyvPS1D4uDix5oN33X2yA6xGlj4zE/anqgzfpxAEQ9JZ6gS
+         BlGaXuK+HB/RFmNkm01BOBV7NeeEmeZg5N8NJS6m5jRRFBTsyjXl+H97UjS+ZVA1u+YP
+         ODBA==
+X-Gm-Message-State: AOAM530rEDJBBfK4HPCOK4zMquRWQpPxPv9iMMzhSMHlcxEwUgzPG6qo
+        iqDfA2JJBaMU1w0dHe3NNjDwDg==
+X-Google-Smtp-Source: ABdhPJxUg2ZSy1cRzJOfRT7wMt5lROj2OHro7gDzF/BNqlsnxaiay1aMKZCuQ1ey77k0Iw2IuNnSIQ==
+X-Received: by 2002:a05:6512:3301:b0:472:2373:eda9 with SMTP id k1-20020a056512330100b004722373eda9mr18490476lfe.455.1651774418201;
+        Thu, 05 May 2022 11:13:38 -0700 (PDT)
+Received: from localhost.localdomain (mobile-access-5672eb-224.dhcp.inet.fi. [86.114.235.224])
+        by smtp.gmail.com with ESMTPSA id o15-20020ac24bcf000000b0047255d210f6sm315087lfq.37.2022.05.05.11.13.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 May 2022 11:13:37 -0700 (PDT)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v5 1/7] dt-bindings: clock: add QCOM SM8450 camera clock bindings
+Date:   Thu,  5 May 2022 21:13:17 +0300
+Message-Id: <20220505181317.4125934-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20220505121213.4121802-2-vladimir.zapolskiy@linaro.org>
+References: <20220505121213.4121802-2-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
-X-OriginatorOrg: qti.qualcomm.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MW4PR02MB7186.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 59c32a7a-1777-41da-3fb4-08da2ec16fd6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 May 2022 18:02:36.5599
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: cjMMG2nUGtN151hr3ZCJwQ7/f2X4qdDdO2Y5iuaHwYwoZHuGt1zTdtrvlstT7Fx5DUECXjGF6U6Yp7OqaMaeb69wTACBvVbhsgglc8FvFqs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR02MB4236
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGkgRG91ZywNCg0KPj4NCj4+IFF1b3RpbmcgRG91Z2xhcyBBbmRlcnNvbiAoMjAyMi0wNC0yNSAx
-NDowNjo0MikNCj4+ID4gV2UncmUgc3VwcG9zZWQgdG8gbGlzdCB0aGUgc3VwcGxpZXMgaW4gdGhl
-IGR0IGJpbmRpbmdzIGJ1dCB0aGVyZSBhcmUNCj4+ID4gbm9uZSBpbiB0aGUgRFAgY29udHJvbGxl
-ciBiaW5kaW5ncy4gTG9va2luZyBhdCB0aGUgTGludXggZHJpdmVyIGFuZA0KPj4gPiBleGlzdGlu
-ZyBkZXZpY2UgdHJlZXMsIHdlIGNhbiBzZWUgdGhhdCB0d28gc3VwcGxpZXMgYXJlIGV4cGVjdGVk
-Og0KPj4gPiAtIHZkZGEtMHA5LXN1cHBseQ0KPj4gPiAtIHZkZGEtMXAyLXN1cHBseQ0KPj4gPg0K
-Pj4gPiBMZXQncyBsaXN0IHRoZW0gYm90aCBpbiB0aGUgYmluZGluZ3MuIE5vdGUgdGhhdCB0aGUg
-ZGF0YXNoZWV0IGZvcg0KPj4gPiBzYzcyODAgZG9lc24ndCBkZXNjcmliZSB0aGVzZSBzdXBwbGll
-cyB2ZXJ5IHZlcmJvc2VseS4gRm9yIHRoZSAwcDkNCj4+ID4gc3VwcGx5LCBmb3IgaW5zdGFuY2Us
-IGl0IHNheXMgIlBvd2VyIGZvciBlRFAgMC45IFYgY2lyY3VpdHMiLiBUaGlzDQo+PiA+IHRoaXMg
-aXMgb2J2aW91cyBmcm9tIHRoZSBwcm9wZXJ0eSBuYW1lLCB3ZSBkb24ndCBib3RoZXIgY2x1dHRl
-cmluZw0KPj4gPiB0aGUgYmluZGluZ3Mgd2l0aCBhIGRlc2NyaXB0aW9uLg0KPj4gPg0KPj4gPiBT
-aWduZWQtb2ZmLWJ5OiBEb3VnbGFzIEFuZGVyc29uIDxkaWFuZGVyc0BjaHJvbWl1bS5vcmc+DQo+
-PiA+IC0tLQ0KPj4gPg0KPj4gPiAgLi4uL2RldmljZXRyZWUvYmluZGluZ3MvZGlzcGxheS9tc20v
-ZHAtY29udHJvbGxlci55YW1sICAgICAgfCA2ICsrKysrKw0KPj4gPiAgMSBmaWxlIGNoYW5nZWQs
-IDYgaW5zZXJ0aW9ucygrKQ0KPj4gPg0KPj4gPiBkaWZmIC0tZ2l0DQo+PiA+IGEvRG9jdW1lbnRh
-dGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2Rpc3BsYXkvbXNtL2RwLWNvbnRyb2xsZXIueWFtbA0K
-Pj4gPiBiL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9kaXNwbGF5L21zbS9kcC1j
-b250cm9sbGVyLnlhbWwNCj4+ID4gaW5kZXggY2QwNWNmZDc2NTM2Li5kYmEzMTEwOGRiNTEgMTAw
-NjQ0DQo+PiA+IC0tLQ0KPj4gPiBhL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9k
-aXNwbGF5L21zbS9kcC1jb250cm9sbGVyLnlhbWwNCj4+ID4gKysrIGIvRG9jdW1lbnRhdGlvbi9k
-ZXZpY2V0cmVlL2JpbmRpbmdzL2Rpc3BsYXkvbXNtL2RwLWNvbnRyb2xsZXIueWENCj4+ID4gKysr
-IG1sDQo+PiA+IEBAIC03Niw2ICs3Niw5IEBAIHByb3BlcnRpZXM6DQo+PiA+ICAgICIjc291bmQt
-ZGFpLWNlbGxzIjoNCj4+ID4gICAgICBjb25zdDogMA0KPj4gPg0KPj4gPiArICB2ZGRhLTBwOS1z
-dXBwbHk6IHRydWUNCj4+ID4gKyAgdmRkYS0xcDItc3VwcGx5OiB0cnVlDQo+PiA+ICsNCj4+ID4g
-ICAgcG9ydHM6DQo+PiA+ICAgICAgJHJlZjogL3NjaGVtYXMvZ3JhcGgueWFtbCMvcHJvcGVydGll
-cy9wb3J0cw0KPj4gPiAgICAgIHByb3BlcnRpZXM6DQo+PiA+IEBAIC0xMzcsNiArMTQwLDkgQEAg
-ZXhhbXBsZXM6DQo+PiA+DQo+PiA+ICAgICAgICAgIHBvd2VyLWRvbWFpbnMgPSA8JnJwbWhwZCBT
-QzcxODBfQ1g+Ow0KPj4gPg0KPj4gPiArICAgICAgICB2ZGRhLTBwOS1zdXBwbHkgPSA8JnZkZGFf
-dXNiX3NzX2RwX2NvcmU+Ow0KPj4NCj4+IEhhdmluZyAnYScgaW4gJ3ZkZGEnIHR5cGljYWxseSBt
-ZWFucyAnYW5hbG9nJyBmb3IgJ2FuYWxvZycgY2lyY3VpdHMsDQo+PiBzbyBJJ2QgZXhwZWN0IHRo
-aXMgdG8gb25seSBtYXR0ZXIgZm9yIHRoZSBwaHkgdGhhdCBjb250YWlucyB0aGUgYW5hbG9nDQo+
-PiBjaXJjdWl0cnkuIEl0IHdvdWxkIGJlIGdyZWF0IHRvIHJlbW92ZSB0aGUgcmVndWxhdG9yIGNv
-ZGUgZnJvbQ0KPj4gZHJpdmVycy9ncHUvZHJtL21zbS9kcC9kcF9wb3dlci5jIGFuZCBtb3ZlIHRo
-ZSByZWd1bGF0b3Jfc2V0X2xvYWQoKQ0KPj4gY2FsbCB0byB0aGUgcGh5IGRyaXZlciBpZiBwb3Nz
-aWJsZS4gSG9wZWZ1bGx5IHFjb20gZm9sa3MgY2FuIGhlbHANCj4+IGNsYXJpZnkgaGVyZS4NCj4N
-Cj5JbnRlcmVzdGluZy4gT2RkbHkgZW5vdWdoLCB0aGUgc2M3MjgwIGRhdGFzaGVldCBkb2Vzbid0
-IGxpc3QgdGhlICJfQSIuDQo+SXQgY2FsbHMgdGhlc2UgIlZERF9WUkVGXzBQOSIgYW5kICJWRERf
-VlJFRl8xUDIiLiBIb3dldmVyLCBvbiB0aGUNCj5zY2hlbWF0aWMgaW4gZnJvbnQgb2YgbWUgc29t
-ZW9uZSBsYWJlbGVkIHRoZXNlIHBpbnMgb24gdGhlIHNjNzI4MCB3aXRoIHRoZQ0KPiJBIi4gLi4u
-YW5kIHRoZSBkcml2ZXIgbG9va3MgZm9yIGEgc3VwcGx5IHdpdGggdGhlICJhIi4gOi0vDQo+DQo+
-SXQgd291bGQgYmUgZ29vZCB0byBnZXQgY2xhcmlmaWNhdGlvbiBmcm9tIHNvbWVvbmUgd2l0aCBi
-ZXR0ZXIgaW5mb3JtYXRpb24uDQo+DQo+LURvdWcNCg0KT3VyIGludGVybmFsIHBvd2VyIGdyaWQg
-ZG9jdW1lbnRzIGxpc3QgdGhlIHJlZ3VsYXRvcnMgYXMgVkREX0FfKl8xUDIgYW5kIFZERF9BXypf
-MFA5DQpmb3IgYWxsIHRoZSBwbGF0Zm9ybXMuDQoNClNvLCBhcyBhIHByYWN0aWNlLCB3ZSBwdXQg
-dGhlIHNhbWUgbmFtZSBpbiB0aGUgRFQgZmlsZXMuIEhlbmNlLA0KDQpSZXZpZXdlZC1ieTogU2Fu
-a2VlcnRoIEJpbGxha2FudGkgPHF1aWNfc2JpbGxha2FAcXVpY2luYy5jb20+DQoNClRoYW5rIHlv
-dSwNClNhbmtlZXJ0aCANCg==
+The change adds device tree bindings for camera clock controller
+found on SM8450 SoC.
+
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+Changes from v4 to v5:
+* fixed a typo in a usage example found in the yaml file.
+
+Changes from v3 to v4:
+* renamed a filename in $id value after the rename of the file itself.
+
+Changes from v2 to v3:
+* renamed files to match the compatible value "qcom,sm8450-camcc",
+* fixed a typo in a usage example found in the yaml file.
+
+Changes from v1 to v2:
+* updated qcom,camcc-sm8450.yaml according to review comments from Rob,
+* changed qcom,camcc-sm8450.h license to dual one.
+
+ .../bindings/clock/qcom,sm8450-camcc.yaml     |  89 ++++++++++
+ include/dt-bindings/clock/qcom,sm8450-camcc.h | 159 ++++++++++++++++++
+ 2 files changed, 248 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+ create mode 100644 include/dt-bindings/clock/qcom,sm8450-camcc.h
+
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+new file mode 100644
+index 000000000000..49a2781df60c
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+@@ -0,0 +1,89 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,sm8450-camcc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Camera Clock & Reset Controller Binding for SM8450
++
++maintainers:
++  - Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
++
++description: |
++  Qualcomm camera clock control module which supports the clocks, resets and
++  power domains on SM8450.
++
++  See also dt-bindings/clock/qcom,camcc-sm8450.h
++
++properties:
++  compatible:
++    const: qcom,sm8450-camcc
++
++  clocks:
++    items:
++      - description: Camera AHB clock from GCC
++      - description: Board XO source
++      - description: Board active XO source
++      - description: Sleep clock source
++
++  clock-names:
++    items:
++      - const: iface
++      - const: bi_tcxo
++      - const: bi_tcxo_ao
++      - const: sleep_clk
++
++  power-domains:
++    maxItems: 1
++    description:
++      A phandle and PM domain specifier for the MMCX power domain.
++
++  required-opps:
++    description:
++      A phandle to an OPP node describing required MMCX performance point.
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - power-domains
++  - required-opps
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-sm8450.h>
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
++    clock-controller@ade0000 {
++      compatible = "qcom,sm8450-camcc";
++      reg = <0 0xade0000 0 0x20000>;
++      clocks = <&gcc GCC_CAMERA_AHB_CLK>,
++               <&rpmhcc RPMH_CXO_CLK>,
++               <&rpmhcc RPMH_CXO_CLK_A>,
++               <&sleep_clk>;
++      clock-names = "iface", "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
++      power-domains = <&rpmhpd SM8450_MMCX>;
++      required-opps = <&rpmhpd_opp_low_svs>;
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,sm8450-camcc.h b/include/dt-bindings/clock/qcom,sm8450-camcc.h
+new file mode 100644
+index 000000000000..7ff67acf301a
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,sm8450-camcc.h
+@@ -0,0 +1,159 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_CAM_CC_SM8450_H
++#define _DT_BINDINGS_CLK_QCOM_CAM_CC_SM8450_H
++
++/* CAM_CC clocks */
++#define CAM_CC_BPS_AHB_CLK					0
++#define CAM_CC_BPS_CLK						1
++#define CAM_CC_BPS_CLK_SRC					2
++#define CAM_CC_BPS_FAST_AHB_CLK					3
++#define CAM_CC_CAMNOC_AXI_CLK					4
++#define CAM_CC_CAMNOC_AXI_CLK_SRC				5
++#define CAM_CC_CAMNOC_DCD_XO_CLK				6
++#define CAM_CC_CCI_0_CLK					7
++#define CAM_CC_CCI_0_CLK_SRC					8
++#define CAM_CC_CCI_1_CLK					9
++#define CAM_CC_CCI_1_CLK_SRC					10
++#define CAM_CC_CORE_AHB_CLK					11
++#define CAM_CC_CPAS_AHB_CLK					12
++#define CAM_CC_CPAS_BPS_CLK					13
++#define CAM_CC_CPAS_FAST_AHB_CLK				14
++#define CAM_CC_CPAS_IFE_0_CLK					15
++#define CAM_CC_CPAS_IFE_1_CLK					16
++#define CAM_CC_CPAS_IFE_2_CLK					17
++#define CAM_CC_CPAS_IFE_LITE_CLK				18
++#define CAM_CC_CPAS_IPE_NPS_CLK					19
++#define CAM_CC_CPAS_SBI_CLK					20
++#define CAM_CC_CPAS_SFE_0_CLK					21
++#define CAM_CC_CPAS_SFE_1_CLK					22
++#define CAM_CC_CPHY_RX_CLK_SRC					23
++#define CAM_CC_CSI0PHYTIMER_CLK					24
++#define CAM_CC_CSI0PHYTIMER_CLK_SRC				25
++#define CAM_CC_CSI1PHYTIMER_CLK					26
++#define CAM_CC_CSI1PHYTIMER_CLK_SRC				27
++#define CAM_CC_CSI2PHYTIMER_CLK					28
++#define CAM_CC_CSI2PHYTIMER_CLK_SRC				29
++#define CAM_CC_CSI3PHYTIMER_CLK					30
++#define CAM_CC_CSI3PHYTIMER_CLK_SRC				31
++#define CAM_CC_CSI4PHYTIMER_CLK					32
++#define CAM_CC_CSI4PHYTIMER_CLK_SRC				33
++#define CAM_CC_CSI5PHYTIMER_CLK					34
++#define CAM_CC_CSI5PHYTIMER_CLK_SRC				35
++#define CAM_CC_CSID_CLK						36
++#define CAM_CC_CSID_CLK_SRC					37
++#define CAM_CC_CSID_CSIPHY_RX_CLK				38
++#define CAM_CC_CSIPHY0_CLK					39
++#define CAM_CC_CSIPHY1_CLK					40
++#define CAM_CC_CSIPHY2_CLK					41
++#define CAM_CC_CSIPHY3_CLK					42
++#define CAM_CC_CSIPHY4_CLK					43
++#define CAM_CC_CSIPHY5_CLK					44
++#define CAM_CC_FAST_AHB_CLK_SRC					45
++#define CAM_CC_GDSC_CLK						46
++#define CAM_CC_ICP_AHB_CLK					47
++#define CAM_CC_ICP_CLK						48
++#define CAM_CC_ICP_CLK_SRC					49
++#define CAM_CC_IFE_0_CLK					50
++#define CAM_CC_IFE_0_CLK_SRC					51
++#define CAM_CC_IFE_0_DSP_CLK					52
++#define CAM_CC_IFE_0_FAST_AHB_CLK				53
++#define CAM_CC_IFE_1_CLK					54
++#define CAM_CC_IFE_1_CLK_SRC					55
++#define CAM_CC_IFE_1_DSP_CLK					56
++#define CAM_CC_IFE_1_FAST_AHB_CLK				57
++#define CAM_CC_IFE_2_CLK					58
++#define CAM_CC_IFE_2_CLK_SRC					59
++#define CAM_CC_IFE_2_DSP_CLK					60
++#define CAM_CC_IFE_2_FAST_AHB_CLK				61
++#define CAM_CC_IFE_LITE_AHB_CLK					62
++#define CAM_CC_IFE_LITE_CLK					63
++#define CAM_CC_IFE_LITE_CLK_SRC					64
++#define CAM_CC_IFE_LITE_CPHY_RX_CLK				65
++#define CAM_CC_IFE_LITE_CSID_CLK				66
++#define CAM_CC_IFE_LITE_CSID_CLK_SRC				67
++#define CAM_CC_IPE_NPS_AHB_CLK					68
++#define CAM_CC_IPE_NPS_CLK					69
++#define CAM_CC_IPE_NPS_CLK_SRC					70
++#define CAM_CC_IPE_NPS_FAST_AHB_CLK				71
++#define CAM_CC_IPE_PPS_CLK					72
++#define CAM_CC_IPE_PPS_FAST_AHB_CLK				73
++#define CAM_CC_JPEG_CLK						74
++#define CAM_CC_JPEG_CLK_SRC					75
++#define CAM_CC_MCLK0_CLK					76
++#define CAM_CC_MCLK0_CLK_SRC					77
++#define CAM_CC_MCLK1_CLK					78
++#define CAM_CC_MCLK1_CLK_SRC					79
++#define CAM_CC_MCLK2_CLK					80
++#define CAM_CC_MCLK2_CLK_SRC					81
++#define CAM_CC_MCLK3_CLK					82
++#define CAM_CC_MCLK3_CLK_SRC					83
++#define CAM_CC_MCLK4_CLK					84
++#define CAM_CC_MCLK4_CLK_SRC					85
++#define CAM_CC_MCLK5_CLK					86
++#define CAM_CC_MCLK5_CLK_SRC					87
++#define CAM_CC_MCLK6_CLK					88
++#define CAM_CC_MCLK6_CLK_SRC					89
++#define CAM_CC_MCLK7_CLK					90
++#define CAM_CC_MCLK7_CLK_SRC					91
++#define CAM_CC_PLL0						92
++#define CAM_CC_PLL0_OUT_EVEN					93
++#define CAM_CC_PLL0_OUT_ODD					94
++#define CAM_CC_PLL1						95
++#define CAM_CC_PLL1_OUT_EVEN					96
++#define CAM_CC_PLL2						97
++#define CAM_CC_PLL3						98
++#define CAM_CC_PLL3_OUT_EVEN					99
++#define CAM_CC_PLL4						100
++#define CAM_CC_PLL4_OUT_EVEN					101
++#define CAM_CC_PLL5						102
++#define CAM_CC_PLL5_OUT_EVEN					103
++#define CAM_CC_PLL6						104
++#define CAM_CC_PLL6_OUT_EVEN					105
++#define CAM_CC_PLL7						106
++#define CAM_CC_PLL7_OUT_EVEN					107
++#define CAM_CC_PLL8						108
++#define CAM_CC_PLL8_OUT_EVEN					109
++#define CAM_CC_QDSS_DEBUG_CLK					110
++#define CAM_CC_QDSS_DEBUG_CLK_SRC				111
++#define CAM_CC_QDSS_DEBUG_XO_CLK				112
++#define CAM_CC_SBI_AHB_CLK					113
++#define CAM_CC_SBI_CLK						114
++#define CAM_CC_SFE_0_CLK					115
++#define CAM_CC_SFE_0_CLK_SRC					116
++#define CAM_CC_SFE_0_FAST_AHB_CLK				117
++#define CAM_CC_SFE_1_CLK					118
++#define CAM_CC_SFE_1_CLK_SRC					119
++#define CAM_CC_SFE_1_FAST_AHB_CLK				120
++#define CAM_CC_SLEEP_CLK					121
++#define CAM_CC_SLEEP_CLK_SRC					122
++#define CAM_CC_SLOW_AHB_CLK_SRC					123
++#define CAM_CC_XO_CLK_SRC					124
++
++/* CAM_CC resets */
++#define CAM_CC_BPS_BCR						0
++#define CAM_CC_ICP_BCR						1
++#define CAM_CC_IFE_0_BCR					2
++#define CAM_CC_IFE_1_BCR					3
++#define CAM_CC_IFE_2_BCR					4
++#define CAM_CC_IPE_0_BCR					5
++#define CAM_CC_QDSS_DEBUG_BCR					6
++#define CAM_CC_SBI_BCR						7
++#define CAM_CC_SFE_0_BCR					8
++#define CAM_CC_SFE_1_BCR					9
++
++/* CAM_CC GDSCRs */
++#define BPS_GDSC		0
++#define IPE_0_GDSC		1
++#define SBI_GDSC		2
++#define IFE_0_GDSC		3
++#define IFE_1_GDSC		4
++#define IFE_2_GDSC		5
++#define SFE_0_GDSC		6
++#define SFE_1_GDSC		7
++#define TITAN_TOP_GDSC		8
++
++#endif
+-- 
+2.33.0
+
