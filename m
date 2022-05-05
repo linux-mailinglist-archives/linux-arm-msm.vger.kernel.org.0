@@ -2,100 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81EDD51C3E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 17:26:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A38FC51C40B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 17:37:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343503AbiEEPaA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 11:30:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55150 "EHLO
+        id S242771AbiEEPlg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 11:41:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344763AbiEEP36 (ORCPT
+        with ESMTP id S238590AbiEEPld (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 11:29:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 289D82182B;
-        Thu,  5 May 2022 08:26:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B4BE961D11;
-        Thu,  5 May 2022 15:26:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0F4C385A8;
-        Thu,  5 May 2022 15:26:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651764378;
-        bh=0k1tO5axREF/4p/FKv3ZbViryXBR4aYYf04SAPimw2o=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RUOT97NqXTW5U1EvAcCEkgmVXpdTPe8VucAPSAymvGiXQZ2hoxqLyvPeS2HgLGrBh
-         i1OVA/b5AZStqoFiLrbgQbd00yJg0AOOtQhBYavAxVGEZCigcVBAclXSmtsg5Zd+Xd
-         mVvIW9mIxcIF91ensVGsOhlZqqqWf5cPJfRbgBXt2WOmV4wKRISyDeOA0Bsp+YVS/G
-         401eP7/4CSNTwlZqY7lZTNL3cBdk9H5vyRl5pkzpVIa75h2SAvWEEwiCRUy2K2f6Qc
-         LHyYPpcTsoV+hZazK+7qwd1cC6s4LiFzKXjSzaA3hJkFzCSIekR9tm7q0jV9w5sCjR
-         A51apK5XBwXFg==
-Date:   Thu, 5 May 2022 16:26:12 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] spi: dt-bindings: qcom,spi-geni-qcom: allow three
- interconnects
-Message-ID: <YnPslKE9klw/Mair@sirena.org.uk>
-References: <20220504125119.190526-1-krzysztof.kozlowski@linaro.org>
- <YnKVLxmz0hhQGNzI@sirena.org.uk>
- <cfba178d-ff36-910b-3067-ce32b701b643@linaro.org>
- <YnKZyCogvngR7zfc@sirena.org.uk>
- <a099eb33-91a0-0262-f6c0-a77dc7aec146@linaro.org>
+        Thu, 5 May 2022 11:41:33 -0400
+Received: from extserv.mm-sol.com (ns.mm-sol.com [37.157.136.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 218BD15815;
+        Thu,  5 May 2022 08:37:52 -0700 (PDT)
+Received: from [192.168.1.17] (unknown [84.238.208.205])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        (Authenticated sender: svarbanov@mm-sol.com)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id BF412D2AA;
+        Thu,  5 May 2022 18:37:50 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1651765070; bh=uVBey31bxdTj1jCCK+/s43l7HdKmJ0V7+XbcUggK3zA=;
+        h=Date:Subject:To:Cc:From:From;
+        b=nkIpo+HObdOmz3xtRL3k69eQ5gV3avmAx9tAxhZakfllVMMRQJLx0GpYxbf7XKTnm
+         Wf6qbPwZ7Z912uWgMvVyb9htTfP6OpOCQIsHX4XkodBxZ8RqIBBaIVbSRMmm+8Ku7g
+         urirEqfGJmmDX2wZwRRDLLZbGIbIdivxe+H8kes5t47FZMFEuVnApJLBgPXtcuGDpP
+         rN6n7+KZ+rP8vaHVz0CzGt53tQKEjQmSNkDTioHzmbFWuLbiph0DEOIRNMWQP2rWtj
+         vM+NysPthpGf/2duhomPGxxlfd1j7IFDqEOMlMnI0VkWn7e9S5/SqzkBMrnMdAiFoL
+         9T6z5/LVoNoWA==
+Message-ID: <ace7dd07-cf2f-fa74-866f-50f7da0b89bb@mm-sol.com>
+Date:   Thu, 5 May 2022 18:37:48 +0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="bFKPx0PKehbSOEUY"
-Content-Disposition: inline
-In-Reply-To: <a099eb33-91a0-0262-f6c0-a77dc7aec146@linaro.org>
-X-Cookie: Real programs don't eat cache.
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v7 0/7] PCI: qcom: Fix higher MSI vectors handling
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220505135407.1352382-1-dmitry.baryshkov@linaro.org>
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+In-Reply-To: <20220505135407.1352382-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Thanks Dmitry!
 
---bFKPx0PKehbSOEUY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 5/5/22 16:54, Dmitry Baryshkov wrote:
+> I have replied with my Tested-by to the patch at [2], which has landed
+> in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
+> Add support for handling MSIs from 8 endpoints"). However lately I
+> noticed that during the tests I still had 'pcie_pme=nomsi', so the
+> device was not forced to use higher MSI vectors.
+> 
+> After removing this option I noticed that hight MSI vectors are not
+> delivered on tested platforms. After additional research I stumbled upon
+> a patch in msm-4.14 ([1]), which describes that each group of MSI
+> vectors is mapped to the separate interrupt. Implement corresponding
+> mapping.
+> 
+> Since we can not expect that other platforms will use multi-IRQ scheme
+> for MSI mapping (e.g. iMX and Tegra map all 256 MSI interrupts to single
+> IRQ), it's support is implemented directly in pcie-qcom rather than in
+> the core driver.
+> 
+> The first patch in the series is a revert of  [2] (landed in pci-next).
+> Either both patches should be applied or both should be dropped.
+> 
+> Patchseries dependecies: [3] (for the schema change).
+> 
+> Changes since v6:
+>  - Fix indentation of the arguments as requested by Stanimir
 
-On Thu, May 05, 2022 at 11:00:26AM +0200, Krzysztof Kozlowski wrote:
+<cut>
 
-> I don't know, Mark. The confusion was not intended. The second patch in
-> the set depended on SPI patch, so probably after three weeks Bjorn just
-> took entire set.
+> 
+> Dmitry Baryshkov (7):
+>   PCI: qcom: Revert "PCI: qcom: Add support for handling MSIs from 8
+>     endpoints"
+>   PCI: dwc: Correct msi_irq condition in dw_pcie_free_msi()
+>   PCI: dwc: Add msi_host_deinit callback
+>   PCI: dwc: Export several functions useful for MSI implentations
+>   PCI: qcom: Handle MSIs routed to multiple GIC interrupts
+>   dt-bindings: PCI: qcom: Support additional MSI interrupts
+>   arm64: dts: qcom: sm8250: provide additional MSI interrupts
 
-> https://lore.kernel.org/all/20220404064017.68634-1-krzysztof.kozlowski@linaro.org/
+For PCI qcom driver:
 
-Ah, so this was part of the pile where I was waiting for Bjorn to say if
-he was OK with adding him as a maintainer.  Bjorn, please don't just
-apply patches without some sort of handshake when people are clearly
-around and replying to mail - it causes confusion like this :(
+Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
 
---bFKPx0PKehbSOEUY
-Content-Type: application/pgp-signature; name="signature.asc"
+> 
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    |  45 +++++-
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi          |  11 +-
+>  .../pci/controller/dwc/pcie-designware-host.c |  72 +++++----
+>  drivers/pci/controller/dwc/pcie-designware.h  |  12 ++
+>  drivers/pci/controller/dwc/pcie-qcom.c        | 138 +++++++++++++++++-
+>  5 files changed, 246 insertions(+), 32 deletions(-)
+> 
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmJz7JQACgkQJNaLcl1U
-h9BI8Af+NVvL8/LWcbqmAd3UbedPPsrdmc4E7WXxCKiDCeeuC1g2+eb4Fw6w14rV
-4wtO1EZutitVEnvnAcw4V6prNrlHF3JCQxZyJiAPgmXzOf4FZCMPdsxOKLwMM8cj
-hpwl7i5dNyCnymFC08V4ZkRsuo/7QaLpqaola7PuuMCckdcNco801AG5tGoJAhaK
-iTXU/hXLxoW2xK/u/q17Cow8bawsw44X/M3WmTrmjlBA12VwAFZUBW41UVfvU/o9
-C40BBVE66Jz44aOFVA/wwZKFykCfKZLKBF8qgQmZ5WuTBVUM8v9ExOhLZl0JrqPm
-OM/8eUYLRm0bx9dni4uCzL1wh1KSlQ==
-=r72j
------END PGP SIGNATURE-----
-
---bFKPx0PKehbSOEUY--
+-- 
+regards,
+Stan
