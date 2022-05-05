@@ -2,237 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29E8A51C3F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 17:29:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76C4651C3C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 17:21:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377544AbiEEPcj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 11:32:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56942 "EHLO
+        id S239589AbiEEPZe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 11:25:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232024AbiEEPci (ORCPT
+        with ESMTP id S232495AbiEEPZd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 11:32:38 -0400
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 183845BE7B;
-        Thu,  5 May 2022 08:28:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651764536; x=1683300536;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=GyvmqhzHL+nS7FAawrKlmtuIIqJmkGLA4a4pCuECvyM=;
-  b=YVuxgaq6qRFhgrXU2q3oBPUTq/4uIVArWJZVe8ufQb2wLLMp16osNuLS
-   SkqvekrSakYvEujxeP67OE5l858MXKRyRuvicufEsTFtnLwRZIyYTy6iY
-   X2+VfD3+D7WVHfI9YGgxptQrnW8VMy9N6XLd4KQtgndaWRT9A0no09t2x
-   6u1+m8uY+FDymWD+Uf/lg7KUqlGD3Bui+HhQGmPjrB4JdOEFbS+w3K793
-   bJIFplPE6iKD7uW6ZGwiVs0et+MXFp1Qfn0v/V6u0ndF0g5Amdp4ubRoR
-   UUyTEuMYw8egPGM+LDfzMhgGbuWXUOORc2SMcsimuyTyKJF6NtZaTiQXw
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10338"; a="328682305"
-X-IronPort-AV: E=Sophos;i="5.91,201,1647327600"; 
-   d="scan'208";a="328682305"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 08:08:24 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,201,1647327600"; 
-   d="scan'208";a="708972231"
-Received: from stinkpipe.fi.intel.com (HELO stinkbox) ([10.237.72.51])
-  by fmsmga001.fm.intel.com with SMTP; 05 May 2022 08:08:19 -0700
-Received: by stinkbox (sSMTP sendmail emulation); Thu, 05 May 2022 18:08:18 +0300
-Date:   Thu, 5 May 2022 18:08:18 +0300
-From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Lyude Paul <lyude@redhat.com>, LKML <linux-kernel@vger.kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
+        Thu, 5 May 2022 11:25:33 -0400
+X-Greylist: delayed 338 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 05 May 2022 08:21:52 PDT
+Received: from elaine.keithp.com (home.keithp.com [63.227.221.253])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91427554A8;
+        Thu,  5 May 2022 08:21:52 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by elaine.keithp.com (Postfix) with ESMTP id 373F23F3296A;
+        Thu,  5 May 2022 08:16:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
+        t=1651763774; bh=O3aXJOWYxVTqOu3VmcXxOiZZOhMrUjqY/t6cXMT24+E=;
+        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+        b=M3zB+WUy+cYZq4HgtgtbfmLljWbRpIeJ5Zkg9r1D71YqvPlgOkiQ4tXheXCRGUa8+
+         RMuby4CqFAMCoPUIrwdzYTZDTf78io+RFFo6OcdGBDUFDZRaGhZfKKcTtwdj7WCFy4
+         6tn6om4NwF6owZoCYEHNTlN4dA5iODmOFbhrxNDmu4q/fHHXFfSRYzNqzWEthWHBp3
+         hB3E0o3k1G8NwFJfKh9rQpVZYZLwPg6CF6he0rk/+KFPQLpotGYN+CgB1L7QQOYecl
+         ymeV9rACfLcKoB95CZdy6K628IEeM8t07ROlSN+X9O0IbQydzX/BQ3xj9k+MYZwzPf
+         UxJC+uQh0iuJw==
+X-Virus-Scanned: Debian amavisd-new at keithp.com
+Received: from elaine.keithp.com ([127.0.0.1])
+        by localhost (elaine.keithp.com [127.0.0.1]) (amavisd-new, port 10024)
+        with LMTP id AExLuWAu_LJ4; Thu,  5 May 2022 08:16:13 -0700 (PDT)
+Received: from keithp.com (koto.keithp.com [192.168.11.2])
+        by elaine.keithp.com (Postfix) with ESMTPSA id 046443F32465;
+        Thu,  5 May 2022 08:16:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=keithp.com; s=mail;
+        t=1651763773; bh=O3aXJOWYxVTqOu3VmcXxOiZZOhMrUjqY/t6cXMT24+E=;
+        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+        b=krSTvH+KcMYcsYiJs+brgDawkHD6ep7gtAt/7ImbSH+PVnVS6n5TIWQoiUP+PjBfQ
+         TTV9zZEzFSNSLzQmSsEIJT24ancVfic/4tw1+i19H4UqIv2Soci174vL3i+L8WgOn3
+         3GAVx4Wwdu1vRPL7EVqx5qPLOOTreMDXIScBgNd+X5AcHfMZWw538tPrPoKpSSqHZH
+         dCLZclbzdDsdQUL6m86l3cbny8WccVcefFqv7gslHwR8P3ZsfbW/X+4PLXD3hTeyro
+         XMqcEagdrGN5NURX0L6R0oPpkf8LkkkUJo0DYZf6b68EQ+TuLV1TgvwIq/q3gwMiYO
+         4YgvEK7vCGplw==
+Received: by keithp.com (Postfix, from userid 1000)
+        id 4874D1E601B9; Thu,  5 May 2022 08:16:12 -0700 (PDT)
+From:   Keith Packard <keithp@keithp.com>
+To:     Johannes Berg <johannes@sipsolutions.net>,
+        Kees Cook <keescook@chromium.org>
+Cc:     "Gustavo A . R . Silva" <gustavoars@kernel.org>,
+        Francis Laniel <laniel_francis@privacyrequired.com>,
+        Daniel Axtens <dja@axtens.net>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Vincenzo Frascino <vincenzo.frascino@arm.com>,
+        Guenter Roeck <linux@roeck-us.net>,
         Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Maxime Ripard <maxime@cerno.tech>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-Subject: Re: [PATCH] drm: Document that power requirements for DP AUX
- transfers
-Message-ID: <YnPoYsnx7IeBfJ5D@intel.com>
-References: <20220503162033.1.Ia8651894026707e4fa61267da944ff739610d180@changeid>
- <YnJv3B/85hTz54SC@intel.com>
- <CAD=FV=WndmKuEB0=OVQP9YuJaSmD0uxkNs5LE0wWsFj7gBvhBA@mail.gmail.com>
- <1c6c9fde6e85f09cc89ea8dc6e8716fef58f3ee1.camel@redhat.com>
- <YnPjO4kbjezQl5Da@intel.com>
- <CAD=FV=XbZEagm5qR207mcVm1Ry=bGeuRAqTYx3SBoZfyo6fSkg@mail.gmail.com>
+        Tadeusz Struk <tadeusz.struk@linaro.org>,
+        Alexei Starovoitov <ast@kernel.org>,
+        alsa-devel@alsa-project.org, Al Viro <viro@zeniv.linux.org.uk>,
+        Andrew Gabbasov <andrew_gabbasov@mentor.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Andy Lavr <andy.lavr@gmail.com>,
+        Arend van Spriel <aspriel@gmail.com>,
+        Baowen Zheng <baowen.zheng@corigine.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+        Bradley Grove <linuxdrivers@attotech.com>,
+        brcm80211-dev-list.pdl@broadcom.com,
+        Christian Brauner <brauner@kernel.org>,
+        Christian =?utf-8?Q?G=C3=B6ttsche?= <cgzones@googlemail.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        Chris Zankel <chris@zankel.net>,
+        Cong Wang <cong.wang@bytedance.com>,
+        David Gow <davidgow@google.com>,
+        David Howells <dhowells@redhat.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+        devicetree@vger.kernel.org, Dexuan Cui <decui@microsoft.com>,
+        Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
+        Eli Cohen <elic@nvidia.com>,
+        Eric Dumazet <edumazet@google.com>,
+        Eric Paris <eparis@parisplace.org>,
+        Eugeniu Rosca <erosca@de.adit-jv.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Franky Lin <franky.lin@broadcom.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Gregory Greenman <gregory.greenman@intel.com>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Hante Meuleman <hante.meuleman@broadcom.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Hulk Robot <hulkci@huawei.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        James Morris <jmorris@namei.org>,
+        Jarkko Sakkinen <jarkko@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        John Keeping <john@metanate.com>,
+        Juergen Gross <jgross@suse.com>, Kalle Valo <kvalo@kernel.org>,
+        keyrings@vger.kernel.org, kunit-dev@googlegroups.com,
+        Kuniyuki Iwashima <kuniyu@amazon.co.jp>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Leon Romanovsky <leon@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux1394-devel@lists.sourceforge.net,
+        linux-afs@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-hardening@vger.kernel.org, linux-hyperv@vger.kernel.org,
+        linux-integrity@vger.kernel.org, linux-rdma@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-security-module@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
+        linux-xtensa@linux-xtensa.org, llvm@lists.linux.dev,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Louis Peens <louis.peens@corigine.com>,
+        Luca Coelho <luciano.coelho@intel.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Marc Dionne <marc.dionne@auristor.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Mark Brown <broonie@kernel.org>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Max Filippov <jcmvbkbc@gmail.com>,
+        Mimi Zohar <zohar@linux.ibm.com>,
+        Muchun Song <songmuchun@bytedance.com>,
+        Nathan Chancellor <nathan@kernel.org>, netdev@vger.kernel.org,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Nuno =?utf-8?Q?S=C3=A1?= <nuno.sa@analog.com>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Paul Moore <paul@paul-moore.com>,
+        Rich Felker <dalias@aerifal.cx>,
+        Rob Herring <robh+dt@kernel.org>,
+        Russell King <linux@armlinux.org.uk>, selinux@vger.kernel.org,
+        "Serge E. Hallyn" <serge@hallyn.com>,
+        SHA-cyfmac-dev-list@infineon.com,
+        Simon Horman <simon.horman@corigine.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Stefan Richter <stefanr@s5r6.in-berlin.de>,
+        Steffen Klassert <steffen.klassert@secunet.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Stephen Smalley <stephen.smalley.work@gmail.com>,
+        Takashi Iwai <tiwai@suse.com>, Tom Rix <trix@redhat.com>,
+        Udipto Goswami <quic_ugoswami@quicinc.com>,
+        wcn36xx@lists.infradead.org, Wei Liu <wei.liu@kernel.org>,
+        xen-devel@lists.xenproject.org,
+        Xiu Jianfeng <xiujianfeng@huawei.com>,
+        Yang Yingliang <yangyingliang@huawei.com>
+Subject: Re: [PATCH 02/32] Introduce flexible array struct memcpy() helpers
+In-Reply-To: <970a674df04271b5fd1971b495c6b11a996c20c2.camel@sipsolutions.net>
+References: <20220504014440.3697851-1-keescook@chromium.org>
+ <20220504014440.3697851-3-keescook@chromium.org>
+ <d3b73d80f66325fdfaf2d1f00ea97ab3db03146a.camel@sipsolutions.net>
+ <202205040819.DEA70BD@keescook>
+ <970a674df04271b5fd1971b495c6b11a996c20c2.camel@sipsolutions.net>
+Date:   Thu, 05 May 2022 08:16:11 -0700
+Message-ID: <871qx8qabo.fsf@keithp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAD=FV=XbZEagm5qR207mcVm1Ry=bGeuRAqTYx3SBoZfyo6fSkg@mail.gmail.com>
-X-Patchwork-Hint: comment
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 05, 2022 at 08:00:20AM -0700, Doug Anderson wrote:
-> Hi,
-> 
-> On Thu, May 5, 2022 at 7:46 AM Ville Syrjälä
-> <ville.syrjala@linux.intel.com> wrote:
-> >
-> > On Wed, May 04, 2022 at 02:10:08PM -0400, Lyude Paul wrote:
-> > > On Wed, 2022-05-04 at 09:04 -0700, Doug Anderson wrote:
-> > > > Hi,
-> > > >
-> > > > On Wed, May 4, 2022 at 5:21 AM Ville Syrjälä
-> > > > <ville.syrjala@linux.intel.com> wrote:
-> > > > >
-> > > > > On Tue, May 03, 2022 at 04:21:08PM -0700, Douglas Anderson wrote:
-> > > > > > When doing DP AUX transfers there are two actors that need to be
-> > > > > > powered in order for the DP AUX transfer to work: the DP source and
-> > > > > > the DP sync. Commit bacbab58f09d ("drm: Mention the power state
-> > > > > > requirement on side-channel operations") added some documentation
-> > > > > > saying that the DP source is required to power itself up (if needed)
-> > > > > > to do AUX transfers. However, that commit doesn't talk anything about
-> > > > > > the DP sink.
-> > > > > >
-> > > > > > For full fledged DP the sink isn't really a problem. It's expected
-> > > > > > that if an external DP monitor isn't plugged in that attempting to do
-> > > > > > AUX transfers won't work. It's also expected that if a DP monitor is
-> > > > > > plugged in (and thus asserting HPD) that it AUX transfers will work.
-> > > > > >
-> > > > > > When we're looking at eDP, however, things are less obvious. Let's add
-> > > > > > some documentation about expectations. Here's what we'll say:
-> > > > > >
-> > > > > > 1. We don't expect the DP AUX transfer function to power on an eDP
-> > > > > > panel. If an eDP panel is physically connected but powered off then it
-> > > > > > makes sense for the transfer to fail.
-> > > > >
-> > > > > I don't agree with this. I think the panel should just get powred up
-> > > > > for AUX transfers.
-> > > >
-> > > > That's definitely a fair thing to think about and I have at times
-> > > > thought about trying to make it work that way. It always ends up
-> > > > hitting a roadblock.
-> >
-> > How do you even probe the panel initially if you can't power it on
-> > without doing some kind of full modeset/etc.?
-> 
-> It's not that we can't power it on without a full modeset. It' that at
-> panel probe time all the DRM components haven't been hooked together
-> yet, so the bridge chain isn't available yet. The panel can power
-> itself on, though. This is why the documentation I added says: "if a
-> panel driver is initiating a DP AUX transfer it may power itself up
-> however it wants"
-> 
-> 
-> > > > The biggest roadblock that I recall is that to make this work then
-> > > > you'd have to somehow ensure that the bridge chain's pre_enable() call
-> > > > was made as part of the AUX transfer, right? Since the transfer
-> > > > function can be called in any context at all, we have to coordinate
-> > > > this with DRM. If, for instance, DRM is mid way through powering the
-> > > > panel down then we need to wait for DRM to fully finish powering down,
-> > > > then we need to power the panel back up. I don't believe that we can
-> > > > just force the panel to stay on if DRM is turning it off because of
-> > > > panel power sequencing requirements. At least I know it would have the
-> > > > potential to break "samsung-atna33xc20.c" which absolutely needs to
-> > > > see the panel power off after it's been disabled.
-> > > >
-> > > > We also, I believe, need to handle the fact that the bridge chain may
-> > > > not have even been created yet. We do AUX transfers to read the EDID
-> > > > and also to setup the backlight in the probe function of panel-edp. At
-> > > > that point the panel hasn't been linked into the chain. We had _long_
-> > > > discussions [1] about moving these out of probe and decided that we
-> > > > could move the EDID read to be later but that it was going to really
-> > > > ugly to move the AUX backlight later. The backlight would end up
-> > > > popping up at some point in time later (the first call to panel
-> > > > prepare() or maybe get_modes()) and that seemed weird.
-> > > >
-> > > > [1]
-> > > > https://lore.kernel.org/lkml/CAD=FV=U5-sTDLYdkeJWLAOG-0wgxR49VxtwUyUO7z2PuibLGsg@mail.gmail.com/
-> > > >
-> > > >
-> > > > > Otherwise you can't trust that eg. the /dev/aux
-> > > > > stuff is actually usable.
-> > > >
-> > > > Yeah, it's been on my mind to talk more about /dev/aux. I think
-> > > > /dev/aux has some problems, at least with eDP. Specifically:
-> > > >
-> > > > 1. Even if we somehow figure out how to power the panel on as part of
-> > > > the aux transfer, we actually _still_ not guaranteed to be able to
-> > > > talk to it as far as I understand. My colleague reported to me that on
-> > > > a system he was working with that had PSR (panel self refresh) that
-> > > > when the panel was powered on but in PSR mode that it wouldn't talk
-> > > > over AUX. Assuming that this is correct then I guess we'd also have to
-> > > > do even more coordination with DRM to exit PSR and block future
-> > > > transitions of PSR. (NOTE: it's always possible that my colleague ran
-> > > > into some other bug and that panels are _supposed_ to be able to talk
-> > > > in PSR. If you think this is the case, I can always try to dig more).
-> > >
-> > > TBH - the coordination with drm I don't think would be the difficult part, as
-> > > we'd just need to add some sort of property (ideally invisible to userspace)
-> > > that can be used in an atomic commit to disable PSR - similar to how we enable
-> > > CRC readback from sysfs in the majority of DRM drivers. That being said
-> > > though, I think we can just leave the work of solving this problem up to
-> > > whoever ends up needing this to work.
-> >
-> > The driver should just disable/prevent PSR when doing AUX if the hardware
-> > can't guarantee the PSR and AUX won't interfere with each other.
-> 
-> OK, fair enough. If we can solve the PSR problem that would be great.
-> 
-> 
-> > For i915 we have no problems with powering the panel on for AUX, but
-> > there is still a race with PSR vs. AUX because both use the same hardware
-> > internally. I've been nagging at people to fix this for i915 but I don't
-> > think it still got done :( Originally we were supposed to get a hardware
-> > mutex for this but that plan got scrapped for some reason.
-> 
-> I haven't looked at the i915 DRM code much, but my understanding is
-> that it's more of an "all in one" approach. The one driver pretty much
-> handles everything itself. That means that powering the panel up isn't
-> too hard. Is that right?
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, we don't have too many "helpful" abstractions in the way ;)
+Johannes Berg <johannes@sipsolutions.net> writes:
 
-> > > > for userspace to be mucking with /dev/aux. For DP's case I guess
-> > > > /dev/aux is essentially enabling userspace drivers to do things like
-> > > > update firmware on DP monitors or play with the backlight. I guess we
-> > > > decided that we didn't want to add drivers in the kernel to handle
-> > > > this type of stuff so we left it for userspace? For eDP, though, there
-> > >
-> > > The main reason DP AUX got exposed to userspace in the first place was for
-> > > usecases like fwupd,
-> >
-> > My memory says the original reason was debugging. Or at least I had
-> > no idea fwupd had started to use this until I saw some weird looking
-> > DPCD addresses in some debug log.
-> >
-> > But I suppose it's possible there were already plans for firmware
-> > updates and whatnot and it just wasn't being discussed when this was
-> > being developed.
-> 
-> If it's just for debugging, I'd argue that leaving it as-is should be
-> fine. Someone poking around with their system can find a way to make
-> sure that the panel stays on.
+> Yeah, dunno, I guess I'm slightly more on the side of not requiring it,
+> since we don't do the same for kmalloc() etc. and probably really
+> wouldn't want to add kmalloc_s() that does it ;-)
 
-That could require altering the state of the system quite a bit, which
-may defeat the purpose. At least I would not be willing to accept such 
-a limitation.
+I suspect the number of bugs this catches will be small, but they'll be
+in places where the flow of control is complicated. What we want is to
+know that there's no "real" value already present. I'd love it if we
+could make the macro declare a new name (yeah, I know, mixing
+declarations and code).
 
-> This is similar to how if you're poking
-> around with /dev/i2c it's up to you to make sure that the i2c device
-> you're poking at stays powered.
-> 
-> -Doug
+Of course, we could also end up with people writing a wrapping macro
+that sets the variable to NULL before invoking the underlying macro...
 
--- 
-Ville Syrjälä
-Intel
+=2D-=20
+=2Dkeith
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEw4O3eCVWE9/bQJ2R2yIaaQAAABEFAmJz6jsACgkQ2yIaaQAA
+ABGQAg/+NFgE01jSUQAsZc8G2KY9qfifpQ5rzrWtedUNXoOhcAo33tvPHnED0AxP
+Q4MXv/X4TRCTOD/5aBjZeKgy9I9G2jYbZq9iYf5uaD9zIECpE5XyznDZzo15cWBE
+B+W7olq9dqiARf6CuwNpYCjB8zv2ubR42c+faTCJNM63owpN9xpGT/7OEbE0HoKg
+TawmusqNU2nOkT82kjh1iVoK0BbmPSATiKkCH9ZpUVQYOQvsyieFtAlQREms/pip
+ccnHssDAaV1dgAg2NlKDzU30XA3rIIsfX+v3Bh+CWoj77Az7IO8+/V+nmNm5GHyy
+bs8LUQY3Z7/otHyGVfjVN9eU6LcEvstr7tOPLWxF0h+YxJk12uKhUZnmt4NisYrL
+uOcx/MC4y6tx9+kdn1U5KoV+O/ekhW/N/WwYcE6YUYZeol3Ahpve77B7uzLbwyOj
+TMLF83DtVqGLwl1y5mdKUfdeUeYhVMYo+eaq0ChKHdYdKj9ra2BaL1oiTc3lKqVW
+FdHX7C9qLA4LsTzfuDiEQDOrnwMDXhvtQrysTOjlQLIcivarCfxIKQw0co8Vubug
+sceCDXCr5qY2cCr51YqbDSVqEXK5Dos7IGlIyIlZH0YCktIbgOGTEPZDcidplXy2
+LWWWFIK6Viz1AgjSRxRU24qmTbFCFLZdboKDuzsCHG8HDByLmNM=
+=BTwc
+-----END PGP SIGNATURE-----
+--=-=-=--
