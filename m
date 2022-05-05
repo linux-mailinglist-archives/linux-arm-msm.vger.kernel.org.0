@@ -2,75 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19DA951CC4E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 00:48:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B7C751CC8B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 01:14:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386474AbiEEWwP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 18:52:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34990 "EHLO
+        id S234769AbiEEXSh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 19:18:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382065AbiEEWwP (ORCPT
+        with ESMTP id S243882AbiEEXSg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 18:52:15 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A2795E16C
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 15:48:33 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id t11-20020a17090ad50b00b001d95bf21996so9265440pju.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 15:48:33 -0700 (PDT)
+        Thu, 5 May 2022 19:18:36 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 300185DD22
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 16:14:55 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id p12so4867293pfn.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 16:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=dOvtahK956Ivo+8wYfwH4F2X00Zrm/MhoFWEgCAUD/s=;
-        b=B7YNLeILdO7JIZFMjaI+Xd8odazymDoK4JVXXm9WjQBUXwPcVdvv181pdkz8Rfur+F
-         FUzUwcFS19U1qZci1rlkeuziHXEPZn8EAndNdzobYO4AIDtnHzXFv13BJUBdHRo3Xh7Z
-         NmBdNrIz0woYjhvJcS49lKoQ6idyX5XwFdNjk=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0kSQb2icz9EuOBfEIavY1Q/aWHO2riUJJut5MHkXzYQ=;
+        b=S0Sy52a0le6z4xwOpfZmcEWeenlEQ8Ny5+NOsiV9S4WMz7U3/f+JzITvJnQltHt/fh
+         W/ORtfNYaxnBYg5XBurxElcnewtdnmEM2batwjzyFoBv1i9xCVFhXsoUL764CUpEBAbh
+         hAGapFLJLcwOGD1ZWZVT1v0J/duqNja6LRVUg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=dOvtahK956Ivo+8wYfwH4F2X00Zrm/MhoFWEgCAUD/s=;
-        b=vGDLJj0qnSLB9mYlwHrB+ONY+X9zu5bTg+uHNnXMpw1Xzv7u7OK4CwNg7K11/pQu7R
-         bPmkzAG8Bk/+uP/RAOSuOz8a6B6aZ3jdIhvQFGAyYjFO6uWfrdd9gEII9wn/tW/9TdAY
-         yoqGprnY1jTM4BBSbAPx35fSe+XVSXX6CBUTkaOf8LYqMlEtM/RxPWwxrALRWpHnDkUO
-         xvJU8fMJmgfirPR28NUaoJqHblLNjuqbWsbwDoc6cLYH3oCjtYKXJBueSWWEiSSsIMMa
-         GSu1dBJ9HeR2U8tlwZSUQztv33PK3AUJdlBEjZpx9cugr84Hpabg23rHFQbFmthcCPhj
-         ygew==
-X-Gm-Message-State: AOAM53080J4jsKVINEAFA55JY9KoovFuzcKTv1R34s2yLUcl5Oec1kdd
-        LAHOiXutK30R/x73jXrMbb2HWg==
-X-Google-Smtp-Source: ABdhPJwji52geo2qkgFpp9fgSwaUVZ9VbcOfLrtQ81fQp2II80rTvMrsuXG7lN58lVPelZ2IgJ9q+g==
-X-Received: by 2002:a17:902:f64e:b0:14d:20db:8478 with SMTP id m14-20020a170902f64e00b0014d20db8478mr485373plg.158.1651790913052;
-        Thu, 05 May 2022 15:48:33 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:5605:d5cd:699b:1b26])
-        by smtp.gmail.com with UTF8SMTPSA id 2-20020a621702000000b0050dc76281f6sm1876448pfx.208.2022.05.05.15.48.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 May 2022 15:48:32 -0700 (PDT)
-Date:   Thu, 5 May 2022 15:48:31 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0kSQb2icz9EuOBfEIavY1Q/aWHO2riUJJut5MHkXzYQ=;
+        b=0QL3hxqHl32S6UytTs/D18xbKf/BbjEmAA+j1MPRlwaJBKCmGhbFiviGJDI7AT5qyf
+         HYwCym0EUxJ6gcDw3CW7cswCwvBW1uEvJ2Nfncpl4o7JkbHMheM5VqIOee6mhIucP4z2
+         XX7wNxBOQW3dOYew1Ma15PnikTm8tOb7+gwmjuq+OCROZcF0VtGgZI79VCb24qbw25Jd
+         UZBx8zVX7xLiOTo813YDJnVC4DEC11muuL66Vhd+hPKE+TqR5/Wi4t5dfCdlVgPmxz5r
+         i3kDUuBAiRRcfj9PFt1eNR3gcvCAB6lVJ1hzupgqOEUzsySzyFI0rVak0yzpsnqKOV86
+         oTdA==
+X-Gm-Message-State: AOAM530A05gie2f0J6Y2N2bkGeIv+VDjEwKaU4Q0riOiiPu41IY487Zd
+        PfWOmuuOlOs8gn63cfDJwOFKDpLPRUjzyMtpJVoYdA==
+X-Google-Smtp-Source: ABdhPJz1Ia/6Uv5F5lGAd/5I0letqAwHCmGa5BKl/B4Z2msc8l/CSz4cY/+EbZgHTjJmPSiBnaxrlA==
+X-Received: by 2002:a63:2317:0:b0:3c1:f437:2e7c with SMTP id j23-20020a632317000000b003c1f4372e7cmr351115pgj.351.1651792494626;
+        Thu, 05 May 2022 16:14:54 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:b675:c6dd:f7f3:5454])
+        by smtp.gmail.com with ESMTPSA id r20-20020aa79634000000b0050dc7a3e88asm1961946pfg.9.2022.05.05.16.14.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 May 2022 16:14:54 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     swboyd@chromium.org, mka@chromium.org,
+        Douglas Anderson <dianders@chromium.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Subject: Re: [v15 3/6] usb: dwc3: core: Host wake up support from system
- suspend
-Message-ID: <YnRUPxBZB55TPmf2@google.com>
-References: <1651740973-7944-1-git-send-email-quic_kriskura@quicinc.com>
- <1651740973-7944-4-git-send-email-quic_kriskura@quicinc.com>
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7280: Set SPI flash to 50 MHz for herobrine boards
+Date:   Thu,  5 May 2022 16:14:30 -0700
+Message-Id: <20220505161425.1.Icf6f3796d2fa122b4c0566d9317b461bfbc24b7f@changeid>
+X-Mailer: git-send-email 2.36.0.512.ge40c2bad7a-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1651740973-7944-4-git-send-email-quic_kriskura@quicinc.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -81,93 +69,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 05, 2022 at 02:26:10PM +0530, Krishna Kurapati wrote:
-> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> 
-> During suspend read the status of all port and set hs phy mode
-> based on current speed. Use this hs phy mode to configure wakeup
-> interrupts in qcom glue driver.
-> 
-> Check wakeup-source property for dwc3 core node to set the
-> wakeup capability. Drop the device_init_wakeup call from
-> runtime suspend and resume.
-> 
-> Also check during suspend if any wakeup capable devices are
-> connected to the controller (directly or through hubs), if there
-> are none set a flag to indicate that the PHY is powered
-> down during suspend.
-> 
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  drivers/usb/dwc3/core.c | 33 ++++++++++++++++++++-------------
->  drivers/usb/dwc3/core.h |  4 ++++
->  drivers/usb/dwc3/host.c | 24 ++++++++++++++++++++++++
->  3 files changed, 48 insertions(+), 13 deletions(-)
-> 
-> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> index 950e238..cf377f5 100644
-> --- a/drivers/usb/dwc3/core.c
-> +++ b/drivers/usb/dwc3/core.c
-> @@ -33,6 +33,7 @@
->  #include <linux/usb/gadget.h>
->  #include <linux/usb/of.h>
->  #include <linux/usb/otg.h>
-> +#include <linux/usb/hcd.h>
+sc7280-herobrine based boards are specced to be able to access their
+SPI flash at 50 MHz with the drive strength of the pins set at 8. The
+drive strength is already set to 8 in "sc7280-herobrine.dtsi", so
+let's bump up the clock. The matching firmware change for this is at:
 
-This is not needed anymore
+https://review.coreboot.org/c/coreboot/+/63948
 
->  
->  #include "core.h"
->  #include "gadget.h"
-> @@ -1787,6 +1788,7 @@ static int dwc3_probe(struct platform_device *pdev)
->  
->  	platform_set_drvdata(pdev, dwc);
->  	dwc3_cache_hwparams(dwc);
-> +	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
->  
->  	spin_lock_init(&dwc->lock);
->  	mutex_init(&dwc->mutex);
-> @@ -1936,6 +1938,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->  {
->  	unsigned long	flags;
->  	u32 reg;
-> +	struct usb_hcd  *hcd = platform_get_drvdata(dwc->xhci);
+NOTE: the firmware change isn't _required_ to make the kernel work at
+50 MHz, it merely shows that the boards are known to work fine at 50
+MHz.
 
-This isn't used anymore, delete it
+ALSO NOTE: this doesn't update the "sc7280-chrome-common.dtsi" file
+which is used by both herobrine boards and IDP. At the moment the IDP
+boards aren't configuring a drive strength of 8 and it seems safer to
+just leave them at the slower speed if they're already working.
 
->  
->  	switch (dwc->current_dr_role) {
->  	case DWC3_GCTL_PRTCAP_DEVICE:
-> @@ -1948,10 +1951,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->  		dwc3_core_exit(dwc);
->  		break;
->  	case DWC3_GCTL_PRTCAP_HOST:
-> -		if (!PMSG_IS_AUTO(msg)) {
-> -			dwc3_core_exit(dwc);
-> -			break;
-> -		}
-> +		dwc3_check_phy_speed_mode(dwc);
->  
->  		/* Let controller to suspend HSPHY before PHY driver suspends */
->  		if (dwc->dis_u2_susphy_quirk ||
-> @@ -1967,6 +1967,16 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->  
->  		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
->  		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
-> +
-> +		if (!PMSG_IS_AUTO(msg)) {
-> +			if (device_may_wakeup(dwc->dev) &&
-> +					device_wakeup_path(dwc->dev)) {
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-nit: the indentation is odd, align it with device_may_wakeup()?
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-> +				dwc->phy_power_off = false;
-> +			} else {
-> +				dwc->phy_power_off = true;
-> +				dwc3_core_exit(dwc);
-
-As commented earlier, taking the controller and PHYs completely down causes a
-significant power draw in some USB clients. Let's clarify what the specific
-benefits are of doing dwc3_core_exit() vs. entering a low power mode.
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index d58045dd7334..939d9e922834 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -452,6 +452,10 @@ &sdhc_2 {
+ 	cd-gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
+ };
+ 
++&spi_flash {
++	spi-max-frequency = <50000000>;
++};
++
+ /* Fingerprint, enabled on a per-board basis */
+ ap_spi_fp: &spi9 {
+ 	pinctrl-0 = <&qup_spi9_data_clk>, <&qup_spi9_cs_gpio_init_high>, <&qup_spi9_cs_gpio>;
+-- 
+2.36.0.512.ge40c2bad7a-goog
 
