@@ -2,122 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A38FC51C40B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 17:37:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A695E51C428
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 17:44:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242771AbiEEPlg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 11:41:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33890 "EHLO
+        id S1380909AbiEEPse (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 11:48:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238590AbiEEPld (ORCPT
+        with ESMTP id S1380888AbiEEPsd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 11:41:33 -0400
-Received: from extserv.mm-sol.com (ns.mm-sol.com [37.157.136.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 218BD15815;
-        Thu,  5 May 2022 08:37:52 -0700 (PDT)
-Received: from [192.168.1.17] (unknown [84.238.208.205])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        (Authenticated sender: svarbanov@mm-sol.com)
-        by extserv.mm-sol.com (Postfix) with ESMTPSA id BF412D2AA;
-        Thu,  5 May 2022 18:37:50 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
-        t=1651765070; bh=uVBey31bxdTj1jCCK+/s43l7HdKmJ0V7+XbcUggK3zA=;
-        h=Date:Subject:To:Cc:From:From;
-        b=nkIpo+HObdOmz3xtRL3k69eQ5gV3avmAx9tAxhZakfllVMMRQJLx0GpYxbf7XKTnm
-         Wf6qbPwZ7Z912uWgMvVyb9htTfP6OpOCQIsHX4XkodBxZ8RqIBBaIVbSRMmm+8Ku7g
-         urirEqfGJmmDX2wZwRRDLLZbGIbIdivxe+H8kes5t47FZMFEuVnApJLBgPXtcuGDpP
-         rN6n7+KZ+rP8vaHVz0CzGt53tQKEjQmSNkDTioHzmbFWuLbiph0DEOIRNMWQP2rWtj
-         vM+NysPthpGf/2duhomPGxxlfd1j7IFDqEOMlMnI0VkWn7e9S5/SqzkBMrnMdAiFoL
-         9T6z5/LVoNoWA==
-Message-ID: <ace7dd07-cf2f-fa74-866f-50f7da0b89bb@mm-sol.com>
-Date:   Thu, 5 May 2022 18:37:48 +0300
+        Thu, 5 May 2022 11:48:33 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B062532F3
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 08:44:53 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id m20so9486432ejj.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 08:44:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=quJEpHcp/xQptAms2+pqVJe+BALCjwpz/XJpAyA2rOQ=;
+        b=LtUWKtWwjEvzaJgwc+Y/Pc6ZtJYCCkbtEkwMj1kQLWR6QFKfyiqJlhG7vN+64C/904
+         xP1Ersi2F/t8PVceS5QerFuVP5j/3gPomyLsiSTKmZBksKXz8GSeR+BShI51vCfXE6u3
+         smVhw88erVhJUBtIhFgT/WIVkntmQ4UTU7dtA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=quJEpHcp/xQptAms2+pqVJe+BALCjwpz/XJpAyA2rOQ=;
+        b=C/x22YFoKiutwAghGb50oBEwNlJ+L/tfjvNnk4k1nqQJ3AKN7bWSqzlkUOGLzuABXs
+         XhyMJfNtzpGEoqkdUG/1gijotmsQTPHU3qeuYcndLbOx8pGffPRg3RJL8RdxePYyxKW9
+         8EKuh3LfW1oNCcjbhsdXrZdji4DTMY2Mk+e9/nU5OpQWThXood6I2xPIUk+rp3TFXkU2
+         ncnZBakWh0kd0fqCZLd+bGUSHwgdlMORuWbHQpJL+e2MGnWiyMKCOAigVCOCRAsqHKlG
+         s+j86Cw8PuWx3DgIjvWgmuBruFxHtMaNdEHDqzuwCGKxDNLu8X1IgkVmEF0qnotnVCj+
+         lElg==
+X-Gm-Message-State: AOAM533Y7mWpBl/vLqQ9+vp/kGGQb2Hyy88COh+2hkCAWvaHu65YvSak
+        FzOLh+7r25cKYF1gDEjOZcHwMYbVtYY15xhXH8w=
+X-Google-Smtp-Source: ABdhPJzXdsxfrKKQBGWQk7TN9WmpqH/rzYoLICDh8E5LN97/96L49jtwKBn/byrbsyEwh5nbAB8iiQ==
+X-Received: by 2002:a17:906:9b96:b0:6f5:cba:b665 with SMTP id dd22-20020a1709069b9600b006f50cbab665mr1053255ejc.505.1651765491206;
+        Thu, 05 May 2022 08:44:51 -0700 (PDT)
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com. [209.85.128.51])
+        by smtp.gmail.com with ESMTPSA id w9-20020a170906184900b006f3ef214dcesm871006eje.52.2022.05.05.08.44.49
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 May 2022 08:44:50 -0700 (PDT)
+Received: by mail-wm1-f51.google.com with SMTP id i20-20020a05600c355400b0039456976dcaso2752890wmq.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 08:44:49 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f08:b0:391:fe3c:40e6 with SMTP id
+ l8-20020a05600c4f0800b00391fe3c40e6mr5718669wmq.34.1651765489131; Thu, 05 May
+ 2022 08:44:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v7 0/7] PCI: qcom: Fix higher MSI vectors handling
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220505135407.1352382-1-dmitry.baryshkov@linaro.org>
-From:   Stanimir Varbanov <svarbanov@mm-sol.com>
-In-Reply-To: <20220505135407.1352382-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220426114627.1.I2dd93486c6952bd52f2020904de0133970d11b29@changeid>
+ <20220426114627.2.I4ac7f55aa446699f8c200a23c10463256f6f439f@changeid>
+In-Reply-To: <20220426114627.2.I4ac7f55aa446699f8c200a23c10463256f6f439f@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 5 May 2022 08:44:36 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XzGOGc8pMics4=idQeCuLYWxj=bHcic4NZa9+3qbqpbg@mail.gmail.com>
+Message-ID: <CAD=FV=XzGOGc8pMics4=idQeCuLYWxj=bHcic4NZa9+3qbqpbg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] drm/probe-helper: For DP, add 640x480 if all other
+ modes are bad
+To:     dri-devel <dri-devel@lists.freedesktop.org>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Dmitry!
+Ville,
 
-On 5/5/22 16:54, Dmitry Baryshkov wrote:
-> I have replied with my Tested-by to the patch at [2], which has landed
-> in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
-> Add support for handling MSIs from 8 endpoints"). However lately I
-> noticed that during the tests I still had 'pcie_pme=nomsi', so the
-> device was not forced to use higher MSI vectors.
-> 
-> After removing this option I noticed that hight MSI vectors are not
-> delivered on tested platforms. After additional research I stumbled upon
-> a patch in msm-4.14 ([1]), which describes that each group of MSI
-> vectors is mapped to the separate interrupt. Implement corresponding
-> mapping.
-> 
-> Since we can not expect that other platforms will use multi-IRQ scheme
-> for MSI mapping (e.g. iMX and Tegra map all 256 MSI interrupts to single
-> IRQ), it's support is implemented directly in pcie-qcom rather than in
-> the core driver.
-> 
-> The first patch in the series is a revert of  [2] (landed in pci-next).
-> Either both patches should be applied or both should be dropped.
-> 
-> Patchseries dependecies: [3] (for the schema change).
-> 
-> Changes since v6:
->  - Fix indentation of the arguments as requested by Stanimir
+On Tue, Apr 26, 2022 at 11:47 AM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> As per Displayport spec section 5.2.1.2 ("Video Timing Format") says
+> that all detachable sinks shall support 640x480 @60Hz as a fail safe
+> mode.
+>
+> A DP compliance test expected us to utilize the above fact when all
+> modes it presented to the DP source were not achievable. It presented
+> only modes that would be achievable with more lanes and/or higher
+> speeds than we had available and expected that when we couldn't do
+> that then we'd fall back to 640x480 even though it didn't advertise
+> this size.
+>
+> In order to pass the compliance test (and also support any users who
+> might fall into a similar situation with their display), we need to
+> add 640x480 into the list of modes. However, we don't want to add
+> 640x480 all the time. Despite the fact that the DP spec says all sinks
+> _shall support_ 640x480, they're not guaranteed to support it
+> _well_. Continuing to read the spec you can see that the display is
+> not required to really treat 640x480 equal to all the other modes. It
+> doesn't need to scale or anything--just display the pixels somehow for
+> failsafe purposes. It should also be noted that it's not hard to find
+> a display hooked up via DisplayPort that _doesn't_ support 640x480 at
+> all. The HP ZR30w screen I'm sitting in front of has a native DP port
+> and doesn't work at 640x480. I also plugged in a tiny 800x480 HDMI
+> display via a DP to HDMI adapter and that screen definitely doesn't
+> support 640x480.
+>
+> As a compromise solution, let's only add the 640x480 mode if:
+> * We're on DP.
+> * All other modes have been pruned.
+>
+> This acknowledges that 640x480 might not be the best mode to use but,
+> since sinks are _supposed_ to support it, we will at least fall back
+> to it if there's nothing else.
+>
+> Note that we _don't_ add higher resolution modes like 1024x768 in this
+> case. We only add those modes for a failed EDID read where we have no
+> idea what's going on. In the case where we've pruned all modes then
+> instead we only want 640x480 which is the only defined "Fail Safe"
+> resolution.
+>
+> This patch originated in response to Kuogee Hsieh's patch [1].
+>
+> [1] https://lore.kernel.org/r/1650671124-14030-1-git-send-email-quic_khsieh@quicinc.com
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+>  drivers/gpu/drm/drm_probe_helper.c | 26 +++++++++++++++++++++-----
+>  1 file changed, 21 insertions(+), 5 deletions(-)
 
-<cut>
+I think this patch is fairly safe / non-controversial, but someone
+suggested you might have an opinion on it and another patch I posted
+recently [1] so I wanted to double-check. Just to be clear: I'm hoping
+to land _both_ this patch and [1]. If you don't have an opinion,
+that's OK too.
 
-> 
-> Dmitry Baryshkov (7):
->   PCI: qcom: Revert "PCI: qcom: Add support for handling MSIs from 8
->     endpoints"
->   PCI: dwc: Correct msi_irq condition in dw_pcie_free_msi()
->   PCI: dwc: Add msi_host_deinit callback
->   PCI: dwc: Export several functions useful for MSI implentations
->   PCI: qcom: Handle MSIs routed to multiple GIC interrupts
->   dt-bindings: PCI: qcom: Support additional MSI interrupts
->   arm64: dts: qcom: sm8250: provide additional MSI interrupts
+Abhinav: I think maybe you're happy with this now? Would you be
+willing to give a Reviewed-by?
 
-For PCI qcom driver:
+[1] https://lore.kernel.org/r/20220426132121.RFC.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid
 
-Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
-
-> 
->  .../devicetree/bindings/pci/qcom,pcie.yaml    |  45 +++++-
->  arch/arm64/boot/dts/qcom/sm8250.dtsi          |  11 +-
->  .../pci/controller/dwc/pcie-designware-host.c |  72 +++++----
->  drivers/pci/controller/dwc/pcie-designware.h  |  12 ++
->  drivers/pci/controller/dwc/pcie-qcom.c        | 138 +++++++++++++++++-
->  5 files changed, 246 insertions(+), 32 deletions(-)
-> 
-
--- 
-regards,
-Stan
+-Doug
