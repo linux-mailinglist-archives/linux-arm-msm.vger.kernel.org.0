@@ -2,204 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8554951BAF2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 10:49:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7216351BB1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 May 2022 10:56:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346404AbiEEIwk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 04:52:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34240 "EHLO
+        id S1350843AbiEEJAI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 05:00:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350432AbiEEIwi (ORCPT
+        with ESMTP id S1350831AbiEEJAD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 04:52:38 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3C2E4AE28
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 01:48:59 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id w187so6497211ybe.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 01:48:59 -0700 (PDT)
+        Thu, 5 May 2022 05:00:03 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D00B74A93D;
+        Thu,  5 May 2022 01:56:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=op5ROKe2ZN3R178e7Bu8w5MlRYrTA2IJQ63KYbg67x0=;
-        b=PlQULGTSlWNcIR7xPZDYQG2Pa8eSpGTcolUplNhYBX/Nm4Yp95pd7BYFPUtf606YSc
-         19v4xDJJ2QlHi9c8bGxAbCXYQTQFHyq7pIKSguxg/MgiGd+KOBZ7oKl2NdmUibY6Sga2
-         MSDvMGQuMD8pP62o08MoI5rkuY46WTL0P2XwhogDtkZ5lpbSBYjW6bByhbP82EHKj60n
-         /sxfuNmOh7XcwQ+qGNS0gqxZL8TM0VC0Wc5XhwryNxv4NFtWsGrgUKaoA4YKSvNS5SOv
-         Wj2zJRTpSCu/batd46b1k2S5otWGZzb/W54OY1D0r1ia/0C5CXDbiTQnhZhnstTJryTU
-         8RfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=op5ROKe2ZN3R178e7Bu8w5MlRYrTA2IJQ63KYbg67x0=;
-        b=Q9ihC9KesYJnU0XI/qyeUodweZf7NJ+FjWo3ldGbE+IiFQG2ZqZ6if/vWq5GaFzk7V
-         LmVEA9P0XTJ/TJpGO7R5GpHSVR2nHenJu2w8UwnTcD8jMZPJ5GB0sFSe0WKTgCrMGDdQ
-         KPwrsW5BHKfpbyL9CIQYz4mcYdUpwLzEixxkA0Xmd2ADIxukP6M4CmCSy/UOKEW+XqTv
-         qzmSGFdeid7UPG7d/C+jcZ/meE3gvxehjJiB2tjXjpBC/wBfjjfez/67ujUHuaD8ON7D
-         aMyuDz9vLSpT32yMmpdIihWgdlGl5ZTdxCRKIp3Juve2AMXIGsho82jfwLboEruwx/gR
-         fKXQ==
-X-Gm-Message-State: AOAM5330vz1xPkoZ6Zp3OdMXw+XV43B+U0Hfs+sh5cujMEZKAb6mrRd4
-        9e2nR48f84HX9lxk/sXzS1fO91wZM2qq2uzxYjEMWw==
-X-Google-Smtp-Source: ABdhPJz2AMrVv3CJIjrI6pJqL+b8hzT+Mj4fdxway48kUTXDu4QxBUWQrSy+dKStzWQ5d1zkk8f5o+rC9IbeqBsiFQ8=
-X-Received: by 2002:a25:3455:0:b0:648:44db:51e0 with SMTP id
- b82-20020a253455000000b0064844db51e0mr19579704yba.314.1651740539255; Thu, 05
- May 2022 01:48:59 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651740984; x=1683276984;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=nHnYS1LvqFgA82/c2MhFG1oyQYkocC2pW62jDuzSpOE=;
+  b=DghpDP0DBnsPWVDwC0oe/5Wr5o9aXHExr0WvBPwKqvFr8YffeeLXviz/
+   GFU6/3k33Lipwl+wqBgcwnvFv+VvN6mlGAeWKaTH3KdUBQhVaThI1agjT
+   nlv64yLS8XQPsLZtvPgl/z4MCFBYORwJybk1R85b06c5c8xZHmDWz/NEN
+   I=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 05 May 2022 01:56:24 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 01:56:23 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 5 May 2022 01:56:23 -0700
+Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 5 May 2022 01:56:17 -0700
+From:   Krishna Kurapati <quic_kriskura@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "Matthias Kaehlcke" <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
+CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: [v15 0/6] USB DWC3 host wake up support from system suspend
+Date:   Thu, 5 May 2022 14:26:07 +0530
+Message-ID: <1651740973-7944-1-git-send-email-quic_kriskura@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <20220505015528.344-1-quic_jesszhan@quicinc.com> <CAF6AEGt1uFAgAo1+sp7KbamTb4DAn_MU-NR+UvGHLUGfm3oQ=A@mail.gmail.com>
-In-Reply-To: <CAF6AEGt1uFAgAo1+sp7KbamTb4DAn_MU-NR+UvGHLUGfm3oQ=A@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 5 May 2022 11:48:48 +0300
-Message-ID: <CAA8EJpraDRzBevNPC6H9ZAaLAXFq2aOkdoD9NGo-DpgsXoCm=g@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/mdp5: Return error code in mdp5_pipe_release
- when deadlock is detected
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>, quic_aravindh@quicinc.com,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 5 May 2022 at 05:06, Rob Clark <robdclark@gmail.com> wrote:
->
-> On Wed, May 4, 2022 at 6:55 PM Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
-> >
-> > mdp5_get_global_state runs the risk of hitting a -EDEADLK when acquiring
-> > the modeset lock, but currently mdp5_pipe_release doesn't check for if
-> > an error is returned. Because of this, there is a possibility of
-> > mdp5_pipe_release hitting a NULL dereference error.
-> >
-> > To avoid this, let's have mdp5_pipe_release check if
-> > mdp5_get_global_state returns an error and propogate that error.
-> >
-> > Changes since v1:
-> > - Separated declaration and initialization of *new_state to avoid
-> >   compiler warning
-> > - Fixed some spelling mistakes in commit message
-> >
->
-> Note that mdp5_mixer_release() needs the same treatment.. one more comment below
->
-> > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> > ---
-> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c  | 15 +++++++++++----
-> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h  |  2 +-
-> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 20 ++++++++++++++++----
-> >  3 files changed, 28 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
-> > index ba6695963aa6..97887a2be082 100644
-> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
-> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c
-> > @@ -119,18 +119,23 @@ int mdp5_pipe_assign(struct drm_atomic_state *s, struct drm_plane *plane,
-> >         return 0;
-> >  }
-> >
-> > -void mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe)
-> > +int mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe)
-> >  {
-> >         struct msm_drm_private *priv = s->dev->dev_private;
-> >         struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
-> >         struct mdp5_global_state *state = mdp5_get_global_state(s);
-> > -       struct mdp5_hw_pipe_state *new_state = &state->hwpipe;
-> > +       struct mdp5_hw_pipe_state *new_state;
-> >
-> >         if (!hwpipe)
-> > -               return;
-> > +               return -EINVAL;
->
-> At least per the current code, !hwpipe is "normal".. I think that fits
-> the model of things like kfree(NULL), so lets make this just return 0
+Avoiding phy powerdown in host mode when wakeup capable devices are 
+connected, so that it can be wake up by devices.
+Keep usb30_prim gdsc active to retain controller status
+during suspend/resume.
 
-Especially since we release the r_hwpipe w/o additional check. And
-r_hwpipe frequently is NULL.
+Changes in v15:
+Added patch to enable wakeup for xhci-plat based on children wakeup status.
+Used device_wakeup_path instead of device_children_wakeup_capable
 
->
-> > +
-> > +       if (IS_ERR(state))
-> > +               return PTR_ERR(state);
-> > +
-> > +       new_state = &state->hwpipe;
-> >
-> >         if (WARN_ON(!new_state->hwpipe_to_plane[hwpipe->idx]))
-> > -               return;
-> > +               return -EINVAL;
-> >
-> >         DBG("%s: release from plane %s", hwpipe->name,
-> >                 new_state->hwpipe_to_plane[hwpipe->idx]->name);
-> > @@ -141,6 +146,8 @@ void mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe)
-> >         }
-> >
-> >         new_state->hwpipe_to_plane[hwpipe->idx] = NULL;
-> > +
-> > +       return 0;
-> >  }
-> >
-> >  void mdp5_pipe_destroy(struct mdp5_hw_pipe *hwpipe)
-> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h
-> > index 9b26d0761bd4..cca67938cab2 100644
-> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h
-> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h
-> > @@ -37,7 +37,7 @@ int mdp5_pipe_assign(struct drm_atomic_state *s, struct drm_plane *plane,
-> >                      uint32_t caps, uint32_t blkcfg,
-> >                      struct mdp5_hw_pipe **hwpipe,
-> >                      struct mdp5_hw_pipe **r_hwpipe);
-> > -void mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe);
-> > +int mdp5_pipe_release(struct drm_atomic_state *s, struct mdp5_hw_pipe *hwpipe);
-> >
-> >  struct mdp5_hw_pipe *mdp5_pipe_init(enum mdp5_pipe pipe,
-> >                 uint32_t reg_offset, uint32_t caps);
-> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> > index 228b22830970..979458482841 100644
-> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> > @@ -311,12 +311,24 @@ static int mdp5_plane_atomic_check_with_state(struct drm_crtc_state *crtc_state,
-> >                                 mdp5_state->r_hwpipe = NULL;
-> >
-> >
-> > -                       mdp5_pipe_release(state->state, old_hwpipe);
-> > -                       mdp5_pipe_release(state->state, old_right_hwpipe);
-> > +                       ret = mdp5_pipe_release(state->state, old_hwpipe);
-> > +                       if (ret)
-> > +                               return ret;
-> > +
-> > +                       ret = mdp5_pipe_release(state->state, old_right_hwpipe);
-> > +                       if (ret)
-> > +                               return ret;
-> > +
-> >                 }
-> >         } else {
-> > -               mdp5_pipe_release(state->state, mdp5_state->hwpipe);
-> > -               mdp5_pipe_release(state->state, mdp5_state->r_hwpipe);
-> > +               ret = mdp5_pipe_release(state->state, mdp5_state->hwpipe);
-> > +               if (ret)
-> > +                       return ret;
-> > +
-> > +               ret = mdp5_pipe_release(state->state, mdp5_state->r_hwpipe);
-> > +               if (ret)
-> > +                       return ret;
-> > +
-> >                 mdp5_state->hwpipe = mdp5_state->r_hwpipe = NULL;
-> >         }
-> >
-> > --
-> > 2.35.1
-> >
+Changes in v14:
+Added patch for device_children_wakeup_capable.
+Used device_children_wakeup_capable instead of usb_wakeup_enabled_descendants.
+Fixed minor nit picks in v13 reported by Matthias.
+
+Changes in v13:
+Moved the dt bindings patch to start.
+Changed dwc3_set_phy_speed_mode to dwc3_check_phy_speed_mode.
+Check wakep-source property for dwc3 core node to set the
+wakeup capability. Drop the device_init_wakeup call from
+runtime suspend and resume.
+Added GENPD_FLAG_RPM_ALWAYS_ON and set GENPD_FLAG_ALWAYS_ON if
+wakeup is supported.
+
+Changes in v12:
+Squashed PATCH 1/5 and 2/5 of v11.
+Added dt bindings and device tree entry for wakeup-source property
+for dwc3 core node.
+Dropped redundant phy_set_mode call.
 
 
+Changes in v11:
+Moving back to v8 version
+https://patchwork.kernel.org/project/linux-arm-msm/cover/1624882097-23265-1-git-send-email-sanm@codeaurora.org
+as we are getting interrupts during suspend
+when enabling both DP hs phy irq and DM hs phy irq.
+Moved the set phy mode function to dwc3/core.c from xhci-plat.c
+We didn't find any other option other than accessing xhci from dwc.
+
+Changes in v10:
+PATCH 1/6: Change device_set_wakeup_capable to device_set_wakeup_enable
+PATCH 2/6: Remove redundant else part in dwc3_resume_common
+PATCH 4/6: Change the irg flags
+PATCH 5/6: Set flag GENPD_FLAG_ALWAYS_ON
+PATCH 6/6: Remove disable interrupts function and enable
+interrupts in probe.
+
+
+Changes in v9:
+Checking with device_may_makeup property instead of phy_power_off flag.
+Changed the IRQ flags and removed hs_phy_mode variable.
+
+Changes in v8:
+Moved the dwc3 suspend quirk code in dwc3/host.c to xhci-plat.c
+Checking phy_power_off flag instead of usb_wakeup_enabled_descendants 
+to keep gdsc active.
+
+Changes in v7:
+Change in commit text and message in PATCH 1/5 and PATCH 5/5
+as per Matthias suggestion.
+Added curly braces for if and else if sections in PATCH 4/5.
+
+Changes in v6:
+Addressed comments in host.c and core.c
+Separated the patches in dwc3-qcom.c to make it simple.
+Dropped wakeup-source change as it is not related to this series.
+
+Changes in v5:
+Added phy_power_off flag to check presence of wakeup capable devices.
+Dropped patch[v4,4/5] as it is present linux-next.
+Addressed comments in host.c and dwc3-qcom.c.
+
+Changes in v4:
+Addressed Matthias comments raised in v3.
+
+Changes in v3:
+Removed need_phy_for_wakeup flag and by default avoiding phy powerdown.
+Addressed Matthias comments and added entry for DEV_SUPERSPEED.
+Added suspend_quirk in dwc3 host and moved the dwc3_set_phy_speed_flags.
+Added wakeup-source dt entry and reading in dwc-qcom.c glue driver.
+
+Changes in v2:
+Dropped the patch in clock to set GENPD_FLAG_ACTIVE_WAKEUP flag and 
+setting in usb dwc3 driver.
+Separated the core patch and glue driver patch.
+Made need_phy_for_wakeup flag part of dwc structure and 
+hs_phy_flags as unsgined int.
+Adrressed the comment on device_init_wakeup call.
+Corrected offset for reading portsc register.
+Added pacth to support wakeup in xo shutdown case.
+
+Krishna Kurapati (1):
+  usb: host: xhci-plat: Enable wakeup based on children wakeup status
+
+Sandeep Maheswaram (5):
+  dt-bindings: usb: dwc3: Add wakeup-source property support
+  usb: dwc3: core: Host wake up support from system suspend
+  usb: dwc3: qcom: Add helper functions to enable,disable wake irqs
+  usb: dwc3: qcom: Configure wakeup interrupts during suspend
+  usb: dwc3: qcom: Keep power domain on to retain controller status
+
+ .../devicetree/bindings/usb/snps,dwc3.yaml         |  5 ++
+ drivers/usb/dwc3/core.c                            | 33 ++++----
+ drivers/usb/dwc3/core.h                            |  4 +
+ drivers/usb/dwc3/dwc3-qcom.c                       | 91 +++++++++++++---------
+ drivers/usb/dwc3/host.c                            | 24 ++++++
+ drivers/usb/host/xhci-plat.c                       |  8 ++
+ 6 files changed, 115 insertions(+), 50 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.7.4
+
