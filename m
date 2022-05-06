@@ -2,76 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1A8C51DDA8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 18:33:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D996051DDC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 18:44:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377106AbiEFQgy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 May 2022 12:36:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40312 "EHLO
+        id S1443879AbiEFQro (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 May 2022 12:47:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1443819AbiEFQgx (ORCPT
+        with ESMTP id S1443873AbiEFQrn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 May 2022 12:36:53 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 796014EF6B;
-        Fri,  6 May 2022 09:33:10 -0700 (PDT)
+        Fri, 6 May 2022 12:47:43 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 761E46D4EF
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 May 2022 09:43:58 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id n8so7975250plh.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 May 2022 09:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651854790; x=1683390790;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=NUSDpDYK9LHoRDYP/GAG5zI9+n9lXCiukOajpSWRp7U=;
-  b=SCMfjvm7IPTy3aeW2103g5sLBIX2xC9SxjzYQQkcDoKpJnNW/H59zZd+
-   ZbdPuR+s3/HfqWCQEF2R8mG22kOyX7zbvK/mReS4+9lnhlImX8L27Wb8L
-   mKb/f3AR6w9wcDDXgKNE/opK3ZRvUzQWE4DK1jcRPxqW84WM/j8btgpAZ
-   Y=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 May 2022 09:33:10 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 09:33:09 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 6 May 2022 09:33:09 -0700
-Received: from [10.111.168.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 6 May 2022
- 09:33:04 -0700
-Message-ID: <8ea03441-b835-f5db-5cc3-85e5330dfe3f@quicinc.com>
-Date:   Fri, 6 May 2022 09:33:02 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [RFC PATCH] drm/edid: drm_add_modes_noedid() should set lowest
- resolution as preferred
-Content-Language: en-US
-To:     Jani Nikula <jani.nikula@linux.intel.com>,
-        Doug Anderson <dianders@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-CC:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=bh6CSxzg+6JEuytBMw9j2GAuoj8y6isr1C8LlTE1oj0=;
+        b=Wz5z/M4s4vEelC1rO7cvaON/5FHKnFmJUoy9cc/K0NCPWdiNWFx7lnSZCQI8WNZgRR
+         oU5QrhdRhNqo7EbI18EeYzFv9eBZvL/FWHQ386cV0Kqgw0omywbeyeU1VKkDnV1eSsxX
+         XkwwaphhHcbe5+IVaU1X4s7tc0XwptOkfXx0A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=bh6CSxzg+6JEuytBMw9j2GAuoj8y6isr1C8LlTE1oj0=;
+        b=jEcXPZk0wcu7PWPRhbjwgJYp7P/HCdjPg8pnSiYMCvHbjW+8lKfEixCmXB+QrQ01dS
+         5LM8dLy1I602NntgQGnr7p0kROu1rhuqR6MukrRIP15zBOLfkX+/QMdLRyRy2VXWF1kT
+         HhqcdEHcGcljpIxrRpV4Wq1mHsMHQxoXTt9NhwRUYVpF5tDaQe8FcGmOyaakvJDiGuXd
+         N319pI60Q89E/plJ42LoyuQupQx7j/BGUK04CIcL0KKXMfRkaCfZsr7jUpdCo0pe81z0
+         6mK6pa/oCzXllD/dyy43MLrdD7Upnip8T8Q2gIOX1QUWtLtIpw14TdZCD4OR0C89Fvvi
+         YtrA==
+X-Gm-Message-State: AOAM5305ou3W8szEQ0h2GCw8yqZ2dK/bcsXQGnqm1nN1w0Lsuw28SZMW
+        zmizHTkw+EhPrBe0o1l3VA0B0Q==
+X-Google-Smtp-Source: ABdhPJxF4L/wGCp4qcxZiMgtimiFuwwc7nuYDpCZz76X/jycgdjKkXzFHiicexTd65Ug7W5tdFP2rQ==
+X-Received: by 2002:a17:903:94:b0:15c:f928:a373 with SMTP id o20-20020a170903009400b0015cf928a373mr4651954pld.26.1651855437956;
+        Fri, 06 May 2022 09:43:57 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:5605:d5cd:699b:1b26])
+        by smtp.gmail.com with UTF8SMTPSA id c14-20020a170902848e00b0015e8d4eb205sm1969908plo.79.2022.05.06.09.43.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 May 2022 09:43:57 -0700 (PDT)
+Date:   Fri, 6 May 2022 09:43:55 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
         Stephen Boyd <swboyd@chromium.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        LKML <linux-kernel@vger.kernel.org>
-References: <20220426132121.RFC.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
- <CAD=FV=XViHtOoQH3fm4yoRcUAkLkf0Wf4zPXUH0Zq5_09tZmjw@mail.gmail.com>
- <874k22lxmh.fsf@intel.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <874k22lxmh.fsf@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
+        quic_kriskura@quicinc.com, quic_vpulyala@quicinc.com
+Subject: Re: [PATCH v14 3/7] usb: dwc3: core: Host wake up support from
+ system suspend
+Message-ID: <YnVQS5twzZ/q1iWu@google.com>
+References: <1650395470-31333-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1650395470-31333-4-git-send-email-quic_c_sanm@quicinc.com>
+ <YnK79i3NiTdMmC98@google.com>
+ <20220505032618.GC4640@hu-pkondeti-hyd.qualcomm.com>
+ <YnP/PZViq1u0f2yl@google.com>
+ <20220506030107.GD4640@hu-pkondeti-hyd.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220506030107.GD4640@hu-pkondeti-hyd.qualcomm.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,89 +85,168 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jani
-
-On 5/6/2022 4:16 AM, Jani Nikula wrote:
-> On Thu, 05 May 2022, Doug Anderson <dianders@chromium.org> wrote:
->> Ville,
->>
->> On Tue, Apr 26, 2022 at 1:21 PM Douglas Anderson <dianders@chromium.org> wrote:
->>>
->>> If we're unable to read the EDID for a display because it's corrupt /
->>> bogus / invalid then we'll add a set of standard modes for the
->>> display. When userspace looks at these modes it doesn't really have a
->>> good concept for which mode to pick and it'll likely pick the highest
->>> resolution one by default. That's probably not ideal because the modes
->>> were purely guesses on the part of the Linux kernel.
->>>
->>> Let's instead set 640x480 as the "preferred" mode when we have no EDID.
->>>
->>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
->>> ---
->>>
->>>   drivers/gpu/drm/drm_edid.c | 9 +++++++++
->>>   1 file changed, 9 insertions(+)
->>
->> Someone suggested that you might have an opinion on this patch and
->> another one I posted recently [1]. Do you have any thoughts on it?
->> Just to be clear: I'm hoping to land _both_ this patch and [1]. If you
->> don't have an opinion, that's OK too.
->>
->> [1] https://lore.kernel.org/r/20220426114627.2.I4ac7f55aa446699f8c200a23c10463256f6f439f@changeid
+On Fri, May 06, 2022 at 08:31:07AM +0530, Pavan Kondeti wrote:
+> On Thu, May 05, 2022 at 09:45:49AM -0700, Matthias Kaehlcke wrote:
+> > On Thu, May 05, 2022 at 08:56:18AM +0530, Pavan Kondeti wrote:
+> > > On Wed, May 04, 2022 at 10:46:30AM -0700, Matthias Kaehlcke wrote:
+> > > > On Wed, Apr 20, 2022 at 12:41:06AM +0530, Sandeep Maheswaram wrote:
+> > > > > During suspend read the status of all port and set hs phy mode
+> > > > > based on current speed. Use this hs phy mode to configure wakeup
+> > > > > interrupts in qcom glue driver.
+> > > > > 
+> > > > > Check wakeup-source property for dwc3 core node to set the
+> > > > > wakeup capability. Drop the device_init_wakeup call from
+> > > > > runtime suspend and resume.
+> > > > > 
+> > > > > Also check during suspend if any wakeup capable devices are
+> > > > > connected to the controller (directly or through hubs), if there
+> > > > > are none set a flag to indicate that the PHY is powered
+> > > > > down during suspend.
+> > > > > 
+> > > > > Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> > > > > ---
+> > > > > v14:
+> > > > > Used device_children_wakeup_capable instead of usb_wakeup_enabled_descendants.
+> > > > > 
+> > > > > v13:
+> > > > > Changed dwc3_set_phy_speed_mode to dwc3_check_phy_speed_mode.
+> > > > > Removed device_init_wakeup calls from dwc3_runtime_suspend and dwc3_runtime_resume
+> > > > > as we have a new dt property wakeup-source.
+> > > > > 
+> > > > > 
+> > > > >  drivers/usb/dwc3/core.c | 33 ++++++++++++++++++++-------------
+> > > > >  drivers/usb/dwc3/core.h |  4 ++++
+> > > > >  drivers/usb/dwc3/host.c | 24 ++++++++++++++++++++++++
+> > > > >  3 files changed, 48 insertions(+), 13 deletions(-)
+> > > > > 
+> > > > > diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> > > > > index 1170b80..898aa66 100644
+> > > > > --- a/drivers/usb/dwc3/core.c
+> > > > > +++ b/drivers/usb/dwc3/core.c
+> > > > > @@ -32,6 +32,7 @@
+> > > > >  #include <linux/usb/gadget.h>
+> > > > >  #include <linux/usb/of.h>
+> > > > >  #include <linux/usb/otg.h>
+> > > > > +#include <linux/usb/hcd.h>
+> > > > >  
+> > > > >  #include "core.h"
+> > > > >  #include "gadget.h"
+> > > > > @@ -1723,6 +1724,7 @@ static int dwc3_probe(struct platform_device *pdev)
+> > > > >  
+> > > > >  	platform_set_drvdata(pdev, dwc);
+> > > > >  	dwc3_cache_hwparams(dwc);
+> > > > > +	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
+> > > > >  
+> > > > >  	spin_lock_init(&dwc->lock);
+> > > > >  	mutex_init(&dwc->mutex);
+> > > > > @@ -1865,6 +1867,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> > > > >  {
+> > > > >  	unsigned long	flags;
+> > > > >  	u32 reg;
+> > > > > +	struct usb_hcd  *hcd = platform_get_drvdata(dwc->xhci);
+> > > > >  
+> > > > >  	switch (dwc->current_dr_role) {
+> > > > >  	case DWC3_GCTL_PRTCAP_DEVICE:
+> > > > > @@ -1877,10 +1880,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> > > > >  		dwc3_core_exit(dwc);
+> > > > >  		break;
+> > > > >  	case DWC3_GCTL_PRTCAP_HOST:
+> > > > > -		if (!PMSG_IS_AUTO(msg)) {
+> > > > > -			dwc3_core_exit(dwc);
+> > > > > -			break;
+> > > > > -		}
+> > > > > +		dwc3_check_phy_speed_mode(dwc);
+> > > > >  
+> > > > >  		/* Let controller to suspend HSPHY before PHY driver suspends */
+> > > > >  		if (dwc->dis_u2_susphy_quirk ||
+> > > > > @@ -1896,6 +1896,16 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> > > > >  
+> > > > >  		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
+> > > > >  		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
+> > > > > +
+> > > > > +		if (!PMSG_IS_AUTO(msg)) {
+> > > > > +			if (device_may_wakeup(dwc->dev) &&
+> > > > > +			    device_children_wakeup_capable(&hcd->self.root_hub->dev)) {
+> > > > > +				dwc->phy_power_off = false;
+> > > > > +			} else {
+> > > > > +				dwc->phy_power_off = true;
+> > > > > +				dwc3_core_exit(dwc);
+> > > > 
+> > > > I found that shutting the PHYs down during suspend leads to high power
+> > > > consumption of a downstream hub (about 80mW vs 15mW when the PHYs are
+> > > > not shut down).
+> > > > 
+> > > > It would be interesting to know if this also impacts other non-hub
+> > > > peripherals. Unfortunately I can't test that, the hub on my system is
+> > > > soldered to the board.
+> > > > 
+> > > > I understand that shutting the PHYs down might be beneficial in terms
+> > > > of power on some systems, however on those I'm looking at we'd strongly
+> > > > prefer to save the 65mW of power consumed by the hub, rather than
+> > > > whatever smaller amount of power that is saved by powering down the
+> > > > PHYs.
+> > > > 
+> > > > Could we introduce a sysfs attribute (or some other sort of knob) to
+> > > > allow the admin to configure whether the PHYs should remain on or off
+> > > > during suspend? That is assuming that it is actually desirable to power
+> > > > them off on some systems.
+> > > 
+> > > The result may vary across SoCs also. The current proposal is to keep PHY
+> > > powered during system suspend if any of the downstream USB devices are enabled
+> > > for wakeup. This also includes USB2/USB3 root hub. If one wants to keep PHY
+> > > always powered on even when no device is attached, they can do so by enabling
+> > > wakeup (echo enabled > /sys/bus/usb/devices/usbX/power/wakeup). This is anyway
+> > > needed if you want to detect a peripheral attach during system suspend.
+> > 
+> > My concern is that it is not evident for an admin what causes the high power
+> > consumption of the USB client (if they detect/localize it in the first place),
+> > and even less that wakeup needs to be enabled to mitigate it.
+> > 
+> > Why can't we just put the PHYs in suspend, rather than taking the controller
+> > down completely during suspend?
 > 
-> There are a number of drivers with combos:
+> Agreed and I also have the same question.
 > 
-> 	drm_add_modes_noedid()
-> 	drm_set_preferred_mode()
-> 
-> which I think would be affected by the change. Perhaps you should just
-> call drm_set_preferred_mode() in your referenced patch?
-> So it seems like many drivers handle the !edid case within their 
-respective get_modes() call which probably is because they know the max 
-capability of their connector and because they know which mode should be 
-set as preferred. But at the same time, perhaps the code below which 
-handles the count == 0 case should be changed like below to make sure we 
-are within the max_width/height of the connector (to handle the first 
-condition)?
+> I don't know the background on why DWC3 chooses to power down the PHY(s)
+> during system suspend. Probably it is beneficial in some board designs.
+> Atleast this patch series provides a way to wakeup the USB from system
+> suspend, which also can be used not to power down the PHY(s). If all the users
+> of DWC3 agree that powering down the PHY is bad, then we can do something
+> about it.
 
-diff --git a/drivers/gpu/drm/drm_probe_helper.c 
-b/drivers/gpu/drm/drm_probe_helper.c
-index 682359512996..6eb89d90777b 100644
---- a/drivers/gpu/drm/drm_probe_helper.c
-+++ b/drivers/gpu/drm/drm_probe_helper.c
-@@ -517,7 +517,8 @@ int drm_helper_probe_single_connector_modes(struct 
-drm_connector *connector,
+I came across this commit while doing a bit of archeology:
 
-         if (count == 0 && (connector->status == 
-connector_status_connected ||
-                            connector->status == connector_status_unknown))
--               count = drm_add_modes_noedid(connector, 1024, 768);
-+               count = drm_add_modes_noedid(connector, 
-connector->dev->mode_config.max_width,
-+                               connector->dev->mode_config.max_height);
-         count += drm_helper_probe_add_cmdline_mode(connector);
-         if (count == 0)
-                 goto prune;
+  commit c4a5153e87fdf6805f63ff57556260e2554155a5
+  Author: Manu Gautam <mgautam@codeaurora.org>
+  Date:   Thu Jan 18 16:54:30 2018 +0530
+
+  usb: dwc3: core: Power-off core/PHYs on system_suspend in host mode
+
+  Commit 689bf72c6e0d ("usb: dwc3: Don't reinitialize core during
+  host bus-suspend/resume") updated suspend/resume routines to not
+  power_off and reinit PHYs/core for host mode.
+  It broke platforms that rely on DWC3 core to power_off PHYs to
+  enter low power state on system suspend.
+
+  Perform dwc3_core_exit/init only during host mode system_suspend/
+  resume to addresses power regression from above mentioned patch
+  and also allow USB session to stay connected across
+  runtime_suspend/resume in host mode. While at it also replace
+  existing checks for HOST only dr_mode with current_dr_role to
+  have similar core driver behavior for both Host-only and DRD+Host
+  configurations.
+
+  Fixes: 689bf72c6e0d ("usb: dwc3: Don't reinitialize core during host bus-suspend/resume")
+  Reviewed-by: Roger Quadros <rogerq@ti.com>
+  Signed-off-by: Manu Gautam <mgautam@codeaurora.org>
+  Signed-off-by: Felipe Balbi <felipe.balbi@linux.intel.com>
 
 
-> Alternatively, perhaps drm_set_preferred_mode() should erase the
-> previous preferred mode(s) if it finds a matching new preferred mode.
-> 
+So apparently powering off the core and PHYs is needed on some
+platforms.
 
-But still yes, even if we change it like above perhaps for other non-DP 
-cases its still better to allow individual drivers to pick their 
-preferred modes.
-
-If we call drm_set_preferred_mode() in the referenced patch, it will not 
-address the no EDID cases because the patch comes into picture when 
-there was a EDID with some modes but not with 640x480.
-
-So i think the second proposal is a good one. It will cover existing 
-users of drm_set_preferred_mode() as typically its called after 
-drm_add_modes_noedid() which means the existing users want to "override" 
-their preferred mode.
-
-> 
-> BR,
-> Jani.
-> 
+We could introduce a DT property that indicates that keeping the core/PHYs
+on is supported. Another hint could be the fact that the controller is
+marked as wakeup capable, however that would still power the core/PHYs
+down if the 'wakeup-source' property isn't set for a controller that is
+technically wakeup capable.
