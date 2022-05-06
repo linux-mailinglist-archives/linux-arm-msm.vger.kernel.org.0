@@ -2,89 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95AF751DD05
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 18:07:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 422A051DD19
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 18:09:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1443542AbiEFQLZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 May 2022 12:11:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43438 "EHLO
+        id S1443646AbiEFQN2 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Fri, 6 May 2022 12:13:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1443494AbiEFQLC (ORCPT
+        with ESMTP id S1443595AbiEFQM7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 May 2022 12:11:02 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B28E06D96E;
-        Fri,  6 May 2022 09:07:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3F17861A8E;
-        Fri,  6 May 2022 16:07:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68152C385A8;
-        Fri,  6 May 2022 16:07:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1651853238;
-        bh=hlecmGmXMdLPY0SRK5EkvKlwwip1h2w5sOHri907iUo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=uhFiHHHND8MOJ19d6UW4iRbnGzrkDvFC2fq54yEYFWJXiOnFi4FoJIewObEJ6Nb+k
-         EsWvbsctIbTeLMStgoPFGfDMHxEE07wR8BVYakDYb0uCPIGyfRpYYMhm0CFbJ0R3x7
-         TT7MR+hAhChPi9MZOfVpRpae98ETxmO1wNty9BP/I2yMcUokPs2yJVGaVtDpu8pqHy
-         Ro0zYW5QlFq6Q8yE97Of6cYJyIkxEdAOqtxacw9CYx3mXOW1yA8xcf4wpj48DRuKHj
-         +96B4bM+L5L8s8iIx91QCC0xE2nnbcs/5ow6HUEN5UlVZ411kE7xKUS0YOsuZrIvxB
-         d4nc0r9N1Kwag==
-From:   Will Deacon <will@kernel.org>
-To:     krzk+dt@kernel.org, robin.murphy@arm.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
-        joro@8bytes.org, Rohit Agarwal <quic_rohiagar@quicinc.com>,
-        robh+dt@kernel.org
-Cc:     catalin.marinas@arm.com, kernel-team@android.com,
-        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org,
-        manivannan.sadhasivam@linaro.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/7] SDX65 devicetree updates
-Date:   Fri,  6 May 2022 17:07:03 +0100
-Message-Id: <165185052553.2780438.7989324600616529868.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <1649670615-21268-1-git-send-email-quic_rohiagar@quicinc.com>
-References: <1649670615-21268-1-git-send-email-quic_rohiagar@quicinc.com>
+        Fri, 6 May 2022 12:12:59 -0400
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8652712ACE;
+        Fri,  6 May 2022 09:09:04 -0700 (PDT)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+        id 3209C1C0BCD; Fri,  6 May 2022 18:09:03 +0200 (CEST)
+Date:   Fri, 6 May 2022 18:09:01 +0200
+From:   Pavel Machek <pavel@ucw.cz>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>, Luca Weiss <luca@z3ntu.xyz>,
+        Doug Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-pwm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v14 2/2] leds: Add driver for Qualcomm LPG
+Message-ID: <20220506160901.GA1199@bug>
+References: <20220303214300.59468-1-bjorn.andersson@linaro.org>
+ <20220303214300.59468-2-bjorn.andersson@linaro.org>
+ <20220504073009.GC8204@duo.ucw.cz>
+ <YnKTAvQc6eDxTl14@ripper>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <YnKTAvQc6eDxTl14@ripper>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 11 Apr 2022 15:20:08 +0530, Rohit Agarwal wrote:
-> This series adds devicetree nodes for SDX65. It adds reserved memory
-> nodes, SDHCI, smmu and tcsr mutex support.
+Hi!
+
+> > > +    "255 500 0 500"
+> > > +
+> > > +        ^
+> > > +        |
+> > > +    255 +----+    +----+
+> > > +        |    |    |    |      ...
+> > > +      0 |    +----+    +----
+> > > +        +---------------------->
+> > > +        0    5   10   15     time (100ms)
+> > > +
+> > > +The LPG supports specifying a longer hold-time for the first and last element
+> > > +in the pattern, the so called "low pause" and "high pause".
+> > 
+> > Please see
+> > Documentation/devicetree/bindings/leds/leds-trigger-pattern.txt . This
+> > should really be compatible.
 > 
-> Changes from v1:
->  - Addressed Mani's Comments and made necessary.
->  - Rebased on top of v5.18-rc2.
+> Unfortunately the LPG hardware only supports fixed duration (except for
+> the ability to hold/extend the first and last duration in the pattern)
+> and it also does not support gradual transition between the brightness
+> levels.
+
+Ok.
+
+> As such the pattern sequence provided to hw_pattern looks to be the
+> smae, but I don't see that it can be made compatible.
 > 
-> [...]
+> > Can I get either patch to disable pattern infrastructure for now or to
+> > get it compatible?
+> > 
+> 
+> I'd be happy to get this updated to your liking, but this was one of the
+> drivers we discussed when we introduced the pattern trigger and led to
+> the conclusion that we need the ability to do hw-specific patterns.
+> 
+> As such this document provides the hardware specific documentation, as
+> we describe under "hw_pattern" in
+> Documentation/ABI/testing/sysfs-class-led-trigger-pattern.
+> 
+> Please advice on what you would like me to do.
 
-Applied SMMU binding patch to will (for-joerg/arm-smmu/updates), thanks!
+I'd like you to use same format leds-trigger-pattern describes.
 
-[4/7] dt-bindings: arm-smmu: Add binding for SDX65 SMMU
-      https://git.kernel.org/will/c/5a4eb9163471
+If someone passes "255 500 0 500", that's requesting gradual transitions and
+your hw can not do that. You return -EINVAL.
 
-However, I must confess that I don't understand the point in updating
-the binding documentation but not the driver. Should we be matching on
-the new compatible string somewhere?
+If someone wants that kind of blinking, they need to pass "255 0 255 500 0 0 0 500".
 
-Cheers,
--- 
-Will
+Best regards,
+									Pavel
 
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+
+-- (english) http://www.livejournal.com/~pavelmachek (cesky, pictures) 
+http://atrey.karlin.mff.cuni.cz/~pavel/picture/horses/blog.html
