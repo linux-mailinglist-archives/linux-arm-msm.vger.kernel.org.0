@@ -2,66 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A48751E246
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 May 2022 01:40:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ADE951E284
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 May 2022 01:41:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236547AbiEFX2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 May 2022 19:28:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58522 "EHLO
+        id S1445009AbiEFXg6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 May 2022 19:36:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1444967AbiEFX2B (ORCPT
+        with ESMTP id S1445008AbiEFXg6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 May 2022 19:28:01 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8149D712CF
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 May 2022 16:24:16 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id s11-20020a4ab54b000000b0035f0178dfcfso1498264ooo.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 May 2022 16:24:16 -0700 (PDT)
+        Fri, 6 May 2022 19:36:58 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34E89712CF
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 May 2022 16:33:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=/ElELV4+QaCmbQivuCO+s3nmw20xVvpsLHj2VQCOczQ=;
-        b=Q/mL5LmBEmb9tU2w0cn5NhXVWbyWIiPZkShqLXDDa+rVYo+1WH5J6y4cbFsJ/GHnIC
-         cRQnPAAT2Uuv1KT9qQMyQhEBwSwfFhY1cgAJT+RawLfPkt8k09bvKbPuhGRMAXoU9bmo
-         oaM+z+Z1SZgTAZFMlrKYNiQUFUqDmFkNmJnYU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=/ElELV4+QaCmbQivuCO+s3nmw20xVvpsLHj2VQCOczQ=;
-        b=bKTQ7YJocoPizn90NGKPdbXXnA+QYXRo+nINXTfzLE1KyHd0O0vm0Kx8IxLYDWGtBH
-         egT4lF5ENIwToUIhZBHLnFV51FdMPyervLj3Ii7yUOksp8Il5M65jOxHzwC6d0NUI1Ve
-         Y2NBv+ZSRT6KJV2LEPTPBpF9CddhgteHpVnuKckIC5E6uuzrO+HoiWR/AvPcyt0qNi8R
-         YAXsXWnor0fE/o3KECrRO3NJXCI4yf+YwD7BNAbpD4Rpt75xWCb+7yeMTHD/OvYeQ/K3
-         4Uz/1YMls/WobqTYaSSTY2Qhz6xqgbDB+bJTn55p74VYVHRUenwDXUrNpTbiTicv7+dA
-         s2sQ==
-X-Gm-Message-State: AOAM532ZnUqeyTXaIWCeVXnKUS8FlFBkT7uq/f33/NqeD+v4faTBYyMy
-        8TsJO5w7/+luDp1riM5gOX7EY2biHgjLo4jE495qZA==
-X-Google-Smtp-Source: ABdhPJyUJ6tVOobOozeBnxyxa8RgSY9d+Hm2+Rmx0y+yjUzUjdvUB/hoshBRw+G0Dpmcp5sPU11pJETcqoz8VXu5aq0=
-X-Received: by 2002:a4a:6b49:0:b0:329:99cd:4fb8 with SMTP id
- h9-20020a4a6b49000000b0032999cd4fb8mr1917932oof.25.1651879455825; Fri, 06 May
- 2022 16:24:15 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 6 May 2022 19:24:15 -0400
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651879993; x=1683415993;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=4Kh+GvAbr/YI/Pds4w5Pm9hZwgEXo4x7FfflSbKt5go=;
+  b=kEqS1L/Y7dsxBRKvvVz0g854C74R1SxfnzY4yag09Lmu0INhP1Y3eXlk
+   iMDr6oEti1upk1jtOhBOvcun5qzyG2G9ry80cJ1dTbRh56o2a4R+LJOgc
+   0aYQ4PAZBwlFk7L46A0o1QHorMbN/HtQiOHl6vDFdUHnegtNibz0JG+lN
+   Y=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 06 May 2022 16:33:12 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 16:33:12 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 6 May 2022 16:33:11 -0700
+Received: from [10.111.168.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 6 May 2022
+ 16:33:08 -0700
+Message-ID: <888eb1c7-67fa-dbb4-a589-da629d175486@quicinc.com>
+Date:   Fri, 6 May 2022 16:33:06 -0700
 MIME-Version: 1.0
-In-Reply-To: <YnKvoh+h07at8b65@builder.lan>
-References: <20220412194505.614002-1-swboyd@chromium.org> <YnKvoh+h07at8b65@builder.lan>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Fri, 6 May 2022 19:24:15 -0400
-Message-ID: <CAE-0n517iAS9KSdunMX18LpqDrQ4ac-yRCZq82j-XdExaGjCXA@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: rpmh: Set wake/sleep state for BCM clks
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        patches@lists.linux.dev, Alex Elder <elder@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 12/25] drm/msm/dpu: inline _dpu_plane_set_scanout
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
+ <20220209172520.3719906-13-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220209172520.3719906-13-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,27 +72,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2022-05-04 09:53:54)
-> On Tue 12 Apr 14:45 CDT 2022, Stephen Boyd wrote:
->
-> > Set the wake and sleep state for BCM clks here, not just the active
-> > state, as the active only state is dropped when CPUs go to deep idle.
-> > This ensures the clk is always on when the driver thinks it is on.
-> >
-> > This was found by inspection, and could very well be incorrect if the
-> > RPMh hardware copies over the active only state to the sleep and wake
-> > states.
-> >
->
-> Taking another look at this patch and now it makes perfect sense to me.
-> Sorry for not grasping the problem earlier.
->
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->
->
-> Will you take this in fixes, or do you want me to pick it for 5.19?
->
 
-I'm waiting for Taniya to reply. For all I know this has no effect
-because there's some sort of copy/paste from one state to another. Until
-then it doesn't seem like we should do anything.
+
+On 2/9/2022 9:25 AM, Dmitry Baryshkov wrote:
+> In preparation to reworking dpu_plane_sspp_atomic_update() inline the
+> _dpu_plane_set_scanout() function.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 41 ++++++++++-------------
+>   1 file changed, 18 insertions(+), 23 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index d029ce806039..3ce7dcc285e2 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -490,28 +490,6 @@ static void _dpu_plane_set_qos_remap(struct drm_plane *plane)
+>   	dpu_vbif_set_qos_remap(dpu_kms, &qos_params);
+>   }
+>   
+> -static void _dpu_plane_set_scanout(struct drm_plane *plane,
+> -		struct dpu_plane_state *pstate,
+> -		struct dpu_hw_pipe_cfg *pipe_cfg,
+> -		struct drm_framebuffer *fb)
+> -{
+> -	struct dpu_plane *pdpu = to_dpu_plane(plane);
+> -	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+> -	struct msm_gem_address_space *aspace = kms->base.aspace;
+> -	int ret;
+> -
+> -	ret = dpu_format_populate_layout(aspace, fb, &pipe_cfg->layout);
+> -	if (ret == -EAGAIN)
+> -		DPU_DEBUG_PLANE(pdpu, "not updating same src addrs\n");
+> -	else if (ret)
+> -		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
+> -	else if (pstate->pipe.sspp->ops.setup_sourceaddress) {
+> -		trace_dpu_plane_set_scanout(&pstate->pipe,
+> -					    &pipe_cfg->layout);
+> -		pstate->pipe.sspp->ops.setup_sourceaddress(&pstate->pipe, pipe_cfg);
+> -	}
+> -}
+> -
+>   static void _dpu_plane_setup_scaler3(struct dpu_hw_pipe *pipe_hw,
+>   		uint32_t src_w, uint32_t src_h, uint32_t dst_w, uint32_t dst_h,
+>   		struct dpu_hw_scaler3_cfg *scale_cfg,
+> @@ -1074,10 +1052,27 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>   	const struct dpu_format *fmt =
+>   		to_dpu_format(msm_framebuffer_format(fb));
+>   	struct dpu_hw_pipe_cfg pipe_cfg;
+> +	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+> +	struct msm_gem_address_space *aspace = kms->base.aspace;
+> +	bool update_src_addr = true;
+> +	int ret;
+>   
+>   	memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
+>   
+> -	_dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
+> +	ret = dpu_format_populate_layout(aspace, fb, &pipe_cfg.layout);
+> +	if (ret == -EAGAIN) {
+> +		DPU_DEBUG_PLANE(pdpu, "not updating same src addrs\n");
+> +		update_src_addr = false;
+> +	} else if (ret) {
+> +		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
+> +		update_src_addr = false;
+> +	}
+> +
+Do we need update_src_addr?
+
+It seems we can just do
+
+if (!ret &&  pipe->sspp->ops.setup_sourceaddress) {
+	.....
+	.....
+}
+
+> +	if (update_src_addr &&
+> +	    pipe->sspp->ops.setup_sourceaddress) {
+> +		trace_dpu_plane_set_scanout(pipe, &pipe_cfg.layout);
+> +		pipe->sspp->ops.setup_sourceaddress(pipe, &pipe_cfg);
+> +	}
+>   
+>   	pstate->pending = true;
+>   
