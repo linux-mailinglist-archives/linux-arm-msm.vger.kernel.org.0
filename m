@@ -2,136 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD56D51D26F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 09:41:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49A2151D441
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 11:22:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389637AbiEFHon (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 May 2022 03:44:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36166 "EHLO
+        id S1390536AbiEFJ0A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 May 2022 05:26:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1389632AbiEFHom (ORCPT
+        with ESMTP id S1390570AbiEFJZu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 May 2022 03:44:42 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECC295DA51
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 May 2022 00:40:59 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id bq30so11209817lfb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 May 2022 00:40:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=yq4oJMCDfCqiuSYPrGiR7TdBoQ/AyiNCejA6X9Nl+ck=;
-        b=dorWGvetxsGHiee41vHh66trGajA/WXxHaOioCCMFnhLOgLF6l/cV99tZXnLtV0BmF
-         PAsja2Dl0CXAnTSrT8yRsPGa8iwAuT7/H0jCoSLoJK0PUwnFDF3AxxSA3VEP9tTesybY
-         uWRbNG+JjmP4NPtPDHx+m+AMyuxsnnamZV+64uujGSzZuB0cM8FTs8OKJMk6AzZ81kjz
-         Eeq7kxVE1d7YbJ9WH112miBPug2PYTcYjktR+s4LrHHqKqBHoQmdBmixBynslQX2oXjo
-         TCBV73G4ZQmlwajOcDRSjW5PX5vxI511uB6+496bT30FVQovW+CKnrK2lg05xmQ1PFog
-         Y9Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=yq4oJMCDfCqiuSYPrGiR7TdBoQ/AyiNCejA6X9Nl+ck=;
-        b=IcREJKZBPXC1iafLs+NcBXN57R+c3GpKZqusC0S9rrVkiywzLpsf+VjalNBUJCeCHl
-         9WWK5wojRu1mQWkexQyYyKw+5PD1shCXxgT2xs7CG4j78+qG4rby7H7RLnc9NQohxaFx
-         eBshESOuuc4DgQdg0Jt0sMZPN396+8fZ8TfO6I5oUJM7tC3kyzYz/MaX17ebBI0/Gj4C
-         FHKB/i8qhIptnfsZ880U7n9ZWUguTOavIBhYd+L6AdNk3fvx5FcCt8olNIq0Kwu3fdRJ
-         4evWnR8GkHn0LhCk43gTsGYRlFt8WpXYCBJYul1lPMTGAYQnrbjuCYpB8M4ZV/JB61cO
-         LGcQ==
-X-Gm-Message-State: AOAM532Tn/b5VDffPTuFi0Z4OI9Ker/Mumo2VhaFAZUyd3w0r9n1qsPA
-        4TeMDR2026H+31v9BQYtsEYE1Q==
-X-Google-Smtp-Source: ABdhPJx6qUi9SRLbyFFX1g/1yaeZbkNDkB/nwXSfN7TIJM0D6xR1485+MD2fKPk/lbQ9P98gpQLvnA==
-X-Received: by 2002:a05:6512:2386:b0:473:a4e3:d4aa with SMTP id c6-20020a056512238600b00473a4e3d4aamr1639490lfv.448.1651822858278;
-        Fri, 06 May 2022 00:40:58 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id bt24-20020a056512261800b0047255d2113asm570118lfb.105.2022.05.06.00.40.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 May 2022 00:40:57 -0700 (PDT)
-Message-ID: <b334a2e6-69ae-690d-8560-25f8a1319e5c@linaro.org>
-Date:   Fri, 6 May 2022 10:40:56 +0300
+        Fri, 6 May 2022 05:25:50 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8E1A169284;
+        Fri,  6 May 2022 02:21:34 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CC3E9ED1;
+        Fri,  6 May 2022 02:21:33 -0700 (PDT)
+Received: from [10.57.0.148] (unknown [10.57.0.148])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C01AC3FA31;
+        Fri,  6 May 2022 02:21:31 -0700 (PDT)
+Message-ID: <687b78b5-5671-5317-ce9e-98720bb533fa@arm.com>
+Date:   Fri, 6 May 2022 10:21:30 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v7 5/7] PCI: qcom: Handle MSIs routed to multiple GIC
- interrupts
-Content-Language: en-GB
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220505135407.1352382-1-dmitry.baryshkov@linaro.org>
- <20220505135407.1352382-6-dmitry.baryshkov@linaro.org>
- <YnRA//LbCW+IVi3o@robh.at.kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YnRA//LbCW+IVi3o@robh.at.kernel.org>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.8.1
+Subject: Re: [PATCHv14 2/9] coresight: etm4x: Use asm-generic IO memory
+ barriers
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>, arnd@arndb.de,
+        catalin.marinas@arm.com, rostedt@goodmis.org
+Cc:     gregkh@linuxfoundation.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        maz@kernel.org, quic_psodagud@quicinc.com, quic_tsoni@quicinc.com,
+        will@kernel.org, Mathieu Poirier <mathieu.poirier@linaro.org>
+References: <cover.1651663123.git.quic_saipraka@quicinc.com>
+ <0d76de0ecc0aa7cb01fd8b8863a8e567abd4410b.1651663123.git.quic_saipraka@quicinc.com>
+ <483bb401-13e6-8c52-4b5f-f3c635b9ad46@arm.com>
+ <b44a0e0b-ee86-3b08-0103-3ccee94e3270@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <b44a0e0b-ee86-3b08-0103-3ccee94e3270@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-10.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/05/2022 00:26, Rob Herring wrote:
-> On Thu, May 05, 2022 at 04:54:05PM +0300, Dmitry Baryshkov wrote:
->> On some of Qualcomm platforms each group of 32 MSI vectors is routed to the
->> separate GIC interrupt. Thus to receive higher MSI vectors properly,
->> add separate msi_host_init()/msi_host_deinit() handling additional host
->> IRQs.
+On 06/05/2022 04:02, Sai Prakash Ranjan wrote:
+> Hi Suzuki,
 > 
-> msi_host_init() has 1 user (keystone) as it doesn't use the DWC MSI
-> controller. But QCom does given the access to PCIE_MSI_INTR0_STATUS,
-> so mutiple MSI IRQ outputs must have been added in newer versions of the
-> DWC IP. If so, it's only a matter of time for another platform to
-> do the same thing. Maybe someone from Synopsys could confirm?
-
-This is a valid question, and if you check, first iterations of this 
-patchset had this in the dwc core ([1], [2]). Exactly for the reason 
-this might be usable for other platforms.
-
-Then I did some research for other platforms using DWC PCIe IP core. For 
-example, both Tegra Xavier and iMX6 support up to 256 MSI vectors, they 
-use DWC MSI IRQ controller. The iMX6 TRM explicitly describes using 
-different MSI groups for different endpoints. The diagram shows 8 MSI 
-IRQ signal lines. However in the end the signals from all groups are 
-OR'ed to form a single host msi_ctrl_int. Thus currently I suppose that 
-using multiple MSI IRQs is a peculiarity of Qualcomm platform.
-
-
+> On 5/6/2022 5:14 AM, Suzuki K Poulose wrote:
+>> Hi,
+>>
+>> On 04/05/2022 12:28, Sai Prakash Ranjan wrote:
+>>> Per discussion in [1], it was decided to move to using architecture
+>>> independent/asm-generic IO memory barriers to have just one set of
+>>> them and deprecate use of arm64 specific IO memory barriers in driver
+>>> code. So replace current usage of __io_rmb()/__iowmb() in drivers to
+>>> __io_ar()/__io_bw().
+>>>
+>>> [1] 
+>>> https://lore.kernel.org/lkml/CAK8P3a0L2tLeF1Q0+0ijUxhGNaw+Z0fyPC1oW6_ELQfn0=i4iw@mail.gmail.com/ 
+>>>
+>>>
+>>
+>> Looking at the dis-assembly it looks like in effect they are slightly
+>> different for arm64.
+>>
+>> i.e., before this patch we had
+>>
+>> "dmb osh{ld/st}"
+>>
+>> and after the patch we have :
+>>
+>> "dsb {ld/st}"
+>>
+>> Is this really what we want ? I don't think this is desirable.
+>>
+>> Suzuki
+>>
 > 
-> Therefore this should all be handled in the DWC core. In general, I
-> don't want to see more users nor more ops if we don't have to. Let's not
-> create ops for what can be handled as data. AFAICT, this is just number
-> of MSIs and # of MSIs per IRQ. It seems plausible another platform could
-> do something similar and supporting it in the core code wouldn't
-> negatively impact other platforms.
+> No, this is not supposed to happen and I do not see how it could happen.
+> __io_ar() is defined as __iormb() and __io_bw() is __iowmb().
+> 
+> I checked the disassembly in both case with MMIO trace off/on with 
+> __etm4_cpu_save()
+> as below and saw the same number of "dmb"s.
+> 
+> aarch64-linux-gnu-gdb -batch -ex "disassemble/rs __etm4_cpu_save" 
+> vmlinux-without-mmio
+> aarch64-linux-gnu-gdb -batch -ex "disassemble/rs __etm4_cpu_save" 
+> vmlinux-with-mmio
+> 
+> Can you tell me how are you validating if I am missing something?
 
-I wanted to balance adding additional ops vs complicating the core for 
-other platforms. And I still suppose that platform specifics should go 
-to the platform driver. However if you prefer [1] and [2], we can go 
-back to that implementation.
+Apologies, I was missing the patch in this series, which adds
+the arm64 definition for __io_ar/__io_bw. (hint: Please Cc
+the affected subsystem in the Cover letter for the series, so
+we know what the intention of the changes are).
 
+With the patch1, yes this makes sense to me. Otherwise, __io_ar()
+is default to rmb() which implies dsb ld.
 
-[1]: 
-https://lore.kernel.org/linux-arm-msm/20220427121653.3158569-2-dmitry.baryshkov@linaro.org/[2]: 
-https://lore.kernel.org/linux-arm-msm/20220427121653.3158569-3-dmitry.baryshkov@linaro.org/
+With that said,
 
-
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
