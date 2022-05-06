@@ -2,73 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6DF451D1EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 09:05:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD56D51D26F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 09:41:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1388425AbiEFHJW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 May 2022 03:09:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57446 "EHLO
+        id S1389637AbiEFHon (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 May 2022 03:44:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1388074AbiEFHJU (ORCPT
+        with ESMTP id S1389632AbiEFHom (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 May 2022 03:09:20 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 851195DD06
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 May 2022 00:05:37 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id n18so6581451plg.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 May 2022 00:05:37 -0700 (PDT)
+        Fri, 6 May 2022 03:44:42 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECC295DA51
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 May 2022 00:40:59 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id bq30so11209817lfb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 May 2022 00:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=cGsWnmcdsW5+Xbz2FC0gnC+YhC9gKY5ai2q+ZLxNWKk=;
-        b=iGfeU6j4YOla+JtEHUOB09UfEODgM9SORI0CjiGCK3q2DfKIne0qOPtu0MdS35Rotn
-         Hx32nUuF+ubpNJfY6lFTixhB70XxgTCUCCJoFGINp7JQUwqslisT8ONxyMiucPfwmVQo
-         BcFb8kYte/P5jcgoSxwC16k4VOUSXc8gItHA/Ex91Ubt4UdlZTQ6mexhIy/yn5JqZsmj
-         Fr6aheufgPglMQ0D7EQSMolgLewxrLfZaHj1bxb3I0gKzPRzRQQemhkTmtazoSrtpyMr
-         nzwuClYjHKZW6ndVApHAanUqj7vWmsckKD0+ywNg+CaxDC4w/gXYRww+HpnawMjnneyQ
-         aFrA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=yq4oJMCDfCqiuSYPrGiR7TdBoQ/AyiNCejA6X9Nl+ck=;
+        b=dorWGvetxsGHiee41vHh66trGajA/WXxHaOioCCMFnhLOgLF6l/cV99tZXnLtV0BmF
+         PAsja2Dl0CXAnTSrT8yRsPGa8iwAuT7/H0jCoSLoJK0PUwnFDF3AxxSA3VEP9tTesybY
+         uWRbNG+JjmP4NPtPDHx+m+AMyuxsnnamZV+64uujGSzZuB0cM8FTs8OKJMk6AzZ81kjz
+         Eeq7kxVE1d7YbJ9WH112miBPug2PYTcYjktR+s4LrHHqKqBHoQmdBmixBynslQX2oXjo
+         TCBV73G4ZQmlwajOcDRSjW5PX5vxI511uB6+496bT30FVQovW+CKnrK2lg05xmQ1PFog
+         Y9Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=cGsWnmcdsW5+Xbz2FC0gnC+YhC9gKY5ai2q+ZLxNWKk=;
-        b=Evr4v4P4qli6HJMxNK5g/FanxsW+015BglRDHGoUxj5vJBHjoEUmJUiG00CfylEvbv
-         fSJ+gGqHYglXsO2JHu39RZ8b87nbm4xsEaG5RWjsdOsaXn3W4BwF3x9OyoBtkfGgFsvM
-         JEVvj2PlZEIYrTjFipn0/Xt6JbywxkoiR9xw3O48ZUJ/+tGd/DYXiE4FVV73rcyV9OFk
-         ViHHNzuYyleOBK5JKMyGJmZZKCbatRU9o5+A2L7SBm0ahVA0SzXt1yC0SvBdPOu3Yz/l
-         2rYYbHq7vuZKbtsSlxZ2NotzKuTIWgQWhs/+MBjHiGPbCwIFsW92Q/27x5ng2556nAG+
-         p26w==
-X-Gm-Message-State: AOAM5334wJKa+qZHl81/6RvHbLOi299N6fs2VQLN6OSy+zXiEtQ2aw7B
-        +LN6XcnAw2lhdpAbRcqO4YlL
-X-Google-Smtp-Source: ABdhPJzsB3eC1EyI0ybZRmYrUTNiZQMxNEEm9JOshBJBQsw2h5Kg3NaX5TAl6/ej75kNHI1+th2v3Q==
-X-Received: by 2002:a17:903:244c:b0:15e:b3f7:950d with SMTP id l12-20020a170903244c00b0015eb3f7950dmr2086414pls.9.1651820737005;
-        Fri, 06 May 2022 00:05:37 -0700 (PDT)
-Received: from thinkpad ([117.207.26.33])
-        by smtp.gmail.com with ESMTPSA id v1-20020a622f01000000b0050dc76281c5sm2573828pfv.159.2022.05.06.00.05.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 May 2022 00:05:36 -0700 (PDT)
-Date:   Fri, 6 May 2022 12:35:31 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        gregkh@linuxfoundation.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] ARM: dts: qcom: sdx65-mtp: Enable USB3 and PHY
- support
-Message-ID: <20220506070531.GE17659@thinkpad>
-References: <1651482395-29443-1-git-send-email-quic_rohiagar@quicinc.com>
- <1651482395-29443-5-git-send-email-quic_rohiagar@quicinc.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=yq4oJMCDfCqiuSYPrGiR7TdBoQ/AyiNCejA6X9Nl+ck=;
+        b=IcREJKZBPXC1iafLs+NcBXN57R+c3GpKZqusC0S9rrVkiywzLpsf+VjalNBUJCeCHl
+         9WWK5wojRu1mQWkexQyYyKw+5PD1shCXxgT2xs7CG4j78+qG4rby7H7RLnc9NQohxaFx
+         eBshESOuuc4DgQdg0Jt0sMZPN396+8fZ8TfO6I5oUJM7tC3kyzYz/MaX17ebBI0/Gj4C
+         FHKB/i8qhIptnfsZ880U7n9ZWUguTOavIBhYd+L6AdNk3fvx5FcCt8olNIq0Kwu3fdRJ
+         4evWnR8GkHn0LhCk43gTsGYRlFt8WpXYCBJYul1lPMTGAYQnrbjuCYpB8M4ZV/JB61cO
+         LGcQ==
+X-Gm-Message-State: AOAM532Tn/b5VDffPTuFi0Z4OI9Ker/Mumo2VhaFAZUyd3w0r9n1qsPA
+        4TeMDR2026H+31v9BQYtsEYE1Q==
+X-Google-Smtp-Source: ABdhPJx6qUi9SRLbyFFX1g/1yaeZbkNDkB/nwXSfN7TIJM0D6xR1485+MD2fKPk/lbQ9P98gpQLvnA==
+X-Received: by 2002:a05:6512:2386:b0:473:a4e3:d4aa with SMTP id c6-20020a056512238600b00473a4e3d4aamr1639490lfv.448.1651822858278;
+        Fri, 06 May 2022 00:40:58 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id bt24-20020a056512261800b0047255d2113asm570118lfb.105.2022.05.06.00.40.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 May 2022 00:40:57 -0700 (PDT)
+Message-ID: <b334a2e6-69ae-690d-8560-25f8a1319e5c@linaro.org>
+Date:   Fri, 6 May 2022 10:40:56 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1651482395-29443-5-git-send-email-quic_rohiagar@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v7 5/7] PCI: qcom: Handle MSIs routed to multiple GIC
+ interrupts
+Content-Language: en-GB
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220505135407.1352382-1-dmitry.baryshkov@linaro.org>
+ <20220505135407.1352382-6-dmitry.baryshkov@linaro.org>
+ <YnRA//LbCW+IVi3o@robh.at.kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YnRA//LbCW+IVi3o@robh.at.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,88 +86,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 02, 2022 at 02:36:35PM +0530, Rohit Agarwal wrote:
-> Enable the support for USB3 controller, QMP PHY and HS PHY on SDX65 MTP.
+On 06/05/2022 00:26, Rob Herring wrote:
+> On Thu, May 05, 2022 at 04:54:05PM +0300, Dmitry Baryshkov wrote:
+>> On some of Qualcomm platforms each group of 32 MSI vectors is routed to the
+>> separate GIC interrupt. Thus to receive higher MSI vectors properly,
+>> add separate msi_host_init()/msi_host_deinit() handling additional host
+>> IRQs.
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> msi_host_init() has 1 user (keystone) as it doesn't use the DWC MSI
+> controller. But QCom does given the access to PCIE_MSI_INTR0_STATUS,
+> so mutiple MSI IRQ outputs must have been added in newer versions of the
+> DWC IP. If so, it's only a matter of time for another platform to
+> do the same thing. Maybe someone from Synopsys could confirm?
 
-I hope you have tested the interface using a gadget driver.
+This is a valid question, and if you check, first iterations of this 
+patchset had this in the dwc core ([1], [2]). Exactly for the reason 
+this might be usable for other platforms.
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Then I did some research for other platforms using DWC PCIe IP core. For 
+example, both Tegra Xavier and iMX6 support up to 256 MSI vectors, they 
+use DWC MSI IRQ controller. The iMX6 TRM explicitly describes using 
+different MSI groups for different endpoints. The diagram shows 8 MSI 
+IRQ signal lines. However in the end the signals from all groups are 
+OR'ed to form a single host msi_ctrl_int. Thus currently I suppose that 
+using multiple MSI IRQs is a peculiarity of Qualcomm platform.
 
-Thanks,
-Mani
 
-> ---
->  arch/arm/boot/dts/qcom-sdx65-mtp.dts | 29 +++++++++++++++++++++++++----
->  1 file changed, 25 insertions(+), 4 deletions(-)
 > 
-> diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-> index 79dc31a..6920524 100644
-> --- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-> +++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
-> @@ -123,7 +123,7 @@
->  			regulator-max-microvolt = <1300000>;
->  		};
->  
-> -		ldo1 {
-> +		vreg_l1b_1p2: ldo1 {
->  			regulator-min-microvolt = <1200000>;
->  			regulator-max-microvolt = <1200000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> @@ -141,13 +141,13 @@
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
-> -		ldo4 {
-> +		vreg_l4b_0p88: ldo4 {
->  			regulator-min-microvolt = <880000>;
->  			regulator-max-microvolt = <912000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
-> -		ldo5 {
-> +		vreg_l5b_1p8: ldo5 {
->  			regulator-min-microvolt = <1800000>;
->  			regulator-max-microvolt = <1800000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> @@ -177,7 +177,7 @@
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
-> -		ldo10 {
-> +		vreg_l10b_3p08: ldo10 {
->  			regulator-min-microvolt = <3088000>;
->  			regulator-max-microvolt = <3088000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> @@ -244,3 +244,24 @@
->  		};
->  	};
->  };
-> +
-> +&usb {
-> +	status = "okay";
-> +};
-> +
-> +&usb_dwc3 {
-> +	dr_mode = "peripheral";
-> +};
-> +
-> +&usb_hsphy {
-> +	status = "okay";
-> +	vdda-pll-supply = <&vreg_l4b_0p88>;
-> +	vdda33-supply = <&vreg_l10b_3p08>;
-> +	vdda18-supply = <&vreg_l5b_1p8>;
-> +};
-> +
-> +&usb_qmpphy {
-> +	status = "okay";
-> +	vdda-phy-supply = <&vreg_l4b_0p88>;
-> +	vdda-pll-supply = <&vreg_l1b_1p2>;
-> +};
-> -- 
-> 2.7.4
-> 
+> Therefore this should all be handled in the DWC core. In general, I
+> don't want to see more users nor more ops if we don't have to. Let's not
+> create ops for what can be handled as data. AFAICT, this is just number
+> of MSIs and # of MSIs per IRQ. It seems plausible another platform could
+> do something similar and supporting it in the core code wouldn't
+> negatively impact other platforms.
+
+I wanted to balance adding additional ops vs complicating the core for 
+other platforms. And I still suppose that platform specifics should go 
+to the platform driver. However if you prefer [1] and [2], we can go 
+back to that implementation.
+
+
+[1]: 
+https://lore.kernel.org/linux-arm-msm/20220427121653.3158569-2-dmitry.baryshkov@linaro.org/[2]: 
+https://lore.kernel.org/linux-arm-msm/20220427121653.3158569-3-dmitry.baryshkov@linaro.org/
+
+
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
