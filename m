@@ -2,107 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76D0D51DBAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 17:11:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6921D51DBC6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 17:21:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1442772AbiEFPPJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 May 2022 11:15:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41818 "EHLO
+        id S1442760AbiEFPYz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 May 2022 11:24:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236500AbiEFPPG (ORCPT
+        with ESMTP id S1347956AbiEFPYz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 May 2022 11:15:06 -0400
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 426952F03F;
-        Fri,  6 May 2022 08:11:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651849883; x=1683385883;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=yHfDzCayxw0smKFpxdbArsN9Ikdnfmg63XFLoA4TdjE=;
-  b=XzWyh365VREPgkfAPJzAQ5UaqEJ06mra9APv5zcu6yR20+vM7kf31nyb
-   5CKTEfzWBmedirYIcciJMAT5NO7zsKoAQ4Xfr1f+jlv5AEKKX3uKmcS1G
-   G09eRwPbXL68+L31MJKch7ODSLBOI8FHQmxCyEL7obx2x57Fm7/zJfmI+
-   NcA5xiPFZxZrgqNBT8cqD6qGU8RxOA15q98M0qvV6MSVI4xxGwc628CFh
-   o06ky60+Q7fZCuY52hf+cZBTLzMQGcJmKiofBuEQSSh5BMf9aw/NjjYQY
-   JymSb4KNU3GGR647ujwhgag1c4cklK9NoP4R3IvbxiYyNPYOnFf4lN9kf
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10339"; a="268096065"
-X-IronPort-AV: E=Sophos;i="5.91,203,1647327600"; 
-   d="scan'208";a="268096065"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 08:11:18 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,203,1647327600"; 
-   d="scan'208";a="632969449"
-Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
-  by fmsmga004.fm.intel.com with ESMTP; 06 May 2022 08:11:15 -0700
-Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nmzbu-000Dai-VH;
-        Fri, 06 May 2022 15:11:14 +0000
-Date:   Fri, 6 May 2022 23:10:47 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     kbuild-all@lists.01.org, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org,
-        =?iso-8859-1?Q?Andr=E9?= Almeida <andrealmeid@collabora.com>,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Fri, 6 May 2022 11:24:55 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE6C86D187
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 May 2022 08:21:10 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id b32so1413197ljf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 May 2022 08:21:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=I55ZRoAdfLKVNaKBbEHKhxBfOeVaGDwGP7LdCu0kpbI=;
+        b=TBBjnnqHN+rda3+SbI4xPAMCxwqjpEU5eHa/MnEV5xbJwL36SKZ5Npr2seshsd5kWg
+         YTEQY3+LgRQfMOQCVw7kPwF3FEW2GVCTMvnxHfKEHI1jxQq1WiV4QnvRL6no0G1G+GLp
+         g5xpw0TXVpVz4GMb24Dy5WQeWapifBQe8MrQSi5U9qsdfyQHx6hJSdyYoBNMb2RTszt/
+         IIKq5ZYPrHSWnsZDAvi/k3xIuly3v3ntlHOEDry2uQJ9XRGQpbxaTxuoAVuXYaoTw1ku
+         h4cDOdqZvnD70WmfymcJHkKNefA38eTrCpH4XKgyfebP6nd4Lo3MfrdoROu4N47Mz92w
+         jJBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=I55ZRoAdfLKVNaKBbEHKhxBfOeVaGDwGP7LdCu0kpbI=;
+        b=Xn+djZUiF9ClFwwCanytdyqPcjnLbeqy2G6gyX1Lzjp1NclzUD/iJj6ePtm36b0P3c
+         kFqh8pOnjK64PDDSfVXWszLnBYxxbma67zx8+5OY6suTrAKEafpFHzBcNRJyPGDJVuhV
+         ofqvx/xseM7PbLQB1c2EwZNcqnYLW9aEkqh0/C1tPOog2KzR4pa08mMpp289RHZYA0Wj
+         9XrZ/4WOgv3locJ3Rx6/dOK96gO6kLB9VWaDjouEJPkNjBVIh9xrAk49kU5eBPAneVmP
+         wl/wxBSLdl1cOaueUwWCivd8mNyEUWm0GINvr31YPHyS8AH4f7aoWG5bhhpMnHzKH768
+         fSCA==
+X-Gm-Message-State: AOAM5305e0fQB8sixZ2voqKCfAkqU3dWOeyUYGFx8iKpHijrSYInjQxL
+        kbMiVdQ1JqCuQ+Jc9G3LEmMrrQ==
+X-Google-Smtp-Source: ABdhPJw9UHCPNY2DyVm4gg4MEluyi+wNK+Qmmr9vuB6nhdv+qxm1OICdX98ORMkCYczlryjt5TSeSA==
+X-Received: by 2002:a2e:bd85:0:b0:250:9bf2:8e27 with SMTP id o5-20020a2ebd85000000b002509bf28e27mr2307306ljq.177.1651850469086;
+        Fri, 06 May 2022 08:21:09 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id k16-20020a05651239d000b0047255d211e6sm716757lfu.277.2022.05.06.08.21.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 May 2022 08:21:08 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ARM: dts: qcom: msm8974-hammerhead: Add notification LED
-Message-ID: <202205062319.gc3Q6aGA-lkp@intel.com>
-References: <20220505164336.13210-1-luca@z3ntu.xyz>
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v6 0/8] dt-bindings: YAMLify pci/qcom,pcie schema
+Date:   Fri,  6 May 2022 18:20:59 +0300
+Message-Id: <20220506152107.1527552-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220505164336.13210-1-luca@z3ntu.xyz>
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Luca,
+Convert pci/qcom,pcie schema to YAML description. The first patch
+introduces several warnings which are fixed by the other patches in the
+series.
 
-I love your patch! Yet something to improve:
+Note regarding the snps,dw-pcie compatibility. The Qualcomm PCIe
+controller uses Synopsys PCIe IP core. However it is not just fused to
+the address space. Accessing PCIe registers requires several clocks and
+regulators to be powered up. Thus it can be assumed that the qcom,pcie
+bindings are not fully compatible with the snps,dw-pcie schema.
 
-[auto build test ERROR on next-20220505]
-[cannot apply to robh/for-next v5.18-rc5 v5.18-rc4 v5.18-rc3 v5.18-rc5]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Changes since v5:
+ - s/stance/stanza (pointed out by Bjorn Helgaas)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Luca-Weiss/ARM-dts-qcom-msm8974-hammerhead-Add-notification-LED/20220506-004626
-base:    632a8c88e339fe86ae6e420a24dfc641d4dd0ab5
-config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20220506/202205062319.gc3Q6aGA-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/982ec92f3741358d8ce62dd43841b550a6ab6a22
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Luca-Weiss/ARM-dts-qcom-msm8974-hammerhead-Add-notification-LED/20220506-004626
-        git checkout 982ec92f3741358d8ce62dd43841b550a6ab6a22
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
+Changes since v4:
+ - Change subjects to follow convention (suggested by Bjorn Helgaas)
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+Changes since v3:
+ - Rebase on linux-next to include sm8150 patches
 
-All errors (new ones prefixed by >>):
+Changes since v2 (still kudos to Krzyshtof):
+ - Readded reg-names conversion patch
+ - Mention wake-gpio update in the commit message
+ - Remove extra quotes in the schema
 
->> Error: arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts:317.1-12 Label or path pm8941_lpg not found
->> FATAL ERROR: Syntax error parsing input tree
+Changes since v1 (all kudos to Krzyshtof):
+ - Dropped the reg-names patch. It will be handled separately
+ - Squashed the snps,dw-pcie removal (from schema) into the first patch
+ - Replaced deprecated perst-gpio and wake-gpio with perst-gpios and
+   wake-gpios in the examples and in DT files
+ - Moved common clocks/clock-names, resets/reset-names and power-domains
+   properties to the top level of the schema, leaving only platform
+   specifics in the conditional branches
+ - Dropped iommu-map/iommu-map-mask for now
+ - Added (missed) interrupt-cells, clocks, clock-names, resets,
+   reset-names properties to the required list (resets/reset-names are
+   removed in the next patch, as they are not used on msm8996)
+ - Fixed IRQ flags in the examples
+ - Merged apq8064/ipq8064 into the single condition statement
+ - Added extra empty lines
+
+Dmitry Baryshkov (8):
+  dt-bindings: PCI: qcom: Convert to YAML
+  dt-bindings: PCI: qcom: Do not require resets on msm8996 platforms
+  dt-bindings: PCI: qcom: Specify reg-names explicitly
+  dt-bindings: PCI: qcom: Add schema for sc7280 chipset
+  arm64: dts: qcom: stop using snps,dw-pcie falback
+  arm: dts: qcom: stop using snps,dw-pcie falback
+  arm: dts: qcom-*: replace deprecated perst-gpio with perst-gpios
+  arm64: dts: qcom: replace deprecated perst-gpio with perst-gpios
+
+ .../devicetree/bindings/pci/qcom,pcie.txt     | 398 ----------
+ .../devicetree/bindings/pci/qcom,pcie.yaml    | 714 ++++++++++++++++++
+ arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts   |   2 +-
+ arch/arm/boot/dts/qcom-apq8064-ifc6410.dts    |   2 +-
+ arch/arm/boot/dts/qcom-apq8064.dtsi           |   2 +-
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi |   2 +-
+ .../boot/dts/qcom-ipq4019-ap.dk07.1-c1.dts    |   2 +-
+ arch/arm/boot/dts/qcom-ipq4019.dtsi           |   2 +-
+ arch/arm/boot/dts/qcom-ipq8064.dtsi           |   6 +-
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dts   |   6 +-
+ arch/arm64/boot/dts/qcom/ipq8074-hk01.dts     |   4 +-
+ arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi    |   4 +-
+ .../dts/qcom/msm8996-sony-xperia-tone.dtsi    |   4 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |   6 +-
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi      |   2 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |   2 +-
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |   2 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |   2 +-
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |   4 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   4 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |   6 +-
+ 21 files changed, 746 insertions(+), 430 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.txt
+ create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.yaml
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.35.1
+
