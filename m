@@ -2,81 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C44F51DC92
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 17:51:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95AF751DD05
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 18:07:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1443182AbiEFPzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 May 2022 11:55:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55118 "EHLO
+        id S1443542AbiEFQLZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 May 2022 12:11:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1443179AbiEFPzI (ORCPT
+        with ESMTP id S1443494AbiEFQLC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 May 2022 11:55:08 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57AB35A140
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 May 2022 08:51:24 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id c11so7808496plg.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 May 2022 08:51:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=QjBqmMkmUcAMteJnBmmBn9QwTnggo7cn/NEd2Zx55+0=;
-        b=W4DvYNiShQEw5Df/QqOsE3u6o78JjUjVH4ZFW7H+i08QfF6dpLk3ArQQaZeDmwp1Vf
-         iZ5ibY6qjvrAJ6NGXtv/O+5C3FJOM5ebArCvQvUqJhZsldESB/nDcwCMt6uZWBRoj2vg
-         Qw/IbW+Dvxo9/3BMiasCzJ1stnKwjTr9O3p1A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=QjBqmMkmUcAMteJnBmmBn9QwTnggo7cn/NEd2Zx55+0=;
-        b=vayhWaQiFlLPu4SiMBrqjdiEIE+D2N/HynqwVzTM+RtqIoZb1juVHx3Bqi+ggHtsl5
-         QYVpz2ScPnFZ5Dw8tD4VqmCPGnBOXAAEQ0M2KzX0artzi1n5tg+Q0HWGq1JvXwrKEjgT
-         cIF1qBhDJ8QLAiJNnIpOP5pVW3U7f9LXrBZeYkWhUllxM06gEAarDVXojWOOKP527OFx
-         bpV/n6pM6IxG6SWdagJGpMAk5Pbwbyn0lRMUATV5ab1o8Xb2p4juATBQw5S38ojbzqRd
-         YOg6N91a8HHkSGHswNeyrN0JSoKFx55tgoFf9Ys1ik63YtrCzKGXJTtqHOfpvCVIiUJX
-         8cFQ==
-X-Gm-Message-State: AOAM530xhxz3utHy6jy3lgUX+UiT4zflAawx++aGLkxxEYufU4jEzXL5
-        cydwt0lHvLUXR6tVB39D1olPDQ==
-X-Google-Smtp-Source: ABdhPJyho+6NNnFxpnW1GNoxoFsMysiiMDWcCS6WEGttMo1EG7E5PizLKyh+VxpCy0upBflJeUKWFg==
-X-Received: by 2002:a17:902:c14a:b0:15b:9c29:935a with SMTP id 10-20020a170902c14a00b0015b9c29935amr4306895plj.2.1651852283888;
-        Fri, 06 May 2022 08:51:23 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:5605:d5cd:699b:1b26])
-        by smtp.gmail.com with UTF8SMTPSA id e15-20020a17090301cf00b0015e8d4eb24esm2013771plh.152.2022.05.06.08.51.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 May 2022 08:51:23 -0700 (PDT)
-Date:   Fri, 6 May 2022 08:51:22 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
-Cc:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, quic_ppratap@quicinc.com,
-        quic_vpulyala@quicinc.com,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Subject: Re: [v15 3/6] usb: dwc3: core: Host wake up support from system
- suspend
-Message-ID: <YnVD+ltiQhKE+jPf@google.com>
-References: <1651740973-7944-1-git-send-email-quic_kriskura@quicinc.com>
- <1651740973-7944-4-git-send-email-quic_kriskura@quicinc.com>
- <YnRUPxBZB55TPmf2@google.com>
- <a83dea08-0920-17e6-ec1c-f9d8a490a08d@quicinc.com>
- <20220506051448.GE4640@hu-pkondeti-hyd.qualcomm.com>
+        Fri, 6 May 2022 12:11:02 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B28E06D96E;
+        Fri,  6 May 2022 09:07:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3F17861A8E;
+        Fri,  6 May 2022 16:07:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68152C385A8;
+        Fri,  6 May 2022 16:07:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651853238;
+        bh=hlecmGmXMdLPY0SRK5EkvKlwwip1h2w5sOHri907iUo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=uhFiHHHND8MOJ19d6UW4iRbnGzrkDvFC2fq54yEYFWJXiOnFi4FoJIewObEJ6Nb+k
+         EsWvbsctIbTeLMStgoPFGfDMHxEE07wR8BVYakDYb0uCPIGyfRpYYMhm0CFbJ0R3x7
+         TT7MR+hAhChPi9MZOfVpRpae98ETxmO1wNty9BP/I2yMcUokPs2yJVGaVtDpu8pqHy
+         Ro0zYW5QlFq6Q8yE97Of6cYJyIkxEdAOqtxacw9CYx3mXOW1yA8xcf4wpj48DRuKHj
+         +96B4bM+L5L8s8iIx91QCC0xE2nnbcs/5ow6HUEN5UlVZ411kE7xKUS0YOsuZrIvxB
+         d4nc0r9N1Kwag==
+From:   Will Deacon <will@kernel.org>
+To:     krzk+dt@kernel.org, robin.murphy@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
+        joro@8bytes.org, Rohit Agarwal <quic_rohiagar@quicinc.com>,
+        robh+dt@kernel.org
+Cc:     catalin.marinas@arm.com, kernel-team@android.com,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org,
+        manivannan.sadhasivam@linaro.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/7] SDX65 devicetree updates
+Date:   Fri,  6 May 2022 17:07:03 +0100
+Message-Id: <165185052553.2780438.7989324600616529868.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <1649670615-21268-1-git-send-email-quic_rohiagar@quicinc.com>
+References: <1649670615-21268-1-git-send-email-quic_rohiagar@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220506051448.GE4640@hu-pkondeti-hyd.qualcomm.com>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,96 +62,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 06, 2022 at 10:44:48AM +0530, Pavan Kondeti wrote:
-> On Fri, May 06, 2022 at 10:41:01AM +0530, Krishna Kurapati PSSNV wrote:
-> > 
-> > On 5/6/2022 4:18 AM, Matthias Kaehlcke wrote:
-> > >On Thu, May 05, 2022 at 02:26:10PM +0530, Krishna Kurapati wrote:
-> > >>From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> > >>
-> > >>During suspend read the status of all port and set hs phy mode
-> > >>based on current speed. Use this hs phy mode to configure wakeup
-> > >>interrupts in qcom glue driver.
-> > >>
-> > >>Check wakeup-source property for dwc3 core node to set the
-> > >>wakeup capability. Drop the device_init_wakeup call from
-> > >>runtime suspend and resume.
-> > >>
-> > >>Also check during suspend if any wakeup capable devices are
-> > >>connected to the controller (directly or through hubs), if there
-> > >>are none set a flag to indicate that the PHY is powered
-> > >>down during suspend.
-> > >>
-> > >>Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> > >>Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> > >>---
-> > >>  drivers/usb/dwc3/core.c | 33 ++++++++++++++++++++-------------
-> > >>  drivers/usb/dwc3/core.h |  4 ++++
-> > >>  drivers/usb/dwc3/host.c | 24 ++++++++++++++++++++++++
-> > >>  3 files changed, 48 insertions(+), 13 deletions(-)
-> > >>
-> > >>diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> > >>index 950e238..cf377f5 100644
-> > >>--- a/drivers/usb/dwc3/core.c
-> > >>+++ b/drivers/usb/dwc3/core.c
-> > >>@@ -33,6 +33,7 @@
-> > >>  #include <linux/usb/gadget.h>
-> > >>  #include <linux/usb/of.h>
-> > >>  #include <linux/usb/otg.h>
-> > >>+#include <linux/usb/hcd.h>
-> > >This is not needed anymore
-> > >
-> > >>  #include "core.h"
-> > >>  #include "gadget.h"
-> > >>@@ -1787,6 +1788,7 @@ static int dwc3_probe(struct platform_device *pdev)
-> > >>  	platform_set_drvdata(pdev, dwc);
-> > >>  	dwc3_cache_hwparams(dwc);
-> > >>+	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
-> > >>  	spin_lock_init(&dwc->lock);
-> > >>  	mutex_init(&dwc->mutex);
-> > >>@@ -1936,6 +1938,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
-> > >>  {
-> > >>  	unsigned long	flags;
-> > >>  	u32 reg;
-> > >>+	struct usb_hcd  *hcd = platform_get_drvdata(dwc->xhci);
-> > >This isn't used anymore, delete it
-> > My bad, Will fix this in next version.
-> > >>  	switch (dwc->current_dr_role) {
-> > >>  	case DWC3_GCTL_PRTCAP_DEVICE:
-> > >>@@ -1948,10 +1951,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
-> > >>  		dwc3_core_exit(dwc);
-> > >>  		break;
-> > >>  	case DWC3_GCTL_PRTCAP_HOST:
-> > >>-		if (!PMSG_IS_AUTO(msg)) {
-> > >>-			dwc3_core_exit(dwc);
-> > >>-			break;
-> > >>-		}
-> > >>+		dwc3_check_phy_speed_mode(dwc);
-> > >>  		/* Let controller to suspend HSPHY before PHY driver suspends */
-> > >>  		if (dwc->dis_u2_susphy_quirk ||
-> > >>@@ -1967,6 +1967,16 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
-> > >>  		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
-> > >>  		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
-> > >>+
-> > >>+		if (!PMSG_IS_AUTO(msg)) {
-> > >>+			if (device_may_wakeup(dwc->dev) &&
-> > >>+					device_wakeup_path(dwc->dev)) {
-> > >nit: the indentation is odd, align it with device_may_wakeup()?
-> > Sure, Will take care of it.
-> > >>+				dwc->phy_power_off = false;
-> > >>+			} else {
-> > >>+				dwc->phy_power_off = true;
-> > >>+				dwc3_core_exit(dwc);
-> > >As commented earlier, taking the controller and PHYs completely down causes a
-> > >significant power draw in some USB clients. Let's clarify what the specific
-> > >benefits are of doing dwc3_core_exit() vs. entering a low power mode.
-> > Sure, once we come to a conclusion on this, I will refresh the patches.
+On Mon, 11 Apr 2022 15:20:08 +0530, Rohit Agarwal wrote:
+> This series adds devicetree nodes for SDX65. It adds reserved memory
+> nodes, SDHCI, smmu and tcsr mutex support.
 > 
-> I think, Matthias is asking you to clarify in the commit description. we can
-> even quote Matthias observations.
+> Changes from v1:
+>  - Addressed Mani's Comments and made necessary.
+>  - Rebased on top of v5.18-rc2.
+> 
+> [...]
 
-Actually I would like to have a discussion about the benefits of powering down
-the controller and PHYs vs. entering a low power state. Maybe there are good
-reasons for powering everything down (e.g. significant power savings), but
-as we have seen there are also significant downsides, so let's make sure
-we understand both.
+Applied SMMU binding patch to will (for-joerg/arm-smmu/updates), thanks!
+
+[4/7] dt-bindings: arm-smmu: Add binding for SDX65 SMMU
+      https://git.kernel.org/will/c/5a4eb9163471
+
+However, I must confess that I don't understand the point in updating
+the binding documentation but not the driver. Should we be matching on
+the new compatible string somewhere?
+
+Cheers,
+-- 
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
