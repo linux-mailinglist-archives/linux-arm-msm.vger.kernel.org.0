@@ -2,70 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 745F251CFC8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 05:40:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2248A51CFD6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 05:49:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1388961AbiEFDoe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 23:44:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46276 "EHLO
+        id S241376AbiEFDxU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 23:53:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1388839AbiEFDoL (ORCPT
+        with ESMTP id S240649AbiEFDxT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 23:44:11 -0400
-Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEE0E12AD3
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 20:40:28 -0700 (PDT)
-Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-e5e433d66dso6100888fac.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 20:40:28 -0700 (PDT)
+        Thu, 5 May 2022 23:53:19 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6491546645
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 20:49:38 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id m6-20020a05683023a600b0060612720715so4205567ots.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 20:49:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=WNNx5SqqknTge4y9/eUvRrcsh9m9RTE+BK27SVwwwhs=;
-        b=Y3oK9ZklCqUyV2UCcurb2SZie0KVUZBoED2gV1ZMI54pHlaObR+Yu0zT/4B4URslXU
-         L6G/3lv1KbX/2evOvCIeoR+ixzyEP7ORlBdMS+PejkXygXxDWjojZ4QdbvqK5khV4Rg+
-         aXl6hBUofLH6/lhsMPnD+Gt3DCuNIGLHpSNROar9lyMsILkTt10qVoPg0fRQ0Hf0/KrI
-         Lj322x0AfrbEWjvlMqlNrdgw7jX0QnytRFVMrU9EEqlKnocZzr8VhMqvFztq1OGJQhvk
-         wfcTyWXHicx0+w5PgU+0YCbmio7sD6DwE8qEznkr0GpxszA/CS1dyVzU3Q/FoAIlePWV
-         74/g==
+        bh=gY3JG7TDfX21nMa2WGN3YpZ2LNRhrr+YzDEPbalak5Q=;
+        b=rm12KW9WahZ+pwPBKCJVM2MEWPGf3QaPgdfV77GxfU+PL9qPHhQVxFbBNl1/wX6mMb
+         33mlJ2qzs/GataHnbdbJbQFsz94LjdsexJKnrSK4xud5V34rQsH0Qnjmfl1s3dJ1isoB
+         49+bB0vzHKrwQM2YNOsVxZHVe7mnBW/dsJTBJaUYxSZwR/g4aTpFnDVXJz0BIQBJwGAo
+         csegzBQNKgbI+Cr0+u7SiO4kMSkoFuSfcHOjPE9kFqfD+BQeecZKjqxYmg4gWXdIMx6K
+         t3c3SdZcrqBCnZZb3wt5DxgF2PPaMG6vq3yaTpGrZpvJAHkxUjF8L4FifGsxvJygyJZj
+         LVhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=WNNx5SqqknTge4y9/eUvRrcsh9m9RTE+BK27SVwwwhs=;
-        b=7HpqWFBajxyRFWEBEAAfXpPNNrsGgNKk4RC0pwmY7wm0AwkdpimtCQ1UeS3PDA9v4e
-         0hQPqg6/ZaUh8Loav0tZDM+6uwS2NsEf4jZ4B6mEHI1s0V/08fjGALeJHx6FMYUyHOs4
-         omg9fl8NqjdszDOHWuAIWAYr35WLjX8ytg1iUNdZIgIcgr2oOWXhg0JmgDxbYn3BjuoP
-         aFYVKTSO03/KBdqIOIYWzpzYEIDjzfGSa7qxm654OsgBVzMqugIhxaw6iln9h8bAXE3l
-         jrTojFBPcaBpwfpT7pSDQlxxSPVN2nYVVSqlfCuxNN4YqQ7YhN6BEly8ymhbiW6a/pKh
-         +VXg==
-X-Gm-Message-State: AOAM533ECAnovVy936vf8Zl6kjzbypvr7AbsxDITlRRyAzjAyPbg0f/Z
-        wNMa6BgPF9fo5jyu07gcHhDVBw==
-X-Google-Smtp-Source: ABdhPJydCEUimIJyazQBa8BRPeEcgTzNUlC4nBe5TecKYIwIBr2ZbEo9p+gDmXN3dQu5R6BUoL3UXg==
-X-Received: by 2002:a05:6870:f5a3:b0:e1:944b:6450 with SMTP id eh35-20020a056870f5a300b000e1944b6450mr526370oab.254.1651808428175;
-        Thu, 05 May 2022 20:40:28 -0700 (PDT)
+        bh=gY3JG7TDfX21nMa2WGN3YpZ2LNRhrr+YzDEPbalak5Q=;
+        b=gyJJz3VW2uQUNE9oOJFkclRRDDNg4bmmJ+sbHAroinJyzBmpA9SUFLHPCiGCYn9Qhd
+         BphGQFmJX0MfqfiAbs9600Yb9JbbD9hO3OPyIAZG1gnuhq84Qoxyhma5Fia5tR5Yrf/o
+         rWaFehLDzsTU1UBJ+5iae5XPbpuyhBlGuNq1RkPuUiZeXJJvhzgtAC+oY3Ie7awMCGAD
+         H3OWX9F+qBiVRffGL47rfw9u1kNmf5NvKsuzgIBU/qWfU7aP+4YOt4Sbk4MRi8xq5hlF
+         QYLKfhxE2CgkI6mjykzST3iaGJcyY+mTPO0UfH4EAAw5VpKELYczkj2pfIxvv7HeG6Ls
+         2f2Q==
+X-Gm-Message-State: AOAM5315P0PV6z3oFhZsDepiL8Oc2glakSBnvIJKM4acunDvO5Msgmat
+        UnseweW2bz1qko1kS95q3TffQA==
+X-Google-Smtp-Source: ABdhPJxdBvt/VaAntv7NqdoCyyrKBD09j8Ynb47Z79pap61Oi/wfCocwQtV6PkRBZzAZIdQJH633Kw==
+X-Received: by 2002:a05:6830:4420:b0:606:64a6:1deb with SMTP id q32-20020a056830442000b0060664a61debmr93692otv.236.1651808977637;
+        Thu, 05 May 2022 20:49:37 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id p22-20020a056870831600b000eb0e40b4b8sm1260245oae.48.2022.05.05.20.40.27
+        by smtp.gmail.com with ESMTPSA id w14-20020a056870e2ce00b000e686d13887sm1150364oad.33.2022.05.05.20.49.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 May 2022 20:40:27 -0700 (PDT)
-Date:   Thu, 5 May 2022 22:40:22 -0500
+        Thu, 05 May 2022 20:49:36 -0700 (PDT)
+Date:   Thu, 5 May 2022 22:49:34 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        patches@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        Benson Leung <bleung@chromium.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        "Joseph S. Barrera III" <joebar@chromium.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Remove cros-ec
- keyboard from detachables
-Message-ID: <YnSYppSYwaoZRXb4@builder.lan>
-References: <20220426225748.324759-1-swboyd@chromium.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: Re: [PATCH 1/2] ARM: dts: qcom: Add LPG node to pm8941
+Message-ID: <YnSazu3rcBMFPxYw@builder.lan>
+References: <20220504205411.1510667-1-bjorn.andersson@linaro.org>
+ <12122358.O9o76ZdvQC@g550jk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220426225748.324759-1-swboyd@chromium.org>
+In-Reply-To: <12122358.O9o76ZdvQC@g550jk>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -76,71 +72,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 26 Apr 17:57 CDT 2022, Stephen Boyd wrote:
+On Thu 05 May 03:01 CDT 2022, Luca Weiss wrote:
 
-> Trogdor devices that have a detachable keyboard still have a
-> non-detachable keyboard input device present because we include the
-> cros-ec-keyboard.dtsi snippet in the top-level sc7180-trogdor.dtsi file
-> that every variant board includes. We do this because the
-> keyboard-controller node also provides some buttons like the power
-> button and volume buttons. Unfortunately, this means we register a
-> keyboard input device that doesn't do anything on boards with a
-> detachable keyboard. Let's delete the rows/columns properties of the
-> device node to indicate that there isn't a matrix keyboard on these
-> boards.
+> Hi Bjorn,
+> 
+> On Mittwoch, 4. Mai 2022 22:54:10 CEST Bjorn Andersson wrote:
+> > The PM8941 contains 8 LPG channels, as well as TRILED and LUT blocks.
+> > Add a node for these.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  arch/arm/boot/dts/qcom-pm8941.dtsi | 9 +++++++++
+> >  1 file changed, 9 insertions(+)
+> > 
+> > diff --git a/arch/arm/boot/dts/qcom-pm8941.dtsi
+> > b/arch/arm/boot/dts/qcom-pm8941.dtsi index cdd2bdb77b32..7881a071b372
+> > 100644
+> > --- a/arch/arm/boot/dts/qcom-pm8941.dtsi
+> > +++ b/arch/arm/boot/dts/qcom-pm8941.dtsi
+> > @@ -144,6 +144,15 @@ pm8941_1: pm8941@1 {
+> >  		#address-cells = <1>;
+> >  		#size-cells = <0>;
+> > 
+> > +		pm8941_lpg: lpg {
+> > +			compatible = "qcom,pm8941-lpg";
+> > +
+> > +			#address-cells = <1>;
+> > +			#size-cells = <0>;
+> 
+> Just curious, why doesn't pm8941 have #pwm-cells = <2>; like the other lpg 
+> nodes in [0]?
+
+I guess I didn't have a need for the lpg to be a pwm-chip on this pmic,
+yet. This could be added now, or at a later point when someone has a
+usecase for the pwm-chip.
+
+> Other than that, the node works fine on pm8941. Will send a patch for enabling 
+> notification LED on msm8974-FP2 soon.
 > 
 
-As this seems to directly relate to the final design of each device,
-would it make sense to push out the &keyboard_controller from
-trogdor.dtsi? Or do you think it would be too much duplication for it to
-be worth it?
+If you turn that into a Tested-by, and preferably a Reviewed-by, I would
+have what I need to merge the two changes.
 
-Regards,
+Looking forward to the FP2 patch.
+
+Thanks,
 Bjorn
 
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Hsin-Yi Wang <hsinyi@chromium.org>
-> Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 5 +++++
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 5 +++++
->  2 files changed, 10 insertions(+)
+> Regards
+> Luca
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> index c81805ef2250..4173623cc241 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> @@ -119,6 +119,11 @@ &i2c9 {
->  	status = "disabled";
->  };
->  
-> +&keyboard_controller {
-> +	/delete-property/keypad,num-rows;
-> +	/delete-property/keypad,num-columns;
-> +};
-> +
->  &panel {
->  	compatible = "boe,nv110wtm-n61";
->  };
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-> index bff2b556cc75..7205062e88b4 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-> @@ -121,6 +121,11 @@ &camcc {
->  	status = "okay";
->  };
->  
-> +&keyboard_controller {
-> +	/delete-property/keypad,num-rows;
-> +	/delete-property/keypad,num-columns;
-> +};
-> +
->  &panel {
->  	compatible = "samsung,atna33xc20";
->  	enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
-> -- 
-> https://chromeos.dev
+> [0] https://lore.kernel.org/linux-arm-msm/20220505022706.1692554-2-bjorn.andersson@linaro.org/
+> 
+> 
+> > +
+> > +			status = "disabled";
+> > +		};
+> > +
+> >  		pm8941_wled: wled@d800 {
+> >  			compatible = "qcom,pm8941-wled";
+> >  			reg = <0xd800>;
+> 
+> 
+> 
 > 
