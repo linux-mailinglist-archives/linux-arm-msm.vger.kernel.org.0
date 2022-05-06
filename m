@@ -2,66 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2248A51CFD6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 05:49:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC79C51D05F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 06:50:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241376AbiEFDxU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 23:53:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51182 "EHLO
+        id S1389022AbiEFExq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 May 2022 00:53:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240649AbiEFDxT (ORCPT
+        with ESMTP id S1381291AbiEFExo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 23:53:19 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6491546645
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 20:49:38 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id m6-20020a05683023a600b0060612720715so4205567ots.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 20:49:38 -0700 (PDT)
+        Fri, 6 May 2022 00:53:44 -0400
+Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 762DD64BE2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 21:50:01 -0700 (PDT)
+Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-ed9ac77cbbso6214268fac.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 21:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=gY3JG7TDfX21nMa2WGN3YpZ2LNRhrr+YzDEPbalak5Q=;
-        b=rm12KW9WahZ+pwPBKCJVM2MEWPGf3QaPgdfV77GxfU+PL9qPHhQVxFbBNl1/wX6mMb
-         33mlJ2qzs/GataHnbdbJbQFsz94LjdsexJKnrSK4xud5V34rQsH0Qnjmfl1s3dJ1isoB
-         49+bB0vzHKrwQM2YNOsVxZHVe7mnBW/dsJTBJaUYxSZwR/g4aTpFnDVXJz0BIQBJwGAo
-         csegzBQNKgbI+Cr0+u7SiO4kMSkoFuSfcHOjPE9kFqfD+BQeecZKjqxYmg4gWXdIMx6K
-         t3c3SdZcrqBCnZZb3wt5DxgF2PPaMG6vq3yaTpGrZpvJAHkxUjF8L4FifGsxvJygyJZj
-         LVhQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DbTzwaOIwGb0TT9g7l9scXPT5GJOJT3bNtMetNu/grc=;
+        b=eXe7FpyIvy/UsDfzb+KAq06m2NMeOXCv/ETzKBWhqS0aa07hSWrTl4DVQUOo6NKOY9
+         w0ZfIJlEWQv5Sl1b+pn0sCjhku04Us84QTUu5ijuCvP8heGKe+EG3bb30BjdTGV8stol
+         S4QZtWZfTmvzIdfdW+Knm8pXO9aUCfiSnSzomv+jqlqbDjKstPoNw4ONvn+jbgJsVsBD
+         PKh5+dxJ1RqKbvRvARQ6Wgb5y4GW4b7b5dppVER/XRm/EGGXv589hKLinRYmySy+5tBn
+         QMis9hgc7PMa4HI1D/Mcjz+FdygCrvXyshA2BLzOiSgnDjmyM1KbfG6ElxfznzR+LLVx
+         aTPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=gY3JG7TDfX21nMa2WGN3YpZ2LNRhrr+YzDEPbalak5Q=;
-        b=gyJJz3VW2uQUNE9oOJFkclRRDDNg4bmmJ+sbHAroinJyzBmpA9SUFLHPCiGCYn9Qhd
-         BphGQFmJX0MfqfiAbs9600Yb9JbbD9hO3OPyIAZG1gnuhq84Qoxyhma5Fia5tR5Yrf/o
-         rWaFehLDzsTU1UBJ+5iae5XPbpuyhBlGuNq1RkPuUiZeXJJvhzgtAC+oY3Ie7awMCGAD
-         H3OWX9F+qBiVRffGL47rfw9u1kNmf5NvKsuzgIBU/qWfU7aP+4YOt4Sbk4MRi8xq5hlF
-         QYLKfhxE2CgkI6mjykzST3iaGJcyY+mTPO0UfH4EAAw5VpKELYczkj2pfIxvv7HeG6Ls
-         2f2Q==
-X-Gm-Message-State: AOAM5315P0PV6z3oFhZsDepiL8Oc2glakSBnvIJKM4acunDvO5Msgmat
-        UnseweW2bz1qko1kS95q3TffQA==
-X-Google-Smtp-Source: ABdhPJxdBvt/VaAntv7NqdoCyyrKBD09j8Ynb47Z79pap61Oi/wfCocwQtV6PkRBZzAZIdQJH633Kw==
-X-Received: by 2002:a05:6830:4420:b0:606:64a6:1deb with SMTP id q32-20020a056830442000b0060664a61debmr93692otv.236.1651808977637;
-        Thu, 05 May 2022 20:49:37 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w14-20020a056870e2ce00b000e686d13887sm1150364oad.33.2022.05.05.20.49.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 May 2022 20:49:36 -0700 (PDT)
-Date:   Thu, 5 May 2022 22:49:34 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH 1/2] ARM: dts: qcom: Add LPG node to pm8941
-Message-ID: <YnSazu3rcBMFPxYw@builder.lan>
-References: <20220504205411.1510667-1-bjorn.andersson@linaro.org>
- <12122358.O9o76ZdvQC@g550jk>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DbTzwaOIwGb0TT9g7l9scXPT5GJOJT3bNtMetNu/grc=;
+        b=zt4b0ED5bnUrdSduCr9ZFHuD58C58d+9iAyonJnOPRowLbT3L7QP5XOa2TjHKbu3Oe
+         m73gUBU2ZTJb5L5VvxUaFkgRsJA7L6jPO4GBoiuGHyQJb0P85SEQWYOXT1eGSRoQnxRT
+         K72Yo/hhVqHqmvnG6HlJBVuYLmSw30fJgX6+QL7Bp5xjXVRd0u9U4Y2J+2oj9hnV484B
+         dEdB39HnyXXrDLJMjHlnBO+G4/GG+rCBAA3SNzGaISs2Xi1Io/Of0aztOjk0/UoAr1WG
+         GuZrBPH3/zvqkpRqwY35ROvdI6Fr0nB5lASRCG51e5IDsIIGQwvoUlx7hoZn0Zdepqc1
+         cFdg==
+X-Gm-Message-State: AOAM530m/cYmNsMLFW8DoIv5aqQIvwDg+7NvJnoiKXMsnTXFmt6OTOdS
+        JSw+jbeabuiVm64IwcUF26IURY/uTqmbEBeFvvmB8g==
+X-Google-Smtp-Source: ABdhPJxtggnbKMD7VEvQYkEJDSwVOJ5H+Z9F5ubmhLXSslQkDEcU50IdroxLWZO4nFbW3RNSQtfQJ/cxdPEDGtfzVTc=
+X-Received: by 2002:a05:6870:b50d:b0:ed:e8f5:b1cd with SMTP id
+ v13-20020a056870b50d00b000ede8f5b1cdmr565395oap.147.1651812600715; Thu, 05
+ May 2022 21:50:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <12122358.O9o76ZdvQC@g550jk>
+References: <20220429214420.854335-1-bhupesh.sharma@linaro.org>
+ <20220429214420.854335-3-bhupesh.sharma@linaro.org> <YnSTFRuMDFYclHYh@builder.lan>
+In-Reply-To: <YnSTFRuMDFYclHYh@builder.lan>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Fri, 6 May 2022 10:19:45 +0530
+Message-ID: <CAH=2Ntz3eE2yFQjuqhSr-LZ3_Uqc8NwMyuH7HL1oqymyMkfsQA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: Fix node names for sdhci
+ 'opp-table' nodes (across dts files)
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -72,67 +68,116 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 05 May 03:01 CDT 2022, Luca Weiss wrote:
+Hi Bjorn,
 
-> Hi Bjorn,
-> 
-> On Mittwoch, 4. Mai 2022 22:54:10 CEST Bjorn Andersson wrote:
-> > The PM8941 contains 8 LPG channels, as well as TRILED and LUT blocks.
-> > Add a node for these.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Fri, 6 May 2022 at 08:46, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+>
+> On Fri 29 Apr 16:44 CDT 2022, Bhupesh Sharma wrote:
+>
+> > Since the Qualcomm sdhci-msm device-tree binding has been converted
+> > to yaml format, 'make dtbs_check' reports a number of issues with
+> > node names for sdhci 'opp-table' nodes, as it doesn't seem to like
+> > any 'preceding text or numbers' before 'opp-table' pattern in the
+> > node names.
+> >
+> > Fix the same.
+> >
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Rob Herring <robh@kernel.org>
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > > ---
-> >  arch/arm/boot/dts/qcom-pm8941.dtsi | 9 +++++++++
-> >  1 file changed, 9 insertions(+)
-> > 
-> > diff --git a/arch/arm/boot/dts/qcom-pm8941.dtsi
-> > b/arch/arm/boot/dts/qcom-pm8941.dtsi index cdd2bdb77b32..7881a071b372
-> > 100644
-> > --- a/arch/arm/boot/dts/qcom-pm8941.dtsi
-> > +++ b/arch/arm/boot/dts/qcom-pm8941.dtsi
-> > @@ -144,6 +144,15 @@ pm8941_1: pm8941@1 {
-> >  		#address-cells = <1>;
-> >  		#size-cells = <0>;
-> > 
-> > +		pm8941_lpg: lpg {
-> > +			compatible = "qcom,pm8941-lpg";
-> > +
-> > +			#address-cells = <1>;
-> > +			#size-cells = <0>;
-> 
-> Just curious, why doesn't pm8941 have #pwm-cells = <2>; like the other lpg 
-> nodes in [0]?
+> >  arch/arm64/boot/dts/qcom/sc7180.dtsi | 4 ++--
+> >  arch/arm64/boot/dts/qcom/sm6350.dtsi | 4 ++--
+> >  arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
+> >  arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
+> >  4 files changed, 6 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > index 86175d257b1e..b6df3186e94c 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > @@ -725,7 +725,7 @@ sdhc_1: sdhci@7c4000 {
+> >
+> >                       status = "disabled";
+> >
+> > -                     sdhc1_opp_table: sdhc1-opp-table {
+> > +                     sdhc1_opp_table: opp-table-sdhc1 {
+>
+> There's only a single opp-table child node of &sdhc_1, so I would prefer
+> that these would just be:
+>
+>                         sdhc1_opp_table: opp-table {
+>
+> Like  what you did in the sm8150 and sm8250 case below.
+>
+> Can you please update this accordingly?
 
-I guess I didn't have a need for the lpg to be a pwm-chip on this pmic,
-yet. This could be added now, or at a later point when someone has a
-usecase for the pwm-chip.
-
-> Other than that, the node works fine on pm8941. Will send a patch for enabling 
-> notification LED on msm8974-FP2 soon.
-> 
-
-If you turn that into a Tested-by, and preferably a Reviewed-by, I would
-have what I need to merge the two changes.
-
-Looking forward to the FP2 patch.
+Sure, let me fix these in v2.
 
 Thanks,
-Bjorn
+Bhupesh
 
-> Regards
-> Luca
-> 
-> [0] https://lore.kernel.org/linux-arm-msm/20220505022706.1692554-2-bjorn.andersson@linaro.org/
-> 
-> 
-> > +
-> > +			status = "disabled";
-> > +		};
-> > +
-> >  		pm8941_wled: wled@d800 {
-> >  			compatible = "qcom,pm8941-wled";
-> >  			reg = <0xd800>;
-> 
-> 
-> 
-> 
+>
+> >                               compatible = "operating-points-v2";
+> >
+> >                               opp-100000000 {
+> > @@ -2609,7 +2609,7 @@ sdhc_2: sdhci@8804000 {
+> >
+> >                       status = "disabled";
+> >
+> > -                     sdhc2_opp_table: sdhc2-opp-table {
+> > +                     sdhc2_opp_table: opp-table-sdhc2 {
+> >                               compatible = "operating-points-v2";
+> >
+> >                               opp-100000000 {
+> > diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> > index fb1a0f662575..87a5d72b2ca0 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> > @@ -497,7 +497,7 @@ sdhc_1: sdhci@7c4000 {
+> >
+> >                       status = "disabled";
+> >
+> > -                     sdhc1_opp_table: sdhc1-opp-table {
+> > +                     sdhc1_opp_table: opp-table-sdhc1 {
+> >                               compatible = "operating-points-v2";
+> >
+> >                               opp-19200000 {
+> > @@ -941,7 +941,7 @@ sdhc_2: sdhci@8804000 {
+> >
+> >                       status = "disabled";
+> >
+> > -                     sdhc2_opp_table: sdhc2-opp-table {
+> > +                     sdhc2_opp_table: opp-table-sdhc2 {
+> >                               compatible = "operating-points-v2";
+> >
+> >                               opp-100000000 {
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> > index 2700a8145cb9..e265d61f7c05 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> > @@ -3563,7 +3563,7 @@ sdhc_2: sdhci@8804000 {
+> >
+> >                       status = "disabled";
+> >
+> > -                     sdhc2_opp_table: sdhc2-opp-table {
+> > +                     sdhc2_opp_table: opp-table {
+> >                               compatible = "operating-points-v2";
+> >
+> >                               opp-19200000 {
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > index dc2562070336..5ca16f76ddeb 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > @@ -2937,7 +2937,7 @@ sdhc_2: sdhci@8804000 {
+> >
+> >                       status = "disabled";
+> >
+> > -                     sdhc2_opp_table: sdhc2-opp-table {
+> > +                     sdhc2_opp_table: opp-table {
+> >                               compatible = "operating-points-v2";
+> >
+> >                               opp-19200000 {
+> > --
+> > 2.35.1
+> >
