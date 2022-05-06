@@ -2,159 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAE5951D99D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 15:51:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9021A51DA90
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 16:31:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1441888AbiEFNz0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 May 2022 09:55:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51316 "EHLO
+        id S1347737AbiEFOeo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 May 2022 10:34:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229713AbiEFNz0 (ORCPT
+        with ESMTP id S1389485AbiEFOen (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 May 2022 09:55:26 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C3F953717;
-        Fri,  6 May 2022 06:51:43 -0700 (PDT)
+        Fri, 6 May 2022 10:34:43 -0400
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 110805AEF5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 May 2022 07:31:00 -0700 (PDT)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-edeb6c3642so7374845fac.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 May 2022 07:31:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1651845103; x=1683381103;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=3ivlAaKlYcbgS3obWabrrpQ7s1a/tru9izwj6OSDCOs=;
-  b=xDmnm2F6OrGafLNAHjfhvQuIRyyKgYIiH8ZMph/N7nabvj+90RZI7HCO
-   ni7DCLjwPhiICmAngxqw96/ncuVacSf3/ewucZW9W32yHbgoCAACx4VnN
-   eDEHqiwKdWnPQn+IAq3cb5pa3JKKRMdJRNzJSjsggKxNlMNEIULXKcUxj
-   E=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 06 May 2022 06:51:43 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 06:51:42 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 6 May 2022 06:51:42 -0700
-Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 6 May 2022 06:51:38 -0700
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-To:     <bjorn.andersson@linaro.org>, <arnd@arndb.de>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <sboyd@kernel.org>, <agross@kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <mathieu.poirier@linaro.org>,
-        <mka@chromium.org>, Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH] remoteproc: qcom_q6v5_mss: map/unmap metadata region before/after use
-Date:   Fri, 6 May 2022 19:21:26 +0530
-Message-ID: <1651845086-16535-1-git-send-email-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=Z3BhvNnZeKv1IcmAFTPQ8BjykroeJGCMjBhzdl/UNHM=;
+        b=jO3oHxuDXU4qKNmreCjjYaiO4yOFVMLlHvrgsIknXQpO28ujlFHIX+YGJMNDAohf0S
+         DZNeyUI7z2EDLgUqTLJxUWdlh1QK08j28ZN3csKfsdDpAqlRFloCzirijmDCbWZLcZyE
+         C6gdUaugeCxwk+y28GBfLl9pvOmB54KmpIvUA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=Z3BhvNnZeKv1IcmAFTPQ8BjykroeJGCMjBhzdl/UNHM=;
+        b=xbJydrp7FGGKmU5TISFEWR71fUka6JDSetUXN3Jy+pEE8OxKCeQDuApXwx2R+87a9l
+         vUsSrCW3L82FPPAcW9uDlhR/9cyCyE5L7ew54c5LerUy90XUsuI9mCI5T0LfOvzYG97z
+         m17vQyr+58n0SLRF60njNxQRoPOWOQRX73vcNqid95SqDsT3p2DnhTQKAOI2L3pnD6qX
+         2YfdWApMk0EG9W7QVd3hG1KX1rTIrkpjm4MFDATfgDwutp6R8WMHkmZ9vZ/007AHnVW8
+         9zfmT0xEe3KxfMPXkSp/WBetdzx5XKYSoZqty2IePvqeQlWcivU5FOaYXyyc4FVSxoXq
+         YFeg==
+X-Gm-Message-State: AOAM532+9km2fPxl82KdqdudIqBp++0e08Bm3VGWNN9yfUa3eks54ZLh
+        ti5k9b5XfDT7AelVUL7nD4CdQtqVEaR2WRO/cFUwsA==
+X-Google-Smtp-Source: ABdhPJzE+vXk1hqtD9UBfXOO2I3rdrl0PyEIZMyce2ypHXN0n1NbIBLqFN65uSkfs/ck6n2qBT6ImYvZZMQRqp20FeQ=
+X-Received: by 2002:a05:6870:40c1:b0:ed:9a12:3f95 with SMTP id
+ l1-20020a05687040c100b000ed9a123f95mr1383802oal.193.1651847457937; Fri, 06
+ May 2022 07:30:57 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 6 May 2022 10:30:57 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <YnSYppSYwaoZRXb4@builder.lan>
+References: <20220426225748.324759-1-swboyd@chromium.org> <YnSYppSYwaoZRXb4@builder.lan>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 6 May 2022 10:30:56 -0400
+Message-ID: <CAE-0n50PaacK_zT1NPoj+9YA9GX4oqpADEHObFdK+Zyu67Guig@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Remove cros-ec keyboard
+ from detachables
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        patches@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        Benson Leung <bleung@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Hsin-Yi Wang <hsinyi@chromium.org>,
+        "Joseph S. Barrera III" <joebar@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The application processor accessing the dynamically assigned metadata
-region after assigning it to the remote Q6 would lead to an XPU violation.
-Fix this by un-mapping the metadata region post firmware header copy. The
-metadata region is freed only after the modem Q6 is done with fw header
-authentication.
+Quoting Bjorn Andersson (2022-05-05 20:40:22)
+> On Tue 26 Apr 17:57 CDT 2022, Stephen Boyd wrote:
+>
+> > Trogdor devices that have a detachable keyboard still have a
+> > non-detachable keyboard input device present because we include the
+> > cros-ec-keyboard.dtsi snippet in the top-level sc7180-trogdor.dtsi file
+> > that every variant board includes. We do this because the
+> > keyboard-controller node also provides some buttons like the power
+> > button and volume buttons. Unfortunately, this means we register a
+> > keyboard input device that doesn't do anything on boards with a
+> > detachable keyboard. Let's delete the rows/columns properties of the
+> > device node to indicate that there isn't a matrix keyboard on these
+> > boards.
+> >
+>
+> As this seems to directly relate to the final design of each device,
+> would it make sense to push out the &keyboard_controller from
+> trogdor.dtsi? Or do you think it would be too much duplication for it to
+> be worth it?
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
- drivers/remoteproc/qcom_q6v5_mss.c | 43 +++++++++++++++++++++++++++++++-------
- 1 file changed, 35 insertions(+), 8 deletions(-)
+I tried it out a few days ago but I'm waiting to see how the driver
+patch goes before sending the dts bits. See the WIP patches up to the
+end of the chain on chromium gerrit[1].
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index af217de75e4d..eb34a258b67b 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -10,6 +10,7 @@
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/devcoredump.h>
-+#include <linux/dma-map-ops.h>
- #include <linux/dma-mapping.h>
- #include <linux/interrupt.h>
- #include <linux/kernel.h>
-@@ -932,27 +933,52 @@ static void q6v5proc_halt_axi_port(struct q6v5 *qproc,
- static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
- 				const char *fw_name)
- {
--	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS;
-+	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS | DMA_ATTR_NO_KERNEL_MAPPING;
-+	unsigned long flags = VM_DMA_COHERENT | VM_FLUSH_RESET_PERMS;
-+	struct page **pages;
-+	struct page *page;
- 	dma_addr_t phys;
- 	void *metadata;
- 	int mdata_perm;
- 	int xferop_ret;
- 	size_t size;
--	void *ptr;
-+	void *vaddr;
-+	int count;
- 	int ret;
-+	int i;
- 
- 	metadata = qcom_mdt_read_metadata(fw, &size, fw_name, qproc->dev);
- 	if (IS_ERR(metadata))
- 		return PTR_ERR(metadata);
- 
--	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
--	if (!ptr) {
--		kfree(metadata);
-+	page = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
-+	if (!page) {
- 		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto free_metadata;
-+	}
-+
-+	count = PAGE_ALIGN(size) >> PAGE_SHIFT;
-+	pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
-+	if (!pages) {
-+		ret = -ENOMEM;
-+		goto free_metadata;
- 	}
- 
--	memcpy(ptr, metadata, size);
-+	for (i = 0; i < count; i++)
-+		pages[i] = nth_page(page, i);
-+
-+	vaddr = vmap(pages, count, flags, dma_pgprot(qproc->dev, PAGE_KERNEL, dma_attrs));
-+	kfree(pages);
-+	if (!vaddr) {
-+		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n", &phys, size);
-+		ret = -EBUSY;
-+		goto free_metadata;
-+	}
-+
-+	memcpy(vaddr, metadata, size);
-+
-+	vunmap(vaddr);
- 
- 	/* Hypervisor mapping to access metadata by modem */
- 	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
-@@ -982,7 +1008,8 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
- 			 "mdt buffer not reclaimed system may become unstable\n");
- 
- free_dma_attrs:
--	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
-+	dma_free_attrs(qproc->dev, size, page, phys, dma_attrs);
-+free_metadata:
- 	kfree(metadata);
- 
- 	return ret < 0 ? ret : 0;
--- 
-2.7.4
-
+[1] https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/3609017
