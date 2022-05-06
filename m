@@ -2,66 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EADD651DE62
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 19:32:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C893D51DE8D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 20:02:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1444215AbiEFRgM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 May 2022 13:36:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34516 "EHLO
+        id S232093AbiEFSGD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 May 2022 14:06:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1444142AbiEFRgK (ORCPT
+        with ESMTP id S231305AbiEFSGB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 May 2022 13:36:10 -0400
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33FE05047B;
-        Fri,  6 May 2022 10:32:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651858347; x=1683394347;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=RJIpyH4aTtIDi9aTnRTxdWTTpZ/zrmSOQtRCRTJZbRw=;
-  b=iTnFYc4gmZeuC0UJYgs0IHP/gXEyWLz5sU5Aae/3yIdSAGaEhjYehT2P
-   jtR7dnX5e3opm0UFej3f3BerB90zB1Ty0Xfg+TUpOIl1q+1qfD31Ou/jx
-   8ZEc0HOp1TUQLfSrgytNjrMNCJU1p+WReTiehU+7RY8hueiTb86hMv1rE
-   rIL3TDSCj6caMQXFsq3rW9ownSDu7LYDeMzPROrcZ1ZvbK+PCyjLN5XfC
-   wGyPDspl9U6bQ6KjeyKPdzCEV8MWe++tG0+cePTP7J58uq53hm3pmmObN
-   qcmBguNYF/C4yQC22M7u1kTZcWlZYGH/kKII92lVG/Bku3bOYaLLxg1vs
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10339"; a="268425255"
-X-IronPort-AV: E=Sophos;i="5.91,205,1647327600"; 
-   d="scan'208";a="268425255"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 10:32:26 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,205,1647327600"; 
-   d="scan'208";a="812475599"
-Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
-  by fmsmga006.fm.intel.com with ESMTP; 06 May 2022 10:32:23 -0700
-Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nn1oV-000DiS-2G;
-        Fri, 06 May 2022 17:32:23 +0000
-Date:   Sat, 7 May 2022 01:31:56 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     kbuild-all@lists.01.org, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ARM: dts: qcom: msm8974-FP2: Add notification LED
-Message-ID: <202205070100.8DCDwfSb-lkp@intel.com>
-References: <20220505163029.6541-1-luca@z3ntu.xyz>
+        Fri, 6 May 2022 14:06:01 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3026A62BC6;
+        Fri,  6 May 2022 11:02:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651860137; x=1683396137;
+  h=message-id:date:mime-version:subject:from:to:cc:
+   references:in-reply-to:content-transfer-encoding;
+  bh=l6I0GlDZLn9jFdBOzxWh3af+oL9wPuCwbZyXBTFN764=;
+  b=wPdOIyoV5gPvAoNcKhJvKXxqyhyAwgzdgpjQGFQ8+6/pvJryGw3XuTHq
+   g2fCiFY2bhL9HgunDJ4z7DsET9BPbQLZTVh/qf+wFJ2DCdDjuEsLEmszS
+   jlvBKp5Rm/CDHZAziQoJdcLxqt9vY/KzuPpZO/2y0MgxXEumcGzhoV4Aj
+   A=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 06 May 2022 11:02:17 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 11:01:46 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 6 May 2022 11:01:46 -0700
+Received: from [10.110.90.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 6 May 2022
+ 11:01:45 -0700
+Message-ID: <c9ac9fbf-d94e-feea-e762-95eeae8f5a74@quicinc.com>
+Date:   Fri, 6 May 2022 11:01:45 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220505163029.6541-1-luca@z3ntu.xyz>
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 5/5] bus: mhi: host: Remove redundant dma_wmb() before ctx
+ wp update
+Content-Language: en-US
+From:   Hemant Kumar <quic_hemantk@quicinc.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>
+CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_bbhatt@quicinc.com>
+References: <20220502104144.91806-1-manivannan.sadhasivam@linaro.org>
+ <20220502104144.91806-6-manivannan.sadhasivam@linaro.org>
+ <CAMZdPi_i60TqszUL+=ocMn-4veyoGRQoOGD_B4YiEpz_uWE+ZQ@mail.gmail.com>
+ <20220504081720.GB5446@thinkpad>
+ <CAMZdPi9oA4SSYGSPw9tCmQ=GhwhCgdYz+=rQiUzu1tNbo80ceQ@mail.gmail.com>
+ <20220504155855.GA3507@thinkpad>
+ <514326aa-49eb-2b07-b99e-53899722c7e2@quicinc.com>
+In-Reply-To: <514326aa-49eb-2b07-b99e-53899722c7e2@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,39 +74,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Luca,
+Hi Loic,
 
-Thank you for the patch! Yet something to improve:
+On 5/6/2022 10:41 AM, Hemant Kumar wrote:
+> Hi Loic,
+> 
+> On 5/4/2022 8:58 AM, Manivannan Sadhasivam wrote:
+>> On Wed, May 04, 2022 at 11:25:33AM +0200, Loic Poulain wrote:
+>>> On Wed, 4 May 2022 at 10:17, Manivannan Sadhasivam
+>>> <manivannan.sadhasivam@linaro.org>  wrote:
+>>>> Hi Loic,
+>>>>
+>>>> On Wed, May 04, 2022 at 09:21:20AM +0200, Loic Poulain wrote:
+>>>>> Hi Mani,
+>>>>>
+>>>>> On Mon, 2 May 2022 at 12:42, Manivannan Sadhasivam
+>>>>> <manivannan.sadhasivam@linaro.org>  wrote:
+>>>>>> The endpoint device will only read the context wp when the host rings
+>>>>>> the doorbell.
+>>>>> Are we sure about this statement? what if we update ctxt_wp while the
+>>>>> device is still processing the previous ring? is it going to continue
+>>>>> processing the new ctxt_wp or wait for a new doorbell interrupt? what
+>>>>> about burst mode in which we don't ring at all (ring_db is no-op)?
+>>>>>
+>>>> Good point. I think my statement was misleading. But still this scenario won't
+>>>> happen as per my undestanding. Please see below.
+>>>>
+>>>>>> And moreover the doorbell write is using writel(). This
+>>>>>> guarantess that the prior writes will be completed before ringing
+>>>>>> doorbell.
+>>>>> Yes but the barrier is to ensure that descriptor/ring content is
+>>>>> updated before we actually pass it to device ownership, it's not about
+>>>>> ordering with the doorbell write, but the memory coherent ones.
+>>>>>
+>>>> I see a clear data dependency between writing the ring element and updating the
+>>>> context pointer. For instance,
+>>>>
+>>>> ```
+>>>> struct mhi_ring_element *mhi_tre;
+>>>>
+>>>> mhi_tre = ring->wp;
+>>>> /* Populate mhi_tre */
+>>>> ...
+>>>>
+>>>> /* Increment wp */
+>>>> ring->wp += el_size;
+>>>>
+>>>> /* Update ctx wp */
+>>>> ring->ctx_wp = ring->iommu_base + (ring->wp - ring->base);
+>>>> ```
+>>>>
+>>>> This is analogous to:
+>>>>
+>>>> ```
+>>>> Read PTR A;
+>>>> Update PTR A;
+>>>> Increment PTR A;
+>>>> Write PTR A to PTR B;
+>>>> ```
+>>> Interesting point, but shouldn't it be more correct to translate it as:
+>>>
+>>> 1. Write PTR A to PTR B (mhi_tre);
+>>> 2. Update PTR B DATA;
+>>> 3. Increment PTR A;
+>>> 4. Write PTR A to PTR C;
+>>>
+>>> In that case, it looks like line 2. has no ordering constraint with 3.
+>>> & 4? whereas the following guarantee it:
+>>>
+>>> 1. Write PTR A to PTR B (mhi_tre);
+>>> 2. Update PTR B DATA;
+>>> 3. Increment PTR A;
+>>> dma_wmb()
+>>> 4. Write PTR A to PTR C;
+>>>
+>>> To be honest, compiler optimization is beyond my knowledge, so I don't
+>>> know if a specific compiler arch/version could be able to mess up the
+>>> sequence or not. But this pattern is really close to what is described
+>>> for dma_wmb() usage in Documentation/memory-barriers.txt. That's why I
+>>> challenged this change and would be conservative, keeping the explicit
+>>> barrier.
+>>>
+>> Hmm. Since I was reading the memory model and going through the MHI code, I
+>> _thought_ that this dma_wmb() is redundant. But I missed the fact that the
+>> updating to memory pointed by "wp" happens implicitly via a pointer. So that
+>> won't qualify as a direct dependency.
+>>
+>>>> Here, because of the data dependency due to "ring->wp", the CPU or compiler
+>>>> won't be ordering the instructions. I think that's one of the reason we never
+>>>> hit any issue due to this.
+>>> You may be right here about the implicit ordering guarantee... So if
+>>> you're sure, I think it would deserve an inline comment to explain why
+>>> we don't need a memory barrier as in the 'usual' dma descriptor update
+>>> sequences.
+>>>
+>> I think the barrier makes sense now. Sorry for the confusion and thanks for the
+>> explanations.
+>>
+>> Thanks,
+>> Mani
+>>
+>>> Loic
+> 
+> You made a good point. After following your conversation, in case of 
+> burst mode is enabled and currently
+> 
+> we are in polling mode, does it make sense to move dma_wmb after 
+> updating channel WP context ?
+> 
+> DB ring is going to get skipped when we are in pilling mode.
+> 
+> instead of dma_wmb();
+> *ring->ctxt_wp  =  cpu_to_le64(db);
+> 
+> *ring->ctxt_wp  =  cpu_to_le64(db); dma_wmb();
+> 
+> Thanks,
+> Hemant
+> 
+i think i spoke too fast. I think we dont need to worry about the 
+polling mode as the context_wp update would happen at some point of time 
+and that does not require dma_wmb after update context wp.
 
-[auto build test ERROR on next-20220505]
-[cannot apply to robh/for-next v5.18-rc5 v5.18-rc4 v5.18-rc3 v5.18-rc5]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Luca-Weiss/ARM-dts-qcom-msm8974-FP2-Add-notification-LED/20220506-003524
-base:    632a8c88e339fe86ae6e420a24dfc641d4dd0ab5
-config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20220507/202205070100.8DCDwfSb-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/45445147f88f2416d7bc32c8a72c714818fe466c
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Luca-Weiss/ARM-dts-qcom-msm8974-FP2-Add-notification-LED/20220506-003524
-        git checkout 45445147f88f2416d7bc32c8a72c714818fe466c
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> Error: arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts:123.1-12 Label or path pm8941_lpg not found
-   FATAL ERROR: Syntax error parsing input tree
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Thanks,
+Hemant
