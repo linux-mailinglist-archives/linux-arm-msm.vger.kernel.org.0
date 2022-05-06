@@ -2,67 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8B6751DEA3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 20:07:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0FD651DF57
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 20:56:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348316AbiEFSL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 May 2022 14:11:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59718 "EHLO
+        id S1388892AbiEFS77 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 May 2022 14:59:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346371AbiEFSL1 (ORCPT
+        with ESMTP id S235093AbiEFS77 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 May 2022 14:11:27 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 332646A049
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 May 2022 11:07:43 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id r192so2522906pgr.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 May 2022 11:07:43 -0700 (PDT)
+        Fri, 6 May 2022 14:59:59 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E10452E6D
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 May 2022 11:56:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=oeCi0WJlUlmAdUeOo2uz48KTn4E3vAZHoMZo0EAAkuM=;
-        b=Gg5ruBm21DzYEMBQr5TEYEc1ZQ7fUIgBCnTB6MXv3XeOLGNCg7AK+0aaUv6X+C40FB
-         C1AgAN7/vfAEFz4C/EyjuyR88RWUdMSq/FXBwWFCXhdOWL8IPNPkzGYF+pCIin34BV0Q
-         UT8Y3bBcpR7hia7BFnmou2ARRH3YINHkaijaw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oeCi0WJlUlmAdUeOo2uz48KTn4E3vAZHoMZo0EAAkuM=;
-        b=HpWPb9hdukuQPNU3Yv3kErX2YAAUUTf4sTiSykNoqnYdiTK/vBdJfsDBrddAIrXmaq
-         IwykCgACil9a0MvzwO7X6m464+q6iyEcYRbqAiCmyRuBrMOLDwEFk6PomEHM2WC2DnYz
-         G9NHjO2xhO9PPjXTOtikceymKIEB6t8ckbY2ZMhqodicmE11WQNqHOHuBR8jJaMoel4g
-         0rpznWwwEo6G/mCXeUAnrOZPb3XTwMBoKiujoC5lvPmBrPNKobENTT8N1bl6lejeC1Zs
-         GCFNbBVIwTsX6qyzn7lxyBdRgvTl1GV+xQdGiUThKl+gJVWkbrtz4pvNN78I5HFW1ZMg
-         KE9A==
-X-Gm-Message-State: AOAM530VweAUJtwsIM17S/Z9+s1fQbFeuOCX99maWPxfRlwUJuVyFpYw
-        onour9s8jiI8T1hJiN1JKzCpRQ==
-X-Google-Smtp-Source: ABdhPJyUzAvAcObjVB4Zo5k4rHClZd9eDGKJQyfMV136Sx5Gz+UmKUekLEwGYz0lD6keoGn5yEv++A==
-X-Received: by 2002:aa7:8888:0:b0:50f:2e7a:76b7 with SMTP id z8-20020aa78888000000b0050f2e7a76b7mr4747567pfe.48.1651860462705;
-        Fri, 06 May 2022 11:07:42 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:5605:d5cd:699b:1b26])
-        by smtp.gmail.com with UTF8SMTPSA id y10-20020a170902d64a00b0015e8d4eb2d8sm2031674plh.290.2022.05.06.11.07.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 May 2022 11:07:42 -0700 (PDT)
-Date:   Fri, 6 May 2022 11:07:41 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     bjorn.andersson@linaro.org, arnd@arndb.de,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        sboyd@kernel.org, agross@kernel.org,
-        linux-remoteproc@vger.kernel.org, mathieu.poirier@linaro.org
-Subject: Re: [PATCH] remoteproc: qcom_q6v5_mss: map/unmap metadata region
- before/after use
-Message-ID: <YnVj7fxUbTqkJpdz@google.com>
-References: <1651845086-16535-1-git-send-email-quic_sibis@quicinc.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651863373; x=1683399373;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=5/Dk1uTXcCfTv/3E17+urHvlKmuK+Juq73sgN1FKJds=;
+  b=ceC15pDzCqJrjrFyLwfi5/xs2U0nF0Seol6n/vCE/sht6IXBIZ1N+tWe
+   QRVivvG2R6j/bIYJDJ+nuu5H/8HPidMHEPw+j9t0YbS5ATPuqtPo3VOTo
+   L0uFghYY9ckFVHkVjj7+ll0voOMxVTP2IRw52btmQKZAW3oVktxrM8Fcu
+   Q=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 06 May 2022 11:56:13 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 11:56:13 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 6 May 2022 11:56:12 -0700
+Received: from [10.111.168.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 6 May 2022
+ 11:56:09 -0700
+Message-ID: <2568f72d-3f2c-056e-185f-30bd85b84705@quicinc.com>
+Date:   Fri, 6 May 2022 11:56:07 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1651845086-16535-1-git-send-email-quic_sibis@quicinc.com>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 09/25] drm/msm/dpu: dpu_crtc_blend_setup: split mixer and
+ ctl logic
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
+ <20220209172520.3719906-10-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220209172520.3719906-10-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,103 +73,282 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 06, 2022 at 07:21:26PM +0530, Sibi Sankar wrote:
-> The application processor accessing the dynamically assigned metadata
-> region after assigning it to the remote Q6 would lead to an XPU violation.
-> Fix this by un-mapping the metadata region post firmware header copy. The
-> metadata region is freed only after the modem Q6 is done with fw header
-> authentication.
+
+
+On 2/9/2022 9:25 AM, Dmitry Baryshkov wrote:
+> The funcitons _dpu_crtc_blend_setup() and _dpu_crtc_blend_setup_mixer()
+> have an intertwined mixture of CTL and LM-related code. Split these two
+> functions into LM-specific and CTL-specific parts, making both code
+> paths clean and observable.
 > 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 
-Should this have a 'Fixes:' tag?
+I do see the intention of this change, but there are two things to 
+consider here.
 
+Let me know what you think of those:
+
+1) Agreed that we are able to split it out but at what cost? We are 
+repeating some of the loops such as
+
+a) for (i = 0; i < cstate->num_mixers; i++) {
+b) drm_atomic_crtc_for_each_plane(
+
+2) The intertwining is "somewhat" logical here because we are 
+programming the LMs for which we are staging the planes so it somewhat 
+goes together
+
+3) dropping sspp idx from this trace removes some useful informatio of 
+which sspp is staged to which stage of blend
+
+ >   		trace_dpu_crtc_setup_mixer(DRMID(crtc), DRMID(plane),
+ >   					   state, pstate, stage_idx,
+ > -					   sspp_idx - SSPP_VIG0,
+ >   					   format->base.pixel_format,
+ >   					   fb ? fb->modifier : 0);
+
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/remoteproc/qcom_q6v5_mss.c | 43 +++++++++++++++++++++++++++++++-------
->  1 file changed, 35 insertions(+), 8 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 101 +++++++++++++---------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h |  10 +--
+>   2 files changed, 63 insertions(+), 48 deletions(-)
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index af217de75e4d..eb34a258b67b 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -10,6 +10,7 @@
->  #include <linux/clk.h>
->  #include <linux/delay.h>
->  #include <linux/devcoredump.h>
-> +#include <linux/dma-map-ops.h>
->  #include <linux/dma-mapping.h>
->  #include <linux/interrupt.h>
->  #include <linux/kernel.h>
-> @@ -932,27 +933,52 @@ static void q6v5proc_halt_axi_port(struct q6v5 *qproc,
->  static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
->  				const char *fw_name)
->  {
-> -	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS;
-> +	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS | DMA_ATTR_NO_KERNEL_MAPPING;
-> +	unsigned long flags = VM_DMA_COHERENT | VM_FLUSH_RESET_PERMS;
-> +	struct page **pages;
-> +	struct page *page;
->  	dma_addr_t phys;
->  	void *metadata;
->  	int mdata_perm;
->  	int xferop_ret;
->  	size_t size;
-> -	void *ptr;
-> +	void *vaddr;
-> +	int count;
->  	int ret;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index e6c33022d560..ada7d5750536 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -336,27 +336,23 @@ static void _dpu_crtc_program_lm_output_roi(struct drm_crtc *crtc)
+>   	}
+>   }
+>   
+> -static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+> -	struct dpu_crtc *dpu_crtc, struct dpu_crtc_mixer *mixer,
+> -	struct dpu_hw_stage_cfg *stage_cfg)
+> +static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc)
+>   {
+> +	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
+> +	struct dpu_crtc_mixer *mixer = cstate->mixers;
+>   	struct drm_plane *plane;
+>   	struct drm_framebuffer *fb;
+>   	struct drm_plane_state *state;
+> -	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
+>   	struct dpu_plane_state *pstate = NULL;
+>   	struct dpu_format *format;
+> -	struct dpu_hw_ctl *ctl = mixer->lm_ctl;
+> -
 > +	int i;
->  
->  	metadata = qcom_mdt_read_metadata(fw, &size, fw_name, qproc->dev);
->  	if (IS_ERR(metadata))
->  		return PTR_ERR(metadata);
->  
-> -	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
-> -	if (!ptr) {
-> -		kfree(metadata);
-> +	page = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
-> +	if (!page) {
->  		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
-> -		return -ENOMEM;
-> +		ret = -ENOMEM;
-> +		goto free_metadata;
+>   	uint32_t stage_idx, lm_idx;
+> -	int zpos_cnt[DPU_STAGE_MAX + 1] = { 0 };
+>   	bool bg_alpha_enable = false;
+> -	DECLARE_BITMAP(fetch_active, SSPP_MAX);
+>   
+> -	memset(fetch_active, 0, sizeof(fetch_active));
+> -	drm_atomic_crtc_for_each_plane(plane, crtc) {
+> -		enum dpu_sspp sspp_idx;
+> +	for (i = 0; i < cstate->num_mixers; i++)
+> +		mixer[i].mixer_op_mode = 0;
+>   
+> +	drm_atomic_crtc_for_each_plane(plane, crtc) {
+>   		state = plane->state;
+>   		if (!state)
+>   			continue;
+> @@ -364,14 +360,10 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   		pstate = to_dpu_plane_state(state);
+>   		fb = state->fb;
+>   
+> -		sspp_idx = pstate->pipe_hw->idx;
+> -		set_bit(sspp_idx, fetch_active);
+> -
+> -		DRM_DEBUG_ATOMIC("crtc %d stage:%d - plane %d sspp %d fb %d\n",
+> +		DRM_DEBUG_ATOMIC("crtc %d stage:%d - plane %d fb %d\n",
+>   				crtc->base.id,
+>   				pstate->stage,
+>   				plane->base.id,
+> -				sspp_idx - SSPP_VIG0,
+>   				state->fb ? state->fb->base.id : -1);
+>   
+>   		format = to_dpu_format(msm_framebuffer_format(pstate->base.fb));
+> @@ -379,15 +371,8 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   		if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
+>   			bg_alpha_enable = true;
+>   
+> -		stage_idx = zpos_cnt[pstate->stage]++;
+> -		stage_cfg->stage[pstate->stage][stage_idx] =
+> -					sspp_idx;
+> -		stage_cfg->multirect_index[pstate->stage][stage_idx] =
+> -					pstate->multirect_index;
+> -
+>   		trace_dpu_crtc_setup_mixer(DRMID(crtc), DRMID(plane),
+>   					   state, pstate, stage_idx,
+> -					   sspp_idx - SSPP_VIG0,
+>   					   format->base.pixel_format,
+>   					   fb ? fb->modifier : 0);
+>   
+> @@ -396,8 +381,6 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   			_dpu_crtc_setup_blend_cfg(mixer + lm_idx,
+>   						pstate, format);
+>   
+> -			mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(mixer[lm_idx].lm_ctl, sspp_idx);
+> -
+>   			if (bg_alpha_enable && !format->alpha_enable)
+>   				mixer[lm_idx].mixer_op_mode = 0;
+>   			else
+> @@ -406,17 +389,22 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   		}
+>   	}
+>   
+> -	if (ctl->ops.set_active_pipes)
+> -		ctl->ops.set_active_pipes(ctl, fetch_active);
+> -
+>   	 _dpu_crtc_program_lm_output_roi(crtc);
+> +
+> +	for (i = 0; i < cstate->num_mixers; i++) {
+> +		struct dpu_hw_mixer *lm;
+> +
+> +		lm = mixer[i].hw_lm;
+> +
+> +		lm->ops.setup_alpha_out(lm, mixer[i].mixer_op_mode);
+> +
+> +		DRM_DEBUG_ATOMIC("lm %d, op_mode 0x%X\n",
+> +			mixer[i].hw_lm->idx - LM_0,
+> +			mixer[i].mixer_op_mode);
+> +	}
+>   }
+>   
+> -/**
+> - * _dpu_crtc_blend_setup - configure crtc mixers
+> - * @crtc: Pointer to drm crtc structure
+> - */
+> -static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
+> +static void _dpu_crtc_blend_setup_ctl(struct drm_crtc *crtc)
+>   {
+>   	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
+>   	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
+> @@ -425,34 +413,62 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
+>   	struct dpu_hw_mixer *lm;
+>   	struct dpu_hw_stage_cfg stage_cfg;
+>   	int i;
+> +	struct drm_plane *plane;
+> +	struct drm_plane_state *state;
+> +	struct dpu_plane_state *pstate = NULL;
+> +
+> +	uint32_t stage_idx, lm_idx;
+> +	int zpos_cnt[DPU_STAGE_MAX + 1] = { 0 };
+> +	DECLARE_BITMAP(fetch_active, SSPP_MAX);
+>   
+>   	DRM_DEBUG_ATOMIC("%s\n", dpu_crtc->name);
+>   
+> -	for (i = 0; i < cstate->num_mixers; i++) {
+> -		mixer[i].mixer_op_mode = 0;
+> +	for (i = 0; i < cstate->num_mixers; i++)
+>   		if (mixer[i].lm_ctl->ops.clear_all_blendstages)
+>   			mixer[i].lm_ctl->ops.clear_all_blendstages(
+>   					mixer[i].lm_ctl);
+> -	}
+>   
+>   	/* initialize stage cfg */
+>   	memset(&stage_cfg, 0, sizeof(struct dpu_hw_stage_cfg));
+>   
+> -	_dpu_crtc_blend_setup_mixer(crtc, dpu_crtc, mixer, &stage_cfg);
+> +	memset(fetch_active, 0, sizeof(fetch_active));
+> +	drm_atomic_crtc_for_each_plane(plane, crtc) {
+> +		enum dpu_sspp sspp_idx;
+> +
+> +		state = plane->state;
+> +		if (!state)
+> +			continue;
+> +
+> +		pstate = to_dpu_plane_state(state);
+> +
+> +		sspp_idx = pstate->pipe_hw->idx;
+> +		set_bit(sspp_idx, fetch_active);
+> +
+> +		stage_idx = zpos_cnt[pstate->stage]++;
+> +		stage_cfg.stage[pstate->stage][stage_idx] =
+> +					sspp_idx;
+> +		stage_cfg.multirect_index[pstate->stage][stage_idx] =
+> +					pstate->multirect_index;
+> +
+> +		/* blend config update */
+> +		for (lm_idx = 0; lm_idx < cstate->num_mixers; lm_idx++)
+> +			mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(mixer[lm_idx].lm_ctl, sspp_idx);
 > +	}
 > +
-> +	count = PAGE_ALIGN(size) >> PAGE_SHIFT;
-> +	pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
-> +	if (!pages) {
-> +		ret = -ENOMEM;
-> +		goto free_metadata;
->  	}
->  
-> -	memcpy(ptr, metadata, size);
-> +	for (i = 0; i < count; i++)
-> +		pages[i] = nth_page(page, i);
-> +
-> +	vaddr = vmap(pages, count, flags, dma_pgprot(qproc->dev, PAGE_KERNEL, dma_attrs));
-> +	kfree(pages);
-> +	if (!vaddr) {
-> +		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n", &phys, size);
-> +		ret = -EBUSY;
-> +		goto free_metadata;
-> +	}
-> +
-> +	memcpy(vaddr, metadata, size);
-> +
-> +	vunmap(vaddr);
->  
->  	/* Hypervisor mapping to access metadata by modem */
->  	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
-> @@ -982,7 +1008,8 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
->  			 "mdt buffer not reclaimed system may become unstable\n");
->  
->  free_dma_attrs:
-> -	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
-> +	dma_free_attrs(qproc->dev, size, page, phys, dma_attrs);
-> +free_metadata:
->  	kfree(metadata);
->  
->  	return ret < 0 ? ret : 0;
-> -- 
-> 2.7.4
-> 
+> +	ctl = mixer->lm_ctl;
+> +	if (ctl->ops.set_active_pipes)
+> +		ctl->ops.set_active_pipes(ctl, fetch_active);
+>   
+>   	for (i = 0; i < cstate->num_mixers; i++) {
+>   		ctl = mixer[i].lm_ctl;
+>   		lm = mixer[i].hw_lm;
+>   
+> -		lm->ops.setup_alpha_out(lm, mixer[i].mixer_op_mode);
+> -
+>   		/* stage config flush mask */
+>   		ctl->ops.update_pending_flush_mixer(ctl,
+>   			mixer[i].hw_lm->idx);
+>   
+> -		DRM_DEBUG_ATOMIC("lm %d, op_mode 0x%X, ctl %d\n",
+> +		DRM_DEBUG_ATOMIC("lm %d, ctl %d\n",
+>   			mixer[i].hw_lm->idx - LM_0,
+> -			mixer[i].mixer_op_mode,
+>   			ctl->idx - CTL_0);
+>   
+>   		ctl->ops.setup_blendstage(ctl, mixer[i].hw_lm->idx,
+> @@ -731,7 +747,8 @@ static void dpu_crtc_atomic_begin(struct drm_crtc *crtc,
+>   	if (unlikely(!cstate->num_mixers))
+>   		return;
+>   
+> -	_dpu_crtc_blend_setup(crtc);
+> +	_dpu_crtc_blend_setup_mixer(crtc);
+> +	_dpu_crtc_blend_setup_ctl(crtc);
+>   
+>   	_dpu_crtc_setup_cp_blocks(crtc);
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+> index 54d74341e690..ecd2f371374d 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+> @@ -632,9 +632,9 @@ TRACE_EVENT(dpu_enc_phys_vid_irq_ctrl,
+>   TRACE_EVENT(dpu_crtc_setup_mixer,
+>   	TP_PROTO(uint32_t crtc_id, uint32_t plane_id,
+>   		 struct drm_plane_state *state, struct dpu_plane_state *pstate,
+> -		 uint32_t stage_idx, enum dpu_sspp sspp, uint32_t pixel_format,
+> +		 uint32_t stage_idx, uint32_t pixel_format,
+>   		 uint64_t modifier),
+> -	TP_ARGS(crtc_id, plane_id, state, pstate, stage_idx, sspp,
+> +	TP_ARGS(crtc_id, plane_id, state, pstate, stage_idx,
+>   		pixel_format, modifier),
+>   	TP_STRUCT__entry(
+>   		__field(	uint32_t,		crtc_id		)
+> @@ -644,7 +644,6 @@ TRACE_EVENT(dpu_crtc_setup_mixer,
+>   		__field_struct(	struct drm_rect,	dst_rect	)
+>   		__field(	uint32_t,		stage_idx	)
+>   		__field(	enum dpu_stage,		stage		)
+> -		__field(	enum dpu_sspp,		sspp		)
+>   		__field(	uint32_t,		multirect_idx	)
+>   		__field(	uint32_t,		multirect_mode	)
+>   		__field(	uint32_t,		pixel_format	)
+> @@ -658,20 +657,19 @@ TRACE_EVENT(dpu_crtc_setup_mixer,
+>   		__entry->dst_rect = drm_plane_state_dest(state);
+>   		__entry->stage_idx = stage_idx;
+>   		__entry->stage = pstate->stage;
+> -		__entry->sspp = sspp;
+>   		__entry->multirect_idx = pstate->multirect_index;
+>   		__entry->multirect_mode = pstate->multirect_mode;
+>   		__entry->pixel_format = pixel_format;
+>   		__entry->modifier = modifier;
+>   	),
+>   	TP_printk("crtc_id:%u plane_id:%u fb_id:%u src:" DRM_RECT_FP_FMT
+> -		  " dst:" DRM_RECT_FMT " stage_idx:%u stage:%d, sspp:%d "
+> +		  " dst:" DRM_RECT_FMT " stage_idx:%u stage:%d, "
+>   		  "multirect_index:%d multirect_mode:%u pix_format:%u "
+>   		  "modifier:%llu",
+>   		  __entry->crtc_id, __entry->plane_id, __entry->fb_id,
+>   		  DRM_RECT_FP_ARG(&__entry->src_rect),
+>   		  DRM_RECT_ARG(&__entry->dst_rect),
+> -		  __entry->stage_idx, __entry->stage, __entry->sspp,
+> +		  __entry->stage_idx, __entry->stage,
+>   		  __entry->multirect_idx, __entry->multirect_mode,
+>   		  __entry->pixel_format, __entry->modifier)
+>   );
