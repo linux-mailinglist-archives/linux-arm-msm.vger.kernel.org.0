@@ -2,398 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C24C951CF16
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 04:51:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D109751CF30
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 05:02:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1388370AbiEFCy7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 22:54:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59550 "EHLO
+        id S1388426AbiEFDFO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 23:05:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1388365AbiEFCy6 (ORCPT
+        with ESMTP id S1388410AbiEFDFM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 22:54:58 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49EED5E150
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 19:51:15 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id q8so6258807oif.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 19:51:15 -0700 (PDT)
+        Thu, 5 May 2022 23:05:12 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D83BE63BD4;
+        Thu,  5 May 2022 20:01:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=13imn2c5ElMh1BnKD5PWdRvOyPrpFEqafcOP6fellxw=;
-        b=Vu9pgJSPUjQ5haFITEFUz5w/Q0+jp3wiZln2Va1XsigjpIthpN/p+j4ColCY3cVlln
-         6dOxCN3w5o9qUpE93yOEAtw4h+g9T6HnzMMGOkh7TF5eShohzjz7qSvvhMs7W4VXwLoy
-         q1losr8mTaXjzkDNXRsnGcO0MuDYmsxk6AvTqtCrV7ReqS4dROVOjjwHNLD3OgnXR96h
-         PjYlNhuosMCUIUPFSQZ7tDcJg6iUeDDxrCNmWzGievM1A3io5eC6neSUmSjRuwGfMpy6
-         oXikGWDwDc3xnOhAA8DiarpQjlKgoHB5mGWMRgNBe42e7rNKxppIwv+68cogoNgcBk63
-         /jLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=13imn2c5ElMh1BnKD5PWdRvOyPrpFEqafcOP6fellxw=;
-        b=0GQjTuhEIwZ47L8L1dcPkrtO+b2QRR35+jyMyrwVfZUZkpjwsonoIG0xFsLWs9e2pg
-         hU98IgUeZNPSi3B7nCbdqm+FGU7AmPiNTbo5Ma5ZM9QVD9icyiXEIXNhusthD7rgMzjK
-         IzrR+ymOzGqeuCtpphxu0ilqasINPuzXZZHDrr2ciX2VnO8/qLglXt5uMivS5vlK+y6s
-         SNN1INTFxnBiIyNpRJUH3cwxe8qJX3chak1nXlgpvEKgOnJRdrRRxHZzs81xNQScxYbN
-         eyK8bvvs8aMl0OH+/DCF6fxr+kdgRDgrTYHEBDSEkoM01SDCRVPQZo/4ryoQXmWPl26X
-         rtGQ==
-X-Gm-Message-State: AOAM532igM3EhhUg2vwFCLjGhXz+VifgzuvFQEfvqC1SXhJ8mxraVQkl
-        QafVO/p5D1uTyi4dCfv66/CjXQ==
-X-Google-Smtp-Source: ABdhPJytD5u/8xWOb1qLiOs2oD9QoyyldjFknwKFtGOY7YZuR/yt+RSJ/tDYZ5SIvKRnJBJXCCugRw==
-X-Received: by 2002:aca:2807:0:b0:326:14c8:a19b with SMTP id 7-20020aca2807000000b0032614c8a19bmr3909135oix.158.1651805474510;
-        Thu, 05 May 2022 19:51:14 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id g28-20020a4ae89c000000b0035eb4e5a6dasm1437281ooe.48.2022.05.05.19.51.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 May 2022 19:51:13 -0700 (PDT)
-Date:   Thu, 5 May 2022 19:53:48 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Alex Elder <elder@ieee.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@codeaurora.org>, vkoul@kernel.org
-Subject: Re: [PATCH V7 2/7] soc: qcom: dcc:Add driver support for Data
- Capture and Compare unit(DCC)
-Message-ID: <YnSNvHVrJruVbE53@ripper>
-References: <cover.1646285069.git.quic_schowdhu@quicinc.com>
- <bc8504bdaf24d98762e2dbad7d084ca247380f06.1646285069.git.quic_schowdhu@quicinc.com>
- <YnFuXYEXxLQkak24@builder.lan>
- <0997f2bc-e8ce-24cc-da90-0ecd3201350c@quicinc.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1651806079; x=1683342079;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=6NJBNSe+ke9BOc+D9CNrVP8Oq2ZaFRRV3VehaVMuYpM=;
+  b=mCjl9eOF85DmkmxLaKeA3L8fWWexbtBAGdQkXKE9Sq+zt2pLmxqL3B2w
+   rgxPHjJGIdxwkLG0OdnfNWevizRO2tg1XV2mO7pFkdj6vCTQ56HVAfnik
+   8bBsfuUSJ087mW99V5H0/+k6xWSzymbh3sPUjSkWsfeE1gJ4q6C+dOOo5
+   w=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 05 May 2022 20:01:19 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 20:01:18 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 5 May 2022 20:01:18 -0700
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 5 May 2022 20:01:11 -0700
+Date:   Fri, 6 May 2022 08:31:07 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_kriskura@quicinc.com>, <quic_vpulyala@quicinc.com>
+Subject: Re: [PATCH v14 3/7] usb: dwc3: core: Host wake up support from
+ system suspend
+Message-ID: <20220506030107.GD4640@hu-pkondeti-hyd.qualcomm.com>
+References: <1650395470-31333-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1650395470-31333-4-git-send-email-quic_c_sanm@quicinc.com>
+ <YnK79i3NiTdMmC98@google.com>
+ <20220505032618.GC4640@hu-pkondeti-hyd.qualcomm.com>
+ <YnP/PZViq1u0f2yl@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <0997f2bc-e8ce-24cc-da90-0ecd3201350c@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+In-Reply-To: <YnP/PZViq1u0f2yl@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 05 May 05:53 PDT 2022, Souradeep Chowdhury wrote:
-
-> 
-> On 5/3/2022 11:33 PM, Bjorn Andersson wrote:
-> > On Thu 03 Mar 00:27 CST 2022, Souradeep Chowdhury wrote:
+On Thu, May 05, 2022 at 09:45:49AM -0700, Matthias Kaehlcke wrote:
+> On Thu, May 05, 2022 at 08:56:18AM +0530, Pavan Kondeti wrote:
+> > On Wed, May 04, 2022 at 10:46:30AM -0700, Matthias Kaehlcke wrote:
+> > > On Wed, Apr 20, 2022 at 12:41:06AM +0530, Sandeep Maheswaram wrote:
+> > > > During suspend read the status of all port and set hs phy mode
+> > > > based on current speed. Use this hs phy mode to configure wakeup
+> > > > interrupts in qcom glue driver.
+> > > > 
+> > > > Check wakeup-source property for dwc3 core node to set the
+> > > > wakeup capability. Drop the device_init_wakeup call from
+> > > > runtime suspend and resume.
+> > > > 
+> > > > Also check during suspend if any wakeup capable devices are
+> > > > connected to the controller (directly or through hubs), if there
+> > > > are none set a flag to indicate that the PHY is powered
+> > > > down during suspend.
+> > > > 
+> > > > Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> > > > ---
+> > > > v14:
+> > > > Used device_children_wakeup_capable instead of usb_wakeup_enabled_descendants.
+> > > > 
+> > > > v13:
+> > > > Changed dwc3_set_phy_speed_mode to dwc3_check_phy_speed_mode.
+> > > > Removed device_init_wakeup calls from dwc3_runtime_suspend and dwc3_runtime_resume
+> > > > as we have a new dt property wakeup-source.
+> > > > 
+> > > > 
+> > > >  drivers/usb/dwc3/core.c | 33 ++++++++++++++++++++-------------
+> > > >  drivers/usb/dwc3/core.h |  4 ++++
+> > > >  drivers/usb/dwc3/host.c | 24 ++++++++++++++++++++++++
+> > > >  3 files changed, 48 insertions(+), 13 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> > > > index 1170b80..898aa66 100644
+> > > > --- a/drivers/usb/dwc3/core.c
+> > > > +++ b/drivers/usb/dwc3/core.c
+> > > > @@ -32,6 +32,7 @@
+> > > >  #include <linux/usb/gadget.h>
+> > > >  #include <linux/usb/of.h>
+> > > >  #include <linux/usb/otg.h>
+> > > > +#include <linux/usb/hcd.h>
+> > > >  
+> > > >  #include "core.h"
+> > > >  #include "gadget.h"
+> > > > @@ -1723,6 +1724,7 @@ static int dwc3_probe(struct platform_device *pdev)
+> > > >  
+> > > >  	platform_set_drvdata(pdev, dwc);
+> > > >  	dwc3_cache_hwparams(dwc);
+> > > > +	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
+> > > >  
+> > > >  	spin_lock_init(&dwc->lock);
+> > > >  	mutex_init(&dwc->mutex);
+> > > > @@ -1865,6 +1867,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> > > >  {
+> > > >  	unsigned long	flags;
+> > > >  	u32 reg;
+> > > > +	struct usb_hcd  *hcd = platform_get_drvdata(dwc->xhci);
+> > > >  
+> > > >  	switch (dwc->current_dr_role) {
+> > > >  	case DWC3_GCTL_PRTCAP_DEVICE:
+> > > > @@ -1877,10 +1880,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> > > >  		dwc3_core_exit(dwc);
+> > > >  		break;
+> > > >  	case DWC3_GCTL_PRTCAP_HOST:
+> > > > -		if (!PMSG_IS_AUTO(msg)) {
+> > > > -			dwc3_core_exit(dwc);
+> > > > -			break;
+> > > > -		}
+> > > > +		dwc3_check_phy_speed_mode(dwc);
+> > > >  
+> > > >  		/* Let controller to suspend HSPHY before PHY driver suspends */
+> > > >  		if (dwc->dis_u2_susphy_quirk ||
+> > > > @@ -1896,6 +1896,16 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> > > >  
+> > > >  		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
+> > > >  		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
+> > > > +
+> > > > +		if (!PMSG_IS_AUTO(msg)) {
+> > > > +			if (device_may_wakeup(dwc->dev) &&
+> > > > +			    device_children_wakeup_capable(&hcd->self.root_hub->dev)) {
+> > > > +				dwc->phy_power_off = false;
+> > > > +			} else {
+> > > > +				dwc->phy_power_off = true;
+> > > > +				dwc3_core_exit(dwc);
+> > > 
+> > > I found that shutting the PHYs down during suspend leads to high power
+> > > consumption of a downstream hub (about 80mW vs 15mW when the PHYs are
+> > > not shut down).
+> > > 
+> > > It would be interesting to know if this also impacts other non-hub
+> > > peripherals. Unfortunately I can't test that, the hub on my system is
+> > > soldered to the board.
+> > > 
+> > > I understand that shutting the PHYs down might be beneficial in terms
+> > > of power on some systems, however on those I'm looking at we'd strongly
+> > > prefer to save the 65mW of power consumed by the hub, rather than
+> > > whatever smaller amount of power that is saved by powering down the
+> > > PHYs.
+> > > 
+> > > Could we introduce a sysfs attribute (or some other sort of knob) to
+> > > allow the admin to configure whether the PHYs should remain on or off
+> > > during suspend? That is assuming that it is actually desirable to power
+> > > them off on some systems.
 > > 
-> > > The DCC is a DMA Engine designed to capture and store data
-> > > during system crash or software triggers. The DCC operates
-> > > based on user inputs via the sysfs interface. The user gives
-> > > addresses as inputs and these addresses are stored in the
-> > > dcc sram. In case of a system crash or a manual software
-> > > trigger by the user through the debugfs interface,
-> > > the dcc captures and stores the values at these addresses.
-> > > This patch contains the driver which has all the methods
-> > > pertaining to the debugfs interface, auxiliary functions to
-> > > support all the four fundamental operations of dcc namely
-> > > read, write, read/modify/write and loop. The probe method
-> > > here instantiates all the resources necessary for dcc to
-> > > operate mainly the dedicated dcc sram where it stores the
-> > > values. The DCC driver can be used for debugging purposes
-> > > without going for a reboot since it can perform software
-> > > triggers as well based on user inputs.
-> > > 
-> > > Also added the documentation for debugfs entries and explained
-> > > the functionalities of each debugfs file that has been created
-> > > for dcc.
-> > > 
-> > > The following is the justification of using debugfs interface
-> > > over the other alternatives like sysfs/ioctls
-> > > 
-> > > i) As can be seen from the debugfs attribute descriptions,
-> > > some of the debugfs attribute files here contains multiple
-> > > arguments which needs to be accepted from the user. This goes
-> > > against the design style of sysfs.
-> > > 
-> > > ii) The user input patterns have been made simple and convenient
-> > > in this case with the use of debugfs interface as user doesn't
-> > > need to shuffle between different files to execute one instruction
-> > > as was the case on using other alternatives.
-> > > 
-> > > Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> > > ---
-> > >   Documentation/ABI/testing/debugfs-driver-dcc |  124 +++
-> > >   drivers/soc/qcom/Kconfig                     |    8 +
-> > >   drivers/soc/qcom/Makefile                    |    1 +
-> > >   drivers/soc/qcom/dcc.c                       | 1465 ++++++++++++++++++++++++++
-> > >   4 files changed, 1598 insertions(+)
-> > >   create mode 100644 Documentation/ABI/testing/debugfs-driver-dcc
-> > >   create mode 100644 drivers/soc/qcom/dcc.c
-> > > 
-> > > diff --git a/Documentation/ABI/testing/debugfs-driver-dcc b/Documentation/ABI/testing/debugfs-driver-dcc
-> > > new file mode 100644
-> > > index 0000000..70029ab
-> > > --- /dev/null
-> > > +++ b/Documentation/ABI/testing/debugfs-driver-dcc
-> > > @@ -0,0 +1,124 @@
-> > > +What:          /sys/kernel/debug/dcc/.../trigger
-> > > +Date:          March 2022
-> > > +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> > > +Description:
-> > > +		This is the debugfs interface for manual software
-> > > +		triggers. The user can simply enter a 1 against
-> > > +		the debugfs file and enable a manual trigger.
-> > > +		Example:
-> > > +		echo  1 > /sys/kernel/debug/dcc/.../trigger
-> > > +
-> > > +What:          /sys/kernel/debug/dcc/.../enable
-> > > +Date:          March 2022
-> > > +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> > > +Description:
-> > > +		This debugfs interface is used for enabling the
-> > > +		the dcc hardware. On enabling the dcc, all the
-> > > +		addresses entered by the user is written into
-> > > +		dcc sram which is read by the dcc hardware on
-> > > +		manual or crash induced triggers.
-> > > +		Example:
-> > > +		echo  0 > /sys/bus/platform/devices/.../enable
-> > > +		(disable dcc)
-> > > +		echo  1 > /sys/bus/platform/devices/.../enable
-> > > +		(enable dcc)
-> > > +
-> > > +What:          /sys/kernel/debug/dcc/.../config_read
-> > As mentioned last time, I don't like this interface of having 6 files
-> > that the user can write to in order to append items in the currently
-> > selected linked list.
-> > 
-> > Why can't this be a single "config" which takes a multiline string of
-> > operations? (Bonus point for supporting appending to the list).
-> > 
-> > 
-> > This would also serve as a natural place to dump the linked list back to
-> > the user for inspection.
+> > The result may vary across SoCs also. The current proposal is to keep PHY
+> > powered during system suspend if any of the downstream USB devices are enabled
+> > for wakeup. This also includes USB2/USB3 root hub. If one wants to keep PHY
+> > always powered on even when no device is attached, they can do so by enabling
+> > wakeup (echo enabled > /sys/bus/usb/devices/usbX/power/wakeup). This is anyway
+> > needed if you want to detect a peripheral attach during system suspend.
 > 
-> Following is the justification of having multiple files in debugfs
+> My concern is that it is not evident for an admin what causes the high power
+> consumption of the USB client (if they detect/localize it in the first place),
+> and even less that wakeup needs to be enabled to mitigate it.
 > 
-> 1-> Since there are fundamentally 4 instructions for DCC, Read,Write,Read
-> and then Write and Loop,having separate debugfs files for the same makes it
-> 
-> convenient for the user to use this tool and also to document.This
-> also is consistent with the design principles of debugfs as it supports
-> logical segregation of Debugfs files based on the user instructions.
-> 
+> Why can't we just put the PHYs in suspend, rather than taking the controller
+> down completely during suspend?
 
-So say the user of DCC wants to read a register 10 times, they know that
-the DCC operates on lists of operations, so they want to tell the
-computer "read X, loop 10 times".
+Agreed and I also have the same question.
 
-But the API is "write to loop file", "write to read file" and "write to
-loop file".
+I don't know the background on why DWC3 chooses to power down the PHY(s)
+during system suspend. Probably it is beneficial in some board designs.
+Atleast this patch series provides a way to wakeup the USB from system
+suspend, which also can be used not to power down the PHY(s). If all the users
+of DWC3 agree that powering down the PHY is bad, then we can do something
+about it.
 
-You're achieving the same thing, but the user and the driver thinks in
-terms of lists of operations and inbetween is a API which provides
-"logical segregation" of the different parts of that list.
-
-> 2-> We are maintaining a common linkedlist inside the driver and it can be
-> viewed by the user through the "config_read" debugfs file. Will be adding
-> this to the documentation as well.
-> 
-
-So I use a mix of config_* files to build the lists, and then
-config_read is used to look at the list?
-
-So some config_* files will when written append to the list, some
-config_* files will perform some action (e.g. reset) and reading some
-config_* files will return something useful.
-
-> Let me know your thoughts regarding the above.
-> 
-
-I am not convinced that having multiple files provides a nice user
-interface. But I certain that the use of the word "config" in various
-different ways is wrong.
-
-There are files in the interface which purpose is to append items to the
-linked list, name them append_*. Reading the appended items on the list
-should not be overloaded on one of the "append" files.
-
-
-So perhaps:
-
-append_read
-append_write
-append_rmw
-append_loop
-config (to dump the current config)
-enable
-ready
-reset
-trigger
-
-
-But then looking at the append_* functions again and the examples below.
-You could easily have a single append which takes read, write, rmw and
-loop as a first keyword - and build a crude parser based on sscanf to
-decode the strings.
-
-Then all append_* becomes "append", which is a single file for adding to
-the list and "config" is a single point to read the current list.
-Perhaps you could name this file just "config", reading will dump the
-list, writing will append to the list.
-
-Here you would have a cleaner interface.
-
-
-But as you write your own fops you could differentiate between write
-and append, so you could make this slightly cleaner by manifesting the
-"append" part by allowing the user to do:
-
-  echo read 1, 2, 3 > config
-  echo read 4, 5, 6 >> config
-
-Which clearly shows that the first writes to the config and second
-appends to the current config. With this interface reset would become:
-
-  echo > config
-
-You can still require that only single operation is written to or
-appended to the list per write - to allow you to continue to rely on the
-crude sscanf based parser.
-
-With this your interface is reduced to:
-
-config
-enable
-ready
-trigger
-
-> > > +Date:          March 2022
-> > > +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> > > +Description:
-> > > +		This stores the addresses of the registers which
-> > > +		needs to be read in case of a hardware crash or
-> > > +		manual software triggers. The address entered here
-> > > +		are considered under read type instruction.
-> > > +		Example:
-> > > +		echo <1> <2> <3> >/sys/kernel/debug/dcc/../config_read
-> > > +		1->Address to be considered for reading the value.
-> > > +		2->The word count of the addresses, read n words
-> > > +		   starting from address <1>.
-> > > +		3->Can be a 1 or 0 which indicates if it is apb or ahb
-> > > +		bus respectively.
-> > > +
-> > > +What:          /sys/kernel/debug/dcc/.../config_write
-> > > +Date:          March 2022
-> > > +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> > > +Description:
-> > > +		This file allows user to write a value to the register
-> > > +		address given as argument. The reason for this feature
-> > > +		of dcc is that for accessing certain registers it is
-> > > +		necessary to set some bits of some other register.
-> > > +		Example:
-> > > +		echo <1> <2> <3> > /sys/bus/platform/devices/.../config_write
-> > > +		1->Address to be considered for writing the value.
-> > > +		2->The value that needs to be written at the location.
-> > > +		3->Can be a 1 or 0 which indicates if it is apb or ahb
-> > > +		bus respectively.
-> > > +
-> > > +What:          /sys/kernel/debug/dcc/.../config_reset
-> > > +Date:          March 2022
-> > > +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> > > +Description:
-> > > +		This file is used to reset the configuration of
-> > > +		a dcc driver to the default configuration. This
-> > > +		means that all the previous addresses stored in
-> > > +		the driver gets removed and user needs to enter
-> > > +		the address values from the start.
-> > > +		Example:
-> > > +		echo  1 > /sys/bus/platform/devices/.../config_reset
-> > > +
-> > > +What:          /sys/kernel/debug/dcc/.../config_loop
-> > > +Date:		March 2022
-> > > +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> > > +Description:
-> > > +		This file is used to enter the loop type addresses for
-> > > +		dcc. DCC hardware provides feature to loop among multiple
-> > > +		addresses. For debugging purposes register values need to
-> > > +		be captured repeatedly in a loop. On giving the loop count
-> > > +		as n, the value at address will be captured n times in a
-> > > +		loop. At most 8 loop addresses can be configured at once.
-> > > +		Example:
-> > > +		echo <1> <2> <3> > /sys/kernel/debug/dcc/../config_loop
-> > > +		1->The loop count, the number of times the value of the
-> > > +		   addresses will be captured.
-> > > +		2->The address count, total number of addresses to be
-> > > +		   entered in this instruction.
-> > > +		3->The series of addresses to be entered separated by a
-> > > +		   space like <addr1> <addr2>... and so on.
-> > > +
-> > > +What:          /sys/kernel/debug/dcc/.../config_read_write
-> > > +Date:          March 2022
-> > > +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> > > +Description:
-> > > +		This file is used to read the value of the register
-> > > +		and then write the value given as an argument to the
-> > > +		register address. The address argument should be given
-> > > +		of the form <addr> <mask> <value>.For debugging purposes
-> > > +		sometimes we need to first read from a register and then
-> > > +		set some values to the register.
-> > > +		Example:
-> > > +		echo <1> <2> <3> > /sys/kernel/debug/dcc/.../config_read_write
-> > > +		1->The address which needs to be considered for read then write.
-> > > +		2->The value that needs to be written on the address.
-> > > +		3->The mask of the value to be written.
-> > > +
-> > > +What:		/sys/kernel/debug/dcc/.../ready
-> > > +Date:		March 2022
-> > > +Contact	Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> > > +Description:
-> > > +		This file is used to check the status of the dcc
-> > > +		hardware if it's ready to take the inputs. A 0
-> > > +		here indicates dcc is in a ready condition.
-> > > +		Example:
-> > > +		cat /sys/kernel/debug/dcc/.../ready
-> > > +
-> > > +What:		/sys/kernel/debug/dcc/.../curr_list
-> > I still don't like the idea of having a single set of files to interface
-> > with all N lists. I think you should discover how many lists you have
-> > and create N directories of files, each on operating on a given list.
-> 
-> As explained before there cannot be different files based on lists as
-> the number of lists to be used varies across platforms where DCC is
-> used.
-
-Isn't this dcc->nr_link_list?
-
-> Also we are giving the user the flexibility to configure
-> multiple lists at one go whereas the dumps are collected in the form
-> of separate lists that are configured by the user.
-> 
-
-I'm not sure I follow what you're trying to say here.
-
-If we determine that nr_link_list is 2, you create a directory named 0
-and one named 1, fill them with the interface files to operate on list 0
-and list 1 respectively. Then you still allow the user to configure and
-enable the 2 available lists?
-
-The difference is that it's clear how many lists you have and it's clear
-when you poke at 0/config_read that you're referring to the first list
-and poking 0/enable will mean the same list - there's no curr_list to
-mux between them in the interface.
-
-Regards,
-Bjorn
-
-> > 
-> > > +Date:		March 2022
-> > > +Contact:	Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> > > +Description:
-> > > +		This attribute is used to enter the linklist to be
-> > > +		used while appending addresses. The range of values
-> > > +		for this is advertised either by a register or is
-> > > +		predefined. Max value for this can be till 8.
-> > > +		Example:
-> > > +		echo 0 > /sys/kernel/debug/dcc/...curr_list
-> > > +
-> > Regards,
-> > Bjorn
+Thanks,
+Pavan
