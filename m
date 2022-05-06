@@ -2,47 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 115BE51CCDB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 01:44:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F80751CD62
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 May 2022 02:06:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384175AbiEEXs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 May 2022 19:48:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53230 "EHLO
+        id S237072AbiEFAKJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 May 2022 20:10:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241016AbiEEXs2 (ORCPT
+        with ESMTP id S237293AbiEFAKH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 May 2022 19:48:28 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 23F62606EF;
-        Thu,  5 May 2022 16:44:46 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 67B5B106F;
-        Thu,  5 May 2022 16:44:46 -0700 (PDT)
-Received: from [10.57.0.148] (unknown [10.57.0.148])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 03C393F85F;
-        Thu,  5 May 2022 16:44:43 -0700 (PDT)
-Message-ID: <483bb401-13e6-8c52-4b5f-f3c635b9ad46@arm.com>
-Date:   Fri, 6 May 2022 00:44:42 +0100
+        Thu, 5 May 2022 20:10:07 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3385549F3D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 May 2022 17:06:26 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id dk23so11563683ejb.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 17:06:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MIqpVTVHlo6DTmks9PgaRxjH9KsrXWoNaS9uh51VnYI=;
+        b=iHvC3Bp/yZjV6/3facmjrej5Ie9usQb83qVPvzExp04r1roEmXwSpQZCBtdphVUkn7
+         POw8j/oDDE9PdGus9LduRz7GzkZAfHZPZuZzgVRHsyheT5kxbgAaQB1cXrnAjggHBQ08
+         NIAtWJAu8HT1XDGaJ4soyBeenWFAl9t7LLvH8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MIqpVTVHlo6DTmks9PgaRxjH9KsrXWoNaS9uh51VnYI=;
+        b=HuSv/U+t9gffYGvIpAYrJQ2MtGeUJLD8dXrihvifwxGTLjWoWuF2Wk3JxZW7XMZINc
+         ja2+81c2PJVpAdC/OKD2L8Ue+0Ov6QkkaeeX4lNNZ5j4ep+/ikpHeIa5rfC3wVWIvffj
+         uAYxic4TvgH4x24ikL2fWkI7TWrzqTuiZlToeKhPCpks4nGWIjHQwFefM+ZkMYGcEkZG
+         /oj4v9ZBhp+g6iuZcGBhkx0HGR7YNjin4wxV1wi5DxMjKNqavtrGyHNWNHlc60wKveDL
+         WpcbxWZCrsLV8pBKx/UnqoW1HCF/HeQEqNcdi1EVgngQMlhVy+Zo/BYUGCXY6lErnMiF
+         IQrw==
+X-Gm-Message-State: AOAM533P9Oqr2KfnGVA0szxfxPN+fUZ9IwyvjYXbgmvoQVp9PhJCH0j2
+        733/DOwU9pJx59vkHFlOp1KNHB38PFNRc0ARrGI=
+X-Google-Smtp-Source: ABdhPJwJ/aJHVS1iTn/BRuBLDyFXyg8gZgua7grnDbrK5TKDuPPsyJmZ4ahzUp+9uBatRV5CinClow==
+X-Received: by 2002:a17:906:9b94:b0:6f3:fd8d:8a00 with SMTP id dd20-20020a1709069b9400b006f3fd8d8a00mr661343ejc.90.1651795584512;
+        Thu, 05 May 2022 17:06:24 -0700 (PDT)
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com. [209.85.221.41])
+        by smtp.gmail.com with ESMTPSA id hf27-20020a1709072c5b00b006f3ef214e2esm1300256ejc.148.2022.05.05.17.06.22
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 May 2022 17:06:23 -0700 (PDT)
+Received: by mail-wr1-f41.google.com with SMTP id e2so7983983wrh.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 May 2022 17:06:22 -0700 (PDT)
+X-Received: by 2002:a5d:6d09:0:b0:20c:53a9:cc30 with SMTP id
+ e9-20020a5d6d09000000b0020c53a9cc30mr410473wrq.513.1651795582324; Thu, 05 May
+ 2022 17:06:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.8.1
-Subject: Re: [PATCHv14 2/9] coresight: etm4x: Use asm-generic IO memory
- barriers
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>, arnd@arndb.de,
-        catalin.marinas@arm.com, rostedt@goodmis.org
-Cc:     gregkh@linuxfoundation.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        maz@kernel.org, quic_psodagud@quicinc.com, quic_tsoni@quicinc.com,
-        will@kernel.org, Mathieu Poirier <mathieu.poirier@linaro.org>
-References: <cover.1651663123.git.quic_saipraka@quicinc.com>
- <0d76de0ecc0aa7cb01fd8b8863a8e567abd4410b.1651663123.git.quic_saipraka@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <0d76de0ecc0aa7cb01fd8b8863a8e567abd4410b.1651663123.git.quic_saipraka@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-9.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <1651079383-7665-1-git-send-email-quic_srivasam@quicinc.com>
+ <1651079383-7665-5-git-send-email-quic_srivasam@quicinc.com>
+ <YmsrB6Q89II5w1+9@google.com> <CAD=FV=XxeZsiOVVBDK_vmx0nhT7roB2FqcaPXsH3+jzTHFXMxw@mail.gmail.com>
+ <YnKyzxPEolSVUhqD@builder.lan>
+In-Reply-To: <YnKyzxPEolSVUhqD@builder.lan>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 5 May 2022 17:06:08 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com>
+Message-ID: <CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com>
+Subject: Re: [PATCH v12 4/4] arm64: dts: qcom: sc7280-herobrine: Add lpi
+ pinmux properties for CRD 3.0/3.1
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        quic_rohkumar@quicinc.com,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -51,116 +89,106 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On 04/05/2022 12:28, Sai Prakash Ranjan wrote:
-> Per discussion in [1], it was decided to move to using architecture
-> independent/asm-generic IO memory barriers to have just one set of
-> them and deprecate use of arm64 specific IO memory barriers in driver
-> code. So replace current usage of __io_rmb()/__iowmb() in drivers to
-> __io_ar()/__io_bw().
-> 
-> [1] https://lore.kernel.org/lkml/CAK8P3a0L2tLeF1Q0+0ijUxhGNaw+Z0fyPC1oW6_ELQfn0=i4iw@mail.gmail.com/
-> 
+On Wed, May 4, 2022 at 10:07 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Fri 29 Apr 11:10 CDT 2022, Doug Anderson wrote:
+>
+> > Hi,
+> >
+> > On Thu, Apr 28, 2022 at 5:02 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+> > >
+> > > On Wed, Apr 27, 2022 at 10:39:43PM +0530, Srinivasa Rao Mandadapu wrote:
+> > > > Add LPASS LPI pinctrl properties, which are required for Audio
+> > > > functionality on herobrine based platforms of rev5+
+> > > > (aka CRD 3.0/3.1) boards.
+> > > >
+> > > > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> > > > Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> > > > Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> > >
+> > > I'm not super firm in pinctrl territory, a few maybe silly questions
+> > > below.
+> > >
+> > > >  arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 84 +++++++++++++++++++++++
+> > > >  1 file changed, 84 insertions(+)
+> > > >
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> > > > index deaea3a..dfc42df 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> > > > +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> > > > @@ -111,6 +111,90 @@ ap_ts_pen_1v8: &i2c13 {
+> > > >   * - If a pin is not hooked up on Qcard, it gets no name.
+> > > >   */
+> > > >
+> > > > +&lpass_dmic01 {
+> > > > +     clk {
+> > > > +             drive-strength = <8>;
+> > > > +     };
+> >
+> > Ugh, I've been distracted and I hadn't realized we were back to the
+> > two-level syntax. Definitely not my favorite for all the reasons I
+> > talked about [1]. I guess you took Bjorn's silence to my response to
+> > mean that you should switch back to this way? :(
+> >
+> > Bjorn: can you clarify?
+> >
+>
+> I didn't think through the fact that &mi2s0_state was specified in the
+> .dtsi and as such will be partially be overridden by the baord dts.
+>
+>
+> I do prefer the two level style and describing full "states", but as you
+> say whenever we provide something that will have to be overwritten it's
+> suboptimal.
+>
+> As such, I think your flattened model is preferred in this case
 
-Looking at the dis-assembly it looks like in effect they are slightly
-different for arm64.
+How about for future patches we just provided labels at both levels
+(I'm not suggesting we churn this patch series more):
 
-i.e., before this patch we had
+lpass_dmic01_sleep: dmic01-sleep {
+  lpass_dmic01_sleep_clk: clk {
+    pins = "gpio6";
+    function = "dmic1_clk";
+  };
 
-"dmb osh{ld/st}"
+  lpass_dmic01_sleep_data: data {
+    pins = "gpio7";
+    function = "dmic1_data";
+  };
+};
 
-and after the patch we have :
+Then you can in your pinctrl reference you can just reference the
+top-level node but boards can override without having to replicate
+hierarchy...
 
-"dsb {ld/st}"
+> but it
+> makes me dislike the partial definition between the dtsi and dts even
+> more (but I don't have any better suggestion).
 
-Is this really what we want ? I don't think this is desirable.
+One other proposal I'd make is that maybe we should change the rules
+about never putting drive strength in the soc.dtsi file. While it
+should still be OK for boards to override the drive strength, it seems
+like a whole lot of biolerplate code to have every board override
+every pin and say that its drive strength is 2. Similarly, if there's
+a high speed interface (like eMMC) where a drive strength of 2 is
+nonsense for any board, it doesn't seem ridiculous to specify a
+default drive strength of something higher in the soc.dtsi file.
 
-Suzuki
+I would like to say the same thing goes for for pulls, but it's
+unfortunately uglier for pulls. :( For instance, nearly everyone has
+an external pullup for i2c busses. The strength of the pullup needs to
+be tuned for the i2c bus speed and the impedance of the line. Thus, it
+would ideally make sense to specify this in the soc.dtsi file.
+Unfortunately, if we do that and some board _wants_ to use the
+internal pulls (maybe they're running at a really low speed and/or
+forgot to add external pulls) then they have to do an ugly
+"/delete-property/ bias-disable" because adding the "bias-pull-up"
+doesn't delete the other property and you end up with both. :( That
+seems bad, so I guess I'd vote to keep banning bias definitions in the
+soc.dtsi file.
 
+Anyway, I'd love your opinion on this.
 
-> Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
-> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-> Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-> ---
->   drivers/hwtracing/coresight/coresight-etm4x-core.c | 8 ++++----
->   drivers/hwtracing/coresight/coresight-etm4x.h      | 8 ++++----
->   2 files changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> index 7f416a12000e..81c0faf45b28 100644
-> --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> @@ -98,7 +98,7 @@ u64 etm4x_sysreg_read(u32 offset, bool _relaxed, bool _64bit)
->   	}
->   
->   	if (!_relaxed)
-> -		__iormb(res);	/* Imitate the !relaxed I/O helpers */
-> +		__io_ar(res);	/* Imitate the !relaxed I/O helpers */
->   
->   	return res;
->   }
-> @@ -106,7 +106,7 @@ u64 etm4x_sysreg_read(u32 offset, bool _relaxed, bool _64bit)
->   void etm4x_sysreg_write(u64 val, u32 offset, bool _relaxed, bool _64bit)
->   {
->   	if (!_relaxed)
-> -		__iowmb();	/* Imitate the !relaxed I/O helpers */
-> +		__io_bw();	/* Imitate the !relaxed I/O helpers */
->   	if (!_64bit)
->   		val &= GENMASK(31, 0);
->   
-> @@ -130,7 +130,7 @@ static u64 ete_sysreg_read(u32 offset, bool _relaxed, bool _64bit)
->   	}
->   
->   	if (!_relaxed)
-> -		__iormb(res);	/* Imitate the !relaxed I/O helpers */
-> +		__io_ar(res);	/* Imitate the !relaxed I/O helpers */
->   
->   	return res;
->   }
-> @@ -138,7 +138,7 @@ static u64 ete_sysreg_read(u32 offset, bool _relaxed, bool _64bit)
->   static void ete_sysreg_write(u64 val, u32 offset, bool _relaxed, bool _64bit)
->   {
->   	if (!_relaxed)
-> -		__iowmb();	/* Imitate the !relaxed I/O helpers */
-> +		__io_bw();	/* Imitate the !relaxed I/O helpers */
->   	if (!_64bit)
->   		val &= GENMASK(31, 0);
->   
-> diff --git a/drivers/hwtracing/coresight/coresight-etm4x.h b/drivers/hwtracing/coresight/coresight-etm4x.h
-> index 3c4d69b096ca..f54698731582 100644
-> --- a/drivers/hwtracing/coresight/coresight-etm4x.h
-> +++ b/drivers/hwtracing/coresight/coresight-etm4x.h
-> @@ -448,14 +448,14 @@
->   #define etm4x_read32(csa, offset)					\
->   	({								\
->   		u32 __val = etm4x_relaxed_read32((csa), (offset));	\
-> -		__iormb(__val);						\
-> +		__io_ar(__val);						\
->   		__val;							\
->   	 })
->   
->   #define etm4x_read64(csa, offset)					\
->   	({								\
->   		u64 __val = etm4x_relaxed_read64((csa), (offset));	\
-> -		__iormb(__val);						\
-> +		__io_ar(__val);						\
->   		__val;							\
->   	 })
->   
-> @@ -479,13 +479,13 @@
->   
->   #define etm4x_write32(csa, val, offset)					\
->   	do {								\
-> -		__iowmb();						\
-> +		__io_bw();						\
->   		etm4x_relaxed_write32((csa), (val), (offset));		\
->   	} while (0)
->   
->   #define etm4x_write64(csa, val, offset)					\
->   	do {								\
-> -		__iowmb();						\
-> +		__io_bw();						\
->   		etm4x_relaxed_write64((csa), (val), (offset));		\
->   	} while (0)
->   
-
+-Doug
