@@ -2,101 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C92D51EA7E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 May 2022 00:20:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77DC951EA8B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 May 2022 00:47:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234830AbiEGWYE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 May 2022 18:24:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47258 "EHLO
+        id S233584AbiEGWup (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 May 2022 18:50:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231447AbiEGWYD (ORCPT
+        with ESMTP id S231174AbiEGWuo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 May 2022 18:24:03 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 385901FA73;
-        Sat,  7 May 2022 15:20:15 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        Sat, 7 May 2022 18:50:44 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68F4F1EC42;
+        Sat,  7 May 2022 15:46:56 -0700 (PDT)
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 628023F617;
-        Sun,  8 May 2022 00:20:13 +0200 (CEST)
-Date:   Sun, 8 May 2022 00:20:11 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A96463F612;
+        Sun,  8 May 2022 00:46:54 +0200 (CEST)
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Pavel Machek <pavel@ucw.cz>
-Cc:     phone-devel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Martin Botka <martin.botka@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] dt-bindings: leds: qcom-lpg: Add compatible for
- PM660L LPG block
-Message-ID: <20220507222011.qynqs5onwbptu2ky@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Pavel Machek <pavel@ucw.cz>, phone-devel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220504205704.699500-1-marijn.suijten@somainline.org>
- <20220507211907.GF11004@duo.ucw.cz>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm6350: Replace literal rpmpd indices with constants
+Date:   Sun,  8 May 2022 00:46:45 +0200
+Message-Id: <20220507224645.2238421-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.36.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220507211907.GF11004@duo.ucw.cz>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pavel!
+It seems the SM6350_CX definition was temporarily replaced with its
+literal value 0 in 1797e1c9a95c ("arm64: dts: qcom: sm6350: Add SDHCI1/2
+nodes") to prevent a dependency on the qcom-rpmpd.h header patch being
+available prior to this DT patch being applied, similar to c23f1b77358c
+("arm64: dts: qcom: sm6125: Avoid using missing SM6125_VDDCX").
+However, unlike the revert of that in the sm6125 tree the next merge
+window around in a90b8adfa2dd ("Revert "arm64: dts: qcom: sm6125: Avoid
+using missing SM6125_VDDCX""), this has not yet happened for sm6350:
+replace them back now that the definitions are definitely available.
 
-On 2022-05-07 23:19:07, Pavel Machek wrote:
-> Hi!
-> 
-> > Document the availability of an LPG configuration for the PM660L PMIC in
-> > the Qualcomm Light Pulse Generator driver.
-> 
-> Thank you, but I could not apply it.
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+---
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thank you for notifying me.  It seems the diff-context changed a little
-when the pm8350c-pwm patches were applied, the series is now rebased on
-linux-leds and re-sent as [1] (I may have forgotten to pass -v2 to git
-format-patch, apologies for that).
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index fb1a0f662575..b3160720edcb 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -489,7 +489,7 @@ sdhc_1: sdhci@7c4000 {
+ 			clock-names = "iface", "core", "xo";
+ 			qcom,dll-config = <0x000f642c>;
+ 			qcom,ddr-config = <0x80040868>;
+-			power-domains = <&rpmhpd 0>;
++			power-domains = <&rpmhpd SM6350_CX>;
+ 			operating-points-v2 = <&sdhc1_opp_table>;
+ 			bus-width = <8>;
+ 			non-removable;
+@@ -935,7 +935,7 @@ sdhc_2: sdhci@8804000 {
+ 			clock-names = "iface", "core", "xo";
+ 			qcom,dll-config = <0x0007642c>;
+ 			qcom,ddr-config = <0x80040868>;
+-			power-domains = <&rpmhpd 0>;
++			power-domains = <&rpmhpd SM6350_CX>;
+ 			operating-points-v2 = <&sdhc2_opp_table>;
+ 			bus-width = <4>;
+ 
+-- 
+2.36.0
 
-[1]: https://lore.kernel.org/linux-leds/20220507221123.2201668-4-marijn.suijten@somainline.org/T/#u
-
-> Can you collect reviews
-
-Unless I missed something there only seems to be one Acked-by from Rob,
-on the dt-bindings patch - I hope that's enough and otherwise Bjorn may
-want to chime in on the LPG code part.
-
-> I'll only be able to apply first two.
-
-No worries about that, I expect Bjorn to pick up the latter two through
-the arm-msm tree.  Is it okay if I send all patches as a unified series
-going forward, or should it rather be split per sub-tree/maintainer?
-
-Last but not least, a friendly reminder to look at patch [2] (resent as
-[3]) to complement Bjorn's LPG patches.
-
-[2]: https://lore.kernel.org/linux-leds/20210418213427.220638-1-marijn.suijten@somainline.org/
-[3]: https://lore.kernel.org/linux-leds/20210915080252.69147-1-marijn.suijten@somainline.org/
-
-- Marijn
