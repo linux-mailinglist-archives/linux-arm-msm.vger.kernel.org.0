@@ -2,104 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72A9D51E9BE
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 May 2022 21:50:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6ADFB51E9E4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 May 2022 22:29:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1446957AbiEGTxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 May 2022 15:53:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60128 "EHLO
+        id S245448AbiEGUdl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 May 2022 16:33:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1446968AbiEGTxa (ORCPT
+        with ESMTP id S234125AbiEGUdk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 May 2022 15:53:30 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1C1323159
-        for <linux-arm-msm@vger.kernel.org>; Sat,  7 May 2022 12:49:32 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id c190-20020a1c35c7000000b0038e37907b5bso8681457wma.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 May 2022 12:49:32 -0700 (PDT)
+        Sat, 7 May 2022 16:33:40 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBD51BC95;
+        Sat,  7 May 2022 13:29:52 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id z2so18549515ejj.3;
+        Sat, 07 May 2022 13:29:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ilc0VbonCcRhi9mLGg0w5D3YQpFVaF2AQJc4whr2j6c=;
-        b=GaZ9tzvXpjNcgmgnxuWraCdmeumQAoW/3TXkmO1wuvMU9opQ3dpO9bj45L8Jr/5EnX
-         8/LvmS1ksrLMJvrHMEIYATBlxOPm20DZttBmCbk5s5rZshwBWOq5CuQtoD4+2gf4csjy
-         V50Z5dA0syf/7Hyl5Jnf93lIK1SXy8gyUqVN8ucOCQqEqr/v7ajFIEDgG3blc5BHKvpZ
-         RsLMzX1v2wn3ERVX67erl2nsnu2RWHUU69TXhnBJecMYumFbjCVQIe8EEaPmbEe+x7Iy
-         f1OWmzHAsuMyjFHiKlXY0KUQXcTh5OsVENptEep1b3kRee7hVEVw3iexJZO6bfC2cmcb
-         VzKw==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Tof11gWdZVMZxib9oySvQf9mu+NWMt2gs2nvPMKj0h4=;
+        b=C3ZuLoKoR2iCe5UXuOCY/VW4LgEWX+8cpj5smDSCHQ4HIxFwlin1LDpr07fod8mdxn
+         wzlv2MY2QGIDFPZJ66WpRVOQuqiq1QwIsCZxq612RI9rGUcF4XG2rTUxWlDiRvv1GNjz
+         p6ZOK68mjBiVohcMZTFTwnYaTzod5W6CJCUzyNufehejYA2CeJ6Wwc8jDOWPTZ1ZChf9
+         /ZkiskxHHwnXLTd6E///2f6IJqaKF0cDDUMpV7Tdcp2VhynpeIz3G68PEx6CZdRwWL6E
+         RgAi4BtoNJz2Cc1b7glnp/0wU314fkJrknE9txUxrgjuxeCX/uebtm4bWMeT+LNKIMfC
+         32tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ilc0VbonCcRhi9mLGg0w5D3YQpFVaF2AQJc4whr2j6c=;
-        b=Fx6oDmehcvsF9jM23aPQoIBNqVfCcau8E5LfmKkFw8/mbkHuntlr+wSj1hsRZE7uUM
-         6WSi7XMS/msqwkNo5Y4gCtSprVPnDH+YlnkSmKBgi5zksfV02TS09VVIMElVSEX2EEsy
-         Hj6rnKJ44SnrflcJIxqfadl4SZSNFIl5jnaQfGZtd0FYHgjUDtRTpkPxFGLmrWmkpnHc
-         BlcoFgte+EVvgySJw+pT55QiME3Em8nsO4ZvYEJi6aX5mAK788/tmzXJr+7iRkCCXBhG
-         v3ShFk9Bq+BtLmPb/LU5WzmFkl6v7kM4mKEiOUCIHtQ7SSHxBAVodp7rSTzBydYMuW72
-         SsBQ==
-X-Gm-Message-State: AOAM532Zn4lZK+CRQUbTRgn5zHz8okZhULgni8Ehe4c11MBPJrfL1aaW
-        Vkin4P9e0zGYnjph8/nF/en+KA==
-X-Google-Smtp-Source: ABdhPJyqbr4VcTdRcSr3fwIjiPUCv49n0I43wzga/jVDHpbwMGIuFgzWHkAlhzgnAITpSkHXZw3ohg==
-X-Received: by 2002:a1c:f710:0:b0:394:1960:e8a1 with SMTP id v16-20020a1cf710000000b003941960e8a1mr9020862wmh.154.1651952972430;
-        Sat, 07 May 2022 12:49:32 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id j6-20020a05600c1c0600b003942a244ec4sm8535027wms.9.2022.05.07.12.49.31
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Tof11gWdZVMZxib9oySvQf9mu+NWMt2gs2nvPMKj0h4=;
+        b=AMtU0J7cTBAb3gC+izXhw+S2nsLhhTqLT/4FjW1pHAK0Xix9oSEfrqATxV6m3Z3sZz
+         NbgWAWlwq5bdSSHatu4Ez28NWJdzY0U9yQm2o8/88UxGKac37Ugs1i+ktnRFEyF7IB2M
+         ukV1/JXm1Udjy7c7LZofrBxwMaqmnN9Xc4Q/lnz8O2xPeepFEtXXluMS7J6CucSztWrQ
+         BQwjlPWmcAJ6zw94fqc64aw2e5dmKgD5mMTk6BeltM0l5lUPcZaKM6hGOoIgt9/gBAPJ
+         Ly0zr52LNR5Xm854+m8cf2KhIbca/Um7pxjCQIaRJLI92VENVN4hwl/SUQK/0/pFxE9S
+         CEAg==
+X-Gm-Message-State: AOAM530Y8ZO7+/j7/BiHfmEqDWtq2495EZoZ8yrIkIls7BUlJfxbmz+4
+        klGJbDPG4ZZEzvWAXCQQIqU=
+X-Google-Smtp-Source: ABdhPJwBO0kpC+X39nkzexVVOGLumhjhW2iK1jvS8kyu1A/7LVkn+ROZIbfovMRTEgh0n3UkKCAOCg==
+X-Received: by 2002:a17:906:27cd:b0:6f3:c015:e40d with SMTP id k13-20020a17090627cd00b006f3c015e40dmr8948239ejc.15.1651955391231;
+        Sat, 07 May 2022 13:29:51 -0700 (PDT)
+Received: from fedora.robimarko.hr (cpezg-94-253-144-244-cbl.xnet.hr. [94.253.144.244])
+        by smtp.googlemail.com with ESMTPSA id k11-20020a056402048b00b0042617ba6383sm3900777edv.13.2022.05.07.13.29.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 May 2022 12:49:32 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Luca Weiss <luca@z3ntu.xyz>, David Heidelberg <david@ixit.cz>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 11/11] ARM: dts: qcom: pmx65: add fallback compatible to PMIC GPIO
-Date:   Sat,  7 May 2022 21:49:13 +0200
-Message-Id: <20220507194913.261121-12-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220507194913.261121-1-krzysztof.kozlowski@linaro.org>
-References: <20220507194913.261121-1-krzysztof.kozlowski@linaro.org>
+        Sat, 07 May 2022 13:29:50 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     bjorn.andersson@linaro.org, agross@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, tdas@codeaurora.org,
+        absahu@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Robert Marko <robimarko@gmail.com>
+Subject: [PATCH v2 01/11] clk: qcom: ipq8074: fix NSS core PLL-s
+Date:   Sat,  7 May 2022 22:29:38 +0200
+Message-Id: <20220507202948.397271-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The bindings require all PMIC GPIO nodes to have two compatibles -
-specific followed by SPMI or SSBI fallback.
+Like in IPQ6018 the NSS related Alpha PLL-s require initial configuration
+to work.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+So, obtain the regmap that is required for the Alpha PLL configuration
+and thus utilize the qcom_cc_really_probe() as we already have the regmap.
+Then utilize the Alpha PLL configs from the downstream QCA 5.4 based
+kernel to configure them.
+
+This fixes the UBI32 and NSS crypto PLL-s failing to get enabled by the
+kernel.
+
+Fixes: b8e7e519625f ("clk: qcom: ipq8074: add remaining PLL’s")
+Signed-off-by: Robert Marko <robimarko@gmail.com>
 ---
- arch/arm/boot/dts/qcom-pmx65.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-ipq8074.c | 39 +++++++++++++++++++++++++++++++++-
+ 1 file changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom-pmx65.dtsi b/arch/arm/boot/dts/qcom-pmx65.dtsi
-index 5411b833d26e..8701396fe1f2 100644
---- a/arch/arm/boot/dts/qcom-pmx65.dtsi
-+++ b/arch/arm/boot/dts/qcom-pmx65.dtsi
-@@ -21,7 +21,7 @@ pmx65_temp: temp-alarm@a00 {
- 		};
+diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
+index 541016db3c4b..1a5141da7e23 100644
+--- a/drivers/clk/qcom/gcc-ipq8074.c
++++ b/drivers/clk/qcom/gcc-ipq8074.c
+@@ -4371,6 +4371,33 @@ static struct clk_branch gcc_pcie0_axi_s_bridge_clk = {
+ 	},
+ };
  
- 		pmx65_gpios: pinctrl@8800 {
--			compatible = "qcom,pmx65-gpio";
-+			compatible = "qcom,pmx65-gpio", "qcom,spmi-gpio";
- 			reg = <0x8800>;
- 			gpio-controller;
- 			#gpio-cells = <2>;
++static const struct alpha_pll_config ubi32_pll_config = {
++	.l = 0x4e,
++	.config_ctl_val = 0x200d4aa8,
++	.config_ctl_hi_val = 0x3c2,
++	.main_output_mask = BIT(0),
++	.aux_output_mask = BIT(1),
++	.pre_div_val = 0x0,
++	.pre_div_mask = BIT(12),
++	.post_div_val = 0x0,
++	.post_div_mask = GENMASK(9, 8),
++};
++
++static const struct alpha_pll_config nss_crypto_pll_config = {
++	.l = 0x3e,
++	.alpha = 0x0,
++	.alpha_hi = 0x80,
++	.config_ctl_val = 0x4001055b,
++	.main_output_mask = BIT(0),
++	.pre_div_val = 0x0,
++	.pre_div_mask = GENMASK(14, 12),
++	.post_div_val = 0x1 << 8,
++	.post_div_mask = GENMASK(11, 8),
++	.vco_mask = GENMASK(21, 20),
++	.vco_val = 0x0,
++	.alpha_en_mask = BIT(24),
++};
++
+ static struct clk_hw *gcc_ipq8074_hws[] = {
+ 	&gpll0_out_main_div2.hw,
+ 	&gpll6_out_main_div2.hw,
+@@ -4772,7 +4799,17 @@ static const struct qcom_cc_desc gcc_ipq8074_desc = {
+ 
+ static int gcc_ipq8074_probe(struct platform_device *pdev)
+ {
+-	return qcom_cc_probe(pdev, &gcc_ipq8074_desc);
++	struct regmap *regmap;
++
++	regmap = qcom_cc_map(pdev, &gcc_ipq8074_desc);
++	if (IS_ERR(regmap))
++		return PTR_ERR(regmap);
++
++	clk_alpha_pll_configure(&ubi32_pll_main, regmap, &ubi32_pll_config);
++	clk_alpha_pll_configure(&nss_crypto_pll_main, regmap,
++				&nss_crypto_pll_config);
++
++	return qcom_cc_really_probe(pdev, &gcc_ipq8074_desc, regmap);
+ }
+ 
+ static struct platform_driver gcc_ipq8074_driver = {
 -- 
-2.32.0
+2.35.1
 
