@@ -2,72 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68AED51E8D8
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 May 2022 19:09:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A6B851E8DB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 May 2022 19:11:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355155AbiEGRNU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 May 2022 13:13:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35900 "EHLO
+        id S1386476AbiEGRP0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 May 2022 13:15:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348471AbiEGRNO (ORCPT
+        with ESMTP id S1353291AbiEGRPZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 May 2022 13:13:14 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAB34205E6
-        for <linux-arm-msm@vger.kernel.org>; Sat,  7 May 2022 10:09:26 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id y32so17296443lfa.6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 May 2022 10:09:26 -0700 (PDT)
+        Sat, 7 May 2022 13:15:25 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 333E823156
+        for <linux-arm-msm@vger.kernel.org>; Sat,  7 May 2022 10:11:37 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id j6so19621480ejc.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 May 2022 10:11:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jHDRJOheaN9Ke/+xaTIfLp8HPoD3ikp08lVBr1HW+Kw=;
-        b=pyWcSSNgvp7yQdVCBADdq13hmeOTh4B0SCaxGwrkdYe0hf0Xz35oprHFfQQFE64VtZ
-         HrzPAG319W1oRtdjeCkCSAq4UH3sVPRHrFuYrlczKJUpuzmgaTb+AnL5YeFsLiVrvMP4
-         snDDhrxVobpaDPhvyG9/ljW/ZtRGzOVCTGo59GcqyTYaXkJmTTLwvuwJ/9SBRLlG3lPp
-         7d/kSdY0W62n56j9Pxud56xuFOElyhgu+wEYvvb8tH1WB5C15P80scJG/BMRH5PChQoP
-         k6FDZDQBDUxpq5nip6UAK6Zh5VxULoVhCuBlUzjiXp1Or5UZ3hwrNtUp2HpXEiLge3Ai
-         dArg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=kPC8xpzAw3seVpPCqG0lfumLyo2lZCHJj18NiX9s2GQ=;
+        b=S/43XoutSBi6deU8mLJslFLwl8lpTrvEDiYFDnw6iLR2GKAGQBKLGoVdVaRu8dcmiR
+         b3rhibp9neHf6zEr5PRyqtW/EpCrzzvxvS6G+E6YKwtCfzZh+8Aa5lBZ20IZ9sZiGXkT
+         2vh0BvP1XFEpQi3so1V/vNkJ50lKSU8xhff9yqfsFIuVb23lv2BCSvprK4tHzzRSBgiB
+         V15+symef3iIL1I4xHZQrc0UJp00WTa4MxHXShqtJJ8izibylrmL9QTAa9bnnGHXqct0
+         c0Tq2giBHSf5F+hm/BNEbz5t1EaTOJihEQc2XzeP8tstuhZOPz1wLhXZDHShNGknM+3t
+         OfKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jHDRJOheaN9Ke/+xaTIfLp8HPoD3ikp08lVBr1HW+Kw=;
-        b=GYQrA3ATsiW5n0NYJS+OQeMPEGSpFqkFeIiE//0oymCn30sWhTytolavNyjJgdt3wI
-         us0hkCCpk95KCdHrQtrAa3bn8qDjoQzt+zOkcOqJw4aRlPnQhpBGP0AF6zR/BIMrij8g
-         uzfadgK2diMs0mztYn8rFOfc4HsJLro7Eot+zuen8lwzCUqIuhuYq1z3rwet5eY+uOTV
-         QrXlmlwm2pCoUn4pAEBKPmXKbRxpvn8jlcP6CwPA+O0pkZ090JRigtodAhXeixoeX8L/
-         JAHQ3wc8X5q+euNL2eYGR9ZzC7L9RtuFhTXQ6G9VByB5hw3mTSQ3MdxweOugc10mZhFx
-         20Eg==
-X-Gm-Message-State: AOAM530eDpRzzFpVCXvDJxrglFnsK0ASzCq+HciUxh0L+dt4MuXyDd5o
-        RffL2p/aeWj3vJy3IVlVxZWGKg==
-X-Google-Smtp-Source: ABdhPJzigrCUwpoqfPE1LC+g/sENWK+0OQhGslut0HmshE54YWflI28/IMe4QI56N4AukhGmDZuOCA==
-X-Received: by 2002:a19:4343:0:b0:474:d7a:634d with SMTP id m3-20020a194343000000b004740d7a634dmr2909583lfj.168.1651943365097;
-        Sat, 07 May 2022 10:09:25 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id n14-20020a05651203ee00b0047255d211f9sm1175308lfq.296.2022.05.07.10.09.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 May 2022 10:09:24 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, kernel test robot <lkp@intel.com>
-Subject: [PATCH v2 3/3] drm/msm: stop storing the array of CRTCs in struct msm_drm_private
-Date:   Sat,  7 May 2022 20:09:22 +0300
-Message-Id: <20220507170922.1723712-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220507170922.1723712-1-dmitry.baryshkov@linaro.org>
-References: <20220507170922.1723712-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=kPC8xpzAw3seVpPCqG0lfumLyo2lZCHJj18NiX9s2GQ=;
+        b=AOwc9Sw3Fk8qEuG15aS+OrdOoHWkszmQoiBc6LJYwnqh0UwuZ1gdz/MQeTfCbPBOcT
+         8TaS+5RmB3/xQ18u5hXAzKhH5r93LQCOMQbYfI99WnhbpXEWKPju10t8Zj9MK11t/YUW
+         HsS2UwRmyDan0mifVx+k1/L0DlTAPkOSroTfzQ3s1md0wDI1ut9lzuQsbkfk1/KWxjPz
+         FXNBvZQpC5rHhtHIf4pa9UzKwAO754dfKY96swqaWVp+ndKb7Dm7+14l9MdAb1o2AGN4
+         X/wQ0ymL+f+MOOMWnykiosekCz8nNuIiYeMGmO1Ytk2am2y3VTzCp281QCanpLmgLrfB
+         GoMw==
+X-Gm-Message-State: AOAM533vOGdvLOioacQ0hCxXqF6o9TJW6f8Wx31Nz24RxPLeFy10A9s2
+        bgMfqH07wRn03BHwgF8m+QTQSA==
+X-Google-Smtp-Source: ABdhPJwwAEeoniHD/trCzfvn38SeFwBuyrYgn1WYqjpzBVePU20+VNXiptdysppw2x7Xs7qgAIb+Gg==
+X-Received: by 2002:a17:906:9b8a:b0:6f3:fcc9:f863 with SMTP id dd10-20020a1709069b8a00b006f3fcc9f863mr8163934ejc.672.1651943495721;
+        Sat, 07 May 2022 10:11:35 -0700 (PDT)
+Received: from [192.168.0.233] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id ej5-20020a056402368500b0042617ba63d1sm3801018edb.91.2022.05.07.10.11.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 07 May 2022 10:11:35 -0700 (PDT)
+Message-ID: <63b76cc7-4a86-fb78-282e-acb16d09bb36@linaro.org>
+Date:   Sat, 7 May 2022 19:11:33 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     =?UTF-8?Q?Krzysztof_Koz=c5=82owski?= <k.kozlowski.k@gmail.com>,
+        Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Julius Werner <jwerner@chromium.org>
+References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
+ <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org>
+ <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
+ <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org>
+ <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
+ <606cc762-a0c2-49a4-3e5d-d2dbd4595bc7@linaro.org>
+ <CAD=FV=W_SA-3PfDFi-Gkjk9pew5bchFNjQhXX8MkZyuy5UohEQ@mail.gmail.com>
+ <CAJKOXPdt5WTg4VU-TEW3dmPHR76dKg63XVxRQfa7ZSKc_jz6Ag@mail.gmail.com>
+ <CAD=FV=XQqQSQDNh-zXqEQkwsrax5Qb3OtfKZoQLkncJj_4mcQw@mail.gmail.com>
+ <daf66d41-42ac-50dc-3f8d-c261da8e452d@linaro.org>
+ <CAD=FV=WhA=n_=Ys6NfedPtNPddL81HnG6Qws_R+vq9w8Nrsn5A@mail.gmail.com>
+ <ce2ea308-b63d-ad27-4cea-7353268f8ebb@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <ce2ea308-b63d-ad27-4cea-7353268f8ebb@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,184 +93,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Handling the array of CRTC duplicate the struct msm_drm_private
-duplicates a list of CRTCs in the drm_device. Drop it and use the
-existing list for CRTC enumeration.
+On 07/05/2022 19:04, Krzysztof Kozlowski wrote:
+> On 06/05/2022 23:33, Doug Anderson wrote:
+>> Hi,
+>>
+>> On Wed, May 4, 2022 at 12:04 AM Krzysztof Kozlowski
+>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>
+>>>>>>> The most specific compatible identifies or, like recently Rob confirmed
+>>>>>>> in case of Renesas, the list of compatibles:
+>>>>>>> https://lore.kernel.org/linux-devicetree/Yk2%2F0Jf151gLuCGz@robh.at.kernel.org/
+>>>>>>
+>>>>>> I'm confused. If the device tree contains the compatibles:
+>>>>>>
+>>>>>> "google,lazor-rev4", "google,lazor-rev3", "google,lazor", "qualcomm,sc7180"
+>>>>>>
+>>>>>> You want to know what board you're on and you look at the compatible,
+>>>>>> right? You'll decide that you're on a "google,lazor-rev4" which is the
+>>>>>> most specific compatible. ...but you could have booted a
+>>>>>> "google,lazor-rev3". How do you know?
+>>>>>
+>>>>> Applying the wrong DTB on the wrong device will always give you the
+>>>>> wrong answer. You can try too boot google,lazor-rev3 on x86 PC and it
+>>>>> does not make it a google,lazor-rev3...
+>>>>
+>>>> I don't understand what you're saying here. If a device tree has the compatible:
+>>>>
+>>>> "google,lazor-rev4", "google,lazor-rev3", "google,lazor", "qualcomm,sc7180"
+>>>>
+>>>> You wouldn't expect to boot it on an x86 PC, but you would expect to
+>>>> boot it on either a "google,lazor-rev4" _or_ a "google,lazor-rev3".
+>>>
+>>> Yes, but booting it does not mean that the hardware is rev3 or rev4.
+>>> Booting it means only that we are running DTB on a compatible hardware.
+>>> The DTB determines what is accessible to user-space, not what *really*
+>>> the hardware is. The user-space (since we are going now to original
+>>> question) reads it and can understand that it is running on hardware
+>>> compatible with rev3 - either rev3 or rev4 - and act accordingly.
+>>>
+>>>> Correct? Now, after we've booted software wants to look at the
+>>>> compatible of the device tree that was booted. The most specific entry
+>>>> in that device tree is "google,lazor-rev4". ...but we could have
+>>>> booted it on a "google,lazor-rev3". How can you know?
+>>>
+>>> No, providing and loading a rev4 DTB on a rev3 board is not correct and
+>>> does not make any sense. rev3 boards are not compatible with rev4, it's
+>>> the other way. Not every fruit is an apple, but every apple is a fruit.
+>>> This is why I used that example - if you load rev4 DTB on rev3 hardware
+>>> then you have totally wrong booting process.
+>>
+>> I think this is the crux of the difference in opinion and there's no
+>> reasonable way I'm aware of to do what you're asking. If -rev3 and
+>> -rev4 are identical from a software point of view it would be silly
+>> not to share a device tree for the two of them. The number of device
+>> trees we'd have to land in the kernel tree would be multiplied by
+>> several times and we'd have many that are identical except for this
+>> compatible string. I see no benefit here and lots of downside.
+> 
+> Wait, we agreed that you don't consider them identical, didn't we? If
+> they are identical, you do not need rev4 at all. So they are not
+> identical...
+> 
+> If they are identical, just use rev3 and problem is gone.
+> If they are not identical or you need to assume there will be difference
+> (for future), then just go with rev3 without fallback to rev3 and also
+> problem is gone.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
+This should be:
+If they are not identical or you need to assume there will be difference
+(for future), then just go with rev4 without fallback to rev3 and also
+problem is gone.
 
-Changes since v1:
-- Intialize the index variable in msm_drm_init() / event thread
-  initialization.
+> 
+> Right now it's not possible to validate QCOM DTSes against DT bindings
+> because they throw big fat warnings about undocumented top compatibles.
+> This is a downside for us.
+> 
+> Remember, you do not have to use Devicetree or Linux at all if it causes
+> you some downsides... No one is forced. :) If you choose to use it,
+> sorry, it comes with some requirements like being following Devicetree
+> specification or the binding guidelines.
+> 
+> Best regards,
+> Krzysztof
 
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |  2 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c |  2 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  2 +-
- drivers/gpu/drm/msm/msm_drv.c            | 29 ++++++++++++------------
- drivers/gpu/drm/msm/msm_drv.h            |  3 +--
- 5 files changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 2b9d931474e0..c84859fb2d9b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -808,7 +808,7 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
- 			ret = PTR_ERR(crtc);
- 			return ret;
- 		}
--		priv->crtcs[priv->num_crtcs++] = crtc;
-+		priv->num_crtcs++;
- 	}
- 
- 	/* All CRTCs are compatible with all encoders */
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-index fb48c8c19ec3..7449c1693e45 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-@@ -337,7 +337,7 @@ static int modeset_init(struct mdp4_kms *mdp4_kms)
- 			goto fail;
- 		}
- 
--		priv->crtcs[priv->num_crtcs++] = crtc;
-+		priv->num_crtcs++;
- 	}
- 
- 	/*
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 3d5621a68f85..36808990f840 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -497,7 +497,7 @@ static int modeset_init(struct mdp5_kms *mdp5_kms)
- 			DRM_DEV_ERROR(dev->dev, "failed to construct crtc %d (%d)\n", i, ret);
- 			goto fail;
- 		}
--		priv->crtcs[priv->num_crtcs++] = crtc;
-+		priv->num_crtcs++;
- 	}
- 
- 	/*
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 4a3dda23e3e0..db676a142ac1 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -144,7 +144,7 @@ static void msm_irq_uninstall(struct drm_device *dev)
- 
- struct msm_vblank_work {
- 	struct work_struct work;
--	int crtc_id;
-+	struct drm_crtc *crtc;
- 	bool enable;
- 	struct msm_drm_private *priv;
- };
-@@ -157,15 +157,15 @@ static void vblank_ctrl_worker(struct work_struct *work)
- 	struct msm_kms *kms = priv->kms;
- 
- 	if (vbl_work->enable)
--		kms->funcs->enable_vblank(kms, priv->crtcs[vbl_work->crtc_id]);
-+		kms->funcs->enable_vblank(kms, vbl_work->crtc);
- 	else
--		kms->funcs->disable_vblank(kms,	priv->crtcs[vbl_work->crtc_id]);
-+		kms->funcs->disable_vblank(kms,	vbl_work->crtc);
- 
- 	kfree(vbl_work);
- }
- 
- static int vblank_ctrl_queue_work(struct msm_drm_private *priv,
--					int crtc_id, bool enable)
-+					struct drm_crtc *crtc, bool enable)
- {
- 	struct msm_vblank_work *vbl_work;
- 
-@@ -175,7 +175,7 @@ static int vblank_ctrl_queue_work(struct msm_drm_private *priv,
- 
- 	INIT_WORK(&vbl_work->work, vblank_ctrl_worker);
- 
--	vbl_work->crtc_id = crtc_id;
-+	vbl_work->crtc = crtc;
- 	vbl_work->enable = enable;
- 	vbl_work->priv = priv;
- 
-@@ -349,6 +349,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
- 	struct msm_drm_private *priv = dev_get_drvdata(dev);
- 	struct drm_device *ddev;
- 	struct msm_kms *kms;
-+	struct drm_crtc *crtc;
- 	int ret, i;
- 
- 	if (drm_firmware_drivers_only())
-@@ -422,12 +423,14 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
- 	ddev->mode_config.funcs = &mode_config_funcs;
- 	ddev->mode_config.helper_private = &mode_config_helper_funcs;
- 
--	for (i = 0; i < priv->num_crtcs; i++) {
-+	drm_for_each_crtc(crtc, ddev) {
-+		i = drm_crtc_index(crtc);
-+
- 		/* initialize event thread */
--		priv->event_thread[i].crtc_id = priv->crtcs[i]->base.id;
-+		priv->event_thread[i].crtc = crtc;
- 		priv->event_thread[i].dev = ddev;
- 		priv->event_thread[i].worker = kthread_create_worker(0,
--			"crtc_event:%d", priv->event_thread[i].crtc_id);
-+			"crtc_event:%d", priv->event_thread[i].crtc->base.id);
- 		if (IS_ERR(priv->event_thread[i].worker)) {
- 			ret = PTR_ERR(priv->event_thread[i].worker);
- 			DRM_DEV_ERROR(dev, "failed to create crtc_event kthread\n");
-@@ -558,25 +561,23 @@ static void msm_postclose(struct drm_device *dev, struct drm_file *file)
- int msm_crtc_enable_vblank(struct drm_crtc *crtc)
- {
- 	struct drm_device *dev = crtc->dev;
--	unsigned int pipe = crtc->index;
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct msm_kms *kms = priv->kms;
- 	if (!kms)
- 		return -ENXIO;
--	drm_dbg_vbl(dev, "crtc=%u", pipe);
--	return vblank_ctrl_queue_work(priv, pipe, true);
-+	drm_dbg_vbl(dev, "crtc=%u", crtc->base.id);
-+	return vblank_ctrl_queue_work(priv, crtc, true);
- }
- 
- void msm_crtc_disable_vblank(struct drm_crtc *crtc)
- {
- 	struct drm_device *dev = crtc->dev;
--	unsigned int pipe = crtc->index;
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct msm_kms *kms = priv->kms;
- 	if (!kms)
- 		return;
--	drm_dbg_vbl(dev, "crtc=%u", pipe);
--	vblank_ctrl_queue_work(priv, pipe, false);
-+	drm_dbg_vbl(dev, "crtc=%u", crtc->base.id);
-+	vblank_ctrl_queue_work(priv, crtc, false);
- }
- 
- /*
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index fdbaad53eb84..2ba57c575e13 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -102,7 +102,7 @@ struct msm_display_topology {
- /* Commit/Event thread specific structure */
- struct msm_drm_thread {
- 	struct drm_device *dev;
--	unsigned int crtc_id;
-+	struct drm_crtc *crtc;
- 	struct kthread_worker *worker;
- };
- 
-@@ -178,7 +178,6 @@ struct msm_drm_private {
- 	struct workqueue_struct *wq;
- 
- 	unsigned int num_crtcs;
--	struct drm_crtc *crtcs[MAX_CRTCS];
- 
- 	struct msm_drm_thread event_thread[MAX_CRTCS];
- 
--- 
-2.35.1
-
+Best regards,
+Krzysztof
