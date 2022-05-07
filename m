@@ -2,108 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5733F51E815
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 May 2022 17:14:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B65051E836
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 May 2022 17:36:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1446601AbiEGPRj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 May 2022 11:17:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41476 "EHLO
+        id S1380705AbiEGPkY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 May 2022 11:40:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382110AbiEGPRj (ORCPT
+        with ESMTP id S1377641AbiEGPkX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 May 2022 11:17:39 -0400
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A1942D1FE;
-        Sat,  7 May 2022 08:13:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651936432; x=1683472432;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=SFrfLygWwaKz2niUDCJteyOlvqg0e03MT+XUWT0AuUQ=;
-  b=DL/j5qcK8uvQVXsqw5lD87pV1QXWrlQPP9AGWqBiGoVtDNbtZvgiE5ZG
-   a+rv2WaqX1TYnwl8buzKHNg5e/k7csztqq9/A4iQB2tc/7+E8qjgpOpGa
-   8bDX2ZmQPOtnmOe/GT+mtAEJ3w6s5Qt2D2AW3EfZyDmd1BWA/2e+9/PM4
-   i6JUGT5DEUNCrg+OGVEazyo3/EZxaMaeD5bRye2SBbXNHBg/dEW5e4989
-   kofJ6ay7eqyphvGlfy3xlI7evpgq3n5MdC1Tef/+diuSRVkisUVguE0Bj
-   Pq4IjFC1uCfN5UlHdkEq6EjycOoeQX0e0bvq4RaFkJQcI9CvgzbyEEC2G
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10340"; a="329271612"
-X-IronPort-AV: E=Sophos;i="5.91,207,1647327600"; 
-   d="scan'208";a="329271612"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2022 08:13:52 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,207,1647327600"; 
-   d="scan'208";a="709892109"
-Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 07 May 2022 08:13:48 -0700
-Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nnM7w-000Eg3-7k;
-        Sat, 07 May 2022 15:13:48 +0000
-Date:   Sat, 7 May 2022 23:13:14 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Satya Priya <quic_c_skakit@quicinc.com>,
+        Sat, 7 May 2022 11:40:23 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7749E43EE7;
+        Sat,  7 May 2022 08:36:34 -0700 (PDT)
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id EC6F33F565;
+        Sat,  7 May 2022 17:36:29 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     kbuild-all@lists.01.org, Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, quic_collinsd@quicinc.com,
-        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Subject: Re: [PATCH V11 7/9] regulator: Add a regulator driver for the PM8008
- PMIC
-Message-ID: <202205072349.clMXCCaw-lkp@intel.com>
-References: <1651742739-12338-8-git-send-email-quic_c_skakit@quicinc.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: msm8998: Make regulator voltages multiple of step-size
+Date:   Sat,  7 May 2022 17:36:27 +0200
+Message-Id: <20220507153627.1478268-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.36.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1651742739-12338-8-git-send-email-quic_c_skakit@quicinc.com>
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Satya,
+These voltages are not a multiple of the given step-size 8000 (with base
+voltage 1664000) in pm8998_pldo, resulting in PLDO regulators l18 and
+l22 failing to validate and in turn not probing the rpm-pm8998-regulator
+driver:
 
-Thank you for the patch! Yet something to improve:
+    l18: unsupportable voltage constraints 2856000-2848000uV
+    qcom_rpm_smd_regulator rpm-glink:rpm-requests:pm8998-regulators: l18: devm_regulator_register() failed, ret=-22
 
-[auto build test ERROR on lee-mfd/for-mfd-next]
-[also build test ERROR on robh/for-next broonie-regulator/for-next v5.18-rc5]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Round the voltages down for the sake of erring on the safe side, leaving
+a comment in place to document this discrepancy wrt downstream sources.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Satya-Priya/Add-Qualcomm-Technologies-Inc-PM8008-regulator-driver/20220505-173045
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/lee/mfd.git for-mfd-next
-config: mips-allmodconfig (https://download.01.org/0day-ci/archive/20220507/202205072349.clMXCCaw-lkp@intel.com/config)
-compiler: mips-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/66f37a37cac5f149b7f08cc53508ca6363ea575a
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Satya-Priya/Add-Qualcomm-Technologies-Inc-PM8008-regulator-driver/20220505-173045
-        git checkout 66f37a37cac5f149b7f08cc53508ca6363ea575a
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=mips SHELL=/bin/bash
+Fixes: 390883af89d2 ("arm64: dts: qcom: msm8998: Introduce support for Sony Yoshino platform")
+Reported-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ .../dts/qcom/msm8998-sony-xperia-yoshino-poplar.dts    | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>, old ones prefixed by <<):
-
->> ERROR: modpost: "pm8008_get_regmap" [drivers/regulator/qcom-pm8008-regulator.ko] undefined!
-
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-poplar.dts b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-poplar.dts
+index 4a1f98a21031..c21333aa73c2 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-poplar.dts
++++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-poplar.dts
+@@ -26,11 +26,13 @@ &lab {
+ };
+ 
+ &vreg_l18a_2p85 {
+-	regulator-min-microvolt = <2850000>;
+-	regulator-max-microvolt = <2850000>;
++	/* Note: Round-down from 2850000 to be a multiple of PLDO step-size 8000 */
++	regulator-min-microvolt = <2848000>;
++	regulator-max-microvolt = <2848000>;
+ };
+ 
+ &vreg_l22a_2p85 {
+-	regulator-min-microvolt = <2700000>;
+-	regulator-max-microvolt = <2700000>;
++	/* Note: Round-down from 2700000 to be a multiple of PLDO step-size 8000 */
++	regulator-min-microvolt = <2696000>;
++	regulator-max-microvolt = <2696000>;
+ };
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.36.0
+
