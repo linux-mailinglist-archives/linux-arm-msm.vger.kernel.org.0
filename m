@@ -2,100 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C024A51ED96
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 May 2022 15:00:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B540A51EDBE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 May 2022 15:24:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231669AbiEHNEn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 May 2022 09:04:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48186 "EHLO
+        id S233445AbiEHN1z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 May 2022 09:27:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232146AbiEHNEi (ORCPT
+        with ESMTP id S233354AbiEHN1x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 May 2022 09:04:38 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0164617B;
-        Sun,  8 May 2022 06:00:45 -0700 (PDT)
-Received: from [192.168.1.101] (abxj12.neoplus.adsl.tpnet.pl [83.9.3.12])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A344F3F36E;
-        Sun,  8 May 2022 15:00:42 +0200 (CEST)
-Message-ID: <7626562a-abbd-64f4-380e-a0b855f3aadb@somainline.org>
-Date:   Sun, 8 May 2022 15:00:41 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH] arm64: dts: qcom: sm6350: Replace literal rpmpd indices
- with constants
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
+        Sun, 8 May 2022 09:27:53 -0400
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA588DE96;
+        Sun,  8 May 2022 06:23:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1652016235; x=1683552235;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=psDk1P7wyWAseUdXJBcbmzY0aYvncXmFOfzhn5uJ3xM=;
+  b=CBl6C+MjWo6RpG+uN45nt+uxA2QpFIisUL1dofsw5/uOUg/6ZDhTFUXO
+   3UKx4vQvG+Apex924ZVBTbyfSRVrmLSg7awiI3TP8rBzWDtEASHJ05KZd
+   K4jlHVsIrt1evdCfJzfS7pBFpHW/TFbBIbn276kTTMMhr5/VAPKbHthfl
+   1eBJs9MOGvIFnjiGhpigDhpZ3UOfjovsuUrpw3wdeNfUatmv+qdOnmn9l
+   OBq+K96vltH1IlpKy0C6Z+f8zpXy6Y4JhZYwFgiaQR35ElUO+vxOEYrIb
+   8xYlLU6745OsMT83HIMWn6YhlNrDrUX9zDZl7gAhF19nJnXhC/zMh3qjt
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10341"; a="267678969"
+X-IronPort-AV: E=Sophos;i="5.91,208,1647327600"; 
+   d="scan'208";a="267678969"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2022 06:23:54 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,208,1647327600"; 
+   d="scan'208";a="622565927"
+Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
+  by fmsmga008.fm.intel.com with ESMTP; 08 May 2022 06:23:50 -0700
+Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1nngt4-000FVH-16;
+        Sun, 08 May 2022 13:23:50 +0000
+Date:   Sun, 8 May 2022 21:22:50 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220507224645.2238421-1-marijn.suijten@somainline.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220507224645.2238421-1-marijn.suijten@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Wesley Cheng <wcheng@codeaurora.org>
+Cc:     kbuild-all@lists.01.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_vpulyala@quicinc.com,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: Re: [v3 2/3] phy: qcom-snps: Add support for overriding phy tuning
+ parameters
+Message-ID: <202205082118.cd3B5WOH-lkp@intel.com>
+References: <1652011947-18575-3-git-send-email-quic_kriskura@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1652011947-18575-3-git-send-email-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Krishna,
+
+Thank you for the patch! Perhaps something to improve:
+
+[auto build test WARNING on robh/for-next]
+[also build test WARNING on krzk/for-next linus/master v5.18-rc5 next-20220506]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-Kurapati/Add-QCOM-SNPS-PHY-overriding-params-support/20220508-201506
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20220508/202205082118.cd3B5WOH-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/4f3771418951e9e3fcb6357959dbd668cdb54fb1
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Krishna-Kurapati/Add-QCOM-SNPS-PHY-overriding-params-support/20220508-201506
+        git checkout 4f3771418951e9e3fcb6357959dbd668cdb54fb1
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=m68k SHELL=/bin/bash drivers/phy/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+   drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c: In function 'phy_read_param_override_seq':
+>> drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c:530:33: warning: variable 'hsphy' set but not used [-Wunused-but-set-variable]
+     530 |         struct qcom_snps_hsphy *hsphy;
+         |                                 ^~~~~
 
 
-On 8.05.2022 00:46, Marijn Suijten wrote:
-> It seems the SM6350_CX definition was temporarily replaced with its
-> literal value 0 in 1797e1c9a95c ("arm64: dts: qcom: sm6350: Add SDHCI1/2
-> nodes") to prevent a dependency on the qcom-rpmpd.h header patch being
-> available prior to this DT patch being applied, similar to c23f1b77358c
-> ("arm64: dts: qcom: sm6125: Avoid using missing SM6125_VDDCX").
-> However, unlike the revert of that in the sm6125 tree the next merge
-> window around in a90b8adfa2dd ("Revert "arm64: dts: qcom: sm6125: Avoid
-> using missing SM6125_VDDCX""), this has not yet happened for sm6350:
-> replace them back now that the definitions are definitely available.
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+vim +/hsphy +530 drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
 
-Konrad
+   524	
+   525	static void phy_read_param_override_seq(struct device *dev)
+   526	{
+   527		struct device_node *node = dev->of_node;
+   528		s32 val;
+   529		int ret, i;
+ > 530		struct qcom_snps_hsphy *hsphy;
+   531		struct override_param_map *cfg = (struct override_param_map* ) of_device_get_match_data(dev);
+   532		hsphy = dev_get_drvdata(dev);
+   533	
+   534		for (i = 0; i < ARRAY_SIZE(phy_seq_props); i++) {
+   535			ret = of_property_read_s32(node, phy_seq_props[i], &val);
+   536			if (!ret)
+   537				hsphy_override_param_update_val(cfg[i], val, &update_seq_cfg[i]);
+   538		}
+   539	}
+   540	
 
->  arch/arm64/boot/dts/qcom/sm6350.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> index fb1a0f662575..b3160720edcb 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> @@ -489,7 +489,7 @@ sdhc_1: sdhci@7c4000 {
->  			clock-names = "iface", "core", "xo";
->  			qcom,dll-config = <0x000f642c>;
->  			qcom,ddr-config = <0x80040868>;
-> -			power-domains = <&rpmhpd 0>;
-> +			power-domains = <&rpmhpd SM6350_CX>;
->  			operating-points-v2 = <&sdhc1_opp_table>;
->  			bus-width = <8>;
->  			non-removable;
-> @@ -935,7 +935,7 @@ sdhc_2: sdhci@8804000 {
->  			clock-names = "iface", "core", "xo";
->  			qcom,dll-config = <0x0007642c>;
->  			qcom,ddr-config = <0x80040868>;
-> -			power-domains = <&rpmhpd 0>;
-> +			power-domains = <&rpmhpd SM6350_CX>;
->  			operating-points-v2 = <&sdhc2_opp_table>;
->  			bus-width = <4>;
->  
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
