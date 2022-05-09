@@ -2,65 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF65F520319
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 19:02:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEC9152031C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 19:02:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239418AbiEIRFv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 May 2022 13:05:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35352 "EHLO
+        id S239439AbiEIRGH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 May 2022 13:06:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239344AbiEIRFu (ORCPT
+        with ESMTP id S239440AbiEIRF7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 May 2022 13:05:50 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A4C17B84F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 10:01:54 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id j10-20020a17090a94ca00b001dd2131159aso2375566pjw.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 10:01:54 -0700 (PDT)
+        Mon, 9 May 2022 13:05:59 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 039D81B3BBE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 10:02:04 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id z15-20020a9d65cf000000b00605f064482cso10537536oth.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 10:02:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=drmB4B/KeU3fHWFx597AR+Yu/A5DLZU91oSasUCiT7U=;
-        b=m1NE+UqwuE2JCokeZ/4NnYbjGBL1hDxABFvO2l9oOixcazovqQf/zz8Azbq0eOo08J
-         9dzO0LDQi8DcPKmus+QALfQFs0j7JWEjW73jBqepNzASDsb+O4TuxSoCEZsPZQzE+9Dw
-         4mMPzh0cj0SqCkhby2T4QPSK84JFJbmhvDa44=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GjxiAYG973+YHHezpxuQgXS4fAT5Lbjwcqc22ucgL2w=;
+        b=wlkusx7cNtkouSDUW6mCE2YQ6lW/1MopLeduSz5WaihSFZzTZr9QDyEfS7ocIuwUe3
+         PDQesJEDxfsvRW16HXyg93hK2iKJsT8IJW3wns4p8ia5LlRH5CbSdaskbR6jEIOMZ2Ni
+         LpyA2rVh9P87cG3zHU/BplocnEcFJSxNU+B/GhSVZGnQrCG5Dy73GN2u08udAn8351mF
+         IaYacqn0KN8Vin2/xG61uNHAU+6d94mOVo/7s5dCWf25wOAvhXXlZHXK8CFhXCqlrvxI
+         1NTk8hI5P9pxg4ltm8ZD6W/O+fKeI1PZ+xGH4ijQ2sad1/2NnjGrQH6Ld+pjmZ7WvZ9w
+         XG6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=drmB4B/KeU3fHWFx597AR+Yu/A5DLZU91oSasUCiT7U=;
-        b=WyIghaOR4IE7+N5U1AN8B3oYYwY3HFaaDO4ddA7SPs2uXyMttWStfcLPXKTiyg0omJ
-         miIHaz8SxwXLkNHAvjwGhIm9a6Tg94hCoW1u91CJIzb3MtoROY6uzqWZmuy3TjjhAByz
-         ggDk0B4PmCyzCA94wKdCKv2jDpuIIuBGuZ8tMHkIIG6DcKiLsrrOx7bTByqeyjWYTZTj
-         M8tCcdulbLekkDbvGD62RGFcp5pvBXDxYUGTym5JoatMM20Nfvdhuu5/Lgk2hdkChGMI
-         gnH2rmk7lQW+5Gnfl9sBNNsjtb+OkQ3WqF2O9RZM1Bw09+SVhhsJTcG9lIaxCOcHUPq9
-         XBxg==
-X-Gm-Message-State: AOAM5314gk5gd36Gew9n1RVzqxZMJtVblfsbPHaSHjfefqVa/Uy1LXSH
-        lFUsZPMMhkMjKxv5Foh8GrKJJA==
-X-Google-Smtp-Source: ABdhPJzFx4RkUX7Re2fQ5VjSd7jPNvjGhUPAVnsG831dSlxazJfNq6euXwx81V8mDUA9ZdihKUhLDw==
-X-Received: by 2002:a17:90b:1642:b0:1dc:6419:43ff with SMTP id il2-20020a17090b164200b001dc641943ffmr19092455pjb.229.1652115713987;
-        Mon, 09 May 2022 10:01:53 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:753:614a:caf8:e14d])
-        by smtp.gmail.com with UTF8SMTPSA id cq17-20020a17090af99100b001cd4989fec9sm12854513pjb.21.2022.05.09.10.01.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 May 2022 10:01:53 -0700 (PDT)
-Date:   Mon, 9 May 2022 10:01:51 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, sboyd@kernel.org, agross@kernel.org,
-        linux-remoteproc@vger.kernel.org, mathieu.poirier@linaro.org
-Subject: Re: [PATCH] remoteproc: sysmon: Wait for SSCTL service to come up
-Message-ID: <YnlI/9i1C720mgAX@google.com>
-References: <1652065867-5669-1-git-send-email-quic_sibis@quicinc.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GjxiAYG973+YHHezpxuQgXS4fAT5Lbjwcqc22ucgL2w=;
+        b=aXeEhwKpHemRGWW2b7CEcHBh7xhHEXGDBk4NdTC+CP5X3zxXp1woBFVirh//N4tL7v
+         woKAHwx/eTMV5zYal3C833iSsmoFOcuKDwxKX6zPdVbQfLYVM/xCuYNjrHIPDd4yUJLu
+         HR5i0Rou3vjEIhKEN1Qqry0C1fcig845cM6OvRhc9PDXEtzLGah00iQKeMzoSaD0C57S
+         pRROkHvgLhQiD3SkdBJ8sR7IseiC05A/vTvb8uqH3zfkkVBCXff2fPDY9qvKgPTLhuOC
+         OLURnMn2kswHDs+zZWLqEFZIysMvi+m2L7+G7vX6Jk4OrrwgcG+p0NzUz5xc6KkQT3sy
+         St3g==
+X-Gm-Message-State: AOAM533LI+QEgif0Ihadx2OSIt3VEGXr1kUS1CfTDnRYrrT9v7WoqyUh
+        wya6455YeGuD/2oWF2iP9SloiA==
+X-Google-Smtp-Source: ABdhPJyAJJiAw7wJ4RHIkyJlmYNTD3aC/s4/u1WNoTMgV46YA06Jxxzcfituz+AmE6RNCaBmUoLPlA==
+X-Received: by 2002:a05:6830:2705:b0:606:5c00:e45d with SMTP id j5-20020a056830270500b006065c00e45dmr6517054otu.375.1652115723208;
+        Mon, 09 May 2022 10:02:03 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id bh29-20020a056808181d00b00325cda1ff9dsm4499198oib.28.2022.05.09.10.02.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 May 2022 10:02:02 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        =?UTF-8?q?An=C3=ADbal=20Lim=C3=B3n?= <anibal.limon@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+Subject: [GIT PULL] Qualcomm ARM64 defconfig updates for v5.19
+Date:   Mon,  9 May 2022 12:01:58 -0500
+Message-Id: <20220509170158.311962-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1652065867-5669-1-git-send-email-quic_sibis@quicinc.com>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,15 +76,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 09, 2022 at 08:41:07AM +0530, Sibi Sankar wrote:
-> The SSCTL service comes up after a finite time when the remote Q6 comes
-> out of reset. Any graceful shutdowns requested during this period will
-> be a NOP and abrupt tearing down of the glink channel might lead to pending
-> transactions on the remote Q6 side and will ultimately lead to a fatal
-> error. Fix this by waiting for the SSCTL service when a graceful shutdown
-> is requested.
-> 
-> Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+The following changes since commit 3123109284176b1532874591f7c81f3837bbdc17:
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+  Linux 5.18-rc1 (2022-04-03 14:08:21 -0700)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-5.19
+
+for you to fetch changes up to ad1661b0c91d55f1c194fa4bb059056e48937adb:
+
+  arm64: defconfig: Enable Qualcomm GPI DMA Driver (2022-04-12 16:51:24 -0500)
+
+----------------------------------------------------------------
+Qualcomm ARM64 defconfig updates for v5.19
+
+This enables the GPI DMA driver, providing access to I2C and SPI
+controllers that are setup for shared ownership. The PCIe Gen2 PHY
+provides PCI support on the QCS405 platform, among others. The PMIC
+watchdog, concell and ADC5 ThermalMonitor drivers provides housekeeping
+services on a range of different platforms.
+
+The Display and Video clock controllers for SM8250 are enabled, as is
+the audio RX/TX macros and the WCD9335 audio codec driver.
+
+Lastly the Ath11k driver, used on a variety of modern boards and the
+FastRPC driver, which provides an interface for computational offloading
+on the Hexagon cores, are enabled.
+
+All drivers, except the SM8250 Display and Video clock controller
+drivers are enabled as modules. The two clock controllers provides
+power-domains and must be builtin to reduce the risk of probe deferral
+happening (and being ignored) after late initcall.
+
+----------------------------------------------------------------
+Aníbal Limón (1):
+      arm64: defconfig: Enable PM8916 watchdog driver
+
+Bjorn Andersson (1):
+      arm64: defconfig: Enable Qualcomm PCIe Gen2 PHY
+
+Bryan O'Donoghue (1):
+      arm64: defconfig: Enable SM8250 video clock controller
+
+Dmitry Baryshkov (5):
+      arm64: defconfig: enable Qualcomm RX and TX macro for SM8250 audio
+      arm64: defconfig: enable wcd9335 codec as module
+      arm64: defconfig: reenable SM_DISPCC_8250
+      arm64: defconfig: Enable some Qualcomm drivers
+      arm64: defconfig: enable ath11k driver
+
+Vinod Koul (1):
+      arm64: defconfig: Enable Qualcomm GPI DMA Driver
+
+ arch/arm64/configs/defconfig | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
