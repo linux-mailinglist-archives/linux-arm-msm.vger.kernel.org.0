@@ -2,141 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E217551F311
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 05:53:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD74C51F45C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 08:24:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230304AbiEIDxV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 May 2022 23:53:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43898 "EHLO
+        id S233661AbiEIG0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 May 2022 02:26:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229689AbiEIDm6 (ORCPT
+        with ESMTP id S232404AbiEIGPi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 May 2022 23:42:58 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8608AD11F;
-        Sun,  8 May 2022 20:39:01 -0700 (PDT)
+        Mon, 9 May 2022 02:15:38 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AD6F21255;
+        Sun,  8 May 2022 23:11:44 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id x18so12912011plg.6;
+        Sun, 08 May 2022 23:11:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652067541; x=1683603541;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Eec18//IsPwyC++u7RUnbqlmOOXMwJSxguy1wuaYhpw=;
-  b=we78HVW9HlOQ/CHVIvPONMrWOEGsHpG9ajgN3+52cChGpxoq7sE2QWfd
-   2tZuSSPTFCrPxCTZD5mGFfA47RMAmrtnxhSLio9EKj+2wmPbvv2F4RBht
-   /xuSguEi6tos0JA23AJfVDJHOnADtepgXVed+iRan6Y3Bd+7lv/EaipsR
-   U=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 May 2022 20:38:53 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2022 20:38:53 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Sun, 8 May 2022 20:38:53 -0700
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Sun, 8 May 2022 20:38:47 -0700
-Date:   Mon, 9 May 2022 09:08:43 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Matthias Kaehlcke <mka@chromium.org>
-CC:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>
-Subject: Re: [v15 2/6] usb: host: xhci-plat: Enable wakeup based on children
- wakeup status
-Message-ID: <20220509033843.GB9170@hu-pkondeti-hyd.qualcomm.com>
-References: <1651740973-7944-1-git-send-email-quic_kriskura@quicinc.com>
- <1651740973-7944-3-git-send-email-quic_kriskura@quicinc.com>
- <YnVAZSZYQvIJxOHv@google.com>
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tLx5Pm6Ngh4YLs7U4uiQY60BpXpO+WnLGyecC77JrZw=;
+        b=Jnf9FtUJSdYHxR7peyJf3TzliXYeHQrTsId7OaDoq71bojBxuF9kPLSuguaSt0bpAr
+         oOikRnEOw1TuiIJD6/iXR0PxSRIjkVeKUk89cZqEdQ8MPrnOyweopgjeJyvmAMj0EgMq
+         sDXCkaTbjZs9WRrtgQwibByiyBBliFpqQVD87QlVnIeosD/LRHtuvVWfZREX3tvfQLEs
+         yq4eovHKjSOUeR+pdIW1HtjdObCpfuimJlfNKao5/VsRAud/dNmF72XboTCCU8NwCjOy
+         SPIE1raBJoijowbBnBfPsZQdeJw44hKiwwumgsWHLVVVMJRQJHzAtxh0gnRf9Xkd+bLJ
+         7c6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tLx5Pm6Ngh4YLs7U4uiQY60BpXpO+WnLGyecC77JrZw=;
+        b=eHgfrY3VVtzPvAySOhGP+QaVCW/eouqwBL4P6nUsMeagWlC7hZ/jEiCAVd75Jjefdq
+         gTKv8/29hJF9oy6CziBzfsFU+IpjNC+7xNsMrN1BT7FKitLMwU3j+0HwpE3QbIPH98yT
+         cvBpgtthmhk3Vus2OuJSm3jFwOkc4FCI6c8RRdaATLyOfJ6jSC7mIwa5wta/sb9Y/y/H
+         K4gsz3we2PAOOr8M1/X23lgBEYwXuDRQAtYHfOwhIm/BlvbyEzlbk8KRx6/ulxSYMAXl
+         RTVA+jnHuS133OTyejuWYW8eKluFso6IsS7uLV1YBbb/AriXr3MFnaO3BflCObFDjwbo
+         efsw==
+X-Gm-Message-State: AOAM533qC9PiL6fBzQS4iPLHZbPSmqu6ineSq9MBg/tCkz6jKLZmeKG4
+        C27Tp4knzgLM+kWPO7baaJA=
+X-Google-Smtp-Source: ABdhPJxv9Zjx5DUMC6R3uYLXLUaG+lxpUae+8y4732Pr++SO/sJa3ZwhEvnos3IXYMSepsop/B152Q==
+X-Received: by 2002:a17:902:ec8c:b0:15e:a371:ad7d with SMTP id x12-20020a170902ec8c00b0015ea371ad7dmr14751207plg.12.1652076703604;
+        Sun, 08 May 2022 23:11:43 -0700 (PDT)
+Received: from localhost.localdomain ([103.84.139.165])
+        by smtp.gmail.com with ESMTPSA id s13-20020a170902988d00b0015e8d4eb257sm6135771plp.161.2022.05.08.23.11.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 May 2022 23:11:43 -0700 (PDT)
+From:   Hangyu Hua <hbh25y@gmail.com>
+To:     robdclark@gmail.com, sean@poorly.run, quic_abhinavk@quicinc.com,
+        airlied@linux.ie, daniel@ffwll.ch, dmitry.baryshkov@linaro.org,
+        gbeeresh@codeaurora.org, sviau@codeaurora.org,
+        wentaox@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Hangyu Hua <hbh25y@gmail.com>
+Subject: [PATCH] drm: msm: fix possible memory leak in mdp5_crtc_cursor_set()
+Date:   Mon,  9 May 2022 14:11:25 +0800
+Message-Id: <20220509061125.18585-1-hbh25y@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <YnVAZSZYQvIJxOHv@google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 06, 2022 at 08:36:31AM -0700, Matthias Kaehlcke wrote:
-> On Thu, May 05, 2022 at 02:26:09PM +0530, Krishna Kurapati wrote:
-> > device_wakeup_path() tells if any of the children devices needs
-> > wakeup. Use this hint to enable/disable wakeup of our device. This
-> > helps the parent device of xhci-plat (like sysdev) to retrieve
-> > the wakeup setting via device_wakeup_path().
-> > 
-> > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> > ---
-> >  drivers/usb/host/xhci-plat.c | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> > 
-> > diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-> > index 649ffd8..ad585fa 100644
-> > --- a/drivers/usb/host/xhci-plat.c
-> > +++ b/drivers/usb/host/xhci-plat.c
-> > @@ -415,6 +415,14 @@ static int __maybe_unused xhci_plat_suspend(struct device *dev)
-> >  	if (pm_runtime_suspended(dev))
-> >  		pm_runtime_resume(dev);
-> >  
-> > +	if (device_wakeup_path(dev)) {
-> > +		if (!device_may_wakeup(dev))
-> > +			device_wakeup_enable(dev);
-> > +	} else {
-> > +		if (device_may_wakeup(dev))
-> > +			device_wakeup_disable(dev);
-> > +	}
-> 
-> This code is not self-explantatory and deserves a comment.
-> 
-> Enabling/disabling wakeup for the purpose if signalling is a bit of a
-> hack. It might be an acceptable hack as long as it has no side effects.
-> However with the current implementation the wakeup state of the xHCI can
-> be different after resuming than it was before going to suspend:
-> 
-> after boot
->   grep -h xhci /sys/class/wakeup/*/name
->     => xhci-hcd.14.auto
-> 
-> after suspend w/o wakeup capable device
->   grep -h xhci /sys/class/wakeup/*/name
->     => no results
-> 
-> after suspend with wakeup capable device
->   grep -h xhci /sys/class/wakeup/*/name
->     => xhci-hcd.14.auto
-> 
-> The hack shouldn't alter the wakeup state 'persistently', i.e. you'll have
-> to restore it on resume, as in Pavan does in his reply to '[PATCH v14 2/7]
-> PM / wakeup: Add device_children_wakeup_capable()' (it needs to be done
-> conditionally though).
+drm_gem_object_lookup will call drm_gem_object_get inside. So cursor_bo
+needs to be put when msm_gem_get_and_pin_iova fails.
 
-I am worried that we are not doing the right thing here. why should the
-xhci-plat goes against the wishes of the user space policy here? Can we NOT
-just do anything here? If some one wants xhci-plat to wakeup all the time,
-dwc3 will be configured to wakeup the system provided that the support is
-available. This way we don't break any existing users of xhci-plat i.e not
-enabling wakeup from the kernel.
+Fixes: e172d10a9c4a ("drm/msm/mdp5: Add hardware cursor support")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Thanks,
-Pavan
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+index b966cd69f99d..6a5f73f6a23b 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+@@ -991,8 +991,10 @@ static int mdp5_crtc_cursor_set(struct drm_crtc *crtc,
+ 
+ 	ret = msm_gem_get_and_pin_iova(cursor_bo, kms->aspace,
+ 			&mdp5_crtc->cursor.iova);
+-	if (ret)
++	if (ret) {
++		drm_gem_object_put(cursor_bo);
+ 		return -EINVAL;
++	}
+ 
+ 	pm_runtime_get_sync(&pdev->dev);
+ 
+-- 
+2.25.1
+
