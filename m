@@ -2,87 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DB2851FA34
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 12:46:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72E8E51FBBD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 13:53:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230324AbiEIKrr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 May 2022 06:47:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52800 "EHLO
+        id S233405AbiEIL5N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 May 2022 07:57:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230286AbiEIKrn (ORCPT
+        with ESMTP id S233368AbiEIL5L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 May 2022 06:47:43 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B16B1FB56E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 03:42:06 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id bv19so25946474ejb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 03:42:06 -0700 (PDT)
+        Mon, 9 May 2022 07:57:11 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88BF749920
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 04:53:16 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id v12so19049119wrv.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 04:53:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=JivA9lag35NY9StRFNW9wke9LTJ6pmcL9zBt3wJOnU0=;
-        b=ebaX/LiG6h3ghMGqzXvvTtDfpdIdzRUdMsxKFM94Yy8+E12Sr3DvvX192yCt7N9eaf
-         Wo9pgDs/hq2TtDMw+I3gIbpC/iPByRUlD0nnpcj4K1aFZluap+o4rT1jKW+lRxQsY/lB
-         YImjtFV5Y2N37SSLo40zlepq4inIK4viPucbc0ucPvd7yuhvC8VBxM/aIiJCdan0EQpi
-         6z1b1qtItWLP5Qj6D5HtJCSXIcPHecK/zY6vkBDdaHTstIFF7DwctSp6Chp8sucFqYXG
-         VMDK/pAURSFkWRz0RMVESZltCFl2iav0O54VA6a9Shnscry122w8SMGNoJAYQvVobcnx
-         qpBw==
+        bh=RxUzrPlGd351YrggkQ+XVPFB6IRBoiOml8FovLXDQls=;
+        b=QkXMW5uuaL3UWTGchOY4X5vIz2WtCTt+ksTinRvBmWsybFlbwoMxdLcDQOxye3ohgi
+         gnmzf6e3rnEgJ0uOQrRNHKHMU+ULsY9FJBBhSFJH3TbPAzKHQRPdwW8EZk+j1tH88eFn
+         ODC8CR8RZbxKmtHeS/vTb/W53fH8Q0NSiS5Wf2GvXdi1xEIO75iAFQ3FqlQEB0N2SwPQ
+         NPldIAEDAPHH+KnG9POHjALKNJnbvNCs0azsHHRbqYi9pGvMmBcrZX+QIbQ6CfQXF/K9
+         jezmJsaQymWVYXSUG1qlVuJTpoy+2xkS7uvm/evWWoQo/OYMOBNVeeuOMLCRK4EA8ryy
+         rdtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=JivA9lag35NY9StRFNW9wke9LTJ6pmcL9zBt3wJOnU0=;
-        b=D/7n3IszpR5xqk0qsDh/k282AfMzsb5TSbihjfSbTUoibJHKr06y8i285E91/8FD64
-         Z5nTAXvjexomFhm1RJUSDfHqe0CntXdDc9xXi9B5lLguMVkVrTs2kcjqOTWFdSLvaYdM
-         8VhiB/rOd5bf8orO2whbJYXbtFxzalRv+NZ/4TdY6LFKI/Rx11+0MQxf68itCAjQC1lO
-         In8y8XGQZ08TMnTLIH0pcEcHc46gbYAeEGi/rPOMH8msh5step26Hp0aPCUyYn4VHR9y
-         o7IkkQvaG3Z/DIedsm7rc6/rILlx5K12jdk7X2nUtN7c/5aDt/aFyGbeEpI3na2Dr0J8
-         J6pQ==
-X-Gm-Message-State: AOAM532q7dpIvYpZH/tLalCU2EmVzn2O34M+SUPEm2Ujbr4G0wQ4yKQ2
-        Ccg1wzOsNUJv7QqkyiZy153bhg==
-X-Google-Smtp-Source: ABdhPJyydy8/hiqqh2G8YhKauvC+LWx8dzSKJTUfCcLfOe3cv7c+z2fSoNuVxciYHs95+Iin63Zlig==
-X-Received: by 2002:a17:906:559:b0:6f3:8ba6:39c8 with SMTP id k25-20020a170906055900b006f38ba639c8mr14043662eja.486.1652092684369;
-        Mon, 09 May 2022 03:38:04 -0700 (PDT)
-Received: from [192.168.0.243] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id z12-20020a170906714c00b006f3ef214dfdsm4907874ejj.99.2022.05.09.03.38.03
+        bh=RxUzrPlGd351YrggkQ+XVPFB6IRBoiOml8FovLXDQls=;
+        b=d5Ibpik1AWwqJVg2l0Eoq1CZ6eEJJJmaDokgcv8NBOR21cvBVCdQiAaQZP1Y8VSnlx
+         UCUFoxLT/eeuiJ5PIk/RvGzW5WA0DUF2MsVlTJ4DAhcXpwWBC3Zk2dBH2M2+t/AjX6ke
+         7hJ5/PvZkJrlmhRjXaMS0wFOLlf952Iv4nkyHicqQIuhL5g9ZZeV0/dRPtsXIlikXRZh
+         /7bopNvCgvLpPRyz78qMC4fC1j6nrGWTVgCEjs41ygpGhUCN1E+iW6AQvHJiHS5DqSxT
+         HPlLN6lUEjlDPitSRn5tQ5hlGkFgudmIcZwscC+y+YV0OAi8JrLZOxDa0PsZHVpINXBL
+         snaw==
+X-Gm-Message-State: AOAM531sL+PQ0EGBzz7dYqPf0ek0jr7hm/xcElJ1WpwnZD+3KIv9aVaS
+        obWFsnz3akQQPdbJ3PSY3U4bCw==
+X-Google-Smtp-Source: ABdhPJynPqQUzeFT4sckq1r/7NDs65EafIDtt517li/wAXth+qZSTmTNNlUOB6AgZGr6bSeEd4qyTw==
+X-Received: by 2002:a5d:598c:0:b0:20c:6912:6870 with SMTP id n12-20020a5d598c000000b0020c69126870mr13265519wri.465.1652097194941;
+        Mon, 09 May 2022 04:53:14 -0700 (PDT)
+Received: from [192.168.0.33] (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
+        by smtp.gmail.com with ESMTPSA id y17-20020a7bc191000000b003942a244f45sm5298524wmi.30.2022.05.09.04.53.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 May 2022 03:38:03 -0700 (PDT)
-Message-ID: <dea39b1f-0091-2690-7f07-108d07ef9f3c@linaro.org>
-Date:   Mon, 9 May 2022 12:38:02 +0200
+        Mon, 09 May 2022 04:53:14 -0700 (PDT)
+Message-ID: <b148d9a1-9c3b-9e6f-1419-7a644bcd43b5@linaro.org>
+Date:   Mon, 9 May 2022 12:53:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.1
-Subject: Re: [RFC PATCH v2 4/6] PM: opp: allow control of multiple clocks
+Subject: Re: [PATCH v14 05/10] iio: adc: qcom-spmi-rradc: introduce round
+ robin adc
 Content-Language: en-US
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+To:     Jonathan Cameron <jic23@kernel.org>
+Cc:     Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
-References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
- <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
- <20220425072710.v6gwo4gu3aouezg4@vireshk-i7>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220425072710.v6gwo4gu3aouezg4@vireshk-i7>
-Content-Type: text/plain; charset=UTF-8
+        linux-arm-msm@vger.kernel.org,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+References: <20220429220904.137297-1-caleb.connolly@linaro.org>
+ <20220429220904.137297-6-caleb.connolly@linaro.org>
+ <20220501183850.5bbbcbab@jic23-huawei>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <20220501183850.5bbbcbab@jic23-huawei>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,163 +86,275 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/04/2022 09:27, Viresh Kumar wrote:
-> On 11-04-22, 17:43, Krzysztof Kozlowski wrote:
->> Devices might need to control several clocks when scaling the frequency
->> and voltage.  Example is the Universal Flash Storage (UFS) which scales
->> several independent clocks with change of performance levels.
+
+
+On 01/05/2022 18:38, Jonathan Cameron wrote:
+> On Fri, 29 Apr 2022 23:09:00 +0100
+> Caleb Connolly <caleb.connolly@linaro.org> wrote:
+> 
+>> The Round Robin ADC is responsible for reading data about the rate of
+>> charge from the USB or DC input ports, it can also read the battery
+>> ID (resistence), skin temperature and the die temperature of the pmic.
+>> It is found on the PMI8998 and PM660 Qualcomm PMICs.
 >>
->> Add parsing of multiple clocks and clock names
-> 
-> This part is fine, the OPP core should be able to do this.
+>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> Hi Caleb,
+Hi Jonathan,
 
-Sorry for late reply, I think I my filters archived it or I missed it.
-
+Thanks for spotting this, I completely missed it... Yeah this should be 
+IIO_INFO_PROCESSED, the battery ID calculation doesn't fit in the 
+raw/offset/scale format.
 > 
->> and scale all of them,
+> I took another quick read through of this and noticed that the battery channel
+> is providing on IIO_INFO_RAW but there is code for IIO_INFO_PROCESSED.
 > 
-> This is tricky as the OPP core can't really assume the order in which the clocks
-> needs to be programmed. We had the same problem with multiple regulators and the
-> same is left for drivers to do via the custom-api.
+> Something gone wrong along the way?  If all we need is to change it to
+> BIT(IIO_INFO_PROCESSED) I can do that whilst applying or you can do a v15 if
+> you prefer.
+That would be hugely appreciated, thanks a lot.
 > 
-> Either we can take the same route here, and let platforms add their own OPP
-> drivers which can handle this, Or hide this all behind a basic device clock's
-> driver, which you get with clk_get(dev, NULL).
-
-For my use case, the order of scaling will be the same as in previous
-implementation, because UFS drivers just got bunch of clocks with
-freq-table-hz property and were scaling in DT order.
-
-If drivers need something better, they can always provide custom-opp
-thus replacing my method. My implementation here does not restrict them.
-
-For the drivers where the order does not matter, why forcing each driver
-to provide its own implementation of clock scaling? Isn't shared generic
-PM OPP code a way to remove code duplication?
-
+> Thanks,
 > 
->> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+> Jonathan
 > 
->> +static int _generic_set_opp_clks_only(struct device *dev,
->> +				      struct opp_table *opp_table,
->> +				      struct dev_pm_opp *opp)
+>> ---
+> 
+>> diff --git a/drivers/iio/adc/qcom-spmi-rradc.c b/drivers/iio/adc/qcom-spmi-rradc.c
+>> new file mode 100644
+>> index 000000000000..c437546d8a4c
+>> --- /dev/null
+>> +++ b/drivers/iio/adc/qcom-spmi-rradc.c
+> 
+> 
+> ..
+> 
+>> +
+>> +/*
+>> + * These functions explicitly cast int64_t to int.
+>> + * They will never overflow, as the values are small enough.
+> 
+> See below. I don't think this gets used...
+> 
+>> + */
+>> +static int rradc_post_process_batt_id(struct rradc_chip *chip, u16 adc_code,
+>> +				      int *result_ohms)
 >> +{
->> +	int i, ret;
+>> +	uint32_t current_value;
+>> +	int64_t r_id;
 >> +
->> +	if (!opp_table->clks)
->> +		return 0;
->> +
->> +	for (i = 0; i < opp_table->clk_count; i++) {
->> +		if (opp->rates[i]) {
-> 
-> This should mean that we can disable that clock and it isn't required.
-
-No, it does not mean that. The DT might provide several clocks which
-only some are important for frequency scaling. All others just need to
-be enabled.
-
-Maybe you prefer to skip getting such clocks in PM OPP?
-
-> 
->> +			ret = _generic_set_opp_clk_only(dev, opp_table->clks[i],
->> +							opp->rates[i]);
->> +			if (ret) {
->> +				dev_err(dev, "%s: failed to set clock %pC rate: %d\n",
->> +					__func__, opp_table->clks[i], ret);
->> +				return ret;
->> +			}
->> +		}
->> +	}
+>> +	current_value = chip->batt_id_data;
+>> +	r_id = ((int64_t)adc_code * RR_ADC_FS_VOLTAGE_MV);
+>> +	r_id = div64_s64(r_id, (RR_ADC_CHAN_MSB * current_value));
+>> +	*result_ohms = (int)(r_id * MILLI);
 >> +
 >> +	return 0;
 >> +}
+>> +
 > 
-> As said earlier, this won't work in the core.
 > 
 >> +
->>  static int _generic_set_opp_regulator(struct opp_table *opp_table,
->>  				      struct device *dev,
->>  				      struct dev_pm_opp *opp,
->> @@ -796,7 +835,7 @@ static int _generic_set_opp_regulator(struct opp_table *opp_table,
->>  	}
->>  
->>  	/* Change frequency */
->> -	ret = _generic_set_opp_clk_only(dev, opp_table->clk, freq);
->> +	ret = _generic_set_opp_clks_only(dev, opp_table, opp);
->>  	if (ret)
->>  		goto restore_voltage;
->>  
->> @@ -820,7 +859,7 @@ static int _generic_set_opp_regulator(struct opp_table *opp_table,
->>  	return 0;
->>  
->>  restore_freq:
->> -	if (_generic_set_opp_clk_only(dev, opp_table->clk, old_opp->rate))
->> +	if (_generic_set_opp_clks_only(dev, opp_table, old_opp))
->>  		dev_err(dev, "%s: failed to restore old-freq (%lu Hz)\n",
->>  			__func__, old_opp->rate);
->>  restore_voltage:
->> @@ -880,7 +919,7 @@ static int _set_opp_custom(const struct opp_table *opp_table,
+>> +static int rradc_read_raw(struct iio_dev *indio_dev,
+>> +			  struct iio_chan_spec const *chan_spec, int *val,
+>> +			  int *val2, long mask)
+>> +{
+>> +	struct rradc_chip *chip = iio_priv(indio_dev);
+>> +	const struct rradc_channel *chan;
+>> +	int ret;
+>> +	u16 adc_code;
+>> +
+>> +	if (chan_spec->address >= RR_ADC_CHAN_MAX) {
+>> +		dev_err(chip->dev, "Invalid channel index:%lu\n",
+>> +			chan_spec->address);
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	switch (mask) {
+>> +	case IIO_CHAN_INFO_SCALE:
+>> +		return rradc_read_scale(chip, chan_spec->address, val, val2);
+>> +	case IIO_CHAN_INFO_OFFSET:
+>> +		return rradc_read_offset(chip, chan_spec->address, val);
+>> +	case IIO_CHAN_INFO_RAW:
+>> +		ret = rradc_do_conversion(chip, chan_spec->address, &adc_code);
+>> +		if (ret < 0)
+>> +			return ret;
+>> +
+>> +		*val = adc_code;
+>> +		return IIO_VAL_INT;
+>> +	case IIO_CHAN_INFO_PROCESSED:
 > 
-> This is where we can handle it in your case, if you don't want to hide it behind
-> a clk driver.
+> This doesn't seem to apply to any channels....
 > 
->>  	}
->>  
->>  	data->regulators = opp_table->regulators;
->> -	data->clk = opp_table->clk;
->> +	data->clk = (opp_table->clks ? opp_table->clks[0] : NULL);
->>  	data->dev = dev;
->>  	data->old_opp.rate = old_opp->rate;
->>  	data->new_opp.rate = freq;
->> @@ -969,8 +1008,8 @@ static void _find_current_opp(struct device *dev, struct opp_table *opp_table)
+>> +		chan = &rradc_chans[chan_spec->address];
+>> +		if (!chan->scale_fn)
+>> +			return -EINVAL;
+>> +		ret = rradc_do_conversion(chip, chan_spec->address, &adc_code);
+>> +		if (ret < 0)
+>> +			return ret;
+>> +
+>> +		*val = chan->scale_fn(chip, adc_code, val);
+>> +		return IIO_VAL_INT;
+>> +	default:
+>> +		return -EINVAL;
+>> +	}
+>> +}
+>> +
+>> +static int rradc_read_label(struct iio_dev *indio_dev,
+>> +			    struct iio_chan_spec const *chan, char *label)
+>> +{
+>> +	return snprintf(label, PAGE_SIZE, "%s\n",
+>> +			rradc_chans[chan->address].label);
+>> +}
+>> +
+>> +static const struct iio_info rradc_info = {
+>> +	.read_raw = rradc_read_raw,
+>> +	.read_label = rradc_read_label,
+>> +};
+>> +
+>> +static const struct rradc_channel rradc_chans[RR_ADC_CHAN_MAX] = {
+>> +	{
+>> +		.label = "batt_id",
+>> +		.scale_fn = rradc_post_process_batt_id,
+>> +		.lsb = RR_ADC_BATT_ID_5_LSB,
+>> +		.status = RR_ADC_BATT_ID_STS,
+>> +		.size = 6,
+>> +		.trigger_addr = RR_ADC_BATT_ID_TRIGGER,
+>> +		.trigger_mask = BIT(0),
+>> +	}, {
+>> +		.label = "batt",
+>> +		.lsb = RR_ADC_BATT_THERM_LSB,
+>> +		.status = RR_ADC_BATT_THERM_STS,
+>> +		.size = 2,
+>> +		.trigger_addr = RR_ADC_BATT_THERM_TRIGGER,
+>> +	}, {
+>> +		.label = "pmi8998_skin",
+>> +		.lsb = RR_ADC_SKIN_TEMP_LSB,
+>> +		.status = RR_ADC_AUX_THERM_STS,
+>> +		.size = 2,
+>> +		.trigger_addr = RR_ADC_AUX_THERM_TRIGGER,
+>> +	}, {
+>> +		.label = "usbin_i",
+>> +		.lsb = RR_ADC_USB_IN_I_LSB,
+>> +		.status = RR_ADC_USB_IN_I_STS,
+>> +		.size = 2,
+>> +		.trigger_addr = RR_ADC_USB_IN_I_TRIGGER,
+>> +	}, {
+>> +		.label = "usbin_v",
+>> +		.lsb = RR_ADC_USB_IN_V_LSB,
+>> +		.status = RR_ADC_USB_IN_V_STS,
+>> +		.size = 2,
+>> +		.trigger_addr = RR_ADC_USB_IN_V_TRIGGER,
+>> +		.trigger_mask = BIT(7),
+>> +	}, {
+>> +		.label = "dcin_i",
+>> +		.lsb = RR_ADC_DC_IN_I_LSB,
+>> +		.status = RR_ADC_DC_IN_I_STS,
+>> +		.size = 2,
+>> +		.trigger_addr = RR_ADC_DC_IN_I_TRIGGER,
+>> +	}, {
+>> +		.label = "dcin_v",
+>> +		.lsb = RR_ADC_DC_IN_V_LSB,
+>> +		.status = RR_ADC_DC_IN_V_STS,
+>> +		.size = 2,
+>> +		.trigger_addr = RR_ADC_DC_IN_V_TRIGGER,
+>> +	}, {
+>> +		.label = "pmi8998_die",
+>> +		.lsb = RR_ADC_PMI_DIE_TEMP_LSB,
+>> +		.status = RR_ADC_PMI_DIE_TEMP_STS,
+>> +		.size = 2,
+>> +		.trigger_addr = RR_ADC_PMI_DIE_TEMP_TRIGGER,
+>> +		.trigger_mask = RR_ADC_TRIGGER_EVERY_CYCLE,
+>> +	}, {
+>> +		.label = "chg",
+>> +		.lsb = RR_ADC_CHARGER_TEMP_LSB,
+>> +		.status = RR_ADC_CHARGER_TEMP_STS,
+>> +		.size = 2,
+>> +		.trigger_addr = RR_ADC_CHARGER_TEMP_TRIGGER,
+>> +	}, {
+>> +		.label = "gpio",
+>> +		.lsb = RR_ADC_GPIO_LSB,
+>> +		.status = RR_ADC_GPIO_STS,
+>> +		.size = 2,
+>> +		.trigger_addr = RR_ADC_GPIO_TRIGGER,
+>> +	},
+>> +};
+>> +
+>> +static const struct iio_chan_spec rradc_iio_chans[RR_ADC_CHAN_MAX] = {
+>> +	{
+>> +		.type = IIO_RESISTANCE,
+>> +		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
+>> +		.address = RR_ADC_BATT_ID,
+>> +		.channel = 0,
+>> +		.indexed = 1,
+>> +	}, {
+>> +		.type = IIO_TEMP,
+>> +		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
+>> +		.address = RR_ADC_BATT_THERM,
+>> +		.channel = 0,
+>> +		.indexed = 1,
+>> +	}, {
+>> +		.type = IIO_TEMP,
+>> +		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
+>> +				      BIT(IIO_CHAN_INFO_SCALE) |
+>> +				      BIT(IIO_CHAN_INFO_OFFSET),
+>> +		.address = RR_ADC_SKIN_TEMP,
+>> +		.channel = 1,
+>> +		.indexed = 1,
+>> +	}, {
+>> +		.type = IIO_CURRENT,
+>> +		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
+>> +				      BIT(IIO_CHAN_INFO_SCALE),
+>> +		.address = RR_ADC_USBIN_I,
+>> +		.channel = 0,
+>> +		.indexed = 1,
+>> +	}, {
+>> +		.type = IIO_VOLTAGE,
+>> +		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
+>> +				      BIT(IIO_CHAN_INFO_SCALE),
+>> +		.address = RR_ADC_USBIN_V,
+>> +		.channel = 0,
+>> +		.indexed = 1,
+>> +	}, {
+>> +		.type = IIO_CURRENT,
+>> +		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
+>> +				      BIT(IIO_CHAN_INFO_SCALE),
+>> +		.address = RR_ADC_DCIN_I,
+>> +		.channel = 1,
+>> +		.indexed = 1,
+>> +	}, {
+>> +		.type = IIO_VOLTAGE,
+>> +		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
+>> +				      BIT(IIO_CHAN_INFO_SCALE),
+>> +		.address = RR_ADC_DCIN_V,
+>> +		.channel = 1,
+>> +		.indexed = 1,
+>> +	}, {
+>> +		.type = IIO_TEMP,
+>> +		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
+>> +				      BIT(IIO_CHAN_INFO_SCALE) |
+>> +				      BIT(IIO_CHAN_INFO_OFFSET),
+>> +		.address = RR_ADC_DIE_TEMP,
+>> +		.channel = 2,
+>> +		.indexed = 1,
+>> +	}, {
+>> +		.type = IIO_TEMP,
+>> +		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
+>> +				      BIT(IIO_CHAN_INFO_OFFSET) |
+>> +				      BIT(IIO_CHAN_INFO_SCALE),
+>> +		.address = RR_ADC_CHG_TEMP,
+>> +		.channel = 3,
+>> +		.indexed = 1,
+>> +	}, {
+>> +		.type = IIO_VOLTAGE,
+>> +		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
+>> +				      BIT(IIO_CHAN_INFO_SCALE),
+>> +		.address = RR_ADC_GPIO,
+>> +		.channel = 2,
+>> +		.indexed = 1,
+>> +	},
+>> +};
+>> +
 > 
-> I think this routine breaks as soon as we add support for multiple clocks.
-> clks[0]'s frequency can be same for multiple OPPs and this won't get you the
-> right OPP then.
 
-I don't think so and this was raised also by Stephen - only the first
-clock is considered the one used for all PM OPP frequency operations,
-like get ceil/floor.
-
-The assumption (which might need better documentation) is that first
-clock frequency is the main one:
-1. It is still in opp->rate field, so it is used everywhere when OPPs
-are compared/checked for rates.
-1. Usually is used also in opp-table nodes names.
-
-The logical explanation is that devices has some main operating
-frequency, e.g. the core clock, and this determines the performance. In
-the same time such device might not be able to scale this one core clock
-independently from others, therefore this set of patches.
-
-> 
->>  	struct dev_pm_opp *opp = ERR_PTR(-ENODEV);
->>  	unsigned long freq;
->>  
->> -	if (!IS_ERR(opp_table->clk)) {
->> -		freq = clk_get_rate(opp_table->clk);
->> +	if (opp_table->clks && !IS_ERR(opp_table->clks[0])) {
->> +		freq = clk_get_rate(opp_table->clks[0]);
->>  		opp = _find_freq_ceil(opp_table, &freq);
->>  	}
->>  
->> @@ -1070,7 +1109,7 @@ static int _set_opp(struct device *dev, struct opp_table *opp_table,
->>  						 scaling_down);
->>  	} else {
->>  		/* Only frequency scaling */
->> -		ret = _generic_set_opp_clk_only(dev, opp_table->clk, freq);
->> +		ret = _generic_set_opp_clks_only(dev, opp_table, opp);
->>  	}
->>  
->>  	if (ret)
->> @@ -1135,11 +1174,15 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned long target_freq)
-> 
-> This should have a BUG or WARN _ON() now if clock count is more than one. This
-> routine can't be called unless custom handler is available.
-> 
-> I skipped rest of the code as we need to work/decide on the design first.
-
-
-
-Best regards,
-Krzysztof
+-- 
+Kind Regards,
+Caleb (they/he)
