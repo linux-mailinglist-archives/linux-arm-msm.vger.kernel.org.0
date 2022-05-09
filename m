@@ -2,49 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 145CA51FEE8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 15:54:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DA9252003D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 16:48:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236625AbiEIN5W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 May 2022 09:57:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59520 "EHLO
+        id S237613AbiEIOvY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 May 2022 10:51:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236626AbiEIN5V (ORCPT
+        with ESMTP id S237670AbiEIOvU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 May 2022 09:57:21 -0400
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74CCB2EA22;
-        Mon,  9 May 2022 06:53:26 -0700 (PDT)
-Received: from dggpemm500020.china.huawei.com (unknown [172.30.72.53])
-        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4KxjKB65bGz1JC0K;
-        Mon,  9 May 2022 21:52:14 +0800 (CST)
-Received: from dggpemm500007.china.huawei.com (7.185.36.183) by
- dggpemm500020.china.huawei.com (7.185.36.49) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Mon, 9 May 2022 21:53:24 +0800
-Received: from huawei.com (10.175.103.91) by dggpemm500007.china.huawei.com
- (7.185.36.183) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Mon, 9 May
- 2022 21:53:24 +0800
-From:   Yang Yingliang <yangyingliang@huawei.com>
-To:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-media@vger.kernel.org>
-CC:     <mchehab@kernel.org>, <hverkuil-cisco@xs4all.nl>,
-        <robert.foss@linaro.org>, <bryan.odonoghue@linaro.org>,
-        <vladimir.zapolskiy@linaro.org>
-Subject: [PATCH] media: camss: csid: fix wrong size passed to devm_kmalloc_array()
-Date:   Mon, 9 May 2022 22:04:59 +0800
-Message-ID: <20220509140459.1361628-1-yangyingliang@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        Mon, 9 May 2022 10:51:20 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 726F324BB13
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 07:47:25 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id dk23so27302625ejb.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 07:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9xRTrI9WocAtlulH6OCScXZ4ICM1Jp6yEojhtKo1MlE=;
+        b=IcxXe3YOAgVNx9iZE1MzK3khoVKlhLo3o8CnfHO1XE31/CHYWK1u7sjG+FLAZdMzrQ
+         D5OYeJ/eyxd3EdXmDlq2fpT6ts0ZWblq7G6+3C7Vm5VOgIvDGzcYygnGnR0i4SYRLtVO
+         H8BVRqv3QmEKXn1E0yRO475DC2cBMf6Y/h/f1PLosLTXcz86Ae1O2O0vTtb/YZe8QPtP
+         +7kG0+kSj+Vr4ApYFgJLRxeW+Ar8rmLyC7HtaWCLA8SRwNkSgFiQEmuzJkQ1jQlJGtRy
+         rXzyTyuGTKE6csuq8zdtIsBI5pjEgeCdvepu7gZe6E46L9NGhyliHGaJGK0KJZ+N91Sc
+         mF4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9xRTrI9WocAtlulH6OCScXZ4ICM1Jp6yEojhtKo1MlE=;
+        b=ZrVx9WSCAHNrmzookcac6u9J4de8wsavY/bpaJK19mO6A+bM99xaXIcuAQfOw441c4
+         yfl2X8zFbAq8z0Wyranu2cgGvhHniPFTEwRflZSPVRpUAeSCguZtFAn8rhSf3/wllDnO
+         GWO4Z+2z+SXs5tXYazWSkLIcQ/WOk0NmKVIRfzDZFWoS1f/cAA7Q88HuKJ41+UlGiZHC
+         Ch+GQYxTAAVk6qnFHU0ppSKtH9Klh91aJtR9GKhO+pAecIKLmm5j4J7yQeCR9bVwdIy8
+         yP43bdEJJlh9/CtBESsvvori1fYO1s+Fwa1bmMb/Kmz9fV+bLsvpSKqba5FnSlb19KmC
+         oZsQ==
+X-Gm-Message-State: AOAM532QQANEZ1NIz29HgljpROqWbXVuiEDfttMaByFHHMDPqVmc32RC
+        NaocrBLFMKJbtXtHrOpcrkdH6g==
+X-Google-Smtp-Source: ABdhPJyH2mzabaK/ko/NHtQYxwJwz5wtJK9y40PCttihpkD1MkIMrDLyJ3GIPC7RaVkk/udDlHi+uA==
+X-Received: by 2002:a17:907:1ca4:b0:6f4:68b8:99d2 with SMTP id nb36-20020a1709071ca400b006f468b899d2mr15485120ejc.616.1652107644053;
+        Mon, 09 May 2022 07:47:24 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id u9-20020a05640207c900b0042617ba637bsm6451828edy.5.2022.05.09.07.47.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 May 2022 07:47:23 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Robert Foss <robert.foss@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Del Regno <angelogioacchino.delregno@somainline.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/4] media: dt-bindings: qcom,sdm660-camss: document interconnects
+Date:   Mon,  9 May 2022 16:47:11 +0200
+Message-Id: <20220509144714.144154-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.103.91]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- dggpemm500007.china.huawei.com (7.185.36.183)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -52,28 +76,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-'supplies' is a pointer, the real size of struct regulator_bulk_data
-should be pass to devm_kmalloc_array().
+Document the interconnect properties used in the Qualcomm CAMSS on
+SDM660:
 
-Fixes: 0d8140179715 ("media: camss: Add regulator_bulk support")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+  sdm630-sony-xperia-nile-discovery.dtb: camss@ca00000: 'interconnect-names', 'interconnects' do not match any of the regexes: 'pinctrl-[0-9]+'
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/media/platform/qcom/camss/camss-csid.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/media/qcom,sdm660-camss.yaml       | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index f993f349b66b..80628801cf09 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -666,7 +666,7 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
- 	if (csid->num_supplies) {
- 		csid->supplies = devm_kmalloc_array(camss->dev,
- 						    csid->num_supplies,
--						    sizeof(csid->supplies),
-+						    sizeof(*csid->supplies),
- 						    GFP_KERNEL);
- 		if (!csid->supplies)
- 			return -ENOMEM;
+diff --git a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+index 338ab28d5f3b..b28c8e17f158 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+@@ -84,6 +84,13 @@ properties:
+       - const: vfe0
+       - const: vfe1
+ 
++  interconnects:
++    maxItems: 1
++
++  interconnect-names:
++    items:
++      - const: vfe-mem
++
+   iommus:
+     maxItems: 4
+ 
 -- 
-2.25.1
+2.32.0
 
