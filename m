@@ -2,74 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35B9E51F2BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 04:59:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2C3751F2D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 05:19:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229379AbiEIC7V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 May 2022 22:59:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34060 "EHLO
+        id S231256AbiEIDRq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 May 2022 23:17:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232184AbiEIC5B (ORCPT
+        with ESMTP id S231424AbiEIDPX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 May 2022 22:57:01 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFF65719D2;
-        Sun,  8 May 2022 19:53:09 -0700 (PDT)
+        Sun, 8 May 2022 23:15:23 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F67586AEF;
+        Sun,  8 May 2022 20:11:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652064790; x=1683600790;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=6Wxg3fLn0A0xQwJ99WIYxTRHGTymqsdyy7BxyjO6OG8=;
-  b=u7gbwZ18aTHEIMnAzO1A9IP81w/TiS4bPRJpPAP+mjRPgJ4szV04+NYt
-   7SfBfVg5QdeIWmNc0xOpdA1MTtTSyowkRw+OWTV1rZ0LFI8X40kw7Hct0
-   Fkd+w6tsldqBIlByHunsbnXh42n8SriH4jWvptuIZAYO1xLBrpCk7bTqE
-   w=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 May 2022 19:53:09 -0700
+  t=1652065890; x=1683601890;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=p8urheBXbOU7HRdMjgj249wzbQxrt5Hj0ai6+bM7SsU=;
+  b=m0BEsNOyJ2zLwDXAUvQawRsU05SLRNNp3/hzwQNQIy09ww3mA8LfRzhD
+   MCBjm1CqSVZyeAiG0Gamwwso16bamP2RmRy9TCPlscTyYou57nkCzzBKc
+   gmvgpNeat7b3jztDpW9ubYkzGxO7RcQ4vKI5CD2QjGipPqR4TgN8PmM6a
+   M=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 08 May 2022 20:11:30 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2022 19:53:08 -0700
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2022 20:11:28 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Sun, 8 May 2022 19:53:08 -0700
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ 15.2.986.22; Sun, 8 May 2022 20:11:28 -0700
+Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Sun, 8 May 2022 19:53:02 -0700
-Date:   Mon, 9 May 2022 08:22:58 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Doug Anderson" <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Subject: Re: [v3 1/3] dt-bindings: phy: qcom,usb-snps-femto-v2: Add phy
- override params bindings
-Message-ID: <20220509025258.GH4640@hu-pkondeti-hyd.qualcomm.com>
-References: <1652011947-18575-1-git-send-email-quic_kriskura@quicinc.com>
- <1652011947-18575-2-git-send-email-quic_kriskura@quicinc.com>
+ 15.2.986.22; Sun, 8 May 2022 20:11:24 -0700
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <bjorn.andersson@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <sboyd@kernel.org>, <agross@kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <mathieu.poirier@linaro.org>,
+        <mka@chromium.org>, Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH] remoteproc: sysmon: Wait for SSCTL service to come up
+Date:   Mon, 9 May 2022 08:41:07 +0530
+Message-ID: <1652065867-5669-1-git-send-email-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1652011947-18575-2-git-send-email-quic_kriskura@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,64 +62,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
+The SSCTL service comes up after a finite time when the remote Q6 comes
+out of reset. Any graceful shutdowns requested during this period will
+be a NOP and abrupt tearing down of the glink channel might lead to pending
+transactions on the remote Q6 side and will ultimately lead to a fatal
+error. Fix this by waiting for the SSCTL service when a graceful shutdown
+is requested.
 
-On Sun, May 08, 2022 at 05:42:25PM +0530, Krishna Kurapati wrote:
-> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> 
-> Add device tree bindings for SNPS phy tuning parameters.
-> 
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  .../bindings/phy/qcom,usb-snps-femto-v2.yaml       | 87 ++++++++++++++++++++++
->  1 file changed, 87 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
-> index 1ce251d..6c2ecdd 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
-> @@ -53,6 +53,93 @@ properties:
->    vdda33-supply:
->      description: phandle to the regulator 3.3V supply node.
->  
+Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+---
+ drivers/remoteproc/qcom_sysmon.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-<snip>
+diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
+index 9fca81492863..a9f04dd83ab6 100644
+--- a/drivers/remoteproc/qcom_sysmon.c
++++ b/drivers/remoteproc/qcom_sysmon.c
+@@ -41,6 +41,7 @@ struct qcom_sysmon {
+ 	struct completion comp;
+ 	struct completion ind_comp;
+ 	struct completion shutdown_comp;
++	struct completion ssctl_comp;
+ 	struct mutex lock;
+ 
+ 	bool ssr_ack;
+@@ -445,6 +446,8 @@ static int ssctl_new_server(struct qmi_handle *qmi, struct qmi_service *svc)
+ 
+ 	svc->priv = sysmon;
+ 
++	complete(&sysmon->ssctl_comp);
++
+ 	return 0;
+ }
+ 
+@@ -501,6 +504,7 @@ static int sysmon_start(struct rproc_subdev *subdev)
+ 		.ssr_event = SSCTL_SSR_EVENT_AFTER_POWERUP
+ 	};
+ 
++	reinit_completion(&sysmon->ssctl_comp);
+ 	mutex_lock(&sysmon->state_lock);
+ 	sysmon->state = SSCTL_SSR_EVENT_AFTER_POWERUP;
+ 	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+@@ -545,6 +549,11 @@ static void sysmon_stop(struct rproc_subdev *subdev, bool crashed)
+ 	if (crashed)
+ 		return;
+ 
++	if (sysmon->ssctl_instance) {
++		if (!wait_for_completion_timeout(&sysmon->ssctl_comp, HZ / 2))
++			dev_err(sysmon->dev, "timeout waiting for ssctl service\n");
++	}
++
+ 	if (sysmon->ssctl_version)
+ 		sysmon->shutdown_acked = ssctl_request_shutdown(sysmon);
+ 	else if (sysmon->ept)
+@@ -631,6 +640,7 @@ struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
+ 	init_completion(&sysmon->comp);
+ 	init_completion(&sysmon->ind_comp);
+ 	init_completion(&sysmon->shutdown_comp);
++	init_completion(&sysmon->ssctl_comp);
+ 	mutex_init(&sysmon->lock);
+ 	mutex_init(&sysmon->state_lock);
+ 
+-- 
+2.7.4
 
-> +
-> +  qcom,hs-rise-fall-time-bps:
-> +    $ref: /schemas/types.yaml#/definitions/int32
-> +    description:
-> +      This adjusts the rise/fall times of the high-speed waveform.
-> +      The values defined are in multiples of basis points (1bp = 0.01%).
-> +      The hardware accepts only discrete values. The value closest to the
-> +      provided input will be chosen as the override value for this param.
-> +
-> +  qcom,hs-crossover-voltage:
-> +    $ref: /schemas/types.yaml#/definitions/int32
-> +    description:
-> +      This adjusts the voltage at which the DP<#> and DM<#>
-> +      signals cross while transmitting in HS mode.
-> +      The values defined are in milli volts. The hardware accepts only
-> +      discrete values. The value closest to the provided input will be
-> +      chosen as the override value for this param.
-> +
-> +  qcom,hs-output-impedance:
-> +    $ref: /schemas/types.yaml#/definitions/int32
-> +    description:
-> +      In some applications, there can be significant series resistance
-> +      on the D+ and D- paths between the transceiver and cable. This adjusts
-> +      the driver source impedance to compensate for added series
-> +      resistance on the USB. The values defined are in milliohms.
-
-%s/milliohms/mill ohms
-
-> +      The hardware accepts only discrete values. The value closest to the
-> +      provided input will be chosen as the override value for this param.
-> +
-
-What are the units for HS crossover voltage and output impedence? can you add
-units as a suffix like other parameters?
-
-Thanks,
-Pavan
