@@ -2,99 +2,411 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA0D4520105
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 17:23:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D2475201DA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 18:02:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238327AbiEIP1M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 May 2022 11:27:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35372 "EHLO
+        id S238767AbiEIQGi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 May 2022 12:06:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238204AbiEIP1L (ORCPT
+        with ESMTP id S238765AbiEIQGh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 May 2022 11:27:11 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89C6E2A1883
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 08:23:14 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id v65so15520434oig.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 08:23:14 -0700 (PDT)
+        Mon, 9 May 2022 12:06:37 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 144FF9BADD
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 09:02:43 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 125-20020a1c1983000000b003941f354c62so8555826wmz.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 09:02:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=REojqMTypU3/iERzyVKWOawFG50CjfHR0afcTjLuxM0=;
-        b=jBb0jbM39pGn+Md7Husess5D5OKzKj906uv1BI0sHPD3y1nCOhro/8dNlnoF3xdp++
-         UHfXxeee2gQWOgvK0avSEj1PYUXdwbYI4ZDqyjex5T1gh/3PL2lP2xwlusoFMMo6hQnY
-         g/wSdypa+lJm9Q66Ucb8TYyVfKURJJyxI3J+o6L7PV4lP8CaNSQG+L7oujmCf/AwFFex
-         zfKtS5rDV5X/E2eAYi5jhIDENhFV3MBU6s9ENGTDcData07T+NfZwdnfTOT9PdX1SWkd
-         c7gJi46erOrrpoLBaKsUOZTzWAh2sI3UgzcdVPFmveenYnPD8ynaNxPNA1xJcQQTwVOJ
-         1Q7w==
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=XjSykcbq3Eja6b8cSjj+R5Eo14GeCIVsWb5UhQqjews=;
+        b=YraRkawoWp6YQiuvCcifrxCehyPIRBUhhCQ+3jSy3tu65ClDolI5Lc4ck9Cox/kBb2
+         3TMkZ9j9lw/QuKsqL0Uij9cPKYLznReZjNNkBTJhLlOgwwN8sZhfB+/GHgLOXV0MfeCd
+         8VTRKE3LHFizTRhGwQ8bh899mml/7IDS6OXS57fi830FjOnKTedZSrfuQZA3VLPmvpRs
+         kZ5uLjMWr3EuI+/PmSN/fPvfo8+LqsxLg3lSVS+Ittz5ljhGU6Ab+dR1bEgxEPD4LsrM
+         SB3re2RZhAu2Yd8MwJ0Jhd9ZctwKoSjuvlgPIOl7BDWHaIVI5B7mthxvEEGo+WPUs+eR
+         9CJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=REojqMTypU3/iERzyVKWOawFG50CjfHR0afcTjLuxM0=;
-        b=PIaIBayNNcMX0GTbkWJptHZCAL9Sf3uNcQjzST3E/32rosSftOggTIVI1SxMTB4PYr
-         QNW77h4mNZWJylNnTrJQZvpAcbYdq5eyrXaflrhhJOKzKI/ijuJ6I9Fqn5tyz9ohwJx5
-         aNNGbZgGRrU+wOdNrczYVnMM5XzLFD2m89UCrBRtPWDx9VBQeu/V/qTdBi8zIfLNUqt2
-         sdQP92NWA0fgnKOgw4sutbi7hBV+bHjdyCIY3RrXQlZbw8EbBI4TFMMMjzwQkKqMekPA
-         LQuaEt50I7gTqyAUAm3173I95y0Zbc+E3nbKeTtmKK+KATiCOCSse9BBOCo1fyJcUPJu
-         YMmQ==
-X-Gm-Message-State: AOAM533QlhFmzy4AfmIONA3pkUArMMtFzsnNPGDpIbGIHPzUzLoWqgsv
-        SnLv7onpCWT6Crsk1YwaG8sPMA==
-X-Google-Smtp-Source: ABdhPJzNbJWnvjVt0Sxu1YmytFAB5FhsVfRm9P5Jy8Zc0DzeRDBagQM0LpnOtBrg0cuX5F9QRHY2nA==
-X-Received: by 2002:a05:6808:192a:b0:326:a728:f8a3 with SMTP id bf42-20020a056808192a00b00326a728f8a3mr5731967oib.153.1652109793810;
-        Mon, 09 May 2022 08:23:13 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id k18-20020a056870d39200b000e932746d33sm4372902oag.28.2022.05.09.08.23.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 May 2022 08:23:13 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     arm@kernel.org, soc@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [GIT PULL] Qualcomm ARM64 DT fixes for v5.18
-Date:   Mon,  9 May 2022 10:23:10 -0500
-Message-Id: <20220509152310.306179-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.32.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=XjSykcbq3Eja6b8cSjj+R5Eo14GeCIVsWb5UhQqjews=;
+        b=Ft9oUPV30gvVJZrr7RTcOUHQ0joMZ0eCdSNK6ekmQvoDlkvjSnehTiqH9vZRMdq041
+         r23RwIDSdMwn6LYpRMmf+me6KyLuJBEot3xBiVsE48CgNqUbM82RMX2Hsym8pr8MfV5J
+         FC9L6bH6Sa+xaam993gAHEOvGnM4+GniC+9qeW1NcKZzUroxWzCIBiCL+CymZ7b+DG2k
+         o8m7hCwGGVZxeuBKXIg7YaPCK7DuebZ5Jfpy1qwZKHySdbgJhb5GvgQhdpxZp57+e3C0
+         /QWVAcVlB/wYSGHnjaLVAmBFC5imAdaRmInjKep3NaCSiGs4+1Gqnw3mTNCGsxGp2ufs
+         Gxfw==
+X-Gm-Message-State: AOAM531MxqFv7IzP3Yoc+ldkR14mcgz9i5MW1G3EV/+fhDfY/feW5Dh2
+        noxAdA+aLnl4yXulclyFn2ZqkL10H5BIGArbu7c=
+X-Google-Smtp-Source: ABdhPJw6WYDcT48KMmMHwU74QPZ4AZlcgPPHPHuZhU9HgI6eS+wtfsvagMh5QCOW55an64Pt9Kq1EwNC2qe2rfL1zts=
+X-Received: by 2002:a7b:cc0d:0:b0:381:220e:a3a0 with SMTP id
+ f13-20020a7bcc0d000000b00381220ea3a0mr16710686wmh.59.1652112161319; Mon, 09
+ May 2022 09:02:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 9 May 2022 09:02:30 -0700
+Message-ID: <CAF6AEGvJCr_1D8d0dgmyQC5HD4gmXeZw=bFV_CNCfceZbpMxRw@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-next-2022-05-09 for v5.19
+To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 3123109284176b1532874591f7c81f3837bbdc17:
+Hi Dave & Daniel,
 
-  Linux 5.18-rc1 (2022-04-03 14:08:21 -0700)
+Here is the main drm/msm pull request for v5.19, containing:
+
+ - Fourcc modifier for tiled but not compressed layouts
+ - Support for userspace allocated IOVA (GPU virtual address)
+ - Devfreq clamp_to_idle fix
+ - DPU: DSC (Display Stream Compression) support
+ - DPU: inline rotation support on SC7280
+ - DPU: update DP timings to follow vendor recommendations
+ - DP, DPU: add support for wide bus (on newer chipsets)
+ - DP: eDP support
+ - Merge DPU1 and MDP5 MDSS driver, make dpu/mdp device the master
+   component
+ - MDSS: optionally reset the IP block at the bootup to drop
+   bootloader state
+ - Properly register and unregister internal bridges in the DRM framework
+ - Complete DPU IRQ cleanup
+ - DP: conversion to use drm_bridge and drm_bridge_connector
+ - eDP: drop old eDP parts again
+ - Misc small fixes
+
+The following changes since commit ce522ba9ef7e2d9fb22a39eb3371c0c64e2a433e:
+
+  Linux 5.18-rc2 (2022-04-10 14:21:36 -1000)
 
 are available in the Git repository at:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-5.18
+  https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2022-05-09
 
-for you to fetch changes up to 18019eb62efb68c9b365acca9c4fcb2e0d459487:
+for you to fetch changes up to 24df12013853ac59c52cc726e9cbe51e38d09eda:
 
-  arm64: dts: qcom: sm8250: don't enable rx/tx macro by default (2022-04-11 21:40:57 -0500)
-
-----------------------------------------------------------------
-Qualcomm ARM64 DT fixes for v5.18
-
-This disables the two Soundwire controllers as well as rx and tx macros
-by default on the SM8250 platform to avoid crashes on devices where
-these aren't available.
+  MAINTAINERS: Add Dmitry as MSM DRM driver co-maintainer (2022-05-07
+12:02:29 -0700)
 
 ----------------------------------------------------------------
-Dmitry Baryshkov (1):
-      arm64: dts: qcom: sm8250: don't enable rx/tx macro by default
+Abhinav Kumar (22):
+      drm/msm: remove unused hotplug and edid macros from msm_drv.h
+      drm: allow passing possible_crtcs to drm_writeback_connector_init()
+      drm: introduce drm_writeback_connector_init_with_encoder() API
+      drm/msm/dpu: add writeback blocks to the sm8250 DPU catalog
+      drm/msm/dpu: add reset_intf_cfg operation for dpu_hw_ctl
+      drm/msm/dpu: rename dpu_hw_pipe_cdp_cfg to dpu_hw_cdp_cfg
+      drm/msm/dpu: add dpu_hw_wb abstraction for writeback blocks
+      drm/msm/dpu: add writeback blocks to DPU RM
+      drm/msm/dpu: add changes to support writeback in hw_ctl
+      drm/msm/dpu: add an API to reset the encoder related hw blocks
+      drm/msm/dpu: make changes to dpu_encoder to support virtual encoder
+      drm/msm/dpu: add encoder operations to prepare/cleanup wb job
+      drm/msm/dpu: move _dpu_plane_get_qos_lut to dpu_hw_util file
+      drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback
+      drm/msm/dpu: add the writeback connector layer
+      drm/msm/dpu: initialize dpu encoder and connector for writeback
+      drm/msm/dpu: gracefully handle null fb commits for writeback
+      drm/msm/dpu: add writeback blocks to the display snapshot
+      drm/msm/dpu: add wb_idx to existing DRM prints in dpu_encoder
+      drm/msm/dpu: add wb_idx to DRM traces in dpu_encoder
+      drm/msm/dpu: remove unused refcount for encoder_phys_wb
+      drm/msm/dpu: add missing break statement for update_pending_flush_wb()
 
- arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 12 ++++++++++++
- arch/arm64/boot/dts/qcom/sm8250.dtsi    |  4 ++++
- 2 files changed, 16 insertions(+)
+Bjorn Andersson (2):
+      dt-bindings: display: msm: Add optional resets
+      drm/msm/dpu: Issue MDSS reset during initialization
+
+Chia-I Wu (3):
+      drm/msm: remove explicit devfreq status reset
+      drm/msm: simplify gpu_busy callback
+      drm/msm: return the average load over the polling period
+
+Dan Carpenter (1):
+      drm/msm: return an error pointer in msm_gem_prime_get_sg_table()
+
+Dmitry Baryshkov (37):
+      drm/msm: unify MDSS drivers
+      drm/msm: remove extra indirection for msm_mdss
+      drm/msm: split the main platform driver
+      drm/msm: stop using device's match data pointer
+      drm/msm: allow compile time selection of driver components
+      drm/msm: make mdp5/dpu devices master components
+      drm/msm: properly add and remove internal bridges
+      drm/msm/dpu: remove manual destruction of DRM objects
+      drm/msm: loop over encoders using drm_for_each_encoder()
+      drm/msm: don't store created planes, connectors and encoders
+      drm/msm: remove unused plane_property field from msm_drm_private
+      drm/msm/dpu: don't use merge_3d if DSC merge topology is used
+      drm/msm/dpu: remove extra wrappers around dpu_core_irq
+      drm/msm/dpu: remove always-true argument of dpu_core_irq_read()
+      drm/msm/dpu: allow just single IRQ callback
+      drm/msm/dpu: get rid of dpu_encoder_helper_(un)register_irq
+      drm/msm/dpu: remove struct dpu_encoder_irq
+      drm/msm/dpu: pass irq to dpu_encoder_helper_wait_for_irq()
+      drm/msm/dpu: document INTF_EDP/INTF_DP difference
+      drm/msm/dpu: drop INTF_TYPE_MAX symbol
+      drm/msm/dpu: drop obsolete INTF_EDP comment
+      drm/msm/dpu: drop INTF_EDP from interface type conditions
+      drm/msm/dp: replace dp_connector with drm_bridge_connector
+      drm/msm/dp: remove extra wrappers and public functions
+      drm/msm/dp: drop dp_mode argument from dp_panel_get_modes()
+      drm/msm/dp: simplify dp_connector_get_modes()
+      drm/msm/dp: remove max_pclk_khz field from dp_panel/dp_display
+      drm/msm: select DRM_DP_AUX_BUS for the AUX bus support
+      drm/msm/dsi: fix error checks and return values for DSI xmit functions
+      drm/msm/dsi: use RMW cycles in dsi_update_dsc_timing
+      drm/msm: add missing include to msm_drv.c
+      drm/msm: drop old eDP block support (again)
+      drm/msm/dpu: don't access mode pointer before it is set
+      drm/msm/dsi: fix address for second DSI PHY on SDM660
+      drm/msm/dsi: pll_7nm: remove unsupported dividers for DSI pixel clock
+      drm/msm/dpu: remove NULL-ness check in dpu_hw_intr_destroy
+      MAINTAINERS: Add Dmitry as MSM DRM driver co-maintainer
+
+Douglas Anderson (1):
+      drm/msm: Fix shutdown
+
+Guo Zhengkui (1):
+      drm/msm: fix returnvar.cocci warning
+
+Haowen Bai (1):
+      drm/msm/mdp5: Eliminate useless code
+
+Jessica Zhang (3):
+      drm/msm/dpu: Clean up CRC debug logs
+      drm/msm/mdp5: Return error code in mdp5_pipe_release when
+deadlock is detected
+      drm/msm/mdp5: Return error code in mdp5_mixer_release when
+deadlock is detected
+
+Konrad Dybcio (1):
+      drm/msm/disp: dpu1: Properly sort qcm2290_dpu_caps
+
+Kuogee Hsieh (10):
+      drm/msm/dpu: adjust display_v_end for eDP and DP
+      drm/msm/dpu: replace BIT(x) with correspond marco define string
+      drm/msm/dpu: revise timing engine programming to support widebus feature
+      drm/msm/dp: enable widebus feature for display port
+      drm/msm/dp: replace DRM_DEBUG_DP marco with drm_dbg_dp
+      drm/msm/dp: stop event kernel thread when DP unbind
+      drm/msm/dp: tear down main link at unplug handle immediately
+      drm/msm/dp: reset DP controller before transmit phy test pattern
+      drm/msm/dp: do not stop transmitting phy test pattern during DP
+phy compliance test
+      drm/msm/dp: fix event thread stuck in wait_event after kthread_stop()
+
+Luca Weiss (1):
+      drm/msm: Fix null pointer dereferences without iommu
+
+Lv Ruyi (4):
+      drm/msm/dpu: fix error check return value of irq_of_parse_and_map()
+      drm/msm/dp: fix error check return value of irq_of_parse_and_map()
+      drm/msm/hdmi: fix error check return value of irq_of_parse_and_map()
+      drm: msm: fix error check return value of irq_of_parse_and_map()
+
+Marijn Suijten (2):
+      drm/msm/dpu: Bind pingpong block to intf on active ctls in cmd encoder
+      drm/msm/dpu: Use indexed array initializer to prevent mismatches
+
+Rob Clark (16):
+      drm/fourcc: Add QCOM tiled modifiers
+      drm/msm: Remove unused field in submit
+      drm/msm: Add support for pointer params
+      drm/msm: Split out helper to get comm/cmdline
+      drm/msm: Add a way to override processes comm/cmdline
+      drm/msm/gem: Move prototypes
+      drm/msm/gpu: Drop duplicate fence counter
+      drm/msm/gem: Convert some missed GEM_WARN_ON()s
+      drm/msm/gem: Split out inuse helper
+      drm/msm/gem: Drop PAGE_SHIFT for address space mm
+      drm/msm: Drop msm_gem_iova()
+      drm/msm/gem: Rework vma lookup and pin
+      drm/msm/gem: Split vma lookup and pin
+      drm/msm/gem: Add fenced vma unpin
+      drm/msm: Add a way for userspace to allocate GPU iova
+      drm/msm: Limit command submission when no IOMMU
+
+Sankeerth Billakanti (4):
+      drm/msm/dp: Add eDP support via aux_bus
+      drm/msm/dp: Support only IRQ_HPD and REPLUG interrupts for eDP
+      drm/msm/dp: wait for hpd high before aux transaction
+      drm/msm/dp: Support the eDP modes given by panel
+
+Tom Rix (1):
+      drm/msm: change msm_sched_ops from global to static
+
+Vinod Koul (13):
+      drm/msm/dsi: add support for dsc data
+      drm/msm/dsi: Pass DSC params to drm_panel
+      drm/msm/disp/dpu1: Add support for DSC
+      drm/msm/disp/dpu1: Add support for DSC in pingpong block
+      drm/msm/disp/dpu1: Add DSC for SDM845 to hw_catalog
+      drm/msm/disp/dpu1: Add DSC support in hw_ctl
+      drm/msm/disp/dpu1: Add support for DSC in encoder
+      drm/msm: Add missing num_dspp field documentation
+      drm/msm/disp/dpu1: Add support for DSC in topology
+      drm/msm/disp/dpu1: Add DSC support in RM
+      drm/msm/dsi: add mode valid callback for dsi_mgr
+      drm/msm: Update generated headers
+      drm/msm/dsi: Add support for DSC configuration
+
+Vinod Polimera (5):
+      drm/msm/disp/dpu1: add inline function to validate format support
+      drm/msm/disp/dpu1: add inline rotation support for sc7280
+      drm/msm/disp/dpu1: set vbif hw config to NULL to avoid use after
+memory free during pm runtime resume
+      drm/msm/disp/dpu1: set mdp clk to the maximum frequency in opp
+table during probe
+      drm/msm/disp/dpu1: avoid clearing hw interrupts if hw_intr is
+null during drm uninit
+
+Yang Yingliang (1):
+      drm/msm/hdmi: check return value after calling
+platform_get_resource_byname()
+
+ .../bindings/display/msm/dpu-qcm2290.yaml          |    4 +
+ .../bindings/display/msm/dpu-sc7180.yaml           |    4 +
+ .../bindings/display/msm/dpu-sc7280.yaml           |    4 +
+ .../bindings/display/msm/dpu-sdm845.yaml           |    4 +
+ MAINTAINERS                                        |    5 +-
+ .../drm/arm/display/komeda/komeda_wb_connector.c   |    4 +-
+ drivers/gpu/drm/arm/malidp_mw.c                    |    4 +-
+ drivers/gpu/drm/drm_writeback.c                    |   73 +-
+ drivers/gpu/drm/msm/Kconfig                        |   51 +-
+ drivers/gpu/drm/msm/Makefile                       |   29 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |   21 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |    2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |   17 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c            |   68 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h            |    4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h       |   32 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |   12 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  592 +++++++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |   32 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |   97 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |  112 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   79 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |  753 +++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h        |   22 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  157 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   95 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |   94 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |   23 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |  215 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |   80 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c  |  195 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h  |   12 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |   62 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |    2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c          |    2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   22 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   32 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h    |   14 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c        |    2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h        |   18 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c        |   25 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h        |   19 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c          |  279 ++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h          |  115 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  241 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |   13 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c           |  260 ----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |  170 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h          |    2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   78 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h             |   13 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h          |   93 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c      |   76 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h      |   31 +
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c   |    3 +
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c           |   64 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c   |    3 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c          |   10 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c           |   81 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c          |  252 ----
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.c         |   15 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_mixer.h         |    4 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c          |   15 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.h          |    2 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c         |   22 +-
+ drivers/gpu/drm/msm/dp/dp_audio.c                  |   50 +-
+ drivers/gpu/drm/msm/dp/dp_aux.c                    |   21 +-
+ drivers/gpu/drm/msm/dp/dp_aux.h                    |    3 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.c                |   98 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.h                |    3 +
+ drivers/gpu/drm/msm/dp/dp_ctrl.c                   |  166 ++-
+ drivers/gpu/drm/msm/dp/dp_ctrl.h                   |    2 +
+ drivers/gpu/drm/msm/dp/dp_debug.c                  |    2 -
+ drivers/gpu/drm/msm/dp/dp_display.c                |  438 ++++---
+ drivers/gpu/drm/msm/dp/dp_display.h                |    7 +-
+ drivers/gpu/drm/msm/dp/dp_drm.c                    |  215 +--
+ drivers/gpu/drm/msm/dp/dp_drm.h                    |   22 +-
+ drivers/gpu/drm/msm/dp/dp_link.c                   |  103 +-
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |   49 +-
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |    3 +-
+ drivers/gpu/drm/msm/dp/dp_parser.c                 |   25 +-
+ drivers/gpu/drm/msm/dp/dp_parser.h                 |   14 +-
+ drivers/gpu/drm/msm/dp/dp_power.c                  |   25 +-
+ drivers/gpu/drm/msm/dsi/dsi.c                      |    6 +-
+ drivers/gpu/drm/msm/dsi/dsi.h                      |    3 +
+ drivers/gpu/drm/msm/dsi/dsi.xml.h                  |   80 ++
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 |  300 ++++-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c              |   15 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c         |    2 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |   10 +-
+ drivers/gpu/drm/msm/edp/edp.h                      |   77 --
+ drivers/gpu/drm/msm/edp/edp_ctrl.c                 | 1373 --------------------
+ drivers/gpu/drm/msm/hdmi/hdmi.c                    |   11 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c             |    3 +
+ drivers/gpu/drm/msm/msm_drv.c                      |  294 ++---
+ drivers/gpu/drm/msm/msm_drv.h                      |  162 ++-
+ drivers/gpu/drm/msm/msm_fb.c                       |   20 +-
+ drivers/gpu/drm/msm/msm_fence.c                    |    6 +-
+ drivers/gpu/drm/msm/msm_fence.h                    |    3 +
+ drivers/gpu/drm/msm/msm_gem.c                      |  151 ++-
+ drivers/gpu/drm/msm/msm_gem.h                      |   53 +-
+ drivers/gpu/drm/msm/msm_gem_prime.c                |    2 +-
+ drivers/gpu/drm/msm/msm_gem_submit.c               |   37 +-
+ drivers/gpu/drm/msm/msm_gem_vma.c                  |   61 +-
+ drivers/gpu/drm/msm/msm_gpu.c                      |   51 +-
+ drivers/gpu/drm/msm/msm_gpu.h                      |   25 +-
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c              |   97 +-
+ drivers/gpu/drm/msm/msm_kms.h                      |   21 -
+ drivers/gpu/drm/msm/msm_mdss.c                     |  415 ++++++
+ drivers/gpu/drm/msm/msm_rd.c                       |    5 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.c               |   15 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.h               |    1 -
+ drivers/gpu/drm/msm/msm_submitqueue.c              |    2 +
+ drivers/gpu/drm/rcar-du/rcar_du_writeback.c        |    4 +-
+ drivers/gpu/drm/vc4/vc4_txp.c                      |    3 +-
+ drivers/gpu/drm/vkms/vkms_writeback.c              |    4 +-
+ include/drm/drm_panel.h                            |    7 +
+ include/drm/drm_writeback.h                        |   11 +-
+ include/uapi/drm/drm_fourcc.h                      |   22 +
+ include/uapi/drm/msm_drm.h                         |    7 +
+ 120 files changed, 5709 insertions(+), 3832 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
+ delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h
+ delete mode 100644 drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+ delete mode 100644 drivers/gpu/drm/msm/edp/edp.h
+ delete mode 100644 drivers/gpu/drm/msm/edp/edp_ctrl.c
+ create mode 100644 drivers/gpu/drm/msm/msm_mdss.c
