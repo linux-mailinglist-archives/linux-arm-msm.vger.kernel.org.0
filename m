@@ -2,311 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBF9851FEA1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 15:46:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C077E51FEE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 15:54:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236123AbiEINpB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 May 2022 09:45:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52428 "EHLO
+        id S236478AbiEIN5E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 May 2022 09:57:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236320AbiEINo4 (ORCPT
+        with ESMTP id S236485AbiEIN5D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 May 2022 09:44:56 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F5C0248C6;
-        Mon,  9 May 2022 06:40:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652103649; x=1683639649;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=XmYwGjbnnr/i+lbTzB1eEncVPKM3RXggXOlUOlKqef4=;
-  b=fpNm7v0u6aAFsOQSrfOvBR0wL7dTkktS6Ui3CE6Z58ng7DO+47E55B8s
-   BSV8HpB67PHpxiQxf7JU3L6+ktZ5NICBGYeVlAguWTHoGYNKVr+hfBEEA
-   yEZLHL9Gwbm/jM9lpWByhqndwqRetE24iP8GLkBAusB/IWLPYlEuqfxNU
-   w=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 May 2022 06:40:48 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 May 2022 06:40:47 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 9 May 2022 06:40:47 -0700
-Received: from jinlmao-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 9 May 2022 06:40:43 -0700
-From:   Mao Jinlong <quic_jinlmao@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>
-CC:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH v7 10/10] arm64: dts: qcom: sm8250: Add tpdm mm/prng
-Date:   Mon, 9 May 2022 21:39:47 +0800
-Message-ID: <20220509133947.20987-11-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220509133947.20987-1-quic_jinlmao@quicinc.com>
-References: <20220509133947.20987-1-quic_jinlmao@quicinc.com>
+        Mon, 9 May 2022 09:57:03 -0400
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 711B12AE0B;
+        Mon,  9 May 2022 06:53:07 -0700 (PDT)
+Received: from dggpemm500024.china.huawei.com (unknown [172.30.72.56])
+        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4KxjKS5RqdzhYtW;
+        Mon,  9 May 2022 21:52:28 +0800 (CST)
+Received: from dggpemm500007.china.huawei.com (7.185.36.183) by
+ dggpemm500024.china.huawei.com (7.185.36.203) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Mon, 9 May 2022 21:53:05 +0800
+Received: from huawei.com (10.175.103.91) by dggpemm500007.china.huawei.com
+ (7.185.36.183) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Mon, 9 May
+ 2022 21:53:04 +0800
+From:   Yang Yingliang <yangyingliang@huawei.com>
+To:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-media@vger.kernel.org>
+CC:     <mchehab@kernel.org>, <hverkuil-cisco@xs4all.nl>,
+        <robert.foss@linaro.org>, <bryan.odonoghue@linaro.org>,
+        <vladimir.zapolskiy@linaro.org>
+Subject: [PATCH] media: camss: csid: fix wrong size passed to devm_kmalloc_array()
+Date:   Mon, 9 May 2022 22:04:39 +0800
+Message-ID: <20220509140439.1361352-1-yangyingliang@huawei.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.103.91]
+X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+ dggpemm500007.china.huawei.com (7.185.36.183)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add tpdm mm and tpdm prng for sm8250.
+'supplies' is a pointer, the real size of struct regulator_bulk_data
+should be pass to devm_kmalloc_array().
 
-+---------------+                +-------------+
-|  tpdm@6c08000 |                |tpdm@684C000 |
-+-------|-------+                +------|------+
-        |                               |
-+-------|-------+                       |
-| funnel@6c0b000|                       |
-+-------|-------+                       |
-        |                               |
-+-------|-------+                       |
-|funnel@6c2d000 |                       |
-+-------|-------+                       |
-        |                               |
-        |    +---------------+          |
-        +----- tpda@6004000  -----------+
-             +-------|-------+
-                     |
-             +-------|-------+
-             |funnel@6005000 |
-             +---------------+
-
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+Fixes: 0d8140179715 ("media: camss: Add regulator_bulk support")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 170 +++++++++++++++++++++++++++
- 1 file changed, 170 insertions(+)
+ drivers/media/platform/qcom/camss/camss-csid.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index bc86a0e3faa3..b3cc99e5f5dd 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2725,6 +2725,73 @@
- 			};
- 		};
- 
-+		tpda@6004000 {
-+			compatible = "arm,primecell";
-+			reg = <0 0x06004000 0 0x1000>;
-+			reg-names = "tpda-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					reg = <0>;
-+					tpda_out_funnel_qatb: endpoint {
-+						remote-endpoint = <&funnel_qatb_in_tpda>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@9 {
-+					reg = <9>;
-+					tpda_9_in_tpdm_mm: endpoint {
-+						remote-endpoint = <&tpdm_mm_out_tpda9>;
-+					};
-+				};
-+
-+				port@23 {
-+					reg = <23>;
-+					tpda_23_in_tpdm_prng: endpoint {
-+						remote-endpoint = <&tpdm_prng_out_tpda_23>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6005000 {
-+			compatible = "arm,primecell";
-+
-+			reg = <0 0x06005000 0 0x1000>;
-+			reg-names = "funnel-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					funnel_qatb_out_funnel_in0: endpoint {
-+						remote-endpoint = <&funnel_in0_in_funnel_qatb>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					funnel_qatb_in_tpda: endpoint {
-+						remote-endpoint = <&tpda_out_funnel_qatb>;
-+					};
-+				};
-+			};
-+		};
-+
- 		funnel@6041000 {
- 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			reg = <0 0x06041000 0 0x1000>;
-@@ -2744,6 +2811,13 @@
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 
-+				port@6 {
-+					reg = <6>;
-+					funnel_in0_in_funnel_qatb: endpoint {
-+						remote-endpoint = <&funnel_qatb_out_funnel_in0>;
-+					};
-+				};
-+
- 				port@7 {
- 					reg = <7>;
- 					funnel0_in7: endpoint {
-@@ -2858,6 +2932,23 @@
- 			};
- 		};
- 
-+		tpdm@684c000 {
-+			compatible = "arm,primecell";
-+			reg = <0 0x0684c000 0 0x1000>;
-+			reg-names = "tpdm-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					tpdm_prng_out_tpda_23: endpoint {
-+						remote-endpoint = <&tpda_23_in_tpdm_prng>;
-+					};
-+				};
-+			};
-+		};
-+
- 		funnel@6b04000 {
- 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			arm,primecell-periphid = <0x000bb908>;
-@@ -2942,6 +3033,85 @@
- 			};
- 		};
- 
-+		tpdm@6c08000 {
-+			compatible = "arm,primecell";
-+			reg = <0 0x06c08000 0 0x1000>;
-+			reg-names = "tpdm-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					tpdm_mm_out_funnel_dl_mm: endpoint {
-+						remote-endpoint = <&funnel_dl_mm_in_tpdm_mm>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6c0b000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+
-+			reg = <0 0x06c0b000 0 0x1000>;
-+			reg-names = "funnel-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					funnel_dl_mm_out_funnel_dl_center: endpoint {
-+					remote-endpoint = <&funnel_dl_center_in_funnel_dl_mm>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@3 {
-+					reg = <3>;
-+					funnel_dl_mm_in_tpdm_mm: endpoint {
-+						remote-endpoint = <&tpdm_mm_out_funnel_dl_mm>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6c2d000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+
-+			reg = <0 0x06c2d000 0 0x1000>;
-+			reg-names = "funnel-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				port {
-+					tpdm_mm_out_tpda9: endpoint {
-+						remote-endpoint = <&tpda_9_in_tpdm_mm>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@2 {
-+					reg = <2>;
-+					funnel_dl_center_in_funnel_dl_mm: endpoint {
-+					remote-endpoint = <&funnel_dl_mm_out_funnel_dl_center>;
-+					};
-+				};
-+			};
-+		};
-+
- 		etm@7040000 {
- 			compatible = "arm,coresight-etm4x", "arm,primecell";
- 			reg = <0 0x07040000 0 0x1000>;
+diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+index f993f349b66b..80628801cf09 100644
+--- a/drivers/media/platform/qcom/camss/camss-csid.c
++++ b/drivers/media/platform/qcom/camss/camss-csid.c
+@@ -666,7 +666,7 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
+ 	if (csid->num_supplies) {
+ 		csid->supplies = devm_kmalloc_array(camss->dev,
+ 						    csid->num_supplies,
+-						    sizeof(csid->supplies),
++						    sizeof(*csid->supplies),
+ 						    GFP_KERNEL);
+ 		if (!csid->supplies)
+ 			return -ENOMEM;
 -- 
-2.17.1
+2.25.1
 
