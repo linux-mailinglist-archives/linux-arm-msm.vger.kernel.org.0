@@ -2,68 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45C0A51F528
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 09:18:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE4E651F5AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 09:54:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230392AbiEIHEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 May 2022 03:04:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59384 "EHLO
+        id S234266AbiEIHlC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 May 2022 03:41:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235687AbiEIGvj (ORCPT
+        with ESMTP id S236196AbiEIHRn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 May 2022 02:51:39 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C062215A3F9
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 May 2022 23:47:46 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id a191so11253059pge.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 May 2022 23:47:46 -0700 (PDT)
+        Mon, 9 May 2022 03:17:43 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 158BA1B1856
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 00:13:48 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id j6so24941819ejc.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 00:13:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9+O2wWIYtSN6v7D3S7HE43AVtnFz4Fs9gpTHjGdIAXw=;
-        b=CUJD3MGxQAYTxanRS7RRy74vpVXIeCRYmEdhWDRMPZvHt5RsJQJ9hSjWBYftdA6WYo
-         XHgX/WXibp+3rMcavpaO63pgoqCAtpvnI4pSinQ1hQw9iEDB12co5iR8TDckzT+1Ir2i
-         MdEOUh7N3Ufhy0Se3m+kBvF4a8A8ZvYTP68yMvOd4u5+1XNJlAYcpY3CTQFZMzB6NlN0
-         onh14jDg3iHYft88hVA5HzlZkvVxYt6j1pFXj92Cjxlx8/Tk47p/dF3Hhb2tCc2Dvupv
-         KOL0wWCFFCleYu0k6KRIqYb2uFHl1YvedkWiWbb2Nr2Uy5fJClzoLSSfg5KC5R8QFdbx
-         M2Ag==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=ac0wdZ20AHn5wVPxVYwtmg/c1OI3pc9hHhoSEjeifpc=;
+        b=ZZC9iQtnZRNTyGmUsZa7/DrBwotSxXWiCSY2rboitpOCAh5WrIkUR6+tiDV6P6cATU
+         ehuALpVBNDk97t5KAdpXvbLp/CuJ5FnMeFfFgl9/bNVMlvNmtiEKFpDIF8qiGq5Qt4uV
+         ar8B4lD5t+y0ZSto5BKU/hh382WJ7p86RlTPfYPkX23Gc8KIaFQXpDOMr7Ueq5zM7DhK
+         IhAtt/Dh79iqqrSZhheHZtUqo2pdyfZktnorxHQc9xRp7P73r5JGgAi94xxjvLNcjPjw
+         nR5lm75IXPdMJl0v1d/Cj99tEBivO7D+42vYsNRhEYzcK468IkLUOuAaVWeFFptHcHiO
+         qkkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9+O2wWIYtSN6v7D3S7HE43AVtnFz4Fs9gpTHjGdIAXw=;
-        b=NXbmJFgx7zuBGjyzBl3sATwe2SvEkxVNi6r7a+WVDS7zx7BuP1O5Oq/RE0ic3m/Cbf
-         cihF3RBs5x+nzgNqVECReF3/p1duBpAnQ3qvopgS+rqx4FYMYanAK62b9ZNTdYXmG+yr
-         Ootshb5xMFPnVjXvKzTjqViHfrB8ND4La3Fyxioh0rN35dL1RKrQR1BO71CZZRtiq2Uy
-         RIIxDIQZx3IBLvvZu9iWNzd58EMCa+3yc3bwF31kBCjCGoKYFjYkf6z8fPK26NE+6PnV
-         Qj6Lk/l9hYQPVSQmjjS/ZTnDBN9NiE6UL6ytLVYjMXvJkEs+TjIW6cQyIjjFglEWBgIV
-         LL5Q==
-X-Gm-Message-State: AOAM532fDrhYZd2VE0DKb1CzKRmL2N+RXb59oTXEHif0ujcFzPsIG9/A
-        F7ZKRr6PXYOupVl5fVLTg5jGJlmT75gXS753i/9M8uo5LSM=
-X-Google-Smtp-Source: ABdhPJzeywHjNPgQ2e8+81H3HxjJ5160+Mo9DrU73UpmHrLc0o39xzUzzFM8Zj7+8U49t8aaXxSFYLrk6xvGEzi9l8g=
-X-Received: by 2002:a63:f4e:0:b0:382:1e31:79e8 with SMTP id
- 14-20020a630f4e000000b003821e3179e8mr12395833pgp.167.1652078860816; Sun, 08
- May 2022 23:47:40 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ac0wdZ20AHn5wVPxVYwtmg/c1OI3pc9hHhoSEjeifpc=;
+        b=FJXeHFKDEEMqPy4h8P/a7zp6dtaE3QBipljRA+VQCSq2j9v/en0Fav8ICSe1yggtwQ
+         l1J+W5oyxfF3rqmhLM0ZhsQdjnXlYaPn2Zq87ppNmGVEhGxnQFaJ+1hbQuNzDM4CZ1I5
+         gu/nBbau8lnB40vvDxLC1D3oCzYRoor0kVfrq5tYYtcr/hZ9bkc73Rwf5cwGmca/abd1
+         cPRL3gcPiUD8ZziKWsUoZpue4ebRDLlfnHHL8ZSp0Bw/hRpzLMohmOlSzw/xZsx+huwu
+         gTiBCl9ZmoWW0NCLiNF9Xv/UaiQvBMm9IkBGhMEhQcTzIW5CtixtYxmMNVwHkqU723hf
+         ZETA==
+X-Gm-Message-State: AOAM532EyMhCAFinFjmWycB5vAi9HkgKCzpcCOORthn5ZlR8TtIpS20K
+        4oiHC5sTlgjnFsaNiUu7k97WPg==
+X-Google-Smtp-Source: ABdhPJyZUiyqYlM/No92bKswLQXC05uEE20qb/n8pLGATD1lJjK8igzRKiN8DiowBQA0FrB0/i1gZg==
+X-Received: by 2002:a17:907:6d9e:b0:6f9:b861:828e with SMTP id sb30-20020a1709076d9e00b006f9b861828emr5170050ejc.427.1652080426647;
+        Mon, 09 May 2022 00:13:46 -0700 (PDT)
+Received: from [192.168.0.242] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id el22-20020a170907285600b006f3ef214e1dsm4771728ejc.131.2022.05.09.00.13.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 May 2022 00:13:46 -0700 (PDT)
+Message-ID: <f0e27ff9-8eb6-1250-1262-e7ab7908bb33@linaro.org>
+Date:   Mon, 9 May 2022 09:13:45 +0200
 MIME-Version: 1.0
-References: <20220502104144.91806-1-manivannan.sadhasivam@linaro.org>
- <20220502104144.91806-6-manivannan.sadhasivam@linaro.org> <CAMZdPi_i60TqszUL+=ocMn-4veyoGRQoOGD_B4YiEpz_uWE+ZQ@mail.gmail.com>
- <20220504081720.GB5446@thinkpad> <CAMZdPi9oA4SSYGSPw9tCmQ=GhwhCgdYz+=rQiUzu1tNbo80ceQ@mail.gmail.com>
- <20220504155855.GA3507@thinkpad> <514326aa-49eb-2b07-b99e-53899722c7e2@quicinc.com>
- <c9ac9fbf-d94e-feea-e762-95eeae8f5a74@quicinc.com>
-In-Reply-To: <c9ac9fbf-d94e-feea-e762-95eeae8f5a74@quicinc.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Mon, 9 May 2022 08:47:06 +0200
-Message-ID: <CAMZdPi_NwN_y7AQMu47NoFDFtgxoV8TPdRdxqm5+GmT0uUZh+g@mail.gmail.com>
-Subject: Re: [PATCH 5/5] bus: mhi: host: Remove redundant dma_wmb() before ctx
- wp update
-To:     Hemant Kumar <quic_hemantk@quicinc.com>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_bbhatt@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v3 2/6] dt-bindings: clock: Add support for IPQ8074 APSS
+ clock controller
+Content-Language: en-US
+To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
+        jassisinghbrar@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20220507203620.399028-1-robimarko@gmail.com>
+ <20220507203620.399028-2-robimarko@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220507203620.399028-2-robimarko@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,134 +79,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Hemant,
+On 07/05/2022 22:36, Robert Marko wrote:
+> Add dt-binding for the IPQ8074 APSS clock controller which provides
+> clocks to the CPU cores.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+> Changes in v2:
+> * Correct subject
 
-On Fri, 6 May 2022 at 20:02, Hemant Kumar <quic_hemantk@quicinc.com> wrote:
->
-> Hi Loic,
->
-> On 5/6/2022 10:41 AM, Hemant Kumar wrote:
-> > Hi Loic,
-> >
-> > On 5/4/2022 8:58 AM, Manivannan Sadhasivam wrote:
-> >> On Wed, May 04, 2022 at 11:25:33AM +0200, Loic Poulain wrote:
-> >>> On Wed, 4 May 2022 at 10:17, Manivannan Sadhasivam
-> >>> <manivannan.sadhasivam@linaro.org>  wrote:
-> >>>> Hi Loic,
-> >>>>
-> >>>> On Wed, May 04, 2022 at 09:21:20AM +0200, Loic Poulain wrote:
-> >>>>> Hi Mani,
-> >>>>>
-> >>>>> On Mon, 2 May 2022 at 12:42, Manivannan Sadhasivam
-> >>>>> <manivannan.sadhasivam@linaro.org>  wrote:
-> >>>>>> The endpoint device will only read the context wp when the host rings
-> >>>>>> the doorbell.
-> >>>>> Are we sure about this statement? what if we update ctxt_wp while the
-> >>>>> device is still processing the previous ring? is it going to continue
-> >>>>> processing the new ctxt_wp or wait for a new doorbell interrupt? what
-> >>>>> about burst mode in which we don't ring at all (ring_db is no-op)?
-> >>>>>
-> >>>> Good point. I think my statement was misleading. But still this scenario won't
-> >>>> happen as per my undestanding. Please see below.
-> >>>>
-> >>>>>> And moreover the doorbell write is using writel(). This
-> >>>>>> guarantess that the prior writes will be completed before ringing
-> >>>>>> doorbell.
-> >>>>> Yes but the barrier is to ensure that descriptor/ring content is
-> >>>>> updated before we actually pass it to device ownership, it's not about
-> >>>>> ordering with the doorbell write, but the memory coherent ones.
-> >>>>>
-> >>>> I see a clear data dependency between writing the ring element and updating the
-> >>>> context pointer. For instance,
-> >>>>
-> >>>> ```
-> >>>> struct mhi_ring_element *mhi_tre;
-> >>>>
-> >>>> mhi_tre = ring->wp;
-> >>>> /* Populate mhi_tre */
-> >>>> ...
-> >>>>
-> >>>> /* Increment wp */
-> >>>> ring->wp += el_size;
-> >>>>
-> >>>> /* Update ctx wp */
-> >>>> ring->ctx_wp = ring->iommu_base + (ring->wp - ring->base);
-> >>>> ```
-> >>>>
-> >>>> This is analogous to:
-> >>>>
-> >>>> ```
-> >>>> Read PTR A;
-> >>>> Update PTR A;
-> >>>> Increment PTR A;
-> >>>> Write PTR A to PTR B;
-> >>>> ```
-> >>> Interesting point, but shouldn't it be more correct to translate it as:
-> >>>
-> >>> 1. Write PTR A to PTR B (mhi_tre);
-> >>> 2. Update PTR B DATA;
-> >>> 3. Increment PTR A;
-> >>> 4. Write PTR A to PTR C;
-> >>>
-> >>> In that case, it looks like line 2. has no ordering constraint with 3.
-> >>> & 4? whereas the following guarantee it:
-> >>>
-> >>> 1. Write PTR A to PTR B (mhi_tre);
-> >>> 2. Update PTR B DATA;
-> >>> 3. Increment PTR A;
-> >>> dma_wmb()
-> >>> 4. Write PTR A to PTR C;
-> >>>
-> >>> To be honest, compiler optimization is beyond my knowledge, so I don't
-> >>> know if a specific compiler arch/version could be able to mess up the
-> >>> sequence or not. But this pattern is really close to what is described
-> >>> for dma_wmb() usage in Documentation/memory-barriers.txt. That's why I
-> >>> challenged this change and would be conservative, keeping the explicit
-> >>> barrier.
-> >>>
-> >> Hmm. Since I was reading the memory model and going through the MHI code, I
-> >> _thought_ that this dma_wmb() is redundant. But I missed the fact that the
-> >> updating to memory pointed by "wp" happens implicitly via a pointer. So that
-> >> won't qualify as a direct dependency.
-> >>
-> >>>> Here, because of the data dependency due to "ring->wp", the CPU or compiler
-> >>>> won't be ordering the instructions. I think that's one of the reason we never
-> >>>> hit any issue due to this.
-> >>> You may be right here about the implicit ordering guarantee... So if
-> >>> you're sure, I think it would deserve an inline comment to explain why
-> >>> we don't need a memory barrier as in the 'usual' dma descriptor update
-> >>> sequences.
-> >>>
-> >> I think the barrier makes sense now. Sorry for the confusion and thanks for the
-> >> explanations.
-> >>
-> >> Thanks,
-> >> Mani
-> >>
-> >>> Loic
-> >
-> > You made a good point. After following your conversation, in case of
-> > burst mode is enabled and currently
-> >
-> > we are in polling mode, does it make sense to move dma_wmb after
-> > updating channel WP context ?
-> >
-> > DB ring is going to get skipped when we are in pilling mode.
-> >
-> > instead of dma_wmb();
-> > *ring->ctxt_wp  =  cpu_to_le64(db);
-> >
-> > *ring->ctxt_wp  =  cpu_to_le64(db); dma_wmb();
-> >
-> > Thanks,
-> > Hemant
-> >
-> i think i spoke too fast. I think we dont need to worry about the
-> polling mode as the context_wp update would happen at some point of time
-> and that does not require dma_wmb after update context wp.
+After explanations about license:
 
-Exactly. It's also important to remember that a barrier only ensures
-operations ordering and not committing.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Regards,
-Loic
+
+Best regards,
+Krzysztof
