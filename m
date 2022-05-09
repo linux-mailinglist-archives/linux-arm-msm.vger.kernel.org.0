@@ -2,55 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25BEA52049D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 20:37:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5900A520535
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 May 2022 21:21:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240200AbiEIShv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 May 2022 14:37:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53638 "EHLO
+        id S240506AbiEITXv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 May 2022 15:23:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240185AbiEIShv (ORCPT
+        with ESMTP id S240522AbiEITXu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 May 2022 14:37:51 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C63FB52507;
-        Mon,  9 May 2022 11:33:51 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 6AC26B8115E;
-        Mon,  9 May 2022 18:33:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C45C385B5;
-        Mon,  9 May 2022 18:33:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652121229;
-        bh=/xv7HUCbZ4GcHES/hTY69qU5Wnk174brdxHC9qD13jQ=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=BftOeXMMRYLJ9cNsZzEIM/CcfHPPNdDBppbQEM/waG2wbTocU/GoWBmucpQ4hyTJ4
-         Ld0bBa5+I6fnsGmX3oywnei7nFFCXyE7O3JAkazlRf6zQVmf5hev8AvCU+Q8RuSPhk
-         KJT+cAnZ+dgWaRoyqL7toINV6oW+2fUYImdzvG1MMkzIDSQmy2ag5NyQvYmVlj6v8D
-         Ri10W58BpRblk4UqJnkRlGacngxxTRiQJvbj7zLcFwlcOJJDbCpU/Kf9hj5LaEQISc
-         47/5J+ev3cZ7PdFu1SQwC+V9mnbkWGm2qHj2nKFFZ3O1T/UTpES9O+G1xIQf8ZNCGy
-         5OzmU/gvt7OUQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     konrad.dybcio@somainline.org, ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, kholk11@gmail.com,
-        angelogioacchino.delregno@somainline.org,
-        jamipkettunen@somainline.org, linux-kernel@vger.kernel.org,
-        lgirdwood@gmail.com, marijn.suijten@somainline.org,
-        linux-arm-msm@vger.kernel.org
-In-Reply-To: <20220430163753.609909-1-konrad.dybcio@somainline.org>
-References: <20220430163753.609909-1-konrad.dybcio@somainline.org>
-Subject: Re: [PATCH v2] regulator: qcom_smd: Fix up PM8950 regulator configuration
-Message-Id: <165212122648.1242901.8952054943926488317.b4-ty@kernel.org>
-Date:   Mon, 09 May 2022 19:33:46 +0100
+        Mon, 9 May 2022 15:23:50 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A79D94B874
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 12:19:50 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id n8so14794605plh.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 12:19:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=KxPqHT2Kr+KyNj+2ntbnJAJv8pZrB8xBI5SfIaP2vFc=;
+        b=B4IwO0nyKOAm5augILPM3hpD8rDu9e6FzqYla0dT2S8wGmnvAM7pRZbRKSnGeFFxpm
+         cNw5/XjodsTZgEN3O/QJ3ymKLQU6m3EkhA+wl5idtToj9//MAKok8i9+vJG5EkTtiQby
+         NFRCqT/KmrHY7WCJANDmfE6basadEMlF+PxpA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KxPqHT2Kr+KyNj+2ntbnJAJv8pZrB8xBI5SfIaP2vFc=;
+        b=A1ZQrHmrAlt6p4MIpB/VrRocOC05bBsRUCJ9oIk6e+gDrqtvHO2db5cg5jC6H86KbW
+         9A+b3++wsUCjqEby4P+L0Nml+r0wNqz7JmNaX5hBDyucJd2NgJQ00ZrgMA1Y103c9cGZ
+         7Tlr4EC9PpIU1WIqnniYGpC34XlPMK+SS5MJ4oo4J5bA/CNi1qn84HSvVB9c1sJhR4vc
+         wAq5HjYOE3KCrmdYKLd7ygRi4wVJtGBQ7PxAsMTqKu/Ug7shwDG9qZEEW038k6tBomcU
+         WREMNgoRpdq9sQDUv9cel7snROnTeqQMWGp77hgBTML2pJP2ck8ORbJwT84zpqGLoMt0
+         TYgg==
+X-Gm-Message-State: AOAM533OxQKr0TAVKCZtd3xgcYxg4vTJSP16be3PRMVpc4L03QrDqFMP
+        dO/LMDA/P0c2X400KOh1ijOf8w==
+X-Google-Smtp-Source: ABdhPJynK+hgyAqxpMUsozaBIsBVXpWHnA1HB/wZaD2Fn2o0ZomfaUwWpc0M5alYMbL3GWwl6Pyb8A==
+X-Received: by 2002:a17:90b:17c1:b0:1dc:a6e6:ef26 with SMTP id me1-20020a17090b17c100b001dca6e6ef26mr28136922pjb.22.1652123989602;
+        Mon, 09 May 2022 12:19:49 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:753:614a:caf8:e14d])
+        by smtp.gmail.com with UTF8SMTPSA id f19-20020a63dc53000000b003c14af50631sm8918375pgj.73.2022.05.09.12.19.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 May 2022 12:19:49 -0700 (PDT)
+Date:   Mon, 9 May 2022 12:19:47 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Sibi Sankar <quic_sibis@quicinc.com>, swboyd@chromium.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mathieu.poirier@linaro.org, krzysztof.kozlowski@canonical.com,
+        agross@kernel.org, dianders@chromium.org, ohad@wizery.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        evgreen@chromium.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: remoteproc: qcom: Add SC7280 MSS
+ bindings
+Message-ID: <YnlpU+sCfO86+qc2@google.com>
+References: <1652082798-5855-1-git-send-email-quic_sibis@quicinc.com>
+ <1652082798-5855-2-git-send-email-quic_sibis@quicinc.com>
+ <1652098858.589911.3576234.nullmailer@robh.at.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1652098858.589911.3576234.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,41 +75,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 30 Apr 2022 18:37:52 +0200, Konrad Dybcio wrote:
-> Following changes have been made:
+On Mon, May 09, 2022 at 07:20:58AM -0500, Rob Herring wrote:
+> On Mon, 09 May 2022 13:23:17 +0530, Sibi Sankar wrote:
+> > Add MSS PIL loading bindings for SC7280 SoCs.
+> > 
+> > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> > ---
+> >  .../bindings/remoteproc/qcom,sc7280-mss-pil.yaml   | 261 +++++++++++++++++++++
+> >  1 file changed, 261 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+> > 
 > 
-> - S5, L4, L18, L20 and L21 were removed (S5 is managed by
-> SPMI, whereas the rest seems not to exist [or at least it's blocked
-> by Sony Loire /MSM8956/ RPM firmware])
+> Running 'make dtbs_check' with the schema in this patch gives the
+> following warnings. Consider if they are expected or the schema is
+> incorrect. These may not be new warnings.
 > 
-> - Supply maps have were adjusted to reflect regulator changes.
+> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+> This will change in the future.
 > 
-> [...]
+> Full log is available here: https://patchwork.ozlabs.org/patch/
 
-Applied to
+The culprit is this snippet in arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi:
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+/* Modem setup is different on Chrome setups than typical Qualcomm setup */
+&remoteproc_mpss {
+	status = "okay";
+	compatible = "qcom,sc7280-mss-pil";
+	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
+	memory-region = <&mba_mem>, <&mpss_mem>;
+};
 
-Thanks!
+The original compatible string from sc7280.dtsi is 'qcom,sc7280-mpss-pas'.
 
-[1/1] regulator: qcom_smd: Fix up PM8950 regulator configuration
-      commit: b11b3d21a94d66bc05d1142e0b210bfa316c62be
+> remoteproc@4080000: clock-names:1: 'snoc_axi' was expected
+> 	arch/arm64/boot/dts/qcom/sc7280-crd.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-idp2.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-idp.dtb
+> 
+> remoteproc@4080000: clock-names:2: 'offline' was expected
+> 	arch/arm64/boot/dts/qcom/sc7280-crd.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-idp2.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-idp.dtb
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+The fix probably consists in adding overrides for 'clocks' and
+'clock-names' to the extension in sc7280-chrome-common.dtsi, unless
+we add a dedicated 'qcom,sc7280-mss-pil' node to sc7280.dtsi. This
+can be done once the binding landed.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+> remoteproc@4080000: 'interconnects' is a required property
+> 	arch/arm64/boot/dts/qcom/sc7280-crd.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-idp2.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-idp.dtb
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+This can be fixed by adding an 'interconnects' to either the
+extension in sc7280-chrome-common.dtsi, or the original node if
+'qcom,sc7280-mpss-pas' uses the same interconnect.
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+> remoteproc@4080000: reset-names:1: 'pdc_sync' was expected
+> 	arch/arm64/boot/dts/qcom/sc7280-crd.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-idp2.dtb
+> 	arch/arm64/boot/dts/qcom/sc7280-idp.dtb
+>
 
-Thanks,
-Mark
+This could be fixed by aligning the reset names of the
+'qcom,sc7280-mpss-pas' and 'qcom,sc7280-mss-pil' bindings.
+The reset is called 'pdc_reset' for 'mpss-pas', and 'pdc_sync'
+for 'mpss-pil'.
