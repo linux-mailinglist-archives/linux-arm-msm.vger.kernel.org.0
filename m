@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C0475222F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 19:39:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E211522304
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 19:40:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245652AbiEJRno (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 May 2022 13:43:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38006 "EHLO
+        id S1348355AbiEJRov (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 May 2022 13:44:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245615AbiEJRnn (ORCPT
+        with ESMTP id S1348361AbiEJRot (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 May 2022 13:43:43 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C295E296BD5;
-        Tue, 10 May 2022 10:39:45 -0700 (PDT)
+        Tue, 10 May 2022 13:44:49 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D481012A81
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 10:40:49 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id y63so19285507oia.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 10:40:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652204386; x=1683740386;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=FkyvDe+lg/6UUzc3a3RX0uzSgZKO1lAGbr6Xu1sBYnI=;
-  b=kQMsueoNZK5SbvPlsCBOIoNIMgo0Sos82mEJNrLRT2dUBnbl26HCQ8M1
-   tAImu4APL3OuCOfA7VD1M/UzJoADMERNT2K62DD53EWD03Q4w4DEoVmRT
-   8mqBhqt29gmwXu7K/tGMQhHsiOS7ioq7Vdol3OpeI0T1QhpGCfzUvrQV5
-   4=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 10 May 2022 10:39:45 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 10:39:45 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 10 May 2022 10:39:45 -0700
-Received: from [10.38.241.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 10 May
- 2022 10:39:42 -0700
-Message-ID: <e205565a-e0f5-dca2-a287-a829056d9601@quicinc.com>
-Date:   Tue, 10 May 2022 10:39:40 -0700
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=UKufSQs9qr2bj9JxpR70M2MLmSNQQ67hZiGFvmJhYoc=;
+        b=mdY/If8uRLEfI44R6YGWNOJxV4pcVZkV2cqgKl6mPn2qSRu9ZEv1lEWDIFC2daiykt
+         2e1RiT9qD3sYV5V/WfZx0zxgjzmxv1dsDsRhjJ9fNdW9WfpT/PoLmKh1gugpSSvyB9OS
+         r5ivIcCI5Z4QdKRZvhVb8GLWcVU4lgDzVyo9E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=UKufSQs9qr2bj9JxpR70M2MLmSNQQ67hZiGFvmJhYoc=;
+        b=tcspmwD1yF38nw6QTZplbSpa/VYzRASoMZy2tarrgfnzPP9AdXe2Qiv3z5KMd5wqdA
+         0vbxx2B8Y2iq9Kjm3JgL5FZJvng7FF+dOOissNLChgKMfkbZE9tg7RetAVfNPXg++CSF
+         dgsPJz4+w88jERH2o+HYHb4svFWtykvjl5n2afLcghbEmpHuNiyPBietf36hQM2sMhuQ
+         Edt+wEpS7Ol9QMzwiaA7JOwZpozenrBmARNHOv7tvDNdQy3/wkR6+gR5DP73ybzfBCEn
+         T4VKH0yBjncGWTyjNGdXUoFSZo2ZUTfqEGErm8ckcs7RVgjswEe5F5iZAS7Lf/OXYwBK
+         wP1w==
+X-Gm-Message-State: AOAM530GUMOq5uQRablKZpY/SMShCS6redOniouzAwrs8kQsOH3RuBve
+        czmg1KHAOmP8jsj+3sXgyxP84QglwnV4f0e+wztk6A==
+X-Google-Smtp-Source: ABdhPJz95HjcXUXoUbA/7guupIrd/nNtcSppXPf36HaH/0UjgRjU1DiKnHjuUteekXQ3UkimNseRwGrch2RzwVkttFo=
+X-Received: by 2002:a05:6808:14c2:b0:326:c129:d308 with SMTP id
+ f2-20020a05680814c200b00326c129d308mr576354oiw.193.1652204449230; Tue, 10 May
+ 2022 10:40:49 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 10 May 2022 10:40:48 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm: Fix fb plane offset calculation
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>
-CC:     Rob Clark <robdclark@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220510165216.3577068-1-robdclark@gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220510165216.3577068-1-robdclark@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+In-Reply-To: <20220505104024.v4.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid>
+References: <20220505104024.v4.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 10 May 2022 10:40:48 -0700
+Message-ID: <CAE-0n511S7dNPetX0dHp2RSPUZQjwGtXM8nMTF0bf03JjbPwfg@mail.gmail.com>
+Subject: Re: [PATCH v4 1/5] arm64: dts: qcom: sc7180: Add wormdingler dts files
+To:     "Joseph S. Barrera III" <joebar@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,30 +72,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Joseph S. Barrera III (2022-05-05 10:41:12)
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
+> new file mode 100644
+> index 000000000000..e947e01d0b3b
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
+> @@ -0,0 +1,417 @@
+[...]
+> +
+> +/* PINCTRL - board-specific pinctrl */
+> +
+> +&tlmm {
+> +       gpio-line-names = "HUB_RST_L",
+[...]
+> +
+> +       vdd_reset_1800: vdd-reset-1800 {
+> +               pinmux {
+> +                       pins = "gpio87";
+> +                       function = "gpio";
+> +               };
+> +
+> +               pinconf {
+> +                       pins = "gpio87";
+> +                       drive-strength = <2>;
+> +                       bias-disable;
+> +               };
+> +       };
+> +
+> +       avdd_lcd_en: avdd-lcd-en {
+> +               pinmux {
+> +                       pins = "gpio88";
+> +                       function = "gpio";
+> +               };
+> +
+> +               pinconf {
+> +                       pins = "gpio88";
+> +                       drive-strength = <2>;
+> +                       bias-disable;
+> +               };
+> +       };
+> +
+> +       avee_lcd_en: avee-lcd_en {
 
+avee-lcd-en
 
-On 5/10/2022 9:52 AM, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> The offset got dropped by accident.
-> 
-> Fixes: d413e6f97134 ("drm/msm: Drop msm_gem_iova()")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/msm_fb.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
-> index 362775ae50af..4269da268a4a 100644
-> --- a/drivers/gpu/drm/msm/msm_fb.c
-> +++ b/drivers/gpu/drm/msm/msm_fb.c
-> @@ -118,7 +118,7 @@ uint32_t msm_framebuffer_iova(struct drm_framebuffer *fb,
->   		struct msm_gem_address_space *aspace, int plane)
->   {
->   	struct msm_framebuffer *msm_fb = to_msm_framebuffer(fb);
-> -	return msm_fb->iova[plane];
-> +	return msm_fb->iova[plane] + fb->offsets[plane];
->   }
->   
->   struct drm_gem_object *msm_framebuffer_bo(struct drm_framebuffer *fb, int plane)
+No underscores in node names please.
+
+> +               pinmux {
+> +                       pins = "gpio21";
+> +                       function = "gpio";
+> +               };
+> +
+> +               pinconf {
+> +                       pins = "gpio21";
+> +                       drive-strength = <2>;
+> +                       bias-disable;
+> +               };
+> +       };
+
+Are these supposed to be sorted by node name? Or gpio number? Please do
+one of those.
+
+> +
+> +       mipi_1800_en: mipi-1800-en {
+> +               pinmux {
+> +                       pins = "gpio86";
+> +                       function = "gpio";
+> +               };
+> +
+> +               pinconf {
+> +                       pins = "gpio86";
+> +                       drive-strength = <2>;
+> +                       bias-disable;
+> +               };
+> +       };
+> +};
