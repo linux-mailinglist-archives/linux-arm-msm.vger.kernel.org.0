@@ -2,105 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 377AC520CDB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 06:29:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEB07520D05
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 06:41:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236602AbiEJEdG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 May 2022 00:33:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50960 "EHLO
+        id S236445AbiEJEo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 May 2022 00:44:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236711AbiEJEbr (ORCPT
+        with ESMTP id S236350AbiEJEoz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 May 2022 00:31:47 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAA73255099;
-        Mon,  9 May 2022 21:27:34 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id d22so15687471plr.9;
-        Mon, 09 May 2022 21:27:34 -0700 (PDT)
+        Tue, 10 May 2022 00:44:55 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A12711B7AE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 21:40:56 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id p8so13953004pfh.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 21:40:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3fqvQ3B2e4Jfl0iz3GRolUCBYJvQ9lqVFwmUIWfWd7Y=;
-        b=qnGCBaEYK367xZ1eAYI6+LLPhIq5OrOC6tUVYCrOxpre7uW8ekX+CMakaeuz1UVqyd
-         TectHU6QsvpR50yVyYaeKk7h5h+s2aYfdkdTAhnPS9zffRxPDKoQvN1rU7dklJfWxova
-         I/ldPFfE3b5gbTvzZay7FyWJK7W6z3a12SFhfLxGuv5t2zDWt2n5y0yuarCbp11MRLXW
-         QTK5rYxv2fBJ34tOkoHjFt/bNPyutuujD8NF1u2lg47j+JGmaARATx+4p7tdnRV0KA9t
-         uJeL4CwyP0Ima0AKFjSA0dswRk38mJ6Ncq+D7Mzf5K8jRow7L08wS/OJjXUE2E0XX1TO
-         hlhA==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=lbY1apz0pshrpCAaJ1RrYyZnbJ+UjeS0fVoXXo8j4x4=;
+        b=g1O4yIW8IBZL4UjQArViSLk8BGWFwVVdDj4k3lboHQlTkJQ+rm3mIbeCIIKgBldnDL
+         vemV1tqpX0uc13aujVWctoK7Xgz/Zw9Wdv34dhYv0rS2b96Ryzawc8Q7WTi9VBXsyM8/
+         I5Pi+SicIj63pu9fYM3QYaBG5+AIDSGzQCMOf3QCc6fdmLUVblR7n6tedFbDYuwdUZhu
+         zIuKHv2b8wLek6nQwSIbFcYwuO2pnT7dYWxxulUgiS5fNtP+EASQcqA5eMTg8QKMPEiX
+         u1yAPilOKbWZR5pPKRYIkh4RjlpecE57z8J7ag6lrDvUnChqYht9pXoHxKkm7w1GC0Ey
+         LmBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3fqvQ3B2e4Jfl0iz3GRolUCBYJvQ9lqVFwmUIWfWd7Y=;
-        b=Lq9d6Tr9VbXwpFWtBsUYnCHVNPWpDgjMoXDR8Ckf8mkpzSpfCMak4P76gQmtbBmRri
-         UW+HkJEQJTyKZrKoWbWiBsLOfFVIECWRjgRfwJFIW9YMHFRVyKTvOr95xGfGQJJN1yOh
-         7+0EbIsIi9g9KfjqFMlB3w6ew6LUeQA/m2kWMAhdSPXJUI6Pmca2bw97lGlbXry+o0Nu
-         +vVDQdMfPk37AUOybLS59vc/UavXuOBAN6ESnjO7ntUGsj54iJ+jj7MhTliTGWbK9Awu
-         Fl1oUAEPaYyBT5xMm5Il4qP5sGaLP1I80bkKcXFQXncipHigK9YSolp77yQlQzHUyHoh
-         ovaA==
-X-Gm-Message-State: AOAM533Zblv+JBRdgdiPVn7TgbWy8sFTHgMSIw8ijUk8nwWLpLSULRGQ
-        BzQG6XMYl4ePuiy064zZHlLfplv5Z4nUgg==
-X-Google-Smtp-Source: ABdhPJxIie1pCr/tmPsDQ9H3w67WWAhPJGg0hqYxGcy/AwcuMSO/PgjddGDmJ3g5glskXx3C8Rgv7g==
-X-Received: by 2002:a17:902:bf0a:b0:15c:df1b:f37d with SMTP id bi10-20020a170902bf0a00b0015cdf1bf37dmr18665939plb.90.1652156854032;
-        Mon, 09 May 2022 21:27:34 -0700 (PDT)
-Received: from skynet-linux.local ([2401:4900:33a2:808d:da42:4e61:10ad:478d])
-        by smtp.googlemail.com with ESMTPSA id x4-20020a1709028ec400b0015e8d4eb2aesm741263plo.248.2022.05.09.21.27.29
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=lbY1apz0pshrpCAaJ1RrYyZnbJ+UjeS0fVoXXo8j4x4=;
+        b=M+HiIqIax1BasKbG4QMHDpBVoK/+/QCa1wDpfJazDvNU0sRX1YsOtBQSJyZLlthBLI
+         Hm826wj4+xECbd6y8mV5CHCzRLlqRJmqLYTbkq+ACfl72d6FYJRt1DOKjbfthwdQl6o5
+         aPn+EX5aJ72pEK1Ki0Yt2dmKq8q7jGO5x8BCwiKeEUa/sxSqY6DthcG2UhHxJ+MpZCp8
+         +9wpxfrWfdbQY9OUMMfeyGaer8ZIrHGqq6tI/KBvCAQEGAYcP+24WazGUcrbZve6OS4h
+         PTs9m7qRBuERB/7oZK5pFkErP7yPo47Pj8bfib2pXFjdwXZBKlT+JFUCcvJJarzVKytS
+         qZFA==
+X-Gm-Message-State: AOAM5330OBLr4kx5JLzi0z7DR3Kqb+6fSoNMcO8x6GbqvbIP+6j/aUTH
+        MjRcE5Xws9oI/YyFNDarQk4q2A==
+X-Google-Smtp-Source: ABdhPJymevaw8JA+ZHsBCjPJ4j0suFS7f77voPGuje3SGgohExKLxChq+oCh5WRtZK41XqI6SBv0+w==
+X-Received: by 2002:aa7:9110:0:b0:4fa:e388:af57 with SMTP id 16-20020aa79110000000b004fae388af57mr18793150pfh.1.1652157656115;
+        Mon, 09 May 2022 21:40:56 -0700 (PDT)
+Received: from localhost ([122.162.234.2])
+        by smtp.gmail.com with ESMTPSA id a2-20020a170902900200b0015e8d4eb289sm780370plp.211.2022.05.09.21.40.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 May 2022 21:27:33 -0700 (PDT)
-From:   Sireesh Kodali <sireeshkodali1@gmail.com>
-To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-Cc:     bjorn.andersson@linaro.org,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 09 May 2022 21:40:55 -0700 (PDT)
+Date:   Tue, 10 May 2022 10:10:53 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] arm64: dts: qcom: msm8916: Fix typo in pronto remoteproc node
-Date:   Tue, 10 May 2022 09:56:54 +0530
-Message-Id: <20220510042654.71152-3-sireeshkodali1@gmail.com>
-X-Mailer: git-send-email 2.36.0
-In-Reply-To: <20220510042654.71152-1-sireeshkodali1@gmail.com>
-References: <20220510042654.71152-1-sireeshkodali1@gmail.com>
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
+Subject: Re: [RFC PATCH v2 4/6] PM: opp: allow control of multiple clocks
+Message-ID: <20220510044053.ykn6ygnbeokhzrsa@vireshk-i7>
+References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
+ <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
+ <20220425072710.v6gwo4gu3aouezg4@vireshk-i7>
+ <dea39b1f-0091-2690-7f07-108d07ef9f3c@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dea39b1f-0091-2690-7f07-108d07ef9f3c@linaro.org>
+User-Agent: NeoMutt/20180716-391-311a52
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The smem-state properties for the pronto node were incorrectly labelled,
-reading `qcom,state*` rather than `qcom,smem-state*`. Fix that, allowing
-the stop state to be used.
+On 09-05-22, 12:38, Krzysztof Kozlowski wrote:
+> On 25/04/2022 09:27, Viresh Kumar wrote:
+> > This is tricky as the OPP core can't really assume the order in which the clocks
+> > needs to be programmed. We had the same problem with multiple regulators and the
+> > same is left for drivers to do via the custom-api.
+> > 
+> > Either we can take the same route here, and let platforms add their own OPP
+> > drivers which can handle this, Or hide this all behind a basic device clock's
+> > driver, which you get with clk_get(dev, NULL).
+> 
+> For my use case, the order of scaling will be the same as in previous
+> implementation, because UFS drivers just got bunch of clocks with
+> freq-table-hz property and were scaling in DT order.
+> 
+> If drivers need something better, they can always provide custom-opp
+> thus replacing my method. My implementation here does not restrict them.
+> 
+> For the drivers where the order does not matter, why forcing each driver
+> to provide its own implementation of clock scaling? Isn't shared generic
+> PM OPP code a way to remove code duplication?
 
-Fixes: 88106096cbf8 ("ARM: dts: msm8916: Add and enable wcnss node")
+Code duplication is a good argument and I am in favor of avoiding it,
+but nevertheless this shouldn't be something which platforms can pick
+by mistake, just because they didn't go through core code. In other
+words, this shouldn't be the default behavior of the core.
 
-Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+If we want, core can provide a helper to get rid of the duplication
+though, but the user explicitly needs to use it.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index e34963505e07..7ecd747dc624 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1758,8 +1758,8 @@ pronto: remoteproc@a21b000 {
- 					<&rpmpd MSM8916_VDDMX>;
- 			power-domain-names = "cx", "mx";
- 
--			qcom,state = <&wcnss_smp2p_out 0>;
--			qcom,state-names = "stop";
-+			qcom,smem-states = <&wcnss_smp2p_out 0>;
-+			qcom,smem-state-names = "stop";
- 
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&wcnss_pin_a>;
+> >> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+> > 
+> >> +static int _generic_set_opp_clks_only(struct device *dev,
+> >> +				      struct opp_table *opp_table,
+> >> +				      struct dev_pm_opp *opp)
+> >> +{
+> >> +	int i, ret;
+> >> +
+> >> +	if (!opp_table->clks)
+> >> +		return 0;
+> >> +
+> >> +	for (i = 0; i < opp_table->clk_count; i++) {
+> >> +		if (opp->rates[i]) {
+> > 
+> > This should mean that we can disable that clock and it isn't required.
+> 
+> No, it does not mean that. The DT might provide several clocks which
+> only some are important for frequency scaling. All others just need to
+> be enabled.
+> 
+> Maybe you prefer to skip getting such clocks in PM OPP?
+
+They shouldn't reach the OPP core then. What will the OPP core do if a
+clock has a value for one OPP and not the other ?
+
+> >> @@ -969,8 +1008,8 @@ static void _find_current_opp(struct device *dev, struct opp_table *opp_table)
+> > 
+> > I think this routine breaks as soon as we add support for multiple clocks.
+> > clks[0]'s frequency can be same for multiple OPPs and this won't get you the
+> > right OPP then.
+> 
+> I don't think so and this was raised also by Stephen - only the first
+> clock is considered the one used for all PM OPP frequency operations,
+> like get ceil/floor.
+
+IMHO, this is broken by design. I can easily see that someone wants to
+have few variants of all other frequencies for the same frequency of
+the so called "main" clock, i.e. multiple OPPs with same "main" freq
+value.  I don't think we can mark the clocks "main" or otherwise as
+easily for every platform.
+
+Stephen, any inputs on this ?
+
+> The assumption (which might need better documentation) is that first
+> clock frequency is the main one:
+> 1. It is still in opp->rate field, so it is used everywhere when OPPs
+> are compared/checked for rates.
+> 1. Usually is used also in opp-table nodes names.
+> 
+> The logical explanation is that devices has some main operating
+> frequency, e.g. the core clock, and this determines the performance. In
+> the same time such device might not be able to scale this one core clock
+> independently from others, therefore this set of patches.
+
+I understand what you are saying, but I can feel that it will break or
+will force bad bug-fixes into the core at a later point of time.
+
+I think it would be better to take it slowly and see how it goes. Lets
+first add support for the OPP core to parse and store this data and
+then we can add support to use it, or at least do all this in separate
+patches so they are easier to review/apply.
+
 -- 
-2.36.0
-
+viresh
