@@ -2,182 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEB07520D05
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 06:41:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92AB9520DCB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 08:22:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236445AbiEJEo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 May 2022 00:44:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45348 "EHLO
+        id S232406AbiEJG0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 May 2022 02:26:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236350AbiEJEoz (ORCPT
+        with ESMTP id S237193AbiEJGZh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 May 2022 00:44:55 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A12711B7AE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 21:40:56 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id p8so13953004pfh.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 21:40:56 -0700 (PDT)
+        Tue, 10 May 2022 02:25:37 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F33A64BBA6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 23:21:25 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id cq17-20020a17090af99100b001dc0386cd8fso1284777pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 23:21:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=lbY1apz0pshrpCAaJ1RrYyZnbJ+UjeS0fVoXXo8j4x4=;
-        b=g1O4yIW8IBZL4UjQArViSLk8BGWFwVVdDj4k3lboHQlTkJQ+rm3mIbeCIIKgBldnDL
-         vemV1tqpX0uc13aujVWctoK7Xgz/Zw9Wdv34dhYv0rS2b96Ryzawc8Q7WTi9VBXsyM8/
-         I5Pi+SicIj63pu9fYM3QYaBG5+AIDSGzQCMOf3QCc6fdmLUVblR7n6tedFbDYuwdUZhu
-         zIuKHv2b8wLek6nQwSIbFcYwuO2pnT7dYWxxulUgiS5fNtP+EASQcqA5eMTg8QKMPEiX
-         u1yAPilOKbWZR5pPKRYIkh4RjlpecE57z8J7ag6lrDvUnChqYht9pXoHxKkm7w1GC0Ey
-         LmBg==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :content-transfer-encoding;
+        bh=f0ZQoiwRSTWeuW/E0qX/vgU+j2w7ZPOXgEISOXG2/K8=;
+        b=rhbooEKxSweLF/hKTN6wo/TqGR2odyzF+HAlYzvlyW2M3o573J3e8/BCh4x6ye4QXB
+         yBonBPk4b8Txqjxw55KdKLwjFjGvpDdHMaVkzzKJXz/EWKC4gDCIxtZ3agLZc+D/9KJw
+         L9E2N6+SLNJPRBM7LKXwBGk+zIOFwr+WlXjm85lSXlSbQ6zIwI+FEEnLms/2EHfhV4eP
+         FOVeKytypd7QBmIXueSRvKy8YPOLcmQ9KatpSEVnhApQToljdstSJxNPOAzxyH3ofGSe
+         wpE9lnDhxaxMlnPRT/CvViVkG3odFeqfg39QVi93JMcRGyAMUJjbqXcEP3j3RGcqiii8
+         T2kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lbY1apz0pshrpCAaJ1RrYyZnbJ+UjeS0fVoXXo8j4x4=;
-        b=M+HiIqIax1BasKbG4QMHDpBVoK/+/QCa1wDpfJazDvNU0sRX1YsOtBQSJyZLlthBLI
-         Hm826wj4+xECbd6y8mV5CHCzRLlqRJmqLYTbkq+ACfl72d6FYJRt1DOKjbfthwdQl6o5
-         aPn+EX5aJ72pEK1Ki0Yt2dmKq8q7jGO5x8BCwiKeEUa/sxSqY6DthcG2UhHxJ+MpZCp8
-         +9wpxfrWfdbQY9OUMMfeyGaer8ZIrHGqq6tI/KBvCAQEGAYcP+24WazGUcrbZve6OS4h
-         PTs9m7qRBuERB/7oZK5pFkErP7yPo47Pj8bfib2pXFjdwXZBKlT+JFUCcvJJarzVKytS
-         qZFA==
-X-Gm-Message-State: AOAM5330OBLr4kx5JLzi0z7DR3Kqb+6fSoNMcO8x6GbqvbIP+6j/aUTH
-        MjRcE5Xws9oI/YyFNDarQk4q2A==
-X-Google-Smtp-Source: ABdhPJymevaw8JA+ZHsBCjPJ4j0suFS7f77voPGuje3SGgohExKLxChq+oCh5WRtZK41XqI6SBv0+w==
-X-Received: by 2002:aa7:9110:0:b0:4fa:e388:af57 with SMTP id 16-20020aa79110000000b004fae388af57mr18793150pfh.1.1652157656115;
-        Mon, 09 May 2022 21:40:56 -0700 (PDT)
-Received: from localhost ([122.162.234.2])
-        by smtp.gmail.com with ESMTPSA id a2-20020a170902900200b0015e8d4eb289sm780370plp.211.2022.05.09.21.40.55
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding;
+        bh=f0ZQoiwRSTWeuW/E0qX/vgU+j2w7ZPOXgEISOXG2/K8=;
+        b=xz73hg0Fjxx+5a0wGprornru2Z+bczS6093rs4OD26LFlxgzNxQOx1QjF5DYzHYNgt
+         W8hka/jTQUg+qEvoWp9AKyJYmJFDvWP23UytcAF+JtAzsYPm11GZWnJjgu2MAoXZhhWT
+         DYzc5EhDjTzr5snvw+pqEWbzrUBFEs4tEvhHb7HGBPBZombUQ2Y7KZ8jOpGsirmprRuh
+         2ZjU4Pgzx+khFtTgYV6sFYcEWyjNRsu6kiyGIjbW/hc2S4fsUj+P+R0W9S8FSmb5SPDr
+         EdZrQ+8xzFvjJccIvFW1upau5BB8b9XZcnB3s5A1KsFrOByWKCrrMI9H3uKt94rQxvCl
+         5eWA==
+X-Gm-Message-State: AOAM5328yjry0zYAnz6uc+U+X6YD9Vk720P4r4QJDDBrbj7x3PRbw43z
+        o6dcOW1QvU1jKJwwCA08+8XG
+X-Google-Smtp-Source: ABdhPJxbl+nGav8AiYmNljVz6gZZTrIxKjYDVGiZPJy5CyQg4eiieJxb9aDGLyuKH8TR5PaJAwb+mw==
+X-Received: by 2002:a17:902:cecf:b0:15e:b10a:9f3a with SMTP id d15-20020a170902cecf00b0015eb10a9f3amr19895067plg.118.1652163685110;
+        Mon, 09 May 2022 23:21:25 -0700 (PDT)
+Received: from thinkpad ([220.158.159.212])
+        by smtp.gmail.com with ESMTPSA id r3-20020a170903020300b0015e8d4eb22dsm1041830plh.119.2022.05.09.23.21.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 May 2022 21:40:55 -0700 (PDT)
-Date:   Tue, 10 May 2022 10:10:53 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
-Subject: Re: [RFC PATCH v2 4/6] PM: opp: allow control of multiple clocks
-Message-ID: <20220510044053.ykn6ygnbeokhzrsa@vireshk-i7>
-References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
- <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
- <20220425072710.v6gwo4gu3aouezg4@vireshk-i7>
- <dea39b1f-0091-2690-7f07-108d07ef9f3c@linaro.org>
+        Mon, 09 May 2022 23:21:24 -0700 (PDT)
+Date:   Tue, 10 May 2022 11:51:20 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     gregkh@linuxfoundation.org
+Cc:     quic_hemantk@quicinc.com, slark_xiao@163.com,
+        quic_jhugo@quicinc.com, Daniele.Palmas@telit.com,
+        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
+Subject: [GIT PULL] MHI changes for v5.19
+Message-ID: <20220510062120.GA9140@thinkpad>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <dea39b1f-0091-2690-7f07-108d07ef9f3c@linaro.org>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09-05-22, 12:38, Krzysztof Kozlowski wrote:
-> On 25/04/2022 09:27, Viresh Kumar wrote:
-> > This is tricky as the OPP core can't really assume the order in which the clocks
-> > needs to be programmed. We had the same problem with multiple regulators and the
-> > same is left for drivers to do via the custom-api.
-> > 
-> > Either we can take the same route here, and let platforms add their own OPP
-> > drivers which can handle this, Or hide this all behind a basic device clock's
-> > driver, which you get with clk_get(dev, NULL).
-> 
-> For my use case, the order of scaling will be the same as in previous
-> implementation, because UFS drivers just got bunch of clocks with
-> freq-table-hz property and were scaling in DT order.
-> 
-> If drivers need something better, they can always provide custom-opp
-> thus replacing my method. My implementation here does not restrict them.
-> 
-> For the drivers where the order does not matter, why forcing each driver
-> to provide its own implementation of clock scaling? Isn't shared generic
-> PM OPP code a way to remove code duplication?
+The following changes since commit 5d4be19cbe6aadfad0a5f40df91bd478cedd8344:
 
-Code duplication is a good argument and I am in favor of avoiding it,
-but nevertheless this shouldn't be something which platforms can pick
-by mistake, just because they didn't go through core code. In other
-words, this shouldn't be the default behavior of the core.
+  bus: mhi: ep: Add uevent support for module autoloading (2022-04-04 10:17:51 +0530)
 
-If we want, core can provide a helper to get rid of the duplication
-though, but the user explicitly needs to use it.
+are available in the Git repository at:
 
-> >> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-> > 
-> >> +static int _generic_set_opp_clks_only(struct device *dev,
-> >> +				      struct opp_table *opp_table,
-> >> +				      struct dev_pm_opp *opp)
-> >> +{
-> >> +	int i, ret;
-> >> +
-> >> +	if (!opp_table->clks)
-> >> +		return 0;
-> >> +
-> >> +	for (i = 0; i < opp_table->clk_count; i++) {
-> >> +		if (opp->rates[i]) {
-> > 
-> > This should mean that we can disable that clock and it isn't required.
-> 
-> No, it does not mean that. The DT might provide several clocks which
-> only some are important for frequency scaling. All others just need to
-> be enabled.
-> 
-> Maybe you prefer to skip getting such clocks in PM OPP?
+  git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git tags/mhi-for-v5.19
 
-They shouldn't reach the OPP core then. What will the OPP core do if a
-clock has a value for one OPP and not the other ?
+for you to fetch changes up to 13b9b814da2de5006795ddcff2bbaea46017429d:
 
-> >> @@ -969,8 +1008,8 @@ static void _find_current_opp(struct device *dev, struct opp_table *opp_table)
-> > 
-> > I think this routine breaks as soon as we add support for multiple clocks.
-> > clks[0]'s frequency can be same for multiple OPPs and this won't get you the
-> > right OPP then.
-> 
-> I don't think so and this was raised also by Stephen - only the first
-> clock is considered the one used for all PM OPP frequency operations,
-> like get ceil/floor.
+  bus: mhi: host: Add support for Foxconn T99W373 and T99W368 (2022-05-10 11:10:56 +0530)
 
-IMHO, this is broken by design. I can easily see that someone wants to
-have few variants of all other frequencies for the same frequency of
-the so called "main" clock, i.e. multiple OPPs with same "main" freq
-value.  I don't think we can mark the clocks "main" or otherwise as
-easily for every platform.
+----------------------------------------------------------------
+MHI changes for v5.19
 
-Stephen, any inputs on this ?
+MHI Host
+--------
 
-> The assumption (which might need better documentation) is that first
-> clock frequency is the main one:
-> 1. It is still in opp->rate field, so it is used everywhere when OPPs
-> are compared/checked for rates.
-> 1. Usually is used also in opp-table nodes names.
-> 
-> The logical explanation is that devices has some main operating
-> frequency, e.g. the core clock, and this determines the performance. In
-> the same time such device might not be able to scale this one core clock
-> independently from others, therefore this set of patches.
+Support for new modems:
 
-I understand what you are saying, but I can feel that it will break or
-will force bad bug-fixes into the core at a later point of time.
+ - Foxconn Cinterion MV32-WA/MV32-WB based on SDX62/SDX65
+ - Telit FN980 v1 based on SDX55
+ - Telit FN990 based on SDX65
+ - Foxconn T99W373/T99W368 based on SDX62/SDX65
 
-I think it would be better to take it slowly and see how it goes. Lets
-first add support for the OPP core to parse and store this data and
-then we can add support to use it, or at least do all this in separate
-patches so they are easier to review/apply.
+Core changes:
 
+ - During the recycle of event ring elements, compute the ctxt_wp based on the
+   local cached value instead of reading from shared memory. This is to prevent
+   the possible corruption of the ctxt_wp as some of the endpoint devices could
+   modify the value in shared memory.
+
+ - Add sysfs support for resetting the endpoint based on the MHI spec. The MHI
+   spec allows the host to hard reset the device in the case of an unrecoverable
+   error and all other reset mechanisms have failed.
+
+ - During MHI shutdown, wait for the endpoint device to enter the ready state
+   post reset before proceeding. This is to avoid a possible race where host
+   would remove the interrupt handler and device will send ready state
+   interrupt, resulting in IOMMU fault.
+
+ - Bail out updating the MHI register if the read has failed during
+   read/modify/write.
+
+ - Use mhi_write_reg() instead of mhi_write_reg_field() for writing the whole
+   register fields in mhi_init_mmio().
+
+MAINTAINERS change:
+
+ - Since Qualcomm has moved the email domain for its employess from codeaurora
+   domain to quicinc, update the same for Hemant.
+
+----------------------------------------------------------------
+Bhaumik Bhatt (2):
+      bus: mhi: host: Bail on writing register fields if read fails
+      bus: mhi: host: Optimize and update MMIO register write method
+
+Daniele Palmas (2):
+      bus: mhi: host: pci_generic: add Telit FN980 v1 hardware revision
+      bus: mhi: host: pci_generic: add Telit FN990
+
+Jeffrey Hugo (3):
+      bus: mhi: host: Use cached values for calculating the shared write pointer
+      bus: mhi: host: Add soc_reset sysfs
+      bus: mhi: host: Wait for ready state after reset
+
+Manivannan Sadhasivam (2):
+      MAINTAINERS: Update Hemant's email id
+      bus: mhi: host: pci_generic: Sort mhi_pci_id_table based on the PID
+
+Slark Xiao (2):
+      bus: mhi: host: Add support for Cinterion MV32-WA/MV32-WB
+      bus: mhi: host: Add support for Foxconn T99W373 and T99W368
+
+ Documentation/ABI/stable/sysfs-bus-mhi |  10 +++++++
+ MAINTAINERS                            |   2 +-
+ drivers/bus/mhi/host/boot.c            |  22 ++++++++++----
+ drivers/bus/mhi/host/init.c            |  82 ++++++++++++++++++++++++++++++++++------------------
+ drivers/bus/mhi/host/internal.h        |   7 +++--
+ drivers/bus/mhi/host/main.c            |  18 +++++-------
+ drivers/bus/mhi/host/pci_generic.c     | 133 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--------
+ drivers/bus/mhi/host/pm.c              |  24 ++++++++++++---
+ 8 files changed, 234 insertions(+), 64 deletions(-)
 -- 
-viresh
+மணிவண்ணன் சதாசிவம்
