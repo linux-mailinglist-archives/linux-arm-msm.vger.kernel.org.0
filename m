@@ -2,114 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 043FD5213AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 13:26:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDB69521675
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 15:09:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240914AbiEJLaI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 May 2022 07:30:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36608 "EHLO
+        id S242103AbiEJNN1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 May 2022 09:13:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240920AbiEJLaB (ORCPT
+        with ESMTP id S242242AbiEJNN0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 May 2022 07:30:01 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E751154BEC;
-        Tue, 10 May 2022 04:26:03 -0700 (PDT)
+        Tue, 10 May 2022 09:13:26 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC73555236
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 06:09:26 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id m20so32821193ejj.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 06:09:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652181964; x=1683717964;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=sdNRxDIfnksd3fpkm2K+v0TV8UU/vL/TT0dLoHicC0c=;
-  b=tVJdCFGAmH4+PuiKF0jaUM34Q5mnKrEvTdNfMajyMieRcA1ZTNwVuAfD
-   IEtehKggnUFEp4AMJ/g1RqJcgQ0Mk3CpufWzsT4yBCYlWcFj+NEI0/t4v
-   cXVBQsqjyREEeKdqgYdhsHgeLHvIchqMV2DueAo9+hpx35wfY1Jk2ARaa
-   s=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 10 May 2022 04:26:01 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 04:26:01 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 10 May 2022 04:25:55 -0700
-Received: from hu-ylal-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 10 May 2022 04:25:52 -0700
-From:   Yogesh Lal <quic_ylal@quicinc.com>
-To:     <bjorn.andersson@linaro.org>, <quic_sibis@quicinc.com>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        Yogesh Lal <quic_ylal@quicinc.com>
-Subject: [PATCH 2/2 V2] remoteproc: qcom: Add full coredump fallback mechanism
-Date:   Tue, 10 May 2022 16:55:30 +0530
-Message-ID: <1652181930-22212-2-git-send-email-quic_ylal@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1652181930-22212-1-git-send-email-quic_ylal@quicinc.com>
-References: <1652181930-22212-1-git-send-email-quic_ylal@quicinc.com>
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=GY+8CojCMdOqBSOFBIYghZE3p4uLJiwb7g8ImRgX/dU=;
+        b=qLsqWbFt7LCQx0MaLfgYA2s8hsAyOOpVW5rh9DzwWbCQLNbIGdXf+F5JAY+grnNJgF
+         sBb+zqwdE6bmq3okeUZuIzZcXNrdkJXOXN+krDKNhSROug7uv2bkRgdVwR8cANiD9kk9
+         BLfNHSChZRjoUi6DlTO96a5lvuqCRTd36KWMWg3SESso0kbRMIFxUgPqiB3VTABTkQwW
+         137KeyzjeGxXgJh1BBCMMJxYMNpzVQT5QI8bPIWcGLxEv6TjCxvjpmjZcxB6sZU+2Rsu
+         HVwaN8RSnozbhzp3UBfq4nG6jZLC8bbH4yImCfFr6ChuFmcx5MUDpvqyVKF1VYgZGdLl
+         7uvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=GY+8CojCMdOqBSOFBIYghZE3p4uLJiwb7g8ImRgX/dU=;
+        b=73ZkKYWU+DFfQKmw3/8+mpnanBJq9buFGyuI4xz7vt0EuCzSr78oj/EU0sqF8snEpd
+         gQvRdW2wxLIwwcPvv8vXcDpnbRJw429ZoUrjjCZwIbVt0vVaMEg/yDHN9NwrV0VYFbl6
+         d9nEtMguaE3azHy29i0aXBOXEo41Z3wNk7hHo0c7nyEyALBPqbW7yeWnKz9CzCnMqWhT
+         LfwRvGDkm/g2DmISgELjroB8pWro8d+ktOFZEk78IZ9/lS9Orhoq3V4H5xD85auKCuC0
+         a3HoZIwYg9K2KAFjYfPC/g4QHn8bPCgtmVmQIelTI3+dR5sDMHtp2T41UelmKKcD2rB/
+         9dEQ==
+X-Gm-Message-State: AOAM531rgxC71BLGnxCQzDq2RPhYAuafxNbhdJmyYR8JTmA0wPrzguRi
+        /mJ0k0rO2ywpU8B97WqpxkxFnw==
+X-Google-Smtp-Source: ABdhPJyeV9V1iJhHLhwfC6K1BZ5EadKgzzBkTD1pVb1eEmEusgki6rRs5oqhoRfmG7wEJ9obJwywHg==
+X-Received: by 2002:a17:907:7d92:b0:6fd:bd33:f00f with SMTP id oz18-20020a1709077d9200b006fdbd33f00fmr1956321ejc.467.1652188165022;
+        Tue, 10 May 2022 06:09:25 -0700 (PDT)
+Received: from [192.168.0.252] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id jy15-20020a170907762f00b006f3ef214e54sm6055980ejc.186.2022.05.10.06.09.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 May 2022 06:09:23 -0700 (PDT)
+Message-ID: <1e533194-7047-8342-b426-f607fddbfaa3@linaro.org>
+Date:   Tue, 10 May 2022 15:09:20 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [RFC PATCH v2 4/6] PM: opp: allow control of multiple clocks
+Content-Language: en-US
+To:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
+References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
+ <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
+ <20220425072710.v6gwo4gu3aouezg4@vireshk-i7>
+ <dea39b1f-0091-2690-7f07-108d07ef9f3c@linaro.org>
+ <20220510044053.ykn6ygnbeokhzrsa@vireshk-i7>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220510044053.ykn6ygnbeokhzrsa@vireshk-i7>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Siddharth Gupta <sidgup@codeaurora.org>
+On 10/05/2022 06:40, Viresh Kumar wrote:
+> On 09-05-22, 12:38, Krzysztof Kozlowski wrote:
+>> On 25/04/2022 09:27, Viresh Kumar wrote:
+>>> This is tricky as the OPP core can't really assume the order in which the clocks
+>>> needs to be programmed. We had the same problem with multiple regulators and the
+>>> same is left for drivers to do via the custom-api.
+>>>
+>>> Either we can take the same route here, and let platforms add their own OPP
+>>> drivers which can handle this, Or hide this all behind a basic device clock's
+>>> driver, which you get with clk_get(dev, NULL).
+>>
+>> For my use case, the order of scaling will be the same as in previous
+>> implementation, because UFS drivers just got bunch of clocks with
+>> freq-table-hz property and were scaling in DT order.
+>>
+>> If drivers need something better, they can always provide custom-opp
+>> thus replacing my method. My implementation here does not restrict them.
+>>
+>> For the drivers where the order does not matter, why forcing each driver
+>> to provide its own implementation of clock scaling? Isn't shared generic
+>> PM OPP code a way to remove code duplication?
+> 
+> Code duplication is a good argument and I am in favor of avoiding it,
+> but nevertheless this shouldn't be something which platforms can pick
+> by mistake, just because they didn't go through core code. In other
+> words, this shouldn't be the default behavior of the core.
+> 
+> If we want, core can provide a helper to get rid of the duplication
+> though, but the user explicitly needs to use it.
 
-If a remoteproc's firmware does not support minidump but the driver
-adds an ID, the minidump driver does not collect any coredumps when
-the remoteproc crashes. This hinders the purpose of coredump
-collection. This change adds a fallback mechanism in the event of a
-crash.
+OK, that sounds like a solution.
 
-Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
-Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
----
- drivers/remoteproc/qcom_common.c   | 7 +++++--
- drivers/remoteproc/qcom_q6v5_pas.c | 1 +
- 2 files changed, 6 insertions(+), 2 deletions(-)
+> 
+>>>> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+>>>
+>>>> +static int _generic_set_opp_clks_only(struct device *dev,
+>>>> +				      struct opp_table *opp_table,
+>>>> +				      struct dev_pm_opp *opp)
+>>>> +{
+>>>> +	int i, ret;
+>>>> +
+>>>> +	if (!opp_table->clks)
+>>>> +		return 0;
+>>>> +
+>>>> +	for (i = 0; i < opp_table->clk_count; i++) {
+>>>> +		if (opp->rates[i]) {
+>>>
+>>> This should mean that we can disable that clock and it isn't required.
+>>
+>> No, it does not mean that. The DT might provide several clocks which
+>> only some are important for frequency scaling. All others just need to
+>> be enabled.
+>>
+>> Maybe you prefer to skip getting such clocks in PM OPP?
+> 
+> They shouldn't reach the OPP core then. What will the OPP core do if a
+> clock has a value for one OPP and not the other ?
 
-diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-index 4b91e3c..b3fdc66 100644
---- a/drivers/remoteproc/qcom_common.c
-+++ b/drivers/remoteproc/qcom_common.c
-@@ -163,8 +163,11 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id)
- 	 */
- 	if (subsystem->regions_baseptr == 0 ||
- 	    le32_to_cpu(subsystem->status) != 1 ||
--	    le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED ||
--	    le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
-+	    le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED) {
-+		return rproc_coredump(rproc);
-+	}
-+
-+	if (le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
- 		dev_err(&rproc->dev, "Minidump not ready, skipping\n");
- 		return;
- 	}
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 401b1ec..6e5cbca 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -274,6 +274,7 @@ static const struct rproc_ops adsp_minidump_ops = {
- 	.start = adsp_start,
- 	.stop = adsp_stop,
- 	.da_to_va = adsp_da_to_va,
-+	.parse_fw = qcom_register_dump_segments,
- 	.load = adsp_load,
- 	.panic = adsp_panic,
- 	.coredump = adsp_minidump,
--- 
-2.7.4
+That would be the same mistake as providing one voltage as 0 or with
+something outside of a spec (but still within regulators min/max).
+Mistakes in DTS create undesirable behavior and this part is no different.
 
+However I understand your point - since the driver provides the list of
+clocks to OPP, it should not provide ones which are irrelevant.
+
+> 
+>>>> @@ -969,8 +1008,8 @@ static void _find_current_opp(struct device *dev, struct opp_table *opp_table)
+>>>
+>>> I think this routine breaks as soon as we add support for multiple clocks.
+>>> clks[0]'s frequency can be same for multiple OPPs and this won't get you the
+>>> right OPP then.
+>>
+>> I don't think so and this was raised also by Stephen - only the first
+>> clock is considered the one used for all PM OPP frequency operations,
+>> like get ceil/floor.
+> 
+> IMHO, this is broken by design. I can easily see that someone wants to
+> have few variants of all other frequencies for the same frequency of
+> the so called "main" clock, i.e. multiple OPPs with same "main" freq
+> value.  I don't think we can mark the clocks "main" or otherwise as
+> easily for every platform.
+> 
+> Stephen, any inputs on this ?
+
+In such case, matching opps by frequency would be a quite different API.
+The drivers can use now:
+https://github.com/krzk/linux/commit/ebc31798494fcc66389ae409dce6d9489c16156a#diff-b6370444c32afa2e55d9b6150f355ba6f4d20c5ed5da5399ea8295d323de8267R1200
+
+If you assume that this frequency can be used for multiple OPPs, then
+the API should be different. Something like:
+int dev_pm_opp_set_rate(struct device *dev, unsigned long *target_freqs,
+                        size_t num_freqs);
+
+Finding right opp for given frequencies would be also quite much more
+complicated task. Not a simple ceil/floor search by one frequency.
+
+I don't need that use-case and my implementation does not prevent anyone
+from implementing it in the future. IOW, why developing now complex
+solution which no one currently needs? If anyone needs such scaling by
+multiple-frequencies, the PM OPP can be reworked/extended/improved again.
+
+Additionally let me point also that my implementation targets not a
+specific one driver, but actually entire subsystem of drivers - all UFS
+drivers.
+
+> 
+>> The assumption (which might need better documentation) is that first
+>> clock frequency is the main one:
+>> 1. It is still in opp->rate field, so it is used everywhere when OPPs
+>> are compared/checked for rates.
+>> 1. Usually is used also in opp-table nodes names.
+>>
+>> The logical explanation is that devices has some main operating
+>> frequency, e.g. the core clock, and this determines the performance. In
+>> the same time such device might not be able to scale this one core clock
+>> independently from others, therefore this set of patches.
+> 
+> I understand what you are saying, but I can feel that it will break or
+> will force bad bug-fixes into the core at a later point of time.
+> 
+> I think it would be better to take it slowly and see how it goes. Lets
+> first add support for the OPP core to parse and store this data and
+> then we can add support to use it, or at least do all this in separate
+> patches so they are easier to review/apply.
+
+Sure, I'll split the patch to smaller chunks.
+
+Best regards,
+Krzysztof
