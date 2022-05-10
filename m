@@ -2,61 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D552C520EE4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 09:43:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04A5E520F09
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 09:49:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232317AbiEJHrT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 May 2022 03:47:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51952 "EHLO
+        id S229513AbiEJHxN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 May 2022 03:53:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237672AbiEJHqk (ORCPT
+        with ESMTP id S237449AbiEJHxG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 May 2022 03:46:40 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E544C36694;
-        Tue, 10 May 2022 00:41:05 -0700 (PDT)
+        Tue, 10 May 2022 03:53:06 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D969A1900E1;
+        Tue, 10 May 2022 00:48:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652168468; x=1683704468;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=xBdoamdqGRWw6ZVRrJjsM/tXezclgPHdNkSntmQA3HQ=;
-  b=qI2vbIRJLq0oOHydVvlt2L8YxFLRuc9hfb9xpBnbwZUEdSTPSybR4YbN
-   ugAOLSoILbGt4tf/GPPyr3mUxrTOcWt3BCtGEfIgzdstQCydmtxMBxY6H
-   QHoL/I+9eifdJZAa9sfi+ekMqErCkX+7Lp8EoABZaZkyWzbuy1C4kt08v
-   4=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 10 May 2022 00:41:05 -0700
+  t=1652168912; x=1683704912;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=66sP44ABH8cW1KMcQ/acjMJ0/jSkvrRxLCtDRKD7gqo=;
+  b=gdoY93kop7NLTmOqQ/FLMeiDBFyEd2gduQP8+1U/E3vNwX2atDtLGSqm
+   4RrBEhzHd2rXr+trjabvsElWVwxElm4XVPIQWjkni+u8Fxo8OZG92InA2
+   xERGaIBZk8hin9qdJpExpWwcmuxzmWccCWxBmbhnQ/xOGEEDJyT6QESGU
+   w=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 10 May 2022 00:48:32 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 00:41:05 -0700
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 00:48:32 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 10 May 2022 00:41:04 -0700
-Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
+ 15.2.986.22; Tue, 10 May 2022 00:48:31 -0700
+Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 10 May 2022 00:41:00 -0700
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
-        <devicetree@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH 2/2] arm64: dts: Support a new sc7280 gpu sku
-Date:   Tue, 10 May 2022 13:10:45 +0530
-Message-ID: <20220510131038.2.I18889462ca69a54aa9e1da448c37c894a2c474a9@changeid>
+ 15.2.986.22; Tue, 10 May 2022 00:48:28 -0700
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <mani@kernel.org>,
+        <jassisinghbrar@gmail.com>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <agross@kernel.org>, Prasad Sodagudi <quic_psodagud@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH] mailbox: qcom-ipcc: Log the pending interrupt during resume
+Date:   Tue, 10 May 2022 13:18:13 +0530
+Message-ID: <1652168893-11814-1-git-send-email-quic_sibis@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <20220510131038.1.Ibf12c1b99feecc4130f1e3130a3fc4ddd710a2e9@changeid>
-References: <20220510131038.1.Ibf12c1b99feecc4130f1e3130a3fc4ddd710a2e9@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
@@ -72,35 +62,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for a new sc7280 sku in the gpu's opp table.
+From: Prasad Sodagudi <quic_psodagud@quicinc.com>
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Enable logging of the pending interrupt that triggered device wakeup. This
+logging information helps to debug IRQs that cause periodic device wakeups
+and prints the detailed information of pending IPCC interrupts instead of
+the generic "Resume caused by IRQ 17, ipcc".
+
+Scenario: Device wakeup caused by Modem crash
+Logs:
+qcom-ipcc mailbox: virq: 182 triggered smp2p client-id: 2; signal-id: 2
+
+From the IPCC bindings it can further understood that the client here is
+IPCC_CLIENT_MPSS and the signal was IPCC_MPROC_SIGNAL_SMP2P.
+
+Signed-off-by: Prasad Sodagudi <quic_psodagud@quicinc.com>
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 ---
+ drivers/mailbox/qcom-ipcc.c | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index d782ffe..16fb10dd 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2018,14 +2018,14 @@
- 					opp-hz = /bits/ 64 <315000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
- 					opp-peak-kBps = <1804000>;
--					opp-supported-hw = <0x03>;
-+					opp-supported-hw = <0x07>;
- 				};
+diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+index c5d963222014..5be3a2809d09 100644
+--- a/drivers/mailbox/qcom-ipcc.c
++++ b/drivers/mailbox/qcom-ipcc.c
+@@ -254,6 +254,35 @@ static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc,
+ 	return devm_mbox_controller_register(dev, mbox);
+ }
  
- 				opp-450000000 {
- 					opp-hz = /bits/ 64 <450000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
- 					opp-peak-kBps = <4068000>;
--					opp-supported-hw = <0x03>;
-+					opp-supported-hw = <0x07>;
- 				};
++#ifdef CONFIG_PM_SLEEP
++static int qcom_ipcc_pm_resume(struct device *dev)
++{
++	struct qcom_ipcc *ipcc = dev_get_drvdata(dev);
++	const char *name = "null";
++	struct irq_desc *desc;
++	u32 hwirq;
++	int virq;
++
++	hwirq = readl(ipcc->base + IPCC_REG_RECV_ID);
++	if (hwirq == IPCC_NO_PENDING_IRQ)
++		return 0;
++
++	virq = irq_find_mapping(ipcc->irq_domain, hwirq);
++	desc = irq_to_desc(virq);
++	if (!desc)
++		name = "stray irq";
++	else if (desc->action && desc->action->name)
++		name = desc->action->name;
++
++	dev_info(dev, "virq: %d triggered %s client-id: %ld; signal-id: %ld\n", virq, name,
++		 FIELD_GET(IPCC_CLIENT_ID_MASK, hwirq), FIELD_GET(IPCC_SIGNAL_ID_MASK, hwirq));
++
++	return 0;
++}
++#else
++#define qcom_ipcc_pm_resume NULL
++#endif
++
+ static int qcom_ipcc_probe(struct platform_device *pdev)
+ {
+ 	struct qcom_ipcc *ipcc;
+@@ -324,6 +353,10 @@ static const struct of_device_id qcom_ipcc_of_match[] = {
+ };
+ MODULE_DEVICE_TABLE(of, qcom_ipcc_of_match);
  
- 				opp-550000000 {
++static const struct dev_pm_ops qcom_ipcc_dev_pm_ops = {
++	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(NULL, qcom_ipcc_pm_resume)
++};
++
+ static struct platform_driver qcom_ipcc_driver = {
+ 	.probe = qcom_ipcc_probe,
+ 	.remove = qcom_ipcc_remove,
+@@ -331,6 +364,7 @@ static struct platform_driver qcom_ipcc_driver = {
+ 		.name = "qcom-ipcc",
+ 		.of_match_table = qcom_ipcc_of_match,
+ 		.suppress_bind_attrs = true,
++		.pm = &qcom_ipcc_dev_pm_ops,
+ 	},
+ };
+ 
 -- 
 2.7.4
 
