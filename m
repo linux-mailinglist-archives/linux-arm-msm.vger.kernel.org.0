@@ -2,76 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 703105222E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 19:35:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C0475222F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 19:39:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245484AbiEJRjw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 May 2022 13:39:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50208 "EHLO
+        id S245652AbiEJRno (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 May 2022 13:43:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243060AbiEJRjv (ORCPT
+        with ESMTP id S245615AbiEJRnn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 May 2022 13:39:51 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05B325F63;
-        Tue, 10 May 2022 10:35:52 -0700 (PDT)
+        Tue, 10 May 2022 13:43:43 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C295E296BD5;
+        Tue, 10 May 2022 10:39:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652204153; x=1683740153;
+  t=1652204386; x=1683740386;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=r8ZcV1vuUcmf0/igLjZxMrCayIbyMQkN9WHg1UvKdEo=;
-  b=G7dRNKVFa30ytU44Y9h0fTme10Y/LSMkJzKcUt3vrqS5kvJ1ot/oS8mZ
-   FdwNDsu6Cn1H3JmmGfHPWY+LK8TlsuVu1oTLF2NOLA3Fq6bwSUVqjkqyb
-   v9HldPJigTu4WYX8kbnwMwlawXHqkUuliP9tuzayxBivShHrLVACJegkm
-   Q=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 10 May 2022 10:35:52 -0700
+  bh=FkyvDe+lg/6UUzc3a3RX0uzSgZKO1lAGbr6Xu1sBYnI=;
+  b=kQMsueoNZK5SbvPlsCBOIoNIMgo0Sos82mEJNrLRT2dUBnbl26HCQ8M1
+   tAImu4APL3OuCOfA7VD1M/UzJoADMERNT2K62DD53EWD03Q4w4DEoVmRT
+   8mqBhqt29gmwXu7K/tGMQhHsiOS7ioq7Vdol3OpeI0T1QhpGCfzUvrQV5
+   4=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 10 May 2022 10:39:45 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 10:35:51 -0700
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 10:39:45 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 10 May 2022 10:35:51 -0700
-Received: from [10.216.55.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ 15.2.986.22; Tue, 10 May 2022 10:39:45 -0700
+Received: from [10.38.241.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 10 May
- 2022 10:35:45 -0700
-Message-ID: <7ef88262-4292-3077-00a1-dc06b2483b10@quicinc.com>
-Date:   Tue, 10 May 2022 23:05:42 +0530
+ 2022 10:39:42 -0700
+Message-ID: <e205565a-e0f5-dca2-a287-a829056d9601@quicinc.com>
+Date:   Tue, 10 May 2022 10:39:40 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [v3 3/3] arm64: dts: qcom: sc7280: Update SNPS Phy params for
- SC7280 IDP device
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm: Fix fb plane offset calculation
 Content-Language: en-US
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Doug Anderson" <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_ppratap@quicinc.com>,
-        <quic_vpulyala@quicinc.com>
-References: <1652011947-18575-1-git-send-email-quic_kriskura@quicinc.com>
- <1652011947-18575-4-git-send-email-quic_kriskura@quicinc.com>
- <20220509032005.GJ4640@hu-pkondeti-hyd.qualcomm.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <20220509032005.GJ4640@hu-pkondeti-hyd.qualcomm.com>
+To:     Rob Clark <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>
+CC:     Rob Clark <robdclark@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220510165216.3577068-1-robdclark@gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220510165216.3577068-1-robdclark@gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,40 +72,29 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 5/9/2022 8:50 AM, Pavan Kondeti wrote:
-> Hi Krishna,
->
-> On Sun, May 08, 2022 at 05:42:27PM +0530, Krishna Kurapati wrote:
->> Overriding the SNPS Phy tuning parameters for SC7280 IDP device.
->>
->> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 6 ++++++
->>   1 file changed, 6 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index 5eb6689..ad85ffb 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -325,6 +325,12 @@
->>   	vdda-pll-supply = <&vreg_l10c_0p8>;
->>   	vdda33-supply = <&vreg_l2b_3p0>;
->>   	vdda18-supply = <&vreg_l1c_1p8>;
->> +	qcom,hs-rise-fall-time-bps = <0>;
->> +	qcom,squelch-detector-bps = <(-2090)>;
->> +	qcom,hs-disconnect-bps = <1743>;
->> +	qcom,hs-amplitude-bps = <1780>;
->> +	qcom,hs-crossover-voltage = <(-31)>;
->> +	qcom,hs-output-impedance = <2600>;
->>   };
-> Is this an example change or do we see any HS electrical compliance failures
-> on SC7280 IDP that will get fixed with these override sequence?
->
-> Thanks,
-> Pavan
 
-Hi Pavan,
-
-These results were based on compliance testing results.
-
+On 5/10/2022 9:52 AM, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> The offset got dropped by accident.
+> 
+> Fixes: d413e6f97134 ("drm/msm: Drop msm_gem_iova()")
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/msm_fb.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
+> index 362775ae50af..4269da268a4a 100644
+> --- a/drivers/gpu/drm/msm/msm_fb.c
+> +++ b/drivers/gpu/drm/msm/msm_fb.c
+> @@ -118,7 +118,7 @@ uint32_t msm_framebuffer_iova(struct drm_framebuffer *fb,
+>   		struct msm_gem_address_space *aspace, int plane)
+>   {
+>   	struct msm_framebuffer *msm_fb = to_msm_framebuffer(fb);
+> -	return msm_fb->iova[plane];
+> +	return msm_fb->iova[plane] + fb->offsets[plane];
+>   }
+>   
+>   struct drm_gem_object *msm_framebuffer_bo(struct drm_framebuffer *fb, int plane)
