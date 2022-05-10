@@ -2,85 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 235B552266B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 23:42:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36F6A52266E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 23:43:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229942AbiEJVmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 May 2022 17:42:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55374 "EHLO
+        id S230470AbiEJVnm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 May 2022 17:43:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbiEJVmK (ORCPT
+        with ESMTP id S229838AbiEJVnl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 May 2022 17:42:10 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89663590A8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 14:42:05 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id j6so351721ejc.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 14:42:05 -0700 (PDT)
+        Tue, 10 May 2022 17:43:41 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 425B424F0D7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 14:43:40 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id bv19so419662ejb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 14:43:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=P8qY51W8vgfgv1roBIBZtJ5APPVjv9LiCcViJn43/9k=;
-        b=d9vybpfNPpkMOvcwKAuJOUBxBBYwKmkD5XmA6D69UyUqJSc2pr1poiFTUGhgnBb1b7
-         XdFNC6gf8eS7v91hV/9EE6QzIwRzYyU30UTywTBJpfcxxhoN71XmuvmgIrSV2rvYYpQ/
-         oa9Sx9bgfoznP7XpN2l0xmIiHQotsJgg3v1fE=
+        bh=JE1ryK3sFFaZpqLHuF4NT4pM8/q2oJCkuMH2NRrxWwk=;
+        b=UMCjE/GJyeRlpXcLvxAjSgAKgcgANfb//EG2WUd71BZf+62ZGEjKPE+xFJHNrgi25q
+         f/nnP8NBmQAIYJOomN7He1W39UCjnMwXBbwlO4gflTisczQg9XlhUlyVT4rvsCLdU2zp
+         qnyPa9oPLPuPspS+y0RzhTOQVDFihYiyLymU0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=P8qY51W8vgfgv1roBIBZtJ5APPVjv9LiCcViJn43/9k=;
-        b=HwiOAFBTy2slOwTMe6D0BsBP8I1/6AgImqdrB/E6lbLD+cZhCFPnNAwHZlEyq+wn4D
-         SlnNfPBH9WGDG2pkolmX1PkgV26sB/3bTPk+aGl/6/DeSWLcoHL84Zux5IZgMkQ5QX8s
-         lLBK2yzOxHidl2srMuTvUSVVJYQ4ki9N/tKqbQob9ep/nBAAujRYb6TxLtgMpwAnzxge
-         XVEQxxal2RjEPWJBsJRASjcuWNOnb3CqmDLAqphD/TboUU9OVyNdJ1bOK4Lk82sNCyzH
-         hy9/E9rBmsCikoJamDcCevg6lyDiHJPhgGRvf3EX8UkcHQQCbyKoE0c6SJZ7WgcihiLm
-         n7UA==
-X-Gm-Message-State: AOAM533S0VsJjrd66W+SpcoRvtOMp9Xs3yK13dgvhcwjWl0ou9W7UW/e
-        sBZtN5cHAR2eC3ivlpU9UQeUesBeHtiAMpiZ/Vk=
-X-Google-Smtp-Source: ABdhPJwluz0mtWgJr1nkzfx/T/aTYRAuqXPTubZeJTA1FPDuNrfBpslGJluv9geNZLLg8LxuxBWd4A==
-X-Received: by 2002:a17:906:cb09:b0:6f3:87ca:1351 with SMTP id lk9-20020a170906cb0900b006f387ca1351mr21366159ejb.674.1652218923810;
-        Tue, 10 May 2022 14:42:03 -0700 (PDT)
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com. [209.85.221.44])
-        by smtp.gmail.com with ESMTPSA id i3-20020aa7c703000000b0042617ba638esm160846edq.24.2022.05.10.14.42.02
+        bh=JE1ryK3sFFaZpqLHuF4NT4pM8/q2oJCkuMH2NRrxWwk=;
+        b=AXgQx6yJlrc6knEVhayTxGFkYFVwGjwY1tXMNuHVJUfNjCa1Ptas4yOf0H466ddxer
+         vYxKBNJwaugw7Zl8qxeybhQpURYX/nzIEy0BvuMp3Nf7/KgeLWrQ4bhUXzQTTgNSe7fv
+         EB/rK0qDYBJ7o0ftqBcO81H1Z+Wr86GLw3sCuSZFlKUUdBB1d58RkBNdip6izjYBJQyd
+         DR4/U5vAbFcWRnd7Ul470PEmxuh3x9L7XH2cuYDFE41kRdmjTa+o2hERSCJ5Scya3Jo1
+         wpRLDPq0V1LG8+WbEroba1WcJqg48EPQWHm8WvUGjOqt/kQOFgPPnrl+L/6BsCbhFald
+         pk6Q==
+X-Gm-Message-State: AOAM5332mVuGeLMZh+1SGx2yOwX5Qr8i/Stv5GvUNSJBHTkfq1IflVUU
+        AIyRjodx6WuK5Mz6JwkUd0JIALkwgznvSM8CkHk=
+X-Google-Smtp-Source: ABdhPJyS6aC0+kmzxOPsAPraDqDkznrdNNnfvVE1v6KtAk7GB8njpu5aVwHbNqdJu5WBt+zOGGKwMA==
+X-Received: by 2002:a17:907:62a6:b0:6ef:8118:d3e2 with SMTP id nd38-20020a17090762a600b006ef8118d3e2mr21137962ejc.605.1652219018593;
+        Tue, 10 May 2022 14:43:38 -0700 (PDT)
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com. [209.85.128.41])
+        by smtp.gmail.com with ESMTPSA id i23-20020a1709064ed700b006f3ef214e52sm167713ejv.184.2022.05.10.14.43.37
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 May 2022 14:42:03 -0700 (PDT)
-Received: by mail-wr1-f44.google.com with SMTP id e24so367568wrc.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 14:42:02 -0700 (PDT)
-X-Received: by 2002:a05:6000:c7:b0:20a:d8c1:d044 with SMTP id
- q7-20020a05600000c700b0020ad8c1d044mr20361092wrx.422.1652218922331; Tue, 10
- May 2022 14:42:02 -0700 (PDT)
+        Tue, 10 May 2022 14:43:37 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id q20so136473wmq.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 14:43:37 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f13:b0:394:8978:7707 with SMTP id
+ l19-20020a05600c4f1300b0039489787707mr1887184wmq.34.1652219016683; Tue, 10
+ May 2022 14:43:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220426132121.RFC.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
- <CAD=FV=XViHtOoQH3fm4yoRcUAkLkf0Wf4zPXUH0Zq5_09tZmjw@mail.gmail.com>
- <874k22lxmh.fsf@intel.com> <8ea03441-b835-f5db-5cc3-85e5330dfe3f@quicinc.com>
- <CAD=FV=UBTEAQD+49xwFM4UdzD2dqQ7WkpNYtO=JRTJwfRWo1Yg@mail.gmail.com> <685a547b-175e-68db-a5f6-0e85dacd075a@quicinc.com>
-In-Reply-To: <685a547b-175e-68db-a5f6-0e85dacd075a@quicinc.com>
+References: <20220510104656.1.Id98b473e08c950f9a461826dde187ef7705a928c@changeid>
+ <CAD=FV=U33QSjnD7ERdVBb+hk4yooGU5=C0FtnhFsDME_MePR0w@mail.gmail.com> <YnrZQ4ggqxjlacL1@google.com>
+In-Reply-To: <YnrZQ4ggqxjlacL1@google.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 10 May 2022 14:41:48 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WaY=x8ije6FOsTXBYgOU6j5cCAdZX-pkbAJLYMfhrDqQ@mail.gmail.com>
-Message-ID: <CAD=FV=WaY=x8ije6FOsTXBYgOU6j5cCAdZX-pkbAJLYMfhrDqQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] drm/edid: drm_add_modes_noedid() should set lowest
- resolution as preferred
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Jani Nikula <jani.nikula@linux.intel.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
+Date:   Tue, 10 May 2022 14:43:24 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VNNP0k_xS=qDUrO2jyNG3r=HB4nz+C0uRZLDBiBuCYZg@mail.gmail.com>
+Message-ID: <CAD=FV=VNNP0k_xS=qDUrO2jyNG3r=HB4nz+C0uRZLDBiBuCYZg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Set modem FW path for Chrome OS boards
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        LKML <linux-kernel@vger.kernel.org>
+        LKML <linux-kernel@vger.kernel.org>,
+        "Joseph S . Barrera III" <joebar@chromium.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,140 +83,61 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Tue, May 10, 2022 at 2:33 PM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On Tue, May 10, 2022 at 2:29 PM Matthias Kaehlcke <mka@chromium.org> wrote:
 >
-> Hi Doug
->
-> On 5/10/2022 1:53 PM, Doug Anderson wrote:
+> On Tue, May 10, 2022 at 12:49:30PM -0700, Doug Anderson wrote:
 > > Hi,
 > >
-> > On Fri, May 6, 2022 at 9:33 AM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> >>
-> >> Hi Jani
-> >>
-> >> On 5/6/2022 4:16 AM, Jani Nikula wrote:
-> >>> On Thu, 05 May 2022, Doug Anderson <dianders@chromium.org> wrote:
-> >>>> Ville,
-> >>>>
-> >>>> On Tue, Apr 26, 2022 at 1:21 PM Douglas Anderson <dianders@chromium.org> wrote:
-> >>>>>
-> >>>>> If we're unable to read the EDID for a display because it's corrupt /
-> >>>>> bogus / invalid then we'll add a set of standard modes for the
-> >>>>> display. When userspace looks at these modes it doesn't really have a
-> >>>>> good concept for which mode to pick and it'll likely pick the highest
-> >>>>> resolution one by default. That's probably not ideal because the modes
-> >>>>> were purely guesses on the part of the Linux kernel.
-> >>>>>
-> >>>>> Let's instead set 640x480 as the "preferred" mode when we have no EDID.
-> >>>>>
-> >>>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> >>>>> ---
-> >>>>>
-> >>>>>    drivers/gpu/drm/drm_edid.c | 9 +++++++++
-> >>>>>    1 file changed, 9 insertions(+)
-> >>>>
-> >>>> Someone suggested that you might have an opinion on this patch and
-> >>>> another one I posted recently [1]. Do you have any thoughts on it?
-> >>>> Just to be clear: I'm hoping to land _both_ this patch and [1]. If you
-> >>>> don't have an opinion, that's OK too.
-> >>>>
-> >>>> [1] https://lore.kernel.org/r/20220426114627.2.I4ac7f55aa446699f8c200a23c10463256f6f439f@changeid
-> >>>
-> >>> There are a number of drivers with combos:
-> >>>
-> >>>        drm_add_modes_noedid()
-> >>>        drm_set_preferred_mode()
-> >>>
-> >>> which I think would be affected by the change. Perhaps you should just
-> >>> call drm_set_preferred_mode() in your referenced patch?
+> > On Tue, May 10, 2022 at 10:47 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+> > >
+> > > Specify the path of the modem FW for SC7280 Chrome OS boards in
+> > > the 'remoteproc_mpss' node.
+> > >
+> > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > > ---
+> > >
+> > >  arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 2 ++
+> > >  1 file changed, 2 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+> > > index 9f4a9c263c35..995c5bd12549 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+> > > @@ -89,6 +89,8 @@ &remoteproc_mpss {
+> > >         compatible = "qcom,sc7280-mss-pil";
+> > >         iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
+> > >         memory-region = <&mba_mem>, <&mpss_mem>;
+> > > +       firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
+> > > +                       "qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
 > >
-> > I'm going to do that and I think it works out pretty well. Patch is at:
+> > We don't necessarily need to change anything, but a few thoughts:
 > >
-> > https://lore.kernel.org/r/20220510135101.v2.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid
-> >
-> >
-> >> So it seems like many drivers handle the !edid case within their
-> >> respective get_modes() call which probably is because they know the max
-> >> capability of their connector and because they know which mode should be
-> >> set as preferred. But at the same time, perhaps the code below which
-> >> handles the count == 0 case should be changed like below to make sure we
-> >> are within the max_width/height of the connector (to handle the first
-> >> condition)?
-> >>
-> >> diff --git a/drivers/gpu/drm/drm_probe_helper.c
-> >> b/drivers/gpu/drm/drm_probe_helper.c
-> >> index 682359512996..6eb89d90777b 100644
-> >> --- a/drivers/gpu/drm/drm_probe_helper.c
-> >> +++ b/drivers/gpu/drm/drm_probe_helper.c
-> >> @@ -517,7 +517,8 @@ int drm_helper_probe_single_connector_modes(struct
-> >> drm_connector *connector,
-> >>
-> >>           if (count == 0 && (connector->status ==
-> >> connector_status_connected ||
-> >>                              connector->status == connector_status_unknown))
-> >> -               count = drm_add_modes_noedid(connector, 1024, 768);
-> >> +               count = drm_add_modes_noedid(connector,
-> >> connector->dev->mode_config.max_width,
-> >> +                               connector->dev->mode_config.max_height);
-> >>           count += drm_helper_probe_add_cmdline_mode(connector);
-> >>           if (count == 0)
-> >>                   goto prune;
-> >>
-> >>
-> >>> Alternatively, perhaps drm_set_preferred_mode() should erase the
-> >>> previous preferred mode(s) if it finds a matching new preferred mode.
-> >>>
-> >>
-> >> But still yes, even if we change it like above perhaps for other non-DP
-> >> cases its still better to allow individual drivers to pick their
-> >> preferred modes.
-> >>
-> >> If we call drm_set_preferred_mode() in the referenced patch, it will not
-> >> address the no EDID cases because the patch comes into picture when
-> >> there was a EDID with some modes but not with 640x480.
-> >
-> > I'm not sure I understand the above paragraph. I think the "there's an
-> > EDID but no 640x480" is handled by my other patch [1]. Here we're only
-> > worried about the "no EDID" case, right?
-> >
-> Yes, there are two fixes which have been done (OR have to be done).
+> > 1. I guess technically we don't actually need the "modem" subdirectory
+> > for herobrine, right? WiFi works differently on sc7280 so we won't
+> > have a "no modem" modem firmware. ...but I guess it doesn't hurt to
+> > have it and it's nice to keep it symmetric.
 >
-> 1) Case when EDID read failed and count of modes was 0.
+> Yeah, it seems nice to keep it symmetric and also indicate for what
+> kind of device the firmware is for. 'sc7280-herobrine' (or
+> 'sc7280-chrome') doesn't reveal that.
 >
-> Here the DRM framework was already adding 640x480@60fps. The fix we had
-> to make was making 640x480@60fps as the preferred mode. Which is what
-> your current patch aims at addressing.
+> > 2. Whenever we're ready to support WiFi only SKUs then I guess it'll
+> > still be OK to specify the firmware name. We'll just set the status of
+> > "&mdss_dp" to "disabled".
 >
-> https://lore.kernel.org/all/20220510135101.v2.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid/
+> Yes, specifying the FW name is not a problem. Either we'll set the
+> status of 'remoteproc_mpss' to 'disabled' or have a DT snippet for
+> the modem that is only included for SKUs with a modem.
 >
-> So I thought the suggestion which Jani was giving was to call
-> drm_set_preferred_mode() on the referenced patch which was:
+> > 3. It's slightly weird that we're using the name "herobrine" but
+> > putting the change in the "chrome-common.dtsi" file. Should it be
+> > "sc7280-chrome" instead?
 >
-> https://lore.kernel.org/all/20220510131309.v2.2.I4ac7f55aa446699f8c200a23c10463256f6f439f@changeid/
->
-> So that would not have fixed this case.
->
-> Perhaps, I misunderstood the patch which was being referenced?
+> Currently OS images have the FW in 'qcom/sc7280-herobrine', but we
+> could change that if desired. If we change the path we could also
+> consider to change it to 'qcom/sc7280-q6v5' or 'qcom/sc7280-mpss'
+> instead of 'qcom/sc7280-chrome/modem'.
 
-Ah! I couldn't quite understand what the "referenced patch" meant. I
-assumed that Jani was meaning that we add a call to
-drm_set_preferred_mode() to whatever was calling
-drm_add_modes_noedid().
+OK. I'm OK w/ it being "qcom/sc7280-herobrine". So I guess:
 
-
-> 2) Case where there were other modes, which got filtered out and in the
-> end no modes were left and we had to end up adding 640x480.
->
-> No need to set the preferred mode in this case as this would have been
-> the only mode in the list ( so becomes preferred by default ).
->
-> Thats this change
->
-> https://lore.kernel.org/all/20220426114627.2.I4ac7f55aa446699f8c200a23c10463256f6f439f@changeid/
->
-> I agree with combination of these 2 it should work.
-
-OK, cool. So just to be clear: you're good with both "v2" patches that
-I sent out today and they should fix both use cases, right? ;-)
-
--Doug
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
