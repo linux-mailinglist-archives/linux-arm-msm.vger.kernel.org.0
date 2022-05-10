@@ -2,86 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C39065221B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 18:50:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DABB5221BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 18:52:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347676AbiEJQyp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 May 2022 12:54:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46166 "EHLO
+        id S243868AbiEJQ4V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 May 2022 12:56:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347689AbiEJQyn (ORCPT
+        with ESMTP id S237279AbiEJQ4U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 May 2022 12:54:43 -0400
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C250165B8;
-        Tue, 10 May 2022 09:50:41 -0700 (PDT)
-Received: by mail-oi1-f173.google.com with SMTP id q10so4013224oia.9;
-        Tue, 10 May 2022 09:50:41 -0700 (PDT)
+        Tue, 10 May 2022 12:56:20 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53D7D27D003;
+        Tue, 10 May 2022 09:52:20 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id x18so17261454plg.6;
+        Tue, 10 May 2022 09:52:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GlbUvuuWywK7r9IASaNCIAQVNurd9YpTqewxFeLD4Rs=;
+        b=eAksJ5ZwCS6JUF2s47IELsBUbuSOqioFvb6MBBDzupqY9v71HGtPALLBQdHly+Q4Fh
+         DShJbrjkSQIb7jykbW/iyKoL2t8zf5ENw/mG8nt94ygLj8ongvXhTPpdzRtPsoY7kJ6V
+         mX8KaQXsxzDiE18YMgbJgBvw2Ctwrd9I2WbpQuIXTFnvUoJjYPAxdkyBUVboE9ts76AJ
+         FacBL5YkyyFO+PSjs0yjsiTjP3Yz0NIQJOhkouL8zuRxNzedFRafbtFdMgOYXfkGGFRo
+         77GAI3ARWhvuQ0JxQ/XQ4G3SyOR3ZyVLzm6N19EwoHIHz9egltmUj6Up+YZTV8ukpIE1
+         nVhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=B3sdHtLCLqCtzcR8PT+tmEwLfguhQ3CqlLtMecSR1Vw=;
-        b=bVI6ge+ebdCQw1aytBwaIVDl9XPGjHzOY6P8xf1wuL2otIwW/7RVjfCK2eTlgb0VVh
-         goxLB5K9DjJqp4i/sr3/FpISLVQ+uXmuLarB6XyHsroaBTHGDz5MeeVAH5/ZxI4f2HeB
-         OJ5WVydbCTHfykIjorJSG2oKM7x7I7j0hvLJoEEh9T/9nGUD3webXLp4zRUeaToNsIJh
-         qi+AdjVSgfqXGjQHszM/Rq4CVM25pY0idaP8EG43Efx0N53rvKeTZZG1jkSWjKo/gCnf
-         8umHMaoCHEYLFdxR5rxV1Mqb9+L/Vih5lIuPG7V+2ENuFxLLHK4ezvE1aOq3prztb0f6
-         yi/Q==
-X-Gm-Message-State: AOAM530AScCWgC5q25536ZToLBx+urSPap5I3fs1OqX3HJPm1Q/Wqouq
-        lMbnWOcH+9F25OJH0yo8tg==
-X-Google-Smtp-Source: ABdhPJwy45fRS0tiYahp1LC3/uI3tPz8OaNKpA9VxUOABysCHuGZ47sXiGRVMbOS3RgvlDnb6zvmtw==
-X-Received: by 2002:aca:62c5:0:b0:326:b067:ac89 with SMTP id w188-20020aca62c5000000b00326b067ac89mr456323oib.281.1652201439460;
-        Tue, 10 May 2022 09:50:39 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id v8-20020a4ade88000000b0035eb4e5a6b2sm6265009oou.8.2022.05.10.09.50.38
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GlbUvuuWywK7r9IASaNCIAQVNurd9YpTqewxFeLD4Rs=;
+        b=InKB3fd/DCWATGkVdlJF+j/WznoAxG1QtVeQa+eGvDqFYYa3W6F6um59DVTCGUF3cP
+         4GyqmWt3NmKR7YBM0mbx6rCE2sYT078MZDOEyLkOUFIWoZR8fzwWadNs6003kOTRR5TQ
+         yRbx01ojNkynHncnkXmWNrdbHZL6fI2x79ZKizfaC3V1sLJkRdh4wM9n28FJI1VQsIQC
+         Gc+t7hMVWBb1TtuO33zxVaySypjCzWg26Kkcd06B6+oD/VuGy7zI/Qyy8Bq4IYtzKkkc
+         wiWzJ8uXdjlUxQhi5jgf+Zo3cPwq7YuUNpnBj4mJnmnFhd74EIQ0d1/eJ851gaWUqfCh
+         VD0A==
+X-Gm-Message-State: AOAM531l9agauWbZ0DjwTkFZYsSPNQbQKI9Fd+8qEzFD1djtWudlisPW
+        O1Wdw0sI3b89vURxNB28jPQ=
+X-Google-Smtp-Source: ABdhPJwmOOWFZJFiV5ZPMNAWyXasCIh2GiEs5APeA0AQgt/pqcBNlctje9oW1aHg3VNdud72TsDotQ==
+X-Received: by 2002:a17:902:d4ce:b0:15e:90f8:216c with SMTP id o14-20020a170902d4ce00b0015e90f8216cmr22171600plg.65.1652201539771;
+        Tue, 10 May 2022 09:52:19 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id n10-20020a170903110a00b0015e8d4eb20fsm2296636plh.89.2022.05.10.09.52.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 May 2022 09:50:39 -0700 (PDT)
-Received: (nullmailer pid 2180926 invoked by uid 1000);
-        Tue, 10 May 2022 16:50:38 -0000
-Date:   Tue, 10 May 2022 11:50:38 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>, linux-pci@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Subject: Re: [PATCH v6 4/8] dt-bindings: PCI: qcom: Add schema for sc7280
- chipset
-Message-ID: <YnqX3hCJHoJfUB0V@robh.at.kernel.org>
-References: <20220506152107.1527552-1-dmitry.baryshkov@linaro.org>
- <20220506152107.1527552-5-dmitry.baryshkov@linaro.org>
+        Tue, 10 May 2022 09:52:18 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Fix fb plane offset calculation
+Date:   Tue, 10 May 2022 09:52:16 -0700
+Message-Id: <20220510165216.3577068-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220506152107.1527552-5-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 06 May 2022 18:21:03 +0300, Dmitry Baryshkov wrote:
-> Add support for sc7280-specific clock and reset definitions.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie.yaml    | 32 +++++++++++++++++++
->  1 file changed, 32 insertions(+)
-> 
+From: Rob Clark <robdclark@chromium.org>
 
-Acked-by: Rob Herring <robh@kernel.org>
+The offset got dropped by accident.
+
+Fixes: d413e6f97134 ("drm/msm: Drop msm_gem_iova()")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_fb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
+index 362775ae50af..4269da268a4a 100644
+--- a/drivers/gpu/drm/msm/msm_fb.c
++++ b/drivers/gpu/drm/msm/msm_fb.c
+@@ -118,7 +118,7 @@ uint32_t msm_framebuffer_iova(struct drm_framebuffer *fb,
+ 		struct msm_gem_address_space *aspace, int plane)
+ {
+ 	struct msm_framebuffer *msm_fb = to_msm_framebuffer(fb);
+-	return msm_fb->iova[plane];
++	return msm_fb->iova[plane] + fb->offsets[plane];
+ }
+ 
+ struct drm_gem_object *msm_framebuffer_bo(struct drm_framebuffer *fb, int plane)
+-- 
+2.35.1
+
