@@ -2,85 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 57837520A96
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 03:19:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04C26520BDD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 May 2022 05:17:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231852AbiEJBXW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 May 2022 21:23:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57886 "EHLO
+        id S235287AbiEJDV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 May 2022 23:21:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbiEJBXW (ORCPT
+        with ESMTP id S235270AbiEJDVY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 May 2022 21:23:22 -0400
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEF3020F74F;
-        Mon,  9 May 2022 18:19:26 -0700 (PDT)
-Received: from dggpemm500022.china.huawei.com (unknown [172.30.72.53])
-        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4Ky0Xk5hTkz1JBxm;
-        Tue, 10 May 2022 09:18:14 +0800 (CST)
-Received: from dggpemm500007.china.huawei.com (7.185.36.183) by
- dggpemm500022.china.huawei.com (7.185.36.162) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Tue, 10 May 2022 09:19:25 +0800
-Received: from [10.174.178.174] (10.174.178.174) by
- dggpemm500007.china.huawei.com (7.185.36.183) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Tue, 10 May 2022 09:19:24 +0800
-Subject: Re: [PATCH] media: camss: csid: fix wrong size passed to
- devm_kmalloc_array()
-From:   Yang Yingliang <yangyingliang@huawei.com>
-To:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-media@vger.kernel.org>
-CC:     <mchehab@kernel.org>, <hverkuil-cisco@xs4all.nl>,
-        <robert.foss@linaro.org>, <bryan.odonoghue@linaro.org>,
-        <vladimir.zapolskiy@linaro.org>
-References: <20220509140439.1361352-1-yangyingliang@huawei.com>
-Message-ID: <ae190d9c-160d-7d3d-6a57-a50655b36a73@huawei.com>
-Date:   Tue, 10 May 2022 09:19:23 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Mon, 9 May 2022 23:21:24 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD1EF26FE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 May 2022 20:17:26 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id y32so27016160lfa.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 May 2022 20:17:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Ls/SMjFj6heZoySKcqmoqFtaszIPQaljVTG5Re0rH9M=;
+        b=EB1ROIutBjcQZmj6LJr9SUFDRILRUz/dzhbYK+KW34P/HGB5VYjQOYia914IABPKHm
+         ZB2rJYgCDwhzeTK1YSlNZCVpAtHmbUntOvkPoj0MeZhIc5THiAljwEScvUbZU5unm1E0
+         78ioKS9u3eFHR3yEy1e3LjpgEBGiS3yUMMS3M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Ls/SMjFj6heZoySKcqmoqFtaszIPQaljVTG5Re0rH9M=;
+        b=YaDL01Tmbsm28CnbhXEjIhXygceUjhEIKbGV5XqASNgj/vMPTLLlzzZBsKaLQ9uHBe
+         GT1R+ItloBbjV70JMU3zK9Rrqq3HjqwZOlU0JiG/RLuPfMdQsMpYU0oq5iRXNTrn85Yu
+         F7RbbXFw/EO9s242GsbRLM1EBmZL47iG0OXiETd8LJUF4cZTOFS8MLoGJ2NlSHFU3LaD
+         3S/VwmL+kL+mneSWqmYGXhXdXYDG3a4U4qP1gsHuTT13GeeeJa8wf6VrZ5E7cxN+jGUY
+         6A0KcuNkMErgtIfWj4Pi7JxHDdmXtgHbbiHqGl1MP1HzCAEyLsaOfDasWIOWWpWAe+LX
+         2eXA==
+X-Gm-Message-State: AOAM531ckTPJdI/pgV+Ph8WTI0Fes/YxCAZIOmzzajDiqCNNlQ3iXzj6
+        rt5wqlXTPGDqod87TNSRulClyiLVXfMXcS4zVVnTU2JsJv0=
+X-Google-Smtp-Source: ABdhPJw1K7QAlE5QAiZCLMLRs+tK1ZtQMIflSjgCESXPl/YsTyscWXUV+ShFFygPmv2BiT+hQUxJJ2+IPMYpxQps+Qk=
+X-Received: by 2002:a05:6512:3f86:b0:44a:f5bf:ec9a with SMTP id
+ x6-20020a0565123f8600b0044af5bfec9amr15376918lfa.490.1652152645011; Mon, 09
+ May 2022 20:17:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20220509140439.1361352-1-yangyingliang@huawei.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [10.174.178.174]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- dggpemm500007.china.huawei.com (7.185.36.183)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <1651228073-1999-1-git-send-email-quic_bgodavar@quicinc.com>
+ <1651228073-1999-4-git-send-email-quic_bgodavar@quicinc.com>
+ <0D3D8346-0F64-4CAF-8BED-940F189A3E97@holtmann.org> <SJ0PR02MB713538E5BBB40CDEF2E050A0F8FF9@SJ0PR02MB7135.namprd02.prod.outlook.com>
+In-Reply-To: <SJ0PR02MB713538E5BBB40CDEF2E050A0F8FF9@SJ0PR02MB7135.namprd02.prod.outlook.com>
+From:   Miao-chen Chou <mcchou@chromium.org>
+Date:   Mon, 9 May 2022 20:17:13 -0700
+Message-ID: <CABmPvSFiAC474WthmMX0nE20UEOxUD5dEYBVbiKh7HOovCnCkA@mail.gmail.com>
+Subject: Re: [PATCH v1 3/3] Bluetooth: hci_qca: WAR to handle WCN6750 HW issue
+To:     "Balakrishna Godavarthi (QUIC)" <quic_bgodavar@quicinc.com>
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        Andy Gross <agross@kernel.org>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        "mka@chromium.org" <mka@chromium.org>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        "Hemant Gupta (QUIC)" <quic_hemantg@quicinc.com>,
+        "Sai Teja Aluvala (Temp) (QUIC)" <quic_saluvala@quicinc.com>,
+        quic_rjliao <quic_rjliao@quicinc.com>,
+        Alain Michaud <alainmichaud@google.com>,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I made a mistake, this patch was sent twice, please ignore this patch.
+Hi Bala,
+
+When is the estimated start date and timeline of the driver development?
 
 Thanks,
-Yang
-On 2022/5/9 22:04, Yang Yingliang wrote:
-> 'supplies' is a pointer, the real size of struct regulator_bulk_data
-> should be pass to devm_kmalloc_array().
+Miao
+
+On Fri, Apr 29, 2022 at 8:09 PM Balakrishna Godavarthi (QUIC)
+<quic_bgodavar@quicinc.com> wrote:
 >
-> Fixes: 0d8140179715 ("media: camss: Add regulator_bulk support")
-> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-> ---
->   drivers/media/platform/qcom/camss/camss-csid.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> Hi Marcel,
 >
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-> index f993f349b66b..80628801cf09 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-> @@ -666,7 +666,7 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
->   	if (csid->num_supplies) {
->   		csid->supplies = devm_kmalloc_array(camss->dev,
->   						    csid->num_supplies,
-> -						    sizeof(csid->supplies),
-> +						    sizeof(*csid->supplies),
->   						    GFP_KERNEL);
->   		if (!csid->supplies)
->   			return -ENOMEM;
+> -----Original Message-----
+> From: Marcel Holtmann <marcel@holtmann.org>
+> Sent: Friday, April 29, 2022 8:24 PM
+> To: Balakrishna Godavarthi (QUIC) <quic_bgodavar@quicinc.com>
+> Cc: Andy Gross <agross@kernel.org>; robh+dt@kernel.org; bjorn.andersson@l=
+inaro.org; linux-arm-msm@vger.kernel.org; devicetree@vger.kernel.org; linux=
+-kernel@vger.kernel.org; Johan Hedberg <johan.hedberg@gmail.com>; mka@chrom=
+ium.org; linux-bluetooth@vger.kernel.org; Hemant Gupta (QUIC) <quic_hemantg=
+@quicinc.com>; Sai Teja Aluvala (Temp) (QUIC) <quic_saluvala@quicinc.com>; =
+quic_rjliao <quic_rjliao@quicinc.com>; mcchou@chromium.org
+> Subject: Re: [PATCH v1 3/3] Bluetooth: hci_qca: WAR to handle WCN6750 HW =
+issue
+>
+> Hi Balakrishna,
+>
+> > The patch is workaround for hardware issue on WCN6750.
+> > On WCN6750 sometimes observed AON power source takes 100ms time to
+> > fully discharge voltage during OFF. As WCN6750 is combo chip for WLAN
+> > and BT. If any of the tech area ON is triggered during discharge
+> > phase, it fails to turn ON.
+> > To overcome this hardware issue, During BT ON, driver check for
+> > WLAN_EN pin status. If it high, it will pull BT_EN to high immediately
+> > else it will wait for 100ms assuming WLAN was just powered OFF and
+> > then BT_EN will be pulled to high.
+> >
+> > Fixes: d8f97da1b92d2 ("Bluetooth: hci_qca: Add support for QTI
+> > Bluetooth chip wcn6750")
+> > Reviewed-by: Miao-chen Chou <mcchou@chromium.org>
+> > Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
+> > Signed-off-by: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
+> > ---
+> > drivers/bluetooth/hci_qca.c | 30 ++++++++++++++++++++++++------
+> > 1 file changed, 24 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+> > index eab34e2..c3862d1 100644
+> > --- a/drivers/bluetooth/hci_qca.c
+> > +++ b/drivers/bluetooth/hci_qca.c
+> > @@ -219,6 +219,7 @@ struct qca_serdev {
+> >       struct hci_uart  serdev_hu;
+> >       struct gpio_desc *bt_en;
+> >       struct gpio_desc *sw_ctrl;
+> > +     struct gpio_desc *wlan_en;
+> >       struct clk       *susclk;
+> >       enum qca_btsoc_type btsoc_type;
+> >       struct qca_power *bt_power;
+>
+> I am really against these intermixing of Bluetooth and WiFi details. Ther=
+e is work ongoing to do some sequence power procedure. Maybe that is someth=
+ing you should look into. This is a mess.
+>
+> And again, we are still hacking around hci_qca.c instead of writing a cle=
+an serdev only driver for this hardware. I have the feeling that nobody lis=
+tens to review comments these days. It is just hacking patches together to =
+get hardware enabled somehow and then disappear.
+>
+> [Bala]: We are working on serdev like driver for our QCA platform.  We ar=
+e in initial stages of discussion, and soon we will start the driver develo=
+pment work.
+> In mean to stop stability or functional issues we are trying to add these=
+ HACKs in QCA driver.
+>
+> Regards
+>
+> Marcel
+>
