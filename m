@@ -2,105 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36632522B23
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 06:39:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00EC6522B7B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 07:06:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238935AbiEKEj1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 00:39:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41994 "EHLO
+        id S236562AbiEKFGy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 01:06:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235681AbiEKEjO (ORCPT
+        with ESMTP id S235846AbiEKFGu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 00:39:14 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54E0B14B668
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 21:39:12 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id j10-20020a17090a94ca00b001dd2131159aso3853347pjw.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 21:39:12 -0700 (PDT)
+        Wed, 11 May 2022 01:06:50 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 803A84EF44
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 22:06:46 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id v11so1000495pff.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 22:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=s3Cdswvtyrq8qHVwuRB9YRoTAIoD9G/2//h6WeFZHzo=;
-        b=nrkBIDyCffFbQz5WNhQU88q5l+bx8m1CoLNL/nRcxBFZRgp3B2RwRJzpJi69hjmFPQ
-         Eotn36CVTQor8sTwq84btYhQQ+OsypTpYdHIfGkC/Ekjg8a9U0HkQq0T/gbcQg5/if4Y
-         i1yzcJYhTRMm8ny1NIiOYUNRazrfloxlCC/1XVxW2+TG0ItQpx2/G3cXjgMuOALgO1Rc
-         auxKHXwS3ghK6vFFIfR8essc70JXfRi2oIpi3YT/VLqISCMTaVWCOI/Xf0rWfpfTmlnw
-         XgqCFC8jOuHD5AjsEtox3h0b9tzcHlVM0fA1RrJyDFubK9aS707t1BYf/K43qSc4slo4
-         wrQw==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=AUEIkeNWULTqIuIT1TZeXx+IdneqcLu7BzWDktuhfnk=;
+        b=F8jn7i4bbQ95N7G7p4DIUqUUwb8R45Ly5JB7TyyhJiHYhrGNc7SkaFJWOMLSwQiz6B
+         mLVffC7ztUhB4aMrEx9YveKtguy8R5xI87IrhfPmry6wYuvrkwwXZhpMXR2S/FF3paXF
+         4vR4IChTGPB+fepRra4S8AToZBNXV2Un6pyThhngFfNZ12B4XRupcgr9ykO+zGnLooZe
+         WEypzao1fonjiP3LL3Df9bvaMieh8T3HC9Lp2fDodmttzz5+CZTXnRYZn2ANc1NCvkus
+         AfLV9HnZVpARsF8gv35ufAIkT1BXKQoDK835N2MrukdhICpE6kgp8lRM8SUu7m7KiNPy
+         GOaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=s3Cdswvtyrq8qHVwuRB9YRoTAIoD9G/2//h6WeFZHzo=;
-        b=HBz0QDcxoVabphsNL2XffNspOHkg2rSubGYPOd2bggl0mtLWaRTF/Z5eZSyNM7Mk+z
-         13jO64ao8MFPK0hBQlrh85vI/cFm3OfWw45XOVKdmdiXB/nqOdDMCcGA1DL0uJvZfUxM
-         dEkFgDwPYpU7rqEIA+sA1tQfTMJISVMIph2heZgr/fNcYhcXx0+7NVjHCg0OeRgW2xfW
-         M5IBfx3mqUXWaLnyaoTzx5A9M7aPmEmsmZtKd6EI6QNuFuzMah54iERFl3RxFPEn2riW
-         H69mKS32PhtRVQ6p6hI77JRW0K+5Z5gsAehE8hSa3mANfpicQKTIfKLD5Flvk3dCAnTX
-         hk3g==
-X-Gm-Message-State: AOAM531d3HF7BYm8dRjvbZZwY63avCizk0fQX9Id478tcC2xg+BPCbcb
-        69+mXFUwj6QZZIrkutRMhwXGSwnCDDF/pOrbNWI=
-X-Google-Smtp-Source: ABdhPJwbKHmbnZDflMHBZCcp2YbZAAZvFdPcM4owWeuPIkoxodmwIZJ+Xpgi08ylB1RFXLrw63SQRxJzumbwJKMTxhs=
-X-Received: by 2002:a17:90b:1007:b0:1dc:9862:68af with SMTP id
- gm7-20020a17090b100700b001dc986268afmr3261389pjb.205.1652243951499; Tue, 10
- May 2022 21:39:11 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AUEIkeNWULTqIuIT1TZeXx+IdneqcLu7BzWDktuhfnk=;
+        b=7GdPbTn3KIdUv14ykFSHruLE9WC2BVr8IHg6S0Jet9p75fRyyIh/y+C/qVY1YM+oRu
+         Snjl9EuWaz1JQ43qckUv5aCdL9nCOepqhYicWAAze5wg4y+5RL2WD/zenGVHBvoCC9wg
+         gbXPAIro25SWabEbErdksgUSHbyyWFiIZV88EQhp4SAv9V6/AHQw9zsD4a+1OMjZjcZX
+         eqUWqqAuiZ7m9i3x8C/dTx36z31+pxqdpYUjYzCzd8JE4U+ggSvilfwVcvMsWQi8MnAr
+         /onu6skE5or2kivjbcmalRoUYQeFhscnoSkMVRFOi4TUjru8X+G//C0n4CEvT4XMp5QK
+         hG2A==
+X-Gm-Message-State: AOAM532qR2OKy+iolW/4h7oc0Y1qAnDMMO8Iheq4Gl2dgpKV/yyhfcNU
+        bWaw84MJnpZsxAXVJLUZ/VF03Q==
+X-Google-Smtp-Source: ABdhPJw19bwjjubf5ZE0oIAmRAefBe7FNecIitByBceQ0V+zCTh9c6/8TSu7+c0yFISh4fD8ZvKs3w==
+X-Received: by 2002:a05:6a00:18a9:b0:50d:d41b:7240 with SMTP id x41-20020a056a0018a900b0050dd41b7240mr23119315pfh.66.1652245606028;
+        Tue, 10 May 2022 22:06:46 -0700 (PDT)
+Received: from localhost ([122.162.234.2])
+        by smtp.gmail.com with ESMTPSA id 13-20020a62190d000000b0050dc7628161sm496573pfz.59.2022.05.10.22.06.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 May 2022 22:06:45 -0700 (PDT)
+Date:   Wed, 11 May 2022 10:36:43 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
+Subject: Re: [RFC PATCH v2 4/6] PM: opp: allow control of multiple clocks
+Message-ID: <20220511050643.hd5tcrojb3wkbg7t@vireshk-i7>
+References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
+ <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
+ <20220425072710.v6gwo4gu3aouezg4@vireshk-i7>
+ <dea39b1f-0091-2690-7f07-108d07ef9f3c@linaro.org>
+ <20220510044053.ykn6ygnbeokhzrsa@vireshk-i7>
+ <1e533194-7047-8342-b426-f607fddbfaa3@linaro.org>
 MIME-Version: 1.0
-Received: by 2002:a05:6a10:319:0:0:0:0 with HTTP; Tue, 10 May 2022 21:39:10
- -0700 (PDT)
-From:   Private Mail <privatemail1961@gmail.com>
-Date:   Tue, 10 May 2022 21:39:10 -0700
-Message-ID: <CANjAOAiiVcSrSv31FjThCVmeppS54UVvGVj3SRSvMfxOB+T8DA@mail.gmail.com>
-Subject: Have you had this? It is for your Benefit
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.3 required=5.0 tests=ADVANCE_FEE_4_NEW_MONEY,
-        BAYES_50,DEAR_BENEFICIARY,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-        DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FREEMAIL_REPLY,
-        LOTS_OF_MONEY,MONEY_FRAUD_5,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,UNDISC_MONEY autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: ****
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1e533194-7047-8342-b426-f607fddbfaa3@linaro.org>
+User-Agent: NeoMutt/20180716-391-311a52
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Our Ref: BG/WA0151/2022
+On 10-05-22, 15:09, Krzysztof Kozlowski wrote:
+> On 10/05/2022 06:40, Viresh Kumar wrote:
+> > They shouldn't reach the OPP core then. What will the OPP core do if a
+> > clock has a value for one OPP and not the other ?
+> 
+> That would be the same mistake as providing one voltage as 0 or with
+> something outside of a spec (but still within regulators min/max).
+> Mistakes in DTS create undesirable behavior and this part is no different.
 
-Dear Beneficiary
+Right, I agree and so it shouldn't be allowed in principle.
 
-Subject: An Estate of US$15.8 Million
+> However I understand your point - since the driver provides the list of
+> clocks to OPP, it should not provide ones which are irrelevant.
 
-Blount and Griffin Genealogical Investigators specializes in probate
-research to locate missing heirs and beneficiaries to estates in the
-United Kingdom and Europe.
+Right.
 
-We can also help you find wills, obtain copies of certificates, help
-you to administer an estate, as well as calculating how an estate,
-intestacy or trust should be distributed.
+> > IMHO, this is broken by design. I can easily see that someone wants to
+> > have few variants of all other frequencies for the same frequency of
+> > the so called "main" clock, i.e. multiple OPPs with same "main" freq
+> > value.  I don't think we can mark the clocks "main" or otherwise as
+> > easily for every platform.
+> > 
+> > Stephen, any inputs on this ?
+> 
+> In such case, matching opps by frequency would be a quite different API.
+> The drivers can use now:
+> https://github.com/krzk/linux/commit/ebc31798494fcc66389ae409dce6d9489c16156a#diff-b6370444c32afa2e55d9b6150f355ba6f4d20c5ed5da5399ea8295d323de8267R1200
+> 
+> If you assume that this frequency can be used for multiple OPPs, then
+> the API should be different. Something like:
+> int dev_pm_opp_set_rate(struct device *dev, unsigned long *target_freqs,
+>                         size_t num_freqs);
 
-You may be entitled to a large pay out for an inheritance in Europe
-worth US$15.8 million. We have discovered an estate belonging to the
-late Depositor has remained unclaimed since he died in 2011 and we
-have strong reasons to believe you are the closest living relative to
-the deceased we can find.
+At this point I am not looking for a new API, but just continuing the discussion
+to understand what different hardwares want or look like.
 
-You may unknowingly be the heir of this person who died without
-leaving a will (intestate). We will conduct a probate research to
-prove your entitlement, and can submit a claim on your behalf all at
-no risk to yourselves.
+> Finding right opp for given frequencies would be also quite much more
+> complicated task. Not a simple ceil/floor search by one frequency.
 
-Our service fee of 10% will be paid to us after you have received the estate.
+Right.
 
-The estate transfer process should take just a matter of days as we
-have the mechanism and expertise to get this done very quickly. This
-message may come to you as a shock, however we hope to work with you
-to transfer the estate to you as quickly as possible.
+> I don't need that use-case and my implementation does not prevent anyone
+> from implementing it in the future. IOW, why developing now complex
+> solution which no one currently needs? If anyone needs such scaling by
+> multiple-frequencies, the PM OPP can be reworked/extended/improved again.
 
-Feel free to email our senior case worker Mr. Malcolm Casey on email:
-malcolmcasey68@yahoo.com for further discussions.
+It isn't about being complex or simple for me, but the design needs to be
+robust. Either we can have a guaranteed "main" frequency or not and that would
+decide how we need to proceed here.
 
-With warm regards,
-
-Mr. Blount W. Gort, CEO.
-Blount and Griffin Associates Inc
+-- 
+viresh
