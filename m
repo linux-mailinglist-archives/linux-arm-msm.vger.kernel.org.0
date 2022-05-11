@@ -2,63 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C0B7522E25
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 10:20:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5968B522E93
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 10:39:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243522AbiEKITz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 04:19:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42262 "EHLO
+        id S243880AbiEKIjg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 04:39:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243517AbiEKITv (ORCPT
+        with ESMTP id S243829AbiEKIj0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 04:19:51 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 757371498F0;
-        Wed, 11 May 2022 01:19:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652257188; x=1683793188;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=PB/2aZrvQWYmUfnMErurG8sAofzUSHYXrrclvPfLz7g=;
-  b=XFt7rh/gTBhxXDOwChbXg/2p61EMSWWBb6xeAOjhCah0IqaKKU4sHDTN
-   oYf+6h4lvf4p2VHe/QetpewzMTPYEHVhysnJ/oIMUYYC8ZYy+LzHPjm1m
-   EV/sU0WXauIIbNA0/sUlWeimeE0+86CCRbWaoWebPbTpxnPWYz65X52aJ
-   Y=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 11 May 2022 01:19:48 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2022 01:19:48 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 11 May 2022 01:19:47 -0700
-Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 11 May 2022 01:19:43 -0700
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-To:     <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>
-CC:     <ohad@wizery.com>, <agross@kernel.org>,
-        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <mka@chromium.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH v3 2/2] dt-bindings: remoteproc: qcom: Add SC7280 MSS bindings
-Date:   Wed, 11 May 2022 13:49:22 +0530
-Message-ID: <1652257162-23874-3-git-send-email-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1652257162-23874-1-git-send-email-quic_sibis@quicinc.com>
-References: <1652257162-23874-1-git-send-email-quic_sibis@quicinc.com>
+        Wed, 11 May 2022 04:39:26 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5025711E494
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 01:39:22 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id BD5F9205ED;
+        Wed, 11 May 2022 10:39:19 +0200 (CEST)
+Date:   Wed, 11 May 2022 10:39:17 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     phone-devel@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+        Rob Herring <robh@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+Subject: Re: [PATCH 2/4] leds: qcom-lpg: Add PM660L configuration and
+ compatible
+Message-ID: <20220511083917.5xhseah7tuzmrn6f@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        phone-devel@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+        Rob Herring <robh@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+References: <20220507221123.2201668-1-marijn.suijten@somainline.org>
+ <20220507221123.2201668-2-marijn.suijten@somainline.org>
+ <YnszX1wdQhUSkgyH@builder.lan>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YnszX1wdQhUSkgyH@builder.lan>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -67,285 +71,96 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add MSS PIL loading bindings for SC7280 SoCs.
+On 2022-05-10 22:54:07, Bjorn Andersson wrote:
+> On Sat 07 May 17:11 CDT 2022, Marijn Suijten wrote:
+> 
+> > Inherit PM660L PMIC LPG/triled block configuration from downstream
+> > drivers and DT sources, consisting of a triled block with automatic
+> > trickle charge control and source selection, three colored led channels
+> > belonging to the synchronized triled block and one loose PWM channel.
+> > 
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > ---
+> >  drivers/leds/rgb/leds-qcom-lpg.c | 18 ++++++++++++++++++
+> >  1 file changed, 18 insertions(+)
+> > 
+> > diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+> > index cfa3362b2457..30c12ac8eed4 100644
+> > --- a/drivers/leds/rgb/leds-qcom-lpg.c
+> > +++ b/drivers/leds/rgb/leds-qcom-lpg.c
+> > @@ -1271,6 +1271,23 @@ static int lpg_remove(struct platform_device *pdev)
+> >  	return 0;
+> >  }
+> >  
+> > +static const struct lpg_data pm660l_lpg_data = {
+> > +	.lut_base = 0xb000,
+> > +	.lut_size = 0x100,
+> 
+> The documentation tells me that you have 49 entries of LUT on the
+> PM660L.
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
+Downstream DT sources report the full 0x100 range starting at 0xb000 is
+used, before the first channel starts at 0xb100:
 
-v3:
- * Re-ordered clock list, fixed pdc_sync typo [Rob/Matthias]
+    https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/LA.UM.8.2.1.r1-06200-sdm660.0/arch/arm64/boot/dts/qcom/pm660l.dtsi#L84-85
 
- .../bindings/remoteproc/qcom,sc7280-mss-pil.yaml   | 261 +++++++++++++++++++++
- 1 file changed, 261 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+However, every LUT entry appears to be two bytes in size so this should
+at least be halved.
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
-new file mode 100644
-index 000000000000..2f95bfd7b3eb
---- /dev/null
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
-@@ -0,0 +1,261 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/remoteproc/qcom,sc7280-mss-pil.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SC7280 MSS Peripheral Image Loader
-+
-+maintainers:
-+  - Sibi Sankar <quic_sibis@quicinc.com>
-+
-+description:
-+  This document defines the binding for a component that loads and boots firmware
-+  on the Qualcomm Technology Inc. SC7280 Modem Hexagon Core.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,sc7280-mss-pil
-+
-+  reg:
-+    items:
-+      - description: MSS QDSP6 registers
-+      - description: RMB registers
-+
-+  reg-names:
-+    items:
-+      - const: qdsp6
-+      - const: rmb
-+
-+  iommus:
-+    items:
-+      - description: MSA Stream 1
-+      - description: MSA Stream 2
-+
-+  interconnects:
-+    items:
-+      - description: Path leading to system memory
-+
-+  interrupts:
-+    items:
-+      - description: Watchdog interrupt
-+      - description: Fatal interrupt
-+      - description: Ready interrupt
-+      - description: Handover interrupt
-+      - description: Stop acknowledge interrupt
-+      - description: Shutdown acknowledge interrupt
-+
-+  interrupt-names:
-+    items:
-+      - const: wdog
-+      - const: fatal
-+      - const: ready
-+      - const: handover
-+      - const: stop-ack
-+      - const: shutdown-ack
-+
-+  clocks:
-+    items:
-+      - description: GCC MSS IFACE clock
-+      - description: GCC MSS OFFLINE clock
-+      - description: GCC MSS SNOC_AXI clock
-+      - description: RPMH PKA clock
-+      - description: RPMH XO clock
-+
-+  clock-names:
-+    items:
-+      - const: iface
-+      - const: offline
-+      - const: snoc_axi
-+      - const: pka
-+      - const: xo
-+
-+  power-domains:
-+    items:
-+      - description: CX power domain
-+      - description: MSS power domain
-+
-+  power-domain-names:
-+    items:
-+      - const: cx
-+      - const: mss
-+
-+  resets:
-+    items:
-+      - description: AOSS restart
-+      - description: PDC reset
-+
-+  reset-names:
-+    items:
-+      - const: mss_restart
-+      - const: pdc_reset
-+
-+  memory-region:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    description: Phandle reference to the reserved-memory for the MBA region followed
-+                 by the modem region.
-+
-+  firmware-name:
-+    $ref: /schemas/types.yaml#/definitions/string
-+    description:
-+      The name of the firmware which should be loaded for this remote
-+      processor.
-+
-+  qcom,halt-regs:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    description:
-+      Phandle reference to a syscon representing TCSR followed by the
-+      four offsets within syscon for q6, modem, nc and vq6 halt registers.
-+
-+  qcom,ext-regs:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    description:
-+      Two phandle references to syscons representing TCSR_REG and TCSR register
-+      space followed by the two offsets within the syscon to force_clk_en/rscc_disable
-+      and axim1_clk_off/crypto_clk_off registers respectively.
-+
-+  qcom,qaccept-regs:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    description:
-+      Phandle reference to a syscon representing TCSR followed by the
-+      three offsets within syscon for mdm, cx and axi qaccept registers.
-+
-+  qcom,qmp:
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+    description: Reference to the AOSS side-channel message RAM.
-+
-+  qcom,smem-states:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    description: States used by the AP to signal the Hexagon core
-+    items:
-+      - description: Stop the modem
-+
-+  qcom,smem-state-names:
-+    $ref: /schemas/types.yaml#/definitions/string
-+    description: The names of the state bits used for SMP2P output
-+    const: stop
-+
-+  glink-edge:
-+    type: object
-+    description: |
-+      Qualcomm G-Link subnode which represents communication edge, channels
-+      and devices related to the DSP.
-+
-+    properties:
-+      interrupts:
-+        items:
-+          - description: IRQ from MSS to GLINK
-+
-+      mboxes:
-+        items:
-+          - description: Mailbox for communication between APPS and MSS
-+
-+      label:
-+        description: The names of the state bits used for SMP2P output
-+        items:
-+          - const: modem
-+
-+      qcom,remote-pid:
-+        $ref: /schemas/types.yaml#/definitions/uint32
-+        description: ID of the shared memory used by GLINK for communication with MSS
-+
-+    required:
-+      - interrupts
-+      - mboxes
-+      - label
-+      - qcom,remote-pid
-+
-+    additionalProperties: false
-+
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+  - iommus
-+  - interconnects
-+  - interrupts
-+  - interrupt-names
-+  - clocks
-+  - clock-names
-+  - power-domains
-+  - power-domain-names
-+  - resets
-+  - reset-names
-+  - qcom,halt-regs
-+  - qcom,ext-regs
-+  - qcom,qaccept-regs
-+  - memory-region
-+  - qcom,qmp
-+  - qcom,smem-states
-+  - qcom,smem-state-names
-+  - glink-edge
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
-+    #include <dt-bindings/clock/qcom,rpmh.h>
-+    #include <dt-bindings/interconnect/qcom,sc7280.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/mailbox/qcom-ipcc.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
-+    #include <dt-bindings/reset/qcom,sdm845-aoss.h>
-+    #include <dt-bindings/reset/qcom,sdm845-pdc.h>
-+
-+    remoteproc_mpss: remoteproc@4080000 {
-+        compatible = "qcom,sc7280-mss-pil";
-+        reg = <0x04080000 0x10000>, <0x04180000 0x48>;
-+        reg-names = "qdsp6", "rmb";
-+
-+        iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
-+
-+        interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
-+
-+        interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
-+                              <&modem_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
-+
-+        interrupt-names = "wdog", "fatal", "ready", "handover",
-+                          "stop-ack", "shutdown-ack";
-+
-+        clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
-+                 <&gcc GCC_MSS_OFFLINE_AXI_CLK>,
-+                 <&gcc GCC_MSS_SNOC_AXI_CLK>,
-+                 <&rpmhcc RPMH_PKA_CLK>,
-+                 <&rpmhcc RPMH_CXO_CLK>;
-+        clock-names = "iface", "offline", "snoc_axi", "pka", "xo";
-+
-+        power-domains = <&rpmhpd SC7280_CX>,
-+                        <&rpmhpd SC7280_MSS>;
-+        power-domain-names = "cx", "mss";
-+
-+        memory-region = <&mba_mem>, <&mpss_mem>;
-+
-+        qcom,qmp = <&aoss_qmp>;
-+
-+        qcom,smem-states = <&modem_smp2p_out 0>;
-+        qcom,smem-state-names = "stop";
-+
-+        resets = <&aoss_reset AOSS_CC_MSS_RESTART>,
-+                 <&pdc_reset PDC_MODEM_SYNC_RESET>;
-+        reset-names = "mss_restart", "pdc_reset";
-+
-+        qcom,halt-regs = <&tcsr_mutex 0x23000 0x25000 0x28000 0x33000>;
-+        qcom,ext-regs = <&tcsr 0x10000 0x10004 &tcsr_mutex 0x26004 0x26008>;
-+        qcom,qaccept-regs = <&tcsr_mutex 0x23030 0x23040 0x23020>;
-+
-+        glink-edge {
-+            interrupts-extended = <&ipcc IPCC_CLIENT_MPSS
-+                                   IPCC_MPROC_SIGNAL_GLINK_QMP
-+                                   IRQ_TYPE_EDGE_RISING>;
-+            mboxes = <&ipcc IPCC_CLIENT_MPSS
-+                      IPCC_MPROC_SIGNAL_GLINK_QMP>;
-+            label = "modem";
-+            qcom,remote-pid = <1>;
-+        };
-+    };
--- 
-2.7.4
+The driver does seem to add another 0x42 on top of this base address:
 
+    https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/LA.UM.8.2.1.r1-06200-sdm660.0/drivers/pwm/pwm-qti-lpg.c#L104
+
+(Your LPG driver adds 0x40 - I've seen both used in our downstream
+driver) yet that leaves (0x100-0x42) / 2 = 95 spots.
+
+This is still significantly higher than 49.  Is part of this register
+range used for something else, inaccesible for LUT-value readings or is
+the counter hardware in the LPG limiting this?
+
+The driver codes in a max length of 47:
+
+    https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/LA.UM.8.2.1.r1-06200-sdm660.0/drivers/pwm/pwm-qti-lpg.c#L108
+
+If you're confident about this I'll bump it down to 49 or try validating
+what happens if higher registers are used.
+
+> > +
+> > +	.triled_base = 0xd000,
+> > +	.triled_has_atc_ctl = true,
+> > +	.triled_has_src_sel = true,
+> > +
+> > +	.num_channels = 4,
+> > +	.channels = (struct lpg_channel_data[]) {
+> 
+> This can be const
+
+Thanks for spotting!
+
+- Marijn
+
+> 
+> Regards,
+> Bjorn
+> 
+> > +		{ .base = 0xb100, .triled_mask = BIT(5) },
+> > +		{ .base = 0xb200, .triled_mask = BIT(6) },
+> > +		{ .base = 0xb300, .triled_mask = BIT(7) },
+> > +		{ .base = 0xb400 },
+> > +	},
+> > +};
+> > +
+> >  static const struct lpg_data pm8916_pwm_data = {
+> >  	.num_channels = 1,
+> >  	.channels = (const struct lpg_channel_data[]) {
+> > @@ -1391,6 +1408,7 @@ static const struct lpg_data pm8350c_pwm_data = {
+> >  };
+> >  
+> >  static const struct of_device_id lpg_of_table[] = {
+> > +	{ .compatible = "qcom,pm660l-lpg", .data = &pm660l_lpg_data },
+> >  	{ .compatible = "qcom,pm8150b-lpg", .data = &pm8150b_lpg_data },
+> >  	{ .compatible = "qcom,pm8150l-lpg", .data = &pm8150l_lpg_data },
+> >  	{ .compatible = "qcom,pm8350c-pwm", .data = &pm8350c_pwm_data },
+> > -- 
+> > 2.36.0
+> > 
