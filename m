@@ -2,208 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D1F9523BB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 19:36:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A7DD523BD3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 19:46:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231935AbiEKRg5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 13:36:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34968 "EHLO
+        id S1345770AbiEKRqk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 13:46:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234003AbiEKRg4 (ORCPT
+        with ESMTP id S1345040AbiEKRqj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 13:36:56 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 207BA674DC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:36:55 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id p4so3495245edx.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:36:55 -0700 (PDT)
+        Wed, 11 May 2022 13:46:39 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8120F5DA1A;
+        Wed, 11 May 2022 10:46:38 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id bg25so1649391wmb.4;
+        Wed, 11 May 2022 10:46:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=jwXHsUB6qUpzl3VRnWjzmQKSgk8cDfdgFA5s7nwGaLI=;
-        b=bT22W7fDGAySEG7vBs4hb15DD4bL48uTSAqlVdi3MASn69ux2G7d6N/VKWbxFQeXzu
-         IgyiHQ6LaCd+Jy6MC9n/t37uslzcQJdkPoDj5+cJEJKwpg5f0JFW2jRrHzzzLJkf9iT4
-         QtQSQUI6LtFE/fIizHPmL1xz0u3XWz12sCguANLoXC7jJDbOFe74dMAP5p6lDhtoGNwH
-         DFbFezBtzeZP0nBg/lmOWq7iZL6At0YQIyWc6fyuUn3CK6qOaU17FXZxe0d/AgEW+9TG
-         J7Jt47UJoYkfeT8yAPruPYcESKHLZfst00coEXtq0vevDQTAQYtBInbCq7t9qf1jIkXW
-         U8mg==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hZIhjLMbOoF976Pa2gp/bTHKHDJhsmozC2Xdhlo7Go4=;
+        b=WbaD35REy4RkuI+0jS9Yz9GZbFYslRKSN3kwXxem7hTMwcXCJRi/7mSeJB4RNe+KUJ
+         M7ikAVkz3pLJ/+A/Zd7OZof/hD0WjT2CoD6kwoRDnXii4/UIoRq//XkQr7rsw3AciJXV
+         eW/JXs0byA6F9CltG3XlyUnpqrGxdk+vGhJD7UTD7aAaxjJrgivbmyq8JVh5cWGoAeoP
+         GGy1NuKChyOz9ZnWmc4SmcP9lCn6EWUIuW4vdFKC2zBoerfScGv0yoBZZoBWfmS8DvH8
+         XpH1Vpu3fYyUfcUOC8sDv7lL97hTjYYhp/GdsFmzd41J/zvu+1oLbdC2iQhYcfKukri6
+         MdXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=jwXHsUB6qUpzl3VRnWjzmQKSgk8cDfdgFA5s7nwGaLI=;
-        b=kYGvbiqshGq3QokP0HNBVjhGbfjK04XcbWeLDWkSshHud+/AwTYZZHDLIp8VVdU0Y8
-         1xExoPRC5e8/bUGFcAJa67VGtsVOCBJ780T9Mq/XTtOW6oY+rw+KwWxj83hLDMUXBFiN
-         7TFIpG9TIYpxAOqtUL4t8hAcR8lEmu+zU/QmGAW9+LEaC7Aj9ViO4KuWw+xT1BZpO4Sz
-         Ciqx4lJKsLFOVIc/dTSjnVtyjNgMuGhphXF2uY+MVJLqvbQmpuHKUAGpTNLgnNrn7tdX
-         4rOk/ghhQA2zFFgwlghVkdYeTpMwPisMy09kXCGdAXjmSDCXJ24TIhuDujcJmwNIU+RS
-         FSzA==
-X-Gm-Message-State: AOAM531babdz7jzHhDN4qGZ8ikGNu3uRZBBoA6OZ1LI/nb3YvASY7Pdn
-        YgdsgRxeNfZX9pXxSCnfsaFvOw==
-X-Google-Smtp-Source: ABdhPJyHrA/Ee4SIk42qzBFrUON01ZYdvbhXAObX8J9n0ciqCBlqDatunWcWgBVW2FLF9m2wVcZ9SQ==
-X-Received: by 2002:a05:6402:2078:b0:428:1071:d9b2 with SMTP id bd24-20020a056402207800b004281071d9b2mr31020035edb.302.1652290613620;
-        Wed, 11 May 2022 10:36:53 -0700 (PDT)
-Received: from [192.168.0.155] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id y8-20020a170906524800b006f3ef214d9esm1231008ejm.4.2022.05.11.10.36.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 May 2022 10:36:53 -0700 (PDT)
-Message-ID: <b619b455-c944-0cc6-ca83-e65490612ed7@linaro.org>
-Date:   Wed, 11 May 2022 19:36:52 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hZIhjLMbOoF976Pa2gp/bTHKHDJhsmozC2Xdhlo7Go4=;
+        b=lxmYTeV6IZ0WxhJy7tIYe7JR3bvypDoz/8rBC/8PYmjurIyxFXujrT1uJGN5fcgZEd
+         o9vA/+501rDhrFaM6WaY/rNvU9Gb9uz528h3XMMBMrMxhV1A4PNnavcBiKKzLtFmjD5m
+         ujtlhWlMOxox9Fif+Bw+1ojGbTaBtXToeozlpeFA0yLXXLgxkapdVMfo/DoXLpAF1P4f
+         xm1gt7F+bMclVMs/CLkVZN/EB5Odf/meGQxLGHfwBrQOZYdn97blK8wYZi4rAxiYUZw7
+         wUYBSDJ8uYBsd0wVhMNbKVdRhbhk/rmAhaZLnTWbUM8/tnwzi1nOvPHEdo+UPEjmoHEO
+         toSw==
+X-Gm-Message-State: AOAM532xo3aVIDObhkg+t+D+3J+KnhPgKBKzg/2zgTh1pfylOuaiPC4h
+        qDRBGtq3X29z+NCCwGWY2+/dDcJX98p4OZhxafi9RFkH
+X-Google-Smtp-Source: ABdhPJyyI6ZQQ21PBHHrfOwIDXju3dqvOzK7tmSkFW7qgZPpqEGyfOOYbWN1XYAiCyzaICg8/Egs+zHO23GPOYNfFPc=
+X-Received: by 2002:a05:600c:a53:b0:394:7a51:cb71 with SMTP id
+ c19-20020a05600c0a5300b003947a51cb71mr6322859wmq.148.1652291196975; Wed, 11
+ May 2022 10:46:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
-Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>,
-        Rob Herring <robh@kernel.org>
-Cc:     Julius Werner <jwerner@chromium.org>,
-        =?UTF-8?Q?Krzysztof_Koz=c5=82owski?= <k.kozlowski.k@gmail.com>,
-        Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
+ <20220510141329.54414-1-tomeu.vizoso@collabora.com> <e4e03cd8-3ebc-e5e1-e7d0-6bdc038049b5@quicinc.com>
+ <CAF6AEGueadnRMiatO3MoHS+NTQ1o1sgcV0cVjJM3iu-6JUNmNw@mail.gmail.com> <CAKMK7uGRuCZwF6m02tcxxrgQGaijsYaNkowjxR+cw0JM3UpDkQ@mail.gmail.com>
+In-Reply-To: <CAKMK7uGRuCZwF6m02tcxxrgQGaijsYaNkowjxR+cw0JM3UpDkQ@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 11 May 2022 10:46:24 -0700
+Message-ID: <CAF6AEGthpxPLxyt_i-aUFgW485hA5qw+xXcJ3gKQUJ+fM=ZBhg@mail.gmail.com>
+Subject: Re: [Freedreno] [RFC v2] drm/msm: Add initial ci/ subdirectory
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
- <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org>
- <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
- <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org>
- <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
- <606cc762-a0c2-49a4-3e5d-d2dbd4595bc7@linaro.org>
- <CAD=FV=W_SA-3PfDFi-Gkjk9pew5bchFNjQhXX8MkZyuy5UohEQ@mail.gmail.com>
- <CAJKOXPdt5WTg4VU-TEW3dmPHR76dKg63XVxRQfa7ZSKc_jz6Ag@mail.gmail.com>
- <CAD=FV=XQqQSQDNh-zXqEQkwsrax5Qb3OtfKZoQLkncJj_4mcQw@mail.gmail.com>
- <daf66d41-42ac-50dc-3f8d-c261da8e452d@linaro.org>
- <CAD=FV=WhA=n_=Ys6NfedPtNPddL81HnG6Qws_R+vq9w8Nrsn5A@mail.gmail.com>
- <ce2ea308-b63d-ad27-4cea-7353268f8ebb@linaro.org>
- <CAODwPW857CkH0+ZnBaUeowW4te-hSy6nrdeeX6-OLPOs5TptsQ@mail.gmail.com>
- <55dcf917-7ac0-efe9-8531-b77be682125a@linaro.org>
- <CAD=FV=UPKo4CxRVmdHr05rRPaNHFYfaQTqmBJAU5ZF61ccKgEA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=UPKo4CxRVmdHr05rRPaNHFYfaQTqmBJAU5ZF61ccKgEA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Jonathan Corbet <corbet@lwn.net>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/05/2022 18:09, Doug Anderson wrote:
->>
->> So you choose they are not identical, fine. Why insisting on adding
->> fallback compatible while not keeping bindings updated? Just don't add
->> the compatible and work on rev3 or rev4. Doug even once wrote "_we don't
->> know_ if -rev7 and -rev8 are compatible", so don't make them compatible.
->> Don't add fallbacks or some generic unspecified front-compatibles and
->> just work on revision.
-> 
-> Somehow, it seems like we keep talking past each other here and it
-> feels like folks are getting upset and we're not moving forward. Maybe
-> the right way to make progress is to find some face-to-face time at a
-> future conference and sit in front of a white board and hash it out.
-> That being said:
-> 
-> * Without changing our bootloader or having a big explosion in the
-> number of dts files, we really can't change our scheme. The best we
-> can do is document it.
+On Wed, May 11, 2022 at 10:12 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>
+> On Tue, 10 May 2022 at 22:26, Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > On Tue, May 10, 2022 at 12:39 PM Jessica Zhang
+> > <quic_jesszhan@quicinc.com> wrote:
+> > >
+> > >
+> > >
+> > > On 5/10/2022 7:13 AM, Tomeu Vizoso wrote:
+> > > > And use it to store expectations about what the drm/msm driver is
+> > > > supposed to pass in the IGT test suite.
+> > > >
+> > > > Also include a configuration file that points to the out-of-tree CI
+> > > > scripts.
+> > > >
+> > > > By storing the test expectations along the code we can make sure both
+> > > > stay in sync with each other, and so we can know when a code change
+> > > > breaks those expectations.
+> > > >
+> > > > This will allow all contributors to drm/msm to reuse the infrastructure
+> > > > already in gitlab.freedesktop.org to test the driver on several
+> > > > generations of the hardware.
+> > > >
+> > > > v2:
+> > > >    - Fix names of result expectation files to match SoC
+> > > >    - Don't execute tests that are going to skip on all boards
+> > > >
+> > > > Signed-off-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
+> > > > ---
+> > > >   Documentation/gpu/msm_automated_testing.rst   |  70 +++++++++
+> > > >   drivers/gpu/drm/msm/ci/gitlab-ci.yml          |  11 ++
+> > > >   drivers/gpu/drm/msm/ci/msm.testlist           | 148 ++++++++++++++++++
+> > > >   .../gpu/drm/msm/ci/msm_apq8016_results.txt    | 140 +++++++++++++++++
+> > > >   .../gpu/drm/msm/ci/msm_apq8096_results.txt    | 140 +++++++++++++++++
+> > > >   drivers/gpu/drm/msm/ci/msm_sc7180_results.txt | 141 +++++++++++++++++
+> > > >   drivers/gpu/drm/msm/ci/msm_sdm845_results.txt | 141 +++++++++++++++++
+> > > >   7 files changed, 791 insertions(+)
+> > > >   create mode 100644 Documentation/gpu/msm_automated_testing.rst
+> > > >   create mode 100644 drivers/gpu/drm/msm/ci/gitlab-ci.yml
+> > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm.testlist
+> > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8016_results.txt
+> > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8096_results.txt
+> > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
+> > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_sdm845_results.txt
+> > > >
 
-That's reasonable.
+[snip]
 
-> 
-> * If we want to change our scheme, we'd need to sit down and come to
-> an agreement that satisfies everyone, if such a thing is possible.
+> > > > diff --git a/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt b/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
+> > > > new file mode 100644
+> > > > index 000000000000..01f7b4b399b5
+> > > > --- /dev/null
+> > > > +++ b/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
+> > > > @@ -0,0 +1,141 @@
+> > > > +igt@core_auth@getclient-simple,dmesg-warn
+> > > > +igt@core_auth@getclient-master-drop,pass
+> > > > +igt@core_auth@basic-auth,pass
+> > > > +igt@core_auth@many-magics,pass
+> > > > +igt@core_getclient,pass
+> > > > +igt@core_getstats,pass
+> > > > +igt@core_getversion,pass
+> > > > +igt@core_setmaster_vs_auth,pass
+> > > > +igt@drm_read@invalid-buffer,pass
+> > > > +igt@drm_read@fault-buffer,pass
+> > > > +igt@drm_read@empty-block,pass
+> > > > +igt@drm_read@empty-nonblock,pass
+> > > > +igt@drm_read@short-buffer-block,pass
+> > > > +igt@drm_read@short-buffer-nonblock,pass
+> > > > +igt@drm_read@short-buffer-wakeup,pass
+> > > > +igt@kms_addfb_basic@unused-handle,pass
+> > > > +igt@kms_addfb_basic@unused-pitches,pass
+> > > > +igt@kms_addfb_basic@unused-offsets,pass
+> > > > +igt@kms_addfb_basic@unused-modifier,pass
+> > > > +igt@kms_addfb_basic@legacy-format,dmesg-warn
+> > > > +igt@kms_addfb_basic@no-handle,pass
+> > > > +igt@kms_addfb_basic@basic,pass
+> > > > +igt@kms_addfb_basic@bad-pitch-0,pass
+> > > > +igt@kms_addfb_basic@bad-pitch-32,pass
+> > > > +igt@kms_addfb_basic@bad-pitch-63,pass
+> > > > +igt@kms_addfb_basic@bad-pitch-128,pass
+> > > > +igt@kms_addfb_basic@bad-pitch-256,pass
+> > > > +igt@kms_addfb_basic@bad-pitch-1024,pass
+> > > > +igt@kms_addfb_basic@bad-pitch-999,pass
+> > > > +igt@kms_addfb_basic@bad-pitch-65536,pass
+> > > > +igt@kms_addfb_basic@size-max,pass
+> > > > +igt@kms_addfb_basic@too-wide,pass
+> > > > +igt@kms_addfb_basic@too-high,dmesg-warn
+> > >
+> > > For test results on Trogdor, is is possible to have them be
+> > > success/fail/skip only?
+> > >
+> > > Results such as dmesg-warn/dmesg-fail are igt_runner specific and
+> > > because there isn't support for igt_runner on ChromeOS, they will be
+> > > difficult to replicate and debug.
+> >
+> > Actually, I wonder if it would be better to just treat
+> > dmesg-warn/dmesg-fail as pass/fail?  I'd noticed some flakes on
+> > rockchip which looked just like unrelated dmesg msg which just
+> > happened to show up while the test was running.
+>
+> This is kinda the reason behind standardizing on drm dmesg logging, so
+> that we have some chances at filtering stuff out. Not sure that's a
+> good idea, since when your entire box splats and lockdep is dead, then
+> continuing to run drm tests is still fairly pointless.
 
-There is open CFP for ELCE 2022 (in Ireland). Maybe we could organize
-some session there? But we for sure would need Rob, so the arrangements
-should rather focus on him, not on my availability.
+I'm not sure if we are using it yet for drm-ci, but for mesa-ci we
+monitor dmesg (over serial port, from the controller) for splats, so
+we already have the tech for restarting or aborting the CI run.  We
+don't need igt-runner to tell us.
 
-> That would only be able to affect future boards.
+> I think this is another reason why trying at least to standardize this
+> stuff over drivers would be pretty good idea.
+>
+> > Additionally, some of the tests, like msm_recovery, are *expected* to
+> > generate some dmesg spam since they are intentionally triggering GPU
+> > hangs to test the recovery mechanism.
+>
+> Uh I don't like that. It just allows userspace to spam dmesg, which
+> doesn't seem like a great idea. That's at least why i915 dumps these
+> at a lower level, and in the past had a special "I'm going to whack
+> the gpu real hard expect hangs" knob in debugfs.
+>
+> Having tests which intentionally spam dmesg above info level isn't
+> really good since then you need endless amounts of test-specific
+> encoding of what is considered a success and what not. Like when a
+> backmerge breaks a testcases which is already at dmesg-fail, is that
+> bad or not? Probably bad, but was the situation before that really
+> good or already kinda on fire?
 
-I would like to say that if you had bindings, then obviously we would
-not break them, but since there are no bindings... :)
+I guess I could add some debugfs knobs to squelch the dmesg msgs on
+gpu hangs.  In the normal case, I'd prefer that gpu hangs are not
+silent.. since that is something we get in feedback reports if a user
+(or dogfooder) reports a bug.
 
-> We don't want to
-> change the bootloader dts loading scheme on old boards.
+The rockchip case I mentioned was some unrelated dmesg about
+linktraining failing.. presumably because there was no display
+attached?  IDK, I didn't look too closely.  But my point is we could
+be getting unrelated and asynchronous dmesg spam, even from other
+kernel subsystems.  Letting that be part of the test results just
+sounds like asking for flakes.
 
-Understood.
+BR,
+-R
 
->>>> Right now it's not possible to validate QCOM DTSes against DT bindings
->>>> because they throw big fat warnings about undocumented top compatibles.
->>>> This is a downside for us.
->>>
->>> But that's a solvable problem, right? As I understand, what Doug was
->>> initially just asking was whether it made _sense_ to document all of
->>> these... not that we couldn't do it. Then this whole thread went down
->>> a rabbit hole of whether our compatible assignments are allowed in the
->>> first place. If we can compromise on this discussion by just doing
->>> whatever needs to be done to make the tool happy, I think(?) we can
->>> provide that.
->>
->> None of recent patches from Chromium were doing it, even after
->> complaining from my side, so why do you suddenly believe that it is
->> "doable"? If yes, please start doing it and fix the DTSes which you
->> already submitted without bindings.
->>
->> To remind - entire discussion started with Doug saying it is pure
->> overhead for him.
-> 
-> I mean, to be fair I said it _seems_ pure overhead and then said that
-> we could do it if it makes some tools happy. ...but before doing that,
-> I wanted to make sure it was actually valuable. I still have doubts
-> about the assertion that the most specific compatible is guaranteed to
-> uniquely identify hardware. So if the whole reason for doing this is
-> to make the validation tools happy and there's no other value, then at
-> least it's plausible to argue that the tools could simply be fixed to
-> allow this and not shout about it. 
-
-Instead of adding bindings, you can indeed change/fix the tools. Go
-ahead. :)
-
-> Now, certainly I'm not arguing that
-> yaml validation in general is useless. I'm in agreement that we want
-> dts files to be able to be formally validated because it catches
-> typos, missing properties, and bugs. I am _only_ saying that I still
-> haven't seen a good argument for why we need to validate the top-level
-> compatible string.
-
-I don't feel expert enough on this topic to give you good answer. Which
-does not prove that there isn't or there is such good answer.
-
-> Since there no properties associated with the
-> top-level compatible string, it's mostly just checking did some one
-> copy-paste the compatible string from one file (the dts file) to the
-> other file (the yaml file) correctly. To me, that does not feel like a
-> useful check.
-
-Still it can detect messing of SoC compatibles or not defining any
-board-level compatible thus pretending that someone's board is just
-SC7180. Imagine now user-space or bootloader trying to parse it...
-
-BTW, the bindings validation of top-level compatible might actually help
-you - to be sure that DTSes have proper compatibles matching what
-bootloader expects.
-
-> The other thing I wanted to make sure was that we weren't just going
-> to get NAKed later if/when we had to adjust compatible strings on
-> existing dts files.
-
-Stable ABI is more of SoC maintainer decision and I see Bjorn responded
-here.
-
-> In any case, I guess I'll make an attempt to document the compatibles
-> for existing Chromebooks and we'll see what happens. I'm still not
-> convinced of the value, but as long as we're not going to get NAKed
-> for documenting reality it's fine.
-
-
-Best regards,
-Krzysztof
+> -Daniel
+>
+> > BR,
+> > -R
+> >
