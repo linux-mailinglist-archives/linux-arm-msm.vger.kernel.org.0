@@ -2,209 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67687524111
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 01:36:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDD6F52413C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 01:55:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349371AbiEKXgz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 19:36:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57238 "EHLO
+        id S1349486AbiEKXzF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 19:55:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229927AbiEKXgy (ORCPT
+        with ESMTP id S237870AbiEKXzE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 19:36:54 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72C98FD37
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 16:36:53 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id w19so6127151lfu.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 16:36:53 -0700 (PDT)
+        Wed, 11 May 2022 19:55:04 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 745406FD3A;
+        Wed, 11 May 2022 16:54:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=KaLkwfARzPI2WUpcwLW6/tBEwXIZOMHiSmPz9kdEE3g=;
-        b=n0LF6L3TfqxhtT/UfzDLL6epuNTp+yuCqM2xZdmxgkzTk56zc2C977OlKn2yUpvB8C
-         wvH0NPF6Q7rtL5tQNNCtH/mIJguDgwAHzlWsil9P9SmAycH5sQoSEY5LSO21YsrgioKA
-         B4/a5jDnUR2Q/zOymf7fwH2e7lwXX8IUdD8BrPJEgB5nMJ+O/EFRgMUnJVun19oScTZm
-         mVgmqM3MprFirE8VdlCOIjJ0j48ynmYlo1KaO3PIWJEAmPxWJy/TOgwPgf4//tKNZlfB
-         B7DBUJoTLRHmjUFST42Bchz5Oln/A9YscYVEP03C3n8MTx8VBIgyIdUCKfSiti+n9rTj
-         vNCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=KaLkwfARzPI2WUpcwLW6/tBEwXIZOMHiSmPz9kdEE3g=;
-        b=aoyhRNPm2pqVL2XcubMAiDewlkZP0UF5MVLpnrFYqqejWixYeJPRhJGykBRIXaH5/y
-         ffKYD84Z7ncx+HjqmWccmaCS3eMkabAyxyxqbXS6w1Sz6/Znirs2UOedSMOZ3TEXJJIV
-         7utc3xkHIj/nQ3rz38odVmFDuOEbxZ82w/hQ0SNscGGG8wuGxghhpOlkyeEOdKQ1zU8m
-         2i72RFQEaTDXSf2FomOQjpWvoaDb9ksnobUngc5dTeqmX5GoGEcYgS1rOUrputq1jzR3
-         OPkko+b7ptbtyyL45K1cyNDAKKbth/PE7rmEkQrL/3H1Kr3TC0jiVaYtzuBpgdMPDdhE
-         T/kw==
-X-Gm-Message-State: AOAM533XtoMfkZnubx8CtebjnX8vEWCO80J4idh7X+Jv1/9gUV7jhe9v
-        cHhm5g94Git/7KR5dgCtPpR1rQ==
-X-Google-Smtp-Source: ABdhPJwpiahihkqiYE0pu+9+p1gKbMKOBwf+fvXN70CbwJ1SRvU1fqfGCLtKFePoPsmUBxJaPzXPyw==
-X-Received: by 2002:a05:6512:3ba4:b0:473:a3fb:2810 with SMTP id g36-20020a0565123ba400b00473a3fb2810mr22432088lfv.645.1652312211709;
-        Wed, 11 May 2022 16:36:51 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id x20-20020ac25dd4000000b0047255d2114dsm497214lfq.124.2022.05.11.16.36.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 May 2022 16:36:51 -0700 (PDT)
-Message-ID: <a2bdbeb9-943b-f073-36ce-4a767a99288e@linaro.org>
-Date:   Thu, 12 May 2022 02:36:49 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH 1/2] drm/msm/dsi: move DSI host powerup to modeset time
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Doug Anderson <dianders@chromium.org>,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652313299; x=1683849299;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=djoNJ50KR+AFBmKpoCbyO4jjNOYnBtA+kMqhid4fp1A=;
+  b=ofVj1TUvUACSYehN7FLHJfCWGZGRezsPN9fMjqaAjmpPF1E4U6RL/dC2
+   vTNqYRkVEUIxUFXNO7ENNB5RQ7dAWDzo/W6g7riy6zDTI7qdYSzb+eEnT
+   fnZyiaV63OBdscqlRy0GPJrJvkdx/vUBvJnLKDf5anKVOSGVSoYJtzBHk
+   o=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 11 May 2022 16:54:58 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2022 16:54:58 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 11 May 2022 16:54:58 -0700
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 11 May 2022 16:54:52 -0700
+Date:   Thu, 12 May 2022 05:24:48 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Andy Gross" <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-References: <20211207222901.988484-1-dmitry.baryshkov@linaro.org>
- <20211207222901.988484-2-dmitry.baryshkov@linaro.org>
- <CAD=FV=V7RyVJKis9e3aoouQyhUppyAhVs9oN9=miKeZcV0t6_g@mail.gmail.com>
- <15f9df0b-3228-af8f-f123-b5d10eb1bacb@linaro.org>
- <CAF6AEGuD05pLUELrc9Hzy_htrczKDtxe8dv6dp6uw9msGXkcGQ@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAF6AEGuD05pLUELrc9Hzy_htrczKDtxe8dv6dp6uw9msGXkcGQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_vpulyala@quicinc.com>
+Subject: Re: [v15 2/6] usb: host: xhci-plat: Enable wakeup based on children
+ wakeup status
+Message-ID: <20220511235448.GA11722@hu-pkondeti-hyd.qualcomm.com>
+References: <1651740973-7944-1-git-send-email-quic_kriskura@quicinc.com>
+ <1651740973-7944-3-git-send-email-quic_kriskura@quicinc.com>
+ <YnVAZSZYQvIJxOHv@google.com>
+ <20220509033843.GB9170@hu-pkondeti-hyd.qualcomm.com>
+ <20220511015101.GB23843@hu-pkondeti-hyd.qualcomm.com>
+ <YnvcMe+irsndtcV0@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <YnvcMe+irsndtcV0@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/05/2022 01:07, Rob Clark wrote:
-> On Wed, May 11, 2022 at 2:49 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> On 11/05/2022 23:06, Doug Anderson wrote:
->>> Hi,
->>>
->>> On Tue, Dec 7, 2021 at 2:29 PM Dmitry Baryshkov
->>> <dmitry.baryshkov@linaro.org> wrote:
->>>>
->>>> The DSI subsystem does not fully fall into the pre-enable/enable system
->>>> of callbacks, since typically DSI device bridge drivers expect to be
->>>> able to communicate with DSI devices at the pre-enable() callback. The
->>>> reason is that for some DSI hosts enabling the video stream would
->>>> prevent other drivers from sending DSI commands. For example see the
->>>> panel-bridge driver, which does drm_panel_prepare() from the
->>>> pre_enable() callback (which would be called before our pre_enable()
->>>> callback, resulting in panel preparation failures as the link is not yet
->>>> ready).
->>>>
->>>> Therewere several attempts to solve this issue, but currently the best
->>>> approach is to power up the DSI link from the mode_set() callback,
->>>> allowing next bridge/panel to use DSI transfers in the pre_enable()
->>>> time. Follow this approach.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>    drivers/gpu/drm/msm/dsi/dsi_manager.c | 43 +++++++++++++++++++--------
->>>>    1 file changed, 31 insertions(+), 12 deletions(-)
->>>
->>> I happened to be testing today on one of the sc7180-trogdor variants
->>> that has a parade-ps8640 bridge chip in it and ran into problems. A
->>> bisect pointed to this patch and, sure enough, reverting it fixes me
->>> again.
->>>
->>> The Chromebook in question is able to power the screen on at bootup
->>> but things don't work so well in other cases. Specifically, if I leave
->>> the Chromebook idle then it will turn the screen off (but in this
->>> case, not enter S3). Hitting a key should wake the screen up, but it
->>> doesn't.
->>>
->>> None of the error prints in dsi_mgr_bridge_power_on() are hitting when
->>> it fails and I even added extra error prints. It's not hitting any of
->>> the early returns.
->>>
->>> I did a little bit more debugging and it appears that nothing funny is
->>> going on. It's just the ordering difference that matters. With the
->>> patch reverted, I see this and it all works:
->>>
->>> boot:
->>> [    9.653801] DOUG: dsi_mgr_bridge_mode_set
->>> [    9.658687] DOUG: ps8640_pre_enable
->>> [    9.664194] DOUG: dsi_mgr_bridge_pre_enable
->>>
->>> screen turns off:
->>> [   82.130038] DOUG: dsi_mgr_bridge_post_disable
->>> [   82.166817] DOUG: ps8640_post_disable
->>>
->>> screen turns on:
->>> [   92.611846] DOUG: dsi_mgr_bridge_mode_set
->>> [   92.617875] DOUG: ps8640_pre_enable
->>> [   92.920237] DOUG: dsi_mgr_bridge_pre_enable
->>>
->>> Without the patch reverted, I see this and it fails:
->>>
->>> boot:
->>> [   10.817810] DOUG: dsi_mgr_bridge_mode_set
->>> [   10.822128] DOUG: dsi_mgr_bridge_power_on
->>> [   10.852131] DOUG: ps8640_pre_enable
->>> [   10.857942] DOUG: dsi_mgr_bridge_pre_enable
->>>
->>> screen turns off:
->>> [   34.819953] DOUG: dsi_mgr_bridge_post_disable
->>> [   34.883777] DOUG: ps8640_post_disable
->>>
->>> screen should turn on, but doesn't:
->>> [   46.193589] DOUG: dsi_mgr_bridge_mode_set
->>> [   46.197951] DOUG: dsi_mgr_bridge_power_on
->>> [   46.248438] DOUG: ps8640_pre_enable
->>> [   46.541700] DOUG: dsi_mgr_bridge_pre_enable
->>>
->>> Unfortunately, ps8640 is a pretty big black box. The Linux kernel
->>> driver does almost nothing at all and the parade bridge chip has a
->>> bunch of magic firmware on it. Though I don't know for sure, I assume
->>> that this magic firmware simply can't handle the fact that the MIPI
->>> side is already setup / running when the bridge is powered on.
->>>
->>> Rather than this patch, maybe you can jump on Dave Stevenson's patch
->>> series [1] which I believe would solve this problem in a more dynamic
->>> way? Would you accept a revert of ${SUBJECT} patch to fix my problem?
->>
->> I'm fine with the revert, but it will depend on [1]. Otherwise other
->> MIPI DSI bridges are broken (see the discussion at [2]).
+On Wed, May 11, 2022 at 08:54:25AM -0700, Matthias Kaehlcke wrote:
+> On Wed, May 11, 2022 at 07:21:01AM +0530, Pavan Kondeti wrote:
+> > On Mon, May 09, 2022 at 09:08:43AM +0530, Pavan Kondeti wrote:
+> > > On Fri, May 06, 2022 at 08:36:31AM -0700, Matthias Kaehlcke wrote:
+> > > > On Thu, May 05, 2022 at 02:26:09PM +0530, Krishna Kurapati wrote:
+> > > > > device_wakeup_path() tells if any of the children devices needs
+> > > > > wakeup. Use this hint to enable/disable wakeup of our device. This
+> > > > > helps the parent device of xhci-plat (like sysdev) to retrieve
+> > > > > the wakeup setting via device_wakeup_path().
+> > > > > 
+> > > > > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> > > > > ---
+> > > > >  drivers/usb/host/xhci-plat.c | 8 ++++++++
+> > > > >  1 file changed, 8 insertions(+)
+> > > > > 
+> > > > > diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
+> > > > > index 649ffd8..ad585fa 100644
+> > > > > --- a/drivers/usb/host/xhci-plat.c
+> > > > > +++ b/drivers/usb/host/xhci-plat.c
+> > > > > @@ -415,6 +415,14 @@ static int __maybe_unused xhci_plat_suspend(struct device *dev)
+> > > > >  	if (pm_runtime_suspended(dev))
+> > > > >  		pm_runtime_resume(dev);
+> > > > >  
+> > > > > +	if (device_wakeup_path(dev)) {
+> > > > > +		if (!device_may_wakeup(dev))
+> > > > > +			device_wakeup_enable(dev);
+> > > > > +	} else {
+> > > > > +		if (device_may_wakeup(dev))
+> > > > > +			device_wakeup_disable(dev);
+> > > > > +	}
+> > > > 
+> > > > This code is not self-explantatory and deserves a comment.
+> > > > 
+> > > > Enabling/disabling wakeup for the purpose if signalling is a bit of a
+> > > > hack. It might be an acceptable hack as long as it has no side effects.
+> > > > However with the current implementation the wakeup state of the xHCI can
+> > > > be different after resuming than it was before going to suspend:
+> > > > 
+> > > > after boot
+> > > >   grep -h xhci /sys/class/wakeup/*/name
+> > > >     => xhci-hcd.14.auto
+> > > > 
+> > > > after suspend w/o wakeup capable device
+> > > >   grep -h xhci /sys/class/wakeup/*/name
+> > > >     => no results
+> > > > 
+> > > > after suspend with wakeup capable device
+> > > >   grep -h xhci /sys/class/wakeup/*/name
+> > > >     => xhci-hcd.14.auto
+> > > > 
+> > > > The hack shouldn't alter the wakeup state 'persistently', i.e. you'll have
+> > > > to restore it on resume, as in Pavan does in his reply to '[PATCH v14 2/7]
+> > > > PM / wakeup: Add device_children_wakeup_capable()' (it needs to be done
+> > > > conditionally though).
+> > > 
+> > > I am worried that we are not doing the right thing here. why should the
+> > > xhci-plat goes against the wishes of the user space policy here? Can we NOT
+> > > just do anything here? If some one wants xhci-plat to wakeup all the time,
+> > > dwc3 will be configured to wakeup the system provided that the support is
+> > > available. This way we don't break any existing users of xhci-plat i.e not
+> > > enabling wakeup from the kernel.
+> > > 
+> > Krishna,
+> > 
+> > can we please drop this patch and use device_wakeup_path() and verify the
+> > following cases.
+> > 
+> > 1. one of the downstream USB device supports wakeup and xhci-plat wakeup is enabled
+> > 2. one of the downstream USB device supports wakeup and xhci-plat wakeup is
+> > disabled
+> > 3. none of the downstream USB device supports wakeup (or disable) and
+> > xhci-plat wakeup is enabled.
+> > 4. none of the downstream USB device supports wakeup (or disable) and
+> > xhci-plat wakeup is disabled.
 > 
-> heh, well the problem is that MIPI DSI bridges, or at least one of
-> them, is broken *without* the revert ;-)
+> I wonder if we couldn't keep this simpler: if the dwc3 is wakeup capable keep
+> the PHYs/core powered, otherwise power them down. Similar to what commit
+> 689bf72c6e0d ("usb: dwc3: Don't reinitialize core during host
+> bus-suspend/resume") intended, but with the additonal check for wakeup
+> capability. We now know that the PHYs need to be powered down on some SoCs
+> to allow the SoC to reach its low power mode during suspend:
 > 
-> [1] looks like a bit much for -fixes, so I'd be inclined to revert
-> this patch and at least go back to the broken/working state from
-> before for the time being..
-
-So... We either get the ps8640 or tc358762 & the rest broken. I'd 
-suggest a modparam.
-
 > 
-> BR,
-> -R
+>   commit c4a5153e87fdf6805f63ff57556260e2554155a5
+>   Author: Manu Gautam <mgautam@codeaurora.org>
+>   Date:   Thu Jan 18 16:54:30 2018 +0530
 > 
->>> [1] https://lore.kernel.org/r/cover.1646406653.git.dave.stevenson@raspberrypi.com
->>
->> [2]
->> https://lore.kernel.org/all/CAPY8ntBrhYAmsraDqJGuTrSL6VjGXBAMVoN7xweV7E4qZv+v3Q@mail.gmail.com/
->>
->>
->> --
->> With best wishes
->> Dmitry
+>   usb: dwc3: core: Power-off core/PHYs on system_suspend in host mode
+> 
+>   Commit 689bf72c6e0d ("usb: dwc3: Don't reinitialize core during
+>   host bus-suspend/resume") updated suspend/resume routines to not
+>   power_off and reinit PHYs/core for host mode.
+>   It broke platforms that rely on DWC3 core to power_off PHYs to
+>   enter low power state on system suspend.
+> 
+> 
+> With wakeup capable controllers this is apparently not an issue, otherwise
+> the SoC wouldn't be able to enter its low power state when wakeup is
+> enabled.
 
+Agree to your suggestion. Thanks for your inputs.
 
--- 
-With best wishes
-Dmitry
+Thanks,
+Pavan
