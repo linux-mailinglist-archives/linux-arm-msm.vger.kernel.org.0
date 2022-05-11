@@ -2,77 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E71C523E66
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 22:06:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 770A4523E6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 22:06:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230454AbiEKUGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 16:06:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48330 "EHLO
+        id S235722AbiEKUGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 16:06:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229667AbiEKUGf (ORCPT
+        with ESMTP id S231585AbiEKUGi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 16:06:35 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C25726126
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 13:06:33 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id l18so6182778ejc.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 13:06:33 -0700 (PDT)
+        Wed, 11 May 2022 16:06:38 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A988233363;
+        Wed, 11 May 2022 13:06:37 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id m1so4430407wrb.8;
+        Wed, 11 May 2022 13:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=s+VKxsDNd2Dlk25JXEG0/tKdfNG/XmzW8g0WEIYdC88=;
-        b=R7vHakTRampr8OzU3rpFsQDFxOiF/ZYOzyU/LbZPRwC2qoIjA41ST8iUnSy/gzro0B
-         jTSxW/5/tKOFtoy6GEXCUuG7WzsuuTRO9uiHlsS2zYy6Q3XcNRZo3IY6AxUvfNLsJgll
-         Cp/W/Cf1mJWMPRsE9Ldkye6nOnCYHs/+4rGE4=
+        bh=W6YNSoA5Dua0+s/FF7SpEIcKqn99xdL9v6a8e8wASjE=;
+        b=huVs1irgBIkg9Eul0wYK5EYPJx3b0ncqN0x9QsTfJvBcQ2t5FOtXmqR45KnVbSBCt0
+         tRVR32t6absZdZ99QabYYfqRY9JvV5eBYNqMncuhU2tTBEa3Jx27JsNQ5Qk/8J/I1Rqd
+         uiZxKXViZRvewgUcnsIcC3Lbrm8xA1GbN6EW0FjiDtQoz/UCGHm8rUNxBJguevCQ8bby
+         hbqSts8HPIVGxqadiiBHoU5HXVcqmZGmu8SOnw+2/jhm12VXAimJtNgdng9UB3jfuSIq
+         6e1eUh5wALaSoHtArYquH1ViBA4Y+EuTOUaXV46Htl6nWhXkQD9cVPMgbXCnlOic3bq7
+         XXOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=s+VKxsDNd2Dlk25JXEG0/tKdfNG/XmzW8g0WEIYdC88=;
-        b=b9XLTQduGQO7evU2vTwhVt9jbpOvbKlT+FeDARh1eyf8u4q91Qc5eflKEkd235dG1/
-         NGAGHzpBG207pxw1LbqLkYOaFACoD9z/dZrc1Eq4++8GCNweIOBe79d76yEue5/PWqTF
-         j33e8UeYZfqSTjSZk2eh6V212oeuD1IGt0fZJmkQyJ6E1/ToMCczSB3ZHCeYwSlabbO7
-         qZ0qI4agS7WhxfcJOSoB6bhXggcqI9yZatPwUlB9s1de+h6wdWp7xia4ygAKk04x6yS5
-         qZJzvFJfLn3bAoYmzKHFGnwbWzfLzIQzfkDBz7l5BLCteFVOyVJHNv4YVqIjElmhWMS/
-         EvoQ==
-X-Gm-Message-State: AOAM533yup3kliIACryHiMcAKgm2L1PxFLDep7d1x+B7Cj+N5/N8PmcU
-        /RwnUUmLhySuDEAaUKlAUypUNZbluCM3yk4VNR8=
-X-Google-Smtp-Source: ABdhPJzazHyMkX2yjQhAR0rj45OR0qzY0EIFsKYlY6p/Nr/zQ1fZCI27PPF1gwEJzRkG62xvtzs6Wg==
-X-Received: by 2002:a17:907:9815:b0:6f9:f5c6:ab01 with SMTP id ji21-20020a170907981500b006f9f5c6ab01mr17345835ejc.163.1652299591931;
-        Wed, 11 May 2022 13:06:31 -0700 (PDT)
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com. [209.85.128.48])
-        by smtp.gmail.com with ESMTPSA id m6-20020a170906580600b006f3ef214e0asm1310559ejq.112.2022.05.11.13.06.30
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 May 2022 13:06:30 -0700 (PDT)
-Received: by mail-wm1-f48.google.com with SMTP id m62so1824766wme.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 13:06:30 -0700 (PDT)
-X-Received: by 2002:a7b:c4c8:0:b0:394:26c5:b79e with SMTP id
- g8-20020a7bc4c8000000b0039426c5b79emr6580581wmk.15.1652299589792; Wed, 11 May
- 2022 13:06:29 -0700 (PDT)
+        bh=W6YNSoA5Dua0+s/FF7SpEIcKqn99xdL9v6a8e8wASjE=;
+        b=jIbk90YdUXfXvJZ8ACJopqiFLW53MdJ1ZBNfinMfZzq1Q9dsnQc/MonA3T6WsAU7cO
+         RVQKq2yvIyyM8DrG3mLon9itHq4PlxZgiTcG/hf+n1ee74HYm3h4KJsbEVgoVvxCrPsu
+         cTzxpxs0RgpI3DgJX3FhgYrCmmuMALv9HQYwSDqRsCoRje6j34gus6G0J3/nnefiMrom
+         bGQrAxDC/EJdkLqw1Lxr1+QQbg4zIebyGRExAUmQuvCCxn8rmENi4g0rLGeCAVoSm3xF
+         ouA9g+/ip7jECnhJ3NNGm1cN7R43Y4qHc0A5kRjZ0NoP6Fyq48ZEoKaQubD2uVW+xHKa
+         pDVw==
+X-Gm-Message-State: AOAM530RVgx+jmsPzKj9Oqa0FkGjdL/YX4TxAB1Cfd9+9WnKj1jEQ/xs
+        ZBnySnD8853MWCBnco9Z96cN9YfzowL9mF6Tj4g39n6z
+X-Google-Smtp-Source: ABdhPJztZ9XbUj0FLLKnjaG49uOatzw5PqIll6Yx+Z6ecof8fZ/Xg+4CXVkwVcsz/BnqI+EDtAS88Q5dTYmp2/hyOH8=
+X-Received: by 2002:a05:6000:156e:b0:20c:5218:8907 with SMTP id
+ 14-20020a056000156e00b0020c52188907mr24120425wrz.297.1652299596131; Wed, 11
+ May 2022 13:06:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20211207222901.988484-1-dmitry.baryshkov@linaro.org> <20211207222901.988484-2-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20211207222901.988484-2-dmitry.baryshkov@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 11 May 2022 13:06:17 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V7RyVJKis9e3aoouQyhUppyAhVs9oN9=miKeZcV0t6_g@mail.gmail.com>
-Message-ID: <CAD=FV=V7RyVJKis9e3aoouQyhUppyAhVs9oN9=miKeZcV0t6_g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] drm/msm/dsi: move DSI host powerup to modeset time
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
+References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
+ <20220510141329.54414-1-tomeu.vizoso@collabora.com> <CAPM=9tzLR-wsLhg2ikGjoK06s-ju5XWa1rtPPiUpN=pwD1vgtA@mail.gmail.com>
+ <CAHk-=wg8YgH1h3wrm9CtXff7rSewa+NE0Z5upb1GOE8XiTL9HA@mail.gmail.com>
+ <CAF6AEGusO9XAqHNatJLgV+wpVoyyLg1vHtUsnSkAxJeV7n3WNg@mail.gmail.com> <CAHk-=wjbE0f2AGroB1Hy=fx2fh7cRpS0wNdB46Ybk14Mb0b5Jw@mail.gmail.com>
+In-Reply-To: <CAHk-=wjbE0f2AGroB1Hy=fx2fh7cRpS0wNdB46Ybk14Mb0b5Jw@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 11 May 2022 13:06:23 -0700
+Message-ID: <CAF6AEGvNfC6=o63hH7eoSzT5JmF5C73sDyYXJj-hecS_cgRjHg@mail.gmail.com>
+Subject: Re: Adding CI results to the kernel tree was Re: [RFC v2] drm/msm:
+ Add initial ci/ subdirectory
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Dave Airlie <airlied@gmail.com>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
         Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Corbet <corbet@lwn.net>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
         dri-devel <dri-devel@lists.freedesktop.org>,
         freedreno <freedreno@lists.freedesktop.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,93 +82,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Tue, Dec 7, 2021 at 2:29 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+On Wed, May 11, 2022 at 12:08 PM Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
-> The DSI subsystem does not fully fall into the pre-enable/enable system
-> of callbacks, since typically DSI device bridge drivers expect to be
-> able to communicate with DSI devices at the pre-enable() callback. The
-> reason is that for some DSI hosts enabling the video stream would
-> prevent other drivers from sending DSI commands. For example see the
-> panel-bridge driver, which does drm_panel_prepare() from the
-> pre_enable() callback (which would be called before our pre_enable()
-> callback, resulting in panel preparation failures as the link is not yet
-> ready).
+> On Wed, May 11, 2022 at 11:40 AM Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > It is missing in this revision of the RFC, but the intention is to
+> > have the gitlab-ci.yml point to a specific commit SHA in the
+> > gfx-ci/drm-ci[1] tree, to solve the problem of keeping the results in
+> > sync with the expectations.  Ie. a kernel commit would control moving
+> > to a new version of i-g-t (and eventually deqp and/or piglit), and at
+> > the same time make any necessary updates in the expectations files.
 >
-> Therewere several attempts to solve this issue, but currently the best
-> approach is to power up the DSI link from the mode_set() callback,
-> allowing next bridge/panel to use DSI transfers in the pre_enable()
-> time. Follow this approach.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/msm/dsi/dsi_manager.c | 43 +++++++++++++++++++--------
->  1 file changed, 31 insertions(+), 12 deletions(-)
+> Wouldn't it then be better to just have the expectation files in the
+> ci tree too?
 
-I happened to be testing today on one of the sc7180-trogdor variants
-that has a parade-ps8640 bridge chip in it and ran into problems. A
-bisect pointed to this patch and, sure enough, reverting it fixes me
-again.
+The main reason is that we would frequently have situations where both
+-next and -fixes pointing at the same ci tree commit, but with
+differing expectations.  If we kept the expectations in the ci tree,
+we'd end up frequently updating the ci tree and then updating the
+kernel tree to point to the appropriate ci tree version.
 
-The Chromebook in question is able to power the screen on at bootup
-but things don't work so well in other cases. Specifically, if I leave
-the Chromebook idle then it will turn the screen off (but in this
-case, not enter S3). Hitting a key should wake the screen up, but it
-doesn't.
+Additionally, on the mesa side, it has been useful to squash the
+expectations update into the commit that fixed a bug or added a
+feature.  It provides a connection in git history between code and
+test results.
 
-None of the error prints in dsi_mgr_bridge_power_on() are hitting when
-it fails and I even added extra error prints. It's not hitting any of
-the early returns.
-
-I did a little bit more debugging and it appears that nothing funny is
-going on. It's just the ordering difference that matters. With the
-patch reverted, I see this and it all works:
-
-boot:
-[    9.653801] DOUG: dsi_mgr_bridge_mode_set
-[    9.658687] DOUG: ps8640_pre_enable
-[    9.664194] DOUG: dsi_mgr_bridge_pre_enable
-
-screen turns off:
-[   82.130038] DOUG: dsi_mgr_bridge_post_disable
-[   82.166817] DOUG: ps8640_post_disable
-
-screen turns on:
-[   92.611846] DOUG: dsi_mgr_bridge_mode_set
-[   92.617875] DOUG: ps8640_pre_enable
-[   92.920237] DOUG: dsi_mgr_bridge_pre_enable
-
-Without the patch reverted, I see this and it fails:
-
-boot:
-[   10.817810] DOUG: dsi_mgr_bridge_mode_set
-[   10.822128] DOUG: dsi_mgr_bridge_power_on
-[   10.852131] DOUG: ps8640_pre_enable
-[   10.857942] DOUG: dsi_mgr_bridge_pre_enable
-
-screen turns off:
-[   34.819953] DOUG: dsi_mgr_bridge_post_disable
-[   34.883777] DOUG: ps8640_post_disable
-
-screen should turn on, but doesn't:
-[   46.193589] DOUG: dsi_mgr_bridge_mode_set
-[   46.197951] DOUG: dsi_mgr_bridge_power_on
-[   46.248438] DOUG: ps8640_pre_enable
-[   46.541700] DOUG: dsi_mgr_bridge_pre_enable
-
-Unfortunately, ps8640 is a pretty big black box. The Linux kernel
-driver does almost nothing at all and the parade bridge chip has a
-bunch of magic firmware on it. Though I don't know for sure, I assume
-that this magic firmware simply can't handle the fact that the MIPI
-side is already setup / running when the bridge is powered on.
-
-Rather than this patch, maybe you can jump on Dave Stevenson's patch
-series [1] which I believe would solve this problem in a more dynamic
-way? Would you accept a revert of ${SUBJECT} patch to fix my problem?
-
-[1] https://lore.kernel.org/r/cover.1646406653.git.dave.stevenson@raspberrypi.com
-
-
--Doug
+BR,
+-R
