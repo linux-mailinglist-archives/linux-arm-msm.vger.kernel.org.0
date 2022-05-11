@@ -2,127 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E9CA522AF5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 06:25:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36632522B23
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 06:39:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230393AbiEKEZO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 00:25:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52004 "EHLO
+        id S238935AbiEKEj1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 00:39:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230139AbiEKEZN (ORCPT
+        with ESMTP id S235681AbiEKEjO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 00:25:13 -0400
-Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [46.235.227.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DE383CA44;
-        Tue, 10 May 2022 21:25:11 -0700 (PDT)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: tomeu)
-        with ESMTPSA id 814831F44A6E
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1652243109;
-        bh=k4CAo9Y95waZZqgDc5richqC5rLeJJTWfy44Q601/Q0=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=niWJrFanqGGREze6rfJDFHgENDAnnMzMPF1kW1PppuLMKTJrCqRH5Manut/a+mBZi
-         qfP5A2JO/4AMj55JBTKCwMaOOFmcM6hoWeaQkyAuWSnmN5h0BpzX/+4r3DlUGq0V8Y
-         LofZuROKTHNgs6pUHlJhdSIjqDzNtoy0ppPHE1sj7Roqwqw1AADwNS1IMfkPgMASJb
-         9tgcrydqEl4JdMpTAomltpPNZib56Y29L7FNr29pTB0iqZrqiVefgbYjbxEmWAsmwr
-         YsUxUW4/t1xacp3+wVJ2CBqyqw/XtAH+cUPfmfAYFOIrLXLHAj3CTroxJ7HX9R0mw8
-         FXYT9MeAeEEnA==
-Subject: Re: [Freedreno] [RFC v2] drm/msm: Add initial ci/ subdirectory
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
- <20220510141329.54414-1-tomeu.vizoso@collabora.com>
- <e4e03cd8-3ebc-e5e1-e7d0-6bdc038049b5@quicinc.com>
-From:   Tomeu Vizoso <tomeu.vizoso@collabora.com>
-Message-ID: <33ab308f-f0a1-b5b9-1bcb-b4387f5a4152@collabora.com>
-Date:   Wed, 11 May 2022 06:25:05 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Wed, 11 May 2022 00:39:14 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54E0B14B668
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 21:39:12 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id j10-20020a17090a94ca00b001dd2131159aso3853347pjw.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 21:39:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=s3Cdswvtyrq8qHVwuRB9YRoTAIoD9G/2//h6WeFZHzo=;
+        b=nrkBIDyCffFbQz5WNhQU88q5l+bx8m1CoLNL/nRcxBFZRgp3B2RwRJzpJi69hjmFPQ
+         Eotn36CVTQor8sTwq84btYhQQ+OsypTpYdHIfGkC/Ekjg8a9U0HkQq0T/gbcQg5/if4Y
+         i1yzcJYhTRMm8ny1NIiOYUNRazrfloxlCC/1XVxW2+TG0ItQpx2/G3cXjgMuOALgO1Rc
+         auxKHXwS3ghK6vFFIfR8essc70JXfRi2oIpi3YT/VLqISCMTaVWCOI/Xf0rWfpfTmlnw
+         XgqCFC8jOuHD5AjsEtox3h0b9tzcHlVM0fA1RrJyDFubK9aS707t1BYf/K43qSc4slo4
+         wrQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=s3Cdswvtyrq8qHVwuRB9YRoTAIoD9G/2//h6WeFZHzo=;
+        b=HBz0QDcxoVabphsNL2XffNspOHkg2rSubGYPOd2bggl0mtLWaRTF/Z5eZSyNM7Mk+z
+         13jO64ao8MFPK0hBQlrh85vI/cFm3OfWw45XOVKdmdiXB/nqOdDMCcGA1DL0uJvZfUxM
+         dEkFgDwPYpU7rqEIA+sA1tQfTMJISVMIph2heZgr/fNcYhcXx0+7NVjHCg0OeRgW2xfW
+         M5IBfx3mqUXWaLnyaoTzx5A9M7aPmEmsmZtKd6EI6QNuFuzMah54iERFl3RxFPEn2riW
+         H69mKS32PhtRVQ6p6hI77JRW0K+5Z5gsAehE8hSa3mANfpicQKTIfKLD5Flvk3dCAnTX
+         hk3g==
+X-Gm-Message-State: AOAM531d3HF7BYm8dRjvbZZwY63avCizk0fQX9Id478tcC2xg+BPCbcb
+        69+mXFUwj6QZZIrkutRMhwXGSwnCDDF/pOrbNWI=
+X-Google-Smtp-Source: ABdhPJwbKHmbnZDflMHBZCcp2YbZAAZvFdPcM4owWeuPIkoxodmwIZJ+Xpgi08ylB1RFXLrw63SQRxJzumbwJKMTxhs=
+X-Received: by 2002:a17:90b:1007:b0:1dc:9862:68af with SMTP id
+ gm7-20020a17090b100700b001dc986268afmr3261389pjb.205.1652243951499; Tue, 10
+ May 2022 21:39:11 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <e4e03cd8-3ebc-e5e1-e7d0-6bdc038049b5@quicinc.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:6a10:319:0:0:0:0 with HTTP; Tue, 10 May 2022 21:39:10
+ -0700 (PDT)
+From:   Private Mail <privatemail1961@gmail.com>
+Date:   Tue, 10 May 2022 21:39:10 -0700
+Message-ID: <CANjAOAiiVcSrSv31FjThCVmeppS54UVvGVj3SRSvMfxOB+T8DA@mail.gmail.com>
+Subject: Have you had this? It is for your Benefit
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=4.3 required=5.0 tests=ADVANCE_FEE_4_NEW_MONEY,
+        BAYES_50,DEAR_BENEFICIARY,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+        DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FREEMAIL_REPLY,
+        LOTS_OF_MONEY,MONEY_FRAUD_5,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,UNDISC_MONEY autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/10/22 9:39 PM, Jessica Zhang wrote:
-> 
-> 
-> On 5/10/2022 7:13 AM, Tomeu Vizoso wrote:
->> +igt@kms_atomic_interruptible@legacy-setmode@pipe-a-edp-1
->> +igt@kms_atomic_interruptible@atomic-setmode@pipe-a-edp-1
->> +igt@kms_atomic_interruptible@legacy-dpms@pipe-a-edp-1
->> +igt@kms_atomic_interruptible@legacy-pageflip@pipe-a-edp-1
->> +igt@kms_atomic_interruptible@legacy-cursor@pipe-a-edp-1
->> +igt@kms_atomic_interruptible@universal-setplane-primary@pipe-a-edp-1
->> +igt@kms_atomic_interruptible@universal-setplane-cursor@pipe-a-edp-1
-> 
-> I see that there are some KMS subtests/tests are missing such as 
-> kms_atomic_transition -- are they unstable across all boards?
-> 
->  From what I've seen, kms_atomic_transition is unstable only on Trogdor, 
-> but has stable results on other boards.
+Our Ref: BG/WA0151/2022
 
-I don't know of a good reason for not having the tests in this list. 
-Developers can follow the instructions at "How to expand coverage" to 
-add tests if the driver can consistently pass (or fail) them.
+Dear Beneficiary
 
-There is ongoing work to have a test runner that will better handle 
-flaky tests, which will make it possible to expand the list without 
-having to resort to per-soc test lists.
+Subject: An Estate of US$15.8 Million
 
->> +igt@kms_addfb_basic@size-max,pass
->> +igt@kms_addfb_basic@too-wide,pass
->> +igt@kms_addfb_basic@too-high,dmesg-warn
-> 
-> For test results on Trogdor, is is possible to have them be 
-> success/fail/skip only?
-> 
-> Results such as dmesg-warn/dmesg-fail are igt_runner specific and 
-> because there isn't support for igt_runner on ChromeOS, they will be 
-> difficult to replicate and debug.
+Blount and Griffin Genealogical Investigators specializes in probate
+research to locate missing heirs and beneficiaries to estates in the
+United Kingdom and Europe.
 
-As Rob said later, it's probably better to drop that distinction. Maybe 
-at some future point we will want to track expected kmsg output but I 
-think there are lots of work to do before that makes sense.
+We can also help you find wills, obtain copies of certificates, help
+you to administer an estate, as well as calculating how an estate,
+intestacy or trust should be distributed.
 
-Will do that in a v3.
+You may be entitled to a large pay out for an inheritance in Europe
+worth US$15.8 million. We have discovered an estate belonging to the
+late Depositor has remained unclaimed since he died in 2011 and we
+have strong reasons to believe you are the closest living relative to
+the deceased we can find.
 
->> +igt@kms_universal_plane@universal-plane-pipe-a-functional,skip
->> +igt@kms_universal_plane@disable-primary-vs-flip-pipe-a,pass
->> +igt@kms_universal_plane@disable-primary-vs-flip-pipe-b,fail
-> 
-> We could probably skip checking the results for kms_universal_plane on 
-> Trogdor for now, since this is a test affected by the hack regression. 
-> There is an IGT patch in the works for fixing the 
-> disable-primary-vs-flip-pipe-b failure, so it should be updated pretty 
-> soon too.
+You may unknowingly be the heir of this person who died without
+leaving a will (intestate). We will conduct a probate research to
+prove your entitlement, and can submit a claim on your behalf all at
+no risk to yourselves.
 
-So, how this should work is for the patch that fixes that bug to update 
-also the expectation files (see "How to update test expectations" in the 
-docs). In this case though, the fix is likely to land before this patch, 
-so I will just update the expectations once I rebase and the fix is 
-brought into my branch.
+Our service fee of 10% will be paid to us after you have received the estate.
 
-Thanks for the feedback!
+The estate transfer process should take just a matter of days as we
+have the mechanism and expertise to get this done very quickly. This
+message may come to you as a shock, however we hope to work with you
+to transfer the estate to you as quickly as possible.
 
-Tomeu
+Feel free to email our senior case worker Mr. Malcolm Casey on email:
+malcolmcasey68@yahoo.com for further discussions.
+
+With warm regards,
+
+Mr. Blount W. Gort, CEO.
+Blount and Griffin Associates Inc
