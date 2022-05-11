@@ -2,300 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC9D2523B3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 19:16:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E687C523B6B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 19:23:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235302AbiEKRQB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 13:16:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46136 "EHLO
+        id S1345045AbiEKRXi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 13:23:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345342AbiEKRP5 (ORCPT
+        with ESMTP id S1345444AbiEKRXh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 13:15:57 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9F68E63
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:15:49 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id t5so3302666edw.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:15:49 -0700 (PDT)
+        Wed, 11 May 2022 13:23:37 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A854521719C;
+        Wed, 11 May 2022 10:23:35 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id q23so3959808wra.1;
+        Wed, 11 May 2022 10:23:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:from:subject:to:cc
-         :references:content-language:in-reply-to:content-transfer-encoding;
-        bh=2+4MntLHEZNAXBomauNodAZbp3YguNyy5lnTjqXp3Ic=;
-        b=JcBroyxGn8h8fNlXpKBt42ipS1NOhTuZm1+WlKC1/4/wjOusrkG9fFG2b1NrKOGgjD
-         3+c/A1g4tKA44nu30jSUdKPQWqMsaEUq0QT4KIsAATdlOeRXYObF5/D9VZLKYuwC/8Qf
-         1G/sFBlZfzj5soGBelp8EO2Dc4RNtXrGpt4woU67C6HCbcHAhAkLFNrcMsUmx7rmlyGo
-         3RGY+0gx1+GiEb/1QzlKbmTDGqIPnT+DT0r3cLZX49gomPOT7StVdPLDBrnnX2cm9NhH
-         kLs5cBUY6LdZPsj79WXn4wQB4z8BXx+rS2MKNDBU5aRpKqzrgRy3qzoZHFnxlOGJv7KL
-         OQbQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=t+uExahuLFs0lwI65+li3ZxmFaNfaWHqSTSJZ2XjbAs=;
+        b=LEDNVSFLwfFJoutNu7Z+cuVLwScWtXpYqs/aKugxuTaEVH9u7G64kOa0gpyma9L+FL
+         ILmOzR6KK59WZT8muKWEDKti0z/Hd3nhlHbgCza9CGhdPnKnvC+mWOg07sgY4RyE/b/S
+         uFSvTeHSUMk3ov/GzmhAAOeiDs8k5APMzC8KqFhMNudS9Rdjc8I9m7cRjHZP02/6SfhF
+         b0h6RDaiZ373YcGDejut/NcvERdMDjI8tfv0NF0P0hosYAT9/1lew9OGWmtBCq4UyoaT
+         I7k1Y+hUtdJZvTGurSwdWOifp9+lFYkurtrzDU1ps7RjVcyXHMo7hErN4AHUZNVMnSjx
+         PCHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:from
-         :subject:to:cc:references:content-language:in-reply-to
-         :content-transfer-encoding;
-        bh=2+4MntLHEZNAXBomauNodAZbp3YguNyy5lnTjqXp3Ic=;
-        b=GftCaVCjNLNxzGwCXou6s9A3z9SJI3I4IZwZCOd5deNBkdfhNq+OfX17t5b53Sr2Yg
-         FdLAVpFwWNBnypjMQAeGZzzeorYlta1qflg4y6K5+vdob2BV7FKtKEheYn6GVyRBHYgr
-         mRsicToQa285pDtuGZ+yyjuLYNHBReH7neRIre6KvpdMsc58oRfURr6YrqV/kuCH7OlS
-         X7f9nUfC6aEvikC6/YDOVutTsAlEQRVu1ZDwnog9XV7AHPMgxynVZSCqd3THZvZIedDT
-         4pzLU6hS0CqVhzjcrGO6b3x3h6ArYmfLpRmn58R3psqN3WfztG5452vxb0k7u2GNgX08
-         elYA==
-X-Gm-Message-State: AOAM5311lCYEPdTw9fb4tdzPD8hoA2tsI0yiPt9b/MZjAyU4Zl/MWvmS
-        fapiJaT8fyHqMrr4owwHwlG4Dw==
-X-Google-Smtp-Source: ABdhPJy+l6Pw2ksp3ZDG3sf8ODxLy1zEongSmEXpjKq9Ts2M24KN/KaNbBfI/Scm7nQ4bUDirR4TPQ==
-X-Received: by 2002:a05:6402:190a:b0:427:efb7:bd81 with SMTP id e10-20020a056402190a00b00427efb7bd81mr30108532edz.63.1652289348324;
-        Wed, 11 May 2022 10:15:48 -0700 (PDT)
-Received: from [192.168.0.155] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id b5-20020a056402138500b0042a2d9af0f8sm311978edv.79.2022.05.11.10.15.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 May 2022 10:15:47 -0700 (PDT)
-Message-ID: <00234f36-9bae-31d5-5b83-ea238e7e3c11@linaro.org>
-Date:   Wed, 11 May 2022 19:15:46 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=t+uExahuLFs0lwI65+li3ZxmFaNfaWHqSTSJZ2XjbAs=;
+        b=nHb3ABa7NE1IOtb0uBwJCMi7y3DzzbSFe7DA2nP0S1F/W6Rqh/ZxpiI7h+khF/9hBX
+         xbbLFK/mYxOFT/k0hPSC84642cKXoIIXks390UfyktyAnQ/S6gNSCkmHVtWjWS7s84EJ
+         xfeR23aOvDq7QrozoNCTl7kAh3xxRzydrghqdaYtLJwvaohQqhqISctHhiWunCkdw3WJ
+         jRQCU842a23pT+y+rAfByZj+YHK/kYOwv/l1/TVkASiGrV7OE9WY7r6a2TTOLeBGMhsw
+         Cl5MYOVfdlG+wfSdhWqjaspOwCIv+oQYGm9rb53qfxJu7M7qXVGAFrbRFy2sRn2cWd5M
+         TF9g==
+X-Gm-Message-State: AOAM530x9mXay19iv4/3wO884rJ/gXkUtmKyqH/a2bLnr7CxoTohAHiM
+        D4Nea0/c42DXoV4gmtGBNrqbP8ZwzymyXfmtSPk=
+X-Google-Smtp-Source: ABdhPJyC6inV6eAWLK0ZXsHs0MrWHXEsfMAJsBP34QdhxVkct3PvJuiGu3x0A+V1OdjNNJe8DBpE4CuVih15n0h5kXc=
+X-Received: by 2002:a05:6000:156e:b0:20c:5218:8907 with SMTP id
+ 14-20020a056000156e00b0020c52188907mr23626979wrz.297.1652289814014; Wed, 11
+ May 2022 10:23:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 4/9] dt-bindings: remoteproc: qcom: wcnss: Convert to YAML
-To:     Sireesh Kodali <sireeshkodali1@gmail.com>,
-        linux-remoteproc@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-References: <20220511161602.117772-1-sireeshkodali1@gmail.com>
- <20220511161602.117772-5-sireeshkodali1@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20220511161602.117772-5-sireeshkodali1@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
+ <20220510141329.54414-1-tomeu.vizoso@collabora.com> <CAPM=9tzLR-wsLhg2ikGjoK06s-ju5XWa1rtPPiUpN=pwD1vgtA@mail.gmail.com>
+ <YntWQIXSqMCd6TYV@kroah.com> <1255a66a-121d-988a-19a7-316f703cb37d@mailbox.org>
+ <YnujG0nkF0U6d5kd@kroah.com> <CAF6AEGsmD-CNGj4bAE952JQpquaWA+Nxo5TGpFiHqaPK9doP-g@mail.gmail.com>
+ <CAKMK7uH8k6j5jE562yvbtBaE8EnM8JGF7zOXT4C62HdOgOs9SQ@mail.gmail.com>
+In-Reply-To: <CAKMK7uH8k6j5jE562yvbtBaE8EnM8JGF7zOXT4C62HdOgOs9SQ@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 11 May 2022 10:23:21 -0700
+Message-ID: <CAF6AEGvF9aaAiggAmdBq-OQ0BP5-+3YmdL+P2=Vm4LAEf0aqvg@mail.gmail.com>
+Subject: Re: [Freedreno] Adding CI results to the kernel tree was Re: [RFC v2]
+ drm/msm: Add initial ci/ subdirectory
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     Sean Paul <sean@poorly.run>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        =?UTF-8?Q?Michel_D=C3=A4nzer?= <michel.daenzer@mailbox.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/05/2022 18:15, Sireesh Kodali wrote:
-> Convert the dt-bindings from txt to YAML. This is in preparation for
-> including the relevant bindings for the MSM8953 platform's wcnss pil.
-> 
-> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+On Wed, May 11, 2022 at 9:43 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>
+> On Wed, 11 May 2022 at 15:33, Rob Clark <robdclark@gmail.com> wrote:
+> > On Wed, May 11, 2022 at 4:50 AM Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > On Wed, May 11, 2022 at 12:26:05PM +0200, Michel D=C3=A4nzer wrote:
+> > > > On 2022-05-11 08:22, Greg Kroah-Hartman wrote:
+> > > > > On Wed, May 11, 2022 at 03:06:47PM +1000, Dave Airlie wrote:
+> > > > >>> And use it to store expectations about what the drm/msm driver =
+is
+> > > > >>> supposed to pass in the IGT test suite.
+> > > > >>
+> > > > >> I wanted to loop in Linus/Greg to see if there are any issues ra=
+ised
+> > > > >> by adding CI results file to the tree in their minds, or if any =
+other
+> > > > >> subsystem has done this already, and it's all fine.
+> > > > >
+> > > > > Why does the results need to be added to the tree?  Shouldn't the=
+y be
+> > > > > either "all is good" or "constantly changing and a constant churn=
+"?
+> > > > >
+> > > > >> I think this is a good thing after our Mesa experience, but Mesa=
+ has a
+> > > > >> lot tighter integration here, so I want to get some more opinion=
+s
+> > > > >> outside the group.
+> > > > >
+> > > > > For systems that have "tight integration" this might make sense a=
+s proof
+> > > > > that all is working for a specific commit, but I can't see how th=
+is will
+> > > > > help the kernel out much.
+> > > > >
+> > > > > What are you going to do with these results being checked in all =
+the
+> > > > > time?
+> > > >
+> > > > Having the expected results in the tree keeps them consistent with =
+the driver code itself, and allows putting in place gating CI to prevent me=
+rging driver changes which make any of the tests deviate from the expected =
+result.
+> > >
+> > > Shouldn't "expected result" always be "pass"?
+> > >
+> > > If not, then the test should be changed to be "skipped" like we have
+> > > today in the kselftest tests.
+> >
+> > No, we want to run tests even if they are expected to fail.  This
+> > prevents the scenario of a test getting fixed without being noticed
+> > (for ex, developer was working on fixing test A and didn't notice that
+> > the fix also fixed test B).  If a fix goes unnoticed, a later
+> > regression would also go unnoticed ;-)
+> >
+> > I was skeptical about this approach at first with mesa CI, but having
+> > used mesa CI for a while, I am now a firm believer in the approach.
+> >
+> > And ofc we want the expectations to be in the kernel tree because
+> > there could be, for example, differences between -fixes and -next
+> > branches.  (Or even stable kernel branches if/when we get to the point
+> > of running CI on those.)
+>
+> Yeah result files in tree is kinda needed, even more so for the
+> kernel. A lot of the linux-next integration testing is only done after
+> patches have landed, and sometimes such breakage makes it to upstream
+> and then into the subsystem/driver tree. Annotating in the backmerge
+> what exactly broke and why helps a lot with tracking issues.
+>
+> And expecting every subsystem to run every other subsystem's tests,
+> especially tests that run on hw, is just not going to scale. So there
+> will be all kinds of difference in test results.
+>
+> > > And how about tieing this into the kselftest process as well, why wou=
+ld
+> > > this be somehow separate from the rest of the kernel tests?
+> > >
+> > > > Keeping them separate inevitably results in divergence between the =
+driver code and the expected test results, which would result in spurious f=
+ailures of such CI.
+> > >
+> > > Again, "pass" should be the expected results :)
+> > >
+> > > > I expect the main complication for the kernel will be due to driver=
+ changes merged via different trees, e.g. for cross-subsystem reworks. Sinc=
+e those will not go through the same CI, they may accidentally introduce in=
+consistencies. The ideal solution for this IMO would be centralizing CI suc=
+h that the same gating tests have to pass regardless of how the code is mer=
+ged. But there's likely quite a long way to go until we get there. :)
+> > >
+> > > We have in-kernel tests for the rest of the kernel, why can't you put
+> > > your testing stuff into there as well?
+> >
+> > We could ofc put a lot more of the gitlab yml and scripts into the
+> > kernel tree.  Probably all of i-g-t is a bit much to put in the kernel
+> > tree.  Not to mention I'd like to see this expand to also run some
+> > deqp and/or piglit tests, which is definitely too much to vendor into
+> > the kernel tree.
+> >
+> > The approach of this RFC was to put only what was absolutely required
+> > in the kernel tree (such as expectations), and then link out to an
+> > external drm-ci tree[1] which has all the necessary scripts and yml
+> > for building and running tests, to avoid having to put a whole lot
+> > more in the kernel tree. (We should be specifying exact commit-sha for
+> > that tree, IMO, as it controls the version of i-g-t which gets used,
+> > and we need to be able to update expectations in sync with an i-g-t
+> > uprev, for example when new tests are added or if a test fix caused a
+> > fail->pass transition.)
+>
+> Yeah I think longer-term we should carry a lot more in upstream, at
+> least anything that's shared across drivers wrt the ci integration (or
+> build testing and running tests which are hw agnostic). Maybe even
+> igt, not sure (otoh xfs-tests isn't moving into the kernel either, and
+> there's lots more like that).
 
-Thank you for your patch. There is something to discuss/improve.
+A lot of the drm-ci tree is the scripts/etc for things like power
+control, booting, etc.. and a lot of that is identical to what we have
+in the mesa tree (since the on-hw tests run on the same CI farms as
+mesa-ci)
 
-Please use existing bindings or example-schema as a starting point. Half
-of my review could be skipped if you just followed what we already have
-in the tree.
+But ofc it can be re-used by other drivers via one line in toplevel
+$driver/ci/gitlab-ci.yml, ie:
 
-Some of these qcom specific properties already exist but you decided to
-write them differently... please don't, rather reuse the code.
+  DRM_CI_PROJECT_PATH: &drm-ci-project-path gfx-ci/drm-ci
 
-(...)
+BR,
+-R
 
-> +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description:
-> +  This document defines the binding for a component that loads and boots
-> +  firmware on the Qualcomm WCNSS core.
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - items:
-> +          - enum:
-> +              - qcom,pronto-v2-pil
-> +          - enum:
-> +              - qcom,pronto
-
-This does not look correct. The fallback compatible should not change.
-What is more, it was not documented in original binding, so this should
-be done in separate patch.
-
-> +      - items:
-
-No need for items, it's just one item.
-
-> +          - enum:
-> +              - qcom,riva-pil
-> +              - qcom,pronto-v1-pil
-> +              - qcom,pronto-v2-pil
-> +
-> +  reg:
-> +    description: must specify the base address and size of the CCU, DXE and PMU
-> +      register blocks
-
-New line after "decription:", drop "must specify" and start with capital
-letter.
-
-You need maxItems: 3
-
-
-> +
-> +  reg-names:
-> +    items:
-> +      - const: ccu
-> +      - const: dxe
-> +      - const: pmu
-> +
-> +  interrupts-extended:
-> +    description:
-> +      Interrupt lines
-
-Skip description, it's obvious.
-
-It should be only "interrupts", not extended.
-
-> +    minItems: 2
-> +    maxItems: 5
-> +
-> +  interrupt-names:
-> +    minItems: 2
-> +    maxItems: 5
-
-Names should be clearly defined. They were BTW defined in original
-bindings, so you should not remove them. This makes me wonder what else
-did you remove from original bindings...
-
-Please document all deviations from pure conversion in the commit msg.
-It's a second "hidden" difference.
-
-> +
-> +  firmware-name:
-> +    $ref: /schemas/types.yaml#/definitions/string
-> +    description: Relative firmware image path for the WCNSS core. Defaults to
-> +      "wcnss.mdt".
-
-
-Blank line after "description:". This applies to other places as well.
-
-Remove "Defailts to ..." and just add "default" schema.
-
-> +
-> +  vddpx-supply:
-> +    description: Reference to the PX regulator to be held on behalf of the
-> +      booting of the WCNSS core
-> +
-> +  vddmx-supply:
-> +    description: Reference to the MX regulator to be held on behalf of the
-> +      booting of the WCNSS core.
-> +
-> +  vddcx-supply:
-> +    description: Reference to the CX regulator to be held on behalf of the
-> +      booting of the WCNSS core.
-
-s/Reference to the//
-
-> +
-> +  power-domains:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    description: References to the power domains that need to be held on
-> +      behalf of the booting WCNSS core
-
-1. Ditto.
-2. No need for ref
-3. maxItems
-
-> +
-> +  power-domain-names:
-> +    $ref: /schemas/types.yaml#/definitions/string-array
-
-No need for ref, skip description.
-
-> +    description: Names of the power domains
-> +    items:
-> +      - const: cx
-> +      - const: mx
-> +
-> +  qcom,smem-states:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    description: States used by the AP to signal the WCNSS core that it should
-> +      shutdown
-> +    items:
-> +      - description: Stop the modem
-> +
-> +  qcom,smem-state-names:
-> +    $ref: /schemas/types.yaml#/definitions/string-array
-
-No need for ref. Really, it does not appear in any of existing bindings
-for smem-state-names, so how did you get it?
-
-> +    description: The names of the state bits used for SMP2P output
-> +    items:
-> +      - const: stop
-> +
-> +  memory-region:
-> +    maxItems: 1
-> +    description: Reference to the reserved-memory for the WCNSS core
-> +
-> +  smd-edge:
-> +    type: object
-> +    description:
-> +      Qualcomm Shared Memory subnode which represents communication edge,
-> +      channels and devices related to the ADSP.
-
-You should reference /schemas/soc/qcom/qcom,smd.yaml
-
-> +
-> +  iris:
-
-Generic node name... what is "iris"?
-
-> +    type: object
-> +    description:
-> +      The iris subnode of the WCNSS PIL is used to describe the attached rf module
-
-s/rf/RF/
-
-> +      and its resource dependencies.
-> +
-> +    properties:
-> +      compatible:
-> +        enum:
-> +          - qcom,wcn3620
-> +          - qcom,wcn3660
-> +          - qcom,wcn3660b
-> +          - qcom,wcn3680
-> +
-> +      clocks:
-> +        description: XO clock
-> +
-> +      clock-names:
-> +        items:
-> +          - const: xo
-> +
-> +    required:
-> +      - compatible
-
-clocks and clock-names were required.
-Missing supplies, which were btw as well required.
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - interrupts-extended
-> +  - interrupt-names
-> +  - vddpx-supply
-> +  - memory-region
-> +  - smd-edge
-> +  - iris
-> +
-> +additionalProperties: false
-> +
-> +if:
-
-Within allOf, please.
-
-
-
-Best regards,
-Krzysztof
+> Personally I think long-term the only thing outside should be other
+> repos with tests or stuff you need to run them, and not really the
+> glue to make it all work in ci. But that's maybe a bit too much
+> wishful thinking if CI systems stay largely subsystem specific (which
+> they currently are in many ways, with some overlap).
+>
+> But maybe there is enough random pieces to share here for a lot more
+> in-tree to make sense, and imo the fewer extra steps and indirection
+> CI testing and test updating has, the better.
+>
+> But like Rob says, eventually there's a limit and when you put the
+> entire GL/vulkan stack + it's conformance testsuite (which is
+> maintained by khronos somewhere completely different than both
+> kernel.org and freedesktop.org) then it's definitely too much and wont
+> work. And eventually we do want to run these things too (e.g.
+> intel-gfx-ci does run mesa + piglit on every run).
+> -Daniel
+> --
+> Daniel Vetter
+> Software Engineer, Intel Corporation
+> http://blog.ffwll.ch
