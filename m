@@ -2,107 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2B1B5230BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 12:36:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E2FD523133
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 13:13:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236201AbiEKKgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 06:36:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55794 "EHLO
+        id S234259AbiEKLNP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 07:13:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236068AbiEKKgR (ORCPT
+        with ESMTP id S229534AbiEKLNO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 06:36:17 -0400
-X-Greylist: delayed 603 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 11 May 2022 03:36:16 PDT
-Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 622662E9F2;
-        Wed, 11 May 2022 03:36:16 -0700 (PDT)
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4KyrfS4WZhz9spJ;
-        Wed, 11 May 2022 12:26:08 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-        t=1652264768;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=y/E1vKB93vrG/DjRCzLKzwqBALm4NpArvjus/ourHbI=;
-        b=k8G6LO/DA2hkLYEA4a/jti/zyEqH+lLwPnhhAIg00NLSzA8dFGBzwZhjEyddtDJLG3Vqtx
-        3Hfgh/KESeU2q0Gw3XmFYEv5SohRvJ9OmQ0KtNd+AsM/0RZ4CtNKQKLVz3qvG7MNiLRA/8
-        hV5lPw77oNCmAbG/y34GKc2R3BkkcJkYNWyp7x4MuZlJmMDy7hV6XZvhZ48GrkYg/y6kP/
-        Pe25JiyS+7TgQAiMk6Nv3aOyN9XhrIOaN1xn89Fs+TB070DOxvp+q8L1+fIyUGWK67T+KX
-        bnk1uVDGBkRI0+yZao76NBnnBcpEyLkexJXAszQCzAVpSOj9nfjih2CEcl0QKA==
-Message-ID: <1255a66a-121d-988a-19a7-316f703cb37d@mailbox.org>
-Date:   Wed, 11 May 2022 12:26:05 +0200
+        Wed, 11 May 2022 07:13:14 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1B6D1ED284;
+        Wed, 11 May 2022 04:13:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652267594; x=1683803594;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=VE7K9gMh3/DHq2/WOHPkc6irQyhIwSWoqYEC5egAEPc=;
+  b=jX6x9KVBqYU9jTB35LbtOfvPORxVgxdhuSc3iTDXNTEGPbRe+SaO39Oq
+   QarwULEpXjjbVr8MUIpZPst0dQKMrGTxkH02LjCE7Px/NEGc/35ZVJTcI
+   tcCoty3WkZvz4lICxjlzKFNFSY4UEhoTTpI/iErpiOaqIWyaKY/L5s3vQ
+   c=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 11 May 2022 04:13:13 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2022 04:13:13 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 11 May 2022 04:13:12 -0700
+Received: from [10.50.27.146] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 11 May
+ 2022 04:13:07 -0700
+Message-ID: <7a7b4657-ec75-7984-1a6e-50ff928ab09c@quicinc.com>
+Date:   Wed, 11 May 2022 16:43:03 +0530
 MIME-Version: 1.0
-Subject: Re: Adding CI results to the kernel tree was Re: [RFC v2] drm/msm:
- Add initial ci/ subdirectory
-Content-Language: en-CA
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Dave Airlie <airlied@gmail.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Jonathan Corbet <corbet@lwn.net>, Sean Paul <sean@poorly.run>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
- <20220510141329.54414-1-tomeu.vizoso@collabora.com>
- <CAPM=9tzLR-wsLhg2ikGjoK06s-ju5XWa1rtPPiUpN=pwD1vgtA@mail.gmail.com>
- <YntWQIXSqMCd6TYV@kroah.com>
-From:   =?UTF-8?Q?Michel_D=c3=a4nzer?= <michel.daenzer@mailbox.org>
-In-Reply-To: <YntWQIXSqMCd6TYV@kroah.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-MBO-RS-META: f1u1x9t1eq9gx7t66636ikwanw7e56pm
-X-MBO-RS-ID: 8072a6e3cb6bccf98f1
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH] arm64: Enable repeat tlbi workaround on KRYO4XX gold CPUs
+Content-Language: en-US
+To:     Shreyas K K <quic_shrekk@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>
+CC:     Andre Przywara <andre.przywara@arm.com>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Prasanna Kumar <quic_kprasan@quicinc.com>
+References: <20220511080247.1530-1-quic_shrekk@quicinc.com>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <20220511080247.1530-1-quic_shrekk@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-05-11 08:22, Greg Kroah-Hartman wrote:
-> On Wed, May 11, 2022 at 03:06:47PM +1000, Dave Airlie wrote:
->>> And use it to store expectations about what the drm/msm driver is
->>> supposed to pass in the IGT test suite.
->>
->> I wanted to loop in Linus/Greg to see if there are any issues raised
->> by adding CI results file to the tree in their minds, or if any other
->> subsystem has done this already, and it's all fine.
-> 
-> Why does the results need to be added to the tree?  Shouldn't they be
-> either "all is good" or "constantly changing and a constant churn"?
-> 
->> I think this is a good thing after our Mesa experience, but Mesa has a
->> lot tighter integration here, so I want to get some more opinions
->> outside the group.
-> 
-> For systems that have "tight integration" this might make sense as proof
-> that all is working for a specific commit, but I can't see how this will
-> help the kernel out much.
-> 
-> What are you going to do with these results being checked in all the
-> time?
+Hi Shreyas,
 
-Having the expected results in the tree keeps them consistent with the driver code itself, and allows putting in place gating CI to prevent merging driver changes which make any of the tests deviate from the expected result.
+On 5/11/2022 1:32 PM, Shreyas K K wrote:
+> Add KRYO4XX gold/big cores to the list of CPUs that need the
+> repeat TLBI workaround. Apply this to the affected
+> KRYO4XX cores (rcpe to rdpe).
+>
+> The variant and revision bits are implementation defined and are
+> different from the their Cortex CPU counterparts on which they are
+> based on, i.e., (r0p0 to r1p0) is equivalent to (rcpe to rdpe).
+>
+> Signed-off-by: Shreyas K K <quic_shrekk@quicinc.com>
+> ---
+>   Documentation/arm64/silicon-errata.rst | 3 +++
+>   arch/arm64/kernel/cpu_errata.c         | 2 ++
+>   2 files changed, 5 insertions(+)
+>
+> diff --git a/Documentation/arm64/silicon-errata.rst b/Documentation/arm64/silicon-errata.rst
+> index 466cb9e89047..d27db84d585e 100644
+> --- a/Documentation/arm64/silicon-errata.rst
+> +++ b/Documentation/arm64/silicon-errata.rst
+> @@ -189,6 +189,9 @@ stable kernels.
+>   +----------------+-----------------+-----------------+-----------------------------+
+>   | Qualcomm Tech. | Kryo4xx Silver  | N/A             | ARM64_ERRATUM_1024718       |
+>   +----------------+-----------------+-----------------+-----------------------------+
+> +| Qualcomm Tech. | Kryo4xx Gold    | N/A             | ARM64_ERRATUM_1286807       |
+> ++----------------+-----------------+-----------------+-----------------------------+
+> +
+>   +----------------+-----------------+-----------------+-----------------------------+
+>   | Fujitsu        | A64FX           | E#010001        | FUJITSU_ERRATUM_010001      |
+>   +----------------+-----------------+-----------------+-----------------------------+
+> diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
+> index 4c9b5b4b7a0b..2518657e6de1 100644
+> --- a/arch/arm64/kernel/cpu_errata.c
+> +++ b/arch/arm64/kernel/cpu_errata.c
+> @@ -208,6 +208,8 @@ static const struct arm64_cpu_capabilities arm64_repeat_tlbi_list[] = {
+>   #ifdef CONFIG_ARM64_ERRATUM_1286807
+>   	{
+>   		ERRATA_MIDR_RANGE(MIDR_CORTEX_A76, 0, 0, 3, 0),
+> +		/* Kryo4xx Gold (rcpe to rdpe) => (r0p0 to r1p0) */
+> +		ERRATA_MIDR_RANGE(QCOM_CPU_PART_KRYO_4XX_GOLD, 0xc, 0xe, 0xd, 0xe),
+>   	},
+>   #endif
+>   	{},
 
-Keeping them separate inevitably results in divergence between the driver code and the expected test results, which would result in spurious failures of such CI.
+Why not include r2p0 and r3p0 which are affected by this erratum? I see these revisions are present
+in our SoCs as per the document.
 
-
-I expect the main complication for the kernel will be due to driver changes merged via different trees, e.g. for cross-subsystem reworks. Since those will not go through the same CI, they may accidentally introduce inconsistencies. The ideal solution for this IMO would be centralizing CI such that the same gating tests have to pass regardless of how the code is merged. But there's likely quite a long way to go until we get there. :)
-
-
--- 
-Earthling Michel Dänzer            |                  https://redhat.com
-Libre software enthusiast          |         Mesa and Xwayland developer
+Thanks,
+Sai
