@@ -2,135 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6E36523627
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 16:50:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34C92523683
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 17:01:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245085AbiEKOuh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 10:50:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36542 "EHLO
+        id S234001AbiEKPBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 11:01:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245095AbiEKOue (ORCPT
+        with ESMTP id S245305AbiEKPA7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 10:50:34 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 999421B091C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 07:50:26 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 4so2904300ljw.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 07:50:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ElWpfj0wGJL50TvRphg5kRjDcZaYvuq2GbVsqJVFYCc=;
-        b=D89wtlNLbOs5yE8adcQ/A2ga2mHXKALISGT/gYSnpbat0i4NuirW4ZCbyUo2MTqHIM
-         DybTUguFzP50B+QC5CPz2TzKjbooVf6vopYcNNMl7ZUovlVPA0oH8Br/q9KFIEAmXniz
-         F0j2NDH2h9QX+6DPv05OnLKU/lCRS2VNa6DQznqwmQB3VBxMPm5cCJbbSmyddqzOtzgw
-         MErApNu6AJbzoTmjvacV0Cjlufn2JPHd7IFrZPxtZuKzx5w77hCDKAFQUpVM50td0iZT
-         WgQtdLpvHIwe6pWOO3tlZhkYS3rM9lzdvgLUrwrDhiGGSwVnAz5iQAYClQs/zR9hV3u3
-         p17Q==
+        Wed, 11 May 2022 11:00:59 -0400
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98DB25F83;
+        Wed, 11 May 2022 08:00:57 -0700 (PDT)
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-ed9a75c453so3088574fac.11;
+        Wed, 11 May 2022 08:00:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=ElWpfj0wGJL50TvRphg5kRjDcZaYvuq2GbVsqJVFYCc=;
-        b=Tchp1tvs02hYoepzrdp+UUFouw3DXjkdxMavQG+tLz1OVcxzpMvUbJ+rhhXdq8u/k1
-         H/Khjlj9PgH/DfvXGZF7d35FJsHyh9VguWiGdDFT2U/jWB09r50tNRojSCzRL25J3mNX
-         xwv/CmY1HmppmD+HqHxGEnb7A/+KpKHwAScRVD8Er88IWhzLxjyxDXSCzOYtDN4AXNfn
-         DjGtcME+De8zgquuDWbZ6wFZA2mInysaxNU9MsZrZWiaszgjGo2bYpN3sh1MddgyCQGb
-         oevwtdaXGI8nq2fgXxEan41RitdrA3azxk/SSHnTIF03Q9rGQAahOSxf3iHWU5EUYAky
-         GHog==
-X-Gm-Message-State: AOAM530Ude36pqMby0Ch4u8fO9gGKOTJxMPJLYUNHpQojGI/qV/rG/Ug
-        Cf4G3nF80Y9OsqE9NFx+NwlDnQ==
-X-Google-Smtp-Source: ABdhPJywfHPoACVHlBO9DahbBv/k/o1jSWDDDk9EmMhQ1LcoWNLUQAhoA0UwVt6duF/93+DZe8i4Pw==
-X-Received: by 2002:a2e:9e02:0:b0:249:7d50:bd8c with SMTP id e2-20020a2e9e02000000b002497d50bd8cmr17118916ljk.327.1652280624969;
-        Wed, 11 May 2022 07:50:24 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id d17-20020ac25ed1000000b0047255d2116bsm315476lfq.154.2022.05.11.07.50.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 May 2022 07:50:24 -0700 (PDT)
-Message-ID: <3c126a06-f8fb-bc7a-860b-d4b1f2ef0133@linaro.org>
-Date:   Wed, 11 May 2022 17:50:23 +0300
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=vBTrUV1JVs542plxfiXyvT5BXPWLoJzHzGRMGx1WPJY=;
+        b=6JYTgOIP0hsnrI8FXQYty/BhzJtk9S5uKu5zWs30TCZ9bt3OGZrkTYSy1K7NQAPND+
+         6ze1KOz+SXTC/sA8J59AO/dd3PVBSVnXc4gVeDxgn4t3uBsNc9Zamq+ERYnYinAHH42h
+         Z9SWCTAmFuzi8mwjN/gfZ43kLi3KNsRwr29AKzomZQ1bGJM2Z56vBwKol8d+3CQcRx2K
+         eFjYjheCD5/Ep1x/RD5jX0Cvw2UJqQiYyOa0Y9w9tqEGO4w4DhyzfBVD3BcLHbg7gOST
+         Sgsr4SLaL3Ia9f9AmL/0fRPYTang4PxNMug6CZixBcl7Qgsy1Pzy+Qj5VzuekfV5g/NK
+         wOWA==
+X-Gm-Message-State: AOAM532qpz1J0gQYxaxe08pLa8badXseNbQIfWPGiWZfhCRJQ657pi0u
+        CiT8RPX3Ig+InLsYUdLo6Q==
+X-Google-Smtp-Source: ABdhPJxUMkdBpn8c5m5HjGueLUxw+LXyBeQTusye1isd9tLanUxiMmZsorwNzC3AQJcEgc6ftiQEhA==
+X-Received: by 2002:a05:6870:4284:b0:e6:26d2:9fdf with SMTP id y4-20020a056870428400b000e626d29fdfmr2864914oah.107.1652281256708;
+        Wed, 11 May 2022 08:00:56 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id n84-20020acaef57000000b00326a7d33635sm812208oih.27.2022.05.11.08.00.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 May 2022 08:00:56 -0700 (PDT)
+Received: (nullmailer pid 305854 invoked by uid 1000);
+        Wed, 11 May 2022 15:00:55 -0000
+Date:   Wed, 11 May 2022 10:00:55 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        linux-clk@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v5 1/7] dt-bindings: clock: add QCOM SM8450 camera clock
+ bindings
+Message-ID: <20220511150055.GA305799-robh@kernel.org>
+References: <20220509090059.4140941-1-vladimir.zapolskiy@linaro.org>
+ <20220509090059.4140941-2-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v7 6/7] dt-bindings: PCI: qcom: Support additional MSI
- interrupts
-Content-Language: en-GB
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20220505135407.1352382-1-dmitry.baryshkov@linaro.org>
- <20220505135407.1352382-7-dmitry.baryshkov@linaro.org>
- <YnRB4UxBzFDmsls7@robh.at.kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YnRB4UxBzFDmsls7@robh.at.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220509090059.4140941-2-vladimir.zapolskiy@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/05/2022 00:30, Rob Herring wrote:
-> On Thu, May 05, 2022 at 04:54:06PM +0300, Dmitry Baryshkov wrote:
->> On Qualcomm platforms each group of 32 MSI vectors is routed to the
->> separate GIC interrupt. Document mapping of additional interrupts.
->>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../devicetree/bindings/pci/qcom,pcie.yaml    | 45 ++++++++++++++++++-
->>   1 file changed, 44 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> index 0b69b12b849e..fd3290e0e220 100644
->> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> @@ -43,11 +43,20 @@ properties:
->>       maxItems: 5
->>   
->>     interrupts:
->> -    maxItems: 1
->> +    minItems: 1
->> +    maxItems: 8
->>   
->>     interrupt-names:
->> +    minItems: 1
->>       items:
->>         - const: msi
->> +      - const: msi2
+On Mon, 09 May 2022 12:00:58 +0300, Vladimir Zapolskiy wrote:
+> The change adds device tree bindings for camera clock controller
+> found on SM8450 SoC.
 > 
-> Is 2 from some documentation or you made up. If the latter, software
-> folks start numbering at 0, not 1. :) I wouldn't care, but I think this
-> may become common.
-
-It has been made up, so I will update this.
-
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+> Changes from v4 to v5:
+> * fixed a typo in a usage example found in the yaml file.
 > 
->> +      - const: msi3
->> +      - const: msi4
->> +      - const: msi5
->> +      - const: msi6
->> +      - const: msi7
->> +      - const: msi8
+> Changes from v3 to v4:
+> * renamed a filename in $id value after the rename of the file itself.
+> 
+> Changes from v2 to v3:
+> * renamed files to match the compatible value "qcom,sm8450-camcc",
+> * fixed a typo in a usage example found in the yaml file.
+> 
+> Changes from v1 to v2:
+> * updated qcom,camcc-sm8450.yaml according to review comments from Rob,
+> * changed qcom,camcc-sm8450.h license to dual one.
+> 
+>  .../bindings/clock/qcom,sm8450-camcc.yaml     |  89 ++++++++++
+>  include/dt-bindings/clock/qcom,sm8450-camcc.h | 159 ++++++++++++++++++
+>  2 files changed, 248 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,sm8450-camcc.h
+> 
 
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: Rob Herring <robh@kernel.org>
