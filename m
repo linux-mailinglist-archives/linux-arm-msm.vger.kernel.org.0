@@ -2,230 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A7DD523BD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 19:46:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE6AA523BDB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 19:49:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345770AbiEKRqk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 13:46:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43406 "EHLO
+        id S1345806AbiEKRtj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 13:49:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345040AbiEKRqj (ORCPT
+        with ESMTP id S1345801AbiEKRti (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 13:46:39 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8120F5DA1A;
-        Wed, 11 May 2022 10:46:38 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id bg25so1649391wmb.4;
-        Wed, 11 May 2022 10:46:38 -0700 (PDT)
+        Wed, 11 May 2022 13:49:38 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 148E8BA98F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:49:37 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id g6so5607703ejw.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:49:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=hZIhjLMbOoF976Pa2gp/bTHKHDJhsmozC2Xdhlo7Go4=;
-        b=WbaD35REy4RkuI+0jS9Yz9GZbFYslRKSN3kwXxem7hTMwcXCJRi/7mSeJB4RNe+KUJ
-         M7ikAVkz3pLJ/+A/Zd7OZof/hD0WjT2CoD6kwoRDnXii4/UIoRq//XkQr7rsw3AciJXV
-         eW/JXs0byA6F9CltG3XlyUnpqrGxdk+vGhJD7UTD7aAaxjJrgivbmyq8JVh5cWGoAeoP
-         GGy1NuKChyOz9ZnWmc4SmcP9lCn6EWUIuW4vdFKC2zBoerfScGv0yoBZZoBWfmS8DvH8
-         XpH1Vpu3fYyUfcUOC8sDv7lL97hTjYYhp/GdsFmzd41J/zvu+1oLbdC2iQhYcfKukri6
-         MdXQ==
+        bh=tQuubGtd0mpwX+LKmxSAA3U7GpvwZ1mzYyhs1YQaY+k=;
+        b=OJiCbw7IG/ulyvP3DKIxIckp8YkedTNelTyv73ImcVlXH3o1WDCtU6WUPBfUnB04oc
+         o6Rh5fEGdkI0pj1ypnFHm7dDZaVYR5GrS11x0bZ08EMb6TE5lzGBQ1+zTcLDG8jbLnOF
+         j0FlqePjxKypeItKizgIs/aZ1MADcYSNuSzsU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=hZIhjLMbOoF976Pa2gp/bTHKHDJhsmozC2Xdhlo7Go4=;
-        b=lxmYTeV6IZ0WxhJy7tIYe7JR3bvypDoz/8rBC/8PYmjurIyxFXujrT1uJGN5fcgZEd
-         o9vA/+501rDhrFaM6WaY/rNvU9Gb9uz528h3XMMBMrMxhV1A4PNnavcBiKKzLtFmjD5m
-         ujtlhWlMOxox9Fif+Bw+1ojGbTaBtXToeozlpeFA0yLXXLgxkapdVMfo/DoXLpAF1P4f
-         xm1gt7F+bMclVMs/CLkVZN/EB5Odf/meGQxLGHfwBrQOZYdn97blK8wYZi4rAxiYUZw7
-         wUYBSDJ8uYBsd0wVhMNbKVdRhbhk/rmAhaZLnTWbUM8/tnwzi1nOvPHEdo+UPEjmoHEO
-         toSw==
-X-Gm-Message-State: AOAM532xo3aVIDObhkg+t+D+3J+KnhPgKBKzg/2zgTh1pfylOuaiPC4h
-        qDRBGtq3X29z+NCCwGWY2+/dDcJX98p4OZhxafi9RFkH
-X-Google-Smtp-Source: ABdhPJyyI6ZQQ21PBHHrfOwIDXju3dqvOzK7tmSkFW7qgZPpqEGyfOOYbWN1XYAiCyzaICg8/Egs+zHO23GPOYNfFPc=
-X-Received: by 2002:a05:600c:a53:b0:394:7a51:cb71 with SMTP id
- c19-20020a05600c0a5300b003947a51cb71mr6322859wmq.148.1652291196975; Wed, 11
- May 2022 10:46:36 -0700 (PDT)
+        bh=tQuubGtd0mpwX+LKmxSAA3U7GpvwZ1mzYyhs1YQaY+k=;
+        b=S5mUtHG6Lyv8GXpyyVn1xvemAJBDL04rt8n/9CIXybc86uV+CrVYB9MY6jX96ihVGV
+         xZ59wKN27RXFxePW+LBq3zcXRtA6rvn9pSDkUlNBd/JD1xrKzsXRvOf93xJiMmGU/7El
+         NzYHajnjKsxGYT+gorokRzCmB7USyWM+HBF1f7yKtmu63UVlNeynxfTwQgt69zP1a37r
+         5a7R35W5/3BPIIlrkPFqXaf0hj4WhJ4s3hRm3+vFdgB7BIo0pgUQ5BzXtd/43PoqEVQE
+         /RoekLKTQDiKHHjBxZOWaXHgsIwpGaO+X96G/zg9D5dLTJ75wfSY0JGRccF/zltoouMY
+         qYEQ==
+X-Gm-Message-State: AOAM533LO/amhgG/yzk/s2ZxRFCfeFzku2jOJly4iPGobw2uoW8rdmN0
+        jZl1e+r1t/qV7pjPARZDFg6OTvUzn1tdmdPvlzU=
+X-Google-Smtp-Source: ABdhPJyFEofe9ebaS48mESsxlO8lETwfWAEo3YMZCOjKcDUULZHG8NBQSq9I4sO66AOwx9Y4xPEycA==
+X-Received: by 2002:a17:907:6d17:b0:6f4:6b6e:32da with SMTP id sa23-20020a1709076d1700b006f46b6e32damr27482386ejc.301.1652291375205;
+        Wed, 11 May 2022 10:49:35 -0700 (PDT)
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com. [209.85.128.45])
+        by smtp.gmail.com with ESMTPSA id h18-20020a1709067cd200b006f3ef214df5sm1259769ejp.91.2022.05.11.10.49.33
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 May 2022 10:49:34 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id m2-20020a1ca302000000b003943bc63f98so1653292wme.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:49:33 -0700 (PDT)
+X-Received: by 2002:a7b:c4c8:0:b0:394:26c5:b79e with SMTP id
+ g8-20020a7bc4c8000000b0039426c5b79emr6094352wmk.15.1652291373235; Wed, 11 May
+ 2022 10:49:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
- <20220510141329.54414-1-tomeu.vizoso@collabora.com> <e4e03cd8-3ebc-e5e1-e7d0-6bdc038049b5@quicinc.com>
- <CAF6AEGueadnRMiatO3MoHS+NTQ1o1sgcV0cVjJM3iu-6JUNmNw@mail.gmail.com> <CAKMK7uGRuCZwF6m02tcxxrgQGaijsYaNkowjxR+cw0JM3UpDkQ@mail.gmail.com>
-In-Reply-To: <CAKMK7uGRuCZwF6m02tcxxrgQGaijsYaNkowjxR+cw0JM3UpDkQ@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 11 May 2022 10:46:24 -0700
-Message-ID: <CAF6AEGthpxPLxyt_i-aUFgW485hA5qw+xXcJ3gKQUJ+fM=ZBhg@mail.gmail.com>
-Subject: Re: [Freedreno] [RFC v2] drm/msm: Add initial ci/ subdirectory
-To:     Daniel Vetter <daniel@ffwll.ch>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
+ <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org> <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
+ <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org> <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
+ <606cc762-a0c2-49a4-3e5d-d2dbd4595bc7@linaro.org> <CAD=FV=W_SA-3PfDFi-Gkjk9pew5bchFNjQhXX8MkZyuy5UohEQ@mail.gmail.com>
+ <CAJKOXPdt5WTg4VU-TEW3dmPHR76dKg63XVxRQfa7ZSKc_jz6Ag@mail.gmail.com>
+ <CAD=FV=XQqQSQDNh-zXqEQkwsrax5Qb3OtfKZoQLkncJj_4mcQw@mail.gmail.com>
+ <daf66d41-42ac-50dc-3f8d-c261da8e452d@linaro.org> <CAD=FV=WhA=n_=Ys6NfedPtNPddL81HnG6Qws_R+vq9w8Nrsn5A@mail.gmail.com>
+ <ce2ea308-b63d-ad27-4cea-7353268f8ebb@linaro.org> <CAODwPW857CkH0+ZnBaUeowW4te-hSy6nrdeeX6-OLPOs5TptsQ@mail.gmail.com>
+ <55dcf917-7ac0-efe9-8531-b77be682125a@linaro.org> <CAD=FV=UPKo4CxRVmdHr05rRPaNHFYfaQTqmBJAU5ZF61ccKgEA@mail.gmail.com>
+ <b619b455-c944-0cc6-ca83-e65490612ed7@linaro.org>
+In-Reply-To: <b619b455-c944-0cc6-ca83-e65490612ed7@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 11 May 2022 10:49:20 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VTNk_WPw+1sVRdToZLvDH_ve9QL+-+-unNEAK0k2hGMg@mail.gmail.com>
+Message-ID: <CAD=FV=VTNk_WPw+1sVRdToZLvDH_ve9QL+-+-unNEAK0k2hGMg@mail.gmail.com>
+Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>,
+        Julius Werner <jwerner@chromium.org>,
+        =?UTF-8?Q?Krzysztof_Koz=C5=82owski?= <k.kozlowski.k@gmail.com>,
+        Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Jonathan Corbet <corbet@lwn.net>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 11, 2022 at 10:12 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+Hi,
+
+On Wed, May 11, 2022 at 10:36 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> On Tue, 10 May 2022 at 22:26, Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Tue, May 10, 2022 at 12:39 PM Jessica Zhang
-> > <quic_jesszhan@quicinc.com> wrote:
-> > >
-> > >
-> > >
-> > > On 5/10/2022 7:13 AM, Tomeu Vizoso wrote:
-> > > > And use it to store expectations about what the drm/msm driver is
-> > > > supposed to pass in the IGT test suite.
-> > > >
-> > > > Also include a configuration file that points to the out-of-tree CI
-> > > > scripts.
-> > > >
-> > > > By storing the test expectations along the code we can make sure both
-> > > > stay in sync with each other, and so we can know when a code change
-> > > > breaks those expectations.
-> > > >
-> > > > This will allow all contributors to drm/msm to reuse the infrastructure
-> > > > already in gitlab.freedesktop.org to test the driver on several
-> > > > generations of the hardware.
-> > > >
-> > > > v2:
-> > > >    - Fix names of result expectation files to match SoC
-> > > >    - Don't execute tests that are going to skip on all boards
-> > > >
-> > > > Signed-off-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
-> > > > ---
-> > > >   Documentation/gpu/msm_automated_testing.rst   |  70 +++++++++
-> > > >   drivers/gpu/drm/msm/ci/gitlab-ci.yml          |  11 ++
-> > > >   drivers/gpu/drm/msm/ci/msm.testlist           | 148 ++++++++++++++++++
-> > > >   .../gpu/drm/msm/ci/msm_apq8016_results.txt    | 140 +++++++++++++++++
-> > > >   .../gpu/drm/msm/ci/msm_apq8096_results.txt    | 140 +++++++++++++++++
-> > > >   drivers/gpu/drm/msm/ci/msm_sc7180_results.txt | 141 +++++++++++++++++
-> > > >   drivers/gpu/drm/msm/ci/msm_sdm845_results.txt | 141 +++++++++++++++++
-> > > >   7 files changed, 791 insertions(+)
-> > > >   create mode 100644 Documentation/gpu/msm_automated_testing.rst
-> > > >   create mode 100644 drivers/gpu/drm/msm/ci/gitlab-ci.yml
-> > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm.testlist
-> > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8016_results.txt
-> > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8096_results.txt
-> > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
-> > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_sdm845_results.txt
-> > > >
-
-[snip]
-
-> > > > diff --git a/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt b/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
-> > > > new file mode 100644
-> > > > index 000000000000..01f7b4b399b5
-> > > > --- /dev/null
-> > > > +++ b/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
-> > > > @@ -0,0 +1,141 @@
-> > > > +igt@core_auth@getclient-simple,dmesg-warn
-> > > > +igt@core_auth@getclient-master-drop,pass
-> > > > +igt@core_auth@basic-auth,pass
-> > > > +igt@core_auth@many-magics,pass
-> > > > +igt@core_getclient,pass
-> > > > +igt@core_getstats,pass
-> > > > +igt@core_getversion,pass
-> > > > +igt@core_setmaster_vs_auth,pass
-> > > > +igt@drm_read@invalid-buffer,pass
-> > > > +igt@drm_read@fault-buffer,pass
-> > > > +igt@drm_read@empty-block,pass
-> > > > +igt@drm_read@empty-nonblock,pass
-> > > > +igt@drm_read@short-buffer-block,pass
-> > > > +igt@drm_read@short-buffer-nonblock,pass
-> > > > +igt@drm_read@short-buffer-wakeup,pass
-> > > > +igt@kms_addfb_basic@unused-handle,pass
-> > > > +igt@kms_addfb_basic@unused-pitches,pass
-> > > > +igt@kms_addfb_basic@unused-offsets,pass
-> > > > +igt@kms_addfb_basic@unused-modifier,pass
-> > > > +igt@kms_addfb_basic@legacy-format,dmesg-warn
-> > > > +igt@kms_addfb_basic@no-handle,pass
-> > > > +igt@kms_addfb_basic@basic,pass
-> > > > +igt@kms_addfb_basic@bad-pitch-0,pass
-> > > > +igt@kms_addfb_basic@bad-pitch-32,pass
-> > > > +igt@kms_addfb_basic@bad-pitch-63,pass
-> > > > +igt@kms_addfb_basic@bad-pitch-128,pass
-> > > > +igt@kms_addfb_basic@bad-pitch-256,pass
-> > > > +igt@kms_addfb_basic@bad-pitch-1024,pass
-> > > > +igt@kms_addfb_basic@bad-pitch-999,pass
-> > > > +igt@kms_addfb_basic@bad-pitch-65536,pass
-> > > > +igt@kms_addfb_basic@size-max,pass
-> > > > +igt@kms_addfb_basic@too-wide,pass
-> > > > +igt@kms_addfb_basic@too-high,dmesg-warn
-> > >
-> > > For test results on Trogdor, is is possible to have them be
-> > > success/fail/skip only?
-> > >
-> > > Results such as dmesg-warn/dmesg-fail are igt_runner specific and
-> > > because there isn't support for igt_runner on ChromeOS, they will be
-> > > difficult to replicate and debug.
-> >
-> > Actually, I wonder if it would be better to just treat
-> > dmesg-warn/dmesg-fail as pass/fail?  I'd noticed some flakes on
-> > rockchip which looked just like unrelated dmesg msg which just
-> > happened to show up while the test was running.
+> > * If we want to change our scheme, we'd need to sit down and come to
+> > an agreement that satisfies everyone, if such a thing is possible.
 >
-> This is kinda the reason behind standardizing on drm dmesg logging, so
-> that we have some chances at filtering stuff out. Not sure that's a
-> good idea, since when your entire box splats and lockdep is dead, then
-> continuing to run drm tests is still fairly pointless.
+> There is open CFP for ELCE 2022 (in Ireland). Maybe we could organize
+> some session there? But we for sure would need Rob, so the arrangements
+> should rather focus on him, not on my availability.
 
-I'm not sure if we are using it yet for drm-ci, but for mesa-ci we
-monitor dmesg (over serial port, from the controller) for splats, so
-we already have the tech for restarting or aborting the CI run.  We
-don't need igt-runner to tell us.
+Looks plausible to me to make it.
 
-> I think this is another reason why trying at least to standardize this
-> stuff over drivers would be pretty good idea.
+
+> > I mean, to be fair I said it _seems_ pure overhead and then said that
+> > we could do it if it makes some tools happy. ...but before doing that,
+> > I wanted to make sure it was actually valuable. I still have doubts
+> > about the assertion that the most specific compatible is guaranteed to
+> > uniquely identify hardware. So if the whole reason for doing this is
+> > to make the validation tools happy and there's no other value, then at
+> > least it's plausible to argue that the tools could simply be fixed to
+> > allow this and not shout about it.
 >
-> > Additionally, some of the tests, like msm_recovery, are *expected* to
-> > generate some dmesg spam since they are intentionally triggering GPU
-> > hangs to test the recovery mechanism.
+> Instead of adding bindings, you can indeed change/fix the tools. Go
+> ahead. :)
+
+I will try to take a quick look to see what this would look like.
+
+
+> > Since there no properties associated with the
+> > top-level compatible string, it's mostly just checking did some one
+> > copy-paste the compatible string from one file (the dts file) to the
+> > other file (the yaml file) correctly. To me, that does not feel like a
+> > useful check.
 >
-> Uh I don't like that. It just allows userspace to spam dmesg, which
-> doesn't seem like a great idea. That's at least why i915 dumps these
-> at a lower level, and in the past had a special "I'm going to whack
-> the gpu real hard expect hangs" knob in debugfs.
+> Still it can detect messing of SoC compatibles or not defining any
+> board-level compatible thus pretending that someone's board is just
+> SC7180. Imagine now user-space or bootloader trying to parse it...
 >
-> Having tests which intentionally spam dmesg above info level isn't
-> really good since then you need endless amounts of test-specific
-> encoding of what is considered a success and what not. Like when a
-> backmerge breaks a testcases which is already at dmesg-fail, is that
-> bad or not? Probably bad, but was the situation before that really
-> good or already kinda on fire?
+> BTW, the bindings validation of top-level compatible might actually help
+> you - to be sure that DTSes have proper compatibles matching what
+> bootloader expects.
 
-I guess I could add some debugfs knobs to squelch the dmesg msgs on
-gpu hangs.  In the normal case, I'd prefer that gpu hangs are not
-silent.. since that is something we get in feedback reports if a user
-(or dogfooder) reports a bug.
+I'm still not seeing the help here. Is it somehow going to be easier
+for someone to sneak in a dts file to the kernel tree that is just
+"sc7180" than it will be to sneak an entry into the bindings that is
+just "sc7180"? The people reviewing the dts and the list of allowed
+boards in the bindings are the same people, right? Every entry in the
+bindings gets used to match exactly one board, so, as I said, it's
+pretty much just a question of whether you copy-pasted properly...
 
-The rockchip case I mentioned was some unrelated dmesg about
-linktraining failing.. presumably because there was no display
-attached?  IDK, I didn't look too closely.  But my point is we could
-be getting unrelated and asynchronous dmesg spam, even from other
-kernel subsystems.  Letting that be part of the test results just
-sounds like asking for flakes.
-
-BR,
--R
-
-> -Daniel
->
-> > BR,
-> > -R
-> >
+-Doug
