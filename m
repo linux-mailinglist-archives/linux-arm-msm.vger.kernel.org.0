@@ -2,524 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 850D0523880
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 18:17:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8429D52384E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 18:15:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344681AbiEKQRg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 12:17:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38636 "EHLO
+        id S1344469AbiEKQO7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 12:14:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241166AbiEKQRQ (ORCPT
+        with ESMTP id S1344456AbiEKQO5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 12:17:16 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D3E72CC8C;
-        Wed, 11 May 2022 09:17:03 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id a15-20020a17090ad80f00b001dc2e23ad84so5365847pjv.4;
-        Wed, 11 May 2022 09:17:03 -0700 (PDT)
+        Wed, 11 May 2022 12:14:57 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24B376EB3F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:14:56 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id q10so3258832oia.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:14:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZBJKZIsVMsFKHOYwovHJla2knjXCDedlt+wjbXlZFEw=;
-        b=QfFjHLv0s3dOvr2zX8dOoxKGo+oPkncDzpEXD5i/0R2k1Amvn/z/1pWMGEsJoYAQJt
-         BAqC9FlB8PnmrjnzLtkhPgXjFKEY1h7dq21UmiUakxJyR3iKN+mCbRNeAxppdKwQlOrq
-         EkAroyPY00i4B31fMUvhjvx5H9B54O2E50vhU79xHy/BM9qb7LVD/H9q5HifjewbW7i+
-         PwR+qGAZsjVYXOME0OY0l3n1yXwbIJ/RVtHIBFMnDZ1OeGYJ5ws13n0wCxdsRIJB6Ofs
-         ui9fQOfhM5FQHkgKGMKmfVyuvPCxpVbzoOmwkqwMsExDTnZmp3CBswHVEQbNDNIpVnSG
-         42bQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Cf09Je3CtRN58q8NVoc2nPVu33QjMHj88UB5fSrOla4=;
+        b=CTG8yoxyViVJG9wmGrm6SLhEgFT0WuEvMoQXyZI5Kx6YkRB5j28pASLSwuZICqn0Cn
+         WUe9JQtUluE5n2n2m1EPa+FISLLmw74zubXRkCQO7+cPFnDb7SH7eHHvsAv5UmyVzyUV
+         Yg4qwAYNHpV19CvN9+QaSJdKAjMOYPnzZCA3hYz+C9nugper2Z4G1e1AGj+1SszRkaQo
+         moGjWWVVce7nK2CR/KrFugqD3XC1mwkzPeFT8lqC0rXm5ECEPIDRHLahArrblpkSEeOi
+         oarjMZfY1Bm/srauvkhyBWogv1HqzCKX1WkOEQx8b1IIsfASQoQDyYqMHU0Z+3n8xztv
+         Iymw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZBJKZIsVMsFKHOYwovHJla2knjXCDedlt+wjbXlZFEw=;
-        b=tZ08RvklxBeqLjRh0vxE9RlKVRfk3eRzr4cgmDH1GMKhv8HTVAnBB4JfX3TG1igRKY
-         JWMujM+SOCY+jRaT1ticpH3dctaJCnKZo2ysKWxTHy+AO984e5aV6X4QoRGsUM9acqcS
-         v86yALsc09HpDeZMWpQleiXzmQMbMoRQBYGS30i6NY86H3Q8rczYm0s1RB50l2mE+BFw
-         KuTFAkTfTvPiUjnD8p60cTEiEH3HLqZsdtsOs62alfxg0pm33M000x8ZHS4p0R3dmxhl
-         +1XtCotorbBDDN2ESjA4NxDM9CQRQxwisBDAw0eWV02tLbiUsskTq5K7T95K5VCrCaOB
-         tb6Q==
-X-Gm-Message-State: AOAM531TpSTgebKmNh8UWWN8EeRRLYuaamjOtyVTq1GKBwV5OYFFJnDO
-        ei/7jny1uuOaT0VjI5BRtIR786FsgWvdyn6h
-X-Google-Smtp-Source: ABdhPJwxI08p83XE/Dos9iEQkLfNw4eXNlmTKOWVJXbcZ4PNRiJ9Pm5Tdd7F7r1+vZzTyCJ4FWBIng==
-X-Received: by 2002:a17:90a:c08a:b0:1d9:88de:d192 with SMTP id o10-20020a17090ac08a00b001d988ded192mr6165192pjs.8.1652285822231;
-        Wed, 11 May 2022 09:17:02 -0700 (PDT)
-Received: from skynet-linux.local ([49.204.239.218])
-        by smtp.googlemail.com with ESMTPSA id x7-20020a17090a1f8700b001ded49491basm220322pja.2.2022.05.11.09.16.58
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Cf09Je3CtRN58q8NVoc2nPVu33QjMHj88UB5fSrOla4=;
+        b=Zvk0+69lsuO129wYkhrnrmZemB3jto0dRXJTnpG+M3x/gxBg1bpQ5HGFrhmsG1WyQT
+         fQ4wkhZnxQ+TXMxkGNdVVgPpTVAhCMlky2q9fX9uRykKVHBGv+Oyx2oS58AwS6ZAKA6F
+         yTcYCGHLHVol3lrneXeEiHRRhjP2uGaGXUXc1eqUL0zVL6Wdc7Cl4uiA5lputnwK9CEv
+         yXhO0tbwndd5s3G6I9u7xlCVSWq7l6Rygx4nMJCRBHYcMNHz5BJqSYSdqtXX86sbgIMZ
+         IzJZqH12AQezGy07Mfz0LBfagNQQQfX7neC136t3phl2E0tnOl7ulHD4MiQKSa04fwQm
+         P41Q==
+X-Gm-Message-State: AOAM530Kj5EOugn5BVqZh61VjJl+aZGDx+WleP3xiXieGN7Dnp4sB9Vg
+        3BU5Riwxx8h/pLCo2pV+pMubeQ==
+X-Google-Smtp-Source: ABdhPJz8wvQ3CXsSwZJgwMBRizoEDzOcZERxCvR6YfvQLmBZIZFLmiRHdvM6kGdBrvW6hOVawnGctg==
+X-Received: by 2002:a05:6808:2199:b0:326:90e2:754b with SMTP id be25-20020a056808219900b0032690e2754bmr2876267oib.227.1652285695478;
+        Wed, 11 May 2022 09:14:55 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id z18-20020a056808065200b00325cda1ffacsm861218oih.43.2022.05.11.09.14.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 May 2022 09:17:01 -0700 (PDT)
-From:   Sireesh Kodali <sireeshkodali1@gmail.com>
-To:     linux-remoteproc@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 11 May 2022 09:14:54 -0700 (PDT)
+Date:   Wed, 11 May 2022 09:17:25 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Pavel Machek <pavel@ucw.cz>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>, Luca Weiss <luca@z3ntu.xyz>,
+        Doug Anderson <dianders@chromium.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: [PATCH 9/9] arm64: dts: qcom: msm8953: Add remote processor nodes
-Date:   Wed, 11 May 2022 21:46:02 +0530
-Message-Id: <20220511161602.117772-10-sireeshkodali1@gmail.com>
-X-Mailer: git-send-email 2.36.0
-In-Reply-To: <20220511161602.117772-1-sireeshkodali1@gmail.com>
-References: <20220511161602.117772-1-sireeshkodali1@gmail.com>
+        Jonathan Corbet <corbet@lwn.net>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-pwm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v14 2/2] leds: Add driver for Qualcomm LPG
+Message-ID: <YnvhleAI5RW0ZvkV@ripper>
+References: <20220303214300.59468-1-bjorn.andersson@linaro.org>
+ <20220303214300.59468-2-bjorn.andersson@linaro.org>
+ <20220504073009.GC8204@duo.ucw.cz>
+ <YnKTAvQc6eDxTl14@ripper>
+ <20220506160901.GA1199@bug>
+ <YnVMcaRV86jZslhd@ripper>
+ <20220507063659.GA6968@amd>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220507063659.GA6968@amd>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit adds the modem (q6v5_mss), WiFi (wcnss-pil) and audio DSP
-(q6v5_pas) remote processor nodes for the MSM8953 platform. It also adds
-the coresponding SMP2P, SMSM and pinctrl nodes that are needed by these
-remote processors.
+On Fri 06 May 23:36 PDT 2022, Pavel Machek wrote:
 
-Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
----
- arch/arm64/boot/dts/qcom/msm8953.dtsi | 378 ++++++++++++++++++++++++++
- 1 file changed, 378 insertions(+)
+> Hi!
+> 
+> > > > As such the pattern sequence provided to hw_pattern looks to be the
+> > > > smae, but I don't see that it can be made compatible.
+> > > > 
+> > > > > Can I get either patch to disable pattern infrastructure for now or to
+> > > > > get it compatible?
+> > > > > 
+> > > > 
+> > > > I'd be happy to get this updated to your liking, but this was one of the
+> > > > drivers we discussed when we introduced the pattern trigger and led to
+> > > > the conclusion that we need the ability to do hw-specific patterns.
+> > > > 
+> > > > As such this document provides the hardware specific documentation, as
+> > > > we describe under "hw_pattern" in
+> > > > Documentation/ABI/testing/sysfs-class-led-trigger-pattern.
+> > > > 
+> > > > Please advice on what you would like me to do.
+> > > 
+> > > I'd like you to use same format leds-trigger-pattern describes.
+> > > 
+> > > If someone passes "255 500 0 500", that's requesting gradual transitions and
+> > > your hw can not do that. You return -EINVAL.
+> > > 
+> > > If someone wants that kind of blinking, they need to pass "255 0 255 500 0 0 0 500".
+> > > 
+> > 
+> > So the section under hw_pattern in sysfs-class-led-trigger-pattern that
+> > says:
+> > 
+> > "Since different LED hardware can have different semantics of
+> > hardware patterns, each driver is expected to provide its own
+> > description for the hardware patterns in their documentation
+> > file at Documentation/leds/."
+> > 
+> > That doesn't apply to this piece of hardware & driver?
+> 
+> It applies: since your hardware can not do arbitrary patterns, you
+> need description of what kinds of patterns it can do.
+> 
+> But you should still use compatible format, so that pattern that is
+> valid for hw_pattern file is valid for pattern file, too, and produces
+> same result.
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-index 431228faacdd..04e285e442ff 100644
---- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-@@ -2,9 +2,13 @@
- /* Copyright (c) 2022, The Linux Foundation. All rights reserved. */
- 
- #include <dt-bindings/clock/qcom,gcc-msm8953.h>
-+#include <dt-bindings/clock/qcom,rpmcc.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-+#include <dt-bindings/soc/qcom,apr.h>
-+#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
-+#include <dt-bindings/sound/qcom,q6asm.h>
- #include <dt-bindings/thermal/thermal.h>
- 
- / {
-@@ -384,6 +388,80 @@ rpmpd_opp_turbo: opp9 {
- 		};
- 	};
- 
-+	modem-smp2p {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <435>, <428>;
-+
-+		interrupts = <GIC_SPI 27 IRQ_TYPE_EDGE_RISING>;
-+
-+		qcom,ipc = <&apcs 8 14>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <1>;
-+
-+		modem_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		modem_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
-+	adsp-smp2p {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <443>, <429>;
-+
-+		interrupts = <GIC_SPI 291 IRQ_TYPE_EDGE_RISING>;
-+
-+		mboxes = <&apcs 10>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <2>;
-+
-+		smp2p_adsp_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		smp2p_adsp_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
-+	wcnss-smp2p {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <451>, <431>;
-+
-+		interrupts = <GIC_SPI 143 IRQ_TYPE_EDGE_RISING>;
-+
-+		qcom,ipc = <&apcs 8 18>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <4>;
-+
-+		wcnss_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		wcnss_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
- 	smsm {
- 		compatible = "qcom,smsm";
- 
-@@ -398,6 +476,22 @@ apps_smsm: apps@0 {
- 
- 			#qcom,smem-state-cells = <1>;
- 		};
-+
-+		hexagon_smsm: hexagon@1 {
-+			reg = <1>;
-+			interrupts = <GIC_SPI 26 IRQ_TYPE_EDGE_RISING>;
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+
-+		wcnss_smsm: wcnss@6 {
-+			reg = <6>;
-+			interrupts = <GIC_SPI 144 IRQ_TYPE_EDGE_RISING>;
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
- 	};
- 
- 	soc: soc@0 {
-@@ -688,6 +782,59 @@ i2c_8_sleep: i2c-8-sleep-pins {
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
-+
-+			wcnss_default: wcnss-default-pins {
-+				wcss_wlan2 {
-+					pins = "gpio76";
-+					function = "wcss_wlan2";
-+				};
-+				wcss_wlan1 {
-+					pins = "gpio77";
-+					function = "wcss_wlan1";
-+				};
-+				wcss_wlan0 {
-+					pins = "gpio78";
-+					function = "wcss_wlan0";
-+				};
-+				wcss_wlan {
-+					pins = "gpio79", "gpio80";
-+					function = "wcss_wlan";
-+				};
-+
-+				pinconf {
-+					pins = "gpio76", "gpio77", "gpio78",
-+					     "gpio79", "gpio80";
-+					drive-strength = <6>;
-+					bias-pull-up;
-+				};
-+			};
-+
-+			wcnss_sleep: wcnss-sleep-pins {
-+				wcss_wlan2 {
-+					pins = "gpio76";
-+					function = "wcss_wlan2";
-+				};
-+				wcss_wlan1 {
-+					pins = "gpio77";
-+					function = "wcss_wlan1";
-+				};
-+				wcss_wlan0 {
-+					pins = "gpio78";
-+					function = "wcss_wlan0";
-+				};
-+				wcss_wlan {
-+					pins = "gpio79", "gpio80";
-+					function = "wcss_wlan";
-+				};
-+
-+				pinconf {
-+					pins = "gpio76", "gpio77",
-+					     "gpio78", "gpio79",
-+					     "gpio80";
-+					drive-strength = <2>;
-+					bias-pull-down;
-+				};
-+			};
- 		};
- 
- 		gcc: clock-controller@1800000 {
-@@ -745,6 +892,59 @@ spmi_bus: spmi@200f000 {
- 			#size-cells = <0>;
- 		};
- 
-+		modem: remoteproc@4080000 {
-+			compatible = "qcom,msm8953-mss-pil";
-+			reg = <0x4080000 0x100>,
-+			    <0x4020000 0x040>;
-+
-+			reg-names = "qdsp6", "rmb";
-+
-+			interrupts-extended = <&intc 0 24 1>,
-+					      <&modem_smp2p_in 0 0>,
-+					      <&modem_smp2p_in 1 0>,
-+					      <&modem_smp2p_in 2 0>,
-+					      <&modem_smp2p_in 3 0>;
-+			interrupt-names = "wdog", "fatal", "ready",
-+					  "handover", "stop-ack";
-+
-+			clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
-+				 <&gcc GCC_MSS_Q6_BIMC_AXI_CLK>,
-+				 <&gcc GCC_BOOT_ROM_AHB_CLK>,
-+				 <&xo_board>;
-+			clock-names = "iface", "bus", "mem", "xo";
-+
-+			power-domains = <&rpmpd MSM8953_VDDCX>, <&rpmpd MSM8953_VDDMX>;
-+			power-domain-names = "cx", "mx";
-+
-+			qcom,smem-states = <&modem_smp2p_out 0>;
-+			qcom,smem-state-names = "stop";
-+
-+			resets = <&gcc GCC_MSS_BCR>;
-+			reset-names = "mss_restart";
-+
-+			qcom,halt-regs = <&tcsr 0x18000 0x19000 0x1a000>;
-+
-+			status = "okay";
-+
-+			mba {
-+				memory-region = <&mba_mem>;
-+			};
-+
-+			mpss {
-+				memory-region = <&mpss_mem>;
-+			};
-+
-+			smd-edge {
-+				interrupts = <GIC_SPI 25 IRQ_TYPE_EDGE_RISING>;
-+
-+				qcom,smd-edge = <0>;
-+				qcom,ipc = <&apcs 8 12>;
-+				qcom,remote-pid = <1>;
-+
-+				label = "modem";
-+			};
-+		};
-+
- 		usb3: usb@70f8800 {
- 			compatible = "qcom,msm8953-dwc3", "qcom,dwc3";
- 			reg = <0x70f8800 0x400>;
-@@ -1057,6 +1257,74 @@ i2c_8: i2c@7af8000 {
- 			status = "disabled";
- 		};
- 
-+		pronto: remoteproc@a21b000 {
-+			compatible = "qcom,pronto-v3-pil", "qcom,pronto";
-+			reg = <0xa204000 0x2000>,
-+			      <0xa202000 0x1000>,
-+			      <0xa21b000 0x3000>;
-+			reg-names = "ccu", "dxe", "pmu";
-+
-+			memory-region = <&wcnss_fw_mem>;
-+
-+			interrupts-extended = <&intc 0 149 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcnss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcnss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcnss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcnss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
-+
-+			power-domains = <&rpmpd MSM8953_VDDCX>, <&rpmpd MSM8953_VDDMX>;
-+			power-domain-names = "cx", "mx";
-+
-+			qcom,state = <&wcnss_smp2p_out 0>;
-+			qcom,state-names = "stop";
-+
-+			pinctrl-names = "default", "sleep";
-+			pinctrl-0 = <&wcnss_default>;
-+			pinctrl-1 = <&wcnss_sleep>;
-+
-+			status = "okay";
-+
-+			iris: iris {
-+				compatible = "qcom,wcn3660b";
-+
-+				clocks = <&rpmcc RPM_SMD_RF_CLK2>;
-+				clock-names = "xo";
-+			};
-+
-+			smd-edge {
-+				interrupts = <GIC_SPI 142 IRQ_TYPE_EDGE_RISING>;
-+
-+				qcom,ipc = <&apcs 8 17>;
-+				qcom,smd-edge = <6>;
-+				qcom,remote-pid = <4>;
-+
-+				label = "pronto";
-+
-+				wcnss {
-+					compatible = "qcom,wcnss";
-+					qcom,smd-channels = "WCNSS_CTRL";
-+
-+					qcom,mmio = <&pronto>;
-+
-+					bt {
-+						compatible = "qcom,wcnss-bt";
-+					};
-+
-+					wifi {
-+						compatible = "qcom,wcnss-wlan";
-+
-+						interrupts = <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-+							     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
-+						interrupt-names = "tx", "rx";
-+
-+						qcom,smem-states = <&apps_smsm 10>, <&apps_smsm 9>;
-+						qcom,smem-state-names = "tx-enable", "tx-rings-empty";
-+					};
-+				};
-+			};
-+		};
-+
- 		intc: interrupt-controller@b000000 {
- 			compatible = "qcom,msm-qgic2";
- 			interrupt-controller;
-@@ -1070,6 +1338,116 @@ apcs: mailbox@b011000 {
- 			#mbox-cells = <1>;
- 		};
- 
-+		lpass: remoteproc@c200000 {
-+			compatible = "qcom,msm8953-adsp-pil";
-+			reg = <0xc200000 0x100>;
-+
-+			interrupts-extended = <&intc 0 293 IRQ_TYPE_EDGE_RISING>,
-+					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
-+					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
-+					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
-+					      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "wdog", "fatal", "ready",
-+					  "handover", "stop-ack";
-+			clocks = <&xo_board>;
-+			clock-names = "xo";
-+
-+			power-domains = <&rpmpd MSM8953_VDDCX>;
-+			power-domain-names = "cx";
-+
-+			memory-region = <&adsp_fw_mem>;
-+
-+			qcom,smem-states = <&smp2p_adsp_out 0>;
-+			qcom,smem-state-names = "stop";
-+
-+			smd-edge {
-+				interrupts = <GIC_SPI 289 IRQ_TYPE_EDGE_RISING>;
-+
-+				label = "lpass";
-+				mboxes = <&apcs 8>;
-+				qcom,smd-edge = <1>;
-+				qcom,remote-pid = <2>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				apr {
-+					compatible = "qcom,apr-v2";
-+					qcom,smd-channels = "apr_audio_svc";
-+					qcom,apr-domain = <APR_DOMAIN_ADSP>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					q6core {
-+						reg = <APR_SVC_ADSP_CORE>;
-+						compatible = "qcom,q6core";
-+					};
-+
-+					q6afe: q6afe {
-+						compatible = "qcom,q6afe";
-+						reg = <APR_SVC_AFE>;
-+						q6afedai: dais {
-+							compatible = "qcom,q6afe-dais";
-+							#address-cells = <1>;
-+							#size-cells = <0>;
-+							#sound-dai-cells = <1>;
-+
-+							dai@16 {
-+								reg = <PRIMARY_MI2S_RX>;
-+								qcom,sd-lines = <0 1>;
-+							};
-+
-+							dai@21 {
-+								reg = <TERTIARY_MI2S_TX>;
-+								qcom,sd-lines = <0 1>;
-+							};
-+						};
-+						q6afecc: clock-controller {
-+							compatible = "qcom,q6afe-clocks";
-+							#clock-cells = <2>;
-+						};
-+					};
-+
-+					q6asm: q6asm {
-+						compatible = "qcom,q6asm";
-+						reg = <APR_SVC_ASM>;
-+						q6asmdai: dais {
-+							compatible = "qcom,q6asm-dais";
-+							#address-cells = <1>;
-+							#size-cells = <0>;
-+							#sound-dai-cells = <1>;
-+
-+							dai@0 {
-+								reg = <MSM_FRONTEND_DAI_MULTIMEDIA1>;
-+							};
-+
-+							dai@1 {
-+								reg = <MSM_FRONTEND_DAI_MULTIMEDIA2>;
-+							};
-+
-+							dai@2 {
-+								reg = <MSM_FRONTEND_DAI_MULTIMEDIA3>;
-+							};
-+
-+							dai@3 {
-+								reg = <MSM_FRONTEND_DAI_MULTIMEDIA4>;
-+								is-compress-dai;
-+							};
-+						};
-+					};
-+
-+					q6adm: q6adm {
-+						compatible = "qcom,q6adm";
-+						reg = <APR_SVC_ADM>;
-+						q6routing: routing {
-+							compatible = "qcom,q6adm-routing";
-+							#sound-dai-cells = <0>;
-+						};
-+					};
-+				};
-+			};
-+
-+		};
-+
- 		timer@b120000 {
- 			compatible = "arm,armv7-timer-mem";
- 			reg = <0xb120000 0x1000>;
--- 
-2.36.0
+Okay, I didn't understand that the hw_pattern needs to be a subset of
+the pattern. I will prepare a patch to require the pattern to include
+the zero-time entries as well.
 
+> If you believe documentation implies something else, it may need to be
+> clarified.
+> 
+
+I'll read it again and if needed I'll try to clarify the expectations.
+
+Thanks,
+Bjorn
