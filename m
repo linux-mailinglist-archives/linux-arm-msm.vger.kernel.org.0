@@ -2,171 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A416F52350C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 16:09:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 072DF523516
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 16:11:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244414AbiEKOJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 10:09:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60028 "EHLO
+        id S234699AbiEKOL1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 10:11:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244420AbiEKOJb (ORCPT
+        with ESMTP id S229457AbiEKOL0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 10:09:31 -0400
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EDB46B010
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 07:09:29 -0700 (PDT)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-2fb965b34easo22561767b3.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 07:09:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=83Nv0MHRiwJG3Qt4wgTcx11zG/+pISY5yN6uuKlIn0Q=;
-        b=kBcewzqBBvAfPquvl/sGPouMBUO+fHjmZ0vQl9khshvjjIB1XxMmZXwU0WzC5aAqV2
-         sjp/OIIyT1zvaiYhawbSxJps6a6rz91drkgGurTkeDFiVA1UfCUMk7FBM8WQ+VjDBhlF
-         Lq/1hG9mRdvTI6sW63ezJVlPMq96c4VBKftDYJjJyRT87lriIFKKvQpS8bfePV9dxXcy
-         1Yeh5sIaX4/QPvbdkMSLfGdhhri2shmxQiARr++u6OukeqyHWihRBII+CRaS9cFVcRp4
-         3ui3NeRn/Ji7F3zf4t7ie2o99FzoVUn+JO4iOPtHmyWraYU0Md+LE50AvrI5iNJIpEal
-         9Ipw==
+        Wed, 11 May 2022 10:11:26 -0400
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A732469B6D;
+        Wed, 11 May 2022 07:11:25 -0700 (PDT)
+Received: by mail-ot1-f49.google.com with SMTP id l9-20020a056830268900b006054381dd35so534495otu.4;
+        Wed, 11 May 2022 07:11:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=83Nv0MHRiwJG3Qt4wgTcx11zG/+pISY5yN6uuKlIn0Q=;
-        b=XWAZvNvCcP0vosZfqqFxMLemUsQ9866DZHXuBOnu9bs9oSsmoSHO7Muu5SrvQzvSEQ
-         JoWXX6PHUgTOmjSiF17WxFme9wom4z6BA/zar7fm5tyg1EilNwI/U9Zu9Pvyuzp5lZZ+
-         Qbqc5EV9zclk3T/HjXTPh90CXz5UxMZyg1p7jYzcRvLHlB+1yitlmWqwXPNb9nE65B2k
-         tP7ZYRGEINv0GEgmPeK1tJQXOKWOwswuxmUp2KZvZN1Ph4kBBL93bMM3aolyJgB9D8Ox
-         277qKqUYDvt7PIbUE67hrb/liRGfUdZAjtlwc6Q3I17uj2Af/eYImWK8T7P5m3za1Ec7
-         +ItQ==
-X-Gm-Message-State: AOAM530RyUFyI6mbSaGwZRLgkOUKX8C9sgSs0whAZfSh27gtLtRIIqfA
-        gLQLX38ApKmg1KmKTnKzXR/T8Sl5f5aI/lZ2m36MqA==
-X-Google-Smtp-Source: ABdhPJxpj7VEhOJk81+QJ7sbXCb6T0VZeHbkdlPGDlNlc7ESj1A/mFHECqzvuvaiyTYwwHSJIZkushdwooT13fS70Zc=
-X-Received: by 2002:a81:1d4e:0:b0:2f7:be8b:502e with SMTP id
- d75-20020a811d4e000000b002f7be8b502emr25537778ywd.278.1652278168274; Wed, 11
- May 2022 07:09:28 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=z06cn7d/G69c0xSOTqxfuLMjJW9goLXOAMM1t5ljbEY=;
+        b=sXRFys/Lp75204n8zPJTPjwU5BY1G8PgQE2fXeesgdwZ3WEvbBL1LQlyUuI+48+QiJ
+         F57ICzyhBh7Yp8RuLI9N3ZCVxawCpkAj/yDZPZpw4d+TNf9nXtE6nt3965DyjNeKWyF0
+         yGaFDljuuWhKSsay73AShl7gEt7h8maNRVlq8oF4twptKGDjtyBGriJELdytIJneZhYj
+         mV1Pki89WS4Xk7SLn2bSQtVkqbe9xa2Tbba6b3K96IyuuxPpem0QQVombwE46oOpoLMs
+         xZP1p8nXGP1bIJHGfeZ0kMlbKO2lpJhb+1QJwKMc0i7ZFPiJuBenOA/kqOKGdJNaFJ9L
+         WO7Q==
+X-Gm-Message-State: AOAM5302SGASvfUwi1tkydMo1POTgFr62fi8HIYTo5dQrtDTwqZWKfTM
+        4c2QInM2/33LqxiraGdOXw==
+X-Google-Smtp-Source: ABdhPJxlKR+OEInFUMX3Z041DuUSmqCUhy9narX4q7Nb6Cr6YXvbswUKh9xkuPRehGjQl3+dmFTXew==
+X-Received: by 2002:a9d:195:0:b0:605:eb43:5b84 with SMTP id e21-20020a9d0195000000b00605eb435b84mr10001291ote.357.1652278284426;
+        Wed, 11 May 2022 07:11:24 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id c17-20020a056830315100b006060322126esm819796ots.62.2022.05.11.07.11.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 May 2022 07:11:23 -0700 (PDT)
+Received: (nullmailer pid 234685 invoked by uid 1000);
+        Wed, 11 May 2022 14:11:22 -0000
+Date:   Wed, 11 May 2022 09:11:22 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Satya Priya <quic_c_skakit@quicinc.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, quic_collinsd@quicinc.com,
+        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
+Subject: Re: [PATCH V11 2/9] dt-bindings: mfd: pm8008: Change the address
+ cells
+Message-ID: <20220511141122.GA226988-robh@kernel.org>
+References: <1651742739-12338-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1651742739-12338-3-git-send-email-quic_c_skakit@quicinc.com>
 MIME-Version: 1.0
-References: <20220506152107.1527552-1-dmitry.baryshkov@linaro.org>
- <YnqXxNxFhf/odyka@robh.at.kernel.org> <CAA8EJpriMcP4uQ3fjyiCKY+uc82ctXe2VrjO1psPDcp-P++Nhw@mail.gmail.com>
- <Ynu1p1hzqHJNpSp3@lpieralisi> <CAA8EJpoQ0TkY9zVzhB00f9iYKquPauF2JeapSECaPp3=eXWjsw@mail.gmail.com>
- <YnvBgXsYYv72otXS@lpieralisi>
-In-Reply-To: <YnvBgXsYYv72otXS@lpieralisi>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 11 May 2022 17:09:17 +0300
-Message-ID: <CAA8EJpocyeRHGAS7=cpqQc7DHCUO6j4RS4nrfdiptAwu=7wcFg@mail.gmail.com>
-Subject: Re: [PATCH v6 0/8] dt-bindings: YAMLify pci/qcom,pcie schema
-To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1651742739-12338-3-git-send-email-quic_c_skakit@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 11 May 2022 at 17:00, Lorenzo Pieralisi
-<lorenzo.pieralisi@arm.com> wrote:
->
-> On Wed, May 11, 2022 at 04:53:43PM +0300, Dmitry Baryshkov wrote:
-> > On Wed, 11 May 2022 at 16:10, Lorenzo Pieralisi
-> > <lorenzo.pieralisi@arm.com> wrote:
-> > >
-> > > On Wed, May 11, 2022 at 01:13:28PM +0300, Dmitry Baryshkov wrote:
-> > > > On Tue, 10 May 2022 at 19:50, Rob Herring <robh@kernel.org> wrote:
-> > > > >
-> > > > > On Fri, May 06, 2022 at 06:20:59PM +0300, Dmitry Baryshkov wrote:
-> > > > > > Convert pci/qcom,pcie schema to YAML description. The first patch
-> > > > > > introduces several warnings which are fixed by the other patches in the
-> > > > > > series.
-> > > > > >
-> > > > > > Note regarding the snps,dw-pcie compatibility. The Qualcomm PCIe
-> > > > > > controller uses Synopsys PCIe IP core. However it is not just fused to
-> > > > > > the address space. Accessing PCIe registers requires several clocks and
-> > > > > > regulators to be powered up. Thus it can be assumed that the qcom,pcie
-> > > > > > bindings are not fully compatible with the snps,dw-pcie schema.
-> > > > > >
-> > > > > > Changes since v5:
-> > > > > >  - s/stance/stanza (pointed out by Bjorn Helgaas)
-> > > > > >
-> > > > > > Changes since v4:
-> > > > > >  - Change subjects to follow convention (suggested by Bjorn Helgaas)
-> > > > > >
-> > > > > > Changes since v3:
-> > > > > >  - Rebase on linux-next to include sm8150 patches
-> > > > > >
-> > > > > > Changes since v2 (still kudos to Krzyshtof):
-> > > > > >  - Readded reg-names conversion patch
-> > > > > >  - Mention wake-gpio update in the commit message
-> > > > > >  - Remove extra quotes in the schema
-> > > > > >
-> > > > > > Changes since v1 (all kudos to Krzyshtof):
-> > > > > >  - Dropped the reg-names patch. It will be handled separately
-> > > > > >  - Squashed the snps,dw-pcie removal (from schema) into the first patch
-> > > > > >  - Replaced deprecated perst-gpio and wake-gpio with perst-gpios and
-> > > > > >    wake-gpios in the examples and in DT files
-> > > > > >  - Moved common clocks/clock-names, resets/reset-names and power-domains
-> > > > > >    properties to the top level of the schema, leaving only platform
-> > > > > >    specifics in the conditional branches
-> > > > > >  - Dropped iommu-map/iommu-map-mask for now
-> > > > > >  - Added (missed) interrupt-cells, clocks, clock-names, resets,
-> > > > > >    reset-names properties to the required list (resets/reset-names are
-> > > > > >    removed in the next patch, as they are not used on msm8996)
-> > > > > >  - Fixed IRQ flags in the examples
-> > > > > >  - Merged apq8064/ipq8064 into the single condition statement
-> > > > > >  - Added extra empty lines
-> > > > > >
-> > > > > > Dmitry Baryshkov (8):
-> > > > > >   dt-bindings: PCI: qcom: Convert to YAML
-> > > > > >   dt-bindings: PCI: qcom: Do not require resets on msm8996 platforms
-> > > > > >   dt-bindings: PCI: qcom: Specify reg-names explicitly
-> > > > > >   dt-bindings: PCI: qcom: Add schema for sc7280 chipset
-> > > > > >   arm64: dts: qcom: stop using snps,dw-pcie falback
-> > > > > >   arm: dts: qcom: stop using snps,dw-pcie falback
-> > > > > >   arm: dts: qcom-*: replace deprecated perst-gpio with perst-gpios
-> > > > > >   arm64: dts: qcom: replace deprecated perst-gpio with perst-gpios
-> > > > > >
-> > > > > >  .../devicetree/bindings/pci/qcom,pcie.txt     | 398 ----------
-> > > > > >  .../devicetree/bindings/pci/qcom,pcie.yaml    | 714 ++++++++++++++++++
-> > > > >
-> > > > > What tree do these apply to because they don't apply to rc1. I'm
-> > > > > assuming the PCI tree and Lorenzo should take them.
-> > > >
-> > > > The series depends on the patch in Lorenzo's tree (sm8150 bindings),
-> > > > so I'd assume it would be natural to merge these patches through his
-> > > > tree too.
-> > >
-> > > I can take the DT bindings but the dts updates I'd prefer if they
-> > > went via platform trees. Is that OK ?
-> >
-> > Yes, that's fine with me. I think Bjorn has sent 5.19 pull request
-> > already, I'll track them getting merged into 5.19 or 5.20.
->
-> I assume you meant BjornA sent a PR with patches [5-8] in it,
-> correct ?
->
-> I will only pull the DT bindings, patches [1-4], please let me
-> know if that's what you expect.
+On Thu, May 05, 2022 at 02:55:32PM +0530, Satya Priya wrote:
+> Change the address cells as '2' so that the first cell
+> describes the i2c address offset of the clients. 
+> This helps us to define the child nodes of all
+> clients under the same parent mfd node, instead of
+> adding separate mfd DT nodes.
+> 
+> Change the gpios reg value accordingly.
+> 
+> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+> ---
+> Changes in V11:
+>  - New patch added from V11.
+> 
+>  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> index a89649c..a41618e 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> @@ -39,7 +39,7 @@ properties:
+>    interrupt-controller: true
+>  
+>    "#address-cells":
+> -    const: 1
+> +    const: 2
+>  
+>    "#size-cells":
+>      const: 0
+> @@ -48,7 +48,7 @@ properties:
+>      maxItems: 1
+>  
+>  patternProperties:
+> -  "^gpio@[0-9a-f]+$":
+> +  "^gpio@[0],[0-9a-f]+$":
 
-Yes and Yes.
+^gpio@0,[0-9a-f]+$
 
->
-> Lorenzo
-
-
-
--- 
-With best wishes
-Dmitry
+>      type: object
+>  
+>      description: |
+> @@ -61,7 +61,7 @@ patternProperties:
+>            - const: qcom,spmi-gpio
+>  
+>        reg:
+> -        description: Peripheral address of one of the two GPIO peripherals.
+> +        description: Peripheral offset and address of one of the two GPIO peripherals.
+>          maxItems: 1
+>  
+>        gpio-controller: true
+> @@ -110,7 +110,7 @@ examples:
+>        pm8008i@8 {
+>          compatible = "qcom,pm8008";
+>          reg = <0x8>;
+> -        #address-cells = <1>;
+> +        #address-cells = <2>;
+>          #size-cells = <0>;
+>          interrupt-controller;
+>          #interrupt-cells = <2>;
+> @@ -120,9 +120,9 @@ examples:
+>  
+>          reset-gpios = <&pm8350c_gpios 4 GPIO_ACTIVE_LOW>;
+>  
+> -        pm8008_gpios: gpio@c000 {
+> +        pm8008_gpios: gpio@0,c000 {
+>            compatible = "qcom,pm8008-gpio", "qcom,spmi-gpio";
+> -          reg = <0xc000>;
+> +          reg = <0x0 0xc000>;
+>            gpio-controller;
+>            gpio-ranges = <&pm8008_gpios 0 0 2>;
+>            #gpio-cells = <2>;
+> -- 
+> 2.7.4
+> 
+> 
