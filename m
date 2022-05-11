@@ -2,189 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DDC452400A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 00:07:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E188524074
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 00:58:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244883AbiEKWHU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 18:07:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36302 "EHLO
+        id S1348952AbiEKW6b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 18:58:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348561AbiEKWHT (ORCPT
+        with ESMTP id S1348951AbiEKW6b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 18:07:19 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E7D63D1F1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 15:07:18 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id v64-20020a1cac43000000b0038cfd1b3a6dso4034859wme.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 15:07:18 -0700 (PDT)
+        Wed, 11 May 2022 18:58:31 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5585E6D19C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 15:58:30 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id cq17-20020a17090af99100b001dc0386cd8fso3297271pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 15:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XfZBJpcBKwzYlb0zHDiPNCx0eBqvHT03lQUdHD5aVVY=;
-        b=n1cMNMAQ8Zb9JwAUxDKyG7Pj/gARe2P0nrj210PR2QUhgCo9mgyRtDxZkOM22EAA2G
-         zV+08saZbiWtizTl6bqWjhiAMR94tL+YeiNPxVSKm38pOOureQtcf8yDbU2xJnmatCUi
-         TjgjCVYPr4jCrGj7UvZCQiY92/YHiM/9Mi/vqJPJ6sZKKkTF5a7G2r1zW/tyPPxr20wv
-         za03tj7WeH0MzBlVElobHNh9kPS7bQUEAuBOsduVQEMPHcaxCJY1sa5Aj5sgC6ueTW+I
-         3OuFKglwgHqRz4Ootsdh6XRSHcNbIJ5x01B+GM46rZBwT0tHjsZATZTSnCjK3/GnLg6C
-         rd7Q==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LOtUBAROt8+wSZqck5ELJgqyUVB2vFhXIURSscRlUY4=;
+        b=DvS+M4uoPyOP2cGbinXkmJFSQjV7jAHY/pFLgs8BVJNOUo0IhmEtaQJDeZHy7n0lI9
+         oJRkHDmPw+hhwekGiNi5e1/y3wX4HUtf9Ex8LYcFQqLfrCZDwVhYeN9JeMQ6Mf705WIW
+         DutFGsRV7NOEn10hg2nVrhHFue4sJs80E8JkQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XfZBJpcBKwzYlb0zHDiPNCx0eBqvHT03lQUdHD5aVVY=;
-        b=PnRKfgRXRenrwewCmPSaphFVFw66EtKq9+9FpBGgt3GaTeaQlWCHwN09CfKU+CXyu2
-         tuXRu00vHoTR2t3Yxr9nDJ8GT9p0VE28WEhZCGzFJflcT/UUZrPM/X1/SVsBiIr5BkxT
-         84OwQTz0OFLQCuHQ8quicSC0oH+GNEVkuA8+m+w0sov9lDqY5CL1aluxLtRsY+TRR4Q/
-         MJYkQygXTpmazWflENUmJfnqB0Ibmz/HTIDcjpUmTBeZvAbMlfCQl5jQL93Vvo65jWUT
-         ldUYZEfy0SQq3BfnOKpWJlvn7Vqi3B6M/ucGFy/F+A5ctREGcm7p+eAOIvukM+yZZBtC
-         PYlA==
-X-Gm-Message-State: AOAM532Wg5OiOYc29pvqrx4ks5uBR/VBtiscRLifaC+izHl3IrT1VfC1
-        0N2NpZH1Mg0/00/rI8MFlkhAk895DPeZVzAWWdA=
-X-Google-Smtp-Source: ABdhPJwWomw4prnLDCs+S4DzNmAEc7VxbOCHvGXvax2SPGQmwUjAvcUMs3e3/H++RTrNg7BehTEQhGI4zNVY44m4Kko=
-X-Received: by 2002:a7b:cc0d:0:b0:381:220e:a3a0 with SMTP id
- f13-20020a7bcc0d000000b00381220ea3a0mr6929365wmh.59.1652306836492; Wed, 11
- May 2022 15:07:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <20211207222901.988484-1-dmitry.baryshkov@linaro.org>
- <20211207222901.988484-2-dmitry.baryshkov@linaro.org> <CAD=FV=V7RyVJKis9e3aoouQyhUppyAhVs9oN9=miKeZcV0t6_g@mail.gmail.com>
- <15f9df0b-3228-af8f-f123-b5d10eb1bacb@linaro.org>
-In-Reply-To: <15f9df0b-3228-af8f-f123-b5d10eb1bacb@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 11 May 2022 15:07:07 -0700
-Message-ID: <CAF6AEGuD05pLUELrc9Hzy_htrczKDtxe8dv6dp6uw9msGXkcGQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] drm/msm/dsi: move DSI host powerup to modeset time
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LOtUBAROt8+wSZqck5ELJgqyUVB2vFhXIURSscRlUY4=;
+        b=mLDWUKAwxWm+pyJsgnD9M7pWrOulqWP7KI+/70PtOpHJUJ0vzT3lkuYXv6jd25UuQf
+         sgTi4QP4iFVasTTMnD3GGpC7Pi/7kUhN7GiIPnGaIBSqrhaMAZPAVhVIvn8FOiY1vJRz
+         q+/7iCLNrtCbDfff5g+D2FBgZ7F/qAaHVMun+LM7Nwn4nQ4+D9gWvZpWtJSAo8k+OBIf
+         TBRs0Kr3vyKnbXzSghMV/ZEVe3A4HaQDVwuLiFIBMrK8L5oBESRjt/1kVb7KkHzhLwVy
+         tk73Z/qImPSEYie7V87f9/0MMjh434GoxE99mPdKUI5f6SLBnqLGZ9R+q1YdPCcB4Myz
+         8G9w==
+X-Gm-Message-State: AOAM531slZKixSB9GvFLGipbgllWdBDfc7/p2wd+ZqWHJwQGC5yUpwRq
+        3dHloeVZBO6lSc7NnEfs+E8LfA==
+X-Google-Smtp-Source: ABdhPJz/rySupxeHwGcIIPekwo8CUfSHZrQcTijT7+Ndv2m0tuN4p9CM6EMMOqwz7W+WeipOlPBNkw==
+X-Received: by 2002:a17:903:18c:b0:15e:be98:90ef with SMTP id z12-20020a170903018c00b0015ebe9890efmr27017500plg.129.1652309909866;
+        Wed, 11 May 2022 15:58:29 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:504e:720d:de58:4f66])
+        by smtp.gmail.com with ESMTPSA id n5-20020a170902968500b0015e8d4eb1easm2399714plp.52.2022.05.11.15.58.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 May 2022 15:58:29 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, swboyd@chromium.org,
+        quic_khsieh@quicinc.com, quic_sbillaka@quicinc.com,
+        quic_abhinavk@quicinc.com, ville.syrjala@linux.intel.com,
+        quic_aravindh@quicinc.com, tzimmermann@suse.de,
+        dmitry.baryshkov@linaro.org, robdclark@gmail.com,
+        linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v3 1/2] drm/probe-helper: Add helper for drm_helper_probe_single_connector_modes()
+Date:   Wed, 11 May 2022 15:58:07 -0700
+Message-Id: <20220511155749.v3.1.I2dd93486c6952bd52f2020904de0133970d11b29@changeid>
+X-Mailer: git-send-email 2.36.0.550.gb090851708-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 11, 2022 at 2:49 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 11/05/2022 23:06, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Tue, Dec 7, 2021 at 2:29 PM Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
-> >>
-> >> The DSI subsystem does not fully fall into the pre-enable/enable system
-> >> of callbacks, since typically DSI device bridge drivers expect to be
-> >> able to communicate with DSI devices at the pre-enable() callback. The
-> >> reason is that for some DSI hosts enabling the video stream would
-> >> prevent other drivers from sending DSI commands. For example see the
-> >> panel-bridge driver, which does drm_panel_prepare() from the
-> >> pre_enable() callback (which would be called before our pre_enable()
-> >> callback, resulting in panel preparation failures as the link is not yet
-> >> ready).
-> >>
-> >> Therewere several attempts to solve this issue, but currently the best
-> >> approach is to power up the DSI link from the mode_set() callback,
-> >> allowing next bridge/panel to use DSI transfers in the pre_enable()
-> >> time. Follow this approach.
-> >>
-> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >> ---
-> >>   drivers/gpu/drm/msm/dsi/dsi_manager.c | 43 +++++++++++++++++++--------
-> >>   1 file changed, 31 insertions(+), 12 deletions(-)
-> >
-> > I happened to be testing today on one of the sc7180-trogdor variants
-> > that has a parade-ps8640 bridge chip in it and ran into problems. A
-> > bisect pointed to this patch and, sure enough, reverting it fixes me
-> > again.
-> >
-> > The Chromebook in question is able to power the screen on at bootup
-> > but things don't work so well in other cases. Specifically, if I leave
-> > the Chromebook idle then it will turn the screen off (but in this
-> > case, not enter S3). Hitting a key should wake the screen up, but it
-> > doesn't.
-> >
-> > None of the error prints in dsi_mgr_bridge_power_on() are hitting when
-> > it fails and I even added extra error prints. It's not hitting any of
-> > the early returns.
-> >
-> > I did a little bit more debugging and it appears that nothing funny is
-> > going on. It's just the ordering difference that matters. With the
-> > patch reverted, I see this and it all works:
-> >
-> > boot:
-> > [    9.653801] DOUG: dsi_mgr_bridge_mode_set
-> > [    9.658687] DOUG: ps8640_pre_enable
-> > [    9.664194] DOUG: dsi_mgr_bridge_pre_enable
-> >
-> > screen turns off:
-> > [   82.130038] DOUG: dsi_mgr_bridge_post_disable
-> > [   82.166817] DOUG: ps8640_post_disable
-> >
-> > screen turns on:
-> > [   92.611846] DOUG: dsi_mgr_bridge_mode_set
-> > [   92.617875] DOUG: ps8640_pre_enable
-> > [   92.920237] DOUG: dsi_mgr_bridge_pre_enable
-> >
-> > Without the patch reverted, I see this and it fails:
-> >
-> > boot:
-> > [   10.817810] DOUG: dsi_mgr_bridge_mode_set
-> > [   10.822128] DOUG: dsi_mgr_bridge_power_on
-> > [   10.852131] DOUG: ps8640_pre_enable
-> > [   10.857942] DOUG: dsi_mgr_bridge_pre_enable
-> >
-> > screen turns off:
-> > [   34.819953] DOUG: dsi_mgr_bridge_post_disable
-> > [   34.883777] DOUG: ps8640_post_disable
-> >
-> > screen should turn on, but doesn't:
-> > [   46.193589] DOUG: dsi_mgr_bridge_mode_set
-> > [   46.197951] DOUG: dsi_mgr_bridge_power_on
-> > [   46.248438] DOUG: ps8640_pre_enable
-> > [   46.541700] DOUG: dsi_mgr_bridge_pre_enable
-> >
-> > Unfortunately, ps8640 is a pretty big black box. The Linux kernel
-> > driver does almost nothing at all and the parade bridge chip has a
-> > bunch of magic firmware on it. Though I don't know for sure, I assume
-> > that this magic firmware simply can't handle the fact that the MIPI
-> > side is already setup / running when the bridge is powered on.
-> >
-> > Rather than this patch, maybe you can jump on Dave Stevenson's patch
-> > series [1] which I believe would solve this problem in a more dynamic
-> > way? Would you accept a revert of ${SUBJECT} patch to fix my problem?
->
-> I'm fine with the revert, but it will depend on [1]. Otherwise other
-> MIPI DSI bridges are broken (see the discussion at [2]).
+The drm_helper_probe_single_connector_modes() is a bit long. Let's
+break a chunk off to update and validate modes. This helps avoid one
+goto and also will allow us to more easily call the helper a second
+time in a future patch without adding looping or another goto.
 
-heh, well the problem is that MIPI DSI bridges, or at least one of
-them, is broken *without* the revert ;-)
+This change is intended to be a no-op change--just code movement.
 
-[1] looks like a bit much for -fixes, so I'd be inclined to revert
-this patch and at least go back to the broken/working state from
-before for the time being..
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+---
 
-BR,
--R
+Changes in v3:
+- Removed WARN_ON
 
-> > [1] https://lore.kernel.org/r/cover.1646406653.git.dave.stevenson@raspberrypi.com
->
-> [2]
-> https://lore.kernel.org/all/CAPY8ntBrhYAmsraDqJGuTrSL6VjGXBAMVoN7xweV7E4qZv+v3Q@mail.gmail.com/
->
->
-> --
-> With best wishes
-> Dmitry
+Changes in v2:
+- Two underscores for __drm_helper_update_and_validate().
+- Return err and use WARN_ON instead of returning a bool.
+
+ drivers/gpu/drm/drm_probe_helper.c | 106 ++++++++++++++++-------------
+ 1 file changed, 60 insertions(+), 46 deletions(-)
+
+diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+index 682359512996..2570d47e7eab 100644
+--- a/drivers/gpu/drm/drm_probe_helper.c
++++ b/drivers/gpu/drm/drm_probe_helper.c
+@@ -354,6 +354,61 @@ drm_helper_probe_detect(struct drm_connector *connector,
+ }
+ EXPORT_SYMBOL(drm_helper_probe_detect);
+ 
++static int __drm_helper_update_and_validate(struct drm_connector *connector,
++					    uint32_t maxX, uint32_t maxY,
++					    struct drm_modeset_acquire_ctx *ctx)
++{
++	struct drm_device *dev = connector->dev;
++	struct drm_display_mode *mode;
++	int mode_flags = 0;
++	int ret;
++
++	drm_connector_list_update(connector);
++
++	if (connector->interlace_allowed)
++		mode_flags |= DRM_MODE_FLAG_INTERLACE;
++	if (connector->doublescan_allowed)
++		mode_flags |= DRM_MODE_FLAG_DBLSCAN;
++	if (connector->stereo_allowed)
++		mode_flags |= DRM_MODE_FLAG_3D_MASK;
++
++	list_for_each_entry(mode, &connector->modes, head) {
++		if (mode->status != MODE_OK)
++			continue;
++
++		mode->status = drm_mode_validate_driver(dev, mode);
++		if (mode->status != MODE_OK)
++			continue;
++
++		mode->status = drm_mode_validate_size(mode, maxX, maxY);
++		if (mode->status != MODE_OK)
++			continue;
++
++		mode->status = drm_mode_validate_flag(mode, mode_flags);
++		if (mode->status != MODE_OK)
++			continue;
++
++		ret = drm_mode_validate_pipeline(mode, connector, ctx,
++						 &mode->status);
++		if (ret) {
++			drm_dbg_kms(dev,
++				    "drm_mode_validate_pipeline failed: %d\n",
++				    ret);
++
++			if (drm_WARN_ON_ONCE(dev, ret != -EDEADLK))
++				mode->status = MODE_ERROR;
++			else
++				return -EDEADLK;
++		}
++
++		if (mode->status != MODE_OK)
++			continue;
++		mode->status = drm_mode_validate_ycbcr420(mode, connector);
++	}
++
++	return 0;
++}
++
+ /**
+  * drm_helper_probe_single_connector_modes - get complete set of display modes
+  * @connector: connector to probe
+@@ -421,7 +476,6 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+ 	const struct drm_connector_helper_funcs *connector_funcs =
+ 		connector->helper_private;
+ 	int count = 0, ret;
+-	int mode_flags = 0;
+ 	bool verbose_prune = true;
+ 	enum drm_connector_status old_status;
+ 	struct drm_modeset_acquire_ctx ctx;
+@@ -519,52 +573,12 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+ 			   connector->status == connector_status_unknown))
+ 		count = drm_add_modes_noedid(connector, 1024, 768);
+ 	count += drm_helper_probe_add_cmdline_mode(connector);
+-	if (count == 0)
+-		goto prune;
+-
+-	drm_connector_list_update(connector);
+-
+-	if (connector->interlace_allowed)
+-		mode_flags |= DRM_MODE_FLAG_INTERLACE;
+-	if (connector->doublescan_allowed)
+-		mode_flags |= DRM_MODE_FLAG_DBLSCAN;
+-	if (connector->stereo_allowed)
+-		mode_flags |= DRM_MODE_FLAG_3D_MASK;
+-
+-	list_for_each_entry(mode, &connector->modes, head) {
+-		if (mode->status != MODE_OK)
+-			continue;
+-
+-		mode->status = drm_mode_validate_driver(dev, mode);
+-		if (mode->status != MODE_OK)
+-			continue;
+-
+-		mode->status = drm_mode_validate_size(mode, maxX, maxY);
+-		if (mode->status != MODE_OK)
+-			continue;
+-
+-		mode->status = drm_mode_validate_flag(mode, mode_flags);
+-		if (mode->status != MODE_OK)
+-			continue;
+-
+-		ret = drm_mode_validate_pipeline(mode, connector, &ctx,
+-						 &mode->status);
+-		if (ret) {
+-			drm_dbg_kms(dev,
+-				    "drm_mode_validate_pipeline failed: %d\n",
+-				    ret);
+-
+-			if (drm_WARN_ON_ONCE(dev, ret != -EDEADLK)) {
+-				mode->status = MODE_ERROR;
+-			} else {
+-				drm_modeset_backoff(&ctx);
+-				goto retry;
+-			}
++	if (count != 0) {
++		ret = __drm_helper_update_and_validate(connector, maxX, maxY, &ctx);
++		if (ret == -EDEADLK) {
++			drm_modeset_backoff(&ctx);
++			goto retry;
+ 		}
+-
+-		if (mode->status != MODE_OK)
+-			continue;
+-		mode->status = drm_mode_validate_ycbcr420(mode, connector);
+ 	}
+ 
+ prune:
+-- 
+2.36.0.550.gb090851708-goog
+
