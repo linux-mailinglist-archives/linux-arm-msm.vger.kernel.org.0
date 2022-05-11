@@ -2,146 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C09DD522A8E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 05:54:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E9CA522AF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 06:25:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231158AbiEKDyQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 May 2022 23:54:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59460 "EHLO
+        id S230393AbiEKEZO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 00:25:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234629AbiEKDyM (ORCPT
+        with ESMTP id S230139AbiEKEZN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 May 2022 23:54:12 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAB4E4C7A1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 20:54:10 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-e5e433d66dso1405512fac.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 20:54:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=0WrSL/b+MR9+m4rRbjGXRX60B+r7zy7wkt64zUH48oY=;
-        b=rDNhyYBHwTL4zR2u6Rh91X182mgiFM7lrZSGXKOmY04hNhVAPm4Dgx0gU5cVJ2vGDC
-         VVK0s4uScAZKYRBD/jNDbgkWWuBV5j+CeByod0LNmbTJY6H1BdD52pzirbR50niNQOWs
-         4UcMfF4B2g4Ic9rYOGzl0LOSN1aaLtLb/R9U55fs4o/J0pMUPrqbzTdJSVKL4Fh78wGH
-         oqA+4Tao/oGIRZvarBpyi6x4Gmuur5E3YRVUVPWpq48UoXcyFBPUo67hsWk85HdW1Iyu
-         UKVBVAQsXQiIpeynG/0M9jNsljMLvTSFcolAfzNWxtFedgaFi3D/S+XxgXcjaVIGS2sh
-         xkqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=0WrSL/b+MR9+m4rRbjGXRX60B+r7zy7wkt64zUH48oY=;
-        b=wg+CGuj/xb7JJDX+VurvQfWDYM99xfTrTZSgfEoWT8HZrmh/ik3WBxNzqNkbnlTKi7
-         UEWPVOx9HBQh9I6aVGS1MY32q58Io3A9PEN6kR9xRMpr3mfX+q2GBgp84d6fasa8zeTu
-         IyfOP/ED0dkp5RHrAeO1bIv+jMDPVUeEJMw7vd7/T/aYpt2BsXIMhP0sDgJXqkJUAzBP
-         d05m2PutDAZjG0N7yz7AHGZgrZOsGPeteOqho70nbZFcHWi11d8zUKY72swzemuB5xfc
-         yCOoYK6ZtLQTIC97UYWMwxh9hjIiG46AhNr6E/G7NkEWpY8zqitra6VssNuB/vogPlzn
-         l7nA==
-X-Gm-Message-State: AOAM530YQMaAZHlZQsZmWrjtUNE3Cu23S5Llrt+dNkwPCiznYiM93EbB
-        XBN00sqzmi0TpNEqK8OsL7bayA==
-X-Google-Smtp-Source: ABdhPJyoFDZ6uvhFkWPUEbCyNMWvl/HBFzH2dTTIdFcRPaK+Uq/uWTzwMP5AeRGfoz4hWcMS4Eo26w==
-X-Received: by 2002:a05:6870:818a:b0:f1:1223:3afd with SMTP id k10-20020a056870818a00b000f112233afdmr497822oae.271.1652241250132;
-        Tue, 10 May 2022 20:54:10 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id l6-20020a056830154600b0060603221269sm397354otp.57.2022.05.10.20.54.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 May 2022 20:54:09 -0700 (PDT)
-Date:   Tue, 10 May 2022 22:54:07 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
-        Rob Herring <robh@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Subject: Re: [PATCH 2/4] leds: qcom-lpg: Add PM660L configuration and
- compatible
-Message-ID: <YnszX1wdQhUSkgyH@builder.lan>
-References: <20220507221123.2201668-1-marijn.suijten@somainline.org>
- <20220507221123.2201668-2-marijn.suijten@somainline.org>
+        Wed, 11 May 2022 00:25:13 -0400
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [46.235.227.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DE383CA44;
+        Tue, 10 May 2022 21:25:11 -0700 (PDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: tomeu)
+        with ESMTPSA id 814831F44A6E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1652243109;
+        bh=k4CAo9Y95waZZqgDc5richqC5rLeJJTWfy44Q601/Q0=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=niWJrFanqGGREze6rfJDFHgENDAnnMzMPF1kW1PppuLMKTJrCqRH5Manut/a+mBZi
+         qfP5A2JO/4AMj55JBTKCwMaOOFmcM6hoWeaQkyAuWSnmN5h0BpzX/+4r3DlUGq0V8Y
+         LofZuROKTHNgs6pUHlJhdSIjqDzNtoy0ppPHE1sj7Roqwqw1AADwNS1IMfkPgMASJb
+         9tgcrydqEl4JdMpTAomltpPNZib56Y29L7FNr29pTB0iqZrqiVefgbYjbxEmWAsmwr
+         YsUxUW4/t1xacp3+wVJ2CBqyqw/XtAH+cUPfmfAYFOIrLXLHAj3CTroxJ7HX9R0mw8
+         FXYT9MeAeEEnA==
+Subject: Re: [Freedreno] [RFC v2] drm/msm: Add initial ci/ subdirectory
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
+ <20220510141329.54414-1-tomeu.vizoso@collabora.com>
+ <e4e03cd8-3ebc-e5e1-e7d0-6bdc038049b5@quicinc.com>
+From:   Tomeu Vizoso <tomeu.vizoso@collabora.com>
+Message-ID: <33ab308f-f0a1-b5b9-1bcb-b4387f5a4152@collabora.com>
+Date:   Wed, 11 May 2022 06:25:05 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220507221123.2201668-2-marijn.suijten@somainline.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <e4e03cd8-3ebc-e5e1-e7d0-6bdc038049b5@quicinc.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 07 May 17:11 CDT 2022, Marijn Suijten wrote:
-
-> Inherit PM660L PMIC LPG/triled block configuration from downstream
-> drivers and DT sources, consisting of a triled block with automatic
-> trickle charge control and source selection, three colored led channels
-> belonging to the synchronized triled block and one loose PWM channel.
+On 5/10/22 9:39 PM, Jessica Zhang wrote:
 > 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->  drivers/leds/rgb/leds-qcom-lpg.c | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
 > 
-> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-> index cfa3362b2457..30c12ac8eed4 100644
-> --- a/drivers/leds/rgb/leds-qcom-lpg.c
-> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
-> @@ -1271,6 +1271,23 @@ static int lpg_remove(struct platform_device *pdev)
->  	return 0;
->  }
->  
-> +static const struct lpg_data pm660l_lpg_data = {
-> +	.lut_base = 0xb000,
-> +	.lut_size = 0x100,
-
-The documentation tells me that you have 49 entries of LUT on the
-PM660L.
-
-> +
-> +	.triled_base = 0xd000,
-> +	.triled_has_atc_ctl = true,
-> +	.triled_has_src_sel = true,
-> +
-> +	.num_channels = 4,
-> +	.channels = (struct lpg_channel_data[]) {
-
-This can be const
-
-Regards,
-Bjorn
-
-> +		{ .base = 0xb100, .triled_mask = BIT(5) },
-> +		{ .base = 0xb200, .triled_mask = BIT(6) },
-> +		{ .base = 0xb300, .triled_mask = BIT(7) },
-> +		{ .base = 0xb400 },
-> +	},
-> +};
-> +
->  static const struct lpg_data pm8916_pwm_data = {
->  	.num_channels = 1,
->  	.channels = (const struct lpg_channel_data[]) {
-> @@ -1391,6 +1408,7 @@ static const struct lpg_data pm8350c_pwm_data = {
->  };
->  
->  static const struct of_device_id lpg_of_table[] = {
-> +	{ .compatible = "qcom,pm660l-lpg", .data = &pm660l_lpg_data },
->  	{ .compatible = "qcom,pm8150b-lpg", .data = &pm8150b_lpg_data },
->  	{ .compatible = "qcom,pm8150l-lpg", .data = &pm8150l_lpg_data },
->  	{ .compatible = "qcom,pm8350c-pwm", .data = &pm8350c_pwm_data },
-> -- 
-> 2.36.0
+> On 5/10/2022 7:13 AM, Tomeu Vizoso wrote:
+>> +igt@kms_atomic_interruptible@legacy-setmode@pipe-a-edp-1
+>> +igt@kms_atomic_interruptible@atomic-setmode@pipe-a-edp-1
+>> +igt@kms_atomic_interruptible@legacy-dpms@pipe-a-edp-1
+>> +igt@kms_atomic_interruptible@legacy-pageflip@pipe-a-edp-1
+>> +igt@kms_atomic_interruptible@legacy-cursor@pipe-a-edp-1
+>> +igt@kms_atomic_interruptible@universal-setplane-primary@pipe-a-edp-1
+>> +igt@kms_atomic_interruptible@universal-setplane-cursor@pipe-a-edp-1
 > 
+> I see that there are some KMS subtests/tests are missing such as 
+> kms_atomic_transition -- are they unstable across all boards?
+> 
+>  From what I've seen, kms_atomic_transition is unstable only on Trogdor, 
+> but has stable results on other boards.
+
+I don't know of a good reason for not having the tests in this list. 
+Developers can follow the instructions at "How to expand coverage" to 
+add tests if the driver can consistently pass (or fail) them.
+
+There is ongoing work to have a test runner that will better handle 
+flaky tests, which will make it possible to expand the list without 
+having to resort to per-soc test lists.
+
+>> +igt@kms_addfb_basic@size-max,pass
+>> +igt@kms_addfb_basic@too-wide,pass
+>> +igt@kms_addfb_basic@too-high,dmesg-warn
+> 
+> For test results on Trogdor, is is possible to have them be 
+> success/fail/skip only?
+> 
+> Results such as dmesg-warn/dmesg-fail are igt_runner specific and 
+> because there isn't support for igt_runner on ChromeOS, they will be 
+> difficult to replicate and debug.
+
+As Rob said later, it's probably better to drop that distinction. Maybe 
+at some future point we will want to track expected kmsg output but I 
+think there are lots of work to do before that makes sense.
+
+Will do that in a v3.
+
+>> +igt@kms_universal_plane@universal-plane-pipe-a-functional,skip
+>> +igt@kms_universal_plane@disable-primary-vs-flip-pipe-a,pass
+>> +igt@kms_universal_plane@disable-primary-vs-flip-pipe-b,fail
+> 
+> We could probably skip checking the results for kms_universal_plane on 
+> Trogdor for now, since this is a test affected by the hack regression. 
+> There is an IGT patch in the works for fixing the 
+> disable-primary-vs-flip-pipe-b failure, so it should be updated pretty 
+> soon too.
+
+So, how this should work is for the patch that fixes that bug to update 
+also the expectation files (see "How to update test expectations" in the 
+docs). In this case though, the fix is likely to land before this patch, 
+so I will just update the expectations once I rebase and the fix is 
+brought into my branch.
+
+Thanks for the feedback!
+
+Tomeu
