@@ -2,122 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2FD85235A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 16:34:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6E36523627
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 16:50:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244721AbiEKOes (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 10:34:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33812 "EHLO
+        id S245085AbiEKOuh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 10:50:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240682AbiEKOeq (ORCPT
+        with ESMTP id S245095AbiEKOue (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 10:34:46 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AECF0AAE02
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 07:34:45 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id c11so2035733plg.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 07:34:45 -0700 (PDT)
+        Wed, 11 May 2022 10:50:34 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 999421B091C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 07:50:26 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 4so2904300ljw.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 07:50:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=MhOchhliyqvD/fDprf+7mSJg0pmzKYErDvnqXI8SdZ8=;
-        b=mc/JyeED3yQ2BjAkmfjKhD0nmAY2sGlgjXuK81sBCjqECSkrbPCWrP0RoQQq0gl9Ed
-         AooB3VKc5xmiG0XJh4laAENA7HzRh8ysZ1U+9OQTieH0gtQRkdh3FlHyN3vzNZwdjQli
-         FE3GOcVXsRTCB6AQhBodhUZYnbewAEZxQWxN/ECf008jV6GQhZsiAJU+fscrYJkFlx2Q
-         FBP6EqV+zTH3qDndp3KE3m8VFHsvZeHTMwXgvHQqa/+RBSgnblnZZugwQ/R3wVZ1+AUe
-         HaGCQWnElK794UYSVkTmgjFF+5pP+hafkPIdHZWnAu9H07K9TTgpwxKLgbWujqk4dOxn
-         y/Aw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ElWpfj0wGJL50TvRphg5kRjDcZaYvuq2GbVsqJVFYCc=;
+        b=D89wtlNLbOs5yE8adcQ/A2ga2mHXKALISGT/gYSnpbat0i4NuirW4ZCbyUo2MTqHIM
+         DybTUguFzP50B+QC5CPz2TzKjbooVf6vopYcNNMl7ZUovlVPA0oH8Br/q9KFIEAmXniz
+         F0j2NDH2h9QX+6DPv05OnLKU/lCRS2VNa6DQznqwmQB3VBxMPm5cCJbbSmyddqzOtzgw
+         MErApNu6AJbzoTmjvacV0Cjlufn2JPHd7IFrZPxtZuKzx5w77hCDKAFQUpVM50td0iZT
+         WgQtdLpvHIwe6pWOO3tlZhkYS3rM9lzdvgLUrwrDhiGGSwVnAz5iQAYClQs/zR9hV3u3
+         p17Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=MhOchhliyqvD/fDprf+7mSJg0pmzKYErDvnqXI8SdZ8=;
-        b=eZ0eY25UANI04+qVOTYzy5r/op3MUFVtffk7YMD9U68Al0EHhJAwC5q35GAF4DOGel
-         xKp4c1UbcU8T5R7ehtV2KWRUBM2bv0qZnNeuPjD1r+pDWpCh7eTkHhxB9UZsHxooH9Ra
-         +OtZSkWyAXHjLiAQry8u2xAdtAxLVBMmyg3AgJdYbBscCCriWalUiqHnDM+rMC+4tHbt
-         aw/pgrS1MHXQsnrXuJaBJmW2MM5tCpGFujpRrDqdYq4NkAsdhYXKCjAhn6S2QOmcuAxz
-         cErN4inSvdGhqn+JULjagwx7a+V9DIOkBvUW9U5su96dxxv09VEo4VJ6Pr5gMZdj9CNM
-         ZCAA==
-X-Gm-Message-State: AOAM532N1iWIpPJOuBfFh6u2ZMhABylFWhBTqHiCI0Dhwc5W8rSmI5Pf
-        V3DrZioAohsCoPGNKgB/G1dX
-X-Google-Smtp-Source: ABdhPJz2+4vMI8VtPsUXSrJVs7Qfa0zuC9D2DOnpyqBMogXTwJNszsdtByLkAkfH4vjh/ReNC97d4A==
-X-Received: by 2002:a17:902:d487:b0:15e:a0a4:69e3 with SMTP id c7-20020a170902d48700b0015ea0a469e3mr26180679plg.155.1652279684939;
-        Wed, 11 May 2022 07:34:44 -0700 (PDT)
-Received: from thinkpad ([117.217.183.109])
-        by smtp.gmail.com with ESMTPSA id n23-20020a17090a929700b001cd60246575sm13859pjo.17.2022.05.11.07.34.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 May 2022 07:34:44 -0700 (PDT)
-Date:   Wed, 11 May 2022 20:04:35 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: Re: [PATCH v4 2/5] clk: qcom: regmap: add pipe clk implementation
-Message-ID: <20220511143435.GA4067@thinkpad>
-References: <20220501192149.4128158-1-dmitry.baryshkov@linaro.org>
- <20220501192149.4128158-3-dmitry.baryshkov@linaro.org>
- <20220502101053.GF5053@thinkpad>
- <c47616bf-a0c3-3ad5-c3e2-ba2ae33110d0@linaro.org>
- <20220502111004.GH5053@thinkpad>
- <29819e6d-9aa1-aca9-0ff6-b81098077f28@linaro.org>
- <YnUXOYxk47NRG2VD@hovoldconsulting.com>
- <30846cb5-a22e-0102-9700-a1417de69952@linaro.org>
- <YnjtJuR7ShSsF+mz@hovoldconsulting.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ElWpfj0wGJL50TvRphg5kRjDcZaYvuq2GbVsqJVFYCc=;
+        b=Tchp1tvs02hYoepzrdp+UUFouw3DXjkdxMavQG+tLz1OVcxzpMvUbJ+rhhXdq8u/k1
+         H/Khjlj9PgH/DfvXGZF7d35FJsHyh9VguWiGdDFT2U/jWB09r50tNRojSCzRL25J3mNX
+         xwv/CmY1HmppmD+HqHxGEnb7A/+KpKHwAScRVD8Er88IWhzLxjyxDXSCzOYtDN4AXNfn
+         DjGtcME+De8zgquuDWbZ6wFZA2mInysaxNU9MsZrZWiaszgjGo2bYpN3sh1MddgyCQGb
+         oevwtdaXGI8nq2fgXxEan41RitdrA3azxk/SSHnTIF03Q9rGQAahOSxf3iHWU5EUYAky
+         GHog==
+X-Gm-Message-State: AOAM530Ude36pqMby0Ch4u8fO9gGKOTJxMPJLYUNHpQojGI/qV/rG/Ug
+        Cf4G3nF80Y9OsqE9NFx+NwlDnQ==
+X-Google-Smtp-Source: ABdhPJywfHPoACVHlBO9DahbBv/k/o1jSWDDDk9EmMhQ1LcoWNLUQAhoA0UwVt6duF/93+DZe8i4Pw==
+X-Received: by 2002:a2e:9e02:0:b0:249:7d50:bd8c with SMTP id e2-20020a2e9e02000000b002497d50bd8cmr17118916ljk.327.1652280624969;
+        Wed, 11 May 2022 07:50:24 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id d17-20020ac25ed1000000b0047255d2116bsm315476lfq.154.2022.05.11.07.50.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 May 2022 07:50:24 -0700 (PDT)
+Message-ID: <3c126a06-f8fb-bc7a-860b-d4b1f2ef0133@linaro.org>
+Date:   Wed, 11 May 2022 17:50:23 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YnjtJuR7ShSsF+mz@hovoldconsulting.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v7 6/7] dt-bindings: PCI: qcom: Support additional MSI
+ interrupts
+Content-Language: en-GB
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20220505135407.1352382-1-dmitry.baryshkov@linaro.org>
+ <20220505135407.1352382-7-dmitry.baryshkov@linaro.org>
+ <YnRB4UxBzFDmsls7@robh.at.kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YnRB4UxBzFDmsls7@robh.at.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 09, 2022 at 12:29:58PM +0200, Johan Hovold wrote:
-> On Fri, May 06, 2022 at 04:00:38PM +0300, Dmitry Baryshkov wrote:
-> > On 06/05/2022 15:40, Johan Hovold wrote:
-> > > On Mon, May 02, 2022 at 02:18:26PM +0300, Dmitry Baryshkov wrote:
-> > >> On 02/05/2022 14:10, Manivannan Sadhasivam wrote:
-> > > 
-> > >>> I don't understand this. How can you make this clock disabled? It just has 4
-> > >>> parents, right?
-> > >>
-> > >> It has 4 parents. It uses just two of them (pipe and tcxo).
-> > > 
-> > > Really? I did not know that. Which are the other two parents and what
-> > > would they be used for?
-> > 
-> > This is described neither in the downstream tree nor in any sources I 
-> > have at possession.
+On 06/05/2022 00:30, Rob Herring wrote:
+> On Thu, May 05, 2022 at 04:54:06PM +0300, Dmitry Baryshkov wrote:
+>> On Qualcomm platforms each group of 32 MSI vectors is routed to the
+>> separate GIC interrupt. Document mapping of additional interrupts.
+>>
+>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   .../devicetree/bindings/pci/qcom,pcie.yaml    | 45 ++++++++++++++++++-
+>>   1 file changed, 44 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> index 0b69b12b849e..fd3290e0e220 100644
+>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> @@ -43,11 +43,20 @@ properties:
+>>       maxItems: 5
+>>   
+>>     interrupts:
+>> -    maxItems: 1
+>> +    minItems: 1
+>> +    maxItems: 8
+>>   
+>>     interrupt-names:
+>> +    minItems: 1
+>>       items:
+>>         - const: msi
+>> +      - const: msi2
 > 
-> Yeah, I don't see anything downstream either, but how do you know that
-> it has four parents then?
+> Is 2 from some documentation or you made up. If the latter, software
+> folks start numbering at 0, not 1. :) I wouldn't care, but I think this
+> may become common.
+
+It has been made up, so I will update this.
+
 > 
+>> +      - const: msi3
+>> +      - const: msi4
+>> +      - const: msi5
+>> +      - const: msi6
+>> +      - const: msi7
+>> +      - const: msi8
 
-This information is available in Qcom's internal GCC documentation.
-
-Thanks,
-Mani
-
-> Johan
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
