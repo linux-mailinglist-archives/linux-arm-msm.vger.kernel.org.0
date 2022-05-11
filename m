@@ -2,180 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8382E52344B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 15:33:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D912A5234BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 15:53:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243750AbiEKNdr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 09:33:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39794 "EHLO
+        id S230306AbiEKNx6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 09:53:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239272AbiEKNdp (ORCPT
+        with ESMTP id S241433AbiEKNx4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 09:33:45 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A100C5D8A;
-        Wed, 11 May 2022 06:33:44 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id i20-20020a05600c355400b0039456976dcaso2542409wmq.1;
-        Wed, 11 May 2022 06:33:43 -0700 (PDT)
+        Wed, 11 May 2022 09:53:56 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC18D2DD56
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 06:53:54 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id x17so4169431ybj.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 06:53:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ksy6PHWBR9sVN5QwB4AlZVRAOWKrGBlUQcJanMtrZ1E=;
-        b=mTDzNH2v16tSY8KR9n8XYuM9TmRFKMujDftxz6TIj6GtwaEOz1nHkwh9I23i0T3HdH
-         FkRLXEX5SaHr/3aMMMm7OL/M/d+MaFHllgpxQm/fpYTPdAYgalEfYfqkuEUtmA93LCsz
-         KTJ+dEbvn9aYPq/m/ywGmSofzC6L8X7kJ7GhdUszaeH8/X2mdeXpmjdv+8MkkdGJOkK5
-         Gy7x53+7PYcENNJD+lBQtTteeSN2J6383EG33+HODXzESWqPsDZuh/g7svvE1fImNNif
-         2mBzCB9nkBhxa2kVXx1d4gGeBI3j+8uRsqTkVokwRaI4RP3uLnVC7AdoYvSvrUEYrboU
-         /Gew==
+         :cc;
+        bh=EKBDsHZRYlf8FJ7KDE3y9NTurDd/YZ9iYNARovE8bGk=;
+        b=qUPnKVqt3hQXN9yc2X6cSefiSUewR3oJ0bBSN7J35htxxkYxBBZ4qKZ9MWHm4JieOO
+         akOeH7FyP+X2pxTipLoDydecNpskwP+cJvRsFV89R6Yz+VPaT1HmeBmQ/22yh2BbDXAu
+         EdilNg5CBTD3IKrQlfl97rWmnN4XKp/+R/X2k2hllzOmzr0EGl3u4k4H4z0tw2HfWejj
+         fFWg5j89aWwuVXF2N1eAya74m3uuSOeTSIKUDURGSCeY/GsHZhLJfWJuHH1xwjYXGlH8
+         IHZ8mtGVQ2RrQMt5QGKvV+ZHvPkFdsC4IWyL1RBmiRPypHt7OtL4iMXlHdjwrKdFk+4A
+         K/uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ksy6PHWBR9sVN5QwB4AlZVRAOWKrGBlUQcJanMtrZ1E=;
-        b=Te3yLYRzB0NysHtcEWCB1gaLaCzJQhVcX2c37IM4nrcptIbn9r3dgV13XCEqIFOJRJ
-         oqYGgUiw0Ba0vfr+99c2p/uWgk1hTe6K4l+VpxbHlH7zLDxo0W25vzaLT/judCJ7HR+D
-         ZLbHXY09DHnEe/2d5HCB/CAcn50xTDTQhNFlbqkfpJ5AaEqqJV6yKEr7+Gxp4cHA1kj+
-         wW9Rj8jnsZU1WAhXwe9m4atuqrO4pxz0BTJ8YPeVCvSoVhMWqrmt5+g8OcZQhA9d2N6q
-         /fuQD7Q+SG4dQje7j2RJoGDJiDJwKWLoiC1Aqb0BpaaPkgrTmTS2fhVozV8FZ/RQYI6A
-         trcA==
-X-Gm-Message-State: AOAM533dibntHCbFS9zUh5lod72P/g6u0HTzGisCZ9cJT7vj7brDmomj
-        lxgAk1K3yGM/iLAV9D3CEOAPHeS7mCtr2oZnXC0=
-X-Google-Smtp-Source: ABdhPJx0HsNmN6aXZ/qgME3QoitJWXJwbYBVMkQDcpQpvHLbKrddWJTuykdpvOlgA7X5TIZWTNkDfYvdnRN4NLyIp6Q=
-X-Received: by 2002:a05:600c:154d:b0:394:8d64:9166 with SMTP id
- f13-20020a05600c154d00b003948d649166mr4952413wmg.102.1652276022494; Wed, 11
- May 2022 06:33:42 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=EKBDsHZRYlf8FJ7KDE3y9NTurDd/YZ9iYNARovE8bGk=;
+        b=0AxGVnd5c7SKSnoNshOWE8spiHkGvfIzbilrLdLHEsjDHssUWg6a7PKM82RwEUrcE4
+         XUz+Ygkm/5xHRg29QSGARHeJtC5m9JZxPPiFwgfZ1V1ogUFnW0oZRscX6KvH3MpTLR/e
+         4Fx6Kl/aR0G1wJ6lmwiJWdl+CrxpvogwOb0iYDIW5UBKrbYZYwyowPu7/nbUKbOdcg8a
+         uypnrpgZhND1/Dasi/2NS7qH464wfH19IOzrUunaE1tYdyK1uHRwjKPbK0fTlZ5y1EaO
+         L05PbrgMlKl0uSTypvtULTdatEOa5JChrV9NNVoEmBwQ4MewuLh3/U0RlwXqnA397Hd+
+         M0BQ==
+X-Gm-Message-State: AOAM530vT4DYz6PRflHIShFn0pS90unui33efK1BX/kFnSzZzGvpFT9d
+        R2SjVYJfCI1tIhYZt3yth+wdgB4QumMaORxuVcLPkw==
+X-Google-Smtp-Source: ABdhPJy4C8oSK2D5rm3zTpwR4XoY6AS+wh6T5Uf7ex4DN+vN2dIZy/VxRWvdleAWC0WsC5BlgDFjQQxUSIt85svwTYg=
+X-Received: by 2002:a25:c206:0:b0:64a:7dfe:e714 with SMTP id
+ s6-20020a25c206000000b0064a7dfee714mr22299152ybf.92.1652277233933; Wed, 11
+ May 2022 06:53:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
- <20220510141329.54414-1-tomeu.vizoso@collabora.com> <CAPM=9tzLR-wsLhg2ikGjoK06s-ju5XWa1rtPPiUpN=pwD1vgtA@mail.gmail.com>
- <YntWQIXSqMCd6TYV@kroah.com> <1255a66a-121d-988a-19a7-316f703cb37d@mailbox.org>
- <YnujG0nkF0U6d5kd@kroah.com>
-In-Reply-To: <YnujG0nkF0U6d5kd@kroah.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 11 May 2022 06:33:32 -0700
-Message-ID: <CAF6AEGsmD-CNGj4bAE952JQpquaWA+Nxo5TGpFiHqaPK9doP-g@mail.gmail.com>
-Subject: Re: [Freedreno] Adding CI results to the kernel tree was Re: [RFC v2]
- drm/msm: Add initial ci/ subdirectory
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     =?UTF-8?Q?Michel_D=C3=A4nzer?= <michel.daenzer@mailbox.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Dave Airlie <airlied@gmail.com>, Sean Paul <sean@poorly.run>
+References: <20220506152107.1527552-1-dmitry.baryshkov@linaro.org>
+ <YnqXxNxFhf/odyka@robh.at.kernel.org> <CAA8EJpriMcP4uQ3fjyiCKY+uc82ctXe2VrjO1psPDcp-P++Nhw@mail.gmail.com>
+ <Ynu1p1hzqHJNpSp3@lpieralisi>
+In-Reply-To: <Ynu1p1hzqHJNpSp3@lpieralisi>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 11 May 2022 16:53:43 +0300
+Message-ID: <CAA8EJpoQ0TkY9zVzhB00f9iYKquPauF2JeapSECaPp3=eXWjsw@mail.gmail.com>
+Subject: Re: [PATCH v6 0/8] dt-bindings: YAMLify pci/qcom,pcie schema
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 11, 2022 at 4:50 AM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Wed, 11 May 2022 at 16:10, Lorenzo Pieralisi
+<lorenzo.pieralisi@arm.com> wrote:
 >
-> On Wed, May 11, 2022 at 12:26:05PM +0200, Michel D=C3=A4nzer wrote:
-> > On 2022-05-11 08:22, Greg Kroah-Hartman wrote:
-> > > On Wed, May 11, 2022 at 03:06:47PM +1000, Dave Airlie wrote:
-> > >>> And use it to store expectations about what the drm/msm driver is
-> > >>> supposed to pass in the IGT test suite.
-> > >>
-> > >> I wanted to loop in Linus/Greg to see if there are any issues raised
-> > >> by adding CI results file to the tree in their minds, or if any othe=
-r
-> > >> subsystem has done this already, and it's all fine.
+> On Wed, May 11, 2022 at 01:13:28PM +0300, Dmitry Baryshkov wrote:
+> > On Tue, 10 May 2022 at 19:50, Rob Herring <robh@kernel.org> wrote:
 > > >
-> > > Why does the results need to be added to the tree?  Shouldn't they be
-> > > either "all is good" or "constantly changing and a constant churn"?
+> > > On Fri, May 06, 2022 at 06:20:59PM +0300, Dmitry Baryshkov wrote:
+> > > > Convert pci/qcom,pcie schema to YAML description. The first patch
+> > > > introduces several warnings which are fixed by the other patches in the
+> > > > series.
+> > > >
+> > > > Note regarding the snps,dw-pcie compatibility. The Qualcomm PCIe
+> > > > controller uses Synopsys PCIe IP core. However it is not just fused to
+> > > > the address space. Accessing PCIe registers requires several clocks and
+> > > > regulators to be powered up. Thus it can be assumed that the qcom,pcie
+> > > > bindings are not fully compatible with the snps,dw-pcie schema.
+> > > >
+> > > > Changes since v5:
+> > > >  - s/stance/stanza (pointed out by Bjorn Helgaas)
+> > > >
+> > > > Changes since v4:
+> > > >  - Change subjects to follow convention (suggested by Bjorn Helgaas)
+> > > >
+> > > > Changes since v3:
+> > > >  - Rebase on linux-next to include sm8150 patches
+> > > >
+> > > > Changes since v2 (still kudos to Krzyshtof):
+> > > >  - Readded reg-names conversion patch
+> > > >  - Mention wake-gpio update in the commit message
+> > > >  - Remove extra quotes in the schema
+> > > >
+> > > > Changes since v1 (all kudos to Krzyshtof):
+> > > >  - Dropped the reg-names patch. It will be handled separately
+> > > >  - Squashed the snps,dw-pcie removal (from schema) into the first patch
+> > > >  - Replaced deprecated perst-gpio and wake-gpio with perst-gpios and
+> > > >    wake-gpios in the examples and in DT files
+> > > >  - Moved common clocks/clock-names, resets/reset-names and power-domains
+> > > >    properties to the top level of the schema, leaving only platform
+> > > >    specifics in the conditional branches
+> > > >  - Dropped iommu-map/iommu-map-mask for now
+> > > >  - Added (missed) interrupt-cells, clocks, clock-names, resets,
+> > > >    reset-names properties to the required list (resets/reset-names are
+> > > >    removed in the next patch, as they are not used on msm8996)
+> > > >  - Fixed IRQ flags in the examples
+> > > >  - Merged apq8064/ipq8064 into the single condition statement
+> > > >  - Added extra empty lines
+> > > >
+> > > > Dmitry Baryshkov (8):
+> > > >   dt-bindings: PCI: qcom: Convert to YAML
+> > > >   dt-bindings: PCI: qcom: Do not require resets on msm8996 platforms
+> > > >   dt-bindings: PCI: qcom: Specify reg-names explicitly
+> > > >   dt-bindings: PCI: qcom: Add schema for sc7280 chipset
+> > > >   arm64: dts: qcom: stop using snps,dw-pcie falback
+> > > >   arm: dts: qcom: stop using snps,dw-pcie falback
+> > > >   arm: dts: qcom-*: replace deprecated perst-gpio with perst-gpios
+> > > >   arm64: dts: qcom: replace deprecated perst-gpio with perst-gpios
+> > > >
+> > > >  .../devicetree/bindings/pci/qcom,pcie.txt     | 398 ----------
+> > > >  .../devicetree/bindings/pci/qcom,pcie.yaml    | 714 ++++++++++++++++++
 > > >
-> > >> I think this is a good thing after our Mesa experience, but Mesa has=
- a
-> > >> lot tighter integration here, so I want to get some more opinions
-> > >> outside the group.
-> > >
-> > > For systems that have "tight integration" this might make sense as pr=
-oof
-> > > that all is working for a specific commit, but I can't see how this w=
-ill
-> > > help the kernel out much.
-> > >
-> > > What are you going to do with these results being checked in all the
-> > > time?
+> > > What tree do these apply to because they don't apply to rc1. I'm
+> > > assuming the PCI tree and Lorenzo should take them.
 > >
-> > Having the expected results in the tree keeps them consistent with the =
-driver code itself, and allows putting in place gating CI to prevent mergin=
-g driver changes which make any of the tests deviate from the expected resu=
-lt.
+> > The series depends on the patch in Lorenzo's tree (sm8150 bindings),
+> > so I'd assume it would be natural to merge these patches through his
+> > tree too.
 >
-> Shouldn't "expected result" always be "pass"?
+> I can take the DT bindings but the dts updates I'd prefer if they
+> went via platform trees. Is that OK ?
+
+Yes, that's fine with me. I think Bjorn has sent 5.19 pull request
+already, I'll track them getting merged into 5.19 or 5.20.
+
 >
-> If not, then the test should be changed to be "skipped" like we have
-> today in the kselftest tests.
+> Thanks,
+> Lorenzo
 
-No, we want to run tests even if they are expected to fail.  This
-prevents the scenario of a test getting fixed without being noticed
-(for ex, developer was working on fixing test A and didn't notice that
-the fix also fixed test B).  If a fix goes unnoticed, a later
-regression would also go unnoticed ;-)
 
-I was skeptical about this approach at first with mesa CI, but having
-used mesa CI for a while, I am now a firm believer in the approach.
 
-And ofc we want the expectations to be in the kernel tree because
-there could be, for example, differences between -fixes and -next
-branches.  (Or even stable kernel branches if/when we get to the point
-of running CI on those.)
-
-> And how about tieing this into the kselftest process as well, why would
-> this be somehow separate from the rest of the kernel tests?
->
-> > Keeping them separate inevitably results in divergence between the driv=
-er code and the expected test results, which would result in spurious failu=
-res of such CI.
->
-> Again, "pass" should be the expected results :)
->
-> > I expect the main complication for the kernel will be due to driver cha=
-nges merged via different trees, e.g. for cross-subsystem reworks. Since th=
-ose will not go through the same CI, they may accidentally introduce incons=
-istencies. The ideal solution for this IMO would be centralizing CI such th=
-at the same gating tests have to pass regardless of how the code is merged.=
- But there's likely quite a long way to go until we get there. :)
->
-> We have in-kernel tests for the rest of the kernel, why can't you put
-> your testing stuff into there as well?
-
-We could ofc put a lot more of the gitlab yml and scripts into the
-kernel tree.  Probably all of i-g-t is a bit much to put in the kernel
-tree.  Not to mention I'd like to see this expand to also run some
-deqp and/or piglit tests, which is definitely too much to vendor into
-the kernel tree.
-
-The approach of this RFC was to put only what was absolutely required
-in the kernel tree (such as expectations), and then link out to an
-external drm-ci tree[1] which has all the necessary scripts and yml
-for building and running tests, to avoid having to put a whole lot
-more in the kernel tree. (We should be specifying exact commit-sha for
-that tree, IMO, as it controls the version of i-g-t which gets used,
-and we need to be able to update expectations in sync with an i-g-t
-uprev, for example when new tests are added or if a test fix caused a
-fail->pass transition.)
-
-BR,
--R
-
-[1] https://gitlab.freedesktop.org/gfx-ci/drm-ci
-
-> thanks,
->
-> greg k-h
+-- 
+With best wishes
+Dmitry
