@@ -2,80 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8429D52384E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 18:15:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13ACC523A8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 18:43:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344469AbiEKQO7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 12:14:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57806 "EHLO
+        id S1344911AbiEKQnv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 12:43:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344456AbiEKQO5 (ORCPT
+        with ESMTP id S245735AbiEKQnt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 12:14:57 -0400
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24B376EB3F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:14:56 -0700 (PDT)
-Received: by mail-oi1-x236.google.com with SMTP id q10so3258832oia.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:14:56 -0700 (PDT)
+        Wed, 11 May 2022 12:43:49 -0400
+Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A83F62BFF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:43:42 -0700 (PDT)
+Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-ed9ac77cbbso3505613fac.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:43:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Cf09Je3CtRN58q8NVoc2nPVu33QjMHj88UB5fSrOla4=;
-        b=CTG8yoxyViVJG9wmGrm6SLhEgFT0WuEvMoQXyZI5Kx6YkRB5j28pASLSwuZICqn0Cn
-         WUe9JQtUluE5n2n2m1EPa+FISLLmw74zubXRkCQO7+cPFnDb7SH7eHHvsAv5UmyVzyUV
-         Yg4qwAYNHpV19CvN9+QaSJdKAjMOYPnzZCA3hYz+C9nugper2Z4G1e1AGj+1SszRkaQo
-         moGjWWVVce7nK2CR/KrFugqD3XC1mwkzPeFT8lqC0rXm5ECEPIDRHLahArrblpkSEeOi
-         oarjMZfY1Bm/srauvkhyBWogv1HqzCKX1WkOEQx8b1IIsfASQoQDyYqMHU0Z+3n8xztv
-         Iymw==
+        d=ffwll.ch; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Qv5UPaNLDRk7OZesf9/OmG2IAf7szhws6U9XAPIZMsU=;
+        b=KHSscfX2VH88d4KZ8IH4882XNUx7gbxDp0H53sNZEcKHbBd0GlfHPCRJsWZAFSKulo
+         Y+i6p6Jr8+ZVY45RCmnhekz9C/ttFtLh2dTnv4xa1Q+PpWB7Gsyuf6DhDmxbKtjc9JdO
+         e2NW++2QKWi9+U6ubodpwq6eLTZOgqK/xZcJ0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Cf09Je3CtRN58q8NVoc2nPVu33QjMHj88UB5fSrOla4=;
-        b=Zvk0+69lsuO129wYkhrnrmZemB3jto0dRXJTnpG+M3x/gxBg1bpQ5HGFrhmsG1WyQT
-         fQ4wkhZnxQ+TXMxkGNdVVgPpTVAhCMlky2q9fX9uRykKVHBGv+Oyx2oS58AwS6ZAKA6F
-         yTcYCGHLHVol3lrneXeEiHRRhjP2uGaGXUXc1eqUL0zVL6Wdc7Cl4uiA5lputnwK9CEv
-         yXhO0tbwndd5s3G6I9u7xlCVSWq7l6Rygx4nMJCRBHYcMNHz5BJqSYSdqtXX86sbgIMZ
-         IzJZqH12AQezGy07Mfz0LBfagNQQQfX7neC136t3phl2E0tnOl7ulHD4MiQKSa04fwQm
-         P41Q==
-X-Gm-Message-State: AOAM530Kj5EOugn5BVqZh61VjJl+aZGDx+WleP3xiXieGN7Dnp4sB9Vg
-        3BU5Riwxx8h/pLCo2pV+pMubeQ==
-X-Google-Smtp-Source: ABdhPJz8wvQ3CXsSwZJgwMBRizoEDzOcZERxCvR6YfvQLmBZIZFLmiRHdvM6kGdBrvW6hOVawnGctg==
-X-Received: by 2002:a05:6808:2199:b0:326:90e2:754b with SMTP id be25-20020a056808219900b0032690e2754bmr2876267oib.227.1652285695478;
-        Wed, 11 May 2022 09:14:55 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id z18-20020a056808065200b00325cda1ffacsm861218oih.43.2022.05.11.09.14.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 May 2022 09:14:54 -0700 (PDT)
-Date:   Wed, 11 May 2022 09:17:25 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Pavel Machek <pavel@ucw.cz>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>, Luca Weiss <luca@z3ntu.xyz>,
-        Doug Anderson <dianders@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-pwm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v14 2/2] leds: Add driver for Qualcomm LPG
-Message-ID: <YnvhleAI5RW0ZvkV@ripper>
-References: <20220303214300.59468-1-bjorn.andersson@linaro.org>
- <20220303214300.59468-2-bjorn.andersson@linaro.org>
- <20220504073009.GC8204@duo.ucw.cz>
- <YnKTAvQc6eDxTl14@ripper>
- <20220506160901.GA1199@bug>
- <YnVMcaRV86jZslhd@ripper>
- <20220507063659.GA6968@amd>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Qv5UPaNLDRk7OZesf9/OmG2IAf7szhws6U9XAPIZMsU=;
+        b=Egi5utivzJgEUUzCvhgKybrzQg5Fq8rtvuYvufI6fR/w5fyMUR2NyDnGCxdhbVkZSl
+         PpQj7MC7uaerYuYnNs182aD6N5VHNjL/vBUmrU2d5umBYfQFr3NbEo4eVNfoEWeGeLR4
+         gqJ20uWnbUomUL+qrZ+cB+SL79lyd2asWkvLvrQ+SoTZRM8UNF4KQOJSOwgPwgkUzYqf
+         eDlLt8gJWeMWAW9vPVd+wyiY1q2jp9wpZZsZ+pqN3mLGYh0gpmvAQpElU91hRWXmNcjk
+         fYrTDn6f+HIXQckMk9ZJTrWh2hAjSIpQSrUIVu3fnj8s2Ou4cthevLKwHUy6VbkFcm2k
+         1qlA==
+X-Gm-Message-State: AOAM531/Wl8KmBLxsxKsldCksxJA7Y4Uza5W55W6LSchzBxc9x+7YMf7
+        yCPyMeoMB3vuE/+LtJ4t5oIt2ISlQ7CkhTHM6os1/Q==
+X-Google-Smtp-Source: ABdhPJy4VUawIZKr2RKSdWewGiu4eDM2uIznpYK2t+g0yjD/k1O8zxOEKSecLPlBSOajA0MocZ2fHlfSRQxeSPeybkM=
+X-Received: by 2002:a05:6870:b4a2:b0:ee:326e:58fb with SMTP id
+ y34-20020a056870b4a200b000ee326e58fbmr3261404oap.7.1652287420253; Wed, 11 May
+ 2022 09:43:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220507063659.GA6968@amd>
+References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
+ <20220510141329.54414-1-tomeu.vizoso@collabora.com> <CAPM=9tzLR-wsLhg2ikGjoK06s-ju5XWa1rtPPiUpN=pwD1vgtA@mail.gmail.com>
+ <YntWQIXSqMCd6TYV@kroah.com> <1255a66a-121d-988a-19a7-316f703cb37d@mailbox.org>
+ <YnujG0nkF0U6d5kd@kroah.com> <CAF6AEGsmD-CNGj4bAE952JQpquaWA+Nxo5TGpFiHqaPK9doP-g@mail.gmail.com>
+In-Reply-To: <CAF6AEGsmD-CNGj4bAE952JQpquaWA+Nxo5TGpFiHqaPK9doP-g@mail.gmail.com>
+From:   Daniel Vetter <daniel@ffwll.ch>
+Date:   Wed, 11 May 2022 18:43:29 +0200
+Message-ID: <CAKMK7uH8k6j5jE562yvbtBaE8EnM8JGF7zOXT4C62HdOgOs9SQ@mail.gmail.com>
+Subject: Re: [Freedreno] Adding CI results to the kernel tree was Re: [RFC v2]
+ drm/msm: Add initial ci/ subdirectory
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sean Paul <sean@poorly.run>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        =?UTF-8?Q?Michel_D=C3=A4nzer?= <michel.daenzer@mailbox.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,62 +79,134 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 06 May 23:36 PDT 2022, Pavel Machek wrote:
+On Wed, 11 May 2022 at 15:33, Rob Clark <robdclark@gmail.com> wrote:
+> On Wed, May 11, 2022 at 4:50 AM Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Wed, May 11, 2022 at 12:26:05PM +0200, Michel D=C3=A4nzer wrote:
+> > > On 2022-05-11 08:22, Greg Kroah-Hartman wrote:
+> > > > On Wed, May 11, 2022 at 03:06:47PM +1000, Dave Airlie wrote:
+> > > >>> And use it to store expectations about what the drm/msm driver is
+> > > >>> supposed to pass in the IGT test suite.
+> > > >>
+> > > >> I wanted to loop in Linus/Greg to see if there are any issues rais=
+ed
+> > > >> by adding CI results file to the tree in their minds, or if any ot=
+her
+> > > >> subsystem has done this already, and it's all fine.
+> > > >
+> > > > Why does the results need to be added to the tree?  Shouldn't they =
+be
+> > > > either "all is good" or "constantly changing and a constant churn"?
+> > > >
+> > > >> I think this is a good thing after our Mesa experience, but Mesa h=
+as a
+> > > >> lot tighter integration here, so I want to get some more opinions
+> > > >> outside the group.
+> > > >
+> > > > For systems that have "tight integration" this might make sense as =
+proof
+> > > > that all is working for a specific commit, but I can't see how this=
+ will
+> > > > help the kernel out much.
+> > > >
+> > > > What are you going to do with these results being checked in all th=
+e
+> > > > time?
+> > >
+> > > Having the expected results in the tree keeps them consistent with th=
+e driver code itself, and allows putting in place gating CI to prevent merg=
+ing driver changes which make any of the tests deviate from the expected re=
+sult.
+> >
+> > Shouldn't "expected result" always be "pass"?
+> >
+> > If not, then the test should be changed to be "skipped" like we have
+> > today in the kselftest tests.
+>
+> No, we want to run tests even if they are expected to fail.  This
+> prevents the scenario of a test getting fixed without being noticed
+> (for ex, developer was working on fixing test A and didn't notice that
+> the fix also fixed test B).  If a fix goes unnoticed, a later
+> regression would also go unnoticed ;-)
+>
+> I was skeptical about this approach at first with mesa CI, but having
+> used mesa CI for a while, I am now a firm believer in the approach.
+>
+> And ofc we want the expectations to be in the kernel tree because
+> there could be, for example, differences between -fixes and -next
+> branches.  (Or even stable kernel branches if/when we get to the point
+> of running CI on those.)
 
-> Hi!
-> 
-> > > > As such the pattern sequence provided to hw_pattern looks to be the
-> > > > smae, but I don't see that it can be made compatible.
-> > > > 
-> > > > > Can I get either patch to disable pattern infrastructure for now or to
-> > > > > get it compatible?
-> > > > > 
-> > > > 
-> > > > I'd be happy to get this updated to your liking, but this was one of the
-> > > > drivers we discussed when we introduced the pattern trigger and led to
-> > > > the conclusion that we need the ability to do hw-specific patterns.
-> > > > 
-> > > > As such this document provides the hardware specific documentation, as
-> > > > we describe under "hw_pattern" in
-> > > > Documentation/ABI/testing/sysfs-class-led-trigger-pattern.
-> > > > 
-> > > > Please advice on what you would like me to do.
-> > > 
-> > > I'd like you to use same format leds-trigger-pattern describes.
-> > > 
-> > > If someone passes "255 500 0 500", that's requesting gradual transitions and
-> > > your hw can not do that. You return -EINVAL.
-> > > 
-> > > If someone wants that kind of blinking, they need to pass "255 0 255 500 0 0 0 500".
-> > > 
-> > 
-> > So the section under hw_pattern in sysfs-class-led-trigger-pattern that
-> > says:
-> > 
-> > "Since different LED hardware can have different semantics of
-> > hardware patterns, each driver is expected to provide its own
-> > description for the hardware patterns in their documentation
-> > file at Documentation/leds/."
-> > 
-> > That doesn't apply to this piece of hardware & driver?
-> 
-> It applies: since your hardware can not do arbitrary patterns, you
-> need description of what kinds of patterns it can do.
-> 
-> But you should still use compatible format, so that pattern that is
-> valid for hw_pattern file is valid for pattern file, too, and produces
-> same result.
-> 
+Yeah result files in tree is kinda needed, even more so for the
+kernel. A lot of the linux-next integration testing is only done after
+patches have landed, and sometimes such breakage makes it to upstream
+and then into the subsystem/driver tree. Annotating in the backmerge
+what exactly broke and why helps a lot with tracking issues.
 
-Okay, I didn't understand that the hw_pattern needs to be a subset of
-the pattern. I will prepare a patch to require the pattern to include
-the zero-time entries as well.
+And expecting every subsystem to run every other subsystem's tests,
+especially tests that run on hw, is just not going to scale. So there
+will be all kinds of difference in test results.
 
-> If you believe documentation implies something else, it may need to be
-> clarified.
-> 
+> > And how about tieing this into the kselftest process as well, why would
+> > this be somehow separate from the rest of the kernel tests?
+> >
+> > > Keeping them separate inevitably results in divergence between the dr=
+iver code and the expected test results, which would result in spurious fai=
+lures of such CI.
+> >
+> > Again, "pass" should be the expected results :)
+> >
+> > > I expect the main complication for the kernel will be due to driver c=
+hanges merged via different trees, e.g. for cross-subsystem reworks. Since =
+those will not go through the same CI, they may accidentally introduce inco=
+nsistencies. The ideal solution for this IMO would be centralizing CI such =
+that the same gating tests have to pass regardless of how the code is merge=
+d. But there's likely quite a long way to go until we get there. :)
+> >
+> > We have in-kernel tests for the rest of the kernel, why can't you put
+> > your testing stuff into there as well?
+>
+> We could ofc put a lot more of the gitlab yml and scripts into the
+> kernel tree.  Probably all of i-g-t is a bit much to put in the kernel
+> tree.  Not to mention I'd like to see this expand to also run some
+> deqp and/or piglit tests, which is definitely too much to vendor into
+> the kernel tree.
+>
+> The approach of this RFC was to put only what was absolutely required
+> in the kernel tree (such as expectations), and then link out to an
+> external drm-ci tree[1] which has all the necessary scripts and yml
+> for building and running tests, to avoid having to put a whole lot
+> more in the kernel tree. (We should be specifying exact commit-sha for
+> that tree, IMO, as it controls the version of i-g-t which gets used,
+> and we need to be able to update expectations in sync with an i-g-t
+> uprev, for example when new tests are added or if a test fix caused a
+> fail->pass transition.)
 
-I'll read it again and if needed I'll try to clarify the expectations.
+Yeah I think longer-term we should carry a lot more in upstream, at
+least anything that's shared across drivers wrt the ci integration (or
+build testing and running tests which are hw agnostic). Maybe even
+igt, not sure (otoh xfs-tests isn't moving into the kernel either, and
+there's lots more like that).
 
-Thanks,
-Bjorn
+Personally I think long-term the only thing outside should be other
+repos with tests or stuff you need to run them, and not really the
+glue to make it all work in ci. But that's maybe a bit too much
+wishful thinking if CI systems stay largely subsystem specific (which
+they currently are in many ways, with some overlap).
+
+But maybe there is enough random pieces to share here for a lot more
+in-tree to make sense, and imo the fewer extra steps and indirection
+CI testing and test updating has, the better.
+
+But like Rob says, eventually there's a limit and when you put the
+entire GL/vulkan stack + it's conformance testsuite (which is
+maintained by khronos somewhere completely different than both
+kernel.org and freedesktop.org) then it's definitely too much and wont
+work. And eventually we do want to run these things too (e.g.
+intel-gfx-ci does run mesa + piglit on every run).
+-Daniel
+--=20
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
