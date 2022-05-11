@@ -2,92 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2067522C39
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 08:23:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1646E522C7D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 08:43:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242112AbiEKGXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 02:23:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49258 "EHLO
+        id S242227AbiEKGnp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 02:43:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242035AbiEKGXQ (ORCPT
+        with ESMTP id S230070AbiEKGno (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 02:23:16 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFD601F8C4E;
-        Tue, 10 May 2022 23:23:01 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 95C73B82142;
-        Wed, 11 May 2022 06:23:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1CF1C385D1;
-        Wed, 11 May 2022 06:22:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1652250179;
-        bh=dr1sS53G4Pm1TyL5NsyZonMQdvda/MUhmA20m7oW+z0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tCHRDyaGR/wgK9C5TITSFPPM9YlIjPDgY0oE8C8NjR7J+qG1gD8mlS/Cvn8MihHwq
-         0ZuQFmf6VbMmJB/OtN3emjcuijgLE2JhdCaL24vp8q30p98Uv+lr0x960Y6+uT/Vmd
-         ERIluI0KmC+Px3sf0zdAJ+X0HzEpMgPydBrZ1Hjs=
-Date:   Wed, 11 May 2022 08:22:56 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Dave Airlie <airlied@gmail.com>
-Cc:     Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: Adding CI results to the kernel tree was Re: [RFC v2] drm/msm:
- Add initial ci/ subdirectory
-Message-ID: <YntWQIXSqMCd6TYV@kroah.com>
-References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
- <20220510141329.54414-1-tomeu.vizoso@collabora.com>
- <CAPM=9tzLR-wsLhg2ikGjoK06s-ju5XWa1rtPPiUpN=pwD1vgtA@mail.gmail.com>
+        Wed, 11 May 2022 02:43:44 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9F08B1D4;
+        Tue, 10 May 2022 23:43:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652251423; x=1683787423;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=PTO+On8Bs9vt5yZvZ1hxSaNlJGopfMF1D5C9kQY7ebs=;
+  b=s1Rq46lVeG0L3uCi9uTO0VYBweE9Di51XzSFM2ZbFrGC7gsx3Umtt7yz
+   nGixCQbFIj0bmM0R6cINn3Q5fD8bYK5IR/lrcpeT7jM3Mbo0s2EmSYLFc
+   +3qy0D5w/4wdyySxkh3s0xcoAyvXW8iUszdHS9fjZgpbqxWSsL3Kd1xsH
+   A=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 10 May 2022 23:43:41 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 23:43:41 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 10 May 2022 23:43:41 -0700
+Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 10 May 2022 23:43:38 -0700
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <mani@kernel.org>,
+        <jassisinghbrar@gmail.com>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <agross@kernel.org>, Prasad Sodagudi <quic_psodagud@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH v2] mailbox: qcom-ipcc: Log the pending interrupt during resume
+Date:   Wed, 11 May 2022 12:13:24 +0530
+Message-ID: <1652251404-30562-1-git-send-email-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPM=9tzLR-wsLhg2ikGjoK06s-ju5XWa1rtPPiUpN=pwD1vgtA@mail.gmail.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 11, 2022 at 03:06:47PM +1000, Dave Airlie wrote:
-> > And use it to store expectations about what the drm/msm driver is
-> > supposed to pass in the IGT test suite.
-> 
-> I wanted to loop in Linus/Greg to see if there are any issues raised
-> by adding CI results file to the tree in their minds, or if any other
-> subsystem has done this already, and it's all fine.
+From: Prasad Sodagudi <quic_psodagud@quicinc.com>
 
-Why does the results need to be added to the tree?  Shouldn't they be
-either "all is good" or "constantly changing and a constant churn"?
+Enable logging of the pending interrupt that triggered device wakeup. This
+logging information helps to debug IRQs that cause periodic device wakeups
+and prints the detailed information of pending IPCC interrupts instead of
+the generic "Resume caused by IRQ 17, ipcc".
 
-> I think this is a good thing after our Mesa experience, but Mesa has a
-> lot tighter integration here, so I want to get some more opinions
-> outside the group.
+Scenario: Device wakeup caused by Modem crash
+Logs:
+qcom-ipcc mailbox: virq: 182 triggered client-id: 2; signal-id: 2
 
-For systems that have "tight integration" this might make sense as proof
-that all is working for a specific commit, but I can't see how this will
-help the kernel out much.
+From the IPCC bindings it can further understood that the client here is
+IPCC_CLIENT_MPSS and the signal was IPCC_MPROC_SIGNAL_SMP2P.
 
-What are you going to do with these results being checked in all the
-time?
+Signed-off-by: Prasad Sodagudi <quic_psodagud@quicinc.com>
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+---
 
-thanks,
+V2:
+ * Fix build error when ipcc is a module [Kernel Test Bot]
 
-greg k-h
+ drivers/mailbox/qcom-ipcc.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+index c5d963222014..21c071ec119c 100644
+--- a/drivers/mailbox/qcom-ipcc.c
++++ b/drivers/mailbox/qcom-ipcc.c
+@@ -254,6 +254,28 @@ static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc,
+ 	return devm_mbox_controller_register(dev, mbox);
+ }
+ 
++#ifdef CONFIG_PM_SLEEP
++static int qcom_ipcc_pm_resume(struct device *dev)
++{
++	struct qcom_ipcc *ipcc = dev_get_drvdata(dev);
++	u32 hwirq;
++	int virq;
++
++	hwirq = readl(ipcc->base + IPCC_REG_RECV_ID);
++	if (hwirq == IPCC_NO_PENDING_IRQ)
++		return 0;
++
++	virq = irq_find_mapping(ipcc->irq_domain, hwirq);
++
++	dev_info(dev, "virq: %d triggered client-id: %ld; signal-id: %ld\n", virq,
++		 FIELD_GET(IPCC_CLIENT_ID_MASK, hwirq), FIELD_GET(IPCC_SIGNAL_ID_MASK, hwirq));
++
++	return 0;
++}
++#else
++#define qcom_ipcc_pm_resume NULL
++#endif
++
+ static int qcom_ipcc_probe(struct platform_device *pdev)
+ {
+ 	struct qcom_ipcc *ipcc;
+@@ -324,6 +346,10 @@ static const struct of_device_id qcom_ipcc_of_match[] = {
+ };
+ MODULE_DEVICE_TABLE(of, qcom_ipcc_of_match);
+ 
++static const struct dev_pm_ops qcom_ipcc_dev_pm_ops = {
++	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(NULL, qcom_ipcc_pm_resume)
++};
++
+ static struct platform_driver qcom_ipcc_driver = {
+ 	.probe = qcom_ipcc_probe,
+ 	.remove = qcom_ipcc_remove,
+@@ -331,6 +357,7 @@ static struct platform_driver qcom_ipcc_driver = {
+ 		.name = "qcom-ipcc",
+ 		.of_match_table = qcom_ipcc_of_match,
+ 		.suppress_bind_attrs = true,
++		.pm = &qcom_ipcc_dev_pm_ops,
+ 	},
+ };
+ 
+-- 
+2.7.4
+
