@@ -2,367 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E556652308C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 12:18:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2B1B5230BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 12:36:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229671AbiEKKRy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 06:17:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49050 "EHLO
+        id S236201AbiEKKgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 06:36:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241042AbiEKKRv (ORCPT
+        with ESMTP id S236068AbiEKKgR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 06:17:51 -0400
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5BC6275FF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 03:17:49 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-2f7c57ee6feso15308407b3.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 03:17:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=y0yk23I1nDnNSowekKcj7K4w/pPnlPvOTvgMIkY+JzY=;
-        b=FqMrW5EntG3ipuoiwVfOM67aT5Gm1MK/Dj1UfRMNCyHfNATyiSW3ZrDxrwwGBSGwX2
-         uRYIGTz6w1YHw1we3DmY4r74fBIcLk/JZZGJmJR3zIoIZ4ZvQeyRD5hwjFODucoaulyB
-         sBZ/ogDveNZh7mMCrLcTz/3qEMkdywakcMfSQX2j+j0Dr0aZc+Yfh2AuRTWnTxRKZ5My
-         ynKDHOBMfqzpfnIr288h41cfsJmxw1zaWJoSs/BA8tVOJHSVFGKvOs7xR8n5MwqnPdqT
-         Dc9CZ9Rf0XHLG2p1e6MJ+KLI68DYjCyEFyMhFePNlgiG+e326oKWPlqv0uckDZ3UuVh6
-         CS0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=y0yk23I1nDnNSowekKcj7K4w/pPnlPvOTvgMIkY+JzY=;
-        b=NwB1D7F3YmsGNHIQe4lNnDCVN/KcaY9DZNiYbyOL4IdU6RoWZ8dQ3Olhxyrv3XsJ++
-         ac34oSm3vnF+48sq+VX/TN8kKZ2nd0IsccAe+nEDF0UHDrYPnLvb9qU1qVRUGEq8nSbn
-         1KBLNyh2wYSfTMvJz4dcBGV0eOKq12ndsGa50YTbz0QBfV6QEbq3/kKpQ4HEGEoyZn6H
-         5YgEwKXHXKMjeyYOmej4ufm3p+h6o8kJNGf4cotakvpvo9EWjDydTmaDkQdxeLrw1urV
-         ssSQxRv88exrRL2Z82+cBoJH6epQHG9Rc5dWh3Z6CtJQ1rA5oTm8Xa6qoZnhvVwWUbC0
-         ZrGA==
-X-Gm-Message-State: AOAM5310IxpYGmFQmVRMxeYdw/ejsj9bZo5r+mTRzQGwJ4ytHer2JyAm
-        z/6PCiuJTyW1M6G/kZdffLWWq2OqjruIdlgF6/6F1z5d8Og=
-X-Google-Smtp-Source: ABdhPJz4aj17AwoY38RDYc+QLTaQW0WnUvtR/e0tNCPlOO+Qtzk0GrHuH0MhHzWeNLwkVtFwq3xsT3GaGDExEy0dRyc=
-X-Received: by 2002:a81:1985:0:b0:2f7:c16b:3afd with SMTP id
- 127-20020a811985000000b002f7c16b3afdmr23752186ywz.113.1652264269024; Wed, 11
- May 2022 03:17:49 -0700 (PDT)
+        Wed, 11 May 2022 06:36:17 -0400
+X-Greylist: delayed 603 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 11 May 2022 03:36:16 PDT
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 622662E9F2;
+        Wed, 11 May 2022 03:36:16 -0700 (PDT)
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4KyrfS4WZhz9spJ;
+        Wed, 11 May 2022 12:26:08 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+        t=1652264768;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=y/E1vKB93vrG/DjRCzLKzwqBALm4NpArvjus/ourHbI=;
+        b=k8G6LO/DA2hkLYEA4a/jti/zyEqH+lLwPnhhAIg00NLSzA8dFGBzwZhjEyddtDJLG3Vqtx
+        3Hfgh/KESeU2q0Gw3XmFYEv5SohRvJ9OmQ0KtNd+AsM/0RZ4CtNKQKLVz3qvG7MNiLRA/8
+        hV5lPw77oNCmAbG/y34GKc2R3BkkcJkYNWyp7x4MuZlJmMDy7hV6XZvhZ48GrkYg/y6kP/
+        Pe25JiyS+7TgQAiMk6Nv3aOyN9XhrIOaN1xn89Fs+TB070DOxvp+q8L1+fIyUGWK67T+KX
+        bnk1uVDGBkRI0+yZao76NBnnBcpEyLkexJXAszQCzAVpSOj9nfjih2CEcl0QKA==
+Message-ID: <1255a66a-121d-988a-19a7-316f703cb37d@mailbox.org>
+Date:   Wed, 11 May 2022 12:26:05 +0200
 MIME-Version: 1.0
-References: <20220510155744.812471-1-y.oudjana@protonmail.com> <20220510155940.812565-1-y.oudjana@protonmail.com>
-In-Reply-To: <20220510155940.812565-1-y.oudjana@protonmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 11 May 2022 13:17:38 +0300
-Message-ID: <CAA8EJprE-p6m4iAWuo=881=T25AekhsueUxU0LazRMVKBZ26zA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] clk: qcom: msm8996-cpu: Add CBF support
-To:     Yassine Oudjana <yassine.oudjana@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Subject: Re: Adding CI results to the kernel tree was Re: [RFC v2] drm/msm:
+ Add initial ci/ subdirectory
+Content-Language: en-CA
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Dave Airlie <airlied@gmail.com>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Jonathan Corbet <corbet@lwn.net>, Sean Paul <sean@poorly.run>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
+ <20220510141329.54414-1-tomeu.vizoso@collabora.com>
+ <CAPM=9tzLR-wsLhg2ikGjoK06s-ju5XWa1rtPPiUpN=pwD1vgtA@mail.gmail.com>
+ <YntWQIXSqMCd6TYV@kroah.com>
+From:   =?UTF-8?Q?Michel_D=c3=a4nzer?= <michel.daenzer@mailbox.org>
+In-Reply-To: <YntWQIXSqMCd6TYV@kroah.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-MBO-RS-META: f1u1x9t1eq9gx7t66636ikwanw7e56pm
+X-MBO-RS-ID: 8072a6e3cb6bccf98f1
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 2022-05-11 08:22, Greg Kroah-Hartman wrote:
+> On Wed, May 11, 2022 at 03:06:47PM +1000, Dave Airlie wrote:
+>>> And use it to store expectations about what the drm/msm driver is
+>>> supposed to pass in the IGT test suite.
+>>
+>> I wanted to loop in Linus/Greg to see if there are any issues raised
+>> by adding CI results file to the tree in their minds, or if any other
+>> subsystem has done this already, and it's all fine.
+> 
+> Why does the results need to be added to the tree?  Shouldn't they be
+> either "all is good" or "constantly changing and a constant churn"?
+> 
+>> I think this is a good thing after our Mesa experience, but Mesa has a
+>> lot tighter integration here, so I want to get some more opinions
+>> outside the group.
+> 
+> For systems that have "tight integration" this might make sense as proof
+> that all is working for a specific commit, but I can't see how this will
+> help the kernel out much.
+> 
+> What are you going to do with these results being checked in all the
+> time?
 
-On Tue, 10 May 2022 at 19:05, Yassine Oudjana <yassine.oudjana@gmail.com> wrote:
->
-> From: Konrad Dybcio <konrad.dybcio@somainline.org>
->
-> Add the required code to support the CBF clock, which is responsible for
-> core cluster interconnect frequency on msm8996.
->
-> Somewhat based on AngeloGioacchino del Regno's work at:
-> https://github.com/sonyxperiadev/kernel/blob/aosp/LE.UM.2.3.2.r1.4/drivers/clk/qcom/clk-cpu-8996.c
->
-> This fixes the issue with booting with all 4 cores enabled.
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Signed-off-by: Yassine Oudjana <yassine.oudjana@gmail.com>
-> ---
->  drivers/clk/qcom/clk-cpu-8996.c | 162 +++++++++++++++++++++++++++++++-
->  1 file changed, 159 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
-> index 4a4fde8dd12d..8afc271f92d0 100644
-> --- a/drivers/clk/qcom/clk-cpu-8996.c
-> +++ b/drivers/clk/qcom/clk-cpu-8996.c
-> @@ -68,10 +68,19 @@ enum _pmux_input {
->         NUM_OF_PMUX_INPUTS
->  };
->
-> +enum {
-> +       CBF_PLL_INDEX = 1,
-> +       CBF_DIV_2_INDEX,
-> +       CBF_SAFE_INDEX
-> +};
-> +
->  #define DIV_2_THRESHOLD                600000000
->  #define PWRCL_REG_OFFSET 0x0
->  #define PERFCL_REG_OFFSET 0x80000
->  #define MUX_OFFSET     0x40
-> +#define CBF_REG_OFFSET 0x0
-> +#define CBF_PLL_OFFSET 0xf000
-> +#define CBF_MUX_OFFSET 0x18
->  #define ALT_PLL_OFFSET 0x100
->  #define SSSCTL_OFFSET 0x160
->
-> @@ -98,6 +107,17 @@ static const u8 alt_pll_regs[PLL_OFF_MAX_REGS] = {
->         [PLL_OFF_STATUS] = 0x28,
->  };
->
-> +static const u8 cbf_pll_regs[PLL_OFF_MAX_REGS] = {
-> +       [PLL_OFF_L_VAL] = 0x08,
-> +       [PLL_OFF_ALPHA_VAL] = 0x10,
-> +       [PLL_OFF_USER_CTL] = 0x18,
-> +       [PLL_OFF_CONFIG_CTL] = 0x20,
-> +       [PLL_OFF_CONFIG_CTL_U] = 0x24,
-> +       [PLL_OFF_TEST_CTL] = 0x30,
-> +       [PLL_OFF_TEST_CTL_U] = 0x34,
-> +       [PLL_OFF_STATUS] = 0x28,
-> +};
-> +
->  /* PLLs */
->
->  static const struct alpha_pll_config hfpll_config = {
-> @@ -111,6 +131,17 @@ static const struct alpha_pll_config hfpll_config = {
->         .early_output_mask = BIT(3),
->  };
->
-> +static const struct alpha_pll_config cbfpll_config = {
-> +       .l = 72,
-> +       .config_ctl_val = 0x200d4aa8,
-> +       .config_ctl_hi_val = 0x006,
-> +       .pre_div_mask = BIT(12),
-> +       .post_div_mask = 0x3 << 8,
-> +       .post_div_val = 0x1 << 8,
-> +       .main_output_mask = BIT(0),
-> +       .early_output_mask = BIT(3),
-> +};
-> +
->  static struct clk_alpha_pll perfcl_pll = {
->         .offset = PERFCL_REG_OFFSET,
->         .regs = prim_pll_regs,
-> @@ -135,6 +166,18 @@ static struct clk_alpha_pll pwrcl_pll = {
->         },
->  };
->
-> +static struct clk_alpha_pll cbf_pll = {
-> +       .offset = CBF_PLL_OFFSET,
-> +       .regs = cbf_pll_regs,
-> +       .flags = SUPPORTS_DYNAMIC_UPDATE | SUPPORTS_FSM_MODE,
-> +       .clkr.hw.init = &(struct clk_init_data){
-> +               .name = "cbf_pll",
-> +               .parent_names = (const char *[]){ "xo" },
-> +               .num_parents = 1,
-> +               .ops = &clk_alpha_pll_huayra_ops,
-> +       },
-> +};
-> +
->  static const struct pll_vco alt_pll_vco_modes[] = {
->         VCO(3,  250000000,  500000000),
->         VCO(2,  500000000,  750000000),
-> @@ -194,6 +237,9 @@ struct clk_cpu_8996_mux {
->  static int cpu_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
->                                void *data);
->
-> +static int cbf_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
-> +                              void *data);
-> +
->  #define to_clk_cpu_8996_mux_nb(_nb) \
->         container_of(_nb, struct clk_cpu_8996_mux, nb)
->
-> @@ -329,6 +375,35 @@ static struct clk_cpu_8996_mux perfcl_pmux = {
->         },
->  };
->
-> +static struct clk_cpu_8996_mux cbf_mux = {
-> +       .reg = CBF_REG_OFFSET + CBF_MUX_OFFSET,
-> +       .shift = 0,
-> +       .width = 2,
-> +       .pll = &cbf_pll.clkr.hw,
-> +       .nb.notifier_call = cbf_clk_notifier_cb,
-> +       .clkr.hw.init = &(struct clk_init_data) {
-> +               .name = "cbf_mux",
-> +               .parent_names = (const char *[]){
-> +                       "xo",
-> +                       "cbf_pll",
-> +                       "cbf_pll_main",
-> +               },
+Having the expected results in the tree keeps them consistent with the driver code itself, and allows putting in place gating CI to prevent merging driver changes which make any of the tests deviate from the expected result.
 
-parent_data please.
+Keeping them separate inevitably results in divergence between the driver code and the expected test results, which would result in spurious failures of such CI.
 
-> +               .num_parents = 3,
-> +               .ops = &clk_cpu_8996_mux_ops,
-> +               /* CPU clock is critical and should never be gated */
-> +               .flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-> +       },
-> +};
-> +
-> +static const struct regmap_config cbf_msm8996_regmap_config = {
-> +       .reg_bits               = 32,
-> +       .reg_stride             = 4,
-> +       .val_bits               = 32,
-> +       .max_register           = 0x10000,
-> +       .fast_io                = true,
-> +       .val_format_endian      = REGMAP_ENDIAN_LITTLE,
-> +};
-> +
->  static const struct regmap_config cpu_msm8996_regmap_config = {
->         .reg_bits               = 32,
->         .reg_stride             = 4,
-> @@ -397,6 +472,35 @@ static int qcom_cpu_clk_msm8996_register_clks(struct device *dev,
->         return ret;
->  }
->
-> +static struct clk_regmap *cbf_msm8996_clks[] = {
-> +       &cbf_pll.clkr,
-> +       &cbf_mux.clkr,
-> +};
-> +
-> +static int qcom_cbf_clk_msm8996_register_clks(struct device *dev,
-> +                                             struct regmap *regmap)
-> +{
-> +       int ret;
-> +
-> +       cbf_mux.pll_div_2 = clk_hw_register_fixed_factor(dev, "cbf_pll_main",
-> +                                                     "cbf_pll", CLK_SET_RATE_PARENT,
-> +                                                     1, 2);
-> +       if (IS_ERR(cbf_mux.pll_div_2)) {
-> +               dev_err(dev, "Failed to initialize cbf_pll_main\n");
-> +               return PTR_ERR(cbf_mux.pll_div_2);
-> +       }
-> +
-> +       ret = devm_clk_register_regmap(dev, cbf_msm8996_clks[0]);
-> +       ret = devm_clk_register_regmap(dev, cbf_msm8996_clks[1]);
-> +
-> +       clk_alpha_pll_configure(&cbf_pll, regmap, &cbfpll_config);
-> +       clk_set_rate(cbf_pll.clkr.hw.clk, 614400000);
-> +       clk_prepare_enable(cbf_pll.clkr.hw.clk);
-> +       clk_notifier_register(cbf_mux.clkr.hw.clk, &cbf_mux.nb);
-> +
-> +       return ret;
-> +}
-> +
->  static int qcom_cpu_clk_msm8996_unregister_clks(void)
->  {
->         int ret = 0;
-> @@ -409,8 +513,13 @@ static int qcom_cpu_clk_msm8996_unregister_clks(void)
->         if (ret)
->                 return ret;
->
-> +       ret = clk_notifier_unregister(cbf_mux.clkr.hw.clk, &cbf_mux.nb);
-> +       if (ret)
-> +               return ret;
-> +
->         clk_hw_unregister(perfcl_smux.pll);
->         clk_hw_unregister(pwrcl_smux.pll);
-> +       clk_hw_unregister(cbf_mux.pll);
->
->         return 0;
->  }
-> @@ -481,14 +590,48 @@ static int cpu_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
->         return notifier_from_errno(ret);
->  };
->
-> +static int cbf_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
-> +                              void *data)
-> +{
-> +       struct clk_cpu_8996_mux *cbfclk = to_clk_cpu_8996_mux_nb(nb);
-> +       struct clk_notifier_data *cnd = data;
-> +       struct clk_hw *parent;
-> +       int ret;
-> +
-> +       switch (event) {
-> +       case PRE_RATE_CHANGE:
-> +               parent = clk_hw_get_parent_by_index(&cbfclk->clkr.hw, CBF_DIV_2_INDEX);
-> +               ret = clk_cpu_8996_mux_set_parent(&cbfclk->clkr.hw, CBF_DIV_2_INDEX);
-> +
-> +               if (cnd->old_rate > DIV_2_THRESHOLD && cnd->new_rate < DIV_2_THRESHOLD)
-> +                       ret = clk_set_rate(parent->clk, cnd->old_rate / 2);
-> +               break;
-> +       case POST_RATE_CHANGE:
-> +               if (cnd->new_rate < DIV_2_THRESHOLD)
-> +                       ret = clk_cpu_8996_mux_set_parent(&cbfclk->clkr.hw, CBF_DIV_2_INDEX);
-> +               else {
-> +                       parent = clk_hw_get_parent_by_index(&cbfclk->clkr.hw, CBF_PLL_INDEX);
-> +                       ret = clk_set_rate(parent->clk, cnd->new_rate);
-> +                       ret = clk_cpu_8996_mux_set_parent(&cbfclk->clkr.hw, CBF_PLL_INDEX);
-> +               }
-> +               break;
-> +       default:
-> +               ret = 0;
-> +               break;
-> +       }
-> +
-> +       return notifier_from_errno(ret);
-> +};
-> +
->  static int qcom_cpu_clk_msm8996_driver_probe(struct platform_device *pdev)
->  {
-> -       struct regmap *regmap;
-> +       struct regmap *regmap, *regmap_cbf;
->         struct clk_hw_onecell_data *data;
->         struct device *dev = &pdev->dev;
-> +       static void __iomem *cbf_base;
->         int ret;
->
-> -       data = devm_kzalloc(dev, struct_size(data, hws, 2), GFP_KERNEL);
-> +       data = devm_kzalloc(dev, struct_size(data, hws, 3), GFP_KERNEL);
->         if (!data)
->                 return -ENOMEM;
->
-> @@ -506,9 +649,22 @@ static int qcom_cpu_clk_msm8996_driver_probe(struct platform_device *pdev)
->
->         qcom_cpu_clk_msm8996_acd_init(base);
->
-> +       cbf_base = devm_platform_ioremap_resource(pdev, 1);
-> +       if (IS_ERR(cbf_base))
-> +               return PTR_ERR(cbf_base);
 
-So, if the reg1 is not provided, thr driver will error out, breaking
-the compatibility with existing dts files.
-I'd suggest making reg1 optional (you can add a warning printk
-demanding the dts to be updated).
-
-> +       regmap_cbf = devm_regmap_init_mmio(dev, cbf_base, &cbf_msm8996_regmap_config);
-> +       if (IS_ERR(regmap_cbf))
-> +               return PTR_ERR(regmap_cbf);
-> +
-> +       ret = qcom_cbf_clk_msm8996_register_clks(dev, regmap_cbf);
-> +       if (ret)
-> +               return ret;
-> +
->         data->hws[0] = &pwrcl_pmux.clkr.hw;
->         data->hws[1] = &perfcl_pmux.clkr.hw;
-> -       data->num = 2;
-> +       data->hws[2] = &cbf_mux.clkr.hw;
-> +       data->num = 3;
->
->         return devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, data);
->  }
-> --
-> 2.36.0
->
+I expect the main complication for the kernel will be due to driver changes merged via different trees, e.g. for cross-subsystem reworks. Since those will not go through the same CI, they may accidentally introduce inconsistencies. The ideal solution for this IMO would be centralizing CI such that the same gating tests have to pass regardless of how the code is merged. But there's likely quite a long way to go until we get there. :)
 
 
 -- 
-With best wishes
-Dmitry
+Earthling Michel Dänzer            |                  https://redhat.com
+Libre software enthusiast          |         Mesa and Xwayland developer
