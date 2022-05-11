@@ -2,234 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDB9B523AEB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 18:54:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79751523AF0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 18:55:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345185AbiEKQys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 12:54:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33996 "EHLO
+        id S1345207AbiEKQzP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 12:55:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345165AbiEKQyp (ORCPT
+        with ESMTP id S1345187AbiEKQzO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 12:54:45 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDBEC546AD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:54:42 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id bq30so4650324lfb.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:54:42 -0700 (PDT)
+        Wed, 11 May 2022 12:55:14 -0400
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95DB9E15F9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:55:12 -0700 (PDT)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-ee1e7362caso3498759fac.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:55:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=+5747A4Ma391dQmFsOLvwVUU2kapbuzWaQTGm/dKdZQ=;
-        b=NrZRAu/N5s8gpBmN+NE8JE4qm599tse0FE4/hUcxD2dduSKW9wcjqAwCyx+phX7hhI
-         OFZAunZ8ixiWs41Nk0IJ9xuGMr1PVNayB8zF7g3Wvo0Cj5R1D1Tq3P6fLdJ6buieL0Ex
-         98NpfA2mqbzQdhJKWE64l0nc2GXlZBY4lseJ1h3KiqC7bZnuQqWzQi9on+uQadEQw69T
-         t9u6X6xV3OwjOch09fv1bYhhdzmPkwetJduP2qksKYuU9hQQCfbMNI3jN5oJsGbxFWLB
-         XlomA+rUzeI4poH8sHTs4MnmUwj09JpTlohRPR0JJrfKjyvMyvgA/ad8e6RyPZRHzqAy
-         SGJA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=e3giz9a5p6PvP3nI2WSHt0o4PXurVZJIiRH9HCmnbgA=;
+        b=uBPOYhmJyrZG0FGOnJJGKTdVuYYwxHxOhcB6nDfe79s8E2xsWIOzqB0165KN9XHcia
+         tBfF4m0V5qF8xggSG6dLqi/4kKpcisL04i5iHEIHWvu6Ilo2BELbDPs0dlDBNAOy/KHa
+         3H7EZAxGJrU/g9FUsizaDPkHleJbdPbkuDSP3PVqCe+LhSs3L2uvcV1YsXDudQ9V6hgw
+         f88baRvNO3b9BQurljvLlIuVYqaOhKwfoJlP6qPbSbQj2foXq2bWroCazfUaOrGRrmVs
+         1TIIA1rWkPC/eGu+f9SOmFUBsPjtq1tUS/nSqfY9TLtDQd2dBirMrl/5hFb8A7hZhy7o
+         bgVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=+5747A4Ma391dQmFsOLvwVUU2kapbuzWaQTGm/dKdZQ=;
-        b=u7J7qvoQaAgz2Z0mCeoxoAxMQ2eWvHh6JEuI0qEbtV5hlARt/8ElOoEfdymQMIADoy
-         QgOmphwg+qcoHbnCDWJenRJuVXbuUPfdmYFQ3Z+sr/70gz0rBzLBrL7vjXAfUsrdiDWB
-         mh7X8wsCrBky93RlwV5Az9wes+LqULSeay31bjmSGKjIGEldHdaB5FPKXlUzfFAVgycY
-         lK6n5I9Rp34zARMZdGXV+5mp59sV7j02+1ebevyf0FN9r5QB7OSVw2sxcA3WTAeWHIs5
-         HBTVLSAgsDwxOCQwQ2F5s7DSLw7A90+k2JYG+Xm1wPQb4cNb526rUNUT5wd5qzLJMQzS
-         nEhw==
-X-Gm-Message-State: AOAM531FkIT1F69InXpTMLm/kIlPSkCplCIehK2TMEUSrnp6dtH4o3m2
-        qxEln+AOH3+z7U7dpK1zAyBRY7GVNZxU7g==
-X-Google-Smtp-Source: ABdhPJye2LWKIIWro0fjrmR+DnWvSvOo9wamkKGElpGs2OZ2l4JsOJdVTsjMmwDwZYXwdSRzw9Q0cA==
-X-Received: by 2002:a05:6512:2391:b0:473:ac1e:f2ce with SMTP id c17-20020a056512239100b00473ac1ef2cemr20756190lfv.297.1652288081314;
-        Wed, 11 May 2022 09:54:41 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id dt5-20020a0565122a8500b0047255d2119csm354662lfb.203.2022.05.11.09.54.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 May 2022 09:54:40 -0700 (PDT)
-Message-ID: <1d43e1fa-30b2-dbf0-bfaf-f9cfaf987efb@linaro.org>
-Date:   Wed, 11 May 2022 19:54:40 +0300
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=e3giz9a5p6PvP3nI2WSHt0o4PXurVZJIiRH9HCmnbgA=;
+        b=pyfvzjkdoFSBiXGqKU2qC3kc5sip95S0LLMqtIdjCG+9pWz/I2DD4O2IgJons98Zf1
+         kDlVHXHZm+NFEnqVIzc38RrwawwcKyKh2/FHkTyp1NxAA8LuqpRXGYmbSEyTgV8wtpD/
+         NAhmkIf0W7FzSNeTUIRLUEw4k7wDUD7K3HIfGeMUWQH8gGMsJfnQfyTx0CkAF5IdX3ej
+         kJOCBxC2xarYtmFow5kZ4EVG3QVXhY80krWqHgW7moB6sf+UtwUcMexd+y2T7UbZnIrs
+         bkD9/VE0ljnBXGgrDUN5WCVlfSHumQU3elInpJ9ILdd9eC10TMHiygIPJS6GjWzGI9L8
+         RgTQ==
+X-Gm-Message-State: AOAM531RWIzC5QeO87R53aYSNFhszqgNVJGiA7lQsX2Nq4WjHlYkEtqj
+        pQJ3JM1aIjG9jp+pLLfIL1Pa3Q==
+X-Google-Smtp-Source: ABdhPJxEdwJtX69e+zhiWdIzMm1ZqMWIkh8OiCFXiuYll6RGXhu6yrgmeL6C/g/GRpjKiPK0o0fgSg==
+X-Received: by 2002:a05:6870:a707:b0:e2:cc85:d98 with SMTP id g7-20020a056870a70700b000e2cc850d98mr3275858oam.131.1652288111734;
+        Wed, 11 May 2022 09:55:11 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id g6-20020acab606000000b00325cda1ffbasm895644oif.57.2022.05.11.09.55.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 May 2022 09:55:10 -0700 (PDT)
+Date:   Wed, 11 May 2022 09:57:41 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Julius Werner <jwerner@chromium.org>,
+        Krzysztof Koz??owski <k.kozlowski.k@gmail.com>,
+        Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
+Message-ID: <YnvrBWiOMB8vZ61D@ripper>
+References: <606cc762-a0c2-49a4-3e5d-d2dbd4595bc7@linaro.org>
+ <CAD=FV=W_SA-3PfDFi-Gkjk9pew5bchFNjQhXX8MkZyuy5UohEQ@mail.gmail.com>
+ <CAJKOXPdt5WTg4VU-TEW3dmPHR76dKg63XVxRQfa7ZSKc_jz6Ag@mail.gmail.com>
+ <CAD=FV=XQqQSQDNh-zXqEQkwsrax5Qb3OtfKZoQLkncJj_4mcQw@mail.gmail.com>
+ <daf66d41-42ac-50dc-3f8d-c261da8e452d@linaro.org>
+ <CAD=FV=WhA=n_=Ys6NfedPtNPddL81HnG6Qws_R+vq9w8Nrsn5A@mail.gmail.com>
+ <ce2ea308-b63d-ad27-4cea-7353268f8ebb@linaro.org>
+ <CAODwPW857CkH0+ZnBaUeowW4te-hSy6nrdeeX6-OLPOs5TptsQ@mail.gmail.com>
+ <55dcf917-7ac0-efe9-8531-b77be682125a@linaro.org>
+ <CAD=FV=UPKo4CxRVmdHr05rRPaNHFYfaQTqmBJAU5ZF61ccKgEA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH 2/9] remoteproc: qcom: q6v5-mss: Add modem support on
- MSM8953
-Content-Language: en-GB
-To:     Sireesh Kodali <sireeshkodali1@gmail.com>,
-        linux-remoteproc@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-References: <20220511161602.117772-1-sireeshkodali1@gmail.com>
- <20220511161602.117772-3-sireeshkodali1@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220511161602.117772-3-sireeshkodali1@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=UPKo4CxRVmdHr05rRPaNHFYfaQTqmBJAU5ZF61ccKgEA@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/05/2022 19:15, Sireesh Kodali wrote:
-> The modem on the MSM8953 platform is similar to the modem on the MSM8996
-> platform in terms of set up. It differs primarily in the way it needs SCM
-> to bless the MPSS firmware region.
+On Wed 11 May 09:09 PDT 2022, Doug Anderson wrote:
+
+> Hi,
 > 
-> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
-> ---
->   drivers/remoteproc/qcom_q6v5_mss.c | 64 +++++++++++++++++++++++++++---
->   1 file changed, 58 insertions(+), 6 deletions(-)
+> On Wed, May 11, 2022 at 12:20 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+> >
+> > On 11/05/2022 04:39, Julius Werner wrote:
+> > >> Wait, we agreed that you don't consider them identical, didn't we? If
+> > >> they are identical, you do not need rev4 at all. So they are not
+> > >> identical...
+> > >
+> > > Well, they are identical until they're not. We intend them to be
+> > > identical. But for practical purposes it does sometimes happen that
+> > > two board revisions which were meant to be indistinguishable by
+> > > software end up needing to be distinguished at a later point, when
+> > > both the hardware and firmware can no longer be changed. We need to
+> > > allow an escape hatch for that case. It does not happen often, so just
+> > > treating them all as separate boards from the start is not a scalable
+> > > solution. DTBs are not free when they all need to be packaged in the
+> > > same kernel image.
+> >
+> > You split more important part of my message, ignoring the point.
+> >
+> > So you choose they are not identical, fine. Why insisting on adding
+> > fallback compatible while not keeping bindings updated? Just don't add
+> > the compatible and work on rev3 or rev4. Doug even once wrote "_we don't
+> > know_ if -rev7 and -rev8 are compatible", so don't make them compatible.
+> > Don't add fallbacks or some generic unspecified front-compatibles and
+> > just work on revision.
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index af217de75e4d..a73fdcddeda4 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -234,6 +234,7 @@ struct q6v5 {
->   
->   enum {
->   	MSS_MSM8916,
-> +	MSS_MSM8953,
->   	MSS_MSM8974,
->   	MSS_MSM8996,
->   	MSS_MSM8998,
-> @@ -687,12 +688,14 @@ static int q6v5proc_reset(struct q6v5 *qproc)
->   		}
->   		goto pbl_wait;
->   	} else if (qproc->version == MSS_MSM8996 ||
-> -		   qproc->version == MSS_MSM8998) {
-> +		   qproc->version == MSS_MSM8998 ||
-> +		   qproc->version == MSS_MSM8953) {
->   		int mem_pwr_ctl;
->   
->   		/* Override the ACC value if required */
-> -		writel(QDSP6SS_ACC_OVERRIDE_VAL,
-> -		       qproc->reg_base + QDSP6SS_STRAP_ACC);
-> +		if (qproc->version != MSS_MSM8953)
-> +			writel(QDSP6SS_ACC_OVERRIDE_VAL,
-> +					qproc->reg_base + QDSP6SS_STRAP_ACC);
->   
->   		/* Assert resets, stop core */
->   		val = readl(qproc->reg_base + QDSP6SS_RESET_REG);
-> @@ -734,7 +737,8 @@ static int q6v5proc_reset(struct q6v5 *qproc)
->   		writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
->   
->   		/* Turn on L1, L2, ETB and JU memories 1 at a time */
-> -		if (qproc->version == MSS_MSM8996) {
-> +		if (qproc->version == MSS_MSM8996 ||
-> +			qproc->version == MSS_MSM8953) {
->   			mem_pwr_ctl = QDSP6SS_MEM_PWR_CTL;
->   			i = 19;
->   		} else {
-> @@ -1314,7 +1318,16 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
->   			max_addr = ALIGN(phdr->p_paddr + phdr->p_memsz, SZ_4K);
->   	}
->   
-> -	/*
-> +	if (qproc->version == MSS_MSM8953) {
-> +		ret = qcom_scm_pas_mem_setup(5, qproc->mpss_phys, qproc->mpss_size);
-> +		if (ret) {
-> +			dev_err(qproc->dev,
-> +					"setting up mpss memory failed: %d\n", ret);
-> +			goto release_firmware;
-> +		}
-> +	}
-> +
-> +	/**
+> Somehow, it seems like we keep talking past each other here and it
+> feels like folks are getting upset and we're not moving forward. Maybe
+> the right way to make progress is to find some face-to-face time at a
+> future conference and sit in front of a white board and hash it out.
+> That being said:
+> 
+> * Without changing our bootloader or having a big explosion in the
+> number of dts files, we really can't change our scheme. The best we
+> can do is document it.
+> 
+> * If we want to change our scheme, we'd need to sit down and come to
+> an agreement that satisfies everyone, if such a thing is possible.
+> That would only be able to affect future boards. We don't want to
+> change the bootloader dts loading scheme on old boards.
+> 
 
-Single star please
+In particular we don't want to end up with a scheme that requires you to
+spin new software for hardware that you think is compatible with the
+existing description provided to the software, that would just cause
+logistical overhead.
 
->   	 * In case of a modem subsystem restart on secure devices, the modem
->   	 * memory can be reclaimed only after MBA is loaded.
->   	 */
-> @@ -1413,7 +1426,6 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
->   			writel(RMB_CMD_LOAD_READY, qproc->rmb_base + RMB_MBA_COMMAND_REG);
->   		}
->   		writel(size, qproc->rmb_base + RMB_PMI_CODE_LENGTH_REG);
-> -
->   		ret = readl(qproc->rmb_base + RMB_MBA_STATUS_REG);
->   		if (ret < 0) {
->   			dev_err(qproc->dev, "MPSS authentication failed: %d\n",
-> @@ -1422,6 +1434,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
->   		}
->   	}
->   
-> +
+> 
+> > >> Right now it's not possible to validate QCOM DTSes against DT bindings
+> > >> because they throw big fat warnings about undocumented top compatibles.
+> > >> This is a downside for us.
+> > >
+> > > But that's a solvable problem, right? As I understand, what Doug was
+> > > initially just asking was whether it made _sense_ to document all of
+> > > these... not that we couldn't do it. Then this whole thread went down
+> > > a rabbit hole of whether our compatible assignments are allowed in the
+> > > first place. If we can compromise on this discussion by just doing
+> > > whatever needs to be done to make the tool happy, I think(?) we can
+> > > provide that.
+> >
+> > None of recent patches from Chromium were doing it, even after
+> > complaining from my side, so why do you suddenly believe that it is
+> > "doable"? If yes, please start doing it and fix the DTSes which you
+> > already submitted without bindings.
+> >
+> > To remind - entire discussion started with Doug saying it is pure
+> > overhead for him.
+> 
+> I mean, to be fair I said it _seems_ pure overhead and then said that
+> we could do it if it makes some tools happy. ...but before doing that,
+> I wanted to make sure it was actually valuable. I still have doubts
+> about the assertion that the most specific compatible is guaranteed to
+> uniquely identify hardware. So if the whole reason for doing this is
+> to make the validation tools happy and there's no other value, then at
+> least it's plausible to argue that the tools could simply be fixed to
+> allow this and not shout about it. Now, certainly I'm not arguing that
+> yaml validation in general is useless. I'm in agreement that we want
+> dts files to be able to be formally validated because it catches
+> typos, missing properties, and bugs. I am _only_ saying that I still
+> haven't seen a good argument for why we need to validate the top-level
+> compatible string. Since there no properties associated with the
+> top-level compatible string, it's mostly just checking did some one
+> copy-paste the compatible string from one file (the dts file) to the
+> other file (the yaml file) correctly. To me, that does not feel like a
+> useful check.
+> 
+> The other thing I wanted to make sure was that we weren't just going
+> to get NAKed later if/when we had to adjust compatible strings on
+> existing dts files.
+> 
 
-Unnecessary
+I don't have a reason for rejecting such changes, as long as it doesn't
+affect your ability to run off existing DTBs - but in the end you'd be
+the ones suffering most from that...
 
+Regards,
+Bjorn
 
->   	/* Transfer ownership of modem ddr region to q6 */
->   	ret = q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm, false, true,
->   				      qproc->mpss_phys, qproc->mpss_size);
-> @@ -2198,6 +2211,44 @@ static const struct rproc_hexagon_res msm8996_mss = {
->   	.version = MSS_MSM8996,
->   };
->   
-> +static const struct rproc_hexagon_res msm8953_mss = {
-> +	.hexagon_mba_image = "mba.mbn",
-> +	.proxy_supply = (struct qcom_mss_reg_res[]) {
-> +		{
-> +			.supply = "pll",
-> +			.uA = 100000,
-> +		},
-> +		{}
-> +	},
-> +	.proxy_pd_names = (char*[]) {
-> +			"cx",
-> +			"mx",
-> +			NULL
-> +	},
-> +	.active_supply = (struct qcom_mss_reg_res[]) {
-> +		{
-> +			.supply = "mss",
-> +			.uV = 1050000,
-> +			.uA = 100000,
-> +		},
-> +		{}
-> +	},
-> +	.proxy_clk_names = (char*[]){
-> +			"xo",
-> +			NULL
-> +	},
-> +	.active_clk_names = (char*[]){
-> +			"iface",
-> +			"bus",
-> +			"mem",
-> +			NULL
-> +	},
-> +	.need_mem_protection = false,
-> +	.has_alt_reset = false,
-> +	.has_spare_reg = false,
-
-
-Please follow the custom  and define the rest of fields here.
-
-> +	.version = MSS_MSM8953,
-> +};
-> +
->   static const struct rproc_hexagon_res msm8916_mss = {
->   	.hexagon_mba_image = "mba.mbn",
->   	.proxy_supply = (struct qcom_mss_reg_res[]) {
-> @@ -2301,6 +2352,7 @@ static const struct of_device_id q6v5_of_match[] = {
->   	{ .compatible = "qcom,msm8916-mss-pil", .data = &msm8916_mss},
->   	{ .compatible = "qcom,msm8974-mss-pil", .data = &msm8974_mss},
->   	{ .compatible = "qcom,msm8996-mss-pil", .data = &msm8996_mss},
-> +	{ .compatible = "qcom,msm8953-mss-pil", .data = &msm8953_mss},
->   	{ .compatible = "qcom,msm8998-mss-pil", .data = &msm8998_mss},
->   	{ .compatible = "qcom,sc7180-mss-pil", .data = &sc7180_mss},
->   	{ .compatible = "qcom,sc7280-mss-pil", .data = &sc7280_mss},
-
-
--- 
-With best wishes
-Dmitry
+> In any case, I guess I'll make an attempt to document the compatibles
+> for existing Chromebooks and we'll see what happens. I'm still not
+> convinced of the value, but as long as we're not going to get NAKed
+> for documenting reality it's fine.
+> 
+> -Doug
+> 
+> -Doug
