@@ -2,178 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE259523E52
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 22:04:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E71C523E66
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 22:06:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347541AbiEKUEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 16:04:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39654 "EHLO
+        id S230454AbiEKUGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 16:06:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347496AbiEKUEW (ORCPT
+        with ESMTP id S229667AbiEKUGf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 16:04:22 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9874231C82;
-        Wed, 11 May 2022 13:04:20 -0700 (PDT)
+        Wed, 11 May 2022 16:06:35 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C25726126
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 13:06:33 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id l18so6182778ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 13:06:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652299461; x=1683835461;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=vo23C2NXNJUhjPv0ou9jjN5qBMPI2jaVxAHFOXzcqC0=;
-  b=PF7ikufoln50javw9oTeWcJn7KnrZguJBZ5W7vIUCYbzEGa31tNSIXhe
-   MIRrmJM87QBq4oUs/OHWXL1VNLfH8q7XwAO3RJGFal94QPZi4y53641C4
-   I0CjXAHvOg5E5LiSUsAW9BK4RjGoQ2QDtzIdPrQeib3tcauJEWAPapJEh
-   Q=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 11 May 2022 13:04:20 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2022 13:04:20 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 11 May 2022 13:04:19 -0700
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 11 May 2022 13:04:18 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3] drm/msm/dp: Always clear mask bits to disable interrupts at dp_ctrl_reset_irq_ctrl()
-Date:   Wed, 11 May 2022 13:04:09 -0700
-Message-ID: <1652299449-31205-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=s+VKxsDNd2Dlk25JXEG0/tKdfNG/XmzW8g0WEIYdC88=;
+        b=R7vHakTRampr8OzU3rpFsQDFxOiF/ZYOzyU/LbZPRwC2qoIjA41ST8iUnSy/gzro0B
+         jTSxW/5/tKOFtoy6GEXCUuG7WzsuuTRO9uiHlsS2zYy6Q3XcNRZo3IY6AxUvfNLsJgll
+         Cp/W/Cf1mJWMPRsE9Ldkye6nOnCYHs/+4rGE4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=s+VKxsDNd2Dlk25JXEG0/tKdfNG/XmzW8g0WEIYdC88=;
+        b=b9XLTQduGQO7evU2vTwhVt9jbpOvbKlT+FeDARh1eyf8u4q91Qc5eflKEkd235dG1/
+         NGAGHzpBG207pxw1LbqLkYOaFACoD9z/dZrc1Eq4++8GCNweIOBe79d76yEue5/PWqTF
+         j33e8UeYZfqSTjSZk2eh6V212oeuD1IGt0fZJmkQyJ6E1/ToMCczSB3ZHCeYwSlabbO7
+         qZ0qI4agS7WhxfcJOSoB6bhXggcqI9yZatPwUlB9s1de+h6wdWp7xia4ygAKk04x6yS5
+         qZJzvFJfLn3bAoYmzKHFGnwbWzfLzIQzfkDBz7l5BLCteFVOyVJHNv4YVqIjElmhWMS/
+         EvoQ==
+X-Gm-Message-State: AOAM533yup3kliIACryHiMcAKgm2L1PxFLDep7d1x+B7Cj+N5/N8PmcU
+        /RwnUUmLhySuDEAaUKlAUypUNZbluCM3yk4VNR8=
+X-Google-Smtp-Source: ABdhPJzazHyMkX2yjQhAR0rj45OR0qzY0EIFsKYlY6p/Nr/zQ1fZCI27PPF1gwEJzRkG62xvtzs6Wg==
+X-Received: by 2002:a17:907:9815:b0:6f9:f5c6:ab01 with SMTP id ji21-20020a170907981500b006f9f5c6ab01mr17345835ejc.163.1652299591931;
+        Wed, 11 May 2022 13:06:31 -0700 (PDT)
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com. [209.85.128.48])
+        by smtp.gmail.com with ESMTPSA id m6-20020a170906580600b006f3ef214e0asm1310559ejq.112.2022.05.11.13.06.30
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 May 2022 13:06:30 -0700 (PDT)
+Received: by mail-wm1-f48.google.com with SMTP id m62so1824766wme.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 13:06:30 -0700 (PDT)
+X-Received: by 2002:a7b:c4c8:0:b0:394:26c5:b79e with SMTP id
+ g8-20020a7bc4c8000000b0039426c5b79emr6580581wmk.15.1652299589792; Wed, 11 May
+ 2022 13:06:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20211207222901.988484-1-dmitry.baryshkov@linaro.org> <20211207222901.988484-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211207222901.988484-2-dmitry.baryshkov@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 11 May 2022 13:06:17 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=V7RyVJKis9e3aoouQyhUppyAhVs9oN9=miKeZcV0t6_g@mail.gmail.com>
+Message-ID: <CAD=FV=V7RyVJKis9e3aoouQyhUppyAhVs9oN9=miKeZcV0t6_g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm/dsi: move DSI host powerup to modeset time
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dp_catalog_ctrl_reset() will software reset DP controller. But it will
-not reset programmable registers to default value. DP driver still have
-to clear mask bits to interrupt status registers to disable interrupts
-after software reset of controller. This patch removes the enable flag
-condition checking to always clear mask bits of interrupt status
-registers to disable interrupts if enable flag is false.
+Hi,
 
-This patch also will fix the potential problem happen at system suspend where
-dp_ctrl_reset_irq_ctrl() was called to try to disable HPD related irqs but
-the irq is still unmasked unexpectedly and can come in while system are
-suspending. This leads to bus hangs if the irq is handled after we power down
-the DP hardware because we run the irq handler and access a device register
-assuming that no irq could ever come in if we powered down the device. We
-don't know when the irq will be handled though, so it's possible the irq is
-pending from before we disable the irq in the hardware.
+On Tue, Dec 7, 2021 at 2:29 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> The DSI subsystem does not fully fall into the pre-enable/enable system
+> of callbacks, since typically DSI device bridge drivers expect to be
+> able to communicate with DSI devices at the pre-enable() callback. The
+> reason is that for some DSI hosts enabling the video stream would
+> prevent other drivers from sending DSI commands. For example see the
+> panel-bridge driver, which does drm_panel_prepare() from the
+> pre_enable() callback (which would be called before our pre_enable()
+> callback, resulting in panel preparation failures as the link is not yet
+> ready).
+>
+> Therewere several attempts to solve this issue, but currently the best
+> approach is to power up the DSI link from the mode_set() callback,
+> allowing next bridge/panel to use DSI transfers in the pre_enable()
+> time. Follow this approach.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi_manager.c | 43 +++++++++++++++++++--------
+>  1 file changed, 31 insertions(+), 12 deletions(-)
 
-Changes in v2:
--- add more details commit text
+I happened to be testing today on one of the sc7180-trogdor variants
+that has a parade-ps8640 bridge chip in it and ran into problems. A
+bisect pointed to this patch and, sure enough, reverting it fixes me
+again.
 
-Changes in v3:
--- add synchrons_irq()
--- add atomic_t suspended
+The Chromebook in question is able to power the screen on at bootup
+but things don't work so well in other cases. Specifically, if I leave
+the Chromebook idle then it will turn the screen off (but in this
+case, not enter S3). Hitting a key should wake the screen up, but it
+doesn't.
 
-Fixes: ba0a422be723 ("drm/msm/dp: do not initialize phy until plugin interrupt received")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c    |  9 +++++++--
- drivers/gpu/drm/msm/dp/dp_display.c | 18 ++++++++++++++++++
- 2 files changed, 25 insertions(+), 2 deletions(-)
+None of the error prints in dsi_mgr_bridge_power_on() are hitting when
+it fails and I even added extra error prints. It's not hitting any of
+the early returns.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index af7a80c..f3e333e 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1389,8 +1389,13 @@ void dp_ctrl_reset_irq_ctrl(struct dp_ctrl *dp_ctrl, bool enable)
- 
- 	dp_catalog_ctrl_reset(ctrl->catalog);
- 
--	if (enable)
--		dp_catalog_ctrl_enable_irq(ctrl->catalog, enable);
-+	/*
-+	 * all dp controller programmable registers will not
-+	 * be reset to default value after DP_SW_RESET
-+	 * therefore interrupt mask bits have to be updated
-+	 * to enable/disable interrupts
-+	 */
-+	dp_catalog_ctrl_enable_irq(ctrl->catalog, enable);
- }
- 
- void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl)
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index c388323..c34dbfc 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -98,6 +98,8 @@ struct dp_display_private {
- 	struct dp_ctrl    *ctrl;
- 	struct dp_debug   *debug;
- 
-+	atomic_t suspended;
-+
- 	struct dp_usbpd_cb usbpd_cb;
- 	struct dp_display_mode dp_mode;
- 	struct msm_dp dp_display;
-@@ -187,6 +189,11 @@ static int dp_add_event(struct dp_display_private *dp_priv, u32 event,
- 	int pndx;
- 
- 	spin_lock_irqsave(&dp_priv->event_lock, flag);
-+	if (atomic_read(&dp_priv->suspended)) {
-+		spin_unlock_irqrestore(&dp_priv->event_lock, flag);
-+		return -EPERM;
-+	}
-+
- 	pndx = dp_priv->event_pndx + 1;
- 	pndx %= DP_EVENT_Q_MAX;
- 	if (pndx == dp_priv->event_gndx) {
-@@ -454,6 +461,13 @@ static void dp_display_host_deinit(struct dp_display_private *dp)
- 		dp->dp_display.connector_type, dp->core_initialized,
- 		dp->phy_initialized);
- 
-+	if (!dp->core_initialized) {
-+		DRM_DEBUG_DP("DP core not initialized\n");
-+		return;
-+	}
-+
-+	synchronize_irq(dp->irq);
-+
- 	dp_ctrl_reset_irq_ctrl(dp->ctrl, false);
- 	dp_aux_deinit(dp->aux);
- 	dp_power_deinit(dp->power);
-@@ -1362,6 +1376,8 @@ static int dp_pm_resume(struct device *dev)
- 		dp->dp_display.connector_type, dp->core_initialized,
- 		dp->phy_initialized, dp_display->power_on);
- 
-+	atomic_set(&dp->suspended, 0);
-+
- 	/* start from disconnected state */
- 	dp->hpd_state = ST_DISCONNECTED;
- 
-@@ -1431,6 +1447,8 @@ static int dp_pm_suspend(struct device *dev)
- 		dp->dp_display.connector_type, dp->core_initialized,
- 		dp->phy_initialized, dp_display->power_on);
- 
-+	atomic_inc(&dp->suspended);
-+
- 	/* mainlink enabled */
- 	if (dp_power_clk_status(dp->power, DP_CTRL_PM))
- 		dp_ctrl_off_link_stream(dp->ctrl);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+I did a little bit more debugging and it appears that nothing funny is
+going on. It's just the ordering difference that matters. With the
+patch reverted, I see this and it all works:
 
+boot:
+[    9.653801] DOUG: dsi_mgr_bridge_mode_set
+[    9.658687] DOUG: ps8640_pre_enable
+[    9.664194] DOUG: dsi_mgr_bridge_pre_enable
+
+screen turns off:
+[   82.130038] DOUG: dsi_mgr_bridge_post_disable
+[   82.166817] DOUG: ps8640_post_disable
+
+screen turns on:
+[   92.611846] DOUG: dsi_mgr_bridge_mode_set
+[   92.617875] DOUG: ps8640_pre_enable
+[   92.920237] DOUG: dsi_mgr_bridge_pre_enable
+
+Without the patch reverted, I see this and it fails:
+
+boot:
+[   10.817810] DOUG: dsi_mgr_bridge_mode_set
+[   10.822128] DOUG: dsi_mgr_bridge_power_on
+[   10.852131] DOUG: ps8640_pre_enable
+[   10.857942] DOUG: dsi_mgr_bridge_pre_enable
+
+screen turns off:
+[   34.819953] DOUG: dsi_mgr_bridge_post_disable
+[   34.883777] DOUG: ps8640_post_disable
+
+screen should turn on, but doesn't:
+[   46.193589] DOUG: dsi_mgr_bridge_mode_set
+[   46.197951] DOUG: dsi_mgr_bridge_power_on
+[   46.248438] DOUG: ps8640_pre_enable
+[   46.541700] DOUG: dsi_mgr_bridge_pre_enable
+
+Unfortunately, ps8640 is a pretty big black box. The Linux kernel
+driver does almost nothing at all and the parade bridge chip has a
+bunch of magic firmware on it. Though I don't know for sure, I assume
+that this magic firmware simply can't handle the fact that the MIPI
+side is already setup / running when the bridge is powered on.
+
+Rather than this patch, maybe you can jump on Dave Stevenson's patch
+series [1] which I believe would solve this problem in a more dynamic
+way? Would you accept a revert of ${SUBJECT} patch to fix my problem?
+
+[1] https://lore.kernel.org/r/cover.1646406653.git.dave.stevenson@raspberrypi.com
+
+
+-Doug
