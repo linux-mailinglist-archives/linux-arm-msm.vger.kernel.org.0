@@ -2,136 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 829F55234F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 16:04:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A416F52350C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 16:09:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244317AbiEKOD7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 10:03:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37696 "EHLO
+        id S244414AbiEKOJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 10:09:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238190AbiEKOD6 (ORCPT
+        with ESMTP id S244420AbiEKOJb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 10:03:58 -0400
-Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [46.235.227.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2117C1133;
-        Wed, 11 May 2022 07:03:57 -0700 (PDT)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: tomeu)
-        with ESMTPSA id AD82D1F44B18
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1652277835;
-        bh=xSx6F4evAwybIJWHucSyu4yeLye8vq75JCHZIdqYZLc=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=PZRkH+oixPRVh+pYjowNCZTDelUzKF3qOWvUeoCKcl+R+yRYSLUiw86TAttDtHvtj
-         aM3wRuQHjK+N2z8ccCa+OzyBd4vzxOXfHjk6wC3gEYE0znuN7z2naYQGCpVRnx3FZv
-         RezU+yx8jb6R9Nlxw2qkKL4yLlkTvWyJoqumfgg1ZdH3ULMILWwu/A3ztlaya8Fnck
-         NJ68c3VQXX+HhpwqO4vN2dKCieebX6W5YlWxFbo7qkU23zLXvbnaYlf3qN4CCrOdrL
-         jZAcmazA5wX/sTMF9hbbSmBlWh8jmqiCo8A8HUeWYo3CcATm5aaKb0nnrokSVGJ0vc
-         1tHH9dCFybI7g==
-Subject: Re: [RFC v3] drm/msm: Add initial ci/ subdirectory
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Corbet <corbet@lwn.net>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-doc@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-References: <20220510141329.54414-1-tomeu.vizoso@collabora.com>
- <20220511061533.56881-1-tomeu.vizoso@collabora.com>
- <CAF6AEGts6cKOrmRruo8uSXSW=Kq58VZxdPuS13Q7jVajbvga-g@mail.gmail.com>
-From:   Tomeu Vizoso <tomeu.vizoso@collabora.com>
-Message-ID: <3e4198de-a0be-aa76-c5ea-fd07d47704ee@collabora.com>
-Date:   Wed, 11 May 2022 16:03:51 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Wed, 11 May 2022 10:09:31 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EDB46B010
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 07:09:29 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-2fb965b34easo22561767b3.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 07:09:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=83Nv0MHRiwJG3Qt4wgTcx11zG/+pISY5yN6uuKlIn0Q=;
+        b=kBcewzqBBvAfPquvl/sGPouMBUO+fHjmZ0vQl9khshvjjIB1XxMmZXwU0WzC5aAqV2
+         sjp/OIIyT1zvaiYhawbSxJps6a6rz91drkgGurTkeDFiVA1UfCUMk7FBM8WQ+VjDBhlF
+         Lq/1hG9mRdvTI6sW63ezJVlPMq96c4VBKftDYJjJyRT87lriIFKKvQpS8bfePV9dxXcy
+         1Yeh5sIaX4/QPvbdkMSLfGdhhri2shmxQiARr++u6OukeqyHWihRBII+CRaS9cFVcRp4
+         3ui3NeRn/Ji7F3zf4t7ie2o99FzoVUn+JO4iOPtHmyWraYU0Md+LE50AvrI5iNJIpEal
+         9Ipw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=83Nv0MHRiwJG3Qt4wgTcx11zG/+pISY5yN6uuKlIn0Q=;
+        b=XWAZvNvCcP0vosZfqqFxMLemUsQ9866DZHXuBOnu9bs9oSsmoSHO7Muu5SrvQzvSEQ
+         JoWXX6PHUgTOmjSiF17WxFme9wom4z6BA/zar7fm5tyg1EilNwI/U9Zu9Pvyuzp5lZZ+
+         Qbqc5EV9zclk3T/HjXTPh90CXz5UxMZyg1p7jYzcRvLHlB+1yitlmWqwXPNb9nE65B2k
+         tP7ZYRGEINv0GEgmPeK1tJQXOKWOwswuxmUp2KZvZN1Ph4kBBL93bMM3aolyJgB9D8Ox
+         277qKqUYDvt7PIbUE67hrb/liRGfUdZAjtlwc6Q3I17uj2Af/eYImWK8T7P5m3za1Ec7
+         +ItQ==
+X-Gm-Message-State: AOAM530RyUFyI6mbSaGwZRLgkOUKX8C9sgSs0whAZfSh27gtLtRIIqfA
+        gLQLX38ApKmg1KmKTnKzXR/T8Sl5f5aI/lZ2m36MqA==
+X-Google-Smtp-Source: ABdhPJxpj7VEhOJk81+QJ7sbXCb6T0VZeHbkdlPGDlNlc7ESj1A/mFHECqzvuvaiyTYwwHSJIZkushdwooT13fS70Zc=
+X-Received: by 2002:a81:1d4e:0:b0:2f7:be8b:502e with SMTP id
+ d75-20020a811d4e000000b002f7be8b502emr25537778ywd.278.1652278168274; Wed, 11
+ May 2022 07:09:28 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAF6AEGts6cKOrmRruo8uSXSW=Kq58VZxdPuS13Q7jVajbvga-g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20220506152107.1527552-1-dmitry.baryshkov@linaro.org>
+ <YnqXxNxFhf/odyka@robh.at.kernel.org> <CAA8EJpriMcP4uQ3fjyiCKY+uc82ctXe2VrjO1psPDcp-P++Nhw@mail.gmail.com>
+ <Ynu1p1hzqHJNpSp3@lpieralisi> <CAA8EJpoQ0TkY9zVzhB00f9iYKquPauF2JeapSECaPp3=eXWjsw@mail.gmail.com>
+ <YnvBgXsYYv72otXS@lpieralisi>
+In-Reply-To: <YnvBgXsYYv72otXS@lpieralisi>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 11 May 2022 17:09:17 +0300
+Message-ID: <CAA8EJpocyeRHGAS7=cpqQc7DHCUO6j4RS4nrfdiptAwu=7wcFg@mail.gmail.com>
+Subject: Re: [PATCH v6 0/8] dt-bindings: YAMLify pci/qcom,pcie schema
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/11/22 3:20 PM, Rob Clark wrote:
-> On Tue, May 10, 2022 at 11:15 PM Tomeu Vizoso
-> <tomeu.vizoso@collabora.com> wrote:
->>
->> And use it to store expectations about what the drm/msm driver is
->> supposed to pass in the IGT test suite.
->>
->> Also include a configuration file that points to the out-of-tree CI
->> scripts.
->>
->> By storing the test expectations along the code we can make sure both
->> stay in sync with each other, and so we can know when a code change
->> breaks those expectations.
->>
->> This will allow all contributors to drm/msm to reuse the infrastructure
->> already in gitlab.freedesktop.org to test the driver on several
->> generations of the hardware.
->>
->> v2:
->>    - Fix names of result expectation files to match SoC
->>    - Don't execute tests that are going to skip on all boards
->>
->> v3:
->>    - Remove tracking of dmesg output during test execution
->>
->> Signed-off-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
->> ---
->>   Documentation/gpu/msm_automated_testing.rst   |  70 +++++++++
->>   drivers/gpu/drm/msm/ci/gitlab-ci.yml          |  11 ++
->>   drivers/gpu/drm/msm/ci/msm.testlist           | 144 ++++++++++++++++++
->>   .../gpu/drm/msm/ci/msm_apq8016_results.txt    | 141 +++++++++++++++++
->>   .../gpu/drm/msm/ci/msm_apq8096_results.txt    | 141 +++++++++++++++++
->>   drivers/gpu/drm/msm/ci/msm_sc7180_results.txt | 142 +++++++++++++++++
->>   drivers/gpu/drm/msm/ci/msm_sdm845_results.txt | 142 +++++++++++++++++
->>   7 files changed, 791 insertions(+)
->>   create mode 100644 Documentation/gpu/msm_automated_testing.rst
->>   create mode 100644 drivers/gpu/drm/msm/ci/gitlab-ci.yml
->>   create mode 100644 drivers/gpu/drm/msm/ci/msm.testlist
->>   create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8016_results.txt
->>   create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8096_results.txt
->>   create mode 100644 drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
->>   create mode 100644 drivers/gpu/drm/msm/ci/msm_sdm845_results.txt
->>
-> 
-> [snip]
-> 
->> diff --git a/drivers/gpu/drm/msm/ci/gitlab-ci.yml b/drivers/gpu/drm/msm/ci/gitlab-ci.yml
->> new file mode 100644
->> index 000000000000..9b7caa7fcab2
->> --- /dev/null
->> +++ b/drivers/gpu/drm/msm/ci/gitlab-ci.yml
->> @@ -0,0 +1,11 @@
->> +variables:
->> +  # Change this to use your fork of drm-ci
->> +  DRM_CI_PROJECT_PATH: &drm-ci-project-path gfx-ci/drm-ci
->> +  DRM_CI_COMMIT_SHA: &drm-ci-commit-sha msm
-> 
-> btw, shouldn't we list an exact commit sha (or tag) for drm-ci, or am
-> I overlooking something?  We want to be able to uprev the drm-ci
-> version (and therefore igt version) in sync with any necessary updates
-> to the expectations
+On Wed, 11 May 2022 at 17:00, Lorenzo Pieralisi
+<lorenzo.pieralisi@arm.com> wrote:
+>
+> On Wed, May 11, 2022 at 04:53:43PM +0300, Dmitry Baryshkov wrote:
+> > On Wed, 11 May 2022 at 16:10, Lorenzo Pieralisi
+> > <lorenzo.pieralisi@arm.com> wrote:
+> > >
+> > > On Wed, May 11, 2022 at 01:13:28PM +0300, Dmitry Baryshkov wrote:
+> > > > On Tue, 10 May 2022 at 19:50, Rob Herring <robh@kernel.org> wrote:
+> > > > >
+> > > > > On Fri, May 06, 2022 at 06:20:59PM +0300, Dmitry Baryshkov wrote:
+> > > > > > Convert pci/qcom,pcie schema to YAML description. The first patch
+> > > > > > introduces several warnings which are fixed by the other patches in the
+> > > > > > series.
+> > > > > >
+> > > > > > Note regarding the snps,dw-pcie compatibility. The Qualcomm PCIe
+> > > > > > controller uses Synopsys PCIe IP core. However it is not just fused to
+> > > > > > the address space. Accessing PCIe registers requires several clocks and
+> > > > > > regulators to be powered up. Thus it can be assumed that the qcom,pcie
+> > > > > > bindings are not fully compatible with the snps,dw-pcie schema.
+> > > > > >
+> > > > > > Changes since v5:
+> > > > > >  - s/stance/stanza (pointed out by Bjorn Helgaas)
+> > > > > >
+> > > > > > Changes since v4:
+> > > > > >  - Change subjects to follow convention (suggested by Bjorn Helgaas)
+> > > > > >
+> > > > > > Changes since v3:
+> > > > > >  - Rebase on linux-next to include sm8150 patches
+> > > > > >
+> > > > > > Changes since v2 (still kudos to Krzyshtof):
+> > > > > >  - Readded reg-names conversion patch
+> > > > > >  - Mention wake-gpio update in the commit message
+> > > > > >  - Remove extra quotes in the schema
+> > > > > >
+> > > > > > Changes since v1 (all kudos to Krzyshtof):
+> > > > > >  - Dropped the reg-names patch. It will be handled separately
+> > > > > >  - Squashed the snps,dw-pcie removal (from schema) into the first patch
+> > > > > >  - Replaced deprecated perst-gpio and wake-gpio with perst-gpios and
+> > > > > >    wake-gpios in the examples and in DT files
+> > > > > >  - Moved common clocks/clock-names, resets/reset-names and power-domains
+> > > > > >    properties to the top level of the schema, leaving only platform
+> > > > > >    specifics in the conditional branches
+> > > > > >  - Dropped iommu-map/iommu-map-mask for now
+> > > > > >  - Added (missed) interrupt-cells, clocks, clock-names, resets,
+> > > > > >    reset-names properties to the required list (resets/reset-names are
+> > > > > >    removed in the next patch, as they are not used on msm8996)
+> > > > > >  - Fixed IRQ flags in the examples
+> > > > > >  - Merged apq8064/ipq8064 into the single condition statement
+> > > > > >  - Added extra empty lines
+> > > > > >
+> > > > > > Dmitry Baryshkov (8):
+> > > > > >   dt-bindings: PCI: qcom: Convert to YAML
+> > > > > >   dt-bindings: PCI: qcom: Do not require resets on msm8996 platforms
+> > > > > >   dt-bindings: PCI: qcom: Specify reg-names explicitly
+> > > > > >   dt-bindings: PCI: qcom: Add schema for sc7280 chipset
+> > > > > >   arm64: dts: qcom: stop using snps,dw-pcie falback
+> > > > > >   arm: dts: qcom: stop using snps,dw-pcie falback
+> > > > > >   arm: dts: qcom-*: replace deprecated perst-gpio with perst-gpios
+> > > > > >   arm64: dts: qcom: replace deprecated perst-gpio with perst-gpios
+> > > > > >
+> > > > > >  .../devicetree/bindings/pci/qcom,pcie.txt     | 398 ----------
+> > > > > >  .../devicetree/bindings/pci/qcom,pcie.yaml    | 714 ++++++++++++++++++
+> > > > >
+> > > > > What tree do these apply to because they don't apply to rc1. I'm
+> > > > > assuming the PCI tree and Lorenzo should take them.
+> > > >
+> > > > The series depends on the patch in Lorenzo's tree (sm8150 bindings),
+> > > > so I'd assume it would be natural to merge these patches through his
+> > > > tree too.
+> > >
+> > > I can take the DT bindings but the dts updates I'd prefer if they
+> > > went via platform trees. Is that OK ?
+> >
+> > Yes, that's fine with me. I think Bjorn has sent 5.19 pull request
+> > already, I'll track them getting merged into 5.19 or 5.20.
+>
+> I assume you meant BjornA sent a PR with patches [5-8] in it,
+> correct ?
+>
+> I will only pull the DT bindings, patches [1-4], please let me
+> know if that's what you expect.
 
-You are right, that was me being lazy and using a branch name to not 
-have to update this every time.
+Yes and Yes.
 
-But this should better be a commit sha or tag. Will do it on v4.
+>
+> Lorenzo
 
-Cheers,
 
-Tomeu
+
+-- 
+With best wishes
+Dmitry
