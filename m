@@ -2,155 +2,343 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEB3A5229F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 04:47:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 517AD522A87
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 05:51:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233014AbiEKCrY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 May 2022 22:47:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59450 "EHLO
+        id S232119AbiEKDvi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 May 2022 23:51:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243184AbiEKCjz (ORCPT
+        with ESMTP id S232024AbiEKDvh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 May 2022 22:39:55 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CB3A20EE3B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 19:39:54 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id x18so1063115wrc.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 19:39:54 -0700 (PDT)
+        Tue, 10 May 2022 23:51:37 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB38526566;
+        Tue, 10 May 2022 20:51:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=KimymyJktXOor657BlbrRRjA7HWKVOcx61gbNhrB/7o=;
-        b=ZTskdwHe7UUDxCjjzUIP50Srj0RKN2OBSf66044H+HXptMv9A605OSh25vJ7YOdG+P
-         8CWFNQSjC2CX4AMryGeDeVV/PLLXxV1NLtCivoeweCvK1w2iEyV8sdWQ666XzLfFtrY+
-         67SgDnkPzBDpl5rbl639zMJ/yn2uOnWvm9s5Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=KimymyJktXOor657BlbrRRjA7HWKVOcx61gbNhrB/7o=;
-        b=Fn7ugxUk5NEkbbp1t3E2/8NieoZc5JnQkZAw2Bln6AP6gX0P6mVDB/zRtpJprY7juT
-         WEnTVqNEzzqPRmd+HdSeTKhc50BUGFnbOQkAAS3sIcGsvytSx0SPaurqQBWI9q1jayNI
-         zt7nugncTkdgYnU9xTm1MdbnnIcQOpi4bkxr2cz4PbmHSxZVtaahDMpKlN1eXz0PcYDE
-         kUp4hBOhtpwApciM5cU4CTGaU3w9+7q9NoPOEdElUYMmxfjsvR8btc0VxV9TcRNvIpwj
-         nIlh2y4NVpsrFH8J803AASazEkgrv2zSQwhCrXixz6RgsqWBL0g1swgpDpNzxj96nR96
-         1uOA==
-X-Gm-Message-State: AOAM530GHNn4dUKls7byA4TbLeavjs58MmLOOwkBxM/Tyo0dk7dfQz5v
-        avweR7ZMX6T8NG5+I636iIKTodjTxKY9ONnfM6hHXA==
-X-Google-Smtp-Source: ABdhPJyE21AqoP29m/WgP+FLL3uuTZ5ahlHZq51uPrAhbthHgig5xYN633m5PWpnaxVRM9I3YPxOQ1caQeVnDqhrN+Y=
-X-Received: by 2002:adf:fb03:0:b0:20a:e253:b8c7 with SMTP id
- c3-20020adffb03000000b0020ae253b8c7mr20282047wrr.119.1652236792930; Tue, 10
- May 2022 19:39:52 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652241095; x=1683777095;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=ylVSFRVSwhOX8+xtZy5BB4akLVXL41AMGbjByxG8wPE=;
+  b=uHJ0KTy0nUDm48B9e4IqqxMefwLLdCYKqYKm+j9bU76tmkhWObQE5C8M
+   joGm3YoV3u/hAz2QL5tB32st9eMOdsGItPFEZc9FpRWV276Nn2HYOTIJE
+   VxcBn37UC85taczHXpVxjgJdRzSCgrqb/nXGUwHlbuyAIcU/CQZpZGaep
+   8=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 10 May 2022 20:51:34 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 20:51:33 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 10 May 2022 20:51:33 -0700
+Received: from [10.50.27.146] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 10 May
+ 2022 20:51:28 -0700
+Message-ID: <9c8558fa-223b-7f62-2a3a-67780af782ef@quicinc.com>
+Date:   Wed, 11 May 2022 09:21:24 +0530
 MIME-Version: 1.0
-References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
- <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org> <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
- <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org> <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
- <606cc762-a0c2-49a4-3e5d-d2dbd4595bc7@linaro.org> <CAD=FV=W_SA-3PfDFi-Gkjk9pew5bchFNjQhXX8MkZyuy5UohEQ@mail.gmail.com>
- <CAJKOXPdt5WTg4VU-TEW3dmPHR76dKg63XVxRQfa7ZSKc_jz6Ag@mail.gmail.com>
- <CAD=FV=XQqQSQDNh-zXqEQkwsrax5Qb3OtfKZoQLkncJj_4mcQw@mail.gmail.com>
- <daf66d41-42ac-50dc-3f8d-c261da8e452d@linaro.org> <CAD=FV=WhA=n_=Ys6NfedPtNPddL81HnG6Qws_R+vq9w8Nrsn5A@mail.gmail.com>
- <ce2ea308-b63d-ad27-4cea-7353268f8ebb@linaro.org>
-In-Reply-To: <ce2ea308-b63d-ad27-4cea-7353268f8ebb@linaro.org>
-From:   Julius Werner <jwerner@chromium.org>
-Date:   Tue, 10 May 2022 19:39:41 -0700
-Message-ID: <CAODwPW857CkH0+ZnBaUeowW4te-hSy6nrdeeX6-OLPOs5TptsQ@mail.gmail.com>
-Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        =?UTF-8?Q?Krzysztof_Koz=C5=82owski?= <k.kozlowski.k@gmail.com>,
-        Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Julius Werner <jwerner@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-9.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED,USER_IN_DEF_SPF_WL autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCHv14 5/9] lib: Add register read/write tracing support
+Content-Language: en-US
+To:     <arnd@arndb.de>, <catalin.marinas@arm.com>, <rostedt@goodmis.org>
+CC:     <gregkh@linuxfoundation.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <maz@kernel.org>, <quic_psodagud@quicinc.com>,
+        <quic_tsoni@quicinc.com>, <will@kernel.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>
+References: <cover.1651663123.git.quic_saipraka@quicinc.com>
+ <9827bae40f6f319f294d06859c9e3c7442f067f2.1651663123.git.quic_saipraka@quicinc.com>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <9827bae40f6f319f294d06859c9e3c7442f067f2.1651663123.git.quic_saipraka@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Wait, we agreed that you don't consider them identical, didn't we? If
-> they are identical, you do not need rev4 at all. So they are not
-> identical...
+On 5/4/2022 4:58 PM, Sai Prakash Ranjan wrote:
+> From: Prasad Sodagudi <psodagud@codeaurora.org>
+>
+> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
+> are typically used to read/write from/to memory mapped registers
+> and can cause hangs or some undefined behaviour in following few
+> cases,
+>
+> * If the access to the register space is unclocked, for example: if
+>    there is an access to multimedia(MM) block registers without MM
+>    clocks.
+>
+> * If the register space is protected and not set to be accessible from
+>    non-secure world, for example: only EL3 (EL: Exception level) access
+>    is allowed and any EL2/EL1 access is forbidden.
+>
+> * If xPU(memory/register protection units) is controlling access to
+>    certain memory/register space for specific clients.
+>
+> and more...
+>
+> Such cases usually results in instant reboot/SErrors/NOC or interconnect
+> hangs and tracing these register accesses can be very helpful to debug
+> such issues during initial development stages and also in later stages.
+>
+> So use ftrace trace events to log such MMIO register accesses which
+> provides rich feature set such as early enablement of trace events,
+> filtering capability, dumping ftrace logs on console and many more.
+>
+> Sample output:
+>
+> rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+> rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+> rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
+> rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
+>
+> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
+> Co-developed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+> ---
+>   arch/Kconfig                  |  3 ++
+>   arch/arm64/Kconfig            |  1 +
+>   include/trace/events/rwmmio.h | 97 +++++++++++++++++++++++++++++++++++
+>   lib/Kconfig                   |  7 +++
+>   lib/Makefile                  |  2 +
+>   lib/trace_readwrite.c         | 47 +++++++++++++++++
+>   6 files changed, 157 insertions(+)
+>   create mode 100644 include/trace/events/rwmmio.h
+>   create mode 100644 lib/trace_readwrite.c
+>
+> diff --git a/arch/Kconfig b/arch/Kconfig
+> index 31c4fdc4a4ba..5e7aa17ed609 100644
+> --- a/arch/Kconfig
+> +++ b/arch/Kconfig
+> @@ -1369,6 +1369,9 @@ config ARCH_HAS_ELFCORE_COMPAT
+>   config ARCH_HAS_PARANOID_L1D_FLUSH
+>   	bool
+>   
+> +config ARCH_HAVE_TRACE_MMIO_ACCESS
+> +	bool
+> +
+>   config DYNAMIC_SIGFRAME
+>   	bool
+>   
+> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+> index 20ea89d9ac2f..926e1a252b6f 100644
+> --- a/arch/arm64/Kconfig
+> +++ b/arch/arm64/Kconfig
+> @@ -48,6 +48,7 @@ config ARM64
+>   	select ARCH_HAS_ZONE_DMA_SET if EXPERT
+>   	select ARCH_HAVE_ELF_PROT
+>   	select ARCH_HAVE_NMI_SAFE_CMPXCHG
+> +	select ARCH_HAVE_TRACE_MMIO_ACCESS
+>   	select ARCH_INLINE_READ_LOCK if !PREEMPTION
+>   	select ARCH_INLINE_READ_LOCK_BH if !PREEMPTION
+>   	select ARCH_INLINE_READ_LOCK_IRQ if !PREEMPTION
+> diff --git a/include/trace/events/rwmmio.h b/include/trace/events/rwmmio.h
+> new file mode 100644
+> index 000000000000..82edee9bf716
+> --- /dev/null
+> +++ b/include/trace/events/rwmmio.h
+> @@ -0,0 +1,97 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +#undef TRACE_SYSTEM
+> +#define TRACE_SYSTEM rwmmio
+> +
+> +#if !defined(_TRACE_RWMMIO_H) || defined(TRACE_HEADER_MULTI_READ)
+> +#define _TRACE_RWMMIO_H
+> +
+> +#include <linux/tracepoint.h>
+> +
+> +DECLARE_EVENT_CLASS(rwmmio_rw_template,
+> +
+> +	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+> +
+> +	TP_ARGS(caller, val, width, addr),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(unsigned long, caller)
+> +		__field(unsigned long, addr)
+> +		__field(u64, val)
+> +		__field(u8, width)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->caller = caller;
+> +		__entry->val = val;
+> +		__entry->addr = (unsigned long)(void *)addr;
+> +		__entry->width = width;
+> +	),
+> +
+> +	TP_printk("%pS width=%d val=%#llx addr=%#lx",
+> +		(void *)(unsigned long)__entry->caller, __entry->width,
+> +		__entry->val, __entry->addr)
+> +);
+> +
+> +DEFINE_EVENT(rwmmio_rw_template, rwmmio_write,
+> +	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+> +	TP_ARGS(caller, val, width, addr)
+> +);
+> +
+> +DEFINE_EVENT(rwmmio_rw_template, rwmmio_post_write,
+> +	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+> +	TP_ARGS(caller, val, width, addr)
+> +);
+> +
+> +TRACE_EVENT(rwmmio_read,
+> +
+> +	TP_PROTO(unsigned long caller, u8 width, const volatile void __iomem *addr),
+> +
+> +	TP_ARGS(caller, width, addr),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(unsigned long, caller)
+> +		__field(unsigned long, addr)
+> +		__field(u8, width)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->caller = caller;
+> +		__entry->addr = (unsigned long)(void *)addr;
+> +		__entry->width = width;
+> +	),
+> +
+> +	TP_printk("%pS width=%d addr=%#lx",
+> +		 (void *)(unsigned long)__entry->caller, __entry->width, __entry->addr)
+> +);
+> +
+> +TRACE_EVENT(rwmmio_post_read,
+> +
+> +	TP_PROTO(unsigned long caller, u64 val, u8 width, const volatile void __iomem *addr),
+> +
+> +	TP_ARGS(caller, val, width, addr),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(unsigned long, caller)
+> +		__field(unsigned long, addr)
+> +		__field(u64, val)
+> +		__field(u8, width)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->caller = caller;
+> +		__entry->val = val;
+> +		__entry->addr = (unsigned long)(void *)addr;
+> +		__entry->width = width;
+> +	),
+> +
+> +	TP_printk("%pS width=%d val=%#llx addr=%#lx",
+> +		 (void *)(unsigned long)__entry->caller, __entry->width,
+> +		 __entry->val, __entry->addr)
+> +);
+> +
+> +#endif /* _TRACE_RWMMIO_H */
+> +
+> +#include <trace/define_trace.h>
+> diff --git a/lib/Kconfig b/lib/Kconfig
+> index 087e06b4cdfd..5e2fd075724f 100644
+> --- a/lib/Kconfig
+> +++ b/lib/Kconfig
+> @@ -118,6 +118,13 @@ config INDIRECT_IOMEM_FALLBACK
+>   	  mmio accesses when the IO memory address is not a registered
+>   	  emulated region.
+>   
+> +config TRACE_MMIO_ACCESS
+> +	bool "Register read/write tracing"
+> +	depends on TRACING && ARCH_HAVE_TRACE_MMIO_ACCESS
+> +	help
+> +	  Create tracepoints for MMIO read/write operations. These trace events
+> +	  can be used for logging all MMIO read/write operations.
+> +
+>   source "lib/crypto/Kconfig"
+>   
+>   config CRC_CCITT
+> diff --git a/lib/Makefile b/lib/Makefile
+> index 6b9ffc1bd1ee..3df7d24e65d2 100644
+> --- a/lib/Makefile
+> +++ b/lib/Makefile
+> @@ -151,6 +151,8 @@ lib-y += logic_pio.o
+>   
+>   lib-$(CONFIG_INDIRECT_IOMEM) += logic_iomem.o
+>   
+> +obj-$(CONFIG_TRACE_MMIO_ACCESS) += trace_readwrite.o
+> +
+>   obj-$(CONFIG_GENERIC_HWEIGHT) += hweight.o
+>   
+>   obj-$(CONFIG_BTREE) += btree.o
+> diff --git a/lib/trace_readwrite.c b/lib/trace_readwrite.c
+> new file mode 100644
+> index 000000000000..88637038b30c
+> --- /dev/null
+> +++ b/lib/trace_readwrite.c
+> @@ -0,0 +1,47 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Register read and write tracepoints
+> + *
+> + * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/ftrace.h>
+> +#include <linux/module.h>
+> +#include <asm-generic/io.h>
+> +
+> +#define CREATE_TRACE_POINTS
+> +#include <trace/events/rwmmio.h>
+> +
+> +#ifdef CONFIG_TRACE_MMIO_ACCESS
+> +void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+> +		    unsigned long caller_addr)
+> +{
+> +	trace_rwmmio_write(caller_addr, val, width, addr);
+> +}
+> +EXPORT_SYMBOL_GPL(log_write_mmio);
+> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_write);
+> +
+> +void log_post_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+> +			 unsigned long caller_addr)
+> +{
+> +	trace_rwmmio_post_write(caller_addr, val, width, addr);
+> +}
+> +EXPORT_SYMBOL_GPL(log_post_write_mmio);
+> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_post_write);
+> +
+> +void log_read_mmio(u8 width, const volatile void __iomem *addr,
+> +		   unsigned long caller_addr)
+> +{
+> +	trace_rwmmio_read(caller_addr, width, addr);
+> +}
+> +EXPORT_SYMBOL_GPL(log_read_mmio);
+> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_read);
+> +
+> +void log_post_read_mmio(u64 val, u8 width, const volatile void __iomem *addr,
+> +			unsigned long caller_addr)
+> +{
+> +	trace_rwmmio_post_read(caller_addr, val, width, addr);
+> +}
+> +EXPORT_SYMBOL_GPL(log_post_read_mmio);
+> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_post_read);
+> +#endif /* CONFIG_TRACE_MMIO_ACCESS */
 
-Well, they are identical until they're not. We intend them to be
-identical. But for practical purposes it does sometimes happen that
-two board revisions which were meant to be indistinguishable by
-software end up needing to be distinguished at a later point, when
-both the hardware and firmware can no longer be changed. We need to
-allow an escape hatch for that case. It does not happen often, so just
-treating them all as separate boards from the start is not a scalable
-solution. DTBs are not free when they all need to be packaged in the
-same kernel image.
+Hi Steve,
 
-> Right now it's not possible to validate QCOM DTSes against DT bindings
-> because they throw big fat warnings about undocumented top compatibles.
-> This is a downside for us.
+Could you please review this patch, it is the main one left for this series to get merged. All your
+previous review comments have been incorporated, you can find them in  the cover letter changelog.
 
-But that's a solvable problem, right? As I understand, what Doug was
-initially just asking was whether it made _sense_ to document all of
-these... not that we couldn't do it. Then this whole thread went down
-a rabbit hole of whether our compatible assignments are allowed in the
-first place. If we can compromise on this discussion by just doing
-whatever needs to be done to make the tool happy, I think(?) we can
-provide that.
-
-> Remember, you do not have to use Devicetree or Linux at all if it causes
-> you some downsides... No one is forced. :) If you choose to use it,
-> sorry, it comes with some requirements like being following Devicetree
-> specification or the binding guidelines.
-
-Woah... that is maybe a bit extreme, don't you think? My understanding
-was that Linux tries to support a wide variety of platforms and
-devices and can make the necessary compromises where needed to stay
-practical. I'm sure you are aware of the numerous hacks, workarounds
-and special cases throughout the kernel that enthusiasts put in there
-to get their favorite platform working, even if the original
-manufacturer never bothered to test with anything but Windows and
-blatantly violates common standards. Or how the USB stack has a file
-listing custom quirks for hundreds of individual device IDs just to
-make hardware work that didn't put any effort into following the spec.
-
-We're not even asking for any of that -- we're here, engaging with you
-and trying to find the best way for our platforms to fit cleanly into
-your model. All we're asking is to please offer some way that makes
-accommodations for the necessary practical concerns that come up when
-building devices at our scale. We're open for new suggestions, but
-they need to stay within the realm of what we can practically do (e.g.
-not ship a wholly separate DTB for each board revision, because that
-would grow the kernel image beyond what can fit in the kernel
-partitions on our platforms, and would create a notable extra cost in
-boot time for our users).
-
-Besides, I don't actually see how this violates the Device Tree
-specification? All I see it say about the toplevel compatible property
-is that it
-
-> Specifies a list of platform architectures with which this platform is co=
-mpatible. This property can be used by operating systems in selecting platf=
-orm specific code.
-
-It doesn't say anything about having to uniquely identify the platform
-architecture even if a more generic identifier is good enough to make
-all necessary platform-specific code choices for the operating system.
-In fact, about compatible properties in general the specification says
-
-> The property value consists of a concatenated list of null terminated str=
-ings, from most specific to most general. They allow a device to express it=
-s compatibility with a family of similar devices, potentially allowing a si=
-ngle device driver to match against several devices.
-
-Which implies that using a more generic string to cover multiple cases
-at once is an intentionally allowed use case.
+Thanks,
+Sai
