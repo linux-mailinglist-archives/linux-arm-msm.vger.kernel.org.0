@@ -2,144 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BD32523B97
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 19:33:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D1F9523BB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 19:36:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244493AbiEKRd3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 13:33:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51058 "EHLO
+        id S231935AbiEKRg5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 13:36:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345602AbiEKRd2 (ORCPT
+        with ESMTP id S234003AbiEKRg4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 13:33:28 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F4692317DB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:33:27 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id i19so5440423eja.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:33:27 -0700 (PDT)
+        Wed, 11 May 2022 13:36:56 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 207BA674DC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:36:55 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id p4so3495245edx.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:36:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RnK+iHlohBHk+K+PPu2H+s8rv61aQCy6hHkZXbGO1nI=;
-        b=KSDW7EaxEEAox9ArNl/cG0HEgm3SfZ3GtqPNzdmMU8fD7w0C0oDZs3MEyYZ6yoLdeu
-         yShjYNBWL3FgGR6nQX6mpwU5Yirj2LjWdpRYv8a8UxBup5whzO4smQ6iqzPoBSfjp87S
-         7RlaOLEm4NKQMZeXbACuJSvVt1Ssh4WSaqYVM=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=jwXHsUB6qUpzl3VRnWjzmQKSgk8cDfdgFA5s7nwGaLI=;
+        b=bT22W7fDGAySEG7vBs4hb15DD4bL48uTSAqlVdi3MASn69ux2G7d6N/VKWbxFQeXzu
+         IgyiHQ6LaCd+Jy6MC9n/t37uslzcQJdkPoDj5+cJEJKwpg5f0JFW2jRrHzzzLJkf9iT4
+         QtQSQUI6LtFE/fIizHPmL1xz0u3XWz12sCguANLoXC7jJDbOFe74dMAP5p6lDhtoGNwH
+         DFbFezBtzeZP0nBg/lmOWq7iZL6At0YQIyWc6fyuUn3CK6qOaU17FXZxe0d/AgEW+9TG
+         J7Jt47UJoYkfeT8yAPruPYcESKHLZfst00coEXtq0vevDQTAQYtBInbCq7t9qf1jIkXW
+         U8mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RnK+iHlohBHk+K+PPu2H+s8rv61aQCy6hHkZXbGO1nI=;
-        b=1wuZg0NfOQxtzLrnBF10kVzy+staFk/Ya/TD/OFQ5c1dmPPILdG7QRafcIjls3Gyi+
-         Sekk8Hk7tlJhDfMTgAspApr8pTJwmi8D+Bch1qKOrLUtK/f6QTvSfR8vZZyByLCZIS3w
-         coiBifLNU2DKaVGCg3svu1zWMRYtBQfMFFYXhjcIx2kJdtI+NvNIJ62Mtokk4pAPSpUY
-         VSVs74pWcr5j6ec58kMrlBmOS59hYgFJMREs1h2Usofwam/5QvYS35GPsuylGNgeGr3Y
-         5HtKXpf4tAjEQrTY7t2RM3U+k1BeeLFJ0MApoap11T4KUTdYLVVvLGjnl1E+OBSxL8pH
-         cx2A==
-X-Gm-Message-State: AOAM533/0YAiZ8A+TvYBKOp71U9jGja24Xwb/z39k473qYOmGciNSZaQ
-        jO81UnCh2mQt7p6ZCcLBPTpI3qw+TrQF5HEN5Po=
-X-Google-Smtp-Source: ABdhPJzaS4OGgp/nUqO4YBR9bOi2Z2IPcQgo4WjpoWifH2duOzEyHZhmi5WPNHfvoegfHNthi2LR6A==
-X-Received: by 2002:a17:907:9720:b0:6f4:31d4:925f with SMTP id jg32-20020a170907972000b006f431d4925fmr25892256ejc.658.1652290405542;
-        Wed, 11 May 2022 10:33:25 -0700 (PDT)
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com. [209.85.128.44])
-        by smtp.gmail.com with ESMTPSA id g19-20020a170906521300b006f3ef214e7bsm1190113ejm.225.2022.05.11.10.33.22
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=jwXHsUB6qUpzl3VRnWjzmQKSgk8cDfdgFA5s7nwGaLI=;
+        b=kYGvbiqshGq3QokP0HNBVjhGbfjK04XcbWeLDWkSshHud+/AwTYZZHDLIp8VVdU0Y8
+         1xExoPRC5e8/bUGFcAJa67VGtsVOCBJ780T9Mq/XTtOW6oY+rw+KwWxj83hLDMUXBFiN
+         7TFIpG9TIYpxAOqtUL4t8hAcR8lEmu+zU/QmGAW9+LEaC7Aj9ViO4KuWw+xT1BZpO4Sz
+         Ciqx4lJKsLFOVIc/dTSjnVtyjNgMuGhphXF2uY+MVJLqvbQmpuHKUAGpTNLgnNrn7tdX
+         4rOk/ghhQA2zFFgwlghVkdYeTpMwPisMy09kXCGdAXjmSDCXJ24TIhuDujcJmwNIU+RS
+         FSzA==
+X-Gm-Message-State: AOAM531babdz7jzHhDN4qGZ8ikGNu3uRZBBoA6OZ1LI/nb3YvASY7Pdn
+        YgdsgRxeNfZX9pXxSCnfsaFvOw==
+X-Google-Smtp-Source: ABdhPJyHrA/Ee4SIk42qzBFrUON01ZYdvbhXAObX8J9n0ciqCBlqDatunWcWgBVW2FLF9m2wVcZ9SQ==
+X-Received: by 2002:a05:6402:2078:b0:428:1071:d9b2 with SMTP id bd24-20020a056402207800b004281071d9b2mr31020035edb.302.1652290613620;
+        Wed, 11 May 2022 10:36:53 -0700 (PDT)
+Received: from [192.168.0.155] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id y8-20020a170906524800b006f3ef214d9esm1231008ejm.4.2022.05.11.10.36.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 May 2022 10:33:24 -0700 (PDT)
-Received: by mail-wm1-f44.google.com with SMTP id q20so1645946wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:33:22 -0700 (PDT)
-X-Received: by 2002:a1c:4c06:0:b0:394:65c4:bd03 with SMTP id
- z6-20020a1c4c06000000b0039465c4bd03mr6060279wmf.8.1652290402369; Wed, 11 May
- 2022 10:33:22 -0700 (PDT)
+        Wed, 11 May 2022 10:36:53 -0700 (PDT)
+Message-ID: <b619b455-c944-0cc6-ca83-e65490612ed7@linaro.org>
+Date:   Wed, 11 May 2022 19:36:52 +0200
 MIME-Version: 1.0
-References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
- <20220510141329.54414-1-tomeu.vizoso@collabora.com> <CAPM=9tzLR-wsLhg2ikGjoK06s-ju5XWa1rtPPiUpN=pwD1vgtA@mail.gmail.com>
-In-Reply-To: <CAPM=9tzLR-wsLhg2ikGjoK06s-ju5XWa1rtPPiUpN=pwD1vgtA@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 11 May 2022 10:33:06 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wg8YgH1h3wrm9CtXff7rSewa+NE0Z5upb1GOE8XiTL9HA@mail.gmail.com>
-Message-ID: <CAHk-=wg8YgH1h3wrm9CtXff7rSewa+NE0Z5upb1GOE8XiTL9HA@mail.gmail.com>
-Subject: Re: Adding CI results to the kernel tree was Re: [RFC v2] drm/msm:
- Add initial ci/ subdirectory
-To:     Dave Airlie <airlied@gmail.com>
-Cc:     Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>,
+        Rob Herring <robh@kernel.org>
+Cc:     Julius Werner <jwerner@chromium.org>,
+        =?UTF-8?Q?Krzysztof_Koz=c5=82owski?= <k.kozlowski.k@gmail.com>,
+        Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
+ <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org>
+ <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
+ <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org>
+ <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
+ <606cc762-a0c2-49a4-3e5d-d2dbd4595bc7@linaro.org>
+ <CAD=FV=W_SA-3PfDFi-Gkjk9pew5bchFNjQhXX8MkZyuy5UohEQ@mail.gmail.com>
+ <CAJKOXPdt5WTg4VU-TEW3dmPHR76dKg63XVxRQfa7ZSKc_jz6Ag@mail.gmail.com>
+ <CAD=FV=XQqQSQDNh-zXqEQkwsrax5Qb3OtfKZoQLkncJj_4mcQw@mail.gmail.com>
+ <daf66d41-42ac-50dc-3f8d-c261da8e452d@linaro.org>
+ <CAD=FV=WhA=n_=Ys6NfedPtNPddL81HnG6Qws_R+vq9w8Nrsn5A@mail.gmail.com>
+ <ce2ea308-b63d-ad27-4cea-7353268f8ebb@linaro.org>
+ <CAODwPW857CkH0+ZnBaUeowW4te-hSy6nrdeeX6-OLPOs5TptsQ@mail.gmail.com>
+ <55dcf917-7ac0-efe9-8531-b77be682125a@linaro.org>
+ <CAD=FV=UPKo4CxRVmdHr05rRPaNHFYfaQTqmBJAU5ZF61ccKgEA@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAD=FV=UPKo4CxRVmdHr05rRPaNHFYfaQTqmBJAU5ZF61ccKgEA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 10, 2022 at 10:07 PM Dave Airlie <airlied@gmail.com> wrote:
->
-> > And use it to store expectations about what the drm/msm driver is
-> > supposed to pass in the IGT test suite.
->
-> I wanted to loop in Linus/Greg to see if there are any issues raised
-> by adding CI results file to the tree in their minds, or if any other
-> subsystem has done this already, and it's all fine.
->
-> I think this is a good thing after our Mesa experience, but Mesa has a
-> lot tighter integration here, so I want to get some more opinions
-> outside the group.
+On 11/05/2022 18:09, Doug Anderson wrote:
+>>
+>> So you choose they are not identical, fine. Why insisting on adding
+>> fallback compatible while not keeping bindings updated? Just don't add
+>> the compatible and work on rev3 or rev4. Doug even once wrote "_we don't
+>> know_ if -rev7 and -rev8 are compatible", so don't make them compatible.
+>> Don't add fallbacks or some generic unspecified front-compatibles and
+>> just work on revision.
+> 
+> Somehow, it seems like we keep talking past each other here and it
+> feels like folks are getting upset and we're not moving forward. Maybe
+> the right way to make progress is to find some face-to-face time at a
+> future conference and sit in front of a white board and hash it out.
+> That being said:
+> 
+> * Without changing our bootloader or having a big explosion in the
+> number of dts files, we really can't change our scheme. The best we
+> can do is document it.
 
-Honestly, my immediate reaction is that I think it might be ok, but
+That's reasonable.
 
- (a) are these things going to absolutely balloon over time?
+> 
+> * If we want to change our scheme, we'd need to sit down and come to
+> an agreement that satisfies everyone, if such a thing is possible.
 
- (b) should these not be separated out?
+There is open CFP for ELCE 2022 (in Ireland). Maybe we could organize
+some session there? But we for sure would need Rob, so the arrangements
+should rather focus on him, not on my availability.
 
-Those two issues kind of interact.
+> That would only be able to affect future boards.
 
-If it's a small and targeted test-suite, by all means keep it in the
-kernel, but why not make it part of "tools/testing/selftests"
+I would like to say that if you had bindings, then obviously we would
+not break them, but since there are no bindings... :)
 
-But if people expect this to balloon and we end up having megabytes of
-test output, then I really think it should be a separate git tree.
+> We don't want to
+> change the bootloader dts loading scheme on old boards.
 
-A diffstat like this:
+Understood.
 
->  7 files changed, 791 insertions(+)
+>>>> Right now it's not possible to validate QCOM DTSes against DT bindings
+>>>> because they throw big fat warnings about undocumented top compatibles.
+>>>> This is a downside for us.
+>>>
+>>> But that's a solvable problem, right? As I understand, what Doug was
+>>> initially just asking was whether it made _sense_ to document all of
+>>> these... not that we couldn't do it. Then this whole thread went down
+>>> a rabbit hole of whether our compatible assignments are allowed in the
+>>> first place. If we can compromise on this discussion by just doing
+>>> whatever needs to be done to make the tool happy, I think(?) we can
+>>> provide that.
+>>
+>> None of recent patches from Chromium were doing it, even after
+>> complaining from my side, so why do you suddenly believe that it is
+>> "doable"? If yes, please start doing it and fix the DTSes which you
+>> already submitted without bindings.
+>>
+>> To remind - entire discussion started with Doug saying it is pure
+>> overhead for him.
+> 
+> I mean, to be fair I said it _seems_ pure overhead and then said that
+> we could do it if it makes some tools happy. ...but before doing that,
+> I wanted to make sure it was actually valuable. I still have doubts
+> about the assertion that the most specific compatible is guaranteed to
+> uniquely identify hardware. So if the whole reason for doing this is
+> to make the validation tools happy and there's no other value, then at
+> least it's plausible to argue that the tools could simply be fixed to
+> allow this and not shout about it. 
 
-is not a problem at all. But I get the feeling that this is just the
-tip of the iceberg, and people will want to not just have the result
-files, but start adding actual *input* files that may be largely
-automated stuff and may be tens of megabytes in size.
+Instead of adding bindings, you can indeed change/fix the tools. Go
+ahead. :)
 
-Because the result files on their own aren't really self-contained,
-and then people will want to keep them in sync with the test-files
-themselves, and start adding those, and now it *really* is likely very
-unwieldy.
+> Now, certainly I'm not arguing that
+> yaml validation in general is useless. I'm in agreement that we want
+> dts files to be able to be formally validated because it catches
+> typos, missing properties, and bugs. I am _only_ saying that I still
+> haven't seen a good argument for why we need to validate the top-level
+> compatible string.
 
-Or if that doesn't happen, and the actual input test files stay in a
-separate CI repo, and then you end up having random coherency issues
-with that CI repo, and it all gets to be either horribly messy, or the
-result files in the kernel end up really stale.
+I don't feel expert enough on this topic to give you good answer. Which
+does not prove that there isn't or there is such good answer.
 
-So honestly, I personally don't see a good end result here.  This
-particular small patch? *This* one looks fine to me, except I really
-think tools/testing/selftests/gpu would be a much more logical place
-for it.
+> Since there no properties associated with the
+> top-level compatible string, it's mostly just checking did some one
+> copy-paste the compatible string from one file (the dts file) to the
+> other file (the yaml file) correctly. To me, that does not feel like a
+> useful check.
 
-But I don't see a way forward that is sane.
+Still it can detect messing of SoC compatibles or not defining any
+board-level compatible thus pretending that someone's board is just
+SC7180. Imagine now user-space or bootloader trying to parse it...
 
-Can somebody argue otherwise?
+BTW, the bindings validation of top-level compatible might actually help
+you - to be sure that DTSes have proper compatibles matching what
+bootloader expects.
 
-            Linus
+> The other thing I wanted to make sure was that we weren't just going
+> to get NAKed later if/when we had to adjust compatible strings on
+> existing dts files.
+
+Stable ABI is more of SoC maintainer decision and I see Bjorn responded
+here.
+
+> In any case, I guess I'll make an attempt to document the compatibles
+> for existing Chromebooks and we'll see what happens. I'm still not
+> convinced of the value, but as long as we're not going to get NAKed
+> for documenting reality it's fine.
+
+
+Best regards,
+Krzysztof
