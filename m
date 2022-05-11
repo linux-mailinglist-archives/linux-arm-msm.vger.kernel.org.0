@@ -2,78 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E0135237D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 17:54:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA66D523834
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 18:10:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344094AbiEKPyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 11:54:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39230 "EHLO
+        id S1344371AbiEKQKT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 12:10:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344071AbiEKPya (ORCPT
+        with ESMTP id S1344372AbiEKQKR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 11:54:30 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 458A8102BAF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 08:54:28 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id 137so2158525pgb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 08:54:28 -0700 (PDT)
+        Wed, 11 May 2022 12:10:17 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDA6E2375DE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:10:09 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id j6so4991789ejc.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:10:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=yq+8NVE8TzoPtPDw2d7uVYhIh7kwcTL+WnUZqQp8/Zg=;
-        b=A544jE1jdTMe9rrfN8ZdDhzFJSzsaDUGkABDM9EFerAvihrvGhotTw0oFkJ/MgR4Pk
-         MVqu24ruuNA2Jz7aM8P43TlZt35mSbEaKcGO+kDEBI0pQmBg2yj9JzwE6Yaee9r0d4BK
-         FXMdVl3CU0KS/d16Wjxe5x9DbaNtTPQ4HaDmU=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mtUTymC8Y9rwA+nR5RnPnabs1W1L3QArgmlQfxUtvi0=;
+        b=KejbTgIcaTbt/QNzcRpsI//433QGnVimyV9DcWdNpVyg/b3Kgu3p8PCPgMJjwVjHja
+         fmVl95gma0wX465mkoUCKlfmdRJ1uKxPyyvDWJ24BWigQSe90s3rHSWWhAg9y0arb5Yk
+         sVhhxBQYSc+q6vFjLDE4wZZ6IJrYYIhtcbwPc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=yq+8NVE8TzoPtPDw2d7uVYhIh7kwcTL+WnUZqQp8/Zg=;
-        b=Q/QnNYKFk4lU+vIHND1gB0nXexz5zbMMT0o8ul5UL3x6DJ2HlpXHvSlDoCzGEpsGqQ
-         lMt5KsCqpzEjVPZ0D8FBpKfakUnIPyyPcImCavGgwQS+bPZDptEXEHQFASqu7cwnpn3F
-         PfWuVggVBuZXzOTIwrwYuM3wQyExlp/YoNqmDITDZOS4NZuNQPKWx1W4IFytl5uYVt+e
-         dOLTTUmkpu+xwz9aQbHJoXl+wlq7249h6QK0S1ZlXuUlCo7JMZetDTyEBynQTToQcFxI
-         KKgFsxsrawzh2c06/VszwVpCItr5Q8pH+H/5vB6zW73wceFbNygJv22Tb9Jst/6uz24q
-         2Ifg==
-X-Gm-Message-State: AOAM533rvDQhoxUjX85MmVGeBs4Wfqc/jvXtDF/fPx8RjTGHveqOqZHV
-        GzdI9cCaWYN/z1SvkIZaE+WKaQ==
-X-Google-Smtp-Source: ABdhPJx+7JYliMThOtCxTm/yr7mP3xyk5xGko+RGNTMntUQK+05+H3747B8X3nCsLHyiObebw5cQQw==
-X-Received: by 2002:a65:6217:0:b0:3c6:1571:b971 with SMTP id d23-20020a656217000000b003c61571b971mr21594732pgv.124.1652284467734;
-        Wed, 11 May 2022 08:54:27 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:c586:bf93:e960:73b4])
-        by smtp.gmail.com with UTF8SMTPSA id k15-20020a170902760f00b0015ed19cbfd8sm2043579pll.150.2022.05.11.08.54.26
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mtUTymC8Y9rwA+nR5RnPnabs1W1L3QArgmlQfxUtvi0=;
+        b=MogYocXQLDpMfArb9l5uzsyGZD+28heOcCQzA1Dv9FL5gyzGGpK2aLn/k2DzladRYv
+         Pf6efhkpe0mFVX86E1deI0q4vsfKxTuz2Z/oOKLJCjLPSKewSQIR3NHzmtI33kQcu3dJ
+         qwphml+uuAvAuOPdi03jK86TIEQ6kSSEDsa3xR8F1t4tkx0rNnaKg+XzyazmCXEdQgdf
+         fWfawwy/WH34GeBph4fqQYqX7MtviXBdCMJTcCSEKzTLXTLhxiV3zX2NCpDAMPlgSUEs
+         W0xsM7AQr0YZLluMWXwzrDMq4VXMMB8X+hztI+4p9L73TE4Afi4TbFJwpTDKuNFdXLco
+         yMNA==
+X-Gm-Message-State: AOAM53012ZTxPSfwDZ441DRHoJHDJC2QqeoLmKYVCrxQllVDPOj8nrLq
+        SMqiBPguHWIwqHRRJk/F7nFRgDhIaX1Jrm3OOkY=
+X-Google-Smtp-Source: ABdhPJzaa/mcEArPUtrhI7niZLixExNHjlJgcZkPwCpTb1VkI/COADy8jvQaAGnaPUaO42dtk6N4Gg==
+X-Received: by 2002:a17:907:608f:b0:6f6:1155:99ab with SMTP id ht15-20020a170907608f00b006f6115599abmr22254001ejc.306.1652285407950;
+        Wed, 11 May 2022 09:10:07 -0700 (PDT)
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com. [209.85.221.46])
+        by smtp.gmail.com with ESMTPSA id j6-20020a170906430600b006f3ef214e57sm1118245ejm.189.2022.05.11.09.10.06
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 May 2022 08:54:27 -0700 (PDT)
-Date:   Wed, 11 May 2022 08:54:25 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
-Cc:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Wed, 11 May 2022 09:10:07 -0700 (PDT)
+Received: by mail-wr1-f46.google.com with SMTP id u3so3695497wrg.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:10:06 -0700 (PDT)
+X-Received: by 2002:adf:f50d:0:b0:20a:e096:ef with SMTP id q13-20020adff50d000000b0020ae09600efmr23211050wro.679.1652285406324;
+ Wed, 11 May 2022 09:10:06 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
+ <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org> <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
+ <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org> <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
+ <606cc762-a0c2-49a4-3e5d-d2dbd4595bc7@linaro.org> <CAD=FV=W_SA-3PfDFi-Gkjk9pew5bchFNjQhXX8MkZyuy5UohEQ@mail.gmail.com>
+ <CAJKOXPdt5WTg4VU-TEW3dmPHR76dKg63XVxRQfa7ZSKc_jz6Ag@mail.gmail.com>
+ <CAD=FV=XQqQSQDNh-zXqEQkwsrax5Qb3OtfKZoQLkncJj_4mcQw@mail.gmail.com>
+ <daf66d41-42ac-50dc-3f8d-c261da8e452d@linaro.org> <CAD=FV=WhA=n_=Ys6NfedPtNPddL81HnG6Qws_R+vq9w8Nrsn5A@mail.gmail.com>
+ <ce2ea308-b63d-ad27-4cea-7353268f8ebb@linaro.org> <CAODwPW857CkH0+ZnBaUeowW4te-hSy6nrdeeX6-OLPOs5TptsQ@mail.gmail.com>
+ <55dcf917-7ac0-efe9-8531-b77be682125a@linaro.org>
+In-Reply-To: <55dcf917-7ac0-efe9-8531-b77be682125a@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 11 May 2022 09:09:53 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UPKo4CxRVmdHr05rRPaNHFYfaQTqmBJAU5ZF61ccKgEA@mail.gmail.com>
+Message-ID: <CAD=FV=UPKo4CxRVmdHr05rRPaNHFYfaQTqmBJAU5ZF61ccKgEA@mail.gmail.com>
+Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Julius Werner <jwerner@chromium.org>,
+        =?UTF-8?Q?Krzysztof_Koz=C5=82owski?= <k.kozlowski.k@gmail.com>,
+        Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, quic_ppratap@quicinc.com,
-        quic_vpulyala@quicinc.com
-Subject: Re: [v15 2/6] usb: host: xhci-plat: Enable wakeup based on children
- wakeup status
-Message-ID: <YnvcMe+irsndtcV0@google.com>
-References: <1651740973-7944-1-git-send-email-quic_kriskura@quicinc.com>
- <1651740973-7944-3-git-send-email-quic_kriskura@quicinc.com>
- <YnVAZSZYQvIJxOHv@google.com>
- <20220509033843.GB9170@hu-pkondeti-hyd.qualcomm.com>
- <20220511015101.GB23843@hu-pkondeti-hyd.qualcomm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220511015101.GB23843@hu-pkondeti-hyd.qualcomm.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -84,101 +88,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 11, 2022 at 07:21:01AM +0530, Pavan Kondeti wrote:
-> On Mon, May 09, 2022 at 09:08:43AM +0530, Pavan Kondeti wrote:
-> > On Fri, May 06, 2022 at 08:36:31AM -0700, Matthias Kaehlcke wrote:
-> > > On Thu, May 05, 2022 at 02:26:09PM +0530, Krishna Kurapati wrote:
-> > > > device_wakeup_path() tells if any of the children devices needs
-> > > > wakeup. Use this hint to enable/disable wakeup of our device. This
-> > > > helps the parent device of xhci-plat (like sysdev) to retrieve
-> > > > the wakeup setting via device_wakeup_path().
-> > > > 
-> > > > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> > > > ---
-> > > >  drivers/usb/host/xhci-plat.c | 8 ++++++++
-> > > >  1 file changed, 8 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-> > > > index 649ffd8..ad585fa 100644
-> > > > --- a/drivers/usb/host/xhci-plat.c
-> > > > +++ b/drivers/usb/host/xhci-plat.c
-> > > > @@ -415,6 +415,14 @@ static int __maybe_unused xhci_plat_suspend(struct device *dev)
-> > > >  	if (pm_runtime_suspended(dev))
-> > > >  		pm_runtime_resume(dev);
-> > > >  
-> > > > +	if (device_wakeup_path(dev)) {
-> > > > +		if (!device_may_wakeup(dev))
-> > > > +			device_wakeup_enable(dev);
-> > > > +	} else {
-> > > > +		if (device_may_wakeup(dev))
-> > > > +			device_wakeup_disable(dev);
-> > > > +	}
-> > > 
-> > > This code is not self-explantatory and deserves a comment.
-> > > 
-> > > Enabling/disabling wakeup for the purpose if signalling is a bit of a
-> > > hack. It might be an acceptable hack as long as it has no side effects.
-> > > However with the current implementation the wakeup state of the xHCI can
-> > > be different after resuming than it was before going to suspend:
-> > > 
-> > > after boot
-> > >   grep -h xhci /sys/class/wakeup/*/name
-> > >     => xhci-hcd.14.auto
-> > > 
-> > > after suspend w/o wakeup capable device
-> > >   grep -h xhci /sys/class/wakeup/*/name
-> > >     => no results
-> > > 
-> > > after suspend with wakeup capable device
-> > >   grep -h xhci /sys/class/wakeup/*/name
-> > >     => xhci-hcd.14.auto
-> > > 
-> > > The hack shouldn't alter the wakeup state 'persistently', i.e. you'll have
-> > > to restore it on resume, as in Pavan does in his reply to '[PATCH v14 2/7]
-> > > PM / wakeup: Add device_children_wakeup_capable()' (it needs to be done
-> > > conditionally though).
-> > 
-> > I am worried that we are not doing the right thing here. why should the
-> > xhci-plat goes against the wishes of the user space policy here? Can we NOT
-> > just do anything here? If some one wants xhci-plat to wakeup all the time,
-> > dwc3 will be configured to wakeup the system provided that the support is
-> > available. This way we don't break any existing users of xhci-plat i.e not
-> > enabling wakeup from the kernel.
-> > 
-> Krishna,
-> 
-> can we please drop this patch and use device_wakeup_path() and verify the
-> following cases.
-> 
-> 1. one of the downstream USB device supports wakeup and xhci-plat wakeup is enabled
-> 2. one of the downstream USB device supports wakeup and xhci-plat wakeup is
-> disabled
-> 3. none of the downstream USB device supports wakeup (or disable) and
-> xhci-plat wakeup is enabled.
-> 4. none of the downstream USB device supports wakeup (or disable) and
-> xhci-plat wakeup is disabled.
+Hi,
 
-I wonder if we couldn't keep this simpler: if the dwc3 is wakeup capable keep
-the PHYs/core powered, otherwise power them down. Similar to what commit
-689bf72c6e0d ("usb: dwc3: Don't reinitialize core during host
-bus-suspend/resume") intended, but with the additonal check for wakeup
-capability. We now know that the PHYs need to be powered down on some SoCs
-to allow the SoC to reach its low power mode during suspend:
+On Wed, May 11, 2022 at 12:20 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 11/05/2022 04:39, Julius Werner wrote:
+> >> Wait, we agreed that you don't consider them identical, didn't we? If
+> >> they are identical, you do not need rev4 at all. So they are not
+> >> identical...
+> >
+> > Well, they are identical until they're not. We intend them to be
+> > identical. But for practical purposes it does sometimes happen that
+> > two board revisions which were meant to be indistinguishable by
+> > software end up needing to be distinguished at a later point, when
+> > both the hardware and firmware can no longer be changed. We need to
+> > allow an escape hatch for that case. It does not happen often, so just
+> > treating them all as separate boards from the start is not a scalable
+> > solution. DTBs are not free when they all need to be packaged in the
+> > same kernel image.
+>
+> You split more important part of my message, ignoring the point.
+>
+> So you choose they are not identical, fine. Why insisting on adding
+> fallback compatible while not keeping bindings updated? Just don't add
+> the compatible and work on rev3 or rev4. Doug even once wrote "_we don't
+> know_ if -rev7 and -rev8 are compatible", so don't make them compatible.
+> Don't add fallbacks or some generic unspecified front-compatibles and
+> just work on revision.
+
+Somehow, it seems like we keep talking past each other here and it
+feels like folks are getting upset and we're not moving forward. Maybe
+the right way to make progress is to find some face-to-face time at a
+future conference and sit in front of a white board and hash it out.
+That being said:
+
+* Without changing our bootloader or having a big explosion in the
+number of dts files, we really can't change our scheme. The best we
+can do is document it.
+
+* If we want to change our scheme, we'd need to sit down and come to
+an agreement that satisfies everyone, if such a thing is possible.
+That would only be able to affect future boards. We don't want to
+change the bootloader dts loading scheme on old boards.
 
 
-  commit c4a5153e87fdf6805f63ff57556260e2554155a5
-  Author: Manu Gautam <mgautam@codeaurora.org>
-  Date:   Thu Jan 18 16:54:30 2018 +0530
+> >> Right now it's not possible to validate QCOM DTSes against DT bindings
+> >> because they throw big fat warnings about undocumented top compatibles.
+> >> This is a downside for us.
+> >
+> > But that's a solvable problem, right? As I understand, what Doug was
+> > initially just asking was whether it made _sense_ to document all of
+> > these... not that we couldn't do it. Then this whole thread went down
+> > a rabbit hole of whether our compatible assignments are allowed in the
+> > first place. If we can compromise on this discussion by just doing
+> > whatever needs to be done to make the tool happy, I think(?) we can
+> > provide that.
+>
+> None of recent patches from Chromium were doing it, even after
+> complaining from my side, so why do you suddenly believe that it is
+> "doable"? If yes, please start doing it and fix the DTSes which you
+> already submitted without bindings.
+>
+> To remind - entire discussion started with Doug saying it is pure
+> overhead for him.
 
-  usb: dwc3: core: Power-off core/PHYs on system_suspend in host mode
+I mean, to be fair I said it _seems_ pure overhead and then said that
+we could do it if it makes some tools happy. ...but before doing that,
+I wanted to make sure it was actually valuable. I still have doubts
+about the assertion that the most specific compatible is guaranteed to
+uniquely identify hardware. So if the whole reason for doing this is
+to make the validation tools happy and there's no other value, then at
+least it's plausible to argue that the tools could simply be fixed to
+allow this and not shout about it. Now, certainly I'm not arguing that
+yaml validation in general is useless. I'm in agreement that we want
+dts files to be able to be formally validated because it catches
+typos, missing properties, and bugs. I am _only_ saying that I still
+haven't seen a good argument for why we need to validate the top-level
+compatible string. Since there no properties associated with the
+top-level compatible string, it's mostly just checking did some one
+copy-paste the compatible string from one file (the dts file) to the
+other file (the yaml file) correctly. To me, that does not feel like a
+useful check.
 
-  Commit 689bf72c6e0d ("usb: dwc3: Don't reinitialize core during
-  host bus-suspend/resume") updated suspend/resume routines to not
-  power_off and reinit PHYs/core for host mode.
-  It broke platforms that rely on DWC3 core to power_off PHYs to
-  enter low power state on system suspend.
+The other thing I wanted to make sure was that we weren't just going
+to get NAKed later if/when we had to adjust compatible strings on
+existing dts files.
 
+In any case, I guess I'll make an attempt to document the compatibles
+for existing Chromebooks and we'll see what happens. I'm still not
+convinced of the value, but as long as we're not going to get NAKed
+for documenting reality it's fine.
 
-With wakeup capable controllers this is apparently not an issue, otherwise
-the SoC wouldn't be able to enter its low power state when wakeup is
-enabled.
+-Doug
+
+-Doug
