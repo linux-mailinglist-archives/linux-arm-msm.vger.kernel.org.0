@@ -2,113 +2,251 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CBD5523D33
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 21:12:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FCCA523D3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 21:14:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346682AbiEKTMl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 15:12:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57514 "EHLO
+        id S1346696AbiEKTO4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 15:14:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345686AbiEKTMk (ORCPT
+        with ESMTP id S1346694AbiEKTOz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 15:12:40 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E13E77F38
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 12:12:37 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id g23so3614181edy.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 12:12:37 -0700 (PDT)
+        Wed, 11 May 2022 15:14:55 -0400
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F3587E1DF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 12:14:54 -0700 (PDT)
+Received: by mail-oo1-xc2a.google.com with SMTP id f6-20020a4ace86000000b0035f083d2216so1744344oos.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 12:14:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
+        d=ffwll.ch; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=m0rLYZTGM9tABUfYW7kAK/fqq3Ax7YNevFHH/XCjFGs=;
-        b=eCbRkCpG+1uv8o7qRy4S8ofMtbzrfrNObimViXJYOfvi54JNTAr6JFhhlnpgtpAcS+
-         VN1OH3CnIDFz9Ap8QJJbmVusIA88+j05i4dmbpolhuHRtJjOf6pV7NrV6W8AIKtloJuO
-         Epo1XPPLAfd3d4t/rIpKYoMleVpcQa62xi+gI=
+        bh=RUJga6Sfczdt5mv5sIdR18hVsw/TWMAs8EA6CHrL0rU=;
+        b=gnZmrs2D0DwALRm1ADxLQRz+bDphebBgH43fv+2+38QxVQPxBJjUyuupdNtCRDpDOa
+         +jzQi5V6ZpEid7cMHQY80vZ8VvuEKcIZXqCmEMJ2k1DpUsV1WmB+7vtiP9g4JDjxf8nt
+         wciao+OnkvnhkJLFfB08/eqbrwBDt/Aj6CWwY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=m0rLYZTGM9tABUfYW7kAK/fqq3Ax7YNevFHH/XCjFGs=;
-        b=LnBA14Azdmfg9KRbxX+hcTYkKOfMoJKk4UblfZQwJjtIaS3VMiyx+57k7HqCUQWzbV
-         ViH9ws/AHCQHgvpNn0pBB9EXRj/6IpECG7L5LO8TZoyztRWqUjE645HzNJV4ezWznPrV
-         gbDefEEo3m9D2s3cLy5kRB3dJWqhfsUm6r2Hl2oi/tEzOpJrxTeWNJT/CijD2ZvPaIzL
-         pYmAc2Tuuhs/QLukN1J6CrSnKjkzZGJAIgIljFoy23QzorhRK504nItMynw+QIb1JNUk
-         P3XRg1wDYEeGb0Ky9f7QJZ8xPihyot6BVf6hXcrNa7Bquch0oe+pz3B9qsi6j9OsmPcA
-         lHCw==
-X-Gm-Message-State: AOAM530hvqkzHt2RgpJDlCPzyFpVdh0s9qGDpDjEM/zlPjqxAeEMog+i
-        lp64+Wt+8wuSyjTUI2V5r02oC+oxjg+Zumlc8SY=
-X-Google-Smtp-Source: ABdhPJwfJekXwKPQ8d58XJMzlXXduToQ9wOqy19e8fvf1kC4HOexIIPvnH2W4n29/Y3X+Ty3tIvu+Q==
-X-Received: by 2002:a50:9ecc:0:b0:428:73bd:4667 with SMTP id a70-20020a509ecc000000b0042873bd4667mr26852475edf.165.1652296355905;
-        Wed, 11 May 2022 12:12:35 -0700 (PDT)
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com. [209.85.221.49])
-        by smtp.gmail.com with ESMTPSA id r9-20020aa7c149000000b0042617ba63a8sm1493892edp.50.2022.05.11.12.12.34
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 May 2022 12:12:35 -0700 (PDT)
-Received: by mail-wr1-f49.google.com with SMTP id t6so4304017wra.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 12:12:34 -0700 (PDT)
-X-Received: by 2002:a5d:6dad:0:b0:20c:4dc1:e247 with SMTP id
- u13-20020a5d6dad000000b0020c4dc1e247mr24044515wrs.274.1652296354621; Wed, 11
- May 2022 12:12:34 -0700 (PDT)
+        bh=RUJga6Sfczdt5mv5sIdR18hVsw/TWMAs8EA6CHrL0rU=;
+        b=lAzZU0687eIRkxzukPYv2pta06+MPY1MNbz9gIvBF48qriRA+h0q+W/rfNOexaSp0V
+         /YYyfhAyPQf6PkV1GlxDPA7njLZLIBM6wx+HfdEwpB34ddwwB1duBQLlXvi0LdL1BR30
+         ObZaNEH0+86cpZoSqWAzFkxLiDIp3uJHkW0BfttYh9xmCuXJselSd2Y0ikJPVo9zEkfk
+         UjpZXMdgaKWmXXYO0MufMeSv+edAfVYwERx0mTPCcOrV4jiCGbnbpoYytrYjthvg7mGk
+         lHTbaUZ09+9DQ/1qn69PizUaIHQz3Su/L8ZFDLB0ptZJUy9TsxQCl+sXTHLKcs2L5RYo
+         20sg==
+X-Gm-Message-State: AOAM533AAE+PC9M0an5+R+DiZFXnVXAvWJ+ycnXR2WyskIxMwe/qxVJ3
+        UHDt2m5vQrkNwc2xCK/oLNQhXuJgrnp1LAwQD6UNIA==
+X-Google-Smtp-Source: ABdhPJyiGqNxpKRPpkhQoni0XdhbhyslM+0N6eGW3C65f1o+ZbuKiYMgWnZj20pZMCXHcOFnfqHnj8MmOW+rhz4kBPM=
+X-Received: by 2002:a4a:95c6:0:b0:35f:7f11:7055 with SMTP id
+ p6-20020a4a95c6000000b0035f7f117055mr6213439ooi.87.1652296493819; Wed, 11 May
+ 2022 12:14:53 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
- <20220510141329.54414-1-tomeu.vizoso@collabora.com> <CAPM=9tzLR-wsLhg2ikGjoK06s-ju5XWa1rtPPiUpN=pwD1vgtA@mail.gmail.com>
- <CAHk-=wg8YgH1h3wrm9CtXff7rSewa+NE0Z5upb1GOE8XiTL9HA@mail.gmail.com>
- <CAF6AEGusO9XAqHNatJLgV+wpVoyyLg1vHtUsnSkAxJeV7n3WNg@mail.gmail.com> <CAHk-=wjbE0f2AGroB1Hy=fx2fh7cRpS0wNdB46Ybk14Mb0b5Jw@mail.gmail.com>
-In-Reply-To: <CAHk-=wjbE0f2AGroB1Hy=fx2fh7cRpS0wNdB46Ybk14Mb0b5Jw@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 11 May 2022 12:12:18 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wjy4DY_ya8TBs9W2wLWHibBiHMQW2T43DQR1SGRkqD=gw@mail.gmail.com>
-Message-ID: <CAHk-=wjy4DY_ya8TBs9W2wLWHibBiHMQW2T43DQR1SGRkqD=gw@mail.gmail.com>
-Subject: Re: Adding CI results to the kernel tree was Re: [RFC v2] drm/msm:
- Add initial ci/ subdirectory
+ <20220510141329.54414-1-tomeu.vizoso@collabora.com> <e4e03cd8-3ebc-e5e1-e7d0-6bdc038049b5@quicinc.com>
+ <CAF6AEGueadnRMiatO3MoHS+NTQ1o1sgcV0cVjJM3iu-6JUNmNw@mail.gmail.com>
+ <CAKMK7uGRuCZwF6m02tcxxrgQGaijsYaNkowjxR+cw0JM3UpDkQ@mail.gmail.com> <CAF6AEGthpxPLxyt_i-aUFgW485hA5qw+xXcJ3gKQUJ+fM=ZBhg@mail.gmail.com>
+In-Reply-To: <CAF6AEGthpxPLxyt_i-aUFgW485hA5qw+xXcJ3gKQUJ+fM=ZBhg@mail.gmail.com>
+From:   Daniel Vetter <daniel@ffwll.ch>
+Date:   Wed, 11 May 2022 21:14:42 +0200
+Message-ID: <CAKMK7uGQvay9-twVuEKJe7Hz88iQGBP+bdO+3tKJnsjZsnfV9Q@mail.gmail.com>
+Subject: Re: [Freedreno] [RFC v2] drm/msm: Add initial ci/ subdirectory
 To:     Rob Clark <robdclark@gmail.com>
-Cc:     Dave Airlie <airlied@gmail.com>,
+Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
         Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Maxime Ripard <mripard@kernel.org>,
         Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
         Jonathan Corbet <corbet@lwn.net>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         dri-devel <dri-devel@lists.freedesktop.org>,
         freedreno <freedreno@lists.freedesktop.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 11, 2022 at 12:08 PM Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
+On Wed, 11 May 2022 at 19:46, Rob Clark <robdclark@gmail.com> wrote:
 >
-> The kernel tree might have just the expected *failures* listed, if
-> there are any. Presumably the ci tree has to have the expected results
-> anyway, so what's the advantage of listing non-failures?
+> On Wed, May 11, 2022 at 10:12 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+> >
+> > On Tue, 10 May 2022 at 22:26, Rob Clark <robdclark@gmail.com> wrote:
+> > >
+> > > On Tue, May 10, 2022 at 12:39 PM Jessica Zhang
+> > > <quic_jesszhan@quicinc.com> wrote:
+> > > >
+> > > >
+> > > >
+> > > > On 5/10/2022 7:13 AM, Tomeu Vizoso wrote:
+> > > > > And use it to store expectations about what the drm/msm driver is
+> > > > > supposed to pass in the IGT test suite.
+> > > > >
+> > > > > Also include a configuration file that points to the out-of-tree CI
+> > > > > scripts.
+> > > > >
+> > > > > By storing the test expectations along the code we can make sure both
+> > > > > stay in sync with each other, and so we can know when a code change
+> > > > > breaks those expectations.
+> > > > >
+> > > > > This will allow all contributors to drm/msm to reuse the infrastructure
+> > > > > already in gitlab.freedesktop.org to test the driver on several
+> > > > > generations of the hardware.
+> > > > >
+> > > > > v2:
+> > > > >    - Fix names of result expectation files to match SoC
+> > > > >    - Don't execute tests that are going to skip on all boards
+> > > > >
+> > > > > Signed-off-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
+> > > > > ---
+> > > > >   Documentation/gpu/msm_automated_testing.rst   |  70 +++++++++
+> > > > >   drivers/gpu/drm/msm/ci/gitlab-ci.yml          |  11 ++
+> > > > >   drivers/gpu/drm/msm/ci/msm.testlist           | 148 ++++++++++++++++++
+> > > > >   .../gpu/drm/msm/ci/msm_apq8016_results.txt    | 140 +++++++++++++++++
+> > > > >   .../gpu/drm/msm/ci/msm_apq8096_results.txt    | 140 +++++++++++++++++
+> > > > >   drivers/gpu/drm/msm/ci/msm_sc7180_results.txt | 141 +++++++++++++++++
+> > > > >   drivers/gpu/drm/msm/ci/msm_sdm845_results.txt | 141 +++++++++++++++++
+> > > > >   7 files changed, 791 insertions(+)
+> > > > >   create mode 100644 Documentation/gpu/msm_automated_testing.rst
+> > > > >   create mode 100644 drivers/gpu/drm/msm/ci/gitlab-ci.yml
+> > > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm.testlist
+> > > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8016_results.txt
+> > > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8096_results.txt
+> > > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
+> > > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_sdm845_results.txt
+> > > > >
+>
+> [snip]
+>
+> > > > > diff --git a/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt b/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
+> > > > > new file mode 100644
+> > > > > index 000000000000..01f7b4b399b5
+> > > > > --- /dev/null
+> > > > > +++ b/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
+> > > > > @@ -0,0 +1,141 @@
+> > > > > +igt@core_auth@getclient-simple,dmesg-warn
+> > > > > +igt@core_auth@getclient-master-drop,pass
+> > > > > +igt@core_auth@basic-auth,pass
+> > > > > +igt@core_auth@many-magics,pass
+> > > > > +igt@core_getclient,pass
+> > > > > +igt@core_getstats,pass
+> > > > > +igt@core_getversion,pass
+> > > > > +igt@core_setmaster_vs_auth,pass
+> > > > > +igt@drm_read@invalid-buffer,pass
+> > > > > +igt@drm_read@fault-buffer,pass
+> > > > > +igt@drm_read@empty-block,pass
+> > > > > +igt@drm_read@empty-nonblock,pass
+> > > > > +igt@drm_read@short-buffer-block,pass
+> > > > > +igt@drm_read@short-buffer-nonblock,pass
+> > > > > +igt@drm_read@short-buffer-wakeup,pass
+> > > > > +igt@kms_addfb_basic@unused-handle,pass
+> > > > > +igt@kms_addfb_basic@unused-pitches,pass
+> > > > > +igt@kms_addfb_basic@unused-offsets,pass
+> > > > > +igt@kms_addfb_basic@unused-modifier,pass
+> > > > > +igt@kms_addfb_basic@legacy-format,dmesg-warn
+> > > > > +igt@kms_addfb_basic@no-handle,pass
+> > > > > +igt@kms_addfb_basic@basic,pass
+> > > > > +igt@kms_addfb_basic@bad-pitch-0,pass
+> > > > > +igt@kms_addfb_basic@bad-pitch-32,pass
+> > > > > +igt@kms_addfb_basic@bad-pitch-63,pass
+> > > > > +igt@kms_addfb_basic@bad-pitch-128,pass
+> > > > > +igt@kms_addfb_basic@bad-pitch-256,pass
+> > > > > +igt@kms_addfb_basic@bad-pitch-1024,pass
+> > > > > +igt@kms_addfb_basic@bad-pitch-999,pass
+> > > > > +igt@kms_addfb_basic@bad-pitch-65536,pass
+> > > > > +igt@kms_addfb_basic@size-max,pass
+> > > > > +igt@kms_addfb_basic@too-wide,pass
+> > > > > +igt@kms_addfb_basic@too-high,dmesg-warn
+> > > >
+> > > > For test results on Trogdor, is is possible to have them be
+> > > > success/fail/skip only?
+> > > >
+> > > > Results such as dmesg-warn/dmesg-fail are igt_runner specific and
+> > > > because there isn't support for igt_runner on ChromeOS, they will be
+> > > > difficult to replicate and debug.
+> > >
+> > > Actually, I wonder if it would be better to just treat
+> > > dmesg-warn/dmesg-fail as pass/fail?  I'd noticed some flakes on
+> > > rockchip which looked just like unrelated dmesg msg which just
+> > > happened to show up while the test was running.
+> >
+> > This is kinda the reason behind standardizing on drm dmesg logging, so
+> > that we have some chances at filtering stuff out. Not sure that's a
+> > good idea, since when your entire box splats and lockdep is dead, then
+> > continuing to run drm tests is still fairly pointless.
+>
+> I'm not sure if we are using it yet for drm-ci, but for mesa-ci we
+> monitor dmesg (over serial port, from the controller) for splats, so
+> we already have the tech for restarting or aborting the CI run.  We
+> don't need igt-runner to tell us.
+>
+> > I think this is another reason why trying at least to standardize this
+> > stuff over drivers would be pretty good idea.
+> >
+> > > Additionally, some of the tests, like msm_recovery, are *expected* to
+> > > generate some dmesg spam since they are intentionally triggering GPU
+> > > hangs to test the recovery mechanism.
+> >
+> > Uh I don't like that. It just allows userspace to spam dmesg, which
+> > doesn't seem like a great idea. That's at least why i915 dumps these
+> > at a lower level, and in the past had a special "I'm going to whack
+> > the gpu real hard expect hangs" knob in debugfs.
+> >
+> > Having tests which intentionally spam dmesg above info level isn't
+> > really good since then you need endless amounts of test-specific
+> > encoding of what is considered a success and what not. Like when a
+> > backmerge breaks a testcases which is already at dmesg-fail, is that
+> > bad or not? Probably bad, but was the situation before that really
+> > good or already kinda on fire?
+>
+> I guess I could add some debugfs knobs to squelch the dmesg msgs on
+> gpu hangs.  In the normal case, I'd prefer that gpu hangs are not
+> silent.. since that is something we get in feedback reports if a user
+> (or dogfooder) reports a bug.
+>
+> The rockchip case I mentioned was some unrelated dmesg about
+> linktraining failing.. presumably because there was no display
+> attached?  IDK, I didn't look too closely.  But my point is we could
+> be getting unrelated and asynchronous dmesg spam, even from other
+> kernel subsystems.  Letting that be part of the test results just
+> sounds like asking for flakes.
 
-.. put another way: I think a list of "we are aware that these
-currently fail" is quite reasonable for a development tree, maybe even
-with a comment in the commit that created them about why they
-currently fail.
+That's why I think you need to filter dmesg, otherwise you'll just get
+random stuff in there that causes flaps.
 
-That also ends up being very nice if you fix a problem, and the fix
-commit might then remove the failure for the list, and that all makes
-perfect sense.
+And then in another level you need different filtering to figure out
+when your kernel is too busted and you need to reboot (like when
+lockdep splats anywhere).
 
-But having just the raw output of "these are the expected CI results"
-that is being done and specified by some other tree entirely - that
-seems pointless and just noise to me. There's no actual reason to have
-that kind of noise - and update that kind of noise - that I really
-see.
+Maybe we should pull that part of igt_runner out so that it can be
+used in places where the full thing cant? Maybe even in mesa as a "my
+kernel is in really bad shape" kinda test. There's a lot of tea leaves
+reading heuristics involved in this stuff ime.
+-Daniel
 
-                Linus
+>
+> BR,
+> -R
+>
+> > -Daniel
+> >
+> > > BR,
+> > > -R
+> > >
+
+
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
