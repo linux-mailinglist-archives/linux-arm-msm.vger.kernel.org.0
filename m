@@ -2,420 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A070522720
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 00:46:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D55552280D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 02:01:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237319AbiEJWqn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 May 2022 18:46:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52086 "EHLO
+        id S229638AbiEKABc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 May 2022 20:01:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237363AbiEJWqi (ORCPT
+        with ESMTP id S238927AbiEKABb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 May 2022 18:46:38 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4533321B164
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 15:46:37 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id e24so530317pjt.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 15:46:37 -0700 (PDT)
+        Tue, 10 May 2022 20:01:31 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83114819A0;
+        Tue, 10 May 2022 17:01:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hjptzdLf1gCERRe02HGCOwCzQVmJOB0+x939FyCO2xQ=;
-        b=UTR1LJELBHWGz2oZWIf4FZ9wkS4cdIU5/OPogOMwxbxYC0JxuWTU2Flp7c6ZniAlFu
-         0WIKbumbh5coQaRfZ2SDSdJ1m8UKnNE6K8uv1In//N9qCOZzgG9GsCw+prJ/uOcbvo47
-         e1uXpUN2TH/ZYdB/b7bEjB7Q4B2KS3XC+LjM4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hjptzdLf1gCERRe02HGCOwCzQVmJOB0+x939FyCO2xQ=;
-        b=olTEV0BeQpzD2EpTY4Ny168suBAxPYF0z4GzIvEptdNlYfF30c0IPtbf2h0ff/o6Uq
-         puGAaayVtjGTwTMk3u2bOEeQejitCweDJF7TFYJFx1E0jtpod2thkG650tx6VibLQCuO
-         AzHsfts0hSFwdvid8ckp0Xl6cutLsbzMp+3CplVpoeT7FLcJpbENpGPF1Tz4+8nWUNtl
-         n0a7ITfMIQxkXIhfh2GQ4WzWbqDK22pg8qeaaLg0ILEv90bEy2UZhfeQvAvzWBMZ5Miz
-         K+yqLUcSO4bojzD2unY1+CMCl1jq7aSa1a8mkJbIh9VyvxrbRKmiaHyzbevxQFlpUGih
-         JFvg==
-X-Gm-Message-State: AOAM531NNKTExiKZZk/1u8B5/8qwRLodo4F1EGqaT8U8zVa5UGWDPCUp
-        jTVBK59m1oEQu7RyKtd/XKUEow==
-X-Google-Smtp-Source: ABdhPJzW1E1iZrRpdEmwEsNqWUXZIKICMDN0NFlHOEp7blO5hf+MCQQ/MCKASTYQI79yvuEuTfx02Q==
-X-Received: by 2002:a17:902:e882:b0:15e:b9e8:ba1b with SMTP id w2-20020a170902e88200b0015eb9e8ba1bmr22783526plg.71.1652222796619;
-        Tue, 10 May 2022 15:46:36 -0700 (PDT)
-Received: from joebar-glaptop.lan (c-71-202-34-56.hsd1.ca.comcast.net. [71.202.34.56])
-        by smtp.gmail.com with ESMTPSA id p14-20020a170902b08e00b0015e8da1fb07sm144256plr.127.2022.05.10.15.46.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 May 2022 15:46:36 -0700 (PDT)
-From:   "Joseph S. Barrera III" <joebar@chromium.org>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        "Joseph S. Barrera III" <joebar@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v5 5/5] arm64: dts: qcom: sc7180: Add kingoftown dts files
-Date:   Tue, 10 May 2022 15:44:27 -0700
-Message-Id: <20220510154406.v5.5.Ib62291487a664a65066d18a3e83c5428a6d2cc6c@changeid>
-X-Mailer: git-send-email 2.31.0
-In-Reply-To: <20220510154406.v5.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid>
-References: <20220510154406.v5.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652227287; x=1683763287;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=7RHRssae2FRX5psk74Xv8tmjt+FT1A3nY8e9aWoktGc=;
+  b=mVhIvLU3WHMvsiHzsfV1gMRgrt9ZhOUhh5H66ZEsIxwdMB6+xyH7tyf9
+   Dz/mAVs79mOOG4kqAWs0bhQ3Xs2/1Hxyv+6ujPbfpl4eGmcGaY4c+dRIH
+   +PhnJIW+3EPl2TfJllTOVU9Mh60952V/2Ow+VI8DtxEQD3xpKu07Y2nen
+   U=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 10 May 2022 17:01:27 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 17:01:28 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 10 May 2022 17:00:56 -0700
+Received: from [10.38.241.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 10 May
+ 2022 17:00:52 -0700
+Message-ID: <228732a3-47d4-c97c-a016-a14013dc13d8@quicinc.com>
+Date:   Tue, 10 May 2022 17:00:50 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v2] drm/probe-helper: Default to 640x480 if no EDID
+Content-Language: en-US
+To:     Douglas Anderson <dianders@chromium.org>,
+        <dri-devel@lists.freedesktop.org>
+CC:     <robdclark@gmail.com>, <swboyd@chromium.org>,
+        <quic_aravindh@quicinc.com>, <ville.syrjala@linux.intel.com>,
+        <tzimmermann@suse.de>, <linux-arm-msm@vger.kernel.org>,
+        <jani.nikula@linux.intel.com>, <quic_sbillaka@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <freedreno@lists.freedesktop.org>,
+        <quic_khsieh@quicinc.com>, Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20220510135101.v2.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220510135101.v2.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kingoftown is a trogdor-based board. These dts files are unchanged copies
-from the downstream Chrome OS 5.4 kernel.
 
-Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
 
-(no changes since v4)
-
-Changes in v4:
-- Fixed description (no downstream bits removed).
-- Added missing version history.
-
-Changes in v3:
-- None
-
-Changes in v2:
-- First inclusion in series.
-
- arch/arm64/boot/dts/qcom/Makefile             |   2 +
- .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  44 ++++
- .../dts/qcom/sc7180-trogdor-kingoftown-r1.dts |  17 ++
- .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   | 223 ++++++++++++++++++
- 4 files changed, 286 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index dc26704dfe34..a9f2ad013179 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -60,6 +60,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r4.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-kingoftown-r0.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-kingoftown-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r0.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1-kb.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
-new file mode 100644
-index 000000000000..85aec1be98fc
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r0.dts
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Kingoftown board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180.dtsi"
-+#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
-+#include "sc7180-trogdor-kingoftown.dtsi"
-+
-+/ {
-+	model = "Google Kingoftown (rev0)";
-+	compatible = "google,kingoftown-rev0", "qcom,sc7180";
-+};
-+
-+/*
-+ * In rev1+, the enable pin of pp3300_fp_tp will be tied to pp1800_l10a
-+ * power rail instead, since kingoftown does not have FP.
-+ */
-+&pp3300_fp_tp {
-+	gpio = <&tlmm 74 GPIO_ACTIVE_HIGH>;
-+	enable-active-high;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&en_fp_rails>;
-+};
-+
-+&tlmm {
-+	en_fp_rails: en-fp-rails {
-+		pinmux {
-+			pins = "gpio74";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio74";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
-new file mode 100644
-index 000000000000..2be9138ba89f
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown-r1.dts
-@@ -0,0 +1,17 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Kingoftown board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180.dtsi"
-+#include "sc7180-trogdor-parade-ps8640.dtsi"
-+#include "sc7180-trogdor-kingoftown.dtsi"
-+
-+/ {
-+	model = "Google Kingoftown (rev1+)";
-+	compatible = "google,kingoftown", "qcom,sc7180";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-new file mode 100644
-index 000000000000..e7503a5b0403
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-@@ -0,0 +1,223 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Kingoftown board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+ap_ec_spi: &spi6 {};
-+ap_h1_spi: &spi0 {};
-+
-+#include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-lte-sku.dtsi"
-+
-+&alc5682 {
-+	compatible = "realtek,rt5682s";
-+	realtek,dmic1-clk-pin = <2>;
-+	realtek,dmic-clk-rate-hz = <2048000>;
-+};
-+
-+ap_ts_pen_1v8: &i2c4 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	ap_ts: touchscreen@10 {
-+		compatible = "elan,ekth3500";
-+		reg = <0x10>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
-+
-+		vcc33-supply = <&pp3300_ts>;
-+
-+		reset-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
-+	};
-+};
-+
-+&keyboard_controller {
-+	function-row-physmap = <
-+		MATRIX_KEY(0x00, 0x02, 0)       /* T1 */
-+		MATRIX_KEY(0x03, 0x02, 0)       /* T2 */
-+		MATRIX_KEY(0x02, 0x02, 0)       /* T3 */
-+		MATRIX_KEY(0x01, 0x02, 0)       /* T4 */
-+		MATRIX_KEY(0x03, 0x04, 0)       /* T5 */
-+		MATRIX_KEY(0x02, 0x04, 0)       /* T6 */
-+		MATRIX_KEY(0x01, 0x04, 0)       /* T7 */
-+		MATRIX_KEY(0x02, 0x09, 0)       /* T8 */
-+		MATRIX_KEY(0x01, 0x09, 0)       /* T9 */
-+		MATRIX_KEY(0x00, 0x04, 0)       /* T10 */
-+	>;
-+	linux,keymap = <
-+		MATRIX_KEY(0x00, 0x02, KEY_BACK)
-+		MATRIX_KEY(0x03, 0x02, KEY_REFRESH)
-+		MATRIX_KEY(0x02, 0x02, KEY_ZOOM)
-+		MATRIX_KEY(0x01, 0x02, KEY_SCALE)
-+		MATRIX_KEY(0x03, 0x04, KEY_SYSRQ)
-+		MATRIX_KEY(0x02, 0x04, KEY_BRIGHTNESSDOWN)
-+		MATRIX_KEY(0x01, 0x04, KEY_BRIGHTNESSUP)
-+		MATRIX_KEY(0x02, 0x09, KEY_MUTE)
-+		MATRIX_KEY(0x01, 0x09, KEY_VOLUMEDOWN)
-+		MATRIX_KEY(0x00, 0x04, KEY_VOLUMEUP)
-+
-+		CROS_STD_MAIN_KEYMAP
-+	>;
-+};
-+
-+&panel {
-+	compatible = "edp-panel";
-+};
-+
-+&pp3300_dx_edp {
-+	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&sound {
-+	compatible = "google,sc7180-trogdor";
-+	model = "sc7180-rt5682s-max98357a-1mic";
-+};
-+
-+&wifi {
-+	qcom,ath10k-calibration-variant = "GO_KINGOFTOWN";
-+};
-+
-+/* PINCTRL - modifications to sc7180-trogdor.dtsi */
-+
-+&en_pp3300_dx_edp {
-+	pinmux {
-+		pins = "gpio67";
-+	};
-+
-+	pinconf {
-+		pins = "gpio67";
-+	};
-+};
-+
-+/* PINCTRL - board-specific pinctrl */
-+
-+&tlmm {
-+	gpio-line-names = "TP_INT_L",		/* 0 */
-+			  "AP_RAM_ID0",
-+			  "AP_SKU_ID2",
-+			  "AP_RAM_ID1",
-+			  "",
-+			  "AP_RAM_ID2",
-+			  "AP_TP_I2C_SDA",
-+			  "AP_TP_I2C_SCL",
-+			  "TS_RESET_L",
-+			  "TS_INT_L",
-+			  "",			/* 10 */
-+			  "EDP_BRIJ_IRQ",
-+			  "AP_EDP_BKLTEN",
-+			  "",
-+			  "",
-+			  "EDP_BRIJ_I2C_SDA",
-+			  "EDP_BRIJ_I2C_SCL",
-+			  "HUB_RST_L",
-+			  "",
-+			  "",
-+			  "",			/* 20 */
-+			  "",
-+			  "",
-+			  "AMP_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "HP_IRQ",
-+			  "",
-+			  "",			/* 30 */
-+			  "AP_BRD_ID2",
-+			  "BRIJ_SUSPEND",
-+			  "AP_BRD_ID0",
-+			  "AP_H1_SPI_MISO",
-+			  "AP_H1_SPI_MOSI",
-+			  "AP_H1_SPI_CLK",
-+			  "AP_H1_SPI_CS_L",
-+			  "BT_UART_CTS",
-+			  "BT_UART_RTS",
-+			  "BT_UART_TXD",	/* 40 */
-+			  "BT_UART_RXD",
-+			  "H1_AP_INT_ODL",
-+			  "",
-+			  "UART_AP_TX_DBG_RX",
-+			  "UART_DBG_TX_AP_RX",
-+			  "HP_I2C_SDA",
-+			  "HP_I2C_SCL",
-+			  "FORCED_USB_BOOT",
-+			  "AMP_BCLK",
-+			  "AMP_LRCLK",		/* 50 */
-+			  "AMP_DIN",
-+			  "",
-+			  "HP_BCLK",
-+			  "HP_LRCLK",
-+			  "HP_DOUT",
-+			  "HP_DIN",
-+			  "HP_MCLK",
-+			  "AP_SKU_ID0",
-+			  "AP_EC_SPI_MISO",
-+			  "AP_EC_SPI_MOSI",	/* 60 */
-+			  "AP_EC_SPI_CLK",
-+			  "AP_EC_SPI_CS_L",
-+			  "AP_SPI_CLK",
-+			  "AP_SPI_MOSI",
-+			  "AP_SPI_MISO",
-+			  /*
-+			   * AP_FLASH_WP_L is crossystem ABI. Schematics
-+			   * call it BIOS_FLASH_WP_L.
-+			   */
-+			  "AP_FLASH_WP_L",
-+			  "EN_PP3300_DX_EDP",
-+			  "AP_SPI_CS0_L",
-+			  "",
-+			  "",			/* 70 */
-+			  "",
-+			  "",
-+			  "",
-+			  "EN_FP_RAILS",
-+			  "UIM2_DATA",
-+			  "UIM2_CLK",
-+			  "UIM2_RST",
-+			  "UIM2_PRESENT_L",
-+			  "UIM1_DATA",
-+			  "UIM1_CLK",		/* 80 */
-+			  "UIM1_RST",
-+			  "",
-+			  "CODEC_PWR_EN",
-+			  "HUB_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "AP_SKU_ID1",		/* 90 */
-+			  "AP_RST_REQ",
-+			  "",
-+			  "AP_BRD_ID1",
-+			  "AP_EC_INT_L",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",			/* 100 */
-+			  "",
-+			  "",
-+			  "",
-+			  "EDP_BRIJ_EN",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",			/* 110 */
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "AP_TS_PEN_I2C_SDA",
-+			  "AP_TS_PEN_I2C_SCL",
-+			  "DP_HOT_PLUG_DET",
-+			  "EC_IN_RW_ODL";
-+};
--- 
-2.31.0
-
+On 5/10/2022 1:51 PM, Douglas Anderson wrote:
+> If we're unable to read the EDID for a display because it's corrupt /
+> bogus / invalid then we'll add a set of standard modes for the
+> display. When userspace looks at these modes it doesn't really have a
+> good concept for which mode to pick and it'll likely pick the highest
+> resolution one by default. That's probably not ideal because the modes
+> were purely guesses on the part of the Linux kernel.
+> 
+> Let's instead set 640x480 as the "preferred" mode when we have no EDID.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+> Note that this is the second of two related and similar-sounding but
+> different patches. See also ("drm/probe-helper: For DP, add 640x480 if
+> all other modes are bad") [1]. I'm hoping to land _both_ of the
+> patches since they address different issues. This patch addresses the
+> case of a corrupt EDID and having 640x480 be the default in the
+> "guessed" modes. The other patch handles the case where the EDID
+> _isn't_ corrupt but all the modes listed can't be made with the
+> existing situations. The two patches can land in either order.
+> 
+> Also note that I didn't carry any Tested-by / Reviewed-by tags since
+> the patch is now quite different.
+> 
+> [1] https://lore.kernel.org/r/20220510131309.v2.2.I4ac7f55aa446699f8c200a23c10463256f6f439f@changeid
+> 
+> Changes in v2:
+> - Don't modify drm_add_modes_noedid() 'cause that'll break others
+> - Set 640x480 as preferred in drm_helper_probe_single_connector_modes()
+> 
+>   drivers/gpu/drm/drm_probe_helper.c | 11 ++++++++++-
+>   1 file changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+> index 682359512996..1fbb9a8c315c 100644
+> --- a/drivers/gpu/drm/drm_probe_helper.c
+> +++ b/drivers/gpu/drm/drm_probe_helper.c
+> @@ -516,8 +516,17 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+>   		count = drm_add_override_edid_modes(connector);
+>   
+>   	if (count == 0 && (connector->status == connector_status_connected ||
+> -			   connector->status == connector_status_unknown))
+> +			   connector->status == connector_status_unknown)) {
+>   		count = drm_add_modes_noedid(connector, 1024, 768);
+> +
+> +		/*
+> +		 * Give userspace a hint that we don't have a lot of confidence
+> +		 * in these modes (we totally guessed) by marking 640x480 as
+> +		 * preferred. This is low clock rate and incredibly common as
+> +		 * a failsafe mode.
+> +		 */
+> +		drm_set_preferred_mode(connector, 640, 480);
+> +	}
+>   	count += drm_helper_probe_add_cmdline_mode(connector);
+>   	if (count == 0)
+>   		goto prune;
