@@ -2,107 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFADC522DD2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 10:03:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EE6B522E1B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 10:19:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241805AbiEKIDW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 04:03:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37954 "EHLO
+        id S243470AbiEKITm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 04:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243298AbiEKIDV (ORCPT
+        with ESMTP id S234169AbiEKITl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 04:03:21 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7AA48CCCF;
-        Wed, 11 May 2022 01:03:10 -0700 (PDT)
+        Wed, 11 May 2022 04:19:41 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E94AA14A25C;
+        Wed, 11 May 2022 01:19:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652256192; x=1683792192;
-  h=from:to:cc:subject:date:message-id;
-  bh=U5JVmxHUUjxAbxSb6PLM4Nc67GW9UY1orKH/4MwbuNA=;
-  b=bCkL1ocYAlLpkbyLN7JZv7gxV/tX0Dq/om1qCxl7BVVBvDJJVxPaBlZP
-   NiawT2Qeaot9x461XiMuOIb7Vu7A/gjBPy77+vpCwZcKMjDqVejCuVN/v
-   K7DECh5413qPPHPQRyjJGcOeQ+inm46sApQ00A/a/NR3/0bOX5S2jL/ii
-   w=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 11 May 2022 01:03:10 -0700
+  t=1652257181; x=1683793181;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=Bb2LDTeU+oMoQTSKmfDO7CnRWwQhv1IINwWHZiHdTzM=;
+  b=caCozNoVTuJGVhVzx2LXjq17r4chZ9F9YIA68RNMBB/aLbC/dpkki3Fl
+   SP/FZR+KuSazsxULQcUh+J+retoOj39T86SBMMuQqtj9HcOeSYUI24trX
+   e3NZh/zcDst0d2VwSenTag0yMRyxo2SrY6ad34DN6Wt5yHJMTmSfCcjHu
+   k=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 11 May 2022 01:19:40 -0700
 X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 11 May 2022 01:03:09 -0700
-X-QCInternal: smtphost
-Received: from blr-ubuntu-435.qualcomm.com ([10.79.42.176])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 11 May 2022 13:32:51 +0530
-Received: by blr-ubuntu-435.qualcomm.com (Postfix, from userid 2327845)
-        id B31489008AA; Wed, 11 May 2022 13:32:50 +0530 (IST)
-From:   Shreyas K K <quic_shrekk@quicinc.com>
-To:     Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     Andre Przywara <andre.przywara@arm.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Shreyas K K <quic_shrekk@quicinc.com>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Prasanna Kumar <quic_kprasan@quicinc.com>
-Subject: [PATCH] arm64: Enable repeat tlbi workaround on KRYO4XX gold CPUs
-Date:   Wed, 11 May 2022 13:32:47 +0530
-Message-Id: <20220511080247.1530-1-quic_shrekk@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2022 01:19:39 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 11 May 2022 01:19:38 -0700
+Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 11 May 2022 01:19:34 -0700
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>
+CC:     <ohad@wizery.com>, <agross@kernel.org>,
+        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <mka@chromium.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH v3 0/2] Add support for proxy interconnect bandwidth votes
+Date:   Wed, 11 May 2022 13:49:20 +0530
+Message-ID: <1652257162-23874-1-git-send-email-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add KRYO4XX gold/big cores to the list of CPUs that need the
-repeat TLBI workaround. Apply this to the affected
-KRYO4XX cores (rcpe to rdpe).
+Add proxy interconnect bandwidth votes during modem bootup on SC7280 SoCs.
 
-The variant and revision bits are implementation defined and are
-different from the their Cortex CPU counterparts on which they are
-based on, i.e., (r0p0 to r1p0) is equivalent to (rcpe to rdpe).
+V3:
+ * Re-ordered clock list, fixed pdc_sync typo [Rob/Matthias]
 
-Signed-off-by: Shreyas K K <quic_shrekk@quicinc.com>
----
- Documentation/arm64/silicon-errata.rst | 3 +++
- arch/arm64/kernel/cpu_errata.c         | 2 ++
- 2 files changed, 5 insertions(+)
+V2:
+ * Dropped patch 3 from version 1 [Sub with Bjorn's patch]
+ * Add YAML support [Krzysztof]
+ * Drop interconnect names [Bjorn]
 
-diff --git a/Documentation/arm64/silicon-errata.rst b/Documentation/arm64/silicon-errata.rst
-index 466cb9e89047..d27db84d585e 100644
---- a/Documentation/arm64/silicon-errata.rst
-+++ b/Documentation/arm64/silicon-errata.rst
-@@ -189,6 +189,9 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | Qualcomm Tech. | Kryo4xx Silver  | N/A             | ARM64_ERRATUM_1024718       |
- +----------------+-----------------+-----------------+-----------------------------+
-+| Qualcomm Tech. | Kryo4xx Gold    | N/A             | ARM64_ERRATUM_1286807       |
-++----------------+-----------------+-----------------+-----------------------------+
-+
- +----------------+-----------------+-----------------+-----------------------------+
- | Fujitsu        | A64FX           | E#010001        | FUJITSU_ERRATUM_010001      |
- +----------------+-----------------+-----------------+-----------------------------+
-diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
-index 4c9b5b4b7a0b..2518657e6de1 100644
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -208,6 +208,8 @@ static const struct arm64_cpu_capabilities arm64_repeat_tlbi_list[] = {
- #ifdef CONFIG_ARM64_ERRATUM_1286807
- 	{
- 		ERRATA_MIDR_RANGE(MIDR_CORTEX_A76, 0, 0, 3, 0),
-+		/* Kryo4xx Gold (rcpe to rdpe) => (r0p0 to r1p0) */
-+		ERRATA_MIDR_RANGE(QCOM_CPU_PART_KRYO_4XX_GOLD, 0xc, 0xe, 0xd, 0xe),
- 	},
- #endif
- 	{},
+Sibi Sankar (2):
+  arm64: dts: qcom: sc7280: Add proxy interconnect requirements for
+    modem
+  dt-bindings: remoteproc: qcom: Add SC7280 MSS bindings
+
+ .../bindings/remoteproc/qcom,sc7280-mss-pil.yaml   | 261 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi |   1 +
+ 2 files changed, 262 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+
 -- 
-2.17.1
+2.7.4
 
