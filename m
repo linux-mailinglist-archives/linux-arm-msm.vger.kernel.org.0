@@ -2,144 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88C03523F2F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 23:05:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE022523F3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 23:09:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347951AbiEKVF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 17:05:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48902 "EHLO
+        id S245373AbiEKVJI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 17:09:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229633AbiEKVF1 (ORCPT
+        with ESMTP id S1347093AbiEKVJF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 17:05:27 -0400
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 283D322922E;
-        Wed, 11 May 2022 14:05:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1652303126; x=1683839126;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=fcAVKuqd6YZHzN7purgtSBIoD9bELDVNb4vgy0qU8LA=;
-  b=HxQdqGVMPhXplL8hRLoax5LfcGjF7bU7vpk/oRtT5w8gZFRHHuJ+WPB9
-   SDWmy53D4hLzjUwB6xXB4ERcz3r/+x637r3R5Ax8vdrsQCDCdEOpNFozq
-   tFfMySXrI9Q0hD+dfw2yefWAnumoAr44OYXcA90bbLYq3cgvWHGDIkGno
-   md+dkJs6b2itgzfHS7L8XUVn7lnDJ2Z5LJjVgnFuTXxzZla5CNSLMGOnN
-   iHXwB5uBkiIpmVQ7jS1WfTn3CVrNRJilKs1Rqm+bbXiFEcGHqqp0/YEr1
-   J7EDNVgI7Hp/Wki0tN0e2n3GopNwFJUObsUaOaTLVqaS6QY+WPXfhBcXp
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10344"; a="251865948"
-X-IronPort-AV: E=Sophos;i="5.91,218,1647327600"; 
-   d="scan'208";a="251865948"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2022 14:05:25 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,218,1647327600"; 
-   d="scan'208";a="553491065"
-Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
-  by orsmga002.jf.intel.com with ESMTP; 11 May 2022 14:05:21 -0700
-Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1notWK-000JaW-It;
-        Wed, 11 May 2022 21:05:20 +0000
-Date:   Thu, 12 May 2022 05:04:19 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     kbuild-all@lists.01.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_vpulyala@quicinc.com,
-        Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: Re: [v4 2/3] phy: qcom-snps: Add support for overriding phy tuning
- parameters
-Message-ID: <202205120425.gScyEI7N-lkp@intel.com>
-References: <1652282793-5580-3-git-send-email-quic_kriskura@quicinc.com>
+        Wed, 11 May 2022 17:09:05 -0400
+Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40718994FA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 14:09:04 -0700 (PDT)
+Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-d6e29fb3d7so4352512fac.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 14:09:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=lqtfubk7Hrb8lJoDJxWOzLc9PztEt6fZQ5kqLQlhvTc=;
+        b=Fc3o3I0BqRikt2fk7xWUgF3TEVAR9OaGDwb4PmdfhORz4xdbDFQJsm3VuypKTYAkAj
+         jHOZWlDdAkP7CR3rcvofleydnY5KLXwl0gXJrc9AKXmwhOuTkExrmw7DkKkcu68REeCH
+         FHiD5Wleh8agi6wB/KtEChKlavAq9O3dkSI+k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=lqtfubk7Hrb8lJoDJxWOzLc9PztEt6fZQ5kqLQlhvTc=;
+        b=h/rsgoRYxrHC8xPyTHPEKf8ImfhR9W8lb6ZmIjdA4yVj7rRsjMHx3ftimREi5IoxGi
+         O37/q8DNbQnatHLpgG8mRJdFpC7DBeyhV5ipJgLWFNIlTfeXovgVvDQc5VrioxRKMoCZ
+         7IwpuQADhvwtZgviTgQZsjSy5FxqiCdYZstvnA/AiwKGzpZ5+r1eSy5I6WsiEXKtDyxl
+         lUKSTTDDxxbhef7RsR/iHDqaFOEHDIG0IGSwLap5FAU9FIUH6hWcHS4gQClrauJMtnb8
+         RJ5+ZJa2Pk8B8Zlt7fef3/T7I73qzxUYjn78YJna1DGytYUHHNq5nowWRwBgWh8zT2LV
+         djhw==
+X-Gm-Message-State: AOAM533EBNVtvMej3EcgAsGo5Zc4mDvISIu3HwoUH3ERLqOw2kFwuJRj
+        wJajtz+3lBSszFOkv+S0pyMYlz4fLm7vDS9AftiKgQWj5VI=
+X-Google-Smtp-Source: ABdhPJyzY8NSTk+TBHA5a8x5foiT//cEfAWwheh/EgZpFZ1OOo9rp37wqpfDkPaRzjkj0P2RYr8cHHSXjp64G0nucaE=
+X-Received: by 2002:a05:6870:558e:b0:e1:db7c:26aa with SMTP id
+ n14-20020a056870558e00b000e1db7c26aamr3845551oao.63.1652303343312; Wed, 11
+ May 2022 14:09:03 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 11 May 2022 14:09:02 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1652282793-5580-3-git-send-email-quic_kriskura@quicinc.com>
+In-Reply-To: <1652257162-23874-2-git-send-email-quic_sibis@quicinc.com>
+References: <1652257162-23874-1-git-send-email-quic_sibis@quicinc.com> <1652257162-23874-2-git-send-email-quic_sibis@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 11 May 2022 14:09:02 -0700
+Message-ID: <CAE-0n51gQ=-LH5rAzib8jQbGmNFwdhburbXQ+i+LE7gGWHE_-g@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: sc7280: Add proxy interconnect
+ requirements for modem
+To:     Sibi Sankar <quic_sibis@quicinc.com>, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org
+Cc:     ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, krzysztof.kozlowski+dt@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
+Quoting Sibi Sankar (2022-05-11 01:19:21)
+> Add interconnects that are required to be proxy voted upon during modem
+> bootup on SC7280 SoCs.
+>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
 
-Thank you for the patch! Perhaps something to improve:
-
-[auto build test WARNING on robh/for-next]
-[also build test WARNING on krzk/for-next linus/master v5.18-rc6 next-20220511]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-Kurapati/Add-QCOM-SNPS-PHY-overriding-params-support/20220511-232858
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20220512/202205120425.gScyEI7N-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/48c46f24873c92d3e16904af9e654962d0b923f1
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Krishna-Kurapati/Add-QCOM-SNPS-PHY-overriding-params-support/20220511-232858
-        git checkout 48c46f24873c92d3e16904af9e654962d0b923f1
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=m68k SHELL=/bin/bash drivers/phy/qualcomm/
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All warnings (new ones prefixed by >>):
-
-   drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c: In function 'qcom_snps_hsphy_read_override_param_seq':
->> drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c:541:42: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-     541 |         struct override_param_map *cfg = of_device_get_match_data(dev);
-         |                                          ^~~~~~~~~~~~~~~~~~~~~~~~
-
-
-vim +/const +541 drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-
-   534	
-   535	static void qcom_snps_hsphy_read_override_param_seq(struct device *dev)
-   536	{
-   537		struct device_node *node = dev->of_node;
-   538		s32 val;
-   539		int ret, i;
-   540		struct qcom_snps_hsphy *hsphy;
- > 541		struct override_param_map *cfg = of_device_get_match_data(dev);
-   542	
-   543		hsphy = dev_get_drvdata(dev);
-   544	
-   545		for (i = 0; i < ARRAY_SIZE(phy_seq_props); i++) {
-   546			ret = of_property_read_s32(node, phy_seq_props[i], &val);
-   547			if (!ret) {
-   548				dev_dbg(&hsphy->phy->dev, "Read param: %s val: %d\n",
-   549							phy_seq_props[i], val);
-   550				qcom_snps_hsphy_override_param_update_val(cfg[i], val,
-   551							&hsphy->update_seq_cfg[i]);
-   552			}
-   553		}
-   554	}
-   555	
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
