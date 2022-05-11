@@ -2,269 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FAB5523EF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 22:32:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88C03523F2F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 23:05:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347807AbiEKUco (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 16:32:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57996 "EHLO
+        id S1347951AbiEKVF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 17:05:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230383AbiEKUcm (ORCPT
+        with ESMTP id S229633AbiEKVF1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 16:32:42 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 388EC5F8C6;
-        Wed, 11 May 2022 13:32:41 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id u3so4534683wrg.3;
-        Wed, 11 May 2022 13:32:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HUHLy25jGYvlKwa6rO2wZGsa1KELWrC5u8KS5wDsStM=;
-        b=WmgQRvBkrk/wB6ua+NbYMxd32Cxri0mtP4W62mjoMEacLD6EjtDPkvHOSHwx0R0ffX
-         X4Vpso7mAVpxyJdW4jM5j2sOxnka+FOExiFNZxW+5YZEgxDPHSn+QUMh3lQGrFx/DbNz
-         0cJOoOrcQLt9XOL+/IPQHERLnOtyvOKoNRTVfil4vq/fwjylAbIVLAHLuL0xAKYKPrQX
-         43wYhqGxPpNHxoPgkVOmDw618dW+PJvVoQmHDL8aPNlAmRNOc/kfKYMSes5u94UUUMIr
-         UehgH4yfZdBFoCXclHTNE5cUtc3QZIlIMXSO05b99QnvuU3mKYJKMNGAYNou0QwLT3py
-         Tr+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HUHLy25jGYvlKwa6rO2wZGsa1KELWrC5u8KS5wDsStM=;
-        b=IpyGBk/LS4RWWuPchJBfH+Yj+Q+kaq+zc3OQsGrPVJTnNR4SL8q4mA4gYVmCqHugjF
-         es345Sa///dbWGU5ZAHVg31qnwB1/kPPWbIXmdyW9plMToJ4lfYk5koLtObVyzQnrUhw
-         L/q9M1ZEiYdJuEFMA8NbhCXh3X2DYxn+XoZvKuK6MSr38UMergp8lVa7TXv0v5qjIXsn
-         kLifogKiIuuZos4PDWRY4WY2hE4vQN98XXpzcQD4qxX7Cpp5C04Gkhw4JE8UnIZQefRV
-         zc9TAlR0We+Kxd+uD7EXmbUUj7s8NENvjmSea70EAQy3TUFFqM1TuL25nf5iAI0Yn5g1
-         yIVg==
-X-Gm-Message-State: AOAM530xFZS5VEUDFmIpOBd037oVM382xQmKR6hZ80X+oYNZdHlTFf7j
-        lre3YWeXpm5/TZd+/SpaDCKTcHnBFhTFfQGE+9qUcAXLEBY=
-X-Google-Smtp-Source: ABdhPJy++BOB5kcunxbHexH/sQCoMbPtAC4SMhnBUKC2eCkE4F+c58lBTJlGt/3FbgyepCi0MOTySGrhWK8Z9c0AkKg=
-X-Received: by 2002:adf:fec2:0:b0:20c:6ffb:9598 with SMTP id
- q2-20020adffec2000000b0020c6ffb9598mr24542703wrs.418.1652301159638; Wed, 11
- May 2022 13:32:39 -0700 (PDT)
+        Wed, 11 May 2022 17:05:27 -0400
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 283D322922E;
+        Wed, 11 May 2022 14:05:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1652303126; x=1683839126;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=fcAVKuqd6YZHzN7purgtSBIoD9bELDVNb4vgy0qU8LA=;
+  b=HxQdqGVMPhXplL8hRLoax5LfcGjF7bU7vpk/oRtT5w8gZFRHHuJ+WPB9
+   SDWmy53D4hLzjUwB6xXB4ERcz3r/+x637r3R5Ax8vdrsQCDCdEOpNFozq
+   tFfMySXrI9Q0hD+dfw2yefWAnumoAr44OYXcA90bbLYq3cgvWHGDIkGno
+   md+dkJs6b2itgzfHS7L8XUVn7lnDJ2Z5LJjVgnFuTXxzZla5CNSLMGOnN
+   iHXwB5uBkiIpmVQ7jS1WfTn3CVrNRJilKs1Rqm+bbXiFEcGHqqp0/YEr1
+   J7EDNVgI7Hp/Wki0tN0e2n3GopNwFJUObsUaOaTLVqaS6QY+WPXfhBcXp
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10344"; a="251865948"
+X-IronPort-AV: E=Sophos;i="5.91,218,1647327600"; 
+   d="scan'208";a="251865948"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2022 14:05:25 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,218,1647327600"; 
+   d="scan'208";a="553491065"
+Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
+  by orsmga002.jf.intel.com with ESMTP; 11 May 2022 14:05:21 -0700
+Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1notWK-000JaW-It;
+        Wed, 11 May 2022 21:05:20 +0000
+Date:   Thu, 12 May 2022 05:04:19 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     kbuild-all@lists.01.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_vpulyala@quicinc.com,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: Re: [v4 2/3] phy: qcom-snps: Add support for overriding phy tuning
+ parameters
+Message-ID: <202205120425.gScyEI7N-lkp@intel.com>
+References: <1652282793-5580-3-git-send-email-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
-References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
- <20220510141329.54414-1-tomeu.vizoso@collabora.com> <e4e03cd8-3ebc-e5e1-e7d0-6bdc038049b5@quicinc.com>
- <CAF6AEGueadnRMiatO3MoHS+NTQ1o1sgcV0cVjJM3iu-6JUNmNw@mail.gmail.com>
- <CAKMK7uGRuCZwF6m02tcxxrgQGaijsYaNkowjxR+cw0JM3UpDkQ@mail.gmail.com>
- <CAF6AEGthpxPLxyt_i-aUFgW485hA5qw+xXcJ3gKQUJ+fM=ZBhg@mail.gmail.com> <CAKMK7uGQvay9-twVuEKJe7Hz88iQGBP+bdO+3tKJnsjZsnfV9Q@mail.gmail.com>
-In-Reply-To: <CAKMK7uGQvay9-twVuEKJe7Hz88iQGBP+bdO+3tKJnsjZsnfV9Q@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 11 May 2022 13:32:26 -0700
-Message-ID: <CAF6AEGu1tzz5NgLzXC9X5NwX8XxgJUkJ5CJ5Au8Wt2ZeD815gQ@mail.gmail.com>
-Subject: Re: [Freedreno] [RFC v2] drm/msm: Add initial ci/ subdirectory
-To:     Daniel Vetter <daniel@ffwll.ch>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Jonathan Corbet <corbet@lwn.net>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1652282793-5580-3-git-send-email-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 11, 2022 at 12:14 PM Daniel Vetter <daniel@ffwll.ch> wrote:
->
-> On Wed, 11 May 2022 at 19:46, Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Wed, May 11, 2022 at 10:12 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > >
-> > > On Tue, 10 May 2022 at 22:26, Rob Clark <robdclark@gmail.com> wrote:
-> > > >
-> > > > On Tue, May 10, 2022 at 12:39 PM Jessica Zhang
-> > > > <quic_jesszhan@quicinc.com> wrote:
-> > > > >
-> > > > >
-> > > > >
-> > > > > On 5/10/2022 7:13 AM, Tomeu Vizoso wrote:
-> > > > > > And use it to store expectations about what the drm/msm driver is
-> > > > > > supposed to pass in the IGT test suite.
-> > > > > >
-> > > > > > Also include a configuration file that points to the out-of-tree CI
-> > > > > > scripts.
-> > > > > >
-> > > > > > By storing the test expectations along the code we can make sure both
-> > > > > > stay in sync with each other, and so we can know when a code change
-> > > > > > breaks those expectations.
-> > > > > >
-> > > > > > This will allow all contributors to drm/msm to reuse the infrastructure
-> > > > > > already in gitlab.freedesktop.org to test the driver on several
-> > > > > > generations of the hardware.
-> > > > > >
-> > > > > > v2:
-> > > > > >    - Fix names of result expectation files to match SoC
-> > > > > >    - Don't execute tests that are going to skip on all boards
-> > > > > >
-> > > > > > Signed-off-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
-> > > > > > ---
-> > > > > >   Documentation/gpu/msm_automated_testing.rst   |  70 +++++++++
-> > > > > >   drivers/gpu/drm/msm/ci/gitlab-ci.yml          |  11 ++
-> > > > > >   drivers/gpu/drm/msm/ci/msm.testlist           | 148 ++++++++++++++++++
-> > > > > >   .../gpu/drm/msm/ci/msm_apq8016_results.txt    | 140 +++++++++++++++++
-> > > > > >   .../gpu/drm/msm/ci/msm_apq8096_results.txt    | 140 +++++++++++++++++
-> > > > > >   drivers/gpu/drm/msm/ci/msm_sc7180_results.txt | 141 +++++++++++++++++
-> > > > > >   drivers/gpu/drm/msm/ci/msm_sdm845_results.txt | 141 +++++++++++++++++
-> > > > > >   7 files changed, 791 insertions(+)
-> > > > > >   create mode 100644 Documentation/gpu/msm_automated_testing.rst
-> > > > > >   create mode 100644 drivers/gpu/drm/msm/ci/gitlab-ci.yml
-> > > > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm.testlist
-> > > > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8016_results.txt
-> > > > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8096_results.txt
-> > > > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
-> > > > > >   create mode 100644 drivers/gpu/drm/msm/ci/msm_sdm845_results.txt
-> > > > > >
-> >
-> > [snip]
-> >
-> > > > > > diff --git a/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt b/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
-> > > > > > new file mode 100644
-> > > > > > index 000000000000..01f7b4b399b5
-> > > > > > --- /dev/null
-> > > > > > +++ b/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
-> > > > > > @@ -0,0 +1,141 @@
-> > > > > > +igt@core_auth@getclient-simple,dmesg-warn
-> > > > > > +igt@core_auth@getclient-master-drop,pass
-> > > > > > +igt@core_auth@basic-auth,pass
-> > > > > > +igt@core_auth@many-magics,pass
-> > > > > > +igt@core_getclient,pass
-> > > > > > +igt@core_getstats,pass
-> > > > > > +igt@core_getversion,pass
-> > > > > > +igt@core_setmaster_vs_auth,pass
-> > > > > > +igt@drm_read@invalid-buffer,pass
-> > > > > > +igt@drm_read@fault-buffer,pass
-> > > > > > +igt@drm_read@empty-block,pass
-> > > > > > +igt@drm_read@empty-nonblock,pass
-> > > > > > +igt@drm_read@short-buffer-block,pass
-> > > > > > +igt@drm_read@short-buffer-nonblock,pass
-> > > > > > +igt@drm_read@short-buffer-wakeup,pass
-> > > > > > +igt@kms_addfb_basic@unused-handle,pass
-> > > > > > +igt@kms_addfb_basic@unused-pitches,pass
-> > > > > > +igt@kms_addfb_basic@unused-offsets,pass
-> > > > > > +igt@kms_addfb_basic@unused-modifier,pass
-> > > > > > +igt@kms_addfb_basic@legacy-format,dmesg-warn
-> > > > > > +igt@kms_addfb_basic@no-handle,pass
-> > > > > > +igt@kms_addfb_basic@basic,pass
-> > > > > > +igt@kms_addfb_basic@bad-pitch-0,pass
-> > > > > > +igt@kms_addfb_basic@bad-pitch-32,pass
-> > > > > > +igt@kms_addfb_basic@bad-pitch-63,pass
-> > > > > > +igt@kms_addfb_basic@bad-pitch-128,pass
-> > > > > > +igt@kms_addfb_basic@bad-pitch-256,pass
-> > > > > > +igt@kms_addfb_basic@bad-pitch-1024,pass
-> > > > > > +igt@kms_addfb_basic@bad-pitch-999,pass
-> > > > > > +igt@kms_addfb_basic@bad-pitch-65536,pass
-> > > > > > +igt@kms_addfb_basic@size-max,pass
-> > > > > > +igt@kms_addfb_basic@too-wide,pass
-> > > > > > +igt@kms_addfb_basic@too-high,dmesg-warn
-> > > > >
-> > > > > For test results on Trogdor, is is possible to have them be
-> > > > > success/fail/skip only?
-> > > > >
-> > > > > Results such as dmesg-warn/dmesg-fail are igt_runner specific and
-> > > > > because there isn't support for igt_runner on ChromeOS, they will be
-> > > > > difficult to replicate and debug.
-> > > >
-> > > > Actually, I wonder if it would be better to just treat
-> > > > dmesg-warn/dmesg-fail as pass/fail?  I'd noticed some flakes on
-> > > > rockchip which looked just like unrelated dmesg msg which just
-> > > > happened to show up while the test was running.
-> > >
-> > > This is kinda the reason behind standardizing on drm dmesg logging, so
-> > > that we have some chances at filtering stuff out. Not sure that's a
-> > > good idea, since when your entire box splats and lockdep is dead, then
-> > > continuing to run drm tests is still fairly pointless.
-> >
-> > I'm not sure if we are using it yet for drm-ci, but for mesa-ci we
-> > monitor dmesg (over serial port, from the controller) for splats, so
-> > we already have the tech for restarting or aborting the CI run.  We
-> > don't need igt-runner to tell us.
-> >
-> > > I think this is another reason why trying at least to standardize this
-> > > stuff over drivers would be pretty good idea.
-> > >
-> > > > Additionally, some of the tests, like msm_recovery, are *expected* to
-> > > > generate some dmesg spam since they are intentionally triggering GPU
-> > > > hangs to test the recovery mechanism.
-> > >
-> > > Uh I don't like that. It just allows userspace to spam dmesg, which
-> > > doesn't seem like a great idea. That's at least why i915 dumps these
-> > > at a lower level, and in the past had a special "I'm going to whack
-> > > the gpu real hard expect hangs" knob in debugfs.
-> > >
-> > > Having tests which intentionally spam dmesg above info level isn't
-> > > really good since then you need endless amounts of test-specific
-> > > encoding of what is considered a success and what not. Like when a
-> > > backmerge breaks a testcases which is already at dmesg-fail, is that
-> > > bad or not? Probably bad, but was the situation before that really
-> > > good or already kinda on fire?
-> >
-> > I guess I could add some debugfs knobs to squelch the dmesg msgs on
-> > gpu hangs.  In the normal case, I'd prefer that gpu hangs are not
-> > silent.. since that is something we get in feedback reports if a user
-> > (or dogfooder) reports a bug.
-> >
-> > The rockchip case I mentioned was some unrelated dmesg about
-> > linktraining failing.. presumably because there was no display
-> > attached?  IDK, I didn't look too closely.  But my point is we could
-> > be getting unrelated and asynchronous dmesg spam, even from other
-> > kernel subsystems.  Letting that be part of the test results just
-> > sounds like asking for flakes.
->
-> That's why I think you need to filter dmesg, otherwise you'll just get
-> random stuff in there that causes flaps.
+Hi Krishna,
 
-We've evolved a bit of that over the time, see:
+Thank you for the patch! Perhaps something to improve:
 
-https://gitlab.freedesktop.org/gfx-ci/drm-ci/-/blob/main/.gitlab-ci/bare-metal/cros_servo_run.py#L94
+[auto build test WARNING on robh/for-next]
+[also build test WARNING on krzk/for-next linus/master v5.18-rc6 next-20220511]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-It tends to be a bit specific to the runners and their quirks.  But
-mesa does a lot of CI runs, so once-in-a-blue-moon quirks quickly turn
-frustrating if the CI machinery doesn't detect them, and (for ex)
-reboot and restart the DUT
+url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-Kurapati/Add-QCOM-SNPS-PHY-overriding-params-support/20220511-232858
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20220512/202205120425.gScyEI7N-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/48c46f24873c92d3e16904af9e654962d0b923f1
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Krishna-Kurapati/Add-QCOM-SNPS-PHY-overriding-params-support/20220511-232858
+        git checkout 48c46f24873c92d3e16904af9e654962d0b923f1
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=m68k SHELL=/bin/bash drivers/phy/qualcomm/
 
-BR,
--R
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
 
-> And then in another level you need different filtering to figure out
-> when your kernel is too busted and you need to reboot (like when
-> lockdep splats anywhere).
->
-> Maybe we should pull that part of igt_runner out so that it can be
-> used in places where the full thing cant? Maybe even in mesa as a "my
-> kernel is in really bad shape" kinda test. There's a lot of tea leaves
-> reading heuristics involved in this stuff ime.
-> -Daniel
->
-> >
-> > BR,
-> > -R
-> >
-> > > -Daniel
-> > >
-> > > > BR,
-> > > > -R
-> > > >
->
->
->
-> --
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+All warnings (new ones prefixed by >>):
+
+   drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c: In function 'qcom_snps_hsphy_read_override_param_seq':
+>> drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c:541:42: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+     541 |         struct override_param_map *cfg = of_device_get_match_data(dev);
+         |                                          ^~~~~~~~~~~~~~~~~~~~~~~~
+
+
+vim +/const +541 drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+
+   534	
+   535	static void qcom_snps_hsphy_read_override_param_seq(struct device *dev)
+   536	{
+   537		struct device_node *node = dev->of_node;
+   538		s32 val;
+   539		int ret, i;
+   540		struct qcom_snps_hsphy *hsphy;
+ > 541		struct override_param_map *cfg = of_device_get_match_data(dev);
+   542	
+   543		hsphy = dev_get_drvdata(dev);
+   544	
+   545		for (i = 0; i < ARRAY_SIZE(phy_seq_props); i++) {
+   546			ret = of_property_read_s32(node, phy_seq_props[i], &val);
+   547			if (!ret) {
+   548				dev_dbg(&hsphy->phy->dev, "Read param: %s val: %d\n",
+   549							phy_seq_props[i], val);
+   550				qcom_snps_hsphy_override_param_update_val(cfg[i], val,
+   551							&hsphy->update_seq_cfg[i]);
+   552			}
+   553		}
+   554	}
+   555	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
