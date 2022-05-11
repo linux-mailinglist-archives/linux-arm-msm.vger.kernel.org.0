@@ -2,73 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03C5C522CF8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 09:14:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EED9B522D0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 09:20:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234003AbiEKHOt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 03:14:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41572 "EHLO
+        id S242765AbiEKHUu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 03:20:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242724AbiEKHOr (ORCPT
+        with ESMTP id S242770AbiEKHUs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 03:14:47 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09595197F6C;
-        Wed, 11 May 2022 00:14:46 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 9F0EF1F8F7;
-        Wed, 11 May 2022 07:14:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1652253284; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=HTes6ZfbbVGmiq5E89jqT1Mo6GT9OLPK+Q4K2DqyMrs=;
-        b=lKItyfn9/GmmJOz2KjaokNN+sp4ZqzTVnU+Nhxc57J8he1X+B14BeocqL39AeA4L0Utv/5
-        6KpmpbIknnyCM20Y0vBtR49Wj5qGsdl3+upNEbTG8cA2v87+Vx0XtX0kvy1aQhxos40xIr
-        nKEp0P0z/1l70TnyhqCK54fhxK3Y8QA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1652253284;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=HTes6ZfbbVGmiq5E89jqT1Mo6GT9OLPK+Q4K2DqyMrs=;
-        b=UJu6tlDTlIGSSsTqbTspLeh+NiDYPlFCvnFNtduumsAbKfyDY54+TErZ/Lvc2wbpk9KRbP
-        xa4IDibAy8ayEHAQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 64C2013A76;
-        Wed, 11 May 2022 07:14:44 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id vWC2F2Rie2LCSgAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Wed, 11 May 2022 07:14:44 +0000
-Message-ID: <db7a2b7f-3c94-d45d-98fd-7fd0b181e6aa@suse.de>
-Date:   Wed, 11 May 2022 09:14:43 +0200
+        Wed, 11 May 2022 03:20:48 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8806F11148
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 00:20:44 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id l18so2174368ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 00:20:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=1arvzVCGhx/u2B2mNNK8MUC7PUwBoteRJKwb7bxCHBk=;
+        b=es/5QJb8i1Apn33h4DppkcttqYKh1l7mWyo9SZwDytH2IUHPf0OgM0LCEVhbLeMVeM
+         VZo3MFJkVpTfZqkhS4F5WPCH58M+XOt9VQtYnpvwRXX5QIWhLwjOUQjFOCqiAcaqgkpp
+         sAKFeIbMK45BUZ7PBoGWbWVkSO0gSejrfEVfBp98eJA8Ic4ExwjQy3Lqna5t97aJX4SE
+         ACnygM+6n24f0T6cTEr/mqM9jJJtO6gmnqssQ9a6Rv11ASu/xGj2+524OTdtDFkg6ONl
+         daGlb3NKiR9CQOIyuVCCleVkrAJeMIjd3UYFBu/Si+d2NwXLnXmjwEgeHOyuU397zjzd
+         hoIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=1arvzVCGhx/u2B2mNNK8MUC7PUwBoteRJKwb7bxCHBk=;
+        b=viMca/pqWQkSDfRAjTpN2KOQOtJIOf2cjnkELdNS6FiQDh1iF2v18FgNChTD0zrBXD
+         kSSUs/ISn6xPMQulPD+DXpyysMNKUL52nSM/+w8/6x8HXm9Kq68KnYoTYnV90ZCcyw7Y
+         yAmIembjkgGabb8AKHu2FEn7+hySlWtkjtbpytuPdn/mmTeWqKWkbdSpe9ilgZafS9M6
+         9YrKg7CWjmOY1neuxtphRNKVpN3/C0mNZR+W2vR6ZaseA4qBLLj/jB+ijLJ1fLfNKISi
+         VLg/4Nk6HJ1AL3SsXjkER8lqrKE92jqS21t+aqIgC07Wu9rZOZvnuOYODukEIAq0cf/a
+         hXng==
+X-Gm-Message-State: AOAM532zVVJG9DbHZ3spzDXG15arcgzdyjwbBni9Ajhln9bjyeakFP4U
+        bxQjGBUIXVSCE0x3JmT0E0sESA==
+X-Google-Smtp-Source: ABdhPJzMGjuwnxoY9B7jruVulbsFMLwsfx518TPhcbHoAP0n/EVq1zmT5G6uKK75BZ6E8vUFuG8ZiQ==
+X-Received: by 2002:a17:906:5006:b0:6ce:3762:c72e with SMTP id s6-20020a170906500600b006ce3762c72emr22907379ejj.30.1652253643118;
+        Wed, 11 May 2022 00:20:43 -0700 (PDT)
+Received: from [192.168.0.253] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id q10-20020a1709064c8a00b006f3ef214de2sm616613eju.72.2022.05.11.00.20.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 May 2022 00:20:42 -0700 (PDT)
+Message-ID: <55dcf917-7ac0-efe9-8531-b77be682125a@linaro.org>
+Date:   Wed, 11 May 2022 09:20:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH v2] drm/probe-helper: Default to 640x480 if no EDID
+ Thunderbird/91.8.1
+Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
 Content-Language: en-US
-To:     Douglas Anderson <dianders@chromium.org>,
-        dri-devel@lists.freedesktop.org
-Cc:     quic_sbillaka@quicinc.com, linux-kernel@vger.kernel.org,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        quic_abhinavk@quicinc.com, swboyd@chromium.org,
-        dmitry.baryshkov@linaro.org, quic_aravindh@quicinc.com,
-        quic_khsieh@quicinc.com, freedreno@lists.freedesktop.org
-References: <20220510135101.v2.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <20220510135101.v2.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------W2ExxOTgGkTiT5e0Ie6077H9"
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+To:     Julius Werner <jwerner@chromium.org>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        =?UTF-8?Q?Krzysztof_Koz=c5=82owski?= <k.kozlowski.k@gmail.com>,
+        Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
+ <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org>
+ <CAD=FV=UjyLofXZqnj=bL89fza5JS6O5Np9W-A4V4WK+na0hdrw@mail.gmail.com>
+ <b7ff08b8-60fb-7629-9399-3d5cca46ab9e@linaro.org>
+ <CAD=FV=Vx5g_xTRZGc9wW=ZLnfsOcubTYFcnYQRC5jLm+n3en0w@mail.gmail.com>
+ <606cc762-a0c2-49a4-3e5d-d2dbd4595bc7@linaro.org>
+ <CAD=FV=W_SA-3PfDFi-Gkjk9pew5bchFNjQhXX8MkZyuy5UohEQ@mail.gmail.com>
+ <CAJKOXPdt5WTg4VU-TEW3dmPHR76dKg63XVxRQfa7ZSKc_jz6Ag@mail.gmail.com>
+ <CAD=FV=XQqQSQDNh-zXqEQkwsrax5Qb3OtfKZoQLkncJj_4mcQw@mail.gmail.com>
+ <daf66d41-42ac-50dc-3f8d-c261da8e452d@linaro.org>
+ <CAD=FV=WhA=n_=Ys6NfedPtNPddL81HnG6Qws_R+vq9w8Nrsn5A@mail.gmail.com>
+ <ce2ea308-b63d-ad27-4cea-7353268f8ebb@linaro.org>
+ <CAODwPW857CkH0+ZnBaUeowW4te-hSy6nrdeeX6-OLPOs5TptsQ@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAODwPW857CkH0+ZnBaUeowW4te-hSy6nrdeeX6-OLPOs5TptsQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,107 +94,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------W2ExxOTgGkTiT5e0Ie6077H9
-Content-Type: multipart/mixed; boundary="------------h06qE9PVfR9iUVX0FBBghGEo";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Douglas Anderson <dianders@chromium.org>, dri-devel@lists.freedesktop.org
-Cc: quic_sbillaka@quicinc.com, linux-kernel@vger.kernel.org,
- David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
- quic_abhinavk@quicinc.com, swboyd@chromium.org, dmitry.baryshkov@linaro.org,
- quic_aravindh@quicinc.com, quic_khsieh@quicinc.com,
- freedreno@lists.freedesktop.org
-Message-ID: <db7a2b7f-3c94-d45d-98fd-7fd0b181e6aa@suse.de>
-Subject: Re: [PATCH v2] drm/probe-helper: Default to 640x480 if no EDID
-References: <20220510135101.v2.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
-In-Reply-To: <20220510135101.v2.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
+On 11/05/2022 04:39, Julius Werner wrote:
+>> Wait, we agreed that you don't consider them identical, didn't we? If
+>> they are identical, you do not need rev4 at all. So they are not
+>> identical...
+> 
+> Well, they are identical until they're not. We intend them to be
+> identical. But for practical purposes it does sometimes happen that
+> two board revisions which were meant to be indistinguishable by
+> software end up needing to be distinguished at a later point, when
+> both the hardware and firmware can no longer be changed. We need to
+> allow an escape hatch for that case. It does not happen often, so just
+> treating them all as separate boards from the start is not a scalable
+> solution. DTBs are not free when they all need to be packaged in the
+> same kernel image.
 
---------------h06qE9PVfR9iUVX0FBBghGEo
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+You split more important part of my message, ignoring the point.
 
-SGkNCg0KQW0gMTAuMDUuMjIgdW0gMjI6NTEgc2NocmllYiBEb3VnbGFzIEFuZGVyc29uOg0K
-PiBJZiB3ZSdyZSB1bmFibGUgdG8gcmVhZCB0aGUgRURJRCBmb3IgYSBkaXNwbGF5IGJlY2F1
-c2UgaXQncyBjb3JydXB0IC8NCj4gYm9ndXMgLyBpbnZhbGlkIHRoZW4gd2UnbGwgYWRkIGEg
-c2V0IG9mIHN0YW5kYXJkIG1vZGVzIGZvciB0aGUNCj4gZGlzcGxheS4gV2hlbiB1c2Vyc3Bh
-Y2UgbG9va3MgYXQgdGhlc2UgbW9kZXMgaXQgZG9lc24ndCByZWFsbHkgaGF2ZSBhDQo+IGdv
-b2QgY29uY2VwdCBmb3Igd2hpY2ggbW9kZSB0byBwaWNrIGFuZCBpdCdsbCBsaWtlbHkgcGlj
-ayB0aGUgaGlnaGVzdA0KPiByZXNvbHV0aW9uIG9uZSBieSBkZWZhdWx0LiBUaGF0J3MgcHJv
-YmFibHkgbm90IGlkZWFsIGJlY2F1c2UgdGhlIG1vZGVzDQo+IHdlcmUgcHVyZWx5IGd1ZXNz
-ZXMgb24gdGhlIHBhcnQgb2YgdGhlIExpbnV4IGtlcm5lbC4NCg0KSSdtIHNrZXB0aWNhbC4g
-V2h5IGRvZXMgdGhlIGtlcm5lbCBkbyBhIGJldHRlciBqb2IgdGhhbiB1c2Vyc3BhY2UgaGVy
-ZT8gDQpPbmx5IHRoZSBncmFwaGljcyBkcml2ZXIgY291bGQgcG9zc2libHkgbWFrZSBzdWNo
-IGEgZGVjaXNpb24uDQoNCk5vdCBzZXR0aW5nIGFueSBwcmVmZXJyZWQgbW9kZSBhdCBsZWFz
-dCBnaXZlcyBhIGNsZWFyIG1lc3NhZ2UgdG8gdXNlcnNwYWNlLg0KDQpCZXN0IHJlZ2FyZHMN
-ClRob21hcw0KDQo+IA0KPiBMZXQncyBpbnN0ZWFkIHNldCA2NDB4NDgwIGFzIHRoZSAicHJl
-ZmVycmVkIiBtb2RlIHdoZW4gd2UgaGF2ZSBubyBFRElELg0KPiANCj4gU2lnbmVkLW9mZi1i
-eTogRG91Z2xhcyBBbmRlcnNvbiA8ZGlhbmRlcnNAY2hyb21pdW0ub3JnPg0KPiAtLS0NCj4g
-Tm90ZSB0aGF0IHRoaXMgaXMgdGhlIHNlY29uZCBvZiB0d28gcmVsYXRlZCBhbmQgc2ltaWxh
-ci1zb3VuZGluZyBidXQNCj4gZGlmZmVyZW50IHBhdGNoZXMuIFNlZSBhbHNvICgiZHJtL3By
-b2JlLWhlbHBlcjogRm9yIERQLCBhZGQgNjQweDQ4MCBpZg0KPiBhbGwgb3RoZXIgbW9kZXMg
-YXJlIGJhZCIpIFsxXS4gSSdtIGhvcGluZyB0byBsYW5kIF9ib3RoXyBvZiB0aGUNCj4gcGF0
-Y2hlcyBzaW5jZSB0aGV5IGFkZHJlc3MgZGlmZmVyZW50IGlzc3Vlcy4gVGhpcyBwYXRjaCBh
-ZGRyZXNzZXMgdGhlDQo+IGNhc2Ugb2YgYSBjb3JydXB0IEVESUQgYW5kIGhhdmluZyA2NDB4
-NDgwIGJlIHRoZSBkZWZhdWx0IGluIHRoZQ0KPiAiZ3Vlc3NlZCIgbW9kZXMuIFRoZSBvdGhl
-ciBwYXRjaCBoYW5kbGVzIHRoZSBjYXNlIHdoZXJlIHRoZSBFRElEDQo+IF9pc24ndF8gY29y
-cnVwdCBidXQgYWxsIHRoZSBtb2RlcyBsaXN0ZWQgY2FuJ3QgYmUgbWFkZSB3aXRoIHRoZQ0K
-PiBleGlzdGluZyBzaXR1YXRpb25zLiBUaGUgdHdvIHBhdGNoZXMgY2FuIGxhbmQgaW4gZWl0
-aGVyIG9yZGVyLg0KPiANCj4gQWxzbyBub3RlIHRoYXQgSSBkaWRuJ3QgY2FycnkgYW55IFRl
-c3RlZC1ieSAvIFJldmlld2VkLWJ5IHRhZ3Mgc2luY2UNCj4gdGhlIHBhdGNoIGlzIG5vdyBx
-dWl0ZSBkaWZmZXJlbnQuDQo+IA0KPiBbMV0gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvci8y
-MDIyMDUxMDEzMTMwOS52Mi4yLkk0YWM3ZjU1YWE0NDY2OTlmOGMyMDBhMjNjMTA0NjMyNTZm
-NmY0MzlmQGNoYW5nZWlkDQo+IA0KPiBDaGFuZ2VzIGluIHYyOg0KPiAtIERvbid0IG1vZGlm
-eSBkcm1fYWRkX21vZGVzX25vZWRpZCgpICdjYXVzZSB0aGF0J2xsIGJyZWFrIG90aGVycw0K
-PiAtIFNldCA2NDB4NDgwIGFzIHByZWZlcnJlZCBpbiBkcm1faGVscGVyX3Byb2JlX3Npbmds
-ZV9jb25uZWN0b3JfbW9kZXMoKQ0KPiANCj4gICBkcml2ZXJzL2dwdS9kcm0vZHJtX3Byb2Jl
-X2hlbHBlci5jIHwgMTEgKysrKysrKysrKy0NCj4gICAxIGZpbGUgY2hhbmdlZCwgMTAgaW5z
-ZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMv
-Z3B1L2RybS9kcm1fcHJvYmVfaGVscGVyLmMgYi9kcml2ZXJzL2dwdS9kcm0vZHJtX3Byb2Jl
-X2hlbHBlci5jDQo+IGluZGV4IDY4MjM1OTUxMjk5Ni4uMWZiYjlhOGMzMTVjIDEwMDY0NA0K
-PiAtLS0gYS9kcml2ZXJzL2dwdS9kcm0vZHJtX3Byb2JlX2hlbHBlci5jDQo+ICsrKyBiL2Ry
-aXZlcnMvZ3B1L2RybS9kcm1fcHJvYmVfaGVscGVyLmMNCj4gQEAgLTUxNiw4ICs1MTYsMTcg
-QEAgaW50IGRybV9oZWxwZXJfcHJvYmVfc2luZ2xlX2Nvbm5lY3Rvcl9tb2RlcyhzdHJ1Y3Qg
-ZHJtX2Nvbm5lY3RvciAqY29ubmVjdG9yLA0KPiAgIAkJY291bnQgPSBkcm1fYWRkX292ZXJy
-aWRlX2VkaWRfbW9kZXMoY29ubmVjdG9yKTsNCj4gICANCj4gICAJaWYgKGNvdW50ID09IDAg
-JiYgKGNvbm5lY3Rvci0+c3RhdHVzID09IGNvbm5lY3Rvcl9zdGF0dXNfY29ubmVjdGVkIHx8
-DQo+IC0JCQkgICBjb25uZWN0b3ItPnN0YXR1cyA9PSBjb25uZWN0b3Jfc3RhdHVzX3Vua25v
-d24pKQ0KPiArCQkJICAgY29ubmVjdG9yLT5zdGF0dXMgPT0gY29ubmVjdG9yX3N0YXR1c191
-bmtub3duKSkgew0KPiAgIAkJY291bnQgPSBkcm1fYWRkX21vZGVzX25vZWRpZChjb25uZWN0
-b3IsIDEwMjQsIDc2OCk7DQo+ICsNCj4gKwkJLyoNCj4gKwkJICogR2l2ZSB1c2Vyc3BhY2Ug
-YSBoaW50IHRoYXQgd2UgZG9uJ3QgaGF2ZSBhIGxvdCBvZiBjb25maWRlbmNlDQo+ICsJCSAq
-IGluIHRoZXNlIG1vZGVzICh3ZSB0b3RhbGx5IGd1ZXNzZWQpIGJ5IG1hcmtpbmcgNjQweDQ4
-MCBhcw0KPiArCQkgKiBwcmVmZXJyZWQuIFRoaXMgaXMgbG93IGNsb2NrIHJhdGUgYW5kIGlu
-Y3JlZGlibHkgY29tbW9uIGFzDQo+ICsJCSAqIGEgZmFpbHNhZmUgbW9kZS4NCj4gKwkJICov
-DQo+ICsJCWRybV9zZXRfcHJlZmVycmVkX21vZGUoY29ubmVjdG9yLCA2NDAsIDQ4MCk7DQo+
-ICsJfQ0KPiAgIAljb3VudCArPSBkcm1faGVscGVyX3Byb2JlX2FkZF9jbWRsaW5lX21vZGUo
-Y29ubmVjdG9yKTsNCj4gICAJaWYgKGNvdW50ID09IDApDQo+ICAgCQlnb3RvIHBydW5lOw0K
-DQotLSANClRob21hcyBaaW1tZXJtYW5uDQpHcmFwaGljcyBEcml2ZXIgRGV2ZWxvcGVyDQpT
-VVNFIFNvZnR3YXJlIFNvbHV0aW9ucyBHZXJtYW55IEdtYkgNCk1heGZlbGRzdHIuIDUsIDkw
-NDA5IE7DvHJuYmVyZywgR2VybWFueQ0KKEhSQiAzNjgwOSwgQUcgTsO8cm5iZXJnKQ0KR2Vz
-Y2jDpGZ0c2bDvGhyZXI6IEl2byBUb3Rldg0K
+So you choose they are not identical, fine. Why insisting on adding
+fallback compatible while not keeping bindings updated? Just don't add
+the compatible and work on rev3 or rev4. Doug even once wrote "_we don't
+know_ if -rev7 and -rev8 are compatible", so don't make them compatible.
+Don't add fallbacks or some generic unspecified front-compatibles and
+just work on revision.
 
---------------h06qE9PVfR9iUVX0FBBghGEo--
+> 
+>> Right now it's not possible to validate QCOM DTSes against DT bindings
+>> because they throw big fat warnings about undocumented top compatibles.
+>> This is a downside for us.
+> 
+> But that's a solvable problem, right? As I understand, what Doug was
+> initially just asking was whether it made _sense_ to document all of
+> these... not that we couldn't do it. Then this whole thread went down
+> a rabbit hole of whether our compatible assignments are allowed in the
+> first place. If we can compromise on this discussion by just doing
+> whatever needs to be done to make the tool happy, I think(?) we can
+> provide that.
 
---------------W2ExxOTgGkTiT5e0Ie6077H9
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+None of recent patches from Chromium were doing it, even after
+complaining from my side, so why do you suddenly believe that it is
+"doable"? If yes, please start doing it and fix the DTSes which you
+already submitted without bindings.
 
------BEGIN PGP SIGNATURE-----
+To remind - entire discussion started with Doug saying it is pure
+overhead for him.
 
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmJ7YmMFAwAAAAAACgkQlh/E3EQov+C4
-yRAAn+dUKxN5Uwx5Krr+v1kvNtNkIbz8IjGZ+roavrQcgD+s3zK0OSOW7I9Va944Fx6HKTX11WEL
-6T7s6qcIJH9hfBHNk0t7tmm45MLNX9XX6qJpqwM4IEM+ekbw9yru2YovsVsGEv85LQHhSdmqYY+F
-Fv8baLaBbN/XTHBQz7SRpcORvM0kFfQErEU2reIQn5xAjelWIQrO06Bx52IQvk5V/vfSEWdmzmCH
-2UXTZuYuIEPexNzqRCjcHQJtQcWmeNw9Dc9Wv6t3c+oR4H8502oKjte4UcRK+VKGQQ/h9gGU8Fda
-XHtGSn8BX386RhGmdaQAlQlzn98N+ZgiR1yYzIN5hUYCqrxAgbDu0Kgajzn2O0i9468LyuBn8ACG
-q+IRFW43Nto4gIg9SYAybyUln9JTcmuWt5Cj/9FuQxignf5cBS9QLRbx8Nvr1VnrCymJ7s3tKb/m
-fn5CtKUQKyqRsc+g7XcmUWaoxJL7nmsa7tCfIocUo50uR8oXO+qHcN7hIt08GlY+9JmoFYz8Yeyh
-YO3oH5LhE2jn8jifpBWXQ6/g1fsMKvH96RlVN1EVzI8y4BaoCaOGcRou2eLtZa0tns/q8gFbuyJp
-vhy4nR0ImYLlDoiqBd1KBgfkLmSG1rtluVcNXrrAQBmTLcx17S90rwMneGBQrH2IoUogJoOEnFwc
-v6g=
-=rAeO
------END PGP SIGNATURE-----
+> 
+>> Remember, you do not have to use Devicetree or Linux at all if it causes
+>> you some downsides... No one is forced. :) If you choose to use it,
+>> sorry, it comes with some requirements like being following Devicetree
+>> specification or the binding guidelines.
+> 
+> Woah... that is maybe a bit extreme, don't you think? 
 
---------------W2ExxOTgGkTiT5e0Ie6077H9--
+Yes, it was sarcasting. :) But yeah, using Linux and DTS comes now with
+DT schema. Please document the bindings in DT schema. That's the
+drawback of using mainline...
+
+
+Best regards,
+Krzysztof
