@@ -2,343 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 517AD522A87
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 05:51:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C09DD522A8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 05:54:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232119AbiEKDvi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 May 2022 23:51:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50106 "EHLO
+        id S231158AbiEKDyQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 May 2022 23:54:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232024AbiEKDvh (ORCPT
+        with ESMTP id S234629AbiEKDyM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 May 2022 23:51:37 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB38526566;
-        Tue, 10 May 2022 20:51:34 -0700 (PDT)
+        Tue, 10 May 2022 23:54:12 -0400
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAB4E4C7A1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 20:54:10 -0700 (PDT)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-e5e433d66dso1405512fac.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 May 2022 20:54:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652241095; x=1683777095;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=ylVSFRVSwhOX8+xtZy5BB4akLVXL41AMGbjByxG8wPE=;
-  b=uHJ0KTy0nUDm48B9e4IqqxMefwLLdCYKqYKm+j9bU76tmkhWObQE5C8M
-   joGm3YoV3u/hAz2QL5tB32st9eMOdsGItPFEZc9FpRWV276Nn2HYOTIJE
-   VxcBn37UC85taczHXpVxjgJdRzSCgrqb/nXGUwHlbuyAIcU/CQZpZGaep
-   8=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 10 May 2022 20:51:34 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2022 20:51:33 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 10 May 2022 20:51:33 -0700
-Received: from [10.50.27.146] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 10 May
- 2022 20:51:28 -0700
-Message-ID: <9c8558fa-223b-7f62-2a3a-67780af782ef@quicinc.com>
-Date:   Wed, 11 May 2022 09:21:24 +0530
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0WrSL/b+MR9+m4rRbjGXRX60B+r7zy7wkt64zUH48oY=;
+        b=rDNhyYBHwTL4zR2u6Rh91X182mgiFM7lrZSGXKOmY04hNhVAPm4Dgx0gU5cVJ2vGDC
+         VVK0s4uScAZKYRBD/jNDbgkWWuBV5j+CeByod0LNmbTJY6H1BdD52pzirbR50niNQOWs
+         4UcMfF4B2g4Ic9rYOGzl0LOSN1aaLtLb/R9U55fs4o/J0pMUPrqbzTdJSVKL4Fh78wGH
+         oqA+4Tao/oGIRZvarBpyi6x4Gmuur5E3YRVUVPWpq48UoXcyFBPUo67hsWk85HdW1Iyu
+         UKVBVAQsXQiIpeynG/0M9jNsljMLvTSFcolAfzNWxtFedgaFi3D/S+XxgXcjaVIGS2sh
+         xkqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0WrSL/b+MR9+m4rRbjGXRX60B+r7zy7wkt64zUH48oY=;
+        b=wg+CGuj/xb7JJDX+VurvQfWDYM99xfTrTZSgfEoWT8HZrmh/ik3WBxNzqNkbnlTKi7
+         UEWPVOx9HBQh9I6aVGS1MY32q58Io3A9PEN6kR9xRMpr3mfX+q2GBgp84d6fasa8zeTu
+         IyfOP/ED0dkp5RHrAeO1bIv+jMDPVUeEJMw7vd7/T/aYpt2BsXIMhP0sDgJXqkJUAzBP
+         d05m2PutDAZjG0N7yz7AHGZgrZOsGPeteOqho70nbZFcHWi11d8zUKY72swzemuB5xfc
+         yCOoYK6ZtLQTIC97UYWMwxh9hjIiG46AhNr6E/G7NkEWpY8zqitra6VssNuB/vogPlzn
+         l7nA==
+X-Gm-Message-State: AOAM530YQMaAZHlZQsZmWrjtUNE3Cu23S5Llrt+dNkwPCiznYiM93EbB
+        XBN00sqzmi0TpNEqK8OsL7bayA==
+X-Google-Smtp-Source: ABdhPJyoFDZ6uvhFkWPUEbCyNMWvl/HBFzH2dTTIdFcRPaK+Uq/uWTzwMP5AeRGfoz4hWcMS4Eo26w==
+X-Received: by 2002:a05:6870:818a:b0:f1:1223:3afd with SMTP id k10-20020a056870818a00b000f112233afdmr497822oae.271.1652241250132;
+        Tue, 10 May 2022 20:54:10 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l6-20020a056830154600b0060603221269sm397354otp.57.2022.05.10.20.54.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 May 2022 20:54:09 -0700 (PDT)
+Date:   Tue, 10 May 2022 22:54:07 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+        Rob Herring <robh@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+Subject: Re: [PATCH 2/4] leds: qcom-lpg: Add PM660L configuration and
+ compatible
+Message-ID: <YnszX1wdQhUSkgyH@builder.lan>
+References: <20220507221123.2201668-1-marijn.suijten@somainline.org>
+ <20220507221123.2201668-2-marijn.suijten@somainline.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCHv14 5/9] lib: Add register read/write tracing support
-Content-Language: en-US
-To:     <arnd@arndb.de>, <catalin.marinas@arm.com>, <rostedt@goodmis.org>
-CC:     <gregkh@linuxfoundation.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <maz@kernel.org>, <quic_psodagud@quicinc.com>,
-        <quic_tsoni@quicinc.com>, <will@kernel.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-References: <cover.1651663123.git.quic_saipraka@quicinc.com>
- <9827bae40f6f319f294d06859c9e3c7442f067f2.1651663123.git.quic_saipraka@quicinc.com>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <9827bae40f6f319f294d06859c9e3c7442f067f2.1651663123.git.quic_saipraka@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220507221123.2201668-2-marijn.suijten@somainline.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/4/2022 4:58 PM, Sai Prakash Ranjan wrote:
-> From: Prasad Sodagudi <psodagud@codeaurora.org>
->
-> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
-> are typically used to read/write from/to memory mapped registers
-> and can cause hangs or some undefined behaviour in following few
-> cases,
->
-> * If the access to the register space is unclocked, for example: if
->    there is an access to multimedia(MM) block registers without MM
->    clocks.
->
-> * If the register space is protected and not set to be accessible from
->    non-secure world, for example: only EL3 (EL: Exception level) access
->    is allowed and any EL2/EL1 access is forbidden.
->
-> * If xPU(memory/register protection units) is controlling access to
->    certain memory/register space for specific clients.
->
-> and more...
->
-> Such cases usually results in instant reboot/SErrors/NOC or interconnect
-> hangs and tracing these register accesses can be very helpful to debug
-> such issues during initial development stages and also in later stages.
->
-> So use ftrace trace events to log such MMIO register accesses which
-> provides rich feature set such as early enablement of trace events,
-> filtering capability, dumping ftrace logs on console and many more.
->
-> Sample output:
->
-> rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
-> rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
-> rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
-> rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
->
-> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
-> Co-developed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+On Sat 07 May 17:11 CDT 2022, Marijn Suijten wrote:
+
+> Inherit PM660L PMIC LPG/triled block configuration from downstream
+> drivers and DT sources, consisting of a triled block with automatic
+> trickle charge control and source selection, three colored led channels
+> belonging to the synchronized triled block and one loose PWM channel.
+> 
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
->   arch/Kconfig                  |  3 ++
->   arch/arm64/Kconfig            |  1 +
->   include/trace/events/rwmmio.h | 97 +++++++++++++++++++++++++++++++++++
->   lib/Kconfig                   |  7 +++
->   lib/Makefile                  |  2 +
->   lib/trace_readwrite.c         | 47 +++++++++++++++++
->   6 files changed, 157 insertions(+)
->   create mode 100644 include/trace/events/rwmmio.h
->   create mode 100644 lib/trace_readwrite.c
->
-> diff --git a/arch/Kconfig b/arch/Kconfig
-> index 31c4fdc4a4ba..5e7aa17ed609 100644
-> --- a/arch/Kconfig
-> +++ b/arch/Kconfig
-> @@ -1369,6 +1369,9 @@ config ARCH_HAS_ELFCORE_COMPAT
->   config ARCH_HAS_PARANOID_L1D_FLUSH
->   	bool
->   
-> +config ARCH_HAVE_TRACE_MMIO_ACCESS
-> +	bool
-> +
->   config DYNAMIC_SIGFRAME
->   	bool
->   
-> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-> index 20ea89d9ac2f..926e1a252b6f 100644
-> --- a/arch/arm64/Kconfig
-> +++ b/arch/arm64/Kconfig
-> @@ -48,6 +48,7 @@ config ARM64
->   	select ARCH_HAS_ZONE_DMA_SET if EXPERT
->   	select ARCH_HAVE_ELF_PROT
->   	select ARCH_HAVE_NMI_SAFE_CMPXCHG
-> +	select ARCH_HAVE_TRACE_MMIO_ACCESS
->   	select ARCH_INLINE_READ_LOCK if !PREEMPTION
->   	select ARCH_INLINE_READ_LOCK_BH if !PREEMPTION
->   	select ARCH_INLINE_READ_LOCK_IRQ if !PREEMPTION
-> diff --git a/include/trace/events/rwmmio.h b/include/trace/events/rwmmio.h
-> new file mode 100644
-> index 000000000000..82edee9bf716
-> --- /dev/null
-> +++ b/include/trace/events/rwmmio.h
-> @@ -0,0 +1,97 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +#undef TRACE_SYSTEM
-> +#define TRACE_SYSTEM rwmmio
-> +
-> +#if !defined(_TRACE_RWMMIO_H) || defined(TRACE_HEADER_MULTI_READ)
-> +#define _TRACE_RWMMIO_H
-> +
-> +#include <linux/tracepoint.h>
-> +
-> +DECLARE_EVENT_CLASS(rwmmio_rw_template,
-> +
-> +	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
-> +
-> +	TP_ARGS(caller, val, width, addr),
-> +
-> +	TP_STRUCT__entry(
-> +		__field(unsigned long, caller)
-> +		__field(unsigned long, addr)
-> +		__field(u64, val)
-> +		__field(u8, width)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__entry->caller = caller;
-> +		__entry->val = val;
-> +		__entry->addr = (unsigned long)(void *)addr;
-> +		__entry->width = width;
-> +	),
-> +
-> +	TP_printk("%pS width=%d val=%#llx addr=%#lx",
-> +		(void *)(unsigned long)__entry->caller, __entry->width,
-> +		__entry->val, __entry->addr)
-> +);
-> +
-> +DEFINE_EVENT(rwmmio_rw_template, rwmmio_write,
-> +	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
-> +	TP_ARGS(caller, val, width, addr)
-> +);
-> +
-> +DEFINE_EVENT(rwmmio_rw_template, rwmmio_post_write,
-> +	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
-> +	TP_ARGS(caller, val, width, addr)
-> +);
-> +
-> +TRACE_EVENT(rwmmio_read,
-> +
-> +	TP_PROTO(unsigned long caller, u8 width, const volatile void __iomem *addr),
-> +
-> +	TP_ARGS(caller, width, addr),
-> +
-> +	TP_STRUCT__entry(
-> +		__field(unsigned long, caller)
-> +		__field(unsigned long, addr)
-> +		__field(u8, width)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__entry->caller = caller;
-> +		__entry->addr = (unsigned long)(void *)addr;
-> +		__entry->width = width;
-> +	),
-> +
-> +	TP_printk("%pS width=%d addr=%#lx",
-> +		 (void *)(unsigned long)__entry->caller, __entry->width, __entry->addr)
-> +);
-> +
-> +TRACE_EVENT(rwmmio_post_read,
-> +
-> +	TP_PROTO(unsigned long caller, u64 val, u8 width, const volatile void __iomem *addr),
-> +
-> +	TP_ARGS(caller, val, width, addr),
-> +
-> +	TP_STRUCT__entry(
-> +		__field(unsigned long, caller)
-> +		__field(unsigned long, addr)
-> +		__field(u64, val)
-> +		__field(u8, width)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__entry->caller = caller;
-> +		__entry->val = val;
-> +		__entry->addr = (unsigned long)(void *)addr;
-> +		__entry->width = width;
-> +	),
-> +
-> +	TP_printk("%pS width=%d val=%#llx addr=%#lx",
-> +		 (void *)(unsigned long)__entry->caller, __entry->width,
-> +		 __entry->val, __entry->addr)
-> +);
-> +
-> +#endif /* _TRACE_RWMMIO_H */
-> +
-> +#include <trace/define_trace.h>
-> diff --git a/lib/Kconfig b/lib/Kconfig
-> index 087e06b4cdfd..5e2fd075724f 100644
-> --- a/lib/Kconfig
-> +++ b/lib/Kconfig
-> @@ -118,6 +118,13 @@ config INDIRECT_IOMEM_FALLBACK
->   	  mmio accesses when the IO memory address is not a registered
->   	  emulated region.
->   
-> +config TRACE_MMIO_ACCESS
-> +	bool "Register read/write tracing"
-> +	depends on TRACING && ARCH_HAVE_TRACE_MMIO_ACCESS
-> +	help
-> +	  Create tracepoints for MMIO read/write operations. These trace events
-> +	  can be used for logging all MMIO read/write operations.
-> +
->   source "lib/crypto/Kconfig"
->   
->   config CRC_CCITT
-> diff --git a/lib/Makefile b/lib/Makefile
-> index 6b9ffc1bd1ee..3df7d24e65d2 100644
-> --- a/lib/Makefile
-> +++ b/lib/Makefile
-> @@ -151,6 +151,8 @@ lib-y += logic_pio.o
->   
->   lib-$(CONFIG_INDIRECT_IOMEM) += logic_iomem.o
->   
-> +obj-$(CONFIG_TRACE_MMIO_ACCESS) += trace_readwrite.o
-> +
->   obj-$(CONFIG_GENERIC_HWEIGHT) += hweight.o
->   
->   obj-$(CONFIG_BTREE) += btree.o
-> diff --git a/lib/trace_readwrite.c b/lib/trace_readwrite.c
-> new file mode 100644
-> index 000000000000..88637038b30c
-> --- /dev/null
-> +++ b/lib/trace_readwrite.c
-> @@ -0,0 +1,47 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Register read and write tracepoints
-> + *
-> + * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/ftrace.h>
-> +#include <linux/module.h>
-> +#include <asm-generic/io.h>
-> +
-> +#define CREATE_TRACE_POINTS
-> +#include <trace/events/rwmmio.h>
-> +
-> +#ifdef CONFIG_TRACE_MMIO_ACCESS
-> +void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
-> +		    unsigned long caller_addr)
-> +{
-> +	trace_rwmmio_write(caller_addr, val, width, addr);
-> +}
-> +EXPORT_SYMBOL_GPL(log_write_mmio);
-> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_write);
-> +
-> +void log_post_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
-> +			 unsigned long caller_addr)
-> +{
-> +	trace_rwmmio_post_write(caller_addr, val, width, addr);
-> +}
-> +EXPORT_SYMBOL_GPL(log_post_write_mmio);
-> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_post_write);
-> +
-> +void log_read_mmio(u8 width, const volatile void __iomem *addr,
-> +		   unsigned long caller_addr)
-> +{
-> +	trace_rwmmio_read(caller_addr, width, addr);
-> +}
-> +EXPORT_SYMBOL_GPL(log_read_mmio);
-> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_read);
-> +
-> +void log_post_read_mmio(u64 val, u8 width, const volatile void __iomem *addr,
-> +			unsigned long caller_addr)
-> +{
-> +	trace_rwmmio_post_read(caller_addr, val, width, addr);
-> +}
-> +EXPORT_SYMBOL_GPL(log_post_read_mmio);
-> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_post_read);
-> +#endif /* CONFIG_TRACE_MMIO_ACCESS */
+>  drivers/leds/rgb/leds-qcom-lpg.c | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
+> 
+> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+> index cfa3362b2457..30c12ac8eed4 100644
+> --- a/drivers/leds/rgb/leds-qcom-lpg.c
+> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
+> @@ -1271,6 +1271,23 @@ static int lpg_remove(struct platform_device *pdev)
+>  	return 0;
+>  }
+>  
+> +static const struct lpg_data pm660l_lpg_data = {
+> +	.lut_base = 0xb000,
+> +	.lut_size = 0x100,
 
-Hi Steve,
+The documentation tells me that you have 49 entries of LUT on the
+PM660L.
 
-Could you please review this patch, it is the main one left for this series to get merged. All your
-previous review comments have been incorporated, you can find them in  the cover letter changelog.
+> +
+> +	.triled_base = 0xd000,
+> +	.triled_has_atc_ctl = true,
+> +	.triled_has_src_sel = true,
+> +
+> +	.num_channels = 4,
+> +	.channels = (struct lpg_channel_data[]) {
 
-Thanks,
-Sai
+This can be const
+
+Regards,
+Bjorn
+
+> +		{ .base = 0xb100, .triled_mask = BIT(5) },
+> +		{ .base = 0xb200, .triled_mask = BIT(6) },
+> +		{ .base = 0xb300, .triled_mask = BIT(7) },
+> +		{ .base = 0xb400 },
+> +	},
+> +};
+> +
+>  static const struct lpg_data pm8916_pwm_data = {
+>  	.num_channels = 1,
+>  	.channels = (const struct lpg_channel_data[]) {
+> @@ -1391,6 +1408,7 @@ static const struct lpg_data pm8350c_pwm_data = {
+>  };
+>  
+>  static const struct of_device_id lpg_of_table[] = {
+> +	{ .compatible = "qcom,pm660l-lpg", .data = &pm660l_lpg_data },
+>  	{ .compatible = "qcom,pm8150b-lpg", .data = &pm8150b_lpg_data },
+>  	{ .compatible = "qcom,pm8150l-lpg", .data = &pm8150l_lpg_data },
+>  	{ .compatible = "qcom,pm8350c-pwm", .data = &pm8350c_pwm_data },
+> -- 
+> 2.36.0
+> 
