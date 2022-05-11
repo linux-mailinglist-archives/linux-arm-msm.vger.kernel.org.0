@@ -2,96 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01C8A5232B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 14:09:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 758615233BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 15:10:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242384AbiEKMJW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 08:09:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49782 "EHLO
+        id S230266AbiEKNKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 09:10:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241925AbiEKMJO (ORCPT
+        with ESMTP id S243148AbiEKNKK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 08:09:14 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1723CF68AD;
-        Wed, 11 May 2022 05:07:46 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id i24so1804779pfa.7;
-        Wed, 11 May 2022 05:07:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=56+DPsjLCWIXnMFTS6urdo6Sa/aYQ/f5L9qithdpcbY=;
-        b=Xwc9q/vYLZyd5OxtUTp2jA8G9MWkLDQkKh/2m4QIBExigtpXTfXTrJw5+vWnZ7Z35i
-         up0G7LPQxC3OPxmjLQN1turtWupOCc3kEpl+cA8jCNT2TJLmSl7Qxn5VoCVUxej2ezbg
-         MQi9faKxZ/p4a12SRtHuiCe7cRIP/pCZ1GZcKklw730rqEb/nmtoPwt+IF9jfCyciHRZ
-         gOZEJmaFDB3y8bjryGMrUEERv3Mj67EwomPYQpACYc2pPZKdegzRStt32/+rgdu5s+Y9
-         ib9rujvehQfAcfdW2f8a8qWm8mdpyJx0l/RStGgDHdR0l0UCQ5prJ2GTpEfUO/rR9JZs
-         jeSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=56+DPsjLCWIXnMFTS6urdo6Sa/aYQ/f5L9qithdpcbY=;
-        b=dfjxPCe8kffc/rJJ9oEW0xZBTA9Lys9d5neq1M3mTI8FPD2C+fKzfVpFrivqpV7c+l
-         mc56SDP5zoM4J5CUwyur1dz1lFB+sp2R7bAbtrub401ROrefdJoNnHNWN1G22aXaYXxh
-         vgHN8m14n0/YJ2Zm1+bgbSn5D2jXNBTIXqYB/UEGwVzvnJn8SwD+Xiy6k7e8Cw8mWOWb
-         yUx9pzi3WvBLkbCCbWuM/JWoroa2KJ1lhPUh43JhnivpIdkOGd98tU/dmOLsQX+NdARm
-         GxK7i32ihtWuPPKC2OknEmedGDnQHTNIfU3GcjUFtnMVepWDtVbAQjoYbnJMbXVrPPLv
-         tvtw==
-X-Gm-Message-State: AOAM532mTgH+BDzMhkhDytBOlJPwHxg1JSLWShYkCv/B9AGDF8EF4q5K
-        ebSG1XQ59i3YyBs+5LqyAwCgP3VvqAQCNdIMsWE=
-X-Google-Smtp-Source: ABdhPJweH4nbeVPEIduNamjHzGab/QU+6yP2eOi6bMT+xFKn1qs/s54IW+rS3Brmk9Urv8KyPeJXEQ==
-X-Received: by 2002:a05:6a00:10d3:b0:4fe:5d:75c8 with SMTP id d19-20020a056a0010d300b004fe005d75c8mr24904554pfu.6.1652270865593;
-        Wed, 11 May 2022 05:07:45 -0700 (PDT)
-Received: from localhost.localdomain ([202.120.234.246])
-        by smtp.googlemail.com with ESMTPSA id n24-20020a62e518000000b0050dc76281desm1531733pff.184.2022.05.11.05.07.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 May 2022 05:07:45 -0700 (PDT)
-From:   Miaoqian Lin <linmq006@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
+        Wed, 11 May 2022 09:10:10 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 27170233A49;
+        Wed, 11 May 2022 06:10:07 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id ABB6AED1;
+        Wed, 11 May 2022 06:10:07 -0700 (PDT)
+Received: from lpieralisi (unknown [10.57.1.148])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C79FF3F66F;
+        Wed, 11 May 2022 06:10:04 -0700 (PDT)
+Date:   Wed, 11 May 2022 14:09:59 +0100
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     linmq006@gmail.com
-Subject: [PATCH] rpmsg: qcom_smd: Fix refcount leak in qcom_smd_parse_edge
-Date:   Wed, 11 May 2022 16:07:37 +0400
-Message-Id: <20220511120737.57374-1-linmq006@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v6 0/8] dt-bindings: YAMLify pci/qcom,pcie schema
+Message-ID: <Ynu1p1hzqHJNpSp3@lpieralisi>
+References: <20220506152107.1527552-1-dmitry.baryshkov@linaro.org>
+ <YnqXxNxFhf/odyka@robh.at.kernel.org>
+ <CAA8EJpriMcP4uQ3fjyiCKY+uc82ctXe2VrjO1psPDcp-P++Nhw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpriMcP4uQ3fjyiCKY+uc82ctXe2VrjO1psPDcp-P++Nhw@mail.gmail.com>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-of_parse_phandle() returns a node pointer with refcount
-incremented, we should use of_node_put() on it when done.
+On Wed, May 11, 2022 at 01:13:28PM +0300, Dmitry Baryshkov wrote:
+> On Tue, 10 May 2022 at 19:50, Rob Herring <robh@kernel.org> wrote:
+> >
+> > On Fri, May 06, 2022 at 06:20:59PM +0300, Dmitry Baryshkov wrote:
+> > > Convert pci/qcom,pcie schema to YAML description. The first patch
+> > > introduces several warnings which are fixed by the other patches in the
+> > > series.
+> > >
+> > > Note regarding the snps,dw-pcie compatibility. The Qualcomm PCIe
+> > > controller uses Synopsys PCIe IP core. However it is not just fused to
+> > > the address space. Accessing PCIe registers requires several clocks and
+> > > regulators to be powered up. Thus it can be assumed that the qcom,pcie
+> > > bindings are not fully compatible with the snps,dw-pcie schema.
+> > >
+> > > Changes since v5:
+> > >  - s/stance/stanza (pointed out by Bjorn Helgaas)
+> > >
+> > > Changes since v4:
+> > >  - Change subjects to follow convention (suggested by Bjorn Helgaas)
+> > >
+> > > Changes since v3:
+> > >  - Rebase on linux-next to include sm8150 patches
+> > >
+> > > Changes since v2 (still kudos to Krzyshtof):
+> > >  - Readded reg-names conversion patch
+> > >  - Mention wake-gpio update in the commit message
+> > >  - Remove extra quotes in the schema
+> > >
+> > > Changes since v1 (all kudos to Krzyshtof):
+> > >  - Dropped the reg-names patch. It will be handled separately
+> > >  - Squashed the snps,dw-pcie removal (from schema) into the first patch
+> > >  - Replaced deprecated perst-gpio and wake-gpio with perst-gpios and
+> > >    wake-gpios in the examples and in DT files
+> > >  - Moved common clocks/clock-names, resets/reset-names and power-domains
+> > >    properties to the top level of the schema, leaving only platform
+> > >    specifics in the conditional branches
+> > >  - Dropped iommu-map/iommu-map-mask for now
+> > >  - Added (missed) interrupt-cells, clocks, clock-names, resets,
+> > >    reset-names properties to the required list (resets/reset-names are
+> > >    removed in the next patch, as they are not used on msm8996)
+> > >  - Fixed IRQ flags in the examples
+> > >  - Merged apq8064/ipq8064 into the single condition statement
+> > >  - Added extra empty lines
+> > >
+> > > Dmitry Baryshkov (8):
+> > >   dt-bindings: PCI: qcom: Convert to YAML
+> > >   dt-bindings: PCI: qcom: Do not require resets on msm8996 platforms
+> > >   dt-bindings: PCI: qcom: Specify reg-names explicitly
+> > >   dt-bindings: PCI: qcom: Add schema for sc7280 chipset
+> > >   arm64: dts: qcom: stop using snps,dw-pcie falback
+> > >   arm: dts: qcom: stop using snps,dw-pcie falback
+> > >   arm: dts: qcom-*: replace deprecated perst-gpio with perst-gpios
+> > >   arm64: dts: qcom: replace deprecated perst-gpio with perst-gpios
+> > >
+> > >  .../devicetree/bindings/pci/qcom,pcie.txt     | 398 ----------
+> > >  .../devicetree/bindings/pci/qcom,pcie.yaml    | 714 ++++++++++++++++++
+> >
+> > What tree do these apply to because they don't apply to rc1. I'm
+> > assuming the PCI tree and Lorenzo should take them.
+> 
+> The series depends on the patch in Lorenzo's tree (sm8150 bindings),
+> so I'd assume it would be natural to merge these patches through his
+> tree too.
 
-Fixes: 53e2822e56c7 ("rpmsg: Introduce Qualcomm SMD backend")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
----
- drivers/rpmsg/qcom_smd.c | 1 +
- 1 file changed, 1 insertion(+)
+I can take the DT bindings but the dts updates I'd prefer if they
+went via platform trees. Is that OK ?
 
-diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-index 764c980507be..e559c8e468e3 100644
---- a/drivers/rpmsg/qcom_smd.c
-+++ b/drivers/rpmsg/qcom_smd.c
-@@ -1383,6 +1383,7 @@ static int qcom_smd_parse_edge(struct device *dev,
- 		}
- 
- 		edge->ipc_regmap = syscon_node_to_regmap(syscon_np);
-+		of_node_put(syscon_np);
- 		if (IS_ERR(edge->ipc_regmap)) {
- 			ret = PTR_ERR(edge->ipc_regmap);
- 			goto put_node;
--- 
-2.25.1
-
+Thanks,
+Lorenzo
