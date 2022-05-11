@@ -2,132 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CDE75234F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 16:03:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 829F55234F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 16:04:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244306AbiEKODO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 10:03:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34430 "EHLO
+        id S244317AbiEKOD7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 10:03:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244331AbiEKODN (ORCPT
+        with ESMTP id S238190AbiEKOD6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 10:03:13 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id DEC8B62230;
-        Wed, 11 May 2022 07:03:10 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id ACB54ED1;
-        Wed, 11 May 2022 07:03:10 -0700 (PDT)
-Received: from lpieralisi (unknown [10.57.1.148])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 423BE3F66F;
-        Wed, 11 May 2022 07:03:08 -0700 (PDT)
-Date:   Wed, 11 May 2022 15:03:04 +0100
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Baruch Siach <baruch@tkos.co.il>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v6 0/3] PCI: IPQ6018 platform support
-Message-ID: <YnvCGD4RwuyPkTfK@lpieralisi>
-References: <cover.1644234441.git.baruch@tkos.co.il>
- <20220412161259.GA7109@lpieralisi>
+        Wed, 11 May 2022 10:03:58 -0400
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [46.235.227.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2117C1133;
+        Wed, 11 May 2022 07:03:57 -0700 (PDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: tomeu)
+        with ESMTPSA id AD82D1F44B18
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1652277835;
+        bh=xSx6F4evAwybIJWHucSyu4yeLye8vq75JCHZIdqYZLc=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=PZRkH+oixPRVh+pYjowNCZTDelUzKF3qOWvUeoCKcl+R+yRYSLUiw86TAttDtHvtj
+         aM3wRuQHjK+N2z8ccCa+OzyBd4vzxOXfHjk6wC3gEYE0znuN7z2naYQGCpVRnx3FZv
+         RezU+yx8jb6R9Nlxw2qkKL4yLlkTvWyJoqumfgg1ZdH3ULMILWwu/A3ztlaya8Fnck
+         NJ68c3VQXX+HhpwqO4vN2dKCieebX6W5YlWxFbo7qkU23zLXvbnaYlf3qN4CCrOdrL
+         jZAcmazA5wX/sTMF9hbbSmBlWh8jmqiCo8A8HUeWYo3CcATm5aaKb0nnrokSVGJ0vc
+         1tHH9dCFybI7g==
+Subject: Re: [RFC v3] drm/msm: Add initial ci/ subdirectory
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Corbet <corbet@lwn.net>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-doc@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20220510141329.54414-1-tomeu.vizoso@collabora.com>
+ <20220511061533.56881-1-tomeu.vizoso@collabora.com>
+ <CAF6AEGts6cKOrmRruo8uSXSW=Kq58VZxdPuS13Q7jVajbvga-g@mail.gmail.com>
+From:   Tomeu Vizoso <tomeu.vizoso@collabora.com>
+Message-ID: <3e4198de-a0be-aa76-c5ea-fd07d47704ee@collabora.com>
+Date:   Wed, 11 May 2022 16:03:51 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220412161259.GA7109@lpieralisi>
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <CAF6AEGts6cKOrmRruo8uSXSW=Kq58VZxdPuS13Q7jVajbvga-g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 12, 2022 at 05:12:59PM +0100, Lorenzo Pieralisi wrote:
-> On Mon, Feb 07, 2022 at 04:51:23PM +0200, Baruch Siach wrote:
-> > This series adds support for the single PCIe lane on IPQ6018 SoCs. The code is 
-> > ported from downstream Codeaurora v5.4 kernel. The main difference from 
-> > downstream code is the split of PCIe registers configuration from .init to 
-> > .post_init, since it requires phy_power_on().
-> > 
-> > Tested on IPQ6010 based hardware.
-> > 
-> > Changes in v6:
-> > 
-> >   * Drop DT patch applied to the qcom tree
-> > 
-> >   * Normalize driver changes subject line
-> > 
-> >   * Add a preparatory patch to rename PCIE_CAP_LINK1_VAL to PCIE_CAP_SLOT_VAL,
-> >     and define it using PCI_EXP_SLTCAP_* macros
-> > 
-> >   * Drop a vague comment about ASPM configuration
-> > 
-> >   * Add a comment about the source of delay periods
-> > 
-> > Changes in v5:
-> > 
-> >   * Remove comments from qcom_pcie_init_2_9_0() (Bjorn Andersson)
-> > 
-> > Changes in v4:
-> > 
-> >   * Drop applied DT bits
-> > 
-> >   * Add max-link-speed that was missing from the applied v2 patch
-> > 
-> >   * Rebase the driver on v5.16-rc3
-> > 
-> > Changes in v3:
-> > 
-> >   * Drop applied patches
-> > 
-> >   * Rely on generic code for speed setup
-> > 
-> >   * Drop unused macros
-> > 
-> >   * Formatting fixes
-> > 
-> > Changes in v2:
-> > 
-> >   * Add patch moving GEN3_RELATED macros to a common header
-> > 
-> >   * Drop ATU configuration from pcie-qcom
-> > 
-> >   * Remove local definition of common registers
-> > 
-> >   * Use bulk clk and reset APIs
-> > 
-> >   * Remove msi-parent from device-tree
-> > 
-> > Baruch Siach (2):
-> >   PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
-> >   PCI: qcom: Define slot capabilities using PCI_EXP_SLTCAP_*
-> > 
-> > Selvam Sathappan Periakaruppan (1):
-> >   PCI: qcom: Add IPQ60xx support
-> > 
-> >  drivers/pci/controller/dwc/pcie-designware.h |   7 +
-> >  drivers/pci/controller/dwc/pcie-qcom.c       | 155 ++++++++++++++++++-
-> >  drivers/pci/controller/dwc/pcie-tegra194.c   |   6 -
-> >  3 files changed, 160 insertions(+), 8 deletions(-)
+On 5/11/22 3:20 PM, Rob Clark wrote:
+> On Tue, May 10, 2022 at 11:15 PM Tomeu Vizoso
+> <tomeu.vizoso@collabora.com> wrote:
+>>
+>> And use it to store expectations about what the drm/msm driver is
+>> supposed to pass in the IGT test suite.
+>>
+>> Also include a configuration file that points to the out-of-tree CI
+>> scripts.
+>>
+>> By storing the test expectations along the code we can make sure both
+>> stay in sync with each other, and so we can know when a code change
+>> breaks those expectations.
+>>
+>> This will allow all contributors to drm/msm to reuse the infrastructure
+>> already in gitlab.freedesktop.org to test the driver on several
+>> generations of the hardware.
+>>
+>> v2:
+>>    - Fix names of result expectation files to match SoC
+>>    - Don't execute tests that are going to skip on all boards
+>>
+>> v3:
+>>    - Remove tracking of dmesg output during test execution
+>>
+>> Signed-off-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
+>> ---
+>>   Documentation/gpu/msm_automated_testing.rst   |  70 +++++++++
+>>   drivers/gpu/drm/msm/ci/gitlab-ci.yml          |  11 ++
+>>   drivers/gpu/drm/msm/ci/msm.testlist           | 144 ++++++++++++++++++
+>>   .../gpu/drm/msm/ci/msm_apq8016_results.txt    | 141 +++++++++++++++++
+>>   .../gpu/drm/msm/ci/msm_apq8096_results.txt    | 141 +++++++++++++++++
+>>   drivers/gpu/drm/msm/ci/msm_sc7180_results.txt | 142 +++++++++++++++++
+>>   drivers/gpu/drm/msm/ci/msm_sdm845_results.txt | 142 +++++++++++++++++
+>>   7 files changed, 791 insertions(+)
+>>   create mode 100644 Documentation/gpu/msm_automated_testing.rst
+>>   create mode 100644 drivers/gpu/drm/msm/ci/gitlab-ci.yml
+>>   create mode 100644 drivers/gpu/drm/msm/ci/msm.testlist
+>>   create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8016_results.txt
+>>   create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8096_results.txt
+>>   create mode 100644 drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
+>>   create mode 100644 drivers/gpu/drm/msm/ci/msm_sdm845_results.txt
+>>
 > 
-> Hi Bjorn, Andy,
+> [snip]
 > 
-> any feedback on this series please ?
+>> diff --git a/drivers/gpu/drm/msm/ci/gitlab-ci.yml b/drivers/gpu/drm/msm/ci/gitlab-ci.yml
+>> new file mode 100644
+>> index 000000000000..9b7caa7fcab2
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/ci/gitlab-ci.yml
+>> @@ -0,0 +1,11 @@
+>> +variables:
+>> +  # Change this to use your fork of drm-ci
+>> +  DRM_CI_PROJECT_PATH: &drm-ci-project-path gfx-ci/drm-ci
+>> +  DRM_CI_COMMIT_SHA: &drm-ci-commit-sha msm
+> 
+> btw, shouldn't we list an exact commit sha (or tag) for drm-ci, or am
+> I overlooking something?  We want to be able to uprev the drm-ci
+> version (and therefore igt version) in sync with any necessary updates
+> to the expectations
 
-Any feedback on these patches please ?
+You are right, that was me being lazy and using a branch name to not 
+have to update this every time.
 
-Thanks,
-Lorenzo
+But this should better be a commit sha or tag. Will do it on v4.
+
+Cheers,
+
+Tomeu
