@@ -2,101 +2,387 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC283523BE8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 19:51:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6837B523C04
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 19:55:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345812AbiEKRv4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 13:51:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59902 "EHLO
+        id S1345913AbiEKRzG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 13:55:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345835AbiEKRvz (ORCPT
+        with ESMTP id S239578AbiEKRzF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 13:51:55 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C33E5C34F;
-        Wed, 11 May 2022 10:51:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1652291501;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=yDhDyiG143+NERzD1Q8ObYJHTt8duWx1100elYLk5Lw=;
-    b=r8NeX8j4jl8lZZEDENr2QyYz9IuHVl07+1svJVb03mdDMKhJIiCJebebK6r1SdasDL
-    wCKoyTZalQ6afuDiXvQLs8Jh0AzhRv1mTTPPtIIMhSZogPMPymE7HoSDVLloF3YvgZai
-    AjYGwIOPvTakRCmeJemsat+wwM9rLUgCIn5gTvXBb1fnon2l6m7gQQlsJL4W0gnatZsa
-    w5l5aM87bRodTTMOB4oJfY0FvG9YLL9ZXgvNtw0b7g1XOtNPA0NIx5BgHiqT1yyutoZ8
-    Lex2gFOxdj5C0drn/K6S2xPFFNEpq8H+kclxF/mAzVKUm0HIYtgs5EEgIJiTpnZ7zNtZ
-    myTg==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrK88/6Y="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.42.2 AUTH)
-    with ESMTPSA id u05e50y4BHpf2o2
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Wed, 11 May 2022 19:51:41 +0200 (CEST)
-Date:   Wed, 11 May 2022 19:51:32 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Sireesh Kodali <sireeshkodali1@gmail.com>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, bjorn.andersson@linaro.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: msm8916: Fix typo in pronto
- remoteproc node
-Message-ID: <Ynv3pE3gkLW39jNk@gerhold.net>
-References: <20220510042654.71152-1-sireeshkodali1@gmail.com>
- <20220510042654.71152-3-sireeshkodali1@gmail.com>
+        Wed, 11 May 2022 13:55:05 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE56C6D865
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:55:02 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id p18so3463948edr.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 10:55:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=vRxXDx59BwVAdE/yeHzMrpA2E8oV/k7BSRSKcJYdNfA=;
+        b=j0bCP9Ac9nsbSjZPAcD6tdqqrZV4sDP3RbsQMgYi2x5TCCiRzj83bEfxfyxjpposIi
+         fXlRRRYWSmtJrhuCCbQTE8MTt2iT63WqGTsfMYSiRzrOcvRnRstfaMJuyuI7qhwZFzCQ
+         IQSgpSI6eD/1J1MZTTlrLce8q7RLHtNE0FaYZ5n7rAF6EmLhc53FInghMRjL5oujH9Tk
+         y9a67Ng8mpZ4/DrSbm3cdv16kis8MutYiRMCgNtajxWIGOxIzXSQWK2PqhH8IipabXgs
+         k1sYGaINvDPdY68wqd79jP1OY9Tnu9eRJD/0Hv+P8Jfi32tbvvPlLXVUHavjm2Zv38f+
+         5zGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=vRxXDx59BwVAdE/yeHzMrpA2E8oV/k7BSRSKcJYdNfA=;
+        b=ZFN1sxnZ3PtVHtjeJJ1/yId6o2Z/JQpyPxMjcBBWRJasqE8X9YyFiVc53ZB5Mx3i1B
+         etseO7qTQ6QYg7SvNP4qYNiKpjb8PLlx40nAFJsUSzgE2xS9zQW2GXN+nL9lcCtRhTim
+         xA8FDg7LydSKwCDiirfqOlJHwJt5UKaH38snKHFO+qStdPvMDVe0Z5AWvvLLKaMqN3PM
+         5Rbv7OXH6YEFGd7XEwVRJIhS/e1II6lFc9WIqgdQUFO7MVEkU05m8cRtbQrQamrIzUP7
+         Q7R1Fvzm1SLW34oTcLyvN+/EoXVYd75Fno4Xw2xoFQxm3VD88J2Ag8Eh6OPKlu/9l6rZ
+         kGBw==
+X-Gm-Message-State: AOAM532WM0gkL+2Wts2/K1lPxWZVn9Ga7Vu0AqvHI/zaSCW1U0m3ZbXp
+        CxonlkhTRYrMOhLsI0H1j/sMIQ==
+X-Google-Smtp-Source: ABdhPJxhoebCeo/8aCGNu+Eiiq15xXHJ5M3E/dBl0X+mb8fVJ9xZI1u4poNv7tbPbiIiBRgXjNfWmA==
+X-Received: by 2002:a05:6402:50d1:b0:42a:2e52:c286 with SMTP id h17-20020a05640250d100b0042a2e52c286mr1328969edb.390.1652291701427;
+        Wed, 11 May 2022 10:55:01 -0700 (PDT)
+Received: from [192.168.0.155] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id q21-20020aa7d455000000b0042617ba63d3sm1448654edr.93.2022.05.11.10.55.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 May 2022 10:55:01 -0700 (PDT)
+Message-ID: <2d68e610-e8ae-9e08-257a-3c94c3697334@linaro.org>
+Date:   Wed, 11 May 2022 19:55:00 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220510042654.71152-3-sireeshkodali1@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 9/9] arm64: dts: qcom: msm8953: Add remote processor nodes
+Content-Language: en-US
+To:     Sireesh Kodali <sireeshkodali1@gmail.com>,
+        linux-remoteproc@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+References: <20220511161602.117772-1-sireeshkodali1@gmail.com>
+ <20220511161602.117772-10-sireeshkodali1@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220511161602.117772-10-sireeshkodali1@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 10, 2022 at 09:56:54AM +0530, Sireesh Kodali wrote:
-> The smem-state properties for the pronto node were incorrectly labelled,
-> reading `qcom,state*` rather than `qcom,smem-state*`. Fix that, allowing
-> the stop state to be used.
-> 
-> Fixes: 88106096cbf8 ("ARM: dts: msm8916: Add and enable wcnss node")
+On 11/05/2022 18:16, Sireesh Kodali wrote:
+> This commit adds the modem (q6v5_mss), WiFi (wcnss-pil) and audio DSP
+> (q6v5_pas) remote processor nodes for the MSM8953 platform. It also adds
+> the coresponding SMP2P, SMSM and pinctrl nodes that are needed by these
+> remote processors.
 > 
 > Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+> +			};
+> +
+> +			wcnss_sleep: wcnss-sleep-pins {
+> +				wcss_wlan2 {
 
-Thanks for finding this!
+No underscores in node names, unless something needs it?
 
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
-
-> ---
->  arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> index e34963505e07..7ecd747dc624 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> @@ -1758,8 +1758,8 @@ pronto: remoteproc@a21b000 {
->  					<&rpmpd MSM8916_VDDMX>;
->  			power-domain-names = "cx", "mx";
+> +					pins = "gpio76";
+> +					function = "wcss_wlan2";
+> +				};
+> +				wcss_wlan1 {
+> +					pins = "gpio77";
+> +					function = "wcss_wlan1";
+> +				};
+> +				wcss_wlan0 {
+> +					pins = "gpio78";
+> +					function = "wcss_wlan0";
+> +				};
+> +				wcss_wlan {
+> +					pins = "gpio79", "gpio80";
+> +					function = "wcss_wlan";
+> +				};
+> +
+> +				pinconf {
+> +					pins = "gpio76", "gpio77",
+> +					     "gpio78", "gpio79",
+> +					     "gpio80";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
+> +			};
+>  		};
 >  
-> -			qcom,state = <&wcnss_smp2p_out 0>;
-> -			qcom,state-names = "stop";
-> +			qcom,smem-states = <&wcnss_smp2p_out 0>;
+>  		gcc: clock-controller@1800000 {
+> @@ -745,6 +892,59 @@ spmi_bus: spmi@200f000 {
+>  			#size-cells = <0>;
+>  		};
+>  
+> +		modem: remoteproc@4080000 {
+> +			compatible = "qcom,msm8953-mss-pil";
+> +			reg = <0x4080000 0x100>,
+> +			    <0x4020000 0x040>;
+> +
+> +			reg-names = "qdsp6", "rmb";
+> +
+> +			interrupts-extended = <&intc 0 24 1>,
+> +					      <&modem_smp2p_in 0 0>,
+> +					      <&modem_smp2p_in 1 0>,
+> +					      <&modem_smp2p_in 2 0>,
+> +					      <&modem_smp2p_in 3 0>;
+> +			interrupt-names = "wdog", "fatal", "ready",
+> +					  "handover", "stop-ack";
+> +
+> +			clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
+> +				 <&gcc GCC_MSS_Q6_BIMC_AXI_CLK>,
+> +				 <&gcc GCC_BOOT_ROM_AHB_CLK>,
+> +				 <&xo_board>;
+> +			clock-names = "iface", "bus", "mem", "xo";
+> +
+> +			power-domains = <&rpmpd MSM8953_VDDCX>, <&rpmpd MSM8953_VDDMX>;
+> +			power-domain-names = "cx", "mx";
+> +
+> +			qcom,smem-states = <&modem_smp2p_out 0>;
 > +			qcom,smem-state-names = "stop";
+> +
+> +			resets = <&gcc GCC_MSS_BCR>;
+> +			reset-names = "mss_restart";
+> +
+> +			qcom,halt-regs = <&tcsr 0x18000 0x19000 0x1a000>;
+> +
+> +			status = "okay";
+
+No need for okay.
+
+> +
+> +			mba {
+> +				memory-region = <&mba_mem>;
+> +			};
+> +
+> +			mpss {
+> +				memory-region = <&mpss_mem>;
+> +			};
+> +
+> +			smd-edge {
+> +				interrupts = <GIC_SPI 25 IRQ_TYPE_EDGE_RISING>;
+> +
+> +				qcom,smd-edge = <0>;
+> +				qcom,ipc = <&apcs 8 12>;
+> +				qcom,remote-pid = <1>;
+> +
+> +				label = "modem";
+> +			};
+> +		};
+> +
+>  		usb3: usb@70f8800 {
+>  			compatible = "qcom,msm8953-dwc3", "qcom,dwc3";
+>  			reg = <0x70f8800 0x400>;
+> @@ -1057,6 +1257,74 @@ i2c_8: i2c@7af8000 {
+>  			status = "disabled";
+>  		};
 >  
->  			pinctrl-names = "default";
->  			pinctrl-0 = <&wcnss_pin_a>;
-> -- 
-> 2.36.0
-> 
+> +		pronto: remoteproc@a21b000 {
+> +			compatible = "qcom,pronto-v3-pil", "qcom,pronto";
+> +			reg = <0xa204000 0x2000>,
+> +			      <0xa202000 0x1000>,
+> +			      <0xa21b000 0x3000>;
+> +			reg-names = "ccu", "dxe", "pmu";
+> +
+> +			memory-region = <&wcnss_fw_mem>;
+> +
+> +			interrupts-extended = <&intc 0 149 IRQ_TYPE_EDGE_RISING>,
+> +					      <&wcnss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> +					      <&wcnss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+> +					      <&wcnss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+> +					      <&wcnss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
+> +
+> +			power-domains = <&rpmpd MSM8953_VDDCX>, <&rpmpd MSM8953_VDDMX>;
+> +			power-domain-names = "cx", "mx";
+> +
+> +			qcom,state = <&wcnss_smp2p_out 0>;
+> +			qcom,state-names = "stop";
+> +
+> +			pinctrl-names = "default", "sleep";
+> +			pinctrl-0 = <&wcnss_default>;
+> +			pinctrl-1 = <&wcnss_sleep>;
+> +
+> +			status = "okay";
+
+No need for status.
+
+> +
+> +			iris: iris {
+> +				compatible = "qcom,wcn3660b";
+> +
+> +				clocks = <&rpmcc RPM_SMD_RF_CLK2>;
+> +				clock-names = "xo";
+> +			};
+> +
+> +			smd-edge {
+> +				interrupts = <GIC_SPI 142 IRQ_TYPE_EDGE_RISING>;
+> +
+> +				qcom,ipc = <&apcs 8 17>;
+> +				qcom,smd-edge = <6>;
+> +				qcom,remote-pid = <4>;
+> +
+> +				label = "pronto";
+> +
+> +				wcnss {
+> +					compatible = "qcom,wcnss";
+> +					qcom,smd-channels = "WCNSS_CTRL";
+> +
+> +					qcom,mmio = <&pronto>;
+> +
+> +					bt {
+> +						compatible = "qcom,wcnss-bt";
+> +					};
+> +
+> +					wifi {
+> +						compatible = "qcom,wcnss-wlan";
+> +
+> +						interrupts = <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
+> +							     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
+> +						interrupt-names = "tx", "rx";
+> +
+> +						qcom,smem-states = <&apps_smsm 10>, <&apps_smsm 9>;
+> +						qcom,smem-state-names = "tx-enable", "tx-rings-empty";
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+>  		intc: interrupt-controller@b000000 {
+>  			compatible = "qcom,msm-qgic2";
+>  			interrupt-controller;
+> @@ -1070,6 +1338,116 @@ apcs: mailbox@b011000 {
+>  			#mbox-cells = <1>;
+>  		};
+>  
+> +		lpass: remoteproc@c200000 {
+> +			compatible = "qcom,msm8953-adsp-pil";
+> +			reg = <0xc200000 0x100>;
+> +
+> +			interrupts-extended = <&intc 0 293 IRQ_TYPE_EDGE_RISING>,
+> +					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+> +					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
+> +					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+> +					      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "wdog", "fatal", "ready",
+> +					  "handover", "stop-ack";
+> +			clocks = <&xo_board>;
+> +			clock-names = "xo";
+> +
+> +			power-domains = <&rpmpd MSM8953_VDDCX>;
+> +			power-domain-names = "cx";
+> +
+> +			memory-region = <&adsp_fw_mem>;
+> +
+> +			qcom,smem-states = <&smp2p_adsp_out 0>;
+> +			qcom,smem-state-names = "stop";
+> +
+> +			smd-edge {
+> +				interrupts = <GIC_SPI 289 IRQ_TYPE_EDGE_RISING>;
+> +
+> +				label = "lpass";
+> +				mboxes = <&apcs 8>;
+> +				qcom,smd-edge = <1>;
+> +				qcom,remote-pid = <2>;
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				apr {
+> +					compatible = "qcom,apr-v2";
+> +					qcom,smd-channels = "apr_audio_svc";
+> +					qcom,apr-domain = <APR_DOMAIN_ADSP>;
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					q6core {
+> +						reg = <APR_SVC_ADSP_CORE>;
+> +						compatible = "qcom,q6core";
+> +					};
+> +
+> +					q6afe: q6afe {
+> +						compatible = "qcom,q6afe";
+> +						reg = <APR_SVC_AFE>;
+> +						q6afedai: dais {
+> +							compatible = "qcom,q6afe-dais";
+> +							#address-cells = <1>;
+> +							#size-cells = <0>;
+> +							#sound-dai-cells = <1>;
+> +
+> +							dai@16 {
+> +								reg = <PRIMARY_MI2S_RX>;
+> +								qcom,sd-lines = <0 1>;
+> +							};
+> +
+> +							dai@21 {
+> +								reg = <TERTIARY_MI2S_TX>;
+> +								qcom,sd-lines = <0 1>;
+> +							};
+> +						};
+> +						q6afecc: clock-controller {
+> +							compatible = "qcom,q6afe-clocks";
+> +							#clock-cells = <2>;
+> +						};
+> +					};
+> +
+> +					q6asm: q6asm {
+> +						compatible = "qcom,q6asm";
+> +						reg = <APR_SVC_ASM>;
+> +						q6asmdai: dais {
+> +							compatible = "qcom,q6asm-dais";
+> +							#address-cells = <1>;
+> +							#size-cells = <0>;
+> +							#sound-dai-cells = <1>;
+> +
+> +							dai@0 {
+> +								reg = <MSM_FRONTEND_DAI_MULTIMEDIA1>;
+> +							};
+> +
+> +							dai@1 {
+> +								reg = <MSM_FRONTEND_DAI_MULTIMEDIA2>;
+> +							};
+> +
+> +							dai@2 {
+> +								reg = <MSM_FRONTEND_DAI_MULTIMEDIA3>;
+> +							};
+> +
+> +							dai@3 {
+> +								reg = <MSM_FRONTEND_DAI_MULTIMEDIA4>;
+> +								is-compress-dai;
+> +							};
+> +						};
+> +					};
+> +
+> +					q6adm: q6adm {
+> +						compatible = "qcom,q6adm";
+> +						reg = <APR_SVC_ADM>;
+> +						q6routing: routing {
+> +							compatible = "qcom,q6adm-routing";
+> +							#sound-dai-cells = <0>;
+> +						};
+> +					};
+> +				};
+> +			};
+> +
+
+Remove unneeded blank lines.
+
+> +		};
+> +
+>  		timer@b120000 {
+>  			compatible = "arm,armv7-timer-mem";
+>  			reg = <0xb120000 0x1000>;
+
+
+Best regards,
+Krzysztof
