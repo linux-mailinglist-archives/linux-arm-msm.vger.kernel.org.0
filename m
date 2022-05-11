@@ -2,85 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9F1A523C57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 20:19:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E06E7523C63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 20:22:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346143AbiEKSTw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 14:19:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44702 "EHLO
+        id S1346179AbiEKSWM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 14:22:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343571AbiEKSTv (ORCPT
+        with ESMTP id S237718AbiEKSWL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 14:19:51 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0560C14041C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 11:19:50 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id g6so5749738ejw.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 11:19:49 -0700 (PDT)
+        Wed, 11 May 2022 14:22:11 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1916A126EA0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 11:22:09 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id j6so5665773ejc.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 11:22:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=bGPi3sym2sxZNuq8XM44v+EhEVtJACn3fgf26OWgsSM=;
-        b=xIyjh3l1EuCFk77BXzR8OmHseKLWjA3L+QFx7Esfu1gCdNNOljH4U8pzyTmTAfeUPl
-         R1xQUxezEvy+2+R+WygC1u2eMVN10z2qzL9fm+aycu03bP7hbHKUCGl7b9pRwgDhevkE
-         TmVH35KEAxXFUG4Z3TsTQZ2Zmm8zcl3aQZeJG/JQxZym8rsuDJQZN+8/AdTJEoCfOGb0
-         e3g3pickNN5IzL8ph/3ZgmYaBRwlUY+N17yFU6NPUAWiMkTZ0T0W7yNGtX5lrdvFtQ2e
-         7DXMB8yVaylPGxPzidZzahyxjDf3+funYGQx83vBwa7p0FMRVtXHj9FS+yaGBirFt04g
-         21qA==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uiYBAkZ/K7TON78jcHgwLk8yR9bWm2DLv+jXS6/7A90=;
+        b=TysY5PPYSJqqGGSP17kFdgyVAcXW0GiDdLa8+M1+Q0ojkz+YMGJOdGZ1g7kkbPZOu6
+         yt+IrWP6PXRoXVf3HH1RNxijEEEziatsJwBR8ffnixgRhgmDKQimGHpCgltyrkDtU5pd
+         QyBownI7LpEYTX9O9gVL+tE6Wpia3KSKpa7tY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=bGPi3sym2sxZNuq8XM44v+EhEVtJACn3fgf26OWgsSM=;
-        b=Kk4X4269KNdhIwydr1gu8vHsOpskZmiW1RrewE7CVRrN0k9XzpKHlK2m3HRpwXzFL7
-         3Nd36mAcmJKrQx+U8nlnJOoPeCzgiv7lT/9UmexCSkQXeZeYAKereSiDwB0kpFwtuxU9
-         Pw9XBSie0Qow/8tr7oidmyx+x0u70/GnwN0jikR+n2KQmeHwrlRR5LJdT2o9nm9oK0W4
-         FgFd6P4mPMkN+Zu6gGwCkti6gQEDVa96n6cZRztV9IrKNtoUXOfO0ftRmcVSms71r6K/
-         o6kRidV9RTb24vcYzpf1sbpxMxO9aYkf5RNY0mJvAczDcaNOEF5gd2JcSh4NKubWKfwT
-         c9vg==
-X-Gm-Message-State: AOAM531Jng9Hl+ef/xxzdRuEMUgp2q7W7XPpXoaPGAGSNl4X8LFB65vI
-        mIAtzPp3OELX0iH8OyWcq6apWw==
-X-Google-Smtp-Source: ABdhPJw66c9o+JFuSuktSAYjNSClBUHjxcCrVhgRBUlsQkLLo9gay5LhgxMMS79bGlogG5dtbdtSXw==
-X-Received: by 2002:a17:907:72ce:b0:6f4:d139:c2b1 with SMTP id du14-20020a17090772ce00b006f4d139c2b1mr26220333ejc.563.1652293188527;
-        Wed, 11 May 2022 11:19:48 -0700 (PDT)
-Received: from [192.168.0.155] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id a11-20020a17090682cb00b006f3ef214db4sm1223826ejy.26.2022.05.11.11.19.46
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uiYBAkZ/K7TON78jcHgwLk8yR9bWm2DLv+jXS6/7A90=;
+        b=LfxxqqxLKJpX6amRAq+8qxrxaHDM3afErcbctLb+i0nt0bdl66Y+XzPEkl7TvRdBQT
+         VyTRGkoSRvOaQqvuhCxhL65KVJUXHdfBP9sGdz6Qagg408TKDPDqQC4FrQQeNmkd+kb3
+         icXgQ2/m2A21uYcRcDXVscyEC1JkPqr3uvWJteOoVfW4V9SZ+fhPWX+VdIIqJP0IoGKT
+         BeX/6RLtOCHD1LMX1sq0fTylQEFijqFesiIZWIsrLid5qX3td4TizobXHoBKmt4QTl6p
+         Tt/wmhiW2svaeFlHpuZ9Ign/fgqXGOqFyPjj9XeVIGZcEA8LWKX5TmpiI7SWPXVm2aOD
+         i1Kw==
+X-Gm-Message-State: AOAM532wp08u7ZErf9MPH8pCST6oFas89kkHo0Y8YTWrHg48kfBtBJak
+        U6i6fvC761054vQictWrvCrXoRDWTivRs8zZ4bo=
+X-Google-Smtp-Source: ABdhPJzYkLUsUL7T1tM9nUmuxTi/h0EaNWuoHMpOSgLiTAMuphY7bGwN1/zZOleHqs5ajdk9KQ0SGQ==
+X-Received: by 2002:a17:907:7b85:b0:6fd:d799:ef4e with SMTP id ne5-20020a1709077b8500b006fdd799ef4emr3470028ejc.319.1652293327423;
+        Wed, 11 May 2022 11:22:07 -0700 (PDT)
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com. [209.85.128.45])
+        by smtp.gmail.com with ESMTPSA id r26-20020a056402019a00b0042617ba6391sm1503614edv.27.2022.05.11.11.22.06
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 May 2022 11:19:47 -0700 (PDT)
-Message-ID: <d296720d-ccbe-27f0-8ba1-9653af25dd52@linaro.org>
-Date:   Wed, 11 May 2022 20:19:46 +0200
+        Wed, 11 May 2022 11:22:06 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id bg25so1699510wmb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 11:22:06 -0700 (PDT)
+X-Received: by 2002:a05:600c:3c99:b0:392:b49c:7b79 with SMTP id
+ bg25-20020a05600c3c9900b00392b49c7b79mr6101308wmb.199.1652293325498; Wed, 11
+ May 2022 11:22:05 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [v4 1/3] dt-bindings: phy: qcom,usb-snps-femto-v2: Add phy
- override params bindings
-Content-Language: en-US
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+References: <20220425210643.2420919-1-dianders@chromium.org>
+ <20220425140619.1.Ibfde5a26a7182c4b478d570c23d2649823ac2cce@changeid>
+ <CAE-0n51eZpAKprRQ0HqjLciF_BVQHBDN8SMFNVmmOd=B9UBEzg@mail.gmail.com>
+ <CAD=FV=WmVK3wTQf_EAxSi0WPXedSFGCsKdyqRnHsskmMYTHDQA@mail.gmail.com>
+ <MW4PR02MB718610FAA14F966ADE1B1585E1C29@MW4PR02MB7186.namprd02.prod.outlook.com>
+ <CAE-0n51Q=cGwrMec3JEQENqWHV3pAUjLPT6RwZLA5xV080sgxQ@mail.gmail.com>
+ <MW4PR02MB71867A18732B266DE8FA2040E1C29@MW4PR02MB7186.namprd02.prod.outlook.com>
+ <CAE-0n53MEBYhyRtGWOCmjj923UQU_iVE_SEBQw6_FUci8NLz3w@mail.gmail.com> <MW4PR02MB71866E59B844A0842DF7570EE1C59@MW4PR02MB7186.namprd02.prod.outlook.com>
+In-Reply-To: <MW4PR02MB71866E59B844A0842DF7570EE1C59@MW4PR02MB7186.namprd02.prod.outlook.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 11 May 2022 11:21:52 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WeTK8LBJmc6AkjPyPLVS+2sSRNEFuEOZrWGJr3Kpq58Q@mail.gmail.com>
+Message-ID: <CAD=FV=WeTK8LBJmc6AkjPyPLVS+2sSRNEFuEOZrWGJr3Kpq58Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: msm/dp: List supplies in the bindings
+To:     "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-References: <1652282793-5580-1-git-send-email-quic_kriskura@quicinc.com>
- <1652282793-5580-2-git-send-email-quic_kriskura@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1652282793-5580-2-git-send-email-quic_kriskura@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Vinod Koul <vkoul@kernel.org>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        "linux-phy@lists.infradead.org" <linux-phy@lists.infradead.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,101 +98,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/05/2022 17:26, Krishna Kurapati wrote:
-> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> 
-> Add device tree bindings for SNPS phy tuning parameters.
-> 
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  .../bindings/phy/qcom,usb-snps-femto-v2.yaml       | 87 ++++++++++++++++++++++
->  1 file changed, 87 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
-> index 1ce251d..70efffe 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
-> @@ -53,6 +53,93 @@ properties:
->    vdda33-supply:
->      description: phandle to the regulator 3.3V supply node.
->  
-> +  qcom,hs-disconnect-bps:
-> +    $ref: /schemas/types.yaml#/definitions/int32
-> +    description:
-> +      This adjusts the voltage level for the threshold used to
-> +      detect a disconnect event at the host. Possible values are.
-> +      The values defined are in multiples of basis points (1bp = 0.01%).
+Hi,
 
-This means there is some minimum and maximum (100%)?
+On Fri, May 6, 2022 at 6:36 AM Sankeerth Billakanti (QUIC)
+<quic_sbillaka@quicinc.com> wrote:
+>
+> >> >> Our internal power grid documents list the regulators as
+> >> >> VDD_A_*_1P2 and VDD_A_*_0P9 for all the platforms.
+> >> >
+> >> >Do your internal power grid documents indicate what these supplies
+> >> >are powering? The question is if these supplies power any of the
+> >> >logic inside the eDP controller or if they only supply power to the
+> >> >analog circuits in the eDP phy. If it's the eDP phy only then the
+> >> >regulator usage in the eDP driver should be removed. I would suspect
+> >> >this is the case because the controller is probably all digital logic
+> >> >and runs at the typical 1.8V that the rest of the SoC uses.
+> >> >Similarly, these are voltage references which sound like a PLL reference
+> >voltage.
+> >> >
+> >> >Please clarify this further.
+> >> >
+> >>
+> >> For the DP driver using the usb-dp combo phy, there were cases where
+> >> the usb driver was turning off the phy and pll regulators whenever usb-dp
+> >concurrent mode need not be supported.
+> >> This caused phy and pll to be powered down causing aux transaction failures
+> >and display blankouts.
+> >> From then on, it became a practice for the controller driver to vote for the
+> >phy and pll regulators also.
+> >>
+> >
+> >That sounds like USB-DP combo phy driver had improper regulator power
+> >management where aux transactions from DP didn't keep the power on to
+> >the phy. Where does the power physically go? If the power isn't physically
+> >going to the DP controller it shouldn't be controlled from the DP controller
+> >driver. If the aux bus needs the DP phy enabled, the DP controller driver
+> >should enable the phy power (via phy_power_on()?).
+>
+> Yes, it was limitation earlier when we did not have proper interface to interact
+> with the combo phy.
+>
+> In this case, the power from the regulators go to the combo phy.
+>
+> Now that there is an interface for the controller to interact with the
+> combo phy, the proposal to drop the phy regulator voting from the controller
+> driver seems reasonable to me.
+>
+> The phy_power_on() is used for getting the phy out of low power state or getting
+> it ready for data transfer.
+>
+> The controller driver needs to enable the phy power via the phy_init() before
+> any interaction with the sink like the aux transactions or before sending the data.
+> The controller can disable the regulators via the phy_exit() call.
 
-> +      The hardware accepts only discrete values. The value closest to the
-> +      provided input will be chosen as the override value for this param.
-> +
-> +  qcom,squelch-detector-bps:
-> +    $ref: /schemas/types.yaml#/definitions/int32
-> +    description:
-> +      This adjusts the voltage level for the threshold used to
-> +      detect valid high-speed data.
-> +      The values defined are in multiples of basis points (1bp = 0.01%).
-> +      The hardware accepts only discrete values. The value closest to the
-> +      provided input will be chosen as the override value for this param.
-> +
-> +  qcom,hs-amplitude-bps:
-> +    $ref: /schemas/types.yaml#/definitions/int32
-> +    description:
-> +      This adjusts the high-speed DC level voltage.
-> +      The values defined are in multiples of basis points (1bp = 0.01%).
-> +      The hardware accepts only discrete values. The value closest to the
-> +      provided input will be chosen as the override value for this param.
-> +
-> +  qcom,pre-emphasis-duration-bps:
-> +    $ref: /schemas/types.yaml#/definitions/int32
-> +    description:
-> +      This signal controls the duration for which the
-> +      HS pre-emphasis current is sourced onto DP<#> or DM<#>.
-> +      The HS Transmitter pre-emphasis duration is defined in terms of
-> +      unit amounts. One unit of pre-emphasis duration is approximately
-> +      650 ps and is defined as 1X pre-emphasis duration.
-> +      The values defined are in multiples of basis points (1bp = 0.01%).
-> +      The hardware accepts only discrete values. The value closest to the
-> +      provided input will be chosen as the override value for this param.
-> +
-> +  qcom,pre-emphasis-amplitude-bps:
-> +    $ref: /schemas/types.yaml#/definitions/int32
-> +    description:
-> +      This signal controls the amount of current sourced to
-> +      DP<#> and DM<#> after a J-to-K or K-to-J transition.
-> +      The HS Transmitter pre-emphasis current is defined in terms of unit
-> +      amounts. One unit amount is approximately 2 mA and is defined as
-> +      1X pre-emphasis current.
-> +      The values defined are in multiples of basis points (1bp = 0.01%).
-> +      The hardware accepts only discrete values. The value closest to the
-> +      provided input will be chosen as the override value for this param.
-> +
-> +  qcom,hs-rise-fall-time-bps:
-> +    $ref: /schemas/types.yaml#/definitions/int32
-> +    description:
-> +      This adjusts the rise/fall times of the high-speed waveform.
-> +      The values defined are in multiples of basis points (1bp = 0.01%).
-> +      The hardware accepts only discrete values. The value closest to the
-> +      provided input will be chosen as the override value for this param.
-> +
-> +  qcom,hs-crossover-voltage-mv:
-> +    $ref: /schemas/types.yaml#/definitions/int32
-> +    description:
-> +      This adjusts the voltage at which the DP<#> and DM<#>
-> +      signals cross while transmitting in HS mode.
-> +      The values defined are in milli volts. The hardware accepts only
-> +      discrete values. The value closest to the provided input will be
-> +      chosen as the override value for this param.
-> +
-> +  qcom,hs-output-impedance-mohm:
-> +    $ref: /schemas/types.yaml#/definitions/int32
+I can confirm that if I stop providing these regulators to the DP
+controller that the screen still comes up. ...but also there are lots
+of other things (including the PHY) that power these regulators up...
 
-Here and in other places, please use standard units. See
-dtschema/schemas/property-units.yaml in dtschema repo.
+From offline discussion with folks:
 
+1. It sounds like maybe the code for handling the regulators in the DP
+controller leaked in from downstream where the DP driver itself
+controls more stuff.
 
-Best regards,
-Krzysztof
+2. We should probably remove these regulators from the DP controller.
+
+3. When we remove this from the DP controller, we'll have to make sure
+that the PHY driver calls regulator_set_load() as needed.
+
+Kuogee has volunteered to own this issue and send out patches fixing
+the stuff up. So for now, please consider ${SUBJECT} patch abandoned.
+
+-Doug
