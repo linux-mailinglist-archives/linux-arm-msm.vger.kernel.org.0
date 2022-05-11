@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE562523ACD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 18:50:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3C16523ADD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 May 2022 18:52:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345169AbiEKQuP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 12:50:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45704 "EHLO
+        id S1345105AbiEKQwO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 12:52:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345126AbiEKQuB (ORCPT
+        with ESMTP id S1345196AbiEKQwC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 12:50:01 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DFAD1FE1DB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:49:54 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id bq30so4627807lfb.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:49:54 -0700 (PDT)
+        Wed, 11 May 2022 12:52:02 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C09B5A19F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:51:50 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id j4so4599532lfh.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 09:51:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=IIyLanREwoFCx9oDtJP6l/B2GLW4c3uyyeB7WHPqlcY=;
-        b=hQAzUQgpbX2JYdHBjVsDzoxLXtlUQwzlLE3xUX4lIk/B4hD8khNTplc3IrbJgpxjNK
-         QMob6SR1yxKEOuV7y5z8PgOVpPfRH8z7+LBnlMJx5EgIIE/orkkqAGNF9AGJd32nS0ca
-         y2a2REBFsZudkVlDBZkJHyvfxl5fVtzMywgJ61Clbq3BnRVIK8KUf49I04U5uR46HiZE
-         O1ai6iDAYhJzAb/C1XF1UCAZb+e3Z9iFGpuhyKPKan4B6GgQa3g27oowOmJ+jzTzayhm
-         ApbPbRxQHSQpJrRRKLw8e88d8FFJn7rr9az2pTiBwbJlW94voFQ3ojN/MbJz1ypdaSeJ
-         zYTg==
+        bh=DNkekimpIZPrOqKWBuNc12AOJ0kosP8VwwiWI0Gdmgs=;
+        b=XbjPsW2X4c3cWRAmMZeaDnd+4gaQND1dM5AwXYIk2nHeIjR1E8SC+V/2EV15p1tHLp
+         eIHQbe3Tkc4lqfw+p6mGlYK6fHJwAy8QS/F8hyNIRJSNoEC/DZJ7nmL2qXLu/7P3KeZM
+         7zUJnviG6EUWIqQlz9puheZ0J07I38TUzTI/CzOFl/W+h65zQl9LdUykR4ef1OU7cHfH
+         OC3UDJBhBI0HQzQ77L2DKypCm7bWOuevTFnLYsONb4qai5NDXV4svHVN7QO8I9dCUSks
+         SkBLNFYQHKAVu5vviDrmyjgZJmyKCiWHiopm6Bekr9jAyVQtn+nHH+PuLWOqLZyXTzC2
+         K1DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=IIyLanREwoFCx9oDtJP6l/B2GLW4c3uyyeB7WHPqlcY=;
-        b=6IY+gOg8sy5xG0ClLlT4rPwoFkbx+x9iv//V+/OBppWY1hbPcxLh0kO1m3TJttQnwz
-         063lun+pib9Nol4Sdvj62F6OBF2L8htgQojYU88NyhOFZoJkYw94fCfrG7ZGzc82jdpT
-         i3YoSjOAsWgACUc05uXMD0K6Vllbac9FW8Qza1fxYRJ0gy4ahFW8OfDG0DZs1ck4S5tE
-         MgDHAl5cmzKpnvOG98x6hH5+/ZyYDmkUJSEZYKXh7GMiSqM7FMmyujNvp2nRUB3uc3PA
-         Pnq+GSN/nReCHZcD3wGlyjrNBWVmijWu3SjWj03HEHL7h3+KxvLvEoPp2Mtnbm+gawZg
-         dGow==
-X-Gm-Message-State: AOAM5331kl8uieqVBXzVSkIdEsu5VwIeHkFGSh2M8DwDjq4crdNJPvhK
-        5RbnLe4N2LFiuKSAoCI70eHSow==
-X-Google-Smtp-Source: ABdhPJxRxRD4JQYBVlHS8IbpgAaqLULxwcV4dQ97/QQyLbn3k+ah3uFu5iuDXB1dZuBPSADzZVyDAw==
-X-Received: by 2002:a05:6512:1694:b0:448:3fd4:c7a9 with SMTP id bu20-20020a056512169400b004483fd4c7a9mr21053901lfb.29.1652287792448;
-        Wed, 11 May 2022 09:49:52 -0700 (PDT)
+        bh=DNkekimpIZPrOqKWBuNc12AOJ0kosP8VwwiWI0Gdmgs=;
+        b=BX7zAOTC0zz480F9QLc530mtcfnawxTLkHTS6XNeQzw8gKpuHrAtfhCdFkUmdDk6/g
+         2VnTPvsr/E3Ck/lQkMOSulsrV6e58xXyLVMXuUq7HyDfXYICj9Xllp+n7ymd0rUo5nMF
+         U6/djtSFWeUpvIDmOolc+w7MzHVKIz66E3x73XI57hXZDWQLl8Zxdy1WLiAafLJpPz8d
+         n5xHQM/3GnpyF6XOUCQsV4wAf6TqOduMdGLp+T5CINETxnbY+BaK+tg7aLwuRYvFcop7
+         dEloXBTwIH6nY4iJEGIOomRz50qFGmBfm/hfZ0gFwhZtJpY6mtzcZOg/y8x1nhjKcOkA
+         Mn3Q==
+X-Gm-Message-State: AOAM5335ZzvFoc5J33q+nEtaXRsQjKTFf3CyYpf+UylGNzCTiifgCzLy
+        1SS8YXmHhg2SNUh8UHqKFxwFVA==
+X-Google-Smtp-Source: ABdhPJyLo9G6Tmvo0r462l0cfgtq61tw6rmcLQx9lsfbYrcnKqfnS2XsjvfRAIVGvecfyJ0vfRpAmQ==
+X-Received: by 2002:a05:6512:3f88:b0:44f:567f:8715 with SMTP id x8-20020a0565123f8800b0044f567f8715mr19977138lfa.609.1652287909157;
+        Wed, 11 May 2022 09:51:49 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b28-20020a19645c000000b0047255d211c3sm351349lfj.242.2022.05.11.09.49.51
+        by smtp.gmail.com with ESMTPSA id k34-20020a05651c062200b0024f3d1daeb1sm437515lje.57.2022.05.11.09.51.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 May 2022 09:49:52 -0700 (PDT)
-Message-ID: <8480eee1-42df-46b2-9ff5-2b09fdcc7dc6@linaro.org>
-Date:   Wed, 11 May 2022 19:49:51 +0300
+        Wed, 11 May 2022 09:51:48 -0700 (PDT)
+Message-ID: <b86b5ba5-91ab-592a-5b4b-10dc738116ca@linaro.org>
+Date:   Wed, 11 May 2022 19:51:48 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.1
@@ -112,6 +112,10 @@ On 11/05/2022 19:15, Sireesh Kodali wrote:
 > +	.ssctl_id = 0x14,
 > +};
 > +
+
+Also it looks like this item is identical to msm8996_adsp_resources. So 
+you can existing structure instead.
+
 >   static const struct adsp_data msm8996_adsp_resource = {
 > +	.crash_reason_smem = 423,
 > +	.firmware_name = "adsp.mdt",
@@ -128,10 +132,6 @@ On 11/05/2022 19:15, Sireesh Kodali wrote:
 > +};
 > +
 > +static const struct adsp_data msm8998_adsp_resource = {
-
-This was dropped in 9ae45035ba2be4117edb8fd3952c3c5b84a0b820. Please 
-take care when rebasing your patches.
-
 >   		.crash_reason_smem = 423,
 >   		.firmware_name = "adsp.mdt",
 >   		.pas_id = 1,
