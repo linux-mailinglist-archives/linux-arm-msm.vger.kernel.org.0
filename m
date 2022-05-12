@@ -2,78 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C6E65257AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 00:19:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFCD65257D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 00:34:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359106AbiELWTt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 18:19:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53194 "EHLO
+        id S1359192AbiELWeG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 18:34:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359099AbiELWTs (ORCPT
+        with ESMTP id S1352714AbiELWeF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 18:19:48 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9F64280E00
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 15:19:45 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id g6so12910268ejw.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 15:19:45 -0700 (PDT)
+        Thu, 12 May 2022 18:34:05 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88BFF1B5FA7;
+        Thu, 12 May 2022 15:34:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=McSS2ps7lAda0B7Hjqm4GcEs6ir76cLprhYeL3EvtQM=;
-        b=FpKUMneT2lkBkxD8QufbxsbC3iS2M4kA4XRmF3F+SntKp7qqDK9yyAtfeOxgnr9a3j
-         wwP3HiFOGA9hJIaks57Co+DyFPOq1f1kjR1dq4QGVQ0NSV6f5vppoZjBxU3toP3xQccx
-         Z0uZZ9G3jvEjNFvB4TkXgwrYoNmR0Hgz+ts1M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=McSS2ps7lAda0B7Hjqm4GcEs6ir76cLprhYeL3EvtQM=;
-        b=S6cKUWaBfr896ncEMVr6FQhJLkKSenafWLSIQ4+Or0jNoKN7U0gH8NpiZdSIgGIpOS
-         uTzWZTyK0PkeY4ytV1woj3Zik5y2JpkacoC753MerOXsdSO5r/38+QR6u3MTmYh1V5x4
-         YnZoW8mojKdl952d+/Mv5lljmLD3fyVemBEsb7xyrJ36XoDyMs5HdoyFaX52g98/9BD9
-         nZzQqyY6nspyTt4s5S4utPA+5GqLgqpvsIJiy1H1wahA03f/q7tNBhagMRN5zOuUV/N5
-         difEfDmOS/1Vh1MHSI7305CrWcmdZawbPiq6IA4DqsvLDZo3KcSI8PwfeT5DuWpbvSKZ
-         iN9Q==
-X-Gm-Message-State: AOAM532EFcZ7dYXCRnK5Dk1TMkdKMmUE7RdE1hugUPnUDObYUn9tDoJm
-        hzx5EjNU3h18Zf5DvQLMp34tqb7OvjIiP5/N
-X-Google-Smtp-Source: ABdhPJx7g6XqcOFsonVOhiJTw8dGb/M6dAUL9ZK7z7+h2B5Z80AWk9ZUDk81k+Lqk7Nnwun45EBkPg==
-X-Received: by 2002:a17:906:60cd:b0:6fd:d95c:3e34 with SMTP id f13-20020a17090660cd00b006fdd95c3e34mr1794125ejk.250.1652393984207;
-        Thu, 12 May 2022 15:19:44 -0700 (PDT)
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com. [209.85.221.49])
-        by smtp.gmail.com with ESMTPSA id d2-20020a170907272200b006f3ef214dcfsm174799ejl.53.2022.05.12.15.19.43
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 May 2022 15:19:43 -0700 (PDT)
-Received: by mail-wr1-f49.google.com with SMTP id u3so9107424wrg.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 15:19:43 -0700 (PDT)
-X-Received: by 2002:a5d:6d09:0:b0:20c:53a9:cc30 with SMTP id
- e9-20020a5d6d09000000b0020c53a9cc30mr1382071wrq.513.1652393982520; Thu, 12
- May 2022 15:19:42 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652394844; x=1683930844;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=wIyAMpReDoJksJb4UrovxYn5FThhQ/yxH84VowG15lg=;
+  b=lCxZXUrYwvF8xMmvl7T7Z+tACZ2ef0n1LyNHbm/KGTNDMFd1jlrof8l3
+   4F840LnU4E1QWrY3eA+dLRzt3RWU5Pl10fxbclAap0oDm74sw1ep1HnU8
+   dyzG7b4+2EOGIlP4HY/DXsI1UYtIkpnc4J1N+j3ER8HMmNGgn6iwIq3OC
+   Y=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 12 May 2022 15:34:04 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 15:34:04 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 12 May 2022 15:34:03 -0700
+Received: from [10.38.247.112] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 12 May
+ 2022 15:34:00 -0700
+Message-ID: <a721e2e9-934e-3028-cb1a-047f6d5c5b1e@quicinc.com>
+Date:   Thu, 12 May 2022 15:33:58 -0700
 MIME-Version: 1.0
-References: <20220510154406.v5.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid>
-In-Reply-To: <20220510154406.v5.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 12 May 2022 15:19:30 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Vkiqxv5QRiEqCjZVSNUH=K1N+JuYEsXu=XtFNxRtvttw@mail.gmail.com>
-Message-ID: <CAD=FV=Vkiqxv5QRiEqCjZVSNUH=K1N+JuYEsXu=XtFNxRtvttw@mail.gmail.com>
-Subject: Re: [PATCH v5 1/5] arm64: dts: qcom: sc7180: Add wormdingler dts files
-To:     "Joseph S. Barrera III" <joebar@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v4] drm/msm/dsi: don't powerup at modeset time for
+ parade-ps8640
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>
+CC:     Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        David Airlie <airlied@linux.ie>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        "Stephen Boyd" <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Sean Paul <sean@poorly.run>
+References: <20220512145954.v4.1.Ia196e35ad985059e77b038a41662faae9e26f411@changeid>
+ <dd62b8a7-43b9-364a-a427-94d621648012@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <dd62b8a7-43b9-364a-a427-94d621648012@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,53 +76,124 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Tue, May 10, 2022 at 3:46 PM Joseph S. Barrera III
-<joebar@chromium.org> wrote:
->
-> Wormdingler is a trogdor-based board, shipping to customers as the
-> Lenovo IdeaPad Chromebook Duet 3. These dts files are copies from
-> the downstream Chrome OS 5.4 kernel, but with the camera
-> (sc7180-trogdor-mipi-camera.dtsi) #include removed.
->
-> Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
->
-> ---
->
-> Changes in v5:
-> - Replaced _ in node name with -
-> - Ordered nodes by name
 
-So it's a bit of a judgement call, but generally the rule is that if
-you didn't make very big changes from one version of a patch to the
-next that you should keep "Reviewed-by" tags that you've already
-received. In this case the changes you made from v4 to v5 were very
-small and also very non-controversial (it's hard to believe I would
-object to these changes). Thus, it would have been better to keep my
-Reviewed-by tag. Everyone understands that it's a judgement call so as
-long as it's within reason people won't be too upset at you for making
-your best guess. If you're unsure, you can always add a note "after
-the cut" (AKA "Commit-notes" in patman speak) explaining why you did
-or didn't choose to keep someone's tags.
+On 5/12/2022 3:16 PM, Dmitry Baryshkov wrote:
+> On 13/05/2022 01:00, Douglas Anderson wrote:
+>> Commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
+>> time") caused sc7180 Chromebooks that use the parade-ps8640 bridge
+>> chip to fail to turn the display back on after it turns off.
+>>
+>> Unfortunately, it doesn't look easy to fix the parade-ps8640 driver to
+>> handle the new power sequence. The Linux driver has almost nothing in
+>> it and most of the logic for this bridge chip is in black-box firmware
+>> that the bridge chip uses.
+>>
+>> Also unfortunately, reverting the patch will break "tc358762".
+>>
+>> The long term solution here is probably Dave Stevenson's series [1]
+>> that would give more flexibility. However, that is likely not a quick
+>> fix.
+>>
+>> For the short term, we'll look at the compatible of the next bridge in
+>> the chain and go back to the old way for the Parade PS8640 bridge
+>> chip. If it's found that other bridge chips also need this workaround
+>> then we can add them to the list or consider inverting the condition.
+>>
+>> [1] 
+>> https://lore.kernel.org/r/cover.1646406653.git.dave.stevenson@raspberrypi.com 
+>>
+>>
+>> Fixes: 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset 
+>> time")
+>> Suggested-by: Rob Clark <robdclark@gmail.com>
+>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+Yes, I think this is a better solution than a full revert
 
-That being said, offline Stephen pointed out a problem with all of
-your v5 patches. Specifically, in the meantime while you were spinning
-your patches, Stephen's patch series landed in the upstream tree.
-Namely:
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-19794489fa24 arm64: dts: qcom: Only include sc7180.dtsi in sc7180-trogdor.dtsi
-d277cab7afc7 arm64: dts: qcom: sc7180-trogdor: Simplify spi0/spi6 labeling
-51d30402be75 arm64: dts: qcom: sc7180-trogdor: Simplify trackpad enabling
+I am curious to know why this doesnt work for parade but will not hold 
+this patch back for that. We are initializing and turning on DSI PHY now 
+before turning on the bridge chip which is actually better as we are 
+putting PHY in a good state.
 
-Since he won the race of getting the patches landed, that means it's
-on you to adjust. You should modify your patches to match what Stephen
-did in those 3. ...and, presumably, the changes Stephen is requesting
-here probably _are_ big enough that you'd want to remove my
-Reviewed-by tag for v6.
+So this should have been better, but somehow doesnt work.
 
-Speaking of Stephen, he reviewed your v4 patches, but you didn't copy
-him on v5. In general if someone responds to a patch in the series you
-should CC them on the next version.
-
--Doug
+>> ---
+>> Note that, unlike `struct device`, `struct drm_bridge` still has a
+>> `#ifdef` around the `of_node`. The extra stub function in this patch
+>> is to make sure that we can pass COMPILE_TEST, not because I expect
+>> that we'll actually run into real users who are running this driver
+>> without device tree.
+>>
+>> Changes in v4:
+>> - Use the compatible string of the next bridge as per Rob.
+>>
+>> Changes in v3:
+>> - No longer a revert; now a module parameter.
+>>
+>> Changes in v2:
+>> - Remove the mud from my face.
+>>
+>>   drivers/gpu/drm/msm/dsi/dsi_manager.c | 26 +++++++++++++++++++++++++-
+>>   1 file changed, 25 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c 
+>> b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+>> index 50b987658b1f..2cabba65a8f1 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+>> @@ -34,6 +34,26 @@ static struct msm_dsi_manager msm_dsim_glb;
+>>   #define IS_SYNC_NEEDED()    (msm_dsim_glb.is_sync_needed)
+>>   #define IS_MASTER_DSI_LINK(id)    (msm_dsim_glb.master_dsi_link_id 
+>> == id)
+>> +#ifdef CONFIG_OF
+>> +static bool dsi_mgr_power_on_early(struct drm_bridge *bridge)
+>> +{
+>> +    struct drm_bridge *next_bridge = drm_bridge_get_next_bridge(bridge);
+>> +
+>> +    /*
+>> +     * If the next bridge in the chain is the Parade ps8640 bridge chip
+>> +     * then don't power on early since it seems to violate the 
+>> expectations
+>> +     * of the firmware that the bridge chip is running.
+>> +     */
+>> +    return !(next_bridge && next_bridge->of_node &&
+>> +         of_device_is_compatible(next_bridge->of_node, 
+>> "parade,ps8640"));
+>> +}
+>> +#else
+>> +static inline bool dsi_mgr_power_on_early(struct drm_bridge *bridge)
+>> +{
+>> +    return true;
+>> +}
+>> +#endif
+>> +
+>>   static inline struct msm_dsi *dsi_mgr_get_dsi(int id)
+>>   {
+>>       return msm_dsim_glb.dsi[id];
+>> @@ -389,6 +409,9 @@ static void dsi_mgr_bridge_pre_enable(struct 
+>> drm_bridge *bridge)
+>>       if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
+>>           return;
+>> +    if (!dsi_mgr_power_on_early(bridge))
+>> +        dsi_mgr_bridge_power_on(bridge);
+>> +
+>>       /* Always call panel functions once, because even for dual panels,
+>>        * there is only one drm_panel instance.
+>>        */
+>> @@ -570,7 +593,8 @@ static void dsi_mgr_bridge_mode_set(struct 
+>> drm_bridge *bridge,
+>>       if (is_bonded_dsi && other_dsi)
+>>           msm_dsi_host_set_display_mode(other_dsi->host, adjusted_mode);
+>> -    dsi_mgr_bridge_power_on(bridge);
+>> +    if (dsi_mgr_power_on_early(bridge))
+>> +        dsi_mgr_bridge_power_on(bridge);
+>>   }
+>>   static enum drm_mode_status dsi_mgr_bridge_mode_valid(struct 
+>> drm_bridge *bridge,
+> 
+> 
