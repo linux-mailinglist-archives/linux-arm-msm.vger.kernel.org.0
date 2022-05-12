@@ -2,137 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47020524BDE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 13:42:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DD79524C8D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 14:20:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353294AbiELLmC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 07:42:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33230 "EHLO
+        id S1353600AbiELMUI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 08:20:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351802AbiELLmB (ORCPT
+        with ESMTP id S1350859AbiELMUH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 07:42:01 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0637837BFD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 04:42:00 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 4so6100635ljw.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 04:41:59 -0700 (PDT)
+        Thu, 12 May 2022 08:20:07 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F316A2469FB;
+        Thu, 12 May 2022 05:20:06 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id x8so1011920pgr.4;
+        Thu, 12 May 2022 05:20:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=6T9T68NcFc0952zVBrDOq932Pet+Nc2yVT/DrOYRhBM=;
-        b=MfrdMblJoJMaGsS9/wwW7IgEQsVP493T0B1dVe/hcRSHQa2qJJK6zLDzIs6XqgyR6m
-         QqfINpCdr9iBM3iCKd6TTUo+pAsGqLKef6QAyAc2K2RmGJWUjCdnSU07euRA2Bw8FRUT
-         JltbqrXpIvCr0205WJ2tqiIoa6maS5A7zmw3V0Dc+Wp8gy8e0p3dQILf38H0rBWeoICh
-         2ssSozJzebsLnI83/u/dfjW67b84Qn85zVECo/1GsKsGpu6Kj5AdvifWajNp1Dc5eSST
-         rH7y5LadelaqdTVMbl7zqeWBMMyQF4+5YWG92akdBoS/xu+I6Wo3NhiBepyPZYFpP9Z9
-         sWVg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gorQKMV8vjkGqwI8nCYg+SRESNs1085GlQg2z0ABeuo=;
+        b=PCIAmCovw7OM0hTE2W4qOGNoxgxbBpg8KbeHu/5PSSdoArfiqGcBFNMc5XU5LAmjWl
+         qLIwnwagkjm97pU8rRUANECE9AWjEczeWiXwd/Rz0Tf3/VBSH/XCoEDJ3IwW/QKn7ic5
+         H3kqIR/LdW7GiKoqf42m6g4CZjkjoznsTNeAmqvmG2ii4RPHiOIGQyC8fBl80KFMX/5w
+         3QQIscHoSk+TavN5oSPvjcQGUZBdku+hfWxg7zMq6KvwLXbS/3NDvs8fMCjXk/YFHkXy
+         mDtEBzYVZjjmTd2kjXPOSixISXUdVkMvCpmohKU/wsipluSHe5eVaUzCL1t3krsloryb
+         33+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=6T9T68NcFc0952zVBrDOq932Pet+Nc2yVT/DrOYRhBM=;
-        b=6Sx8TqAo4FcjD+GIL0tdsRDj8Wmyg40DhvfZkPTb3bCOvJgCpt7p2BiR1AjDHF41xt
-         MY68fryWp3fxCAcCaT2BnVcrcdths910yTWj+cJrVh7SHIgLAscZhM48m+9sBpjOUwV4
-         B2OYP7LYTKOz6yHYo3beDrK794k2WaQoCwRlhWSPy9bGf9P60kwYp1ActFBCpbttFZmf
-         xgRzHxr6myox50BwWQ8hCvzaXJ+h1cYx7xIS4erwo/XORVS2PEJHcAKoGwi+DB4CicEC
-         uacOllSaQc1HkUIcOmcREwt0cTLbwn2yyv37VWg60TlGFOOENEfyYuh6LFWVNPHR/uaB
-         hZQw==
-X-Gm-Message-State: AOAM531p8H4H8XEErLxtLtyO5amIwt8RlWO/9Kmk7Z2UZV7fykJiALPD
-        nbjaPsjqjJbOV0o+Gg4p0LEOgVoW2otnbg==
-X-Google-Smtp-Source: ABdhPJwrvrRsnMiVU5z5IvyBoA7401rH8GIZeABVb/kiO4ZTWHWXkyItgblVBRrywExalFEcfqjYCg==
-X-Received: by 2002:a2e:b0fc:0:b0:24f:1050:ff61 with SMTP id h28-20020a2eb0fc000000b0024f1050ff61mr20342984ljl.290.1652355718324;
-        Thu, 12 May 2022 04:41:58 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 10-20020ac25f4a000000b0047255d210f0sm753651lfz.31.2022.05.12.04.41.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 May 2022 04:41:57 -0700 (PDT)
-Message-ID: <d589845f-e85c-5dcb-28cf-ac08eb7c1a8e@linaro.org>
-Date:   Thu, 12 May 2022 14:41:56 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v1 0/7] drm/bridge_connector: perform HPD enablement
- automatically
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
+        bh=gorQKMV8vjkGqwI8nCYg+SRESNs1085GlQg2z0ABeuo=;
+        b=JyuURqTQqImG/fnWH78i+/L6brStlihytiIo/1Au4imHoXl/AKrxXze68vasUjTn+S
+         hGV7j/9lq69sC/kObACG82KX1OE5IzotpfQWWvQ58WsXu6HfAMLkQ7sUSuhIJayXFx5m
+         sbb2Gqtj5imfauvHTMFks2bLd2wSLHUzMztDU3aEaC2XP6s3JoAgwQBeAWLW1Uh0eZF6
+         /kbhrMB22mlbGyHsjN+zMEY38FIptbF897tVfNC7KWjotNmLKZB5A4ZGLXsDHACIgQVN
+         mqIQbtHvSBpOU3bHgfc7v/Wwl/DhLV3dyQowYJ2MNU3KTSqmGmxppQS2si/R8/ekGlzs
+         8YTA==
+X-Gm-Message-State: AOAM530aDheynXIPc1SQ3aUoG6jkMMmk8JY9XrZJdoin0XqUg/60vQgk
+        JCKG/aK5pgQ4GLEStEmgUns=
+X-Google-Smtp-Source: ABdhPJxcj5dr0kJUFfqBEgzEoTIC5s88xMRWYL6CzqRLX2g+WGsAVhfrdfc0KIlhh12QckmcT6X/pg==
+X-Received: by 2002:a63:81c6:0:b0:3ab:6167:74b5 with SMTP id t189-20020a6381c6000000b003ab616774b5mr24640684pgd.527.1652358006556;
+        Thu, 12 May 2022 05:20:06 -0700 (PDT)
+Received: from localhost.localdomain ([202.120.234.246])
+        by smtp.googlemail.com with ESMTPSA id i16-20020a6561b0000000b003c62fa02f08sm1778477pgv.43.2022.05.12.05.20.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 May 2022 05:20:06 -0700 (PDT)
+From:   Miaoqian Lin <linmq006@gmail.com>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Tomi Valkeinen <tomba@kernel.org>
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20220429185157.3673633-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220429185157.3673633-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Cc:     linmq006@gmail.com
+Subject: [PATCH] drm/msm/a6xx: Fix refcount leak in a6xx_gpu_init
+Date:   Thu, 12 May 2022 16:19:50 +0400
+Message-Id: <20220512121955.56937-1-linmq006@gmail.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/04/2022 21:51, Dmitry Baryshkov wrote:
->  From all the drivers using drm_bridge_connector only iMX/dcss and OMAP
-> DRM driver do a proper work of calling
-> drm_bridge_connector_en/disable_hpd() in right places. Rather than
-> teaching each and every driver how to properly handle
-> drm_bridge_connector's HPD, make that automatic.
-> 
-> Add two additional drm_connector helper funcs: enable_hpd() and
-> disable_hpd(). Make drm_kms_helper_poll_* functions call them (as this
-> is the time where the drm_bridge_connector's functions are called by the
-> drivers too).
+of_parse_phandle() returns a node pointer with refcount
+incremented, we should use of_node_put() on it when not need anymore.
 
-Gracious ping regarding this series. It went for two weeks w/o review.
+a6xx_gmu_init() passes the node to of_find_device_by_node()
+and of_dma_configure(), of_find_device_by_node() will takes its
+reference, of_dma_configure() doesn't need the node after usage.
 
-Few additional points 'pro':
-- It makes it possible to handle hpd enablement in cases where the 
-driver uses a mixture of drm_bridge_connector and old connectors (msm)
-- It makes it possible for other connectors to also implement dynamic 
-hpd enablement/disablement in a standard way
+Add missing of_node_put() to avoid refcount leak.
 
-> 
-> Dmitry Baryshkov (7):
->    drm/poll-helper: merge drm_kms_helper_poll_disable() and _fini()
->    drm/probe-helper: enable and disable HPD on connectors
->    drm/bridge_connector: rely on drm_kms_helper_poll_* for HPD enablement
->    drm/imx/dcss: stop using drm_bridge_connector_en/disable_hpd()
->    drm/msm/hdmi: stop using drm_bridge_connector_en/disable_hpd()
->    drm/omap: stop using drm_bridge_connector_en/disable_hpd()
->    drm/bridge_connector: drop drm_bridge_connector_en/disable_hpd()
-> 
->   drivers/gpu/drm/drm_bridge_connector.c   | 23 +++----------
->   drivers/gpu/drm/drm_probe_helper.c       | 40 ++++++++++++++++++-----
->   drivers/gpu/drm/imx/dcss/dcss-dev.c      |  4 ---
->   drivers/gpu/drm/imx/dcss/dcss-kms.c      |  4 ---
->   drivers/gpu/drm/msm/hdmi/hdmi.c          |  2 --
->   drivers/gpu/drm/omapdrm/omap_drv.c       | 41 ------------------------
->   include/drm/drm_bridge_connector.h       |  2 --
->   include/drm/drm_modeset_helper_vtables.h | 22 +++++++++++++
->   8 files changed, 58 insertions(+), 80 deletions(-)
-> 
+Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index ccc4fcf7a630..a8f6d73197b1 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1919,6 +1919,7 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 	BUG_ON(!node);
+ 
+ 	ret = a6xx_gmu_init(a6xx_gpu, node);
++	of_node_put(node);
+ 	if (ret) {
+ 		a6xx_destroy(&(a6xx_gpu->base.base));
+ 		return ERR_PTR(ret);
 -- 
-With best wishes
-Dmitry
+2.25.1
+
