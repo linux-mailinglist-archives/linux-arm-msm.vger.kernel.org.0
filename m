@@ -2,111 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8F0F52550D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 20:42:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 013E852551E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 20:48:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357761AbiELSmP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 14:42:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34798 "EHLO
+        id S1357719AbiELSsW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 14:48:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350835AbiELSmN (ORCPT
+        with ESMTP id S1357788AbiELSsU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 14:42:13 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C67B1154B06
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 11:42:11 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id 31-20020a9d0822000000b00605f1807664so3330176oty.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 11:42:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=2ktEM2WdQXhUkI4WC57ZsgNwZP50FQxfG+aaBGhL1/A=;
-        b=X84dqLkVxAqkq2YriqsNaydX5HWwTZIJ41RwxOz78cFKaBWcUViPGfxQQnUcKxODJU
-         jlRB3Elg852MYIjthVe2hc0onWRbJRVUKA34l44KQTcMpXQgOxe5HdlePDnD7l4gGpmK
-         0I71ECIHGd3G/uPaybBW+PILUaRLuQ7hXCD7A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=2ktEM2WdQXhUkI4WC57ZsgNwZP50FQxfG+aaBGhL1/A=;
-        b=vvx7QXyVvb3z6hytrQxOLmWYgGXbXiaHNnMxocrdlTebkbKlo4CZIj0yrY1TPtly9k
-         gOM02oGu06KJ2b40HcZh3SrIS8YZdI4L2PuORbVtNVNojM6cV7olPHqMoOitF1nI/XuI
-         6B+WTZQa1KtFm2cPpp1PN1hNyN3974fm0dVffdDammVaGVzz9xLOgUH9uc+Hyxyl7TOs
-         8f91W6gZPoHZfzWoCHsMNoj9nDfNCwvJmupubCAGpnI3da9SlETx2e95zXzwY35M7nkP
-         lm+N0LpQ6I09mwVns3PAnN3/EvRsdqyWoTACL8EFHbxGqJUI9sVq2uwfLefYUSt/j6IB
-         z15A==
-X-Gm-Message-State: AOAM533pv4PAEyoCvkhuIb8M4bjp8BEw8cI2tlYCKNXQVWe1kUSqU76Q
-        BOsvsQ/h0e3fpcZj5M8q83ll9WzcJGEQZjJlQUwgJg==
-X-Google-Smtp-Source: ABdhPJwYZomkma75bHZi41atC+Y+imFA2JK98Jirq9TfqEF/WaUpsCWBVXGwHAmgE8CNURqOJUtqAkCO4SquH4yYBm0=
-X-Received: by 2002:a9d:63cd:0:b0:606:9e7f:79f8 with SMTP id
- e13-20020a9d63cd000000b006069e7f79f8mr532146otl.77.1652380930973; Thu, 12 May
- 2022 11:42:10 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 12 May 2022 11:42:10 -0700
-MIME-Version: 1.0
-In-Reply-To: <20220512090429.1.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid>
-References: <20220512090429.1.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 12 May 2022 11:42:10 -0700
-Message-ID: <CAE-0n51fD6H2+JmFLMWyWuamcXDWzLQaXuWpnanvwO8rDQcuKQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add sc7180 Chromebook board bindings
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Herring <robh@kernel.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        "Joseph S . Barrera III" <joebar@chromium.org>,
-        Julius Werner <jwerner@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Thu, 12 May 2022 14:48:20 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13F5E1756B6;
+        Thu, 12 May 2022 11:48:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A3C3161B65;
+        Thu, 12 May 2022 18:48:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70646C385B8;
+        Thu, 12 May 2022 18:48:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652381298;
+        bh=1TlrlHB4aaOgWZa9mSfCmfQlvfeKx2rv8szLiBiWlkM=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=dXgtfhahrA28Qaqmcrp6B4ZMiqMxj2x1AA98remT8c/G65Fj/p0tml3qEhfJTiZgQ
+         IZF6lxgcT5Sm56hSnnM4zunaPJ8yo/r8D//43nQl6RVazKW/OJ7VOaQsEc1Z9U2sCE
+         JC8/3U0elfbwzSKKeUwEEr67p69cx9eONce3QEvGnwcNnLyc7o79dN3SOgfdUDuV0a
+         5sN+4L/LzrJGSyAUEkjRjY+aBrrwFDE8tCeQjYIrQAVrCpGmv9Y2by832Rgi8AGakg
+         MPI1TaQbJw/dBMGMYkR0Ge9Y2s13dBvI9WRQ+biLdQmhWiBdsk18z8HYdvTXPK+gfL
+         RiDMFwhCb4Kcw==
+Date:   Thu, 12 May 2022 13:48:14 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v8 01/10] PCI: qcom: Revert "PCI: qcom: Add support for
+ handling MSIs from 8 endpoints"
+Message-ID: <20220512184814.GA859760@bhelgaas>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220512104545.2204523-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,HEXHASH_WORD,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2022-05-12 09:04:45)
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 5c06d1bfc046..399be67eb5d2 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -214,11 +214,191 @@ properties:
->                - qcom,ipq8074-hk10-c2
->            - const: qcom,ipq8074
->
+On Thu, May 12, 2022 at 01:45:36PM +0300, Dmitry Baryshkov wrote:
+> I have replied with my Tested-by to the patch at [2], which has landed
+> in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
+> Add support for handling MSIs from 8 endpoints"). However lately I
+> noticed that during the tests I still had 'pcie_pme=nomsi', so the
+> device was not forced to use higher MSI vectors.
+> 
+> After removing this option I noticed that high MSI vectors are not
+> delivered on tested platforms. Additional research pointed to
+> a patch in msm-4.14 ([1]), which describes that each group of MSI
+> vectors is mapped to the separate interrupt.
+> 
+> Without these changes specifying num_vectors can lead to missing MSI
+> interrupts and thus to devices malfunction.
+> 
+> Fixes: 20f1bfb8dd62 ("PCI: qcom: Add support for handling MSIs from 8 endpoints")
 
-Side note: The top of this file describes a scheme that is basically not
-used by any compatibles in this file. I came up with that scheme many
-years ago so that we could upstream DTS files but still be able to
-generate the magic numbers that the bootloader picked DTBs by. I hope
-nobody assumes that description applies to "google," prefixed
-compatibles.
+Hopefully Lorenzo will drop both 20f1bfb8dd62 and this patch if/when
+he applies this series.
 
-Can the description can be amended to indicate the "google," scheme with
-rev and sku details? Or a bindings/arm/chrome.yaml file could be made
-and all google prefix chromeos board compatibles could be put in there
-regardless of SoC used.
+This commit log would need some rework because [1] and [2] are
+mentioned in the cover letter, but that doesn't get included when the
+series is applied.  Best if we can just avoid all this confusion by
+dropping 20f1bfb8dd62 and this patch.
 
-> +      # Qualcomm Technologies, Inc. SC7180 IDP
->        - items:
->            - enum:
->                - qcom,sc7180-idp
->            - const: qcom,sc7180
->
-> +      # Google CoachZ (rev1 - 2)
-
-Can we follow the design of rockchip.yaml and also include the marketing
-name (if published)? That helps folks match things up quicker.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index f9a61ad6d1f0..2e5464edc36e 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1587,7 +1587,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	pci->dev = dev;
+>  	pci->ops = &dw_pcie_ops;
+>  	pp = &pci->pp;
+> -	pp->num_vectors = MAX_MSI_IRQS;
+>  
+>  	pcie->pci = pci;
+>  
+> -- 
+> 2.35.1
+> 
