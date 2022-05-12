@@ -2,137 +2,402 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE0FE52489C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 11:10:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A04875248BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 11:20:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351853AbiELJKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 05:10:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54142 "EHLO
+        id S229591AbiELJT7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 05:19:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351862AbiELJKe (ORCPT
+        with ESMTP id S229485AbiELJT6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 05:10:34 -0400
-Received: from AUS01-SY4-obe.outbound.protection.outlook.com (mail-sy4aus01olkn2172.outbound.protection.outlook.com [40.92.62.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 532838E1A2;
-        Thu, 12 May 2022 02:10:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dQZVmhLWNv/FjQhzIXPOp5UFSVUXI1lj3M5/j9gzgQxAZsSPGTovuZFKnsYQ9wvUgtqj+zTSsPfVyZ/tZ7qBB1xfMkt+wBLX/xO6MRljSQsnfqRWG8JA15i+H0ie3Kc8aHovdGfkJBIPWNdRij6UoZ8JJAPLSmQEa69rIbbkbok22KgVMTFoZJm8QMtJ7LP3A6eIreDlttVThNPe5kdUG3kC0bdQszHKGSX7DJ9IRIrGcOeNFHOOG5oYZmop0jHS1TJXBdWXmWzxKOAxCtjAF475GHf4G0fxGlgFpbTMQRDUuRvhjNPH7HAip2VzoieDL7eXyLC20ODzuyuC47cjvw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uTuCJP18nHfqeYgUKGf7KufJ4ztpCEhq/TXcnuTDP5s=;
- b=dS3s4gigX5PJ1jrR8Oww8SIUwkiWaC5NHTc0ZsbzwUx2mwV5brD+tnpylSlU1ZNxYr0yxIFpBNiWOGAl4Thy3ulNkcon5K+b3By4ALcDwoBmIir0n5H708RAX1kf1e9tVrvTMLRihwHQqMQRr5UAmI1lnnu6XACOhFWCkTh9OfCqYTQc0nZQYKAm4K+Wg+TxQFaslxgzpCsbn1nViuJ7mKVxkVMUKbzb0x3KCR4qsigAXeiO6N3ovGzYDUX+P0tFUSMcHqTeHkZ2RuR8QgbW+xNRIOH+7tnJb8Ovw1SDleo/3elaw7U0MmEpNTZYB33Ov7mznyFp7a9f03UIHzvLag==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uTuCJP18nHfqeYgUKGf7KufJ4ztpCEhq/TXcnuTDP5s=;
- b=ssaky/r4LgU+ujcCNo8tEpzpGqZsAwNL+dE2xhCxFchN+TQC+GSl8psupAeZTKOvnuUQbI9SCCzA9BNfmJFRcJ3OuUSL8dhsrIT/gfvgPKaSNtSMXDEeasw58IHuaOm1fy4dy1mVC2rwfRTSsAS+qQy8jVQq9Qc8Qq3TOrUaqkQskgx1tLlaQEioXgFmB6+lPwgWNJcXj8eTTBW49ygt3nQQAgQ9q7NUgspcQTGZqSAzDU5G+4CIe88UXNPlk63DUrOKghUULRfK0H8yKG7r+m6zPrdifyRGdgn5sF80n2V4EtAD1jNFb6+slQH/H583ww6BnGgWDkWXPCD8cib76Q==
-Received: from MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:113::14)
- by MEAP282MB0583.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:65::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5227.20; Thu, 12 May
- 2022 09:10:28 +0000
-Received: from MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
- ([fe80::702a:73df:6a57:6a00]) by MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
- ([fe80::702a:73df:6a57:6a00%6]) with mapi id 15.20.5227.023; Thu, 12 May 2022
- 09:10:28 +0000
-From:   Yonglin Tan <yonglin.tan@outlook.com>
-To:     mani@kernel.org, quic_hemantk@quicinc.com,
-        gregkh@linuxfoundation.org, loic.poulain@linaro.org
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ylintan <yonglin.tan@outlook.com>
-Subject: [PATCH]     bus: mhi: host: Add support for a new Quectel Module.
-Date:   Thu, 12 May 2022 17:07:46 +0800
-Message-ID: <MEYP282MB2374BF134896B003FD8BF826FDCB9@MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.7.4
-Content-Type: text/plain
-X-TMN:  [hMnkSDSX2drB345a6wB4buGMqTV5dL1T]
-X-ClientProxiedBy: HK2PR0401CA0018.apcprd04.prod.outlook.com
- (2603:1096:202:2::28) To MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
- (2603:10c6:220:113::14)
-X-Microsoft-Original-Message-ID: <1652346466-16902-1-git-send-email-yonglin.tan@outlook.com>
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 9e0b35d9-5207-493a-64b1-08da33f74220
-X-MS-Exchange-SLBlob-MailProps: 0RSV28T7LqTw98sKciW2l8XpStjyDTN8lXQUQIW6dh9a5RGd2BB5afhuIdpOem/WjOCQyYwtSamluRPx1nyaAIfzbdY4bxDlF99XjnYFCXBnSIshHcJGGj+GKjBrjzvLfdODrj44g+a7s7xLkJeRaJFBkdTue9Tjt/qwVOXYtmmKX3CxzPDXQP8vKSE78t0xj7ObKTbgOBin6b0x46+Y/4LhEgsFDRaZvC2RcHRpe4vjQHBnSwhRJ2uYWecI1Z+uVWSwNXV97akNwKZSLBDgB/TLoz9tZf8G6pUGTglzzNmMVeRh7kzP4hM17hKyckBn/WxGkU3AD5BAgtUceTi/git/R/wuoJqNwJHFB+ppTp6wlxJlim6SBukP2F5MUMBXG/3dqBucqRlTrLbmxeRksQeTCbKYQZpXLiACjwJrq484h34aTNva1ehnXHj8SOoyWm1JnE284sdjZNV9S+LPyxxpJQCYwAolNHhZ8e+ifApd93sv/wp0wbWbsXQ72n5sNN6rkP6iCTIXPG66F9iTubG8CMlIJVsJkAvRcpS6Ed0pRfESCx4iGF+2SiM8zb+cTTWYjSeuh0WsuFPc0Prsv+9Hx6TNPAa8vVqMf1UvoN5T9KFiYlUAn7kLxbsBCs9E33Q2QpbLbWJ+d8FWDOawX34p8uscVdNV9DQ4P9acPYNrKv1B4hbXzpmoGFhF49J9
-X-MS-TrafficTypeDiagnostic: MEAP282MB0583:EE_
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 6t+/12OZAjh1G7j4S77p/BdjfJ84VRefTRD2rr7LGIhko8pepIjD9ZAUCWJyQM8nNhQsr4U+R5S6D4Iwhd5wd49aa6+5KqlZtWCBH1AWK7ZtLZpo4Hn9Tp4P0gdogSb9w5NqrIIg6feNXAtIv8OdgVdl6j47HGIoyOAiUvi+EBlwSkFA8CknBWtXLL/wbhPlzYZHMKtuhueJMjF93yYck/3m4YODqyYUgitOXs+hQcUko1oS2cmyVz3ft5Zp7xPJI6Pa6IiEqvDju+s5tHG4MqTj3LKfpXzIutux9eQ75xp4DZ55CGeLKrpvTp5K6I3OK9wUMeWmImkXejhT4GvQJ9vYuhCEGh1vVP8vedB58rBRQzBzto43WySdAMSBV/AnCBGc98LkXVPWOp1Y594++pMfQN1xEKpxtPbumi5J1tzfxZPljnCHEJp01W/FWVph252V+CJdwpvjZdPLC/ur4frbO/BA41fAv1rHbmDkVtqmQ0/KRpfPJiROnU+MhGpJqo+pTluyUlUGdy9Cm8JP54Hc58Di0T32rFbpBe3j9iVh/yNTRvKRw4vMXR7OOM59UZ9XEzocXPmma9BJEgD7yg==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?V2q1dB4Yk9pLeaZKy7zDhzyV/P4blRkacuA7l0Vu6Xpjl5j8RxdbMTfrhahJ?=
- =?us-ascii?Q?yLZo9A1fp0nkXRXz4IvdAzVAWwltl4O+x53iH+jLKM2uTUwkpC3Bpn7lbRVF?=
- =?us-ascii?Q?n3PVQedHQueZoBBPU5/7ZfkyQkwMkdd/RZya/3WZuZEGj9pj+aZNA395j0Jq?=
- =?us-ascii?Q?amEpFcm7tQ+PAUCXcyj2Mt5M3fEgKk6S4Unf449hge9Kde3UylDalmYNsZcL?=
- =?us-ascii?Q?DitgJFyrb9ERgR+9sazcc+I3FYTpEUG5WD2qXtiCWcNJJgWj8AkGMoNHhSZM?=
- =?us-ascii?Q?0KOf4xuGwJlT19Fz0UAyzxD1muxOZ8RoRBlVtV5d00vVWeUr3sXFzXliNIB+?=
- =?us-ascii?Q?Inyep+NKm16Atpr6XsAcF/dHiucUye6kh+FW17u6b0gSa6zKbtZWFilow5Sp?=
- =?us-ascii?Q?lplRhXPgZPpt6iuIzA3SIK7DUbCX4G/z1W+KejpUHb1MpqpnNwxXtbxrNQfR?=
- =?us-ascii?Q?eEogyjhDbfgccfix7v9Q+2gLL/4fZalrUuyJENJlVDJMNruFZsZPiHx1plYM?=
- =?us-ascii?Q?BstAINwoBf4fy9MG+Q+uPfhr154y5vsJ88zGGIrHdLeFfKsGoeOVeo97RxOL?=
- =?us-ascii?Q?8pLhJCi4Q9XqvVZs90z7MtJogEvQDB3wAvH68pSpNx2dmsT4lkIO1rHNSzr8?=
- =?us-ascii?Q?l706APiiUDRIWUuD7DQ0OzxVvX90htLaeiPJQfW/ng76NsXEznnIVA+XK53F?=
- =?us-ascii?Q?bASdwpCoXsz1s4dh9pwN6rZ8hX2mYV+9ogDnoMHMqIUF4XYeRC4wz/H2LcxC?=
- =?us-ascii?Q?tV1MpAa4GMK+7POJGb30BW78gSTVdKTkQf5sWpRzpopCK8A1P9gCW6uV+NTs?=
- =?us-ascii?Q?9IqNu9xm5qmI88rl7lq8QM6HSm9jBHbeZm5JhdPo2GqTuZ8xXlc0PTphODce?=
- =?us-ascii?Q?AFzbQ1tAR8d0DQcewgqxmcB0fLhI56umBaQYz8G2jWDNDeBRV3561Gpu9jEg?=
- =?us-ascii?Q?C3m5ymAE+cGkpjMv0lKo/pvYf+h4xjRgAyT4K/gvlpYwPmXKQqy5H3CITRbe?=
- =?us-ascii?Q?VsG4dPRAcO78VhnGPG2A76ohb6IsA6a4DqBt0BIEH2s68pICKoZJsp8qx3P/?=
- =?us-ascii?Q?QyAzVif6DSmPweWepmfRmKE8FKnjrSRqF0t4B2vGPoy5/4DXfewQnv3TxDDR?=
- =?us-ascii?Q?LP6C0nNWfXR5hG3yHEFmWdIbCTrDBoabp1G7zaVB+hDrgBfyHIGMJtzN9fFf?=
- =?us-ascii?Q?b/Ls6AeWbq5iLvi+zqWoR9mTf82MLmsexF/0yXTjGih/9S2V1B1azKAhwguF?=
- =?us-ascii?Q?K1vkVh4+owqpIIsEVYt2Zdg32rTYakxWgx59V//8mqgAmi5kQjV5A/ImISb/?=
- =?us-ascii?Q?wD+xwn1Jy9puCJGI3SufDMUhAu/I/FzXJldW0gkD3iTEm//9F7BjzyWhe87U?=
- =?us-ascii?Q?xDKuRsakCm3KdOuaiHXqiZ6bZ9KSP/bQMlAN0ViUI7HuhAlFNQwQ8cb6GWV+?=
- =?us-ascii?Q?bKR2I2SeKqo=3D?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9e0b35d9-5207-493a-64b1-08da33f74220
-X-MS-Exchange-CrossTenant-AuthSource: MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2022 09:10:28.8047
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MEAP282MB0583
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 12 May 2022 05:19:58 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EC87205F2C;
+        Thu, 12 May 2022 02:19:56 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id l20-20020a17090a409400b001dd2a9d555bso4393075pjg.0;
+        Thu, 12 May 2022 02:19:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:content-transfer-encoding:date:message-id:cc:subject
+         :from:to:references:in-reply-to;
+        bh=Nt7/SSWoDR75mNb090rQF4WPuNxt+chmnIAsdE3g0kU=;
+        b=DNYILr4tgb7B9qV1VlNAdEpvqH3F+SqP+ET2/g5ncLo8iz06RbruAy51IZE5Bk9NGy
+         wCDvMSh9kPQZRe1cZoo53E4sVMe1kioKYuFBG1WjDspni5PB+ge02KFuwmuxNXNgRQ8h
+         FoRDRUbWMHXMXrN4XG67616ksfG9TyN1bvtRkowskjUkaUOCnDldBCYw6D2ESSOwhjVJ
+         bF5qAugGnoUizdMKPj1rP4Ui/JK6gO0WTttZKjb6ljm0Qk5s8+fBuogPIxEpUzDv2orp
+         VU8OetHGA1ov34kXAjs2OUfouPlK3/Hgj6Ee+x8hIyLefueG4YjzxP4n9nrjMxqCvdM2
+         66JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:content-transfer-encoding:date
+         :message-id:cc:subject:from:to:references:in-reply-to;
+        bh=Nt7/SSWoDR75mNb090rQF4WPuNxt+chmnIAsdE3g0kU=;
+        b=tr0sx6OAgFJT+UdZC1dyG2CXWjDwDSPSJF9D+Z9ixheVXINSFuH38VcjQTxip2IV/z
+         xsp68RaVU9IAvwu/o28UlvIk2hszWvHPn7wB2mmb3MMsvP+DqsnIzuTCVTSR9zldBiw/
+         unr9hlQf5Eh28eYKP2hgL2i1Hyngw+xz/fgC4F/OfFY1UgULCpMlMgM0p1WOPRF8mBk/
+         QC/vAmcwha1P6m3tocYbQwHxR/jfSH37fg0/3utZComtfS5PfzuX5XEqo40wZIh8xdgj
+         Oc+I7PNM+eP0NVYCmtfyQv9eb51U0DuEgTYhMiLjXreFF1+vhhKgDmfsTpgqIBYNSots
+         rvVw==
+X-Gm-Message-State: AOAM532aPgiszejeKGsq64jkGdaCCRpHT6V5h4CGdidAjAvOMfBUFI2V
+        UBZkT8eLlDRLlvAE0wt2mjW0UrAehuT2HQgH
+X-Google-Smtp-Source: ABdhPJynQCNJ9zZfkhh1IFBs8j6FfkoVhqJ9UhqYNRqVm1u9en9mfrs+O1kzL+x5hL+YtLV1RAG5uw==
+X-Received: by 2002:a17:902:b7cb:b0:15c:6650:a58a with SMTP id v11-20020a170902b7cb00b0015c6650a58amr29866078plz.63.1652347195964;
+        Thu, 12 May 2022 02:19:55 -0700 (PDT)
+Received: from localhost ([49.204.239.218])
+        by smtp.gmail.com with ESMTPSA id gc1-20020a17090b310100b001cd4989ff61sm1383206pjb.40.2022.05.12.02.19.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 May 2022 02:19:55 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Thu, 12 May 2022 14:49:49 +0530
+Message-Id: <CJXO6ZMZ454X.M3N9HDKNA5HB@skynet-linux>
+Cc:     <linux-arm-msm@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
+        <phone-devel@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>
+Subject: Re: [PATCH 9/9] arm64: dts: qcom: msm8953: Add remote processor
+ nodes
+From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        <linux-remoteproc@vger.kernel.org>
+X-Mailer: aerc 0.9.0
+References: <20220511161602.117772-1-sireeshkodali1@gmail.com>
+ <20220511161602.117772-10-sireeshkodali1@gmail.com>
+ <2d68e610-e8ae-9e08-257a-3c94c3697334@linaro.org>
+In-Reply-To: <2d68e610-e8ae-9e08-257a-3c94c3697334@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: ylintan <yonglin.tan@outlook.com>
+On Wed May 11, 2022 at 11:25 PM IST, Krzysztof Kozlowski wrote:
+> On 11/05/2022 18:16, Sireesh Kodali wrote:
+> > This commit adds the modem (q6v5_mss), WiFi (wcnss-pil) and audio DSP
+> > (q6v5_pas) remote processor nodes for the MSM8953 platform. It also add=
+s
+> > the coresponding SMP2P, SMSM and pinctrl nodes that are needed by these
+> > remote processors.
+> >=20
+> > Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+> > +			};
+> > +
+> > +			wcnss_sleep: wcnss-sleep-pins {
+> > +				wcss_wlan2 {
+>
+> No underscores in node names, unless something needs it?
+>
 
-    A new Quectel EM1xx module need to be supported by kernel.
-    The module is based on Qualcomm SDX24 platform and the
-    configuration should be aligned with EM120 and EM160.
+wcnss_sleep is used by the pronto node defined below
 
-    Signed-off-by: Yonglin Tan <yonglin.tan@outlook.com>
+> > +					pins =3D "gpio76";
+> > +					function =3D "wcss_wlan2";
+> > +				};
+> > +				wcss_wlan1 {
+> > +					pins =3D "gpio77";
+> > +					function =3D "wcss_wlan1";
+> > +				};
+> > +				wcss_wlan0 {
+> > +					pins =3D "gpio78";
+> > +					function =3D "wcss_wlan0";
+> > +				};
+> > +				wcss_wlan {
+> > +					pins =3D "gpio79", "gpio80";
+> > +					function =3D "wcss_wlan";
+> > +				};
+> > +
+> > +				pinconf {
+> > +					pins =3D "gpio76", "gpio77",
+> > +					     "gpio78", "gpio79",
+> > +					     "gpio80";
+> > +					drive-strength =3D <2>;
+> > +					bias-pull-down;
+> > +				};
+> > +			};
+> >  		};
+> > =20
+> >  		gcc: clock-controller@1800000 {
+> > @@ -745,6 +892,59 @@ spmi_bus: spmi@200f000 {
+> >  			#size-cells =3D <0>;
+> >  		};
+> > =20
+> > +		modem: remoteproc@4080000 {
+> > +			compatible =3D "qcom,msm8953-mss-pil";
+> > +			reg =3D <0x4080000 0x100>,
+> > +			    <0x4020000 0x040>;
+> > +
+> > +			reg-names =3D "qdsp6", "rmb";
+> > +
+> > +			interrupts-extended =3D <&intc 0 24 1>,
+> > +					      <&modem_smp2p_in 0 0>,
+> > +					      <&modem_smp2p_in 1 0>,
+> > +					      <&modem_smp2p_in 2 0>,
+> > +					      <&modem_smp2p_in 3 0>;
+> > +			interrupt-names =3D "wdog", "fatal", "ready",
+> > +					  "handover", "stop-ack";
+> > +
+> > +			clocks =3D <&gcc GCC_MSS_CFG_AHB_CLK>,
+> > +				 <&gcc GCC_MSS_Q6_BIMC_AXI_CLK>,
+> > +				 <&gcc GCC_BOOT_ROM_AHB_CLK>,
+> > +				 <&xo_board>;
+> > +			clock-names =3D "iface", "bus", "mem", "xo";
+> > +
+> > +			power-domains =3D <&rpmpd MSM8953_VDDCX>, <&rpmpd MSM8953_VDDMX>;
+> > +			power-domain-names =3D "cx", "mx";
+> > +
+> > +			qcom,smem-states =3D <&modem_smp2p_out 0>;
+> > +			qcom,smem-state-names =3D "stop";
+> > +
+> > +			resets =3D <&gcc GCC_MSS_BCR>;
+> > +			reset-names =3D "mss_restart";
+> > +
+> > +			qcom,halt-regs =3D <&tcsr 0x18000 0x19000 0x1a000>;
+> > +
+> > +			status =3D "okay";
+>
+> No need for okay.
 
-Signed-off-by: ylintan <yonglin.tan@outlook.com>
----
- drivers/bus/mhi/host/pci_generic.c | 2 ++
- 1 file changed, 2 insertions(+)
+I'll drop it in v2
+>
+> > +
+> > +			mba {
+> > +				memory-region =3D <&mba_mem>;
+> > +			};
+> > +
+> > +			mpss {
+> > +				memory-region =3D <&mpss_mem>;
+> > +			};
+> > +
+> > +			smd-edge {
+> > +				interrupts =3D <GIC_SPI 25 IRQ_TYPE_EDGE_RISING>;
+> > +
+> > +				qcom,smd-edge =3D <0>;
+> > +				qcom,ipc =3D <&apcs 8 12>;
+> > +				qcom,remote-pid =3D <1>;
+> > +
+> > +				label =3D "modem";
+> > +			};
+> > +		};
+> > +
+> >  		usb3: usb@70f8800 {
+> >  			compatible =3D "qcom,msm8953-dwc3", "qcom,dwc3";
+> >  			reg =3D <0x70f8800 0x400>;
+> > @@ -1057,6 +1257,74 @@ i2c_8: i2c@7af8000 {
+> >  			status =3D "disabled";
+> >  		};
+> > =20
+> > +		pronto: remoteproc@a21b000 {
+> > +			compatible =3D "qcom,pronto-v3-pil", "qcom,pronto";
+> > +			reg =3D <0xa204000 0x2000>,
+> > +			      <0xa202000 0x1000>,
+> > +			      <0xa21b000 0x3000>;
+> > +			reg-names =3D "ccu", "dxe", "pmu";
+> > +
+> > +			memory-region =3D <&wcnss_fw_mem>;
+> > +
+> > +			interrupts-extended =3D <&intc 0 149 IRQ_TYPE_EDGE_RISING>,
+> > +					      <&wcnss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> > +					      <&wcnss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+> > +					      <&wcnss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+> > +					      <&wcnss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
+> > +			interrupt-names =3D "wdog", "fatal", "ready", "handover", "stop-ack=
+";
+> > +
+> > +			power-domains =3D <&rpmpd MSM8953_VDDCX>, <&rpmpd MSM8953_VDDMX>;
+> > +			power-domain-names =3D "cx", "mx";
+> > +
+> > +			qcom,state =3D <&wcnss_smp2p_out 0>;
+> > +			qcom,state-names =3D "stop";
+> > +
+> > +			pinctrl-names =3D "default", "sleep";
+> > +			pinctrl-0 =3D <&wcnss_default>;
+> > +			pinctrl-1 =3D <&wcnss_sleep>;
+> > +
+> > +			status =3D "okay";
+>
+> No need for status.
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 8416267..0a6469c 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -557,6 +557,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-+	{ PCI_DEVICE(0x1eac, 0x2001), /* EM120R-GL for FCCL (sdx24) */
-+		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
- 		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
--- 
-2.7.4
+Will be dropped in v2
+>
+> > +
+> > +			iris: iris {
+> > +				compatible =3D "qcom,wcn3660b";
+> > +
+> > +				clocks =3D <&rpmcc RPM_SMD_RF_CLK2>;
+> > +				clock-names =3D "xo";
+> > +			};
+> > +
+> > +			smd-edge {
+> > +				interrupts =3D <GIC_SPI 142 IRQ_TYPE_EDGE_RISING>;
+> > +
+> > +				qcom,ipc =3D <&apcs 8 17>;
+> > +				qcom,smd-edge =3D <6>;
+> > +				qcom,remote-pid =3D <4>;
+> > +
+> > +				label =3D "pronto";
+> > +
+> > +				wcnss {
+> > +					compatible =3D "qcom,wcnss";
+> > +					qcom,smd-channels =3D "WCNSS_CTRL";
+> > +
+> > +					qcom,mmio =3D <&pronto>;
+> > +
+> > +					bt {
+> > +						compatible =3D "qcom,wcnss-bt";
+> > +					};
+> > +
+> > +					wifi {
+> > +						compatible =3D "qcom,wcnss-wlan";
+> > +
+> > +						interrupts =3D <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
+> > +							     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
+> > +						interrupt-names =3D "tx", "rx";
+> > +
+> > +						qcom,smem-states =3D <&apps_smsm 10>, <&apps_smsm 9>;
+> > +						qcom,smem-state-names =3D "tx-enable", "tx-rings-empty";
+> > +					};
+> > +				};
+> > +			};
+> > +		};
+> > +
+> >  		intc: interrupt-controller@b000000 {
+> >  			compatible =3D "qcom,msm-qgic2";
+> >  			interrupt-controller;
+> > @@ -1070,6 +1338,116 @@ apcs: mailbox@b011000 {
+> >  			#mbox-cells =3D <1>;
+> >  		};
+> > =20
+> > +		lpass: remoteproc@c200000 {
+> > +			compatible =3D "qcom,msm8953-adsp-pil";
+> > +			reg =3D <0xc200000 0x100>;
+> > +
+> > +			interrupts-extended =3D <&intc 0 293 IRQ_TYPE_EDGE_RISING>,
+> > +					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+> > +					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
+> > +					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+> > +					      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
+> > +			interrupt-names =3D "wdog", "fatal", "ready",
+> > +					  "handover", "stop-ack";
+> > +			clocks =3D <&xo_board>;
+> > +			clock-names =3D "xo";
+> > +
+> > +			power-domains =3D <&rpmpd MSM8953_VDDCX>;
+> > +			power-domain-names =3D "cx";
+> > +
+> > +			memory-region =3D <&adsp_fw_mem>;
+> > +
+> > +			qcom,smem-states =3D <&smp2p_adsp_out 0>;
+> > +			qcom,smem-state-names =3D "stop";
+> > +
+> > +			smd-edge {
+> > +				interrupts =3D <GIC_SPI 289 IRQ_TYPE_EDGE_RISING>;
+> > +
+> > +				label =3D "lpass";
+> > +				mboxes =3D <&apcs 8>;
+> > +				qcom,smd-edge =3D <1>;
+> > +				qcom,remote-pid =3D <2>;
+> > +				#address-cells =3D <1>;
+> > +				#size-cells =3D <0>;
+> > +
+> > +				apr {
+> > +					compatible =3D "qcom,apr-v2";
+> > +					qcom,smd-channels =3D "apr_audio_svc";
+> > +					qcom,apr-domain =3D <APR_DOMAIN_ADSP>;
+> > +					#address-cells =3D <1>;
+> > +					#size-cells =3D <0>;
+> > +
+> > +					q6core {
+> > +						reg =3D <APR_SVC_ADSP_CORE>;
+> > +						compatible =3D "qcom,q6core";
+> > +					};
+> > +
+> > +					q6afe: q6afe {
+> > +						compatible =3D "qcom,q6afe";
+> > +						reg =3D <APR_SVC_AFE>;
+> > +						q6afedai: dais {
+> > +							compatible =3D "qcom,q6afe-dais";
+> > +							#address-cells =3D <1>;
+> > +							#size-cells =3D <0>;
+> > +							#sound-dai-cells =3D <1>;
+> > +
+> > +							dai@16 {
+> > +								reg =3D <PRIMARY_MI2S_RX>;
+> > +								qcom,sd-lines =3D <0 1>;
+> > +							};
+> > +
+> > +							dai@21 {
+> > +								reg =3D <TERTIARY_MI2S_TX>;
+> > +								qcom,sd-lines =3D <0 1>;
+> > +							};
+> > +						};
+> > +						q6afecc: clock-controller {
+> > +							compatible =3D "qcom,q6afe-clocks";
+> > +							#clock-cells =3D <2>;
+> > +						};
+> > +					};
+> > +
+> > +					q6asm: q6asm {
+> > +						compatible =3D "qcom,q6asm";
+> > +						reg =3D <APR_SVC_ASM>;
+> > +						q6asmdai: dais {
+> > +							compatible =3D "qcom,q6asm-dais";
+> > +							#address-cells =3D <1>;
+> > +							#size-cells =3D <0>;
+> > +							#sound-dai-cells =3D <1>;
+> > +
+> > +							dai@0 {
+> > +								reg =3D <MSM_FRONTEND_DAI_MULTIMEDIA1>;
+> > +							};
+> > +
+> > +							dai@1 {
+> > +								reg =3D <MSM_FRONTEND_DAI_MULTIMEDIA2>;
+> > +							};
+> > +
+> > +							dai@2 {
+> > +								reg =3D <MSM_FRONTEND_DAI_MULTIMEDIA3>;
+> > +							};
+> > +
+> > +							dai@3 {
+> > +								reg =3D <MSM_FRONTEND_DAI_MULTIMEDIA4>;
+> > +								is-compress-dai;
+> > +							};
+> > +						};
+> > +					};
+> > +
+> > +					q6adm: q6adm {
+> > +						compatible =3D "qcom,q6adm";
+> > +						reg =3D <APR_SVC_ADM>;
+> > +						q6routing: routing {
+> > +							compatible =3D "qcom,q6adm-routing";
+> > +							#sound-dai-cells =3D <0>;
+> > +						};
+> > +					};
+> > +				};
+> > +			};
+> > +
+>
+> Remove unneeded blank lines.
 
+Will be fixed in v2
+>
+> > +		};
+> > +
+> >  		timer@b120000 {
+> >  			compatible =3D "arm,armv7-timer-mem";
+> >  			reg =3D <0xb120000 0x1000>;
+>
+>
+> Best regards,
+> Krzysztof
+
+Thanks,
+Sireesh Kodali
