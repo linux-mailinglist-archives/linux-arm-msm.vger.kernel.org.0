@@ -2,108 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D2E3524801
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 10:38:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE0FE52489C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 11:10:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351532AbiELIhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 04:37:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49006 "EHLO
+        id S1351853AbiELJKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 05:10:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351561AbiELIhC (ORCPT
+        with ESMTP id S1351862AbiELJKe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 04:37:02 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C0CDC5DB8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 01:37:00 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id ks9so8758221ejb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 01:37:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Nv8lNSH0gbtDRGd36VCloQ6uZGegVPpsw/onrG8x3ew=;
-        b=yzFJE4m26cI254ywYC9KLHQeXSX1cl8syDdlPf27qy+G0mcnTD0mjfjwiZWKfNMCVG
-         bimWGCB8dEaE8pCVPoXHBIvO7B5ruTyh8RbzEW+KTU6Q5Ur68C/0PrfR3gwonkuZILKn
-         XBEDBiRH3pEBoR0p9xzsQt3QSUfqEAs/l0utOohuB3A0+eVfGEEDm4GR//oeVo9nocC3
-         LnRt5HKYPC2gNtKH09R6CWG2p1K7zb/RLei1GCX0WchH+T1PnfXGnQjsTAoGFMoDKMOW
-         H5nABG6HPcz+QYi/kx0YLqNgwtJ8GZFbXjbKK4i/3dOZRUBZIBAgKzxeIiS4MEw/xpHm
-         KeCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Nv8lNSH0gbtDRGd36VCloQ6uZGegVPpsw/onrG8x3ew=;
-        b=o4kgI4yUoVAHOtMNykLswQHQutMB8i3Z8NXWbYvOCopwTLLPPmA3EMbjNlX3wDKPmd
-         55metuLZioLFOv8wiqc99VTc1T5y5wM8TQ/kfC4NEVenCZZtgrL23IAJo3Qjd6YrDj3H
-         8vhl6R/KW41d5sczVTRI9U/7rEmrgKCE1XaOwivebL7ZXfYF/SRnWORY2zeJS0sgbp7A
-         TIJwrk7jD2pM/XTirrxl3HK+U42xjQNh2FaSUigfRTzf90pbyrZwWZ20VFLNhaeDUVI9
-         3TxsyxWShmWu0CIcI/MdMFKzWXjSjUSVWSV6IaLtRM6S75gWzSDz+ltAtDMY+Dcm07Q8
-         Btfg==
-X-Gm-Message-State: AOAM53245YfNxJ7LdJNJ7Ni5Z5kQ9oNgAqOdlhW+OBDhLFeO4KS0tcDg
-        est3qrqFsvGA/4vKqx1W8o85qmTxxWMvTCX6
-X-Google-Smtp-Source: ABdhPJwZLwXF5gGhpt3H78T3NZu8Rwtld52oms13g3NCCt4/CVIBRMHb30iIrWeu9SanSWzwVRzyKQ==
-X-Received: by 2002:a17:907:86a0:b0:6f4:fc1f:30d9 with SMTP id qa32-20020a17090786a000b006f4fc1f30d9mr28654321ejc.708.1652344618652;
-        Thu, 12 May 2022 01:36:58 -0700 (PDT)
-Received: from [192.168.0.156] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id ko21-20020a170907987500b006f3ef214e28sm1881071ejc.142.2022.05.12.01.36.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 May 2022 01:36:58 -0700 (PDT)
-Message-ID: <30c18480-bf0d-82b9-5b11-daa3b70c40df@linaro.org>
-Date:   Thu, 12 May 2022 10:36:56 +0200
+        Thu, 12 May 2022 05:10:34 -0400
+Received: from AUS01-SY4-obe.outbound.protection.outlook.com (mail-sy4aus01olkn2172.outbound.protection.outlook.com [40.92.62.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 532838E1A2;
+        Thu, 12 May 2022 02:10:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=dQZVmhLWNv/FjQhzIXPOp5UFSVUXI1lj3M5/j9gzgQxAZsSPGTovuZFKnsYQ9wvUgtqj+zTSsPfVyZ/tZ7qBB1xfMkt+wBLX/xO6MRljSQsnfqRWG8JA15i+H0ie3Kc8aHovdGfkJBIPWNdRij6UoZ8JJAPLSmQEa69rIbbkbok22KgVMTFoZJm8QMtJ7LP3A6eIreDlttVThNPe5kdUG3kC0bdQszHKGSX7DJ9IRIrGcOeNFHOOG5oYZmop0jHS1TJXBdWXmWzxKOAxCtjAF475GHf4G0fxGlgFpbTMQRDUuRvhjNPH7HAip2VzoieDL7eXyLC20ODzuyuC47cjvw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uTuCJP18nHfqeYgUKGf7KufJ4ztpCEhq/TXcnuTDP5s=;
+ b=dS3s4gigX5PJ1jrR8Oww8SIUwkiWaC5NHTc0ZsbzwUx2mwV5brD+tnpylSlU1ZNxYr0yxIFpBNiWOGAl4Thy3ulNkcon5K+b3By4ALcDwoBmIir0n5H708RAX1kf1e9tVrvTMLRihwHQqMQRr5UAmI1lnnu6XACOhFWCkTh9OfCqYTQc0nZQYKAm4K+Wg+TxQFaslxgzpCsbn1nViuJ7mKVxkVMUKbzb0x3KCR4qsigAXeiO6N3ovGzYDUX+P0tFUSMcHqTeHkZ2RuR8QgbW+xNRIOH+7tnJb8Ovw1SDleo/3elaw7U0MmEpNTZYB33Ov7mznyFp7a9f03UIHzvLag==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uTuCJP18nHfqeYgUKGf7KufJ4ztpCEhq/TXcnuTDP5s=;
+ b=ssaky/r4LgU+ujcCNo8tEpzpGqZsAwNL+dE2xhCxFchN+TQC+GSl8psupAeZTKOvnuUQbI9SCCzA9BNfmJFRcJ3OuUSL8dhsrIT/gfvgPKaSNtSMXDEeasw58IHuaOm1fy4dy1mVC2rwfRTSsAS+qQy8jVQq9Qc8Qq3TOrUaqkQskgx1tLlaQEioXgFmB6+lPwgWNJcXj8eTTBW49ygt3nQQAgQ9q7NUgspcQTGZqSAzDU5G+4CIe88UXNPlk63DUrOKghUULRfK0H8yKG7r+m6zPrdifyRGdgn5sF80n2V4EtAD1jNFb6+slQH/H583ww6BnGgWDkWXPCD8cib76Q==
+Received: from MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:113::14)
+ by MEAP282MB0583.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:65::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5227.20; Thu, 12 May
+ 2022 09:10:28 +0000
+Received: from MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
+ ([fe80::702a:73df:6a57:6a00]) by MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
+ ([fe80::702a:73df:6a57:6a00%6]) with mapi id 15.20.5227.023; Thu, 12 May 2022
+ 09:10:28 +0000
+From:   Yonglin Tan <yonglin.tan@outlook.com>
+To:     mani@kernel.org, quic_hemantk@quicinc.com,
+        gregkh@linuxfoundation.org, loic.poulain@linaro.org
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ylintan <yonglin.tan@outlook.com>
+Subject: [PATCH]     bus: mhi: host: Add support for a new Quectel Module.
+Date:   Thu, 12 May 2022 17:07:46 +0800
+Message-ID: <MEYP282MB2374BF134896B003FD8BF826FDCB9@MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM>
+X-Mailer: git-send-email 2.7.4
+Content-Type: text/plain
+X-TMN:  [hMnkSDSX2drB345a6wB4buGMqTV5dL1T]
+X-ClientProxiedBy: HK2PR0401CA0018.apcprd04.prod.outlook.com
+ (2603:1096:202:2::28) To MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
+ (2603:10c6:220:113::14)
+X-Microsoft-Original-Message-ID: <1652346466-16902-1-git-send-email-yonglin.tan@outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH 4/9] dt-bindings: remoteproc: qcom: wcnss: Convert to YAML
-Content-Language: en-US
-To:     Sireesh Kodali <sireeshkodali1@gmail.com>,
-        linux-remoteproc@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-References: <20220511161602.117772-1-sireeshkodali1@gmail.com>
- <20220511161602.117772-5-sireeshkodali1@gmail.com>
- <00234f36-9bae-31d5-5b83-ea238e7e3c11@linaro.org>
- <CJXL0SG2GHN1.1IO2JOR5ARNV8@skynet-linux>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CJXL0SG2GHN1.1IO2JOR5ARNV8@skynet-linux>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 9e0b35d9-5207-493a-64b1-08da33f74220
+X-MS-Exchange-SLBlob-MailProps: 0RSV28T7LqTw98sKciW2l8XpStjyDTN8lXQUQIW6dh9a5RGd2BB5afhuIdpOem/WjOCQyYwtSamluRPx1nyaAIfzbdY4bxDlF99XjnYFCXBnSIshHcJGGj+GKjBrjzvLfdODrj44g+a7s7xLkJeRaJFBkdTue9Tjt/qwVOXYtmmKX3CxzPDXQP8vKSE78t0xj7ObKTbgOBin6b0x46+Y/4LhEgsFDRaZvC2RcHRpe4vjQHBnSwhRJ2uYWecI1Z+uVWSwNXV97akNwKZSLBDgB/TLoz9tZf8G6pUGTglzzNmMVeRh7kzP4hM17hKyckBn/WxGkU3AD5BAgtUceTi/git/R/wuoJqNwJHFB+ppTp6wlxJlim6SBukP2F5MUMBXG/3dqBucqRlTrLbmxeRksQeTCbKYQZpXLiACjwJrq484h34aTNva1ehnXHj8SOoyWm1JnE284sdjZNV9S+LPyxxpJQCYwAolNHhZ8e+ifApd93sv/wp0wbWbsXQ72n5sNN6rkP6iCTIXPG66F9iTubG8CMlIJVsJkAvRcpS6Ed0pRfESCx4iGF+2SiM8zb+cTTWYjSeuh0WsuFPc0Prsv+9Hx6TNPAa8vVqMf1UvoN5T9KFiYlUAn7kLxbsBCs9E33Q2QpbLbWJ+d8FWDOawX34p8uscVdNV9DQ4P9acPYNrKv1B4hbXzpmoGFhF49J9
+X-MS-TrafficTypeDiagnostic: MEAP282MB0583:EE_
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 6t+/12OZAjh1G7j4S77p/BdjfJ84VRefTRD2rr7LGIhko8pepIjD9ZAUCWJyQM8nNhQsr4U+R5S6D4Iwhd5wd49aa6+5KqlZtWCBH1AWK7ZtLZpo4Hn9Tp4P0gdogSb9w5NqrIIg6feNXAtIv8OdgVdl6j47HGIoyOAiUvi+EBlwSkFA8CknBWtXLL/wbhPlzYZHMKtuhueJMjF93yYck/3m4YODqyYUgitOXs+hQcUko1oS2cmyVz3ft5Zp7xPJI6Pa6IiEqvDju+s5tHG4MqTj3LKfpXzIutux9eQ75xp4DZ55CGeLKrpvTp5K6I3OK9wUMeWmImkXejhT4GvQJ9vYuhCEGh1vVP8vedB58rBRQzBzto43WySdAMSBV/AnCBGc98LkXVPWOp1Y594++pMfQN1xEKpxtPbumi5J1tzfxZPljnCHEJp01W/FWVph252V+CJdwpvjZdPLC/ur4frbO/BA41fAv1rHbmDkVtqmQ0/KRpfPJiROnU+MhGpJqo+pTluyUlUGdy9Cm8JP54Hc58Di0T32rFbpBe3j9iVh/yNTRvKRw4vMXR7OOM59UZ9XEzocXPmma9BJEgD7yg==
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?V2q1dB4Yk9pLeaZKy7zDhzyV/P4blRkacuA7l0Vu6Xpjl5j8RxdbMTfrhahJ?=
+ =?us-ascii?Q?yLZo9A1fp0nkXRXz4IvdAzVAWwltl4O+x53iH+jLKM2uTUwkpC3Bpn7lbRVF?=
+ =?us-ascii?Q?n3PVQedHQueZoBBPU5/7ZfkyQkwMkdd/RZya/3WZuZEGj9pj+aZNA395j0Jq?=
+ =?us-ascii?Q?amEpFcm7tQ+PAUCXcyj2Mt5M3fEgKk6S4Unf449hge9Kde3UylDalmYNsZcL?=
+ =?us-ascii?Q?DitgJFyrb9ERgR+9sazcc+I3FYTpEUG5WD2qXtiCWcNJJgWj8AkGMoNHhSZM?=
+ =?us-ascii?Q?0KOf4xuGwJlT19Fz0UAyzxD1muxOZ8RoRBlVtV5d00vVWeUr3sXFzXliNIB+?=
+ =?us-ascii?Q?Inyep+NKm16Atpr6XsAcF/dHiucUye6kh+FW17u6b0gSa6zKbtZWFilow5Sp?=
+ =?us-ascii?Q?lplRhXPgZPpt6iuIzA3SIK7DUbCX4G/z1W+KejpUHb1MpqpnNwxXtbxrNQfR?=
+ =?us-ascii?Q?eEogyjhDbfgccfix7v9Q+2gLL/4fZalrUuyJENJlVDJMNruFZsZPiHx1plYM?=
+ =?us-ascii?Q?BstAINwoBf4fy9MG+Q+uPfhr154y5vsJ88zGGIrHdLeFfKsGoeOVeo97RxOL?=
+ =?us-ascii?Q?8pLhJCi4Q9XqvVZs90z7MtJogEvQDB3wAvH68pSpNx2dmsT4lkIO1rHNSzr8?=
+ =?us-ascii?Q?l706APiiUDRIWUuD7DQ0OzxVvX90htLaeiPJQfW/ng76NsXEznnIVA+XK53F?=
+ =?us-ascii?Q?bASdwpCoXsz1s4dh9pwN6rZ8hX2mYV+9ogDnoMHMqIUF4XYeRC4wz/H2LcxC?=
+ =?us-ascii?Q?tV1MpAa4GMK+7POJGb30BW78gSTVdKTkQf5sWpRzpopCK8A1P9gCW6uV+NTs?=
+ =?us-ascii?Q?9IqNu9xm5qmI88rl7lq8QM6HSm9jBHbeZm5JhdPo2GqTuZ8xXlc0PTphODce?=
+ =?us-ascii?Q?AFzbQ1tAR8d0DQcewgqxmcB0fLhI56umBaQYz8G2jWDNDeBRV3561Gpu9jEg?=
+ =?us-ascii?Q?C3m5ymAE+cGkpjMv0lKo/pvYf+h4xjRgAyT4K/gvlpYwPmXKQqy5H3CITRbe?=
+ =?us-ascii?Q?VsG4dPRAcO78VhnGPG2A76ohb6IsA6a4DqBt0BIEH2s68pICKoZJsp8qx3P/?=
+ =?us-ascii?Q?QyAzVif6DSmPweWepmfRmKE8FKnjrSRqF0t4B2vGPoy5/4DXfewQnv3TxDDR?=
+ =?us-ascii?Q?LP6C0nNWfXR5hG3yHEFmWdIbCTrDBoabp1G7zaVB+hDrgBfyHIGMJtzN9fFf?=
+ =?us-ascii?Q?b/Ls6AeWbq5iLvi+zqWoR9mTf82MLmsexF/0yXTjGih/9S2V1B1azKAhwguF?=
+ =?us-ascii?Q?K1vkVh4+owqpIIsEVYt2Zdg32rTYakxWgx59V//8mqgAmi5kQjV5A/ImISb/?=
+ =?us-ascii?Q?wD+xwn1Jy9puCJGI3SufDMUhAu/I/FzXJldW0gkD3iTEm//9F7BjzyWhe87U?=
+ =?us-ascii?Q?xDKuRsakCm3KdOuaiHXqiZ6bZ9KSP/bQMlAN0ViUI7HuhAlFNQwQ8cb6GWV+?=
+ =?us-ascii?Q?bKR2I2SeKqo=3D?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9e0b35d9-5207-493a-64b1-08da33f74220
+X-MS-Exchange-CrossTenant-AuthSource: MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2022 09:10:28.8047
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MEAP282MB0583
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/05/2022 08:50, Sireesh Kodali wrote:
->>> +    description: The names of the state bits used for SMP2P output
->>> +    items:
->>> +      - const: stop
->>> +
->>> +  memory-region:
->>> +    maxItems: 1
->>> +    description: Reference to the reserved-memory for the WCNSS core
->>> +
->>> +  smd-edge:
->>> +    type: object
->>> +    description:
->>> +      Qualcomm Shared Memory subnode which represents communication edge,
->>> +      channels and devices related to the ADSP.
->>
->> You should reference /schemas/soc/qcom/qcom,smd.yaml
+From: ylintan <yonglin.tan@outlook.com>
 
-It seems it is not a SMD driver so above reference is not correct. This
-should be probably described in its own schema, I just need to
-understand what's this...
+    A new Quectel EM1xx module need to be supported by kernel.
+    The module is based on Qualcomm SDX24 platform and the
+    configuration should be aligned with EM120 and EM160.
 
+    Signed-off-by: Yonglin Tan <yonglin.tan@outlook.com>
 
-Best regards,
-Krzysztof
+Signed-off-by: ylintan <yonglin.tan@outlook.com>
+---
+ drivers/bus/mhi/host/pci_generic.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 8416267..0a6469c 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -557,6 +557,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+ 	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
+ 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
++	{ PCI_DEVICE(0x1eac, 0x2001), /* EM120R-GL for FCCL (sdx24) */
++		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+ 	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
+ 		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+-- 
+2.7.4
+
