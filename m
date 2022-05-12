@@ -2,162 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8546F525751
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 23:48:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9634525778
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 23:58:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358981AbiELVsc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 17:48:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53774 "EHLO
+        id S1358985AbiELV6l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 17:58:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358924AbiELVsI (ORCPT
+        with ESMTP id S1358938AbiELV6j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 17:48:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2830927EB94
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 14:47:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1652392071;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=YWzVrdFw3n8EH2Ce8k4daz33bBf83epcMdzHAJNT8tE=;
-        b=PJ+AYPyj8pLd2Z53EbADYFV5StVYRn6S6jED85CI2KX0LlZFLoUwWpJgqxLVR1cCp1TA7w
-        Ee+yFuIUie++p0yEbE/jlRz3u/BKcr+QXYIEz+i/gmydFs8giFyA8SPefd+tYPxjE25Y4f
-        XVAG82zZg9XBaQNlBcyJxcIQAVNriuI=
-Received: from mimecast-mx02.redhat.com (mx3-rdu2.redhat.com
- [66.187.233.73]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-617-E2haYQIaNmW7kVC3uepXEg-1; Thu, 12 May 2022 17:47:46 -0400
-X-MC-Unique: E2haYQIaNmW7kVC3uepXEg-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com [10.11.54.2])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DD7EB383328C;
-        Thu, 12 May 2022 21:47:45 +0000 (UTC)
-Received: from warthog.procyon.org.uk (unknown [10.33.37.67])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id A13B84010E23;
-        Thu, 12 May 2022 21:47:31 +0000 (UTC)
-Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
-        Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
-        Kingdom.
-        Registered in England and Wales under Company Registration No. 3798903
-From:   David Howells <dhowells@redhat.com>
-In-Reply-To: <20220504014440.3697851-1-keescook@chromium.org>
-References: <20220504014440.3697851-1-keescook@chromium.org>
-To:     Kees Cook <keescook@chromium.org>
-Cc:     Alexei Starovoitov <ast@kernel.org>, alsa-devel@alsa-project.org,
-        Al Viro <viro@zeniv.linux.org.uk>,
-        Andrew Gabbasov <andrew_gabbasov@mentor.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Andy Lavr <andy.lavr@gmail.com>,
-        Arend van Spriel <aspriel@gmail.com>,
-        Baowen Zheng <baowen.zheng@corigine.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-        Bradley Grove <linuxdrivers@attotech.com>,
-        brcm80211-dev-list.pdl@broadcom.com,
-        Christian Brauner <brauner@kernel.org>,
-        Christian =?utf-8?Q?G=C3=B6ttsche?= <cgzones@googlemail.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        Chris Zankel <chris@zankel.net>,
-        Cong Wang <cong.wang@bytedance.com>,
-        Daniel Axtens <dja@axtens.net>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Dan Williams <dan.j.williams@intel.com>,
-        David Gow <davidgow@google.com>,
-        David Howells <dhowells@redhat.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-        devicetree@vger.kernel.org, Dexuan Cui <decui@microsoft.com>,
-        Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
-        Eli Cohen <elic@nvidia.com>,
-        Eric Dumazet <edumazet@google.com>,
-        Eric Paris <eparis@parisplace.org>,
-        Eugeniu Rosca <erosca@de.adit-jv.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Francis Laniel <laniel_francis@privacyrequired.com>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Franky Lin <franky.lin@broadcom.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Gregory Greenman <gregory.greenman@intel.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Hante Meuleman <hante.meuleman@broadcom.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Hulk Robot <hulkci@huawei.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        James Morris <jmorris@namei.org>,
-        Jarkko Sakkinen <jarkko@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Johannes Berg <johannes.berg@intel.com>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        John Keeping <john@metanate.com>,
-        Juergen Gross <jgross@suse.com>, Kalle Valo <kvalo@kernel.org>,
-        Keith Packard <keithp@keithp.com>, keyrings@vger.kernel.org,
-        kunit-dev@googlegroups.com,
-        Kuniyuki Iwashima <kuniyu@amazon.co.jp>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Leon Romanovsky <leon@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux1394-devel@lists.sourceforge.net,
-        linux-afs@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-hardening@vger.kernel.org, linux-hyperv@vger.kernel.org,
-        linux-integrity@vger.kernel.org, linux-rdma@vger.kernel.org,
-        linux-scsi@vger.kernel.org, linux-security-module@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
-        linux-xtensa@linux-xtensa.org, llvm@lists.linux.dev,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Louis Peens <louis.peens@corigine.com>,
-        Luca Coelho <luciano.coelho@intel.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Marc Dionne <marc.dionne@auristor.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Mark Brown <broonie@kernel.org>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Max Filippov <jcmvbkbc@gmail.com>,
-        Mimi Zohar <zohar@linux.ibm.com>,
-        Muchun Song <songmuchun@bytedance.com>,
-        Nathan Chancellor <nathan@kernel.org>, netdev@vger.kernel.org,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Nuno =?utf-8?Q?S=C3=A1?= <nuno.sa@analog.com>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Paul Moore <paul@paul-moore.com>,
-        Rich Felker <dalias@aerifal.cx>,
-        Rob Herring <robh+dt@kernel.org>,
-        Russell King <linux@armlinux.org.uk>, selinux@vger.kernel.org,
-        "Serge E. Hallyn" <serge@hallyn.com>,
-        SHA-cyfmac-dev-list@infineon.com,
-        Simon Horman <simon.horman@corigine.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Stefan Richter <stefanr@s5r6.in-berlin.de>,
-        Steffen Klassert <steffen.klassert@secunet.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Stephen Smalley <stephen.smalley.work@gmail.com>,
-        Tadeusz Struk <tadeusz.struk@linaro.org>,
-        Takashi Iwai <tiwai@suse.com>, Tom Rix <trix@redhat.com>,
-        Udipto Goswami <quic_ugoswami@quicinc.com>,
-        Vincenzo Frascino <vincenzo.frascino@arm.com>,
-        wcn36xx@lists.infradead.org, Wei Liu <wei.liu@kernel.org>,
-        xen-devel@lists.xenproject.org,
-        Xiu Jianfeng <xiujianfeng@huawei.com>,
-        Yang Yingliang <yangyingliang@huawei.com>
-Subject: Re: [PATCH 00/32] Introduce flexible array struct memcpy() helpers
+        Thu, 12 May 2022 17:58:39 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 407706AA79
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 14:58:36 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id c24so1930530lfv.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 14:58:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=l0P9n8l4sqdaGpJYwb8TmYe/pYN9ZOMc6psw005K6W8=;
+        b=r1MgLvAKOWxK17473BnHn1rEYKVN5kTvzRFtC/2J97/fQga/5zikKKgbBLJiuC0Z1K
+         YypSYWWvztIihlbTaAz6X+JG15+4DbmL9g8pI4vNVsKUsXibvYsXntn1jPNaLy6Bakan
+         G1J2LiuA75CnFLN4Uxfsd6Wq3aCH7+AKAsMpVmfpNWtRhbEzNbm9pvj1JCwU2N+1+auC
+         g0xRn30EOBSou4q6FKmf4St64KNo6pco/+G+xdDqh+o8Jnoc2WOBMPumxJB5wEE8Wxu3
+         ChE18T+O6qqyiCrXXh3BlDO23HeI4VecuFySqsau3njHZikMze7Z/ED6zGU0t2x4CLFd
+         EXcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=l0P9n8l4sqdaGpJYwb8TmYe/pYN9ZOMc6psw005K6W8=;
+        b=PSz6cgMqrwToFoXivRjcIJNPXcRzDW9zvis3VormZ0ZrV3WbGiwBJw7+iB7kqbD8zS
+         Lv5hPmas4cpo0ZBwdgDaDWWyNL1eYJJLBSSDtpUCHzw6OGo3QEuLKJxckLb4iB+b7lYP
+         pE901QQIyVLg5irTTF7xFu5c+osob3DmV82u8Io5Rk8b4lri2TZYN+pukHXbjxv5/aOb
+         J3KeIWC0roltVxg/iXG5T/EmMnylNQU3Ef6uXj2ZurWs1z48nary7bG8gD2MI7KDTJ5e
+         4dR1xdATlbMpxLh0Pb+7hS7K+n0n9yyBh2PJscKNUvWQ2zPMMfdjCLEz2y69C3cgEebK
+         jGeA==
+X-Gm-Message-State: AOAM530LkFDuQ0ji7ZsjL6M2Dnb7g95kG2bGQm7YPvcpdYkiBLVr/JsZ
+        llV6bOBYWtjY27ArmkRXA6DaOw==
+X-Google-Smtp-Source: ABdhPJyERGnl7c6n7wtNjcgQljRoguy0RoLnM4HVwXBLlbaWuS/K1RRSFO5ZCpg7ix4qBnIRjjiZsg==
+X-Received: by 2002:a05:6512:1109:b0:473:e582:a60c with SMTP id l9-20020a056512110900b00473e582a60cmr1275217lfg.150.1652392714526;
+        Thu, 12 May 2022 14:58:34 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id l4-20020ac25544000000b0047255d211edsm100706lfk.284.2022.05.12.14.58.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 May 2022 14:58:33 -0700 (PDT)
+Message-ID: <410ffede-1419-89a2-2600-8f92fdb4161e@linaro.org>
+Date:   Fri, 13 May 2022 00:58:32 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-Date:   Thu, 12 May 2022 22:47:31 +0100
-Message-ID: <899235.1652392051@warthog.procyon.org.uk>
-X-Scanned-By: MIMEDefang 2.84 on 10.11.54.2
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v1 1/5] arm64: dts: qcom: sdm660: disable dsi1/dsi1_phy by
+ default
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220503220927.960821-1-dmitry.baryshkov@linaro.org>
+ <20220503220927.960821-2-dmitry.baryshkov@linaro.org>
+ <20220504081102.g36yjajytvuaba7r@SoMainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220504081102.g36yjajytvuaba7r@SoMainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -165,26 +80,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 04/05/2022 11:11, Marijn Suijten wrote:
+> On 2022-05-04 01:09:23, Dmitry Baryshkov wrote:
+>> Follow the typical practice and keep DSI1/DSI1 PHY disabled by default.
+>> They should be enabled in the board DT files. No existing boards use
+>> them at this moment.
+> 
+> This practice also seems to be applied to dsi0/dsi0_phy across other
+> boards.  Should this also be applied to sdm630.dtsi's dsi0/dsi0_phy
+> nodes, and them subsequently re-enabled in sdm630-sony-xperia-nile.dtsi?
 
-Kees Cook <keescook@chromium.org> wrote:
+I will apply corresponding changes to sdm630.dtsi. However enabling them 
+in sdm630-sony-xperia-nile.dtsi doens't make sense at this moment, since 
+neither of nile platforms properly describes the mdss/mdp/panel 
+configuration. I'm looking forward to seeing the updates for these 
+devices trees though.
 
-> I'm happy to also point out that the conversions (patches 5+) are actually
-> a net reduction in lines of code:
->  49 files changed, 154 insertions(+), 244 deletions(-)
+> 
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> 
+> - Marijn
+>> ---
+>>   arch/arm64/boot/dts/qcom/sdm660.dtsi | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+>> index eccf6fde16b4..023b0ac4118c 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+>> @@ -192,6 +192,8 @@ dsi1: dsi@c996000 {
+>>   		phys = <&dsi1_phy>;
+>>   		phy-names = "dsi";
+>>   
+>> +		status = "disabled";
+>> +
+>>   		ports {
+>>   			#address-cells = <1>;
+>>   			#size-cells = <0>;
+>> @@ -225,6 +227,7 @@ dsi1_phy: dsi-phy@c996400 {
+>>   
+>>   		clocks = <&mmcc MDSS_AHB_CLK>, <&rpmcc RPM_SMD_XO_CLK_SRC>;
+>>   		clock-names = "iface", "ref";
+>> +		status = "disabled";
+>>   	};
+>>   };
+>>   
+>> -- 
+>> 2.35.1
+>>
 
-That doesn't mean that it's actually code that's clearer to read.  I would say
-that it's actually less clear.  In a bunch of places, you've done something
-like:
 
--	e = kmalloc(...);
--	if (!e)
-+	if (__mem_to_flex_dup(&e, ...))
-
-The problem is that, to me at least, it looks like:
-
--	e = kmalloc(...);
--	if (kmalloc failed)
-+	if (__mem_to_flex_dup(&e, ...) succeeded)
-
-David
-
+-- 
+With best wishes
+Dmitry
