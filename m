@@ -2,76 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E59852580A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 00:58:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A3A4525812
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 01:05:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359335AbiELW6x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 18:58:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36440 "EHLO
+        id S1359344AbiELXFC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 19:05:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356737AbiELW6w (ORCPT
+        with ESMTP id S1359343AbiELXFB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 18:58:52 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF27C46B17
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 15:58:49 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id o22so7393641ljp.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 15:58:49 -0700 (PDT)
+        Thu, 12 May 2022 19:05:01 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A04AFAD5;
+        Thu, 12 May 2022 16:05:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=jkpKnJ/yq/4VufrEoiHCSBT7WZrJ/+EWhFoDfqoJRbI=;
-        b=BnhBqfRuQvIXa0k2pvOjJ/O9b1LJuEsWOb5zYQolEdDiSRUfVEzPIMshLl3o8idQ91
-         5oBjAtvp/6iTXakcyzAZE3wsCy1eTFjv/hVDa23mzMxzr4WFJgVtVBo+xUlfKFAgHIM9
-         Mly6RLpGzyxxGisHDXTR0VYL4G2222Eh0o3HWeKh7sQNzRbhySTaiqZLvkSWxpwDsv6R
-         6OvT9G6NpjX/uVim1TJxkjhLawU5SWO2Tyf9Im2bD7LyUGQbjhgQ0yBmkczhGYoZjhkP
-         hp65TlJMtt3HsRtJnAvoB2ePHd3HAZXktPqHw/QHE198WK3ihIfohlwbj76T+JCHeB3+
-         Nyag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=jkpKnJ/yq/4VufrEoiHCSBT7WZrJ/+EWhFoDfqoJRbI=;
-        b=4iwiamuFcYRk4tU8Y71LQTb8H9vO5CM/deCPUYqbdOlKaR3dTRij72/rBDZnxQNfzN
-         p6DS5l4KqSPSIYuZtcJRjmtPTKYHn1oDQmo9Qoa++ZZNaqbvxyjoUvuTdYybOEnucfgZ
-         X/P35w0zjwziOHgrCW3eAuc1l5Er56MBmyLQRlVVyp/OOiMCT8/U+xvJ9DddU/fAoO0a
-         C9m/45c7Ne5rFnxQYXxHY+fA1nD4smB0nCfpgDizATSjLTBmigtYvotPxrXwCbEuWiiM
-         vJUUGpb4kF3OC/tbjc4C54QVwZIA4gtnA2Kupf7Z7bhQStrsHGnAUi3vIn0lPN5nw6qL
-         waSA==
-X-Gm-Message-State: AOAM532xZjoNRSYVi7U+Gx39g3pTVdyerxAVusYmiBI87u93mqv5Qb4y
-        0zTwhk5yX155KuXnE6pmpO+iPg==
-X-Google-Smtp-Source: ABdhPJzaT7iP0KrmcmP9LaClAfuGYAaA0bF0Hr1bpKK+ozoWANK0hP65k8I4/3Cvwc3WRpMN7gqINw==
-X-Received: by 2002:a2e:8404:0:b0:250:cde7:e9e3 with SMTP id z4-20020a2e8404000000b00250cde7e9e3mr1373508ljg.289.1652396328004;
-        Thu, 12 May 2022 15:58:48 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j2-20020a2ea902000000b0024f3d1daeccsm134820ljq.84.2022.05.12.15.58.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 May 2022 15:58:47 -0700 (PDT)
-Message-ID: <ae909313-ef7a-5c40-55b8-a1a802b6cdd5@linaro.org>
-Date:   Fri, 13 May 2022 01:58:47 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652396700; x=1683932700;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=Irmk+PIoDl9lVGe3CGNHkqKewPzKLkRFe6w4ku7l9SQ=;
+  b=M7suJ0HBk4PZDniWOyJMxoqOaiYOayE9BxU34k9c8HqVAL23QDJ0WvRu
+   S76R/1GI47qGQrA+vsJ3nv0stnBphPDgvIqKyoVC/rT25UplfAJ+k/g6e
+   9y1U8Mo6/QoMuhrJu1xyyZQ9mQZGFtE9nEnkGRvOvYlZxwymBIhzg8dEl
+   g=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 12 May 2022 16:05:00 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 16:04:59 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 12 May 2022 16:04:59 -0700
+Received: from [10.38.247.112] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 12 May
+ 2022 16:04:56 -0700
+Message-ID: <09d99477-ac9d-ee90-41f1-af13a302d25d@quicinc.com>
+Date:   Thu, 12 May 2022 16:04:54 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v1 5/5] arm64: dts: qcom: sdm660: Add initial Inforce
- IFC6560 board support
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v4] drm/msm/dsi: don't powerup at modeset time for
+ parade-ps8640
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
+CC:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        "David Airlie" <airlied@linux.ie>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220503220927.960821-1-dmitry.baryshkov@linaro.org>
- <20220503220927.960821-6-dmitry.baryshkov@linaro.org>
- <0574f34c-b898-8ccb-05bd-6e3d454fee2c@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <0574f34c-b898-8ccb-05bd-6e3d454fee2c@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Sean Paul <sean@poorly.run>
+References: <20220512145954.v4.1.Ia196e35ad985059e77b038a41662faae9e26f411@changeid>
+ <dd62b8a7-43b9-364a-a427-94d621648012@linaro.org>
+ <a721e2e9-934e-3028-cb1a-047f6d5c5b1e@quicinc.com>
+ <CAD=FV=U_dfCzcW6kP9zH=pxOUAioTMwh7=0-_=zSAkX9hurZmg@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAD=FV=U_dfCzcW6kP9zH=pxOUAioTMwh7=0-_=zSAkX9hurZmg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,89 +80,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/05/2022 19:17, Konrad Dybcio wrote:
+Hi,
+
+On 5/12/2022 3:44 PM, Doug Anderson wrote:
+> Hi,
 > 
-> On 04/05/2022 00:09, Dmitry Baryshkov wrote:
->> The IFC6560 is a board from Inforce Computing, built around the SDA660
->> SoC. This patch describes core clocks, some regulators from the two
->> PMICs, debug uart, storage, bluetooth and audio DSP remoteproc.
+> On Thu, May 12, 2022 at 3:34 PM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >>
->> The regulator settings are inherited from prior work by Konrad Dybcio
->> and AngeloGioacchino Del Regno.
+>> On 5/12/2022 3:16 PM, Dmitry Baryshkov wrote:
+>>> On 13/05/2022 01:00, Douglas Anderson wrote:
+>>>> Commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
+>>>> time") caused sc7180 Chromebooks that use the parade-ps8640 bridge
+>>>> chip to fail to turn the display back on after it turns off.
+>>>>
+>>>> Unfortunately, it doesn't look easy to fix the parade-ps8640 driver to
+>>>> handle the new power sequence. The Linux driver has almost nothing in
+>>>> it and most of the logic for this bridge chip is in black-box firmware
+>>>> that the bridge chip uses.
+>>>>
+>>>> Also unfortunately, reverting the patch will break "tc358762".
+>>>>
+>>>> The long term solution here is probably Dave Stevenson's series [1]
+>>>> that would give more flexibility. However, that is likely not a quick
+>>>> fix.
+>>>>
+>>>> For the short term, we'll look at the compatible of the next bridge in
+>>>> the chain and go back to the old way for the Parade PS8640 bridge
+>>>> chip. If it's found that other bridge chips also need this workaround
+>>>> then we can add them to the list or consider inverting the condition.
+>>>>
+>>>> [1]
+>>>> https://lore.kernel.org/r/cover.1646406653.git.dave.stevenson@raspberrypi.com
+>>>>
+>>>>
+>>>> Fixes: 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
+>>>> time")
+>>>> Suggested-by: Rob Clark <robdclark@gmail.com>
+>>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+>>>
+>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>
+>> Yes, I think this is a better solution than a full revert
 >>
->> Co-developed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
->>   .../boot/dts/qcom/sda660-inforce-ifc6560.dts  | 455 ++++++++++++++++++
->>   2 files changed, 456 insertions(+)
->>   create mode 100644 arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+>> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile 
->> b/arch/arm64/boot/dts/qcom/Makefile
->> index f9e6343acd03..5f717fe0e8d0 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -88,6 +88,7 @@ dtb-$(CONFIG_ARCH_QCOM)    += 
-
-[skipped]
-
->> +
->> +/* BAM DMA doesn't seem to work on the board */
-> I wonder if these are configured differently on your firmware.. what if 
-> you remove the `qcom,controlled-remotely` property, or in case that 
-> doesn't work, swap out the BAM clock for a fake one, like xo_board?
-
-You know, replacing BAM clock with xo_board makes the devices probe and 
-work. So does adding interconnects property (together with Bhupeshe's 
-patches which didn't land for some reason). I think I will override just 
-the clocks for now and update the core dtsi once the [1] gets merged.
-
-[1] 
-https://lore.kernel.org/linux-arm-msm/20211110105922.217895-14-bhupesh.sharma@linaro.org/
-
->> +&blsp1_dma {
->> +    status = "disabled";
->> +};
+>> I am curious to know why this doesnt work for parade but will not hold
+>> this patch back for that. We are initializing and turning on DSI PHY now
+>> before turning on the bridge chip which is actually better as we are
+>> putting PHY in a good state.
+>>
+>> So this should have been better, but somehow doesn't work.
 > 
-> This reference should come before blsp1_i2c6 alphabetically
+> I can't really explain it, but mostly because the Parade chip is just
+> a big black box. There have been several times when an OEM using this
+> bridge chip had one problem or another with getting the display to
+> turn on, then the parade FAE would make some magic tweak to the
+> firmware and it would be fixed. The current way that the Linux driver
+> is working is with pretty much zero configuration so I think this chip
+> bakes in a bunch of assumptions about the timings / signal coming from
+> the MIPI DSI side. It doesn't surprise me that changing the order like
+> this would confuse it.
 > 
+> In theory I believe the Parade chip can run in a less "automatic" mode
+> where everything is configured and controlled by Linux. I'd really
+> have preferred if we could have gotten that done, but it didn't end up
+> happening. :(
 > 
+> -Doug
 
-[skipped]
+Again this is not to block this change (you already have my ack) but 
+perhaps to help you debug this for future reference as we wont know what 
+change can break parade even in the future if this happens again and the 
+compatible check for parade will keep growing.
 
+One suggestion I can give is can we read any status bits out of the 
+parade chip in the power_on() method as its right after the new method 
+to check why its not in good status or what error bits it throws and 
+perhaps share those error bits with the FAE to see when this error can 
+come to decode this black box a bit :)
 
->> +
->> +&mdp {
->> +    status = "okay";
->> +};
-> 
-> MDP should be always enabled in SoC DTSI instead, as MDSS is borderline 
-> useless without it..
+ From those bits, we can narrow down why this timing or sequence change 
+is affecting them. Like some things could be somehow this is delaying 
+the video pixels from transmitting, it expects PHY to be in some state 
+etc and we can kind-of reverse engineer why this change broke it.
 
-I see your point. sdm845 doesn't disable it, but later platforms 
-(sc7180/sc7280/sm8250) disable mdp and require enabling it explicitly in 
-the board files. I'd tend to follow the example of the later platforms. 
-Not to mention that sdm630.dtsi already contains 'status="disabled"' for 
-this device.
+Like-wise, it is highly possible at the moment we have identified only 
+parade not to work but if there is something wrong with this change we 
+can atleast know what and address it.
 
->> +
->> +&mdss {
->> +    status = "okay";
->> +};
->> +
->> +&mmss_smmu {
->> +    status = "okay";
->> +};
-> 
-> ..and same goes for all the SMMUs (but that's a nit for the future, as I 
-> mentioned in one of the previous emails)
+Thanks
 
-Yes.
-
-[skipped]
-
-
--- 
-With best wishes
-Dmitry
+Abhinav
