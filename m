@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1F46524937
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 11:39:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F5C1524965
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 11:49:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347283AbiELJjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 05:39:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38990 "EHLO
+        id S1347600AbiELJty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 05:49:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352187AbiELJjB (ORCPT
+        with ESMTP id S1352091AbiELJtx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 05:39:01 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A891F210B98;
-        Thu, 12 May 2022 02:38:50 -0700 (PDT)
+        Thu, 12 May 2022 05:49:53 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07473104C83
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 02:49:51 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id o69so4676182pjo.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 02:49:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652348330; x=1683884330;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=Pc3XZR/BwKP8qFo+0/LRobvkz6pJ4jCAfKi/xt3D2KY=;
-  b=EDgbxqLv6ufvlSklnUHYb0j8sQST/39aaXruX24ecTfJz4dt2xuDdYAH
-   vaWJyr8KWg2R5cGbvteIrSUpA6uK0DYgXb+TG0JKiISUyHTdThgAtJtBi
-   Hv8aON0FhgrDnt3KOxqda2eusPuFarsZf7IPMkOGJ9OP3gGywpVxYOOek
-   c=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 12 May 2022 02:38:49 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 02:38:49 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 12 May 2022 02:38:48 -0700
-Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 12 May
- 2022 02:38:46 -0700
-Subject: Re: [PATCH v2] mailbox: qcom-ipcc: Log the pending interrupt during
- resume
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     <bjorn.andersson@linaro.org>, <jassisinghbrar@gmail.com>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <agross@kernel.org>, Prasad Sodagudi <quic_psodagud@quicinc.com>
-References: <1652251404-30562-1-git-send-email-quic_sibis@quicinc.com>
- <20220512074312.GA35848@thinkpad>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <5b8aa653-5af8-a54f-b7bd-4d758eac9019@quicinc.com>
-Date:   Thu, 12 May 2022 15:08:43 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7vDNoP7XYZM3/ecf9dF4efDv9n8wOqQ+k/mfwEFZVIM=;
+        b=mb92F89vgo93E7/HsAj5LhpLUe2i/MZtHILNRe75gO/u8vSR6E4KoOIWY05n54OXmz
+         mStucuOBt/mx5YODMzmguRiRGW0C6PK+Qhy4Gxo41h2ZGeHfRnFpxkV4B+XOtzRir0SW
+         m7yXYiECGjYG1D5VZammiNH5/3r1i9R0tEcPRI4jwmbgu1JPZRKmU+Byga0DD0gvU2Zk
+         UTaY9/D5/zr6yKOB4m3zKtMmvS9VK9vRIk9OnwksPefaPoa/FtM3LSy/kNbnD1i7EK8u
+         0ufH+P+PpOp1wi1sr34e+VJk6cqN6yT2FLjWRENwrUIeH5lQKsGdvxl0fyyLClXKz/At
+         VjUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7vDNoP7XYZM3/ecf9dF4efDv9n8wOqQ+k/mfwEFZVIM=;
+        b=qAUwOX6RlUS7Mo+QI4r5+hwdJQjHU7EZF6eTfLAPp8iqSmuyHtJrBc6mCJaRDj/6gX
+         qfkaWfhm90G3Kul5ASXINKIDVj1loAlcS2aoyi4VfRaYC5KyoOtdUW7gYt/hIu5NmOHz
+         tpb2U+/jYMBXdVAqyID2addobLLlEq1GI9zw82sJqzHWsqHxQmMbPau1+0KznTHDSLza
+         6bCYNdtEw0bysPRhj/bQ5UDOE0WlYRpU7VYLkwUz7+nSshSzBGVUZGBF4fkqxPrMPw9h
+         srIxzftdZasrLxUbYs41yhRqlj/06hthPLwXoBZV+nUre3PmRp7hYgVq3Z2qh04AzlxN
+         nHug==
+X-Gm-Message-State: AOAM530TAeGVZU0MqepV0P8+qA/yJXQmjb9aF20xn/0y9SGO3tLPvueW
+        JHqM0IPDs3quroxq262Nl01nwG/can+Xs4aMiD2nwoe8rog=
+X-Google-Smtp-Source: ABdhPJwHk7Xh/yhC4dMbEG6r7xpO7vJpDubqawNg75H5HqMpAfXdlGz3L8x/czAh8IkjrnGfxoy7bw/M8FPCKoWmg0o=
+X-Received: by 2002:a17:903:228f:b0:15e:be12:a181 with SMTP id
+ b15-20020a170903228f00b0015ebe12a181mr29895350plh.21.1652348990250; Thu, 12
+ May 2022 02:49:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20220512074312.GA35848@thinkpad>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+References: <20220512082318.189398-1-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20220512082318.189398-1-vladimir.zapolskiy@linaro.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Thu, 12 May 2022 11:49:39 +0200
+Message-ID: <CAG3jFysytZ9JjNA3qLWv24hi7tPC2sE1F8wcyOTfJvdgJ+NaQw@mail.gmail.com>
+Subject: Re: [PATCH] media: camss: Allocate power domain resources dynamically
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,117 +68,124 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Mani,
+On Thu, 12 May 2022 at 10:23, Vladimir Zapolskiy
+<vladimir.zapolskiy@linaro.org> wrote:
+>
+> To simplify the driver's maintenance it makes sense to escape from
+> hardcoded numbers of power domain resources per platform and statical
+> allocation of the resources. For instance on a QCOM SM8450 platform
+> the number of CAMSS power domains shall be bumped up to 6, also notably
+> CAMSS on MSM8916 has only one power domain, however it expects to get 2,
+> and thus it should result in a runtime error on driver probe.
+>
+> The change fixes an issue mentioned above and gives more flexibility
+> to support more platforms in future.
 
-Thanks for taking time to review the patch.
+This is a great idea, thanks for submitting this.
 
-On 5/12/22 1:13 PM, Manivannan Sadhasivam wrote:
-> On Wed, May 11, 2022 at 12:13:24PM +0530, Sibi Sankar wrote:
->> From: Prasad Sodagudi <quic_psodagud@quicinc.com>
->>
->> Enable logging of the pending interrupt that triggered device wakeup. This
->> logging information helps to debug IRQs that cause periodic device wakeups
->> and prints the detailed information of pending IPCC interrupts instead of
->> the generic "Resume caused by IRQ 17, ipcc".
->>
->> Scenario: Device wakeup caused by Modem crash
->> Logs:
->> qcom-ipcc mailbox: virq: 182 triggered client-id: 2; signal-id: 2
->>
->>  From the IPCC bindings it can further understood that the client here is
->> IPCC_CLIENT_MPSS and the signal was IPCC_MPROC_SIGNAL_SMP2P.
->>
->> Signed-off-by: Prasad Sodagudi <quic_psodagud@quicinc.com>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
->>
->> V2:
->>   * Fix build error when ipcc is a module [Kernel Test Bot]
->>
->>   drivers/mailbox/qcom-ipcc.c | 27 +++++++++++++++++++++++++++
->>   1 file changed, 27 insertions(+)
->>
->> diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
->> index c5d963222014..21c071ec119c 100644
->> --- a/drivers/mailbox/qcom-ipcc.c
->> +++ b/drivers/mailbox/qcom-ipcc.c
->> @@ -254,6 +254,28 @@ static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc,
->>   	return devm_mbox_controller_register(dev, mbox);
->>   }
->>   
->> +#ifdef CONFIG_PM_SLEEP
-> 
-> You don't need this guard anymore. Please see below.
+>
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>  drivers/media/platform/qcom/camss/camss.c | 38 +++++++++++++----------
+>  drivers/media/platform/qcom/camss/camss.h |  7 ++---
+>  2 files changed, 24 insertions(+), 21 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 79ad82e233cb..32d72b4f947b 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -1452,19 +1452,31 @@ static const struct media_device_ops camss_media_ops = {
+>
+>  static int camss_configure_pd(struct camss *camss)
+>  {
+> -       int nbr_pm_domains = 0;
+> +       struct device *dev = camss->dev;
+>         int last_pm_domain = 0;
+>         int i;
+>         int ret;
+>
+> -       if (camss->version == CAMSS_8x96 ||
+> -           camss->version == CAMSS_660)
+> -               nbr_pm_domains = PM_DOMAIN_GEN1_COUNT;
+> -       else if (camss->version == CAMSS_845 ||
+> -                camss->version == CAMSS_8250)
+> -               nbr_pm_domains = PM_DOMAIN_GEN2_COUNT;
+> +       camss->genpd_num = of_count_phandle_with_args(dev->of_node,
+> +                                                     "power-domains",
+> +                                                     "#power-domain-cells");
+> +       if (camss->genpd_num < 0) {
+> +               dev_err(dev, "Power domains are not defined for camss\n");
+> +               return camss->genpd_num;
+> +       }
+> +
+> +       camss->genpd = devm_kmalloc_array(dev, camss->genpd_num,
+> +                                         sizeof(*camss->genpd), GFP_KERNEL);
+> +       if (!camss->genpd)
+> +               return -ENOMEM;
+>
+> -       for (i = 0; i < nbr_pm_domains; i++) {
+> +       camss->genpd_link = devm_kmalloc_array(dev, camss->genpd_num,
+> +                                              sizeof(*camss->genpd_link),
+> +                                              GFP_KERNEL);
+> +       if (!camss->genpd_link)
+> +               return -ENOMEM;
+> +
+> +       for (i = 0; i < camss->genpd_num; i++) {
+>                 camss->genpd[i] = dev_pm_domain_attach_by_id(camss->dev, i);
+>                 if (IS_ERR(camss->genpd[i])) {
+>                         ret = PTR_ERR(camss->genpd[i]);
+> @@ -1689,7 +1701,6 @@ static int camss_probe(struct platform_device *pdev)
+>
+>  void camss_delete(struct camss *camss)
+>  {
+> -       int nbr_pm_domains = 0;
+>         int i;
+>
+>         v4l2_device_unregister(&camss->v4l2_dev);
+> @@ -1698,14 +1709,7 @@ void camss_delete(struct camss *camss)
+>
+>         pm_runtime_disable(camss->dev);
+>
+> -       if (camss->version == CAMSS_8x96 ||
+> -           camss->version == CAMSS_660)
+> -               nbr_pm_domains = PM_DOMAIN_GEN1_COUNT;
+> -       else if (camss->version == CAMSS_845 ||
+> -                camss->version == CAMSS_8250)
+> -               nbr_pm_domains = PM_DOMAIN_GEN2_COUNT;
+> -
+> -       for (i = 0; i < nbr_pm_domains; i++) {
+> +       for (i = 0; i < camss->genpd_num; i++) {
+>                 device_link_del(camss->genpd_link[i]);
+>                 dev_pm_domain_detach(camss->genpd[i], true);
+>         }
+> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+> index c9b3e0df5be8..0db80cadbbaa 100644
+> --- a/drivers/media/platform/qcom/camss/camss.h
+> +++ b/drivers/media/platform/qcom/camss/camss.h
+> @@ -69,9 +69,7 @@ struct resources_icc {
+>  enum pm_domain {
+>         PM_DOMAIN_VFE0 = 0,
+>         PM_DOMAIN_VFE1 = 1,
+> -       PM_DOMAIN_GEN1_COUNT = 2,       /* CAMSS series of ISPs */
+>         PM_DOMAIN_VFELITE = 2,          /* VFELITE / TOP GDSC */
+> -       PM_DOMAIN_GEN2_COUNT = 3,       /* Titan series of ISPs */
+>  };
+>
+>  enum camss_version {
+> @@ -101,8 +99,9 @@ struct camss {
+>         int vfe_num;
+>         struct vfe_device *vfe;
+>         atomic_t ref_count;
+> -       struct device *genpd[PM_DOMAIN_GEN2_COUNT];
+> -       struct device_link *genpd_link[PM_DOMAIN_GEN2_COUNT];
+> +       int genpd_num;
+> +       struct device **genpd;
+> +       struct device_link **genpd_link;
+>         struct icc_path *icc_path[ICC_SM8250_COUNT];
+>         struct icc_bw_tbl icc_bw_tbl[ICC_SM8250_COUNT];
+>  };
+> --
+> 2.33.0
+>
 
-ack
-
-> 
->> +static int qcom_ipcc_pm_resume(struct device *dev)
->> +{
->> +	struct qcom_ipcc *ipcc = dev_get_drvdata(dev);
->> +	u32 hwirq;
->> +	int virq;
->> +
->> +	hwirq = readl(ipcc->base + IPCC_REG_RECV_ID);
->> +	if (hwirq == IPCC_NO_PENDING_IRQ)
->> +		return 0;
->> +
->> +	virq = irq_find_mapping(ipcc->irq_domain, hwirq);
->> +
->> +	dev_info(dev, "virq: %d triggered client-id: %ld; signal-id: %ld\n", virq,
->> +		 FIELD_GET(IPCC_CLIENT_ID_MASK, hwirq), FIELD_GET(IPCC_SIGNAL_ID_MASK, hwirq));
->> +
-> 
-> Does this really need to be dev_info? This looks like a dev_dbg() material to
-> me.
-
-The whole point of the log is to catch sporadic issues like random
-wakeups caused by remoteprocs through ipcc. We would just end up with
-a single line identifying the client id during resume if ipcc had indeed
-caused the wakeup else it wouldn't print anything.
-
--Sibi
-> 
->> +	return 0;
->> +}
->> +#else
->> +#define qcom_ipcc_pm_resume NULL
->> +#endif
->> +
->>   static int qcom_ipcc_probe(struct platform_device *pdev)
->>   {
->>   	struct qcom_ipcc *ipcc;
->> @@ -324,6 +346,10 @@ static const struct of_device_id qcom_ipcc_of_match[] = {
->>   };
->>   MODULE_DEVICE_TABLE(of, qcom_ipcc_of_match);
->>   
->> +static const struct dev_pm_ops qcom_ipcc_dev_pm_ops = {
->> +	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(NULL, qcom_ipcc_pm_resume)
->> +};
->> +
->>   static struct platform_driver qcom_ipcc_driver = {
->>   	.probe = qcom_ipcc_probe,
->>   	.remove = qcom_ipcc_remove,
->> @@ -331,6 +357,7 @@ static struct platform_driver qcom_ipcc_driver = {
->>   		.name = "qcom-ipcc",
->>   		.of_match_table = qcom_ipcc_of_match,
->>   		.suppress_bind_attrs = true,
->> +		.pm = &qcom_ipcc_dev_pm_ops,
-> 
-> You can use the new pm_sleep_ptr() macro to avoid the PM_SLEEP guard.
-> 
-> 		.pm = pm_sleep_ptr(&qcom_ipcc_dev_pm_ops),
-
-ack
-
-> 
-> Thanks,
-> Mani
-> 
->>   	},
->>   };
->>   
->> -- 
->> 2.7.4
->>
-> 
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
