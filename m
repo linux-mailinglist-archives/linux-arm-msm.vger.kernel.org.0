@@ -2,72 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFCD65257D7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 00:34:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07B815257E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 00:40:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359192AbiELWeG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 18:34:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37330 "EHLO
+        id S1359249AbiELWkr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 18:40:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352714AbiELWeF (ORCPT
+        with ESMTP id S1359234AbiELWkp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 18:34:05 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88BFF1B5FA7;
-        Thu, 12 May 2022 15:34:04 -0700 (PDT)
+        Thu, 12 May 2022 18:40:45 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB97EDFA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 15:40:40 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id n10so6467675pjh.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 15:40:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652394844; x=1683930844;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=wIyAMpReDoJksJb4UrovxYn5FThhQ/yxH84VowG15lg=;
-  b=lCxZXUrYwvF8xMmvl7T7Z+tACZ2ef0n1LyNHbm/KGTNDMFd1jlrof8l3
-   4F840LnU4E1QWrY3eA+dLRzt3RWU5Pl10fxbclAap0oDm74sw1ep1HnU8
-   dyzG7b4+2EOGIlP4HY/DXsI1UYtIkpnc4J1N+j3ER8HMmNGgn6iwIq3OC
-   Y=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 12 May 2022 15:34:04 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 15:34:04 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 12 May 2022 15:34:03 -0700
-Received: from [10.38.247.112] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 12 May
- 2022 15:34:00 -0700
-Message-ID: <a721e2e9-934e-3028-cb1a-047f6d5c5b1e@quicinc.com>
-Date:   Thu, 12 May 2022 15:33:58 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v4] drm/msm/dsi: don't powerup at modeset time for
- parade-ps8640
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>
-CC:     Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        David Airlie <airlied@linux.ie>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        "Stephen Boyd" <swboyd@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Var06zhUfSCRGoXl/2YsHbPLCV39KwA7ovVK4YO/gYI=;
+        b=lRh8vfKWUKUZwwsK2meeCN8N1RalNIVkqUl9qT9Miv8PTf5mw6HFPPiCt96zBtd98U
+         YNkSyfcIAvU5f7F+qhAIzbiUBhVPvLiDVJ/+KurWq6X1DYubUfQ7Q54ZAbE+tK52azF5
+         xR1ztL15JY3nvuj2ZkBRnM2YM/xp2wKuf5OpE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Var06zhUfSCRGoXl/2YsHbPLCV39KwA7ovVK4YO/gYI=;
+        b=IBlzYcGDXmmhqnmX2+UCZtz+15eBjvYUyqbz7vMQut6AMXJWVjyJcy7bYHPFAQsjKk
+         z3Y6hOw2KIUwR/YyB7RjHVYIx2+uXDAhgoA2VElHJ22wDGaYqPDVefxMfcI3dK+E4LyV
+         jf4b/nAbo0V+wX9Ix7AtIuLWHBw5CSJQAKebD6ypRM8oPOnPu7u/+8isYgWzstMmSnki
+         Dxye1NKOfMl96kFArEzbdm79SaQd2p9D+q58hqPi08Gu8q2IRErWlTWbNgpO+1wjcS33
+         bSdfRKJs0CZDt4+4pL7CeIhmEwwUcOJ7CONYLLWQ+YgtC5d1j3nopvdhUtTKuCUmdc91
+         ORAQ==
+X-Gm-Message-State: AOAM530H653RrOF5sih7G+SsWj6D2D+H7rUFPm85qoIrBEA/L085lDbZ
+        pjenZk5hGScqSsns3ohg1Ru/SQ==
+X-Google-Smtp-Source: ABdhPJz/0NAzpj2X0qc6+LmD057ToQ+VV6hPC/AZ4GoKWxAxkwvmbJ/ELD8Ga+7cT1wWr4yCeaBWgw==
+X-Received: by 2002:a17:902:d2c9:b0:15e:a266:6472 with SMTP id n9-20020a170902d2c900b0015ea2666472mr1736829plc.45.1652395240339;
+        Thu, 12 May 2022 15:40:40 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:bc87:9632:bcce:8e17])
+        by smtp.gmail.com with UTF8SMTPSA id v21-20020a17090a521500b001d2edf4b513sm275481pjh.56.2022.05.12.15.40.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 May 2022 15:40:40 -0700 (PDT)
+Date:   Thu, 12 May 2022 15:40:38 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>
-References: <20220512145954.v4.1.Ia196e35ad985059e77b038a41662faae9e26f411@changeid>
- <dd62b8a7-43b9-364a-a427-94d621648012@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <dd62b8a7-43b9-364a-a427-94d621648012@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Subject: Re: [v16 2/5] usb: dwc3: core: Host wake up support from system
+ suspend
+Message-ID: <Yn2M5hrah78jro1C@google.com>
+References: <1652379802-8318-1-git-send-email-quic_kriskura@quicinc.com>
+ <1652379802-8318-3-git-send-email-quic_kriskura@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1652379802-8318-3-git-send-email-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,124 +81,177 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/12/2022 3:16 PM, Dmitry Baryshkov wrote:
-> On 13/05/2022 01:00, Douglas Anderson wrote:
->> Commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
->> time") caused sc7180 Chromebooks that use the parade-ps8640 bridge
->> chip to fail to turn the display back on after it turns off.
->>
->> Unfortunately, it doesn't look easy to fix the parade-ps8640 driver to
->> handle the new power sequence. The Linux driver has almost nothing in
->> it and most of the logic for this bridge chip is in black-box firmware
->> that the bridge chip uses.
->>
->> Also unfortunately, reverting the patch will break "tc358762".
->>
->> The long term solution here is probably Dave Stevenson's series [1]
->> that would give more flexibility. However, that is likely not a quick
->> fix.
->>
->> For the short term, we'll look at the compatible of the next bridge in
->> the chain and go back to the old way for the Parade PS8640 bridge
->> chip. If it's found that other bridge chips also need this workaround
->> then we can add them to the list or consider inverting the condition.
->>
->> [1] 
->> https://lore.kernel.org/r/cover.1646406653.git.dave.stevenson@raspberrypi.com 
->>
->>
->> Fixes: 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset 
->> time")
->> Suggested-by: Rob Clark <robdclark@gmail.com>
->> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+On Thu, May 12, 2022 at 11:53:19PM +0530, Krishna Kurapati wrote:
+> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> During suspend read the status of all port and set hs phy mode
+> based on current speed. Use this hs phy mode to configure wakeup
+> interrupts in qcom glue driver.
 > 
-Yes, I think this is a better solution than a full revert
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-I am curious to know why this doesnt work for parade but will not hold 
-this patch back for that. We are initializing and turning on DSI PHY now 
-before turning on the bridge chip which is actually better as we are 
-putting PHY in a good state.
-
-So this should have been better, but somehow doesnt work.
-
->> ---
->> Note that, unlike `struct device`, `struct drm_bridge` still has a
->> `#ifdef` around the `of_node`. The extra stub function in this patch
->> is to make sure that we can pass COMPILE_TEST, not because I expect
->> that we'll actually run into real users who are running this driver
->> without device tree.
->>
->> Changes in v4:
->> - Use the compatible string of the next bridge as per Rob.
->>
->> Changes in v3:
->> - No longer a revert; now a module parameter.
->>
->> Changes in v2:
->> - Remove the mud from my face.
->>
->>   drivers/gpu/drm/msm/dsi/dsi_manager.c | 26 +++++++++++++++++++++++++-
->>   1 file changed, 25 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c 
->> b/drivers/gpu/drm/msm/dsi/dsi_manager.c
->> index 50b987658b1f..2cabba65a8f1 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
->> @@ -34,6 +34,26 @@ static struct msm_dsi_manager msm_dsim_glb;
->>   #define IS_SYNC_NEEDED()    (msm_dsim_glb.is_sync_needed)
->>   #define IS_MASTER_DSI_LINK(id)    (msm_dsim_glb.master_dsi_link_id 
->> == id)
->> +#ifdef CONFIG_OF
->> +static bool dsi_mgr_power_on_early(struct drm_bridge *bridge)
->> +{
->> +    struct drm_bridge *next_bridge = drm_bridge_get_next_bridge(bridge);
->> +
->> +    /*
->> +     * If the next bridge in the chain is the Parade ps8640 bridge chip
->> +     * then don't power on early since it seems to violate the 
->> expectations
->> +     * of the firmware that the bridge chip is running.
->> +     */
->> +    return !(next_bridge && next_bridge->of_node &&
->> +         of_device_is_compatible(next_bridge->of_node, 
->> "parade,ps8640"));
->> +}
->> +#else
->> +static inline bool dsi_mgr_power_on_early(struct drm_bridge *bridge)
->> +{
->> +    return true;
->> +}
->> +#endif
->> +
->>   static inline struct msm_dsi *dsi_mgr_get_dsi(int id)
->>   {
->>       return msm_dsim_glb.dsi[id];
->> @@ -389,6 +409,9 @@ static void dsi_mgr_bridge_pre_enable(struct 
->> drm_bridge *bridge)
->>       if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
->>           return;
->> +    if (!dsi_mgr_power_on_early(bridge))
->> +        dsi_mgr_bridge_power_on(bridge);
->> +
->>       /* Always call panel functions once, because even for dual panels,
->>        * there is only one drm_panel instance.
->>        */
->> @@ -570,7 +593,8 @@ static void dsi_mgr_bridge_mode_set(struct 
->> drm_bridge *bridge,
->>       if (is_bonded_dsi && other_dsi)
->>           msm_dsi_host_set_display_mode(other_dsi->host, adjusted_mode);
->> -    dsi_mgr_bridge_power_on(bridge);
->> +    if (dsi_mgr_power_on_early(bridge))
->> +        dsi_mgr_bridge_power_on(bridge);
->>   }
->>   static enum drm_mode_status dsi_mgr_bridge_mode_valid(struct 
->> drm_bridge *bridge,
+> Check wakeup-source property for dwc3 core node to set the
+> wakeup capability. Drop the device_init_wakeup call from
+> runtime suspend and resume.
 > 
+> Also check during suspend if any wakeup capable devices are
+> connected to the controller (directly or through hubs), if there
+> are none set a flag to indicate that the PHY is powered
+> down during suspend.
 > 
+> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  drivers/usb/dwc3/core.c | 30 +++++++++++++++++-------------
+>  drivers/usb/dwc3/core.h |  4 ++++
+>  drivers/usb/dwc3/host.c | 24 ++++++++++++++++++++++++
+>  3 files changed, 45 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> index 01115df..8bcabc5 100644
+> --- a/drivers/usb/dwc3/core.c
+> +++ b/drivers/usb/dwc3/core.c
+> @@ -1785,6 +1785,7 @@ static int dwc3_probe(struct platform_device *pdev)
+>  
+>  	platform_set_drvdata(pdev, dwc);
+>  	dwc3_cache_hwparams(dwc);
+> +	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
+>  
+>  	spin_lock_init(&dwc->lock);
+>  	mutex_init(&dwc->mutex);
+> @@ -1946,10 +1947,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+>  		dwc3_core_exit(dwc);
+>  		break;
+>  	case DWC3_GCTL_PRTCAP_HOST:
+> -		if (!PMSG_IS_AUTO(msg)) {
+> -			dwc3_core_exit(dwc);
+> -			break;
+> -		}
+> +		dwc3_check_phy_speed_mode(dwc);
+>  
+>  		/* Let controller to suspend HSPHY before PHY driver suspends */
+>  		if (dwc->dis_u2_susphy_quirk ||
+> @@ -1965,6 +1963,15 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+>  
+>  		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
+>  		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
+> +
+> +		if (!PMSG_IS_AUTO(msg)) {
+> +			if (device_may_wakeup(dwc->dev))
+
+I think this should be device_can_wakeup(), i.e. hardware capability instead of
+device policy. A drawback of powering the PHYs off is that it causes a high
+power consumption of certain peripherals if VBUS is still supplied, so this
+should be limited to platforms where the PHYs must be powered off (using wakeup
+capability as a proxy for now).
+
+
+> +				dwc->phy_power_off = false;
+> +			else {
+> +				dwc->phy_power_off = true;
+> +				dwc3_core_exit(dwc);
+> +			}
+> +		}
+>  		break;
+>  	case DWC3_GCTL_PRTCAP_OTG:
+>  		/* do nothing during runtime_suspend */
+> @@ -2008,11 +2015,12 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+>  		break;
+>  	case DWC3_GCTL_PRTCAP_HOST:
+>  		if (!PMSG_IS_AUTO(msg)) {
+> -			ret = dwc3_core_init_for_resume(dwc);
+> -			if (ret)
+> -				return ret;
+> -			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
+> -			break;
+> +			if (dwc->phy_power_off) {
+> +				ret = dwc3_core_init_for_resume(dwc);
+> +				if (ret)
+> +					return ret;
+> +				dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
+> +			}
+>  		}
+>  		/* Restore GUSB2PHYCFG bits that were modified in suspend */
+>  		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+> @@ -2084,8 +2092,6 @@ static int dwc3_runtime_suspend(struct device *dev)
+>  	if (ret)
+>  		return ret;
+>  
+> -	device_init_wakeup(dev, true);
+> -
+>  	return 0;
+>  }
+>  
+> @@ -2094,8 +2100,6 @@ static int dwc3_runtime_resume(struct device *dev)
+>  	struct dwc3     *dwc = dev_get_drvdata(dev);
+>  	int		ret;
+>  
+> -	device_init_wakeup(dev, false);
+> -
+>  	ret = dwc3_resume_common(dwc, PMSG_AUTO_RESUME);
+>  	if (ret)
+>  		return ret;
+> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+> index 81c486b..37397a8 100644
+> --- a/drivers/usb/dwc3/core.h
+> +++ b/drivers/usb/dwc3/core.h
+> @@ -1155,6 +1155,9 @@ struct dwc3 {
+>  
+>  	bool			phys_ready;
+>  
+> +	unsigned int            hs_phy_mode;
+> +	bool			phy_power_off;
+> +
+>  	struct ulpi		*ulpi;
+>  	bool			ulpi_ready;
+>  
+> @@ -1539,6 +1542,7 @@ int dwc3_core_soft_reset(struct dwc3 *dwc);
+>  #if IS_ENABLED(CONFIG_USB_DWC3_HOST) || IS_ENABLED(CONFIG_USB_DWC3_DUAL_ROLE)
+>  int dwc3_host_init(struct dwc3 *dwc);
+>  void dwc3_host_exit(struct dwc3 *dwc);
+> +void dwc3_check_phy_speed_mode(struct dwc3 *dwc);
+>  #else
+>  static inline int dwc3_host_init(struct dwc3 *dwc)
+>  { return 0; }
+> diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
+> index f56c30c..e19b40a 100644
+> --- a/drivers/usb/dwc3/host.c
+> +++ b/drivers/usb/dwc3/host.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/platform_device.h>
+>  
+>  #include "core.h"
+> +#include "../host/xhci.h"
+>  
+>  static void dwc3_host_fill_xhci_irq_res(struct dwc3 *dwc,
+>  					int irq, char *name)
+> @@ -136,3 +137,26 @@ void dwc3_host_exit(struct dwc3 *dwc)
+>  {
+>  	platform_device_unregister(dwc->xhci);
+>  }
+> +
+> +void dwc3_check_phy_speed_mode(struct dwc3 *dwc)
+> +{
+> +	int i, num_ports;
+> +	u32 reg;
+> +	struct usb_hcd	*hcd = platform_get_drvdata(dwc->xhci);
+> +	struct xhci_hcd	*xhci_hcd = hcd_to_xhci(hcd);
+> +
+> +	dwc->hs_phy_mode = 0;
+> +
+> +	reg = readl(&xhci_hcd->cap_regs->hcs_params1);
+> +
+> +	num_ports = HCS_MAX_PORTS(reg);
+> +	for (i = 0; i < num_ports; i++) {
+> +		reg = readl(&xhci_hcd->op_regs->port_status_base + i * NUM_PORT_REGS);
+> +		if (reg & PORT_PE) {
+> +			if (DEV_HIGHSPEED(reg) || DEV_FULLSPEED(reg))
+> +				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_HS;
+> +			else if (DEV_LOWSPEED(reg))
+> +				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_LS;
+> +		}
+> +	}
+> +}
+
+I anticipate that it might raise concerns from maintainers that
+dwc3_check_phy_speed_mode() accesses xHCI data structures and
+registers directly. Could there be a generic HCD API that provides
+this functionality (if implemented by the specific HCD)?
