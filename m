@@ -2,158 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4255652530D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 18:55:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12F5A525354
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 19:12:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356739AbiELQza (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 12:55:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35122 "EHLO
+        id S1356687AbiELRLz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 13:11:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356716AbiELQz3 (ORCPT
+        with ESMTP id S1356931AbiELRLB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 12:55:29 -0400
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F22156E8D9;
-        Thu, 12 May 2022 09:55:27 -0700 (PDT)
-Received: from fraeml743-chm.china.huawei.com (unknown [172.18.147.226])
-        by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Kzd985FVsz67lbv;
-        Fri, 13 May 2022 00:51:56 +0800 (CST)
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- fraeml743-chm.china.huawei.com (10.206.15.224) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Thu, 12 May 2022 18:55:25 +0200
-Received: from localhost (10.81.210.133) by lhreml710-chm.china.huawei.com
- (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Thu, 12 May
- 2022 17:55:24 +0100
-Date:   Thu, 12 May 2022 17:55:22 +0100
-From:   Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To:     Markuss Broks <markuss.broks@gmail.com>
-CC:     <linux-kernel@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Song Qiang <songqiang1304521@gmail.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        "Lars-Peter Clausen" <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 12 May 2022 13:11:01 -0400
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F061327CD6;
+        Thu, 12 May 2022 10:10:54 -0700 (PDT)
+X-IronPort-AV: E=McAfee;i="6400,9594,10345"; a="252120842"
+X-IronPort-AV: E=Sophos;i="5.91,220,1647327600"; 
+   d="scan'208";a="252120842"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 10:08:38 -0700
+X-IronPort-AV: E=Sophos;i="5.91,220,1647327600"; 
+   d="scan'208";a="658684239"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 10:08:32 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.95)
+        (envelope-from <andy.shevchenko@gmail.com>)
+        id 1npCIe-00FHkY-Cq;
+        Thu, 12 May 2022 20:08:28 +0300
+Date:   Thu, 12 May 2022 20:08:28 +0300
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Joey Gouly <joey.gouly@arm.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Liam Girdwood" <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, <linux-iio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v3 3/5] proximity: vl53l0x: Handle the VDD regulator
-Message-ID: <20220512175522.000013cb@Huawei.com>
-In-Reply-To: <20220512110757.5297-4-markuss.broks@gmail.com>
-References: <20220512110757.5297-1-markuss.broks@gmail.com>
-        <20220512110757.5297-4-markuss.broks@gmail.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; i686-w64-mingw32)
+        Andy Gross <agross@kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, kernel-team@android.com
+Subject: Re: [PATCH v3 00/10] gpiolib: Handle immutable irq_chip structures
+Message-ID: <Yn0/DIl3+i/heRH6@smile.fi.intel.com>
+References: <20220419141846.598305-1-maz@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.81.210.133]
-X-ClientProxiedBy: lhreml720-chm.china.huawei.com (10.201.108.71) To
- lhreml710-chm.china.huawei.com (10.201.108.61)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220419141846.598305-1-maz@kernel.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-Spam-Status: No, score=0.7 required=5.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+        FORGED_GMAIL_RCVD,FREEMAIL_FROM,NML_ADSP_CUSTOM_MED,SPF_HELO_NONE,
+        SPF_SOFTFAIL,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 12 May 2022 14:07:55 +0300
-Markuss Broks <markuss.broks@gmail.com> wrote:
-
-> Handle the regulator supplying the VDD pin of VL53L0X.
+On Tue, Apr 19, 2022 at 03:18:36PM +0100, Marc Zyngier wrote:
+> This is a followup from [2].
 > 
-> Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
-Hi Markuss,
-
-One ordering question inline.
-
-> ---
->  drivers/iio/proximity/vl53l0x-i2c.c | 37 +++++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
+> I recently realised that the gpiolib play ugly tricks on the
+> unsuspecting irq_chip structures by patching the callbacks.
 > 
-> diff --git a/drivers/iio/proximity/vl53l0x-i2c.c b/drivers/iio/proximity/vl53l0x-i2c.c
-> index 12a3e2eff464..d8523e3981e8 100644
-> --- a/drivers/iio/proximity/vl53l0x-i2c.c
-> +++ b/drivers/iio/proximity/vl53l0x-i2c.c
-> @@ -43,6 +43,7 @@
->  struct vl53l0x_data {
->  	struct i2c_client *client;
->  	struct completion completion;
-> +	struct regulator *vdd_supply;
->  };
->  
->  static irqreturn_t vl53l0x_handle_irq(int irq, void *priv)
-> @@ -192,10 +193,31 @@ static const struct iio_info vl53l0x_info = {
->  	.read_raw = vl53l0x_read_raw,
->  };
->  
-> +static void vl53l0x_power_off(void *_data)
-> +{
-> +	struct vl53l0x_data *data = _data;
-> +
-> +	regulator_disable(data->vdd_supply);
-> +}
-> +
-> +static int vl53l0x_power_on(struct vl53l0x_data *data)
-> +{
-> +	int ret;
-> +
-> +	ret = regulator_enable(data->vdd_supply);
-> +	if (ret)
-> +		return ret;
-> +
-> +	usleep_range(3200, 5000);
-> +
-> +	return 0;
-> +}
-> +
->  static int vl53l0x_probe(struct i2c_client *client)
->  {
->  	struct vl53l0x_data *data;
->  	struct iio_dev *indio_dev;
-> +	int error;
->  
->  	indio_dev = devm_iio_device_alloc(&client->dev, sizeof(*data));
->  	if (!indio_dev)
-> @@ -210,6 +232,21 @@ static int vl53l0x_probe(struct i2c_client *client)
->  				     I2C_FUNC_SMBUS_BYTE_DATA))
->  		return -EOPNOTSUPP;
->  
-> +	data->vdd_supply = devm_regulator_get_optional(&client->dev, "vdd");
-> +	if (IS_ERR(data->vdd_supply))
-> +		return dev_err_probe(&client->dev, PTR_ERR(data->vdd_supply),
-> +				     "Unable to get VDD regulator\n");
-> +
-> +	error = devm_add_action_or_reset(&client->dev, vl53l0x_power_off, data);
+> Not only this breaks when an irq_chip structure is made const (which
+> really should be the default case), but it also forces this structure
+> to be copied at nauseam for each instance of the GPIO block, which is
+> a waste of memory.
 
-I don't follow why you have this before the power_on.  We haven't enabled the
-regulator yet so shouldn't be turning it off if we get an error whilst trying
-to enable it.  The or_reset part is to ensure that even if this call
-fails to register a devm action it will still call the callback thus allowing
-you safely do this after turning the power on.
+Is this brings us to the issue with IRQ chip name?
 
-> +	if (error)
-> +		return dev_err_probe(&client->dev, error,
-> +				     "Failed to install poweroff action\n");
-> +
-> +	error = vl53l0x_power_on(data);
-> +	if (error)
-> +		return dev_err_probe(&client->dev, error,
-> +				     "Failed to power on the chip\n");
-> +
->  	indio_dev->name = "vl53l0x";
->  	indio_dev->info = &vl53l0x_info;
->  	indio_dev->channels = vl53l0x_channels;
+The use case in my mind is the following:
+1) we have two or more GPIO chips that supports IRQ;
+2) the user registers two IRQs of the same (by number) pin on different chips;
+3) cat /proc/interrupt will show 'my_gpio_chip XX', where XX is the number.
+
+So, do I understand correct current state of affairs?
+
+If so, we have to fix this to have any kind of ID added to the chip name that
+we can map /proc/interrupts output correctly.
+
+> My current approach is to add a new irq_chip flag (IRQCHIP_IMMUTABLE)
+> which does what it says on the tin: don't you dare writing to them.
+> Gpiolib is further updated not to install its own callbacks, and it
+> becomes the responsibility of the driver to call into the gpiolib when
+> required. This is similar to what we do for other subsystems such as
+> PCI-MSI.
+> 
+> 5 drivers are updated to this new model: M1, QC, Tegra, pl061 and AMD
+> (as I actively use them) keeping a single irq_chip structure, marking
+> it const, and exposing the new flag.
+> 
+> Nothing breaks, the volume of change is small, the memory usage goes
+> down and we have fewer callbacks that can be used as attack vectors.
+> What's not to love?
+> 
+> Since there wasn't any objection in the previous round of review, I'm
+> going to take this series into -next to see if anything breaks at
+> scale.
+
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
 
