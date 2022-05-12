@@ -2,78 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5BC2524B03
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 13:08:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62983524B33
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 13:15:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353035AbiELLId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 07:08:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59816 "EHLO
+        id S1353016AbiELLPM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 07:15:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352979AbiELLIa (ORCPT
+        with ESMTP id S1353115AbiELLOX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 07:08:30 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C30145D199;
-        Thu, 12 May 2022 04:08:21 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id d15so8413609lfk.5;
-        Thu, 12 May 2022 04:08:21 -0700 (PDT)
+        Thu, 12 May 2022 07:14:23 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08C4F2375C6;
+        Thu, 12 May 2022 04:13:39 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id y32so8409524lfa.6;
+        Thu, 12 May 2022 04:13:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qjFTO1D1EZDKKiJccbHJv6i5BuHy5bt8K51ddMuen78=;
-        b=h9FmGSg4bI11T8kP5bLEDH1qqYkFrt3qTZmcdAjTGFQYt9wQXbDKgOqXfC+JYpujXu
-         FvdC96vgRZ1QQoyFPFGTqC5H7q5SEqo/pxrG35EEu7sw1THgssiDtIfZddVWlppwATMF
-         DQEcV7Ttr4YPAcbRZ5hP+XQc3FGqFBe6NMMZIDdYjkxfj/p7nriaquFmDWv2jZtJpE4o
-         GLokkOOzk241QdGAVo2xcwKTQmkWPpLL7IzNrzLdWUMJPyE3HkIsduyM9x2hUfak6k2t
-         GFpyRdam+7vpsdR41RAjGuTgycZ+SJJBSwxeO+luDitt0YnUk+GGn4sZhPnX5FdWHt/B
-         wORw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=KCB0ImVpAY7B2JF+x0CS8IN4OXseCO+dC93CiOsDqZE=;
+        b=Ao5tBKQv/NTxFJJRHfQ4U2dYpVn9IvZxgC6LSELXpi8DUWLN9gBTdA/DgrcQh5nvu0
+         PulKh13h1oX2KFeb4biM1/XAANhAxdvsJBCQaQE4NiDVdF9sJ4PUnbZk+44oTBtCdaKi
+         plRdSuPe1chh4pUv6jpqcEQz2mT1w1lK9L6/EXZnNiFOqRnUmeBo7ObHwEGWDWZUp5/E
+         iRIUA/6S9S4J/pCVN5Ftv/nkuzmtGbd1THrwZpPNOooEpgQdhz6Jb5yvPhclfeKGbzfy
+         Mfs6Fe9Kr94DBh4Ly7wT6AaFHqoP9Bwk8o1dFzsH77VfseTI0wzEMwLJDZGJyIH/EUOQ
+         dMUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qjFTO1D1EZDKKiJccbHJv6i5BuHy5bt8K51ddMuen78=;
-        b=EN01Dir/xyhAvpyvCYtXjza1Pz+sX6AWShnVNPryberhQCEgo7eBC6j0SBNa8cwIWF
-         UTewxjsPGJ9gJBiLPbRuRp+oVxmM2qcR35F/aA3qsLnYliMZ2OYILfQ+FkIQxuouu54E
-         eaPqsKX/9QLRgqzWl5akU2lMOiYhZkzwAW3cmIKfbkxlGW8mb7oG67KPEBStuBUaR/Cx
-         j+3+w1Jmk8XV0ZUWAzml6Yi8pQZYoaW7eqCQpyDK3W1cnn8Ke0yU9O0bsvGfZ8a5osoO
-         9edDiIFOnsTZud/leJ1GcKG+eLZYatqyQwH4DyhNE+kZ4kGZujed/KynkgiZD5tKqJqS
-         3jvg==
-X-Gm-Message-State: AOAM531TVkfVbnQ5wyR9xtghk9ueN/4Nc2XoVY5CNr4IWEaZhpSQrYNJ
-        r9+PBcXtdxuTpicolpiC9j72QbgewD0dUg==
-X-Google-Smtp-Source: ABdhPJzV29F8YQmt876AcPMunxt7RvQwAWEqhPI/M867EYQL1xSd6Z1fcha4gXmGoRf9vbMonoSd1Q==
-X-Received: by 2002:a05:6512:3a84:b0:473:de2d:ae1 with SMTP id q4-20020a0565123a8400b00473de2d0ae1mr23442455lfu.371.1652353700039;
-        Thu, 12 May 2022 04:08:20 -0700 (PDT)
-Received: from nergzd-desktop.localdomain ([194.39.226.133])
-        by smtp.gmail.com with ESMTPSA id i25-20020a056512007900b004725b99d2fdsm734883lfo.164.2022.05.12.04.08.18
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KCB0ImVpAY7B2JF+x0CS8IN4OXseCO+dC93CiOsDqZE=;
+        b=F+371TM+igYY2acMsdrvzDZdwaapNj/u8k26AdnC5SeWzmT1tNnKOMrIaDA1hXJv0c
+         uiVC8iiTBBpeWX0E1ErD/K0nMqk2ORc8uYvitCe0AeFORRE3qw5c1WGuu0UuHLKkwlvH
+         Ow6c9cC1P+bDPy+Egpgo03lkYSmtL/Hnnk1X5Cz1wPcvHL9/7CnfEipYcvTme5HH+yqk
+         +1R0VEpYVzplrQTaBKC/dPp6GBVtWxrVxzUWs1K2JkEv4DC1/nbk0pfMRsfXhqEVOmTm
+         I6gdT2zoTlVPpSu51EsMbLqyO2Yaq0qaOVzwrolzXA2VSx/BPzIMuBOPvG9LCHxuo6Kw
+         0USQ==
+X-Gm-Message-State: AOAM532hVqGhW/xccIZMkXhMzbiDKtds9UyOhl8AmHs73oLUoh37hlz9
+        vQYxp5seE+qS7MtdbgOJbaU=
+X-Google-Smtp-Source: ABdhPJwzB6axamuqFYigSaMUEWNNHcGwfaA6RyUv9ueDx2XJE3a62ISJaxdkKmsQr0AKgKO+dcDjpA==
+X-Received: by 2002:a05:6512:b90:b0:473:9e03:c4f3 with SMTP id b16-20020a0565120b9000b004739e03c4f3mr24399865lfv.494.1652354016062;
+        Thu, 12 May 2022 04:13:36 -0700 (PDT)
+Received: from mobilestation ([95.79.189.214])
+        by smtp.gmail.com with ESMTPSA id l5-20020ac25545000000b004742009e038sm738867lfk.126.2022.05.12.04.13.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 May 2022 04:08:19 -0700 (PDT)
-From:   Markuss Broks <markuss.broks@gmail.com>
-To:     linux-kernel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Markuss Broks <markuss.broks@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Song Qiang <songqiang1304521@gmail.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 5/5] arm64: dts: qcom: msm8998-xperia: Introduce ToF sensor support
-Date:   Thu, 12 May 2022 14:07:57 +0300
-Message-Id: <20220512110757.5297-6-markuss.broks@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220512110757.5297-1-markuss.broks@gmail.com>
-References: <20220512110757.5297-1-markuss.broks@gmail.com>
+        Thu, 12 May 2022 04:13:35 -0700 (PDT)
+Date:   Thu, 12 May 2022 14:13:33 +0300
+From:   Serge Semin <fancer.lancer@gmail.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        gustavo.pimentel@synopsys.com, vkoul@kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH] dmaengine: dw-edma: Remove runtime PM support
+Message-ID: <20220512111333.4dx44nru6rqdcbqp@mobilestation>
+References: <20220512083612.122824-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220512083612.122824-1-manivannan.sadhasivam@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -84,65 +72,126 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds device tree support for the VL53L0X ToF sensor
-found on all Yoshino devices.
+On Thu, May 12, 2022 at 02:06:12PM +0530, Manivannan Sadhasivam wrote:
+> Currently, the dw-edma driver enables the runtime_pm for parent device
+> (chip->dev) and increments/decrements the refcount during alloc/free
+> chan resources callbacks.
+> 
+> This leads to a problem when the eDMA driver has been probed, but the
+> channels were not used. This scenario can happen when the DW PCIe driver
+> probes eDMA driver successfully, but the PCI EPF driver decides not to
+> use eDMA channels and use iATU instead for PCI transfers.
+> 
+> In this case, the underlying device would be runtime suspended due to
+> pm_runtime_enable() in dw_edma_probe() and the PCI EPF driver would have
+> no knowledge of it.
+> 
+> Ideally, the eDMA driver should not be the one doing the runtime PM of
+> the parent device. The responsibility should instead belong to the client
+> drivers like PCI EPF.
+> 
+> So let's remove the runtime PM support from eDMA driver.
 
-Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
----
- .../dts/qcom/msm8998-sony-xperia-yoshino.dtsi | 33 +++++++++++++++++++
- 1 file changed, 33 insertions(+)
+Right. Especially seeing the runtime PM has already been configured
+for the PCIe peripheral devices in pci_pm_init(). It is relevant for the remote
+eDMA setup. Meanwhile the local eDMA-enabled platforms (DW PCIe hosts
+and CPU-side of the DW PCIe End-points) need to manually handle
+the PM policy in the platform drivers the way it is done for instance in
+drivers/pci/controller/dwc/{pci-dra7xx.c, pci-keystone.c, pcie-qcom.c,
+pcie-tegra194.c}. So feel free to add:
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-index 47488a1aecae..a95fa29aa18b 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-@@ -245,6 +245,24 @@ &blsp2_uart1 {
- 	status = "okay";
- };
- 
-+&blsp2_i2c2 {
-+	status = "okay";
-+
-+	proximity@29 {
-+		compatible = "st,vl53l0x";
-+		reg = <0x29>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <22 IRQ_TYPE_EDGE_FALLING>;
-+
-+		reset-gpios = <&tlmm 27 GPIO_ACTIVE_LOW>;
-+		vdd-supply = <&cam_vio_vreg>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&tof_int &tof_reset>;
-+	};
-+};
-+
- &ibb {
- 	regulator-min-microamp = <800000>;
- 	regulator-max-microamp = <800000>;
-@@ -621,6 +639,21 @@ hall_sensor0_default: acc-cover-open {
- 		input-enable;
- 	};
- 
-+	tof_int: tof-int {
-+		pins = "gpio22";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <2>;
-+		input-enable;
-+	};
-+
-+	tof_reset: tof-reset {
-+		pins = "gpio27";
-+		function = "gpio";
-+		bias-disable;
-+		drive-strength = <2>;
-+	};
-+
- 	ts_int_n: ts-int-n {
- 		pins = "gpio125";
- 		function = "gpio";
--- 
-2.36.1
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
 
+> 
+> Cc: Serge Semin <fancer.lancer@gmail.com>
+> Cc: Frank Li <Frank.Li@nxp.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+> 
+
+> Note: This patch is made on top of Frank and Serge's edma work, but should
+> be applicable independently also.
+> 
+
+To be clearer regarding what patchsets Manivannan is talking about:
+
+> [PATCH v10 0/9] Enable designware PCI EP EDMA locally
+
+Link: https://lore.kernel.org/linux-pci/20220503005801.1714345-1-Frank.Li@nxp.com/
+
+> [PATCH v2 00/26] dmaengine: dw-edma: Add RP/EP local DMA controllers support
+
+Link: https://lore.kernel.org/linux-pci/20220503225104.12108-1-Sergey.Semin@baikalelectronics.ru/
+
+Anyway I would suggest to merge this patch on top of or before ahead
+the Frank's work since my series enables the eDMA support for the
+currently available platforms, which unlikely (the eDMA driver must be
+explicitly enabled and the DT-part needs to be fixed) but may get some
+runtime-PM conflicts denoted in the patch log.
+
+-Sergey
+
+> 
+>  drivers/dma/dw-edma/dw-edma-core.c | 12 ------------
+>  1 file changed, 12 deletions(-)
+> 
+> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+> index 561686b51915..b2b5077d380b 100644
+> --- a/drivers/dma/dw-edma/dw-edma-core.c
+> +++ b/drivers/dma/dw-edma/dw-edma-core.c
+> @@ -9,7 +9,6 @@
+>  #include <linux/module.h>
+>  #include <linux/device.h>
+>  #include <linux/kernel.h>
+> -#include <linux/pm_runtime.h>
+>  #include <linux/dmaengine.h>
+>  #include <linux/err.h>
+>  #include <linux/interrupt.h>
+> @@ -731,15 +730,12 @@ static int dw_edma_alloc_chan_resources(struct dma_chan *dchan)
+>  		dchan->dev->chan_dma_dev = false;
+>  	}
+>  
+> -	pm_runtime_get(chan->dw->chip->dev);
+> -
+>  	return 0;
+>  }
+>  
+>  static void dw_edma_free_chan_resources(struct dma_chan *dchan)
+>  {
+>  	unsigned long timeout = jiffies + msecs_to_jiffies(5000);
+> -	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+>  	int ret;
+>  
+>  	while (time_before(jiffies, timeout)) {
+> @@ -752,8 +748,6 @@ static void dw_edma_free_chan_resources(struct dma_chan *dchan)
+>  
+>  		cpu_relax();
+>  	}
+> -
+> -	pm_runtime_put(chan->dw->chip->dev);
+>  }
+>  
+>  static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
+> @@ -1010,9 +1004,6 @@ int dw_edma_probe(struct dw_edma_chip *chip)
+>  	if (err)
+>  		goto err_irq_free;
+>  
+> -	/* Power management */
+> -	pm_runtime_enable(dev);
+> -
+>  	/* Turn debugfs on */
+>  	dw_edma_v0_core_debugfs_on(dw);
+>  
+> @@ -1046,9 +1037,6 @@ int dw_edma_remove(struct dw_edma_chip *chip)
+>  	for (i = (dw->nr_irqs - 1); i >= 0; i--)
+>  		free_irq(chip->ops->irq_vector(dev, i), &dw->irq[i]);
+>  
+> -	/* Power management */
+> -	pm_runtime_disable(dev);
+> -
+>  	/* Deregister eDMA device */
+>  	dma_async_device_unregister(&dw->dma);
+>  	list_for_each_entry_safe(chan, _chan, &dw->dma.channels,
+> -- 
+> 2.25.1
+> 
