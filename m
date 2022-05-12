@@ -2,105 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 391925249D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 12:02:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0D495249E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 12:02:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352403AbiELKBv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 06:01:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57304 "EHLO
+        id S1352438AbiELKB6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 06:01:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352448AbiELKAs (ORCPT
+        with ESMTP id S1352646AbiELKBo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 06:00:48 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1F0E22EA69
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 03:00:30 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id z2so9161403ejj.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 03:00:30 -0700 (PDT)
+        Thu, 12 May 2022 06:01:44 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AA542631;
+        Thu, 12 May 2022 03:01:43 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id i24so4337716pfa.7;
+        Thu, 12 May 2022 03:01:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bc1mIt/3dkcIrUfw+Wx32EX6v+iTPPZGITrndOapvM4=;
-        b=XWoI6TWSrxqK4NFoOjglomE/cazymfb44cK3GD+F51Mv24B90JgGF4RjFOU6vUL2TA
-         Q5PrHb+k5cF5N4/WTC03LZyXuQyeOh3GeFVMQiDGBW8q3Tnp4VuezfIuUa2Dbb057fxI
-         UdliXYS1OEAbQgB+XnH1fDT8b/s0IlZm3fS1qcO9qmlWwXKVwAOS5cDoYODbM9Se53s8
-         Xs4/A3+oL1w8WnMjB6UxxhXb+S+SXVw9XwXy+6FWk1jGX1IiT6N3rn7h30vnW6D4NWCJ
-         z98XLnrs8xh6/N9nasuXsNNwwNvnK3xguu9XYnlMhc0vYjIFjjH6M91XwBWvRGwyfxwu
-         kqVw==
+        d=gmail.com; s=20210112;
+        h=mime-version:content-transfer-encoding:date:message-id:cc:subject
+         :from:to:references:in-reply-to;
+        bh=EpBY+DzaKr9D9IVnNO2+lmGSlE52SY1thjpa7lm9o98=;
+        b=H/vDwD9CLydNeeCx0wINFwNCrrUAP3HjvBKceekUmrNS2Cm1/dqVyoSPjQfWVLDoYY
+         hNwhC4cPb4rAtzFwuXR9KbED2q9bIevRtRi8A19F/zYGPSv3LpHFTI89j0/GVsI6vbF6
+         z1Y6KvKppkgn0KxmM7uP5k6RH6XbpoK6oqnLi1r0EOGwuSLagI/LXmTklB96zhbGrRdR
+         jZq++K/R4Nc732LumYw2B9iaYS6s6+8Tyb0U3xypaHWBY1ZyVfSNkTTFaVb4L/kLKkvG
+         nm1V01D/xeNmrkc7tRGXoFryvx/vhdCjcmi01xDQFF8dbqEbY/IpM4YQHJGhZzcwJcxr
+         RzdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bc1mIt/3dkcIrUfw+Wx32EX6v+iTPPZGITrndOapvM4=;
-        b=P/csZI3RQVlQzkTcmK34F6I1dlYbQkm4Z8fdc0DfczExDrJyhMqL1qkOfGI9CKvvo2
-         uQY1Ci9+24BHbzKHtEAbCROvUNg9kxm/lFQSNmLhVBgmt6Tisg+ME8+wnvySn10T6kKq
-         Lh98v0+hOtVu6f3N2BM9U3+L8tg1NzAjUDU7qM3mFRFBMw3/g5hjJ4mywY/czsXVrnEg
-         UjVFFWVPlz5x/hj2bfudBLMvTVNnS94sR0uvBSUutr8UPXggTq2GBpcYrdwTr9CTD6Wh
-         vtZgCzrcHALjhSASK/0B/qCqgQivDxrovaO+NF1MrC6wAO7mmRK1gutFas8uwMZ6lRg+
-         tuaw==
-X-Gm-Message-State: AOAM532VWtwIG2htximD6SZ0RbC5fVJWBnff17NGl/f8rIzJsHQcKSGO
-        mxy41eDGSpqLS2vwrYF2RJZenw==
-X-Google-Smtp-Source: ABdhPJwYJ3PjB3jJ91CPv9ONU3HTEf/WZ7sIWJ5XKfonKTYMcQs7h0i1F6unGKj0cysXRYnV8JkFWQ==
-X-Received: by 2002:a17:907:62a6:b0:6ef:8118:d3e2 with SMTP id nd38-20020a17090762a600b006ef8118d3e2mr28698426ejc.605.1652349630543;
-        Thu, 12 May 2022 03:00:30 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id d17-20020a170906641100b006f3ef214da1sm1970287ejm.7.2022.05.12.03.00.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 May 2022 03:00:30 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 12/12] arm64: dts: qcom: sm8450: remove duplicated glink-edge interrupt
-Date:   Thu, 12 May 2022 12:00:06 +0200
-Message-Id: <20220512100006.99695-13-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220512100006.99695-1-krzysztof.kozlowski@linaro.org>
-References: <20220512100006.99695-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        h=x-gm-message-state:mime-version:content-transfer-encoding:date
+         :message-id:cc:subject:from:to:references:in-reply-to;
+        bh=EpBY+DzaKr9D9IVnNO2+lmGSlE52SY1thjpa7lm9o98=;
+        b=AFGt3/JvSWzgM0Jhznq0qW4FUROWDWXB2kB1K1yRClHIkeG0u9eb8qcEysv52MtMAZ
+         mVmEsbzoQ1GX/mqb4yPrWS9IDoe99s/0rNWbh9PjGxnX4raVzGbJvp+tLtz2d+mREdCf
+         Fverjp3qDBVvdRwM8i4Lo3xknjBoAdU/8hCR1xL2Yq/Fv3v4xwUHMZyHaIk+4DQVDmu1
+         J9lmK5JxpElJeRDYmGZUQH16zsRCLEeHVXaKwp0m/zD+a8GOaS2TZZRMlLz0LzMwAnd4
+         UtBj0tFgDRSmKM+8Fz+/zpc7I34IGeMkXST1QxngpNB3o4gRyeNJatmLC3Gi1d+xR7jg
+         MVbQ==
+X-Gm-Message-State: AOAM531dVvfqsMgJyWJQhlJGmb1RTCTmKSB6roPiJ0TmVkc1CzR9Uj7K
+        vK5V27KMi4JyeT6itgH+/LM=
+X-Google-Smtp-Source: ABdhPJwDkS1ORRJ1l54DeEOUcmdKRbft9icrpYGIK8G2oR5hAts4EVC68n5cxAfMu55mW6Prgo7TZg==
+X-Received: by 2002:a63:2a04:0:b0:3c4:a041:d71 with SMTP id q4-20020a632a04000000b003c4a0410d71mr24377491pgq.492.1652349702720;
+        Thu, 12 May 2022 03:01:42 -0700 (PDT)
+Received: from localhost ([49.204.239.218])
+        by smtp.gmail.com with ESMTPSA id j8-20020a170902758800b0015ea95948ebsm3454916pll.134.2022.05.12.03.01.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 May 2022 03:01:42 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Thu, 12 May 2022 15:31:36 +0530
+Message-Id: <CJXP2Z9J7QS1.24A3N1EFCTACN@skynet-linux>
+Cc:     <linux-arm-msm@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
+        <phone-devel@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Mathieu Poirier" <mathieu.poirier@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>
+Subject: Re: [PATCH 4/9] dt-bindings: remoteproc: qcom: wcnss: Convert to
+ YAML
+From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        <linux-remoteproc@vger.kernel.org>
+X-Mailer: aerc 0.9.0
+References: <20220511161602.117772-1-sireeshkodali1@gmail.com>
+ <20220511161602.117772-5-sireeshkodali1@gmail.com>
+ <00234f36-9bae-31d5-5b83-ea238e7e3c11@linaro.org>
+ <CJXL0SG2GHN1.1IO2JOR5ARNV8@skynet-linux>
+ <30c18480-bf0d-82b9-5b11-daa3b70c40df@linaro.org>
+In-Reply-To: <30c18480-bf0d-82b9-5b11-daa3b70c40df@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Specifying interrupts and interrupts-extended is not correct.  Keep only
-the extended ones, routed towards IPCC mailbox to fix warnings like:
-
-  sm8450-qrd.dtb: glink-edge: More than one condition true in oneOf schema:
-    {'$filename': 'Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml',
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 7d08fad76371..4e796f27d6fc 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -2282,7 +2282,6 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 							     IRQ_TYPE_EDGE_RISING>;
- 				mboxes = <&ipcc IPCC_CLIENT_MPSS
- 						IPCC_MPROC_SIGNAL_GLINK_QMP>;
--				interrupts = <GIC_SPI 449 IRQ_TYPE_EDGE_RISING>;
- 				label = "modem";
- 				qcom,remote-pid = <1>;
- 			};
--- 
-2.32.0
+On Thu May 12, 2022 at 2:06 PM IST, Krzysztof Kozlowski wrote:
+> On 12/05/2022 08:50, Sireesh Kodali wrote:
+> >>> +    description: The names of the state bits used for SMP2P output
+> >>> +    items:
+> >>> +      - const: stop
+> >>> +
+> >>> +  memory-region:
+> >>> +    maxItems: 1
+> >>> +    description: Reference to the reserved-memory for the WCNSS core
+> >>> +
+> >>> +  smd-edge:
+> >>> +    type: object
+> >>> +    description:
+> >>> +      Qualcomm Shared Memory subnode which represents communication =
+edge,
+> >>> +      channels and devices related to the ADSP.
+> >>
+> >> You should reference /schemas/soc/qcom/qcom,smd.yaml
+>
+> It seems it is not a SMD driver so above reference is not correct. This
+> should be probably described in its own schema, I just need to
+> understand what's this...
+>
+The smd-edge node describes the smd channels used to communicate with
+the remote processor. For wcnss that would be the remote proc id, and
+the channels for bt and wifi (both separate). There's a similar node for
+adsp and q6v5.
+>
+> Best regards,
+> Krzysztof
 
