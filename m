@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E369A525866
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 01:36:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3874525868
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 01:36:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359573AbiELXgw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 19:36:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51152 "EHLO
+        id S1359581AbiELXgz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 19:36:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359530AbiELXgw (ORCPT
+        with ESMTP id S1359530AbiELXgx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 19:36:52 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67FBD580F9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:51 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 4so8334257ljw.11
+        Thu, 12 May 2022 19:36:53 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149665674A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:52 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id bu29so11804888lfb.0
         for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=azPGR+vZJiRZ8wrc365ZR8Nim5+sjCT0QCeZdqg0Fso=;
-        b=l5nombBMfLAuoochQ9oKZQKmL4OlVXimRrMej51XNpCjFbI+7UJi97jWbuDOSquEoU
-         8Xns6m6Xc2aRVdzBcLMxBJ7A48uyOpqfwq5CTKT+O/DUBTfNBzIaJ9ocYIXvw7N8HKKh
-         wZKDdQ6VtJCQfaOvOw+A8Ph1ZlZtbHtxdAaoDIMy7SB7hIs92PDWqfdtQxUMGB+pLxmt
-         RlVyJTHg3L2wK56nSPk13WlmcUb4Eppn/TvKfXbdgo4U03FFOj+Cwl2U9OaPPxg2wIdr
-         syXry3wLBnBGqGV3z+0lxjuMYfsfga1fN/9KnUv+wO/bqM3ji5wYesLAM4c7HOUXnrpM
-         rQqg==
+        bh=i1goeg2wYzcHMfXO9CDFGJF9XLqANUBaSoksUz5XNRc=;
+        b=X3LHZVoKx/IHv7Ini1Y3dYLp8M7uyC0RZiERWt3pMoULdXqVrVHZggMQMIPfrPtF8V
+         /IGe+F1554dHMvA4Ofm87+iFxPr0aiiYA2jSn5qp3oGvtrAc7F/Hs8bJE+bVbNia/U85
+         pII+jH+Vr4nEsO+l0Z+j3ygVX97CVFOeNDl1kcoc0SA7TcjZf4b0GNyROQNkYoVLwXn1
+         PzDDWkvwYjkVxrdJHsy9U7EoWvc9ehA1NrkzlepJOGHN2/dla7NVig3LEB1bO2ubAxYz
+         i/0iu6pswFhG/ZevKdlUtJVl8Im1rW0mo0mgA1vuKUWge7U2DU+IFD6uM9r15WsephHA
+         1UQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=azPGR+vZJiRZ8wrc365ZR8Nim5+sjCT0QCeZdqg0Fso=;
-        b=hgrqDKc+BoCkvkxIN5swHguxi/lmVBBLhNHxV3fDbvaKYdjDUEMTS6dGw2TXKtd+2z
-         29HCr/FW1KLbjqHdxoBwtGhsNyqUlu6W5p/3uJGYrOwAZpruPTXP2ZUZLlvRnLElnnOH
-         8ZtJ6nrl6S3jIM76TWpjufcRK3X0uSTbMGmiF+Z2GrH+EzLBpSsjTi3gQR9lMb1H5aPA
-         qEIajoHuvAJm7ezrAQTA6qRuBoERdQjU+7vz3zA46R6c1kj9icf0nW29e4YDffNls1sQ
-         djR7IG2rJVypK1cLjIkccn91WY4CpirQmjZ1rzlwt4NROby0vEwhy98jAKQPTKpnKm7V
-         vDew==
-X-Gm-Message-State: AOAM5326ZuiYdvHGcUlCzU7U/LahrSliHJO8mqBl7MfpQbmI/2ypGQFY
-        tcOusumgmC3m8hWuKqm3qQhYIQ==
-X-Google-Smtp-Source: ABdhPJxgCHMnJ4LEek1kUdhz+O1bKDx5YuEx6gHj4DQBPerUjDefkT8WWBp7JYFactZEmVCxE/WRtw==
-X-Received: by 2002:a2e:8902:0:b0:24f:1446:3101 with SMTP id d2-20020a2e8902000000b0024f14463101mr1437014lji.266.1652398609807;
-        Thu, 12 May 2022 16:36:49 -0700 (PDT)
+        bh=i1goeg2wYzcHMfXO9CDFGJF9XLqANUBaSoksUz5XNRc=;
+        b=Hq0+CgIF7bCnO9lHWheyMWvcqT7CwcbvmULcrkCBkhg3sblhPIuETBB4nUuglBdrEo
+         ol3DSZstPXZZMUa2yWslXXUy6e8oQ/7luL9LATPyPrG7+0Nagd/5Z8SBbDRKghkb5UK0
+         G9fjG0TTCHgSIv6xUlyc030SjOypn6ac/tEzxyiRB7WGk4zlq8wDslhU6vYd/smkWvA5
+         DZ3PzajAnUNSf0G3kWKTAe2B7pgwEGzt6AXWzw8udOryKwzORC1RFeXr+8E0JDakkuW/
+         cWItoxqrrNmvp0w/9qloW24ELPeVNeVLRaS8LHWubuEnaQyI6ezLR7C7om/W8/dAFM03
+         RQOQ==
+X-Gm-Message-State: AOAM532KAnTBAdVURs7J8mNfjBrzkT9e2O+6kiOV/7G3knBkJNz8WHwj
+        UsDCi73qnLvhXRTdXsbFku0iOA==
+X-Google-Smtp-Source: ABdhPJyzdJYvPj0AkVnv7w7nwDsyWQeF24SHe/E4f8AaPGTqUAz7rhU1DRRUEWq3JfYUPpVIUs3HcQ==
+X-Received: by 2002:a05:6512:2399:b0:473:a82d:cfde with SMTP id c25-20020a056512239900b00473a82dcfdemr1413328lfv.375.1652398610434;
+        Thu, 12 May 2022 16:36:50 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
         by smtp.gmail.com with ESMTPSA id p13-20020a19f00d000000b0047255d211c1sm127937lfc.240.2022.05.12.16.36.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 May 2022 16:36:49 -0700 (PDT)
+        Thu, 12 May 2022 16:36:50 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -56,10 +56,11 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v2 2/8] arm64: dts: qcom: sdm630: disable dsi1/dsi1_phy by default
-Date:   Fri, 13 May 2022 02:36:41 +0300
-Message-Id: <20220512233647.2672813-3-dmitry.baryshkov@linaro.org>
+        freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: [PATCH v2 3/8] arm64: dts: qcom: sdm630: disable GPU by default
+Date:   Fri, 13 May 2022 02:36:42 +0300
+Message-Id: <20220512233647.2672813-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220512233647.2672813-1-dmitry.baryshkov@linaro.org>
 References: <20220512233647.2672813-1-dmitry.baryshkov@linaro.org>
@@ -75,36 +76,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Follow the typical practice and keep DSI0/DSI0 PHY disabled by default.
-They should be enabled in the board DT files. No existing boards use
-them at this moment.
+The SoC's device tree file disables gpucc and adreno's SMMU by default.
+So let's disable the GPU too. Moreover it looks like SMMU might be not
+usable without additional patches (which means that GPU is unusable
+too). No board uses GPU at this moment.
 
+Fixes: 5cf69dcbec8b ("arm64: dts: qcom: sdm630: Add Adreno 508 GPU configuration")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 240293592ef9..8697d40e9b74 100644
+index 8697d40e9b74..e8bb170e8b2f 100644
 --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1559,6 +1559,8 @@ dsi0: dsi@c994000 {
- 				phys = <&dsi0_phy>;
- 				phy-names = "dsi";
+@@ -1050,6 +1050,8 @@ adreno_gpu: gpu@5000000 {
  
-+				status = "disabled";
+ 			operating-points-v2 = <&gpu_sdm630_opp_table>;
+ 
++			status = "disabled";
 +
- 				ports {
- 					#address-cells = <1>;
- 					#size-cells = <0>;
-@@ -1592,6 +1594,7 @@ dsi0_phy: dsi-phy@c994400 {
- 
- 				clocks = <&mmcc MDSS_AHB_CLK>, <&xo_board>;
- 				clock-names = "iface", "ref";
-+				status = "disabled";
- 			};
- 		};
- 
+ 			gpu_sdm630_opp_table: opp-table {
+ 				compatible  = "operating-points-v2";
+ 				opp-775000000 {
 -- 
 2.35.1
 
