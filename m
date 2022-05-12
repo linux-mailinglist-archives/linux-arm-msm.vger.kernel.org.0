@@ -2,68 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1411524691
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 09:11:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 462A05246D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 09:22:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350773AbiELHLj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 03:11:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40950 "EHLO
+        id S230454AbiELHWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 03:22:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350824AbiELHL0 (ORCPT
+        with ESMTP id S1350934AbiELHWJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 03:11:26 -0400
+        Thu, 12 May 2022 03:22:09 -0400
 Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE35960AB5;
-        Thu, 12 May 2022 00:11:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1C3F27B3A;
+        Thu, 12 May 2022 00:22:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652339484; x=1683875484;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=ObP7VaZsDWS7LC/cevYn2R7VTmW0ytKg4J8XTG8Bs2Y=;
-  b=qF5aHuKwmsTbq3dViZXSScRPKIzFd8lp2oW7OuSJdmE8NQ9Y2YgziOQI
-   VlvLpm5NzVDYLUHaKBNbvv2xR6qaN/xl65QEGiOKsQ5y/3Nms2kRrW7U6
-   1uZR4WuYoIePoY1vPO+C5HXUSd02Phuvna7DT5IZTQOwmDsEGit74klga
+  t=1652340125; x=1683876125;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=TcvqFRo7tE7F2CGVY7lJqLdptfPjmpv6H/Lv9po1svo=;
+  b=KBWi2NK9ffH3L6RU8stGP8/c3cs8oUyY9oTK2tblBLAp6yRAMlHvds3E
+   dUKocG/603dE6zRqHRhkV0fRJddf9/cs8716RuLnpxlCXWtOB89hwlSp/
+   qJRvx2OKa8jrIdkBKGgLrhf18tjjk6jrW5q2cCYVARt2uJAQsDfyVk9Y7
    8=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 12 May 2022 00:11:24 -0700
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 12 May 2022 00:22:05 -0700
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 00:11:23 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 12 May 2022 00:11:22 -0700
-Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 00:22:04 -0700
+Received: from [10.50.47.121] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 12 May
- 2022 00:11:18 -0700
-Subject: Re: [PATCH v3 2/2] dt-bindings: remoteproc: qcom: Add SC7280 MSS
- bindings
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>,
-        Sireesh Kodali <sireeshkodali1@gmail.com>
-CC:     <ohad@wizery.com>, <agross@kernel.org>,
-        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <mka@chromium.org>, <krzysztof.kozlowski+dt@linaro.org>
-References: <1652257162-23874-1-git-send-email-quic_sibis@quicinc.com>
- <1652257162-23874-3-git-send-email-quic_sibis@quicinc.com>
- <436e497f-b43c-4543-62d4-e7aea3d37ac7@linaro.org>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <e3543961-1645-b02a-c869-f8fa1ad2d41c@quicinc.com>
-Date:   Thu, 12 May 2022 12:41:13 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ 2022 00:22:00 -0700
+Message-ID: <e740f0f7-8010-a390-98e0-d549d981f5e3@quicinc.com>
+Date:   Thu, 12 May 2022 12:51:48 +0530
 MIME-Version: 1.0
-In-Reply-To: <436e497f-b43c-4543-62d4-e7aea3d37ac7@linaro.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH] arm64: Enable repeat tlbi workaround on KRYO4XX gold CPUs
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>
+CC:     Andre Przywara <andre.przywara@arm.com>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Prasanna Kumar <quic_kprasan@quicinc.com>
+References: <20220511080247.1530-1-quic_shrekk@quicinc.com>
+ <7a7b4657-ec75-7984-1a6e-50ff928ab09c@quicinc.com>
+From:   Shreyas K K <quic_shrekk@quicinc.com>
+In-Reply-To: <7a7b4657-ec75-7984-1a6e-50ff928ab09c@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -74,229 +73,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Krzysztof,
+Hi Sai,
 
-Thanks for taking time to review the patch series.
-
-On 5/11/22 11:40 PM, Krzysztof Kozlowski wrote:
-> On 11/05/2022 10:19, Sibi Sankar wrote:
->> Add MSS PIL loading bindings for SC7280 SoCs.
-> 
-> Why not converting existing bindings? The compatible is already there,
-> so you duplicated its binding.
-
-I'll make sure that all references to the sc7280 mss gets deleted from
-the main binding doc in the next-respin.
-
-
-https://lore.kernel.org/lkml/CAE-0n51KBYjZvwGNy06_okmEWjEfRLQO54CYaY6-JnbBk6kOhA@mail.gmail.com/
-
-https://lore.kernel.org/lkml/YUps1JfGtf6JdbCx@ripper/
-
-Bjorn/Stephen gave the above comments when the wpss bindings was in the 
-process of being merged. It was agreed that a single big clunky binding
-with a lot of if/else would be confusing and Bjorn wanted a separate
-file for it specifically because it overrides a pas compatible. SC7280 
-mss satisfies both the requirements.
-
-> 
+On 5/11/2022 4:43 PM, Sai Prakash Ranjan wrote:
+> Hi Shreyas,
+>
+> On 5/11/2022 1:32 PM, Shreyas K K wrote:
+>> Add KRYO4XX gold/big cores to the list of CPUs that need the
+>> repeat TLBI workaround. Apply this to the affected
+>> KRYO4XX cores (rcpe to rdpe).
 >>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> The variant and revision bits are implementation defined and are
+>> different from the their Cortex CPU counterparts on which they are
+>> based on, i.e., (r0p0 to r1p0) is equivalent to (rcpe to rdpe).
+>>
+>> Signed-off-by: Shreyas K K <quic_shrekk@quicinc.com>
 >> ---
+>>   Documentation/arm64/silicon-errata.rst | 3 +++
+>>   arch/arm64/kernel/cpu_errata.c         | 2 ++
+>>   2 files changed, 5 insertions(+)
 >>
->> v3:
->>   * Re-ordered clock list, fixed pdc_sync typo [Rob/Matthias]
+>> diff --git a/Documentation/arm64/silicon-errata.rst 
+>> b/Documentation/arm64/silicon-errata.rst
+>> index 466cb9e89047..d27db84d585e 100644
+>> --- a/Documentation/arm64/silicon-errata.rst
+>> +++ b/Documentation/arm64/silicon-errata.rst
+>> @@ -189,6 +189,9 @@ stable kernels.
+>> +----------------+-----------------+-----------------+-----------------------------+
+>>   | Qualcomm Tech. | Kryo4xx Silver  | N/A             | 
+>> ARM64_ERRATUM_1024718       |
+>> +----------------+-----------------+-----------------+-----------------------------+
+>> +| Qualcomm Tech. | Kryo4xx Gold    | N/A             | 
+>> ARM64_ERRATUM_1286807       |
+>> ++----------------+-----------------+-----------------+-----------------------------+ 
 >>
->>   .../bindings/remoteproc/qcom,sc7280-mss-pil.yaml   | 261 +++++++++++++++++++++
->>   1 file changed, 261 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
->> new file mode 100644
->> index 000000000000..2f95bfd7b3eb
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
->> @@ -0,0 +1,261 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/remoteproc/qcom,sc7280-mss-pil.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 >> +
->> +title: Qualcomm SC7280 MSS Peripheral Image Loader
->> +
->> +maintainers:
->> +  - Sibi Sankar <quic_sibis@quicinc.com>
->> +
->> +description:
->> +  This document defines the binding for a component that loads and boots firmware
->> +  on the Qualcomm Technology Inc. SC7280 Modem Hexagon Core.
-> 
-> s/This document defines the binding for//
-> Instead describe the hardware.
+>> +----------------+-----------------+-----------------+-----------------------------+
+>>   | Fujitsu        | A64FX           | E#010001        | 
+>> FUJITSU_ERRATUM_010001      |
+>> +----------------+-----------------+-----------------+-----------------------------+
+>> diff --git a/arch/arm64/kernel/cpu_errata.c 
+>> b/arch/arm64/kernel/cpu_errata.c
+>> index 4c9b5b4b7a0b..2518657e6de1 100644
+>> --- a/arch/arm64/kernel/cpu_errata.c
+>> +++ b/arch/arm64/kernel/cpu_errata.c
+>> @@ -208,6 +208,8 @@ static const struct arm64_cpu_capabilities 
+>> arm64_repeat_tlbi_list[] = {
+>>   #ifdef CONFIG_ARM64_ERRATUM_1286807
+>>       {
+>>           ERRATA_MIDR_RANGE(MIDR_CORTEX_A76, 0, 0, 3, 0),
+>> +        /* Kryo4xx Gold (rcpe to rdpe) => (r0p0 to r1p0) */
+>> +        ERRATA_MIDR_RANGE(QCOM_CPU_PART_KRYO_4XX_GOLD, 0xc, 0xe, 
+>> 0xd, 0xe),
+>>       },
+>>   #endif
+>>       {},
+>
+> Why not include r2p0 and r3p0 which are affected by this erratum? I 
+> see these revisions are present
+> in our SoCs as per the document.
+>
+> Thanks,
+> Sai
 
-ack
+Acknowledged. Changing in the next version.
 
-> 
-> 
-> Anyway, similar patch was already sent:
-> https://lore.kernel.org/all/20220511161602.117772-7-sireeshkodali1@gmail.com/
-> Except its several issues, it is much more complete and specific.
+Thanks,
+Shreyas
 
-same reason as detailed above.
-
-> 
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,sc7280-mss-pil
->> +
->> +  reg:
->> +    items:
->> +      - description: MSS QDSP6 registers
->> +      - description: RMB registers
->> +
->> +  reg-names:
->> +    items:
->> +      - const: qdsp6
->> +      - const: rmb
->> +
->> +  iommus:
->> +    items:
->> +      - description: MSA Stream 1
->> +      - description: MSA Stream 2
->> +
->> +  interconnects:
->> +    items:
->> +      - description: Path leading to system memory
->> +
->> +  interrupts:
->> +    items:
->> +      - description: Watchdog interrupt
->> +      - description: Fatal interrupt
->> +      - description: Ready interrupt
->> +      - description: Handover interrupt
->> +      - description: Stop acknowledge interrupt
->> +      - description: Shutdown acknowledge interrupt
->> +
->> +  interrupt-names:
->> +    items:
->> +      - const: wdog
->> +      - const: fatal
->> +      - const: ready
->> +      - const: handover
->> +      - const: stop-ack
->> +      - const: shutdown-ack
->> +
->> +  clocks:
->> +    items:
->> +      - description: GCC MSS IFACE clock
->> +      - description: GCC MSS OFFLINE clock
->> +      - description: GCC MSS SNOC_AXI clock
->> +      - description: RPMH PKA clock
->> +      - description: RPMH XO clock
->> +
->> +  clock-names:
->> +    items:
->> +      - const: iface
->> +      - const: offline
->> +      - const: snoc_axi
->> +      - const: pka
->> +      - const: xo
->> +
->> +  power-domains:
->> +    items:
->> +      - description: CX power domain
->> +      - description: MSS power domain
->> +
->> +  power-domain-names:
->> +    items:
->> +      - const: cx
->> +      - const: mss
->> +
->> +  resets:
->> +    items:
->> +      - description: AOSS restart
->> +      - description: PDC reset
->> +
->> +  reset-names:
->> +    items:
->> +      - const: mss_restart
->> +      - const: pdc_reset
->> +
->> +  memory-region:
->> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> 
-> This should be defined by core schema and ref should not be needed.
-> 
->> +    description: Phandle reference to the reserved-memory for the MBA region followed
->> +                 by the modem region.
-> 
-> maxItems
-
-ack
-
-> 
->> +
->> +  firmware-name:
->> +    $ref: /schemas/types.yaml#/definitions/string
->> +    description:
->> +      The name of the firmware which should be loaded for this remote
->> +      processor.
->> +
->> +  qcom,halt-regs:
->> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->> +    description:
->> +      Phandle reference to a syscon representing TCSR followed by the
->> +      four offsets within syscon for q6, modem, nc and vq6 halt registers.
->> +
->> +  qcom,ext-regs:
->> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->> +    description:
->> +      Two phandle references to syscons representing TCSR_REG and TCSR register
->> +      space followed by the two offsets within the syscon to force_clk_en/rscc_disable
->> +      and axim1_clk_off/crypto_clk_off registers respectively.
->> +
->> +  qcom,qaccept-regs:
->> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->> +    description:
->> +      Phandle reference to a syscon representing TCSR followed by the
->> +      three offsets within syscon for mdm, cx and axi qaccept registers.
->> +
->> +  qcom,qmp:
->> +    $ref: /schemas/types.yaml#/definitions/phandle
->> +    description: Reference to the AOSS side-channel message RAM.
->> +
->> +  qcom,smem-states:
->> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->> +    description: States used by the AP to signal the Hexagon core
->> +    items:
->> +      - description: Stop the modem
->> +
->> +  qcom,smem-state-names:
->> +    $ref: /schemas/types.yaml#/definitions/string
-> 
-> For some reason you decided to make the same mistakes as the
-> https://lore.kernel.org/all/20220511161602.117772-7-sireeshkodali1@gmail.com/
-> 
-> even though all other bindings with this property looks correct.
-> 
-> Please, re-use existing bindings, do not reinvent things in incorrect way.
-> 
-> I'll stop the review, you need to align first.
-> 
-> What is weird, your v2 was before Sireesh's patch, and you both made the
-> same mistakes which do not exist in current bindings.
-
-I guess he used the qcom,sc7280-wpss-pil.yaml for reference as well lol.
-Sure I'll allign with him and who gets to post what.
-
-> 
-> All comments from his set apply here. It seems that his patchset came
-> after yours and copied stuff from your bindings, so yours would be FIFO,
-> if you made proper binding conversion.
-> 
-> Best regards,
-> Krzysztof
-> 
