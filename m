@@ -2,107 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DD79524C8D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 14:20:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C468A524DC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 15:05:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353600AbiELMUI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 08:20:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50222 "EHLO
+        id S1354113AbiELNF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 09:05:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350859AbiELMUH (ORCPT
+        with ESMTP id S1354123AbiELNFT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 08:20:07 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F316A2469FB;
-        Thu, 12 May 2022 05:20:06 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id x8so1011920pgr.4;
-        Thu, 12 May 2022 05:20:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gorQKMV8vjkGqwI8nCYg+SRESNs1085GlQg2z0ABeuo=;
-        b=PCIAmCovw7OM0hTE2W4qOGNoxgxbBpg8KbeHu/5PSSdoArfiqGcBFNMc5XU5LAmjWl
-         qLIwnwagkjm97pU8rRUANECE9AWjEczeWiXwd/Rz0Tf3/VBSH/XCoEDJ3IwW/QKn7ic5
-         H3kqIR/LdW7GiKoqf42m6g4CZjkjoznsTNeAmqvmG2ii4RPHiOIGQyC8fBl80KFMX/5w
-         3QQIscHoSk+TavN5oSPvjcQGUZBdku+hfWxg7zMq6KvwLXbS/3NDvs8fMCjXk/YFHkXy
-         mDtEBzYVZjjmTd2kjXPOSixISXUdVkMvCpmohKU/wsipluSHe5eVaUzCL1t3krsloryb
-         33+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gorQKMV8vjkGqwI8nCYg+SRESNs1085GlQg2z0ABeuo=;
-        b=JyuURqTQqImG/fnWH78i+/L6brStlihytiIo/1Au4imHoXl/AKrxXze68vasUjTn+S
-         hGV7j/9lq69sC/kObACG82KX1OE5IzotpfQWWvQ58WsXu6HfAMLkQ7sUSuhIJayXFx5m
-         sbb2Gqtj5imfauvHTMFks2bLd2wSLHUzMztDU3aEaC2XP6s3JoAgwQBeAWLW1Uh0eZF6
-         /kbhrMB22mlbGyHsjN+zMEY38FIptbF897tVfNC7KWjotNmLKZB5A4ZGLXsDHACIgQVN
-         mqIQbtHvSBpOU3bHgfc7v/Wwl/DhLV3dyQowYJ2MNU3KTSqmGmxppQS2si/R8/ekGlzs
-         8YTA==
-X-Gm-Message-State: AOAM530aDheynXIPc1SQ3aUoG6jkMMmk8JY9XrZJdoin0XqUg/60vQgk
-        JCKG/aK5pgQ4GLEStEmgUns=
-X-Google-Smtp-Source: ABdhPJxcj5dr0kJUFfqBEgzEoTIC5s88xMRWYL6CzqRLX2g+WGsAVhfrdfc0KIlhh12QckmcT6X/pg==
-X-Received: by 2002:a63:81c6:0:b0:3ab:6167:74b5 with SMTP id t189-20020a6381c6000000b003ab616774b5mr24640684pgd.527.1652358006556;
-        Thu, 12 May 2022 05:20:06 -0700 (PDT)
-Received: from localhost.localdomain ([202.120.234.246])
-        by smtp.googlemail.com with ESMTPSA id i16-20020a6561b0000000b003c62fa02f08sm1778477pgv.43.2022.05.12.05.20.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 May 2022 05:20:06 -0700 (PDT)
-From:   Miaoqian Lin <linmq006@gmail.com>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Cc:     linmq006@gmail.com
-Subject: [PATCH] drm/msm/a6xx: Fix refcount leak in a6xx_gpu_init
-Date:   Thu, 12 May 2022 16:19:50 +0400
-Message-Id: <20220512121955.56937-1-linmq006@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        Thu, 12 May 2022 09:05:19 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D782A24F0EC;
+        Thu, 12 May 2022 06:05:17 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 30CB061FBB;
+        Thu, 12 May 2022 13:05:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2AF3C34119;
+        Thu, 12 May 2022 13:05:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652360716;
+        bh=fpbMuzFSSEKE6clnkaj5tApbhUTpleh1BlcZWp+xI5U=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=s9bTsWtrIGr2fZ0/nrf5SoJ1amkYiCiLmXdVWcLjDYohWtvwHFR2gf4Cj9SQyNp2b
+         pQzp5It/eVwcFfAr+lbHXC8sxIZhfgJ3nHzLVatj3KueDxllIOrbjShNbTaqPYMth9
+         IK/JWnPB4IuRaAJ9tY/oQOAPvflWTAkw4998WtjLgft0oZDy+Bnfg+fkqbhbkx0u7y
+         +5i9wTAB0zz55BYkzdnk3CdllrETZYd1Ymn2rYTlu4hdgLLHtvGIxGlmMWEwa08WdN
+         cnOHcwZwaIE3eRdHeGNOR6oJY8oMLr3A4/ys6ygNwg3QujmMTATmhOpYsA1ZyL5Fs/
+         f3ONV8ALoIPVw==
+From:   Will Deacon <will@kernel.org>
+To:     Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Shreyas K K <quic_shrekk@quicinc.com>
+Cc:     kernel-team@android.com, Will Deacon <will@kernel.org>,
+        linux-kernel@vger.kernel.org,
+        Prasanna Kumar <quic_kprasan@quicinc.com>,
+        linux-arm-msm@vger.kernel.org,
+        Andre Przywara <andre.przywara@arm.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: Re: [PATCH V3] arm64: Enable repeat tlbi workaround on KRYO4XX gold CPUs
+Date:   Thu, 12 May 2022 14:05:06 +0100
+Message-Id: <165235773290.1834134.2218780460929548936.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20220512110134.12179-1-quic_shrekk@quicinc.com>
+References: <20220512110134.12179-1-quic_shrekk@quicinc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-of_parse_phandle() returns a node pointer with refcount
-incremented, we should use of_node_put() on it when not need anymore.
+On Thu, 12 May 2022 16:31:34 +0530, Shreyas K K wrote:
+> Add KRYO4XX gold/big cores to the list of CPUs that need the
+> repeat TLBI workaround. Apply this to the affected
+> KRYO4XX cores (rcpe to rfpe).
+> 
+> The variant and revision bits are implementation defined and are
+> different from the their Cortex CPU counterparts on which they are
+> based on, i.e., (r0p0 to r3p0) is equivalent to (rcpe to rfpe).
+> 
+> [...]
 
-a6xx_gmu_init() passes the node to of_find_device_by_node()
-and of_dma_configure(), of_find_device_by_node() will takes its
-reference, of_dma_configure() doesn't need the node after usage.
+Applied to arm64 (for-next/fixes), thanks!
 
-Add missing of_node_put() to avoid refcount leak.
+[1/1] arm64: Enable repeat tlbi workaround on KRYO4XX gold CPUs
+      https://git.kernel.org/arm64/c/51f559d66527
 
-Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index ccc4fcf7a630..a8f6d73197b1 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1919,6 +1919,7 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 	BUG_ON(!node);
- 
- 	ret = a6xx_gmu_init(a6xx_gpu, node);
-+	of_node_put(node);
- 	if (ret) {
- 		a6xx_destroy(&(a6xx_gpu->base.base));
- 		return ERR_PTR(ret);
+Cheers,
 -- 
-2.25.1
+Will
 
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
