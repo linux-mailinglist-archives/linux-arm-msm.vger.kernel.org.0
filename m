@@ -2,101 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECA7A525423
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 19:52:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0315C5254D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 20:29:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357351AbiELRvp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 13:51:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54764 "EHLO
+        id S1357673AbiELS3R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 14:29:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357346AbiELRve (ORCPT
+        with ESMTP id S1357524AbiELS3Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 13:51:34 -0400
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6BC93630F;
-        Thu, 12 May 2022 10:51:26 -0700 (PDT)
-X-IronPort-AV: E=McAfee;i="6400,9594,10345"; a="295343453"
-X-IronPort-AV: E=Sophos;i="5.91,220,1647327600"; 
-   d="scan'208";a="295343453"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 10:36:06 -0700
-X-IronPort-AV: E=Sophos;i="5.91,220,1647327600"; 
-   d="scan'208";a="566808809"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 10:36:00 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.95)
-        (envelope-from <andy.shevchenko@gmail.com>)
-        id 1npCjE-00FIF6-8R;
-        Thu, 12 May 2022 20:35:56 +0300
-Date:   Thu, 12 May 2022 20:35:55 +0300
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Joey Gouly <joey.gouly@arm.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, kernel-team@android.com
-Subject: Re: [PATCH v3 00/10] gpiolib: Handle immutable irq_chip structures
-Message-ID: <Yn1Fe4WPp3ZaUERj@smile.fi.intel.com>
-References: <20220419141846.598305-1-maz@kernel.org>
- <Yn0/DIl3+i/heRH6@smile.fi.intel.com>
+        Thu, 12 May 2022 14:29:16 -0400
+Received: from mail.pekanbaru.go.id (mail.pekanbaru.go.id [103.131.245.194])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A46342631C4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 11:29:15 -0700 (PDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.pekanbaru.go.id (Postfix) with ESMTP id 0B6A198ADF6;
+        Thu, 12 May 2022 10:45:38 +0700 (WIB)
+Received: from mail.pekanbaru.go.id ([127.0.0.1])
+        by localhost (mail.pekanbaru.go.id [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id Tfcdx2vmPSqh; Thu, 12 May 2022 10:45:37 +0700 (WIB)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.pekanbaru.go.id (Postfix) with ESMTP id 88AB896DF4F;
+        Thu, 12 May 2022 10:45:36 +0700 (WIB)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.pekanbaru.go.id 88AB896DF4F
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pekanbaru.go.id;
+        s=EA5C5C9E-4206-11EC-835B-1ADACEA726A0; t=1652327136;
+        bh=WgQd2bW8hb2KeIDNbeIeW1Bb4lp6m29iibMhAQT/egc=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=nqiMRbMS5r6WytEBWLtlSZl78lM4SGJFx+nzBUMtr0qzCgkRPHUqskoz8knSztgWK
+         p2TD9G/+1n+39NaglYahHDuRoOV3rDbymgjvzMET7Sgj4TQ178YCjLCtaBUlX8cfLG
+         migg/y/ipkzHnnQqGnZefyyzK/A0Q85joo6msQ7lLhOYlAjHGa6nh0RKO6KzS8nga3
+         s2YdooaZDmRPKxwjCDT8GNOJQ5R/i3lzmr12qc2QDmMsEj0tdbhFUdUcFfi4NTTUxd
+         ElGyuQiHPAHG5YLg7g9BMdnMuiOtzhL90/o4Tirp36rNmYPhUmHDZyO9/py41GGNfC
+         AHg7UgGY40I0A==
+X-Virus-Scanned: amavisd-new at mail.pekanbaru.go.id
+Received: from mail.pekanbaru.go.id ([127.0.0.1])
+        by localhost (mail.pekanbaru.go.id [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id pLqqJW_kFUP3; Thu, 12 May 2022 10:45:36 +0700 (WIB)
+Received: from [192.168.15.101] (unknown [41.79.219.176])
+        by mail.pekanbaru.go.id (Postfix) with ESMTPSA id 914EF98ADF6;
+        Thu, 12 May 2022 10:45:26 +0700 (WIB)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yn0/DIl3+i/heRH6@smile.fi.intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-        FORGED_GMAIL_RCVD,FREEMAIL_FROM,NML_ADSP_CUSTOM_MED,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_SOFTFAIL,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Awaiting your response 
+To:     Recipients <waterproject@pekanbaru.go.id>
+From:   waterproject@pekanbaru.go.id
+Date:   Thu, 12 May 2022 04:45:19 +0100
+Reply-To: test@hostnextdoor.com
+Message-Id: <20220512034527.914EF98ADF6@mail.pekanbaru.go.id>
+X-Spam-Status: No, score=3.4 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_BL_SPAMCOP_NET,
+        RCVD_IN_SBL,RCVD_IN_VALIDITY_RPBL,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 12, 2022 at 08:08:28PM +0300, Andy Shevchenko wrote:
-> On Tue, Apr 19, 2022 at 03:18:36PM +0100, Marc Zyngier wrote:
-> > This is a followup from [2].
-> > 
-> > I recently realised that the gpiolib play ugly tricks on the
-> > unsuspecting irq_chip structures by patching the callbacks.
-> > 
-> > Not only this breaks when an irq_chip structure is made const (which
-> > really should be the default case), but it also forces this structure
-> > to be copied at nauseam for each instance of the GPIO block, which is
-> > a waste of memory.
-> 
-> Is this brings us to the issue with IRQ chip name?
-> 
-> The use case in my mind is the following:
-> 1) we have two or more GPIO chips that supports IRQ;
-> 2) the user registers two IRQs of the same (by number) pin on different chips;
-> 3) cat /proc/interrupt will show 'my_gpio_chip XX', where XX is the number.
-> 
-> So, do I understand correct current state of affairs?
-> 
-> If so, we have to fix this to have any kind of ID added to the chip name that
-> we can map /proc/interrupts output correctly.
-
-Hmm... Some drivers are using static names, some -- dynamically prepared (one
-way or another). Either way I think the ID is good to have if we still miss it.
-
--- 
-With Best Regards,
-Andy Shevchenko
+Hi =
 
 
+Did you get my previous email? I have attempted over 3 times to open up com=
+munication with you. Please acknowledge if you receive this email. =
+
+
+Regards
+Morten Friis
