@@ -2,69 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 462A05246D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 09:22:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E09EB524732
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 09:43:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230454AbiELHWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 03:22:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49834 "EHLO
+        id S1351120AbiELHn3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 03:43:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350934AbiELHWJ (ORCPT
+        with ESMTP id S1351119AbiELHn2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 03:22:09 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1C3F27B3A;
-        Thu, 12 May 2022 00:22:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652340125; x=1683876125;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=TcvqFRo7tE7F2CGVY7lJqLdptfPjmpv6H/Lv9po1svo=;
-  b=KBWi2NK9ffH3L6RU8stGP8/c3cs8oUyY9oTK2tblBLAp6yRAMlHvds3E
-   dUKocG/603dE6zRqHRhkV0fRJddf9/cs8716RuLnpxlCXWtOB89hwlSp/
-   qJRvx2OKa8jrIdkBKGgLrhf18tjjk6jrW5q2cCYVARt2uJAQsDfyVk9Y7
-   8=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 12 May 2022 00:22:05 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 00:22:04 -0700
-Received: from [10.50.47.121] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 12 May
- 2022 00:22:00 -0700
-Message-ID: <e740f0f7-8010-a390-98e0-d549d981f5e3@quicinc.com>
-Date:   Thu, 12 May 2022 12:51:48 +0530
+        Thu, 12 May 2022 03:43:28 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D0DC1A15D7;
+        Thu, 12 May 2022 00:43:27 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A6AC761EC6;
+        Thu, 12 May 2022 07:43:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2A1C34100;
+        Thu, 12 May 2022 07:43:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652341405;
+        bh=/jv1RPpECihnpiFwTxMxfDy7BEiXHhX9DxelFbnjXMI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Kq3HcyCEBSOk0hL014f1nFXp8zGkv+ZiXpMOprfqAPK0SeY3sNnNk5+ciybqevgCK
+         bNt3IHeISfcuWFpdX3t7bD9tdkR/A7Dg5o/e7SfNc7/xzMlSLOrOMrJKtQ2KxEjWmw
+         5SOaDsVXRAlJDu4frl3ASj7Mr9mjS5v49o0vGKna5j7Vc4qkRIsdf5tczYfz9UNyVp
+         /Kdy5KSu8AC5kdVZw+mEs7Nra9xiF7wImUtbr12Q7M5vqlmR7YIG16+ZNrOjaA8Cpn
+         ual8WVmehZu2V/nfwR5QY1KQv2ETw/GBb3peNpNpnIXKN0V/nEyS5FwZVa/hXSskv3
+         u/xv6sD9lX9dA==
+Date:   Thu, 12 May 2022 13:13:12 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     bjorn.andersson@linaro.org, jassisinghbrar@gmail.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, Prasad Sodagudi <quic_psodagud@quicinc.com>
+Subject: Re: [PATCH v2] mailbox: qcom-ipcc: Log the pending interrupt during
+ resume
+Message-ID: <20220512074312.GA35848@thinkpad>
+References: <1652251404-30562-1-git-send-email-quic_sibis@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH] arm64: Enable repeat tlbi workaround on KRYO4XX gold CPUs
-Content-Language: en-US
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>
-CC:     Andre Przywara <andre.przywara@arm.com>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Prasanna Kumar <quic_kprasan@quicinc.com>
-References: <20220511080247.1530-1-quic_shrekk@quicinc.com>
- <7a7b4657-ec75-7984-1a6e-50ff928ab09c@quicinc.com>
-From:   Shreyas K K <quic_shrekk@quicinc.com>
-In-Reply-To: <7a7b4657-ec75-7984-1a6e-50ff928ab09c@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+In-Reply-To: <1652251404-30562-1-git-send-email-quic_sibis@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,71 +57,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
+On Wed, May 11, 2022 at 12:13:24PM +0530, Sibi Sankar wrote:
+> From: Prasad Sodagudi <quic_psodagud@quicinc.com>
+> 
+> Enable logging of the pending interrupt that triggered device wakeup. This
+> logging information helps to debug IRQs that cause periodic device wakeups
+> and prints the detailed information of pending IPCC interrupts instead of
+> the generic "Resume caused by IRQ 17, ipcc".
+> 
+> Scenario: Device wakeup caused by Modem crash
+> Logs:
+> qcom-ipcc mailbox: virq: 182 triggered client-id: 2; signal-id: 2
+> 
+> From the IPCC bindings it can further understood that the client here is
+> IPCC_CLIENT_MPSS and the signal was IPCC_MPROC_SIGNAL_SMP2P.
+> 
+> Signed-off-by: Prasad Sodagudi <quic_psodagud@quicinc.com>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+> 
+> V2:
+>  * Fix build error when ipcc is a module [Kernel Test Bot]
+> 
+>  drivers/mailbox/qcom-ipcc.c | 27 +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+> 
+> diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+> index c5d963222014..21c071ec119c 100644
+> --- a/drivers/mailbox/qcom-ipcc.c
+> +++ b/drivers/mailbox/qcom-ipcc.c
+> @@ -254,6 +254,28 @@ static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc,
+>  	return devm_mbox_controller_register(dev, mbox);
+>  }
+>  
+> +#ifdef CONFIG_PM_SLEEP
 
-On 5/11/2022 4:43 PM, Sai Prakash Ranjan wrote:
-> Hi Shreyas,
->
-> On 5/11/2022 1:32 PM, Shreyas K K wrote:
->> Add KRYO4XX gold/big cores to the list of CPUs that need the
->> repeat TLBI workaround. Apply this to the affected
->> KRYO4XX cores (rcpe to rdpe).
->>
->> The variant and revision bits are implementation defined and are
->> different from the their Cortex CPU counterparts on which they are
->> based on, i.e., (r0p0 to r1p0) is equivalent to (rcpe to rdpe).
->>
->> Signed-off-by: Shreyas K K <quic_shrekk@quicinc.com>
->> ---
->>   Documentation/arm64/silicon-errata.rst | 3 +++
->>   arch/arm64/kernel/cpu_errata.c         | 2 ++
->>   2 files changed, 5 insertions(+)
->>
->> diff --git a/Documentation/arm64/silicon-errata.rst 
->> b/Documentation/arm64/silicon-errata.rst
->> index 466cb9e89047..d27db84d585e 100644
->> --- a/Documentation/arm64/silicon-errata.rst
->> +++ b/Documentation/arm64/silicon-errata.rst
->> @@ -189,6 +189,9 @@ stable kernels.
->> +----------------+-----------------+-----------------+-----------------------------+
->>   | Qualcomm Tech. | Kryo4xx Silver  | N/A             | 
->> ARM64_ERRATUM_1024718       |
->> +----------------+-----------------+-----------------+-----------------------------+
->> +| Qualcomm Tech. | Kryo4xx Gold    | N/A             | 
->> ARM64_ERRATUM_1286807       |
->> ++----------------+-----------------+-----------------+-----------------------------+ 
->>
->> +
->> +----------------+-----------------+-----------------+-----------------------------+
->>   | Fujitsu        | A64FX           | E#010001        | 
->> FUJITSU_ERRATUM_010001      |
->> +----------------+-----------------+-----------------+-----------------------------+
->> diff --git a/arch/arm64/kernel/cpu_errata.c 
->> b/arch/arm64/kernel/cpu_errata.c
->> index 4c9b5b4b7a0b..2518657e6de1 100644
->> --- a/arch/arm64/kernel/cpu_errata.c
->> +++ b/arch/arm64/kernel/cpu_errata.c
->> @@ -208,6 +208,8 @@ static const struct arm64_cpu_capabilities 
->> arm64_repeat_tlbi_list[] = {
->>   #ifdef CONFIG_ARM64_ERRATUM_1286807
->>       {
->>           ERRATA_MIDR_RANGE(MIDR_CORTEX_A76, 0, 0, 3, 0),
->> +        /* Kryo4xx Gold (rcpe to rdpe) => (r0p0 to r1p0) */
->> +        ERRATA_MIDR_RANGE(QCOM_CPU_PART_KRYO_4XX_GOLD, 0xc, 0xe, 
->> 0xd, 0xe),
->>       },
->>   #endif
->>       {},
->
-> Why not include r2p0 and r3p0 which are affected by this erratum? I 
-> see these revisions are present
-> in our SoCs as per the document.
->
-> Thanks,
-> Sai
+You don't need this guard anymore. Please see below.
 
-Acknowledged. Changing in the next version.
+> +static int qcom_ipcc_pm_resume(struct device *dev)
+> +{
+> +	struct qcom_ipcc *ipcc = dev_get_drvdata(dev);
+> +	u32 hwirq;
+> +	int virq;
+> +
+> +	hwirq = readl(ipcc->base + IPCC_REG_RECV_ID);
+> +	if (hwirq == IPCC_NO_PENDING_IRQ)
+> +		return 0;
+> +
+> +	virq = irq_find_mapping(ipcc->irq_domain, hwirq);
+> +
+> +	dev_info(dev, "virq: %d triggered client-id: %ld; signal-id: %ld\n", virq,
+> +		 FIELD_GET(IPCC_CLIENT_ID_MASK, hwirq), FIELD_GET(IPCC_SIGNAL_ID_MASK, hwirq));
+> +
+
+Does this really need to be dev_info? This looks like a dev_dbg() material to
+me.
+
+> +	return 0;
+> +}
+> +#else
+> +#define qcom_ipcc_pm_resume NULL
+> +#endif
+> +
+>  static int qcom_ipcc_probe(struct platform_device *pdev)
+>  {
+>  	struct qcom_ipcc *ipcc;
+> @@ -324,6 +346,10 @@ static const struct of_device_id qcom_ipcc_of_match[] = {
+>  };
+>  MODULE_DEVICE_TABLE(of, qcom_ipcc_of_match);
+>  
+> +static const struct dev_pm_ops qcom_ipcc_dev_pm_ops = {
+> +	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(NULL, qcom_ipcc_pm_resume)
+> +};
+> +
+>  static struct platform_driver qcom_ipcc_driver = {
+>  	.probe = qcom_ipcc_probe,
+>  	.remove = qcom_ipcc_remove,
+> @@ -331,6 +357,7 @@ static struct platform_driver qcom_ipcc_driver = {
+>  		.name = "qcom-ipcc",
+>  		.of_match_table = qcom_ipcc_of_match,
+>  		.suppress_bind_attrs = true,
+> +		.pm = &qcom_ipcc_dev_pm_ops,
+
+You can use the new pm_sleep_ptr() macro to avoid the PM_SLEEP guard.
+
+		.pm = pm_sleep_ptr(&qcom_ipcc_dev_pm_ops),
 
 Thanks,
-Shreyas
+Mani
 
+>  	},
+>  };
+>  
+> -- 
+> 2.7.4
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
