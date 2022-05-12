@@ -2,100 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE08C524932
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 11:38:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1F46524937
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 11:39:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352142AbiELJiM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 05:38:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60906 "EHLO
+        id S1347283AbiELJjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 05:39:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352133AbiELJhv (ORCPT
+        with ESMTP id S1352187AbiELJjB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 05:37:51 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D04F26FD1A;
-        Thu, 12 May 2022 02:37:38 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id t11-20020a17090ad50b00b001d95bf21996so7324951pju.2;
-        Thu, 12 May 2022 02:37:38 -0700 (PDT)
+        Thu, 12 May 2022 05:39:01 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A891F210B98;
+        Thu, 12 May 2022 02:38:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:content-transfer-encoding:date:message-id:cc:subject
-         :from:to:references:in-reply-to;
-        bh=iZFrk+1WuAX7Uovgz4zajtM6wW58xVr5fx7WagK6QTE=;
-        b=iuLH0XfcHwUlF/vNb9nAe18b2ojIBUCTOjyojcLYaPl/T7OisuyAs147hvM1DKucIB
-         DZ23cJSUA41Gsojj/ZqZ/X81uqu/i/NKlsjSWQgOuI6GSZ+bdoIkTlv8mAaeEv9ry0ci
-         1bBnhdA4CY9RlEuOQXhhb7sgDR9VPA27HPvMuKu/JtntNi3sQmVAp384gNS+BmHiA/fs
-         F+kXkG485qOdYmtwpta5IljifuUEMpVStwRG6QgEepeEez4mIlpv9mejVuKY1z/5cNm6
-         T2F35aXq0/Dm/s+OCm0ufX/idfqkOWH8r/OeBNMYGKN/aa+SoBf9AE8BlwF6Xs2kuMNZ
-         JJJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:content-transfer-encoding:date
-         :message-id:cc:subject:from:to:references:in-reply-to;
-        bh=iZFrk+1WuAX7Uovgz4zajtM6wW58xVr5fx7WagK6QTE=;
-        b=QJjMbdL0Y+jKWVwhMAHvGYf7r3qYUW01i23kPMa8jAGfZMt2Orn63K5BDhbHMPzRc5
-         pwYOJBqzd4qTwoHciESAWzDEAlbjbPC1a1KHS6dOkM8u1tBawkQlHPKgy1kMahw5rTO0
-         t3zFS15W0kRVcvHlXqYkEuv0sLPmWSx1/TC62qVO2Oam/Kb33FkBHgQhnjLt7AAMASDG
-         RcrxeGmTXqPxQUbbQvHSAOiKJqNsUDORG8O0jyvFnEaJnGFl0K1GaDRLv8aVBoI8nvAQ
-         3dWA1oIqgEEh3ncLwFJM3K6LBVU824UWANllCF1zr6MJqNOvqV+hFdnnq/nAh70w5hrB
-         AeeA==
-X-Gm-Message-State: AOAM530+0nJcWdqbVVWljaXjngK4klVkDLAuodbkybLixv/rWuL0qoky
-        E48wQiW2U0LiqTfyRqRrRSQ=
-X-Google-Smtp-Source: ABdhPJzQfordeKPqWJc5pKiQnLmj2Bbc9ov9S+FxXYv9EgRzW0ywBuhOTZVWRfnZoW1+3gLBwaTWzQ==
-X-Received: by 2002:a17:903:32d0:b0:15e:8cbc:fd39 with SMTP id i16-20020a17090332d000b0015e8cbcfd39mr30500975plr.95.1652348258335;
-        Thu, 12 May 2022 02:37:38 -0700 (PDT)
-Received: from localhost ([49.204.239.218])
-        by smtp.gmail.com with ESMTPSA id a10-20020a170902b58a00b0015e8d4eb2acsm3364350pls.246.2022.05.12.02.37.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 May 2022 02:37:37 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 12 May 2022 15:07:32 +0530
-Message-Id: <CJXOKK6WT06F.109YU66ZCBP5T@skynet-linux>
-Cc:     <bjorn.andersson@linaro.org>, "Andy Gross" <agross@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "open list" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: msm8916: Fix typo in pronto
- remoteproc node
-From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
-To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>
-X-Mailer: aerc 0.9.0
-References: <20220510042654.71152-1-sireeshkodali1@gmail.com>
- <20220510042654.71152-3-sireeshkodali1@gmail.com>
- <81365629-6cf0-f320-e684-4fb40b829399@linaro.org>
-In-Reply-To: <81365629-6cf0-f320-e684-4fb40b829399@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652348330; x=1683884330;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=Pc3XZR/BwKP8qFo+0/LRobvkz6pJ4jCAfKi/xt3D2KY=;
+  b=EDgbxqLv6ufvlSklnUHYb0j8sQST/39aaXruX24ecTfJz4dt2xuDdYAH
+   vaWJyr8KWg2R5cGbvteIrSUpA6uK0DYgXb+TG0JKiISUyHTdThgAtJtBi
+   Hv8aON0FhgrDnt3KOxqda2eusPuFarsZf7IPMkOGJ9OP3gGywpVxYOOek
+   c=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 12 May 2022 02:38:49 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 02:38:49 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 12 May 2022 02:38:48 -0700
+Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 12 May
+ 2022 02:38:46 -0700
+Subject: Re: [PATCH v2] mailbox: qcom-ipcc: Log the pending interrupt during
+ resume
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     <bjorn.andersson@linaro.org>, <jassisinghbrar@gmail.com>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <agross@kernel.org>, Prasad Sodagudi <quic_psodagud@quicinc.com>
+References: <1652251404-30562-1-git-send-email-quic_sibis@quicinc.com>
+ <20220512074312.GA35848@thinkpad>
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+Message-ID: <5b8aa653-5af8-a54f-b7bd-4d758eac9019@quicinc.com>
+Date:   Thu, 12 May 2022 15:08:43 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <20220512074312.GA35848@thinkpad>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed May 11, 2022 at 11:41 PM IST, Krzysztof Kozlowski wrote:
-> On 10/05/2022 06:26, Sireesh Kodali wrote:
-> > The smem-state properties for the pronto node were incorrectly labelled=
-,
-> > reading `qcom,state*` rather than `qcom,smem-state*`. Fix that, allowin=
-g
-> > the stop state to be used.
-> >=20
-> > Fixes: 88106096cbf8 ("ARM: dts: msm8916: Add and enable wcnss node")
-> >=20
-> > Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
->
-> No blank lines between tags, please.
->
-> Best regards,
-> Krzysztof
+Hey Mani,
 
-Will fix in v2
+Thanks for taking time to review the patch.
 
-Thanks,
-Sireesh
+On 5/12/22 1:13 PM, Manivannan Sadhasivam wrote:
+> On Wed, May 11, 2022 at 12:13:24PM +0530, Sibi Sankar wrote:
+>> From: Prasad Sodagudi <quic_psodagud@quicinc.com>
+>>
+>> Enable logging of the pending interrupt that triggered device wakeup. This
+>> logging information helps to debug IRQs that cause periodic device wakeups
+>> and prints the detailed information of pending IPCC interrupts instead of
+>> the generic "Resume caused by IRQ 17, ipcc".
+>>
+>> Scenario: Device wakeup caused by Modem crash
+>> Logs:
+>> qcom-ipcc mailbox: virq: 182 triggered client-id: 2; signal-id: 2
+>>
+>>  From the IPCC bindings it can further understood that the client here is
+>> IPCC_CLIENT_MPSS and the signal was IPCC_MPROC_SIGNAL_SMP2P.
+>>
+>> Signed-off-by: Prasad Sodagudi <quic_psodagud@quicinc.com>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> ---
+>>
+>> V2:
+>>   * Fix build error when ipcc is a module [Kernel Test Bot]
+>>
+>>   drivers/mailbox/qcom-ipcc.c | 27 +++++++++++++++++++++++++++
+>>   1 file changed, 27 insertions(+)
+>>
+>> diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+>> index c5d963222014..21c071ec119c 100644
+>> --- a/drivers/mailbox/qcom-ipcc.c
+>> +++ b/drivers/mailbox/qcom-ipcc.c
+>> @@ -254,6 +254,28 @@ static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc,
+>>   	return devm_mbox_controller_register(dev, mbox);
+>>   }
+>>   
+>> +#ifdef CONFIG_PM_SLEEP
+> 
+> You don't need this guard anymore. Please see below.
+
+ack
+
+> 
+>> +static int qcom_ipcc_pm_resume(struct device *dev)
+>> +{
+>> +	struct qcom_ipcc *ipcc = dev_get_drvdata(dev);
+>> +	u32 hwirq;
+>> +	int virq;
+>> +
+>> +	hwirq = readl(ipcc->base + IPCC_REG_RECV_ID);
+>> +	if (hwirq == IPCC_NO_PENDING_IRQ)
+>> +		return 0;
+>> +
+>> +	virq = irq_find_mapping(ipcc->irq_domain, hwirq);
+>> +
+>> +	dev_info(dev, "virq: %d triggered client-id: %ld; signal-id: %ld\n", virq,
+>> +		 FIELD_GET(IPCC_CLIENT_ID_MASK, hwirq), FIELD_GET(IPCC_SIGNAL_ID_MASK, hwirq));
+>> +
+> 
+> Does this really need to be dev_info? This looks like a dev_dbg() material to
+> me.
+
+The whole point of the log is to catch sporadic issues like random
+wakeups caused by remoteprocs through ipcc. We would just end up with
+a single line identifying the client id during resume if ipcc had indeed
+caused the wakeup else it wouldn't print anything.
+
+-Sibi
+> 
+>> +	return 0;
+>> +}
+>> +#else
+>> +#define qcom_ipcc_pm_resume NULL
+>> +#endif
+>> +
+>>   static int qcom_ipcc_probe(struct platform_device *pdev)
+>>   {
+>>   	struct qcom_ipcc *ipcc;
+>> @@ -324,6 +346,10 @@ static const struct of_device_id qcom_ipcc_of_match[] = {
+>>   };
+>>   MODULE_DEVICE_TABLE(of, qcom_ipcc_of_match);
+>>   
+>> +static const struct dev_pm_ops qcom_ipcc_dev_pm_ops = {
+>> +	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(NULL, qcom_ipcc_pm_resume)
+>> +};
+>> +
+>>   static struct platform_driver qcom_ipcc_driver = {
+>>   	.probe = qcom_ipcc_probe,
+>>   	.remove = qcom_ipcc_remove,
+>> @@ -331,6 +357,7 @@ static struct platform_driver qcom_ipcc_driver = {
+>>   		.name = "qcom-ipcc",
+>>   		.of_match_table = qcom_ipcc_of_match,
+>>   		.suppress_bind_attrs = true,
+>> +		.pm = &qcom_ipcc_dev_pm_ops,
+> 
+> You can use the new pm_sleep_ptr() macro to avoid the PM_SLEEP guard.
+> 
+> 		.pm = pm_sleep_ptr(&qcom_ipcc_dev_pm_ops),
+
+ack
+
+> 
+> Thanks,
+> Mani
+> 
+>>   	},
+>>   };
+>>   
+>> -- 
+>> 2.7.4
+>>
+> 
