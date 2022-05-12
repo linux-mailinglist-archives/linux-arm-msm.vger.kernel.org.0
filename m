@@ -2,233 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFE0F524E45
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 15:28:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A0BB524E7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 15:42:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242326AbiELN2Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 09:28:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38676 "EHLO
+        id S1354543AbiELNmp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 09:42:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345932AbiELN2X (ORCPT
+        with ESMTP id S1354538AbiELNmo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 09:28:23 -0400
-Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [46.235.227.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89CCA606E5;
-        Thu, 12 May 2022 06:28:21 -0700 (PDT)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: tomeu)
-        with ESMTPSA id F379F1F4556A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1652362099;
-        bh=P6KXXhLWhwwDciwvFbZefB7qc8KqyBrUxi0cxEsXUEw=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=YezVes2VhgBEsQVdrqfBV5205Bd5u8APQWwe/hTBljiCuNKVZcLaQXnZhg7EY/jC/
-         cL7aLOZRMLwEeUy4/MRLPYa7ngAl00V7mnY9lh72DyPSRT/4YkQbMGl5HnSLALgqKX
-         n6H/xCIuu19ihP+ijGa+yJarJ2U7D4rg16cBxxl2JpwvloeYd+xWh4sjtZp8XvHWCz
-         WUC3rNj7pU4woyO3B+xCedDhGHb1G/Rj/VR8OwKzpO8s9fcsRvfctr+zWeKcr/VAPT
-         OeTwdCk7DMYhi2rMsvqH3Fs3Fz5cOn2Q9Wsiav2CpwUW3iFhCeLFNDvjWSW8EfjLvD
-         223EZVGkQDCuw==
-Subject: Re: [Freedreno] [RFC v2] drm/msm: Add initial ci/ subdirectory
-To:     Rob Clark <robdclark@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Jonathan Corbet <corbet@lwn.net>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
- <20220510141329.54414-1-tomeu.vizoso@collabora.com>
- <e4e03cd8-3ebc-e5e1-e7d0-6bdc038049b5@quicinc.com>
- <CAF6AEGueadnRMiatO3MoHS+NTQ1o1sgcV0cVjJM3iu-6JUNmNw@mail.gmail.com>
- <CAKMK7uGRuCZwF6m02tcxxrgQGaijsYaNkowjxR+cw0JM3UpDkQ@mail.gmail.com>
- <CAF6AEGthpxPLxyt_i-aUFgW485hA5qw+xXcJ3gKQUJ+fM=ZBhg@mail.gmail.com>
-From:   Tomeu Vizoso <tomeu.vizoso@collabora.com>
-Message-ID: <79d79110-9fbc-0e96-d17e-68a1f8f2c224@collabora.com>
-Date:   Thu, 12 May 2022 15:28:16 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <CAF6AEGthpxPLxyt_i-aUFgW485hA5qw+xXcJ3gKQUJ+fM=ZBhg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY autolearn=ham
-        autolearn_force=no version=3.4.6
+        Thu, 12 May 2022 09:42:44 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4176A62CD1;
+        Thu, 12 May 2022 06:42:43 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id i24so4830356pfa.7;
+        Thu, 12 May 2022 06:42:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:content-transfer-encoding:date:message-id:cc:subject
+         :from:to:references:in-reply-to;
+        bh=GgzNh++292NF+E5zmg+4OX55F9De/BlQIpudd+EXtLQ=;
+        b=LA63FLxYpym5WboTuUwi/wt+SGKurpEXYZQxiMDo+Xt5K5HxcMaroziFYgsNY4U/D0
+         jQcL2M6YnnnpxbMx8WO/l+dZr1XtXZXWlVn/uh428fXkeT5rbnonFqHo8E14tAdUQCsG
+         S4W8NZReOH65ZS3DdbfBwBp/s91Ypl8qzOshu5CcbA+6tpQzhSwJbzboU8awwQhvxwgb
+         prba+OJY/UDjw4SkwUk7eclm5IT7azw9CMmuZZvVGf9b0WPTP5FXARfsgIf7JDgzJOn7
+         lIPjXOuhF8ADfbty0dik/14V86WxCGBL/BSipDt5/OBSqXOfAIprdtTOEQ/LgxHdvchl
+         orRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:content-transfer-encoding:date
+         :message-id:cc:subject:from:to:references:in-reply-to;
+        bh=GgzNh++292NF+E5zmg+4OX55F9De/BlQIpudd+EXtLQ=;
+        b=rhUvVR81hmpNdc6UmCck84sIDZZLiq8moZevjrNdD0luwTRpxq3ZU6ls+nm/HnTbAW
+         32fyMt+pqmRye3BxMPOh2cfFmwykTi+MeQx5UDis5hdS1nq/XqBiY3JJMPB+HVvKZdqw
+         oNO5bOsI/+QzP+pEYmgGzAaOo6k8zGpVHtyd7AsgY92Lp75WB667MEbpuuLhejtvoCWS
+         kFOiREwWTUwiO19UP5zGwqD84RngzwDo9pakQvCABe9lgrGRmvdXa3GHotyvI21mUxbV
+         1sfnjVAfzlcvyNhb2DZKGugT437o6Et0v6Y3GQXmTomLqwQ2yA78TnS/gS6U/VGjh3/I
+         yTpQ==
+X-Gm-Message-State: AOAM532N7IwMdRRnxYZuhImr7DWfdmQw2HD761K9KfAW6wI7R1MDvOuj
+        8zkwzlLUwAY7c1TUbkFKKRg=
+X-Google-Smtp-Source: ABdhPJyhAuXqFsgoeseiRJPc84g3MKIgyF+aoWzOOmIUwQdQ7kGidEG8ONsSZ/Ofybzfz7Fr5YYarA==
+X-Received: by 2002:a05:6a00:234b:b0:510:4161:781a with SMTP id j11-20020a056a00234b00b005104161781amr30341812pfj.5.1652362962594;
+        Thu, 12 May 2022 06:42:42 -0700 (PDT)
+Received: from localhost ([49.204.239.218])
+        by smtp.gmail.com with ESMTPSA id x40-20020a056a000be800b0051082ab4de0sm3741051pfu.44.2022.05.12.06.42.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 May 2022 06:42:41 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Thu, 12 May 2022 19:12:36 +0530
+Message-Id: <CJXTS6RN1T67.WNKK2FZKK9UB@skynet-linux>
+Cc:     <linux-arm-msm@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
+        <phone-devel@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Mathieu Poirier" <mathieu.poirier@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Loic Poulain" <loic.poulain@linaro.org>
+Subject: Re: [PATCH 4/9] dt-bindings: remoteproc: qcom: wcnss: Convert to
+ YAML
+From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        <linux-remoteproc@vger.kernel.org>
+X-Mailer: aerc 0.9.0
+References: <20220511161602.117772-1-sireeshkodali1@gmail.com>
+ <20220511161602.117772-5-sireeshkodali1@gmail.com>
+ <00234f36-9bae-31d5-5b83-ea238e7e3c11@linaro.org>
+ <CJXL0SG2GHN1.1IO2JOR5ARNV8@skynet-linux>
+ <a62822a4-a771-dfa9-f46d-586fdccedf66@linaro.org>
+ <CJXOGJIR1ONQ.2ZT3JQGVWWHFB@skynet-linux>
+ <58a6391b-b930-0095-4f50-618dee4f24e2@linaro.org>
+In-Reply-To: <58a6391b-b930-0095-4f50-618dee4f24e2@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/11/22 7:46 PM, Rob Clark wrote:
-> On Wed, May 11, 2022 at 10:12 AM Daniel Vetter <daniel@ffwll.ch> wrote:
->>
->> On Tue, 10 May 2022 at 22:26, Rob Clark <robdclark@gmail.com> wrote:
->>>
->>> On Tue, May 10, 2022 at 12:39 PM Jessica Zhang
->>> <quic_jesszhan@quicinc.com> wrote:
->>>>
->>>>
->>>>
->>>> On 5/10/2022 7:13 AM, Tomeu Vizoso wrote:
->>>>> And use it to store expectations about what the drm/msm driver is
->>>>> supposed to pass in the IGT test suite.
->>>>>
->>>>> Also include a configuration file that points to the out-of-tree CI
->>>>> scripts.
->>>>>
->>>>> By storing the test expectations along the code we can make sure both
->>>>> stay in sync with each other, and so we can know when a code change
->>>>> breaks those expectations.
->>>>>
->>>>> This will allow all contributors to drm/msm to reuse the infrastructure
->>>>> already in gitlab.freedesktop.org to test the driver on several
->>>>> generations of the hardware.
->>>>>
->>>>> v2:
->>>>>     - Fix names of result expectation files to match SoC
->>>>>     - Don't execute tests that are going to skip on all boards
->>>>>
->>>>> Signed-off-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
->>>>> ---
->>>>>    Documentation/gpu/msm_automated_testing.rst   |  70 +++++++++
->>>>>    drivers/gpu/drm/msm/ci/gitlab-ci.yml          |  11 ++
->>>>>    drivers/gpu/drm/msm/ci/msm.testlist           | 148 ++++++++++++++++++
->>>>>    .../gpu/drm/msm/ci/msm_apq8016_results.txt    | 140 +++++++++++++++++
->>>>>    .../gpu/drm/msm/ci/msm_apq8096_results.txt    | 140 +++++++++++++++++
->>>>>    drivers/gpu/drm/msm/ci/msm_sc7180_results.txt | 141 +++++++++++++++++
->>>>>    drivers/gpu/drm/msm/ci/msm_sdm845_results.txt | 141 +++++++++++++++++
->>>>>    7 files changed, 791 insertions(+)
->>>>>    create mode 100644 Documentation/gpu/msm_automated_testing.rst
->>>>>    create mode 100644 drivers/gpu/drm/msm/ci/gitlab-ci.yml
->>>>>    create mode 100644 drivers/gpu/drm/msm/ci/msm.testlist
->>>>>    create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8016_results.txt
->>>>>    create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8096_results.txt
->>>>>    create mode 100644 drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
->>>>>    create mode 100644 drivers/gpu/drm/msm/ci/msm_sdm845_results.txt
->>>>>
-> 
-> [snip]
-> 
->>>>> diff --git a/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt b/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
->>>>> new file mode 100644
->>>>> index 000000000000..01f7b4b399b5
->>>>> --- /dev/null
->>>>> +++ b/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
->>>>> @@ -0,0 +1,141 @@
->>>>> +igt@core_auth@getclient-simple,dmesg-warn
->>>>> +igt@core_auth@getclient-master-drop,pass
->>>>> +igt@core_auth@basic-auth,pass
->>>>> +igt@core_auth@many-magics,pass
->>>>> +igt@core_getclient,pass
->>>>> +igt@core_getstats,pass
->>>>> +igt@core_getversion,pass
->>>>> +igt@core_setmaster_vs_auth,pass
->>>>> +igt@drm_read@invalid-buffer,pass
->>>>> +igt@drm_read@fault-buffer,pass
->>>>> +igt@drm_read@empty-block,pass
->>>>> +igt@drm_read@empty-nonblock,pass
->>>>> +igt@drm_read@short-buffer-block,pass
->>>>> +igt@drm_read@short-buffer-nonblock,pass
->>>>> +igt@drm_read@short-buffer-wakeup,pass
->>>>> +igt@kms_addfb_basic@unused-handle,pass
->>>>> +igt@kms_addfb_basic@unused-pitches,pass
->>>>> +igt@kms_addfb_basic@unused-offsets,pass
->>>>> +igt@kms_addfb_basic@unused-modifier,pass
->>>>> +igt@kms_addfb_basic@legacy-format,dmesg-warn
->>>>> +igt@kms_addfb_basic@no-handle,pass
->>>>> +igt@kms_addfb_basic@basic,pass
->>>>> +igt@kms_addfb_basic@bad-pitch-0,pass
->>>>> +igt@kms_addfb_basic@bad-pitch-32,pass
->>>>> +igt@kms_addfb_basic@bad-pitch-63,pass
->>>>> +igt@kms_addfb_basic@bad-pitch-128,pass
->>>>> +igt@kms_addfb_basic@bad-pitch-256,pass
->>>>> +igt@kms_addfb_basic@bad-pitch-1024,pass
->>>>> +igt@kms_addfb_basic@bad-pitch-999,pass
->>>>> +igt@kms_addfb_basic@bad-pitch-65536,pass
->>>>> +igt@kms_addfb_basic@size-max,pass
->>>>> +igt@kms_addfb_basic@too-wide,pass
->>>>> +igt@kms_addfb_basic@too-high,dmesg-warn
->>>>
->>>> For test results on Trogdor, is is possible to have them be
->>>> success/fail/skip only?
->>>>
->>>> Results such as dmesg-warn/dmesg-fail are igt_runner specific and
->>>> because there isn't support for igt_runner on ChromeOS, they will be
->>>> difficult to replicate and debug.
->>>
->>> Actually, I wonder if it would be better to just treat
->>> dmesg-warn/dmesg-fail as pass/fail?  I'd noticed some flakes on
->>> rockchip which looked just like unrelated dmesg msg which just
->>> happened to show up while the test was running.
->>
->> This is kinda the reason behind standardizing on drm dmesg logging, so
->> that we have some chances at filtering stuff out. Not sure that's a
->> good idea, since when your entire box splats and lockdep is dead, then
->> continuing to run drm tests is still fairly pointless.
-> 
-> I'm not sure if we are using it yet for drm-ci, but for mesa-ci we
-> monitor dmesg (over serial port, from the controller) for splats, so
-> we already have the tech for restarting or aborting the CI run.  We
-> don't need igt-runner to tell us.
+On Thu May 12, 2022 at 4:32 PM IST, Krzysztof Kozlowski wrote:
+> On 12/05/2022 11:32, Sireesh Kodali wrote:
+> >>>>> +          - enum:
+> >>>>> +              - qcom,pronto-v2-pil
+> >>>>> +          - enum:
+> >>>>> +              - qcom,pronto
+> >>>>
+> >>>> This does not look correct. The fallback compatible should not chang=
+e.
+> >>>> What is more, it was not documented in original binding, so this sho=
+uld
+> >>>> be done in separate patch.
+> >>>>
+> >>>
+> >>> This was not a change to the fallback compatible.=20
+> >>
+> >> You made it an enum, so you expect it to use different fallback for
+> >> different cases.
+> >>
+> >>> msm8916.dtsi's wcnss
+> >>> node has "qcom,pronto" as the compatible string, which is why this wa=
+s
+> >>> added. It is however not documented in the txt file. Is it sufficient=
+ to
+> >>> add a note in the commit message, or should it be split into a separa=
+te
+> >>> commit?
+> >>
+> >> Please split it, assuming that fallback is correct. Maybe the fallback
+> >> is wrong?
+> >=20
+> > The code doesn't recognize "qcom,pronto", so perhaps the best solution
+> > is to just remove that compatible from msm8916.dtsi?
+>
+> Eh, I don't know. You need to check, maybe also in downstream sources.
+>
 
-Yep, these scripts are currently being used as-is from Mesa, so we got 
-that functionality for free.
+I just checked, it seems "qcom,pronto" is used by the wcnss driver in
+/net. So both "qcom,pronto-v2-pil" and "qcom,pronto" need to be present,
+but the latter wasn't documented.
 
->> I think this is another reason why trying at least to standardize this
->> stuff over drivers would be pretty good idea.
->>
->>> Additionally, some of the tests, like msm_recovery, are *expected* to
->>> generate some dmesg spam since they are intentionally triggering GPU
->>> hangs to test the recovery mechanism.
->>
->> Uh I don't like that. It just allows userspace to spam dmesg, which
->> doesn't seem like a great idea. That's at least why i915 dumps these
->> at a lower level, and in the past had a special "I'm going to whack
->> the gpu real hard expect hangs" knob in debugfs.
->>
->> Having tests which intentionally spam dmesg above info level isn't
->> really good since then you need endless amounts of test-specific
->> encoding of what is considered a success and what not. Like when a
->> backmerge breaks a testcases which is already at dmesg-fail, is that
->> bad or not? Probably bad, but was the situation before that really
->> good or already kinda on fire?
-> 
-> I guess I could add some debugfs knobs to squelch the dmesg msgs on
-> gpu hangs.  In the normal case, I'd prefer that gpu hangs are not
-> silent.. since that is something we get in feedback reports if a user
-> (or dogfooder) reports a bug.
-> 
-> The rockchip case I mentioned was some unrelated dmesg about
-> linktraining failing.. presumably because there was no display
-> attached?  IDK, I didn't look too closely.  But my point is we could
-> be getting unrelated and asynchronous dmesg spam, even from other
-> kernel subsystems.  Letting that be part of the test results just
-> sounds like asking for flakes.
+> (...)
+>
+> >>>>
+> >>>>> +
+> >>>>> +  iris:
+> >>>>
+> >>>> Generic node name... what is "iris"?
+> >>>>
+> >>> Iris is the RF module, I'll make the description better
+> >>
+> >> RF like wifi? Then the property name should be "wifi".
+> >=20
+> > RF like wifi and bluetooth. However there are wifi and bt subnodes in
+> > the smd-edge subnode. Iris is just the antenna hardware if I understand
+> > correctly. Also this is just a documentation of the existing nodes that
+> > are present in msm8916.dtsi, but for whatever reason their documentatio=
+n
+> > was missing in the txt file. Without adding this node in the YAML
+> > dtb_check fails.
+>
+> It seems commit fd52bdae9ab0 ("wcn36xx: Disable 5GHz for wcn3620")
+>  added usage of "iris" property but did not document it in the bindings.
+>
+> You can fix it by documenting (separate patch) existing practice or
+> document with changing the node name. I am not sure if it is worth the
+> effort, so just new patch please.
+>
 
-I think some drivers are currently a bit too buggy to behave reliably 
-under CI unless one reduces coverage (rockchip on rk3399, for example). 
-And some other drivers (in other subsystems as well) could do with a 
-review of what they print to the console. I guess these are things we 
-could and probably should fix?
+I'll make a 2 separate patches, documenting the extra "qcom,pronto"
+compatible, and the iris subnode.
 
-Cheers,
+Thanks,
+Sireesh
 
-Tomeu
+> Best regards,
+> Krzysztof
 
-> BR,
-> -R
-> 
->> -Daniel
->>
->>> BR,
->>> -R
->>>
