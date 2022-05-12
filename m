@@ -2,72 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BDDD525877
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 01:37:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6C85525880
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 01:39:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359531AbiELXhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 19:37:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51534 "EHLO
+        id S1346147AbiELXjG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 19:39:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359530AbiELXg5 (ORCPT
+        with ESMTP id S1359525AbiELXjF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 19:36:57 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7A4265D1F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:55 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id p10so11669321lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:55 -0700 (PDT)
+        Thu, 12 May 2022 19:39:05 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722BE286FEE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:39:03 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 16so8329406lju.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:39:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Mfq8artsCmgPridHwXtCTWz4VD26jC/9nXCO2mqCNlk=;
-        b=iXwW7J9u+H2HItGvauEDzCNnvKPaZBXXt3QnjD7RMi3ta+74h4j2BR19KiAwVqTNI8
-         boCEE0PazFQzGUotk83wRsifDapmV+z9q9EO/NTLoxDQsyeqolNo+t1sQ7wqpewL4D8v
-         z9CWx2xT27bxW4bBLf+LVCX893TmhrxPa4lk5dcr7AXjdiTK9RajYXKRkNy/GuJZusZI
-         Zfu2JDBhV83WKxFJ233Cf+DebKxzaSy7yKtSkrMNF55jca5XjHiD7+Xzgx3coUfmgl51
-         6Dw1UyOU7uwSzXks9YdCey5rB9tvef4qWZxOQ0+rL2OLBy1EJG7bvrXaZjX5wXrcEyrw
-         ycCQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=UxYHPKKpJ3gJqXFoP77Myjabfl2sbzgjV+P+sSNGRWw=;
+        b=dntSTokMCD79xEtTvx5gvFLZ5kcRTVQvoV2VPYYERLJmmXiz8hnZSVDnP5IRfnKQUn
+         ZRfwt04aYzGCx8etnz3Pt4PT37pe+yuK2lDiN0QvmVc3rdyKwtOBvwfFiFPDItgmHizs
+         N21m6rv0vm5mQFGwV1g9g+u1qot7Raepaj9hn6j3Nhyuvgxfg6RnOmRpmQ3oc9WBr70Y
+         SH1B3vHIoDr1PKZOmRqy5Va2boCmz0BaJ9P4FywUSRmsW1zkUrYabqM+ZG+/aGXYknOt
+         rKDATdfV7mPz+Uxn7gKMo82OIsAo1XE631ID/Q0Kzv3fULwtFosMAoDi/Wqej469bHPh
+         326A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Mfq8artsCmgPridHwXtCTWz4VD26jC/9nXCO2mqCNlk=;
-        b=rkMD11FXt2GV1QH2x0lCJ+IMLLXA3P0k2GIab234ds3HL0cb8d2480wOAPiXcgHd31
-         UWW9HvWzHu4224CygXiPG6fZ0ajuklX6+duE66w9ASKaNeoq/+ChcvkIfHwFsOIRUuep
-         lH4ht48YTExbSnvEUxuEeAtzhrdaVXMK75Bx/lJ1Sid43iNk6ybeNRGsJWtuOLFdzAFy
-         sbUsVffhPO7M3Gx+13qujjMQUV02D+dFW0hGsKW7uUBKdDR2JoC4OTNlL0jGFcwBMQSc
-         kfwZUVnKd7u0i1WM939neqgtYF7rKPOBW1LSKa8l5jQQdQejfLCOy3Nm/Pph/7VjCFBf
-         2QUQ==
-X-Gm-Message-State: AOAM531aOVufGubYkV8kVE/VHo2f23dbHDSIx/jHLfh7WssvYkjDeIpO
-        xmScaZxKZhpxmQDu4k/PAoeghQ==
-X-Google-Smtp-Source: ABdhPJyHwvFyLPj76dHqxn/lAe13fO2rG+/lMa9ckPzT4sqPlUWeknSc1GduqjhN2jAiACWtz8IBTw==
-X-Received: by 2002:a05:6512:2820:b0:474:35c:e74f with SMTP id cf32-20020a056512282000b00474035ce74fmr1426134lfb.661.1652398614085;
-        Thu, 12 May 2022 16:36:54 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p13-20020a19f00d000000b0047255d211c1sm127937lfc.240.2022.05.12.16.36.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 May 2022 16:36:53 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v2 8/8] dt-bindings: arm: qcom: document sda660 SoC and ifc6560 board
-Date:   Fri, 13 May 2022 02:36:47 +0300
-Message-Id: <20220512233647.2672813-9-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220512233647.2672813-1-dmitry.baryshkov@linaro.org>
-References: <20220512233647.2672813-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=UxYHPKKpJ3gJqXFoP77Myjabfl2sbzgjV+P+sSNGRWw=;
+        b=iIm+xivF8rhoqTjAws3azd7GEFm0tU4ci4GN+srZt1Bd74Eiof1LiHa0AmYx0IImES
+         Ns4WVT0vh5sgDmyhP2J0DPkdd+3vDK8elffCCP/gib3KhBv4YqPxgk6icKdYv6WlkiGG
+         MpSM25039H070PDHDH1WF8GqHwC/njN9Pz2ffsApO/SNQuDniseRoiKWIo85JiNg2YPR
+         GYM3uXzCPj0D5beoEF9wUYGumeJaHmtDmDIzabHxFp6Yo/tGh7eLKsJa1wbQ4Yxy0O40
+         F5241aDuG/tXvWoXxt0UiYkhwgMaRN4GmxF+R3K56eR1ZeE4bo/1aZGLeg13CQ/h2boB
+         tfcA==
+X-Gm-Message-State: AOAM532TxAfkLO2L0HI1ewmZ3XlasKYQLxXEnSE53fKnJRjNF2tvugKu
+        tCDIHSJRnLwrBb0R9/zYVxe1zA==
+X-Google-Smtp-Source: ABdhPJzphaFpAg//uJb252NsVwW6dzMlwlzQWV+PmeTT41q4QnXnwikeEwE0h9ga2evmVlZo3558Hg==
+X-Received: by 2002:a05:651c:312:b0:251:f8b8:184e with SMTP id a18-20020a05651c031200b00251f8b8184emr1465068ljp.9.1652398741790;
+        Thu, 12 May 2022 16:39:01 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id j18-20020a056512345200b004725b701c94sm135316lfr.42.2022.05.12.16.39.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 May 2022 16:39:01 -0700 (PDT)
+Message-ID: <49615bc9-c7a4-09ed-c89f-39c50e1d90ba@linaro.org>
+Date:   Fri, 13 May 2022 02:39:00 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v5 13/22] dma: qcom: bam_dma: Add support to initialize
+ interconnect path
+Content-Language: en-GB
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org
+Cc:     bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
+        herbert@gondor.apana.org.au, davem@davemloft.net,
+        stephan@gerhold.net, Thara Gopinath <thara.gopinath@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20211110105922.217895-1-bhupesh.sharma@linaro.org>
+ <20211110105922.217895-14-bhupesh.sharma@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211110105922.217895-14-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,38 +80,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add binding documentation for the Inforce IFC6560 board which uses
-Snapdragon SDA660.
+On 10/11/2021 13:59, Bhupesh Sharma wrote:
+> From: Thara Gopinath <thara.gopinath@linaro.org>
+> 
+> BAM dma engine associated with certain hardware blocks could require
+> relevant interconnect pieces be initialized prior to the dma engine
+> initialization. For e.g. crypto bam dma engine on sm8250. Such requirement
+> is passed on to the bam dma driver from dt via the "interconnects"
+> property.  Add support in bam_dma driver to check whether the interconnect
+> path is accessible/enabled prior to attempting driver intializations.
+> 
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> [Make header file inclusion alphabetical and use 'devm_of_icc_get()']
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> ---
+>   drivers/dma/qcom/bam_dma.c | 11 +++++++++++
+>   1 file changed, 11 insertions(+)
+> 
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index c8a77b428b52..19fb17db467f 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -26,6 +26,7 @@
+>   #include <linux/kernel.h>
+>   #include <linux/io.h>
+>   #include <linux/init.h>
+> +#include <linux/interconnect.h>
+>   #include <linux/slab.h>
+>   #include <linux/module.h>
+>   #include <linux/interrupt.h>
+> @@ -392,6 +393,7 @@ struct bam_device {
+>   	const struct reg_offset_data *layout;
+>   
+>   	struct clk *bamclk;
+> +	struct icc_path *mem_path;
+>   	int irq;
+>   
+>   	/* dma start transaction tasklet */
+> @@ -1284,6 +1286,15 @@ static int bam_dma_probe(struct platform_device *pdev)
+>   		return ret;
+>   	}
+>   
+> +	/* Ensure that interconnects are initialized */
+> +	bdev->mem_path = devm_of_icc_get(bdev->dev, "memory");
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
- 1 file changed, 6 insertions(+)
+Also, as a note, the "memory" is not a good name for the ICC path. 
+Usually they take the form of "src-dst". However in this case you can 
+probably use NULL for the first and the only icc path.
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 129cdd246223..ac4ee0f874ea 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -41,6 +41,7 @@ description: |
-         sa8155p
-         sc7180
-         sc7280
-+        sda660
-         sdm630
-         sdm632
-         sdm660
-@@ -225,6 +226,11 @@ properties:
-               - google,senor
-           - const: qcom,sc7280
- 
-+      - items:
-+          - enum:
-+              - inforce,ifc6560
-+          - const: qcom,sda660
-+
-       - items:
-           - enum:
-               - fairphone,fp3
+> +
+
+Extra newline, not necessary.
+
+> +	if (IS_ERR(bdev->mem_path)) {
+> +		ret = PTR_ERR(bdev->mem_path);
+> +		dev_err(bdev->dev, "failed to acquire icc path %d\n", ret);
+> +		goto err_disable_clk;
+> +	}
+> +
+>   	ret = bam_init(bdev);
+>   	if (ret)
+>   		goto err_disable_clk;
+
+
 -- 
-2.35.1
-
+With best wishes
+Dmitry
