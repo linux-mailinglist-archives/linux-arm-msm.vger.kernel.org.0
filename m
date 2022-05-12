@@ -2,151 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECF77525532
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 20:55:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA61752557A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 21:14:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357816AbiELSzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 14:55:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48972 "EHLO
+        id S1357940AbiELTNs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 15:13:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356238AbiELSzn (ORCPT
+        with ESMTP id S1353107AbiELTNr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 14:55:43 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62300635E;
-        Thu, 12 May 2022 11:55:41 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EBB4661A78;
-        Thu, 12 May 2022 18:55:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1199C385B8;
-        Thu, 12 May 2022 18:55:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652381740;
-        bh=WWAAPtxxtrtCt/U+Ck9agHdEIF6m1EJtXt8aBqRS4zA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=E64vmSecjpiNKtMh6u9O9WROcYkltlTr6S5NYbDhQ/JWNCTeE7zbQoDywPEwXIJSo
-         xwpUtZktVDk6EQZHq0HwOyjJw7eDSv+5f0Xrdfy6tg9+pKnJH/EKjC7AWsXK+nO5vF
-         TTLET8ZbiOk2hCFZtu09bURK6ut0khpQ1JlnUnHQU84CaQAcsJuh5pR4mPsGYaohHk
-         QOor43jLv90t2Cfe1YrCryaJ0cYi6/xFQhW+sqTxt3roBA087gsqy0NfZ8QpUyEiSw
-         EHMuBxv7JvovBbD054Zhc3R5Ju8/wD8qhF6Hy5R7+GRJUDBp2QbQ3e1yk+6ZF9Ov/o
-         mdMax5xEvn7vg==
-Date:   Thu, 12 May 2022 13:55:37 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thu, 12 May 2022 15:13:47 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EDBA1A0AF3;
+        Thu, 12 May 2022 12:13:46 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id j4so10770672lfh.8;
+        Thu, 12 May 2022 12:13:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VyhacgbGSHcXGDEruHjCBEZQJDTnm+E2dVyccxhfr+I=;
+        b=V+ZKHmrB3XgS4QXRdNl/khDE7X8CSh8yCTaxSwN1FEKAVom8pm74Z4kc4NlnwTtCsm
+         qeMyOXTSrz7ckDawSm1y3pIaP5aE9U9PtPphS6ssVTQcmTAOb9mw61+aan+YSKWvR4SQ
+         /jaXeZ2z7pRVH+qV7p/H+3l1qiqD//bfD97+KkD8+DpEymTAOQjgqOyAo4BBrXEdxywL
+         G1rYgCY/eyLJyJh1F5K6HEoNVFYHu2wuvdl/TaK4QGhcSOq1LmsTo+sgUlcw3t3v6Qu4
+         VvKLTztHU5ZVoejUPvWdqCqrzSEDkGgwUODmDsOnbafYVW/sM/wrrVeJCWpdW4ZRhBSH
+         1hiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VyhacgbGSHcXGDEruHjCBEZQJDTnm+E2dVyccxhfr+I=;
+        b=VIgwD+Bdr6826bZGSx8w9hpfxU80n/N/1JEGsRa4jSHkVJ93uZ93uLKuq5MzTJVltz
+         73x1SBEey3JVupUbTIIB6fBMjf3DUhaKM5HUiBg0aSzoz9Ypo/Gn/gADgHBQ2bA3PqwD
+         Xbz5jg8yXSAAvCOL92dy45CfsIPtT9Y8lvfLrcsw6WZB5V8FsdkwARgDdiYkh5bMRLRf
+         lC7fDe/qJ3kwl/8A3/ZkQ7D81vpRhZ5vLlXWaL8eCx2T0INjv8OW6/Ik4RONhoHPcM50
+         Se0wbsW7vtmQqaVPyive/8dAXaaijfv2kSgji1cCr19vs+j5nAMfNOImV9J1sY+QPXUv
+         JgKg==
+X-Gm-Message-State: AOAM5311BU14ncrpq6qfM/5obplHo3bCep1hKwsvGtjLbVIcWAAE/ivZ
+        QCelDjpBYstvx/vLXCw/kYa61qNjQ6EtwQ==
+X-Google-Smtp-Source: ABdhPJw4qAEJCsjFWqaF8N1y/ar8DNryN1nFdar92vrGry6T/7iN9XZNWnapcsX8xa77/KaWRSXMjA==
+X-Received: by 2002:a05:6512:2009:b0:471:ffee:6ee1 with SMTP id a9-20020a056512200900b00471ffee6ee1mr893466lfb.268.1652382824597;
+        Thu, 12 May 2022 12:13:44 -0700 (PDT)
+Received: from nergzd-desktop.localdomain ([194.39.226.133])
+        by smtp.gmail.com with ESMTPSA id y26-20020ac255ba000000b0047255d210f4sm62146lfg.35.2022.05.12.12.13.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 May 2022 12:13:44 -0700 (PDT)
+From:   Markuss Broks <markuss.broks@gmail.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Markuss Broks <markuss.broks@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Song Qiang <songqiang1304521@gmail.com>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v8 06/10] PCI: dwc: Handle MSIs routed to multiple GIC
- interrupts
-Message-ID: <20220512185537.GA861067@bhelgaas>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v4 0/5] Add support for ToF sensor on Yoshino platform
+Date:   Thu, 12 May 2022 22:13:28 +0300
+Message-Id: <20220512191334.61804-1-markuss.broks@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220512104545.2204523-7-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 12, 2022 at 01:45:41PM +0300, Dmitry Baryshkov wrote:
-> On some of Qualcomm platforms each group of 32 MSI vectors is routed to the
-> separate GIC interrupt. Implement support for such configuraions by
-> parsing "msi0" ... "msi7" interrupts and attaching them to the chained
-> handler.
+This series adds support for the ToF proximity sensor installed on
+Yoshino devices. As part of this series, support handling the reset
+GPIO and VDD supply by the VL53L0X driver. Also stop hardcoding the
+interrupt type, since on Yoshino devices it seems that edge triggering
+doesn't work properly.
 
-Again, only if you have some other reason to repost:
+Tested on Sony Xperia XZ1 (poplar).
 
-s/configuraions/configurations/
+Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 
-> Note, that if DT doesn't list an array of MSI interrupts and uses single
-> "msi" IRQ, the driver will limit the amount of supported MSI vectors
-> accordingly (to 32).
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../pci/controller/dwc/pcie-designware-host.c | 33 ++++++++++++++++++-
->  drivers/pci/controller/dwc/pcie-designware.h  |  1 +
->  2 files changed, 33 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 6b0c7b75391f..258bafa306dc 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -291,7 +291,8 @@ static void dw_pcie_msi_init(struct pcie_port *pp)
->  static int dw_pcie_msi_host_init(struct pcie_port *pp)
->  {
->  	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> -	struct platform_device *pdev = to_platform_device(pci->dev);
-> +	struct device *dev = pci->dev;
-> +	struct platform_device *pdev = to_platform_device(dev);
->  	int ret;
->  	u32 ctrl, num_ctrls;
->  
-> @@ -299,6 +300,36 @@ static int dw_pcie_msi_host_init(struct pcie_port *pp)
->  	for (ctrl = 0; ctrl < num_ctrls; ctrl++)
->  		pp->irq_mask[ctrl] = ~0;
->  
-> +	if (pp->has_split_msi_irq) {
-> +		char irq_name[] = "msiXX";
-> +		int irq;
-> +
-> +		if (!pp->msi_irq[0]) {
-> +			irq = platform_get_irq_byname_optional(pdev, irq_name);
-> +			if (irq == -ENXIO) {
-> +				num_ctrls = 1;
-> +				pp->num_vectors = min((u32)MAX_MSI_IRQS_PER_CTRL, pp->num_vectors);
-> +				dev_warn(dev, "No additional MSI IRQs, limiting amount of MSI vectors to %d\n",
-> +					 pp->num_vectors);
-> +			} else {
-> +				pp->msi_irq[0] = irq;
-> +			}
-> +		}
-> +
-> +		/* If we fallback to the single MSI ctrl IRQ, this loop will be skipped as num_ctrls is 1 */
-> +		for (ctrl = 1; ctrl < num_ctrls; ctrl++) {
-> +			if (pp->msi_irq[ctrl])
-> +				continue;
-> +
-> +			snprintf(irq_name, sizeof(irq_name), "msi%d", ctrl);
-> +			irq = platform_get_irq_byname(pdev, irq_name);
-> +			if (irq < 0)
-> +				return irq;
-> +
-> +			pp->msi_irq[ctrl] = irq;
-> +		}
-> +	}
-> +
->  	if (!pp->msi_irq[0]) {
->  		int irq = platform_get_irq_byname_optional(pdev, "msi");
->  
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index 9c1a38b0a6b3..3aa840a5b19c 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -179,6 +179,7 @@ struct dw_pcie_host_ops {
->  
->  struct pcie_port {
->  	bool			has_msi_ctrl:1;
-> +	bool			has_split_msi_irq:1;
->  	u64			cfg0_base;
->  	void __iomem		*va_cfg0_base;
->  	u32			cfg0_size;
-> -- 
-> 2.35.1
-> 
+v2:
+- Fix a nasty issue: turns out grouping the pinctrl makes it not apply,
+which was the main cause of edge interrupts not working correctly and
+having to use level interrupts, which caused a large amount of false
+detections.
+- handle the irq type more gracefully: if it's not provided, default
+to falling edge, but if it's provided, then use the provided one.
+v3:
+- add irq.h header (forgot to commit)
+- reword commit message (already initialized -> pre-initialized)
+v4:
+- reorder powering on and power off action (Jonathan)
+- sort pinctrls by GPIO number (Konrad)
+
+Markuss Broks (5):
+  dt-bindings: proximity: vl53l0x: Document optional supply and GPIO
+    properties
+  proximity: vl53l0x: Get interrupt type from DT
+  proximity: vl53l0x: Handle the VDD regulator
+  proximity: vl53l0x: Handle the reset GPIO
+  arm64: dts: qcom: msm8998-xperia: Introduce ToF sensor support
+
+ .../bindings/iio/proximity/st,vl53l0x.yaml    |  5 ++
+ .../dts/qcom/msm8998-sony-xperia-yoshino.dtsi | 34 +++++++++++++
+ drivers/iio/proximity/vl53l0x-i2c.c           | 50 ++++++++++++++++++-
+ 3 files changed, 88 insertions(+), 1 deletion(-)
+
+-- 
+2.35.1
+
