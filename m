@@ -2,68 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBC3C524E1D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 15:21:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFE0F524E45
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 15:28:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354312AbiELNVj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 09:21:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41198 "EHLO
+        id S242326AbiELN2Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 09:28:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354192AbiELNVh (ORCPT
+        with ESMTP id S1345932AbiELN2X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 09:21:37 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C31664EF4E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 06:21:33 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id x12so4571262pgj.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 06:21:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4aQRSxerZIfxG75Us/8UUQ0iqFXnrxh04bqlSeNWSLY=;
-        b=IW2hTvHv1ornPaWs/asOavYfPGh3aS+PUX88/ZdhRZDMLMqshfnOIRyKUvRCCDs1XM
-         qXCMMVCR59IvJbT8ZjbP0dxO4VlwnEi8t77fh/0oMrbW/5UfGDDRTzvgvV1prWK1iuNE
-         qbngcanQky/AMov43+2ze9brDGfUUgW1OXOZFvSvKMod4jPOzz3Mpa0jAIdA0sfZgLS8
-         /NQ0YGyYLv1N5YR6qQoz9OvPNMZKrxjkn8mROXnQYa79P+e/c9m9AIyhHCK8jvojCcgR
-         VWtEyQvZE673bHkSeTXWPv05X+f6IbP1V7CnhnSZM66AxXItpKgcoTkmZDbD9Rzo4xi7
-         sRbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4aQRSxerZIfxG75Us/8UUQ0iqFXnrxh04bqlSeNWSLY=;
-        b=z/OYjZv/uSlAHcxDYggeceqQ5BrAQchl8qPP3nd00QbJzozcX/tmimt877RGSrO+EK
-         B4nCzIBWVEJRSpp4t2VZQMkM8BAtGLixkemF0dCRQcLw4vP61JTAYlZ13yNcTdZCdkjm
-         f8DtLw9hioJQdkgmr8kfcm9V3xzn8MQABVRwc4ZYPeoUSjnR4WgBDjLs7WgNi23XzcRO
-         CFwENKhTm76XFFY7HNOvGr7YWNl0xg82s0ppOVtGmdlN6okKy+ShQ5P7yvkso+3Hy3FC
-         01HGXpfha6WQFelGRMkF5Fzw0yA3Es5RzOjZOmZcjVCILTUyWRrOr+9q8MnjLVUZcuvx
-         rV5Q==
-X-Gm-Message-State: AOAM533MNWUyfSmTdI55GbJwtLXOnzllIV+Uldarp5EOtal14q9+Whpr
-        x7/PLlUkFrEw/8mZfLMa8Xu0rwkYHzio136HUW0O6Q==
-X-Google-Smtp-Source: ABdhPJyZOET1EER9C9AZQaqJy8BQlI2AbD8N1VzLJbA77Z/dnnf5unDxOdy+QeXxPtAgZWu9NdemKM/OpYLVX4OA/B8=
-X-Received: by 2002:aa7:9110:0:b0:4fa:e388:af57 with SMTP id
- 16-20020aa79110000000b004fae388af57mr29932676pfh.1.1652361693176; Thu, 12 May
- 2022 06:21:33 -0700 (PDT)
+        Thu, 12 May 2022 09:28:23 -0400
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [46.235.227.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89CCA606E5;
+        Thu, 12 May 2022 06:28:21 -0700 (PDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: tomeu)
+        with ESMTPSA id F379F1F4556A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1652362099;
+        bh=P6KXXhLWhwwDciwvFbZefB7qc8KqyBrUxi0cxEsXUEw=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=YezVes2VhgBEsQVdrqfBV5205Bd5u8APQWwe/hTBljiCuNKVZcLaQXnZhg7EY/jC/
+         cL7aLOZRMLwEeUy4/MRLPYa7ngAl00V7mnY9lh72DyPSRT/4YkQbMGl5HnSLALgqKX
+         n6H/xCIuu19ihP+ijGa+yJarJ2U7D4rg16cBxxl2JpwvloeYd+xWh4sjtZp8XvHWCz
+         WUC3rNj7pU4woyO3B+xCedDhGHb1G/Rj/VR8OwKzpO8s9fcsRvfctr+zWeKcr/VAPT
+         OeTwdCk7DMYhi2rMsvqH3Fs3Fz5cOn2Q9Wsiav2CpwUW3iFhCeLFNDvjWSW8EfjLvD
+         223EZVGkQDCuw==
+Subject: Re: [Freedreno] [RFC v2] drm/msm: Add initial ci/ subdirectory
+To:     Rob Clark <robdclark@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Jonathan Corbet <corbet@lwn.net>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
+ <20220510141329.54414-1-tomeu.vizoso@collabora.com>
+ <e4e03cd8-3ebc-e5e1-e7d0-6bdc038049b5@quicinc.com>
+ <CAF6AEGueadnRMiatO3MoHS+NTQ1o1sgcV0cVjJM3iu-6JUNmNw@mail.gmail.com>
+ <CAKMK7uGRuCZwF6m02tcxxrgQGaijsYaNkowjxR+cw0JM3UpDkQ@mail.gmail.com>
+ <CAF6AEGthpxPLxyt_i-aUFgW485hA5qw+xXcJ3gKQUJ+fM=ZBhg@mail.gmail.com>
+From:   Tomeu Vizoso <tomeu.vizoso@collabora.com>
+Message-ID: <79d79110-9fbc-0e96-d17e-68a1f8f2c224@collabora.com>
+Date:   Thu, 12 May 2022 15:28:16 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <20220504122725.179262-1-robert.foss@linaro.org>
- <20220504122725.179262-5-robert.foss@linaro.org> <600d13cc-962a-bb6c-6e43-c56fd63b9591@somainline.org>
-In-Reply-To: <600d13cc-962a-bb6c-6e43-c56fd63b9591@somainline.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Thu, 12 May 2022 15:21:22 +0200
-Message-ID: <CAG3jFysb-ZVr+9jroGs3ibjs9ysOChEz6HqR5NqHj3LvEiFN9Q@mail.gmail.com>
-Subject: Re: [PATCH v3 4/6] clk: qcom: add support for SM8350 DISPCC
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzk+dt@kernel.org, jonathan@marek.ca, tdas@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <CAF6AEGthpxPLxyt_i-aUFgW485hA5qw+xXcJ3gKQUJ+fM=ZBhg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,161 +68,167 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 4 May 2022 at 18:23, Konrad Dybcio <konrad.dybcio@somainline.org> wrote:
->
->
-> On 04/05/2022 14:27, Robert Foss wrote:
-> > From: Jonathan Marek <jonathan@marek.ca>
-> >
-> > Add support to the SM8350 display clock controller by extending the SM8250
-> > display clock controller, which is almost identical but has some minor
-> > differences.
-> >
-> > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >
-> > Changes since v1
-> >   - Remove comment - Dmitry
-> >
-> > Changes since v2
-> >   - Add my SoB - Bjorn
-> >   - Remove CLK_ASSUME_ENABLED_WHEN_UNUSED flag
-> >
-> >
-> >   drivers/clk/qcom/Kconfig         |  4 +--
-> >   drivers/clk/qcom/dispcc-sm8250.c | 60 +++++++++++++++++++++++++++++++-
-> >   2 files changed, 61 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> > index 9b1f54e634b9..1752ca0ee405 100644
-> > --- a/drivers/clk/qcom/Kconfig
-> > +++ b/drivers/clk/qcom/Kconfig
-> > @@ -609,11 +609,11 @@ config SM_DISPCC_6125
-> >         splash screen
-> >
-> >   config SM_DISPCC_8250
-> > -     tristate "SM8150 and SM8250 Display Clock Controller"
-> > +     tristate "SM8150/SM8250/SM8350 Display Clock Controller"
-> >       depends on SM_GCC_8150 || SM_GCC_8250
->
-> || SM_GCC_8350?
+On 5/11/22 7:46 PM, Rob Clark wrote:
+> On Wed, May 11, 2022 at 10:12 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>>
+>> On Tue, 10 May 2022 at 22:26, Rob Clark <robdclark@gmail.com> wrote:
+>>>
+>>> On Tue, May 10, 2022 at 12:39 PM Jessica Zhang
+>>> <quic_jesszhan@quicinc.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 5/10/2022 7:13 AM, Tomeu Vizoso wrote:
+>>>>> And use it to store expectations about what the drm/msm driver is
+>>>>> supposed to pass in the IGT test suite.
+>>>>>
+>>>>> Also include a configuration file that points to the out-of-tree CI
+>>>>> scripts.
+>>>>>
+>>>>> By storing the test expectations along the code we can make sure both
+>>>>> stay in sync with each other, and so we can know when a code change
+>>>>> breaks those expectations.
+>>>>>
+>>>>> This will allow all contributors to drm/msm to reuse the infrastructure
+>>>>> already in gitlab.freedesktop.org to test the driver on several
+>>>>> generations of the hardware.
+>>>>>
+>>>>> v2:
+>>>>>     - Fix names of result expectation files to match SoC
+>>>>>     - Don't execute tests that are going to skip on all boards
+>>>>>
+>>>>> Signed-off-by: Tomeu Vizoso <tomeu.vizoso@collabora.com>
+>>>>> ---
+>>>>>    Documentation/gpu/msm_automated_testing.rst   |  70 +++++++++
+>>>>>    drivers/gpu/drm/msm/ci/gitlab-ci.yml          |  11 ++
+>>>>>    drivers/gpu/drm/msm/ci/msm.testlist           | 148 ++++++++++++++++++
+>>>>>    .../gpu/drm/msm/ci/msm_apq8016_results.txt    | 140 +++++++++++++++++
+>>>>>    .../gpu/drm/msm/ci/msm_apq8096_results.txt    | 140 +++++++++++++++++
+>>>>>    drivers/gpu/drm/msm/ci/msm_sc7180_results.txt | 141 +++++++++++++++++
+>>>>>    drivers/gpu/drm/msm/ci/msm_sdm845_results.txt | 141 +++++++++++++++++
+>>>>>    7 files changed, 791 insertions(+)
+>>>>>    create mode 100644 Documentation/gpu/msm_automated_testing.rst
+>>>>>    create mode 100644 drivers/gpu/drm/msm/ci/gitlab-ci.yml
+>>>>>    create mode 100644 drivers/gpu/drm/msm/ci/msm.testlist
+>>>>>    create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8016_results.txt
+>>>>>    create mode 100644 drivers/gpu/drm/msm/ci/msm_apq8096_results.txt
+>>>>>    create mode 100644 drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
+>>>>>    create mode 100644 drivers/gpu/drm/msm/ci/msm_sdm845_results.txt
+>>>>>
+> 
+> [snip]
+> 
+>>>>> diff --git a/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt b/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
+>>>>> new file mode 100644
+>>>>> index 000000000000..01f7b4b399b5
+>>>>> --- /dev/null
+>>>>> +++ b/drivers/gpu/drm/msm/ci/msm_sc7180_results.txt
+>>>>> @@ -0,0 +1,141 @@
+>>>>> +igt@core_auth@getclient-simple,dmesg-warn
+>>>>> +igt@core_auth@getclient-master-drop,pass
+>>>>> +igt@core_auth@basic-auth,pass
+>>>>> +igt@core_auth@many-magics,pass
+>>>>> +igt@core_getclient,pass
+>>>>> +igt@core_getstats,pass
+>>>>> +igt@core_getversion,pass
+>>>>> +igt@core_setmaster_vs_auth,pass
+>>>>> +igt@drm_read@invalid-buffer,pass
+>>>>> +igt@drm_read@fault-buffer,pass
+>>>>> +igt@drm_read@empty-block,pass
+>>>>> +igt@drm_read@empty-nonblock,pass
+>>>>> +igt@drm_read@short-buffer-block,pass
+>>>>> +igt@drm_read@short-buffer-nonblock,pass
+>>>>> +igt@drm_read@short-buffer-wakeup,pass
+>>>>> +igt@kms_addfb_basic@unused-handle,pass
+>>>>> +igt@kms_addfb_basic@unused-pitches,pass
+>>>>> +igt@kms_addfb_basic@unused-offsets,pass
+>>>>> +igt@kms_addfb_basic@unused-modifier,pass
+>>>>> +igt@kms_addfb_basic@legacy-format,dmesg-warn
+>>>>> +igt@kms_addfb_basic@no-handle,pass
+>>>>> +igt@kms_addfb_basic@basic,pass
+>>>>> +igt@kms_addfb_basic@bad-pitch-0,pass
+>>>>> +igt@kms_addfb_basic@bad-pitch-32,pass
+>>>>> +igt@kms_addfb_basic@bad-pitch-63,pass
+>>>>> +igt@kms_addfb_basic@bad-pitch-128,pass
+>>>>> +igt@kms_addfb_basic@bad-pitch-256,pass
+>>>>> +igt@kms_addfb_basic@bad-pitch-1024,pass
+>>>>> +igt@kms_addfb_basic@bad-pitch-999,pass
+>>>>> +igt@kms_addfb_basic@bad-pitch-65536,pass
+>>>>> +igt@kms_addfb_basic@size-max,pass
+>>>>> +igt@kms_addfb_basic@too-wide,pass
+>>>>> +igt@kms_addfb_basic@too-high,dmesg-warn
+>>>>
+>>>> For test results on Trogdor, is is possible to have them be
+>>>> success/fail/skip only?
+>>>>
+>>>> Results such as dmesg-warn/dmesg-fail are igt_runner specific and
+>>>> because there isn't support for igt_runner on ChromeOS, they will be
+>>>> difficult to replicate and debug.
+>>>
+>>> Actually, I wonder if it would be better to just treat
+>>> dmesg-warn/dmesg-fail as pass/fail?  I'd noticed some flakes on
+>>> rockchip which looked just like unrelated dmesg msg which just
+>>> happened to show up while the test was running.
+>>
+>> This is kinda the reason behind standardizing on drm dmesg logging, so
+>> that we have some chances at filtering stuff out. Not sure that's a
+>> good idea, since when your entire box splats and lockdep is dead, then
+>> continuing to run drm tests is still fairly pointless.
+> 
+> I'm not sure if we are using it yet for drm-ci, but for mesa-ci we
+> monitor dmesg (over serial port, from the controller) for splats, so
+> we already have the tech for restarting or aborting the CI run.  We
+> don't need igt-runner to tell us.
 
-Will fix in v4.
+Yep, these scripts are currently being used as-is from Mesa, so we got 
+that functionality for free.
 
->
-> sidenote: also || SC_GCC_8180X in a separate patch?
+>> I think this is another reason why trying at least to standardize this
+>> stuff over drivers would be pretty good idea.
+>>
+>>> Additionally, some of the tests, like msm_recovery, are *expected* to
+>>> generate some dmesg spam since they are intentionally triggering GPU
+>>> hangs to test the recovery mechanism.
+>>
+>> Uh I don't like that. It just allows userspace to spam dmesg, which
+>> doesn't seem like a great idea. That's at least why i915 dumps these
+>> at a lower level, and in the past had a special "I'm going to whack
+>> the gpu real hard expect hangs" knob in debugfs.
+>>
+>> Having tests which intentionally spam dmesg above info level isn't
+>> really good since then you need endless amounts of test-specific
+>> encoding of what is considered a success and what not. Like when a
+>> backmerge breaks a testcases which is already at dmesg-fail, is that
+>> bad or not? Probably bad, but was the situation before that really
+>> good or already kinda on fire?
+> 
+> I guess I could add some debugfs knobs to squelch the dmesg msgs on
+> gpu hangs.  In the normal case, I'd prefer that gpu hangs are not
+> silent.. since that is something we get in feedback reports if a user
+> (or dogfooder) reports a bug.
+> 
+> The rockchip case I mentioned was some unrelated dmesg about
+> linktraining failing.. presumably because there was no display
+> attached?  IDK, I didn't look too closely.  But my point is we could
+> be getting unrelated and asynchronous dmesg spam, even from other
+> kernel subsystems.  Letting that be part of the test results just
+> sounds like asking for flakes.
 
-I haven't been involved in the 8180X work, and am a little bit
-hesitant to include any changes related to it in this series.
+I think some drivers are currently a bit too buggy to behave reliably 
+under CI unless one reduces coverage (rockchip on rk3399, for example). 
+And some other drivers (in other subsystems as well) could do with a 
+review of what they print to the console. I guess these are things we 
+could and probably should fix?
 
->
-> >       help
-> >         Support for the display clock controller on Qualcomm Technologies, Inc
-> > -       SM8150 and SM8250 devices.
-> > +       SM8150/SM8250/SM8350 devices.
-> >         Say Y if you want to support display devices and functionality such as
-> >         splash screen.
-> >
-> > diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-> > index db9379634fb2..8e6cb990e387 100644
-> > --- a/drivers/clk/qcom/dispcc-sm8250.c
-> > +++ b/drivers/clk/qcom/dispcc-sm8250.c
-> > @@ -43,6 +43,10 @@ static struct pll_vco vco_table[] = {
-> >       { 249600000, 2000000000, 0 },
-> >   };
-> >
-> > +static struct pll_vco lucid_5lpe_vco[] = {
-> > +     { 249600000, 1750000000, 0 },
-> > +};
-> > +
-> >   static struct alpha_pll_config disp_cc_pll0_config = {
-> >       .l = 0x47,
-> >       .alpha = 0xE000,
-> > @@ -1228,6 +1232,7 @@ static const struct of_device_id disp_cc_sm8250_match_table[] = {
-> >       { .compatible = "qcom,sc8180x-dispcc" },
-> >       { .compatible = "qcom,sm8150-dispcc" },
-> >       { .compatible = "qcom,sm8250-dispcc" },
-> > +     { .compatible = "qcom,sm8350-dispcc" },
-> >       { }
-> >   };
-> >   MODULE_DEVICE_TABLE(of, disp_cc_sm8250_match_table);
-> > @@ -1258,7 +1263,7 @@ static int disp_cc_sm8250_probe(struct platform_device *pdev)
-> >               return PTR_ERR(regmap);
-> >       }
-> >
-> > -     /* note: trion == lucid, except for the prepare() op */
-> > +     /* Apply differences for SM8150 and SM8350 */
-> >       BUILD_BUG_ON(CLK_ALPHA_PLL_TYPE_TRION != CLK_ALPHA_PLL_TYPE_LUCID);
-> >       if (of_device_is_compatible(pdev->dev.of_node, "qcom,sc8180x-dispcc") ||
-> >           of_device_is_compatible(pdev->dev.of_node, "qcom,sm8150-dispcc")) {
-> > @@ -1270,6 +1275,59 @@ static int disp_cc_sm8250_probe(struct platform_device *pdev)
-> >               disp_cc_pll1_config.config_ctl_hi1_val = 0x00000024;
-> >               disp_cc_pll1_config.user_ctl_hi1_val = 0x000000D0;
-> >               disp_cc_pll1_init.ops = &clk_alpha_pll_trion_ops;
-> > +     } else if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8350-dispcc")) {
-> > +             static struct clk_rcg2 * const rcgs[] = {
-> > +                     &disp_cc_mdss_byte0_clk_src,
-> > +                     &disp_cc_mdss_byte1_clk_src,
-> > +                     &disp_cc_mdss_dp_aux1_clk_src,
-> > +                     &disp_cc_mdss_dp_aux_clk_src,
-> > +                     &disp_cc_mdss_dp_link1_clk_src,
-> > +                     &disp_cc_mdss_dp_link_clk_src,
-> > +                     &disp_cc_mdss_dp_pixel1_clk_src,
-> > +                     &disp_cc_mdss_dp_pixel2_clk_src,
-> > +                     &disp_cc_mdss_dp_pixel_clk_src,
-> > +                     &disp_cc_mdss_esc0_clk_src,
-> > +                     &disp_cc_mdss_mdp_clk_src,
-> > +                     &disp_cc_mdss_pclk0_clk_src,
-> > +                     &disp_cc_mdss_pclk1_clk_src,
-> > +                     &disp_cc_mdss_rot_clk_src,
-> > +                     &disp_cc_mdss_vsync_clk_src,
-> > +             };
-> > +             static struct clk_regmap_div * const divs[] = {
-> > +                     &disp_cc_mdss_byte0_div_clk_src,
-> > +                     &disp_cc_mdss_byte1_div_clk_src,
-> > +                     &disp_cc_mdss_dp_link1_div_clk_src,
-> > +                     &disp_cc_mdss_dp_link_div_clk_src,
-> > +             };
-> > +             unsigned int i;
-> > +             static bool offset_applied;
-> > +
-> > +             /* only apply the offsets once (in case of deferred probe) */
-> > +             if (!offset_applied) {
-> > +                     for (i = 0; i < ARRAY_SIZE(rcgs); i++)
-> > +                             rcgs[i]->cmd_rcgr -= 4;
-> > +
-> > +                     for (i = 0; i < ARRAY_SIZE(divs); i++) {
-> > +                             divs[i]->reg -= 4;
-> > +                             divs[i]->width = 4;
-> > +                     }
-> > +
-> > +                     disp_cc_mdss_ahb_clk.halt_reg -= 4;
-> > +                     disp_cc_mdss_ahb_clk.clkr.enable_reg -= 4;
-> > +
-> > +                     offset_applied = true;
-> > +             }
-> > +
-> > +             disp_cc_mdss_ahb_clk_src.cmd_rcgr = 0x22a0;
-> > +
-> > +             disp_cc_pll0_config.config_ctl_hi1_val = 0x2A9A699C;
->
-> Lowercase hex, also below.
+Cheers,
 
-Ack.
+Tomeu
 
->
->
-> > +             disp_cc_pll0_config.test_ctl_hi1_val = 0x01800000;
-> > +             disp_cc_pll0_init.ops = &clk_alpha_pll_lucid_5lpe_ops;
-> > +             disp_cc_pll0.vco_table = lucid_5lpe_vco;
-> > +             disp_cc_pll1_config.config_ctl_hi1_val = 0x2A9A699C;
-> > +             disp_cc_pll1_config.test_ctl_hi1_val = 0x01800000;
-> > +             disp_cc_pll1_init.ops = &clk_alpha_pll_lucid_5lpe_ops;
-> > +             disp_cc_pll1.vco_table = lucid_5lpe_vco;
-> >       }
-> >
-> >       clk_lucid_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
-> Konrad
-> >
+> BR,
+> -R
+> 
+>> -Daniel
+>>
+>>> BR,
+>>> -R
+>>>
