@@ -2,69 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45CA9524203
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 03:29:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E2B7524209
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 03:30:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229492AbiELB3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 21:29:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37290 "EHLO
+        id S229875AbiELBaN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 May 2022 21:30:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbiELB3J (ORCPT
+        with ESMTP id S229471AbiELBaI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 21:29:09 -0400
-Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58E3E146424
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 18:29:08 -0700 (PDT)
-Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-ed9ac77cbbso5001203fac.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 May 2022 18:29:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=nlBxn7EbHMfvqAK9TKNXoiDCi+sQenNLw/cNQhu/9WI=;
-        b=FUFfr//9h2g+RgJBdz93Ja3DvE2LJXZMaa0DNrKz7YJxt1hlI1Cp7xQbEWj2eVGT05
-         ZGGU/I/JB4uIxHdwRCSsTeesVOIXsUyqIrt/0B27NhyFr/3j47tc7XapVd4Mzysku7ut
-         qcrlB6GeNNf7yUa0w/zN74VWgAXgNisPS7p/c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=nlBxn7EbHMfvqAK9TKNXoiDCi+sQenNLw/cNQhu/9WI=;
-        b=54z7ejLf5jzdGWEBd2CrZRqJilmU/2U7HXEHOhVuMcqtzteCkOwMW3V+y0dNK5P0qW
-         zfV3lmPGhEQakgoGcHsig66NAACiSolS3WdoVs2kwtXK7Mw2ik+NvRZEPvjtMsg4JvCS
-         h4qHv5TU+eh/IlH9riDlDdl8PlHsrtBz1PRAA/aQwkSq8wrGjc1WSnZEoFVyrtPTWbyX
-         Rv6oWINRGsW0H+Pq/3n96cARffpQNnk1/D9dCJaEr/3PjcgHXf2KZEJF6NkVi+tkoOaY
-         X4HRz0i/ETXcwxRH0u2s0jM16jZWJNGAk2fYa26b42eVxILni1LyvwFM4Xkx8imKcOE/
-         C0DQ==
-X-Gm-Message-State: AOAM531BsRog9NLfW1yN0LDJ7pafKiCMVR/eHToym8akBCiN60f7a6no
-        jdIGE8kAwekEb31s5dUC1aQuO53/Ik5HncG54XMWSw==
-X-Google-Smtp-Source: ABdhPJw4OYNNFu6Zneq7n+svBtNk46Bb9D/X/paXlDhz48aT/quR7ndNb7X6ENvkZKqIC7RZf0qq4//EhBQYQwBeY9s=
-X-Received: by 2002:a05:6870:40c1:b0:ed:9a12:3f95 with SMTP id
- l1-20020a05687040c100b000ed9a123f95mr4225578oal.193.1652318947719; Wed, 11
- May 2022 18:29:07 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 May 2022 18:29:07 -0700
-MIME-Version: 1.0
-In-Reply-To: <CAA8EJpqFksVc+Lj4-G81z26GH-WbQ3CKOUwgsx0Xar-F+EMNRg@mail.gmail.com>
-References: <20220507010021.1667700-1-dmitry.baryshkov@linaro.org>
- <CAE-0n50tgiNj6j8+90xNw2Sku7rHKOGQYrHRjHCHb8-rqnOAxg@mail.gmail.com> <CAA8EJpqFksVc+Lj4-G81z26GH-WbQ3CKOUwgsx0Xar-F+EMNRg@mail.gmail.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 11 May 2022 18:29:07 -0700
-Message-ID: <CAE-0n51KAdQHvpgon6-qpLXZT7X8ghZ+9bSeTji-duMOG2wYiQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] drm/msm: don't free the IRQ if it was not requested
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Wed, 11 May 2022 21:30:08 -0400
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9C89154B3F;
+        Wed, 11 May 2022 18:30:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1652319006; x=1683855006;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=FmzxLobn0K8eUJokt43bdYb1Kp6hZ00M7lRWrjyhUwY=;
+  b=SKeOnlZmmXRXW1DKAasjKtvf6ApCGk+x3DLPODK8l0L+JabxLMnFJfzp
+   m7UVKz3uculOAPYDdc64yIkSIEj3KpWJR9tKlmnn5h5qZrvWsoUgrfDVl
+   SLhrv4GOGlWmIZj+HEvqItztlQypeWYlMk534fxnCb61TeSqkKXnI9BbR
+   x5zgwbY4B6CZGGBKL9dZTagQvSb14XMVDA/GXpWMgVv0W2MWFUuVRfIYF
+   57sM0W2rw+IqipldUXxK2G5dChfh3rSH+aPd2tP5Csj/IvSbtlPMBPBQi
+   LL2cHJK6GRX1ZnLwMc7oo5GwUDtuuIghxvpVa8wnTEXLDxga2TOvaT0Qw
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10344"; a="330460649"
+X-IronPort-AV: E=Sophos;i="5.91,218,1647327600"; 
+   d="scan'208";a="330460649"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2022 18:30:06 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,218,1647327600"; 
+   d="scan'208";a="542554715"
+Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
+  by orsmga006.jf.intel.com with ESMTP; 11 May 2022 18:29:58 -0700
+Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1noxeQ-000Jmk-2Z;
+        Thu, 12 May 2022 01:29:58 +0000
+Date:   Thu, 12 May 2022 09:29:38 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: Re: [v4 2/3] phy: qcom-snps: Add support for overriding phy tuning
+ parameters
+Message-ID: <202205120931.JrA2orb3-lkp@intel.com>
+References: <1652282793-5580-3-git-send-email-quic_kriskura@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1652282793-5580-3-git-send-email-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,18 +79,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-05-11 18:01:31)
-> On Thu, 12 May 2022 at 03:54, Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > Quoting Dmitry Baryshkov (2022-05-06 18:00:20)
-> >
-> > Does this supersede commit 01013ba9bbdd ("drm/msm/disp/dpu1: avoid
-> > clearing hw interrupts if hw_intr is null during drm uninit")? I mean
-> > that with this patch applied kms->irq_requested makes the check in
-> > dpu_core_irq_uninstall() irrelevant because it isn't called anymore?
->
-> Yes.
->
+Hi Krishna,
 
-I didn't see it deleted in the second patch so is a revert going to be
-sent?
+Thank you for the patch! Yet something to improve:
+
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on krzk/for-next linus/master v5.18-rc6 next-20220511]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-Kurapati/Add-QCOM-SNPS-PHY-overriding-params-support/20220511-232858
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+config: riscv-randconfig-r033-20220509 (https://download.01.org/0day-ci/archive/20220512/202205120931.JrA2orb3-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 18dd123c56754edf62c7042dcf23185c3727610f)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install riscv cross compiling tool for clang build
+        # apt-get install binutils-riscv64-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/48c46f24873c92d3e16904af9e654962d0b923f1
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Krishna-Kurapati/Add-QCOM-SNPS-PHY-overriding-params-support/20220511-232858
+        git checkout 48c46f24873c92d3e16904af9e654962d0b923f1
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=riscv SHELL=/bin/bash
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+>> drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c:541:29: error: initializing 'struct override_param_map *' with an expression of type 'const void *' discards qualifiers [-Werror,-Wincompatible-pointer-types-discards-qualifiers]
+           struct override_param_map *cfg = of_device_get_match_data(dev);
+                                      ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   1 error generated.
+
+
+vim +541 drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+
+   534	
+   535	static void qcom_snps_hsphy_read_override_param_seq(struct device *dev)
+   536	{
+   537		struct device_node *node = dev->of_node;
+   538		s32 val;
+   539		int ret, i;
+   540		struct qcom_snps_hsphy *hsphy;
+ > 541		struct override_param_map *cfg = of_device_get_match_data(dev);
+   542	
+   543		hsphy = dev_get_drvdata(dev);
+   544	
+   545		for (i = 0; i < ARRAY_SIZE(phy_seq_props); i++) {
+   546			ret = of_property_read_s32(node, phy_seq_props[i], &val);
+   547			if (!ret) {
+   548				dev_dbg(&hsphy->phy->dev, "Read param: %s val: %d\n",
+   549							phy_seq_props[i], val);
+   550				qcom_snps_hsphy_override_param_update_val(cfg[i], val,
+   551							&hsphy->update_seq_cfg[i]);
+   552			}
+   553		}
+   554	}
+   555	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
