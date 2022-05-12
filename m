@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BCB3525862
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 01:36:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 170E0525864
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 01:36:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359572AbiELXgv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 19:36:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51050 "EHLO
+        id S1359574AbiELXgw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 19:36:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359530AbiELXgv (ORCPT
+        with ESMTP id S1359573AbiELXgv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 12 May 2022 19:36:51 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB06D580F9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:49 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id v4so8341840ljd.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:49 -0700 (PDT)
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9679A5674A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:50 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id a23so262718ljd.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Mqg2HFo22LFUUAaIX3kOrdEQtT9JSav1gOQJOHe+MV4=;
-        b=mmR26HUeqn9O1FSlvZQyN8+ORR4vZKDXyrydHFmv787Zc9a1TOfTgqG5GLjXrYHsYA
-         /FwsXZG72N4ZPzGi/bx4LpFilKVXHporkkc39B9zx7xzqVw1HT/8CCod3ku7aY31RLCy
-         yi8S5F9e8zcNX+kOQ5POJ6PH5pDW3GxLS7vQA5cyAtqv1KDmlj8u5zQvVG1UN9pUqu7O
-         jObEyn32ImgdkZdTGsYTDRJqg/DybjdlvEJ8tSzQSfb6RvcqsqgD+6z18IpCBod348u0
-         i/cFE6wp7VrPz5qDGvaYkpHm0Bvlk/5UqcckaZyl3TRyx6YkoB7TqCzQG/5QBtsrykdi
-         +9cA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ypxafSXytWa1pPBeHJ41K2y3Cfr7QvnghKr6SvtMtAA=;
+        b=rb+K2Ft9N1JMCRJv/Fe8ZdGM+bFqgG4CoCqfPaOTV86HoSoCSD0HtIOdOL29ZeN7AX
+         1toIgFoxbaykz8mICP5X07ZX0feYwCYm27XGrnYMwkqiqGXq98IscbcoaOmJGYFMWkoI
+         tLmQfwhDIfPvRTAoL7pj8v/xPvqnpCwCtRzwrwZGkPddRe/c7yJOzkQSXs1HngiWMrPX
+         GWSuX1DKs6q75MfOR/8tp+NuMGm94J6TS0y6VbVVN2g5bpqAgTu93+CQxAZfenE7PIqA
+         gt6cxRh7s5jkSs9jdBtpcldP8Ba0vTn9F7SUDAhEzCzoWXeLU5glJSe626dbIv4HQY2t
+         BBpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Mqg2HFo22LFUUAaIX3kOrdEQtT9JSav1gOQJOHe+MV4=;
-        b=eP4hpyC8PFQlxB08KsNQgT/2LqgR3/IhFeFdD+Fgo6hpz1Aw0rQM/8FenZpCZHqc3G
-         aGSIQUDfG2uKv5NcirzQGSrEElo25jWkd9BfibS6izD2pfQX0MR2n4dfrxlX5N/2fM0X
-         tgGFyC9W/uZM6UgCmlyK2JsEUbIKSi65EjpjsrusjAh8fGc/ueOKQEeQUVIO4gBBQVR7
-         xFFkFlfk1TsML/9n73Stmpjere9RN7yCG5G+B2IiUVm9kJlifaktMXZmwqMb+HUekzf/
-         dp4RQtZ/8DX9S/gDxetfeVl//m0oEzJzN9zBScC14pYu5NBYIZkqFVu0GR9q0MalWlOQ
-         afrQ==
-X-Gm-Message-State: AOAM533QhmtOFTUsUXrsl2KhUmvATLOuUj4L4DqYCe1B8AdUDxuNtp9R
-        xR6i0Ef7cVFWKL0G49sToRNRAQ==
-X-Google-Smtp-Source: ABdhPJwBV8uAqbFejjQddQs0SGuoQqzrAx8iRAAigbgyagyUKnQQFbrC4zQOu8lElkRCIsjDcVoTBw==
-X-Received: by 2002:a2e:934b:0:b0:24f:cce:5501 with SMTP id m11-20020a2e934b000000b0024f0cce5501mr1442767ljh.443.1652398608278;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ypxafSXytWa1pPBeHJ41K2y3Cfr7QvnghKr6SvtMtAA=;
+        b=WgSEA9+mOukgExxZd/B7f1xgi2c1IoxEgI33jPQu8hA/SNZaLDHVJrkN7OW1NpqJku
+         XO3nFvpXgFVCtR220PeEzE2UWQRfauC72xV70LUrDVoyPMTi49kNDkG+Q8tIKmVsxZRC
+         o/JyyfxYg+wE295qsmWL5r4t7YQp+N6Sri81UFzwuC+oGvFNH/J2rkPk+QPdPbBPIu/V
+         nxXChrZmuWWqUsRO04Pa9fUFBAi4KWu0mfDCBtlWi0NDpigpDAaaaOjRg2QuGfDtOM6c
+         pWg1FxKobgOw31h3YglcKkXQMYsGD0yEpGd1Rql3P0vZZ0q924KrnThbXlo17+n/qln9
+         3ExQ==
+X-Gm-Message-State: AOAM532DjNF1OY3jPB690iw6WGYVqByL/cNWdqdXoZrjyqlcDCA2xU5J
+        kflEFUmX7DYWRQTCxMrzlH+17w==
+X-Google-Smtp-Source: ABdhPJzs/lejBHVwZdlUtDVUyDCa3zyhz75J16AnGDl0WzUv/Phv/2qVG0LJKizWp9yKpxQ78CQQpw==
+X-Received: by 2002:a2e:b8c4:0:b0:250:61c6:8363 with SMTP id s4-20020a2eb8c4000000b0025061c68363mr1468072ljp.334.1652398608989;
         Thu, 12 May 2022 16:36:48 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p13-20020a19f00d000000b0047255d211c1sm127937lfc.240.2022.05.12.16.36.47
+        by smtp.gmail.com with ESMTPSA id p13-20020a19f00d000000b0047255d211c1sm127937lfc.240.2022.05.12.16.36.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 May 2022 16:36:47 -0700 (PDT)
+        Thu, 12 May 2022 16:36:48 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -56,11 +56,15 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v2 0/8] arm64: dts: qcom: initial Inforce IFC6560 board support
-Date:   Fri, 13 May 2022 02:36:39 +0300
-Message-Id: <20220512233647.2672813-1-dmitry.baryshkov@linaro.org>
+        freedreno@lists.freedesktop.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: [PATCH v2 1/8] arm64: dts: qcom: sdm660: disable dsi1/dsi1_phy by default
+Date:   Fri, 13 May 2022 02:36:40 +0300
+Message-Id: <20220512233647.2672813-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220512233647.2672813-1-dmitry.baryshkov@linaro.org>
+References: <20220512233647.2672813-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,60 +77,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This work is largely based on the previous work by Bjorn Andersson ([1])
+Follow the typical practice and keep DSI1/DSI1 PHY disabled by default.
+They should be enabled in the board DT files. No existing boards use
+them at this moment.
 
-Changes since v1 (mostly based on Kondrad's review):
-- Also disabled dsi0/dsi0 phy in sdm630.dtsi
-- Removed the clock from BAM DMA devices rather than disabling them
-  completely
-- Replaced numbers with symbolic names for interconnects in sdm630.dtsi
-- Switched to "qcom,sda660" as a fallback compatible string
-- Added dt-bindings for the qcom,sda660 compat
-- Removed extra nesting level from the adsp firmware path
-- Replaced numbers with proper symbolic names in the board file
-- Added chassis-type property
-- Changed the order of blsp entries in the board file
-- Removed spurious newlines
-- Changed the order of regulator properties
-- Changed the DSI data-lines to list all four lanes. Still use just
-  three lanes for the adv bridge (and describe the reason in the
-  comment)
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sdm660.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Changes since Bjorn's v2:
-- Disable dsi1, dsi1 phy, GPU by default in sdm660.dtsi/sdm630.dtsi
-- Fix qusb2phy ref clock
-- Added USB2 host support to sdm630.dtsi
-- Renamed DTS to follow SoC-vendor-board pattern
-- Fixed vph_pwr voltage
-- Removed extra/unrelated comments
-- Added keys, USB2, USB3,
-- Added configuration for the attached HDMI bridge
-- Enabled MDP, MDSS and DSI0/DSI0 PHY devices
-- Removed uart pinctrl and /reserved-mem nodes (present in main dtsi
-  file)
-- Added card detection for the SDCC2
-- Disabled BLSP BAM DMA devices, they make the board reset during boot
-
-[1] https://lore.kernel.org/linux-arm-msm/20210825221110.1498718-1-bjorn.andersson@linaro.org/#t
-
-Dmitry Baryshkov (8):
-  arm64: dts: qcom: sdm660: disable dsi1/dsi1_phy by default
-  arm64: dts: qcom: sdm630: disable dsi1/dsi1_phy by default
-  arm64: dts: qcom: sdm630: disable GPU by default
-  arm64: dts: qcom: sdm630: fix the qusb2phy ref clock
-  arm64: dts: qcom: sdm630: add second (HS) USB host support
-  arm64: dts: qcom: sdm630: use defined symbols for interconnects
-  arm64: dts: qcom: sdm660: Add initial Inforce IFC6560 board support
-  dt-bindings: arm: qcom: document sda660 SoC and ifc6560 board
-
- .../devicetree/bindings/arm/qcom.yaml         |   6 +
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sda660-inforce-ifc6560.dts  | 459 ++++++++++++++++++
- arch/arm64/boot/dts/qcom/sdm630.dtsi          |  85 +++-
- arch/arm64/boot/dts/qcom/sdm660.dtsi          |   3 +
- 5 files changed, 542 insertions(+), 12 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-
+diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+index eccf6fde16b4..023b0ac4118c 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+@@ -192,6 +192,8 @@ dsi1: dsi@c996000 {
+ 		phys = <&dsi1_phy>;
+ 		phy-names = "dsi";
+ 
++		status = "disabled";
++
+ 		ports {
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+@@ -225,6 +227,7 @@ dsi1_phy: dsi-phy@c996400 {
+ 
+ 		clocks = <&mmcc MDSS_AHB_CLK>, <&rpmcc RPM_SMD_XO_CLK_SRC>;
+ 		clock-names = "iface", "ref";
++		status = "disabled";
+ 	};
+ };
+ 
 -- 
 2.35.1
 
