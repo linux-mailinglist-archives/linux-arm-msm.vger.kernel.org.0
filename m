@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3874525868
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 01:36:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6952152586C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 01:37:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359581AbiELXgz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 19:36:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51250 "EHLO
+        id S1359582AbiELXg6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 19:36:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359530AbiELXgx (ORCPT
+        with ESMTP id S1359577AbiELXgy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 19:36:53 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149665674A
+        Thu, 12 May 2022 19:36:54 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC852580F9
         for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:52 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id bu29so11804888lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:51 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id c24so2230924lfv.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=i1goeg2wYzcHMfXO9CDFGJF9XLqANUBaSoksUz5XNRc=;
-        b=X3LHZVoKx/IHv7Ini1Y3dYLp8M7uyC0RZiERWt3pMoULdXqVrVHZggMQMIPfrPtF8V
-         /IGe+F1554dHMvA4Ofm87+iFxPr0aiiYA2jSn5qp3oGvtrAc7F/Hs8bJE+bVbNia/U85
-         pII+jH+Vr4nEsO+l0Z+j3ygVX97CVFOeNDl1kcoc0SA7TcjZf4b0GNyROQNkYoVLwXn1
-         PzDDWkvwYjkVxrdJHsy9U7EoWvc9ehA1NrkzlepJOGHN2/dla7NVig3LEB1bO2ubAxYz
-         i/0iu6pswFhG/ZevKdlUtJVl8Im1rW0mo0mgA1vuKUWge7U2DU+IFD6uM9r15WsephHA
-         1UQw==
+        bh=x2qQH918JYdrczWJIIm8XRXT3abBOAyM4GeAzsiuGrc=;
+        b=imgXlkwZphoRfEqY61B9arSGf+5S1bk8yxCfn8aW+WCvAiHMbcRdL/HTR67jooTHpv
+         rlAFiCo4+TNI21fUjWYOtZfkzogkS02oS+2HutSM9Wd21kr4heZbyBFAJ+m28xSsbtKc
+         QwIJ0Bf4VKKlRxvVDq6TT+BBzLfZi8MICxrfPZBD+K5NBhOT+ZYOj8oLtpjCyBEhSRZz
+         KkKTLUPO+kLTFVbcp7ZqhtJEE8dewNuOhoEuzZ6uTOcjuCOdARIBom0bO7qi0+WfX1h3
+         vLPB8fN0ApvR/UVgwZM8MxJO8zah4w1TF5T3VhtgzoPXCaWORmQWBoTmarjeAyF2F8mc
+         HN2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=i1goeg2wYzcHMfXO9CDFGJF9XLqANUBaSoksUz5XNRc=;
-        b=Hq0+CgIF7bCnO9lHWheyMWvcqT7CwcbvmULcrkCBkhg3sblhPIuETBB4nUuglBdrEo
-         ol3DSZstPXZZMUa2yWslXXUy6e8oQ/7luL9LATPyPrG7+0Nagd/5Z8SBbDRKghkb5UK0
-         G9fjG0TTCHgSIv6xUlyc030SjOypn6ac/tEzxyiRB7WGk4zlq8wDslhU6vYd/smkWvA5
-         DZ3PzajAnUNSf0G3kWKTAe2B7pgwEGzt6AXWzw8udOryKwzORC1RFeXr+8E0JDakkuW/
-         cWItoxqrrNmvp0w/9qloW24ELPeVNeVLRaS8LHWubuEnaQyI6ezLR7C7om/W8/dAFM03
-         RQOQ==
-X-Gm-Message-State: AOAM532KAnTBAdVURs7J8mNfjBrzkT9e2O+6kiOV/7G3knBkJNz8WHwj
-        UsDCi73qnLvhXRTdXsbFku0iOA==
-X-Google-Smtp-Source: ABdhPJyzdJYvPj0AkVnv7w7nwDsyWQeF24SHe/E4f8AaPGTqUAz7rhU1DRRUEWq3JfYUPpVIUs3HcQ==
-X-Received: by 2002:a05:6512:2399:b0:473:a82d:cfde with SMTP id c25-20020a056512239900b00473a82dcfdemr1413328lfv.375.1652398610434;
-        Thu, 12 May 2022 16:36:50 -0700 (PDT)
+        bh=x2qQH918JYdrczWJIIm8XRXT3abBOAyM4GeAzsiuGrc=;
+        b=H+O1U1B9LU/6+vq1CQQQH0USia2h8SxH+RjrMaoAC9GxiQIuVl2mZzdqux91SdhKv6
+         ivTp5TDh71SByzCI3Ct3RIhjuohB0B8bGejFKzNHrCZlVkRQ9bRDjZlPPcpeHXvsBWbn
+         i3V6PkFVRjrCIEBysHU+MPmEKyMxY2cGGT5BYTC6VdFP0OCtCnBbn7Ee+VYE2UonmkZ+
+         7lODEpsnu3I0cCdErcSa3cRjUsDqvjOez3/DcmKsHWWgWx/R7jy2VUDRfV392qNM/kOO
+         d3j0/Fym/RhJfu7GphYA8goRrDLt6QytU5Li4n9SctMzskCoDll+zgCaQsBixoz2VrVc
+         j1lA==
+X-Gm-Message-State: AOAM531nw6VJOU3bxEqZmgYiMWxo0zN1KeWgLRKYnHcecmBJeQptDwoW
+        qm9uq+9sx3Lwu0QmFrAcUmEyoQ==
+X-Google-Smtp-Source: ABdhPJwQmW0wytK6CIsH6M30YJ8vzgMgIGQyJDw6fDiVF6pGuAn0bMDE2gbxsjPKZlzZjlb1hqkmsQ==
+X-Received: by 2002:a05:6512:68c:b0:473:da9a:66c3 with SMTP id t12-20020a056512068c00b00473da9a66c3mr1430381lfe.531.1652398611128;
+        Thu, 12 May 2022 16:36:51 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p13-20020a19f00d000000b0047255d211c1sm127937lfc.240.2022.05.12.16.36.49
+        by smtp.gmail.com with ESMTPSA id p13-20020a19f00d000000b0047255d211c1sm127937lfc.240.2022.05.12.16.36.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 12 May 2022 16:36:50 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -58,9 +58,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: [PATCH v2 3/8] arm64: dts: qcom: sdm630: disable GPU by default
-Date:   Fri, 13 May 2022 02:36:42 +0300
-Message-Id: <20220512233647.2672813-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 4/8] arm64: dts: qcom: sdm630: fix the qusb2phy ref clock
+Date:   Fri, 13 May 2022 02:36:43 +0300
+Message-Id: <20220512233647.2672813-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220512233647.2672813-1-dmitry.baryshkov@linaro.org>
 References: <20220512233647.2672813-1-dmitry.baryshkov@linaro.org>
@@ -76,31 +76,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SoC's device tree file disables gpucc and adreno's SMMU by default.
-So let's disable the GPU too. Moreover it looks like SMMU might be not
-usable without additional patches (which means that GPU is unusable
-too). No board uses GPU at this moment.
+According to the downstram DT file, the qusb2phy ref clock should be
+GCC_RX0_USB2_CLKREF_CLK, not GCC_RX1_USB2_CLKREF_CLK.
 
-Fixes: 5cf69dcbec8b ("arm64: dts: qcom: sdm630: Add Adreno 508 GPU configuration")
+Fixes: c65a4ed2ea8b ("arm64: dts: qcom: sdm630: Add USB configuration")
+Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 8697d40e9b74..e8bb170e8b2f 100644
+index e8bb170e8b2f..cca56f2fad96 100644
 --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1050,6 +1050,8 @@ adreno_gpu: gpu@5000000 {
+@@ -1262,7 +1262,7 @@ qusb2phy: phy@c012000 {
+ 			#phy-cells = <0>;
  
- 			operating-points-v2 = <&gpu_sdm630_opp_table>;
+ 			clocks = <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
+-				<&gcc GCC_RX1_USB2_CLKREF_CLK>;
++				<&gcc GCC_RX0_USB2_CLKREF_CLK>;
+ 			clock-names = "cfg_ahb", "ref";
  
-+			status = "disabled";
-+
- 			gpu_sdm630_opp_table: opp-table {
- 				compatible  = "operating-points-v2";
- 				opp-775000000 {
+ 			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
 -- 
 2.35.1
 
