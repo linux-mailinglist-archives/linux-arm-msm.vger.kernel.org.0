@@ -2,116 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12F5A525354
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 19:12:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92B1E525394
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 19:29:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356687AbiELRLz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 13:11:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34560 "EHLO
+        id S1357042AbiELR3O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 13:29:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356931AbiELRLB (ORCPT
+        with ESMTP id S1357032AbiELR3N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 13:11:01 -0400
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F061327CD6;
-        Thu, 12 May 2022 10:10:54 -0700 (PDT)
-X-IronPort-AV: E=McAfee;i="6400,9594,10345"; a="252120842"
-X-IronPort-AV: E=Sophos;i="5.91,220,1647327600"; 
-   d="scan'208";a="252120842"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 10:08:38 -0700
-X-IronPort-AV: E=Sophos;i="5.91,220,1647327600"; 
-   d="scan'208";a="658684239"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 10:08:32 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.95)
-        (envelope-from <andy.shevchenko@gmail.com>)
-        id 1npCIe-00FHkY-Cq;
-        Thu, 12 May 2022 20:08:28 +0300
-Date:   Thu, 12 May 2022 20:08:28 +0300
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Joey Gouly <joey.gouly@arm.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Thu, 12 May 2022 13:29:13 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D33126BC89
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 10:29:12 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id y32so10311210lfa.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 10:29:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QqEWL1rH8iN3CN8FjFBg00CzRjn0uL3tiylPGVgUxSg=;
+        b=dejG/JnVNSiY9rsh1DU5CWw+y/+ZhEMSPM2QSTbTb0HyogACJN6fa2is3MYNAKK8oX
+         +630Lzr/DvdXYyWNaKxkr/antVFOS/4pXR0IWrV1tpTVuBjLwg3kwuILCpPT+d/k0GDJ
+         aJVBDP7RZyyWFirT4cjYxCMHQEv3JFcKlDB3oZQH1XO2zQlENoJVx1eUSpOPay7/wM4i
+         ibM9V0Ikpmrms4Jrk7jElyZzcwtOErr+4x68NVNqJifIPKn7OI3tfTngHhZtqGFzbQxE
+         aPq6QRkR1Sd6w112+lyynMGniSK0AYQkUZPUWzQShkvDyJd1+caSg8o+j5N9jNJK6rzV
+         QBkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QqEWL1rH8iN3CN8FjFBg00CzRjn0uL3tiylPGVgUxSg=;
+        b=LWOwPDnt49wGxO5Rm0JdVSVw4iJz5PoSYzK/GTY6Mn+FZa/nNwycStB1+eQWDS/a8N
+         huQDtNhDGYkl8E5za+xB/0zZGayg9UJ8KM8silpNjAYh1TcK+WXCYBRMs2PPiIe+AruV
+         zOrqfGG8qvPAGgLjCkiAr86iB8m6vuQx6UHcLk2H1Ut1erXL8dC3EJQZWirhQjM+BhGJ
+         7XX37irbiPpEKh9Jt6MPtL5iqgeuBCRmxieI1uSGiJiOjhoKnqo/2ab6eNi0Txa6lu58
+         SfPyaIK8oHi7Tje25Gth3r+8u9P2XsbrZjnxv56V0RhT0aAGVAY54JbCoYhJQDPF8DgO
+         pUow==
+X-Gm-Message-State: AOAM531rUEzeONJz4GD2k99w0kA5d4UrWnW86CODnrPAxQte5RLJIrei
+        ztMmvwwmqtDoA6fH3EQVE0P7aA==
+X-Google-Smtp-Source: ABdhPJzP0OrsbfQ/xocauFIbWB3Rw/r+vru1in60QV8VW0hoRp9jGm5e0Ok1NesuZB/YmYHAX6hoLg==
+X-Received: by 2002:a05:6512:128f:b0:473:a2ec:5df6 with SMTP id u15-20020a056512128f00b00473a2ec5df6mr590837lfs.196.1652376550570;
+        Thu, 12 May 2022 10:29:10 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id y10-20020a2e95ca000000b0024f3d1dae9asm11520ljh.34.2022.05.12.10.29.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 May 2022 10:29:10 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, kernel-team@android.com
-Subject: Re: [PATCH v3 00/10] gpiolib: Handle immutable irq_chip structures
-Message-ID: <Yn0/DIl3+i/heRH6@smile.fi.intel.com>
-References: <20220419141846.598305-1-maz@kernel.org>
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Prasad Malisetty <pmaliset@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH v5 0/5]  PCI: qcom: Rework pipe_clk/pipe_clk_src handling
+Date:   Thu, 12 May 2022 20:29:04 +0300
+Message-Id: <20220512172909.2436302-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220419141846.598305-1-maz@kernel.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=0.7 required=5.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-        FORGED_GMAIL_RCVD,FREEMAIL_FROM,NML_ADSP_CUSTOM_MED,SPF_HELO_NONE,
-        SPF_SOFTFAIL,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 19, 2022 at 03:18:36PM +0100, Marc Zyngier wrote:
-> This is a followup from [2].
-> 
-> I recently realised that the gpiolib play ugly tricks on the
-> unsuspecting irq_chip structures by patching the callbacks.
-> 
-> Not only this breaks when an irq_chip structure is made const (which
-> really should be the default case), but it also forces this structure
-> to be copied at nauseam for each instance of the GPIO block, which is
-> a waste of memory.
+PCIe pipe clk (and some other clocks) must be parked to the "safe"
+source (bi_tcxo) when corresponding GDSC is turned off and on again.
+Currently this is handcoded in the PCIe driver by reparenting the
+gcc_pipe_N_clk_src clock.
 
-Is this brings us to the issue with IRQ chip name?
+Instead of doing it manually, follow the approach used by
+clk_rcg2_shared_ops and implement this parking in the enable() and
+disable() clock operations for respective pipe clocks.
 
-The use case in my mind is the following:
-1) we have two or more GPIO chips that supports IRQ;
-2) the user registers two IRQs of the same (by number) pin on different chips;
-3) cat /proc/interrupt will show 'my_gpio_chip XX', where XX is the number.
+PCIe part depends on [1].
 
-So, do I understand correct current state of affairs?
+Changes since v4:
+ - Renamed the clock to clk-regmap-pipe-src,
+ - Added mention of PCIe2 PHY to the commit message,
+ - Expanded commit messages to mention additional pipe clock details.
 
-If so, we have to fix this to have any kind of ID added to the chip name that
-we can map /proc/interrupts output correctly.
+Changes since v3:
+ - Replaced the clock multiplexer implementation with branch-like clock.
 
-> My current approach is to add a new irq_chip flag (IRQCHIP_IMMUTABLE)
-> which does what it says on the tin: don't you dare writing to them.
-> Gpiolib is further updated not to install its own callbacks, and it
-> becomes the responsibility of the driver to call into the gpiolib when
-> required. This is similar to what we do for other subsystems such as
-> PCI-MSI.
-> 
-> 5 drivers are updated to this new model: M1, QC, Tegra, pl061 and AMD
-> (as I actively use them) keeping a single irq_chip structure, marking
-> it const, and exposing the new flag.
-> 
-> Nothing breaks, the volume of change is small, the memory usage goes
-> down and we have fewer callbacks that can be used as attack vectors.
-> What's not to love?
-> 
-> Since there wasn't any objection in the previous round of review, I'm
-> going to take this series into -next to see if anything breaks at
-> scale.
+Changes since v2:
+ - Added is_enabled() callback
+ - Added default parent to the pipe clock configuration
+
+Changes since v1:
+ - Rebased on top of [1].
+ - Removed erroneous Fixes tag from the patch 4.
+
+Changes since RFC:
+ - Rework clk-regmap-mux fields. Specify safe parent as P_* value rather
+   than specifying the register value directly
+ - Expand commit message to the first patch to specially mention that
+   it is required only on newer generations of Qualcomm chipsets.
+
+[1]: https://lore.kernel.org/all/20220401133351.10113-1-johan+linaro@kernel.org/
+
+Dmitry Baryshkov (5):
+  PCI: qcom: Remove unnecessary pipe_clk handling
+  clk: qcom: regmap: add PHY clock source implementation
+  clk: qcom: gcc-sm8450: use new clk_regmap_pipe_src_ops for PCIe pipe
+    clocks
+  clk: qcom: gcc-sc7280: use new clk_regmap_pipe_src_ops for PCIe pipe
+    clocks
+  PCI: qcom: Drop manual pipe_clk_src handling
+
+ drivers/clk/qcom/Makefile              |  1 +
+ drivers/clk/qcom/clk-regmap-pipe-src.c | 62 ++++++++++++++++++++
+ drivers/clk/qcom/clk-regmap-pipe-src.h | 24 ++++++++
+ drivers/clk/qcom/gcc-sc7280.c          | 49 ++++++----------
+ drivers/clk/qcom/gcc-sm8450.c          | 51 ++++++----------
+ drivers/pci/controller/dwc/pcie-qcom.c | 81 +-------------------------
+ 6 files changed, 128 insertions(+), 140 deletions(-)
+ create mode 100644 drivers/clk/qcom/clk-regmap-pipe-src.c
+ create mode 100644 drivers/clk/qcom/clk-regmap-pipe-src.h
 
 
+base-commit: 3123109284176b1532874591f7c81f3837bbdc17
+prerequisite-patch-id: 71e4b5b7ff5d87f2407735cc6a3074812cde3697
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.35.1
 
