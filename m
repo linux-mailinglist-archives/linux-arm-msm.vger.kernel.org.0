@@ -2,62 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C468A524DC2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 15:05:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBC3C524E1D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 15:21:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354113AbiELNF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 09:05:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40718 "EHLO
+        id S1354312AbiELNVj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 09:21:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354123AbiELNFT (ORCPT
+        with ESMTP id S1354192AbiELNVh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 09:05:19 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D782A24F0EC;
-        Thu, 12 May 2022 06:05:17 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 30CB061FBB;
-        Thu, 12 May 2022 13:05:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2AF3C34119;
-        Thu, 12 May 2022 13:05:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652360716;
-        bh=fpbMuzFSSEKE6clnkaj5tApbhUTpleh1BlcZWp+xI5U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=s9bTsWtrIGr2fZ0/nrf5SoJ1amkYiCiLmXdVWcLjDYohWtvwHFR2gf4Cj9SQyNp2b
-         pQzp5It/eVwcFfAr+lbHXC8sxIZhfgJ3nHzLVatj3KueDxllIOrbjShNbTaqPYMth9
-         IK/JWnPB4IuRaAJ9tY/oQOAPvflWTAkw4998WtjLgft0oZDy+Bnfg+fkqbhbkx0u7y
-         +5i9wTAB0zz55BYkzdnk3CdllrETZYd1Ymn2rYTlu4hdgLLHtvGIxGlmMWEwa08WdN
-         cnOHcwZwaIE3eRdHeGNOR6oJY8oMLr3A4/ys6ygNwg3QujmMTATmhOpYsA1ZyL5Fs/
-         f3ONV8ALoIPVw==
-From:   Will Deacon <will@kernel.org>
-To:     Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Shreyas K K <quic_shrekk@quicinc.com>
-Cc:     kernel-team@android.com, Will Deacon <will@kernel.org>,
-        linux-kernel@vger.kernel.org,
-        Prasanna Kumar <quic_kprasan@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Andre Przywara <andre.przywara@arm.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: Re: [PATCH V3] arm64: Enable repeat tlbi workaround on KRYO4XX gold CPUs
-Date:   Thu, 12 May 2022 14:05:06 +0100
-Message-Id: <165235773290.1834134.2218780460929548936.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20220512110134.12179-1-quic_shrekk@quicinc.com>
-References: <20220512110134.12179-1-quic_shrekk@quicinc.com>
+        Thu, 12 May 2022 09:21:37 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C31664EF4E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 06:21:33 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id x12so4571262pgj.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 06:21:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4aQRSxerZIfxG75Us/8UUQ0iqFXnrxh04bqlSeNWSLY=;
+        b=IW2hTvHv1ornPaWs/asOavYfPGh3aS+PUX88/ZdhRZDMLMqshfnOIRyKUvRCCDs1XM
+         qXCMMVCR59IvJbT8ZjbP0dxO4VlwnEi8t77fh/0oMrbW/5UfGDDRTzvgvV1prWK1iuNE
+         qbngcanQky/AMov43+2ze9brDGfUUgW1OXOZFvSvKMod4jPOzz3Mpa0jAIdA0sfZgLS8
+         /NQ0YGyYLv1N5YR6qQoz9OvPNMZKrxjkn8mROXnQYa79P+e/c9m9AIyhHCK8jvojCcgR
+         VWtEyQvZE673bHkSeTXWPv05X+f6IbP1V7CnhnSZM66AxXItpKgcoTkmZDbD9Rzo4xi7
+         sRbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4aQRSxerZIfxG75Us/8UUQ0iqFXnrxh04bqlSeNWSLY=;
+        b=z/OYjZv/uSlAHcxDYggeceqQ5BrAQchl8qPP3nd00QbJzozcX/tmimt877RGSrO+EK
+         B4nCzIBWVEJRSpp4t2VZQMkM8BAtGLixkemF0dCRQcLw4vP61JTAYlZ13yNcTdZCdkjm
+         f8DtLw9hioJQdkgmr8kfcm9V3xzn8MQABVRwc4ZYPeoUSjnR4WgBDjLs7WgNi23XzcRO
+         CFwENKhTm76XFFY7HNOvGr7YWNl0xg82s0ppOVtGmdlN6okKy+ShQ5P7yvkso+3Hy3FC
+         01HGXpfha6WQFelGRMkF5Fzw0yA3Es5RzOjZOmZcjVCILTUyWRrOr+9q8MnjLVUZcuvx
+         rV5Q==
+X-Gm-Message-State: AOAM533MNWUyfSmTdI55GbJwtLXOnzllIV+Uldarp5EOtal14q9+Whpr
+        x7/PLlUkFrEw/8mZfLMa8Xu0rwkYHzio136HUW0O6Q==
+X-Google-Smtp-Source: ABdhPJyZOET1EER9C9AZQaqJy8BQlI2AbD8N1VzLJbA77Z/dnnf5unDxOdy+QeXxPtAgZWu9NdemKM/OpYLVX4OA/B8=
+X-Received: by 2002:aa7:9110:0:b0:4fa:e388:af57 with SMTP id
+ 16-20020aa79110000000b004fae388af57mr29932676pfh.1.1652361693176; Thu, 12 May
+ 2022 06:21:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220504122725.179262-1-robert.foss@linaro.org>
+ <20220504122725.179262-5-robert.foss@linaro.org> <600d13cc-962a-bb6c-6e43-c56fd63b9591@somainline.org>
+In-Reply-To: <600d13cc-962a-bb6c-6e43-c56fd63b9591@somainline.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Thu, 12 May 2022 15:21:22 +0200
+Message-ID: <CAG3jFysb-ZVr+9jroGs3ibjs9ysOChEz6HqR5NqHj3LvEiFN9Q@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] clk: qcom: add support for SM8350 DISPCC
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzk+dt@kernel.org, jonathan@marek.ca, tdas@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,26 +71,161 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 12 May 2022 16:31:34 +0530, Shreyas K K wrote:
-> Add KRYO4XX gold/big cores to the list of CPUs that need the
-> repeat TLBI workaround. Apply this to the affected
-> KRYO4XX cores (rcpe to rfpe).
-> 
-> The variant and revision bits are implementation defined and are
-> different from the their Cortex CPU counterparts on which they are
-> based on, i.e., (r0p0 to r3p0) is equivalent to (rcpe to rfpe).
-> 
-> [...]
+On Wed, 4 May 2022 at 18:23, Konrad Dybcio <konrad.dybcio@somainline.org> wrote:
+>
+>
+> On 04/05/2022 14:27, Robert Foss wrote:
+> > From: Jonathan Marek <jonathan@marek.ca>
+> >
+> > Add support to the SM8350 display clock controller by extending the SM8250
+> > display clock controller, which is almost identical but has some minor
+> > differences.
+> >
+> > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >
+> > Changes since v1
+> >   - Remove comment - Dmitry
+> >
+> > Changes since v2
+> >   - Add my SoB - Bjorn
+> >   - Remove CLK_ASSUME_ENABLED_WHEN_UNUSED flag
+> >
+> >
+> >   drivers/clk/qcom/Kconfig         |  4 +--
+> >   drivers/clk/qcom/dispcc-sm8250.c | 60 +++++++++++++++++++++++++++++++-
+> >   2 files changed, 61 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> > index 9b1f54e634b9..1752ca0ee405 100644
+> > --- a/drivers/clk/qcom/Kconfig
+> > +++ b/drivers/clk/qcom/Kconfig
+> > @@ -609,11 +609,11 @@ config SM_DISPCC_6125
+> >         splash screen
+> >
+> >   config SM_DISPCC_8250
+> > -     tristate "SM8150 and SM8250 Display Clock Controller"
+> > +     tristate "SM8150/SM8250/SM8350 Display Clock Controller"
+> >       depends on SM_GCC_8150 || SM_GCC_8250
+>
+> || SM_GCC_8350?
 
-Applied to arm64 (for-next/fixes), thanks!
+Will fix in v4.
 
-[1/1] arm64: Enable repeat tlbi workaround on KRYO4XX gold CPUs
-      https://git.kernel.org/arm64/c/51f559d66527
+>
+> sidenote: also || SC_GCC_8180X in a separate patch?
 
-Cheers,
--- 
-Will
+I haven't been involved in the 8180X work, and am a little bit
+hesitant to include any changes related to it in this series.
 
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+>
+> >       help
+> >         Support for the display clock controller on Qualcomm Technologies, Inc
+> > -       SM8150 and SM8250 devices.
+> > +       SM8150/SM8250/SM8350 devices.
+> >         Say Y if you want to support display devices and functionality such as
+> >         splash screen.
+> >
+> > diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
+> > index db9379634fb2..8e6cb990e387 100644
+> > --- a/drivers/clk/qcom/dispcc-sm8250.c
+> > +++ b/drivers/clk/qcom/dispcc-sm8250.c
+> > @@ -43,6 +43,10 @@ static struct pll_vco vco_table[] = {
+> >       { 249600000, 2000000000, 0 },
+> >   };
+> >
+> > +static struct pll_vco lucid_5lpe_vco[] = {
+> > +     { 249600000, 1750000000, 0 },
+> > +};
+> > +
+> >   static struct alpha_pll_config disp_cc_pll0_config = {
+> >       .l = 0x47,
+> >       .alpha = 0xE000,
+> > @@ -1228,6 +1232,7 @@ static const struct of_device_id disp_cc_sm8250_match_table[] = {
+> >       { .compatible = "qcom,sc8180x-dispcc" },
+> >       { .compatible = "qcom,sm8150-dispcc" },
+> >       { .compatible = "qcom,sm8250-dispcc" },
+> > +     { .compatible = "qcom,sm8350-dispcc" },
+> >       { }
+> >   };
+> >   MODULE_DEVICE_TABLE(of, disp_cc_sm8250_match_table);
+> > @@ -1258,7 +1263,7 @@ static int disp_cc_sm8250_probe(struct platform_device *pdev)
+> >               return PTR_ERR(regmap);
+> >       }
+> >
+> > -     /* note: trion == lucid, except for the prepare() op */
+> > +     /* Apply differences for SM8150 and SM8350 */
+> >       BUILD_BUG_ON(CLK_ALPHA_PLL_TYPE_TRION != CLK_ALPHA_PLL_TYPE_LUCID);
+> >       if (of_device_is_compatible(pdev->dev.of_node, "qcom,sc8180x-dispcc") ||
+> >           of_device_is_compatible(pdev->dev.of_node, "qcom,sm8150-dispcc")) {
+> > @@ -1270,6 +1275,59 @@ static int disp_cc_sm8250_probe(struct platform_device *pdev)
+> >               disp_cc_pll1_config.config_ctl_hi1_val = 0x00000024;
+> >               disp_cc_pll1_config.user_ctl_hi1_val = 0x000000D0;
+> >               disp_cc_pll1_init.ops = &clk_alpha_pll_trion_ops;
+> > +     } else if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8350-dispcc")) {
+> > +             static struct clk_rcg2 * const rcgs[] = {
+> > +                     &disp_cc_mdss_byte0_clk_src,
+> > +                     &disp_cc_mdss_byte1_clk_src,
+> > +                     &disp_cc_mdss_dp_aux1_clk_src,
+> > +                     &disp_cc_mdss_dp_aux_clk_src,
+> > +                     &disp_cc_mdss_dp_link1_clk_src,
+> > +                     &disp_cc_mdss_dp_link_clk_src,
+> > +                     &disp_cc_mdss_dp_pixel1_clk_src,
+> > +                     &disp_cc_mdss_dp_pixel2_clk_src,
+> > +                     &disp_cc_mdss_dp_pixel_clk_src,
+> > +                     &disp_cc_mdss_esc0_clk_src,
+> > +                     &disp_cc_mdss_mdp_clk_src,
+> > +                     &disp_cc_mdss_pclk0_clk_src,
+> > +                     &disp_cc_mdss_pclk1_clk_src,
+> > +                     &disp_cc_mdss_rot_clk_src,
+> > +                     &disp_cc_mdss_vsync_clk_src,
+> > +             };
+> > +             static struct clk_regmap_div * const divs[] = {
+> > +                     &disp_cc_mdss_byte0_div_clk_src,
+> > +                     &disp_cc_mdss_byte1_div_clk_src,
+> > +                     &disp_cc_mdss_dp_link1_div_clk_src,
+> > +                     &disp_cc_mdss_dp_link_div_clk_src,
+> > +             };
+> > +             unsigned int i;
+> > +             static bool offset_applied;
+> > +
+> > +             /* only apply the offsets once (in case of deferred probe) */
+> > +             if (!offset_applied) {
+> > +                     for (i = 0; i < ARRAY_SIZE(rcgs); i++)
+> > +                             rcgs[i]->cmd_rcgr -= 4;
+> > +
+> > +                     for (i = 0; i < ARRAY_SIZE(divs); i++) {
+> > +                             divs[i]->reg -= 4;
+> > +                             divs[i]->width = 4;
+> > +                     }
+> > +
+> > +                     disp_cc_mdss_ahb_clk.halt_reg -= 4;
+> > +                     disp_cc_mdss_ahb_clk.clkr.enable_reg -= 4;
+> > +
+> > +                     offset_applied = true;
+> > +             }
+> > +
+> > +             disp_cc_mdss_ahb_clk_src.cmd_rcgr = 0x22a0;
+> > +
+> > +             disp_cc_pll0_config.config_ctl_hi1_val = 0x2A9A699C;
+>
+> Lowercase hex, also below.
+
+Ack.
+
+>
+>
+> > +             disp_cc_pll0_config.test_ctl_hi1_val = 0x01800000;
+> > +             disp_cc_pll0_init.ops = &clk_alpha_pll_lucid_5lpe_ops;
+> > +             disp_cc_pll0.vco_table = lucid_5lpe_vco;
+> > +             disp_cc_pll1_config.config_ctl_hi1_val = 0x2A9A699C;
+> > +             disp_cc_pll1_config.test_ctl_hi1_val = 0x01800000;
+> > +             disp_cc_pll1_init.ops = &clk_alpha_pll_lucid_5lpe_ops;
+> > +             disp_cc_pll1.vco_table = lucid_5lpe_vco;
+> >       }
+> >
+> >       clk_lucid_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
+> Konrad
+> >
