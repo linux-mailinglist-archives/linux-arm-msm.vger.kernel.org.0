@@ -2,78 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E1BE52453E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 07:58:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 528FA524611
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 08:45:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349117AbiELF6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 01:58:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49268 "EHLO
+        id S240920AbiELGpt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 02:45:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245288AbiELF6D (ORCPT
+        with ESMTP id S243685AbiELGps (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 01:58:03 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB3F21A97D;
-        Wed, 11 May 2022 22:58:01 -0700 (PDT)
+        Thu, 12 May 2022 02:45:48 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBBB5CD5;
+        Wed, 11 May 2022 23:45:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652335081; x=1683871081;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=NZnDnpvgn5my4A1DvCZcio68+0nCB9EOlvfdWJyoVwM=;
-  b=uaN6etRChmtAK0UDuMe2evnLmOnyeKLErk9PA17i15vm40hyTVueYf2w
-   bK3K+KrZfIiOJNc/PupvPOW6JTFP1kWEn6SGspAc+sj7Eif3jTPHsI+3E
-   MeW75yaUMsPBVCYydGI47t7SiRU2zEmWzjO2cnUvnETWEmpYoiuJ4nj6n
-   M=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 11 May 2022 22:58:01 -0700
+  t=1652337947; x=1683873947;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=2biuyDFgnzEb6wCJFjhSWCD7gu2Xo4QJvuepaHaeyxY=;
+  b=BKIfJiHKKV6sON/Lj2n1BAJ9StU8ASu9WHafHstUrMJOcHupnXnpiB3/
+   qXUU791drVGH5id3Q7ppEWhDx90n6qayaXpUPbi+llaaVWh8Nx91aJbsE
+   8OF+BIx4Ay06I7AcP5TbXXq8Aymtvb4XnXzbGAMeTQqt28ya/+im85Pfx
+   s=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 11 May 2022 23:45:46 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2022 22:58:00 -0700
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2022 23:45:46 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 11 May 2022 22:58:00 -0700
-Received: from [10.216.61.198] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ 15.2.986.22; Wed, 11 May 2022 23:45:45 -0700
+Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 11 May
- 2022 22:57:53 -0700
-Message-ID: <9644d608-4ab9-ed0d-50fb-0016e4331361@quicinc.com>
-Date:   Thu, 12 May 2022 11:27:48 +0530
+ 2022 23:45:42 -0700
+Subject: Re: [PATCH v3 2/2] dt-bindings: remoteproc: qcom: Add SC7280 MSS
+ bindings
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>,
+        <ohad@wizery.com>, <agross@kernel.org>,
+        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+References: <1652257162-23874-1-git-send-email-quic_sibis@quicinc.com>
+ <1652257162-23874-3-git-send-email-quic_sibis@quicinc.com>
+ <YnvrchuHVKFHE3B2@google.com>
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+Message-ID: <3c26d566-5c83-4322-414a-0830a0ec160c@quicinc.com>
+Date:   Thu, 12 May 2022 12:15:38 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [v4 1/3] dt-bindings: phy: qcom,usb-snps-femto-v2: Add phy
- override params bindings
+In-Reply-To: <YnvrchuHVKFHE3B2@google.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        "Matthias Kaehlcke" <mka@chromium.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        "Vinod Koul" <vkoul@kernel.org>
-CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-References: <1652282793-5580-1-git-send-email-quic_kriskura@quicinc.com>
- <1652282793-5580-2-git-send-email-quic_kriskura@quicinc.com>
- <d296720d-ccbe-27f0-8ba1-9653af25dd52@linaro.org>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <d296720d-ccbe-27f0-8ba1-9653af25dd52@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,123 +73,250 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hey Matthias,
 
-On 5/11/2022 11:49 PM, Krzysztof Kozlowski wrote:
-> On 11/05/2022 17:26, Krishna Kurapati wrote:
->> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+On 5/11/22 10:29 PM, Matthias Kaehlcke wrote:
+> Hi Sibi,
+> 
+> On Wed, May 11, 2022 at 01:49:22PM +0530, Sibi Sankar wrote:
+>> Add MSS PIL loading bindings for SC7280 SoCs.
 >>
->> Add device tree bindings for SNPS phy tuning parameters.
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> 
+> There is already a binding for 'qcom,sc7280-mss-pil' in
+> Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt. Shouldn't
+> the entries from that file be deleted?
+> 
 >>
->> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->> ---
->>   .../bindings/phy/qcom,usb-snps-femto-v2.yaml       | 87 ++++++++++++++++++++++
->>   1 file changed, 87 insertions(+)
+>> v3:
+>>   * Re-ordered clock list, fixed pdc_sync typo [Rob/Matthias]
 >>
->> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->> index 1ce251d..70efffe 100644
->> --- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->> @@ -53,6 +53,93 @@ properties:
->>     vdda33-supply:
->>       description: phandle to the regulator 3.3V supply node.
->>   
->> +  qcom,hs-disconnect-bps:
->> +    $ref: /schemas/types.yaml#/definitions/int32
->> +    description:
->> +      This adjusts the voltage level for the threshold used to
->> +      detect a disconnect event at the host. Possible values are.
->> +      The values defined are in multiples of basis points (1bp = 0.01%).
-> This means there is some minimum and maximum (100%)?
-
-Hi Krzystof,
-
-Yes there are max and min for each parameter (not necessarily 0%/100%)
-
-As an example if we take squelch detector threshold, the register value 
-vs actual percentage changer as per data book is as follows :
-
-% change in voltage    |     corresponding reg value
-
-  -20.90%                        |    7
-  -15.60%                        |    6
--10.30%                         |    5
--5.30%                           |    4
-0%                                  |    3
-5.30%                            |    2
-10.60%                          |    1
-15.90%                          |    0
-
-Here the min and max are 15.9% to -20.9%
-
-The min and max differ for each parameter and might not be necessarily 
-0% and 100%
->> +      The hardware accepts only discrete values. The value closest to the
->> +      provided input will be chosen as the override value for this param.
+>>   .../bindings/remoteproc/qcom,sc7280-mss-pil.yaml   | 261 +++++++++++++++++++++
+>>   1 file changed, 261 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+>> new file mode 100644
+>> index 000000000000..2f95bfd7b3eb
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+>> @@ -0,0 +1,261 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/remoteproc/qcom,sc7280-mss-pil.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 >> +
->> +  qcom,squelch-detector-bps:
->> +    $ref: /schemas/types.yaml#/definitions/int32
->> +    description:
->> +      This adjusts the voltage level for the threshold used to
->> +      detect valid high-speed data.
->> +      The values defined are in multiples of basis points (1bp = 0.01%).
->> +      The hardware accepts only discrete values. The value closest to the
->> +      provided input will be chosen as the override value for this param.
+>> +title: Qualcomm SC7280 MSS Peripheral Image Loader
 >> +
->> +  qcom,hs-amplitude-bps:
->> +    $ref: /schemas/types.yaml#/definitions/int32
->> +    description:
->> +      This adjusts the high-speed DC level voltage.
->> +      The values defined are in multiples of basis points (1bp = 0.01%).
->> +      The hardware accepts only discrete values. The value closest to the
->> +      provided input will be chosen as the override value for this param.
+>> +maintainers:
+>> +  - Sibi Sankar <quic_sibis@quicinc.com>
 >> +
->> +  qcom,pre-emphasis-duration-bps:
->> +    $ref: /schemas/types.yaml#/definitions/int32
->> +    description:
->> +      This signal controls the duration for which the
->> +      HS pre-emphasis current is sourced onto DP<#> or DM<#>.
->> +      The HS Transmitter pre-emphasis duration is defined in terms of
->> +      unit amounts. One unit of pre-emphasis duration is approximately
->> +      650 ps and is defined as 1X pre-emphasis duration.
->> +      The values defined are in multiples of basis points (1bp = 0.01%).
->> +      The hardware accepts only discrete values. The value closest to the
->> +      provided input will be chosen as the override value for this param.
+>> +description:
+>> +  This document defines the binding for a component that loads and boots firmware
+>> +  on the Qualcomm Technology Inc. SC7280 Modem Hexagon Core.
 >> +
->> +  qcom,pre-emphasis-amplitude-bps:
->> +    $ref: /schemas/types.yaml#/definitions/int32
->> +    description:
->> +      This signal controls the amount of current sourced to
->> +      DP<#> and DM<#> after a J-to-K or K-to-J transition.
->> +      The HS Transmitter pre-emphasis current is defined in terms of unit
->> +      amounts. One unit amount is approximately 2 mA and is defined as
->> +      1X pre-emphasis current.
->> +      The values defined are in multiples of basis points (1bp = 0.01%).
->> +      The hardware accepts only discrete values. The value closest to the
->> +      provided input will be chosen as the override value for this param.
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,sc7280-mss-pil
 >> +
->> +  qcom,hs-rise-fall-time-bps:
->> +    $ref: /schemas/types.yaml#/definitions/int32
->> +    description:
->> +      This adjusts the rise/fall times of the high-speed waveform.
->> +      The values defined are in multiples of basis points (1bp = 0.01%).
->> +      The hardware accepts only discrete values. The value closest to the
->> +      provided input will be chosen as the override value for this param.
+>> +  reg:
+>> +    items:
+>> +      - description: MSS QDSP6 registers
+>> +      - description: RMB registers
 >> +
->> +  qcom,hs-crossover-voltage-mv:
->> +    $ref: /schemas/types.yaml#/definitions/int32
->> +    description:
->> +      This adjusts the voltage at which the DP<#> and DM<#>
->> +      signals cross while transmitting in HS mode.
->> +      The values defined are in milli volts. The hardware accepts only
->> +      discrete values. The value closest to the provided input will be
->> +      chosen as the override value for this param.
+>> +  reg-names:
+>> +    items:
+>> +      - const: qdsp6
+>> +      - const: rmb
 >> +
->> +  qcom,hs-output-impedance-mohm:
->> +    $ref: /schemas/types.yaml#/definitions/int32
-> Here and in other places, please use standard units. See
-> dtschema/schemas/property-units.yaml in dtschema repo.
->
->
-> Best regards,
-> Krzysztof
+>> +  iommus:
+>> +    items:
+>> +      - description: MSA Stream 1
+>> +      - description: MSA Stream 2
+>> +
+>> +  interconnects:
+>> +    items:
+>> +      - description: Path leading to system memory
+>> +
+>> +  interrupts:
+>> +    items:
+>> +      - description: Watchdog interrupt
+>> +      - description: Fatal interrupt
+>> +      - description: Ready interrupt
+>> +      - description: Handover interrupt
+>> +      - description: Stop acknowledge interrupt
+>> +      - description: Shutdown acknowledge interrupt
+>> +
+>> +  interrupt-names:
+>> +    items:
+>> +      - const: wdog
+>> +      - const: fatal
+>> +      - const: ready
+>> +      - const: handover
+>> +      - const: stop-ack
+>> +      - const: shutdown-ack
+> 
+> 
+> The existing binding (qcom,q6v5.txt) also has:
+> 
+> - interrupts-extended:
+>          Usage: required
+> 	Value type: <prop-encoded-array>
+> 	Definition: reference to the interrupts that match interrupt-names
+> 
+> That's covered implicitly by 'interrupts' I suppose?
+
+
+Yeah ^^ was discussed before during the sc7280 wpss patch series. Rob
+said the tooling handles both the same way.
+
+https://lore.kernel.org/lkml/CAL_Jsq+khyhbwJ5-GPZ5ZGkY4nX_obq4t92Z0V6sZH3Oyj4Fow@mail.gmail.com/
+
+
+> 
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: GCC MSS IFACE clock
+>> +      - description: GCC MSS OFFLINE clock
+>> +      - description: GCC MSS SNOC_AXI clock
+>> +      - description: RPMH PKA clock
+>> +      - description: RPMH XO clock
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: iface
+>> +      - const: offline
+>> +      - const: snoc_axi
+>> +      - const: pka
+>> +      - const: xo
+>> +
+>> +  power-domains:
+>> +    items:
+>> +      - description: CX power domain
+>> +      - description: MSS power domain
+>> +
+>> +  power-domain-names:
+>> +    items:
+>> +      - const: cx
+>> +      - const: mss
+>> +
+>> +  resets:
+>> +    items:
+>> +      - description: AOSS restart
+>> +      - description: PDC reset
+>> +
+>> +  reset-names:
+>> +    items:
+>> +      - const: mss_restart
+>> +      - const: pdc_reset
+>> +
+>> +  memory-region:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>> +    description: Phandle reference to the reserved-memory for the MBA region followed
+>> +                 by the modem region.
+>> +
+>> +  firmware-name:
+>> +    $ref: /schemas/types.yaml#/definitions/string
+>> +    description:
+>> +      The name of the firmware which should be loaded for this remote
+>> +      processor.
+>> +
+>> +  qcom,halt-regs:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>> +    description:
+>> +      Phandle reference to a syscon representing TCSR followed by the
+>> +      four offsets within syscon for q6, modem, nc and vq6 halt registers.
+>> +
+>> +  qcom,ext-regs:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>> +    description:
+>> +      Two phandle references to syscons representing TCSR_REG and TCSR register
+>> +      space followed by the two offsets within the syscon to force_clk_en/rscc_disable
+>> +      and axim1_clk_off/crypto_clk_off registers respectively.
+>> +
+>> +  qcom,qaccept-regs:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>> +    description:
+>> +      Phandle reference to a syscon representing TCSR followed by the
+>> +      three offsets within syscon for mdm, cx and axi qaccept registers.
+>> +
+>> +  qcom,qmp:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle
+>> +    description: Reference to the AOSS side-channel message RAM.
+>> +
+>> +  qcom,smem-states:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>> +    description: States used by the AP to signal the Hexagon core
+>> +    items:
+>> +      - description: Stop the modem
+>> +
+>> +  qcom,smem-state-names:
+>> +    $ref: /schemas/types.yaml#/definitions/string
+>> +    description: The names of the state bits used for SMP2P output
+>> +    const: stop
+>> +
+>> +  glink-edge:
+>> +    type: object
+>> +    description: |
+>> +      Qualcomm G-Link subnode which represents communication edge, channels
+>> +      and devices related to the DSP.
+>> +
+>> +    properties:
+>> +      interrupts:
+>> +        items:
+>> +          - description: IRQ from MSS to GLINK
+>> +
+>> +      mboxes:
+>> +        items:
+>> +          - description: Mailbox for communication between APPS and MSS
+>> +
+>> +      label:
+>> +        description: The names of the state bits used for SMP2P output
+>> +        items:
+>> +          - const: modem
+>> +
+>> +      qcom,remote-pid:
+>> +        $ref: /schemas/types.yaml#/definitions/uint32
+>> +        description: ID of the shared memory used by GLINK for communication with MSS
+>> +
+>> +    required:
+>> +      - interrupts
+>> +      - mboxes
+>> +      - label
+>> +      - qcom,remote-pid
+>> +
+>> +    additionalProperties: false
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - reg-names
+>> +  - iommus
+>> +  - interconnects
+>> +  - interrupts
+>> +  - interrupt-names
+>> +  - clocks
+>> +  - clock-names
+>> +  - power-domains
+>> +  - power-domain-names
+>> +  - resets
+>> +  - reset-names
+>> +  - qcom,halt-regs
+>> +  - qcom,ext-regs
+>> +  - qcom,qaccept-regs
+>> +  - memory-region
+>> +  - qcom,qmp
+> 
+> 'qcom,qmp' is marked as 'optional' in qcom,q6v5.txt
+
+Yeah even though we were forced to mark/implement it as optional in the
+original bindings file/driver (since it was a single bindings file
+covering all the SoCs), it is functionally required for sc7280 mss to
+reach xo-shutdown.
+
+> 
+
+-Sibi
