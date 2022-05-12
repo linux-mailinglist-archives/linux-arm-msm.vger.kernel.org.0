@@ -2,68 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CE305242AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 04:25:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 207E75244C0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 May 2022 07:16:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232646AbiELCZD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 May 2022 22:25:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50240 "EHLO
+        id S1349444AbiELFQ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 01:16:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229823AbiELCZB (ORCPT
+        with ESMTP id S1349915AbiELFQY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 May 2022 22:25:01 -0400
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9DA4C2E;
-        Wed, 11 May 2022 19:25:00 -0700 (PDT)
-Received: from cwcc.thunk.org (pool-108-7-220-252.bstnma.fios.verizon.net [108.7.220.252])
-        (authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 24C2ObEp028012
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 May 2022 22:24:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-        t=1652322280; bh=VS1Wz6MTDeDEe7mFjiXRuQFi0ffsrqAX4JhdhobUr+g=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=nNm5XGIRxTLkjZ9+UM/FNhm3f18Kz/55+4qIb2adh81DsdLJNfttLakxIdBFcKBz/
-         v6RcM3QlUFnreCqfGI9u0aM29E2Hajngw3eNDNzNaBwVfexhXlodmpISiMjDfCneba
-         zKOe5AGr/mkJmrvK5CQdgcbL1k5Lz3M7eFbWYe4rUMHh1E6vRf9Q4fEwhUYDFlbK5y
-         LWqOCX6pa+RkWVEdidnv1a0BZYzD3du3sS6sdLzZ/0AvpZequqUjv+mz6lB5zYAUT4
-         38DKNY31Qk0LCta6rxrZKK02UcwVWoo5XwR/bdEuCvaFs9XHUxOtFf4hqy3pynrbXw
-         6uy4GZTTcYUrA==
-Received: by cwcc.thunk.org (Postfix, from userid 15806)
-        id 67CE015C3F2A; Wed, 11 May 2022 22:24:37 -0400 (EDT)
-Date:   Wed, 11 May 2022 22:24:37 -0400
-From:   "Theodore Ts'o" <tytso@mit.edu>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Michel =?iso-8859-1?Q?D=E4nzer?= <michel.daenzer@mailbox.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Dave Airlie <airlied@gmail.com>, Sean Paul <sean@poorly.run>
-Subject: Re: [Freedreno] Adding CI results to the kernel tree was Re: [RFC
- v2] drm/msm: Add initial ci/ subdirectory
-Message-ID: <Ynxv5WGMd0aJYM5a@mit.edu>
-References: <20220510070140.45407-1-tomeu.vizoso@collabora.com>
- <20220510141329.54414-1-tomeu.vizoso@collabora.com>
- <CAPM=9tzLR-wsLhg2ikGjoK06s-ju5XWa1rtPPiUpN=pwD1vgtA@mail.gmail.com>
- <YntWQIXSqMCd6TYV@kroah.com>
- <1255a66a-121d-988a-19a7-316f703cb37d@mailbox.org>
- <YnujG0nkF0U6d5kd@kroah.com>
- <CAF6AEGsmD-CNGj4bAE952JQpquaWA+Nxo5TGpFiHqaPK9doP-g@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGsmD-CNGj4bAE952JQpquaWA+Nxo5TGpFiHqaPK9doP-g@mail.gmail.com>
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,
+        Thu, 12 May 2022 01:16:24 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E8F21F62F;
+        Wed, 11 May 2022 22:16:22 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id i17so3834230pla.10;
+        Wed, 11 May 2022 22:16:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:content-transfer-encoding:date:message-id:cc:subject
+         :from:to:references:in-reply-to;
+        bh=o5r8j5DfRtmLS+iVKuwr6JvqFgR9CxOqwnqwvrWJx9w=;
+        b=m/daO8WF7cexoTd4geHDhaMezghvuSRaTFPrdGvTuluSIepdWjVnfvL/TZbJUr3GDz
+         /q8/JGjqwkqG/wowpueFJ2DRpwX8YcRFuiHrGc7ngDMHyK687V4hFwdWRbjCWrzNwJ/q
+         +WrGgNv27agaVgQDMct1extVZfjV8Nxus4ZsaVOd8S042zqulV4dkwgSaRkStbjO4BkV
+         hQZzensKfcpL78/LzZwFu2BItNJEmcgCqFqkcveJLrEKxR92CPxDhY5sILeM/ExvhNhk
+         4lMRN9tQ3/JsBxw7U5COI+806D8fSFzLhphMpZPGatrrWYbzdaPsoVBwKQ9EhC9NUiHk
+         qVIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:content-transfer-encoding:date
+         :message-id:cc:subject:from:to:references:in-reply-to;
+        bh=o5r8j5DfRtmLS+iVKuwr6JvqFgR9CxOqwnqwvrWJx9w=;
+        b=snuWjQVaG13p8tE/eCUT+dmABVJ3T8kZQ6zvCGzwV55o/jc3vlUAHyatYz8rApR70o
+         842SorkJFZX7llfJkrOxQ0/vf6L5oALNrRJlSgCcCh+oUYdVmvLZCWt301CbLgIwncum
+         yG2DufstTkQnaH6okFXR75pRZl7lpX9aZkiudBW6AcMGte2c/rQHOUGBoBoP+4DorcyS
+         bZMGnvortrNmH2k7v0Uw50Ls2xCyLhzF8x3wMM6Fdo4g+ckuxqAUsSVrkff3250xVbF9
+         ByEgi2PjTqsLLiTstayrW35BKibT7MfggS4J0HbCBTLQPb4ncSIL9KXCI/CHAaFR3yIe
+         /70Q==
+X-Gm-Message-State: AOAM531R8bQwlLDsYeJf+J8t9gZTFTjA95egSfkPOQ6zQkYXbBGFN6ZG
+        8vYSy5URo0KsUzRInCf7hG0=
+X-Google-Smtp-Source: ABdhPJxsuLKd57Hz6gAd6v6A/NHHFlJvHr99DoDw5/Hx2C3VmQhaVRkb6NQsrtVOgQZ3fe5U5dGiOg==
+X-Received: by 2002:a17:902:d2c9:b0:15e:a266:6472 with SMTP id n9-20020a170902d2c900b0015ea2666472mr28171958plc.45.1652332581734;
+        Wed, 11 May 2022 22:16:21 -0700 (PDT)
+Received: from localhost ([49.204.239.218])
+        by smtp.gmail.com with ESMTPSA id t16-20020a170902e85000b0015e8d4eb2e1sm2857810plg.299.2022.05.11.22.16.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 May 2022 22:16:21 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Thu, 12 May 2022 10:46:16 +0530
+Message-Id: <CJXJ0IIGOKN4.7V6UQ9ZFIX8I@skynet-linux>
+Cc:     <linux-arm-msm@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
+        <phone-devel@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Mathieu Poirier" <mathieu.poirier@linaro.org>
+Subject: Re: [PATCH 2/9] remoteproc: qcom: q6v5-mss: Add modem support on
+ MSM8953
+From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
+To:     "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        <linux-remoteproc@vger.kernel.org>
+X-Mailer: aerc 0.9.0
+References: <20220511161602.117772-1-sireeshkodali1@gmail.com>
+ <20220511161602.117772-3-sireeshkodali1@gmail.com>
+ <1d43e1fa-30b2-dbf0-bfaf-f9cfaf987efb@linaro.org>
+In-Reply-To: <1d43e1fa-30b2-dbf0-bfaf-f9cfaf987efb@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,30 +79,175 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 11, 2022 at 06:33:32AM -0700, Rob Clark wrote:
-> 
-> And ofc we want the expectations to be in the kernel tree because
-> there could be, for example, differences between -fixes and -next
-> branches.  (Or even stable kernel branches if/when we get to the point
-> of running CI on those.)
+On Wed May 11, 2022 at 10:24 PM IST, Dmitry Baryshkov wrote:
+> On 11/05/2022 19:15, Sireesh Kodali wrote:
+> > The modem on the MSM8953 platform is similar to the modem on the MSM899=
+6
+> > platform in terms of set up. It differs primarily in the way it needs S=
+CM
+> > to bless the MPSS firmware region.
+> >=20
+> > Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+> > ---
+> >   drivers/remoteproc/qcom_q6v5_mss.c | 64 +++++++++++++++++++++++++++--=
+-
+> >   1 file changed, 58 insertions(+), 6 deletions(-)
+> >=20
+> > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qc=
+om_q6v5_mss.c
+> > index af217de75e4d..a73fdcddeda4 100644
+> > --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> > @@ -234,6 +234,7 @@ struct q6v5 {
+> >  =20
+> >   enum {
+> >   	MSS_MSM8916,
+> > +	MSS_MSM8953,
+> >   	MSS_MSM8974,
+> >   	MSS_MSM8996,
+> >   	MSS_MSM8998,
+> > @@ -687,12 +688,14 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+> >   		}
+> >   		goto pbl_wait;
+> >   	} else if (qproc->version =3D=3D MSS_MSM8996 ||
+> > -		   qproc->version =3D=3D MSS_MSM8998) {
+> > +		   qproc->version =3D=3D MSS_MSM8998 ||
+> > +		   qproc->version =3D=3D MSS_MSM8953) {
+> >   		int mem_pwr_ctl;
+> >  =20
+> >   		/* Override the ACC value if required */
+> > -		writel(QDSP6SS_ACC_OVERRIDE_VAL,
+> > -		       qproc->reg_base + QDSP6SS_STRAP_ACC);
+> > +		if (qproc->version !=3D MSS_MSM8953)
+> > +			writel(QDSP6SS_ACC_OVERRIDE_VAL,
+> > +					qproc->reg_base + QDSP6SS_STRAP_ACC);
+> >  =20
+> >   		/* Assert resets, stop core */
+> >   		val =3D readl(qproc->reg_base + QDSP6SS_RESET_REG);
+> > @@ -734,7 +737,8 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+> >   		writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
+> >  =20
+> >   		/* Turn on L1, L2, ETB and JU memories 1 at a time */
+> > -		if (qproc->version =3D=3D MSS_MSM8996) {
+> > +		if (qproc->version =3D=3D MSS_MSM8996 ||
+> > +			qproc->version =3D=3D MSS_MSM8953) {
+> >   			mem_pwr_ctl =3D QDSP6SS_MEM_PWR_CTL;
+> >   			i =3D 19;
+> >   		} else {
+> > @@ -1314,7 +1318,16 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+> >   			max_addr =3D ALIGN(phdr->p_paddr + phdr->p_memsz, SZ_4K);
+> >   	}
+> >  =20
+> > -	/*
+> > +	if (qproc->version =3D=3D MSS_MSM8953) {
+> > +		ret =3D qcom_scm_pas_mem_setup(5, qproc->mpss_phys, qproc->mpss_size=
+);
+> > +		if (ret) {
+> > +			dev_err(qproc->dev,
+> > +					"setting up mpss memory failed: %d\n", ret);
+> > +			goto release_firmware;
+> > +		}
+> > +	}
+> > +
+> > +	/**
+>
+> Single star please
+>
+> >   	 * In case of a modem subsystem restart on secure devices, the modem
+> >   	 * memory can be reclaimed only after MBA is loaded.
+> >   	 */
+> > @@ -1413,7 +1426,6 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+> >   			writel(RMB_CMD_LOAD_READY, qproc->rmb_base + RMB_MBA_COMMAND_REG);
+> >   		}
+> >   		writel(size, qproc->rmb_base + RMB_PMI_CODE_LENGTH_REG);
+> > -
+> >   		ret =3D readl(qproc->rmb_base + RMB_MBA_STATUS_REG);
+> >   		if (ret < 0) {
+> >   			dev_err(qproc->dev, "MPSS authentication failed: %d\n",
+> > @@ -1422,6 +1434,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+> >   		}
+> >   	}
+> >  =20
+> > +
+>
+> Unnecessary
+>
 
-There are tradeoffs both ways, whether the patches are kept separate,
-opr in the kernel tree.
+oops
 
-In the file system world, when we discover a bug, very often a test
-case is found to test the fix, and to protect us against regressions.
-It has one other benefit; since the tests (xfstests) are kept separate
-from the kernel, it's a useful way to identify when some patch didn't
-get automatically backported to a LTS or distro kernel.  (For example,
-because the patch didn't cherry-pick cleanly and the manual backport
-process fell through the cracks.)
+> >   	/* Transfer ownership of modem ddr region to q6 */
+> >   	ret =3D q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm, false, tru=
+e,
+> >   				      qproc->mpss_phys, qproc->mpss_size);
+> > @@ -2198,6 +2211,44 @@ static const struct rproc_hexagon_res msm8996_ms=
+s =3D {
+> >   	.version =3D MSS_MSM8996,
+> >   };
+> >  =20
+> > +static const struct rproc_hexagon_res msm8953_mss =3D {
+> > +	.hexagon_mba_image =3D "mba.mbn",
+> > +	.proxy_supply =3D (struct qcom_mss_reg_res[]) {
+> > +		{
+> > +			.supply =3D "pll",
+> > +			.uA =3D 100000,
+> > +		},
+> > +		{}
+> > +	},
+> > +	.proxy_pd_names =3D (char*[]) {
+> > +			"cx",
+> > +			"mx",
+> > +			NULL
+> > +	},
+> > +	.active_supply =3D (struct qcom_mss_reg_res[]) {
+> > +		{
+> > +			.supply =3D "mss",
+> > +			.uV =3D 1050000,
+> > +			.uA =3D 100000,
+> > +		},
+> > +		{}
+> > +	},
+> > +	.proxy_clk_names =3D (char*[]){
+> > +			"xo",
+> > +			NULL
+> > +	},
+> > +	.active_clk_names =3D (char*[]){
+> > +			"iface",
+> > +			"bus",
+> > +			"mem",
+> > +			NULL
+> > +	},
+> > +	.need_mem_protection =3D false,
+> > +	.has_alt_reset =3D false,
+> > +	.has_spare_reg =3D false,
+>
+>
+> Please follow the custom  and define the rest of fields here.
+>
 
-It does make things annoying when we have bugs that can not be safely
-backported (which results in tests that fail on the LTS kernel without
-kernel-version exclude files), and/or when the expectations change
-between versions.  (Although to be honest, for us, the more common
-annoyance is when some userspace package --- e.g., bash or coreutils
-or util-linux --- changes their output, and we have to add filter
-functions to accomodate expected output differences.)
+I missed these in the rebase, I'll add them in v2
 
-						- Ted
+> > +	.version =3D MSS_MSM8953,
+> > +};
+> > +
+> >   static const struct rproc_hexagon_res msm8916_mss =3D {
+> >   	.hexagon_mba_image =3D "mba.mbn",
+> >   	.proxy_supply =3D (struct qcom_mss_reg_res[]) {
+> > @@ -2301,6 +2352,7 @@ static const struct of_device_id q6v5_of_match[] =
+=3D {
+> >   	{ .compatible =3D "qcom,msm8916-mss-pil", .data =3D &msm8916_mss},
+> >   	{ .compatible =3D "qcom,msm8974-mss-pil", .data =3D &msm8974_mss},
+> >   	{ .compatible =3D "qcom,msm8996-mss-pil", .data =3D &msm8996_mss},
+> > +	{ .compatible =3D "qcom,msm8953-mss-pil", .data =3D &msm8953_mss},
+> >   	{ .compatible =3D "qcom,msm8998-mss-pil", .data =3D &msm8998_mss},
+> >   	{ .compatible =3D "qcom,sc7180-mss-pil", .data =3D &sc7180_mss},
+> >   	{ .compatible =3D "qcom,sc7280-mss-pil", .data =3D &sc7280_mss},
+>
+>
+> --=20
+> With best wishes
+> Dmitry
+
+Thank you for the review, I'll make the changes in v2 of this patch.
+
+Thanks,
+Sireesh
