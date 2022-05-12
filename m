@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D657525870
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 01:37:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55CB2525874
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 01:37:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359577AbiELXhB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 19:37:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51372 "EHLO
+        id S1359533AbiELXhG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 19:37:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359578AbiELXgy (ORCPT
+        with ESMTP id S1359580AbiELXgz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 19:36:54 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99ECE65D1D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:53 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id y19so8375452ljd.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:53 -0700 (PDT)
+        Thu, 12 May 2022 19:36:55 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 410A565D1E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:54 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id c24so2230983lfv.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:36:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=u1F2z8vf2EByZAfH4u3WGQEipah84mZvdDX5pars+Lg=;
-        b=Mk2VfKZZ6R7OctyvCPkgGOBI/U1hayeu4pN7zh5/7W9kgGMeGwNNbpzcZr9vkNCLNl
-         jQEjnmdSH/DwV+Xxos18+jrkLfq4w6kvFkGYzUcYXFOResHQypMk/X20BZ8nEzACayor
-         +AtArSP+Jlt9of4d2ZnF8imTGtGQENabrMJXrsPnhYMZX71D8tVcAMa0+Yr0+3XkqzV2
-         y/9ErQUQQwLpG3SOk2wOarFa6iodoH9m7I4vWhLgEaSWyp46BTCQ/5B+9XyuAr/Cll+Q
-         g+tBHoQOGqIYNndlHP51XcnWaJwFZCAamv+huGtfmrFeO0n3lnZUvlYMAuSYBVAb3HJu
-         vm7Q==
+        bh=TX2EPeQO4iv5kbvdeC41BclBBjF3SbJIVPgRNnipG6Q=;
+        b=HE08OQVAnUz2znm00hNElDbS1LEanC3qKT/KhfJ4Dnyuj6plz4TOoRXvqQC0+ztg7d
+         VqgPqqlcPy7nZUg7yhtzgHI4zHwHpyVK8oEgk75jU/hA49F1m9frF4bNPHdAsn1jgMdM
+         XXJ8p2CgFMpW71prYj9/XVW3LarKqJO60vhgC2RTtDn+1UYX9mHgK18p30Qc/NT8Cdjq
+         ihav1A8UoabwD2K6QvCE0XiiEDvZq6mQ8wk8uDw2bW1RtUoO70dWiGAYSqpCpCjJsPPt
+         2WPY0/AoGSzr0Pmz28/NaF4EqSrkQc0ULjXK8j4rEzUrjZNdSfsCcZN/MGj7BaOkyoP2
+         LwHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=u1F2z8vf2EByZAfH4u3WGQEipah84mZvdDX5pars+Lg=;
-        b=Grmr+GwUIb3zQuMF2IOR1CdAxE/3iaoghP76jfI419Lkz6Lw8SF8/H7o1+KKVMICq5
-         ejBQlmAsil+55dvkSrG3PK3Oh2YiYK7SzRV0e/4iFcHqk+P0p/wVWfzOfblDTlxVbOT3
-         r6GKs6ZIg2nVlrdxjyDYyiG3B7aerLCVT4XMpznfeBfRUtP5e+wwUNlMjiFM5f7qxGJN
-         48dp3ubl6J4WiK659nLDWB26PHrAYSJQm5Wm1zOlPmb8s2gstD+kwP7Gua5oEuAbpv3P
-         8069i8AiisXsiaVu4MOQXueyCtSuvKdhLaMTLSfIWRpMXfbn3nSz36Ylx2cuP7AjLZPB
-         wvjA==
-X-Gm-Message-State: AOAM533V1Dx2QQCvk1NupU5t9vRJtsdjC4JByI+BlfEf5+7Lkp43S3Fd
-        gHa3e3EL3ct/C4NjkHiJ2mci4g==
-X-Google-Smtp-Source: ABdhPJyS1EQIkEYnhYZq1tZT/pbc7avQmoLJT1K66vxZyU3+hriDNRai4aURGT3TvCAgw8FuazI6Fw==
-X-Received: by 2002:a2e:3112:0:b0:24f:132a:fd71 with SMTP id x18-20020a2e3112000000b0024f132afd71mr1445200ljx.522.1652398611840;
-        Thu, 12 May 2022 16:36:51 -0700 (PDT)
+        bh=TX2EPeQO4iv5kbvdeC41BclBBjF3SbJIVPgRNnipG6Q=;
+        b=BHGmcyxNI/MIk1A/4SNnqVR9LgGlEihCn30b5iCkWROjIpR3wJGUNpgVTjEpmYUNUn
+         +0UgXJUpLE5nWAaNvFO4mo4vwk/OZ9LESuZ6qjM7rlv/DQLi8Qu+9Tkdfip5prIFJ/LE
+         vmDJD326gEYCkJ2/zVwZwrA1Y+r053RgKsUwODgHLCHMW9+zjcEeWZ0VqxFqf3dnVyXc
+         fwWWGuviPAjV6HX8/NI3Mzctg8rf+lV3fyBBTjAy1jYksxIY+QqMrjRKDM+4VHmdtsBN
+         TVTZWoXduSPPJPSz2NAQnRvJn79K0akh1H3fGqJND8+Ao97IfLNR0Rah4G/MWHKIBhky
+         3fpg==
+X-Gm-Message-State: AOAM531V7xGvJTDEErYh3Ym6leHWqk1rqj1S5tzQ3EH1BQHDWdYiVYGU
+        3W9X2OFTkYQzz1Mu6qMMAFCwqA==
+X-Google-Smtp-Source: ABdhPJy+8lSM7XQyQmcSe1HtYqihl1nvJXf2e/GgGHxotQZ2pTQPbTT5zA2DFcRKH6tbcadE0L/Isg==
+X-Received: by 2002:ac2:46c3:0:b0:471:f5fc:ac4b with SMTP id p3-20020ac246c3000000b00471f5fcac4bmr1400214lfo.381.1652398612615;
+        Thu, 12 May 2022 16:36:52 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
         by smtp.gmail.com with ESMTPSA id p13-20020a19f00d000000b0047255d211c1sm127937lfc.240.2022.05.12.16.36.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 May 2022 16:36:51 -0700 (PDT)
+        Thu, 12 May 2022 16:36:52 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -57,9 +57,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 5/8] arm64: dts: qcom: sdm630: add second (HS) USB host support
-Date:   Fri, 13 May 2022 02:36:44 +0300
-Message-Id: <20220512233647.2672813-6-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 6/8] arm64: dts: qcom: sdm630: use defined symbols for interconnects
+Date:   Fri, 13 May 2022 02:36:45 +0300
+Message-Id: <20220512233647.2672813-7-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220512233647.2672813-1-dmitry.baryshkov@linaro.org>
 References: <20220512233647.2672813-1-dmitry.baryshkov@linaro.org>
@@ -75,87 +75,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DT entries for the second DWC3 USB host, which is limited to the
-USB2.0 (HighSpeed), and the corresponding QUSB PHY.
+Replace numeric values with the symbolic names defined in the bindings
+header.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 55 ++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index cca56f2fad96..17a1877587cf 100644
+index 17a1877587cf..01a1a1703568 100644
 --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1270,6 +1270,20 @@ qusb2phy: phy@c012000 {
- 			status = "disabled";
- 		};
+@@ -8,6 +8,7 @@
+ #include <dt-bindings/clock/qcom,gpucc-sdm660.h>
+ #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
+ #include <dt-bindings/clock/qcom,rpmcc.h>
++#include <dt-bindings/interconnect/qcom,sdm660.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+@@ -1045,7 +1046,7 @@ adreno_gpu: gpu@5000000 {
+ 			nvmem-cells = <&gpu_speed_bin>;
+ 			nvmem-cell-names = "speed_bin";
  
-+		qusb2phy1: phy@c014000 {
-+			compatible = "qcom,sdm660-qusb2-phy";
-+			reg = <0x0c014000 0x180>;
-+			#phy-cells = <0>;
-+
-+			clocks = <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-+				<&gcc GCC_RX1_USB2_CLKREF_CLK>;
-+			clock-names = "cfg_ahb", "ref";
-+
-+			resets = <&gcc GCC_QUSB2PHY_SEC_BCR>;
-+			nvmem-cells = <&qusb2_hstx_trim>;
-+			status = "disabled";
-+		};
-+
- 		sdhc_2: sdhci@c084000 {
- 			compatible = "qcom,sdm630-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0x0c084000 0x1000>;
-@@ -1375,6 +1389,47 @@ opp-384000000 {
- 			};
- 		};
+-			interconnects = <&gnoc 1 &bimc 5>;
++			interconnects = <&gnoc MASTER_APSS_PROC &bimc SLAVE_EBI>;
+ 			interconnect-names = "gfx-mem";
  
-+		usb2: usb@c2f8800 {
-+			compatible = "qcom,sdm660-dwc3", "qcom,dwc3";
-+			reg = <0x0c2f8800 0x400>;
-+			status = "disabled";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
-+
-+			clocks = <&gcc GCC_CFG_NOC_USB2_AXI_CLK>,
-+				 <&gcc GCC_USB20_MASTER_CLK>,
-+				 <&gcc GCC_USB20_MOCK_UTMI_CLK>,
-+				 <&gcc GCC_USB20_SLEEP_CLK>;
-+			clock-names = "cfg_noc", "core",
-+				      "mock_utmi", "sleep";
-+
-+			assigned-clocks = <&gcc GCC_USB20_MOCK_UTMI_CLK>,
-+					  <&gcc GCC_USB20_MASTER_CLK>;
-+			assigned-clock-rates = <19200000>, <60000000>;
-+
-+			interrupts = <GIC_SPI 348 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hs_phy_irq";
-+
-+			qcom,select-utmi-as-pipe-clk;
-+
-+			resets = <&gcc GCC_USB_20_BCR>;
-+
-+			usb2_dwc3: usb@c200000 {
-+				compatible = "snps,dwc3";
-+				reg = <0x0c200000 0xc8d0>;
-+				interrupts = <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
-+				snps,dis_u2_susphy_quirk;
-+				snps,dis_enblslpm_quirk;
-+
-+				/* This is the HS-only host */
-+				maximum-speed = "high-speed";
-+				phys = <&qusb2phy1>;
-+				phy-names = "usb2-phy";
-+				snps,hird-threshold = /bits/ 8 <0>;
-+			};
-+		};
-+
- 		mmcc: clock-controller@c8c0000 {
- 			compatible = "qcom,mmcc-sdm630";
- 			reg = <0x0c8c0000 0x40000>;
+ 			operating-points-v2 = <&gpu_sdm630_opp_table>;
+@@ -1299,8 +1300,8 @@ sdhc_2: sdhci@c084000 {
+ 					<&xo_board>;
+ 			clock-names = "core", "iface", "xo";
+ 
+-			interconnects = <&a2noc 3 &a2noc 10>,
+-					<&gnoc 0 &cnoc 28>;
++			interconnects = <&a2noc MASTER_SDCC_2 &a2noc SLAVE_A2NOC_SNOC>,
++					<&gnoc MASTER_APSS_PROC &cnoc SLAVE_SDCC_2>;
+ 			operating-points-v2 = <&sdhc2_opp_table>;
+ 
+ 			pinctrl-names = "default", "sleep";
+@@ -1351,8 +1352,8 @@ sdhc_1: sdhci@c0c4000 {
+ 				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
+ 			clock-names = "core", "iface", "xo", "ice";
+ 
+-			interconnects = <&a2noc 2 &a2noc 10>,
+-					<&gnoc 0 &cnoc 27>;
++			interconnects = <&a2noc MASTER_SDCC_1 &a2noc SLAVE_A2NOC_SNOC>,
++					<&gnoc MASTER_APSS_PROC &cnoc SLAVE_SDCC_1>;
+ 			interconnect-names = "sdhc1-ddr", "cpu-sdhc1";
+ 			operating-points-v2 = <&sdhc1_opp_table>;
+ 			pinctrl-names = "default", "sleep";
+@@ -1525,9 +1526,9 @@ mdp: mdp@c901000 {
+ 					      "core",
+ 					      "vsync";
+ 
+-				interconnects = <&mnoc 2 &bimc 5>,
+-						<&mnoc 3 &bimc 5>,
+-						<&gnoc 0 &mnoc 17>;
++				interconnects = <&mnoc MASTER_MDP_P0 &bimc SLAVE_EBI>,
++						<&mnoc MASTER_MDP_P1 &bimc SLAVE_EBI>,
++						<&gnoc MASTER_APSS_PROC &mnoc SLAVE_DISPLAY_CFG>;
+ 				interconnect-names = "mdp0-mem",
+ 						     "mdp1-mem",
+ 						     "rotator-mem";
+@@ -2034,7 +2035,7 @@ camss: camss@ca00000 {
+ 				"cphy_csid1",
+ 				"cphy_csid2",
+ 				"cphy_csid3";
+-			interconnects = <&mnoc 5 &bimc 5>;
++			interconnects = <&mnoc MASTER_VFE &bimc SLAVE_EBI>;
+ 			interconnect-names = "vfe-mem";
+ 			iommus = <&mmss_smmu 0xc00>,
+ 				 <&mmss_smmu 0xc01>,
+@@ -2097,8 +2098,8 @@ venus: video-codec@cc00000 {
+ 				 <&mmcc VIDEO_AXI_CLK>,
+ 				 <&mmcc THROTTLE_VIDEO_AXI_CLK>;
+ 			clock-names = "core", "iface", "bus", "bus_throttle";
+-			interconnects = <&gnoc 0 &mnoc 13>,
+-					<&mnoc 4 &bimc 5>;
++			interconnects = <&gnoc MASTER_APSS_PROC &mnoc SLAVE_VENUS_CFG>,
++					<&mnoc MASTER_VENUS &bimc SLAVE_EBI>;
+ 			interconnect-names = "cpu-cfg", "video-mem";
+ 			interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
+ 			iommus = <&mmss_smmu 0x400>,
 -- 
 2.35.1
 
