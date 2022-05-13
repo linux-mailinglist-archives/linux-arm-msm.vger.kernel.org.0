@@ -2,68 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8FCD525D47
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 10:24:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88592525D3D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 10:24:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377981AbiEMIUO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 04:20:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54636 "EHLO
+        id S1378024AbiEMIUn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 04:20:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351157AbiEMIUK (ORCPT
+        with ESMTP id S1378164AbiEMIUL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 04:20:10 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38B9D261FB8;
-        Fri, 13 May 2022 01:19:49 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C7A536202A;
-        Fri, 13 May 2022 08:19:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D663C34118;
-        Fri, 13 May 2022 08:19:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652429988;
-        bh=+yihzS0RWWyeTIkEeVH6oYRX3g8QB8DyI5BsLFSGHX8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VifpVXwKTTPFlSLrdi0cs0RtX/PY/QpEGdq/enPD+31PGDssssHrGhIFkjcqEPDOn
-         QNvZnGwoU6kUDG3zHL8BwT27uF6ViPY8TlR1/bpFMAjyCWSENB0j4vF8citfNeu9XE
-         GlTX9Nz3VTtMHvFEL+hioLK+9X0VXRCzmsdFSQBBuN3FHNGMNVZKM/ozcOGV6lrk1U
-         LeM5BHFhmzGCJaltfYhACMNyF9/Mex2sZchVFcPc0gzKf9O9ALhnHL6jCFUVK8wzmk
-         EThtSUvM8eRSGrD9Ovj7rMHhdnlHVPx/sPf08AL3qE47BYKOguKlvYGnhoGs1GOzb5
-         8E8DtQkOsybfA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1npQWW-0007Cp-Kh; Fri, 13 May 2022 10:19:44 +0200
-Date:   Fri, 13 May 2022 10:19:44 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Prasad Malisetty <pmaliset@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-clk@vger.kernel.org,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>
-Subject: Re: [PATCH v5 5/5] PCI: qcom: Drop manual pipe_clk_src handling
-Message-ID: <Yn4UoE7NKTURYtI+@hovoldconsulting.com>
-References: <20220512172909.2436302-1-dmitry.baryshkov@linaro.org>
- <20220512172909.2436302-6-dmitry.baryshkov@linaro.org>
+        Fri, 13 May 2022 04:20:11 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A67262A5E9D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 01:19:59 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id ch13so14683044ejb.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 01:19:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=TXXtxk4/zRV/azu90zaoknCSwg8YNFPSO9Vmn6Wx84Q=;
+        b=MNGRWTPIXS3qQdhzKLJqftqcmNJb3YAhzFu0XK9shDr0nVZW2KqLNz58KFpFr4nnSR
+         xCWwaq9eJrxFuBDYw/9ctILoH9T29QogEmyhKhxU2v2pbKtphq8ZS0PvubxQBtyDoRWM
+         iA65BP7n4WDjsTuxanI5NnVp5KGaNzh3A/PCrcTLFwO3uij1ITELlNx+3ja2gHSYqBSs
+         +V3XaRmoZpJNZ9vSakl3Krp1q8o83lOp9e3hRaPrtefzfDpUNt/O8MfcpyA4d1vOy0ui
+         HSVAR6GcKVVq8FEt0+WHrDmIqZhJ03tmNf7d3Be0nkugchg8AzjzgL5JiZOBHzSaRBGj
+         qdWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=TXXtxk4/zRV/azu90zaoknCSwg8YNFPSO9Vmn6Wx84Q=;
+        b=xKcTiC3xGkR7k/osdVbpSuktfu3xqjnV4Juq/iiBmr8X4uBgi0IISLmZ9xcMjvuupY
+         VVPFridYZyJg3bmu+4hm4/5VZxV0smpAN4lyvXdMEVz/Zjv6FhDeZBE+3/0AO3HvTBgM
+         Pg++XCK6YnrbC47ShbHMcBdaX3sIq4qHi5ckDRLA3UxA4+orVc5Asv6KACZF9BRZD0sq
+         LZO46hnPRD6W08dI1GXz/CbxqJDE/QFZ0umwikhtSl2G3YrN+TjRU+f1nY9o1Bz5ZzGx
+         95hTPbnlLXu8eLtnb4P+Kjxxsrbq+tZOCdjU4jjBoEhCvI8PkonwKt28Dg6fitkcAg6T
+         GCvg==
+X-Gm-Message-State: AOAM532YCmEMq88hbsvnJc0ulS6X7coxB9DHGF58gF6fqErWEL6R6kOk
+        Hkcwx/7h4cC86LYRFo9suy0xFw==
+X-Google-Smtp-Source: ABdhPJxklCsXB9SJsl5gdraUIi2jz7rJ4AWpTj7K5UOqWzYgbXMjqn5QqncQCk3SD3iUdKyMUSM1UQ==
+X-Received: by 2002:a17:907:1b10:b0:6e4:bac5:f080 with SMTP id mp16-20020a1709071b1000b006e4bac5f080mr3267436ejc.24.1652429998225;
+        Fri, 13 May 2022 01:19:58 -0700 (PDT)
+Received: from [192.168.0.168] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id y24-20020aa7ccd8000000b0042617ba6397sm655801edt.33.2022.05.13.01.19.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 May 2022 01:19:57 -0700 (PDT)
+Message-ID: <d2507298-00a6-a1cc-0302-f96597fb4127@linaro.org>
+Date:   Fri, 13 May 2022 10:19:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220512172909.2436302-6-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 2/7] dt-bindings: pinctrl: qcom-pmic-gpio: Add pm6125
+ compatible
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220511220613.1015472-1-marijn.suijten@somainline.org>
+ <20220511220613.1015472-3-marijn.suijten@somainline.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220511220613.1015472-3-marijn.suijten@somainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,12 +88,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 12, 2022 at 08:29:09PM +0300, Dmitry Baryshkov wrote:
-> Manual reparenting of pipe_clk_src is being replaced with the parking of
-> the clock with clk_disable()/clk_enable(). Drop redundant code letting
-> the pipe clock driver park the clock to the safe bi_tcxo parent
-> automatically.
+On 12/05/2022 00:06, Marijn Suijten wrote:
+> The pm6125 comes with 9 GPIOs, without holes.
+> 
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 
-You ignored my comments on this one too.
+It's the first version, how did the tag appear here?
 
-Johan
+> ---
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+
+
+This will need fixups or rebasing on my sets of PMIC gpio schema cleanup:
+
+https://lore.kernel.org/all/20220507194913.261121-1-krzysztof.kozlowski@linaro.org/
+https://lore.kernel.org/all/20220508135932.132378-2-krzysztof.kozlowski@linaro.org/
+
+Bjorn,
+let us know preferred order (who should rebase on who).
+
+Best regards,
+Krzysztof
