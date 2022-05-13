@@ -2,87 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF17A525D20
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 10:24:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8FCD525D47
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 10:24:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378151AbiEMIRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 04:17:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42944 "EHLO
+        id S1377981AbiEMIUO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 04:20:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378138AbiEMIRC (ORCPT
+        with ESMTP id S1351157AbiEMIUK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 04:17:02 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A88983B294
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 01:17:00 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id f2so3351871wrc.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 01:17:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=E7D8l5bVzLOBk8glw4ZVZyTSYXIEv02i6LMHubHx3+c=;
-        b=BMpOYKIbjITGMPDLK4+XF/wtpBD5jNYwfjCRy8yHy1ozHKyeuJbU6kQvZAAKu6hj8z
-         oMegYQIy+i7PSLhuuzBlE+38Gsw/tsu6NkGhyJI3s7Ye0V+5JeOZsr9rFylGqQsD1/ro
-         lWuv+SjRLWQQvrMCMsD520k7jjNKqdAuzrhlYyGXDMLEZ9abzF8IL6IGLArUiarQBuSq
-         dKQ797Q696/3udZ6UZnXmKBhwjzV3tO+n3LiT7MnHzp6HY+61h1nktKZ6V7Heq1H80xI
-         hAmMMoB6QBLBzHh7QM4j9bUtFceOPR9O3mLB1Wmk+9VZEq85peGrrzc9lUEgec3TKFsO
-         VbRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=E7D8l5bVzLOBk8glw4ZVZyTSYXIEv02i6LMHubHx3+c=;
-        b=f/F8tITZh1YLs3OMlLsbUQdtBKR1GQallMuvBFYS69rBz5vdZDEftaHOWpi/+TOy2A
-         y6hBWDKzj33w54wEA3FEqmuCIdf5J9xYTAHCW7lpjd5Xxn1Db04D/ZUjZAvGnkz6LuXj
-         d96YgsRswhFp1iOGpEfIX5sYfCb4bY4ql7B3eJi2/djAEqzZQU/QdtMfy78XiM2XU3Co
-         K6NQPfG/AOFWITdreMzq7pdnH0wt5h7svloyp9DpML09OOL6RC3DV4KcOoSm+HLRW612
-         gLvI/wdymgXxaimkMHR7Av6BJbYHcGwFWg++z0n6XGr7N2gKpXkKu10CA2bcP7Zg1JBq
-         Yt6A==
-X-Gm-Message-State: AOAM531AwiLN74ZFxD2VoAJUmcmEMTzTo3HASDUI5oakTg8m+C5lUXfN
-        vfVTNQGBmlyjGaNT78H++9WjHQ==
-X-Google-Smtp-Source: ABdhPJzRH+K5Zq0s4HK/uVoQ35ZSyLWacT5PSl/3qhGFUDklo2MdHx4nnrs5uXgifP6P4+MOjKc4ug==
-X-Received: by 2002:a5d:45d0:0:b0:20c:b378:c492 with SMTP id b16-20020a5d45d0000000b0020cb378c492mr2960743wrs.188.1652429819296;
-        Fri, 13 May 2022 01:16:59 -0700 (PDT)
-Received: from [192.168.0.168] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id bh8-20020a05600c3d0800b003942a244f45sm5084637wmb.30.2022.05.13.01.16.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 May 2022 01:16:58 -0700 (PDT)
-Message-ID: <dce77726-460d-1b85-0c96-e8148751e261@linaro.org>
-Date:   Fri, 13 May 2022 10:16:57 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v2 1/5] dt-bindings: proximity: vl53l0x: Document optional
- supply and GPIO properties
-Content-Language: en-US
-To:     Markuss Broks <markuss.broks@gmail.com>,
-        linux-kernel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Song Qiang <songqiang1304521@gmail.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Fri, 13 May 2022 04:20:10 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38B9D261FB8;
+        Fri, 13 May 2022 01:19:49 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C7A536202A;
+        Fri, 13 May 2022 08:19:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D663C34118;
+        Fri, 13 May 2022 08:19:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652429988;
+        bh=+yihzS0RWWyeTIkEeVH6oYRX3g8QB8DyI5BsLFSGHX8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=VifpVXwKTTPFlSLrdi0cs0RtX/PY/QpEGdq/enPD+31PGDssssHrGhIFkjcqEPDOn
+         QNvZnGwoU6kUDG3zHL8BwT27uF6ViPY8TlR1/bpFMAjyCWSENB0j4vF8citfNeu9XE
+         GlTX9Nz3VTtMHvFEL+hioLK+9X0VXRCzmsdFSQBBuN3FHNGMNVZKM/ozcOGV6lrk1U
+         LeM5BHFhmzGCJaltfYhACMNyF9/Mex2sZchVFcPc0gzKf9O9ALhnHL6jCFUVK8wzmk
+         EThtSUvM8eRSGrD9Ovj7rMHhdnlHVPx/sPf08AL3qE47BYKOguKlvYGnhoGs1GOzb5
+         8E8DtQkOsybfA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1npQWW-0007Cp-Kh; Fri, 13 May 2022 10:19:44 +0200
+Date:   Fri, 13 May 2022 10:19:44 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20220511214718.50879-1-markuss.broks@gmail.com>
- <20220511214718.50879-2-markuss.broks@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220511214718.50879-2-markuss.broks@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Prasad Malisetty <pmaliset@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-clk@vger.kernel.org,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>
+Subject: Re: [PATCH v5 5/5] PCI: qcom: Drop manual pipe_clk_src handling
+Message-ID: <Yn4UoE7NKTURYtI+@hovoldconsulting.com>
+References: <20220512172909.2436302-1-dmitry.baryshkov@linaro.org>
+ <20220512172909.2436302-6-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220512172909.2436302-6-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,21 +71,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/05/2022 23:47, Markuss Broks wrote:
-> This patch adds the optional properties for the VL53L0X ToF sensor to the
-> device-tree binding.
+On Thu, May 12, 2022 at 08:29:09PM +0300, Dmitry Baryshkov wrote:
+> Manual reparenting of pipe_clk_src is being replaced with the parking of
+> the clock with clk_disable()/clk_enable(). Drop redundant code letting
+> the pipe clock driver park the clock to the safe bi_tcxo parent
+> automatically.
 
-No "this patch":
-https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
+You ignored my comments on this one too.
 
-> 
-> Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
-> ---
->  .../devicetree/bindings/iio/proximity/st,vl53l0x.yaml        | 5 +++++
->  1 file changed, 5 insertions(+)
-
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+Johan
