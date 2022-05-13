@@ -2,72 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA8835260CC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 13:15:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DE7252611B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 13:40:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379869AbiEMLO7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 07:14:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54092 "EHLO
+        id S241951AbiEMLkg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 07:40:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379809AbiEMLOt (ORCPT
+        with ESMTP id S1379916AbiEMLkf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 07:14:49 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5D8E2A8044
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 04:14:44 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id x22so6544963qto.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 04:14:44 -0700 (PDT)
+        Fri, 13 May 2022 07:40:35 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79FCB2B9CBB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 04:40:32 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 16so9906050lju.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 04:40:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=0x0f.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SBDxVj1nmh6VS/RoV7L/XKPJo0ILCXguhigrIdGmn5Y=;
-        b=ReHu/FYiQyhCdCYpDITJ2vI12co9Ze9xTJ8Y6j7h1wRL4O8jCdd2fk0ap0lr4Km73u
-         x36a84TaLEqQH+IqYFAlkjO0bWmIPlcjQUgpA9S8C/0kBCKR7tnUZ/43A2TYdQNf6U1l
-         itduEnqhN/tf0aEL7nzJl7dHutmcykroGXgqY=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=13KivydabvkpjEDwYIxFmh7RN2bdJ6NfK5/s4jYYpAA=;
+        b=cEWUBfpnNG8NgB6NCQeQJiD4Ax7Q6Rl1rV+FGCmFnATlEpkLtSkVJXS7lCVDCCzb6G
+         qNGmSLnub6DWAycOfya0qnovzppbkxKDLxP3WwoO34wg7IDIU+eYieay7FwX0di4umVm
+         9sJjZ5uBf0rFwGlRm93TAxIF6OuW8BDDJUQt75BppK9Ywn8UBQJ4Xmcj4tnbaRZDvtgY
+         C3E8Pj0ACthMeT3pxuvBv2hluqfepuxC3kEv3HzCkaAX5uInrSdyDul+DuQm5Z/nAFeN
+         PsRpK12hK3BogtMjlWEBhj+Jm5i5Z7uodbanPyJE5Qf2j08ta4EUSw+ncVTZgcw4igEI
+         vIPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SBDxVj1nmh6VS/RoV7L/XKPJo0ILCXguhigrIdGmn5Y=;
-        b=yqx9gJL6nnXoazkaTY9RR/S0DoHnkUjx4VZup/QJbnbvXnmdrWNI2k0dov3NCPT2kq
-         alplPc3cQXXxsLOp/55MZqSXgtrW1Ma8HtF0dILiOTiu0/f1XYdnxNNKaVucJa5PE7a+
-         AAx2uzsJh0OREzzjAPLkavie3VtlAOMjhmAXmSYN01qs5KpGPsquDjw8uLDcYN9Ro8gr
-         OPx4ScP93dVY28cAvGYwtY3+Jz5a06TWhAgyZUD+jPcPQ0AATp+C3SdYyw2xaMOHExxP
-         F2DyoMQmNf5gGGdsFX16rwsgqEYz82xAQId9G2NpJLzqUVBBLZ4gTq4sD4g62hys67wi
-         42CQ==
-X-Gm-Message-State: AOAM533xWtm+Ozd4UfJqRQiZX+QGCllQLahtw+2VNjtfmct6vg2x+Y6X
-        g9R1s2jc3ryic4lDUHwc7Uv1l1c4GoAAvTCwv568bw==
-X-Google-Smtp-Source: ABdhPJwxVPEVNydnGVwXBgBU30xlh2RgrKVjgnTyhbuMIC9o6thUsWItM63n+TIVfXCyNgrZRKLSTLJqKzFK9pcAaoU=
-X-Received: by 2002:a05:622a:18a7:b0:2f3:c715:caf1 with SMTP id
- v39-20020a05622a18a700b002f3c715caf1mr3904348qtc.226.1652440482977; Fri, 13
- May 2022 04:14:42 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=13KivydabvkpjEDwYIxFmh7RN2bdJ6NfK5/s4jYYpAA=;
+        b=2jRzVxVXcbO9ExqRbGzuV9NBaNWubCsOOrP4ko/CGLnXN6DthmG3qxznoWKNiggvJ2
+         VVRx3KUMfeudNoEkIz1kouOmQTX93vF+gvfet6uQ3FZah/g0V3AhaxdBJEtUZ1vSmTeI
+         DymTRqt5MIhxbRJiGERg1+J2QZNu1eizgOusAPxroZf1VdMa/jFtzQRcQ5s6z2BG9yJW
+         3susSBgYqL3aWGlSaIQ1qgX6Bvn/eQ5ui/WY/5pZzWgA3ecPfC7P8riLn9cDgGgcpWsF
+         Vh/jgoR84fAn4Gbf5P/IFG04Edd8TIBkYTb5Sa5KVPZho0Rl8Jn9AXiJUKAmh/msujUz
+         UYsw==
+X-Gm-Message-State: AOAM531D2w2jfc7GOyAZh+NP7W6g55s5oDfrvwGXlZcmORMkutpE8ZmL
+        Tjgofv2zi8zJDzkR9eBN2FO0qg==
+X-Google-Smtp-Source: ABdhPJzAwh6AETeTZ0nyKVbMZd8DCjrHangLUdANZ/G6/o8ulO0MMdEfALmPAllJtVl+SeBzMXA3Jg==
+X-Received: by 2002:a2e:9c86:0:b0:250:d6c7:699e with SMTP id x6-20020a2e9c86000000b00250d6c7699emr2947891lji.339.1652442030680;
+        Fri, 13 May 2022 04:40:30 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id j20-20020a2e8014000000b0024f3d1dae96sm409815ljg.30.2022.05.13.04.40.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 May 2022 04:40:30 -0700 (PDT)
+Message-ID: <1dfe9de4-1160-e0b8-d29c-098d1c37d6b1@linaro.org>
+Date:   Fri, 13 May 2022 14:40:29 +0300
 MIME-Version: 1.0
-References: <20220512162320.2213488-1-maz@kernel.org>
-In-Reply-To: <20220512162320.2213488-1-maz@kernel.org>
-From:   Daniel Palmer <daniel@0x0f.com>
-Date:   Fri, 13 May 2022 20:14:32 +0900
-Message-ID: <CAFr9PXnDqbgd4AebPQepWe5RF2utPcp2PJGoVhVNwX3ZZzsc-g@mail.gmail.com>
-Subject: Re: [PATCH] gpio: Remove dynamic allocation from populate_parent_alloc_arg()
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kernel-team@android.com, Daniel Palmer <daniel@thingy.jp>,
-        Romain Perier <romain.perier@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Robert Richter <rric@kernel.org>,
-        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 2/2] drm/msm: push IRQ setup into individual drivers
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20220507010021.1667700-1-dmitry.baryshkov@linaro.org>
+ <20220507010021.1667700-2-dmitry.baryshkov@linaro.org>
+ <f6ee9ce0-cd91-07a4-eeb9-a4a56f74471c@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <f6ee9ce0-cd91-07a4-eeb9-a4a56f74471c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,46 +81,476 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi March,
+On 13/05/2022 01:54, Abhinav Kumar wrote:
+> 
+> 
+> On 5/6/2022 6:00 PM, Dmitry Baryshkov wrote:
+>> Afther the commit f026e431cf86 ("drm/msm: Convert to Linux IRQ
+>> interfaces") converted MSM DRM driver to handle IRQs on it's own (rather
+>> than using the DRM IRQ mid-layer), there is little point in keeping
+>> irq wrapper in the msm_drv.c which just call into individual drivers.
+>> Push respective code into the mdp4/mdp5/dpu drivers and drop
+>> irq_preinstall/irq_postinstall/irq msm_kms funcs.
+> 
+> Isnt this change causing a lot of code duplication across mdp5/dpu/mdp4?
+> 
+> Do you have any future plans with respect to this separation?
+> 
+> I am missing why this separation into respective mdp4/5/dpu is necessary 
+> because struct msm_kms remains a common struct in all of this so it 
+> remaining in msm_drv will avoid duplication.
 
-On Fri, 13 May 2022 at 01:23, Marc Zyngier <maz@kernel.org> wrote:
-> diff --git a/drivers/gpio/gpio-msc313.c b/drivers/gpio/gpio-msc313.c
-> index b2c90bdd39d0..52d7b8d99170 100644
-> --- a/drivers/gpio/gpio-msc313.c
-> +++ b/drivers/gpio/gpio-msc313.c
-> @@ -550,15 +550,12 @@ static struct irq_chip msc313_gpio_irqchip = {
->   * so we need to provide the fwspec. Essentially gpiochip_populate_parent_fwspec_twocell
->   * that puts GIC_SPI into the first cell.
->   */
-> -static void *msc313_gpio_populate_parent_fwspec(struct gpio_chip *gc,
-> -                                            unsigned int parent_hwirq,
-> -                                            unsigned int parent_type)
-> +static int msc313_gpio_populate_parent_fwspec(struct gpio_chip *gc,
-> +                                             union gpio_irq_fwspec *gfwspec,
-> +                                             unsigned int parent_hwirq,
-> +                                             unsigned int parent_type)
->  {
-> -       struct irq_fwspec *fwspec;
-> -
-> -       fwspec = kmalloc(sizeof(*fwspec), GFP_KERNEL);
-> -       if (!fwspec)
-> -               return NULL;
-> +       struct irq_fwspec *fwspec = &gfwspec->fwspec;
->
->         fwspec->fwnode = gc->irq.parent_domain->fwnode;
->         fwspec->param_count = 3;
-> @@ -566,7 +563,7 @@ static void *msc313_gpio_populate_parent_fwspec(struct gpio_chip *gc,
->         fwspec->param[1] = parent_hwirq;
->         fwspec->param[2] = parent_type;
->
-> -       return fwspec;
-> +       return 0;
->  }
->
->  static int msc313e_gpio_child_to_parent_hwirq(struct gpio_chip *chip,
+I wanted to remove back-and-forth calls between msm core and individual 
+drivers. But I agree that it comes by the cost of code duplication. 
+Let's drop this patch.
 
-This bit looks fine to me. I will test it over the weekend.
+> 
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h  | 13 +---
+>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 28 ++++++++-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  6 +-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  7 +++
+>>   drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c      | 30 ++++++++-
+>>   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c      |  4 +-
+>>   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h      |  4 +-
+>>   drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c      | 30 ++++++++-
+>>   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      |  4 +-
+>>   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h      |  4 +-
+>>   drivers/gpu/drm/msm/msm_drv.c                 | 62 +++----------------
+>>   drivers/gpu/drm/msm/msm_kms.h                 |  4 +-
+>>   12 files changed, 105 insertions(+), 91 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
+>> index b5b6e7031fb9..c6938b1f1870 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
+>> @@ -8,13 +8,6 @@
+>>   #include "dpu_kms.h"
+>>   #include "dpu_hw_interrupts.h"
+>> -/**
+>> - * dpu_core_irq_preinstall - perform pre-installation of core IRQ 
+>> handler
+>> - * @kms:        MSM KMS handle
+>> - * @return:        none
+>> - */
+>> -void dpu_core_irq_preinstall(struct msm_kms *kms);
+>> -
+>>   /**
+>>    * dpu_core_irq_uninstall - uninstall core IRQ handler
+>>    * @kms:        MSM KMS handle
+>> @@ -23,11 +16,11 @@ void dpu_core_irq_preinstall(struct msm_kms *kms);
+>>   void dpu_core_irq_uninstall(struct msm_kms *kms);
+>>   /**
+>> - * dpu_core_irq - core IRQ handler
+>> + * dpu_core_irq_install - install core IRQ handler
+>>    * @kms:        MSM KMS handle
+>> - * @return:        interrupt handling status
+>> + * @return:        non-zero in case of an error
+>>    */
+>> -irqreturn_t dpu_core_irq(struct msm_kms *kms);
+>> +int dpu_core_irq_install(struct msm_kms *kms);
+>>   /**
+>>    * dpu_core_irq_read - IRQ helper function for reading IRQ status
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+>> index d6498e45dc2c..fa4f99034a08 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+>> @@ -164,8 +164,9 @@ static void dpu_core_irq_callback_handler(struct 
+>> dpu_kms *dpu_kms, int irq_idx)
+>>       
+>> dpu_kms->hw_intr->irq_tbl[irq_idx].cb(dpu_kms->hw_intr->irq_tbl[irq_idx].arg, 
+>> irq_idx);
+>>   }
+>> -irqreturn_t dpu_core_irq(struct msm_kms *kms)
+>> +static irqreturn_t dpu_irq(int irq, void *arg)
+>>   {
+>> +    struct msm_kms *kms = arg;
+>>       struct dpu_kms *dpu_kms = to_dpu_kms(kms);
+>>       struct dpu_hw_intr *intr = dpu_kms->hw_intr;
+>>       int reg_idx;
+>> @@ -541,7 +542,7 @@ void dpu_debugfs_core_irq_init(struct dpu_kms 
+>> *dpu_kms,
+>>   }
+>>   #endif
+>> -void dpu_core_irq_preinstall(struct msm_kms *kms)
+>> +static void dpu_core_irq_preinstall(struct msm_kms *kms)
+>>   {
+>>       struct dpu_kms *dpu_kms = to_dpu_kms(kms);
+>>       int i;
+>> @@ -570,5 +571,28 @@ void dpu_core_irq_uninstall(struct msm_kms *kms)
+>>       dpu_clear_irqs(dpu_kms);
+>>       dpu_disable_all_irqs(dpu_kms);
+>> +    if (kms->irq_requested)
+>> +        free_irq(kms->irq, kms);
+>>       pm_runtime_put_sync(&dpu_kms->pdev->dev);
+>>   }
+>> +
+>> +int dpu_core_irq_install(struct msm_kms *kms)
+>> +{
+>> +    int ret;
+>> +
+>> +    dpu_core_irq_preinstall(kms);
+>> +
+>> +    ret = request_irq(kms->irq, dpu_irq, 0, "dpu", kms);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +    kms->irq_requested = true;
+>> +
+>> +    ret = dpu_irq_postinstall(kms);
+>> +    if (ret) {
+>> +        free_irq(kms->irq, kms);
+>> +        return ret;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> index 2b9d931474e0..494978da7785 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> @@ -884,7 +884,7 @@ static void dpu_kms_destroy(struct msm_kms *kms)
+>>           pm_runtime_disable(&dpu_kms->pdev->dev);
+>>   }
+>> -static int dpu_irq_postinstall(struct msm_kms *kms)
+>> +int dpu_irq_postinstall(struct msm_kms *kms)
+>>   {
+>>       struct msm_drm_private *priv;
+>>       struct dpu_kms *dpu_kms = to_dpu_kms(kms);
+>> @@ -960,10 +960,8 @@ static void dpu_kms_mdp_snapshot(struct 
+>> msm_disp_state *disp_state, struct msm_k
+>>   static const struct msm_kms_funcs kms_funcs = {
+>>       .hw_init         = dpu_kms_hw_init,
+>> -    .irq_preinstall  = dpu_core_irq_preinstall,
+>> -    .irq_postinstall = dpu_irq_postinstall,
+>> +    .irq_install     = dpu_core_irq_install,
+>>       .irq_uninstall   = dpu_core_irq_uninstall,
+>> -    .irq             = dpu_core_irq,
+>>       .enable_commit   = dpu_kms_enable_commit,
+>>       .disable_commit  = dpu_kms_disable_commit,
+>>       .vsync_time      = dpu_kms_vsync_time,
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>> index 832a0769f2e7..559184c64045 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>> @@ -204,4 +204,11 @@ void dpu_disable_vblank(struct msm_kms *kms, 
+>> struct drm_crtc *crtc);
+>>    */
+>>   u64 dpu_kms_get_clk_rate(struct dpu_kms *dpu_kms, char *clock_name);
+>> +/**
+>> + * dpu_irq_postinstall - perform post-installation of core IRQ handler
+>> + * @kms:               MSM KMS handle
+>> + * @return:            non-zero in case of error
+>> + */
+>> +int dpu_irq_postinstall(struct msm_kms *kms);
+>> +
+>>   #endif /* __dpu_kms_H__ */
+>> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c 
+>> b/drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c
+>> index 4d49f3ba6a96..87675c162eea 100644
+>> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c
+>> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_irq.c
+>> @@ -32,7 +32,7 @@ static void mdp4_irq_error_handler(struct mdp_irq 
+>> *irq, uint32_t irqstatus)
+>>       }
+>>   }
+>> -void mdp4_irq_preinstall(struct msm_kms *kms)
+>> +static void mdp4_irq_preinstall(struct msm_kms *kms)
+>>   {
+>>       struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(kms));
+>>       mdp4_enable(mdp4_kms);
+>> @@ -41,7 +41,7 @@ void mdp4_irq_preinstall(struct msm_kms *kms)
+>>       mdp4_disable(mdp4_kms);
+>>   }
+>> -int mdp4_irq_postinstall(struct msm_kms *kms)
+>> +static int mdp4_irq_postinstall(struct msm_kms *kms)
+>>   {
+>>       struct mdp_kms *mdp_kms = to_mdp_kms(kms);
+>>       struct mdp4_kms *mdp4_kms = to_mdp4_kms(mdp_kms);
+>> @@ -62,10 +62,13 @@ void mdp4_irq_uninstall(struct msm_kms *kms)
+>>       mdp4_enable(mdp4_kms);
+>>       mdp4_write(mdp4_kms, REG_MDP4_INTR_ENABLE, 0x00000000);
+>>       mdp4_disable(mdp4_kms);
+>> +    if (kms->irq_requested)
+>> +        free_irq(kms->irq, kms);
+>>   }
+>> -irqreturn_t mdp4_irq(struct msm_kms *kms)
+>> +static irqreturn_t mdp4_irq(int irq, void *arg)
+>>   {
+>> +    struct msm_kms *kms = arg;
+>>       struct mdp_kms *mdp_kms = to_mdp_kms(kms);
+>>       struct mdp4_kms *mdp4_kms = to_mdp4_kms(mdp_kms);
+>>       struct drm_device *dev = mdp4_kms->dev;
+>> @@ -88,6 +91,27 @@ irqreturn_t mdp4_irq(struct msm_kms *kms)
+>>       return IRQ_HANDLED;
+>>   }
+>> +int mdp4_irq_install(struct msm_kms *kms)
+>> +{
+>> +    int ret;
+>> +
+>> +    mdp4_irq_preinstall(kms);
+>> +
+>> +    ret = request_irq(kms->irq, mdp4_irq, 0, "mdp4", kms);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +    kms->irq_requested = true;
+>> +
+>> +    ret = mdp4_irq_postinstall(kms);
+>> +    if (ret) {
+>> +        free_irq(kms->irq, kms);
+>> +        return ret;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>   int mdp4_enable_vblank(struct msm_kms *kms, struct drm_crtc *crtc)
+>>   {
+>>       struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(kms));
+>> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c 
+>> b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+>> index fb48c8c19ec3..b7aced272af9 100644
+>> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+>> @@ -148,10 +148,8 @@ static void mdp4_destroy(struct msm_kms *kms)
+>>   static const struct mdp_kms_funcs kms_funcs = {
+>>       .base = {
+>>           .hw_init         = mdp4_hw_init,
+>> -        .irq_preinstall  = mdp4_irq_preinstall,
+>> -        .irq_postinstall = mdp4_irq_postinstall,
+>> +        .irq_install     = mdp4_irq_install,
+>>           .irq_uninstall   = mdp4_irq_uninstall,
+>> -        .irq             = mdp4_irq,
+>>           .enable_vblank   = mdp4_enable_vblank,
+>>           .disable_vblank  = mdp4_disable_vblank,
+>>           .enable_commit   = mdp4_enable_commit,
+>> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h 
+>> b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+>> index e8ee92ab7956..b24a63872232 100644
+>> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+>> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+>> @@ -157,10 +157,8 @@ int mdp4_enable(struct mdp4_kms *mdp4_kms);
+>>   void mdp4_set_irqmask(struct mdp_kms *mdp_kms, uint32_t irqmask,
+>>           uint32_t old_irqmask);
+>> -void mdp4_irq_preinstall(struct msm_kms *kms);
+>> -int mdp4_irq_postinstall(struct msm_kms *kms);
+>> +int mdp4_irq_install(struct msm_kms *kms);
+>>   void mdp4_irq_uninstall(struct msm_kms *kms);
+>> -irqreturn_t mdp4_irq(struct msm_kms *kms);
+>>   int mdp4_enable_vblank(struct msm_kms *kms, struct drm_crtc *crtc);
+>>   void mdp4_disable_vblank(struct msm_kms *kms, struct drm_crtc *crtc);
+>> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c 
+>> b/drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c
+>> index 9b4c8d92ff32..d573ff29d5a4 100644
+>> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c
+>> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c
+>> @@ -36,7 +36,7 @@ static void mdp5_irq_error_handler(struct mdp_irq 
+>> *irq, uint32_t irqstatus)
+>>       }
+>>   }
+>> -void mdp5_irq_preinstall(struct msm_kms *kms)
+>> +static void mdp5_irq_preinstall(struct msm_kms *kms)
+>>   {
+>>       struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
+>>       struct device *dev = &mdp5_kms->pdev->dev;
+>> @@ -47,7 +47,7 @@ void mdp5_irq_preinstall(struct msm_kms *kms)
+>>       pm_runtime_put_sync(dev);
+>>   }
+>> -int mdp5_irq_postinstall(struct msm_kms *kms)
+>> +static int mdp5_irq_postinstall(struct msm_kms *kms)
+>>   {
+>>       struct mdp_kms *mdp_kms = to_mdp_kms(kms);
+>>       struct mdp5_kms *mdp5_kms = to_mdp5_kms(mdp_kms);
+>> @@ -74,11 +74,14 @@ void mdp5_irq_uninstall(struct msm_kms *kms)
+>>       pm_runtime_get_sync(dev);
+>>       mdp5_write(mdp5_kms, REG_MDP5_INTR_EN, 0x00000000);
+>> +    if (kms->irq_requested)
+>> +        free_irq(kms->irq, kms);
+>>       pm_runtime_put_sync(dev);
+>>   }
+>> -irqreturn_t mdp5_irq(struct msm_kms *kms)
+>> +static irqreturn_t mdp5_irq(int irq, void *arg)
+>>   {
+>> +    struct msm_kms *kms = arg;
+>>       struct mdp_kms *mdp_kms = to_mdp_kms(kms);
+>>       struct mdp5_kms *mdp5_kms = to_mdp5_kms(mdp_kms);
+>>       struct drm_device *dev = mdp5_kms->dev;
+>> @@ -101,6 +104,27 @@ irqreturn_t mdp5_irq(struct msm_kms *kms)
+>>       return IRQ_HANDLED;
+>>   }
+>> +int mdp5_irq_install(struct msm_kms *kms)
+>> +{
+>> +    int ret;
+>> +
+>> +    mdp5_irq_preinstall(kms);
+>> +
+>> +    ret = request_irq(kms->irq, mdp5_irq, 0, "mdp5", kms);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +    kms->irq_requested = true;
+>> +
+>> +    ret = mdp5_irq_postinstall(kms);
+>> +    if (ret) {
+>> +        free_irq(kms->irq, kms);
+>> +        return ret;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>   int mdp5_enable_vblank(struct msm_kms *kms, struct drm_crtc *crtc)
+>>   {
+>>       struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
+>> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c 
+>> b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+>> index 3d5621a68f85..18cf0ff4da6c 100644
+>> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+>> @@ -262,10 +262,8 @@ static int mdp5_kms_debugfs_init(struct msm_kms 
+>> *kms, struct drm_minor *minor)
+>>   static const struct mdp_kms_funcs kms_funcs = {
+>>       .base = {
+>>           .hw_init         = mdp5_hw_init,
+>> -        .irq_preinstall  = mdp5_irq_preinstall,
+>> -        .irq_postinstall = mdp5_irq_postinstall,
+>> +        .irq_install     = mdp5_irq_install,
+>>           .irq_uninstall   = mdp5_irq_uninstall,
+>> -        .irq             = mdp5_irq,
+>>           .enable_vblank   = mdp5_enable_vblank,
+>>           .disable_vblank  = mdp5_disable_vblank,
+>>           .flush_commit    = mdp5_flush_commit,
+>> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h 
+>> b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
+>> index 29bf11f08601..630b5f812f24 100644
+>> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
+>> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
+>> @@ -263,10 +263,8 @@ static inline uint32_t lm2ppdone(struct 
+>> mdp5_hw_mixer *mixer)
+>>   void mdp5_set_irqmask(struct mdp_kms *mdp_kms, uint32_t irqmask,
+>>           uint32_t old_irqmask);
+>> -void mdp5_irq_preinstall(struct msm_kms *kms);
+>> -int mdp5_irq_postinstall(struct msm_kms *kms);
+>> +int mdp5_irq_install(struct msm_kms *kms);
+>>   void mdp5_irq_uninstall(struct msm_kms *kms);
+>> -irqreturn_t mdp5_irq(struct msm_kms *kms);
+>>   int mdp5_enable_vblank(struct msm_kms *kms, struct drm_crtc *crtc);
+>>   void mdp5_disable_vblank(struct msm_kms *kms, struct drm_crtc *crtc);
+>>   int mdp5_irq_domain_init(struct mdp5_kms *mdp5_kms);
+>> diff --git a/drivers/gpu/drm/msm/msm_drv.c 
+>> b/drivers/gpu/drm/msm/msm_drv.c
+>> index 44485363f37a..d2fbe54fec4d 100644
+>> --- a/drivers/gpu/drm/msm/msm_drv.c
+>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+>> @@ -77,64 +77,15 @@ static bool modeset = true;
+>>   MODULE_PARM_DESC(modeset, "Use kernel modesetting [KMS] (1=on 
+>> (default), 0=disable)");
+>>   module_param(modeset, bool, 0600);
+>> -static irqreturn_t msm_irq(int irq, void *arg)
+>> -{
+>> -    struct drm_device *dev = arg;
+>> -    struct msm_drm_private *priv = dev->dev_private;
+>> -    struct msm_kms *kms = priv->kms;
+>> -
+>> -    BUG_ON(!kms);
+>> -
+>> -    return kms->funcs->irq(kms);
+>> -}
+>> -
+>> -static void msm_irq_preinstall(struct drm_device *dev)
+>> -{
+>> -    struct msm_drm_private *priv = dev->dev_private;
+>> -    struct msm_kms *kms = priv->kms;
+>> -
+>> -    BUG_ON(!kms);
+>> -
+>> -    kms->funcs->irq_preinstall(kms);
+>> -}
+>> -
+>> -static int msm_irq_postinstall(struct drm_device *dev)
+>> -{
+>> -    struct msm_drm_private *priv = dev->dev_private;
+>> -    struct msm_kms *kms = priv->kms;
+>> -
+>> -    BUG_ON(!kms);
+>> -
+>> -    if (kms->funcs->irq_postinstall)
+>> -        return kms->funcs->irq_postinstall(kms);
+>> -
+>> -    return 0;
+>> -}
+>> -
+>>   static int msm_irq_install(struct drm_device *dev, unsigned int irq)
+>>   {
+>>       struct msm_drm_private *priv = dev->dev_private;
+>>       struct msm_kms *kms = priv->kms;
+>> -    int ret;
+>> -
+>> -    if (irq == IRQ_NOTCONNECTED)
+>> -        return -ENOTCONN;
+>> -
+>> -    msm_irq_preinstall(dev);
+>> -
+>> -    ret = request_irq(irq, msm_irq, 0, dev->driver->name, dev);
+>> -    if (ret)
+>> -        return ret;
+>> -
+>> -    kms->irq_requested = true;
+>> -    ret = msm_irq_postinstall(dev);
+>> -    if (ret) {
+>> -        free_irq(irq, dev);
+>> -        return ret;
+>> -    }
+>> +    if (!kms->funcs->irq_install)
+>> +        return -EINVAL;
+>> -    return 0;
+>> +    return kms->funcs->irq_install(kms);
+>>   }
+>>   static void msm_irq_uninstall(struct drm_device *dev)
+>> @@ -143,8 +94,6 @@ static void msm_irq_uninstall(struct drm_device *dev)
+>>       struct msm_kms *kms = priv->kms;
+>>       kms->funcs->irq_uninstall(kms);
+>> -    if (kms->irq_requested)
+>> -        free_irq(kms->irq, dev);
+>>   }
+>>   struct msm_vblank_work {
+>> @@ -450,6 +399,11 @@ static int msm_drm_init(struct device *dev, const 
+>> struct drm_driver *drv)
+>>       }
+>>       if (kms) {
+>> +        if (kms->irq == IRQ_NOTCONNECTED) {
+>> +            ret = -ENOTCONN;
+>> +            goto err_msm_uninit;
+>> +        }
+>> +
+>>           pm_runtime_get_sync(dev);
+>>           ret = msm_irq_install(ddev, kms->irq);
+>>           pm_runtime_put_sync(dev);
+>> diff --git a/drivers/gpu/drm/msm/msm_kms.h 
+>> b/drivers/gpu/drm/msm/msm_kms.h
+>> index f8ed7588928c..71d497a8fb8b 100644
+>> --- a/drivers/gpu/drm/msm/msm_kms.h
+>> +++ b/drivers/gpu/drm/msm/msm_kms.h
+>> @@ -24,10 +24,8 @@ struct msm_kms_funcs {
+>>       /* hw initialization: */
+>>       int (*hw_init)(struct msm_kms *kms);
+>>       /* irq handling: */
+>> -    void (*irq_preinstall)(struct msm_kms *kms);
+>> -    int (*irq_postinstall)(struct msm_kms *kms);
+>> +    int (*irq_install)(struct msm_kms *kms);
+>>       void (*irq_uninstall)(struct msm_kms *kms);
+>> -    irqreturn_t (*irq)(struct msm_kms *kms);
+>>       int (*enable_vblank)(struct msm_kms *kms, struct drm_crtc *crtc);
+>>       void (*disable_vblank)(struct msm_kms *kms, struct drm_crtc *crtc);
 
-Cheers,
 
-Daniel
+-- 
+With best wishes
+Dmitry
