@@ -2,70 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BEE35526C48
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 23:24:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22A1B526D22
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 00:51:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384653AbiEMVY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 17:24:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53532 "EHLO
+        id S1384854AbiEMWv0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 18:51:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1384647AbiEMVYz (ORCPT
+        with ESMTP id S1350772AbiEMWvX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 17:24:55 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF9FA663FB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 14:24:52 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id x74so4720762ybe.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 14:24:52 -0700 (PDT)
+        Fri, 13 May 2022 18:51:23 -0400
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65C2F175698
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 15:51:21 -0700 (PDT)
+Received: by mail-oo1-xc33.google.com with SMTP id q73-20020a4a334c000000b0035eb110dd0dso2979921ooq.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 15:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0ueDaSsTErmQolYj/n89FuDLYTxrI+xxTPOLBk1HDOg=;
-        b=XvprDXkDP/fuPYLrBoI4hnZYfwqDXbJPAroGtexlcSuJlDruxai6ShoTfhn7sxb4C5
-         iZlmgndunl0Hw27N+ZimYysy3vyVRSfqc6FMBeWqre2N6FyL0pBjDjIGLhQgQ206Nvw2
-         Oq9nfla9Z0DMWaJkFf/k3obDJKp2edaLrq/zqi7t0zFH/XMOxP1ndGdLjg1RIDpHb9Y0
-         ky8J5D1ObPqIIwJKcn6eat+nhChP11h/FM9WjQvdChQIgY0D4VDL1UsPSVZZocgyR5aq
-         N7ZS/EvualRlqgh+jJJvouLCgjCiP23rbWgVTlOCHvr+s/DyYLSIl8B1nHBlm7o4gUTy
-         nXhQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e/NkuoBvgXYvzbAWwDOMbCfFkUOSLZa+w7ZV3Xisx9Q=;
+        b=q6a2UCZsF6tRfpudX73+ygATvEqE3U/hHfuBCYlGVgjWXvCDSW/ooU2SkKFmpaOLS7
+         YPpH0IJZTg6k1W03pYag5iFNAVKNKh4v7OCFnWiYnxn3CaPjUEKIvSM6bxQDufFc6f9/
+         GD6o2mcO0TrehK8pAaOFj0Tg314Q26WSVg9rvleROfG4P43JYbhkvNiJiWGcBrLCW3vc
+         AaetJgKnbR2vO2uUMIKppHQshRWUF8XugOfLyni+kHaagH7WdeNaEF7qmXo1w+oFY1Ov
+         lIngYXjfhjKfXDHnctftngoOo3V11HEGeUk7Fo0gzYlrigRN578xuJc0pfTAIBOIUdn7
+         NJwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0ueDaSsTErmQolYj/n89FuDLYTxrI+xxTPOLBk1HDOg=;
-        b=cFf6KT1AycTR9Rcg9FyRvwzudZuv6BGBl+8cj09Jq+mu/p+u28pX7/cQi+mj/Ri1j3
-         T3JMtl/NSngb90qLySkEqd738KNmz01gF51arWZsKZtqmgU0mZYSpldOVCuHLIMjSLAB
-         KWORe/cdws+e0yrWGuV73+onn5FNHSjMilEC7qGCNzdPmKVT7Ab+7wJMUUb5m7UskZfS
-         iNsGVWrO36+CSKHCVhpkZZxNbZkSrj+9zoZ3EXYTvXwW5LLk1Z8vguXp54xwtQbr7XNG
-         sA3QG5/CsJ5oeqt4Yrig6aTvNYi2ejydHoUndKTB99owEV5skQniFHMynC6IFXQ4qlsi
-         GlAQ==
-X-Gm-Message-State: AOAM533X3RI8COKiKp2uUJliqngjnlyKuw/sCW1LUafIVRFuYpuQ0y9C
-        D89eVRw59QnsnwYeBFkK1CBd4YrWjVIaoz/yuZDdRA==
-X-Google-Smtp-Source: ABdhPJxa1oQfaDAJgT6dUGne1j3ZUOM3aJOd/CmIcNBzgc1KHFgeiv/kBZmlxZpM00Uxg4d1zxDYWRbjBIZAHDoUxjk=
-X-Received: by 2002:a25:2c82:0:b0:64d:62a1:850b with SMTP id
- s124-20020a252c82000000b0064d62a1850bmr273160ybs.291.1652477091802; Fri, 13
- May 2022 14:24:51 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e/NkuoBvgXYvzbAWwDOMbCfFkUOSLZa+w7ZV3Xisx9Q=;
+        b=lGNXH2v1VeRByx3zwhybaPQn+0hAgpDAwxhXY+9C9mbKdX6wnhPcNXrl6SEAIo97mc
+         TO+VyKfs/KUEtU1RzMvioedkjJXb6UNXMb1UHPdSThhDkI8wbUOBBMdHrd0wFiP8O6Fa
+         6OaXM5wqrLrVO5Vgh1ND5/U/6hZgvjDgOjEVhnwyPkEPix6s2Mz+/Y7ptYl7n2PqYfT0
+         5wzSnD10OBWES/HvhmD8WFETVFPxwPuJ0jZ7ZD4y95IuhWDgPS+bzglI3dA0N+i3baMz
+         0ylXcss/5QWL4lEqDx1ZijM9ynFZ3vCKf64mx1m+9QkdfDhVIyl/K3BF1YifRjj3lNZK
+         M4OQ==
+X-Gm-Message-State: AOAM533UOcSxcFO56yJn4lxTeX5b1DDWZTFkZ53VHJT5CTrlW1IJlHnA
+        i8NfbXBkbKqObMH2/TiAJ2nnnA==
+X-Google-Smtp-Source: ABdhPJzMxFG/WXvLdVMsesmbtKJjSkP4lUdqfhD8ANxWOAUX1Kn0kFoSk2IBFcRPKM7kdFvPu67Axw==
+X-Received: by 2002:a4a:a602:0:b0:35f:2658:f34f with SMTP id e2-20020a4aa602000000b0035f2658f34fmr2737335oom.17.1652482280733;
+        Fri, 13 May 2022 15:51:20 -0700 (PDT)
+Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l9-20020a4ae2c9000000b0035eb4e5a6d4sm1592679oot.42.2022.05.13.15.51.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 May 2022 15:51:19 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/3] phy: qcom-qmp: Add SC8280XP USB3 UNI phy
+Date:   Fri, 13 May 2022 15:53:45 -0700
+Message-Id: <20220513225348.1671639-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-References: <20220512162320.2213488-1-maz@kernel.org>
-In-Reply-To: <20220512162320.2213488-1-maz@kernel.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 13 May 2022 23:24:40 +0200
-Message-ID: <CACRpkdajTCS5CmQLY8hffVe1x4WzWuC_myQVGZNKV3sRzLPa=w@mail.gmail.com>
-Subject: Re: [PATCH] gpio: Remove dynamic allocation from populate_parent_alloc_arg()
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, kernel-team@android.com,
-        Daniel Palmer <daniel@thingy.jp>,
-        Romain Perier <romain.perier@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Robert Richter <rric@kernel.org>,
-        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -76,53 +71,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 12, 2022 at 6:23 PM Marc Zyngier <maz@kernel.org> wrote:
+The SC8280XP platform has two instances of the 5nm USB3 UNI phy attached
+to the multi-port USB controller, this series adds definitions for this
+PHY.
 
-> The gpiolib is unique in the way it uses intermediate fwspecs
-> when feeding an interrupt specifier to the parent domain, as it
-> relies on the populate_parent_alloc_arg() callback to perform
-> a dynamic allocation.
->
-> THis is pretty inefficient (we free the structure almost immediately),
-> and the only reason this isn't a stack allocation is that our
-> ThunderX friend uses MSIs rather than a FW-constructed structure.
->
-> Let's solve it by providing a new type composed of the union
-> of a struct irq_fwspec and a msi_info_t, which satisfies both
-> requirements. This allows us to use a stack allocation, and we
-> can move the handful of users to this new scheme.
->
-> Also perform some additional cleanup, such as getting rid of the
-> stub versions of the irq_domain_translate_*cell helpers, which
-> are never used when CONFIG_IRQ_DOMAIN_HIERARCHY isn't selected.
->
-> Tested on a Tegra186.
->
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> Cc: Daniel Palmer <daniel@thingy.jp>
-> Cc: Romain Perier <romain.perier@gmail.com>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-> Cc: Thierry Reding <thierry.reding@gmail.com>
-> Cc: Jonathan Hunter <jonathanh@nvidia.com>
-> Cc: Robert Richter <rric@kernel.org>
-> Cc: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Bjorn Andersson (3):
+  dt-bindings: phy: qcom,qmp: Add compatible for SC8280XP USB3 UNI phy
+  phy: qcom-qmp: Add USB3 5NM QMP UNI registers
+  phy: qcom-qmp: Add SC8280XP USB3 UNI phy
 
-This looks very appetizing to me but:
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml |   1 +
+ drivers/phy/qualcomm/phy-qcom-qmp.c           | 138 ++++
+ .../phy/qualcomm/phy-qcom-usb3-5nm-qmp-uni.h  | 617 ++++++++++++++++++
+ 3 files changed, 756 insertions(+)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-usb3-5nm-qmp-uni.h
 
-drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 15 ++++-----
+-- 
+2.35.1
 
-This seems to have some changes to
-->populate_parent_alloc_arg not even in linux-next,
-so I get confused, what are the prerequisites? (Probably
-something I already reviewed, but...)
-
-Also: don't you also need to fix something in
-drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c?
-the way I remember it it was quite similar to spmi-gpio
-but I may be mistaken.
-
-Yours,
-Linus Walleij
