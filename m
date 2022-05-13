@@ -2,74 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55C485261C4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 14:25:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B515526203
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 14:34:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380219AbiEMMZH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 08:25:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33494 "EHLO
+        id S1380307AbiEMMdj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 08:33:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380218AbiEMMZF (ORCPT
+        with ESMTP id S1380289AbiEMMdh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 08:25:05 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F23912A28EE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 05:25:03 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id w3so6912261qkb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 05:25:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PBpUopp6BxB2ZGbL7q3811xhoXXfcHStep2uYJXiQvY=;
-        b=pJ0gr6jrOYMxrZy+chiy0WQzCUuuaT/CXA0Ya1wfAa+NKSH+KfO8kAPCtTqY6xKUkM
-         Fr1gDzC553oV5TCZbeLQa5ZpzojhnRpDpTo8UvFh1fuTk7/EfL38PXwjHiZc6f2Nd4LV
-         BPhSyX8MNPtE+kfGg5FBDuS2Xkcl01tFZHBXdW5Ts/9P02K0atpsKMBt2m/a94AoyVEU
-         EtVfa/RnGgEU3jZ+zpFv134uYw+dll7FbAo1Zr1+8CACPyLVl3ZhihtF7bS9cfzgdY33
-         CPj+Zauv4HtcdYX4ltIdortit6g66BuiROh7/DHfl1WsOP9tVN96yp7hQ/ncon8dIevS
-         en8g==
+        Fri, 13 May 2022 08:33:37 -0400
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7FB5674D8;
+        Fri, 13 May 2022 05:33:29 -0700 (PDT)
+Received: by mail-oi1-f171.google.com with SMTP id w130so10010174oig.0;
+        Fri, 13 May 2022 05:33:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PBpUopp6BxB2ZGbL7q3811xhoXXfcHStep2uYJXiQvY=;
-        b=j/rOZLdmkDfRsqoptI/VWaze/9amdCqdcuvnrn39vjtp1c6h/3YKq7wGa+gpxQvPsV
-         UssBM3oGzAk9EsHeSzmf0LlI/G7AtysFyp9TEJcoeQfoOrjMkcpMpXKRaqXllxti3GSy
-         T4ra0LqZx7bzZ4BhEvj9BPwvrW3Yy4SaYm2RHm2PjTsOSBQMQ1xRFBitK/d8FYXq8S4C
-         iC0Fs4Qeb1S/56TMiR1GVc6kEenPfsQpMIccb3oHD/sQkF3wM1zto1kOTteNgppEfgai
-         NKh6egsOMXen2TWvSRDGev6F3i0FfA/ANVSoBiCHkTzwEGSP/0o7clOLI2AExwUrSheM
-         nmug==
-X-Gm-Message-State: AOAM530VB82mI8W0mIbUJ/YFEsNTPoK3e4ppFmy9MZRECHoODI7gCcwZ
-        rpWsjpWCDGn/m2Y2OGW8EGjIzauXuqewLm0k0htLxC6Lxzo=
-X-Google-Smtp-Source: ABdhPJwj6qWzoEC2epvWyE5aIwKqWSYYkqo3eZIhz6PbcUM/xIDQrCoUpP7dD0OOLysimdyjRTq30K9i6t8PXP4RL8E=
-X-Received: by 2002:a05:620a:2a11:b0:6a0:4ae4:fee6 with SMTP id
- o17-20020a05620a2a1100b006a04ae4fee6mr3496243qkp.30.1652444703092; Fri, 13
- May 2022 05:25:03 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220512104545.2204523-1-dmitry.baryshkov@linaro.org>
- <20220512104545.2204523-11-dmitry.baryshkov@linaro.org> <Yn5HEUkNW+g20u58@hovoldconsulting.com>
-In-Reply-To: <Yn5HEUkNW+g20u58@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 13 May 2022 15:24:52 +0300
-Message-ID: <CAA8EJpqbs1TYYQG5AmgR0snZDzgcgSobLThQYpDCbEHv3d3mLg@mail.gmail.com>
-Subject: Re: [PATCH v8 10/10] arm64: dts: qcom: sm8250: provide additional MSI interrupts
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=bWNNZ9BS0dFKmSNywVk/RYUdQbyr62FYM4q6Vs2L/NM=;
+        b=Hy0SSDqAdpkoxW1uUVsMzCBlzG2mF3MLABNs19AWPdB9P7D5lbn69I7si9tHvBfAhS
+         CJ5A20AAop+Li7tGFziHf/N3w9LFgI4Q9B4+HnVobmFm3LBuu/TiY+7Y3jO5A/6vOCRT
+         by5EkecfajygZywgMRvFAojf7HtdvZc5ysBNSwfiRrNtz/4zWfGq3bdPbM2Nk0Zy+MvC
+         L8rk8bUvdenBWsXjvO5GmjVBElxI+mzFV2q0WbG+CARPJc6TTHfNLoc3zZNiHZR8Smy3
+         9EuLNo+GuIOQeFQ2SXpF3EhogTRUkV4eIuAsOQOI75+oRQ2uX4fu5qxv7rhrQMxatobD
+         9U4Q==
+X-Gm-Message-State: AOAM533cftWsNHScQRMnr9mo6RNc+w4HFhfsWvzq7M7XJ1pFOrlQomR4
+        IDIcyKCX08bMyinYlTI5vA==
+X-Google-Smtp-Source: ABdhPJy9g68/EPuUsyXU1h/DaMwrHOo5TFodw06tCWraheAODJX/FWpgAk2uAlrbesg9KgRRzQEXPw==
+X-Received: by 2002:a05:6808:124c:b0:2f9:c7cf:146 with SMTP id o12-20020a056808124c00b002f9c7cf0146mr7462531oiv.54.1652445208111;
+        Fri, 13 May 2022 05:33:28 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id i20-20020a4a8d94000000b0035eb4e5a6c5sm933295ook.27.2022.05.13.05.33.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 May 2022 05:33:27 -0700 (PDT)
+Received: (nullmailer pid 85853 invoked by uid 1000);
+        Fri, 13 May 2022 12:33:21 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        Julius Werner <jwerner@chromium.org>,
+        linux-arm-msm@vger.kernel.org,
+        "Joseph S . Barrera III" <joebar@chromium.org>,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>
+In-Reply-To: <20220512090429.2.I1318c1ae2ce55ade1d092fc21df846360b15c560@changeid>
+References: <20220512090429.1.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid> <20220512090429.2.I1318c1ae2ce55ade1d092fc21df846360b15c560@changeid>
+Subject: Re: [PATCH 2/3] dt-bindings: arm: qcom: Add / fix sc7280 board bindings
+Date:   Fri, 13 May 2022 07:33:21 -0500
+Message-Id: <1652445201.115225.85852.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,56 +71,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 13 May 2022 at 14:55, Johan Hovold <johan@kernel.org> wrote:
->
-> On Thu, May 12, 2022 at 01:45:45PM +0300, Dmitry Baryshkov wrote:
-> > On SM8250 each group of MSI interrupts is mapped to the separate host
-> > interrupt. Describe each of interrupts in the device tree for PCIe0
-> > host.
-> >
-> > Tested on Qualcomm RB5 platform with first group of MSI interrupts being
-> > used by the PME and attached ath11k WiFi chip using second group of MSI
-> > interrupts.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sm8250.dtsi | 11 +++++++++--
-> >  1 file changed, 9 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > index 410272a1e19b..ef683a2f7412 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > @@ -1807,8 +1807,15 @@ pcie0: pci@1c00000 {
-> >                       ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
-> >                                <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
-> >
-> > -                     interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
-> > -                     interrupt-names = "msi";
-> > +                     interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
-> > +                                  <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
-> > +                                  <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
-> > +                                  <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
-> > +                                  <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-> > +                                  <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
-> > +                                  <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-> > +                                  <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-> > +                     interrupt-names = "msi", "msi1", "msi2", "msi3", "msi4", "msi5", "msi6", "msi7";
->
-> You must use "msi0" instead of "msi" or you only get 32 MSI regardless
-> of what follows currently (and this wouldn't pass DT validation either).
+On Thu, 12 May 2022 09:04:46 -0700, Douglas Anderson wrote:
+> This copy-pastes compatibles from sc7280-based boards from the device
+> trees to the yaml file. It also fixes the CRD/IDP bindings which had
+> gotten stale.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> 
+>  .../devicetree/bindings/arm/qcom.yaml         | 40 +++++++++++++++----
+>  1 file changed, 33 insertions(+), 7 deletions(-)
+> 
 
-Yes. And that's why I didn't notice that I broke msi0 parsing.
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
->
-> >                       #interrupt-cells = <1>;
-> >                       interrupt-map-mask = <0 0 0 0x7>;
-> >                       interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
->
-> Johan
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
+
+Full log is available here: https://patchwork.ozlabs.org/patch/
 
 
+/: compatible: 'oneOf' conditional failed, one must be fixed:
+	arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dtb
+	arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dtb
+	arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dtb
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dtb
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dtb
+	arch/arm64/boot/dts/qcom/msm8916-mtp.dtb
+	arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dtb
+	arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dtb
+	arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dtb
+	arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dtb
+	arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dtb
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dtb
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dtb
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dtb
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dtb
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dtb
+	arch/arm64/boot/dts/qcom/sc7280-crd.dtb
+	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dtb
+	arch/arm64/boot/dts/qcom/sm8150-hdk.dtb
+	arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dtb
+	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-bahamut.dtb
+	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-griffin.dtb
+	arch/arm64/boot/dts/qcom/sm8250-hdk.dtb
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dtb
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dtb
+	arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dtb
+	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dtb
+	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dtb
+	arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dtb
 
--- 
-With best wishes
-Dmitry
