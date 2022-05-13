@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22BB0525B4E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 08:18:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82B99525B3F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 08:18:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377147AbiEMGOR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 02:14:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48206 "EHLO
+        id S1377197AbiEMGOU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 02:14:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377194AbiEMGOO (ORCPT
+        with ESMTP id S1377202AbiEMGOP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 02:14:14 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CAEE26FA15
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 23:14:11 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 125-20020a1c1983000000b003941f354c62so4183643wmz.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 23:14:11 -0700 (PDT)
+        Fri, 13 May 2022 02:14:15 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 605E026FA19
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 23:14:13 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 129so4220784wmz.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 23:14:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=uAJqhZC1C/Q9FHKuHNivRCwHP2aLTusrcVUMg5OeoKQ=;
-        b=pZngk5SldFVYgLXXBUjf0GnPLvqAwiuSj5OAwlHA/Uxop92U+gROcpDiOQyfUuKnFw
-         KbgJnN7J55/tJMwkSCFuRws/4gbAvRxvUu8liqkyvPsMl15NtCNkftbBtlhimy1bV0X+
-         i0K0JzbRIzik9Xqp93oD7s1lz3p7emwy6ZYeysit21s3N+1+eRzORU6c2bSldwf8VrJJ
-         8QuNlBFUejvRkavEs+Hsxh3WnY097JhjmuzSPH4vLx3EDvd95ESyOiY6LuqlJerFQXJN
-         mJUz2934SH6RwTS3GSKaQENADo94uF9B7WtrIB3jPzdntgoPx/Mr1hJgsVykZk847+VP
-         SI6g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=j60Q+m0nDVDVeq/kqo9om6jZKItdmd/25D1fiKUieoo=;
+        b=RXdzPf6RIzYbLiWfscYfUw6T2WzdY+PgkUVapfUOjjVwymUsMjbC26PCR35K/9ros3
+         NFCHpbJFnlIG89xtEy3Y8fJuHDs+f8y2VWtdjyFzlJNHqMWyxu/4TS0DPZBsmdXlvRfO
+         gOLDtt3A/M8SMk1hz6AeH3bZfptUbnH8srkE0oGQgkPBc4uhxYckRGx+iphp7MkOWgBT
+         Ebk/eV5bimzuyoo0GoKPNTzwrrxVsJuRM3lyE2FTid1oRakLXfLEAbUMBbZ6azdMuZck
+         AT14UTj/IIsDlEaeXLMvp4YOFlzorgSQCY7QkLrxR7FJ5oZSqzKhgU4mKwztI8qW8DHA
+         pRHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=uAJqhZC1C/Q9FHKuHNivRCwHP2aLTusrcVUMg5OeoKQ=;
-        b=RfSx1ICrIccg6nWAuIKTjOE5zYwSgfCeyw4tXQo48GZOIf1yjLXcWYPAiqEeYMrqAy
-         PIGMATrZ68SSCGZO/fyaKDmqrQIxTrJ3kmKu2usDhZfnSqOAiUAuBGJv+izNTB2sgyqH
-         Gb8JG2idJaCPcM0VHg1OYXUQJE857DAgwM08ma6dY/XH4s2gmQYaA9UP3nDDPV8dbYrU
-         0vHFCCOmNsqXCYKb/mBrxF0+Qdij/tYUA5dJ5Hgan95u+DNbvLazSnfyig8x+SqeYHCm
-         GPQeheP8p5klIapa3ISaANT+2afryvQr3W24FQIX2wwqdSakwz94BLLxsL8uqlIDx0zx
-         eaWg==
-X-Gm-Message-State: AOAM530zvOzRd7N4HUyn/49agQz/0wJ4YpRdJeap5pkAye++IL08rrTX
-        tF3l1/6z5ZIES14VEu+ISkx/1g==
-X-Google-Smtp-Source: ABdhPJxSoqFZu5xWQFZQMJH5obw3FV3uE+uXkptGPzvYlWeY5QI75GpqhfaoLqhsUfXF3WXIIQ9wjQ==
-X-Received: by 2002:a7b:cbc2:0:b0:388:faec:2036 with SMTP id n2-20020a7bcbc2000000b00388faec2036mr3031170wmi.190.1652422449908;
-        Thu, 12 May 2022 23:14:09 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=j60Q+m0nDVDVeq/kqo9om6jZKItdmd/25D1fiKUieoo=;
+        b=mVaYU/n1Zgm7O2hZABhzgMVZjIu1fe3BE9szvuQ8KzqNM5VT05FZVbwYRFz4sr0mOV
+         TnQ+czverB7Gq7RXj+rWtIOn3yIgt12PJs3V/ORXnFFDIsOcSY3TN+bosc83U8PhzzmB
+         qrIiHS5X5ujkEdRmgtfbzEc4Ai9Igdw0MnknArAkHUo96IWMP1nVZTEHK6ZGg0mV/mpa
+         b0GOVP7RosfiGPuS+LQsL9b+Ua7jGl9oKMP+dGAkq6+O8pGUdFAlwBn6RhpSRRDaEM9A
+         xLChNDEVXigY8+Qiui8eweJ3hZS1lPIQnpkvDdXu/AXF1DL9fsYQmGscTR/AQtdo30z+
+         Uf0w==
+X-Gm-Message-State: AOAM5320dezhpFr2H63bP/TlphHFDMdzi1//0UddfTicePKSIzEpIKdx
+        ppMAsPYfTe+dVpVusSgpLN6mOQ==
+X-Google-Smtp-Source: ABdhPJxxiNFky+FKvagxgESN3eexGwvVdyb6o64BeUJIDlYUYHYzW412ZYFbVs0kakubT1n7lNKQ5A==
+X-Received: by 2002:a1c:19c1:0:b0:393:a19f:8f95 with SMTP id 184-20020a1c19c1000000b00393a19f8f95mr2940751wmz.149.1652422451913;
+        Thu, 12 May 2022 23:14:11 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id g4-20020adfbc84000000b0020c5253d8f3sm1477760wrh.63.2022.05.12.23.14.08
+        by smtp.gmail.com with ESMTPSA id g4-20020adfbc84000000b0020c5253d8f3sm1477760wrh.63.2022.05.12.23.14.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 May 2022 23:14:09 -0700 (PDT)
+        Thu, 12 May 2022 23:14:11 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -66,11 +66,14 @@ To:     Andy Gross <agross@kernel.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3 0/7] ufs: set power domain performance state when scaling gears
-Date:   Fri, 13 May 2022 08:13:40 +0200
-Message-Id: <20220513061347.46480-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 1/7] dt-bindings: clock: qcom,gcc-sdm845: add parent power domain
+Date:   Fri, 13 May 2022 08:13:41 +0200
+Message-Id: <20220513061347.46480-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20220513061347.46480-1-krzysztof.kozlowski@linaro.org>
+References: <20220513061347.46480-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,58 +86,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Allow Qualcomm GCC to register its parent power domain (e.g. RPMHPD) to
+properly pass performance state from children.
 
-Changes since v2
-================
-1. PM: Split PM OPP patch into two - getting clocks and rates. (Viresh)
-2. PM: Do not set clock rates from PM OPPs but rely on set_opp helper. (Viresh)
-3. PM: Use clk bulk operations in PM OPP for getting/releasing the clocks. (Bjorn)
-4. UFS: Rework clock scalling to be called in the same place as old method, so
-   pre/post changes notification will work. (Mani)
-5. UFS: Bail out if both freq-table-hz and operating-points are provided. (Mani)
-6. Add review tags.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Acked-by: Rob Herring <robh@kernel.org>
 
-Changes since v1
-================
-1. Patch #1 qcom,gcc-sdm845: fix typo (Stephen).
-2. Patch #2 ufs dt-bindings: not adding Rob's review because patch
-   changed significantly.
-3. PM: add new code for handling multiple clocks.
-4. UFS: deprecate freq-table-hz property and use PM opps instead.
-
-Dependencies
-============
-The UFS patch depends on PM OPP patches adding multiple clocks/rates support.
-
-Best regards,
-Krzysztof
+---
 
 Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Krzysztof Kozlowski (7):
-  dt-bindings: clock: qcom,gcc-sdm845: add parent power domain
-  dt-bindings: opp: accept array of frequencies
-  dt-bindings: ufs: common: add OPP table
-  arm64: dts: qcom: sdm845: control RPMHPD performance states with UFS
-  PM: opp: allow control of multiple clocks
-  PM: opp: parse multiple frequencies in each OPP
-  ufs: use PM OPP when scaling gears
-
- .../bindings/clock/qcom,gcc-sdm845.yaml       |   3 +
- .../devicetree/bindings/opp/opp-v2-base.yaml  |  10 +
- .../devicetree/bindings/ufs/ufs-common.yaml   |  34 ++-
- arch/arm64/boot/dts/qcom/sdm845.dtsi          |  43 +++-
- drivers/opp/core.c                            | 207 +++++++++++++-----
- drivers/opp/of.c                              |  47 ++++
- drivers/opp/opp.h                             |   9 +-
- drivers/opp/ti-opp-supply.c                   |   6 +-
- drivers/scsi/ufs/ufshcd-pltfrm.c              |  73 ++++++
- drivers/scsi/ufs/ufshcd.c                     | 150 ++++++++++---
- drivers/scsi/ufs/ufshcd.h                     |   6 +
- include/linux/pm_opp.h                        |  32 ++-
- 12 files changed, 518 insertions(+), 102 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+index d902f137ab17..daf7906ebc40 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+@@ -43,6 +43,9 @@ properties:
+   '#reset-cells':
+     const: 1
+ 
++  power-domains:
++    maxItems: 1
++
+   '#power-domain-cells':
+     const: 1
+ 
 -- 
 2.32.0
 
