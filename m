@@ -2,69 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DF075258A3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 01:44:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AB03525A6F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 05:58:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359677AbiELXoQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 May 2022 19:44:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45414 "EHLO
+        id S1376874AbiEMD6a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 May 2022 23:58:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359616AbiELXoM (ORCPT
+        with ESMTP id S1353234AbiEMD63 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 May 2022 19:44:12 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACEE428ABA2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:43:57 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id a23so276233ljd.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 May 2022 16:43:57 -0700 (PDT)
+        Thu, 12 May 2022 23:58:29 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0277B61284;
+        Thu, 12 May 2022 20:58:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Mfq8artsCmgPridHwXtCTWz4VD26jC/9nXCO2mqCNlk=;
-        b=nk+O2VF70/VkFvaqUpHyDSM3PyW8u4BeOP4nAkdnQGsuzo4aaBPp0vcPpC+ESYSNPM
-         kGY1rBZCJWZzczefk5MDQ8UY2kZk/a8gUJifIDFxtCn20NEnAR9YLb+2NLplwjFyFWiz
-         ntequ5Texs+odZWuQDpDrXY/Sqygrr/raBQpkt//ipGDeY8971AP3ReVe1J9g07eAgsM
-         EHbinKd1PbSZUMO5cojXPqe8w2PfClM1B/4xfBYqVP0pEKa/bQz2ujMSqAzS5q/kFRT1
-         o1nRNn3ClTJDiTcB50yDB5D8USXMT2nZA5NLS7p4Qk6/c2Qjf6kQR12ygUZc3yLcFOsA
-         64qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Mfq8artsCmgPridHwXtCTWz4VD26jC/9nXCO2mqCNlk=;
-        b=3JvAL8KEKpOccvlraff0QhCkVcdgILxer6hbIuDGzVgqjLQincVCEAhKuMb9p9W1CP
-         7tMPQN3StKGapNNwnwaQm/oc1NHPFPy34hcEA74UEareOnbRHFmRZ8TVMb5NJ8bC9f/Q
-         sh8O6k4pF3pJ43vmTX3EAzGB7L6IfOvURcwti5vvylBmKb0nlarc7jDE2C4ro/vZyBqS
-         3Q6zqcmhum5eCHnfCTUoB3bsyod4/RA+jlI4HpPFyc0BoeQjoxRL1s62xkxNpqgi0egq
-         LZlL02u8V4OXn6v6/qhrS/ND2q85u8T6MBRFNyv1hdFyd/lhOc4J+yssOa7SUjniSvZo
-         iNaA==
-X-Gm-Message-State: AOAM533EvOXcNjBzBwMsldlxwqdrM9ARKoCU+10sMnnzZbXMCBu30k6d
-        di65eSyiBmxwvmCAZ3aCM2g8MQ==
-X-Google-Smtp-Source: ABdhPJyZNJTdASj3mJCq9oemHQzr/4AV5ZKfhlamEN/YJACEPxe64G+htUDPyzeEDPKdJHT+6aZ0zQ==
-X-Received: by 2002:a2e:88ce:0:b0:24f:fff:603c with SMTP id a14-20020a2e88ce000000b0024f0fff603cmr1418276ljk.527.1652399035828;
-        Thu, 12 May 2022 16:43:55 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u10-20020ac248aa000000b0047255d211b8sm129976lfg.231.2022.05.12.16.43.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 May 2022 16:43:55 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [RESEND v2 8/8] dt-bindings: arm: qcom: document sda660 SoC and ifc6560 board
-Date:   Fri, 13 May 2022 02:43:49 +0300
-Message-Id: <20220512234349.2673724-9-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220512234349.2673724-1-dmitry.baryshkov@linaro.org>
-References: <20220512234349.2673724-1-dmitry.baryshkov@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652414307; x=1683950307;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=ncB+8XgICxsWrmIQFS+DFHIYDncUBCYudRXyg37O6lc=;
+  b=WzyrJJ0QnXNIkCOouDpZ9vuAmKjJGhio675Wdu7HZgXX+bKLfzT3eXMg
+   U9vuJjslAUo6JqqcmeqefVWIhnDsj6EAt4VmLvxrsaiMF90JSpdl5JRs2
+   MVndaBCPdz9aZHmdCIuuOo7r3DzIk6OHvackBRezlj4z/IVg9xMv1t+vI
+   M=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 12 May 2022 20:58:26 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 20:58:27 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 12 May 2022 20:58:26 -0700
+Received: from [10.216.41.245] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 12 May
+ 2022 20:58:19 -0700
+Message-ID: <4124392b-a40f-c204-f9b0-68c3b22dd652@quicinc.com>
+Date:   Fri, 13 May 2022 09:28:16 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [v16 2/5] usb: dwc3: core: Host wake up support from system
+ suspend
+Content-Language: en-US
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+References: <1652379802-8318-1-git-send-email-quic_kriskura@quicinc.com>
+ <1652379802-8318-3-git-send-email-quic_kriskura@quicinc.com>
+ <Yn2M5hrah78jro1C@google.com>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <Yn2M5hrah78jro1C@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,38 +81,184 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add binding documentation for the Inforce IFC6560 board which uses
-Snapdragon SDA660.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
- 1 file changed, 6 insertions(+)
+On 5/13/2022 4:10 AM, Matthias Kaehlcke wrote:
+> On Thu, May 12, 2022 at 11:53:19PM +0530, Krishna Kurapati wrote:
+>> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+>>
+>> During suspend read the status of all port and set hs phy mode
+>> based on current speed. Use this hs phy mode to configure wakeup
+>> interrupts in qcom glue driver.
+>>
+>> Check wakeup-source property for dwc3 core node to set the
+>> wakeup capability. Drop the device_init_wakeup call from
+>> runtime suspend and resume.
+>>
+>> Also check during suspend if any wakeup capable devices are
+>> connected to the controller (directly or through hubs), if there
+>> are none set a flag to indicate that the PHY is powered
+>> down during suspend.
+>>
+>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+>>   drivers/usb/dwc3/core.c | 30 +++++++++++++++++-------------
+>>   drivers/usb/dwc3/core.h |  4 ++++
+>>   drivers/usb/dwc3/host.c | 24 ++++++++++++++++++++++++
+>>   3 files changed, 45 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+>> index 01115df..8bcabc5 100644
+>> --- a/drivers/usb/dwc3/core.c
+>> +++ b/drivers/usb/dwc3/core.c
+>> @@ -1785,6 +1785,7 @@ static int dwc3_probe(struct platform_device *pdev)
+>>   
+>>   	platform_set_drvdata(pdev, dwc);
+>>   	dwc3_cache_hwparams(dwc);
+>> +	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
+>>   
+>>   	spin_lock_init(&dwc->lock);
+>>   	mutex_init(&dwc->mutex);
+>> @@ -1946,10 +1947,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+>>   		dwc3_core_exit(dwc);
+>>   		break;
+>>   	case DWC3_GCTL_PRTCAP_HOST:
+>> -		if (!PMSG_IS_AUTO(msg)) {
+>> -			dwc3_core_exit(dwc);
+>> -			break;
+>> -		}
+>> +		dwc3_check_phy_speed_mode(dwc);
+>>   
+>>   		/* Let controller to suspend HSPHY before PHY driver suspends */
+>>   		if (dwc->dis_u2_susphy_quirk ||
+>> @@ -1965,6 +1963,15 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+>>   
+>>   		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
+>>   		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
+>> +
+>> +		if (!PMSG_IS_AUTO(msg)) {
+>> +			if (device_may_wakeup(dwc->dev))
+> I think this should be device_can_wakeup(), i.e. hardware capability instead of
+> device policy. A drawback of powering the PHYs off is that it causes a high
+> power consumption of certain peripherals if VBUS is still supplied, so this
+> should be limited to platforms where the PHYs must be powered off (using wakeup
+> capability as a proxy for now).
+Thnaks Mathias for the review. Will make this change in the next patchset.
+>> +				dwc->phy_power_off = false;
+>> +			else {
+>> +				dwc->phy_power_off = true;
+>> +				dwc3_core_exit(dwc);
+>> +			}
+>> +		}
+>>   		break;
+>>   	case DWC3_GCTL_PRTCAP_OTG:
+>>   		/* do nothing during runtime_suspend */
+>> @@ -2008,11 +2015,12 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+>>   		break;
+>>   	case DWC3_GCTL_PRTCAP_HOST:
+>>   		if (!PMSG_IS_AUTO(msg)) {
+>> -			ret = dwc3_core_init_for_resume(dwc);
+>> -			if (ret)
+>> -				return ret;
+>> -			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
+>> -			break;
+>> +			if (dwc->phy_power_off) {
+>> +				ret = dwc3_core_init_for_resume(dwc);
+>> +				if (ret)
+>> +					return ret;
+>> +				dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
+>> +			}
+>>   		}
+>>   		/* Restore GUSB2PHYCFG bits that were modified in suspend */
+>>   		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+>> @@ -2084,8 +2092,6 @@ static int dwc3_runtime_suspend(struct device *dev)
+>>   	if (ret)
+>>   		return ret;
+>>   
+>> -	device_init_wakeup(dev, true);
+>> -
+>>   	return 0;
+>>   }
+>>   
+>> @@ -2094,8 +2100,6 @@ static int dwc3_runtime_resume(struct device *dev)
+>>   	struct dwc3     *dwc = dev_get_drvdata(dev);
+>>   	int		ret;
+>>   
+>> -	device_init_wakeup(dev, false);
+>> -
+>>   	ret = dwc3_resume_common(dwc, PMSG_AUTO_RESUME);
+>>   	if (ret)
+>>   		return ret;
+>> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+>> index 81c486b..37397a8 100644
+>> --- a/drivers/usb/dwc3/core.h
+>> +++ b/drivers/usb/dwc3/core.h
+>> @@ -1155,6 +1155,9 @@ struct dwc3 {
+>>   
+>>   	bool			phys_ready;
+>>   
+>> +	unsigned int            hs_phy_mode;
+>> +	bool			phy_power_off;
+>> +
+>>   	struct ulpi		*ulpi;
+>>   	bool			ulpi_ready;
+>>   
+>> @@ -1539,6 +1542,7 @@ int dwc3_core_soft_reset(struct dwc3 *dwc);
+>>   #if IS_ENABLED(CONFIG_USB_DWC3_HOST) || IS_ENABLED(CONFIG_USB_DWC3_DUAL_ROLE)
+>>   int dwc3_host_init(struct dwc3 *dwc);
+>>   void dwc3_host_exit(struct dwc3 *dwc);
+>> +void dwc3_check_phy_speed_mode(struct dwc3 *dwc);
+>>   #else
+>>   static inline int dwc3_host_init(struct dwc3 *dwc)
+>>   { return 0; }
+>> diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
+>> index f56c30c..e19b40a 100644
+>> --- a/drivers/usb/dwc3/host.c
+>> +++ b/drivers/usb/dwc3/host.c
+>> @@ -12,6 +12,7 @@
+>>   #include <linux/platform_device.h>
+>>   
+>>   #include "core.h"
+>> +#include "../host/xhci.h"
+>>   
+>>   static void dwc3_host_fill_xhci_irq_res(struct dwc3 *dwc,
+>>   					int irq, char *name)
+>> @@ -136,3 +137,26 @@ void dwc3_host_exit(struct dwc3 *dwc)
+>>   {
+>>   	platform_device_unregister(dwc->xhci);
+>>   }
+>> +
+>> +void dwc3_check_phy_speed_mode(struct dwc3 *dwc)
+>> +{
+>> +	int i, num_ports;
+>> +	u32 reg;
+>> +	struct usb_hcd	*hcd = platform_get_drvdata(dwc->xhci);
+>> +	struct xhci_hcd	*xhci_hcd = hcd_to_xhci(hcd);
+>> +
+>> +	dwc->hs_phy_mode = 0;
+>> +
+>> +	reg = readl(&xhci_hcd->cap_regs->hcs_params1);
+>> +
+>> +	num_ports = HCS_MAX_PORTS(reg);
+>> +	for (i = 0; i < num_ports; i++) {
+>> +		reg = readl(&xhci_hcd->op_regs->port_status_base + i * NUM_PORT_REGS);
+>> +		if (reg & PORT_PE) {
+>> +			if (DEV_HIGHSPEED(reg) || DEV_FULLSPEED(reg))
+>> +				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_HS;
+>> +			else if (DEV_LOWSPEED(reg))
+>> +				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_LS;
+>> +		}
+>> +	}
+>> +}
+> I anticipate that it might raise concerns from maintainers that
+> dwc3_check_phy_speed_mode() accesses xHCI data structures and
+> registers directly. Could there be a generic HCD API that provides
+> this functionality (if implemented by the specific HCD)?
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 129cdd246223..ac4ee0f874ea 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -41,6 +41,7 @@ description: |
-         sa8155p
-         sc7180
-         sc7280
-+        sda660
-         sdm630
-         sdm632
-         sdm660
-@@ -225,6 +226,11 @@ properties:
-               - google,senor
-           - const: qcom,sc7280
- 
-+      - items:
-+          - enum:
-+              - inforce,ifc6560
-+          - const: qcom,sda660
-+
-       - items:
-           - enum:
-               - fairphone,fp3
--- 
-2.35.1
+Hi Mathias, we are not sure if there is any such API present currently.
+
+Hi Alan, can you help suggest any API (if present) that we can reuse 
+here to avoid
+
+xhci registers and structs here in dwc3.
 
