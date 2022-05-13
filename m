@@ -2,69 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B43A45269D1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 21:04:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 836A7526A49
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 21:20:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241084AbiEMTD7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 15:03:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59448 "EHLO
+        id S1383867AbiEMTUH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 15:20:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1383531AbiEMTD6 (ORCPT
+        with ESMTP id S1383682AbiEMTTu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 15:03:58 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB9019809E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 12:03:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652468634; x=1684004634;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=od5ts7YfisWgOnFB465C5qzUg8Eu9PE/N8z62d9GeWI=;
-  b=KH2C6gcGVPQfyqs1zU4ziExWtZW9aUxZr+UjPaKjD6dPnehwQUMOsG3/
-   MwiPopMk1wf6XNeNZO9HN9eowsYJjxjooygjy3n2QisYgORyqBkVe9oaL
-   mAbwyn/AEv5XJPmKLRfGFM0CVOFckWYTCZ7lbh7YqEIcIQZVCRMPymK50
-   M=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 13 May 2022 12:03:53 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2022 12:03:53 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 13 May 2022 12:03:53 -0700
-Received: from [10.38.247.112] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 13 May
- 2022 12:03:51 -0700
-Message-ID: <86c52d22-eda6-8a3f-cd21-cf0b89a0581e@quicinc.com>
-Date:   Fri, 13 May 2022 12:03:48 -0700
+        Fri, 13 May 2022 15:19:50 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD757393E3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 12:18:43 -0700 (PDT)
+Received: from [192.168.1.101] (abxh168.neoplus.adsl.tpnet.pl [83.9.1.168])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 7A98F3F401;
+        Fri, 13 May 2022 21:18:37 +0200 (CEST)
+Message-ID: <89049083-9336-7490-ff89-f4337d4cea1a@somainline.org>
+Date:   Fri, 13 May 2022 21:18:36 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 16/25] drm/msm/dpu: drop EAGAIN check from
- dpu_format_populate_layout
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v1 5/5] arm64: dts: qcom: sdm660: Add initial Inforce
+ IFC6560 board support
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
- <20220209172520.3719906-17-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220209172520.3719906-17-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220503220927.960821-1-dmitry.baryshkov@linaro.org>
+ <20220503220927.960821-6-dmitry.baryshkov@linaro.org>
+ <0574f34c-b898-8ccb-05bd-6e3d454fee2c@somainline.org>
+ <ae909313-ef7a-5c40-55b8-a1a802b6cdd5@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <ae909313-ef7a-5c40-55b8-a1a802b6cdd5@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,53 +54,79 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 2/9/2022 9:25 AM, Dmitry Baryshkov wrote:
-> Since layout is not cached anymore, drop comparison against previous
-> layout and corresponding EAGAIN handling.
+On 13.05.2022 00:58, Dmitry Baryshkov wrote:
+> On 04/05/2022 19:17, Konrad Dybcio wrote:
+>>
+>> On 04/05/2022 00:09, Dmitry Baryshkov wrote:
+>>> The IFC6560 is a board from Inforce Computing, built around the SDA660
+>>> SoC. This patch describes core clocks, some regulators from the two
+>>> PMICs, debug uart, storage, bluetooth and audio DSP remoteproc.
+>>>
+>>> The regulator settings are inherited from prior work by Konrad Dybcio
+>>> and AngeloGioacchino Del Regno.
+>>>
+>>> Co-developed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>>>   .../boot/dts/qcom/sda660-inforce-ifc6560.dts  | 455 ++++++++++++++++++
+>>>   2 files changed, 456 insertions(+)
+>>>   create mode 100644 arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>>> index f9e6343acd03..5f717fe0e8d0 100644
+>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>> @@ -88,6 +88,7 @@ dtb-$(CONFIG_ARCH_QCOM)    += 
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Isnt this preventing the usermode from programming the same address again?
-
-I thought that this check is good in that way and has nothing to do with 
-the caching as such.
-
-So its the other way around, by caching we are ensuring that we dont get 
-a new frame update for just updating the same src address.
-
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c | 4 ----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 5 +----
->   2 files changed, 1 insertion(+), 8 deletions(-)
+> [skipped]
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> index 440ae93d7bd1..5c7d739143f0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> @@ -927,10 +927,6 @@ int dpu_format_populate_layout(
->   	else
->   		ret = _dpu_format_populate_addrs_linear(aspace, fb, layout);
->   
-> -	/* check if anything changed */
-> -	if (!ret && !memcmp(plane_addr, layout->plane_addr, sizeof(plane_addr)))
-> -		ret = -EAGAIN;
-> -
->   	return ret;
->   }
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index a521c0681af6..b2395f02f6d3 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -1061,10 +1061,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->   	memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
->   
->   	ret = dpu_format_populate_layout(aspace, fb, &layout);
-> -	if (ret == -EAGAIN) {
-> -		DPU_DEBUG_PLANE(pdpu, "not updating same src addrs\n");
-> -		update_src_addr = false;
-> -	} else if (ret) {
-> +	if (ret) {
->   		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
->   		update_src_addr = false;
->   	}
+>>> +
+>>> +/* BAM DMA doesn't seem to work on the board */
+>> I wonder if these are configured differently on your firmware.. what if you remove the `qcom,controlled-remotely` property, or in case that doesn't work, swap out the BAM clock for a fake one, like xo_board?
+> 
+> You know, replacing BAM clock with xo_board makes the devices probe and work. So does adding interconnects property (together with Bhupeshe's patches which didn't land for some reason). I think I will override just the clocks for now and update the core dtsi once the [1] gets merged.
+Hm, perhaps that clock should be marked as protected on this board then, since interactions with it can cause the board to hang.. Can you read the rate in, for example, debugfs without it going crazy?
+
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/20211110105922.217895-14-bhupesh.sharma@linaro.org/
+> 
+>>> +&blsp1_dma {
+>>> +    status = "disabled";
+>>> +};
+>>
+>> This reference should come before blsp1_i2c6 alphabetically
+>>
+>>
+> 
+> [skipped]
+> 
+> 
+>>> +
+>>> +&mdp {
+>>> +    status = "okay";
+>>> +};
+>>
+>> MDP should be always enabled in SoC DTSI instead, as MDSS is borderline useless without it..
+> 
+> I see your point. sdm845 doesn't disable it, but later platforms (sc7180/sc7280/sm8250) disable mdp and require enabling it explicitly in the board files. I'd tend to follow the example of the later platforms. Not to mention that sdm630.dtsi already contains 'status="disabled"' for this device.
+845 and 8250 do not, I changed that myself some time ago :P As for sc7x80, I just haven't gotten to play with these just yet..
+
+Konrad
+> 
+>>> +
+>>> +&mdss {
+>>> +    status = "okay";
+>>> +};
+>>> +
+>>> +&mmss_smmu {
+>>> +    status = "okay";
+>>> +};
+>>
+>> ..and same goes for all the SMMUs (but that's a nit for the future, as I mentioned in one of the previous emails)
+> 
+> Yes.
+> 
+> [skipped]
+> 
+> 
