@@ -2,77 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E03B526322
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 15:52:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D316526348
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 15:54:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343572AbiEMNuj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 09:50:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53380 "EHLO
+        id S232147AbiEMNwt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 09:52:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382481AbiEMNsg (ORCPT
+        with ESMTP id S231727AbiEMNwA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 09:48:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9DA43FD3C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:48:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1652449713;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=xX4kszIzggw0jJ79lG9EiQ7nkM1SGc5ii4Szr8DCgkY=;
-        b=O0rViqycIgmG+4W7IuQjMVf0c5Ea3HKXLML32Kv78IVt0FSiIiFX7pW08TNTuniKYOq24b
-        tsNpG3EbDvfl3E1c9qfWqUqDVxCrWKTpR5ZnXYsrX4kIGdwB7fWYiM5jiMnbfANp3hz06q
-        xulJ92rcZBMajDi85A+SUDI94u5b0D8=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-642-Qo7szuIIOIeWPwysEL9x0w-1; Fri, 13 May 2022 09:48:32 -0400
-X-MC-Unique: Qo7szuIIOIeWPwysEL9x0w-1
-Received: by mail-qt1-f198.google.com with SMTP id i11-20020ac85e4b000000b002f3d8c3a96dso6351480qtx.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:48:32 -0700 (PDT)
+        Fri, 13 May 2022 09:52:00 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7789856436
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:50:15 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id o22so9474943ljp.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:50:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=RCbegzXr0AopN7OWP2qTKDNO4iaT5GNljew1oaaVSSk=;
+        b=y/JWMFhEoVBwOh9iLovplFTwQMMkFhwPvyBP+jXd0y84M86PZZOz6JzzuRIJc1/50D
+         Nua7VHjmMsXKqNkwcPraRAOCK6k1pCuMFgv6mBfBKPR4Ex4qor3w94leoCtHlzF9OLVE
+         2d59vjjCtbUqRZCpxNw7bCHavtZrlQauH1lDZVruh8cajzUQRAOQ/sLekWUoAZr3ZnQt
+         8Gt1zax1pjShBoRZMeocMHC6yWIM+WrSyeSI4sgZ31Trlc34NpwgVg/vnABvJwjSRJjK
+         M3+3RHtm4gCMfYYjGaZK4Qbozrh6s1ljU7WUyivnAad/qscTLo7PsQ+85tU05BPwbgsY
+         AEbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=xX4kszIzggw0jJ79lG9EiQ7nkM1SGc5ii4Szr8DCgkY=;
-        b=ELaGHLq6StgBpMpdaGw1IeVj9XCBhcZ39nKnMI0i+y95nnSxgp4KykM7D2Shi7jCaE
-         hCqZD5rBGcYOGmYjpLVqN4apKDQPGGAbvVoeKgaltMl4zWHIyQNRml27xU4gnjJVXIeG
-         5qmxzdR9eREqE11KUcHs4quzrNXQCD+svHZLWAfcp/K3Y8buu6r261nvV8WgiexGU81s
-         Y1M9BBStUOb0FE+Hqc2VbB/xQOlZr/qtvsSRveXv4jjoV1FIFg/5yY/cYempSkM1Hm6D
-         py7yJgAgT1d+J8GHaAt06+4Z320slUTpGPWuE3eO4ShgrI+crriFDYQwpm+17EF3OE4/
-         uu+w==
-X-Gm-Message-State: AOAM533raA6s4DjHg1iXfvqR1l5Bjd1R9qtH5arFfd7iIkH+yDKNuNw+
-        Grls89z9aGQV8yFw3NbNToGtUPHlPX99urARXIBw7hgqCG5jxG4eqavfT9bwRy4O4iZJGQROfyx
-        T3oDu5XXGqHZ8yFyfT5ebqFfkpg==
-X-Received: by 2002:ad4:4386:0:b0:456:5223:7bd5 with SMTP id s6-20020ad44386000000b0045652237bd5mr4344051qvr.32.1652449711827;
-        Fri, 13 May 2022 06:48:31 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyqsEvUpuVPbF6jCFPguBKGuCN1RtWI9u8ysl604k+Ls+e2d+tMr4HJRwY2dZofQlR1TleYMA==
-X-Received: by 2002:ad4:4386:0:b0:456:5223:7bd5 with SMTP id s6-20020ad44386000000b0045652237bd5mr4344040qvr.32.1652449711612;
-        Fri, 13 May 2022 06:48:31 -0700 (PDT)
-Received: from localhost (pool-96-237-176-193.bstnma.fios.verizon.net. [96.237.176.193])
-        by smtp.gmail.com with ESMTPSA id w10-20020a37620a000000b0069fc13ce1f7sm1387525qkb.40.2022.05.13.06.48.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 May 2022 06:48:31 -0700 (PDT)
-Date:   Fri, 13 May 2022 09:48:30 -0400
-From:   Eric Chanudet <echanude@redhat.com>
-To:     Parikshit Pareek <quic_ppareek@quicinc.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=RCbegzXr0AopN7OWP2qTKDNO4iaT5GNljew1oaaVSSk=;
+        b=wyrZLd0rxT34lIeinExE8w2bn/oHg4B5mDzWZbhqJRHpiGXqejXYF2C7mWaRD8hByR
+         AAuxWtF/gqi9xkUpWjXM2LvkYtNtyKfvGL+aXL7LYkNA90TnNx0gKYV3NBk3PASQXoEP
+         gE2gsYYdw4fcusi0T5fVphLnQ5BDIA9IuyuzhgYh6RhdQetjOf1ZO3fk0qFE2jKHJQTV
+         Lej7YWHWvUPlquzo833uoI9VPt/PBYf8kf6XDO2mnNiUpOH6d3Mr5obietE8hTDJido+
+         HkSf3A5eXDAotwhbziuhR6zVvs0mXbcQ4EJ0aResHw+7ug1KJrwCPw1Zk9DGRrU3ELL/
+         tcGA==
+X-Gm-Message-State: AOAM532xqVa2dy/hf5o/551z9hmpqidd893ydu9XwIjH4+oSrlucfs+3
+        ZhjzQx4mMlLGLfbpcVP+8lve/A==
+X-Google-Smtp-Source: ABdhPJzspehYpZqjRHyIDQsSJpReakeJmzkr4BaWpo7Pr5K+BQv1mfbWukZOq62yJAX933nqrV+yiw==
+X-Received: by 2002:a05:651c:1313:b0:24f:517c:ffad with SMTP id u19-20020a05651c131300b0024f517cffadmr3130956lja.111.1652449813499;
+        Fri, 13 May 2022 06:50:13 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id o11-20020ac2494b000000b0047255d2113esm386995lfi.109.2022.05.13.06.50.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 May 2022 06:50:12 -0700 (PDT)
+Message-ID: <8f13d1e4-eaca-a8ef-510a-6b2e039612d6@linaro.org>
+Date:   Fri, 13 May 2022 16:50:11 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v8 00/10] PCI: qcom: Fix higher MSI vectors handling
+Content-Language: en-GB
+To:     Johan Hovold <johan@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Prasanna Kumar <quic_kprasan@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: Fix the id of SA8540P SoC
-Message-ID: <20220513134830.6bi457uqtkqk4ijx@echanude>
-References: <20220513114114.7103-1-quic_ppareek@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220513114114.7103-1-quic_ppareek@quicinc.com>
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220512104545.2204523-1-dmitry.baryshkov@linaro.org>
+ <Yn4dvpgezdrKmSro@hovoldconsulting.com>
+ <CAA8EJppzx5nkyk3gCcgFd2G_QewU0Z6q6DAKb-Lyj9yZyMo_AA@mail.gmail.com>
+ <Yn4ms7dKIzeAqt7A@hovoldconsulting.com>
+ <CAA8EJppt4kiG45j62W-Z7Ech8WLNnkPYiVv7T0AK-+Dxtc_KDQ@mail.gmail.com>
+ <Yn5UqtxmNGWerTdT@hovoldconsulting.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <Yn5UqtxmNGWerTdT@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,37 +89,81 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 13, 2022 at 05:11:14PM +0530, Parikshit Pareek wrote:
-> Change the id of SA8540P to its correct value, i.e., 461.
+On 13/05/2022 15:52, Johan Hovold wrote:
+> On Fri, May 13, 2022 at 01:10:44PM +0300, Dmitry Baryshkov wrote:
+>> On Fri, 13 May 2022 at 12:36, Johan Hovold <johan@kernel.org> wrote:
+>>>
+>>> On Fri, May 13, 2022 at 12:28:40PM +0300, Dmitry Baryshkov wrote:
+>>>> On Fri, 13 May 2022 at 11:58, Johan Hovold <johan@kernel.org> wrote:
 > 
-> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
-> ---
->  drivers/soc/qcom/socinfo.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>>> But you also added
+>>>
+>>> +        - properties:
+>>> +            interrupts:
+>>> +              minItems: 8
+>>> +            interrupt-names:
+>>> +              minItems: 8
+>>> +              items:
+>>> +                - const: msi0
+>>> +                - const: msi1
+>>> +                - const: msi2
+>>> +                - const: msi3
+>>> +                - const: msi4
+>>> +                - const: msi5
+>>> +                - const: msi6
+>>> +                - const: msi7
+>>>
+>>> which means that I can no longer describe the four interrupts in DT.
+>>>
+>>> I didn't check the implementation, but it seems you should derive the
+>>> number of MSIs based on the devicetree as I guess you did in v7.
+>>
+>> It is a conditional, so you can add another conditional for the
+>> sc8280xp platform describing just 4 interrupts. And as you don't have
+>> legacy DTS, you can completely omit the backwards compatible clause in
+>> your case.
+>> So, something like:
+>>   - if:
+>>     properties:
+>>        contains:
+>>           enum:
+>>              - qcom,pcie-sc8280xp
+>>    then:
+>>      properties:
+>>         interrupts:
+>>            minItems: 4
+>>            maxItems: 4
+>>         interrupt-names:
+>>             items:
+>>                - const: msi0
+>>                - const: msi1
+>>                - const: msi2
+>>                - const: msi3
 > 
-> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-> index cee579a267a6..c37d7724c7d0 100644
-> --- a/drivers/soc/qcom/socinfo.c
-> +++ b/drivers/soc/qcom/socinfo.c
-> @@ -328,7 +328,7 @@ static const struct soc_id soc_id[] = {
->  	{ 455, "QRB5165" },
->  	{ 457, "SM8450" },
->  	{ 459, "SM7225" },
-> -	{ 460, "SA8540P" },
-> +	{ 461, "SA8540P" },
->  	{ 480, "SM8450" },
->  	{ 482, "SM8450" },
->  	{ 487, "SC7280" },
-> -- 
-> 2.17.1
+> Ok, so the driver code still handles it, thanks.
 > 
-You should mention:
-Fixes: 76ee15ae1b13 ("soc: qcom: socinfo: Add some more PMICs and SoCs")
+> Are you able to confirm that all sc8280xp systems have only four msi
+> IRQs?
 
-With that addition:
-Reviewed-by: Eric Chanudet <echanude@redhat.com>
-Tested-by: Eric Chanudet <echanude@redhat.com>
+Unfortunately no. I don't have access to the sc8280xp docs. Let's see if 
+BjornA can confirm this.
+
+> This seems like another case of using the kernel as a DT validator by
+> describing things in two places and making sure that they match.
+
+Yep, this seems like a bad habit of mine: to distrust the DT.
+
+> 
+> I assume the number of vectors will always be a multiple of the numbers
+> of msi IRQs. Right? Then we don't need to encode this number for every
+> supported platform in the corresponding PCIe driver even if we end up
+> describing it in the binding.
+
+But it was your suggestion!
+
+Let's drop the warning then, parse what was passed by the DT and just 
+print the total amount of MSI IRQs.
 
 -- 
-Eric Chanudet
-
+With best wishes
+Dmitry
