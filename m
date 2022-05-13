@@ -2,73 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E351D526AE6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 22:06:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B91B2526AF0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 22:07:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383997AbiEMUGP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 16:06:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39312 "EHLO
+        id S1384050AbiEMUGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 16:06:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1384036AbiEMUF6 (ORCPT
+        with ESMTP id S1384031AbiEMUGm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 16:05:58 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5327F2E9F5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 13:05:57 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id v65so11378466oig.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 13:05:57 -0700 (PDT)
+        Fri, 13 May 2022 16:06:42 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 375322F386
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 13:06:40 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id x52so8557916pfu.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 13:06:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tGS8MF/Xhbljo/V0X6FBR6Q+x7h80TWkximSoLlEBGs=;
-        b=CmOfYQdg9+gMBNGJb8V6ihuztQ8FNs8jaHFh5eGott+ezBfNrjvHcHGxBorUwAIEqX
-         qAzQ/4UATx6e+qvwPnZvbT9Fk9azzf2JfOOkJnhNgNawXxrrHfjEmVBrTooOUpsu58k6
-         tQgYpbUvngnrB5wKN8W9ev4qlAIOk5KSqtI1EPRq11vgNpHLrnaF17cgPgqkqpKCZ0wT
-         Id631eLL34pQGWM5D4fuTiZTaTID8P/gMt+HHX4u1+E2tzfMA2ktMudWCPCA9bm7B14w
-         ilTYjul5h1hshcXjwbpsE9cWKRrCwPOMaVzFGG01WAzqXAZb1IWY0/UMLACWNnHUB9E5
-         07DA==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jWNQ+udHtvb6wOcT6dMXsk0oWrtzq/bCwEASacHmYiI=;
+        b=PKRSB0OoZr2r4AVps3UEL1sMJ9tjxHub9QfMyVOMWaIPg7HZVUnpxVeUB6GxUGmqM+
+         wOQSXBcFQT/isxFLGop0YTfgpKIPezzGc7lUNAu2QQz4oBD3KNiFmpEToo8utfYfODF2
+         pwiBpAnjxjzO9R3vrj6DM++IIVA0u5YVE38Yk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tGS8MF/Xhbljo/V0X6FBR6Q+x7h80TWkximSoLlEBGs=;
-        b=8Es6VQkvBnhtLj9IX6Lejr2P8csISPMVmPKpX4zMPxcCQx9Xuheq7Yr5I4A8+GFma7
-         evhEccl6YHEpKsc7BGiKcMu14TZ849jqaAQDVaxkmjgjh2FBOUa7sYF4B7pV4IEK+BvB
-         ZXqCCyH0GzyUI53my5MEJIKGbxHbT7xdGhtF0HNKn78pzDLnPmGS0SHgzbr+XzKfw/ni
-         kffCrX03T1//P3rMw+UxuKbwe+TgtXEiRyQe48I3g00o2fHysHnA8dsoL8zwY38kVBHI
-         8Ea5gJXb06PhVbPAVvY2TmtHyHUaxcYCI+ewaPsN/ZH0v9wD6kQldSxBTcvFLkUP3Oox
-         CCyQ==
-X-Gm-Message-State: AOAM5307txyH54sjiUfVGl2fzjNYSUQrxF7ZJTY5RV+1vizxVfuue2oe
-        hfEV7LzMquiym63HtLDMSVCdTg==
-X-Google-Smtp-Source: ABdhPJyaYLtsabZdK86Y5vR/ME4xk7GD1jIO0mxufKrtFS3B3Uzds2Kifbu14ucRKplsaNjIAz7Chg==
-X-Received: by 2002:a05:6808:2126:b0:326:e464:beab with SMTP id r38-20020a056808212600b00326e464beabmr8669661oiw.25.1652472356598;
-        Fri, 13 May 2022 13:05:56 -0700 (PDT)
-Received: from localhost.localdomain (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
-        by smtp.gmail.com with ESMTPSA id a1-20020a9d5c81000000b0060603221240sm1456962oti.16.2022.05.13.13.05.54
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jWNQ+udHtvb6wOcT6dMXsk0oWrtzq/bCwEASacHmYiI=;
+        b=3ffOSgpmdffUEVOrhiIqZdFyMIZYmL4IUuh8ST5+vmtjGBAiShPX9movMOBs3eiBId
+         iQEnjkzoxc8Qp9P1ZQCygHoWl64EyFoXBTz0oWSgU7D3p2HV1L7e7xlVTytGm9Rs5oYd
+         2KS+Q2v5nmivzpHro0c5Qvw+vyk6eVTp85xiBchrlMvH8GD63I+9tjhwcZstG5EbNge+
+         XoltTHx6QBPoEQuLqFXkP+jREnJmLmZ1IrhjlseoqutVO95Oxg9huc2oS/PAkEhGDnRK
+         5qp6xYNhwQn5G8k3lyahqtj9PCkajcmlo7x8O6BidpERs3Nsk+8/Cp6BhHnb77huk/Mw
+         xqCQ==
+X-Gm-Message-State: AOAM532d/MKYfS9z1mkJHhm8YYk4H91+xIN0NqReJaYdx8UGe7AjA+tT
+        Sj31NFDHIYoYZWf+ty7/Ec9h7g==
+X-Google-Smtp-Source: ABdhPJwb8k2JkOVQn+IGowuv6jSNYiE2rgOXffz+wtArhneP1ZpPro3wUSnkEZyb4e33pt3B49ZExw==
+X-Received: by 2002:a05:6a00:21c6:b0:4fa:914c:2c2b with SMTP id t6-20020a056a0021c600b004fa914c2c2bmr5973799pfj.56.1652472399660;
+        Fri, 13 May 2022 13:06:39 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:f334:6f80:82ed:5653])
+        by smtp.gmail.com with ESMTPSA id t1-20020a17090aae0100b001d97fc5a544sm2011231pjq.2.2022.05.13.13.06.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 May 2022 13:05:56 -0700 (PDT)
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-To:     Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        phone-devel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 6/6] dt-bindings: power: supply: qcom,pmi8998-charger: add bindings for smb2 driver
-Date:   Fri, 13 May 2022 21:05:12 +0100
-Message-Id: <20220513200512.501156-7-caleb.connolly@linaro.org>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220513200512.501156-1-caleb.connolly@linaro.org>
-References: <20220513200512.501156-1-caleb.connolly@linaro.org>
+        Fri, 13 May 2022 13:06:39 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     quic_aravindh@quicinc.com, tzimmermann@suse.de,
+        quic_khsieh@quicinc.com, jani.nikula@linux.intel.com,
+        robdclark@gmail.com, quic_sbillaka@quicinc.com,
+        ville.syrjala@linux.intel.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, swboyd@chromium.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v3] drm/probe-helper: Make 640x480 first if no EDID
+Date:   Fri, 13 May 2022 13:06:13 -0700
+Message-Id: <20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
+X-Mailer: git-send-email 2.36.0.550.gb090851708-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,104 +75,117 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add devicetree bindings for the Qualcomm PMI8998/PM660 SMB2 charger
-driver.
+If we're unable to read the EDID for a display because it's corrupt /
+bogus / invalid then we'll add a set of standard modes for the
+display. Since we have no true information about the connected
+display, these modes are essentially guesses but better than nothing.
+None of the modes returned is marked as preferred, but the modes are
+currently sorted such that the higher resolution modes are listed
+first.
 
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+When userspace sees these modes presented by the kernel it needs to
+figure out which one to pick. At least one userspace, ChromeOS [1]
+seems to use the rules:
+1. Try to pick the first mode marked as preferred.
+2. If no modes were marked as preferred then pick the first mode.
+
+The rules above seem pretty reasonable, but they have unfortunate side
+effect that when we have no EDID present we'll default to the highest
+resolution (least likely to work) mode.
+
+Let's change things slightly. In the case of a failed EDID read we
+still won't mark anything preferred but we _won't_ sort the modes at
+the end of drm_helper_probe_single_connector_modes(). The
+drm_add_modes_noedid() adds 640x480 first and so by skipping the call
+to drm_mode_sort() it will stay first. That will be a hint to
+userspace to default to 640x480.
+
+This change makes userspace that behaves like ChromeOS does compliant
+with section 4.2.2.6 (EDID Corruption Detection) of the DP 1.4a Link
+CTS. That section indicates that, at least on DP, if we have a corrupt
+EDID userspace may allow other modes to be tried but should default to
+640x480 in the absence of more information. Note that if
+drm_add_modes_noedid() ever changes to _not_ list 640x480 first we
+might need to do more here, but that seems unlikely and, in any case,
+it would be caught by a future run of DP compliance testing.
+
+Note: this change could pave the way to further improvement to
+drm_helper_probe_single_connector_modes(). Specifically, in the case
+of no EDID we could add additional "standard" modes that are riskier
+than 1024x768 (the current max we add). Now that we're giving
+userspace the hint that it should default to 640x480 perhaps it would
+be OK to offer the options of the higher resolution modes just in case
+they work. This further improvement is left as an exercise to the
+reader.
+
+[1] https://source.chromium.org/chromium/chromium/src/+/a051f741d0a15caff2251301efe081c30e0f4a96:ui/ozone/platform/drm/common/drm_util.cc;l=488
+
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
- .../power/supply/qcom,pmi8998-charger.yaml    | 82 +++++++++++++++++++
- 1 file changed, 82 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
+Note that this is the second of two related and similar-sounding but
+different patches. See also ("drm/probe-helper: For DP, add 640x480 if
+all other modes are bad") [2]. I'm hoping to land _both_ of the
+patches since they address different issues. This patch addresses the
+case of a corrupt EDID and having 640x480 be the default in the
+"guessed" modes. The other patch handles the case where the EDID
+_isn't_ corrupt but all the modes listed can't be made with the
+existing situations. The two patches can land in either order.
 
-diff --git a/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml b/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
-new file mode 100644
-index 000000000000..277c47e048b6
---- /dev/null
-+++ b/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
-@@ -0,0 +1,82 @@
-+# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/power/supply/qcom,pmi8998-charger.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm PMI8998/PM660 Switch-Mode Battery Charger "2"
-+
-+maintainers:
-+  - Caleb Connolly <caleb.connolly@linaro.org>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,pmi8998-charger
-+      - qcom,pm660-charger
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 4
-+
-+  interrupt-names:
-+    items:
-+      - const: usb-plugin
-+      - const: bat-ov
-+      - const: wdog-bark
-+      - const: usbin-icl-change
-+
-+  io-channels:
-+    items:
-+      - description: USB in current in uA
-+      - description: USB in voltage in uV
-+
-+  io-channel-names:
-+    items:
-+      - const: usbin_i
-+      - const: usbin_v
-+
-+  monitored-battery:
-+    description: phandle to the simple-battery node
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - io-channels
-+  - io-channel-names
-+  - monitored-battery
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    pmic {
-+      #address-cells = <1>;
-+      #size-cells = <0>;
-+      #interrupt-cells = <4>;
-+
-+      charger@1000 {
-+        compatible = "qcom,pmi8998-charger";
-+        reg = <0x1000>;
-+
-+        interrupts = <0x2 0x12 0x2 IRQ_TYPE_EDGE_BOTH>,
-+                     <0x2 0x13 0x4 IRQ_TYPE_EDGE_BOTH>,
-+                     <0x2 0x13 0x6 IRQ_TYPE_EDGE_RISING>,
-+                     <0x2 0x16 0x1 IRQ_TYPE_EDGE_RISING>;
-+        interrupt-names = "usb-plugin", "bat-ov", "wdog-bark", "usbin-icl-change";
-+
-+        io-channels = <&pmi8998_rradc 3>,
-+                      <&pmi8998_rradc 4>;
-+        io-channel-names = "usbin_i",
-+                           "usbin_v";
-+
-+        monitored-battery = <&battery>;
-+      };
-+    };
+Also note that I didn't carry any Tested-by / Reviewed-by tags since
+the patch is now quite different (yet again for v2 to v3).
+
+[2] https://lore.kernel.org/r/20220510131309.v2.2.I4ac7f55aa446699f8c200a23c10463256f6f439f@changeid
+
+Changes in v3:
+- Don't set preferred, just disable the sort.
+
+Changes in v2:
+- Don't modify drm_add_modes_noedid() 'cause that'll break others
+- Set 640x480 as preferred in drm_helper_probe_single_connector_modes()
+
+ drivers/gpu/drm/drm_probe_helper.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+index 682359512996..21dd60f30cc7 100644
+--- a/drivers/gpu/drm/drm_probe_helper.c
++++ b/drivers/gpu/drm/drm_probe_helper.c
+@@ -425,6 +425,7 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+ 	bool verbose_prune = true;
+ 	enum drm_connector_status old_status;
+ 	struct drm_modeset_acquire_ctx ctx;
++	bool sort_list = true;
+ 
+ 	WARN_ON(!mutex_is_locked(&dev->mode_config.mutex));
+ 
+@@ -516,8 +517,16 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+ 		count = drm_add_override_edid_modes(connector);
+ 
+ 	if (count == 0 && (connector->status == connector_status_connected ||
+-			   connector->status == connector_status_unknown))
++			   connector->status == connector_status_unknown)) {
+ 		count = drm_add_modes_noedid(connector, 1024, 768);
++		/*
++		 * Want lower res modes, like 640x480, first. That indicates
++		 * to userspace that these are "better" modes. Since we have
++		 * no EDID the modes are a guess anyway, so guess the safer
++		 * mode first.
++		 */
++		sort_list = false;
++	}
+ 	count += drm_helper_probe_add_cmdline_mode(connector);
+ 	if (count == 0)
+ 		goto prune;
+@@ -576,7 +585,8 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+ 	if (list_empty(&connector->modes))
+ 		return 0;
+ 
+-	drm_mode_sort(&connector->modes);
++	if (sort_list)
++		drm_mode_sort(&connector->modes);
+ 
+ 	DRM_DEBUG_KMS("[CONNECTOR:%d:%s] probed modes :\n", connector->base.id,
+ 			connector->name);
 -- 
-2.36.1
+2.36.0.550.gb090851708-goog
 
