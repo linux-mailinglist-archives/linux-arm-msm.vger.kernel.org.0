@@ -2,74 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34BF8526857
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 19:27:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5603F526899
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 19:40:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383000AbiEMR0n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 13:26:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40964 "EHLO
+        id S1383123AbiEMRkY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 13:40:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1383003AbiEMR0l (ORCPT
+        with ESMTP id S1379077AbiEMRkW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 13:26:41 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FC8B712E3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 10:26:32 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id p26so15642443lfh.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 10:26:32 -0700 (PDT)
+        Fri, 13 May 2022 13:40:22 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CC2535DF0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 10:40:21 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id r71so7797080pgr.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 10:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yqdAfmtIDWHLF/VJbRu/tBP/l22n+nezjJyshDnmIDw=;
-        b=quOPmoPLd2qaymHBYrjeDCKDOWC2K/fHideqJhkjMZsw3KcQDkyK3SyArWKpj0MPdR
-         xHh81efs8Sic7uBNHfZmXiup2NBtfSgnHSBRxopweJ7wequlaGoi8udhHaa4T3XscCJr
-         zamNm/trJwgqfMfQ/XNmKzd+miW756EDSEamBHMU3Lv/lzHEyVfSrC9WLlLsPRaYNX78
-         2P7FiLFKSsDdmaKcvVcfASDP20u9PMQ9hidL0wBDdjrjGRW55q/qBRBq5OIEHjl+Mksi
-         QI81gkDL9ym9V4rUDAmjq1mPH0WmUTm6neoM+mlkln0qYevV7PNsle6MH+VST1YwsW7B
-         ft9A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=Ww/qFjWwrZ3PoYuCt3E6efWcKpC5tEXZBrJvZ8cR1LI=;
+        b=O93qK4w/S03z5gd4Z+CP5yG9MFg/tvmoc9kyyCQqcV/Mz2YexNCrZo01E2mtLKBtxR
+         TRkAlkWmi6D9g3qdIzer7hfnNqJj2J3f4FljvBmblziDyWfSxhbe/vKfL1AGgTuUTsKr
+         DoWTcCkB9v6g+skYiRdCfCo3rbG2J6gdkmU3bmnAh3vq1mscALwOR24Gisf+2WZJxLKE
+         8uNwQeg9/6kOmzB5byZmOYqLib0M+Y0lvl1FKEpi7xjYOm4zxe+J52sJOtAJy30DiobH
+         8xcYSXp/WP6NWt85a5xY4DktYxvQ7eMPBZPMGHG3qn+uit9yW3UN2bZmVArwGTQ88de9
+         dxlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yqdAfmtIDWHLF/VJbRu/tBP/l22n+nezjJyshDnmIDw=;
-        b=xQzjyTwTAR3+rR0+jojQEMDZf0JWE3e1wy8mO/hpBoFiuJ43odWRPfs3RTo54BsDz1
-         d18XffUxzglD3N9YTGNZ4pwsfehIYLZwVZcFv2bX9SxvLotPocdHso9SY6nHNAyTOQ/p
-         VsObntSf8D6nl9y6DCG5x8j1gPWuv2Db9ku4kUkz9v9OY5VrnIpSWA29rAKHHqs9nmij
-         bP4zJD7VHajmAX1U50rVtAajd+i2ywK1l+kzoo5Yz5TieCnRFFxFlJ1tBEGecyWejUKw
-         /sV2pzwY1RD+/XRxKR9Ivxuzg+if1c7NJ6O+HIeR+iA3OSMqZn9Bc0eexV+wX4hrO1d1
-         JCmg==
-X-Gm-Message-State: AOAM5303ANXk/bFmClpzO5u9OaiRhNPEeyY0SwyrHwihbUWlY4uKRmvG
-        Zojp3eXAaarZBlPpJd+N3wqxsw==
-X-Google-Smtp-Source: ABdhPJxRphhdD2xEkJn02DzmDn0/V1iJ+P+Nqjok+eL8fbf7qcpmNN04/QVx3ljuuqTSF5hgJk6T0g==
-X-Received: by 2002:a05:6512:203b:b0:472:4d8b:b124 with SMTP id s27-20020a056512203b00b004724d8bb124mr4169275lfs.241.1652462791946;
-        Fri, 13 May 2022 10:26:31 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id e3-20020a2e8183000000b0024f3d1daec0sm511157ljg.72.2022.05.13.10.26.31
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=Ww/qFjWwrZ3PoYuCt3E6efWcKpC5tEXZBrJvZ8cR1LI=;
+        b=AynHf9SIGuDoTEKLPpNSet56OlURZZz7RTeE48r1ckBeI0rYpLK2cxzoEKuNN4pDEr
+         s4JkqaLAfmhJ2G7TdEKYMTn7eq8+OTwqqIkzRKiTzgHH8FVO6M4dXmZcmbmmLgQuJiEf
+         xE6E2GOV6MXencIUdxS6xlMQn27RGTArNwSMwmNJbu8FZY1qWJ+Mw68XmoLB17ZFp9iF
+         fA+Ik498NtiUkawZgKJQpEpg8QnACFCYu1AzsB4jL27dKqoohSTrLbCO//MBqbWeOgZy
+         ToIJJUZDWnUldBCY4kUUjU/BDNABYyH3Mh4TNbpYajAbA2tfNHPtpynH4RHq0w3HX0fc
+         8ohA==
+X-Gm-Message-State: AOAM530MCLyM/pRrNeZQFd3tDp0DIefaZswFXbX1NO279xqZElxES30i
+        TEDIJ3S5WD5/u/ne2QJh5Lzn
+X-Google-Smtp-Source: ABdhPJzraGPi1ax/y/zer2RyzKcWfeu62crVSXxE94AtGdfKOMGGkKDp4NJOyHwJem3eCBrEO733Rw==
+X-Received: by 2002:a05:6a00:a85:b0:506:b9e:7f43 with SMTP id b5-20020a056a000a8500b005060b9e7f43mr5524669pfl.5.1652463620335;
+        Fri, 13 May 2022 10:40:20 -0700 (PDT)
+Received: from thinkpad ([117.202.184.246])
+        by smtp.gmail.com with ESMTPSA id j18-20020a170902da9200b0015e8d4eb272sm2160673plx.188.2022.05.13.10.40.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 May 2022 10:26:31 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 13 May 2022 10:40:19 -0700 (PDT)
+Date:   Fri, 13 May 2022 23:10:10 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Johan Hovold <johan@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v10 10/10] arm64: dts: qcom: sm8250: provide additional MSI interrupts
-Date:   Fri, 13 May 2022 20:26:22 +0300
-Message-Id: <20220513172622.2968887-11-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220513172622.2968887-1-dmitry.baryshkov@linaro.org>
-References: <20220513172622.2968887-1-dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v3 3/7] dt-bindings: ufs: common: add OPP table
+Message-ID: <20220513174010.GC1922@thinkpad>
+References: <20220513061347.46480-1-krzysztof.kozlowski@linaro.org>
+ <20220513061347.46480-4-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220513061347.46480-4-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -80,42 +88,95 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SM8250 each group of MSI interrupts is mapped to the separate host
-interrupt. Describe each of interrupts in the device tree for PCIe0
-host.
+On Fri, May 13, 2022 at 08:13:43AM +0200, Krzysztof Kozlowski wrote:
+> Except scaling UFS and bus clocks, it's necessary to scale also the
+> voltages of regulators or power domain performance state levels.  Adding
+> Operating Performance Points table allows to adjust power domain
+> performance state, depending on the UFS clock speed.
+> 
+> OPPv2 deprecates previous property limited to clock scaling:
+> freq-table-hz.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> 
+> ---
+> 
+> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  .../devicetree/bindings/ufs/ufs-common.yaml   | 34 +++++++++++++++++--
+>  1 file changed, 31 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/ufs/ufs-common.yaml b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
+> index 47a4e9e1a775..d7d2c8a136bb 100644
+> --- a/Documentation/devicetree/bindings/ufs/ufs-common.yaml
+> +++ b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
+> @@ -20,11 +20,24 @@ properties:
+>        items:
+>          - description: Minimum frequency for given clock in Hz
+>          - description: Maximum frequency for given clock in Hz
+> +    deprecated: true
+>      description: |
+> +      Preferred is operating-points-v2.
+> +
+>        Array of <min max> operating frequencies in Hz stored in the same order
+> -      as the clocks property. If this property is not defined or a value in the
+> -      array is "0" then it is assumed that the frequency is set by the parent
+> -      clock or a fixed rate clock source.
+> +      as the clocks property. If either this property or operating-points-v2 is
+> +      not defined or a value in the array is "0" then it is assumed that the
+> +      frequency is set by the parent clock or a fixed rate clock source.
+> +
+> +  operating-points-v2:
+> +    description:
+> +      Preferred over freq-table-hz.
+> +      If present, each OPP must contain array of frequencies stored in the same
+> +      order for each clock.  If clock frequency in the array is "0" then it is
+> +      assumed that the frequency is set by the parent clock or a fixed rate
+> +      clock source.
 
-Tested on Qualcomm RB5 platform with first group of MSI interrupts being
-used by the PME and attached ath11k WiFi chip using second group of MSI
-interrupts.
+This description mentions only the clocks and not voltages. But in theory, the
+OPP table can contain other parameters like current, bandwidth, etc,... So to
+avoid confusion, I'd suggest to get rid of the description.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+> +
+> +  opp-table: true
+>  
+>    interrupts:
+>      maxItems: 1
+> @@ -75,8 +88,23 @@ properties:
+>  
+>  dependencies:
+>    freq-table-hz: [ 'clocks' ]
+> +  operating-points-v2: [ 'clocks', 'clock-names' ]
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 410272a1e19b..523a035ffc5f 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -1807,8 +1807,16 @@ pcie0: pci@1c00000 {
- 			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
- 
--			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
-+			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi0", "msi1", "msi2", "msi3",
-+					  "msi4", "msi5", "msi6", "msi7";
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 0x7>;
- 			interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+What about voltage regulators if relevant opp property is present?
+
+Thanks,
+Mani
+
+>  
+>  required:
+>    - interrupts
+>  
+> +allOf:
+> +  - if:
+> +      required:
+> +        - freq-table-hz
+> +    then:
+> +      properties:
+> +        operating-points-v2: false
+> +  - if:
+> +      required:
+> +        - operating-points-v2
+> +    then:
+> +      properties:
+> +        freq-table-hz: false
+> +
+>  additionalProperties: true
+> -- 
+> 2.32.0
+> 
+
 -- 
-2.35.1
-
+மணிவண்ணன் சதாசிவம்
