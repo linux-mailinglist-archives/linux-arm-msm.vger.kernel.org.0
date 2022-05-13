@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 429265265AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 17:11:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EECA5265CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 17:15:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234580AbiEMPL1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 11:11:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50006 "EHLO
+        id S1381795AbiEMPPl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 11:15:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381775AbiEMPLX (ORCPT
+        with ESMTP id S1350280AbiEMPPd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 11:11:23 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 222FD26575;
-        Fri, 13 May 2022 08:11:20 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 92133B83084;
-        Fri, 13 May 2022 15:11:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C5EC34100;
-        Fri, 13 May 2022 15:11:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652454678;
-        bh=MtrIpPhPFkqz1LD3YnBuRqxM5Mj4y3HqU7Se/OhQo6Y=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Hzc7PXj34yRNaj3fPoDHetgbkm9CQnXISkhFD2dRMEuR8m3loTO45ZYzmv5/L0AOO
-         3lEq7qYGIihBruhERN8+gssWFnbQRmx2Pl5wJmEEb2qMaXoK+FNCXKYcDEFx7EFVBT
-         K2uhBYBBvHazgAhQsGSFiBNfdvu39GZO/5LU3F9GMnSTPTNY7hrYQXWiTSaHe7Gc7O
-         otBinfCz1bwjLe8gjrSM53jNfpsFf7xS006iwtZVj4KN10V/CEyfZ7p+eb8z7REwKx
-         qncfftcnbnWJ5ZiL1yt8yodLLFOL4A/vlmSsOazojzJDf7VEo+AALaDIpcDKniheRB
-         3MB/Yx/KUSOxA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1npWwk-0003Y3-JG; Fri, 13 May 2022 17:11:15 +0200
-Date:   Fri, 13 May 2022 17:11:14 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v8 00/10] PCI: qcom: Fix higher MSI vectors handling
-Message-ID: <Yn51EsPE8Ulqvbva@hovoldconsulting.com>
-References: <20220512104545.2204523-1-dmitry.baryshkov@linaro.org>
- <Yn4dvpgezdrKmSro@hovoldconsulting.com>
- <CAA8EJppzx5nkyk3gCcgFd2G_QewU0Z6q6DAKb-Lyj9yZyMo_AA@mail.gmail.com>
- <Yn4ms7dKIzeAqt7A@hovoldconsulting.com>
- <CAA8EJppt4kiG45j62W-Z7Ech8WLNnkPYiVv7T0AK-+Dxtc_KDQ@mail.gmail.com>
- <Yn5UqtxmNGWerTdT@hovoldconsulting.com>
- <8f13d1e4-eaca-a8ef-510a-6b2e039612d6@linaro.org>
+        Fri, 13 May 2022 11:15:33 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08A1654BED
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 08:15:31 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id q23so11874053wra.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 08:15:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4kMBq3ML8i4Cw0yoGEU+fJc6+bgjz8wLr/JmgXqi+0Y=;
+        b=sSPnHzKsfAMHfdJZEceCGudvpiXtlhgaJ1KH/jFERZw+Cwc4GNQJYDOsKkIwlRr1SG
+         zkWovpQQtEag6AdaxK7LyAXiyW4g8aA5dcLn+9igMe8Z3FYGQlwHPZ1wvRN/wEYYdiHu
+         hMkkGjyQ+Tg2fqdGTUSLDTrNDPk2ljGdh5zd3aZlkZJpJe6aTklZSUiwHBRbGGHQYQGu
+         ok9S/0Q9HjL69n9v7eso0j2N64NbQr2B6Zd/FL9ssgXm67yxf6bgcK+dfcKAnLT9EwdE
+         5ObekqAsaYhfBzkthbhzG+YTC8/USyXkFJr1R21N2xOWBQa1TszxvMOXXJCCK3dpGgXF
+         HzhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4kMBq3ML8i4Cw0yoGEU+fJc6+bgjz8wLr/JmgXqi+0Y=;
+        b=Ce4TdwsEBfUuqh02Gdjd49FEuRtxh8E7u165VvCKis3pJnD3n3MPndYO1q+png5INR
+         sB3AQYnK3wWNBZCDU6RLKk7lLEHYjsELaWqzijA5EbMZzu6BCquXJdywsRLZ9VBc18JJ
+         ZOztTY6On2V7F2M+f1zUmE5sK6wR5eyw4c+n9FYxMaMBC/LqaeRnc904oesc6ClVE9+P
+         BhCPI351LBE9jcQm54m0AKhYEXTBw0jb23IhuqMydqzpn87mYyIhtqr6skUoIGYC4Ulg
+         5qZsLgB3PfyfSMZpYr5wXY+LTU+uLDi2rtHd6LnMRgt3G2aBoLM5dAYjaeSGuSwtjnLp
+         6mMw==
+X-Gm-Message-State: AOAM533E4oR3YHEqIDmetw2MTPTRKWx36uRhLFxcHxnMnrL4R5uHT2Qx
+        GdN8XUwKbpjCW/jELQ9hx4e30A==
+X-Google-Smtp-Source: ABdhPJxYzFSnDNuHEGkraj3axUSnYZQ3NLj17U3JhPBsXfiJv7WzEL40kF+makqi7xt9BaGY90jGXw==
+X-Received: by 2002:a05:6000:86:b0:20a:d7be:e09b with SMTP id m6-20020a056000008600b0020ad7bee09bmr4325701wrx.398.1652454929639;
+        Fri, 13 May 2022 08:15:29 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id y15-20020a05600c364f00b003945237fea1sm2741440wmq.0.2022.05.13.08.15.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 May 2022 08:15:29 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Kalle Valo <kvalo@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Govind Singh <govinds@codeaurora.org>,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] ath10k: do not enforce interrupt trigger type
+Date:   Fri, 13 May 2022 17:15:16 +0200
+Message-Id: <20220513151516.357549-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8f13d1e4-eaca-a8ef-510a-6b2e039612d6@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,43 +76,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 13, 2022 at 04:50:11PM +0300, Dmitry Baryshkov wrote:
-> On 13/05/2022 15:52, Johan Hovold wrote:
-> > On Fri, May 13, 2022 at 01:10:44PM +0300, Dmitry Baryshkov wrote:
-> >> On Fri, 13 May 2022 at 12:36, Johan Hovold <johan@kernel.org> wrote:
+Interrupt line can be configured on different hardware in different way,
+even inverted.  Therefore driver should not enforce specific trigger
+type - edge rising - but instead rely on Devicetree to configure it.
 
-> > Are you able to confirm that all sc8280xp systems have only four msi
-> > IRQs?
-> 
-> Unfortunately no. I don't have access to the sc8280xp docs. Let's see if 
-> BjornA can confirm this.
+All Qualcomm DTSI with WCN3990 define the interrupt type as level high,
+so the mismatch between DTSI and driver causes rebind issues:
 
-I just talked to Bjorn and he said they should be the same for all
-sc8280xp, but of course there are complications like some of the
-controllers actually having more than 4 interrupts (even if they may not
-be usable).
+  $ echo 18800000.wifi > /sys/bus/platform/drivers/ath10k_snoc/unbind
+  $ echo 18800000.wifi > /sys/bus/platform/drivers/ath10k_snoc/bind
+  [   44.763114] irq: type mismatch, failed to map hwirq-446 for interrupt-controller@17a00000!
+  [   44.763130] ath10k_snoc 18800000.wifi: error -ENXIO: IRQ index 0 not found
+  [   44.763140] ath10k_snoc 18800000.wifi: failed to initialize resource: -6
 
-Probably best to describe this in DT.
+Fixes: c963a683e701 ("ath10k: add resource init and deinit for WCN3990")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+---
+
+Separate question is whether DTS has a proper interrupt type (level
+high) configured...
+---
+ drivers/net/wireless/ath/ath10k/snoc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+index 607e8164bf98..5576ad9fd116 100644
+--- a/drivers/net/wireless/ath/ath10k/snoc.c
++++ b/drivers/net/wireless/ath/ath10k/snoc.c
+@@ -1249,13 +1249,12 @@ static void ath10k_snoc_init_napi(struct ath10k *ar)
+ static int ath10k_snoc_request_irq(struct ath10k *ar)
+ {
+ 	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
+-	int irqflags = IRQF_TRIGGER_RISING;
+ 	int ret, id;
  
-> > This seems like another case of using the kernel as a DT validator by
-> > describing things in two places and making sure that they match.
-> 
-> Yep, this seems like a bad habit of mine: to distrust the DT.
-> 
-> > 
-> > I assume the number of vectors will always be a multiple of the numbers
-> > of msi IRQs. Right? Then we don't need to encode this number for every
-> > supported platform in the corresponding PCIe driver even if we end up
-> > describing it in the binding.
-> 
-> But it was your suggestion!
+ 	for (id = 0; id < CE_COUNT_MAX; id++) {
+ 		ret = request_irq(ar_snoc->ce_irqs[id].irq_line,
+-				  ath10k_snoc_per_engine_handler,
+-				  irqflags, ce_name[id], ar);
++				  ath10k_snoc_per_engine_handler, 0,
++				  ce_name[id], ar);
+ 		if (ret) {
+ 			ath10k_err(ar,
+ 				   "failed to register IRQ handler for CE %d: %d\n",
+-- 
+2.32.0
 
-Heh. But with the caveat that I'd still prefer this to come from DT if
-possible. :)
-
-> Let's drop the warning then, parse what was passed by the DT and just 
-> print the total amount of MSI IRQs.
-
-Perfect, thanks!
-
-Johan
