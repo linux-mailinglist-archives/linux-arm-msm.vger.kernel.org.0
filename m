@@ -2,66 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C4AE526D6A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 01:20:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B05E526D9D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 02:02:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230031AbiEMXUP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 19:20:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49316 "EHLO
+        id S229460AbiEMXzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 19:55:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbiEMXUO (ORCPT
+        with ESMTP id S229441AbiEMXzJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 19:20:14 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1B8EBC6D1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 16:18:42 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id i38so17672663ybj.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 16:18:42 -0700 (PDT)
+        Fri, 13 May 2022 19:55:09 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 717993A8AC7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 16:45:36 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id i10so16911116lfg.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 16:45:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=peFPtL0ZhzsJZHNucBDtSwt3F1izphFO+BREPiZmQjc=;
-        b=neoc4bliNIEuwITc3td2ZW08qZUSbSxEOpHqeR4p8ZRBmPCnGFYguhLglAwZ+Zg7GD
-         IHiTKfAwBSBXj7zRbP+cFmi6g6NOO26eqWMaoEdHKOEqxwwVH7Sas76I3p9g5NJHnV3j
-         UTZnJJHhKUxrjf/+krI5Du+FGuy3MSr/HUPLfnZYZCf4sLJsQUT6O/jh9YTkbrBQBBP6
-         6ukMi/1/AukIUqqMlEqPnDoE25XZyk57RvDoJOxucC5Qln8wTzBuHoUXMac9Pc7evjuq
-         ou0AQn4ZteR4wxH0ZzwnY4OpDeFAx58uf/pZ59dN0BdDBLIQayLelu0NaoS8mxsQKyZp
-         /WMA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3coptSTcGA7KypoKZXkrTWNT5EPdBpjYIMaRVPMsJBY=;
+        b=AXHjNtsuiVQTpne6SfqrZqeCD54SmmFhgYW+yfZCEvZzVJp7g0ruiP9scGl1U3NM4C
+         /BaTWyS3pJeHotMyzXfp85skrMWAFT+6SrzcB0VfBZNW7pH09Xxe/hjh2Pk5VBxkMLrd
+         wxkxk/gMoX8VA1Fe459O6Z9Q582J4Nz0PrHrMC+KlL372hSLJo4ApIfLatTQjQTPAZvr
+         LfVmLfm+tGwluYENy8f1c/X8Ml3uxr0tBvkVedGcV/PMIiryY2uR/jkvMwPeIwY3UlnX
+         Tz31CZXNUjbeqFfgFMGCuWiAwTk52fbTvMh5Z7r94JkAGlsrVXDS5dLF1f6qru9/UGeV
+         49Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=peFPtL0ZhzsJZHNucBDtSwt3F1izphFO+BREPiZmQjc=;
-        b=e0YUOYmDkJ0vcywnufFXAd7BXm4FytjETKxKuc0C+93VL8JA6cvKjjoSrv4BHHlB5A
-         TaSks56KgvpnkiK0hv+kl7TElDulaVgAQxHarp5JEoDceqbe5jL95MIrMXdjYan7+/Ov
-         aGevxBTD0H5T5W0gM+ziTu2gR8zqndEZlW7V1nT7HLvo2HcTJc2JVCZwKh6jWyGLdC8G
-         wA9IuSjNwZ7Yh7F8jOnZ/d5Yr+FtAsH6SPLXhDELZMKDTQ0VgNnx17WUDwYxTbS1TunZ
-         5JTyLqRCtra7PbRpFb9xkxo1O1KM67Mp7efHWdtEj6c1wvp0isr0hFf2PubbXeQYh/R5
-         5X8w==
-X-Gm-Message-State: AOAM532rxirKCtSezwmVJxIPGLpohDfuNViaIxTkuE2DmIM74I0wnHx6
-        wObXHYlhikbnK27uC7DXifmWiGf/qQzNOg6+adxQTw==
-X-Google-Smtp-Source: ABdhPJzq/anb8INHniF8SiNul15kIbegKtWUZLQxaVHXqzCkz8MczW1Rtjm+OV0/55vE2qrtnxfGrJFNvmZgkA2MHhQ=
-X-Received: by 2002:a25:bcc3:0:b0:648:7360:8e75 with SMTP id
- l3-20020a25bcc3000000b0064873608e75mr7252850ybm.533.1652483921333; Fri, 13
- May 2022 16:18:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220508135932.132378-1-krzysztof.kozlowski@linaro.org> <20220508135932.132378-2-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220508135932.132378-2-krzysztof.kozlowski@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Sat, 14 May 2022 01:18:30 +0200
-Message-ID: <CACRpkdZLsw7rU113x88MKxTUEPgueLHf+7Pu4FevCAQLP2jBqg@mail.gmail.com>
-Subject: Re: [PATCH 1/4] dt-bindings: pinctrl: qcom,pmic-gpio: add 'gpio-reserved-ranges'
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3coptSTcGA7KypoKZXkrTWNT5EPdBpjYIMaRVPMsJBY=;
+        b=5ar9XSPkA0i2IvoVXrx92+FM3lLXKrsSRaFN0gf00/pJSRfFq/yEfeTeH8CAluH2oX
+         ai2P5foTRNfZ1dfXC+V1DkWmaNJQSmCLgy29IP9VnhkRW/5vnQ80unO0shaNhG0dl/+R
+         gbriVOfj605iGbgEMCndg7q75A/F3+tLZYgjXzEouTz0MP8iZhLSZ6//LaXuaJY8xAQc
+         TZYBM3kVDIp4S2RGq7GmDbQkexd0bBXheQ1+RUuC5OQNAV1J72udut4U5P0izCXAm6CK
+         v8SyCLomoKkPB94A3UrQL76NUoxZgjEqHphnvzJawZQw4Gan6N2S3BhsLaiM41+dELVh
+         qxzg==
+X-Gm-Message-State: AOAM533EOIe7PWPz9qGuFX1oJ2Y1aSoiwLM2KXacVLYvUlUyiFO9H4d/
+        pwZp3UgvNDCiwPHQTXJFNXTQgQ==
+X-Google-Smtp-Source: ABdhPJzpk8BnALUUcy2fNAUcadJ6hsyk5mbR49jSY23KTAO/gyXM6TzbP4Tmn7GxiY9khRKdL8PhRA==
+X-Received: by 2002:a05:6512:32c1:b0:473:e3f3:fdf8 with SMTP id f1-20020a05651232c100b00473e3f3fdf8mr4802683lfg.283.1652485519393;
+        Fri, 13 May 2022 16:45:19 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id o8-20020a05651205c800b0047255d2118csm527342lfo.187.2022.05.13.16.45.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 May 2022 16:45:19 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, David Heidelberg <david@ixit.cz>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v3 0/8] arm64: dts: qcom: initial Inforce IFC6560 board support
+Date:   Sat, 14 May 2022 02:45:10 +0300
+Message-Id: <20220513234518.3068480-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -72,18 +71,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 8, 2022 at 3:59 PM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+This work is largely based on the previous work by Bjorn Andersson ([1])
 
-> 'gpio-reserved-ranges' property is already used and supported by common pinctrl
-> bindings, so add it also here to fix warnings like:
->
->   qrb5165-rb5.dtb: gpio@c000: 'gpio-reserved-ranges' does not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Changes since v2:
+- Removed useless enablement of mdp node from the board file. It is
+  already enabled in the SoC dtsi file.
 
-This does not apply on top of pinctrl's devel branch, am I doing
-something wrong?
+Changes since v1 (mostly based on Kondrad's review):
+- Also disabled dsi0/dsi0 phy in sdm630.dtsi
+- Removed the clock from BAM DMA devices rather than disabling them
+  completely
+- Replaced numbers with symbolic names for interconnects in sdm630.dtsi
+- Switched to "qcom,sda660" as a fallback compatible string
+- Added dt-bindings for the qcom,sda660 compat
+- Removed extra nesting level from the adsp firmware path
+- Replaced numbers with proper symbolic names in the board file
+- Added chassis-type property
+- Changed the order of blsp entries in the board file
+- Removed spurious newlines
+- Changed the order of regulator properties
+- Changed the DSI data-lines to list all four lanes. Still use just
+  three lanes for the adv bridge (and describe the reason in the
+  comment)
 
-Yours,
-Linus Walleij
+Changes since Bjorn's v2:
+- Disable dsi1, dsi1 phy, GPU by default in sdm660.dtsi/sdm630.dtsi
+- Fix qusb2phy ref clock
+- Added USB2 host support to sdm630.dtsi
+- Renamed DTS to follow SoC-vendor-board pattern
+- Fixed vph_pwr voltage
+- Removed extra/unrelated comments
+- Added keys, USB2, USB3,
+- Added configuration for the attached HDMI bridge
+- Enabled MDP, MDSS and DSI0/DSI0 PHY devices
+- Removed uart pinctrl and /reserved-mem nodes (present in main dtsi
+  file)
+- Added card detection for the SDCC2
+- Disabled BLSP BAM DMA devices, they make the board reset during boot
+
+[1] https://lore.kernel.org/linux-arm-msm/20210825221110.1498718-1-bjorn.andersson@linaro.org/#t
+
+Dmitry Baryshkov (8):
+  arm64: dts: qcom: sdm660: disable dsi1/dsi1_phy by default
+  arm64: dts: qcom: sdm630: disable dsi1/dsi1_phy by default
+  arm64: dts: qcom: sdm630: disable GPU by default
+  arm64: dts: qcom: sdm630: fix the qusb2phy ref clock
+  arm64: dts: qcom: sdm630: add second (HS) USB host support
+  arm64: dts: qcom: sdm630: use defined symbols for interconnects
+  arm64: dts: qcom: sdm660: Add initial Inforce IFC6560 board support
+  dt-bindings: arm: qcom: document sda660 SoC and ifc6560 board
+
+ .../devicetree/bindings/arm/qcom.yaml         |   6 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sda660-inforce-ifc6560.dts  | 455 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          |  85 +++-
+ arch/arm64/boot/dts/qcom/sdm660.dtsi          |   3 +
+ 5 files changed, 538 insertions(+), 12 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+
+-- 
+2.35.1
+
