@@ -2,206 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3883A525FE0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 12:39:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C4D2526079
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 13:00:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379441AbiEMKc5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 06:32:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37056 "EHLO
+        id S231683AbiEMLAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 07:00:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355193AbiEMKc5 (ORCPT
+        with ESMTP id S1353808AbiEMLAu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 06:32:57 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12AF2C9ED7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 03:32:55 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id g23so9376262edy.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 03:32:54 -0700 (PDT)
+        Fri, 13 May 2022 07:00:50 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5704140FF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 04:00:48 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id t11-20020a17090ad50b00b001d95bf21996so10492064pju.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 04:00:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=O6FiHPs6TyRR3hcZC36X6uXYX5doF+6brHiz72Bmp3Y=;
-        b=ESeWu6hBSMOQJBwvo98owd3dc9xTpa8qMO8//YKXHXjKIGYKVo1JsZBsr6njl8ehSu
-         7E1K+hGXZtM2f9CE3cbGjof/WV4EeK9S3SwF2jFtH+1afXmrnnCG/m/TFRosldC1dzWE
-         WedDyoMKeks19xDflSrq+4Lb4tbSwRJlFibN7/nxnKkcAJs/8FxuNqxnE4XRZU9pHnJ7
-         JM4np+n5LBPtvfY53RW7yyQA3Hi75fahXxsFnjbTUtIIxFXYgF2S2PMu2mvZ8Ge0cXwj
-         50/0sMzC+4ZHJQmdQHlZTZmbnp6vvML/MgMuPyLPXdtR6IwLZ8ydrhWtTncdxn5sLF0y
-         a9sA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PNdOq8t7JPWMUm+zuKo42J05VFvuGcXIEWGUnieUQq8=;
+        b=Aby8aznXD9r0cpduz4gPRNbEOwt3jnfmn1L1cpN5i+xaJnDLAKGpkNeSk/S+x0nHvA
+         DtDAoalZtiCQUrNS6T/clwmhq1EARzkAX5hrLUaf4H6Js4uPhGkCNkdVWiHG4SEil1Ij
+         SKB3qCz/woLhiCRxQ6q0NY9Ka6SiCGvPkqGXUvbJn4jSInXfNspfJ+wBICwF4igTAZFx
+         uZ9pcc2cSPVuoo2jFRQrvseyy83Y3wrD/0YXISPrOM1gHtgosGY1e+v4sWLVfg5sdolw
+         O7Jv2cao2Q4qvkCUoKOtLJxtr9bpqedg6fOwuzilqlRMi8t3Meg/lPFVODGOzUQ+E2R+
+         vMIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=O6FiHPs6TyRR3hcZC36X6uXYX5doF+6brHiz72Bmp3Y=;
-        b=3bc1ESEz3lfXPuROsWXP2YDHUly24WFBpQfYAJZ9gJFretC5zPHvOT95lpwdG6daUc
-         ZT1eH6ufMItsnIb4Ea7Zi+v89nfqj7RDIkyNdkE3M5MS/vzY/KOSyzq3KrczCKA3Al7q
-         0ei+ETGzmAH8WACCNnHIG8IV1BMSP6ow/3Nb0Mv49VM3Krp73f/JrunGyG92GYSdxFyu
-         aYgP8JaJqtt3xK3g/zAz+5fi7Jvh+CRCIPpqtmMWEDDVWOkWzAXxxs9GYPWKAmn2+wnh
-         Ukw5jm7Kn9ls4hU9yTBt2Qrylo9ufYgzNJOSS8gV3zgHuhYbXZwFQ/lAD4HningLqtvL
-         WXiw==
-X-Gm-Message-State: AOAM533LaP6Pmz3BOrsZewsaKpqv1rwSfadyuh37Z4OTBQsgyPi5Jfk7
-        a/tM13zfYPTzt7apcxNgl0a4UQ==
-X-Google-Smtp-Source: ABdhPJxnxBRqoRRtonBw76pxckczcwui8tR3W20OfcDi/UUxotwJDJc16TYmbr5VAXgcERSaecmHyQ==
-X-Received: by 2002:aa7:ca0d:0:b0:428:90ee:322c with SMTP id y13-20020aa7ca0d000000b0042890ee322cmr30383575eds.100.1652437973639;
-        Fri, 13 May 2022 03:32:53 -0700 (PDT)
-Received: from [192.168.0.171] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id gv2-20020a1709072bc200b006f3ef214df5sm636959ejc.91.2022.05.13.03.32.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 May 2022 03:32:53 -0700 (PDT)
-Message-ID: <5f7dfcba-7e65-4f54-8699-e44ce11e216e@linaro.org>
-Date:   Fri, 13 May 2022 12:32:51 +0200
+        bh=PNdOq8t7JPWMUm+zuKo42J05VFvuGcXIEWGUnieUQq8=;
+        b=BPNeXLgiHEsV/WTUx8vvacq/yQuvfSr7HUOmJXUQOxXQG54RR97zPpiumMkKVoOdRK
+         6yFiF5mH0bI49FkH/6J7N5S69iNsFC/abks9rGvC6hZQ/58tmMOXLiRcPObPdFpHcEeb
+         kZ3hlRWCDuuZeC/Xz/1MIoUD8FSZ+C7pNq4o3gCwDKWvKS/bKS6dowoeGLBvC+OBFKsf
+         zbCkJQ+pua+XKjsgLcnyysZZLKPS1KP5+6ASUUis1Zt5vH18ZibwLCnBZOl6LPU6RRcD
+         CM/FnsQmrTIWRPkmCSklHHNZnip2O4TUd8d+fbmj6a0RtyJRL90ylRal2L94Ue48jAR9
+         +8hg==
+X-Gm-Message-State: AOAM531RbG+qm7uzEU9yIYrLW9UaZjyMns+Arnc/NfvjHtV1Gp6LmBE0
+        BJGsG+yoKg8IZQDzSXwqDK8o
+X-Google-Smtp-Source: ABdhPJx/lj+9GtKbU69bsELbuMcfzZNECYpmx52MJZ5Pm+xKR/MzE5L/DF1hY44DChJqj90mR3eIwA==
+X-Received: by 2002:a17:903:11c7:b0:151:7290:ccc with SMTP id q7-20020a17090311c700b0015172900cccmr4386684plh.95.1652439648056;
+        Fri, 13 May 2022 04:00:48 -0700 (PDT)
+Received: from localhost.localdomain ([117.202.184.202])
+        by smtp.gmail.com with ESMTPSA id u36-20020a631424000000b003db0f2d135esm1322120pgl.49.2022.05.13.04.00.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 May 2022 04:00:47 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     bhelgaas@google.com, lorenzo.pieralisi@arm.com, kbusch@kernel.org,
+        hch@lst.de
+Cc:     linux-nvme@lists.infradead.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        svarbanov@mm-sol.com, bjorn.andersson@linaro.org, axboe@fb.com,
+        quic_vbadigan@quicinc.com, quic_krichai@quicinc.com,
+        quic_nitirawa@quicinc.com, vidyas@nvidia.com, sagi@grimberg.me,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/3] PCI: Notify PCI drivers about powerdown during suspend
+Date:   Fri, 13 May 2022 16:30:24 +0530
+Message-Id: <20220513110027.31015-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [v4 1/3] dt-bindings: phy: qcom,usb-snps-femto-v2: Add phy
- override params bindings
-Content-Language: en-US
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-References: <1652282793-5580-1-git-send-email-quic_kriskura@quicinc.com>
- <1652282793-5580-2-git-send-email-quic_kriskura@quicinc.com>
- <d296720d-ccbe-27f0-8ba1-9653af25dd52@linaro.org>
- <3abbb26f-9396-d024-67f6-f24f7db3408d@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <3abbb26f-9396-d024-67f6-f24f7db3408d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/05/2022 09:33, Krishna Kurapati PSSNV wrote:
-> 
-> On 5/11/2022 11:49 PM, Krzysztof Kozlowski wrote:
->> On 11/05/2022 17:26, Krishna Kurapati wrote:
->>> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
->>>
->>> Add device tree bindings for SNPS phy tuning parameters.
->>>
->>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
->>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->>> ---
->>>   .../bindings/phy/qcom,usb-snps-femto-v2.yaml       | 87 ++++++++++++++++++++++
->>>   1 file changed, 87 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->>> index 1ce251d..70efffe 100644
->>> --- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->>> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->>> @@ -53,6 +53,93 @@ properties:
->>>     vdda33-supply:
->>>       description: phandle to the regulator 3.3V supply node.
->>>   
->>> +  qcom,hs-disconnect-bps:
->>> +    $ref: /schemas/types.yaml#/definitions/int32
->>> +    description:
->>> +      This adjusts the voltage level for the threshold used to
->>> +      detect a disconnect event at the host. Possible values are.
->>> +      The values defined are in multiples of basis points (1bp = 0.01%).
->> This means there is some minimum and maximum (100%)?
->>
->>> +      The hardware accepts only discrete values. The value closest to the
->>> +      provided input will be chosen as the override value for this param.
->>> +
->>> +  qcom,squelch-detector-bps:
->>> +    $ref: /schemas/types.yaml#/definitions/int32
->>> +    description:
->>> +      This adjusts the voltage level for the threshold used to
->>> +      detect valid high-speed data.
->>> +      The values defined are in multiples of basis points (1bp = 0.01%).
->>> +      The hardware accepts only discrete values. The value closest to the
->>> +      provided input will be chosen as the override value for this param.
->>> +
->>> +  qcom,hs-amplitude-bps:
->>> +    $ref: /schemas/types.yaml#/definitions/int32
->>> +    description:
->>> +      This adjusts the high-speed DC level voltage.
->>> +      The values defined are in multiples of basis points (1bp = 0.01%).
->>> +      The hardware accepts only discrete values. The value closest to the
->>> +      provided input will be chosen as the override value for this param.
->>> +
->>> +  qcom,pre-emphasis-duration-bps:
->>> +    $ref: /schemas/types.yaml#/definitions/int32
->>> +    description:
->>> +      This signal controls the duration for which the
->>> +      HS pre-emphasis current is sourced onto DP<#> or DM<#>.
->>> +      The HS Transmitter pre-emphasis duration is defined in terms of
->>> +      unit amounts. One unit of pre-emphasis duration is approximately
->>> +      650 ps and is defined as 1X pre-emphasis duration.
->>> +      The values defined are in multiples of basis points (1bp = 0.01%).
->>> +      The hardware accepts only discrete values. The value closest to the
->>> +      provided input will be chosen as the override value for this param.
->>> +
->>> +  qcom,pre-emphasis-amplitude-bps:
->>> +    $ref: /schemas/types.yaml#/definitions/int32
->>> +    description:
->>> +      This signal controls the amount of current sourced to
->>> +      DP<#> and DM<#> after a J-to-K or K-to-J transition.
->>> +      The HS Transmitter pre-emphasis current is defined in terms of unit
->>> +      amounts. One unit amount is approximately 2 mA and is defined as
->>> +      1X pre-emphasis current.
->>> +      The values defined are in multiples of basis points (1bp = 0.01%).
->>> +      The hardware accepts only discrete values. The value closest to the
->>> +      provided input will be chosen as the override value for this param.
->>> +
->>> +  qcom,hs-rise-fall-time-bps:
->>> +    $ref: /schemas/types.yaml#/definitions/int32
->>> +    description:
->>> +      This adjusts the rise/fall times of the high-speed waveform.
->>> +      The values defined are in multiples of basis points (1bp = 0.01%).
->>> +      The hardware accepts only discrete values. The value closest to the
->>> +      provided input will be chosen as the override value for this param.
->>> +
->>> +  qcom,hs-crossover-voltage-mv:
->>> +    $ref: /schemas/types.yaml#/definitions/int32
->>> +    description:
->>> +      This adjusts the voltage at which the DP<#> and DM<#>
->>> +      signals cross while transmitting in HS mode.
->>> +      The values defined are in milli volts. The hardware accepts only
->>> +      discrete values. The value closest to the provided input will be
->>> +      chosen as the override value for this param.
->>> +
->>> +  qcom,hs-output-impedance-mohm:
->>> +    $ref: /schemas/types.yaml#/definitions/int32
->> Here and in other places, please use standard units. See
->> dtschema/schemas/property-units.yaml in dtschema repo.
->>
->>
->> Best regards,
->> Krzysztof
-> 
-> Hi Krzystof, thanks for the input.
-> 
-> I see there are microvolt and microohm units present in 
-> schemas/property-units.yaml
-> 
-> Would it be possible to add bps (basis point) to the list of standard 
-> units if it makes sense to use it ?
+Hi,
 
-There is already 'percent' so 'bp' could be as well, makes sense to me.
-I can send a patch for it and we'll see what Rob says.
+This series adds support for notifying the PCI drivers like NVMe about the
+transition of PCI devices into powerdown mode during system suspend.
 
+Background
+----------
 
-Best regards,
-Krzysztof
+On Qcom SC7280 based Chrome platforms, the OS will turn off the power to all
+PCIe devices during system suspend for aggressive powersaving. Currently, there
+is no way for the PCI device drivers to learn about this situation. Some of the
+drivers assume that the power will be retained and some others assume that the
+power may be taken down.
+
+We faced the issue with NVMe PCI driver, where the driver expects the NVMe
+device to be in APST (Autonomous Power State Transition) state for power saving
+during system suspend. So when the power goes down, the NVMe driver fails to
+bringup the device during resume.
+
+Previous work
+-------------
+
+We tried to fix this issue in a couple of ways:
+
+1. The NVMe PCI driver checks for the existence of "StorageD3Enable" ACPI
+property in the suspend path. If the property is found, the driver assumes that
+the device may go to poweroff state and shutdowns the device accordingly.
+
+As like the ACPI based systems, we also tried to get the support in place for
+DT based systems. But that didn't get accepted:
+https://lore.kernel.org/all/Yl+6V3pWuyRYuVV8@infradead.org/T/
+
+2. Keith Busch proposed a module params based approach. The parameter when set,
+will allow the driver to support APST during suspend. Absence of that parameter
+will let the driver shutdown the device.
+
+This also did not get accepted:
+https://lore.kernel.org/linux-nvme/20220201165006.3074615-1-kbusch@kernel.org/
+
+Proposal
+--------
+
+Christoph suggested to add a notification in the PCI/PM core to let the NVMe
+driver know that the device will go into powerdown state during suspend.
+https://lore.kernel.org/all/Yg0wklcJ3ed76Jbk@infradead.org/ 
+
+Hence in this series, a "suspend_poweroff" flag is introduced in the host bridge
+struct. When this flag is set by the PCI RC drivers, the PCI device driver like
+NVMe can shutdown the device during suspend.
+
+In the coming days, the usage of this flag could be extended to other PCI
+drivers as well.
+
+Testing
+-------
+
+This series has been tested on SC7280 IDP board connected to a NVMe PCI device.
+
+Thanks,
+Mani
+
+Manivannan Sadhasivam (3):
+  PCI: Add a flag to notify PCI drivers about powerdown during suspend
+  PCI: dwc: qcom: Set suspend_poweroff flag for SC7280
+  nvme-pci: Make use of "suspend_poweroff" flag during system suspend
+
+ drivers/nvme/host/pci.c                | 3 ++-
+ drivers/pci/controller/dwc/pcie-qcom.c | 6 ++++++
+ include/linux/pci.h                    | 1 +
+ 3 files changed, 9 insertions(+), 1 deletion(-)
+
+-- 
+2.25.1
+
