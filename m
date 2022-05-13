@@ -2,85 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D316526348
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 15:54:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 540F3526354
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 15:57:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232147AbiEMNwt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 09:52:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56108 "EHLO
+        id S230452AbiEMN5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 09:57:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231727AbiEMNwA (ORCPT
+        with ESMTP id S230512AbiEMN5g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 09:52:00 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7789856436
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:50:15 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id o22so9474943ljp.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:50:15 -0700 (PDT)
+        Fri, 13 May 2022 09:57:36 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50F81712ED
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:57:34 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id w17-20020a17090a529100b001db302efed6so7855340pjh.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:57:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=RCbegzXr0AopN7OWP2qTKDNO4iaT5GNljew1oaaVSSk=;
-        b=y/JWMFhEoVBwOh9iLovplFTwQMMkFhwPvyBP+jXd0y84M86PZZOz6JzzuRIJc1/50D
-         Nua7VHjmMsXKqNkwcPraRAOCK6k1pCuMFgv6mBfBKPR4Ex4qor3w94leoCtHlzF9OLVE
-         2d59vjjCtbUqRZCpxNw7bCHavtZrlQauH1lDZVruh8cajzUQRAOQ/sLekWUoAZr3ZnQt
-         8Gt1zax1pjShBoRZMeocMHC6yWIM+WrSyeSI4sgZ31Trlc34NpwgVg/vnABvJwjSRJjK
-         M3+3RHtm4gCMfYYjGaZK4Qbozrh6s1ljU7WUyivnAad/qscTLo7PsQ+85tU05BPwbgsY
-         AEbg==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=c38pckiAKbL4R5gHxVgybPN8tZ+xHGcvHTSt+rrxRXI=;
+        b=Aj0zmrOaKti+xYakhuf30LNS9d4gixVrjVffHak/1ybBgigezMf2WbGLhH4zREtA7i
+         UOCRkjtXh4tXDHwTNxDVAbZhvyrT1JU1yZ66a2XAAxW7TQIpnCm6LY8SRCeknr88LLPo
+         SUXgWuDxFtra4m7lNPXmTUuqyfV6H31zK0lHM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=RCbegzXr0AopN7OWP2qTKDNO4iaT5GNljew1oaaVSSk=;
-        b=wyrZLd0rxT34lIeinExE8w2bn/oHg4B5mDzWZbhqJRHpiGXqejXYF2C7mWaRD8hByR
-         AAuxWtF/gqi9xkUpWjXM2LvkYtNtyKfvGL+aXL7LYkNA90TnNx0gKYV3NBk3PASQXoEP
-         gE2gsYYdw4fcusi0T5fVphLnQ5BDIA9IuyuzhgYh6RhdQetjOf1ZO3fk0qFE2jKHJQTV
-         Lej7YWHWvUPlquzo833uoI9VPt/PBYf8kf6XDO2mnNiUpOH6d3Mr5obietE8hTDJido+
-         HkSf3A5eXDAotwhbziuhR6zVvs0mXbcQ4EJ0aResHw+7ug1KJrwCPw1Zk9DGRrU3ELL/
-         tcGA==
-X-Gm-Message-State: AOAM532xqVa2dy/hf5o/551z9hmpqidd893ydu9XwIjH4+oSrlucfs+3
-        ZhjzQx4mMlLGLfbpcVP+8lve/A==
-X-Google-Smtp-Source: ABdhPJzspehYpZqjRHyIDQsSJpReakeJmzkr4BaWpo7Pr5K+BQv1mfbWukZOq62yJAX933nqrV+yiw==
-X-Received: by 2002:a05:651c:1313:b0:24f:517c:ffad with SMTP id u19-20020a05651c131300b0024f517cffadmr3130956lja.111.1652449813499;
-        Fri, 13 May 2022 06:50:13 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o11-20020ac2494b000000b0047255d2113esm386995lfi.109.2022.05.13.06.50.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 May 2022 06:50:12 -0700 (PDT)
-Message-ID: <8f13d1e4-eaca-a8ef-510a-6b2e039612d6@linaro.org>
-Date:   Fri, 13 May 2022 16:50:11 +0300
+        bh=c38pckiAKbL4R5gHxVgybPN8tZ+xHGcvHTSt+rrxRXI=;
+        b=tGR5je2u8SLTIbTH1JSXz6NrXV9rE6S/W6uDcnpYFSXAK8xgvw/qPf7zt0Lv9Dbx0J
+         v8MnNZCwbD48fw8wtKVkh3Nyw0e8mJOxdj2WpL8LkehTdW3UsMyj0sI/1FkXZmFVCZu/
+         MDAXI4sXZ0Eqo4cuCC7I3X86xmw26wd7H3B6x6km2JtKd6dgQyZeF9JzlxDe5UIwXRW+
+         eHgdOPuHODK7963U3OmtiIOrTEZabCEQT1aNitefvMIsky1H+FVFo6xTIkI8tNTpeuma
+         MiYCxVO8U1eDHuaRnEO5eMMV3vpWYeyXFx+p1F1sJfYGzoOGZ7AvnHT2EOzPRZlU7qI5
+         lpmQ==
+X-Gm-Message-State: AOAM533k+YR1QwN3MoxgRlZF068uKSps6Jc6DKUGjQzHFOpOGOGclX2q
+        IddPSbvg1yt6NF9qXyFRLC023A==
+X-Google-Smtp-Source: ABdhPJypfdJ6x5Kten/v6OEf0RQgmVULwcLl0muJOPJ+GbmUvv32LL9LYZnsjMVnVyL/VoEiVqjEVQ==
+X-Received: by 2002:a17:90a:a82:b0:1da:3763:5cf5 with SMTP id 2-20020a17090a0a8200b001da37635cf5mr5138007pjw.55.1652450253811;
+        Fri, 13 May 2022 06:57:33 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:1ee3:ea22:908:c2b5])
+        by smtp.gmail.com with ESMTPSA id p123-20020a625b81000000b0050dc76281d7sm1843921pfb.177.2022.05.13.06.57.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 May 2022 06:57:33 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     quic_aravindh@quicinc.com, quic_khsieh@quicinc.com,
+        quic_sbillaka@quicinc.com, Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>, quic_abhinavk@quicinc.com,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: qcom: sc7280-herobrine: Enable DP
+Date:   Fri, 13 May 2022 06:57:14 -0700
+Message-Id: <20220513065704.1.I9b9b9d4d1a3e0350a89221892261881a1771ad15@changeid>
+X-Mailer: git-send-email 2.36.0.550.gb090851708-goog
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v8 00/10] PCI: qcom: Fix higher MSI vectors handling
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220512104545.2204523-1-dmitry.baryshkov@linaro.org>
- <Yn4dvpgezdrKmSro@hovoldconsulting.com>
- <CAA8EJppzx5nkyk3gCcgFd2G_QewU0Z6q6DAKb-Lyj9yZyMo_AA@mail.gmail.com>
- <Yn4ms7dKIzeAqt7A@hovoldconsulting.com>
- <CAA8EJppt4kiG45j62W-Z7Ech8WLNnkPYiVv7T0AK-+Dxtc_KDQ@mail.gmail.com>
- <Yn5UqtxmNGWerTdT@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <Yn5UqtxmNGWerTdT@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,81 +71,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/05/2022 15:52, Johan Hovold wrote:
-> On Fri, May 13, 2022 at 01:10:44PM +0300, Dmitry Baryshkov wrote:
->> On Fri, 13 May 2022 at 12:36, Johan Hovold <johan@kernel.org> wrote:
->>>
->>> On Fri, May 13, 2022 at 12:28:40PM +0300, Dmitry Baryshkov wrote:
->>>> On Fri, 13 May 2022 at 11:58, Johan Hovold <johan@kernel.org> wrote:
-> 
->>> But you also added
->>>
->>> +        - properties:
->>> +            interrupts:
->>> +              minItems: 8
->>> +            interrupt-names:
->>> +              minItems: 8
->>> +              items:
->>> +                - const: msi0
->>> +                - const: msi1
->>> +                - const: msi2
->>> +                - const: msi3
->>> +                - const: msi4
->>> +                - const: msi5
->>> +                - const: msi6
->>> +                - const: msi7
->>>
->>> which means that I can no longer describe the four interrupts in DT.
->>>
->>> I didn't check the implementation, but it seems you should derive the
->>> number of MSIs based on the devicetree as I guess you did in v7.
->>
->> It is a conditional, so you can add another conditional for the
->> sc8280xp platform describing just 4 interrupts. And as you don't have
->> legacy DTS, you can completely omit the backwards compatible clause in
->> your case.
->> So, something like:
->>   - if:
->>     properties:
->>        contains:
->>           enum:
->>              - qcom,pcie-sc8280xp
->>    then:
->>      properties:
->>         interrupts:
->>            minItems: 4
->>            maxItems: 4
->>         interrupt-names:
->>             items:
->>                - const: msi0
->>                - const: msi1
->>                - const: msi2
->>                - const: msi3
-> 
-> Ok, so the driver code still handles it, thanks.
-> 
-> Are you able to confirm that all sc8280xp systems have only four msi
-> IRQs?
+This enables DisplayPort for herobrine boards.
 
-Unfortunately no. I don't have access to the sc8280xp docs. Let's see if 
-BjornA can confirm this.
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-> This seems like another case of using the kernel as a DT validator by
-> describing things in two places and making sure that they match.
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Yep, this seems like a bad habit of mine: to distrust the DT.
-
-> 
-> I assume the number of vectors will always be a multiple of the numbers
-> of msi IRQs. Right? Then we don't need to encode this number for every
-> supported platform in the corresponding PCIe driver even if we end up
-> describing it in the binding.
-
-But it was your suggestion!
-
-Let's drop the warning then, parse what was passed by the DT and just 
-print the total amount of MSI IRQs.
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index 9cb1bc8ed6b5..709b7aa02101 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -429,6 +429,15 @@ &mdss {
+ 	status = "okay";
+ };
+ 
++&mdss_dp {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&dp_hot_plug_det>;
++	data-lanes = <0 1>;
++	vdda-1p2-supply = <&vdd_a_usbssdp_0_1p2>;
++	vdda-0p9-supply = <&vdd_a_usbssdp_0_core>;
++};
++
+ &mdss_mdp {
+ 	status = "okay";
+ };
 -- 
-With best wishes
-Dmitry
+2.36.0.550.gb090851708-goog
+
