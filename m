@@ -2,58 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DD5E525E98
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 11:19:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DC70525E6C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 11:19:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378470AbiEMIoN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 04:44:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51550 "EHLO
+        id S1378674AbiEMIwB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 04:52:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378502AbiEMIoL (ORCPT
+        with ESMTP id S1348514AbiEMIwA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 04:44:11 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 918AC2AC0E9;
-        Fri, 13 May 2022 01:44:06 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id g6so14899913ejw.1;
-        Fri, 13 May 2022 01:44:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iZuFOu7mi3R6oaoaxmRQI9ZUruMPyMLHtg+6pEfGbWE=;
-        b=QYRK3klwC97qKC35SuJKJwR3ljh55QviJszDrOQTatoqR3xNXMtv7y2tvL4oQ4/62i
-         bStx1dSMmwYPsweHMouSZ6m5taR7WQzEu4YiXV4kG4shELh1Ig+35kxhhXG61u6AKgdc
-         pR61dzxoH6r/PYTiXE54q8E3yCNMWAMevaU2PXapNsGNmJc1ml+5L1Q6Tjs9N5s+JT6q
-         rYQdkbioGf8769je7PEU73DViMl73nUYqx0s50EQ1tqJRvqGOqGUz1G97vxB8p4MZG7x
-         OxETS/BRxq/yxN3NaDWXol9IcY2gYO5HUGyfVJuJsd437aNM2RCZxQnR2QOufjV10Ygz
-         s4Qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iZuFOu7mi3R6oaoaxmRQI9ZUruMPyMLHtg+6pEfGbWE=;
-        b=zVY8YQJhxoea1hxBQci07SzzKWd+ZZC5U0c6eN/314GCaOsVhK9kZBjpDQPgCt7a1I
-         ouLJmefim5iYRK0zr+hKjO1oO1PfqZ+OD3kjD2mRAobYr+LQhnjqFh/avyb/htS2Yapr
-         8Ys8Zy3ZI/PYWbyAo9nqj2jtbHQaJgHaL2n1NvN08MpiwEyZSIsj8U+hYfideCzNQorF
-         ccTzcSqLrWyk99cEBmbjiwhad3kNBimyxK/PD6Mutvio0OfOXWWQ3T6Wmup7Gd13uUve
-         fcRe3oQnL3wIxE5p2VjZBgEVykuRGdrqLpcGJ6+R74lQ1ayLZzBR8GMEsM51WQvsshC6
-         wdRA==
-X-Gm-Message-State: AOAM530F2tu80uAjDmRXDzcM4CRGQ3NI3KomxnUE9hiUcDBQxUZYYArg
-        FFil6TCZuerdw1TpjXucWquTV6T1FHqujrzfCt4=
-X-Google-Smtp-Source: ABdhPJwPYgn9qjZuHBlcNiKfKy33XVPFV4ohp7JOvTJYAgY2JqdWz2SullZNfUvaf3cvYaAWXCITaYTI8Ji7in/u2hk=
-X-Received: by 2002:a17:906:c10d:b0:6f4:a770:846e with SMTP id
- do13-20020a170906c10d00b006f4a770846emr3263286ejc.497.1652431444879; Fri, 13
- May 2022 01:44:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220419141846.598305-1-maz@kernel.org> <Yn0/DIl3+i/heRH6@smile.fi.intel.com>
- <Yn1Fe4WPp3ZaUERj@smile.fi.intel.com> <87tu9umm3k.wl-maz@kernel.org>
-In-Reply-To: <87tu9umm3k.wl-maz@kernel.org>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Fri, 13 May 2022 10:43:29 +0200
-Message-ID: <CAHp75VfKMEcr1U=YQFfDRCpU=2LE78c76fSsAOFTWZHaswdiwg@mail.gmail.com>
-Subject: Re: [PATCH v3 00/10] gpiolib: Handle immutable irq_chip structures
-To:     Marc Zyngier <maz@kernel.org>
+        Fri, 13 May 2022 04:52:00 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A43D11FE1DB;
+        Fri, 13 May 2022 01:51:58 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 552E1B82CD3;
+        Fri, 13 May 2022 08:51:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BEE8C34100;
+        Fri, 13 May 2022 08:51:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652431916;
+        bh=Z9GNVgKPYgZkKWB6ukAD87t5wipTy5BqfBoBFI3+5tE=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=hLLoD0NB9PRvpctpe75eS4G7itCJY3McuHxXJrSO0E2FCQs3vBTR8RbexYLO6/Zst
+         4hNP80cRsC3y9ngKTwTeNhhjyiMXQnjqLKPSDIeEu+NrhLu0bQtxJ0nm0GlUJgGVdA
+         iW/lOBhXMjExq7yhfs5u1rIXd0HVDkIPQ2meN1UOkBcMmV9FH1OLkhCRZX4myQKrgC
+         URfZQTiTtQgJdWFi+lc8wrO+oeDd6VeTMJ32ECNYgAh45nR6/kq3MV8fhaRB0q8lGh
+         MbQ/5Gb6UjO9Bup4Pf7oBUBvpsEfo1Qk1ZqdZgwDT58CZubHJ2bp5Yt34Q0cignsA8
+         HPgv+QbI3lxdA==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1npR1d-00B4kN-9C; Fri, 13 May 2022 09:51:53 +0100
+Date:   Fri, 13 May 2022 09:51:53 +0100
+Message-ID: <87tu9t6cie.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
 Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         Linus Walleij <linus.walleij@linaro.org>,
         Bartosz Golaszewski <brgl@bgdev.pl>,
@@ -74,59 +61,85 @@ Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
         linux-arm-msm@vger.kernel.org,
         Android Kernel Team <kernel-team@android.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Subject: Re: [PATCH v3 00/10] gpiolib: Handle immutable irq_chip structures
+In-Reply-To: <CAHp75VfKMEcr1U=YQFfDRCpU=2LE78c76fSsAOFTWZHaswdiwg@mail.gmail.com>
+References: <20220419141846.598305-1-maz@kernel.org>
+        <Yn0/DIl3+i/heRH6@smile.fi.intel.com>
+        <Yn1Fe4WPp3ZaUERj@smile.fi.intel.com>
+        <87tu9umm3k.wl-maz@kernel.org>
+        <CAHp75VfKMEcr1U=YQFfDRCpU=2LE78c76fSsAOFTWZHaswdiwg@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: andy.shevchenko@gmail.com, linux-kernel@vger.kernel.org, linus.walleij@linaro.org, brgl@bgdev.pl, thierry.reding@gmail.com, joey.gouly@arm.com, jonathanh@nvidia.com, marcan@marcan.st, sven@svenpeter.dev, alyssa@rosenzweig.io, bjorn.andersson@linaro.org, agross@kernel.org, jeffrey.l.hugo@gmail.com, tglx@linutronix.de, Basavaraj.Natikar@amd.com, Shyam-sundar.S-k@amd.com, linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 13, 2022 at 12:18 AM Marc Zyngier <maz@kernel.org> wrote:
-> On Thu, 12 May 2022 18:35:55 +0100,
-> Andy Shevchenko <andy.shevchenko@gmail.com> wrote:
-> >
-> > On Thu, May 12, 2022 at 08:08:28PM +0300, Andy Shevchenko wrote:
-> > > On Tue, Apr 19, 2022 at 03:18:36PM +0100, Marc Zyngier wrote:
-> > > > This is a followup from [2].
+On Fri, 13 May 2022 09:43:29 +0100,
+Andy Shevchenko <andy.shevchenko@gmail.com> wrote:
+> 
+> On Fri, May 13, 2022 at 12:18 AM Marc Zyngier <maz@kernel.org> wrote:
+> > On Thu, 12 May 2022 18:35:55 +0100,
+> > Andy Shevchenko <andy.shevchenko@gmail.com> wrote:
+> > >
+> > > On Thu, May 12, 2022 at 08:08:28PM +0300, Andy Shevchenko wrote:
+> > > > On Tue, Apr 19, 2022 at 03:18:36PM +0100, Marc Zyngier wrote:
+> > > > > This is a followup from [2].
+> > > > >
+> > > > > I recently realised that the gpiolib play ugly tricks on the
+> > > > > unsuspecting irq_chip structures by patching the callbacks.
+> > > > >
+> > > > > Not only this breaks when an irq_chip structure is made const (which
+> > > > > really should be the default case), but it also forces this structure
+> > > > > to be copied at nauseam for each instance of the GPIO block, which is
+> > > > > a waste of memory.
 > > > >
-> > > > I recently realised that the gpiolib play ugly tricks on the
-> > > > unsuspecting irq_chip structures by patching the callbacks.
+> > > > Is this brings us to the issue with IRQ chip name?
 > > > >
-> > > > Not only this breaks when an irq_chip structure is made const (which
-> > > > really should be the default case), but it also forces this structure
-> > > > to be copied at nauseam for each instance of the GPIO block, which is
-> > > > a waste of memory.
+> > > > The use case in my mind is the following:
+> > > > 1) we have two or more GPIO chips that supports IRQ;
+> > > > 2) the user registers two IRQs of the same (by number) pin on different chips;
+> > > > 3) cat /proc/interrupt will show 'my_gpio_chip XX', where XX is the number.
+> > > >
+> > > > So, do I understand correct current state of affairs?
+> > > >
+> > > > If so, we have to fix this to have any kind of ID added to the chip name that
+> > > > we can map /proc/interrupts output correctly.
 > > >
-> > > Is this brings us to the issue with IRQ chip name?
-> > >
-> > > The use case in my mind is the following:
-> > > 1) we have two or more GPIO chips that supports IRQ;
-> > > 2) the user registers two IRQs of the same (by number) pin on different chips;
-> > > 3) cat /proc/interrupt will show 'my_gpio_chip XX', where XX is the number.
-> > >
-> > > So, do I understand correct current state of affairs?
-> > >
-> > > If so, we have to fix this to have any kind of ID added to the chip name that
-> > > we can map /proc/interrupts output correctly.
+> > > Hmm... Some drivers are using static names, some -- dynamically
+> > > prepared (one way or another). Either way I think the ID is good to
+> > > have if we still miss it.
 > >
-> > Hmm... Some drivers are using static names, some -- dynamically
-> > prepared (one way or another). Either way I think the ID is good to
-> > have if we still miss it.
->
-> No, this is a terrible idea. /proc/interrupts gives you a hint of
-> which driver/subsystem deals with the interrupt. This isn't a source
-> of topological information. /sys/kernel/debug/irq has all the
-> information you can dream of, and much more. Just make use of it.
+> > No, this is a terrible idea. /proc/interrupts gives you a hint of
+> > which driver/subsystem deals with the interrupt. This isn't a source
+> > of topological information. /sys/kernel/debug/irq has all the
+> > information you can dream of, and much more. Just make use of it.
+> 
+> Okay, so IIUC the mapping is that: I got a vIRQ number from
+> /proc/interrupts, but then I have to mount debugfs and look into it
+> for a detailed answer of which chip/domain this vIRQ belongs to.
 
-Okay, so IIUC the mapping is that: I got a vIRQ number from
-/proc/interrupts, but then I have to mount debugfs and look into it
-for a detailed answer of which chip/domain this vIRQ belongs to. Also
-/sys/kernel/irq rings a bell, but not sure if it's related.
+Normal users shouldn't care about irqdomains. If you are developing,
+you already have debugfs enabled and mounted on your system.
+
+> Also /sys/kernel/irq rings a bell, but not sure if it's related.
+
+This is the same thing as /proc/interrupt, just dumped with a
+different format.
+
+	M.
 
 -- 
-With Best Regards,
-Andy Shevchenko
+Without deviation from the norm, progress is not possible.
