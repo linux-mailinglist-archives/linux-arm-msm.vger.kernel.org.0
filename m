@@ -2,85 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 511FB526329
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 15:52:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E03B526322
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 15:52:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229546AbiEMNun (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 09:50:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44924 "EHLO
+        id S1343572AbiEMNuj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 09:50:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382075AbiEMNnW (ORCPT
+        with ESMTP id S1382481AbiEMNsg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 09:43:22 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3D9E0CD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:43:19 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id t5so9982760edw.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OWSeXSH3F3SaHIEtdX7R74ohKdWLZ0h8DQhO+Wcow0w=;
-        b=TGvTFxSVVmsEc3R8tVYYfZPGrWW6+ABu75S3UTtbbnTLGRLejRG8DEPWi7HBJDNiRX
-         snrZ57KR/vPmOg0RsTfEskBNf6dAnEjS4bAs+2XyKKaeTs7kCAFs+cWvIE8PKqNdC+vH
-         S+NVgBta+PCEftq5+psO3lOcA4CPcFYtLzer4=
+        Fri, 13 May 2022 09:48:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9DA43FD3C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:48:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1652449713;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=xX4kszIzggw0jJ79lG9EiQ7nkM1SGc5ii4Szr8DCgkY=;
+        b=O0rViqycIgmG+4W7IuQjMVf0c5Ea3HKXLML32Kv78IVt0FSiIiFX7pW08TNTuniKYOq24b
+        tsNpG3EbDvfl3E1c9qfWqUqDVxCrWKTpR5ZnXYsrX4kIGdwB7fWYiM5jiMnbfANp3hz06q
+        xulJ92rcZBMajDi85A+SUDI94u5b0D8=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-642-Qo7szuIIOIeWPwysEL9x0w-1; Fri, 13 May 2022 09:48:32 -0400
+X-MC-Unique: Qo7szuIIOIeWPwysEL9x0w-1
+Received: by mail-qt1-f198.google.com with SMTP id i11-20020ac85e4b000000b002f3d8c3a96dso6351480qtx.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:48:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OWSeXSH3F3SaHIEtdX7R74ohKdWLZ0h8DQhO+Wcow0w=;
-        b=jc9OFBh0MjTofKVNjlcyFLB6vFrz5rlPv4s0cQwpw2DY9i1WkILdLHok45KoMDDCfd
-         MOSFXdhvErNk5kyAsannhqgsGxHoOHrzRTgwuZ+qee12QvtZecGEdu/6Ig4CZ2RsClkQ
-         tCd/0kpWpzWvRJXpLT5uRSRMpctCE2TEwW5rtGKMvgPv30YrQCXSrOAQ20F7SiMb7wss
-         bWRvNaPVhO4Z6mJeOip32RXwjqkj8iKN6qDJ//c7r+E0FB81qcJmjAG90fYMBe9Nmbzs
-         Huoqz/u3h/zMByv6S4abraHIXNKmsc8rrJVVjOt6aJsIbQuvZ9HLm8Vav+oI+yO+J96c
-         25zA==
-X-Gm-Message-State: AOAM531CoUHvlK7lHsRvb1msH7pjRPNCk/ylo7uBQ9ycmS7m9jpbOUL+
-        3mo7yY0WtqN/5CcdiOV9wAAwHTncJnLkl+duXXc=
-X-Google-Smtp-Source: ABdhPJwW8qlw9JwnJkJk2YhRQGHaex6MeXgLjJByJqGLX0wrzHcklk4Z1kMzEdjX2E0hVvNBsgKzjA==
-X-Received: by 2002:a05:6402:31fc:b0:428:5da9:be6a with SMTP id dy28-20020a05640231fc00b004285da9be6amr33121283edb.223.1652449397481;
-        Fri, 13 May 2022 06:43:17 -0700 (PDT)
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com. [209.85.128.46])
-        by smtp.gmail.com with ESMTPSA id dq21-20020a170907735500b006f3ef214da3sm804387ejc.9.2022.05.13.06.43.16
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 May 2022 06:43:16 -0700 (PDT)
-Received: by mail-wm1-f46.google.com with SMTP id k126-20020a1ca184000000b003943fd07180so4775585wme.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 06:43:16 -0700 (PDT)
-X-Received: by 2002:a05:600c:3d8c:b0:394:6097:9994 with SMTP id
- bi12-20020a05600c3d8c00b0039460979994mr15065402wmb.29.1652449395743; Fri, 13
- May 2022 06:43:15 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220512090429.1.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid>
- <20220512090429.2.I1318c1ae2ce55ade1d092fc21df846360b15c560@changeid> <1652445201.115225.85852.nullmailer@robh.at.kernel.org>
-In-Reply-To: <1652445201.115225.85852.nullmailer@robh.at.kernel.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 13 May 2022 06:43:04 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=W1CC8NGFCiUCb-W3i4Z6wYyhmf9JmgbFJ4K+KL6mgvgQ@mail.gmail.com>
-Message-ID: <CAD=FV=W1CC8NGFCiUCb-W3i4Z6wYyhmf9JmgbFJ4K+KL6mgvgQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] dt-bindings: arm: qcom: Add / fix sc7280 board bindings
-To:     Rob Herring <robh@kernel.org>
-Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=xX4kszIzggw0jJ79lG9EiQ7nkM1SGc5ii4Szr8DCgkY=;
+        b=ELaGHLq6StgBpMpdaGw1IeVj9XCBhcZ39nKnMI0i+y95nnSxgp4KykM7D2Shi7jCaE
+         hCqZD5rBGcYOGmYjpLVqN4apKDQPGGAbvVoeKgaltMl4zWHIyQNRml27xU4gnjJVXIeG
+         5qmxzdR9eREqE11KUcHs4quzrNXQCD+svHZLWAfcp/K3Y8buu6r261nvV8WgiexGU81s
+         Y1M9BBStUOb0FE+Hqc2VbB/xQOlZr/qtvsSRveXv4jjoV1FIFg/5yY/cYempSkM1Hm6D
+         py7yJgAgT1d+J8GHaAt06+4Z320slUTpGPWuE3eO4ShgrI+crriFDYQwpm+17EF3OE4/
+         uu+w==
+X-Gm-Message-State: AOAM533raA6s4DjHg1iXfvqR1l5Bjd1R9qtH5arFfd7iIkH+yDKNuNw+
+        Grls89z9aGQV8yFw3NbNToGtUPHlPX99urARXIBw7hgqCG5jxG4eqavfT9bwRy4O4iZJGQROfyx
+        T3oDu5XXGqHZ8yFyfT5ebqFfkpg==
+X-Received: by 2002:ad4:4386:0:b0:456:5223:7bd5 with SMTP id s6-20020ad44386000000b0045652237bd5mr4344051qvr.32.1652449711827;
+        Fri, 13 May 2022 06:48:31 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyqsEvUpuVPbF6jCFPguBKGuCN1RtWI9u8ysl604k+Ls+e2d+tMr4HJRwY2dZofQlR1TleYMA==
+X-Received: by 2002:ad4:4386:0:b0:456:5223:7bd5 with SMTP id s6-20020ad44386000000b0045652237bd5mr4344040qvr.32.1652449711612;
+        Fri, 13 May 2022 06:48:31 -0700 (PDT)
+Received: from localhost (pool-96-237-176-193.bstnma.fios.verizon.net. [96.237.176.193])
+        by smtp.gmail.com with ESMTPSA id w10-20020a37620a000000b0069fc13ce1f7sm1387525qkb.40.2022.05.13.06.48.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 May 2022 06:48:31 -0700 (PDT)
+Date:   Fri, 13 May 2022 09:48:30 -0400
+From:   Eric Chanudet <echanude@redhat.com>
+To:     Parikshit Pareek <quic_ppareek@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Julius Werner <jwerner@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "Joseph S . Barrera III" <joebar@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Prasanna Kumar <quic_kprasan@quicinc.com>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: Fix the id of SA8540P SoC
+Message-ID: <20220513134830.6bi457uqtkqk4ijx@echanude>
+References: <20220513114114.7103-1-quic_ppareek@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220513114114.7103-1-quic_ppareek@quicinc.com>
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,42 +80,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, May 13, 2022 at 05:11:14PM +0530, Parikshit Pareek wrote:
+> Change the id of SA8540P to its correct value, i.e., 461.
+> 
+> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+> ---
+>  drivers/soc/qcom/socinfo.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+> index cee579a267a6..c37d7724c7d0 100644
+> --- a/drivers/soc/qcom/socinfo.c
+> +++ b/drivers/soc/qcom/socinfo.c
+> @@ -328,7 +328,7 @@ static const struct soc_id soc_id[] = {
+>  	{ 455, "QRB5165" },
+>  	{ 457, "SM8450" },
+>  	{ 459, "SM7225" },
+> -	{ 460, "SA8540P" },
+> +	{ 461, "SA8540P" },
+>  	{ 480, "SM8450" },
+>  	{ 482, "SM8450" },
+>  	{ 487, "SC7280" },
+> -- 
+> 2.17.1
+> 
+You should mention:
+Fixes: 76ee15ae1b13 ("soc: qcom: socinfo: Add some more PMICs and SoCs")
 
-On Fri, May 13, 2022 at 5:33 AM Rob Herring <robh@kernel.org> wrote:
->
-> On Thu, 12 May 2022 09:04:46 -0700, Douglas Anderson wrote:
-> > This copy-pastes compatibles from sc7280-based boards from the device
-> > trees to the yaml file. It also fixes the CRD/IDP bindings which had
-> > gotten stale.
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> >
-> >  .../devicetree/bindings/arm/qcom.yaml         | 40 +++++++++++++++----
-> >  1 file changed, 33 insertions(+), 7 deletions(-)
-> >
->
-> Running 'make dtbs_check' with the schema in this patch gives the
-> following warnings. Consider if they are expected or the schema is
-> incorrect. These may not be new warnings.
->
-> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> This will change in the future.
->
-> Full log is available here: https://patchwork.ozlabs.org/patch/
->
->
-> /: compatible: 'oneOf' conditional failed, one must be fixed:
-[...]
->         arch/arm64/boot/dts/qcom/sc7280-crd.dtb
->         arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dtb
+With that addition:
+Reviewed-by: Eric Chanudet <echanude@redhat.com>
+Tested-by: Eric Chanudet <echanude@redhat.com>
 
-Looking explicitly at these, since sc7280 boards were supposed to have
-been fixed.
+-- 
+Eric Chanudet
 
-Ah, I see. herobrine-r0 was removed recently, and the crd compatibles
-were rejiggered. ...so this makes sense. I'll expect that it will be
-resolved when the current Qualcomm tree makes it to mainline.
-
--Doug
