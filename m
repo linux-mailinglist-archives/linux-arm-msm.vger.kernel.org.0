@@ -2,84 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0A4F525CB3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 10:03:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9924E525CDA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 10:14:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352992AbiEMH5h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 03:57:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34480 "EHLO
+        id S1378013AbiEMIFl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 04:05:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245317AbiEMH5f (ORCPT
+        with ESMTP id S1354665AbiEMIFj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 03:57:35 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 268276C573
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 00:57:34 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 129so4350807wmz.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 00:57:34 -0700 (PDT)
+        Fri, 13 May 2022 04:05:39 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3D419C761
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 01:05:38 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id g16so9356191lja.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 01:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Z+VCyQ4FdNddQ9JeHnVFC+z2HG9qAdxbs5Dzgp/YOGU=;
-        b=U7l70itwvDOp59iGQBatgtEC7/68noHv/4vGH1xx/gK7xvyggOGACYW2HTnqYKz3ee
-         sJOFgdqbHCFjCU3aQQl/Rg1oYM5N1KLbqe1vKRIzZJVZGp8F92oIuvvKTgXHunrypO6S
-         ario2rMzTUHJpt5W1RyDo5AEHkPMHc+amiz8oaY8qUe5AE3xTHUlsBYYKgvlD51IrLri
-         vRObZRK8TQUiyUGNtiuAcZZd2XHd8DuG6vzyk5VAodEsSQguBUEFDQ4fWttJWbeAXFoe
-         1t5doi5ttGiH+QvcINZYalUci9oo4Y9W/Xu2cBhRwzX7WUqbRGIPgfJBfrb++xH3GSeH
-         Q26A==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pqtdi0vYTub2c9PlxZf3VXHkASe52dgKtm78U2DVzbo=;
+        b=G+84TNlpkMYRVR5dpiv+fU8K95swN3jl/U7q1l13cBXi9RNHIfkkaUG4d/eexWX3Zr
+         P1m6+8k/58ZQj7tRlDsWYg25kYD9f+MN9aUWKIgZumtZDEXr9XnKXxDV2cmoN3TuXPnH
+         UnvfiKBEYW+e5Bg3KDkU0sXu5/SGFERMp3ZxfHlack4ppN3N627hOTM4BdCKejF2JcMk
+         QE3fVC4lMk3f0yS/JtZsIOm1+7ZlhbLYiy88nyOH2GWjH6a7rbWVJ4xMXhDWsl6HJsM6
+         4C0o2mCdErcAj7dXekwEpfxQk3YpHaSulCg18j9T2FMyNhb6lvUDwzQu4h35/E1840SS
+         hHIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Z+VCyQ4FdNddQ9JeHnVFC+z2HG9qAdxbs5Dzgp/YOGU=;
-        b=6u/2aDh33nPjnY0UI5vQKNlDI0vvFSfwovb0RdjYrtTdocHcsoh2PE+kMuGXDKweoD
-         5gkYqv9M759DtFSKcOhZkxkXPxucJjABTgTQCrw5MOUJtxDOM/PpthpnhWX3HfWpD/cR
-         CGTrrDVMraDgUA3K19YI/EDMEzbAJdOxV3srppkJRdj3Dt3XlR2wIAeq2qzaF2od9CXl
-         syvPQkjP3Kx7/bbT0du6q+5eRnPKAMTynacziLRkjtefL0QEGT7k7/Ipg3vwdxpkEDBo
-         MZOsTDhjGv8QTGiumRZR8O5RG3UFEnNLX8LDvEEo5iByLCv0pmbuBqodzcqCPfAHX/au
-         CqOg==
-X-Gm-Message-State: AOAM532jIW2hfUwW1lvRnsuYStbLBbz2UnPWEC7aOqaxD1KnGjcyR51V
-        vDUkYGyT/RN/eAIOYk9TxZ1PiA==
-X-Google-Smtp-Source: ABdhPJy4D3xJsnTbYAm3729KW2bXLN3aezoJhW288ATXwZYtmBFLJxapQ5HevWL2cU0I7YpH37KeGw==
-X-Received: by 2002:a7b:c0c3:0:b0:394:4c67:b9df with SMTP id s3-20020a7bc0c3000000b003944c67b9dfmr13853307wmh.8.1652428652625;
-        Fri, 13 May 2022 00:57:32 -0700 (PDT)
-Received: from [192.168.0.168] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id y11-20020adfc7cb000000b0020cf41017b4sm297862wrg.19.2022.05.13.00.57.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 May 2022 00:57:31 -0700 (PDT)
-Message-ID: <828bc65f-e585-0fe7-c038-c750861c9446@linaro.org>
-Date:   Fri, 13 May 2022 09:57:30 +0200
+        bh=pqtdi0vYTub2c9PlxZf3VXHkASe52dgKtm78U2DVzbo=;
+        b=mjxnY2Rzx3OSfAU7mMolmiz5rm1ze2RmYBUUVY9GOoW1YdYysA+s4j2y2x7+QGqFL3
+         1e0L2CvUc94aKaxtcEvzhKXC4g/fy3pXCBacbqx3kcsLjrPtvbXmx0lHXferH8k7JTMJ
+         FVbDtH/zN4DJ7unaaQr/4+Lcacy1iLAaJLKJRXmsTnqiYq/IkKveidbUFOvsDNx8G4Sj
+         AZdlgBS0Zkkz2qwbuceu9anNSnScqrELaQHhVW5fRq1T3Q6gbQ85iic0gcND1F7JE+S5
+         +qhSUt3PSIAwOpU9VBtzNa40+gAl+AkBv35MMI6dQdcspflrfb/7nHpBhvMaqBHD7JxF
+         kslA==
+X-Gm-Message-State: AOAM531IcrXaoTk6HOMVj3AvoasSvd7jHYPfbcvSWJv8/gENqmPQo4Ww
+        2n7gf1S5XSaJvaAFPk1s04TKCA==
+X-Google-Smtp-Source: ABdhPJzW0QvfkpqAo1wZErNwh2FaJfkF+CggVbCrcwWWO0pntF5sg54kCPfbgLSHs6rHBnSSnx7l0w==
+X-Received: by 2002:a2e:82c5:0:b0:247:e81f:8b02 with SMTP id n5-20020a2e82c5000000b00247e81f8b02mr2387187ljh.90.1652429136491;
+        Fri, 13 May 2022 01:05:36 -0700 (PDT)
+Received: from localhost.localdomain (mobile-access-b04822-211.dhcp.inet.fi. [176.72.34.211])
+        by smtp.gmail.com with ESMTPSA id q11-20020ac25fcb000000b00473edee678fsm276269lfg.287.2022.05.13.01.05.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 May 2022 01:05:36 -0700 (PDT)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Robert Foss <robert.foss@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH] media: camss: Allocate camss struct as a managed device resource
+Date:   Fri, 13 May 2022 11:05:29 +0300
+Message-Id: <20220513080529.416245-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add sc7180 Chromebook board
- bindings
-Content-Language: en-US
-To:     Douglas Anderson <dianders@chromium.org>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        "Joseph S . Barrera III" <joebar@chromium.org>,
-        Julius Werner <jwerner@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220512090429.1.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220512090429.1.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,59 +71,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/05/2022 18:04, Douglas Anderson wrote:
-> This copy-pastes compatibles from sc7180-based boards from the device
-> trees to the yaml file so that `make dtbs_check` will be happy.
-> 
-> NOTES:
-> - I make no attempt to try to share an "item" for all sc7180 based
->   Chromebooks. Because of the revision matching scheme used by the
->   Chromebook bootloader, at times we need a different number of
->   revisions listed.
-> - Some of the odd entries in here (like google,homestar-rev23 or the
->   fact that "Google Lazor Limozeen without Touchscreen" changed from
->   sku5 to sku6) are not typos but simply reflect reality.
-> - Many revisions of boards here never actually went to consumers, but
->   they are still in use within various companies that were involved in
->   Chromebook development. Since Chromebooks are developed with an
->   "upstream first" methodology, having these revisions supported with
->   upstream Linux is important. Making it easy for Chromebooks to be
->   developed with an "upstream first" methodology is valuable to the
->   upstream community because it improves the quality of upstream and
->   gets Chromebooks supported with vanilla upstream faster.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> 
->  .../devicetree/bindings/arm/qcom.yaml         | 180 ++++++++++++++++++
->  1 file changed, 180 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 5c06d1bfc046..399be67eb5d2 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -214,11 +214,191 @@ properties:
->                - qcom,ipq8074-hk10-c2
->            - const: qcom,ipq8074
->  
-> +      # Qualcomm Technologies, Inc. SC7180 IDP
->        - items:
->            - enum:
->                - qcom,sc7180-idp
->            - const: qcom,sc7180
->  
-> +      # Google CoachZ (rev1 - 2)
-> +      - items:
-> +          - const: google,coachz-rev1
-> +          - const: google,coachz-rev2
+The change simplifies driver's probe and remove functions, no functional
+change is intended.
 
-The inverted pattern of old revision being compatible with the new one,
-is done on purpose? You claim here every rev1 is always compatible with
-rev2 ...
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+The change is supposed to be applied on top of this one:
 
-I don't think we discussed such patterns in previous talk. I quickly
-went through it and there were only skuX moving around, not rev1 being
-newer then rev2.
+  https://lore.kernel.org/linux-media/20220512082318.189398-1-vladimir.zapolskiy@linaro.org/
 
-Best regards,
-Krzysztof
+drivers/media/platform/qcom/camss/camss.c | 33 +++++++----------------
+ 1 file changed, 10 insertions(+), 23 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index e90fea28ac88..0f4908fa21e2 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1751,7 +1751,7 @@ static int camss_probe(struct platform_device *pdev)
+ 	struct camss *camss;
+ 	int num_subdevs, ret;
+ 
+-	camss = kzalloc(sizeof(*camss), GFP_KERNEL);
++	camss = devm_kzalloc(dev, sizeof(*camss), GFP_KERNEL);
+ 	if (!camss)
+ 		return -ENOMEM;
+ 
+@@ -1795,39 +1795,30 @@ static int camss_probe(struct platform_device *pdev)
+ 		camss->csid_num = 5;
+ 		camss->vfe_num = 5;
+ 	} else {
+-		ret = -EINVAL;
+-		goto err_free;
++		return -EINVAL;
+ 	}
+ 
+ 	camss->csiphy = devm_kcalloc(dev, camss->csiphy_num,
+ 				     sizeof(*camss->csiphy), GFP_KERNEL);
+-	if (!camss->csiphy) {
+-		ret = -ENOMEM;
+-		goto err_free;
+-	}
++	if (!camss->csiphy)
++		return -ENOMEM;
+ 
+ 	camss->csid = devm_kcalloc(dev, camss->csid_num, sizeof(*camss->csid),
+ 				   GFP_KERNEL);
+-	if (!camss->csid) {
+-		ret = -ENOMEM;
+-		goto err_free;
+-	}
++	if (!camss->csid)
++		return -ENOMEM;
+ 
+ 	if (camss->version == CAMSS_8x16 ||
+ 	    camss->version == CAMSS_8x96) {
+ 		camss->ispif = devm_kcalloc(dev, 1, sizeof(*camss->ispif), GFP_KERNEL);
+-		if (!camss->ispif) {
+-			ret = -ENOMEM;
+-			goto err_free;
+-		}
++		if (!camss->ispif)
++			return -ENOMEM;
+ 	}
+ 
+ 	camss->vfe = devm_kcalloc(dev, camss->vfe_num, sizeof(*camss->vfe),
+ 				  GFP_KERNEL);
+-	if (!camss->vfe) {
+-		ret = -ENOMEM;
+-		goto err_free;
+-	}
++	if (!camss->vfe)
++		return -ENOMEM;
+ 
+ 	v4l2_async_nf_init(&camss->notifier);
+ 
+@@ -1909,8 +1900,6 @@ static int camss_probe(struct platform_device *pdev)
+ 	v4l2_device_unregister(&camss->v4l2_dev);
+ err_cleanup:
+ 	v4l2_async_nf_cleanup(&camss->notifier);
+-err_free:
+-	kfree(camss);
+ 
+ 	return ret;
+ }
+@@ -1929,8 +1918,6 @@ void camss_delete(struct camss *camss)
+ 		device_link_del(camss->genpd_link[i]);
+ 		dev_pm_domain_detach(camss->genpd[i], true);
+ 	}
+-
+-	kfree(camss);
+ }
+ 
+ /*
+-- 
+2.33.0
+
