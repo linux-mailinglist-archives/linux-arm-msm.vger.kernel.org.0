@@ -2,68 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B3CD525D22
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 10:24:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF17A525D20
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 10:24:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378137AbiEMIQ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 04:16:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41976 "EHLO
+        id S1378151AbiEMIRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 04:17:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378157AbiEMIQ4 (ORCPT
+        with ESMTP id S1378138AbiEMIRC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 04:16:56 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E306C1FE3CF;
-        Fri, 13 May 2022 01:16:52 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2F50E62013;
-        Fri, 13 May 2022 08:16:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2E1C34100;
-        Fri, 13 May 2022 08:16:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652429811;
-        bh=guXp+XBSL9KDmpRUO5UOJREr+LfK1jT4s0wHUCFWfGU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BveVSIgwUYfVMy1tNkHhF++xveumq+o872WnflvtHFS0BmZeW8CoBifVI9ujgHfZ7
-         nPOqcFVW4Qg9np2vXSVO57TI1BJTZnCWx9iL61XcHozypJQiKFHK6HqERoZaR4sLg0
-         4i8MuKs/rA3XumMypR8fsGKNgpYJB3b05E8YAWOMCSJz9p9dtj3AKJUJkZh3Ks0V1m
-         FQEEjM3f3+A3oaAoFc0/wl7rhT5vLeVaUdeoSQ5R4/xkNo9RRM64nfBZ3FdW6IljHG
-         YTHiJRSZT9ngN14EDwRXAdao+SQe1lAqzG//utFFHHFwY/qxeDHXf8TFVlJiLKG8Cy
-         VwrPBVW/BKQTA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1npQTf-0007BK-Pq; Fri, 13 May 2022 10:16:47 +0200
-Date:   Fri, 13 May 2022 10:16:47 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Prasad Malisetty <pmaliset@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v5 2/5] clk: qcom: regmap: add PHY clock source
- implementation
-Message-ID: <Yn4T72U8GxwvIBBu@hovoldconsulting.com>
-References: <20220512172909.2436302-1-dmitry.baryshkov@linaro.org>
- <20220512172909.2436302-3-dmitry.baryshkov@linaro.org>
+        Fri, 13 May 2022 04:17:02 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A88983B294
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 01:17:00 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id f2so3351871wrc.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 01:17:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=E7D8l5bVzLOBk8glw4ZVZyTSYXIEv02i6LMHubHx3+c=;
+        b=BMpOYKIbjITGMPDLK4+XF/wtpBD5jNYwfjCRy8yHy1ozHKyeuJbU6kQvZAAKu6hj8z
+         oMegYQIy+i7PSLhuuzBlE+38Gsw/tsu6NkGhyJI3s7Ye0V+5JeOZsr9rFylGqQsD1/ro
+         lWuv+SjRLWQQvrMCMsD520k7jjNKqdAuzrhlYyGXDMLEZ9abzF8IL6IGLArUiarQBuSq
+         dKQ797Q696/3udZ6UZnXmKBhwjzV3tO+n3LiT7MnHzp6HY+61h1nktKZ6V7Heq1H80xI
+         hAmMMoB6QBLBzHh7QM4j9bUtFceOPR9O3mLB1Wmk+9VZEq85peGrrzc9lUEgec3TKFsO
+         VbRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=E7D8l5bVzLOBk8glw4ZVZyTSYXIEv02i6LMHubHx3+c=;
+        b=f/F8tITZh1YLs3OMlLsbUQdtBKR1GQallMuvBFYS69rBz5vdZDEftaHOWpi/+TOy2A
+         y6hBWDKzj33w54wEA3FEqmuCIdf5J9xYTAHCW7lpjd5Xxn1Db04D/ZUjZAvGnkz6LuXj
+         d96YgsRswhFp1iOGpEfIX5sYfCb4bY4ql7B3eJi2/djAEqzZQU/QdtMfy78XiM2XU3Co
+         K6NQPfG/AOFWITdreMzq7pdnH0wt5h7svloyp9DpML09OOL6RC3DV4KcOoSm+HLRW612
+         gLvI/wdymgXxaimkMHR7Av6BJbYHcGwFWg++z0n6XGr7N2gKpXkKu10CA2bcP7Zg1JBq
+         Yt6A==
+X-Gm-Message-State: AOAM531AwiLN74ZFxD2VoAJUmcmEMTzTo3HASDUI5oakTg8m+C5lUXfN
+        vfVTNQGBmlyjGaNT78H++9WjHQ==
+X-Google-Smtp-Source: ABdhPJzRH+K5Zq0s4HK/uVoQ35ZSyLWacT5PSl/3qhGFUDklo2MdHx4nnrs5uXgifP6P4+MOjKc4ug==
+X-Received: by 2002:a5d:45d0:0:b0:20c:b378:c492 with SMTP id b16-20020a5d45d0000000b0020cb378c492mr2960743wrs.188.1652429819296;
+        Fri, 13 May 2022 01:16:59 -0700 (PDT)
+Received: from [192.168.0.168] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id bh8-20020a05600c3d0800b003942a244f45sm5084637wmb.30.2022.05.13.01.16.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 May 2022 01:16:58 -0700 (PDT)
+Message-ID: <dce77726-460d-1b85-0c96-e8148751e261@linaro.org>
+Date:   Fri, 13 May 2022 10:16:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220512172909.2436302-3-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v2 1/5] dt-bindings: proximity: vl53l0x: Document optional
+ supply and GPIO properties
+Content-Language: en-US
+To:     Markuss Broks <markuss.broks@gmail.com>,
+        linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Song Qiang <songqiang1304521@gmail.com>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20220511214718.50879-1-markuss.broks@gmail.com>
+ <20220511214718.50879-2-markuss.broks@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220511214718.50879-2-markuss.broks@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,178 +90,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 12, 2022 at 08:29:06PM +0300, Dmitry Baryshkov wrote:
-> On recent Qualcomm platforms the QMP PIPE clocks feed into a set of
-> muxes which must be parked to the "safe" source (bi_tcxo) when
-> corresponding GDSC is turned off and on again. Currently this is
-> handcoded in the PCIe driver by reparenting the gcc_pipe_N_clk_src
-> clock. However the same code sequence should be applied in the
-> pcie-qcom endpoint, USB3 and UFS drivers.
+On 11/05/2022 23:47, Markuss Broks wrote:
+> This patch adds the optional properties for the VL53L0X ToF sensor to the
+> device-tree binding.
 
-You seem to have ignored my comment regarding UFS and naming except for
-the updated Subject.
+No "this patch":
+https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
 
-For UFS the corresponding clocks would be named symbol clocks, which
-seems to suggest that a more generic name is warranted. I mentioned
-phy_mux as a possible alternative name for for pipe_mux (or pipe_src).
-
-> Rather than copying this sequence over and over again, follow the
-> example of clk_rcg2_shared_ops and implement this parking in the
-> enable() and disable() clock operations. Supplement the regmap-mux with
-> the new clk_regmap_pipe_src type, which implements such multiplexers
-> as a simple gate clocks.
 > 
-> This is possible since each of these multiplexers has just two clock
-> sources: working (pipe) and safe/park (bi_tcxo) clock sources. If the
-> clock is running off the external pipe source, report it as enabled and
-> report it as disabled otherwise.
-> 
-> This way the PHY will disable the pipe clock before turning off the
-> GDSC, which in turn would lead to disabling corresponding pipe_clk_src
-> (and thus parked to a safe clock srouce). And vice versa, after enabling
-
-typo: source
-
-> the GDSC the PHY will enable the pipe clock, which would cause
-> pipe_clk_src to be switched from a safe source to the working one.
-
-Explaining how this fits together with the PHY power sequencing is good
-but it needs to be reflected in the implementation too. Preferably using
-good naming, but possibly also with a comment.
-
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
 > ---
->  drivers/clk/qcom/Makefile              |  1 +
->  drivers/clk/qcom/clk-regmap-pipe-src.c | 62 ++++++++++++++++++++++++++
->  drivers/clk/qcom/clk-regmap-pipe-src.h | 24 ++++++++++
->  3 files changed, 87 insertions(+)
->  create mode 100644 drivers/clk/qcom/clk-regmap-pipe-src.c
->  create mode 100644 drivers/clk/qcom/clk-regmap-pipe-src.h
-> 
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index 671cf5821af1..03b945535e49 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -11,6 +11,7 @@ clk-qcom-y += clk-branch.o
->  clk-qcom-y += clk-regmap-divider.o
->  clk-qcom-y += clk-regmap-mux.o
->  clk-qcom-y += clk-regmap-mux-div.o
-> +clk-qcom-y += clk-regmap-pipe-src.o
->  clk-qcom-$(CONFIG_KRAIT_CLOCKS) += clk-krait.o
->  clk-qcom-y += clk-hfpll.o
->  clk-qcom-y += reset.o
-> diff --git a/drivers/clk/qcom/clk-regmap-pipe-src.c b/drivers/clk/qcom/clk-regmap-pipe-src.c
-> new file mode 100644
-> index 000000000000..02047987ab5f
-> --- /dev/null
-> +++ b/drivers/clk/qcom/clk-regmap-pipe-src.c
-> @@ -0,0 +1,62 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022, Linaro Ltd.
-> + */
-> +
-> +#include <linux/kernel.h>
-> +#include <linux/bitops.h>
-> +#include <linux/regmap.h>
-> +#include <linux/export.h>
-> +
-> +#include "clk-regmap-pipe-src.h"
-> +
-> +static inline struct clk_regmap_pipe_src *to_clk_regmap_pipe_src(struct clk_hw *hw)
-> +{
-> +	return container_of(to_clk_regmap(hw), struct clk_regmap_pipe_src, clkr);
-> +}
-> +
-> +static int pipe_src_is_enabled(struct clk_hw *hw)
-> +{
-> +	struct clk_regmap_pipe_src *pipe = to_clk_regmap_pipe_src(hw);
+>  .../devicetree/bindings/iio/proximity/st,vl53l0x.yaml        | 5 +++++
+>  1 file changed, 5 insertions(+)
 
-Again, "pipe" is so overloaded and using "mux" (or possibly "src")
-throughout would make the code easier to understand.
 
-> +	struct clk_regmap *clkr = to_clk_regmap(hw);
-> +	unsigned int mask = GENMASK(pipe->width + pipe->shift - 1, pipe->shift);
-> +	unsigned int val;
-> +
-> +	regmap_read(clkr->regmap, pipe->reg, &val);
-> +	val = (val & mask) >> pipe->shift;
-> +
-> +	WARN_ON(unlikely(val != pipe->working_val && val != pipe->park_val));
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Again, please drop unlikely() here.
-
-> +
-> +	return val == pipe->working_val;
-> +}
-> +
-> +static int pipe_src_enable(struct clk_hw *hw)
-> +{
-> +	struct clk_regmap_pipe_src *pipe = to_clk_regmap_pipe_src(hw);
-> +	struct clk_regmap *clkr = to_clk_regmap(hw);
-> +	unsigned int mask = GENMASK(pipe->width + pipe->shift - 1, pipe->shift);
-> +	unsigned int val;
-> +
-> +	val = pipe->working_val << pipe->shift;
-> +
-> +	return regmap_update_bits(clkr->regmap, pipe->reg, mask, val);
-> +}
-> +
-> +static void pipe_src_disable(struct clk_hw *hw)
-> +{
-> +	struct clk_regmap_pipe_src *pipe = to_clk_regmap_pipe_src(hw);
-> +	struct clk_regmap *clkr = to_clk_regmap(hw);
-> +	unsigned int mask = GENMASK(pipe->width + pipe->shift - 1, pipe->shift);
-> +	unsigned int val;
-> +
-> +	val = pipe->park_val << pipe->shift;
-> +
-> +	regmap_update_bits(clkr->regmap, pipe->reg, mask, val);
-> +}
-> +
-> +const struct clk_ops clk_regmap_pipe_src_ops = {
-> +	.enable = pipe_src_enable,
-> +	.disable = pipe_src_disable,
-> +	.is_enabled = pipe_src_is_enabled,
-> +};
-> +EXPORT_SYMBOL_GPL(clk_regmap_pipe_src_ops);
-> diff --git a/drivers/clk/qcom/clk-regmap-pipe-src.h b/drivers/clk/qcom/clk-regmap-pipe-src.h
-> new file mode 100644
-> index 000000000000..3aa4a9f402cd
-> --- /dev/null
-> +++ b/drivers/clk/qcom/clk-regmap-pipe-src.h
-> @@ -0,0 +1,24 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2022, Linaro Ltd.
-> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> + */
-> +
-> +#ifndef __QCOM_CLK_REGMAP_PIPE_SRC_H__
-> +#define __QCOM_CLK_REGMAP_PIPE_SRC_H__
-> +
-> +#include <linux/clk-provider.h>
-> +#include "clk-regmap.h"
-> +
-> +struct clk_regmap_pipe_src {
-> +	u32			reg;
-> +	u32			shift;
-> +	u32			width;
-> +	u32			working_val;
-> +	u32			park_val;
-
-Naming is hard, but I believe something like ext_src_val (or
-phy_src_val) and ref_src_val (or xo_src_val) would allow the code to be
-more self-explanatory and not rely on looking up the commit message to
-understand where "working" and "park" came from.
-
-You probably need to add a comment in the implementation either way.
-
-> +	struct clk_regmap	clkr;
-> +};
-> +
-> +extern const struct clk_ops clk_regmap_pipe_src_ops;
-> +
-> +#endif
-
-Johan
+Best regards,
+Krzysztof
