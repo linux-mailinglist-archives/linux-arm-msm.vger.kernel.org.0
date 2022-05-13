@@ -2,63 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8E06525E7F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 11:19:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F9B3525E77
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 11:19:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378712AbiEMI6p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 04:58:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53176 "EHLO
+        id S1378800AbiEMJBY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 05:01:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378574AbiEMI6o (ORCPT
+        with ESMTP id S1378736AbiEMJBE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 04:58:44 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BED732B24D7;
-        Fri, 13 May 2022 01:58:43 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4821E62171;
-        Fri, 13 May 2022 08:58:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997CAC34100;
-        Fri, 13 May 2022 08:58:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652432322;
-        bh=y5hNXUrGNvO6cEunrd+P8GV2IaK4KDe9YPvw8H7DMF8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=g+QV87M3tdWV5smAyn+8sRCKFz9jK2E+B97C/kP1V0wK4E5fLM053u2uRdcgZ70v2
-         IfcXyJ6B7hjiDMG2ejbI/gcY5CjS+O01EnGcm+ly7bao1pcN6uB6NTNGI7gWJeGDkZ
-         98WfcXiKiofN7G43igJGQopjGZfHburt+hIWLnC27bWNkSKIfwJX6UFW8XoW9yu1/o
-         GYgOc1ITjNo1Sosn93qmSU4CMRoocQQGuQ8ebAIajGj+dTkdMtyAxteqKMzC8jBgcf
-         3Cwqw+5uGlhQQoSqZjmLR3le+kxlpRc+1Z/2dTXj62/sgxc3gjHk/9r0tKjf+4JiFq
-         D9JxQeSr15QLg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1npR8A-0007U9-8a; Fri, 13 May 2022 10:58:39 +0200
-Date:   Fri, 13 May 2022 10:58:38 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v8 00/10] PCI: qcom: Fix higher MSI vectors handling
-Message-ID: <Yn4dvpgezdrKmSro@hovoldconsulting.com>
-References: <20220512104545.2204523-1-dmitry.baryshkov@linaro.org>
+        Fri, 13 May 2022 05:01:04 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 240CB2F3A4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 02:01:00 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id q20so4429229wmq.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 02:01:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:cc:references:in-reply-to:content-transfer-encoding;
+        bh=lRU0KcNE0a23vfPKTZTRFidSipfZvgZA2AvdCHUsUCQ=;
+        b=UHUEMu6m/YYgTvqVnCaYzdnC9PFsK3950Ebdu8MmueWFBUVmxSTKxYWedRVF4YUGnV
+         QQ+lzbsdYh8TDyYLXS2cldnW9jKCxeIfd6VFmAVz0pkqg59pZDbavwQOj8r9WhrPbelf
+         9OopO3EdBKu8ZawPVeLrhLOsbxvEdXY/8DyIsVMlzsu9bkLOXDbqlHcbxKtwivVfKaDA
+         1miew9iVHh7BehvoScGH4zzTYaXtv2CG+PnQiBMy6/LjXVojrA58e0OSFssRo+Vsn4RG
+         YAPd5tc3tM3D648CTGvBPzDbbo64w/ZM0wE4ZTdyKsYuzlxc++5DonMqw+kMktEFwJYj
+         Dm8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:from:to:cc:references:in-reply-to
+         :content-transfer-encoding;
+        bh=lRU0KcNE0a23vfPKTZTRFidSipfZvgZA2AvdCHUsUCQ=;
+        b=xvI6uEf1xkTWEN38u1HQ74gC2ewWAkRB9d3wqaqCZD3VbAAXK/3Ck63LmyzNauk+23
+         DIT7Q3KFaYx6nVp1CVNUFiersiSaup56dVLMdL5K/jEezrDtaaajT9IvBPL+y/LcwoK5
+         698sYtqosAG5denoQEvoGo/RIl/tteog7/+CtRVtgeaZnqaeFjDJIbW2z3JRdACDOYB2
+         wufXdjc/+upzLOqRPQFmUy2oCh7sYAtcg2GbTF8mmr3OV7rFltxSEgQwrDcE00tg0xDM
+         ciamg4qZP4WuxO9iDY4a9pkmNAImHWNxirBoMKx+iRb6EmNEZVVLCrlnmPB6QTuhK5Nh
+         RkTw==
+X-Gm-Message-State: AOAM533t94M2syqTB2M4BETcE4VLV2iVur+KUEGsdWhp3f48EIV6OJW1
+        k+XZQRsImrUgO55/1J+QSRwco/AYgbwjtUfR
+X-Google-Smtp-Source: ABdhPJziNEAcPdLbmvFdxJ3jD2a2GdpSTyBsHkbyz2V3JF3SiM9UZWNoRNY6y9zaDL35ZJRJt41LDA==
+X-Received: by 2002:a05:600c:ad2:b0:394:22e1:ebcf with SMTP id c18-20020a05600c0ad200b0039422e1ebcfmr13991066wmr.181.1652432458722;
+        Fri, 13 May 2022 02:00:58 -0700 (PDT)
+Received: from [192.168.0.169] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id m18-20020adfa3d2000000b0020c5253d8ffsm1560932wrb.75.2022.05.13.02.00.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 May 2022 02:00:58 -0700 (PDT)
+Message-ID: <48d96a4e-ce1b-03a1-1831-36555efd7080@linaro.org>
+Date:   Fri, 13 May 2022 11:00:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220512104545.2204523-1-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add sc7180 Chromebook board
+ bindings
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Douglas Anderson <dianders@chromium.org>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        "Joseph S . Barrera III" <joebar@chromium.org>,
+        Julius Werner <jwerner@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220512090429.1.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid>
+ <828bc65f-e585-0fe7-c038-c750861c9446@linaro.org>
+In-Reply-To: <828bc65f-e585-0fe7-c038-c750861c9446@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -67,36 +88,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 12, 2022 at 01:45:35PM +0300, Dmitry Baryshkov wrote:
-> I have replied with my Tested-by to the patch at [2], which has landed
-> in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
-> Add support for handling MSIs from 8 endpoints"). However lately I
-> noticed that during the tests I still had 'pcie_pme=nomsi', so the
-> device was not forced to use higher MSI vectors.
+On 13/05/2022 09:57, Krzysztof Kozlowski wrote:
+> On 12/05/2022 18:04, Douglas Anderson wrote:
+>> This copy-pastes compatibles from sc7180-based boards from the device
+>> trees to the yaml file so that `make dtbs_check` will be happy.
+>>
+>> NOTES:
+>> - I make no attempt to try to share an "item" for all sc7180 based
+>>   Chromebooks. Because of the revision matching scheme used by the
+>>   Chromebook bootloader, at times we need a different number of
+>>   revisions listed.
+>> - Some of the odd entries in here (like google,homestar-rev23 or the
+>>   fact that "Google Lazor Limozeen without Touchscreen" changed from
+>>   sku5 to sku6) are not typos but simply reflect reality.
+>> - Many revisions of boards here never actually went to consumers, but
+>>   they are still in use within various companies that were involved in
+>>   Chromebook development. Since Chromebooks are developed with an
+>>   "upstream first" methodology, having these revisions supported with
+>>   upstream Linux is important. Making it easy for Chromebooks to be
+>>   developed with an "upstream first" methodology is valuable to the
+>>   upstream community because it improves the quality of upstream and
+>>   gets Chromebooks supported with vanilla upstream faster.
+>>
+>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+>> ---
+>>
+>>  .../devicetree/bindings/arm/qcom.yaml         | 180 ++++++++++++++++++
+>>  1 file changed, 180 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> index 5c06d1bfc046..399be67eb5d2 100644
+>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> @@ -214,11 +214,191 @@ properties:
+>>                - qcom,ipq8074-hk10-c2
+>>            - const: qcom,ipq8074
+>>  
+>> +      # Qualcomm Technologies, Inc. SC7180 IDP
+>>        - items:
+>>            - enum:
+>>                - qcom,sc7180-idp
+>>            - const: qcom,sc7180
+>>  
+>> +      # Google CoachZ (rev1 - 2)
+>> +      - items:
+>> +          - const: google,coachz-rev1
+>> +          - const: google,coachz-rev2
 > 
-> After removing this option I noticed that hight MSI vectors are not
-> delivered on tested platforms. After additional research I stumbled upon
-> a patch in msm-4.14 ([1]), which describes that each group of MSI
-> vectors is mapped to the separate interrupt. Implement corresponding
-> mapping.
+> The inverted pattern of old revision being compatible with the new one,
+> is done on purpose? You claim here every rev1 is always compatible with
+> rev2 ...
 > 
-> The first patch in the series is a revert of  [2] (landed in pci-next).
-> Either both patches should be applied or both should be dropped.
-> 
-> Patchseries dependecies: [3] (for the schema change).
-> 
-> Changes since v7:
->  - Move code back to the dwc core driver (as required by Rob),
->  - Change dt schema to require either a single "msi" interrupt or an
->    array of "msi0", "msi1", ... "msi7" IRQs. Disallow specifying a
->    part of the array (the DT should specify the exact amount of MSI IRQs
->    allowing fallback to a single "msi" IRQ),
+> I don't think we discussed such patterns in previous talk. I quickly
+> went through it and there were only skuX moving around, not rev1 being
+> newer then rev2.
 
-Why this new constraint?
+BTW, your other Chromebooks use logical order:
 
-I've been using your v7 with an sc8280xp which only has four IRQs (and
-hence 128 MSIs).
+https://lore.kernel.org/all/20220512205602.158273-2-nfraprado@collabora.com/
 
-Looks like this version of the series would not allow that anymore.
 
-Johan
+
+
+Best regards,
+Krzysztof
