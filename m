@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9518A525D3A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 10:24:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6D4A525D6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 10:38:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350526AbiEMIYK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 04:24:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38986 "EHLO
+        id S1378187AbiEMIZT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 04:25:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378173AbiEMIYJ (ORCPT
+        with ESMTP id S1378165AbiEMIZS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 04:24:09 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBFBA2817B2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 01:24:07 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id d5so10398694wrb.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 01:24:07 -0700 (PDT)
+        Fri, 13 May 2022 04:25:18 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09FD52A76A2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 01:25:17 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id d5so10402598wrb.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 01:25:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=M1lYVcvZGeJMDFjAhYStiELCM++HSwims5YjxbNozwg=;
-        b=VbF5QVMtyN7wrrr73XL/TWaz7LGSC4fqPP/OtRmnRtZadMHQ6Cu4VKhLauJZphD/8P
-         vD5LrRJlwxmsuT2CnGS5mQQKXg9S3i+1oa4Nf6sHTE1JJqkIWplJptcJsypElUyhJfdJ
-         qlTQFyIhixS+fM0ASMshTHF8S2UFoSsTgOFG92BCWZmv3WZAJtxE4wtU6onXh2xlQQ5k
-         yRSXdTTBzO0ubkXC23EXSMRh830kqZUgHGNBGaNawxdFNq50CUJw+o2k7tODZKYWzkuS
-         x9ExpYkx25FzZdiFZ87M1czwbZEz7OA4k2xlQuX3xpv++wEFFqdwg3WM90Onyh2xeLYl
-         pjHQ==
+        bh=OLNggPi9wURTmTdFsJ5QHlI60DGgYDQ+f545MdR8tgw=;
+        b=IOo2Iby+5VR8ErLhwrU821Fn+W4DVLNUoAN9xuJrocjsqzN8VwB1dwga+fSelG318+
+         AqVAuNNVPV4Su802VSyGYu3/0JZLdTkuLxQH7y11xBqqwOYyUskn37OgrUMAKHyfinc0
+         87UTWIQnadZt5WoQAYUHbUCgLSvnFDPh/a6Z/xJh0tRyh9UhsAu2rWgViktCm/Q5qyNJ
+         NetdPnPRUWvpOgj+Uu1JGNTUh+S6JGqjCp0gj+hv7aA8dDIw94M755iWpN9Kb3fgPyXy
+         E06pAqYseC8jCn2Hi+fO2vy+rgZwEkfMsutKNf6TOMaNOGbIi4Rxrg9QgKiSnhr1+yw7
+         zYbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=M1lYVcvZGeJMDFjAhYStiELCM++HSwims5YjxbNozwg=;
-        b=HLPiaI71bPRS1bPIsubUfo3fXbAOfYy2Cd5Q0Lza3epQYoABETQAG7krd7BX9MncNz
-         V7O8JMfPSP5FHZZNZR45BHAO0H0Kq8QDRLfUuInG7lHaEhpMTIOLwQvR7uMMKOk2HwWW
-         jEcZ3SLM5iuVGXCaQ2iNIsOyrl4pS/+Kx09ZS0Up5eCaWnW5gycOsOiPYRPsB0uJhQ7U
-         4Z9KOzMkJDpA4fYbRLJiM235hdH4QAE7Lq/7unzMTQioqQl1Ibmn2gE3Q+13g7eUeQsz
-         vO+ma5fKq8sjlxRMWFGfFsep4uYc/JCl+v/wyoy55zxVIPHWgDaI7h2n65CRNpSsb2UJ
-         cYYw==
-X-Gm-Message-State: AOAM530XMh38Y1qiDehFaSPmrewEQCDv3yE+AsIzL66C9ZDUe/hlA9/T
-        8VwXh3zgSD8L9fIVuN4WWu5WAg==
-X-Google-Smtp-Source: ABdhPJyfbJrwOl2LNY/n2Drgyva6rd+YJJxS539TxEvjRvHrgJmkirgEPK6yG1Emcsy4it1ih0jbmg==
-X-Received: by 2002:a5d:58e5:0:b0:20a:e022:3f8c with SMTP id f5-20020a5d58e5000000b0020ae0223f8cmr2764714wrd.667.1652430246346;
-        Fri, 13 May 2022 01:24:06 -0700 (PDT)
+        bh=OLNggPi9wURTmTdFsJ5QHlI60DGgYDQ+f545MdR8tgw=;
+        b=aDMSBYdSiXsM/2XT5RWDVbfwEE8yiKvBxFDyUcP3PhpmutV4h6ZIFabxnjIYCdBneq
+         MlresD3Wfw15xtN3aUwIIRVGg2PyQjXLHWPyJ06xA0jCv6FX+OsmR7cVv/UgYbFGH7la
+         PzND2CpFaC+3JAjPChn743XjnKNvHD0/sWICh7Vku8nBO58NiA2ESP1AORW41e8bQ2ug
+         2EWR1uEys1zromE/CGtTD7hecQiyXD4vHE/SiyiTOjztEISo8lwPx0boAnnp86mTfFfV
+         Zn0eJ40WA6EWCp2Kvg1XEL9UzoKX/QiW2WwWewKYAhdjiRZFq48NUZIQOD3YshLxbHxb
+         52Hw==
+X-Gm-Message-State: AOAM531sFqspCzML2GUpUKFpBmE07fg1svne4Thgkog6pbKgAZptOMLk
+        F/EYm3iYCZ8A+hzmfeXG4PH1h8qoglaQkuQm
+X-Google-Smtp-Source: ABdhPJzd4EUvFDocNzZ4P3/PAak/wGCKo5cLOmr0KT/Z0wzfclPL1LJJU+cIzeg2kp5UgiuN/yysEQ==
+X-Received: by 2002:a05:6000:1d89:b0:205:e6d5:c571 with SMTP id bk9-20020a0560001d8900b00205e6d5c571mr2866654wrb.594.1652430315683;
+        Fri, 13 May 2022 01:25:15 -0700 (PDT)
 Received: from [192.168.0.169] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id p26-20020adfa21a000000b0020c61af5e1fsm1495820wra.51.2022.05.13.01.24.05
+        by smtp.gmail.com with ESMTPSA id j32-20020a05600c1c2000b00394832af31csm5464619wms.0.2022.05.13.01.25.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 May 2022 01:24:05 -0700 (PDT)
-Message-ID: <7c7f7036-e3ad-c9db-2c31-749e2d01e83d@linaro.org>
-Date:   Fri, 13 May 2022 10:24:04 +0200
+        Fri, 13 May 2022 01:25:15 -0700 (PDT)
+Message-ID: <dfe8f305-f864-35fb-c05d-310f6b01376b@linaro.org>
+Date:   Fri, 13 May 2022 10:25:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.1
-Subject: Re: [PATCH 5/7] arm64: dts: qcom: Add PM6125 PMIC
+Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm6125-seine: Configure additional
+ trinket thermistors
 Content-Language: en-US
 To:     Marijn Suijten <marijn.suijten@somainline.org>,
         phone-devel@vger.kernel.org,
@@ -71,14 +72,14 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20220511220613.1015472-1-marijn.suijten@somainline.org>
- <20220511220613.1015472-6-marijn.suijten@somainline.org>
+ <20220511220613.1015472-8-marijn.suijten@somainline.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220511220613.1015472-6-marijn.suijten@somainline.org>
+In-Reply-To: <20220511220613.1015472-8-marijn.suijten@somainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,33 +88,33 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 12/05/2022 00:06, Marijn Suijten wrote:
-> This PMIC is commonly used on boards with an SM6125 SoC and looks very
-> similar in layout to the PM6150.
-> 
-> Downstream declares more nodes to be available, but these have been
-> omitted from this patch: the pwm/lpg block is unused on my reference
-> device making it impossible to test/validate, and the spmi-clkdiv does
-> not have a single device-tree binding using this driver yet, hence
-> inclusion is better postponed until ie. audio which uses these clocks is
-> brought up.
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-
-Two reviews on first patch... :)
-
 > +
-> +	pmic@1 {
-> +		compatible = "qcom,pm6125", "qcom,spmi-pmic";
-> +		reg = <0x1 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
+> +&pm6125_gpio {
+> +	camera_flash_therm: camera-flash-therm {
 
-No children, so this should not be needed, I think.
+Align with dtschema please:
 
+https://lore.kernel.org/all/20220507194913.261121-6-krzysztof.kozlowski@linaro.org/
+
+> +		pins = "gpio3";
+> +		function = "normal";
+
+I think there are macros for the function
+
+> +		bias-high-impedance;
 > +	};
-> +};
+> +
+> +	emmc_ufs_therm: emmc-ufs-therm {
+> +		pins = "gpio6";
+> +		function = "normal";
+> +		bias-high-impedance;
+> +	};
+> +
+> +	rf_pa1_therm: rf-pa1-therm {
+> +		pins = "gpio7";
+> +		function = "normal";
+> +		bias-high-impedance;
+
 
 
 Best regards,
