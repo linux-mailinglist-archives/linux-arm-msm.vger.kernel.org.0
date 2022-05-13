@@ -2,153 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F9B3525E77
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 11:19:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91F82525DE3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 May 2022 11:18:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378800AbiEMJBY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 05:01:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60316 "EHLO
+        id S1378946AbiEMJRv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 05:17:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378736AbiEMJBE (ORCPT
+        with ESMTP id S1378757AbiEMJRs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 05:01:04 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 240CB2F3A4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 02:01:00 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id q20so4429229wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 02:01:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=lRU0KcNE0a23vfPKTZTRFidSipfZvgZA2AvdCHUsUCQ=;
-        b=UHUEMu6m/YYgTvqVnCaYzdnC9PFsK3950Ebdu8MmueWFBUVmxSTKxYWedRVF4YUGnV
-         QQ+lzbsdYh8TDyYLXS2cldnW9jKCxeIfd6VFmAVz0pkqg59pZDbavwQOj8r9WhrPbelf
-         9OopO3EdBKu8ZawPVeLrhLOsbxvEdXY/8DyIsVMlzsu9bkLOXDbqlHcbxKtwivVfKaDA
-         1miew9iVHh7BehvoScGH4zzTYaXtv2CG+PnQiBMy6/LjXVojrA58e0OSFssRo+Vsn4RG
-         YAPd5tc3tM3D648CTGvBPzDbbo64w/ZM0wE4ZTdyKsYuzlxc++5DonMqw+kMktEFwJYj
-         Dm8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=lRU0KcNE0a23vfPKTZTRFidSipfZvgZA2AvdCHUsUCQ=;
-        b=xvI6uEf1xkTWEN38u1HQ74gC2ewWAkRB9d3wqaqCZD3VbAAXK/3Ck63LmyzNauk+23
-         DIT7Q3KFaYx6nVp1CVNUFiersiSaup56dVLMdL5K/jEezrDtaaajT9IvBPL+y/LcwoK5
-         698sYtqosAG5denoQEvoGo/RIl/tteog7/+CtRVtgeaZnqaeFjDJIbW2z3JRdACDOYB2
-         wufXdjc/+upzLOqRPQFmUy2oCh7sYAtcg2GbTF8mmr3OV7rFltxSEgQwrDcE00tg0xDM
-         ciamg4qZP4WuxO9iDY4a9pkmNAImHWNxirBoMKx+iRb6EmNEZVVLCrlnmPB6QTuhK5Nh
-         RkTw==
-X-Gm-Message-State: AOAM533t94M2syqTB2M4BETcE4VLV2iVur+KUEGsdWhp3f48EIV6OJW1
-        k+XZQRsImrUgO55/1J+QSRwco/AYgbwjtUfR
-X-Google-Smtp-Source: ABdhPJziNEAcPdLbmvFdxJ3jD2a2GdpSTyBsHkbyz2V3JF3SiM9UZWNoRNY6y9zaDL35ZJRJt41LDA==
-X-Received: by 2002:a05:600c:ad2:b0:394:22e1:ebcf with SMTP id c18-20020a05600c0ad200b0039422e1ebcfmr13991066wmr.181.1652432458722;
-        Fri, 13 May 2022 02:00:58 -0700 (PDT)
-Received: from [192.168.0.169] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id m18-20020adfa3d2000000b0020c5253d8ffsm1560932wrb.75.2022.05.13.02.00.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 May 2022 02:00:58 -0700 (PDT)
-Message-ID: <48d96a4e-ce1b-03a1-1831-36555efd7080@linaro.org>
-Date:   Fri, 13 May 2022 11:00:56 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add sc7180 Chromebook board
- bindings
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Douglas Anderson <dianders@chromium.org>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        "Joseph S . Barrera III" <joebar@chromium.org>,
-        Julius Werner <jwerner@chromium.org>,
+        Fri, 13 May 2022 05:17:48 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7521C541B5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 02:17:45 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 6008D3F792;
+        Fri, 13 May 2022 11:17:41 +0200 (CEST)
+Date:   Fri, 13 May 2022 11:17:34 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     phone-devel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
         Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220512090429.1.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid>
- <828bc65f-e585-0fe7-c038-c750861c9446@linaro.org>
-In-Reply-To: <828bc65f-e585-0fe7-c038-c750861c9446@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/7] dt-bindings: pinctrl: qcom-pmic-gpio: Add pm6125
+ compatible
+Message-ID: <20220513091734.hivkkbpc6inyb4la@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        phone-devel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220511220613.1015472-1-marijn.suijten@somainline.org>
+ <20220511220613.1015472-3-marijn.suijten@somainline.org>
+ <d2507298-00a6-a1cc-0302-f96597fb4127@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d2507298-00a6-a1cc-0302-f96597fb4127@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/05/2022 09:57, Krzysztof Kozlowski wrote:
-> On 12/05/2022 18:04, Douglas Anderson wrote:
->> This copy-pastes compatibles from sc7180-based boards from the device
->> trees to the yaml file so that `make dtbs_check` will be happy.
->>
->> NOTES:
->> - I make no attempt to try to share an "item" for all sc7180 based
->>   Chromebooks. Because of the revision matching scheme used by the
->>   Chromebook bootloader, at times we need a different number of
->>   revisions listed.
->> - Some of the odd entries in here (like google,homestar-rev23 or the
->>   fact that "Google Lazor Limozeen without Touchscreen" changed from
->>   sku5 to sku6) are not typos but simply reflect reality.
->> - Many revisions of boards here never actually went to consumers, but
->>   they are still in use within various companies that were involved in
->>   Chromebook development. Since Chromebooks are developed with an
->>   "upstream first" methodology, having these revisions supported with
->>   upstream Linux is important. Making it easy for Chromebooks to be
->>   developed with an "upstream first" methodology is valuable to the
->>   upstream community because it improves the quality of upstream and
->>   gets Chromebooks supported with vanilla upstream faster.
->>
->> Signed-off-by: Douglas Anderson <dianders@chromium.org>
->> ---
->>
->>  .../devicetree/bindings/arm/qcom.yaml         | 180 ++++++++++++++++++
->>  1 file changed, 180 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->> index 5c06d1bfc046..399be67eb5d2 100644
->> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->> @@ -214,11 +214,191 @@ properties:
->>                - qcom,ipq8074-hk10-c2
->>            - const: qcom,ipq8074
->>  
->> +      # Qualcomm Technologies, Inc. SC7180 IDP
->>        - items:
->>            - enum:
->>                - qcom,sc7180-idp
->>            - const: qcom,sc7180
->>  
->> +      # Google CoachZ (rev1 - 2)
->> +      - items:
->> +          - const: google,coachz-rev1
->> +          - const: google,coachz-rev2
+On 2022-05-13 10:19:56, Krzysztof Kozlowski wrote:
+> On 12/05/2022 00:06, Marijn Suijten wrote:
+> > The pm6125 comes with 9 GPIOs, without holes.
+> > 
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > 
-> The inverted pattern of old revision being compatible with the new one,
-> is done on purpose? You claim here every rev1 is always compatible with
-> rev2 ...
+> It's the first version, how did the tag appear here?
+
+We are friends and review each-others patches offline before spamming
+the mailing list with them, to save readers and maintainers here from
+pointing out glaring mistakes.  I hope this is standard practice in
+companies too, or do you recommend aganst us doing this?
+
+> > ---
+> >  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml | 2 ++
+> >  1 file changed, 2 insertions(+)
 > 
-> I don't think we discussed such patterns in previous talk. I quickly
-> went through it and there were only skuX moving around, not rev1 being
-> newer then rev2.
+> 
+> This will need fixups or rebasing on my sets of PMIC gpio schema cleanup:
 
-BTW, your other Chromebooks use logical order:
+Ack.
 
-https://lore.kernel.org/all/20220512205602.158273-2-nfraprado@collabora.com/
+> https://lore.kernel.org/all/20220507194913.261121-1-krzysztof.kozlowski@linaro.org/
+> https://lore.kernel.org/all/20220508135932.132378-2-krzysztof.kozlowski@linaro.org/
+> 
+> Bjorn,
+> let us know preferred order (who should rebase on who).
 
+I prefer yours to be applied first, so that I can retest this
+patchseries with stricter / more correct dt-bindings introduced by it.
+My series can also be resent with the notice that it has already been
+rebased on top of your series, after collecting more reviews.  Where
+necessary, I can review your series too if that helps getting it in
+sooner.
 
-
-
-Best regards,
-Krzysztof
+- Marijn
