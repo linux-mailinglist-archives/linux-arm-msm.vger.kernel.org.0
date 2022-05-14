@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 187395271A0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 16:10:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B65085271A3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 16:11:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232940AbiENOKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 May 2022 10:10:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45810 "EHLO
+        id S232942AbiENOKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 May 2022 10:10:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232938AbiENOKs (ORCPT
+        with ESMTP id S232956AbiENOKt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 May 2022 10:10:48 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9421B140D5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 07:10:47 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id bu29so19031221lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 07:10:47 -0700 (PDT)
+        Sat, 14 May 2022 10:10:49 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AB38140C1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 07:10:48 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id bu29so19031264lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 07:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=M0l8uf13lS8T2BMe8oGUirk3JiCk+Q/7ugdeXN9BOAM=;
-        b=U8hSAUb8DK2WBaCc/mVtKuRoBrYqxsph2Kt1kxzCH08QEOaPvN1hbyyaqdSAv+dUsB
-         k7WLZIWrXdKEtfGJRBF3Lnd25XzhdERyQ9h2wCpfHRfwaTg86kIbnXKbAjEZXKU9YVi3
-         pwJbDIzYVjTBGDUsBNZs+Qb6TqaWo5rFf1uEJ3fY+p4SOHP5GWaM4/pvrI1bD1Rq60cU
-         3K++xLMmYGJa5L+0ToqPvhXIPcStq7BfixJ5eg6h2qd9uTx2tl+VdnPLMSUswBN32j9M
-         80z/TZZl0XDLYtfLkIwof/w33itntUCW06aTaavWHJtLPcTdRoClamlPAkrw/P4sRmyT
-         6nxQ==
+        bh=GI298Kg9rc4h34nf3DAQdxeYL6loj33xP/T6q0BntqI=;
+        b=liUhwWaOI+8GpSiMpcnF4elqYgD3fClPppVOUI0yqkJbxepo1vAKumyBmwi/rIF8+3
+         5wY+f/xXyovKOzst6Yk1keLP7CndK/v3xpIUUOXnDyRGxOQTn3NrJLp6oYcbO2jgOYsr
+         0SoI34hyyjnIInD9OWEhAlM/5IVLONRaDwZra4+xcb6l73kYKTwNHHnQGV3vWTJxjP1/
+         ybNU8KEevi+WC+fvffXwbYwi6q87KKs/371JygH+L4Ux7WYlcyZtbKmSx6gk5Wv9e9jC
+         4cNBuGvygwTmyv6xySi2J5q1uUDMj0/y+H1tNyYDqKxRcSnF2EVWEIMQzZ9hl4Vrq25h
+         2miA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=M0l8uf13lS8T2BMe8oGUirk3JiCk+Q/7ugdeXN9BOAM=;
-        b=MyQtAZGCTNPw0LDw4J3VfWAB4by5K/somEyNi9unxuwKC19o3VpGSmaB8Y+9BIz471
-         kP0cK9YQBxaxBEYQiVJK0nrmNSSxxqwlgIWH00GgR/iEk8hfQX83E+pbj0i9KLvY2EbF
-         I3WyZUirN3+8ipmQtw8cKQmuMgGo0zHespGdbGaovv2kUO17LYPTY3BZ2YHSxtGC4Ho/
-         MRbiPcXGhIo6RJkTMzhi6sD4W3FHJO0b/k0Kf+vL7nrNKTnxQo8qJ3Qc3hhkQFm7cBFM
-         WALH8VLFbe3cespIT+6miXMtK69Hp/njlRf1p5PT6h7GVfAkZOITEaLSxCitDdeeoPT8
-         866w==
-X-Gm-Message-State: AOAM533JKJ/sPHveq2ondh7weJdomH1ZgADbuqz1vEmHZqXgf8zS1fEt
-        2CBTssjQ7kfMah4V1kknbYIlPg==
-X-Google-Smtp-Source: ABdhPJxHtrOggywCH1D3tFl4UkhhWN6SbJ40OrZovjcJtDH7dPrYNKzffiIFlKGTNoG2ZHvnzwPJzA==
-X-Received: by 2002:a05:6512:3b28:b0:473:b9ec:187e with SMTP id f40-20020a0565123b2800b00473b9ec187emr6866220lfv.536.1652537445942;
-        Sat, 14 May 2022 07:10:45 -0700 (PDT)
+        bh=GI298Kg9rc4h34nf3DAQdxeYL6loj33xP/T6q0BntqI=;
+        b=rH0Roe4866Cy734nBNa5yPIkgBgE7/AB1dzzpUwdrkHAB112yiofYuEfGKgv4rBplZ
+         aiMuJAb6016E30B33zzN8J2vMB/16ObgmVk7MiL24HIHnKwemhXQbEadIRFLbATVglWZ
+         0qZncqhLJG8EDvnTdNc5qhMaCyFP7cIeo/Jv8vwbD1vZPIMOmApPwwIyfAWdy+mZuq/H
+         DW55gHqgThLc/HlCi3RBMV/yMP6znWvKEbpqTtokBpoz0iI2iiMHFuwYVE3bmQ4YIAOZ
+         O5TdaOUFUevtNNVa80KUCsRvPRLqamGZBs6ry0DEIWDu/Hd5D6xPnHo5v0XGhAvjkUht
+         7HiA==
+X-Gm-Message-State: AOAM530382dfOadFKNU4rJwHdD/EWMeIIr4J1DgGtHmMrNrHJEC3Aj7R
+        cjSI9EU6vSp37/x897bNEgYoag==
+X-Google-Smtp-Source: ABdhPJzsl1YH8jYVIh2DSLs9a1OJoWcrwsk3ak1Iqj7QIitfzp79NqHlkyy8PYIOVx0Q9cquYQ5A8w==
+X-Received: by 2002:a19:fc0e:0:b0:471:ff7d:ab35 with SMTP id a14-20020a19fc0e000000b00471ff7dab35mr6899089lfi.345.1652537446703;
+        Sat, 14 May 2022 07:10:46 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id x9-20020a05651c104900b0024f3d1daedasm845912ljm.98.2022.05.14.07.10.45
+        by smtp.gmail.com with ESMTPSA id x9-20020a05651c104900b0024f3d1daedasm845912ljm.98.2022.05.14.07.10.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 May 2022 07:10:45 -0700 (PDT)
+        Sat, 14 May 2022 07:10:46 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -56,9 +56,9 @@ To:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Marijn Suijten <marijn.suijten@somainline.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v4 04/12] arm64: dts: qcom: sdm630: fix the qusb2phy ref clock
-Date:   Sat, 14 May 2022 17:10:33 +0300
-Message-Id: <20220514141041.3158521-5-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v4 05/12] arm64: dts: qcom: sdm630: rename qusb2phy to qusb2phy0
+Date:   Sat, 14 May 2022 17:10:34 +0300
+Message-Id: <20220514141041.3158521-6-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220514141041.3158521-1-dmitry.baryshkov@linaro.org>
 References: <20220514141041.3158521-1-dmitry.baryshkov@linaro.org>
@@ -74,31 +74,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-According to the downstram DT file, the qusb2phy ref clock should be
-GCC_RX0_USB2_CLKREF_CLK, not GCC_RX1_USB2_CLKREF_CLK.
+In preparation to adding second USB host/PHY pair, change first USB
+PHY's label to qusb2phy0.
 
-Fixes: c65a4ed2ea8b ("arm64: dts: qcom: sdm630: Add USB configuration")
-Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi                  | 4 ++--
+ arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts   | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+index 42af1fade461..00baacf28c63 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+@@ -224,7 +224,7 @@ &pon_resin {
+ 	linux,code = <KEY_VOLUMEUP>;
+ };
+ 
+-&qusb2phy {
++&qusb2phy0 {
+ 	status = "okay";
+ 
+ 	vdd-supply = <&vreg_l1b_0p925>;
 diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index e8bb170e8b2f..5be0ec06ed86 100644
+index 5be0ec06ed86..eb8504e5735c 100644
 --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1262,7 +1262,7 @@ qusb2phy: phy@c012000 {
+@@ -1250,13 +1250,13 @@ usb3_dwc3: usb@a800000 {
+ 				 * haven't seen any devices making use of it.
+ 				 */
+ 				maximum-speed = "high-speed";
+-				phys = <&qusb2phy>;
++				phys = <&qusb2phy0>;
+ 				phy-names = "usb2-phy";
+ 				snps,hird-threshold = /bits/ 8 <0>;
+ 			};
+ 		};
+ 
+-		qusb2phy: phy@c012000 {
++		qusb2phy0: phy@c012000 {
+ 			compatible = "qcom,sdm660-qusb2-phy";
+ 			reg = <0x0c012000 0x180>;
  			#phy-cells = <0>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+index dcbaacf18f66..9280c1f0c334 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
++++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+@@ -103,7 +103,7 @@ &pon_resin {
+ 	linux,code = <KEY_VOLUMEDOWN>;
+ };
  
- 			clocks = <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
--				<&gcc GCC_RX1_USB2_CLKREF_CLK>;
-+				 <&gcc GCC_RX0_USB2_CLKREF_CLK>;
- 			clock-names = "cfg_ahb", "ref";
+-&qusb2phy {
++&qusb2phy0 {
+ 	status = "okay";
  
- 			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+ 	vdd-supply = <&vreg_l1b_0p925>;
 -- 
 2.35.1
 
