@@ -2,133 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FB245272E5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 18:26:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DF605272ED
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 18:33:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234177AbiENQ0y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 May 2022 12:26:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56074 "EHLO
+        id S234236AbiENQd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 May 2022 12:33:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231211AbiENQ0x (ORCPT
+        with ESMTP id S234262AbiENQdZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 May 2022 12:26:53 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36C182CE12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 09:26:50 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id j84so9440499ybc.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 09:26:50 -0700 (PDT)
+        Sat, 14 May 2022 12:33:25 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E108DBC90;
+        Sat, 14 May 2022 09:33:17 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id q23so15078128wra.1;
+        Sat, 14 May 2022 09:33:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uAAN2W54G48k9hRqje/cdaPTrbIW4YAQoF/hPdMAfD4=;
-        b=NgAhjgFHi90HV2GORZIQ4dktxh+umurffW9MJr9ugCzFo3AOyZIR0rtZtnqis+BXgt
-         9/PWQLorLuUj5ssBcR9dpOyZVGb5tVBRVn5WtjTfhxWqd0b+/Aps6LaqJmS0T96MyoSi
-         fNKs2ZaugB33/LC0VPxjyXgzry5NFeye6XHzsnc07WCW3mwLf+UlSSwm9QdH9tC6jMSI
-         +jLlBGIvB68JmdxHLvk32ZBmv+Z2TfWXLUWmS5rSP+Ml5vLcXb+/VQ5/XxS+ihnLXUK9
-         gVCTZ1T8qJDhNpUYxKMUYjO7VCU7hqJDBTcngG8EixlAiT8Q5vWGETNept85pD/VbnN3
-         QZfQ==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=HBKA+WQkXWZ1I3M6pl42jHxqJFwGouJWtzUfEFdf0+g=;
+        b=WD6ukIW4K4lBCtxb//51iee1HzWMXQBB1vRuiI4YRFTpfFCktN8Miki8o2INlirdoB
+         lbwk/bx53kCnRUXMde0JdWR9gbTFm5GBioAFCeLw4Duutj3m3rTuM5daMy2Z+A6E4vCF
+         2c6W+qyBjoXNcqeR48AZcVUaEyjrUSOwWxPClaiPDxiO0sUeXPJIR7S+4l9qUqw+3AYi
+         qesTlPX0SXP/dxzjj+k2kT6L9B+d4+Oh+a3lt5F02/5mbetxgnmpU8uAQhoSC/tkS0uY
+         OhgzUOg8BEbREbKVxgktgTwgj6MMmExvJTS8X/7+p+hjGEswkVGB3pLJbqMyhyujkyV8
+         stRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uAAN2W54G48k9hRqje/cdaPTrbIW4YAQoF/hPdMAfD4=;
-        b=0pcDVpdKuvSPgESh6IqsRVrRKYLJdQQuu7W2KSRP3xVaOJjxa2mOL03csQI87V4Cd9
-         TkABlpPWVnFy8gkxKMqWtv+P8xYVwH+Noqt44GEK1tOX7I0p/wfcFI3SRM0mt3/9vopY
-         6uWBXGs6x7Im2bUu7VyXChRu5Q0O524xODA7mldSs3R/veA5oZslDV/WpP/ce/2yMTIK
-         OVfYi9GkZLYDEQLmRrq7Lp98x9Pc1gCaDWreu8ik/2ao64URYG1UCLCExvIunRpTqlYD
-         jiQmhtYY09OW5Jk4974SauqKbBnCkY5Ip33xd7JWQbOyxszcsZ3Nm7jJ6ENuv13I11+4
-         C/ag==
-X-Gm-Message-State: AOAM530QbMBDC0jut3UqUYB8+bb3J45ng71EvM74BIhg0nzkFiaLRjlS
-        TS7DlVlXCMlQfAC4vpuqVI33T7o1dl3nOAdj+M1IiA==
-X-Google-Smtp-Source: ABdhPJw4dvOEMBqoKApaz3M52UhSyBHJuFPFbVJOsBzfkjuUCL4abpY/zc7w1I7zX/avexmLj1yiVR9myg0teR7uhb0=
-X-Received: by 2002:a5b:302:0:b0:64b:a20a:fcd9 with SMTP id
- j2-20020a5b0302000000b0064ba20afcd9mr7045834ybp.492.1652545609490; Sat, 14
- May 2022 09:26:49 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=HBKA+WQkXWZ1I3M6pl42jHxqJFwGouJWtzUfEFdf0+g=;
+        b=0GcorM04xEc1+ZnMftLZ31p1gVHez2CVn+AL1Jqxgf8asf0lZ/B0jpQI7OZn6wsEus
+         jQGMAf7IFw6O65fOeapCA6THu+jgwyKPLPFBX6jac/HsK5Zbn4HFyeH8P9ktsJkQnePW
+         G5a9eW2J8R8DZdvRHwwg5YkVPagmkRG9yOrLAaLCxlXHa/hItZoABEHcDI4KHwg4TMvN
+         4u9LTVYexlhXGnyCYqyyaMGC+K9AXkdD3LBROC/FPkRlrOP6BAWwVAWXGA3FqkmKgg8x
+         oLqWvVAcJcdQiHkCS5yCAt/bbTNQAFTrm/RT7aCG5VHxMb2/1gzLyr4iR88ApdfM158W
+         LugA==
+X-Gm-Message-State: AOAM531RwgoZx4/61vo6NuyBjhLfkRo6O9X3OaO3dhYVyR1c748kKM1g
+        1pdUyHnluAVUXyZg32pk6zgm9AWItzaG9Q==
+X-Google-Smtp-Source: ABdhPJxhNlOF1OhdQWFqzov1nKY/StqGiLhQBCuYeSCsvuIxu4oMC7BoGZW/ze1a/4OUk4/ziT0F2w==
+X-Received: by 2002:a05:6000:1889:b0:20c:617a:b087 with SMTP id a9-20020a056000188900b0020c617ab087mr8142515wri.102.1652545995603;
+        Sat, 14 May 2022 09:33:15 -0700 (PDT)
+Received: from [192.168.35.91] ([194.39.226.133])
+        by smtp.gmail.com with ESMTPSA id u21-20020a7bc055000000b00394586f696dsm8581841wmc.11.2022.05.14.09.33.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 14 May 2022 09:33:15 -0700 (PDT)
+Message-ID: <fad8e87d-20f9-d01d-e92b-2c7b9a751287@gmail.com>
+Date:   Sat, 14 May 2022 19:33:12 +0300
 MIME-Version: 1.0
-References: <20220512162320.2213488-1-maz@kernel.org> <CACRpkdajTCS5CmQLY8hffVe1x4WzWuC_myQVGZNKV3sRzLPa=w@mail.gmail.com>
- <87r14wmmea.wl-maz@kernel.org>
-In-Reply-To: <87r14wmmea.wl-maz@kernel.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Sat, 14 May 2022 18:26:38 +0200
-Message-ID: <CACRpkdZ9NgATS-C0EqLVcxNf1CejwsRMV+NCCVhqrKQ=3c346A@mail.gmail.com>
-Subject: Re: [PATCH] gpio: Remove dynamic allocation from populate_parent_alloc_arg()
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, kernel-team@android.com,
-        Daniel Palmer <daniel@thingy.jp>,
-        Romain Perier <romain.perier@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Robert Richter <rric@kernel.org>,
-        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v4 1/5] dt-bindings: proximity: vl53l0x: Document optional
+ supply and GPIO properties
+Content-Language: en-US
+To:     Jonathan Cameron <jic23@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Song Qiang <songqiang1304521@gmail.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20220512191334.61804-1-markuss.broks@gmail.com>
+ <20220512191334.61804-2-markuss.broks@gmail.com>
+ <f5ec4fd9-b9d7-10fa-1c27-2f268466274f@linaro.org>
+ <20220514152940.1a212c7f@jic23-huawei>
+From:   Markuss Broks <markuss.broks@gmail.com>
+In-Reply-To: <20220514152940.1a212c7f@jic23-huawei>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, May 14, 2022 at 12:36 PM Marc Zyngier <maz@kernel.org> wrote:
-> On Fri, 13 May 2022 22:24:40 +0100,
-> Linus Walleij <linus.walleij@linaro.org> wrote:
-> >
-> > On Thu, May 12, 2022 at 6:23 PM Marc Zyngier <maz@kernel.org> wrote:
-> >
-> > > The gpiolib is unique in the way it uses intermediate fwspecs
-> > > when feeding an interrupt specifier to the parent domain, as it
-> > > relies on the populate_parent_alloc_arg() callback to perform
-> > > a dynamic allocation.
-> > >
-> > > THis is pretty inefficient (we free the structure almost immediately),
-> > > and the only reason this isn't a stack allocation is that our
-> > > ThunderX friend uses MSIs rather than a FW-constructed structure.
-> > >
-> > > Let's solve it by providing a new type composed of the union
-> > > of a struct irq_fwspec and a msi_info_t, which satisfies both
-> > > requirements. This allows us to use a stack allocation, and we
-> > > can move the handful of users to this new scheme.
-> > >
-> > > Also perform some additional cleanup, such as getting rid of the
-> > > stub versions of the irq_domain_translate_*cell helpers, which
-> > > are never used when CONFIG_IRQ_DOMAIN_HIERARCHY isn't selected.
-> > >
-> > > Tested on a Tegra186.
-> > >
-> > > Signed-off-by: Marc Zyngier <maz@kernel.org>
-> > > Cc: Daniel Palmer <daniel@thingy.jp>
-> > > Cc: Romain Perier <romain.perier@gmail.com>
-> > > Cc: Linus Walleij <linus.walleij@linaro.org>
-> > > Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-> > > Cc: Thierry Reding <thierry.reding@gmail.com>
-> > > Cc: Jonathan Hunter <jonathanh@nvidia.com>
-> > > Cc: Robert Richter <rric@kernel.org>
-> > > Cc: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
-> > > Cc: Andy Gross <agross@kernel.org>
-> > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >
-> > This looks very appetizing to me but:
-> >
-> > drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 15 ++++-----
-> >
-> > This seems to have some changes to
-> > ->populate_parent_alloc_arg not even in linux-next,
-> > so I get confused, what are the prerequisites? (Probably
-> > something I already reviewed, but...)
+Hi Jonathan,
+
+On 5/14/22 17:29, Jonathan Cameron wrote:
+> On Fri, 13 May 2022 10:56:50 +0200
+> Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote:
 >
-> Odd. This patch is on top of irqchip-next, which is itself already in
-> -next (you got me worried and I just pulled everything to check).
-
-I confused it with pinctrl-ssbi-gpio.c. Simple beginners mistake.
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-
-Yours,
-Linus Walleij
+>> On 12/05/2022 21:13, Markuss Broks wrote:
+>>> This patch adds the optional properties for the VL53L0X ToF sensor to the
+>>> device-tree binding.
+>>>
+>>> Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
+>> Wait, two days and three versions? Please give some time before
+>> resending entire patchset.
+> Yeah, several instances of this on the IIO list this week. Please
+> let things sit for at least a few days between versions even if
+> the requested changes are fairly minor.
+>
+>> Same comments apply as for v2 and v3...
+>>
+> I 'could' fix this up, but given you've not responded to Krzysztof
+> I think I'd prefer you send a v5 in the second half of next week or
+> later (to give time for other review) with the patch description
+> change Krzysztof suggested made.
+OK, good. I will give this version some time to settle and send a 
+version with those fixes some time next week.
+>
+> Code wise the series looks fine to me.
+>
+> Jonathan
+>
+>
+>
+>> Best regards,
+>> Krzysztof
+- Markuss
