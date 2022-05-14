@@ -2,109 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F6D1526F84
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 09:16:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8975526F7B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 09:15:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231612AbiEND6u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 23:58:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35078 "EHLO
+        id S231776AbiENFGI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 May 2022 01:06:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231546AbiEND6u (ORCPT
+        with ESMTP id S231769AbiENFF4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 23:58:50 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01CC6126EA0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 20:58:49 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id v59so18371476ybi.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 20:58:48 -0700 (PDT)
+        Sat, 14 May 2022 01:05:56 -0400
+Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BB87F41
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 22:05:51 -0700 (PDT)
+Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-ee1e7362caso12921721fac.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 22:05:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GT9/q30klIOZiNi12Byl1O8n++vZSioA/Bb3DiRLCoc=;
-        b=b9aVU7IS90gpAcPOVXeUUrzRXPZYphDZXmhfMOkEgJQ0e8/RprHm3Tru+rqh0eu/jP
-         +n+RJB1cn+kThXEeRgZv3mfaquhe++Vzq8HazzqAAM+xvKu/o65jXbXFJ7FLfvnG0L2X
-         z6AeKhwLSb05/HIc8T0pKufqixhuDC5lp3vBhssiTDDtccAOAjgpAijozUNZ0Gic9K8a
-         GS+rPR30c8EgzGZ0TTaTWHGNsyTqAxZ3GpD9QJu3i/JNT2qSik9ALRb9T9DBno78oVbZ
-         9GWixvBNT3L7/uh+PeNGp8S7tXWLa/fuHpW6kLY4B9I1fgL4a0I9ZvJYqbq9S1tiD3mf
-         siqQ==
+        d=kali.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=X/IAgav4s9J/eHMYgeYeDUOX7BruZpeeDkv9wTzgnWY=;
+        b=M+uGt8zf3J9fvCZPki4VDQjO6k9RWF3TwzCJRZ6+pV6g+35xfeih5qRCucqItHYPs8
+         zougwwQRL7sVf3h8t8ZDSs8xtH5HxaP/km8HpN+fbk+xgOwWOJFpgTdZK4VhKDpWY2R/
+         ctcgmcFlPVqmahsyZlDFQW8L7yO1N/8HoK4umZw/7LxTF9JzS8ps6YhLfImaSDoSFRia
+         X6elXH8asqFGSE0kbdJTxe2rUptET18s22Cz8anvGjPQK3npB6wZuLCdHwE4U6TG8fo7
+         3YJf4h/lcttSV3z/UFbeuLC4zxMuMpWfflC+7um8RCFp956evzBFGVvQOETo5b3oxKYv
+         RI4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GT9/q30klIOZiNi12Byl1O8n++vZSioA/Bb3DiRLCoc=;
-        b=JkakPGS3lZvPSCPfeM25nnZ6C9ISeGhQvQM7fmybl0v31/d4aTj099EnzEA2hxR61a
-         Tdv02dyObWnf+QosLc4bIpEmj+Fx/HIb2FKb3Gh1u8dsa+8an4+RLttNfszYux8s+K7E
-         5fRA98vn8m54sYHoTBv0fDyeXHcLvCKp8TizKu/wXOi4qaNiOQApi74Jyso3hRXKaC99
-         pELtu21reaiX3sOj16reFquSodrlv/EFwn0j9qTWlrYB70HPxeH9aE9n/oxjJYbuKjSf
-         8QtXZCXzwQROnfRFZ+QlDgTmfTKJWibgeOe85TcC/DK4JLuMXZCKPMdX8O6T8CusGVl+
-         LcDQ==
-X-Gm-Message-State: AOAM532UB4/lXBmrB4VcjSX9xl4HowQopHFDEi5uaSDs203+3s6hPt3u
-        JhD2qyP7cxX1ex3hZEVEEJwQIPNAnFKMT/i+sZxu2Q==
-X-Google-Smtp-Source: ABdhPJyA0cZpGgVC+vHuXsPtJhVk9N1EspaO4yzHpGvrbO4jnRAAMhk7yYaKZyXDuU7oq2lHHQw5HbRctiWXIBKLOBM=
-X-Received: by 2002:a25:504c:0:b0:64b:979c:1bae with SMTP id
- e73-20020a25504c000000b0064b979c1baemr5867654ybb.563.1652500728034; Fri, 13
- May 2022 20:58:48 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=X/IAgav4s9J/eHMYgeYeDUOX7BruZpeeDkv9wTzgnWY=;
+        b=gZB7vnNWdYmK2xHVeAnfTD8mjn/DX8p64fyYn6nJN46g21a7dHoGwtz3tguThC/6go
+         Pzb8J3T3fXF8Ag4XaPogocICEgoo1tCmwgEIC6WxJXYNZBCMLDwJmQl8VRwbFp1HxN5c
+         /q7C2HIlwaPQ9ajNw++lnh9pX6rJeX9yndSu/FqZUkPqDpWbSZoXb2Iq8bja1u55rGDy
+         uDDCrbwz8MzPt7rtIPF+nYqrz8h3G/5OSjFh7S9t/MI2HgrAo7oEnlmWwd52276xO2VP
+         2FZEY0WC7QOnLxf38U+kyOOS6OeKxec9nzvW6ClRDtKIRKwvq/dZ4Oug2AhGn13pwo9u
+         5rLA==
+X-Gm-Message-State: AOAM533LPkfh1HPl2zkKtjEEwXnbxWjCHs23ylLb/HQ9pmrezmClEZz6
+        QnHbk5ON1qxxtU+k9W9fdSzrPw==
+X-Google-Smtp-Source: ABdhPJy70FSboA/M7j4vD92dz5/lEptNURnyMkDTAyA1IhHQZoa5U8vy7hqJG1EE8gw+gexfUrUTGA==
+X-Received: by 2002:a05:6870:a2cd:b0:ed:754:a2c6 with SMTP id w13-20020a056870a2cd00b000ed0754a2c6mr9067488oak.270.1652504750057;
+        Fri, 13 May 2022 22:05:50 -0700 (PDT)
+Received: from [192.168.11.16] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id r25-20020a4a7019000000b0035eb4e5a6c8sm2006483ooc.30.2022.05.13.22.05.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 May 2022 22:05:49 -0700 (PDT)
+Message-ID: <3d856d44-a2d6-b5b8-ec78-ce19a3686986@kali.org>
+Date:   Sat, 14 May 2022 00:05:46 -0500
 MIME-Version: 1.0
-References: <20220429164325.1.I2a3b980ea051e59140227999f0f0ca16f1125768@changeid>
- <CAHp75VdqbXCYoEwxMt7xG55QDu2mXHbnpwdnHb6ktm8NdVPJnQ@mail.gmail.com> <CAJZ5v0hKrnRznpTjTyb8ANGN=REaukAbqQNB_14i_NwAA84=uA@mail.gmail.com>
-In-Reply-To: <CAJZ5v0hKrnRznpTjTyb8ANGN=REaukAbqQNB_14i_NwAA84=uA@mail.gmail.com>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Fri, 13 May 2022 20:58:12 -0700
-Message-ID: <CAGETcx_9MNGBi1avOzYoOOaed0CVHa03dfTxYpQuOErtpiisLg@mail.gmail.com>
-Subject: Re: [PATCH] device property: Fix recent breakage of fwnode_get_next_parent_dev()
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.9.0
+Subject: Re: [PATCH] ath10k: do not enforce interrupt trigger type
+Content-Language: en-US
+To:     Kalle Valo <kvalo@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Govind Singh <govinds@codeaurora.org>,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sakari Ailus <sakari.ailus@linux.intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Daniel Scally <djrscally@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL
-        autolearn=ham autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org
+References: <20220513151516.357549-1-krzysztof.kozlowski@linaro.org>
+ <87zgjl4e8t.fsf@kernel.org>
+From:   Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <87zgjl4e8t.fsf@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 5, 2022 at 5:21 AM Rafael J. Wysocki <rafael@kernel.org> wrote:
+
+On 5/13/22 10:57 AM, Kalle Valo wrote:
+> Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> writes:
 >
-> On Sun, May 1, 2022 at 9:50 AM Andy Shevchenko
-> <andy.shevchenko@gmail.com> wrote:
-> >
-> > On Sat, Apr 30, 2022 at 3:00 PM Douglas Anderson <dianders@chromium.org> wrote:
-> > >
-> > > Due to a subtle typo, instead of commit 87ffea09470d ("device
-> > > property: Introduce fwnode_for_each_parent_node()") being a no-op
-> > > change, it ended up causing the display on my sc7180-trogdor-lazor
-> > > device from coming up unless I added "fw_devlink=off" to my kernel
-> > > command line. Fix the typo.
-> >
-> > Sorry and merci pour la fix!
-> > Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+>> Interrupt line can be configured on different hardware in different way,
+>> even inverted.  Therefore driver should not enforce specific trigger
+>> type - edge rising - but instead rely on Devicetree to configure it.
+>>
+>> All Qualcomm DTSI with WCN3990 define the interrupt type as level high,
+>> so the mismatch between DTSI and driver causes rebind issues:
+>>
+>>    $ echo 18800000.wifi > /sys/bus/platform/drivers/ath10k_snoc/unbind
+>>    $ echo 18800000.wifi > /sys/bus/platform/drivers/ath10k_snoc/bind
+>>    [   44.763114] irq: type mismatch, failed to map hwirq-446 for interrupt-controller@17a00000!
+>>    [   44.763130] ath10k_snoc 18800000.wifi: error -ENXIO: IRQ index 0 not found
+>>    [   44.763140] ath10k_snoc 18800000.wifi: failed to initialize resource: -6
+> So you tested on WCN3990? On what firmware version? I can add the
+> Tested-on tag if you provide that.
 >
-> Applied, thanks!
+Hello Krzystof, Kalle,
 
-Has this been picked up by one of the driver-core branches yet? I was
-poking around that
-git repo and didn't see any commit with this title. This breaks
-fw_devlink in a severe manner, so I want to make sure it gets into
-5.18.
+I have seen this issue as well on a Lenovo Flex 5G, which has a WCN3990:
 
--Saravana
+wcn3990 hw1.0 target 0x00000008 chip_id 0x00000000 sub 0000:0000
+kconfig debug 0 debugfs 0 tracing 0 dfs 0 testmode 0
+firmware ver  api 5 features wowlan,mgmt-tx-by-reference,non-bmi crc32 
+b3d4b790
+htt-ver 3.86 wmi-op 4 htt-op 3 cal file max-sta 32 raw 0 hwcrypto 1
 
+With this patch applied, I no longer see the error message in the commit 
+message, when I unbind/bind when wifi stops working.
 
--Saravana
+Tested-by: Steev Klimaszewski <steev@kali.org>
+
+-- Steev
+
