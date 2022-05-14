@@ -2,563 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F0F95270AF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 12:32:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59E6F5270B3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 12:36:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229689AbiENKcH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 May 2022 06:32:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45916 "EHLO
+        id S231829AbiENKgW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 May 2022 06:36:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230011AbiENKcG (ORCPT
+        with ESMTP id S230011AbiENKgV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 May 2022 06:32:06 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03D2D393EE
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 03:32:03 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Sat, 14 May 2022 06:36:21 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28856BFA;
+        Sat, 14 May 2022 03:36:20 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1F12D20542;
-        Sat, 14 May 2022 12:32:01 +0200 (CEST)
-Date:   Sat, 14 May 2022 12:31:59 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 7/8] arm64: dts: qcom: sdm660: Add initial Inforce
- IFC6560 board support
-Message-ID: <20220514103159.es3iqyu5a5fokgar@SoMainline.org>
-References: <20220513234518.3068480-1-dmitry.baryshkov@linaro.org>
- <20220513234518.3068480-8-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220513234518.3068480-8-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0F211B80159;
+        Sat, 14 May 2022 10:36:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A87C340EE;
+        Sat, 14 May 2022 10:36:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652524576;
+        bh=IZ20DnElaUQpGD9AQjF+GTf8KlNtO0jZ4I5fpkzKRAg=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=RI2Iyaydzs9i8l3W1mZ9L/zOUjwA5u5KH186hWT5zJbULe1YO1bWudVvVFZOqRLDt
+         KwBOczHvrcdEwYj76PwBAiAfn2VswtiBq9sl7UU4e9R4fyTlrhHwQP4hg8pR9oUKGI
+         6xkv4bOa2cX2e3RecGYMh7tb8Eg6XlV5412ulgD8uVHmZ2bxYPDvnmo7qlPDG4AVAB
+         nvobTo4sxzGS5HLo1T4KX9S93N/TlINZzmC2c12yifBKH7U8hjOl33HhVIzMkp9TQE
+         oTvYuTFxUNBEeIaQOfBKCW1RLsX9LSn5kl6hZ6jWHyhVnGUZUQUqvhJ+L/aBlO/2Is
+         EGLO+6vuzsGbg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=wait-a-minute.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1npp8A-00BIKM-4A; Sat, 14 May 2022 11:36:14 +0100
+Date:   Sat, 14 May 2022 11:36:13 +0100
+Message-ID: <87r14wmmea.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, kernel-team@android.com,
+        Daniel Palmer <daniel@thingy.jp>,
+        Romain Perier <romain.perier@gmail.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Robert Richter <rric@kernel.org>,
+        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH] gpio: Remove dynamic allocation from populate_parent_alloc_arg()
+In-Reply-To: <CACRpkdajTCS5CmQLY8hffVe1x4WzWuC_myQVGZNKV3sRzLPa=w@mail.gmail.com>
+References: <20220512162320.2213488-1-maz@kernel.org>
+        <CACRpkdajTCS5CmQLY8hffVe1x4WzWuC_myQVGZNKV3sRzLPa=w@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: linus.walleij@linaro.org, linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org, kernel-team@android.com, daniel@thingy.jp, romain.perier@gmail.com, brgl@bgdev.pl, thierry.reding@gmail.com, jonathanh@nvidia.com, rric@kernel.org, nobuhiro1.iwamatsu@toshiba.co.jp, agross@kernel.org, bjorn.andersson@linaro.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-05-14 02:45:17, Dmitry Baryshkov wrote:
-> The IFC6560 is a board from Inforce Computing, built around the SDA660
-> SoC. This patch describes core clocks, some regulators from the two
-> PMICs, debug uart, storage, bluetooth and audio DSP remoteproc.
+Hey Linus,
+
+On Fri, 13 May 2022 22:24:40 +0100,
+Linus Walleij <linus.walleij@linaro.org> wrote:
 > 
-> The regulator settings are inherited from prior work by Konrad Dybcio
-> and AngeloGioacchino Del Regno.
+> On Thu, May 12, 2022 at 6:23 PM Marc Zyngier <maz@kernel.org> wrote:
 > 
-> Co-developed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/sda660-inforce-ifc6560.dts  | 455 ++++++++++++++++++
->  2 files changed, 456 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+> > The gpiolib is unique in the way it uses intermediate fwspecs
+> > when feeding an interrupt specifier to the parent domain, as it
+> > relies on the populate_parent_alloc_arg() callback to perform
+> > a dynamic allocation.
+> >
+> > THis is pretty inefficient (we free the structure almost immediately),
+> > and the only reason this isn't a stack allocation is that our
+> > ThunderX friend uses MSIs rather than a FW-constructed structure.
+> >
+> > Let's solve it by providing a new type composed of the union
+> > of a struct irq_fwspec and a msi_info_t, which satisfies both
+> > requirements. This allows us to use a stack allocation, and we
+> > can move the handful of users to this new scheme.
+> >
+> > Also perform some additional cleanup, such as getting rid of the
+> > stub versions of the irq_domain_translate_*cell helpers, which
+> > are never used when CONFIG_IRQ_DOMAIN_HIERARCHY isn't selected.
+> >
+> > Tested on a Tegra186.
+> >
+> > Signed-off-by: Marc Zyngier <maz@kernel.org>
+> > Cc: Daniel Palmer <daniel@thingy.jp>
+> > Cc: Romain Perier <romain.perier@gmail.com>
+> > Cc: Linus Walleij <linus.walleij@linaro.org>
+> > Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+> > Cc: Thierry Reding <thierry.reding@gmail.com>
+> > Cc: Jonathan Hunter <jonathanh@nvidia.com>
+> > Cc: Robert Richter <rric@kernel.org>
+> > Cc: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+> > Cc: Andy Gross <agross@kernel.org>
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index f9e6343acd03..5f717fe0e8d0 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -88,6 +88,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sda660-inforce-ifc6560.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-ganges-kirin.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-> new file mode 100644
-> index 000000000000..ade5c27dafcf
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-> @@ -0,0 +1,455 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2021, Linaro Ltd.
-> + * Copyright (c) 2020, Konrad Dybcio <konrad.dybcio@somainline.org>
-> + * Copyright (c) 2020, AngeloGioacchino Del Regno
-> + *                     <angelogioacchino.delregno@somainline.org>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sdm660.dtsi"
-> +#include "pm660.dtsi"
-> +#include "pm660l.dtsi"
-> +
-> +/ {
-> +	model = "Inforce 6560 Single Board Computer";
-> +	compatible = "inforce,ifc6560", "qcom,sda660";
-> +	chassis-type = "embedded"; /* SBC */
-> +
-> +	aliases {
-> +		serial0 = &blsp1_uart2;
-> +		serial1 = &blsp2_uart1;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		volup {
-> +			label = "Volume Up";
-> +			gpios = <&pm660l_gpios 7 GPIO_ACTIVE_LOW>;
-> +			linux,code = <KEY_VOLUMEUP>;
-> +			debounce-interval = <15>;
-> +		};
-> +	};
-> +
-> +	/*
-> +	 * Until we hook up type-c detection, we
-> +	 * have to stick with this. But it works.
-> +	 */
-> +	extcon_usb: extcon-usb {
-> +		compatible = "linux,extcon-usb-gpio";
-> +		id-gpio = <&tlmm 58 GPIO_ACTIVE_HIGH>;
-> +	};
-> +
-> +	hdmi-out {
-> +		compatible = "hdmi-connector";
-> +		type = "a";
-> +
-> +		port {
-> +			hdmi_con: endpoint {
-> +				remote-endpoint = <&adv7533_out>;
-> +			};
-> +		};
-> +	};
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3800000>;
-> +		regulator-max-microvolt = <3800000>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	v3p3_bck_bst: v3p3-bck-bst-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "v3p3_bck_bst";
-> +
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		vin-supply = <&vph_pwr>;
-> +	};
-> +
-> +	v1p2_ldo: v1p2-ldo-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "v1p2_ldo";
-> +
-> +		regulator-min-microvolt = <1200000>;
-> +		regulator-max-microvolt = <1200000>;
-> +
-> +		vin-supply = <&vph_pwr>;
-> +	};
-> +
-> +	v5p0_boost: v5p0-boost-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "v5p0_boost";
-> +
-> +		regulator-min-microvolt = <5000000>;
-> +		regulator-max-microvolt = <5000000>;
-> +
-> +		vin-supply = <&vph_pwr>;
-> +	};
-> +};
-> +
-> +&adsp_pil {
-> +	firmware-name = "qcom/ifc6560/adsp.mbn";
-> +};
-> +
-> +&blsp1_dma {
-> +	/*
-> +	 * The board will lock up if we toggle the BLSP clock, unless the
-> +	 * BAM DMA interconnects support is in place.
-> +	 */
-> +	/delete-property/ clocks;
-> +};
-> +
-> +&blsp_i2c6 {
-> +	status = "okay";
-> +
-> +	adv7533: hdmi@39 {
-> +		compatible = "adi,adv7535";
-> +		reg = <0x39>, <0x66>;
-> +		reg-names = "main", "edid";
-> +
-> +		interrupt-parent = <&pm660l_gpios>;
-> +		interrupts = <11 IRQ_TYPE_EDGE_FALLING>;
-> +
-> +		clocks = <&rpmcc RPM_SMD_BB_CLK2>;
-> +		clock-names = "cec";
-> +		/*
-> +		 * Limit to 3 lanes to prevent the bridge from changing amount
-> +		 * of lanes in the fly. MSM DSI host doesn't like that.
-> +		 */
-> +		adi,dsi-lanes = <3>;
-> +		avdd-supply = <&vreg_l13a_1p8>;
-> +		dvdd-supply = <&vreg_l13a_1p8>;
-> +		pvdd-supply = <&vreg_l13a_1p8>;
-> +		a2vdd-supply = <&vreg_l13a_1p8>;
-> +		v3p3-supply = <&v3p3_bck_bst>;
-> +
-> +		ports {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			port@0 {
-> +				reg = <0>;
-> +
-> +				adv7533_in: endpoint {
-> +					remote-endpoint = <&dsi0_out>;
-> +				};
-> +			};
-> +
-> +			port@1 {
-> +				reg = <1>;
-> +
-> +				adv7533_out: endpoint {
-> +					remote-endpoint = <&hdmi_con>;
-> +				};
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&blsp1_uart2 {
-> +	status = "okay";
-> +};
-> +
-> +&blsp2_dma {
-> +	/*
-> +	 * The board will lock up if we toggle the BLSP clock, unless the
-> +	 * BAM DMA interconnects support is in place.
-> +	 */
-> +	/delete-property/ clocks;
-> +};
-> +
-> +&blsp2_uart1 {
-> +	status = "okay";
-> +
-> +	bluetooth {
-> +		compatible = "qcom,wcn3990-bt";
-> +
-> +		vddio-supply = <&vreg_l13a_1p8>;
-> +		vddxo-supply = <&vreg_l9a_1p8>;
-> +		vddrf-supply = <&vreg_l6a_1p3>;
-> +		vddch0-supply = <&vreg_l19a_3p3>;
-> +		max-speed = <3200000>;
-> +	};
-> +};
-> +
-> +&dsi0 {
-> +	status = "okay";
-> +	vdda-supply = <&vreg_l1a_1p225>;
-> +};
-> +
-> +&dsi0_out {
-> +	remote-endpoint = <&adv7533_in>;
-> +	data-lanes = <0 1 2 3>;
-> +};
-> +
-> +&dsi0_phy {
-> +	status = "okay";
-> +	vcca-supply = <&vreg_l1b_0p925>;
-
-@Konrad: It looks like we have this regulator downstream in mdss_dsi but
-not in the upstream DT, is it missing by accident?
-
-> +};
-> +
-> +&mdss {
-> +	status = "okay";
-> +};
-> +
-> +&mmss_smmu {
-> +	status = "okay";
-> +};
-> +
-> +&pon_pwrkey {
-> +	status = "okay";
-> +};
-> +
-> +&pon_resin {
-> +	status = "okay";
-> +
-> +	linux,code = <KEY_VOLUMEUP>;
-> +};
-> +
-> +&qusb2phy {
-> +	status = "okay";
-> +
-> +	vdd-supply = <&vreg_l1b_0p925>;
-> +	vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
-> +};
-> +
-> +&qusb2phy1 {
-> +	status = "okay";
-> +
-> +	vdd-supply = <&vreg_l1b_0p925>;
-> +	vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
-> +};
-> +
-> +&rpm_requests {
-> +	pm660-regulators {
-> +		compatible = "qcom,rpm-pm660-regulators";
-> +
-> +		vdd_s1-supply = <&vph_pwr>;
-> +		vdd_s2-supply = <&vph_pwr>;
-> +		vdd_s3-supply = <&vph_pwr>;
-> +		vdd_s4-supply = <&vph_pwr>;
-> +		vdd_s5-supply = <&vph_pwr>;
-> +		vdd_s6-supply = <&vph_pwr>;
-> +
-> +		vdd_l1_l6_l7-supply = <&vreg_s5a_1p35>;
-> +		vdd_l2_l3-supply = <&vreg_s2b_1p05>;
-> +		vdd_l5-supply = <&vreg_s2b_1p05>;
-> +		vdd_l8_l9_l10_l11_l12_l13_l14-supply = <&vreg_s4a_2p04>;
-> +		vdd_l15_l16_l17_l18_l19-supply = <&vreg_bob>;
-> +
-> +		vreg_s4a_2p04: s4 {
-> +			regulator-min-microvolt = <1805000>;
-> +			regulator-max-microvolt = <2040000>;
-> +			regulator-enable-ramp-delay = <200>;
-> +			regulator-ramp-delay = <0>;
-> +			regulator-always-on;
-> +		};
-> +
-> +		vreg_s5a_1p35: s5 {
-> +			regulator-min-microvolt = <1224000>;
-> +			regulator-max-microvolt = <1350000>;
-> +			regulator-enable-ramp-delay = <200>;
-> +			regulator-ramp-delay = <0>;
-> +		};
-> +
-> +		vreg_l1a_1p225: l1 {
-> +			regulator-min-microvolt = <1150000>;
-> +			regulator-max-microvolt = <1250000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l6a_1p3: l6 {
-> +			regulator-min-microvolt = <1304000>;
-> +			regulator-max-microvolt = <1368000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +			regulator-ramp-delay = <0>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l8a_1p8: l8 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +			regulator-ramp-delay = <0>;
-> +			regulator-system-load = <325000>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l9a_1p8: l9 {
-> +			regulator-min-microvolt = <1804000>;
-> +			regulator-max-microvolt = <1896000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +			regulator-ramp-delay = <0>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l13a_1p8: l13 {
-> +			/* This gives power to the LPDDR4: never turn it off! */
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1944000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +			regulator-ramp-delay = <0>;
-> +			regulator-always-on;
-> +			regulator-boot-on;
-> +		};
-> +
-> +		vreg_l19a_3p3: l19 {
-> +			regulator-min-microvolt = <3312000>;
-> +			regulator-max-microvolt = <3400000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +			regulator-ramp-delay = <0>;
-> +			regulator-allow-set-load;
-> +		};
-> +	};
-> +
-> +	pm660l-regulators {
-> +		compatible = "qcom,rpm-pm660l-regulators";
-> +
-> +		vdd_s1-supply = <&vph_pwr>;
-> +		vdd_s2-supply = <&vph_pwr>;
-> +		vdd_s3_s4-supply = <&vph_pwr>;
-> +		vdd_s5-supply = <&vph_pwr>;
-> +		vdd_s6-supply = <&vph_pwr>;
-> +
-> +		vdd_l1_l9_l10-supply = <&vreg_s2b_1p05>;
-> +		vdd_l2-supply = <&vreg_bob>;
-> +		vdd_l3_l5_l7_l8-supply = <&vreg_bob>;
-> +		vdd_l4_l6-supply = <&vreg_bob>;
-> +		vdd_bob-supply = <&vph_pwr>;
-> +
-> +		vreg_s2b_1p05: s2 {
-> +			regulator-min-microvolt = <1050000>;
-> +			regulator-max-microvolt = <1050000>;
-> +			regulator-enable-ramp-delay = <200>;
-> +			regulator-ramp-delay = <0>;
-> +		};
-> +
-> +		vreg_l1b_0p925: l1 {
-> +			regulator-min-microvolt = <800000>;
-> +			regulator-max-microvolt = <925000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l2b_2p95: l2 {
-> +			regulator-min-microvolt = <1648000>;
-> +			regulator-max-microvolt = <3100000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +			regulator-ramp-delay = <0>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l4b_2p95: l4 {
-> +			regulator-min-microvolt = <2944000>;
-> +			regulator-max-microvolt = <2952000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +			regulator-ramp-delay = <0>;
-> +
-> +			regulator-min-microamp = <200>;
-> +			regulator-max-microamp = <600000>;
-> +			regulator-system-load = <570000>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		/*
-> +		 * Downstream specifies a range of 1721-3600mV,
-> +		 * but the only assigned consumers are SDHCI2 VMMC
-> +		 * and Coresight QPDI that both request pinned 2.95V.
-> +		 * Tighten the range to 1.8-3.328 (closest to 3.3) to
-> +		 * make the mmc driver happy.
-> +		 */
-> +		vreg_l5b_2p95: l5 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <3328000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +			regulator-system-load = <800000>;
-> +			regulator-ramp-delay = <0>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l7b_3p125: l7 {
-> +			regulator-min-microvolt = <2700000>;
-> +			regulator-max-microvolt = <3125000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l8b_3p3: l8 {
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <3400000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +			regulator-ramp-delay = <0>;
-> +		};
-> +
-> +		vreg_bob: bob {
-> +			regulator-min-microvolt = <3300000>;
-> +			regulator-max-microvolt = <3624000>;
-> +			regulator-enable-ramp-delay = <500>;
-> +			regulator-ramp-delay = <0>;
-> +		};
-> +	};
-> +};
-> +
-> +&sdhc_1 {
-> +	status = "okay";
-> +	supports-cqe;
-> +
-> +	vmmc-supply = <&vreg_l4b_2p95>;
-> +	vqmmc-supply = <&vreg_l8a_1p8>;
-> +
-> +	mmc-ddr-1_8v;
-> +	mmc-hs400-1_8v;
-> +	mmc-hs400-enhanced-strobe;
-> +};
-> +
-> +&sdhc_2 {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default";
-
-Missing , "sleep".
-
-> +	pinctrl-0 = <&sdc2_state_on &sdc2_card_det_n>;
-> +	pinctrl1 = <&sdc2_state_off &sdc2_card_det_n>;
-
-Missing hyphen.
-
-> +
-> +	vmmc-supply = <&vreg_l5b_2p95>;
-> +	vqmmc-supply = <&vreg_l2b_2p95>;
-> +
-> +	cd-gpios = <&tlmm 54 GPIO_ACTIVE_LOW>;
-> +	no-sdio;
-> +	no-emmc;
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <0 4>, <8 4>;
-> +
-> +	sdc2_card_det_n: sd-card-det-n {
-> +		pins = "gpio54";
-> +		function = "gpio";
-> +		bias-pull-up;
-> +	};
-
-It seems this pin is also already declared in sdc2-on/off in
-sdm630.dtsi, with the same bias-pull-up in the -on case.  However, the
--off case sets bias-disable, won't that conflict?  (not in this moment,
-because the clashing pinctrl pairs are "unused" with the typos above).
-
-I have always been under the impression this GPIO is board-specific and
-should be moved out of sdm630.dtsi into board-specific DTs, is that
-true?
-
-- Marijn
-
-> +};
-> +
-> +&usb2 {
-> +	status = "okay";
-> +};
-> +
-> +&usb2_dwc3 {
-> +	dr_mode = "host";
-> +};
-> +
-> +&usb3 {
-> +	status = "okay";
-> +};
-> +
-> +&usb3_dwc3 {
-> +	dr_mode = "peripheral";
-> +	extcon = <&extcon_usb>;
-> +};
-> -- 
-> 2.35.1
+> This looks very appetizing to me but:
 > 
+> drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 15 ++++-----
+> 
+> This seems to have some changes to
+> ->populate_parent_alloc_arg not even in linux-next,
+> so I get confused, what are the prerequisites? (Probably
+> something I already reviewed, but...)
+
+Odd. This patch is on top of irqchip-next, which is itself already in
+-next (you got me worried and I just pulled everything to check).
+
+> Also: don't you also need to fix something in
+> drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c?
+> the way I remember it it was quite similar to spmi-gpio
+> but I may be mistaken.
+
+No, this one is graceful enough to use
+gpiochip_populate_parent_fwspec_twocell(), which is directly provided
+by gpiolib and thus addressed directly by this patch. Same thing for
+the spmi-mpp version, which uses the fourcell variant.
+
+HTH,
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
