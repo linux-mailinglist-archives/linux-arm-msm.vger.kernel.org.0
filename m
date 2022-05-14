@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9ADB752709A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 12:12:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F0F95270AF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 12:32:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231669AbiENKMA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 May 2022 06:12:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34730 "EHLO
+        id S229689AbiENKcH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 May 2022 06:32:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231984AbiENKL6 (ORCPT
+        with ESMTP id S230011AbiENKcG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 May 2022 06:11:58 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22857F73
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 03:11:55 -0700 (PDT)
+        Sat, 14 May 2022 06:32:06 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03D2D393EE
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 03:32:03 -0700 (PDT)
 Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B93D520576;
-        Sat, 14 May 2022 12:11:53 +0200 (CEST)
-Date:   Sat, 14 May 2022 12:11:52 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1F12D20542;
+        Sat, 14 May 2022 12:32:01 +0200 (CEST)
+Date:   Sat, 14 May 2022 12:31:59 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -30,122 +30,535 @@ Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 5/8] arm64: dts: qcom: sdm630: add second (HS) USB
- host support
-Message-ID: <20220514101152.57pno74fqbxib26n@SoMainline.org>
+Subject: Re: [PATCH v3 7/8] arm64: dts: qcom: sdm660: Add initial Inforce
+ IFC6560 board support
+Message-ID: <20220514103159.es3iqyu5a5fokgar@SoMainline.org>
 References: <20220513234518.3068480-1-dmitry.baryshkov@linaro.org>
- <20220513234518.3068480-6-dmitry.baryshkov@linaro.org>
+ <20220513234518.3068480-8-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220513234518.3068480-6-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220513234518.3068480-8-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-05-14 02:45:15, Dmitry Baryshkov wrote:
-> Add DT entries for the second DWC3 USB host, which is limited to the
-> USB2.0 (HighSpeed), and the corresponding QUSB PHY.
+On 2022-05-14 02:45:17, Dmitry Baryshkov wrote:
+> The IFC6560 is a board from Inforce Computing, built around the SDA660
+> SoC. This patch describes core clocks, some regulators from the two
+> PMICs, debug uart, storage, bluetooth and audio DSP remoteproc.
 > 
+> The regulator settings are inherited from prior work by Konrad Dybcio
+> and AngeloGioacchino Del Regno.
+> 
+> Co-developed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-Some minor style nits below.
-
 > ---
->  arch/arm64/boot/dts/qcom/sdm630.dtsi | 55 ++++++++++++++++++++++++++++
->  1 file changed, 55 insertions(+)
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/sda660-inforce-ifc6560.dts  | 455 ++++++++++++++++++
+>  2 files changed, 456 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> index cca56f2fad96..17a1877587cf 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> @@ -1270,6 +1270,20 @@ qusb2phy: phy@c012000 {
->  			status = "disabled";
->  		};
->  
-> +		qusb2phy1: phy@c014000 {
-
-Should we rename qusb2phy to qusb2phy0?
-
-> +			compatible = "qcom,sdm660-qusb2-phy";
-> +			reg = <0x0c014000 0x180>;
-> +			#phy-cells = <0>;
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index f9e6343acd03..5f717fe0e8d0 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -88,6 +88,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sda660-inforce-ifc6560.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-ganges-kirin.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+> new file mode 100644
+> index 000000000000..ade5c27dafcf
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+> @@ -0,0 +1,455 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2021, Linaro Ltd.
+> + * Copyright (c) 2020, Konrad Dybcio <konrad.dybcio@somainline.org>
+> + * Copyright (c) 2020, AngeloGioacchino Del Regno
+> + *                     <angelogioacchino.delregno@somainline.org>
+> + */
 > +
-> +			clocks = <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-> +				<&gcc GCC_RX1_USB2_CLKREF_CLK>;
-
-Should use the correct indentation from the get-go?
-
-> +			clock-names = "cfg_ahb", "ref";
+> +/dts-v1/;
 > +
-> +			resets = <&gcc GCC_QUSB2PHY_SEC_BCR>;
-> +			nvmem-cells = <&qusb2_hstx_trim>;
-> +			status = "disabled";
+> +#include "sdm660.dtsi"
+> +#include "pm660.dtsi"
+> +#include "pm660l.dtsi"
+> +
+> +/ {
+> +	model = "Inforce 6560 Single Board Computer";
+> +	compatible = "inforce,ifc6560", "qcom,sda660";
+> +	chassis-type = "embedded"; /* SBC */
+> +
+> +	aliases {
+> +		serial0 = &blsp1_uart2;
+> +		serial1 = &blsp2_uart1;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		volup {
+> +			label = "Volume Up";
+> +			gpios = <&pm660l_gpios 7 GPIO_ACTIVE_LOW>;
+> +			linux,code = <KEY_VOLUMEUP>;
+> +			debounce-interval = <15>;
+> +		};
+> +	};
+> +
+> +	/*
+> +	 * Until we hook up type-c detection, we
+> +	 * have to stick with this. But it works.
+> +	 */
+> +	extcon_usb: extcon-usb {
+> +		compatible = "linux,extcon-usb-gpio";
+> +		id-gpio = <&tlmm 58 GPIO_ACTIVE_HIGH>;
+> +	};
+> +
+> +	hdmi-out {
+> +		compatible = "hdmi-connector";
+> +		type = "a";
+> +
+> +		port {
+> +			hdmi_con: endpoint {
+> +				remote-endpoint = <&adv7533_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3800000>;
+> +		regulator-max-microvolt = <3800000>;
+> +
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +	};
+> +
+> +	v3p3_bck_bst: v3p3-bck-bst-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "v3p3_bck_bst";
+> +
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		vin-supply = <&vph_pwr>;
+> +	};
+> +
+> +	v1p2_ldo: v1p2-ldo-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "v1p2_ldo";
+> +
+> +		regulator-min-microvolt = <1200000>;
+> +		regulator-max-microvolt = <1200000>;
+> +
+> +		vin-supply = <&vph_pwr>;
+> +	};
+> +
+> +	v5p0_boost: v5p0-boost-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "v5p0_boost";
+> +
+> +		regulator-min-microvolt = <5000000>;
+> +		regulator-max-microvolt = <5000000>;
+> +
+> +		vin-supply = <&vph_pwr>;
+> +	};
+> +};
+> +
+> +&adsp_pil {
+> +	firmware-name = "qcom/ifc6560/adsp.mbn";
+> +};
+> +
+> +&blsp1_dma {
+> +	/*
+> +	 * The board will lock up if we toggle the BLSP clock, unless the
+> +	 * BAM DMA interconnects support is in place.
+> +	 */
+> +	/delete-property/ clocks;
+> +};
+> +
+> +&blsp_i2c6 {
+> +	status = "okay";
+> +
+> +	adv7533: hdmi@39 {
+> +		compatible = "adi,adv7535";
+> +		reg = <0x39>, <0x66>;
+> +		reg-names = "main", "edid";
+> +
+> +		interrupt-parent = <&pm660l_gpios>;
+> +		interrupts = <11 IRQ_TYPE_EDGE_FALLING>;
+> +
+> +		clocks = <&rpmcc RPM_SMD_BB_CLK2>;
+> +		clock-names = "cec";
+> +		/*
+> +		 * Limit to 3 lanes to prevent the bridge from changing amount
+> +		 * of lanes in the fly. MSM DSI host doesn't like that.
+> +		 */
+> +		adi,dsi-lanes = <3>;
+> +		avdd-supply = <&vreg_l13a_1p8>;
+> +		dvdd-supply = <&vreg_l13a_1p8>;
+> +		pvdd-supply = <&vreg_l13a_1p8>;
+> +		a2vdd-supply = <&vreg_l13a_1p8>;
+> +		v3p3-supply = <&v3p3_bck_bst>;
+> +
+> +		ports {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			port@0 {
+> +				reg = <0>;
+> +
+> +				adv7533_in: endpoint {
+> +					remote-endpoint = <&dsi0_out>;
+> +				};
+> +			};
+> +
+> +			port@1 {
+> +				reg = <1>;
+> +
+> +				adv7533_out: endpoint {
+> +					remote-endpoint = <&hdmi_con>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&blsp1_uart2 {
+> +	status = "okay";
+> +};
+> +
+> +&blsp2_dma {
+> +	/*
+> +	 * The board will lock up if we toggle the BLSP clock, unless the
+> +	 * BAM DMA interconnects support is in place.
+> +	 */
+> +	/delete-property/ clocks;
+> +};
+> +
+> +&blsp2_uart1 {
+> +	status = "okay";
+> +
+> +	bluetooth {
+> +		compatible = "qcom,wcn3990-bt";
+> +
+> +		vddio-supply = <&vreg_l13a_1p8>;
+> +		vddxo-supply = <&vreg_l9a_1p8>;
+> +		vddrf-supply = <&vreg_l6a_1p3>;
+> +		vddch0-supply = <&vreg_l19a_3p3>;
+> +		max-speed = <3200000>;
+> +	};
+> +};
+> +
+> +&dsi0 {
+> +	status = "okay";
+> +	vdda-supply = <&vreg_l1a_1p225>;
+> +};
+> +
+> +&dsi0_out {
+> +	remote-endpoint = <&adv7533_in>;
+> +	data-lanes = <0 1 2 3>;
+> +};
+> +
+> +&dsi0_phy {
+> +	status = "okay";
+> +	vcca-supply = <&vreg_l1b_0p925>;
+
+@Konrad: It looks like we have this regulator downstream in mdss_dsi but
+not in the upstream DT, is it missing by accident?
+
+> +};
+> +
+> +&mdss {
+> +	status = "okay";
+> +};
+> +
+> +&mmss_smmu {
+> +	status = "okay";
+> +};
+> +
+> +&pon_pwrkey {
+> +	status = "okay";
+> +};
+> +
+> +&pon_resin {
+> +	status = "okay";
+> +
+> +	linux,code = <KEY_VOLUMEUP>;
+> +};
+> +
+> +&qusb2phy {
+> +	status = "okay";
+> +
+> +	vdd-supply = <&vreg_l1b_0p925>;
+> +	vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
+> +};
+> +
+> +&qusb2phy1 {
+> +	status = "okay";
+> +
+> +	vdd-supply = <&vreg_l1b_0p925>;
+> +	vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
+> +};
+> +
+> +&rpm_requests {
+> +	pm660-regulators {
+> +		compatible = "qcom,rpm-pm660-regulators";
+> +
+> +		vdd_s1-supply = <&vph_pwr>;
+> +		vdd_s2-supply = <&vph_pwr>;
+> +		vdd_s3-supply = <&vph_pwr>;
+> +		vdd_s4-supply = <&vph_pwr>;
+> +		vdd_s5-supply = <&vph_pwr>;
+> +		vdd_s6-supply = <&vph_pwr>;
+> +
+> +		vdd_l1_l6_l7-supply = <&vreg_s5a_1p35>;
+> +		vdd_l2_l3-supply = <&vreg_s2b_1p05>;
+> +		vdd_l5-supply = <&vreg_s2b_1p05>;
+> +		vdd_l8_l9_l10_l11_l12_l13_l14-supply = <&vreg_s4a_2p04>;
+> +		vdd_l15_l16_l17_l18_l19-supply = <&vreg_bob>;
+> +
+> +		vreg_s4a_2p04: s4 {
+> +			regulator-min-microvolt = <1805000>;
+> +			regulator-max-microvolt = <2040000>;
+> +			regulator-enable-ramp-delay = <200>;
+> +			regulator-ramp-delay = <0>;
+> +			regulator-always-on;
 > +		};
 > +
->  		sdhc_2: sdhci@c084000 {
->  			compatible = "qcom,sdm630-sdhci", "qcom,sdhci-msm-v5";
->  			reg = <0x0c084000 0x1000>;
-> @@ -1375,6 +1389,47 @@ opp-384000000 {
->  			};
->  		};
->  
-> +		usb2: usb@c2f8800 {
-> +			compatible = "qcom,sdm660-dwc3", "qcom,dwc3";
-> +			reg = <0x0c2f8800 0x400>;
-> +			status = "disabled";
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +			ranges;
+> +		vreg_s5a_1p35: s5 {
+> +			regulator-min-microvolt = <1224000>;
+> +			regulator-max-microvolt = <1350000>;
+> +			regulator-enable-ramp-delay = <200>;
+> +			regulator-ramp-delay = <0>;
+> +		};
 > +
-> +			clocks = <&gcc GCC_CFG_NOC_USB2_AXI_CLK>,
-> +				 <&gcc GCC_USB20_MASTER_CLK>,
-> +				 <&gcc GCC_USB20_MOCK_UTMI_CLK>,
-> +				 <&gcc GCC_USB20_SLEEP_CLK>;
-> +			clock-names = "cfg_noc", "core",
-> +				      "mock_utmi", "sleep";
+> +		vreg_l1a_1p225: l1 {
+> +			regulator-min-microvolt = <1150000>;
+> +			regulator-max-microvolt = <1250000>;
+> +			regulator-enable-ramp-delay = <250>;
+> +			regulator-allow-set-load;
+> +		};
+> +
+> +		vreg_l6a_1p3: l6 {
+> +			regulator-min-microvolt = <1304000>;
+> +			regulator-max-microvolt = <1368000>;
+> +			regulator-enable-ramp-delay = <250>;
+> +			regulator-ramp-delay = <0>;
+> +			regulator-allow-set-load;
+> +		};
+> +
+> +		vreg_l8a_1p8: l8 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-enable-ramp-delay = <250>;
+> +			regulator-ramp-delay = <0>;
+> +			regulator-system-load = <325000>;
+> +			regulator-allow-set-load;
+> +		};
+> +
+> +		vreg_l9a_1p8: l9 {
+> +			regulator-min-microvolt = <1804000>;
+> +			regulator-max-microvolt = <1896000>;
+> +			regulator-enable-ramp-delay = <250>;
+> +			regulator-ramp-delay = <0>;
+> +			regulator-allow-set-load;
+> +		};
+> +
+> +		vreg_l13a_1p8: l13 {
+> +			/* This gives power to the LPDDR4: never turn it off! */
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1944000>;
+> +			regulator-enable-ramp-delay = <250>;
+> +			regulator-ramp-delay = <0>;
+> +			regulator-always-on;
+> +			regulator-boot-on;
+> +		};
+> +
+> +		vreg_l19a_3p3: l19 {
+> +			regulator-min-microvolt = <3312000>;
+> +			regulator-max-microvolt = <3400000>;
+> +			regulator-enable-ramp-delay = <250>;
+> +			regulator-ramp-delay = <0>;
+> +			regulator-allow-set-load;
+> +		};
+> +	};
+> +
+> +	pm660l-regulators {
+> +		compatible = "qcom,rpm-pm660l-regulators";
+> +
+> +		vdd_s1-supply = <&vph_pwr>;
+> +		vdd_s2-supply = <&vph_pwr>;
+> +		vdd_s3_s4-supply = <&vph_pwr>;
+> +		vdd_s5-supply = <&vph_pwr>;
+> +		vdd_s6-supply = <&vph_pwr>;
+> +
+> +		vdd_l1_l9_l10-supply = <&vreg_s2b_1p05>;
+> +		vdd_l2-supply = <&vreg_bob>;
+> +		vdd_l3_l5_l7_l8-supply = <&vreg_bob>;
+> +		vdd_l4_l6-supply = <&vreg_bob>;
+> +		vdd_bob-supply = <&vph_pwr>;
+> +
+> +		vreg_s2b_1p05: s2 {
+> +			regulator-min-microvolt = <1050000>;
+> +			regulator-max-microvolt = <1050000>;
+> +			regulator-enable-ramp-delay = <200>;
+> +			regulator-ramp-delay = <0>;
+> +		};
+> +
+> +		vreg_l1b_0p925: l1 {
+> +			regulator-min-microvolt = <800000>;
+> +			regulator-max-microvolt = <925000>;
+> +			regulator-enable-ramp-delay = <250>;
+> +			regulator-allow-set-load;
+> +		};
+> +
+> +		vreg_l2b_2p95: l2 {
+> +			regulator-min-microvolt = <1648000>;
+> +			regulator-max-microvolt = <3100000>;
+> +			regulator-enable-ramp-delay = <250>;
+> +			regulator-ramp-delay = <0>;
+> +			regulator-allow-set-load;
+> +		};
+> +
+> +		vreg_l4b_2p95: l4 {
+> +			regulator-min-microvolt = <2944000>;
+> +			regulator-max-microvolt = <2952000>;
+> +			regulator-enable-ramp-delay = <250>;
+> +			regulator-ramp-delay = <0>;
+> +
+> +			regulator-min-microamp = <200>;
+> +			regulator-max-microamp = <600000>;
+> +			regulator-system-load = <570000>;
+> +			regulator-allow-set-load;
+> +		};
+> +
+> +		/*
+> +		 * Downstream specifies a range of 1721-3600mV,
+> +		 * but the only assigned consumers are SDHCI2 VMMC
+> +		 * and Coresight QPDI that both request pinned 2.95V.
+> +		 * Tighten the range to 1.8-3.328 (closest to 3.3) to
+> +		 * make the mmc driver happy.
+> +		 */
+> +		vreg_l5b_2p95: l5 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <3328000>;
+> +			regulator-enable-ramp-delay = <250>;
+> +			regulator-system-load = <800000>;
+> +			regulator-ramp-delay = <0>;
+> +			regulator-allow-set-load;
+> +		};
+> +
+> +		vreg_l7b_3p125: l7 {
+> +			regulator-min-microvolt = <2700000>;
+> +			regulator-max-microvolt = <3125000>;
+> +			regulator-enable-ramp-delay = <250>;
+> +		};
+> +
+> +		vreg_l8b_3p3: l8 {
+> +			regulator-min-microvolt = <2800000>;
+> +			regulator-max-microvolt = <3400000>;
+> +			regulator-enable-ramp-delay = <250>;
+> +			regulator-ramp-delay = <0>;
+> +		};
+> +
+> +		vreg_bob: bob {
+> +			regulator-min-microvolt = <3300000>;
+> +			regulator-max-microvolt = <3624000>;
+> +			regulator-enable-ramp-delay = <500>;
+> +			regulator-ramp-delay = <0>;
+> +		};
+> +	};
+> +};
+> +
+> +&sdhc_1 {
+> +	status = "okay";
+> +	supports-cqe;
+> +
+> +	vmmc-supply = <&vreg_l4b_2p95>;
+> +	vqmmc-supply = <&vreg_l8a_1p8>;
+> +
+> +	mmc-ddr-1_8v;
+> +	mmc-hs400-1_8v;
+> +	mmc-hs400-enhanced-strobe;
+> +};
+> +
+> +&sdhc_2 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
 
-This fits on one line and stays at 79 characters.
+Missing , "sleep".
+
+> +	pinctrl-0 = <&sdc2_state_on &sdc2_card_det_n>;
+> +	pinctrl1 = <&sdc2_state_off &sdc2_card_det_n>;
+
+Missing hyphen.
+
+> +
+> +	vmmc-supply = <&vreg_l5b_2p95>;
+> +	vqmmc-supply = <&vreg_l2b_2p95>;
+> +
+> +	cd-gpios = <&tlmm 54 GPIO_ACTIVE_LOW>;
+> +	no-sdio;
+> +	no-emmc;
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <0 4>, <8 4>;
+> +
+> +	sdc2_card_det_n: sd-card-det-n {
+> +		pins = "gpio54";
+> +		function = "gpio";
+> +		bias-pull-up;
+> +	};
+
+It seems this pin is also already declared in sdc2-on/off in
+sdm630.dtsi, with the same bias-pull-up in the -on case.  However, the
+-off case sets bias-disable, won't that conflict?  (not in this moment,
+because the clashing pinctrl pairs are "unused" with the typos above).
+
+I have always been under the impression this GPIO is board-specific and
+should be moved out of sdm630.dtsi into board-specific DTs, is that
+true?
 
 - Marijn
 
+> +};
 > +
-> +			assigned-clocks = <&gcc GCC_USB20_MOCK_UTMI_CLK>,
-> +					  <&gcc GCC_USB20_MASTER_CLK>;
-> +			assigned-clock-rates = <19200000>, <60000000>;
+> +&usb2 {
+> +	status = "okay";
+> +};
 > +
-> +			interrupts = <GIC_SPI 348 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hs_phy_irq";
+> +&usb2_dwc3 {
+> +	dr_mode = "host";
+> +};
 > +
-> +			qcom,select-utmi-as-pipe-clk;
+> +&usb3 {
+> +	status = "okay";
+> +};
 > +
-> +			resets = <&gcc GCC_USB_20_BCR>;
-> +
-> +			usb2_dwc3: usb@c200000 {
-> +				compatible = "snps,dwc3";
-> +				reg = <0x0c200000 0xc8d0>;
-> +				interrupts = <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
-> +				snps,dis_u2_susphy_quirk;
-> +				snps,dis_enblslpm_quirk;
-> +
-> +				/* This is the HS-only host */
-> +				maximum-speed = "high-speed";
-> +				phys = <&qusb2phy1>;
-> +				phy-names = "usb2-phy";
-> +				snps,hird-threshold = /bits/ 8 <0>;
-> +			};
-> +		};
-> +
->  		mmcc: clock-controller@c8c0000 {
->  			compatible = "qcom,mmcc-sdm630";
->  			reg = <0x0c8c0000 0x40000>;
+> +&usb3_dwc3 {
+> +	dr_mode = "peripheral";
+> +	extcon = <&extcon_usb>;
+> +};
 > -- 
 > 2.35.1
 > 
