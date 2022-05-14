@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 144CD527456
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 23:55:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC51852745C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 23:55:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235504AbiENVy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 May 2022 17:54:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44306 "EHLO
+        id S235516AbiENVzG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 May 2022 17:55:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235582AbiENVyy (ORCPT
+        with ESMTP id S235562AbiENVy4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 May 2022 17:54:54 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C2A32DA96
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 14:54:50 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id a15-20020a17090ad80f00b001dc2e23ad84so13887263pjv.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 14:54:50 -0700 (PDT)
+        Sat, 14 May 2022 17:54:56 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 966A22E08B
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 14:54:52 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id n10so11028604pjh.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 14:54:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EeKFz6FvEbcUusdgXpBLLDhoZhZgVhmRs6eLFHdjJY8=;
-        b=o2ylwYfA7fGITDyeMgXr6IGTtlHc8oQwug7nspKDPwGbH25+kLzPeEx3d+B+RQBYiU
-         ABQHsTn2umyC/kgr6ZXogHO1jqVsQi3nI+5gqgbHTQxjUhpfoDk5hQaCA63W087k5ViR
-         w8JxP5LYcVVeKBoAulRUKCoVCIOqNxesUkvbTxy358dyD4xLsTeQc2dAaYwcGe2c8ZVO
-         RD4sJc6qlg4EsWnXwoesfHb60mAuIayEBoPgpb2f/BBOF++cmAMG9nntMIYrAB3QZoQW
-         5uuj+80HxveyfRIkJT7FHvgkX3N5h7NGso1tlpRonYkK2ECm+4XlBA0k29CmTWp7gIfl
-         /WEw==
+        bh=AAcG7rX+mEnMpt5XVNtu3dX5eVwzJDr7gAFJhDONIy0=;
+        b=nxxzsvWzWEKNE3cxFqH6yQ4ICQZmVH8De5uCsd8WKaCkF6jZNyxQF5xp2Cu4Z3Dzl8
+         gJbC40QKZlyfSDBzP7QQzgfM4GYfhBAXQYZIgzZ80553VWgDCmhZTm9bT+D8PJugAiY0
+         s461rzBlWZa2DpQpth4RfHtw9NJiAJNadeEKnD1AoIoJka+YRClOtfVi6QQL7oJ2SygF
+         Z7egm0LlDM5h00heNOLguU92IlCYP8AU5ZSjjFE9Lo0FOCyO4Eq0kbvuuHQKHAJT9hO8
+         lVD9KGn7KT9X1pfhdAXJoQNW+XU7Q2yZrVbRjh+BvUDtCdFUnKsJPdWJFt8w2hYG18kr
+         Znrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EeKFz6FvEbcUusdgXpBLLDhoZhZgVhmRs6eLFHdjJY8=;
-        b=S8GhLSqlX8NImsgJa456z8KTCKU3l26wBU3a8hL/lL+LZtQ18gD953i1eb73g5WBp6
-         V3LSNyReguiVWhjyQoR/9BDZRupVKfpQpHYJ+g20MbSHObXlYCt+Z+jsQHIc3kykhyaX
-         xOK6jw+ta6H78nYddmJeFZZnSUhgojYyQfRw77Skjxqcq1yGGHOaEFgijGmKHJhIw+3R
-         Yabb7eyX78ss5y9xA0pW6XgX5pzKTxyDyCKErx/KC9w9oQR5vvJR0yxZKffII+u/5OlL
-         VsE3EZgnK/1SmW9lDmYRaejJRi5VJ9+IkWoDTy7C9KyBRXbU22w8qOyasqzCmUSEFfir
-         t+kw==
-X-Gm-Message-State: AOAM530fJnb1Oomoqbt2D0mLHG7ak5JIg6wTpIY6DfmIeIktVCRIvm7a
-        enab20aBlM0VLKHB2DEYur1riA12Vz1tKA==
-X-Google-Smtp-Source: ABdhPJyCpJgeUz2YbwGcAWQjqfF/PIggNj85gfy/wL4aiBjgTuGh36+Oe0W4a15vc8BYDL/sBBwbLw==
-X-Received: by 2002:a17:90b:38c4:b0:1dc:6b64:3171 with SMTP id nn4-20020a17090b38c400b001dc6b643171mr23366996pjb.168.1652565289065;
-        Sat, 14 May 2022 14:54:49 -0700 (PDT)
+        bh=AAcG7rX+mEnMpt5XVNtu3dX5eVwzJDr7gAFJhDONIy0=;
+        b=NoKp3jYNKirGUYdNl7TkgtrdIjHdrFZrFQ1Jlbs90guLKmiM/u2yKji4cqwmtakYW0
+         xIsATfJ/r7ZZL1tBPCoNJPmYxIAptU5/hrPSXxQLjcBusEI6Yj5dOn+i+HxLkFMXn8DK
+         VQfGvlAZUB8lB4D+X0UEhnToOg5M02a6MtxCcNUc2rJ5aiObtHDRspFVPc8zjGn74Qdp
+         DuuaW7VQWanJwb5YybL6NSF3dB6ZgsNAvrwzotBlcerHdQOJRxmE+SjrbkFH3COU+3se
+         HudauQWvOWi2QJLfKabR/0+/WqCDa6OhB8eKaplnHJAfkIAz/rNhvlK4IBa0KYfoqP2Y
+         lO/g==
+X-Gm-Message-State: AOAM533xQjVBGu+55UcKrjt7PA4m91sIhhMmQbsR86iR4CHndHuvKhGe
+        k650tGAaM+VRziNWlqggvWWDYjw8E3QtjA==
+X-Google-Smtp-Source: ABdhPJwCxPIfJBC5n04iupZetTYjVESBk39k3MQPbmK94RzqJnkiGQiafVLDjd5ZEzsWsUgXEY+e1Q==
+X-Received: by 2002:a17:903:40d1:b0:15e:f8ee:c278 with SMTP id t17-20020a17090340d100b0015ef8eec278mr10911956pld.100.1652565291841;
+        Sat, 14 May 2022 14:54:51 -0700 (PDT)
 Received: from localhost.localdomain ([2401:4900:1c60:931c:dd30:fa99:963:d0be])
-        by smtp.gmail.com with ESMTPSA id m13-20020a170902db0d00b0015e8d4eb2d2sm4189522plx.284.2022.05.14.14.54.46
+        by smtp.gmail.com with ESMTPSA id m13-20020a170902db0d00b0015e8d4eb2d2sm4189522plx.284.2022.05.14.14.54.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 May 2022 14:54:48 -0700 (PDT)
+        Sat, 14 May 2022 14:54:51 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
         robh@kernel.org
-Subject: [PATCH v2 5/6] arm64: dts: qcom: Fix 'reg-names' for sdhci nodes
-Date:   Sun, 15 May 2022 03:24:23 +0530
-Message-Id: <20220514215424.1007718-6-bhupesh.sharma@linaro.org>
+Subject: [PATCH v2 6/6] arm64: dts: qcom: ipq8074: Fix 'max-frequency' value for sdhci node
+Date:   Sun, 15 May 2022 03:24:24 +0530
+Message-Id: <20220514215424.1007718-7-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20220514215424.1007718-1-bhupesh.sharma@linaro.org>
 References: <20220514215424.1007718-1-bhupesh.sharma@linaro.org>
@@ -72,120 +72,34 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Since the Qualcomm sdhci-msm device-tree binding has been converted
-to yaml format, 'make dtbs_check' reports a number of issues with
-ordering of 'reg-names' as various possible combinations
-are possible for different qcom SoC dts files.
+to yaml format, 'make dtbs_check' reports issues with
+'max-frequency' value for ipq8074 sdhci node:
 
-Fix the same by updating the offending 'dts' files.
+ arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: mmc@7824900:
+  max-frequency:0:0: 384000000 is greater than the maximum of 200000000
+
+Fix the same.
 
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc: Rob Herring <robh@kernel.org>
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/qcs404.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 4 ++--
- arch/arm64/boot/dts/qcom/sm6125.dtsi | 4 ++--
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 +-
- 6 files changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index 86dbf8ea04bc..45044083faf0 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -792,7 +792,7 @@ pcie_phy: phy@7786000 {
- 		sdcc1: mmc@7804000 {
- 			compatible = "qcom,qcs404-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0x07804000 0x1000>, <0x7805000 0x1000>;
--			reg-names = "hc", "cqhci";
-+			reg-names = "hc_mem", "cqe_mem";
- 
- 			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 9076892ff4f8..08f2decc7f4f 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -697,7 +697,7 @@ sdhc_1: mmc@7c4000 {
- 			compatible = "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0 0x7c4000 0 0x1000>,
- 				<0 0x07c5000 0 0x1000>;
--			reg-names = "hc", "cqhci";
-+			reg-names = "hc_mem", "cqe_mem";
- 
- 			iommus = <&apps_smmu 0x60 0x0>;
- 			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index e63d1a4499f8..eaaccf0184af 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -866,7 +866,7 @@ sdhc_1: mmc@7c4000 {
- 
- 			reg = <0 0x007c4000 0 0x1000>,
- 			      <0 0x007c5000 0 0x1000>;
--			reg-names = "hc", "cqhci";
-+			reg-names = "hc_mem", "cqe_mem";
- 
- 			iommus = <&apps_smmu 0xc0 0x0>;
- 			interrupts = <GIC_SPI 652 IRQ_TYPE_LEVEL_HIGH>,
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 6d872e2f400a..77dc985b3634 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1275,7 +1275,7 @@ qusb2phy: phy@c012000 {
- 		sdhc_2: mmc@c084000 {
- 			compatible = "qcom,sdm630-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0x0c084000 0x1000>;
--			reg-names = "hc";
-+			reg-names = "hc_mem";
- 
- 			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
-@@ -1330,7 +1330,7 @@ sdhc_1: mmc@c0c4000 {
- 			reg = <0x0c0c4000 0x1000>,
- 			      <0x0c0c5000 0x1000>,
- 			      <0x0c0c8000 0x8000>;
--			reg-names = "hc", "cqhci", "ice";
-+			reg-names = "hc_mem", "cqe_mem", "ice_mem";
- 
- 			interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index 77bff81af433..94e427abbfd2 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -438,7 +438,7 @@ rpm_msg_ram: sram@45f0000 {
- 		sdhc_1: mmc@4744000 {
- 			compatible = "qcom,sm6125-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0x04744000 0x1000>, <0x04745000 0x1000>;
--			reg-names = "hc", "core";
-+			reg-names = "hc_mem", "core_mem";
- 
- 			interrupts = <GIC_SPI 348 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 352 IRQ_TYPE_LEVEL_HIGH>;
-@@ -459,7 +459,7 @@ sdhc_1: mmc@4744000 {
- 		sdhc_2: mmc@4784000 {
- 			compatible = "qcom,sm6125-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0x04784000 0x1000>;
--			reg-names = "hc";
-+			reg-names = "hc_mem";
- 
- 			interrupts = <GIC_SPI 350 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 1b1eb884136b..6d959aa0ea94 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -477,7 +477,7 @@ sdhc_1: mmc@7c4000 {
- 			reg = <0 0x007c4000 0 0x1000>,
- 				<0 0x007c5000 0 0x1000>,
- 				<0 0x007c8000 0 0x8000>;
--			reg-names = "hc", "cqhci", "ice";
-+			reg-names = "hc_mem", "cqe_mem", "ice_mem";
- 
- 			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 644 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index ab2a1e7955b5..b2d71af9b419 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -388,7 +388,7 @@ sdhc_1: mmc@7824900 {
+ 				 <&gcc GCC_SDCC1_APPS_CLK>,
+ 				 <&xo>;
+ 			clock-names = "iface", "core", "xo";
+-			max-frequency = <384000000>;
++			max-frequency = <200000000>;
+ 			mmc-ddr-1_8v;
+ 			mmc-hs200-1_8v;
+ 			mmc-hs400-1_8v;
 -- 
 2.35.3
 
