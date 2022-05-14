@@ -2,70 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFAC85271AF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 16:11:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C11FC5271E7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 16:21:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232957AbiENOLx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 May 2022 10:11:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45968 "EHLO
+        id S233150AbiENOVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 May 2022 10:21:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233018AbiENOKy (ORCPT
+        with ESMTP id S233383AbiENOVL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 May 2022 10:10:54 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C55EF1573B
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 07:10:52 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id bu29so19031264lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 May 2022 07:10:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Mfq8artsCmgPridHwXtCTWz4VD26jC/9nXCO2mqCNlk=;
-        b=SMxjHo9JuoniR6X2mCjvMmoE9I2k1++Yc+VeG5DsVL58baRjeh/aL2kb+tha6nCBg2
-         rbWm69A+Q+Y02I47hbgcRTk5hKE2yBwcvfytVXd5VO4ALpy3408WndXURCdcJX/+qe7a
-         7Xe6mKuww0ivdZkQnLtKONOexb486DP423eV2kJAqGEqABHsDg24Xsmg1536iRLDnuF+
-         M3cCcYOdAlC+lDWzbELmDrlRQlWUsm0meUq+un6jt7sUE/2zW2YWerK67rmwlwalg/zV
-         vvQD33ReytFR14ldacFYtvNCTfAY9eiP+lI5GbrhQ4fmD+lNQCk5Q5+WutboyR48l9EH
-         LNRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Mfq8artsCmgPridHwXtCTWz4VD26jC/9nXCO2mqCNlk=;
-        b=XCa29fq87JLSMcyto+1LoEbVzr6YU6+73mDUw5o9tbzmfFtOrTFiBxg+qetcEkUfk3
-         cGgTicS7o2JGN4aZO55YK+YPYS2o149ly+uAGQe1MmFL2p2Mr20y7SF759N+27hsEwz1
-         X0ZSQJJ7HIkQ7UTxY0l8O/C8tiX7MBag/aFwH656eFM1+jrRecCdJE9ZrY0ho7Bq4jw1
-         ArJAvLLteB1N6QeF+US/nZFudxnRw1LO1W3nJ2CeVtwrEpR5DVzdvVVkurTi4bKejrDF
-         qIJ4VeenrVhwUToIpPF/WX2hL6JSs7AiEOGNodp2S4Q+FUkIvc+uRi1O+twAD9Shsrir
-         IAjA==
-X-Gm-Message-State: AOAM533ofD2lA6YgS+JbKrXtqFt1UhvtCNWvHRLs72scKmPKJ5rPBK+n
-        kFtzX3NRBpQm/epCXZVCiqkmdQ==
-X-Google-Smtp-Source: ABdhPJxKvqtUWFWZqZl4zlapqe3fxfAc85uOrYcObXZ9NBR1oPPInSqQgghaSPvBQooVUQpN3vRuLw==
-X-Received: by 2002:a19:494b:0:b0:476:5917:b67 with SMTP id l11-20020a19494b000000b0047659170b67mr5382506lfj.452.1652537452364;
-        Sat, 14 May 2022 07:10:52 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id x9-20020a05651c104900b0024f3d1daedasm845912ljm.98.2022.05.14.07.10.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 May 2022 07:10:51 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
+        Sat, 14 May 2022 10:21:11 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0720A1B1;
+        Sat, 14 May 2022 07:21:08 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8537360F2A;
+        Sat, 14 May 2022 14:21:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8425FC340EE;
+        Sat, 14 May 2022 14:21:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652538067;
+        bh=fBJG7A+XsQUdGt9z4Q/dgnY9axRvsRVkKDu5cKbiVRQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=pQqTcVRNOWdlHHOXC+4ME/GCYRzZnE8N7ttD47TT9CnJrMLVmTkjbLeWKpJQfeDhv
+         B2s6QGQXfNzXSAyTatQdpt8RwvlURF0V0iC1OVvNyb6mfs8iQcydgDnUBQeAjQfUFG
+         wRp1M52PJ3Y3DsWNx6TGCG1DposlLQ5GRCfW37nVU+4GUaHW2BoAvfJEle4Z6tLi5M
+         EkaXY4LY3LdzMDOg+ZDkxoilOA2mt8cAc4rljnfawj23clTnGXYhUBuBWSXk1unGLk
+         MUBg0K5zcwc22Hpg7igxdPA0VcDyMnHKMP2BmRVEHuc9RJp0a8cAIXywbAeagz6gSZ
+         vR9sGgUex9UPw==
+Date:   Sat, 14 May 2022 15:29:40 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Markuss Broks <markuss.broks@gmail.com>,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v4 12/12] dt-bindings: arm: qcom: document sda660 SoC and ifc6560 board
-Date:   Sat, 14 May 2022 17:10:41 +0300
-Message-Id: <20220514141041.3158521-13-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220514141041.3158521-1-dmitry.baryshkov@linaro.org>
-References: <20220514141041.3158521-1-dmitry.baryshkov@linaro.org>
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Song Qiang <songqiang1304521@gmail.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 1/5] dt-bindings: proximity: vl53l0x: Document
+ optional supply and GPIO properties
+Message-ID: <20220514152940.1a212c7f@jic23-huawei>
+In-Reply-To: <f5ec4fd9-b9d7-10fa-1c27-2f268466274f@linaro.org>
+References: <20220512191334.61804-1-markuss.broks@gmail.com>
+        <20220512191334.61804-2-markuss.broks@gmail.com>
+        <f5ec4fd9-b9d7-10fa-1c27-2f268466274f@linaro.org>
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,38 +72,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add binding documentation for the Inforce IFC6560 board which uses
-Snapdragon SDA660.
+On Fri, 13 May 2022 10:56:50 +0200
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
- 1 file changed, 6 insertions(+)
+> On 12/05/2022 21:13, Markuss Broks wrote:
+> > This patch adds the optional properties for the VL53L0X ToF sensor to the
+> > device-tree binding.
+> > 
+> > Signed-off-by: Markuss Broks <markuss.broks@gmail.com>  
+> 
+> Wait, two days and three versions? Please give some time before
+> resending entire patchset.
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 129cdd246223..ac4ee0f874ea 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -41,6 +41,7 @@ description: |
-         sa8155p
-         sc7180
-         sc7280
-+        sda660
-         sdm630
-         sdm632
-         sdm660
-@@ -225,6 +226,11 @@ properties:
-               - google,senor
-           - const: qcom,sc7280
- 
-+      - items:
-+          - enum:
-+              - inforce,ifc6560
-+          - const: qcom,sda660
-+
-       - items:
-           - enum:
-               - fairphone,fp3
--- 
-2.35.1
+Yeah, several instances of this on the IIO list this week. Please
+let things sit for at least a few days between versions even if
+the requested changes are fairly minor.
+
+> 
+> Same comments apply as for v2 and v3...
+>
+I 'could' fix this up, but given you've not responded to Krzysztof
+I think I'd prefer you send a v5 in the second half of next week or
+later (to give time for other review) with the patch description
+change Krzysztof suggested made.
+
+Code wise the series looks fine to me.
+
+Jonathan
+
+
+
+> 
+> Best regards,
+> Krzysztof
 
