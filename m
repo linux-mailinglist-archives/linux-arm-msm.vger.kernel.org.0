@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 311B7526EAD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 09:14:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72DC0526EDB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 May 2022 09:14:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229515AbiENBOj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 May 2022 21:14:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45122 "EHLO
+        id S230316AbiENCyq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 May 2022 22:54:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbiENBOi (ORCPT
+        with ESMTP id S230491AbiENCyk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 May 2022 21:14:38 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB414E9B2A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 17:46:46 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id bv19so19078885ejb.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 17:46:46 -0700 (PDT)
+        Fri, 13 May 2022 22:54:40 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6F0637DC9C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 18:12:57 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id g16so12130919lja.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 May 2022 18:12:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SHyTroMz5ImSiERShLEYY2Lrzc1ZDEW9nKld+SBJzIg=;
-        b=JF/o8z2xGK4IYyajhW7kic1uo6fhcgzKoKiUSqS9rQflZeYs4G0rGL5On+qzYrzzgN
-         tSBvYR1KaG/Tf5PRVu1Kc0mmr5L5ytxQ+dsKT+Sh7GIL49+uI9yj0ys1Q9qqIdDLT10z
-         HdhYfPAQ4ubYkMtwQyM0wkIYZygbmOJKURPSwUOfML+r6EKUhCTZVeWeaqaCJ6YJ6wPr
-         xIYBft6qO6nJP8P2LmE6Hq/H6ZlhDysAxdCX4P68mpgPkq6GPAcJLpw+z3UZuhgkRY2X
-         n1g1ydDeOB/WtBy7Y816i6HV6p3a5oAOzGWJEGH63unTYOlGqZebWh1iVaeZxt0q8EJg
-         PVhQ==
+        bh=POq1kk+h3rPcrtH2pN+MXZtFUgmIFpbvHrXaH9miF64=;
+        b=gLFkAJf8zI9Bq1DgypAOh0C3O2OfnQ5/UYssFR8KZqpaFHvoGOJarzJG4LDlOLR3qg
+         7avK4i2DdSsvxyLHts1mOi0AeEHOhTMrcroeIQaVlVkk9Wz+K6nSPd008yvrxBvNWxsE
+         NrMPWdE0hZd4g1jqyqucNgCwmIFcN6h0uAOi27aokRviNRonHLDMq7QxjKmgvA+laXr2
+         6t7+nqXz+JNfx+iaTuAqA14E/KT8f99h1z69OXtYY/datmZRFDsSbm9yxU2FoCrOTy7X
+         Ktl/rkxlZtx/YnFkOK7c3B9Mk8yqym5QFp8XpDcQhw93uD/TvSa0y0lfBM88PpDStw0p
+         1rPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SHyTroMz5ImSiERShLEYY2Lrzc1ZDEW9nKld+SBJzIg=;
-        b=LJdQH8OLDaulOiBk5c00mtRveS+IkI2EucGucMmW3CZ5R+VyW9jVpZclHsZuqVkARm
-         O3MPAzPPD8SXzlxf32YgTUvCyTgqmiLqMja7kExlrNkpZP2+5XViOcM1S+DStcHNQirK
-         v7+8PjwvJlo86acujie/qJzHRpF5QCionfMwqbe+wJ8yseIWwEIPxAL3MjWnucgOSW/Z
-         x9EXaRL8BdVfkf3VogF4STR9A4wYBgfuZqHaNWOcEs1A+cm4q6WW6NL3uaDjRt5SICwG
-         tmhvysw1euREF78+FPNluYWLbA34aOfrq/7H860piuP0yHjqHt2nyjTwMtCX3cLU580L
-         mq7g==
-X-Gm-Message-State: AOAM5313FFbCF3R/Lmi3u9f2DXj7aZX4Y+wbLAg9km0iAG2Jq3OmxJkP
-        LZJOO1MFBuM823r+ZAS3fbd6e0uw/uUrcg==
-X-Google-Smtp-Source: ABdhPJyt9kZ0moFirieBEehdkuftUzbvXW3I6DqWzhK4hLUA8C3Z1+kCmz78zAb4I7GoTqvLc4WB/g==
-X-Received: by 2002:a05:6512:2308:b0:473:da88:ea2b with SMTP id o8-20020a056512230800b00473da88ea2bmr5129769lfu.339.1652486592103;
+        bh=POq1kk+h3rPcrtH2pN+MXZtFUgmIFpbvHrXaH9miF64=;
+        b=mmLmn+jst9ojHARSWcx+T9OpcKAGc5bCif383CcL0yaLcKBLOaxQ82Y05Li67ji6tu
+         7PyrAsgIPleTyvZ1eIo5B8e3wtGBtW8tFTSpKLYK3nHFKhCCeXyUVoblUtpafKtn1SMh
+         KDTZUDyYTMTWpkN+wJt5D43P0GaQjBNGinkMcvK10OdToAevoDzQ1Y/Y1ei/e8VppWQ4
+         T5ss8RmnEOD+ad+0ofvHT+J9a+x3JtwRjYz+HyXx5gJ9/g/rl2nXEfhCgyR+8AzEcWNq
+         BZnJPdSVG5FnZtLBM23aRE4SEvBbPxBeNOVSFvNHv8ig/yZrMtEFLlNqjgGK/1cn6nHo
+         2vMg==
+X-Gm-Message-State: AOAM532JTw57SC9qsn4H3bX0PqKTjW9r3xAvVCvZTfgajzJEyFzqk4iF
+        EUvdQ0tKTkdPlAMKg1XAoupl9yVUr9ABEQ==
+X-Google-Smtp-Source: ABdhPJzLTOftwnTS6vNzC9fvTTF5i3x2HX52DiHRO0WOMmWevvb7oeyQeXluxYzdL0SiehRhi6GFAw==
+X-Received: by 2002:a05:6512:33a7:b0:472:481b:9d6c with SMTP id i7-20020a05651233a700b00472481b9d6cmr5086979lfg.451.1652486592863;
         Fri, 13 May 2022 17:03:12 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id r10-20020a19ac4a000000b0047255d211c3sm529231lfc.242.2022.05.13.17.03.11
+        by smtp.gmail.com with ESMTPSA id r10-20020a19ac4a000000b0047255d211c3sm529231lfc.242.2022.05.13.17.03.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 May 2022 17:03:11 -0700 (PDT)
+        Fri, 13 May 2022 17:03:12 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,9 +55,9 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 1/3] arm64: dts: qcom: sdm630: add device node for the modem PAS
-Date:   Sat, 14 May 2022 03:03:08 +0300
-Message-Id: <20220514000310.3070578-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 2/3] arm64: dts: qcom: sdm660: add device node for the compute PAS
+Date:   Sat, 14 May 2022 03:03:09 +0300
+Message-Id: <20220514000310.3070578-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220514000310.3070578-1-dmitry.baryshkov@linaro.org>
 References: <20220514000310.3070578-1-dmitry.baryshkov@linaro.org>
@@ -73,84 +73,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device tree node describing modem device found on the SDM630/SDM660
-devices.
+Add device tree node describing CDSP device found on the SDM660 (but not
+on SDM630) platform.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 59 ++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm660.dtsi | 68 ++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index b06e87152cd4..1bc0602e9f64 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1018,6 +1018,65 @@ sd-cd {
- 			};
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+index 023b0ac4118c..3b70eff68807 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+@@ -9,6 +9,74 @@
  
-+		mss_pil: remoteproc@4080000 {
-+			compatible = "qcom,sdm660-mss-pil";
-+			reg = <0x04080000 0x408>, <0x04180000 0x48>;
-+			reg-names = "qdsp6", "rmb";
+ #include "sdm630.dtsi"
+ 
++/ {
++	reserved-memory {
++		/delete-node/ tzbuffer@94a00000;
++
++		cdsp_region: cdsp@94a00000 {
++			reg = <0x0 0x94a00000 0x0 0x600000>;
++			no-map;
++		};
++
++	};
++
++	smp2p-cdsp {
++		compatible = "qcom,smp2p";
++		qcom,smem = <94>, <432>;
++		interrupts = <GIC_SPI 514 IRQ_TYPE_EDGE_RISING>;
++		mboxes = <&apcs_glb 30>;
++		qcom,local-pid = <0>;
++		qcom,remote-pid = <5>;
++
++		cdsp_smp2p_out: master-kernel {
++			qcom,entry-name = "master-kernel";
++			#qcom,smem-state-cells = <1>;
++		};
++
++		cdsp_smp2p_in: slave-kernel {
++			qcom,entry-name = "slave-kernel";
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
++
++	soc {
++		cdsp_pil: remoteproc@1a300000 {
++			compatible = "qcom,sdm660-cdsp-pas";
++			reg = <0x1a300000 0x4040>;
 +
 +			interrupts-extended =
-+				<&intc GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
-+				<&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+				<&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-+				<&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-+				<&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
-+				<&modem_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
++				<&intc GIC_SPI 518 IRQ_TYPE_EDGE_RISING>,
++				<&cdsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++				<&cdsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++				<&cdsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++				<&cdsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
 +			interrupt-names = "wdog", "fatal", "ready",
-+					  "handover", "stop-ack",
-+					  "shutdown-ack";
++					  "handover", "stop-ack";
 +
-+			clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
-+				 <&gcc GCC_BIMC_MSS_Q6_AXI_CLK>,
-+				 <&gcc GCC_BOOT_ROM_AHB_CLK>,
-+				 <&gcc GCC_MSS_GPLL0_DIV_CLK>,
-+				 <&gcc GCC_MSS_SNOC_AXI_CLK>,
-+				 <&gcc GCC_MSS_MNOC_BIMC_AXI_CLK>,
-+				 <&rpmcc RPM_SMD_XO_CLK_SRC>,
-+				 <&rpmcc RPM_SMD_QDSS_CLK>;
-+			clock-names = "iface", "bus", "mem", "gpll0_mss",
-+				      "snoc_axi", "mnoc_axi", "xo", "qdss";
++			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>;
++			clock-names = "xo";
 +
-+			qcom,smem-states = <&modem_smp2p_out 0>;
++			memory-region = <&cdsp_region>;
++			power-domains = <&rpmpd SDM660_VDDCX>;
++			power-domain-names = "cx";
++
++			qcom,smem-states = <&cdsp_smp2p_out 0>;
 +			qcom,smem-state-names = "stop";
 +
-+			resets = <&gcc GCC_MSS_RESTART>;
-+			reset-names = "mss_restart";
-+
-+			qcom,halt-regs = <&tcsr_mutex_regs 0x23000 0x25000 0x24000>;
-+
-+			power-domains = <&rpmpd SDM660_VDDCX>,
-+					<&rpmpd SDM660_VDDMX>;
-+			power-domain-names = "cx", "mx";
-+
-+			status = "disabled";
-+
-+			mba {
-+				memory-region = <&mba_region>;
-+			};
-+
-+			mpss {
-+				memory-region = <&mpss_region>;
-+			};
-+
 +			glink-edge {
-+				interrupts = <GIC_SPI 452 IRQ_TYPE_EDGE_RISING>;
-+				label = "modem";
-+				qcom,remote-pid = <1>;
-+				mboxes = <&apcs_glb 15>;
++				interrupts = <GIC_SPI 513 IRQ_TYPE_EDGE_RISING>;
++
++				label = "turing";
++				mboxes = <&apcs_glb 29>;
++				qcom,remote-pid = <5>;
 +				#address-cells = <1>;
 +				#size-cells = <0>;
 +			};
 +		};
++	};
++};
 +
- 		adreno_gpu: gpu@5000000 {
- 			compatible = "qcom,adreno-508.0", "qcom,adreno";
- 
+ &adreno_gpu {
+ 	compatible = "qcom,adreno-512.0", "qcom,adreno";
+ 	operating-points-v2 = <&gpu_sdm660_opp_table>;
 -- 
 2.35.1
 
