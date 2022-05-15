@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 434B85279E3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 May 2022 22:31:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A3905279FE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 May 2022 22:45:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238591AbiEOUbe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 May 2022 16:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43550 "EHLO
+        id S233094AbiEOUpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 May 2022 16:45:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238049AbiEOUbc (ORCPT
+        with ESMTP id S230175AbiEOUpp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 May 2022 16:31:32 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86C85DED3;
-        Sun, 15 May 2022 13:31:31 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id ch13so25114957ejb.12;
-        Sun, 15 May 2022 13:31:31 -0700 (PDT)
+        Sun, 15 May 2022 16:45:45 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB62F101CF;
+        Sun, 15 May 2022 13:45:43 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id j28so1942400eda.13;
+        Sun, 15 May 2022 13:45:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PaTZIap6SATi669kRyhjyKwcnCOv+7U1T4zX6WeFaro=;
-        b=KmLWDVd5X6xcpiaKXRDi2fjsPUutyKu7aXWvR0erkdVmVwIPnh5jxx13W7egdt06BW
-         ny7XRP69ZsA8OcyVUFatbEP0+tnWSLV2/WJv9OdgJphAlOlTdJufKW2x+BlarZeI9zNX
-         baD0ZFDU2/ClXBJ0rkGX5y+P1KaOz8MuOmPY5wuljk/X4BD/rJqAD5nWMuyjSocUdaP1
-         x2+QrkyzWC7LA7F40+pCc9RKjp3hWt1VNwIQu6/MTcHI+nge2h5BrcaeGQO7M2QtY7kw
-         1gbkStCmV8rxj5ohpaKB4Q/2UCGWiHjCwu/x4ut1BaAFw//hlS33ocAzJ9v9Ry06tD3T
-         nhKA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tU6uMaYficFOXva4xeM/4aLqe2TPDWlHeWmOttB+92A=;
+        b=P7TMK03vc1TChbgogl3ipw55D51VjwvKdAuihPqDCO8UPPVh9Hc0+K5hf9Qd33/Mpt
+         //OL49uwGwZj8lWj1IMXNYKWboerFDDcdcewQ9+JoiJYwQanBfr5NEgUKSxZOdWKf6Wr
+         eKobsDqGALNdzY2YV6d1nx3uqui1Snzyab+zeDVy2F94uUeHxkhKJWgnT5fFRvnqTYDm
+         UdCSzE53aVfkag8SZGOaDxyzQyi53579I1wwdyN4NFNQXwKcu9yXSfUOdPozgjThn22+
+         3DfnrqeqV9+i05AQq9wWJMkrvhhlHugZCypqqBsA59IAFmacAgcIJdsdAiNHnx+L4K8D
+         FDZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PaTZIap6SATi669kRyhjyKwcnCOv+7U1T4zX6WeFaro=;
-        b=Q4OYg5VmNKB2jnvFGERFcdqISaigUFq9qHilUarXJ2xq2+5c3x+95ML97rfpi2xkdh
-         ryXsUQ5j89i5Y8F0gmtgNEN90ciKKYeGrdcfB+z0Zv9t6qKi5tz8gm/KGe3M6unbVXFG
-         8t/UzJZA+FkEo2UbGJoZyRlwKOob5BcxNl08tZ2LsiXvR3BefCmBk8baAivv2QlYgt7Q
-         KDBlf4Qwo8JIHkWhvkcvhBKFX7OPFrMV92FydH8EeZdH68aULhFouWtQi/nyhxCL8tk+
-         Y0pAvSVe8RH5KUeytqUF127+RVHVPmh43pGrsNfuPnlrS8UHWHbCTClVZgPuyaqgnvgP
-         HpbA==
-X-Gm-Message-State: AOAM530nuQrbgBWMM0sGF3Y0T8hZb0dhP4mKr/KuSR4t99YboMnec30x
-        qwqtZI7q7eSnQgGElSiXdE8=
-X-Google-Smtp-Source: ABdhPJzD011Sni2n7zKQi+0xlen0WN3fa8JAf3yBeuqk+YEjslKTDCk6c5kmwvg/aVtYdqWwzdcXUA==
-X-Received: by 2002:a17:907:7d93:b0:6fe:21d9:4230 with SMTP id oz19-20020a1709077d9300b006fe21d94230mr5858712ejc.42.1652646690026;
-        Sun, 15 May 2022 13:31:30 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tU6uMaYficFOXva4xeM/4aLqe2TPDWlHeWmOttB+92A=;
+        b=ZcpvOvx6XsAv+zwHmK6IwDE5dAR7NccupoC7p705AHHuuq6W05IYXrSqkxGox3SCR7
+         RdiJg+6ugyTelWmIGLh6g1A0ag3WGe/coJRcktHD4eXhR0d66qyDTiIO3d+Q0VxSZS7p
+         +T5l7zlLKEipT1DYF4qO3VTQrQdnLlBKTovQGU2QESkYfet8ubs+x1c26cUzrKMv3VLU
+         XL0rCxZ8+X+/tQC98g1OAtB3CPHJY5Y1zBKZU1MsJp9u23YGHXSGtKZKgMOqLAtZAd3H
+         rT7oGBmBgmMiRP78K0n7DF1RYWwDHwg7FKtNfkGT1hn/TwSkomYG3QMiVEZxK5A8VkVV
+         bgBQ==
+X-Gm-Message-State: AOAM532d2dXqCmXyEaXbcHT1LHYdTUK1wK8gAFKZwKiDKwej2cuctssg
+        vUN7ACaZMgr6xCdudk/mJMG0z/Bqn2Gp9w==
+X-Google-Smtp-Source: ABdhPJwYZFDmvGmQVM5BvZuDSpnC/dP7nbjdio7lY6LzlTi8nCBgbLC9fjqP2uJkwsFacO3oCVqxzg==
+X-Received: by 2002:a05:6402:b3a:b0:42a:a6de:e533 with SMTP id bo26-20020a0564020b3a00b0042aa6dee533mr5513937edb.100.1652647542371;
+        Sun, 15 May 2022 13:45:42 -0700 (PDT)
 Received: from fedora.robimarko.hr (dh207-98-105.xnet.hr. [88.207.98.105])
-        by smtp.googlemail.com with ESMTPSA id ze16-20020a170906ef9000b006f3ef214e4esm2944884ejb.180.2022.05.15.13.31.29
+        by smtp.googlemail.com with ESMTPSA id i10-20020a50870a000000b0042617ba63cdsm4174156edb.87.2022.05.15.13.45.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 May 2022 13:31:29 -0700 (PDT)
+        Sun, 15 May 2022 13:45:41 -0700 (PDT)
 From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        jassisinghbrar@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org
 Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH 6/6] arm64: dts: ipq8074: add VQMMC supply
-Date:   Sun, 15 May 2022 22:31:18 +0200
-Message-Id: <20220515203118.474684-6-robimarko@gmail.com>
+Subject: [PATCH v4 1/6] clk: qcom: clk-alpha-pll: add support for APSS PLL
+Date:   Sun, 15 May 2022 22:45:35 +0200
+Message-Id: <20220515204540.477711-1-robimarko@gmail.com>
 X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220515203118.474684-1-robimarko@gmail.com>
-References: <20220515203118.474684-1-robimarko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,31 +72,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SDHCI controller claims DDR, HS200 and HS400 1.8V support, however it
-cannot achieve those using the 2.95V I/O that is the default set by
-firmware.
+APSS PLL type will be used by the IPQ8074 APSS driver for providing the
+CPU core clocks and enabling CPU Frequency scaling.
 
-Since we know have access to the PMP8074 PMIC provided LDO that provides
-the I/O voltage set it as VQMMC supply so that higher speeds can actually
-be achieved.
+This is ported from the downstream 5.4 kernel.
 
 Signed-off-by: Robert Marko <robimarko@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/qcom/clk-alpha-pll.c | 12 ++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.h |  1 +
+ 2 files changed, 13 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 906468ee990e..2e8765aa8f37 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -476,6 +476,8 @@ sdhc_1: sdhci@7824900 {
- 			mmc-hs400-1_8v;
- 			bus-width = <8>;
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 4406cf609aae..8270363ff98e 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -154,6 +154,18 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+ 		[PLL_OFF_TEST_CTL_U] = 0x30,
+ 		[PLL_OFF_TEST_CTL_U1] = 0x34,
+ 	},
++	[CLK_ALPHA_PLL_TYPE_APSS] = {
++		[PLL_OFF_L_VAL] = 0x08,
++		[PLL_OFF_ALPHA_VAL] = 0x10,
++		[PLL_OFF_ALPHA_VAL_U] = 0xff,
++		[PLL_OFF_USER_CTL] = 0x18,
++		[PLL_OFF_USER_CTL_U] = 0xff,
++		[PLL_OFF_CONFIG_CTL] = 0x20,
++		[PLL_OFF_CONFIG_CTL_U] = 0x24,
++		[PLL_OFF_TEST_CTL] = 0x30,
++		[PLL_OFF_TEST_CTL_U] = 0x34,
++		[PLL_OFF_STATUS] = 0x28,
++	},
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
  
-+			vqmmc-supply = <&l11>;
-+
- 			status = "disabled";
- 		};
+diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
+index 6e9907deaf30..626fdf80336d 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.h
++++ b/drivers/clk/qcom/clk-alpha-pll.h
+@@ -18,6 +18,7 @@ enum {
+ 	CLK_ALPHA_PLL_TYPE_AGERA,
+ 	CLK_ALPHA_PLL_TYPE_ZONDA,
+ 	CLK_ALPHA_PLL_TYPE_LUCID_EVO,
++	CLK_ALPHA_PLL_TYPE_APSS,
+ 	CLK_ALPHA_PLL_TYPE_MAX,
+ };
  
 -- 
 2.36.1
