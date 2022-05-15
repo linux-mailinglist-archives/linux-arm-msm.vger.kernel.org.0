@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9E3E5278CF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 May 2022 18:50:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E77A5278F1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 May 2022 19:43:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237787AbiEOQuQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 May 2022 12:50:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55878 "EHLO
+        id S237471AbiEORnE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 May 2022 13:43:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229580AbiEOQuP (ORCPT
+        with ESMTP id S230348AbiEORnD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 May 2022 12:50:15 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E78C2A24A;
-        Sun, 15 May 2022 09:50:11 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3592961006;
-        Sun, 15 May 2022 16:50:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5D1C385B8;
-        Sun, 15 May 2022 16:50:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652633409;
-        bh=HsqtpfvtmyTVUvcUp+1tN7FgGBmtK7BHtCt/uJAWdxY=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=g1L09ulVSO0Q2zgw4NrCwr1SMoa8eF4h+APGR6wpinX1myWcEA6W4PCS6PC6vlRzy
-         avRlz59hQgSuIXdVYE8t/ZSDwZ8Pk5QFzBL+xR+UILf/4Z1BVP2vEIoeE9cCgKclUJ
-         H5HNoXJCGuMOc+YNLSD69rdUQ1eY7FNxvCC/4jsB2059uPdL9S1mFFQsa6rmhDoxGL
-         8VvqhsiH+WR1KYvCGiakin+kngB7wlAbDmGKjL+KOS4gotGzbtWWpqfTL2j3INh7Yn
-         8+jVpWjKY75hP5ECYd+nm1jMdZmS9eDGLjWHoM1jJ/vbIcRVhUOvPSxsggU2dUC8BS
-         sbO+IbaYDwJrQ==
-Date:   Sun, 15 May 2022 17:58:43 +0100
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Andy Shevchenko <andy.shevchenko@gmail.com>
-Subject: Re: [PATCH 4/7] iio: adc: qcom-spmi-adc5: Add missing
- VCOIN/AMUX_THM3/GPIO# channels
-Message-ID: <20220515175843.04ca5c51@jic23-huawei>
-In-Reply-To: <20220515175714.20369e91@jic23-huawei>
-References: <20220511220613.1015472-1-marijn.suijten@somainline.org>
-        <20220511220613.1015472-5-marijn.suijten@somainline.org>
-        <20220514171312.227a1f07@jic23-huawei>
-        <20220515153004.iniplpuf6g5ibvjw@SoMainline.org>
-        <20220515175714.20369e91@jic23-huawei>
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-pc-linux-gnu)
+        Sun, 15 May 2022 13:43:03 -0400
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE1BE6374
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 May 2022 10:43:01 -0700 (PDT)
+Received: by mail-qk1-x72e.google.com with SMTP id m1so10851044qkn.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 May 2022 10:43:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wT7VLRDfSwOG7DDUTxqW+M56OQZ9HqRj9DUWwFSPtsI=;
+        b=FEoF/Qragb8knn3BDe1u8yS34m1p84oMRad5hYObcGB1oRmQIcajBS+tN9/q5KH4bE
+         BcT3gDzXnVAAPmLkbsldTRUJTVDdwpL9I2h8dAJ4YzGSErjjVcgQ19tdk4q4xpTyw28q
+         5gQdMrExtYmWjVJg5ERgEVWxjonCdQy0mcJoGUz7SjxjBZGaU4jiWFlpAZePf5WeL/4P
+         WlFo+GhEZv1sNBSRIDzq2P4qvaE7N0UhzqAmURpLSdHaLgJ76sLjbl7XOLL4AZ2dTvHs
+         t3YsJAY5gBHgaq930Zq2Oge0T4YXNiA73k3EQf2eEv4uq0r43dMu+0kFCPRZnh7KPNKI
+         O74w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wT7VLRDfSwOG7DDUTxqW+M56OQZ9HqRj9DUWwFSPtsI=;
+        b=INNy9geE3GibGqaTceakas45+h/mzjrJAlS4IQn7pkvDrK38MExffgQ57b7Cpszzak
+         c2+X+YgVEatkrGD64TFAPXNRgorHaeePIrQySyY9/am/11Dmen9U3rP+5+Lp3eVWZEfr
+         ZWJGLWleDgF/mhdtfm8sXz86P4uVjNyKEsdgcYI8+qes1GRkHxLGQwawuu2VelK/UYDk
+         nD2DvLrgyDYLXXvd78Jx0ciz6VFCXDkMA1wFccE9BdqR/f+87HQHc9P2VN9OgL/ieVOl
+         BZA8+ah2JM/tQkOm29T1zSUN+/xxkImK4vFCvtlj2oRqWLmp7Ei3ZLMtJ8of8EVC5eG1
+         dSCw==
+X-Gm-Message-State: AOAM532hU6NGdP//fj8GVZXsvld/3CrYd2MFMkxewPFOF0Xhf8lvygld
+        0L1cJM1h33ZdZkl+/75VhOvfuN+ZBTZ+Fvfq6djTVYTBOuU=
+X-Google-Smtp-Source: ABdhPJxktobMoOMM3/CKfUI5SmfWU+zvin53agjE4Dvsn+mY4XWFzRdP7eRl2XsMTZ3wKXNyKHaWt/wrSMCJbEjUmxY=
+X-Received: by 2002:a05:620a:2a0f:b0:6a0:2734:a92e with SMTP id
+ o15-20020a05620a2a0f00b006a02734a92emr9855480qkp.593.1652636580974; Sun, 15
+ May 2022 10:43:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20220514190138.3179964-1-dmitry.baryshkov@linaro.org>
+ <20220514190138.3179964-12-dmitry.baryshkov@linaro.org> <20220515145634.6bfbg5ow243ikmai@SoMainline.org>
+In-Reply-To: <20220515145634.6bfbg5ow243ikmai@SoMainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 15 May 2022 20:42:49 +0300
+Message-ID: <CAA8EJprtCO61a7kmm001nN7qz_M4+t6hqs_sFfeLRnwcBkV81w@mail.gmail.com>
+Subject: Re: [PATCH v5 11/12] arm64: dts: qcom: sdm660: Add initial Inforce
+ IFC6560 board support
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,122 +72,529 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 15 May 2022 17:57:14 +0100
-Jonathan Cameron <jic23@kernel.org> wrote:
+On Sun, 15 May 2022 at 17:56, Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> On 2022-05-14 22:01:37, Dmitry Baryshkov wrote:
+> > The IFC6560 is a board from Inforce Computing, built around the SDA660
+> > SoC. This patch describes core clocks, some regulators from the two
+> > PMICs, debug uart, storage, bluetooth and audio DSP remoteproc.
+> >
+> > The regulator settings are inherited from prior work by Konrad Dybcio
+> > and AngeloGioacchino Del Regno.
+> >
+> > Co-developed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> I don't own this board nor a reference manual, but have scrutinized this
+> patch enough (and compared it against the status-quo in other sd*6**
+> dts files) to dare and give it my:
+>
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+>
+> > ---
+> >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+> >  .../boot/dts/qcom/sda660-inforce-ifc6560.dts  | 461 ++++++++++++++++++
+> >  2 files changed, 462 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index f9e6343acd03..5f717fe0e8d0 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -88,6 +88,7 @@ dtb-$(CONFIG_ARCH_QCOM)     += sc7280-herobrine-herobrine-r1.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-idp.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-idp2.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sc7280-crd.dtb
+> > +dtb-$(CONFIG_ARCH_QCOM)      += sda660-inforce-ifc6560.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm630-sony-xperia-ganges-kirin.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm630-sony-xperia-nile-discovery.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm630-sony-xperia-nile-pioneer.dtb
+> > diff --git a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+> > new file mode 100644
+> > index 000000000000..5360b56df045
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+> > @@ -0,0 +1,461 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2021, Linaro Ltd.
+> > + * Copyright (c) 2020, Konrad Dybcio <konrad.dybcio@somainline.org>
+> > + * Copyright (c) 2020, AngeloGioacchino Del Regno
+> > + *                     <angelogioacchino.delregno@somainline.org>
+>
+> These are only for the regulator configuration, which typically depend
+> on the board and should not be copied or inherited from a different
+> board?
 
-> On Sun, 15 May 2022 17:30:04 +0200
-> Marijn Suijten <marijn.suijten@somainline.org> wrote:
-> 
-> > On 2022-05-14 17:13:12, Jonathan Cameron wrote:  
-> > > On Thu, 12 May 2022 00:06:10 +0200
-> > > Marijn Suijten <marijn.suijten@somainline.org> wrote:
-> > >     
-> > > > These channels are specified in downstream kernels [1] and actively used
-> > > > by ie. the Sony Seine platform on the SM6125 SoC.    
-> > > 
-> > > Looking at the links, some of them are on that platform but not all.
-> > > Better to make that explicit in this description.    
-> > 
-> > This has already been queued up for v2.  Adding these seemed easy at the
-> > time but they are in fact not used, and I ended up sending the wrong
-> > patch.
-> > 
-> > Just so that we're on the same page: only ADC5_AMUX_THM3 and
-> > ADC5_GPIO2_100K_PU are unused by my platform.  It seems the first should
-> > be dropped, but the latter can probably stay in the patch with an
-> > explicit mention.  If you think both should stay, there are a bunch more
-> > channels defined in the downstream kernel as per [1] and I'm not sure if
-> > all should be added for completeness.  
-> 
-> Probably better to add them with a comment for platforms on which they
-> apply (either in commit log or alongside the definitions in the code).
-By 'them' I mean add the ones used on your platform only.  Let others
-add theirs when / if boards using them are upstreamed.
+Not sure, they existed in Bjorn's patch. And I'm not in the position
+to remove existing copyrights. So I've left them in place even if they
+are for the regulators.
 
-(realised I'd been very unclear just after hitting send!)
+>
+> - Marijn
+>
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include "sdm660.dtsi"
+> > +#include "pm660.dtsi"
+> > +#include "pm660l.dtsi"
+> > +
+> > +/ {
+> > +     model = "Inforce 6560 Single Board Computer";
+> > +     compatible = "inforce,ifc6560", "qcom,sda660";
+> > +     chassis-type = "embedded"; /* SBC */
+> > +
+> > +     aliases {
+> > +             serial0 = &blsp1_uart2;
+> > +             serial1 = &blsp2_uart1;
+> > +     };
+> > +
+> > +     chosen {
+> > +             stdout-path = "serial0:115200n8";
+> > +     };
+> > +
+> > +     gpio-keys {
+> > +             compatible = "gpio-keys";
+> > +
+> > +             volup {
+> > +                     label = "Volume Up";
+> > +                     gpios = <&pm660l_gpios 7 GPIO_ACTIVE_LOW>;
+> > +                     linux,code = <KEY_VOLUMEUP>;
+> > +                     debounce-interval = <15>;
+> > +             };
+> > +     };
+> > +
+> > +     /*
+> > +      * Until we hook up type-c detection, we
+> > +      * have to stick with this. But it works.
+> > +      */
+> > +     extcon_usb: extcon-usb {
+> > +             compatible = "linux,extcon-usb-gpio";
+> > +             id-gpio = <&tlmm 58 GPIO_ACTIVE_HIGH>;
+> > +     };
+> > +
+> > +     hdmi-out {
+> > +             compatible = "hdmi-connector";
+> > +             type = "a";
+> > +
+> > +             port {
+> > +                     hdmi_con: endpoint {
+> > +                             remote-endpoint = <&adv7533_out>;
+> > +                     };
+> > +             };
+> > +     };
+> > +
+> > +     vph_pwr: vph-pwr-regulator {
+> > +             compatible = "regulator-fixed";
+> > +             regulator-name = "vph_pwr";
+> > +             regulator-min-microvolt = <3800000>;
+> > +             regulator-max-microvolt = <3800000>;
+> > +
+> > +             regulator-always-on;
+> > +             regulator-boot-on;
+> > +     };
+> > +
+> > +     v3p3_bck_bst: v3p3-bck-bst-regulator {
+> > +             compatible = "regulator-fixed";
+> > +             regulator-name = "v3p3_bck_bst";
+> > +
+> > +             regulator-min-microvolt = <3300000>;
+> > +             regulator-max-microvolt = <3300000>;
+> > +
+> > +             vin-supply = <&vph_pwr>;
+> > +     };
+> > +
+> > +     v1p2_ldo: v1p2-ldo-regulator {
+> > +             compatible = "regulator-fixed";
+> > +             regulator-name = "v1p2_ldo";
+> > +
+> > +             regulator-min-microvolt = <1200000>;
+> > +             regulator-max-microvolt = <1200000>;
+> > +
+> > +             vin-supply = <&vph_pwr>;
+> > +     };
+> > +
+> > +     v5p0_boost: v5p0-boost-regulator {
+> > +             compatible = "regulator-fixed";
+> > +             regulator-name = "v5p0_boost";
+> > +
+> > +             regulator-min-microvolt = <5000000>;
+> > +             regulator-max-microvolt = <5000000>;
+> > +
+> > +             vin-supply = <&vph_pwr>;
+> > +     };
+> > +};
+> > +
+> > +&adsp_pil {
+> > +     firmware-name = "qcom/ifc6560/adsp.mbn";
+> > +};
+> > +
+> > +&blsp1_dma {
+> > +     /*
+> > +      * The board will lock up if we toggle the BLSP clock, unless the
+> > +      * BAM DMA interconnects support is in place.
+> > +      */
+> > +     /delete-property/ clocks;
+> > +};
+> > +
+> > +&blsp_i2c6 {
+> > +     status = "okay";
+> > +
+> > +     adv7533: hdmi@39 {
+> > +             compatible = "adi,adv7535";
+> > +             reg = <0x39>, <0x66>;
+> > +             reg-names = "main", "edid";
+> > +
+> > +             interrupt-parent = <&pm660l_gpios>;
+> > +             interrupts = <11 IRQ_TYPE_EDGE_FALLING>;
+> > +
+> > +             clocks = <&rpmcc RPM_SMD_BB_CLK2>;
+> > +             clock-names = "cec";
+> > +             /*
+> > +              * Limit to 3 lanes to prevent the bridge from changing amount
+> > +              * of lanes in the fly. MSM DSI host doesn't like that.
+> > +              */
+> > +             adi,dsi-lanes = <3>;
+> > +             avdd-supply = <&vreg_l13a_1p8>;
+> > +             dvdd-supply = <&vreg_l13a_1p8>;
+> > +             pvdd-supply = <&vreg_l13a_1p8>;
+> > +             a2vdd-supply = <&vreg_l13a_1p8>;
+> > +             v3p3-supply = <&v3p3_bck_bst>;
+> > +
+> > +             ports {
+> > +                     #address-cells = <1>;
+> > +                     #size-cells = <0>;
+> > +
+> > +                     port@0 {
+> > +                             reg = <0>;
+> > +
+> > +                             adv7533_in: endpoint {
+> > +                                     remote-endpoint = <&dsi0_out>;
+> > +                             };
+> > +                     };
+> > +
+> > +                     port@1 {
+> > +                             reg = <1>;
+> > +
+> > +                             adv7533_out: endpoint {
+> > +                                     remote-endpoint = <&hdmi_con>;
+> > +                             };
+> > +                     };
+> > +             };
+> > +     };
+> > +};
+> > +
+> > +&blsp1_uart2 {
+> > +     status = "okay";
+> > +};
+> > +
+> > +&blsp2_dma {
+> > +     /*
+> > +      * The board will lock up if we toggle the BLSP clock, unless the
+> > +      * BAM DMA interconnects support is in place.
+> > +      */
+> > +     /delete-property/ clocks;
+> > +};
+> > +
+> > +&blsp2_uart1 {
+> > +     status = "okay";
+> > +
+> > +     bluetooth {
+> > +             compatible = "qcom,wcn3990-bt";
+> > +
+> > +             vddio-supply = <&vreg_l13a_1p8>;
+> > +             vddxo-supply = <&vreg_l9a_1p8>;
+> > +             vddrf-supply = <&vreg_l6a_1p3>;
+> > +             vddch0-supply = <&vreg_l19a_3p3>;
+> > +             max-speed = <3200000>;
+> > +     };
+> > +};
+> > +
+> > +&dsi0 {
+> > +     status = "okay";
+> > +     vdda-supply = <&vreg_l1a_1p225>;
+> > +};
+> > +
+> > +&dsi0_out {
+> > +     remote-endpoint = <&adv7533_in>;
+> > +     data-lanes = <0 1 2 3>;
+> > +};
+> > +
+> > +&dsi0_phy {
+> > +     status = "okay";
+> > +     vcca-supply = <&vreg_l1b_0p925>;
+> > +};
+> > +
+> > +&mdss {
+> > +     status = "okay";
+> > +};
+> > +
+> > +&mmss_smmu {
+> > +     status = "okay";
+> > +};
+> > +
+> > +&pon_pwrkey {
+> > +     status = "okay";
+> > +};
+> > +
+> > +&pon_resin {
+> > +     status = "okay";
+> > +
+> > +     linux,code = <KEY_VOLUMEUP>;
+> > +};
+> > +
+> > +&qusb2phy0 {
+> > +     status = "okay";
+> > +
+> > +     vdd-supply = <&vreg_l1b_0p925>;
+> > +     vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
+> > +};
+> > +
+> > +&qusb2phy1 {
+> > +     status = "okay";
+> > +
+> > +     vdd-supply = <&vreg_l1b_0p925>;
+> > +     vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
+> > +};
+> > +
+> > +&rpm_requests {
+> > +     pm660-regulators {
+> > +             compatible = "qcom,rpm-pm660-regulators";
+> > +
+> > +             vdd_s1-supply = <&vph_pwr>;
+> > +             vdd_s2-supply = <&vph_pwr>;
+> > +             vdd_s3-supply = <&vph_pwr>;
+> > +             vdd_s4-supply = <&vph_pwr>;
+> > +             vdd_s5-supply = <&vph_pwr>;
+> > +             vdd_s6-supply = <&vph_pwr>;
+> > +
+> > +             vdd_l1_l6_l7-supply = <&vreg_s5a_1p35>;
+> > +             vdd_l2_l3-supply = <&vreg_s2b_1p05>;
+> > +             vdd_l5-supply = <&vreg_s2b_1p05>;
+> > +             vdd_l8_l9_l10_l11_l12_l13_l14-supply = <&vreg_s4a_2p04>;
+> > +             vdd_l15_l16_l17_l18_l19-supply = <&vreg_bob>;
+> > +
+> > +             vreg_s4a_2p04: s4 {
+> > +                     regulator-min-microvolt = <1805000>;
+> > +                     regulator-max-microvolt = <2040000>;
+> > +                     regulator-enable-ramp-delay = <200>;
+> > +                     regulator-ramp-delay = <0>;
+> > +                     regulator-always-on;
+> > +             };
+> > +
+> > +             vreg_s5a_1p35: s5 {
+> > +                     regulator-min-microvolt = <1224000>;
+> > +                     regulator-max-microvolt = <1350000>;
+> > +                     regulator-enable-ramp-delay = <200>;
+> > +                     regulator-ramp-delay = <0>;
+> > +             };
+> > +
+> > +             vreg_l1a_1p225: l1 {
+> > +                     regulator-min-microvolt = <1150000>;
+> > +                     regulator-max-microvolt = <1250000>;
+> > +                     regulator-enable-ramp-delay = <250>;
+> > +                     regulator-allow-set-load;
+> > +             };
+> > +
+> > +             vreg_l6a_1p3: l6 {
+> > +                     regulator-min-microvolt = <1304000>;
+> > +                     regulator-max-microvolt = <1368000>;
+> > +                     regulator-enable-ramp-delay = <250>;
+> > +                     regulator-ramp-delay = <0>;
+> > +                     regulator-allow-set-load;
+> > +             };
+> > +
+> > +             vreg_l8a_1p8: l8 {
+> > +                     regulator-min-microvolt = <1800000>;
+> > +                     regulator-max-microvolt = <1800000>;
+> > +                     regulator-enable-ramp-delay = <250>;
+> > +                     regulator-ramp-delay = <0>;
+> > +                     regulator-system-load = <325000>;
+> > +                     regulator-allow-set-load;
+> > +             };
+> > +
+> > +             vreg_l9a_1p8: l9 {
+> > +                     regulator-min-microvolt = <1804000>;
+> > +                     regulator-max-microvolt = <1896000>;
+> > +                     regulator-enable-ramp-delay = <250>;
+> > +                     regulator-ramp-delay = <0>;
+> > +                     regulator-allow-set-load;
+> > +             };
+> > +
+> > +             vreg_l13a_1p8: l13 {
+> > +                     /* This gives power to the LPDDR4: never turn it off! */
+> > +                     regulator-min-microvolt = <1800000>;
+> > +                     regulator-max-microvolt = <1944000>;
+> > +                     regulator-enable-ramp-delay = <250>;
+> > +                     regulator-ramp-delay = <0>;
+> > +                     regulator-always-on;
+> > +                     regulator-boot-on;
+> > +             };
+> > +
+> > +             vreg_l19a_3p3: l19 {
+> > +                     regulator-min-microvolt = <3312000>;
+> > +                     regulator-max-microvolt = <3400000>;
+> > +                     regulator-enable-ramp-delay = <250>;
+> > +                     regulator-ramp-delay = <0>;
+> > +                     regulator-allow-set-load;
+> > +             };
+> > +     };
+> > +
+> > +     pm660l-regulators {
+> > +             compatible = "qcom,rpm-pm660l-regulators";
+> > +
+> > +             vdd_s1-supply = <&vph_pwr>;
+> > +             vdd_s2-supply = <&vph_pwr>;
+> > +             vdd_s3_s4-supply = <&vph_pwr>;
+> > +             vdd_s5-supply = <&vph_pwr>;
+> > +             vdd_s6-supply = <&vph_pwr>;
+> > +
+> > +             vdd_l1_l9_l10-supply = <&vreg_s2b_1p05>;
+> > +             vdd_l2-supply = <&vreg_bob>;
+> > +             vdd_l3_l5_l7_l8-supply = <&vreg_bob>;
+> > +             vdd_l4_l6-supply = <&vreg_bob>;
+> > +             vdd_bob-supply = <&vph_pwr>;
+> > +
+> > +             vreg_s2b_1p05: s2 {
+> > +                     regulator-min-microvolt = <1050000>;
+> > +                     regulator-max-microvolt = <1050000>;
+> > +                     regulator-enable-ramp-delay = <200>;
+> > +                     regulator-ramp-delay = <0>;
+> > +             };
+> > +
+> > +             vreg_l1b_0p925: l1 {
+> > +                     regulator-min-microvolt = <800000>;
+> > +                     regulator-max-microvolt = <925000>;
+> > +                     regulator-enable-ramp-delay = <250>;
+> > +                     regulator-allow-set-load;
+> > +             };
+> > +
+> > +             vreg_l2b_2p95: l2 {
+> > +                     regulator-min-microvolt = <1648000>;
+> > +                     regulator-max-microvolt = <3100000>;
+> > +                     regulator-enable-ramp-delay = <250>;
+> > +                     regulator-ramp-delay = <0>;
+> > +                     regulator-allow-set-load;
+> > +             };
+> > +
+> > +             vreg_l4b_2p95: l4 {
+> > +                     regulator-min-microvolt = <2944000>;
+> > +                     regulator-max-microvolt = <2952000>;
+> > +                     regulator-enable-ramp-delay = <250>;
+> > +                     regulator-ramp-delay = <0>;
+> > +
+> > +                     regulator-min-microamp = <200>;
+> > +                     regulator-max-microamp = <600000>;
+> > +                     regulator-system-load = <570000>;
+> > +                     regulator-allow-set-load;
+> > +             };
+> > +
+> > +             /*
+> > +              * Downstream specifies a range of 1721-3600mV,
+> > +              * but the only assigned consumers are SDHCI2 VMMC
+> > +              * and Coresight QPDI that both request pinned 2.95V.
+> > +              * Tighten the range to 1.8-3.328 (closest to 3.3) to
+> > +              * make the mmc driver happy.
+> > +              */
+> > +             vreg_l5b_2p95: l5 {
+> > +                     regulator-min-microvolt = <1800000>;
+> > +                     regulator-max-microvolt = <3328000>;
+> > +                     regulator-enable-ramp-delay = <250>;
+> > +                     regulator-system-load = <800000>;
+> > +                     regulator-ramp-delay = <0>;
+> > +                     regulator-allow-set-load;
+> > +             };
+> > +
+> > +             vreg_l7b_3p125: l7 {
+> > +                     regulator-min-microvolt = <2700000>;
+> > +                     regulator-max-microvolt = <3125000>;
+> > +                     regulator-enable-ramp-delay = <250>;
+> > +             };
+> > +
+> > +             vreg_l8b_3p3: l8 {
+> > +                     regulator-min-microvolt = <2800000>;
+> > +                     regulator-max-microvolt = <3400000>;
+> > +                     regulator-enable-ramp-delay = <250>;
+> > +                     regulator-ramp-delay = <0>;
+> > +             };
+> > +
+> > +             vreg_bob: bob {
+> > +                     regulator-min-microvolt = <3300000>;
+> > +                     regulator-max-microvolt = <3624000>;
+> > +                     regulator-enable-ramp-delay = <500>;
+> > +                     regulator-ramp-delay = <0>;
+> > +             };
+> > +     };
+> > +};
+> > +
+> > +&sdc2_state_on {
+> > +     sd-cd {
+> > +             pins = "gpio54";
+> > +             bias-pull-up;
+> > +             drive-strength = <2>;
+> > +     };
+> > +};
+> > +
+> > +&sdc2_state_off {
+> > +     sd-cd {
+> > +             pins = "gpio54";
+> > +             bias-disable;
+> > +             drive-strength = <2>;
+> > +     };
+> > +};
+> > +
+> > +&sdhc_1 {
+> > +     status = "okay";
+> > +     supports-cqe;
+> > +
+> > +     vmmc-supply = <&vreg_l4b_2p95>;
+> > +     vqmmc-supply = <&vreg_l8a_1p8>;
+> > +
+> > +     mmc-ddr-1_8v;
+> > +     mmc-hs400-1_8v;
+> > +     mmc-hs400-enhanced-strobe;
+> > +};
+> > +
+> > +&sdhc_2 {
+> > +     status = "okay";
+> > +
+> > +     vmmc-supply = <&vreg_l5b_2p95>;
+> > +     vqmmc-supply = <&vreg_l2b_2p95>;
+> > +
+> > +     cd-gpios = <&tlmm 54 GPIO_ACTIVE_LOW>;
+> > +     no-sdio;
+> > +     no-emmc;
+> > +};
+> > +
+> > +&tlmm {
+> > +     gpio-reserved-ranges = <0 4>, <8 4>;
+> > +};
+> > +
+> > +&usb2 {
+> > +     status = "okay";
+> > +};
+> > +
+> > +&usb2_dwc3 {
+> > +     dr_mode = "host";
+> > +};
+> > +
+> > +&usb3 {
+> > +     status = "okay";
+> > +};
+> > +
+> > +&usb3_dwc3 {
+> > +     dr_mode = "peripheral";
+> > +     extcon = <&extcon_usb>;
+> > +};
+> > --
+> > 2.35.1
+> >
 
 
-> 
-> Longer term we should think about whether the code can be adjusted
-> to not need an explicit definition for these multi purpose channels
-> though letting the dt itself describe them (under constraints of the
-> hardware platform).  Not worth doing before this patch though.
-> 
-> >   
-> > > > 
-> > > > [1]: https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/drivers/iio/adc/qcom-spmi-adc5.c?h=LA.UM.7.11.r1-05200-NICOBAR.0#n688
-> > > > 
-> > > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > > > Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>    
-> > > 
-> > > I'm not keen on patches with no context being
-> > > sent to mailing lists. Please cc all lists (and preferably individuals)
-> > > on at least the cover letter so we can see overall discussion.    
-> > 
-> > That can be attributed to the terrible workflow for sending
-> > patch-series.  Somehow only `git send-email` supports --cc-cmd yet I'd
-> > expect it on `git format-patch` for auditing and possibly copying to the
-> > cover letter, if `git format-patch --cover-letter` couldn't do this from
-> > the beginning.  
-> 
-> It would definitely be nice as an option.  Can't do it every time because
-> on tree wide change the cc list can become so large the mailing lists
-> reject it.
-> 
-> > At the same time `git send-email` has --[to/cc]-cover options to
-> > propagate email addresses from the cover letter to all the individual
-> > patch-replies, but not the inverse :(
-> > 
-> > In the end this leaves me manually running get_maintainer.pl over the
-> > entire formatted patch-series, and manually copy-pasting + editing the
-> > addresses into the cover letter... Which is easy to forget and is no
-> > different here.
-> > 
-> > My apologies for (yet again) accidentally not sending at least the cover
-> > letter to everyone.  That's a gross oversight, and I'm probably - no, I
-> > must - be doing something wrong.  Suggestions and/or documentation
-> > references are welcome.  
-> 
-> Andy Shevchenko has some scripts to try and help with this:
-> https://github.com/andy-shev/home-bin-tools/blob/master/ge2maintainer.sh
-> 
-> I've not started using them myself (not gotten around to it yet!) but
-> he's pointed to them when I've missed people from cover letter cc lists
-> in the past.
-> 
-> >   
-> > > If nothing else, I've no idea if intent is that the patches go through different
-> > > trees or all need to merge via one route.    
-> > 
-> > I have no idea either, and have not yet had an answer to a similar
-> > question on a different list.  Usually it seems the maintainers work out
-> > amongst themselves who picks what patch, putting them on hold where
-> > necessary to preseve ordering.  If not, should the sender split patches
-> > across multiple series, either holding off sending part of it or linking
-> > to a dependent series?  
-> 
-> In this case I think I can pick this patch up directly into the IIO tree
-> once everyone else is happy. As you note dts patches normally wait on
-> knowing the necessary support is heading in.  If you have a view on what
-> makes sense as the submitter it's good to stick it in the cover letter, but
-> in this case sounds like you don't. :)
-> 
-> Given we are near the end of this cycle, we are probably looking at next
-> cycle anyway now, so plenty of time to figure it out!
-> 
-> > 
-> > In this particular case DT has to wait for these driver patches to land,
-> > otherwise they may define channels that do not exist and unnecessarily
-> > fail probe.
-> >   
-> > > Patch itself looks fine,    
-> > 
-> > Thanks.
-> > 
-> > Looking forward to your suggestions and answers,
-> > 
-> > - Marijn
-> >   
-> > > [..]    
-> 
 
+-- 
+With best wishes
+Dmitry
