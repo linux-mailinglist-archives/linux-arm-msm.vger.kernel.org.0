@@ -2,74 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E3B7528227
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 12:33:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8D8C528234
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 12:35:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235670AbiEPKdl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 06:33:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59460 "EHLO
+        id S242670AbiEPKfy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 06:35:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234217AbiEPKdk (ORCPT
+        with ESMTP id S239433AbiEPKfo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 06:33:40 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09B511C13C;
-        Mon, 16 May 2022 03:33:38 -0700 (PDT)
+        Mon, 16 May 2022 06:35:44 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFFFADEA3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 03:35:41 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id j4so24967554lfh.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 03:35:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652697219; x=1684233219;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=m7KZ12gy0apI74yaJ3tlcm5G7JwMgp7ptlA0Gz5juBE=;
-  b=mdgdjXSFhEMh9XEik+bmF0+Sbtcj1Xb0kPQHs1HG4cyG4+SmouXPyyPO
-   vtXJVMwIXytD/RoQzXvCigXjxNDOIdqenB45A4G315VTllDyo9+PwvQaN
-   eOzOQcpYaPgaFBVi/IwP3mhNzXnpRrJzZYtQD9LaQ6KInXMJNKNOb8IxB
-   k=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 16 May 2022 03:33:38 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 May 2022 03:33:38 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 16 May 2022 03:33:37 -0700
-Received: from [10.79.142.210] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 16 May
- 2022 03:33:33 -0700
-Message-ID: <fb6dc88c-0829-11f8-b6f4-7eec3409e8bf@quicinc.com>
-Date:   Mon, 16 May 2022 16:02:53 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=TybrrNwubeiCmJTT/Pt5SvO7o0SXKQNwkYoFAX++S+M=;
+        b=ywixI+hrkyjZVveqrBs5WbTfJrk3HXSjXdkw/yG+ZcMSgfRLYwk/qZXOUnJIP1WgXO
+         lBVVRcBv8NUHq+A+ubYszRGIn7INTCE/F31x001Db5x3fLnrVpEmL7vSHY882isd5YBX
+         IgKxgv7LNqsEwCDn8jKJej8c3eymfGOqJUVqfJZ14cGhIZkaUcMaHExYzZotzDgRMr/G
+         /la28vRUa6mnJSrxsNnFK6J9NtRC0I/hUwnzzwLYXrJt8vgGZLdal1yBrwJI1gb2tUfC
+         fB4fiIZIahFse2SAC7pVz9X9ne4v2ymyvwkDBWr3JDUMtsIoPd4r5HeyJNHNgB5Gnf6G
+         BvIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=TybrrNwubeiCmJTT/Pt5SvO7o0SXKQNwkYoFAX++S+M=;
+        b=c0zbkS0j2HjX4/FpUN19gAQ119BaZX0hbsO6aMlJ/CQt0EDZp8v9ZD5PRScBi2fikq
+         B1qblElhb9oZsCWpWUIKHVa+23CqgAd5v6jpV+dzDoWIaf1Kofq/SUFgrUTMeAEukRJu
+         bJ/teEpb7PcjZJO5rRX8vDK1L7yMvRSQ/hrO8szWAw9Q6B5T658OG8qWGIktkn4jJKKS
+         KtvWBCHJZg5A7qC6I1U+mrVZNDfCeML2MQ85/FVwfT0Unm8SovmT2yx4Q5RYOt9GGTg0
+         Jxq7faWyOFq6c+Ql/gSFGlskJGQq3E2tzWgBm18UOXNRRk7koumuEokjINiCEVgXSLth
+         kb9w==
+X-Gm-Message-State: AOAM531FnDqwktBeV2OxEZrR71S6q06J0oAroePEJ3UN3tZc7bFSum8D
+        67eMgvFmS3FvGfOVlIbn/FYTyg==
+X-Google-Smtp-Source: ABdhPJzsVUrwn0tS3KToBIsJDTgtNs7vd3KqCRuQCih/v/B3esQjDRGT86G4+aNwUBJFRoPzISn/og==
+X-Received: by 2002:a05:6512:3ee:b0:471:f84f:7d5b with SMTP id n14-20020a05651203ee00b00471f84f7d5bmr12436445lfq.18.1652697340056;
+        Mon, 16 May 2022 03:35:40 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id h12-20020a05651211cc00b0047255d21174sm1265168lfr.163.2022.05.16.03.35.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 May 2022 03:35:39 -0700 (PDT)
+Message-ID: <13d65ae2-f378-5353-16b9-5bf68883a701@linaro.org>
+Date:   Mon, 16 May 2022 12:35:38 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH V7 2/7] soc: qcom: dcc:Add driver support for Data Capture
- and Compare unit(DCC)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v2] dt-bindings: qcom,pdc: convert to YAML
 Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Alex Elder" <elder@ieee.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@codeaurora.org>,
-        <vkoul@kernel.org>
-References: <cover.1646285069.git.quic_schowdhu@quicinc.com>
- <bc8504bdaf24d98762e2dbad7d084ca247380f06.1646285069.git.quic_schowdhu@quicinc.com>
- <YnFuXYEXxLQkak24@builder.lan>
- <0997f2bc-e8ce-24cc-da90-0ecd3201350c@quicinc.com> <YnSNvHVrJruVbE53@ripper>
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <YnSNvHVrJruVbE53@ripper>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220103074348.6039-1-luca.weiss@fairphone.com>
+ <bef4922d-4a32-f184-44a1-8f5430190938@linaro.org>
+ <fef5f229-f247-d032-fc76-46ed7083dbf4@linaro.org>
+ <CK10OTVFAP75.WCSVY40A7PXO@otso>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CK10OTVFAP75.WCSVY40A7PXO@otso>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,332 +83,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 5/6/2022 8:23 AM, Bjorn Andersson wrote:
-> On Thu 05 May 05:53 PDT 2022, Souradeep Chowdhury wrote:
->
->> On 5/3/2022 11:33 PM, Bjorn Andersson wrote:
->>> On Thu 03 Mar 00:27 CST 2022, Souradeep Chowdhury wrote:
->>>
->>>> The DCC is a DMA Engine designed to capture and store data
->>>> during system crash or software triggers. The DCC operates
->>>> based on user inputs via the sysfs interface. The user gives
->>>> addresses as inputs and these addresses are stored in the
->>>> dcc sram. In case of a system crash or a manual software
->>>> trigger by the user through the debugfs interface,
->>>> the dcc captures and stores the values at these addresses.
->>>> This patch contains the driver which has all the methods
->>>> pertaining to the debugfs interface, auxiliary functions to
->>>> support all the four fundamental operations of dcc namely
->>>> read, write, read/modify/write and loop. The probe method
->>>> here instantiates all the resources necessary for dcc to
->>>> operate mainly the dedicated dcc sram where it stores the
->>>> values. The DCC driver can be used for debugging purposes
->>>> without going for a reboot since it can perform software
->>>> triggers as well based on user inputs.
+On 16/05/2022 09:45, Luca Weiss wrote:
+> Hi Krzysztof,
+> 
+> On Mon May 9, 2022 at 10:40 AM CEST, Krzysztof Kozlowski wrote:
+>> On 09/05/2022 10:38, Krzysztof Kozlowski wrote:
+>>> On 03/01/2022 08:43, Luca Weiss wrote:
+>>>> Convert the PDC interrupt controller bindings to YAML.
 >>>>
->>>> Also added the documentation for debugfs entries and explained
->>>> the functionalities of each debugfs file that has been created
->>>> for dcc.
->>>>
->>>> The following is the justification of using debugfs interface
->>>> over the other alternatives like sysfs/ioctls
->>>>
->>>> i) As can be seen from the debugfs attribute descriptions,
->>>> some of the debugfs attribute files here contains multiple
->>>> arguments which needs to be accepted from the user. This goes
->>>> against the design style of sysfs.
->>>>
->>>> ii) The user input patterns have been made simple and convenient
->>>> in this case with the use of debugfs interface as user doesn't
->>>> need to shuffle between different files to execute one instruction
->>>> as was the case on using other alternatives.
->>>>
->>>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>>> Reviewed-by: Rob Herring <robh@kernel.org>
 >>>> ---
->>>>    Documentation/ABI/testing/debugfs-driver-dcc |  124 +++
->>>>    drivers/soc/qcom/Kconfig                     |    8 +
->>>>    drivers/soc/qcom/Makefile                    |    1 +
->>>>    drivers/soc/qcom/dcc.c                       | 1465 ++++++++++++++++++++++++++
->>>>    4 files changed, 1598 insertions(+)
->>>>    create mode 100644 Documentation/ABI/testing/debugfs-driver-dcc
->>>>    create mode 100644 drivers/soc/qcom/dcc.c
+>>>> Changes since v1:
+>>>> * Adjust description of second reg-name as suggested by Maulik Shah
 >>>>
->>>> diff --git a/Documentation/ABI/testing/debugfs-driver-dcc b/Documentation/ABI/testing/debugfs-driver-dcc
->>>> new file mode 100644
->>>> index 0000000..70029ab
->>>> --- /dev/null
->>>> +++ b/Documentation/ABI/testing/debugfs-driver-dcc
->>>> @@ -0,0 +1,124 @@
->>>> +What:          /sys/kernel/debug/dcc/.../trigger
->>>> +Date:          March 2022
->>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>>> +Description:
->>>> +		This is the debugfs interface for manual software
->>>> +		triggers. The user can simply enter a 1 against
->>>> +		the debugfs file and enable a manual trigger.
->>>> +		Example:
->>>> +		echo  1 > /sys/kernel/debug/dcc/.../trigger
->>>> +
->>>> +What:          /sys/kernel/debug/dcc/.../enable
->>>> +Date:          March 2022
->>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>>> +Description:
->>>> +		This debugfs interface is used for enabling the
->>>> +		the dcc hardware. On enabling the dcc, all the
->>>> +		addresses entered by the user is written into
->>>> +		dcc sram which is read by the dcc hardware on
->>>> +		manual or crash induced triggers.
->>>> +		Example:
->>>> +		echo  0 > /sys/bus/platform/devices/.../enable
->>>> +		(disable dcc)
->>>> +		echo  1 > /sys/bus/platform/devices/.../enable
->>>> +		(enable dcc)
->>>> +
->>>> +What:          /sys/kernel/debug/dcc/.../config_read
->>> As mentioned last time, I don't like this interface of having 6 files
->>> that the user can write to in order to append items in the currently
->>> selected linked list.
+>>>> @Rob Herring: Hope it's ok to keep your R-b given the above changes
+>>>>
+>>>> This patch depends on the following patch, which fixed sm8250 & sm8350
+>>>> compatibles and adds sm6350.
+>>>> https://lore.kernel.org/linux-arm-msm/20211213082614.22651-4-luca.weiss@fairphone.com/
 >>>
->>> Why can't this be a single "config" which takes a multiline string of
->>> operations? (Bonus point for supporting appending to the list).
+>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >>>
->>>
->>> This would also serve as a natural place to dump the linked list back to
->>> the user for inspection.
->> Following is the justification of having multiple files in debugfs
+>>> Luca,
+>>> I think this needs resending as dependency was merged. Alternatively,
+>>> maybe Bjorn could pick it up through QCom SoC?
 >>
->> 1-> Since there are fundamentally 4 instructions for DCC, Read,Write,Read
->> and then Write and Loop,having separate debugfs files for the same makes it
+>> Correction - it seems that Rob took the dependency in April, so this
+>> should go via Rob's tree as well.
 >>
->> convenient for the user to use this tool and also to document.This
->> also is consistent with the design principles of debugfs as it supports
->> logical segregation of Debugfs files based on the user instructions.
+>> Luca, can you resend without Rob's Review tag and ask him to pick it up?
 >>
-> So say the user of DCC wants to read a register 10 times, they know that
-> the DCC operates on lists of operations, so they want to tell the
-> computer "read X, loop 10 times".
->
-> But the API is "write to loop file", "write to read file" and "write to
-> loop file".
->
-> You're achieving the same thing, but the user and the driver thinks in
-> terms of lists of operations and inbetween is a API which provides
-> "logical segregation" of the different parts of that list.
->
->> 2-> We are maintaining a common linkedlist inside the driver and it can be
->> viewed by the user through the "config_read" debugfs file. Will be adding
->> this to the documentation as well.
->>
-> So I use a mix of config_* files to build the lists, and then
-> config_read is used to look at the list?
->
-> So some config_* files will when written append to the list, some
-> config_* files will perform some action (e.g. reset) and reading some
-> config_* files will return something useful.
->
->> Let me know your thoughts regarding the above.
->>
-> I am not convinced that having multiple files provides a nice user
-> interface. But I certain that the use of the word "config" in various
-> different ways is wrong.
->
-> There are files in the interface which purpose is to append items to the
-> linked list, name them append_*. Reading the appended items on the list
-> should not be overloaded on one of the "append" files.
->
->
-> So perhaps:
->
-> append_read
-> append_write
-> append_rmw
-> append_loop
-> config (to dump the current config)
-> enable
-> ready
-> reset
-> trigger
->
->
-> But then looking at the append_* functions again and the examples below.
-> You could easily have a single append which takes read, write, rmw and
-> loop as a first keyword - and build a crude parser based on sscanf to
-> decode the strings.
->
-> Then all append_* becomes "append", which is a single file for adding to
-> the list and "config" is a single point to read the current list.
-> Perhaps you could name this file just "config", reading will dump the
-> list, writing will append to the list.
->
-> Here you would have a cleaner interface.
->
->
-> But as you write your own fops you could differentiate between write
-> and append, so you could make this slightly cleaner by manifesting the
-> "append" part by allowing the user to do:
->
->    echo read 1, 2, 3 > config
->    echo read 4, 5, 6 >> config
->
-> Which clearly shows that the first writes to the config and second
-> appends to the current config. With this interface reset would become:
->
->    echo > config
->
-> You can still require that only single operation is written to or
-> appended to the list per write - to allow you to continue to rely on the
-> crude sscanf based parser.
->
-> With this your interface is reduced to:
->
-> config
-> enable
-> ready
-> trigger
+> 
+> So... since torvalds/master my sm6350 patch is merged through Rob's
 
-Ack. Will create a single config for this interface.
+If it was merged to torvalds/master, it's not a dependency anymore...
 
->
->>>> +Date:          March 2022
->>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>>> +Description:
->>>> +		This stores the addresses of the registers which
->>>> +		needs to be read in case of a hardware crash or
->>>> +		manual software triggers. The address entered here
->>>> +		are considered under read type instruction.
->>>> +		Example:
->>>> +		echo <1> <2> <3> >/sys/kernel/debug/dcc/../config_read
->>>> +		1->Address to be considered for reading the value.
->>>> +		2->The word count of the addresses, read n words
->>>> +		   starting from address <1>.
->>>> +		3->Can be a 1 or 0 which indicates if it is apb or ahb
->>>> +		bus respectively.
->>>> +
->>>> +What:          /sys/kernel/debug/dcc/.../config_write
->>>> +Date:          March 2022
->>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>>> +Description:
->>>> +		This file allows user to write a value to the register
->>>> +		address given as argument. The reason for this feature
->>>> +		of dcc is that for accessing certain registers it is
->>>> +		necessary to set some bits of some other register.
->>>> +		Example:
->>>> +		echo <1> <2> <3> > /sys/bus/platform/devices/.../config_write
->>>> +		1->Address to be considered for writing the value.
->>>> +		2->The value that needs to be written at the location.
->>>> +		3->Can be a 1 or 0 which indicates if it is apb or ahb
->>>> +		bus respectively.
->>>> +
->>>> +What:          /sys/kernel/debug/dcc/.../config_reset
->>>> +Date:          March 2022
->>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>>> +Description:
->>>> +		This file is used to reset the configuration of
->>>> +		a dcc driver to the default configuration. This
->>>> +		means that all the previous addresses stored in
->>>> +		the driver gets removed and user needs to enter
->>>> +		the address values from the start.
->>>> +		Example:
->>>> +		echo  1 > /sys/bus/platform/devices/.../config_reset
->>>> +
->>>> +What:          /sys/kernel/debug/dcc/.../config_loop
->>>> +Date:		March 2022
->>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>>> +Description:
->>>> +		This file is used to enter the loop type addresses for
->>>> +		dcc. DCC hardware provides feature to loop among multiple
->>>> +		addresses. For debugging purposes register values need to
->>>> +		be captured repeatedly in a loop. On giving the loop count
->>>> +		as n, the value at address will be captured n times in a
->>>> +		loop. At most 8 loop addresses can be configured at once.
->>>> +		Example:
->>>> +		echo <1> <2> <3> > /sys/kernel/debug/dcc/../config_loop
->>>> +		1->The loop count, the number of times the value of the
->>>> +		   addresses will be captured.
->>>> +		2->The address count, total number of addresses to be
->>>> +		   entered in this instruction.
->>>> +		3->The series of addresses to be entered separated by a
->>>> +		   space like <addr1> <addr2>... and so on.
->>>> +
->>>> +What:          /sys/kernel/debug/dcc/.../config_read_write
->>>> +Date:          March 2022
->>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>>> +Description:
->>>> +		This file is used to read the value of the register
->>>> +		and then write the value given as an argument to the
->>>> +		register address. The address argument should be given
->>>> +		of the form <addr> <mask> <value>.For debugging purposes
->>>> +		sometimes we need to first read from a register and then
->>>> +		set some values to the register.
->>>> +		Example:
->>>> +		echo <1> <2> <3> > /sys/kernel/debug/dcc/.../config_read_write
->>>> +		1->The address which needs to be considered for read then write.
->>>> +		2->The value that needs to be written on the address.
->>>> +		3->The mask of the value to be written.
->>>> +
->>>> +What:		/sys/kernel/debug/dcc/.../ready
->>>> +Date:		March 2022
->>>> +Contact	Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>>> +Description:
->>>> +		This file is used to check the status of the dcc
->>>> +		hardware if it's ready to take the inputs. A 0
->>>> +		here indicates dcc is in a ready condition.
->>>> +		Example:
->>>> +		cat /sys/kernel/debug/dcc/.../ready
->>>> +
->>>> +What:		/sys/kernel/debug/dcc/.../curr_list
->>> I still don't like the idea of having a single set of files to interface
->>> with all N lists. I think you should discover how many lists you have
->>> and create N directories of files, each on operating on a given list.
->> As explained before there cannot be different files based on lists as
->> the number of lists to be used varies across platforms where DCC is
->> used.
-> Isn't this dcc->nr_link_list?
-Yes. This varies across different SoCs and also user may not have access 
-to all the lists supported by DCC.
->
->> Also we are giving the user the flexibility to configure
->> multiple lists at one go whereas the dumps are collected in the form
->> of separate lists that are configured by the user.
->>
-> I'm not sure I follow what you're trying to say here.
->
-> If we determine that nr_link_list is 2, you create a directory named 0
-> and one named 1, fill them with the interface files to operate on list 0
-> and list 1 respectively. Then you still allow the user to configure and
-> enable the 2 available lists?
->
-> The difference is that it's clear how many lists you have and it's clear
-> when you poke at 0/config_read that you're referring to the first list
-> and poking 0/enable will mean the same list - there's no curr_list to
-> mux between them in the interface.
+> tree, but there was also a sm8150 patch applied through Linus Walleij's
+> tree. This means (as far as I understand) that neither can really
+> properly apply this (rebased) patch as one tree will have missed the
+> other commit.
 
-So from DCC hardware perspective, it needs to be told that "list n 
-begins at x and ends at y". That is why the limitation of DCC
+sm8150 patch is also a dependency?
 
-hardware is that the lists can only be configured sequentially and not 
-in a overlapping manner. So for example we need to enter
+> 
+> Does it make sense to send a v3 rebased on linux-next now, or wait until
+> this has settled down in torvalds's tree?
 
-all the addresses to be stored for list n before jumping to any other 
-lists. Seeing this limitation, will it be advantageous to have
+Conflicts can be resolved, you just need to choose one tree to based on.
 
-different set of files for different lists as we will be configuring 
-them sequentially anyway?
 
->
-> Regards,
-> Bjorn
->
->>>> +Date:		March 2022
->>>> +Contact:	Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>>> +Description:
->>>> +		This attribute is used to enter the linklist to be
->>>> +		used while appending addresses. The range of values
->>>> +		for this is advertised either by a register or is
->>>> +		predefined. Max value for this can be till 8.
->>>> +		Example:
->>>> +		echo 0 > /sys/kernel/debug/dcc/...curr_list
->>>> +
->>> Regards,
->>> Bjorn
+Best regards,
+Krzysztof
