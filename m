@@ -2,137 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F016527DAF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 08:38:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93FA6527DB7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 08:40:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237347AbiEPGiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 02:38:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57632 "EHLO
+        id S240347AbiEPGkq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 02:40:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237096AbiEPGiu (ORCPT
+        with ESMTP id S229568AbiEPGkp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 02:38:50 -0400
-Received: from AUS01-ME3-obe.outbound.protection.outlook.com (mail-me3aus01olkn2183.outbound.protection.outlook.com [40.92.63.183])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E77C31353;
-        Sun, 15 May 2022 23:38:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RKuvm8iler1qGsKRxJ100CRYmcQ62jKSoBUbOo7+g/GHL2M+zwv0zL2eaVixkLOb596ZdpN9eB0r9/7BXtMvtEDqCISdksJ7rTqUGU3Lr8tammDoWnimXN/9DuPV5Ufd/jnGhkHYce5yETh5d6iB3YxKpdt+Fwi9enR8Ti6ucl8W4wbRBpTWaXb1+XEk3qb53xntSNFM0qouuiu2u64ddg1J8ziXvYTHHBT6LacjdqWG10A3TpmKBFoESGSOSJM8wketzOEFWSlLcKlxdB1fqZ2ygkMBgiQcKkv6bzi9QZ4jFl2AJ84Zk+7kw9w+ECHfwGuKyrKf8duwUXtdbog4GQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SvigWkKvoIq4jLaUUvWDvrqXzYAAhIgs3IXbJuA11LI=;
- b=VFOQ0uHNXKuSW7/SZNRT/SiYWwV6lbVdy3v37Xf2V/4QmfCQ6H3xjyIbsVh2hAdQWrULo9F/4FQAlUVVmkMTfeNU3xKKntst8SLRg2ICmIl49u35KHS1Q6ZN4cViXcX5u4+9tDZKhQN61v+jUzwzdpGP0UDEpYycHjkM1IemHZsHhMG0t8gOQKNU39202mPz0mpNGNZ4mJu788+cUR3ZaOOOsBuscdJ7SvlkkHa3yK2b9ZuMLxnXHz9mv5XzSWowIQMMdH8CiJsEXiJmZsvotw0ZN5+DaUKkn5P6l+luzfP6Me1Ni8GoVaYYKJkM3drpYb3REWy9AZdnBNS/RBg1/w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SvigWkKvoIq4jLaUUvWDvrqXzYAAhIgs3IXbJuA11LI=;
- b=qK+1jYam/nND7symaZ5q58bVvjA21CeG9lCTZwX/3BpjXDMOVIt7+7xfzBSuwLi07l9cRW9VOWfowGvN94DttlajPbbmkaaFs9MjiedCFXTO/GMutF5ARbe2oOJb2UnI1pis49fsW3odnoI1Hka2qXip3Clqr6JfLNCXH0dVtybIMIJuXchJKjSPsJ4rrFRCfW1K+9xEuREKOnIspF15rqU/tjekCUrAoCQyTSMKKQjSSWJxorH6vtw67xClBg2JQOLp1zRSTWzznMYGhvJhT0E1Cp+lYNBq1Esfz4e3rLXe5hbrtxYDRA/H/a0zZTxQxq9i+i57hIoVBrjbqM36Lw==
-Received: from MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:113::14)
- by SYZP282MB3252.AUSP282.PROD.OUTLOOK.COM (2603:10c6:10:169::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5250.17; Mon, 16 May
- 2022 06:38:43 +0000
-Received: from MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
- ([fe80::702a:73df:6a57:6a00]) by MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
- ([fe80::702a:73df:6a57:6a00%8]) with mapi id 15.20.5250.018; Mon, 16 May 2022
- 06:38:43 +0000
-From:   Yonglin Tan <yonglin.tan@outlook.com>
-To:     mani@kernel.org, loic.poulain@linaro.org,
-        gregkh@linuxfoundation.org, quic_hemantk@quicinc.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mhi@lists.linux.dev, Yonglin Tan <yonglin.tan@outlook.com>
-Subject: [PATCH v2] bus: mhi: host: Add support for Quectel EM120 FCCL.
-Date:   Mon, 16 May 2022 14:38:29 +0800
-Message-ID: <MEYP282MB2374837FFCB18B12BFDEDE80FDCF9@MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.7.4
-Content-Type: text/plain
-X-TMN:  [dVkMxWN3RS1xdHUk5VZzyuXUMSWFaI/7]
-X-ClientProxiedBy: SG2PR01CA0182.apcprd01.prod.exchangelabs.com
- (2603:1096:4:189::20) To MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
- (2603:10c6:220:113::14)
-X-Microsoft-Original-Message-ID: <1652683109-5171-1-git-send-email-yonglin.tan@outlook.com>
+        Mon, 16 May 2022 02:40:45 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73107DE8C
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 May 2022 23:40:44 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id u23so24060891lfc.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 May 2022 23:40:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=IezA8lFbZ3UBxt9oqnYwi09cIkKPiUW4FFJ1P5l8/O0=;
+        b=I0O/pU6cY2spaVMFaJQg1irJ6isUwl5e5ClKCDBGbpiUdQzS1pP3ncibY1xLbZZETg
+         vBW9p6Lpd+BtpNrqDG4mJ21n/B4zxxmO/6LHl1VmKb1PbeGm2SVTWk0dhxmNXIFEj8Il
+         SeR18wyfnPf0rXsq3QP3qHtY/aFEUoVlh4TCorcawpqxJlgXDwV5VDjOZuJzzfhqt6nV
+         BE4VwRhX4due6MEXRw9QYGdIsJ6Dh2eKZCZxR0DKwEB04NNOhHj3ALqp+QnSjUmFEE12
+         y7FD12UQKOA4t9UHw5P0k+2a+g64QrNf69Qa74FVbltOzwKxd077dhAAKIunNPpAE58z
+         ut2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=IezA8lFbZ3UBxt9oqnYwi09cIkKPiUW4FFJ1P5l8/O0=;
+        b=JY1Nrsz6KzhOY/heQATQo5bT+SwpbcmnuqM9jEg2dZnkz25vb9q8SAjicLrhPp7fv3
+         viD50T6qQH12jT2iXdeCLGBfYWg87/618oPoXuJAlRhxjz0ihiGUmGEdmecPprwpU8tk
+         LQn6Z88BfeqGIS4wtNmWqdiIxnIVbur8xppC/Viux41eXVhwIb7YsfSU0Gd/jSkxyuNg
+         wmWWJA+rJVJNEd41cYjA2Uw5ZsW3CgADrPS/3aBPpqrqSHFjdEiz94/2nFWOfh+/TNBL
+         bx1pDErivoX5T1tItMvvhgu3h7/CCllB/EjjgDJsoXRbGOUFlQlFfAlO6bFYe39gFHYh
+         Pvug==
+X-Gm-Message-State: AOAM533D4f5UjhIUrmpghAuSTMPtHY82KYTmpxEQvx67rv+oZHmrEGl1
+        cOWAQyWxIBCs4lFLAtuNB0QL/A==
+X-Google-Smtp-Source: ABdhPJwI3h/Hpn4jlgzq0+4Ulqw991mhhdevbVWHgRGyPrbW/AO6bgZHqym+63dMwfGIhekMCGcUmQ==
+X-Received: by 2002:a19:4348:0:b0:474:d376:45f3 with SMTP id m8-20020a194348000000b00474d37645f3mr11802453lfj.405.1652683242793;
+        Sun, 15 May 2022 23:40:42 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id f13-20020a2eb5ad000000b0024f3d1daedfsm1398118ljn.103.2022.05.15.23.40.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 15 May 2022 23:40:42 -0700 (PDT)
+Message-ID: <96686d6d-83a9-05a2-9fdc-f9fc4b4e7eed@linaro.org>
+Date:   Mon, 16 May 2022 08:40:41 +0200
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: dda489bf-92ec-48bb-0db1-08da3706b895
-X-MS-Exchange-SLBlob-MailProps: gjx25WM8ZNWdKAFq52I1YRrlMZv+xx8wbnqnrhAr/ueQc/sD1Kw11YDM57h9aPNeH+N+Du9xEeKChRXrSPoT17vF2EkH1olgFz6eRwuer9iCmVljqIbG8I+Ul5eJwRrTw3Zi9aPQE9wrIrxdNcg9GEHpw1a17vBJniT/I32sxUiaxJz4RvDQqY9PAra4N8FAxp/VNuTASdIl1w7flC0FoSzWFfB0ZUGMjeC+Sm/xzmMU5NO7CsfXJ99oV+iI1eDXfLY8IYWYLcc8yv+JiXZv1WjGtwOhBWzleWNYNIZaoK9iqIZrodisXv+Rav2RX26RC8TCX+OTU4m8LEgrEdvmrNUKOV7AJOjJl34PYnb/B7LEOHrohRzh0re2w+aweBr4pdGP7zBbMcwV2RDK1ERbmbInt96g8Tv/N2LOIXkyfAEB2wSEjSb60lQZfNSNrNsW5DsGFwGCSnZRxiiPIyMRXCD3Wg64KdAzRbObdBTcvGmcBizVN6MJzSpjXrnA2MeAMpNfYdV1XeCtr9jIxozcRpnJcQAEE72tH/CUYNUhmEXRimF/pQ1BQTJMcKRN+sU2awOEgaVkUgw2DmB0HZebYd9c2VFW49XBe6WktnMHwe0obdgWo96s0TewnLBeCjhFqTPjp3L9E83yUFfh+1aPzaPfDdfo6szZg9aH9e0yTdLTbvpYbDp3FmperIZ14VSHt2wR2btjkC4iPctfohtRJnK7f9vdOfnvywLJJtjguhc=
-X-MS-TrafficTypeDiagnostic: SYZP282MB3252:EE_
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Ow7dGGwwq+hhvkb3NN+/A9/8inpa+JaxypSVFujaTKajsZ9WPErbHZf7P18CplhX7AmrVR9KlMk0QB5i+EFZsQ+mW91YvwugzuBsApNkJw0wEwUiOUprTWADah2w0+pPK4ZSxbHbq0J4BfT0myk9GHj/dq4hRC6sp0wCVETVATmsS7nYALf536m+roJgTOm+h/ip0z/LznSLFGyeh7YlOhkOs8likTbNmUiJPnN3b7vWmllfOu+3GC+UWOXRln3SIH7FYfXydPhRJpo90ZeaR0nR6phGhYr+ZXR6596PZBUThqQgDkoTKsP7d51+WL6CXWVlGQHSZ/nLvo7x6pE1jUJ1/UFKXN9+kxujFBxzXSn55odmUpgeZDgiLvHJ4DuQiX/yHSIGzvMYaFe+JRGDnHBguc9weTEjd3A+jzgwwhT4IlUnW4f8hjaMv4fWwW8K+ibiRWU5wuxc2fbNDaPN/FKzzCFh8+YyQ4+14eNfz6ZL919Fd8EpHW+2Zv2n9X7Y163nOLt20n3Lo/xsfjvGz+781iLPBN2AteHL5pSf2CxGURIoLjrl4wtdKSkOt5ECID4F8W522KG5GyVbkbFwxQ==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?/0OAjazJJwAxixdQTrTGpSA0G/6YL1keHshq2eJRRJ6jrgf3xH1YiXzpofSg?=
- =?us-ascii?Q?NN7wL/NXzQuMQFw85wP8tieAamEceFMd3k73bXktcoU1wq9T4atVKaoU5m+e?=
- =?us-ascii?Q?npaex+BBRj5//ZMnNG7jmo9A5npWOOifuAT4bOyPaHPUn7a5jxJTO/PiMDo/?=
- =?us-ascii?Q?ivnAr/cAihsrzjvii+8H7xSRO6HciF95XwVnahpHW//VJzZHSN2020P0cWDM?=
- =?us-ascii?Q?OZqVhE/6D56ss09ZxQqVoLEWukzktrR9H6RKiByRlGq9C8LI4JqJ6m/0yFpe?=
- =?us-ascii?Q?ft73hFCNQ83Xs+V8z/JYyF4N3M7Bkoez6y7uiYHTg2vOz3JT4Lh02vHzViKo?=
- =?us-ascii?Q?if9oOAGtgWA+kJeIj7EziE4DjwTFPm+/36twygSyPa2F9D/7UbwIvp0mMVrr?=
- =?us-ascii?Q?kHtilo+PoDsivgGed46vYKDVzqRZwCPNHlH97ko9fZBE0H364kefRA7jyfvp?=
- =?us-ascii?Q?yUD8BXOAbasqstYcWeIuY+e1CMJDAXtaB6j7cYy1UcZFkU98XlJlXFktqdVQ?=
- =?us-ascii?Q?aUx669THYGjQKHJ4BDZ/EtA1P5M4QNzmUTJFGlUt0/5t3Fn4vCe7jb434CAi?=
- =?us-ascii?Q?+XqjDeO/tmf+l27bUG3cDkJTy7k3CQ8CBJzQ2TBNhAWXxURxkuRa/RebaxnL?=
- =?us-ascii?Q?cLBvGoGmctCTsdngQqXqF3sFjOGjCux106wEe5z6lz4Pva01C0LUee5gCl47?=
- =?us-ascii?Q?Df1+/MqB6T9CvMpJGDMWPSJxhI1Q1oWG65yss697pocP0KvNHuecWQrYkZFx?=
- =?us-ascii?Q?BYpHkdd7ZPApvUWTCwBMyAzPqy8sCKFVjNqH8760RhXvi2/TkD+Qman+Y7yP?=
- =?us-ascii?Q?buWNSzsMTbqrzaGpCmz57hoIFZ5zx2lYV/F5t+miBmTEqNDpdQspwCnc0YVX?=
- =?us-ascii?Q?43sUcFqI1IweFENtjeZkLV3tuxg2hF19E2l8ag1QcUjeGEvtT9n+UwWDzORJ?=
- =?us-ascii?Q?NzHooz70nyZXZqFKVCPTB4+a2f3ZBnaV459iDjmBZwln/O0iI7vvy5Wvo8rC?=
- =?us-ascii?Q?lpOEvkh314EnCOJdBR9Ka/Zfj+Wp6OJqEa8EUGCAgWF2mHuYUtZhrWx9ebUr?=
- =?us-ascii?Q?kgJ8s9PeiK+88f+wUxw8Fi2d2P8pp28zifOcN7ebw9y5VffAbx+NjX7RLaGU?=
- =?us-ascii?Q?apKBiw52vWw4hyIXKxkogmYr+ZNU3wxRPU6lG+RSnIGKi8h1lJSc2dAFuSif?=
- =?us-ascii?Q?M7JOGqxq/rwLkArEsoww5w+AGE8JddDCsb4QrxY4EQYHQ2n/KBRkuf8AP+yh?=
- =?us-ascii?Q?6cdBhwEB1an9BIcOZBI6FjS7XIJ3ksAvWpMeeTb/wKfjKgeXPH8yC4/15Gn+?=
- =?us-ascii?Q?btwATbdhgO9myzt4wZIFDeQMaA802uqeyAm8OjiqtFYmiINGv6DHvbr9I1Ka?=
- =?us-ascii?Q?ZGTvf7hPPIbhdnHqtCNUhoX8UalUCyiM9qtVKucPTxF67V6PBSYJRqDnoW9e?=
- =?us-ascii?Q?Y5LUFJ+MNrY=3D?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dda489bf-92ec-48bb-0db1-08da3706b895
-X-MS-Exchange-CrossTenant-AuthSource: MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 May 2022 06:38:43.5746
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SYZP282MB3252
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add sc7180 Chromebook board
+ bindings
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Rob Herring <robh@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        "Joseph S . Barrera III" <joebar@chromium.org>,
+        Julius Werner <jwerner@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+References: <20220512090429.1.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid>
+ <828bc65f-e585-0fe7-c038-c750861c9446@linaro.org>
+ <48d96a4e-ce1b-03a1-1831-36555efd7080@linaro.org>
+ <CAD=FV=WNSv+kgTZwjHVq+YNQAG0uB42QUPaU-BPTV_W+j=5aYg@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAD=FV=WNSv+kgTZwjHVq+YNQAG0uB42QUPaU-BPTV_W+j=5aYg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The product's enumeration align with previous 
-Quectel EM120R-GL, so the EM120 FCCL would use 
-the same config as Quectel EM120R-GL. 
+On 13/05/2022 19:00, Doug Anderson wrote:
+> Hi,
+> 
+> On Fri, May 13, 2022 at 2:01 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 13/05/2022 09:57, Krzysztof Kozlowski wrote:
+>>> On 12/05/2022 18:04, Douglas Anderson wrote:
+>>>> This copy-pastes compatibles from sc7180-based boards from the device
+>>>> trees to the yaml file so that `make dtbs_check` will be happy.
+>>>>
+>>>> NOTES:
+>>>> - I make no attempt to try to share an "item" for all sc7180 based
+>>>>   Chromebooks. Because of the revision matching scheme used by the
+>>>>   Chromebook bootloader, at times we need a different number of
+>>>>   revisions listed.
+>>>> - Some of the odd entries in here (like google,homestar-rev23 or the
+>>>>   fact that "Google Lazor Limozeen without Touchscreen" changed from
+>>>>   sku5 to sku6) are not typos but simply reflect reality.
+>>>> - Many revisions of boards here never actually went to consumers, but
+>>>>   they are still in use within various companies that were involved in
+>>>>   Chromebook development. Since Chromebooks are developed with an
+>>>>   "upstream first" methodology, having these revisions supported with
+>>>>   upstream Linux is important. Making it easy for Chromebooks to be
+>>>>   developed with an "upstream first" methodology is valuable to the
+>>>>   upstream community because it improves the quality of upstream and
+>>>>   gets Chromebooks supported with vanilla upstream faster.
+>>>>
+>>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+>>>> ---
+>>>>
+>>>>  .../devicetree/bindings/arm/qcom.yaml         | 180 ++++++++++++++++++
+>>>>  1 file changed, 180 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>> index 5c06d1bfc046..399be67eb5d2 100644
+>>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>> @@ -214,11 +214,191 @@ properties:
+>>>>                - qcom,ipq8074-hk10-c2
+>>>>            - const: qcom,ipq8074
+>>>>
+>>>> +      # Qualcomm Technologies, Inc. SC7180 IDP
+>>>>        - items:
+>>>>            - enum:
+>>>>                - qcom,sc7180-idp
+>>>>            - const: qcom,sc7180
+>>>>
+>>>> +      # Google CoachZ (rev1 - 2)
+>>>> +      - items:
+>>>> +          - const: google,coachz-rev1
+>>>> +          - const: google,coachz-rev2
+>>>
+>>> The inverted pattern of old revision being compatible with the new one,
+>>> is done on purpose? You claim here every rev1 is always compatible with
+>>> rev2 ...
+>>>
+>>> I don't think we discussed such patterns in previous talk. I quickly
+>>> went through it and there were only skuX moving around, not rev1 being
+>>> newer then rev2.
+> 
+> Isn't this what we just had a whole discussion about?
+> 
+> Oh, I see. You're objecting to the fact that the order here lists
+> "rev1" first and "rev2" second.
+> 
+> I think the issue here is that for the purposes of booting Chromebooks
+> the order here doesn't matter. Certainly we can pick a fixed order and
+> we can validate that the order in the yaml matches the order in the
+> device tree, but for all intents and purposes it doesn't matter to
+> anything. The same device tree is compatible with _both_ rev1 and rev2
+> coachz devices. Neither of those two devices is inherently better
+> supported by this device tree than the other.
 
-Signed-off-by: Yonglin Tan <yonglin.tan@outlook.com>
----
+OK, thanks for explanation. Since these were not documented maybe fixing
+existing DTS to more expected order (rev2 being the newest, rev1
+following) would make sense. But certainly please use such new order
+compatibles for new DTSes.
 
-V2:
-Fixed the format errors in the patch description.
+> 
+> We can reorder them if it's important for some reason, but it doesn't
+> change the facts of the matter. You can't tell whether you've booted a
+> "-rev1" Chromebook or a "-rev2" Chromebook based on the most specific
+> compatible string.
 
- drivers/bus/mhi/host/pci_generic.c | 2 ++
- 1 file changed, 2 insertions(+)
+Of course you cannot, because DT is not for such case (when you can use
+different DT for booting on different hardware...)
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 8416267..0a6469c 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -557,6 +557,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-+	{ PCI_DEVICE(0x1eac, 0x2001), /* EM120R-GL for FCCL (sdx24) */
-+		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
- 		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
--- 
-2.7.4
+> 
+> As per the other discussion, we could "solve" this by making two
+> device trees that were exactly the same but one of them had the
+> compatible "-rev1" the other "-rev2". This would result in a big
+> explosion in the number of device trees in our FIT Image for very
+> little gain. It also fails to solve the "newest rev" problem.
+> 
+> 
+> OK, so I've written up a description of the whole system. Maybe it
+> will be clearer with that and we can continue the discussion in my v2
+> if needed.
+> 
+> https://lore.kernel.org/r/20220513095722.v2.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid
+> 
+> -Doug
 
+
+Best regards,
+Krzysztof
