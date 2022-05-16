@@ -2,69 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A9C9D528D9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 21:03:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7367528DAB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 21:06:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345246AbiEPTDM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 15:03:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42028 "EHLO
+        id S1345243AbiEPTGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 15:06:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232386AbiEPTDL (ORCPT
+        with ESMTP id S1345325AbiEPTGK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 15:03:11 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52F4A3EABB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 12:03:10 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id y20-20020a056830071400b00606a2ebd91bso10683737ots.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 12:03:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=V4GahDx2+UnkOWB2njUSr2HS/Dy+k/intVgLF5yRzLM=;
-        b=QP66kbFap0dA2vLnSmHdxk2AoXOTdqe7hb6v4tnSQW8iqhqaz7qNKz9OLoio6gX7Cj
-         BqXaUE6kVM+ivPQf2VZUtfYbN1PZrrSOWIiRlwwYRuSAXD8IQ3tIUVtR+4L/ETIV280S
-         M94XYinqs+gK3IV95dVEbmtTOSLiN0/w2ovvE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=V4GahDx2+UnkOWB2njUSr2HS/Dy+k/intVgLF5yRzLM=;
-        b=CWsx8tvSzjgs5Ea8C5cKZoRHiEB2CD+jdaFpUz15S4xbZERlGgT2r4/PQ0b5JuIngs
-         2QSZxtcny3miQnII9Am0BUWaQJr2Y+N6FbkbwKcLWGNpV2LAQ/h1vgUYle4/waHfZNID
-         hVKOlrcIVMEUuzO9Ggkdgg4jwuqB3T0h4khmZpS9X0rFLLdlOFD53u/cP78EQDKUldhc
-         XQ6ldPZdEZYeNI4ZtLTXihCWD6H1SEmNb++WvtmZBidRmfA9mXyIGG3lxwXsvpJRrQNV
-         ax2lH25wmQ0aLxihWbmwh8q0HwSWaWGpMDlOHd1Sj0GOZ+BT4IrsS4WqouZCEk2pWH0h
-         eJ4w==
-X-Gm-Message-State: AOAM530Hr3OCWfFn4sbrfoI9E4GRayqaBui1gDkEjJLqQzOBbz5L3JsV
-        upTbPuDQb+YJ638KkwDEbh+pU+hTmxZ1DdnTlSMvdg==
-X-Google-Smtp-Source: ABdhPJzIraMdyy+cf5N3cn2fEi0wvFOaIMKvaCnp5/je8pQqGNGQmIISz4raYx080wid7tlfrVJ4iY97vl4x2QO9CtI=
-X-Received: by 2002:a05:6830:13ce:b0:606:702b:87f0 with SMTP id
- e14-20020a05683013ce00b00606702b87f0mr6480452otq.159.1652727789630; Mon, 16
- May 2022 12:03:09 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 May 2022 12:03:08 -0700
+        Mon, 16 May 2022 15:06:10 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F31920BD8;
+        Mon, 16 May 2022 12:06:08 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DBB50614CB;
+        Mon, 16 May 2022 19:06:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83024C385AA;
+        Mon, 16 May 2022 19:06:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652727967;
+        bh=2Resw6p+2SXUmxtcyRn6SOdYMRyAbxOVblDDKJZfhuk=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=BSfKI3ipMdkFD4rYZrdaySQegpDAWsCAylzId9ynBGOuOqecfeWt14fH5AoEc7BHS
+         V8gAZ8FUYAWZ7+5K/4PIDrD6pGIIdrV0O2Jn6D6ulUbwttrVFEhG/G9b0Md4pdqADY
+         53Xfp2wtiTvaziCmhPIFbYVTjPjsMkMemaBd4jPHGp7NQtU+tEhOGlW+KsaU0+Uy//
+         GqydFI+z4tPURPZqkSW3aoa95B2I32CoYGYQEgbbShn5S4SKud+VDFCFP1PSKk/hrU
+         wBLkQLJ+Vw6ANisqhMcgiJZpjptSCT72a9hpW4OU0IhEEp1d+2ZA0FAxOElhbv5Pqe
+         BtFm85iRWxmGA==
+Date:   Mon, 16 May 2022 12:06:05 -0700
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     kernel test robot <lkp@intel.com>
+Cc:     Andrew Morton <akpm@linux-foundation.org>, netdev@vger.kernel.org,
+        linux-staging@lists.linux.dev, linux-sh@vger.kernel.org,
+        linux-omap@vger.kernel.org, linux-mm@kvack.org,
+        linux-mips@vger.kernel.org, linux-kselftest@vger.kernel.org,
+        linux-hwmon@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+        kunit-dev@googlegroups.com, intel-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, bpf@vger.kernel.org,
+        amd-gfx@lists.freedesktop.org
+Subject: Re: [linux-next:master] BUILD REGRESSION
+ 1e1b28b936aed946122b4e0991e7144fdbbfd77e
+Message-ID: <20220516120605.7a6bb562@kernel.org>
+In-Reply-To: <6280f965.kTCPpIEVY9TwoNre%lkp@intel.com>
+References: <6280f965.kTCPpIEVY9TwoNre%lkp@intel.com>
 MIME-Version: 1.0
-In-Reply-To: <1652275113-10277-8-git-send-email-quic_c_skakit@quicinc.com>
-References: <1652275113-10277-1-git-send-email-quic_c_skakit@quicinc.com> <1652275113-10277-8-git-send-email-quic_c_skakit@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Mon, 16 May 2022 12:03:08 -0700
-Message-ID: <CAE-0n51JeC7oobCYNCJ-rOi3n_FVPBjz7yFmtwKEDeqWcX0vFw@mail.gmail.com>
-Subject: Re: [PATCH V12 7/9] regulator: Add a regulator driver for the PM8008 PMIC
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Cc:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
-        quic_jprakash@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,109 +63,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya (2022-05-11 06:18:31)
-> diff --git a/drivers/regulator/qcom-pm8008-regulator.c b/drivers/regulator/qcom-pm8008-regulator.c
-> new file mode 100644
-> index 0000000..0361f02
-> --- /dev/null
-> +++ b/drivers/regulator/qcom-pm8008-regulator.c
-> @@ -0,0 +1,221 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/* Copyright (c) 2022, The Linux Foundation. All rights reserved. */
-> +
-> +#include <linux/device.h>
-> +#include <linux/kernel.h>
-> +#include <linux/mfd/qcom_pm8008.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
+On Sun, 15 May 2022 21:00:21 +0800 kernel test robot wrote:
+> tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+> branch HEAD: 1e1b28b936aed946122b4e0991e7144fdbbfd77e  Add linux-next specific files for 20220513
+> 
+> Error/Warning reports:
+> 
+> https://lore.kernel.org/linux-mm/202204181931.klAC6fWo-lkp@intel.com
+> https://lore.kernel.org/linux-mm/202204291924.vTGZmerI-lkp@intel.com
+> https://lore.kernel.org/linux-mm/202205031017.4TwMan3l-lkp@intel.com
+> https://lore.kernel.org/linux-mm/202205041248.WgCwPcEV-lkp@intel.com
+> https://lore.kernel.org/linux-mm/202205122113.uLKzd3SZ-lkp@intel.com
+> https://lore.kernel.org/linux-mm/202205150051.3RzuooAG-lkp@intel.com
+> https://lore.kernel.org/linux-mm/202205150117.sd6HzBVm-lkp@intel.com
+> https://lore.kernel.org/lkml/202205100617.5UUm3Uet-lkp@intel.com
+> https://lore.kernel.org/llvm/202204210555.DNvfHvIb-lkp@intel.com
+> https://lore.kernel.org/llvm/202205060132.uhqyUx1l-lkp@intel.com
+> https://lore.kernel.org/llvm/202205120010.zWBednzM-lkp@intel.com
+> https://lore.kernel.org/llvm/202205141122.qihFGUem-lkp@intel.com
+> 
+> Error/Warning: (recently discovered and may have been fixed)
+> 
+> <command-line>: fatal error: ./include/generated/utsrelease.h: No such file or directory
+> arch/arm/mach-versatile/versatile.c:56:14: warning: no previous prototype for function 'mmc_status' [-Wmissing-prototypes]
+> arch/x86/kvm/pmu.h:20:32: warning: 'vmx_icl_pebs_cpu' defined but not used [-Wunused-const-variable=]
+> drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc_link_dp.c:5102:7: warning: variable 'allow_lttpr_non_transparent_mode' set but not used [-Wunused-but-set-variable]
+> drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc_link_dp.c:5147:6: warning: no previous prototype for function 'dp_parse_lttpr_mode' [-Wmissing-prototypes]
+> drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c:1364:5: warning: no previous prototype for 'amdgpu_discovery_get_mall_info' [-Wmissing-prototypes]
+> drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c:1983:6: warning: no previous prototype for function 'gfx_v11_0_rlc_stop' [-Wmissing-prototypes]
+> drivers/gpu/drm/amd/amdgpu/soc21.c:171:6: warning: no previous prototype for 'soc21_grbm_select' [-Wmissing-prototypes]
+> drivers/gpu/drm/solomon/ssd130x-spi.c:154:35: warning: 'ssd130x_spi_table' defined but not used [-Wunused-const-variable=]
+> drivers/hwmon/nct6775-platform.c:199:9: sparse:    unsigned char
+> drivers/hwmon/nct6775-platform.c:199:9: sparse:    void
+> drivers/video/fbdev/omap/hwa742.c:492:5: warning: no previous prototype for 'hwa742_update_window_async' [-Wmissing-prototypes]
+> fs/buffer.c:2254:5: warning: stack frame size (2144) exceeds limit (1024) in 'block_read_full_folio' [-Wframe-larger-than]
+> fs/ntfs/aops.c:378:12: warning: stack frame size (2224) exceeds limit (1024) in 'ntfs_read_folio' [-Wframe-larger-than]
+> kernel/trace/fgraph.c:37:12: warning: no previous prototype for 'ftrace_enable_ftrace_graph_caller' [-Wmissing-prototypes]
+> kernel/trace/fgraph.c:46:12: warning: no previous prototype for 'ftrace_disable_ftrace_graph_caller' [-Wmissing-prototypes]
 
-Is this include used?
-
-> +#include <linux/of_device.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +#include <linux/regulator/driver.h>
-> +#include <linux/regulator/of_regulator.h>
-
-Is this include used?
-
-> +
-> +#define VSET_STEP_MV                   8
-> +#define VSET_STEP_UV                   (VSET_STEP_MV * 1000)
-> +
-> +#define LDO_ENABLE_REG(base)           ((base) + 0x46)
-> +#define ENABLE_BIT                     BIT(7)
-> +
-> +#define LDO_VSET_LB_REG(base)          ((base) + 0x40)
-> +
-> +#define LDO_STEPPER_CTL_REG(base)      ((base) + 0x3b)
-> +#define DEFAULT_VOLTAGE_STEPPER_RATE   38400
-> +#define STEP_RATE_MASK                 GENMASK(1, 0)
-> +
-> +struct pm8008_regulator_data {
-> +       const char                      *name;
-> +       const char                      *supply_name;
-> +       int                             min_uv;
-> +       int                             max_uv;
-> +       int                             min_dropout_uv;
-> +       const struct linear_range       *voltage_range;
-> +};
-> +
-> +struct pm8008_regulator {
-> +       struct device           *dev;
-> +       struct regmap           *regmap;
-> +       struct regulator_desc   rdesc;
-> +       u16                     base;
-> +       int                     step_rate;
-> +       int                     voltage_selector;
-> +};
-> +
-> +static const struct linear_range nldo_ranges[] = {
-> +       REGULATOR_LINEAR_RANGE(528000, 0, 122, 8000),
-> +};
-> +
-> +static const struct linear_range pldo_ranges[] = {
-> +       REGULATOR_LINEAR_RANGE(1504000, 0, 237, 8000),
-> +};
-> +
-> +static const struct pm8008_regulator_data reg_data[] = {
-> +       /* name  parent       min_uv  max_uv  headroom_uv voltage_range */
-> +       { "ldo1", "vdd_l1_l2", 528000, 1504000, 225000, nldo_ranges, },
-> +       { "ldo2", "vdd_l1_l2", 528000, 1504000, 225000, nldo_ranges, },
-> +       { "ldo3", "vdd_l3_l4", 1504000, 3400000, 300000, pldo_ranges, },
-> +       { "ldo4", "vdd_l3_l4", 1504000, 3400000, 300000, pldo_ranges, },
-> +       { "ldo5", "vdd_l5",    1504000, 3400000, 200000, pldo_ranges, },
-> +       { "ldo6", "vdd_l6",    1504000, 3400000, 200000, pldo_ranges, },
-> +       { "ldo7", "vdd_l7",    1504000, 3400000, 200000, pldo_ranges, },
-> +};
-> +
-> +static int pm8008_regulator_get_voltage(struct regulator_dev *rdev)
-> +{
-> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
-> +
-> +       return pm8008_reg->voltage_selector;
-> +}
-> +
-> +static inline int pm8008_write_voltage(struct pm8008_regulator *pm8008_reg,
-> +                                                       int mV)
-> +{
-> +       __le16 vset_raw;
-> +
-> +       vset_raw = cpu_to_le16(mV);
-> +
-> +       return regmap_bulk_write(pm8008_reg->regmap,
-> +                       LDO_VSET_LB_REG(pm8008_reg->base),
-> +                       (const void *)&vset_raw, sizeof(vset_raw));
-
-Does sparse complain about casting away __le16?
-
-> +}
-> +
-> +static int pm8008_regulator_set_voltage_time(struct regulator_dev *rdev,
-> +                               int old_uV, int new_uv)
-> +{
-> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
-> +
-> +       return DIV_ROUND_UP(abs(new_uv - old_uV), pm8008_reg->step_rate);
-> +}
-> +
+Is this report CCed everywhere or there's a reason why netdev@ is CCed?
+I'm trying to figure out we need to care and it's not obvious..
