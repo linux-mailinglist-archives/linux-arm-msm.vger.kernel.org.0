@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F55D529107
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 22:45:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0793D529063
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 22:44:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230243AbiEPUjP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 16:39:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60668 "EHLO
+        id S230308AbiEPUmj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 16:42:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348733AbiEPUhC (ORCPT
+        with ESMTP id S236252AbiEPUjS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 16:37:02 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B0945001E;
-        Mon, 16 May 2022 13:18:20 -0700 (PDT)
+        Mon, 16 May 2022 16:39:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40CFB517C1;
+        Mon, 16 May 2022 13:19:55 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 973B96124D;
-        Mon, 16 May 2022 20:18:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9343CC34115;
-        Mon, 16 May 2022 20:18:18 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CD91861170;
+        Mon, 16 May 2022 20:19:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B73C34100;
+        Mon, 16 May 2022 20:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652732299;
-        bh=+6uDV10Sc3DTLJDwxFmU67G8zR9GmxWTjZaSRJ32XLg=;
+        s=k20201202; t=1652732394;
+        bh=SHhiQGhVcUE0vHNCt6nUYr9ak3tUjCBNu2xVT+ZMvnk=;
         h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=e4kdVQ/Dpfon3rGXiGajSkfjR9K2FBo1wKLw+wBBNeMi+8vyzfTWecKzDAW3TzJ7z
-         hxID2Br1Mj8PN/ghRReXgpxOIUhovVXSC7q6OCnTP0fBTK+2B045Dd01UGJQ+/SBmD
-         0YmUSh87/GSaM70G2VJ7hhy2LGITABy1w11uDcGncZMALgUpekTZHVRDOwD7Z8oqBq
-         pw3kHdktEP7gZuRSm0gpVZGAMiF996gaYID9Axl6FPHNQ7xMB93+ks+STQmDifhLkq
-         ulNVvCjlwUGzbchx+0ihF8VPGYcos2W0d5K1dYo2vpVvIgdbOGqEw4LN0ye0tNN+mg
-         cn2fff1GBOWxg==
-Date:   Mon, 16 May 2022 15:18:17 -0500
+        b=EHGLL0p67u5Tt7xDUhDyvi/TAxlteDKDzicHOufHj+R8QMP66W6j0/Yi5ak/tM3J7
+         nv3zbzvcU2XV82k0yDfDcn8X7qvOLFbUcvYsbCnbOlkPtbhCpX1keGPxZsjsH+TlGO
+         k5rTXoTDPci4VnUjAAarqDNMD2zQ28U8QqkvRdfoS87Sf8R/pii2VzQppCjs/lNOkS
+         C+zTIEkzohAE4FB0HlQBZjA0f7UX6ZPiG6NELfw6TjsWrN3B1i4rgjiznUqx0EJEwM
+         3nQsLdMCbXwwLATjCErNnujmwiIxLRW3/+MYfVKAFFVctcsp5Mx1Ud+dGemtODSt5U
+         Op7PYa/bRtUiQ==
+Date:   Mon, 16 May 2022 15:19:50 -0500
 From:   Bjorn Helgaas <helgaas@kernel.org>
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     bhelgaas@google.com, lorenzo.pieralisi@arm.com, kbusch@kernel.org,
@@ -42,13 +42,12 @@ Cc:     bhelgaas@google.com, lorenzo.pieralisi@arm.com, kbusch@kernel.org,
         bjorn.andersson@linaro.org, axboe@fb.com,
         quic_vbadigan@quicinc.com, quic_krichai@quicinc.com,
         quic_nitirawa@quicinc.com, vidyas@nvidia.com, sagi@grimberg.me
-Subject: Re: [PATCH 1/3] PCI: Add a flag to notify PCI drivers about
- powerdown during suspend
-Message-ID: <20220516201817.GA1047280@bhelgaas>
+Subject: Re: [PATCH 2/3] PCI: dwc: qcom: Set suspend_poweroff flag for SC7280
+Message-ID: <20220516201950.GA1047412@bhelgaas>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220513110027.31015-2-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20220513110027.31015-3-manivannan.sadhasivam@linaro.org>
 X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -59,40 +58,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 13, 2022 at 04:30:25PM +0530, Manivannan Sadhasivam wrote:
-> On some systems like Chromebooks based on Qcom chipsets, the OS may
-> powerdown all PCIe devices during system suspend for aggressive
-> powersaving. In that case, the PCI host controller drivers need to notify
-> the PCI device drivers that the power will be taken off during system
-> suspend so that the drivers can prepare the devices accordingly.
-
-"The OS may powerdown all PCIe devices ..." makes it sound like this
-is an OS policy decision.  Where exactly (what function) is that?
-
-Or if it's not an OS policy decision, but rather some property of the
-hardware, say that specifically.
-
-> One prime example is the PCI NVMe driver. This flag can be used by the
-> driver to shutdown the NVMe device during suspend and recover it during
+On Fri, May 13, 2022 at 04:30:26PM +0530, Manivannan Sadhasivam wrote:
+> For aggressive power saving on SC7280 SoCs, the power for the PCI devices
+> will be taken off during system suspend. Hence, notify the same to the
+> PCI device drivers using "suspend_poweroff" flag so that the drivers can
+> prepare the PCI devices to handle the poweroff and recover them during
 > resume.
-> 
+
+No doubt "power ... will be taken off during system suspend" is true,
+but this isn't very informative.  Is this a property of SC7280?  A
+choice made by the SC7280 driver?  Why is this not applicable to other
+systems?
+
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  include/linux/pci.h | 1 +
->  1 file changed, 1 insertion(+)
+>  drivers/pci/controller/dwc/pcie-qcom.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> diff --git a/include/linux/pci.h b/include/linux/pci.h
-> index 60adf42460ab..069caf1fe88d 100644
-> --- a/include/linux/pci.h
-> +++ b/include/linux/pci.h
-> @@ -578,6 +578,7 @@ struct pci_host_bridge {
->  	unsigned int	preserve_config:1;	/* Preserve FW resource setup */
->  	unsigned int	size_windows:1;		/* Enable root bus sizing */
->  	unsigned int	msi_domain:1;		/* Bridge wants MSI domain */
-> +	unsigned int	suspend_poweroff:1;	/* OS may poweroff devices during system suspend */
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 6ab90891801d..4b0ad2827f8f 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -199,6 +199,7 @@ struct qcom_pcie_cfg {
+>  	unsigned int has_ddrss_sf_tbu_clk:1;
+>  	unsigned int has_aggre0_clk:1;
+>  	unsigned int has_aggre1_clk:1;
+> +	unsigned int suspend_poweroff:1;
+>  };
 >  
->  	/* Resource alignment requirements */
->  	resource_size_t (*align_resource)(struct pci_dev *dev,
+>  struct qcom_pcie {
+> @@ -1220,6 +1221,10 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>  	if (pcie->cfg->pipe_clk_need_muxing)
+>  		clk_set_parent(res->pipe_clk_src, res->ref_clk_src);
+>  
+> +	/* Indicate PCI device drivers that the power will be taken off during system suspend */
+> +	if (pcie->cfg->suspend_poweroff)
+> +		pci->pp.bridge->suspend_poweroff = true;
+> +
+>  	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
+>  	if (ret < 0)
+>  		goto err_disable_regulators;
+> @@ -1548,6 +1553,7 @@ static const struct qcom_pcie_cfg sc7280_cfg = {
+>  	.ops = &ops_1_9_0,
+>  	.has_tbu_clk = true,
+>  	.pipe_clk_need_muxing = true,
+> +	.suspend_poweroff = true,
+>  };
+>  
+>  static const struct dw_pcie_ops dw_pcie_ops = {
 > -- 
 > 2.25.1
 > 
