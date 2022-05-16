@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 026C4527DF7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 09:01:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41E5D527DFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 09:03:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240667AbiEPHBW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 03:01:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44830 "EHLO
+        id S240633AbiEPHC6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 03:02:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240651AbiEPHBN (ORCPT
+        with ESMTP id S240630AbiEPHC6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 03:01:13 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9632E65AB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 00:01:10 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id h29so24153199lfj.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 00:01:10 -0700 (PDT)
+        Mon, 16 May 2022 03:02:58 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9819DFBE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 00:02:55 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id g16so16976886lja.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 00:02:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=NbvfOiX/jtGbPtYjjUDXC+IzrP1LLgnY1EgAFKsMWp0=;
-        b=tgw+AdEnx9eQx5k3kbD6Pq7cq5NnJeNxQilDPd9IaKz3349mKE4c87X+GbStT4GBvs
-         dwiqjLc9JEKbJMrHYcMneCBO2xaG5/bW7wnFdsckzgQCxUlmUpZBEFB87HA9hVF5+/ny
-         T2xT5ZoN3fGW3fxkoDpS+gmAynETh3VUNb1tcwFanze5v5iFTPYtaBl0uK6f7rqzSpCq
-         HPpvtAUckdP9cV6tLPq1KcmRDFHqWqvCIvaZNAQVRIOKqo4SDt6UBwgXMBCXt9m4jntr
-         lormf40CO0lfsyZoqQT6RtgfsVX/nH0v46h+X2WU7FEBFVhjihvSjoFhVur8HagSS2b5
-         KBPQ==
+        bh=oirpwm1AGe5M0caD4aV4H+XlkR1kteVHxSnmnXrKWU4=;
+        b=ZXA7vD6G8P26CPF7HOtRct655zWhRS7fd6hici/WgzOo1e74kAWL7FgXV8f1aYt7oY
+         ogzUnuWff17xFKp1lSm6NdqxdDVUxutVJuVRwAFuPhzXDYUoamk6IYgP/dq3P3lSNRca
+         RA6VNBibPx2RWV8wFrL1wD0vdUWAc3zchV4mp5jE48ycPIC9Ifsj2qWD2+0slDmTtblV
+         9ZLnZ8jOrh949/DfQuAgknydvDBmEDrUxFNswZMxEqhH1YtpntBGTXFcRp9wGr+bUN/U
+         idnhvEd+FsGAKEEEmgUgyJ0OLHB1TW/EH8zXF75Kl6H5yWZg8nLjXsUEL9DCU3JT9J/V
+         O2hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=NbvfOiX/jtGbPtYjjUDXC+IzrP1LLgnY1EgAFKsMWp0=;
-        b=wC2G2wM8Cqi8wgB5WxZtY69nBAbmo1tzMGYanY1moU+XVCj/nhc51SVUfQsuC6nwV7
-         ZERF8RK7eX4fAyCSUmWw50t5CuDXbEEcM8JwsXGZ3Bb0PQO18DGtuL5VJTmKcDwNKOHA
-         7uPHOHkxtdQ03imXQNJyY20Ro6ncxt3WKSG8reHoPtZHK79xH+JFmyQMAX9YE6i4IsYK
-         Ifkt+p0JbPOCa4QI72qMp+W87gLn3LE1ctmG7BjjaOBp+knvkspN8lorzO4gHsS3Sbl1
-         28crwk5vMkLBd02gVF7ey0VBvsXZfSlHu8hC0SDrEOscZdR6Frzm5RoQmg9g/FCnYhhj
-         OFVQ==
-X-Gm-Message-State: AOAM530S5dPxarHEUQvF9sOlyPAQZC8F5lltjqWW0QiB7fhVcLe7IlFz
-        +X9VwGZ93YO0EJaIuJcrqyZurg==
-X-Google-Smtp-Source: ABdhPJwmLBBWEwrRgPz4mXsYykl61uynZi06W+txJ8t2mcxBNaa9FQ7HgmbVci/MRO0Eex3gE5NO2w==
-X-Received: by 2002:a05:6512:3091:b0:473:bfb1:8da0 with SMTP id z17-20020a056512309100b00473bfb18da0mr12227874lfd.154.1652684468914;
-        Mon, 16 May 2022 00:01:08 -0700 (PDT)
+        bh=oirpwm1AGe5M0caD4aV4H+XlkR1kteVHxSnmnXrKWU4=;
+        b=2qlWbzt3niDXfEZ0gY8Hn6jTcIkqHbqHdWAyUM/UFUSHTGITFVUAXPnulvHqsdfAjE
+         wbqfPkwYrZDVnqK7MvZIEAv27RZpxVrmuCVQGUuknjfuNFVyHfdg5fL6t8D1PDp6M9t7
+         ASAFsqlw+ZH1qc4fVeK5KqcUCBVr5niRLwV0VXCAwD/JL90oSTImnvsCY6HxC5C3sH0V
+         fYfjwDN5ad5OYvB9i16bSvX4EP0zF14yIlWxPv6n+Aa14gg31Q2qpqLLek7Px5LqTW4Q
+         Up020iO1KUf23Ov66FI03UaYirwJi0nkjrVxmGtGLtLy/72t3qqqTXviMoHNPol05ikU
+         CYNw==
+X-Gm-Message-State: AOAM533eJ7MNWehkXGF3lX5JI27+WrSwNRnOOYV77ipdDJGpz5T442CW
+        B3HekeMk6nQLNkiH7dBHidxk3Q==
+X-Google-Smtp-Source: ABdhPJxj6ZZdDkD9cnljvIwwhF7SAmKjDxjdXJbfWaHgwbjDJfpcyojxAmpzoC3ILaKnvVlcK0Q2/Q==
+X-Received: by 2002:a05:651c:a0e:b0:250:6a11:ff24 with SMTP id k14-20020a05651c0a0e00b002506a11ff24mr10194829ljq.31.1652684573778;
+        Mon, 16 May 2022 00:02:53 -0700 (PDT)
 Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id v26-20020a05651203ba00b0047255d2116fsm1219146lfp.158.2022.05.16.00.01.07
+        by smtp.gmail.com with ESMTPSA id x2-20020a056512078200b0047255d21166sm1219236lfr.149.2022.05.16.00.02.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 May 2022 00:01:08 -0700 (PDT)
-Message-ID: <d4e031d0-8a43-e458-6535-1044d43a2b63@linaro.org>
-Date:   Mon, 16 May 2022 09:01:07 +0200
+        Mon, 16 May 2022 00:02:53 -0700 (PDT)
+Message-ID: <c05d8369-0e95-0f57-eeb7-f23161a8c101@linaro.org>
+Date:   Mon, 16 May 2022 09:02:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.1
-Subject: Re: [PATCH v2 2/4] dt-bindings: arm: qcom: Add sc7180 Chromebook
- board bindings
+Subject: Re: [PATCH v2 3/4] dt-bindings: arm: qcom: Add / fix sc7280 board
+ bindings
 Content-Language: en-US
 To:     Douglas Anderson <dianders@chromium.org>,
         Rob Herring <robh@kernel.org>,
@@ -73,14 +73,14 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20220513095722.v2.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid>
- <20220513095722.v2.2.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid>
+ <20220513095722.v2.3.I1318c1ae2ce55ade1d092fc21df846360b15c560@changeid>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220513095722.v2.2.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid>
+In-Reply-To: <20220513095722.v2.3.I1318c1ae2ce55ade1d092fc21df846360b15c560@changeid>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,63 +89,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 13/05/2022 18:59, Douglas Anderson wrote:
-> This copy-pastes compatibles from sc7180-based boards from the device
-> trees to the yaml file so that `make dtbs_check` will be happy.
-> 
-> NOTES:
-> - I make no attempt to try to share an "item" for all sc7180 based
->   Chromebooks. Because of the revision matching scheme used by the
->   Chromebook bootloader, at times we need a different number of
->   revisions listed.
-> - Some of the odd entries in here (like google,homestar-rev23 or the
->   fact that "Google Lazor Limozeen without Touchscreen" changed from
->   sku5 to sku6) are not typos but simply reflect reality.
-> - Many revisions of boards here never actually went to consumers, but
->   they are still in use within various companies that were involved in
->   Chromebook development. Since Chromebooks are developed with an
->   "upstream first" methodology, having these revisions supported with
->   upstream Linux is important. Making it easy for Chromebooks to be
->   developed with an "upstream first" methodology is valuable to the
->   upstream community because it improves the quality of upstream and
->   gets Chromebooks supported with vanilla upstream faster.
-> 
-> This patch also adds a link to the Chromebook boot flow documentation
-> to explain that Chromebooks don't use the scheme described for the
-> Qualcomm bootloader.
+> This copy-pastes compatibles from sc7280-based boards from the device
+> trees to the yaml file. It also fixes the CRD/IDP bindings which had
+> gotten stale.
 > 
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> The link added here will (obviously) not function until the
-> documentation patch makes it to mainline. Presumably folks who want to
-> read it in the meantime can find it pretty easily. If there's a better
-> way to link this then please let me know.
-> 
-> Changes in v2:
-> - Add link to doc about how Chromebook devicetrees work.
-> - Use a "description" instead of a comment for each item.
-> - Use the marketing name instead of the code name where possible.
-> 
->  .../devicetree/bindings/arm/qcom.yaml         | 187 +++++++++++++++++-
->  1 file changed, 186 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 5c06d1bfc046..8ec0805f4996 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -90,6 +90,11 @@ description: |
->    A dragonboard board v0.1 of subtype 1 with an apq8074 SoC version 2, made in
->    foundry 2.
->  
-> +  There are many devices in the list below that run the standard ChromeOS
-> +  bootloader setup and use the open source depthcharge bootloader to boot the
-> +  OS. These devices do not use the scheme described above. For details, see:
-> +  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/chromebook-boot-flow.rst
 
-Absolute path within Linux repo, please, so
-"Documentation/devicetree/chromebook-boot-flow.rst" (assuming that will
-be the final location). There are tools which check them for validity.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Actually this change should be rather part of that other commit...
 
 Best regards,
 Krzysztof
