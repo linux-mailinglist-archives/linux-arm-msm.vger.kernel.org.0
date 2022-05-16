@@ -2,133 +2,240 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 468A2527D63
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 08:09:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CAE5527D6A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 08:11:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239702AbiEPGJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 02:09:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56176 "EHLO
+        id S240207AbiEPGKg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 02:10:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235487AbiEPGJy (ORCPT
+        with ESMTP id S240213AbiEPGKe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 02:09:54 -0400
-Received: from AUS01-SY4-obe.outbound.protection.outlook.com (mail-sy4aus01olkn2141.outbound.protection.outlook.com [40.92.62.141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53EEC20F42;
-        Sun, 15 May 2022 23:09:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZkkSUJa9m47LcTryhDz9IXW45hN/KUiszu1xz7M5QrSUbCmFXdd+qS1wjAP8BovWelE6mrOxVJfroXTZA0M8U2vfZpqQv+d9LT+VLKf0BZLBycvf4bSOjjvBH7LX1BoHoLOOHdyxuo/WoDeVsjc18eEVN4nCfgYH/Jzd4tXBDGrIRkG4yHTrf2x2WnX173Ffje4Pc6kybnmPW1je0GtHBG2i9gKwWy1W017fCr36bVdmn2BsGxNfvrVRBWt/8TSSRekN+/j4PGN14/c1I5QZRcvyG/FCt1CCDEEbt/4RDClAStKBJYMwU3l19HAH/ykpFftgCvhj4t80SFqEm9EnrQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dy943hCSy4FQOnWDMdvBXvZgX8/9Zlqga1eR1JW5QEs=;
- b=SIYf6ov8fxsWhhA0vVLmgGyLRNYxm8e0QNepkYmnHrYXG3fkKzxI1nPbo32CLqcZoIXigfRk1NcuDuQ83GlOUmfx98oJxbIKwnVNVEixr+Biit8KaPdDqcFZbiLlDcPDkYUB5JTNszVLihifptzgiNFHL4fVegRAx6xwwHKHwKjB8E6SD9LhuaXfDp2zh2qtAutk6xEwvRF0rG2wo4lWy7so+zL5gIJMuzCqsVpDqA5xZJNpiGCi+u5hcufBR1wm7LdVyc8NesLbSAJFI2SqzNwwBASMb9QEkjNUWutjln6gSBbGRN/sB5Ioi1EP8yUIKu0bsOJ7BpkXBas+s1YwXA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dy943hCSy4FQOnWDMdvBXvZgX8/9Zlqga1eR1JW5QEs=;
- b=DtaT7P1oV4bUAFnbv5smknDb5L5+yV/tVH9QpKySN00cN34XMQkHT4vJdMStm71dstSPdHyuRX9HU6nxgUngVlKfHlsOMLDGw8qwuXtNuhaiZFAlbzIJ4P6fvjvPrvneoSBGVZdOZ8Y4TulTNTUE/4tM9Fz6l2GfjOFD1BAoKOgbevzR7FCR/7a3Hh74ZnrfuHzWB8qQqwSOxIqhf00ZqDTJw43Efptq/LspLgLh8UCHrffuPY7GK9maO+JFwFjaPoyUB9URjfVaVT3mrlGkqBeRo66K887YKLKzn4PlhY0DjSYV6kY9vsSH3SDT2pMRrFTLBGYWJINXNJ8WGxycMA==
-Received: from MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:113::14)
- by SYCP282MB0158.AUSP282.PROD.OUTLOOK.COM (2603:10c6:10:86::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5250.16; Mon, 16 May
- 2022 06:09:49 +0000
-Received: from MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
- ([fe80::702a:73df:6a57:6a00]) by MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
- ([fe80::702a:73df:6a57:6a00%8]) with mapi id 15.20.5250.018; Mon, 16 May 2022
- 06:09:49 +0000
-From:   Yonglin Tan <yonglin.tan@outlook.com>
-To:     mani@kernel.org, loic.poulain@linaro.org,
-        gregkh@linuxfoundation.org, quic_hemantk@quicinc.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mhi@lists.linux.dev, Yonglin Tan <yonglin.tan@outlook.com>
-Subject: [PATCH v2] bus: mhi: host: Add support for Quectel EM120 FCCL.
-Date:   Mon, 16 May 2022 14:09:34 +0800
-Message-ID: <MEYP282MB2374B1DA0004F6E5821A2FB5FDCF9@MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.7.4
-Content-Type: text/plain
-X-TMN:  [5tX4mgCJHl4UWKCUYmoen6FtcWSNpkhV]
-X-ClientProxiedBy: SI2PR01CA0051.apcprd01.prod.exchangelabs.com
- (2603:1096:4:193::6) To MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
- (2603:10c6:220:113::14)
-X-Microsoft-Original-Message-ID: <1652681374-5086-1-git-send-email-yonglin.tan@outlook.com>
+        Mon, 16 May 2022 02:10:34 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E87D320F78
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 May 2022 23:10:30 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id v4so16823949ljd.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 May 2022 23:10:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=zib3uaRuFHQp5m+3/8oVVWs2fT/RhjrDBvhpgKAcf3A=;
+        b=T8a68Wcn4gY9NFXddamoH+rRrUy8g81C6ugx+hQrWs90thVEoFpfoW5rfePda8J8Ti
+         KhYLE5GeSNkseGhg6lt7Uw3CFsrabahfUTN6w49xWFaBgVGI0x9XP77w7igMPyaJ68Cq
+         qg8vUoA0kBuM1wr5DCpHhE3FpkgNX+KKJZK6qCoalPD/rQiLoRs9/bYs/l0ErwlkoH0P
+         1viy/5jm8JiHRHEICvrFZ3mP4KXxz85YQeOIAL0QqJ1J/jLc0LdzwVX5OH8SXaqpQEH3
+         cNP78pu268Ud97vfkkEiS4RW+MJ/RzJICDEG0kc8MdHqBzJU5DPGyHb+S8K2sDRzFhMV
+         K1KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=zib3uaRuFHQp5m+3/8oVVWs2fT/RhjrDBvhpgKAcf3A=;
+        b=kr1qKNUD/XXCysu/Sl7Crbz52RbOYEc3iMCL9SXJNu0HhAwaWKtlgb0z7J+zax0i5b
+         Qe6Dk+YbQfPmFT61JEa+r4PPRwduVNxS4myxu+GSF8D2D5o+Ix/chpCUzd+MK8GRMGZp
+         4LEKQwc7Dj0Tl89wBde/wU+YRPkIhN9fMEbmSYoRcU+0hic4Dz72mDmfvXnr95pKm5IA
+         tIv6Anjl0lQma2ONr5qRPTMICdxEOnJ58+4rHtmoA553ui1FAFTW1UPK9yR+PHNkL2Wi
+         6x51cso6Rw3doxYneMs66/TEeGwnEdMdfno5zXgZDDmlQkkhxKA0CqMyM0wwpG4mqZgt
+         rH7A==
+X-Gm-Message-State: AOAM533ZXvLxEAJwqhrzxQmLZc+NM3GDm4Ac6vIb9H6mgibFnBd4hinW
+        LXezNBxtsXTLogrrRLO3F0EFD7BmAvj938GM
+X-Google-Smtp-Source: ABdhPJyrZUQf7WD5zZ0nqfhRfXzM6EGNE+a7PhnPAP8HR3cuJ7y91FoKEpx/vEUszqhSySkNWYqKKw==
+X-Received: by 2002:a05:651c:399:b0:24f:18d:5bbd with SMTP id e25-20020a05651c039900b0024f018d5bbdmr10166934ljp.481.1652681429224;
+        Sun, 15 May 2022 23:10:29 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id j9-20020a19f509000000b0047255d210f2sm1208147lfb.33.2022.05.15.23.10.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 15 May 2022 23:10:28 -0700 (PDT)
+Message-ID: <eecf3117-772a-f50a-5d09-4d729dea7561@linaro.org>
+Date:   Mon, 16 May 2022 08:10:27 +0200
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 07797aa3-c684-406b-bce0-08da3702aeee
-X-MS-Exchange-SLBlob-MailProps: gjx25WM8ZNWdKAFq52I1YRrlMZv+xx8wbnqnrhAr/ueyzdY1/b6SeS71lJ1AKz1mZDOUYjsxjg1P+syCTlWjHEK+K4jnZWeqOK1xbYMy90iydJo2qI5Z8wFlhwuULQWsdXv2TNbxbZZhx09bSM049r7Vb7+RvnXwOBEKcjXBHIKhLDtS9VpCTVuFm39qN1OKoNlTL5ZlGsG98nqI/UgfWKTsIgTwNLjVy9njQnrM+rco0d1dcD5Y61/Y0ESCFj9REe7aJa3JFnGswV48xwnYROmcsFLqmT8ywn5XvrR9GQDIkjsy88hUHf5L3jsG76L0nILGddXlxdO8K5ZtiivTFW7y1rmUOHRcJ2xCPo7S3PZ+GqepRzBLyGV/DHWxdSMFGI0HZik1a4wg4lINkDgssDOiaPlplt1ZbbK2BuGL6MDFel5rhsEb3YyZ957BdWEgENzNY/H4uboOe6DKH7yBp99LzOtQcU8YPWQmooik+7j5GMsqDO20duA6iICpkNkdA/G477L7LUOFoLonShZuKV/an1b7uuTPB9ZVuiP6idIJj9kvB7sQA9BIS/5imlYK7yOhJ5y6fZECDJ7G7qjfPpWxMfcUwAx1kEllpyKfsTKCXHSTyxoPIME9Opq7rCj9SV9KjqUMvT1zcxsOr/nz2BfWr2lmiLP9zG99FLS0vyJkdDbuzIEnwV4avlG1foo2vLEAPJeLMtrpJnSFcdWjnvzpqzRcOlPzRpk4T3JoCcE=
-X-MS-TrafficTypeDiagnostic: SYCP282MB0158:EE_
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: deWk6JD9CgnjMJHDZh/+fm/7ei0UKyFLcwc9b4LjjWL/PMsIEpiUWFoORM9XJcmm8cl31KDwFYL/YE/ARWKSaQ8aRw5iYhtDOjI4uGtsRzCfY4MbFYtSb33/qfwNzUw15X1nfPIohW1GzpWKn8zxyO70t9PC6J/OXtZgmsRV4Ss363hcpErugiUoEt5/eqv2wTRC8YQrxgV/zVdPnO3Fa6uhXLHNVlse21KyH4Vm289tgne82CVZ1wYOTB/IkPxVYAgtZ/B8X0BC2MqGyTcFcbw5xFMCxuqAksqdY99J0oqcPU7dNqH43oCHvyA1vv1ZsDohgxEvLwCfXfjBxTZhBEF9CLEPszI4uLANJgunZFozxKMal/td7W0ypxhOBE2HIYTi9Icy0kp2mtZ3Xfy+lvL9Mg4le4ZLpraXsc/f7RSqLmc80FFXwNKMiT3R9Gfw4hjDCHX3itKTQB6RmCMD4r301ABw7GP+jW7+yrgp5Zx+tXis8qqUU6oRn/JpCxmAPtDM+MG6/FQq/BViF0q04+qNYr0C9Q9e1P89af+RHIzUuQ+fx7ihqoDN4WkWPsgREHVJM7RyBUpbw0fkAt38pQ==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?vi0CUgqDi2re5dh3MLfAKRwJ9TS6gzQP5R48ur0hDcuVxKRQriJk4A0eAPqC?=
- =?us-ascii?Q?BpHgt/D+6m9NaKTde7Z4CQlTuTZhwMEGL7tcQWZQB9PnKRpG7Lr7cORn+gJQ?=
- =?us-ascii?Q?gLcPttaLvHj51qa+mvH1Sq+of5nQ2swWAjzP8pGwNXzP704RKtw4YRFCPBCN?=
- =?us-ascii?Q?GB1adOzOO+YK8OK1fq2E7751x1UYAKWrwdUSRJb6Da1oslIldIUgHlRV/+Qu?=
- =?us-ascii?Q?gYA5l8Vef46gKL2eIzE5jOooqihe4+jG4OfL8cU7nl1TsxXRt/FQBfKKtTvO?=
- =?us-ascii?Q?EpzsiOojV3AEcuoo9s0KQzsJY1mXlUhZxyC38EqPdanZpDgCS1WhnoCYQqDi?=
- =?us-ascii?Q?LoLsNniek5WfChUw9RtzDGr10/nMmE8YP0Pc1ZQVOvm/kIA8uokah6zCYa2b?=
- =?us-ascii?Q?7dY7xg1bdUYB9WyeA16ad8QvbHrENa8/ivaNuiCmxrrEhRiNiy7L/KWvxfGq?=
- =?us-ascii?Q?/cOx+PmyjnX1psB+icDd/glaAzUuX7417lyTaG4PaLUKZvDQ3AsNdO1MGKrU?=
- =?us-ascii?Q?NTcyumtVGsqSsK3inZ+RrL94N7pM6BOYzgl7auHqGz574v3aDsnPDcOhmcDl?=
- =?us-ascii?Q?0hzSX+EYtcC77DCU7O0QlspS9lAnhug2uKpd/Lhz5Qjod3vMqEaVucgONQw5?=
- =?us-ascii?Q?5BnL5r+5or5n6S/tmWhG9YShWAQHn1UQs6FsVHurohF0MrWkLcn7HCOK1N0Z?=
- =?us-ascii?Q?0rCCiR97DC0WgZ/So0jS7dO9cMT+KJ5UFu9WZhlFCAXNqDje99XHpeejl989?=
- =?us-ascii?Q?O98ZyemAMzxw9eFqkUKYxvcmpmrCtPyGTEZw3K6/Wu4NFDkMd1MsSjvi8h8C?=
- =?us-ascii?Q?mcQkwcavLdZniJG3wSYt+g0zCHCnIQTel62mZVq0ezPWpfIhA43kAilD0VEh?=
- =?us-ascii?Q?7DE7TWpPqdr7U6F9kBNPXa9Eb2994YLrdWSlw0BoCY2n+BOEDOFJPIQw8y1a?=
- =?us-ascii?Q?X0VcoMc+59yw7wbD+0JGk9RRVWu5yoD5pBDC1+UwCh9QapJ3VlPXBV/UaijZ?=
- =?us-ascii?Q?wFIH6RQupc753MTuFmhBWYCYxmYgZpQCPg18SEdo0qzOb5OZUBOhSFMUpSOD?=
- =?us-ascii?Q?UzqG4F19CUgUBxmWniydPTvEkEZZnAd4ju636Y/qFB/04IOZAydodjZcXIfR?=
- =?us-ascii?Q?tCwiIpXK3zXUvJ4NSgie4jd7ro6VaVozaXK/qzUwn2KaqW2nZjuNLsqfPYKR?=
- =?us-ascii?Q?msAgVOScM7U2TePJ+Y5wjOfuvfxPP1/cjfWV3aY1ZFRwsd6sAY2hbPWgFxvv?=
- =?us-ascii?Q?Pc+ESonPM4nmA/z3SPsGXISENT7sHkEVUWqhPC4DdgDtDuzFzIZEAhQotIek?=
- =?us-ascii?Q?n/vUH3IwjhQwVpcdrTYnw+MvLqhcmgtGyJKoaBrUhzuTObzKJnqkhx0v1kSJ?=
- =?us-ascii?Q?0c3md3JIemPgnSeYDSuDaUxhGgPm6Q9ButMGXjtPhsD5XVIGlfU1g1zyoa6l?=
- =?us-ascii?Q?iR4IFSG3bgg=3D?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 07797aa3-c684-406b-bce0-08da3702aeee
-X-MS-Exchange-CrossTenant-AuthSource: MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 May 2022 06:09:49.3346
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SYCP282MB0158
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v3 7/7] ufs: use PM OPP when scaling gears
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
+References: <20220513061347.46480-1-krzysztof.kozlowski@linaro.org>
+ <20220513061347.46480-8-krzysztof.kozlowski@linaro.org>
+ <20220513182546.GD1922@thinkpad>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220513182546.GD1922@thinkpad>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The product's enumeration align with previous 
-Quectel EM120R-GL, so the EM120 FCCL would use 
-the same config as Quectel EM120R-GL. 
+On 13/05/2022 20:25, Manivannan Sadhasivam wrote:
+> On Fri, May 13, 2022 at 08:13:47AM +0200, Krzysztof Kozlowski wrote:
+>> Scaling gears requires not only scaling clocks, but also voltage levels,
+>> e.g. via performance states.
+>>
+>> Use the provided OPP table, to set proper OPP frequency which through
+>> required-opps will trigger performance state change.  This deprecates
+>> the old freq-table-hz Devicetree property and old clock scaling method
+>> in favor of PM core code.
+>>
+> 
+> To be clear, you are not changing the voltages (UFS supplies) through OPP. But
+> rather handle only clks and leave the power domain handling to parent OPP
+> device.
 
-Signed-off-by: Yonglin Tan <yonglin.tan@outlook.com>
----
- drivers/bus/mhi/host/pci_generic.c | 2 ++
- 1 file changed, 2 insertions(+)
+Correct, the patchset itself does not introduce itself regulator
+control. For Qualcomm (and maybe others) these will be scaled via OPP
+performance states.
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 8416267..0a6469c 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -557,6 +557,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-+	{ PCI_DEVICE(0x1eac, 0x2001), /* EM120R-GL for FCCL (sdx24) */
-+		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
- 		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
--- 
-2.7.4
+> 
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>
+>> ---
+>>
+>> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> ---
+>>  drivers/scsi/ufs/ufshcd-pltfrm.c |  73 +++++++++++++++
+>>  drivers/scsi/ufs/ufshcd.c        | 150 ++++++++++++++++++++++++-------
+>>  drivers/scsi/ufs/ufshcd.h        |   6 ++
+>>  3 files changed, 195 insertions(+), 34 deletions(-)
+>>
+>> diff --git a/drivers/scsi/ufs/ufshcd-pltfrm.c b/drivers/scsi/ufs/ufshcd-pltfrm.c
+>> index 3ab555f6e66e..a603ca8e383b 100644
+>> --- a/drivers/scsi/ufs/ufshcd-pltfrm.c
+>> +++ b/drivers/scsi/ufs/ufshcd-pltfrm.c
+>> @@ -10,6 +10,7 @@
+>>  
+>>  #include <linux/module.h>
+>>  #include <linux/platform_device.h>
+>> +#include <linux/pm_opp.h>
+>>  #include <linux/pm_runtime.h>
+>>  #include <linux/of.h>
+>>  
+>> @@ -108,6 +109,72 @@ static int ufshcd_parse_clock_info(struct ufs_hba *hba)
+>>  	return ret;
+>>  }
+>>  
+>> +static int ufshcd_parse_operating_points(struct ufs_hba *hba)
+>> +{
+>> +	struct device *dev = hba->dev;
+>> +	struct device_node *np = dev->of_node;
+>> +	struct ufs_clk_info *clki;
+>> +	const char *names[16];
+>> +	int cnt, i, ret;
+>> +
+>> +	if (!of_find_property(dev->of_node, "operating-points-v2", NULL))
+>> +		return 0;
+>> +
+>> +	cnt = of_property_count_strings(np, "clock-names");
+>> +	if (cnt <= 0) {
+>> +		dev_warn(dev, "%s: Missing clock-names\n",
+>> +			 __func__);
+> 
+> This is a hard error, right? So why not dev_err()?
 
+Good point, but actually this (and following cases) should be return 0,
+because clocks/freq-table/opp-points are not required properties. The
+original code (parsing it for freq-table-hz) also does not treat it as
+error.
+
+> 
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	if (cnt > ARRAY_SIZE(names)) {
+>> +		dev_info(dev, "%s: Too many clock-names\n",  __func__);
+> 
+> dev_err()?
+> 
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	if (of_find_property(np, "freq-table-hz", NULL)) {
+>> +		dev_info(dev, "%s: operating-points and freq-table-hz are incompatible\n",
+>> +			 __func__);
+> 
+> dev_err()?
+> 
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	for (i = 0; i < cnt; i++) {
+>> +		ret = of_property_read_string_index(np, "clock-names", i,
+>> +						    &names[i]);
+>> +		if (ret)
+>> +			return ret;
+>> +
+>> +		clki = devm_kzalloc(dev, sizeof(*clki), GFP_KERNEL);
+>> +		if (!clki)
+>> +			return -ENOMEM;
+>> +
+>> +		clki->name = devm_kstrdup(dev, names[i], GFP_KERNEL);
+>> +		if (!clki->name)
+>> +			return -ENOMEM;
+>> +
+>> +		if (!strcmp(names[i], "ref_clk"))
+>> +			clki->keep_link_active = true;
+>> +
+>> +		list_add_tail(&clki->list, &hba->clk_list_head);
+>> +	}
+>> +
+>> +	ret = devm_pm_opp_set_clknames(dev, names, i);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	ret = devm_pm_opp_register_set_opp_helper(dev, ufshcd_set_opp);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	ret = devm_pm_opp_of_add_table(dev);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	hba->use_pm_opp = true;
+>> +
+> 
+> Since you are only handling the clks in UFS driver's OPP implementation, it
+> warrants atleast a comment. Otherwise, someone will add voltage to the OPP
+> table and complain that it is not getting changed. Eventhough the UFS driver
+> won't allow doing it, it is safer to mention it explicitly.
+
+Sure.
+
+> 
+> Also I'm worried about the implementation specific to Qcom platforms. Like we
+> rely on RPMHPD to handle the power domains, but that may not be true for other
+> platforms. I know that we cannot support all possible implementations but
+> atleast we should document this limitation.
+> 
+> Rest looks fine to me. I'll take one more look after testing this series on
+> SM8450.
+
+Using OPPs is quite generic, so other platform could implement also
+regulator scaling. The changes are indeed targetting Qcom platforms, but
+they are not restricting any other usage.
+
+Best regards,
+Krzysztof
