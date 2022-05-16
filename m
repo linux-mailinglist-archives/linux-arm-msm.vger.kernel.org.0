@@ -2,136 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8D8C528234
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 12:35:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90745528242
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 12:38:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242670AbiEPKfy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 06:35:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35304 "EHLO
+        id S242586AbiEPKiy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 06:38:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239433AbiEPKfo (ORCPT
+        with ESMTP id S231665AbiEPKix (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 06:35:44 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFFFADEA3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 03:35:41 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id j4so24967554lfh.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 03:35:41 -0700 (PDT)
+        Mon, 16 May 2022 06:38:53 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEB7D237DC;
+        Mon, 16 May 2022 03:38:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=TybrrNwubeiCmJTT/Pt5SvO7o0SXKQNwkYoFAX++S+M=;
-        b=ywixI+hrkyjZVveqrBs5WbTfJrk3HXSjXdkw/yG+ZcMSgfRLYwk/qZXOUnJIP1WgXO
-         lBVVRcBv8NUHq+A+ubYszRGIn7INTCE/F31x001Db5x3fLnrVpEmL7vSHY882isd5YBX
-         IgKxgv7LNqsEwCDn8jKJej8c3eymfGOqJUVqfJZ14cGhIZkaUcMaHExYzZotzDgRMr/G
-         /la28vRUa6mnJSrxsNnFK6J9NtRC0I/hUwnzzwLYXrJt8vgGZLdal1yBrwJI1gb2tUfC
-         fB4fiIZIahFse2SAC7pVz9X9ne4v2ymyvwkDBWr3JDUMtsIoPd4r5HeyJNHNgB5Gnf6G
-         BvIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=TybrrNwubeiCmJTT/Pt5SvO7o0SXKQNwkYoFAX++S+M=;
-        b=c0zbkS0j2HjX4/FpUN19gAQ119BaZX0hbsO6aMlJ/CQt0EDZp8v9ZD5PRScBi2fikq
-         B1qblElhb9oZsCWpWUIKHVa+23CqgAd5v6jpV+dzDoWIaf1Kofq/SUFgrUTMeAEukRJu
-         bJ/teEpb7PcjZJO5rRX8vDK1L7yMvRSQ/hrO8szWAw9Q6B5T658OG8qWGIktkn4jJKKS
-         KtvWBCHJZg5A7qC6I1U+mrVZNDfCeML2MQ85/FVwfT0Unm8SovmT2yx4Q5RYOt9GGTg0
-         Jxq7faWyOFq6c+Ql/gSFGlskJGQq3E2tzWgBm18UOXNRRk7koumuEokjINiCEVgXSLth
-         kb9w==
-X-Gm-Message-State: AOAM531FnDqwktBeV2OxEZrR71S6q06J0oAroePEJ3UN3tZc7bFSum8D
-        67eMgvFmS3FvGfOVlIbn/FYTyg==
-X-Google-Smtp-Source: ABdhPJzsVUrwn0tS3KToBIsJDTgtNs7vd3KqCRuQCih/v/B3esQjDRGT86G4+aNwUBJFRoPzISn/og==
-X-Received: by 2002:a05:6512:3ee:b0:471:f84f:7d5b with SMTP id n14-20020a05651203ee00b00471f84f7d5bmr12436445lfq.18.1652697340056;
-        Mon, 16 May 2022 03:35:40 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id h12-20020a05651211cc00b0047255d21174sm1265168lfr.163.2022.05.16.03.35.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 May 2022 03:35:39 -0700 (PDT)
-Message-ID: <13d65ae2-f378-5353-16b9-5bf68883a701@linaro.org>
-Date:   Mon, 16 May 2022 12:35:38 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v2] dt-bindings: qcom,pdc: convert to YAML
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20220103074348.6039-1-luca.weiss@fairphone.com>
- <bef4922d-4a32-f184-44a1-8f5430190938@linaro.org>
- <fef5f229-f247-d032-fc76-46ed7083dbf4@linaro.org>
- <CK10OTVFAP75.WCSVY40A7PXO@otso>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CK10OTVFAP75.WCSVY40A7PXO@otso>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652697532; x=1684233532;
+  h=from:to:cc:subject:date:message-id;
+  bh=uv3hpvVLaKZAIJnN9FauPkILRYjjAJhkGFBGer0v5m4=;
+  b=IbOqfwIXGkmuJkqPk6bynuT0XWe8Vo9FsoeX39BsWji+2FOLT7cshGEZ
+   rhYvCPSKtAJjniOrVoyfGqAXQZV177f/ys02BmfNuQUQNuv8xqnejiRL2
+   keRXQ9YdvuREfJ1qa5hCr8hxonDAM5kUO2fw0/R1Lsjl4+BM3cplu1D4N
+   s=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 16 May 2022 03:38:52 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 16 May 2022 03:38:50 -0700
+X-QCInternal: smtphost
+Received: from hu-vnivarth-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.111.166])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 16 May 2022 16:08:34 +0530
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
+        id D1B523E6D; Mon, 16 May 2022 16:08:32 +0530 (+0530)
+From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        gregkh@linuxfoundation.org, jirislaby@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org, quic_c_skakit@quicinc.com,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: [V2] tty: serial: qcom-geni-serial: Remove uart frequency table. Instead, find suitable frequency with call to clk_round_rate.
+Date:   Mon, 16 May 2022 16:08:30 +0530
+Message-Id: <1652697510-30543-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/05/2022 09:45, Luca Weiss wrote:
-> Hi Krzysztof,
-> 
-> On Mon May 9, 2022 at 10:40 AM CEST, Krzysztof Kozlowski wrote:
->> On 09/05/2022 10:38, Krzysztof Kozlowski wrote:
->>> On 03/01/2022 08:43, Luca Weiss wrote:
->>>> Convert the PDC interrupt controller bindings to YAML.
->>>>
->>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>>> Reviewed-by: Rob Herring <robh@kernel.org>
->>>> ---
->>>> Changes since v1:
->>>> * Adjust description of second reg-name as suggested by Maulik Shah
->>>>
->>>> @Rob Herring: Hope it's ok to keep your R-b given the above changes
->>>>
->>>> This patch depends on the following patch, which fixed sm8250 & sm8350
->>>> compatibles and adds sm6350.
->>>> https://lore.kernel.org/linux-arm-msm/20211213082614.22651-4-luca.weiss@fairphone.com/
->>>
->>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>
->>> Luca,
->>> I think this needs resending as dependency was merged. Alternatively,
->>> maybe Bjorn could pick it up through QCom SoC?
->>
->> Correction - it seems that Rob took the dependency in April, so this
->> should go via Rob's tree as well.
->>
->> Luca, can you resend without Rob's Review tag and ask him to pick it up?
->>
-> 
-> So... since torvalds/master my sm6350 patch is merged through Rob's
+Replace the UART frequency table 'root_freq[]' with logic around
+clk_round_rate() so that SoC details like the available clk frequencies
+can change and this driver still works. This reduces tight coupling
+between this UART driver and the SoC clk driver because we no longer
+have to update the 'root_freq[]' array for new SoCs. Instead the driver
+determines the available frequencies at runtime.
 
-If it was merged to torvalds/master, it's not a dependency anymore...
+Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+---
+v2: loops through clk dividers to zero-in quickly
+v1: intial patch looped through available clk frequencies
+---
+ drivers/tty/serial/qcom_geni_serial.c | 56 ++++++++++++++++++++++-------------
+ 1 file changed, 36 insertions(+), 20 deletions(-)
 
-> tree, but there was also a sm8150 patch applied through Linus Walleij's
-> tree. This means (as far as I understand) that neither can really
-> properly apply this (rebased) patch as one tree will have missed the
-> other commit.
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index f496102..4733a23 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -149,12 +149,6 @@ static unsigned int qcom_geni_serial_tx_empty(struct uart_port *port);
+ static void qcom_geni_serial_stop_rx(struct uart_port *uport);
+ static void qcom_geni_serial_handle_rx(struct uart_port *uport, bool drop);
+ 
+-static const unsigned long root_freq[] = {7372800, 14745600, 19200000, 29491200,
+-					32000000, 48000000, 51200000, 64000000,
+-					80000000, 96000000, 100000000,
+-					102400000, 112000000, 120000000,
+-					128000000};
+-
+ #define to_dev_port(ptr, member) \
+ 		container_of(ptr, struct qcom_geni_serial_port, member)
+ 
+@@ -946,25 +940,43 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+ 	return 0;
+ }
+ 
+-static unsigned long get_clk_cfg(unsigned long clk_freq)
+-{
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(root_freq); i++) {
+-		if (!(root_freq[i] % clk_freq))
+-			return root_freq[i];
+-	}
+-	return 0;
+-}
+-
+-static unsigned long get_clk_div_rate(unsigned int baud,
++static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+ 			unsigned int sampling_rate, unsigned int *clk_div)
+ {
+ 	unsigned long ser_clk;
+ 	unsigned long desired_clk;
++	unsigned long freq, prev;
++	unsigned long div, maxdiv;
++	int64_t mult;
+ 
+ 	desired_clk = baud * sampling_rate;
+-	ser_clk = get_clk_cfg(desired_clk);
++	if (!desired_clk) {
++		pr_err("%s: Invalid frequency\n", __func__);
++		return 0;
++	}
++
++	maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
++	prev = 0;
++
++	for (div = 1; div <= maxdiv; div++) {
++		mult = div * desired_clk;
++		if (mult > ULONG_MAX)
++			break;
++
++		freq = clk_round_rate(clk, (unsigned long)mult);
++		if (!(freq % desired_clk)) {
++			ser_clk = freq;
++			break;
++		}
++
++		if (!prev)
++			ser_clk = freq;
++		else if (prev == freq)
++			break;
++
++		prev = freq;
++	}
++
+ 	if (!ser_clk) {
+ 		pr_err("%s: Can't find matching DFS entry for baud %d\n",
+ 								__func__, baud);
+@@ -972,6 +984,9 @@ static unsigned long get_clk_div_rate(unsigned int baud,
+ 	}
+ 
+ 	*clk_div = ser_clk / desired_clk;
++	if (!(*clk_div))
++		*clk_div = 1;
++
+ 	return ser_clk;
+ }
+ 
+@@ -1003,7 +1018,8 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+ 	if (ver >= QUP_SE_VERSION_2_5)
+ 		sampling_rate /= 2;
+ 
+-	clk_rate = get_clk_div_rate(baud, sampling_rate, &clk_div);
++	clk_rate = get_clk_div_rate(port->se.clk, baud,
++		sampling_rate, &clk_div);
+ 	if (!clk_rate)
+ 		goto out_restart_rx;
+ 
+-- 
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
 
-sm8150 patch is also a dependency?
-
-> 
-> Does it make sense to send a v3 rebased on linux-next now, or wait until
-> this has settled down in torvalds's tree?
-
-Conflicts can be resolved, you just need to choose one tree to based on.
-
-
-Best regards,
-Krzysztof
