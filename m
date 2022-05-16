@@ -2,86 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10AB35288AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 17:23:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E099528842
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 17:15:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244677AbiEPPXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 11:23:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33928 "EHLO
+        id S244848AbiEPPP2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 11:15:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245340AbiEPPXU (ORCPT
+        with ESMTP id S245091AbiEPPPZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 11:23:20 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADE013B550
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 08:22:47 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id m12so3327515edb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 08:22:47 -0700 (PDT)
+        Mon, 16 May 2022 11:15:25 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C9B3BA7A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 08:15:23 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id i25-20020a9d6259000000b00605df9afea7so10249821otk.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 08:15:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jP1Z/t75Zd6+QfO0rBYQNP9W66P0QAZBvkxPxWMCEHY=;
-        b=HzgnGElJcy8Kom4TATLPw1DcUEH44GqfdZxPziBJAjMYplYbhEaAxZbm4LdHD3D4/v
-         hkCwqG4CD/WoFFMnuLnuuTvOxmSjctrf5dh2+OCPOpqZhPPBBbBGPYP3ORxEm3A66gsg
-         h/CPTcnbxFRmyXJ8IzwezD1foSwtGz2VR8OrM=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=aqUacUDD/fnqySsoi3HdJFEi/V1mTy/VfQQMnGzRza8=;
+        b=dmfC0zUnM3Da4eBmHuwkOrpuYP643Dic9NsM1QhvrqzZggtptHBQDGNxfy6PdTxadp
+         0WuH6KV4+gkux/NZgj8EAnr7WeIeOjpQpaTch577VWirBI7CKJsjc/eySNgOlfbTA6+O
+         vfF7AJ0JYNL8acPMBsHIbylCVcn8VAYVcqKGBCjy2bbjQSmniPC7FVH0oWqXWBc1CVE0
+         2E58YZqxk95IMCcPfWaPL/21THyhS7lvMivfJsDimueM5vMX0Tu4E0bb5R7nXiAnqGMG
+         +SxQubBfyUDFkhNrgmoHlz90Pp0twEahIdAUh4C3BiFtparP46Mxgj1X0+UU/1PsunOs
+         nE1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jP1Z/t75Zd6+QfO0rBYQNP9W66P0QAZBvkxPxWMCEHY=;
-        b=A2LzgMX9KaAQnm67d5nxUW5Bt2VeokKHm56iyxci0AWHB2jzyN8QeRdnqLaqZYeVsA
-         oBVTSRYo+pjSaOmt8g3PzKX8TdRdqr96iz4I9H7i35lVN1aThnOrTUdYMb7eo+ntWnrw
-         9OSPdZXm302JWDaCoeFh3zXBkn0E+0FS1RoGVe3Ar9OIKaiiXPub3gFN3N+HkMYgr7XX
-         K6B2K/fMn0rtv5bdMKIMdnJSOUjgKn7LQo994Q2ggrESRCPQKiJDT38BZqRnCLglRuoc
-         wQId4Sz/na+c4F5bC1ZVkVfMGcxf1Zj8Ku2wrg0n4zfy2rhHpuN22XKnTasJhPVwA6GE
-         FqRw==
-X-Gm-Message-State: AOAM532XeT3dD1LH8YHlfneCMR0MipaXMm673FjI9aGIx9nkt7IgeVe9
-        KxQ6M+MqaMH2M+xuufk1Vtpugl+wMoYTF3kvKnY=
-X-Google-Smtp-Source: ABdhPJzS0FCa1v5GiMQqB1ExmZ8rxTskYcbR7FEzEhcOJ33kno07DGTg7EHr8VfUmR1rmystq2ZLBw==
-X-Received: by 2002:a05:6402:2743:b0:42a:2cee:20c4 with SMTP id z3-20020a056402274300b0042a2cee20c4mr14080353edd.338.1652714565978;
-        Mon, 16 May 2022 08:22:45 -0700 (PDT)
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com. [209.85.218.46])
-        by smtp.gmail.com with ESMTPSA id j20-20020a1709066dd400b006f3ef214e75sm3724737ejt.219.2022.05.16.08.22.45
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 May 2022 08:22:45 -0700 (PDT)
-Received: by mail-ej1-f46.google.com with SMTP id kq17so29385025ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 08:22:45 -0700 (PDT)
-X-Received: by 2002:a5d:6d09:0:b0:20c:53a9:cc30 with SMTP id
- e9-20020a5d6d09000000b0020c53a9cc30mr14313656wrq.513.1652714224237; Mon, 16
- May 2022 08:17:04 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=aqUacUDD/fnqySsoi3HdJFEi/V1mTy/VfQQMnGzRza8=;
+        b=o5lSabK0bgA5A2Ey69LeiCh37f7BkceiAD8FUxxOhH7igV+5UR5J0J2em+CjaV1xa4
+         rL9WOKQxh8la1pBHGqGoHoa9cqFQkpU+IHhDF7mmI/vsdgzOivPnYFkPr5XeAwDSIxYq
+         rwYQBEPysp9G0jLggXnG788p0V90tQCb4B1Pj4JxvaDffngkPeF5FqsIKYavnQ4wO2EI
+         SJ1X7eHCcIgU7iekA+9yNcWISTVKDb8j9Q11BDt+XUf/5HZvln/yfIyzrUa7jKGzNWEw
+         ZBotOOlIKrzOZ9WsD1U0L8jQmAYklel6bFH+TEzI9nG6eBaebjS8q94MfkcU2sgE1X2j
+         TYxg==
+X-Gm-Message-State: AOAM5310IFeWN1sWRss8+TFDmb4KOnWF/wUGfGsaPNqOPiyZBzf3e+QU
+        PmlVwHLrvkyEJqROQczBntIhjw==
+X-Google-Smtp-Source: ABdhPJyxCbBtqQzZ9IoSbuL6c4zNV6p71BzBhppEUqHbNuekH9OptVw3cYCBHP8hn3HJmDptoqnELA==
+X-Received: by 2002:a9d:2f65:0:b0:609:a162:388d with SMTP id h92-20020a9d2f65000000b00609a162388dmr325956otb.331.1652714121253;
+        Mon, 16 May 2022 08:15:21 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 23-20020a9d0317000000b006060322125asm4070722otv.42.2022.05.16.08.15.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 May 2022 08:15:20 -0700 (PDT)
+Date:   Mon, 16 May 2022 08:17:44 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
+        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, Linus Walleij <linus.walleij@linaro.org>,
+        linux-gpio@vger.kernel.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH 2/2] pinctrl: qcom: sc7280: Add lpi pinctrl variant data
+ structure for adsp based targets
+Message-ID: <YoJrGGg0RviVn2Xj@ripper>
+References: <1651672580-18952-1-git-send-email-quic_srivasam@quicinc.com>
+ <1651672580-18952-3-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-References: <20220513095722.v2.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid>
- <20220513095722.v2.4.Ie8713bc0377672ed8dd71189e66fc0b77226fb85@changeid> <125970b0-af71-1695-a3ab-10a159ac63a5@linaro.org>
-In-Reply-To: <125970b0-af71-1695-a3ab-10a159ac63a5@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 16 May 2022 08:16:51 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XR+WwWmrB1wGX65=szBc2PbGNOHbm2tiQT5Wp8CPG0Kg@mail.gmail.com>
-Message-ID: <CAD=FV=XR+WwWmrB1wGX65=szBc2PbGNOHbm2tiQT5Wp8CPG0Kg@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] dt-bindings: arm: qcom: Add more sc7180 Chromebook
- board bindings
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Julius Werner <jwerner@chromium.org>,
-        "Joseph S . Barrera III" <joebar@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1651672580-18952-3-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,41 +79,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed 04 May 06:56 PDT 2022, Srinivasa Rao Mandadapu wrote:
 
-On Mon, May 16, 2022 at 12:05 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 13/05/2022 18:59, Douglas Anderson wrote:
-> > This adds board bindings for boards that are downstream but not quite
-> > upstream yet.
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> >
-> > Changes in v2:
-> > - Use a "description" instead of a comment for each item.
-> > - Use the marketing name instead of the code name where possible.
->
-> These should be published with the patch adding their upstream DTS/DTSI.
-> There is no point to list all possible boards in the world from any
-> downstream source. For upstream there is no particular benefit for such
-> bindings, for downstream you also said there is no.
+> Add compatible string and lpi pinctrl variant data structure for adsp enabled
+> sc7280 platforms.
 
-Joe has been working on upstreaming these boards:
+This says what the change does, but gives no clue to what this
+compatible represents and why the clock is not optional.
 
-https://lore.kernel.org/r/20220510154406.v5.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid/
+Could you please describe here what scenario this compatible is to be
+used for etc, so that when someone else adds support for the next
+platform they can use the git history to understand which case to
+follow.
 
-I think there is little chance that they won't go upstream at this
-point. However, we're at a time in the merge window where it will be
-several weeks before anything can land. If Joe were to include this
-patch as part of his series I suspect it would be much more confusing
-because it would add an unnecessary dependency between my series and
-his and make it harder for Bjorn to apply it later. Keeping the patch
-with my series means that the series can be applied more easily.
+Thanks,
+Bjorn
 
-How about: I'll add a link to his latest posting in my next version.
-Then, in the future (after these bindings patches have landed) then
-future boards can go together with their bindings.
-
--DOug
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+> index 2add9a4..c9e85d9 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+> @@ -134,6 +134,16 @@ static const struct lpi_function sc7280_functions[] = {
+>  	LPI_FUNCTION(wsa_swr_data),
+>  };
+>  
+> +static const struct lpi_pinctrl_variant_data sc7280_adsp_lpi_data = {
+> +	.pins = sc7280_lpi_pins,
+> +	.npins = ARRAY_SIZE(sc7280_lpi_pins),
+> +	.groups = sc7280_groups,
+> +	.ngroups = ARRAY_SIZE(sc7280_groups),
+> +	.functions = sc7280_functions,
+> +	.nfunctions = ARRAY_SIZE(sc7280_functions),
+> +	.is_clk_optional = false,
+> +};
+> +
+>  static const struct lpi_pinctrl_variant_data sc7280_lpi_data = {
+>  	.pins = sc7280_lpi_pins,
+>  	.npins = ARRAY_SIZE(sc7280_lpi_pins),
+> @@ -149,6 +159,10 @@ static const struct of_device_id lpi_pinctrl_of_match[] = {
+>  	       .compatible = "qcom,sc7280-lpass-lpi-pinctrl",
+>  	       .data = &sc7280_lpi_data,
+>  	},
+> +	{
+> +		.compatible = "qcom,sc7280-lpass-adsp-lpi-pinctrl",
+> +		.data = &sc7280_adsp_lpi_data,
+> +	},
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
+> -- 
+> 2.7.4
+> 
