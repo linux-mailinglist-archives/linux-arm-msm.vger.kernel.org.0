@@ -2,136 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B16325288C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 17:26:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B84E528955
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 17:57:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232002AbiEPPZa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 11:25:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41988 "EHLO
+        id S245500AbiEPP5Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 11:57:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245341AbiEPPZZ (ORCPT
+        with ESMTP id S241042AbiEPP5Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 11:25:25 -0400
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E2103C705;
-        Mon, 16 May 2022 08:25:24 -0700 (PDT)
-Received: by mail-ot1-f52.google.com with SMTP id i25-20020a9d6259000000b00605df9afea7so10271810otk.1;
-        Mon, 16 May 2022 08:25:24 -0700 (PDT)
+        Mon, 16 May 2022 11:57:24 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 046572DA8B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 08:57:23 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id j12so19148366oie.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 08:57:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=vH4NPiCLU7evHB+E7xCfaeXJAYfa3KeY6XJRC/M1pQQ=;
+        b=I0Fe0t6KYm7QeHL4cN/jCuSC51Un3vdX70r9iEitsqA1K63t/YgFccUQtt/UroORI8
+         gbaZVesEkVpySAvrLr+ZxLjUVe3dukyjul41x8r7yLKFveJhVJxgzFg17L1JH7HETKVb
+         cDLQDMsag6+BuTw6eobY8ShmaNGmOTYpnFtwNrxPKF2lvvVWZ5INfF8/MY6caqOEZSL2
+         Ye6zQvzqBWRb17tEJnPLeak7Obi9afHqFu79AV4igYmSV8K323dQsA0UpeoAsYHg5tzt
+         Kryqsrc9lqQlzy1F63Lns/djLraiPwLQs50Cx9vI4MtbmKGnYkO2IDrwa/0t7UdbendC
+         PYJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=OpVnMo42G5s86PrfDD1Zlh8XPSNlbAHUDJJNgTC/Y9E=;
-        b=Yx3qtJPGKgzOENUnk58tn+v08w+XIRZb6rS6ChkB4a6+KY2K10y6ozK4YkdW7S2KYQ
-         SXwt4ENGsQjUtgjJoFcGn/L7zNrnhbf9sp8SO62mmiohw/7GCN422+0LCNGcRvCz5rVV
-         LP5zQIs2VbwiHRgMxxouKKJ/jLGSSlk7MN+8lKaMqV2MfvBToyMTkAGichBA2uPpH2h7
-         2WrJQu/ODMEiyB69r0vnDOLmH4BHJFfUCpN+1AUHZWLTlj9sNrcrQOYNVzSJnRVwuPAt
-         4a6ObECvz+rQTyQYR3ZoRE3Lgbms5bLz/vgp11jiJbb6n62yhY9WMj4b4PkNDY4Vft3i
-         4Ytg==
-X-Gm-Message-State: AOAM533MP9cdyw4OzxZQDiHUpbvkLlI7S6HPI6G1MrEir5BGy9HPK8Cz
-        0aaZLfY8pf6NZyDwFVgl5w==
-X-Google-Smtp-Source: ABdhPJzQb6U+yxx1+Yyv+RdOBdfG4c9OWyZUaP/P8dWPXkSvXkWGRT72AonAuE9aQlT52lkdYFq4qg==
-X-Received: by 2002:a9d:24a8:0:b0:606:b2b8:cfb6 with SMTP id z37-20020a9d24a8000000b00606b2b8cfb6mr6157234ota.237.1652714723474;
-        Mon, 16 May 2022 08:25:23 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id i20-20020a4a8d94000000b0035eb4e5a6c5sm4246865ook.27.2022.05.16.08.25.22
+        bh=vH4NPiCLU7evHB+E7xCfaeXJAYfa3KeY6XJRC/M1pQQ=;
+        b=psQ41S7sojgLhpTaWyzNEN8vhff4SOuKSakfVn2fwGaLcRgXdSGhiNvPHJMF4UHfGH
+         2eELzB3VUY64aMLEsQuV8XFQMYmw9mYU/SUjSoeSc3XUORAjsUmRvnmLPjT2TN+NG/Fv
+         tdp8IWnLG+49hlycesLaKjNoEsFj5IQMvLSOg475DtgXdlBK65i/JKylI92/XLdJcDpq
+         54fLhHhPdPVGWDzNPUOcVLronlvtF11DY/C6JqpiscAd4FEdnasEhQGEZBOnw3S4TUxt
+         iX1tVYKqgwUXa0oiCoEP61AVtrIijmjTWIvP77LYSy4U6ZLxwTYYNmpM8kx6szF+UAls
+         W3mg==
+X-Gm-Message-State: AOAM531/IcaLxPFa3UpXH0OUdy0KCVggPLlcPQus0GEp3l75eyhE4oeP
+        PnFVoMm8Q7XlF5sBOnVmXz9DfA==
+X-Google-Smtp-Source: ABdhPJy9xU3r4l65PfMiVkn2LKSmg6ikqMXRhfqQGFiUU7W25GCBD0SlgcmefZoFQVTXGUHG7oRFmQ==
+X-Received: by 2002:a05:6808:d52:b0:328:acfc:d274 with SMTP id w18-20020a0568080d5200b00328acfcd274mr8189424oik.174.1652716642349;
+        Mon, 16 May 2022 08:57:22 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id u23-20020a544397000000b00328b3d8a80fsm3826691oiv.50.2022.05.16.08.57.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 May 2022 08:25:22 -0700 (PDT)
-Received: (nullmailer pid 2675482 invoked by uid 1000);
-        Mon, 16 May 2022 15:25:21 -0000
-Date:   Mon, 16 May 2022 10:25:21 -0500
-From:   Rob Herring <robh@kernel.org>
+        Mon, 16 May 2022 08:57:21 -0700 (PDT)
+Date:   Mon, 16 May 2022 08:59:45 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Subject: Re: [PATCH 08/12] dt-bindings: remoteproc: qcom,smd-edge: define
- re-usable schema for smd-edge
-Message-ID: <20220516152521.GA2672819-robh@kernel.org>
-References: <20220512100006.99695-1-krzysztof.kozlowski@linaro.org>
- <20220512100006.99695-9-krzysztof.kozlowski@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,qmp: Add compatible for
+ SC8280XP USB3 UNI phy
+Message-ID: <YoJ08Zd/a4g+Ia0r@ripper>
+References: <20220513225348.1671639-1-bjorn.andersson@linaro.org>
+ <20220513225348.1671639-2-bjorn.andersson@linaro.org>
+ <8b47e106-a567-8d8f-ddd9-34b71211002e@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220512100006.99695-9-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <8b47e106-a567-8d8f-ddd9-34b71211002e@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 12, 2022 at 12:00:02PM +0200, Krzysztof Kozlowski wrote:
-> 'smd-edge' property appears in multiple bindings, so split it into one
-> place which can be re-used.  This reduces code duplication and strict
-> schema matching for smd-edge nodes (instead of just "type:object").
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/remoteproc/qcom,adsp.yaml        |  2 +-
->  .../bindings/remoteproc/qcom,smd-edge.yaml    | 88 +++++++++++++++++++
->  .../bindings/soc/qcom/qcom,smd.yaml           | 53 +----------
->  3 files changed, 91 insertions(+), 52 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-> index 4dfbfece1ec7..3072af5f9d79 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-> @@ -148,7 +148,7 @@ properties:
->        three offsets within syscon for q6, modem and nc halt registers.
->  
->    smd-edge:
-> -    type: object
-> +    $ref: /schemas/remoteproc/qcom,smd-edge.yaml#
->      description:
->        Qualcomm Shared Memory subnode which represents communication edge,
->        channels and devices related to the ADSP.
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
-> new file mode 100644
-> index 000000000000..fde2c450e8b5
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
-> @@ -0,0 +1,88 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/remoteproc/qcom,smd-edge.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm SMD Edge communication channel nodes
-> +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description:
-> +  Qualcomm SMD subnode represents a remote subsystem or a remote processor of
-> +  some sort - or in SMD language an "edge". The name of the edges are not
-> +  important.
-> +
-> +
-> +  See also Documentation/devicetree/bindings/soc/qcom/qcom,smd.yaml
-> +
-> +properties:
-> +  $nodename:
-> +    const: "smd-edge"
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  label:
-> +    $ref: /schemas/types.yaml#/definitions/string
+On Mon 16 May 00:11 PDT 2022, Krzysztof Kozlowski wrote:
 
-Don't need a type here. Otherwise,
+> On 14/05/2022 00:53, Bjorn Andersson wrote:
+> > The SC8280XP platform has a pair of 5nm USB3 UNI phys, add a compatible
+> > for these.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> > index 8b850c5ab116..0a9ee5b7600d 100644
+> > --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> > +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> > @@ -33,6 +33,7 @@ properties:
+> >        - qcom,sc8180x-qmp-ufs-phy
+> >        - qcom,sc8180x-qmp-usb3-phy
+> >        - qcom,sc8280xp-qmp-ufs-phy
+> > +      - qcom,sc8280xp-qmp-usb3-uni-phy
+> 
+> What about the clocks/resets/supplies in allOf:if:then?
+> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Of course, seems like I missed that part.
+
+Thanks,
+Bjorn
