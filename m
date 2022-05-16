@@ -2,66 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33B35528823
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 17:12:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 855AE52883D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 17:15:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239696AbiEPPMB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 11:12:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38448 "EHLO
+        id S245048AbiEPPPC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 11:15:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245140AbiEPPLi (ORCPT
+        with ESMTP id S245021AbiEPPPB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 11:11:38 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37F6733A35
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 08:11:37 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id kq17so29320874ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 08:11:37 -0700 (PDT)
+        Mon, 16 May 2022 11:15:01 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D99723BA7E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 08:14:58 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id j6so29275789ejc.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 08:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QhOe+cbJpQ93yezmNjBYNkoQz1rzToEQuOQW8v6GMak=;
-        b=TMjo+X04V5/NRDQ2Z2Yd8NypG6VmbuZCI/jaFOpz3fPoo06X/Hub6O/PggtslDk28m
-         N9d8jcS/6+aKEqZBK6bahPJkmst9B3dKAsE/eWEGdkHAGgt5/Yu4/IqtcGpFEo0v6v3C
-         DA4hoXRONUlwqFy6gocEufGRgWB9dI8rPhT04=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=mT7/Ms8+mt3fxt9Iti7ZV4qUURzTdQF9NTtcKJjj9p0=;
+        b=eTtQA3FGnuABes6xiwZEqM1pVCSn6mP/1J0Zs8PnYUbrf6wa6sWtZV1CMHBCZtTm4P
+         jSKHjKMdc6cj+Qp2wMPTw39Fd+cznhXrru+fGRovVTqjLKhNt3i0Jcx6HekN37E9U0kd
+         0RbT6UHXqoyaa8cBAGwVJO2eQlpWNLNX/MNYBczXUMe4Ino92smkbHWRDU/Ybwyu50qS
+         VGI7DHqkTLHxbPpM2HBhoZILupb4I0WHNRyqCyykv/QPmqpahJFQvs9FQSJymcIdtT8R
+         H3dANwMPkow+FrXWsWmZpYThFo6OWev9hWfWFHOVF9h38h5cwOo0D3Hx/0Mvul4iXPo6
+         0hoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QhOe+cbJpQ93yezmNjBYNkoQz1rzToEQuOQW8v6GMak=;
-        b=Ykgh68ePsvirgeuIL5KmesNk4tOS0OXRCD8qDr4Y6xtuLE7L/8bkgknH9YRAiS8owR
-         6ehbal8JwlEZILBIG6QVPPMXPHhQVXAUTgbkNEMDu463+6oz3Go2n9be0CtNZodo5BkL
-         J9142QjSOSND5BZSk4wOo0M7Onz3PH+9t3Ny3DJlvcW5DWBGJZ4PA5WN5sndPy51gBHp
-         H8NuzFz2Ezhnr1lWWwa8pMDSCR56DRJziiWdb3/1vNBqkIPpFmfwxrtgW2RLGJArvxyQ
-         WLqYSj7dZDbgMvErrAicyfOUsKuCwDScaPGHX6V5LltW+qlZDbQMPGm4gYO1QdhEXQXx
-         jfSw==
-X-Gm-Message-State: AOAM533wf2XcEX5R3yIA6kRQlwkT0O7+7lw3N6/EuV4wlWbWYNJLHTaA
-        MsHJQtJcc6SUDj4mgoxzqETynydnFkbr0+OQhYg=
-X-Google-Smtp-Source: ABdhPJwpMYRbtF61I0ZoyrBOfZWansrcWgr4Igp5yBtdQiqBhD9QMYbCOnl+NW8r9oVZvI93UUR/QQ==
-X-Received: by 2002:a17:907:d89:b0:6f5:be3:b06d with SMTP id go9-20020a1709070d8900b006f50be3b06dmr15591707ejc.74.1652713895439;
-        Mon, 16 May 2022 08:11:35 -0700 (PDT)
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com. [209.85.221.43])
-        by smtp.gmail.com with ESMTPSA id e21-20020a170906649500b006f3ef214de1sm10347ejm.71.2022.05.16.08.11.34
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=mT7/Ms8+mt3fxt9Iti7ZV4qUURzTdQF9NTtcKJjj9p0=;
+        b=WZBQEaGF4ZgiRen1stZNfQEO1kzYRY8PkMRQSYi5VxjK1OJFsT8tVBhkYeGRbPB3L1
+         HdHrUjU4XfteHUNqaZ7UrgPDee78Uat/m3yUsODkPswz+RiYKXtrfBVRv3GrHD8Hvi7W
+         4yokVHz9/G/osUuCbV9aVcXR/QbhU24f/uiJXuv3Y93v/jeKRgOT0OmR4cKTuPqIME1a
+         phBKL7UxanrOKktlv+LYEfiTx2OIuqwSWQPovisGje7zptcQB641NgTo7C4o5waefYaZ
+         6cIgNTgliKlvtOmXa+5MnIsmwOFSG9yD12a+p5JgHfkhM/jHvri1SacoxIW8/Eit83df
+         DnBg==
+X-Gm-Message-State: AOAM532D+KpaXe2VP98hhZp7QOJmD8l7O6tIftmWM/Tq5LbdrhgCXaJo
+        JlueEZaJkfw37v0TSTW5nYBKCg==
+X-Google-Smtp-Source: ABdhPJzZJYJRYHriof0O9i6fwoHE6QsUFvkL/p4fdhMBl53WDdCzW2eGFoljqkVBReNlwPP91IzS9g==
+X-Received: by 2002:a17:906:aed8:b0:6f3:7e6b:14d with SMTP id me24-20020a170906aed800b006f37e6b014dmr16118561ejb.451.1652714097404;
+        Mon, 16 May 2022 08:14:57 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id y9-20020a170906518900b006f3ef214e0csm8153ejk.114.2022.05.16.08.14.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 May 2022 08:11:34 -0700 (PDT)
-Received: by mail-wr1-f43.google.com with SMTP id m1so20964714wrb.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 08:11:34 -0700 (PDT)
-X-Received: by 2002:a5d:5009:0:b0:20d:846:f4da with SMTP id
- e9-20020a5d5009000000b0020d0846f4damr4962075wrt.301.1652713894018; Mon, 16
- May 2022 08:11:34 -0700 (PDT)
+        Mon, 16 May 2022 08:14:56 -0700 (PDT)
+Message-ID: <e7730596-8fb9-7fbd-3074-de561086a121@linaro.org>
+Date:   Mon, 16 May 2022 17:14:55 +0200
 MIME-Version: 1.0
-References: <20220512090429.1.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid>
- <828bc65f-e585-0fe7-c038-c750861c9446@linaro.org> <48d96a4e-ce1b-03a1-1831-36555efd7080@linaro.org>
- <CAD=FV=WNSv+kgTZwjHVq+YNQAG0uB42QUPaU-BPTV_W+j=5aYg@mail.gmail.com> <96686d6d-83a9-05a2-9fdc-f9fc4b4e7eed@linaro.org>
-In-Reply-To: <96686d6d-83a9-05a2-9fdc-f9fc4b4e7eed@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 16 May 2022 08:11:21 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=W8F5xbv2tKhCvjLLHitts+eQFbFE3fb3wogwY91Q7gAA@mail.gmail.com>
-Message-ID: <CAD=FV=W8F5xbv2tKhCvjLLHitts+eQFbFE3fb3wogwY91Q7gAA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add sc7180 Chromebook board bindings
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add sc7180 Chromebook board
+ bindings
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
 Cc:     Rob Herring <robh@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Stephen Boyd <swboyd@chromium.org>,
@@ -78,10 +74,19 @@ Cc:     Rob Herring <robh@kernel.org>,
         <devicetree@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220512090429.1.I9804fcd5d6c8552ab25f598dd7a3ea71b15b55f0@changeid>
+ <828bc65f-e585-0fe7-c038-c750861c9446@linaro.org>
+ <48d96a4e-ce1b-03a1-1831-36555efd7080@linaro.org>
+ <CAD=FV=WNSv+kgTZwjHVq+YNQAG0uB42QUPaU-BPTV_W+j=5aYg@mail.gmail.com>
+ <96686d6d-83a9-05a2-9fdc-f9fc4b4e7eed@linaro.org>
+ <CAD=FV=W8F5xbv2tKhCvjLLHitts+eQFbFE3fb3wogwY91Q7gAA@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAD=FV=W8F5xbv2tKhCvjLLHitts+eQFbFE3fb3wogwY91Q7gAA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,93 +94,108 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 16/05/2022 17:11, Doug Anderson wrote:
+> Hi,
+> 
+> On Sun, May 15, 2022 at 11:40 PM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 13/05/2022 19:00, Doug Anderson wrote:
+>>> Hi,
+>>>
+>>> On Fri, May 13, 2022 at 2:01 AM Krzysztof Kozlowski
+>>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>>
+>>>> On 13/05/2022 09:57, Krzysztof Kozlowski wrote:
+>>>>> On 12/05/2022 18:04, Douglas Anderson wrote:
+>>>>>> This copy-pastes compatibles from sc7180-based boards from the device
+>>>>>> trees to the yaml file so that `make dtbs_check` will be happy.
+>>>>>>
+>>>>>> NOTES:
+>>>>>> - I make no attempt to try to share an "item" for all sc7180 based
+>>>>>>   Chromebooks. Because of the revision matching scheme used by the
+>>>>>>   Chromebook bootloader, at times we need a different number of
+>>>>>>   revisions listed.
+>>>>>> - Some of the odd entries in here (like google,homestar-rev23 or the
+>>>>>>   fact that "Google Lazor Limozeen without Touchscreen" changed from
+>>>>>>   sku5 to sku6) are not typos but simply reflect reality.
+>>>>>> - Many revisions of boards here never actually went to consumers, but
+>>>>>>   they are still in use within various companies that were involved in
+>>>>>>   Chromebook development. Since Chromebooks are developed with an
+>>>>>>   "upstream first" methodology, having these revisions supported with
+>>>>>>   upstream Linux is important. Making it easy for Chromebooks to be
+>>>>>>   developed with an "upstream first" methodology is valuable to the
+>>>>>>   upstream community because it improves the quality of upstream and
+>>>>>>   gets Chromebooks supported with vanilla upstream faster.
+>>>>>>
+>>>>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+>>>>>> ---
+>>>>>>
+>>>>>>  .../devicetree/bindings/arm/qcom.yaml         | 180 ++++++++++++++++++
+>>>>>>  1 file changed, 180 insertions(+)
+>>>>>>
+>>>>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>>>> index 5c06d1bfc046..399be67eb5d2 100644
+>>>>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>>>> @@ -214,11 +214,191 @@ properties:
+>>>>>>                - qcom,ipq8074-hk10-c2
+>>>>>>            - const: qcom,ipq8074
+>>>>>>
+>>>>>> +      # Qualcomm Technologies, Inc. SC7180 IDP
+>>>>>>        - items:
+>>>>>>            - enum:
+>>>>>>                - qcom,sc7180-idp
+>>>>>>            - const: qcom,sc7180
+>>>>>>
+>>>>>> +      # Google CoachZ (rev1 - 2)
+>>>>>> +      - items:
+>>>>>> +          - const: google,coachz-rev1
+>>>>>> +          - const: google,coachz-rev2
+>>>>>
+>>>>> The inverted pattern of old revision being compatible with the new one,
+>>>>> is done on purpose? You claim here every rev1 is always compatible with
+>>>>> rev2 ...
+>>>>>
+>>>>> I don't think we discussed such patterns in previous talk. I quickly
+>>>>> went through it and there were only skuX moving around, not rev1 being
+>>>>> newer then rev2.
+>>>
+>>> Isn't this what we just had a whole discussion about?
+>>>
+>>> Oh, I see. You're objecting to the fact that the order here lists
+>>> "rev1" first and "rev2" second.
+>>>
+>>> I think the issue here is that for the purposes of booting Chromebooks
+>>> the order here doesn't matter. Certainly we can pick a fixed order and
+>>> we can validate that the order in the yaml matches the order in the
+>>> device tree, but for all intents and purposes it doesn't matter to
+>>> anything. The same device tree is compatible with _both_ rev1 and rev2
+>>> coachz devices. Neither of those two devices is inherently better
+>>> supported by this device tree than the other.
+>>
+>> OK, thanks for explanation. Since these were not documented maybe fixing
+>> existing DTS to more expected order (rev2 being the newest, rev1
+>> following) would make sense. But certainly please use such new order
+>> compatibles for new DTSes.
+> 
+> I'm still not sure I understand: if the list of revisions is
+> effectively unordered, why does it matter which order they are listed
+> in? Certainly we can change the order, but I'm not sure how I justify
+> the extra churn in my patch description.
 
-On Sun, May 15, 2022 at 11:40 PM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 13/05/2022 19:00, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Fri, May 13, 2022 at 2:01 AM Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> >>
-> >> On 13/05/2022 09:57, Krzysztof Kozlowski wrote:
-> >>> On 12/05/2022 18:04, Douglas Anderson wrote:
-> >>>> This copy-pastes compatibles from sc7180-based boards from the device
-> >>>> trees to the yaml file so that `make dtbs_check` will be happy.
-> >>>>
-> >>>> NOTES:
-> >>>> - I make no attempt to try to share an "item" for all sc7180 based
-> >>>>   Chromebooks. Because of the revision matching scheme used by the
-> >>>>   Chromebook bootloader, at times we need a different number of
-> >>>>   revisions listed.
-> >>>> - Some of the odd entries in here (like google,homestar-rev23 or the
-> >>>>   fact that "Google Lazor Limozeen without Touchscreen" changed from
-> >>>>   sku5 to sku6) are not typos but simply reflect reality.
-> >>>> - Many revisions of boards here never actually went to consumers, but
-> >>>>   they are still in use within various companies that were involved in
-> >>>>   Chromebook development. Since Chromebooks are developed with an
-> >>>>   "upstream first" methodology, having these revisions supported with
-> >>>>   upstream Linux is important. Making it easy for Chromebooks to be
-> >>>>   developed with an "upstream first" methodology is valuable to the
-> >>>>   upstream community because it improves the quality of upstream and
-> >>>>   gets Chromebooks supported with vanilla upstream faster.
-> >>>>
-> >>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> >>>> ---
-> >>>>
-> >>>>  .../devicetree/bindings/arm/qcom.yaml         | 180 ++++++++++++++++++
-> >>>>  1 file changed, 180 insertions(+)
-> >>>>
-> >>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> >>>> index 5c06d1bfc046..399be67eb5d2 100644
-> >>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> >>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> >>>> @@ -214,11 +214,191 @@ properties:
-> >>>>                - qcom,ipq8074-hk10-c2
-> >>>>            - const: qcom,ipq8074
-> >>>>
-> >>>> +      # Qualcomm Technologies, Inc. SC7180 IDP
-> >>>>        - items:
-> >>>>            - enum:
-> >>>>                - qcom,sc7180-idp
-> >>>>            - const: qcom,sc7180
-> >>>>
-> >>>> +      # Google CoachZ (rev1 - 2)
-> >>>> +      - items:
-> >>>> +          - const: google,coachz-rev1
-> >>>> +          - const: google,coachz-rev2
-> >>>
-> >>> The inverted pattern of old revision being compatible with the new one,
-> >>> is done on purpose? You claim here every rev1 is always compatible with
-> >>> rev2 ...
-> >>>
-> >>> I don't think we discussed such patterns in previous talk. I quickly
-> >>> went through it and there were only skuX moving around, not rev1 being
-> >>> newer then rev2.
-> >
-> > Isn't this what we just had a whole discussion about?
-> >
-> > Oh, I see. You're objecting to the fact that the order here lists
-> > "rev1" first and "rev2" second.
-> >
-> > I think the issue here is that for the purposes of booting Chromebooks
-> > the order here doesn't matter. Certainly we can pick a fixed order and
-> > we can validate that the order in the yaml matches the order in the
-> > device tree, but for all intents and purposes it doesn't matter to
-> > anything. The same device tree is compatible with _both_ rev1 and rev2
-> > coachz devices. Neither of those two devices is inherently better
-> > supported by this device tree than the other.
->
-> OK, thanks for explanation. Since these were not documented maybe fixing
-> existing DTS to more expected order (rev2 being the newest, rev1
-> following) would make sense. But certainly please use such new order
-> compatibles for new DTSes.
+The list for the bindings (YAML), the toolset and for the Devicetree
+spec is ordered. Even if it is not ordered for your bootloader
+implementation. Your current order is a bit confusing:
 
-I'm still not sure I understand: if the list of revisions is
-effectively unordered, why does it matter which order they are listed
-in? Certainly we can change the order, but I'm not sure how I justify
-the extra churn in my patch description.
+compatible = "google,coachz-rev1", "google,coachz-rev2", "qcom,sc7180";
 
--Doug
+Changing the order in existing DTS, might not be worth. I propose then
+to introduce the logical order in the future, so for new DTS:
+
+compatible = "google,XXX-rev2", "google,XXX-rev1", "qcom,sc7180";
+
+I understood that for your bootloader it does not matter.
+
+Best regards,
+Krzysztof
