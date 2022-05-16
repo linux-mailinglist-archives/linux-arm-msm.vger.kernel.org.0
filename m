@@ -2,76 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9FB1528216
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 12:28:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E3B7528227
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 12:33:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242700AbiEPK2u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 06:28:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48164 "EHLO
+        id S235670AbiEPKdl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 06:33:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242758AbiEPK2k (ORCPT
+        with ESMTP id S234217AbiEPKdk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 06:28:40 -0400
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DECE013E24;
-        Mon, 16 May 2022 03:28:16 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id 9914521F76;
-        Mon, 16 May 2022 10:28:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1652696895; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=IbWdGpEaF5BmWaFq2MQ0/vY8Q/+HNZlu8w/vHFUL8w8=;
-        b=v02j2CwKvtzqRWoBHPXGswk38lBgr2/4EVQ0iGLjzwP3pzl7CGYhOU60M+nsKaWKU/kpRR
-        sWCI84kk3uR5Uct8YoaW6WvmtSZhQADjvFDgPy3YYeTdimgWpqDf+LmTwLa2VXIaD5gHFN
-        OxBXc/88aZwq96Lg2g6WrQchKPAB0h8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1652696895;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=IbWdGpEaF5BmWaFq2MQ0/vY8Q/+HNZlu8w/vHFUL8w8=;
-        b=ejs6DnNNLBqhYQzEGCiZiLkfljgb3vZLJ8qe5yuVDsZwng7i/17oOORF4Dpc/AUiUcQ1V7
-        rWsIyCJxO4oX1TCQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 3CDD813ADC;
-        Mon, 16 May 2022 10:28:15 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id vFOqDT8ngmLBKgAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Mon, 16 May 2022 10:28:15 +0000
-Message-ID: <5857c510-9783-a483-8414-65d7350618d6@suse.de>
-Date:   Mon, 16 May 2022 12:28:14 +0200
+        Mon, 16 May 2022 06:33:40 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09B511C13C;
+        Mon, 16 May 2022 03:33:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652697219; x=1684233219;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=m7KZ12gy0apI74yaJ3tlcm5G7JwMgp7ptlA0Gz5juBE=;
+  b=mdgdjXSFhEMh9XEik+bmF0+Sbtcj1Xb0kPQHs1HG4cyG4+SmouXPyyPO
+   vtXJVMwIXytD/RoQzXvCigXjxNDOIdqenB45A4G315VTllDyo9+PwvQaN
+   eOzOQcpYaPgaFBVi/IwP3mhNzXnpRrJzZYtQD9LaQ6KInXMJNKNOb8IxB
+   k=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 16 May 2022 03:33:38 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 May 2022 03:33:38 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 16 May 2022 03:33:37 -0700
+Received: from [10.79.142.210] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 16 May
+ 2022 03:33:33 -0700
+Message-ID: <fb6dc88c-0829-11f8-b6f4-7eec3409e8bf@quicinc.com>
+Date:   Mon, 16 May 2022 16:02:53 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.0
-Subject: Re: [PATCH v3] drm/probe-helper: Make 640x480 first if no EDID
+Subject: Re: [PATCH V7 2/7] soc: qcom: dcc:Add driver support for Data Capture
+ and Compare unit(DCC)
 Content-Language: en-US
-To:     Douglas Anderson <dianders@chromium.org>,
-        dri-devel@lists.freedesktop.org
-Cc:     quic_aravindh@quicinc.com, quic_khsieh@quicinc.com,
-        jani.nikula@linux.intel.com, robdclark@gmail.com,
-        quic_sbillaka@quicinc.com, ville.syrjala@linux.intel.com,
-        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-        swboyd@chromium.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        linux-kernel@vger.kernel.org
-References: <20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------e1LEwrNpciWji2gXoobnf7xw"
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Alex Elder" <elder@ieee.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@codeaurora.org>,
+        <vkoul@kernel.org>
+References: <cover.1646285069.git.quic_schowdhu@quicinc.com>
+ <bc8504bdaf24d98762e2dbad7d084ca247380f06.1646285069.git.quic_schowdhu@quicinc.com>
+ <YnFuXYEXxLQkak24@builder.lan>
+ <0997f2bc-e8ce-24cc-da90-0ecd3201350c@quicinc.com> <YnSNvHVrJruVbE53@ripper>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <YnSNvHVrJruVbE53@ripper>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -82,175 +77,332 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------e1LEwrNpciWji2gXoobnf7xw
-Content-Type: multipart/mixed; boundary="------------YFrukezgSqQ100MX0GePfkJ0";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Douglas Anderson <dianders@chromium.org>, dri-devel@lists.freedesktop.org
-Cc: quic_aravindh@quicinc.com, quic_khsieh@quicinc.com,
- jani.nikula@linux.intel.com, robdclark@gmail.com, quic_sbillaka@quicinc.com,
- ville.syrjala@linux.intel.com, quic_abhinavk@quicinc.com,
- dmitry.baryshkov@linaro.org, swboyd@chromium.org,
- freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, linux-kernel@vger.kernel.org
-Message-ID: <5857c510-9783-a483-8414-65d7350618d6@suse.de>
-Subject: Re: [PATCH v3] drm/probe-helper: Make 640x480 first if no EDID
-References: <20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
-In-Reply-To: <20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
 
---------------YFrukezgSqQ100MX0GePfkJ0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+On 5/6/2022 8:23 AM, Bjorn Andersson wrote:
+> On Thu 05 May 05:53 PDT 2022, Souradeep Chowdhury wrote:
+>
+>> On 5/3/2022 11:33 PM, Bjorn Andersson wrote:
+>>> On Thu 03 Mar 00:27 CST 2022, Souradeep Chowdhury wrote:
+>>>
+>>>> The DCC is a DMA Engine designed to capture and store data
+>>>> during system crash or software triggers. The DCC operates
+>>>> based on user inputs via the sysfs interface. The user gives
+>>>> addresses as inputs and these addresses are stored in the
+>>>> dcc sram. In case of a system crash or a manual software
+>>>> trigger by the user through the debugfs interface,
+>>>> the dcc captures and stores the values at these addresses.
+>>>> This patch contains the driver which has all the methods
+>>>> pertaining to the debugfs interface, auxiliary functions to
+>>>> support all the four fundamental operations of dcc namely
+>>>> read, write, read/modify/write and loop. The probe method
+>>>> here instantiates all the resources necessary for dcc to
+>>>> operate mainly the dedicated dcc sram where it stores the
+>>>> values. The DCC driver can be used for debugging purposes
+>>>> without going for a reboot since it can perform software
+>>>> triggers as well based on user inputs.
+>>>>
+>>>> Also added the documentation for debugfs entries and explained
+>>>> the functionalities of each debugfs file that has been created
+>>>> for dcc.
+>>>>
+>>>> The following is the justification of using debugfs interface
+>>>> over the other alternatives like sysfs/ioctls
+>>>>
+>>>> i) As can be seen from the debugfs attribute descriptions,
+>>>> some of the debugfs attribute files here contains multiple
+>>>> arguments which needs to be accepted from the user. This goes
+>>>> against the design style of sysfs.
+>>>>
+>>>> ii) The user input patterns have been made simple and convenient
+>>>> in this case with the use of debugfs interface as user doesn't
+>>>> need to shuffle between different files to execute one instruction
+>>>> as was the case on using other alternatives.
+>>>>
+>>>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> ---
+>>>>    Documentation/ABI/testing/debugfs-driver-dcc |  124 +++
+>>>>    drivers/soc/qcom/Kconfig                     |    8 +
+>>>>    drivers/soc/qcom/Makefile                    |    1 +
+>>>>    drivers/soc/qcom/dcc.c                       | 1465 ++++++++++++++++++++++++++
+>>>>    4 files changed, 1598 insertions(+)
+>>>>    create mode 100644 Documentation/ABI/testing/debugfs-driver-dcc
+>>>>    create mode 100644 drivers/soc/qcom/dcc.c
+>>>>
+>>>> diff --git a/Documentation/ABI/testing/debugfs-driver-dcc b/Documentation/ABI/testing/debugfs-driver-dcc
+>>>> new file mode 100644
+>>>> index 0000000..70029ab
+>>>> --- /dev/null
+>>>> +++ b/Documentation/ABI/testing/debugfs-driver-dcc
+>>>> @@ -0,0 +1,124 @@
+>>>> +What:          /sys/kernel/debug/dcc/.../trigger
+>>>> +Date:          March 2022
+>>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> +Description:
+>>>> +		This is the debugfs interface for manual software
+>>>> +		triggers. The user can simply enter a 1 against
+>>>> +		the debugfs file and enable a manual trigger.
+>>>> +		Example:
+>>>> +		echo  1 > /sys/kernel/debug/dcc/.../trigger
+>>>> +
+>>>> +What:          /sys/kernel/debug/dcc/.../enable
+>>>> +Date:          March 2022
+>>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> +Description:
+>>>> +		This debugfs interface is used for enabling the
+>>>> +		the dcc hardware. On enabling the dcc, all the
+>>>> +		addresses entered by the user is written into
+>>>> +		dcc sram which is read by the dcc hardware on
+>>>> +		manual or crash induced triggers.
+>>>> +		Example:
+>>>> +		echo  0 > /sys/bus/platform/devices/.../enable
+>>>> +		(disable dcc)
+>>>> +		echo  1 > /sys/bus/platform/devices/.../enable
+>>>> +		(enable dcc)
+>>>> +
+>>>> +What:          /sys/kernel/debug/dcc/.../config_read
+>>> As mentioned last time, I don't like this interface of having 6 files
+>>> that the user can write to in order to append items in the currently
+>>> selected linked list.
+>>>
+>>> Why can't this be a single "config" which takes a multiline string of
+>>> operations? (Bonus point for supporting appending to the list).
+>>>
+>>>
+>>> This would also serve as a natural place to dump the linked list back to
+>>> the user for inspection.
+>> Following is the justification of having multiple files in debugfs
+>>
+>> 1-> Since there are fundamentally 4 instructions for DCC, Read,Write,Read
+>> and then Write and Loop,having separate debugfs files for the same makes it
+>>
+>> convenient for the user to use this tool and also to document.This
+>> also is consistent with the design principles of debugfs as it supports
+>> logical segregation of Debugfs files based on the user instructions.
+>>
+> So say the user of DCC wants to read a register 10 times, they know that
+> the DCC operates on lists of operations, so they want to tell the
+> computer "read X, loop 10 times".
+>
+> But the API is "write to loop file", "write to read file" and "write to
+> loop file".
+>
+> You're achieving the same thing, but the user and the driver thinks in
+> terms of lists of operations and inbetween is a API which provides
+> "logical segregation" of the different parts of that list.
+>
+>> 2-> We are maintaining a common linkedlist inside the driver and it can be
+>> viewed by the user through the "config_read" debugfs file. Will be adding
+>> this to the documentation as well.
+>>
+> So I use a mix of config_* files to build the lists, and then
+> config_read is used to look at the list?
+>
+> So some config_* files will when written append to the list, some
+> config_* files will perform some action (e.g. reset) and reading some
+> config_* files will return something useful.
+>
+>> Let me know your thoughts regarding the above.
+>>
+> I am not convinced that having multiple files provides a nice user
+> interface. But I certain that the use of the word "config" in various
+> different ways is wrong.
+>
+> There are files in the interface which purpose is to append items to the
+> linked list, name them append_*. Reading the appended items on the list
+> should not be overloaded on one of the "append" files.
+>
+>
+> So perhaps:
+>
+> append_read
+> append_write
+> append_rmw
+> append_loop
+> config (to dump the current config)
+> enable
+> ready
+> reset
+> trigger
+>
+>
+> But then looking at the append_* functions again and the examples below.
+> You could easily have a single append which takes read, write, rmw and
+> loop as a first keyword - and build a crude parser based on sscanf to
+> decode the strings.
+>
+> Then all append_* becomes "append", which is a single file for adding to
+> the list and "config" is a single point to read the current list.
+> Perhaps you could name this file just "config", reading will dump the
+> list, writing will append to the list.
+>
+> Here you would have a cleaner interface.
+>
+>
+> But as you write your own fops you could differentiate between write
+> and append, so you could make this slightly cleaner by manifesting the
+> "append" part by allowing the user to do:
+>
+>    echo read 1, 2, 3 > config
+>    echo read 4, 5, 6 >> config
+>
+> Which clearly shows that the first writes to the config and second
+> appends to the current config. With this interface reset would become:
+>
+>    echo > config
+>
+> You can still require that only single operation is written to or
+> appended to the list per write - to allow you to continue to rely on the
+> crude sscanf based parser.
+>
+> With this your interface is reduced to:
+>
+> config
+> enable
+> ready
+> trigger
 
-SGkgRG91Z2xhcywNCg0KSSB1bmRlcnN0YW5kIHRoYXQgeW91J3JlIHRyeWluZyB0byB0ZWxs
-IHVzZXJzcGFjZSB0aGF0IHRoZSBtb2RlbGlzdCBoYXMgDQpiZWVuIG1hZGUgdXAsIGJ1dCBp
-dCdzIG5vdCBzb21ldGhpbmcgdGhhdCBzaG91bGQgYmUgZG9uZSB2aWEgZnJhZ2lsZSANCmhl
-dXJpc3RpY3MgSU1ITy4NCg0KSSBsb29rZWQgYXQgdGhlIENocm9taXVtIHNvdXJjZSBjb2Rl
-IHRoYXQgeW91IGxpbmtlZCwgYnV0IEkgY2Fubm90IHNheSANCndoZXRoZXIgaXQncyBkb2lu
-ZyB0aGUgY29ycmVjdCB0aGluZy4gSXQgYWxsIGRlcGVuZHMgb24gd2hhdCB5b3VyIA0KcHJv
-Z3JhbSBuZWVkcy4NCg0KSW4gdGhhdCBmdW5jdGlvbiwgeW91IGNvdWxkIGFsc28gc2VhcmNo
-IGZvciAnRFJNX01PREVfVFlQRV9VU0VSREVGJy4gDQpJdCdzIHRoZSBtb2RlIHRoYXQgdGhl
-IHVzZXIgc3BlY2lmaWVkIG9uIHRoZSBrZXJuZWwgY29tbWFuZCBsaW5lLiBJZiANCkNocm9t
-aXVtJ3MgYXV0b21hdGljIG1vZGUgc2VsZWN0aW9uIGZhaWxzLCB5b3UnZCBnaXZlIHlvdXIg
-dXNlcnMgZGlyZWN0IA0KY29udHJvbCBvdmVyIGl0LiAgV2hlbiB0aGVyZSdzIG5vIGZsYWdn
-ZWQgbW9kZSBvciBpZiANCi9zeXMvY2xhc3MvZHJtL2NhcmQ8Li4uPi9zdGF0dXMgY29udGFp
-bnMgInVuY29ubmVjdGVkIiwgeW91IGNhbiBhc3N1bWUgDQp0aGF0IHRoZSBtb2RlbGlzdCBp
-cyBhcnRpZmljaWFsIGFuZCB0cnkgdGhlIG1vZGVzIGluIGFuIGFwcHJvcHJpYXRlIG9yZGVy
-Lg0KDQpJZiB3ZSByZWFsbHkgd2FudCB0aGUga2VybmVsIHRvIGdpdmUgYWRkaXRpb25hbCBn
-dWFyYW50ZWVzLCB3ZSBzaG91bGQgDQpoYXZlIGEgYnJvYWRlciBkaXNjdXNzaW9uIGFib3V0
-IHRoaXMgdG9waWMgSU1ITy4NCg0KQmVzdCByZWdhcmRzDQpUaG9tYXMNCg0KWzFdIA0KaHR0
-cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvdjUuMTcuOC9zb3VyY2UvZHJpdmVycy9n
-cHUvZHJtL2RybV9zeXNmcy5jI0wxOTYNCg0KQW0gMTMuMDUuMjIgdW0gMjI6MDYgc2Nocmll
-YiBEb3VnbGFzIEFuZGVyc29uOg0KPiBJZiB3ZSdyZSB1bmFibGUgdG8gcmVhZCB0aGUgRURJ
-RCBmb3IgYSBkaXNwbGF5IGJlY2F1c2UgaXQncyBjb3JydXB0IC8NCj4gYm9ndXMgLyBpbnZh
-bGlkIHRoZW4gd2UnbGwgYWRkIGEgc2V0IG9mIHN0YW5kYXJkIG1vZGVzIGZvciB0aGUNCj4g
-ZGlzcGxheS4gU2luY2Ugd2UgaGF2ZSBubyB0cnVlIGluZm9ybWF0aW9uIGFib3V0IHRoZSBj
-b25uZWN0ZWQNCj4gZGlzcGxheSwgdGhlc2UgbW9kZXMgYXJlIGVzc2VudGlhbGx5IGd1ZXNz
-ZXMgYnV0IGJldHRlciB0aGFuIG5vdGhpbmcuDQo+IE5vbmUgb2YgdGhlIG1vZGVzIHJldHVy
-bmVkIGlzIG1hcmtlZCBhcyBwcmVmZXJyZWQsIGJ1dCB0aGUgbW9kZXMgYXJlDQo+IGN1cnJl
-bnRseSBzb3J0ZWQgc3VjaCB0aGF0IHRoZSBoaWdoZXIgcmVzb2x1dGlvbiBtb2RlcyBhcmUg
-bGlzdGVkDQo+IGZpcnN0Lg0KPiANCj4gV2hlbiB1c2Vyc3BhY2Ugc2VlcyB0aGVzZSBtb2Rl
-cyBwcmVzZW50ZWQgYnkgdGhlIGtlcm5lbCBpdCBuZWVkcyB0bw0KPiBmaWd1cmUgb3V0IHdo
-aWNoIG9uZSB0byBwaWNrLiBBdCBsZWFzdCBvbmUgdXNlcnNwYWNlLCBDaHJvbWVPUyBbMV0N
-Cj4gc2VlbXMgdG8gdXNlIHRoZSBydWxlczoNCj4gMS4gVHJ5IHRvIHBpY2sgdGhlIGZpcnN0
-IG1vZGUgbWFya2VkIGFzIHByZWZlcnJlZC4NCj4gMi4gSWYgbm8gbW9kZXMgd2VyZSBtYXJr
-ZWQgYXMgcHJlZmVycmVkIHRoZW4gcGljayB0aGUgZmlyc3QgbW9kZS4NCj4gDQo+IFRoZSBy
-dWxlcyBhYm92ZSBzZWVtIHByZXR0eSByZWFzb25hYmxlLCBidXQgdGhleSBoYXZlIHVuZm9y
-dHVuYXRlIHNpZGUNCj4gZWZmZWN0IHRoYXQgd2hlbiB3ZSBoYXZlIG5vIEVESUQgcHJlc2Vu
-dCB3ZSdsbCBkZWZhdWx0IHRvIHRoZSBoaWdoZXN0DQo+IHJlc29sdXRpb24gKGxlYXN0IGxp
-a2VseSB0byB3b3JrKSBtb2RlLg0KPiANCj4gTGV0J3MgY2hhbmdlIHRoaW5ncyBzbGlnaHRs
-eS4gSW4gdGhlIGNhc2Ugb2YgYSBmYWlsZWQgRURJRCByZWFkIHdlDQo+IHN0aWxsIHdvbid0
-IG1hcmsgYW55dGhpbmcgcHJlZmVycmVkIGJ1dCB3ZSBfd29uJ3RfIHNvcnQgdGhlIG1vZGVz
-IGF0DQo+IHRoZSBlbmQgb2YgZHJtX2hlbHBlcl9wcm9iZV9zaW5nbGVfY29ubmVjdG9yX21v
-ZGVzKCkuIFRoZQ0KPiBkcm1fYWRkX21vZGVzX25vZWRpZCgpIGFkZHMgNjQweDQ4MCBmaXJz
-dCBhbmQgc28gYnkgc2tpcHBpbmcgdGhlIGNhbGwNCj4gdG8gZHJtX21vZGVfc29ydCgpIGl0
-IHdpbGwgc3RheSBmaXJzdC4gVGhhdCB3aWxsIGJlIGEgaGludCB0bw0KPiB1c2Vyc3BhY2Ug
-dG8gZGVmYXVsdCB0byA2NDB4NDgwLg0KPiANCj4gVGhpcyBjaGFuZ2UgbWFrZXMgdXNlcnNw
-YWNlIHRoYXQgYmVoYXZlcyBsaWtlIENocm9tZU9TIGRvZXMgY29tcGxpYW50DQo+IHdpdGgg
-c2VjdGlvbiA0LjIuMi42IChFRElEIENvcnJ1cHRpb24gRGV0ZWN0aW9uKSBvZiB0aGUgRFAg
-MS40YSBMaW5rDQo+IENUUy4gVGhhdCBzZWN0aW9uIGluZGljYXRlcyB0aGF0LCBhdCBsZWFz
-dCBvbiBEUCwgaWYgd2UgaGF2ZSBhIGNvcnJ1cHQNCj4gRURJRCB1c2Vyc3BhY2UgbWF5IGFs
-bG93IG90aGVyIG1vZGVzIHRvIGJlIHRyaWVkIGJ1dCBzaG91bGQgZGVmYXVsdCB0bw0KPiA2
-NDB4NDgwIGluIHRoZSBhYnNlbmNlIG9mIG1vcmUgaW5mb3JtYXRpb24uIE5vdGUgdGhhdCBp
-Zg0KPiBkcm1fYWRkX21vZGVzX25vZWRpZCgpIGV2ZXIgY2hhbmdlcyB0byBfbm90XyBsaXN0
-IDY0MHg0ODAgZmlyc3Qgd2UNCj4gbWlnaHQgbmVlZCB0byBkbyBtb3JlIGhlcmUsIGJ1dCB0
-aGF0IHNlZW1zIHVubGlrZWx5IGFuZCwgaW4gYW55IGNhc2UsDQo+IGl0IHdvdWxkIGJlIGNh
-dWdodCBieSBhIGZ1dHVyZSBydW4gb2YgRFAgY29tcGxpYW5jZSB0ZXN0aW5nLg0KPiANCj4g
-Tm90ZTogdGhpcyBjaGFuZ2UgY291bGQgcGF2ZSB0aGUgd2F5IHRvIGZ1cnRoZXIgaW1wcm92
-ZW1lbnQgdG8NCj4gZHJtX2hlbHBlcl9wcm9iZV9zaW5nbGVfY29ubmVjdG9yX21vZGVzKCku
-IFNwZWNpZmljYWxseSwgaW4gdGhlIGNhc2UNCj4gb2Ygbm8gRURJRCB3ZSBjb3VsZCBhZGQg
-YWRkaXRpb25hbCAic3RhbmRhcmQiIG1vZGVzIHRoYXQgYXJlIHJpc2tpZXINCj4gdGhhbiAx
-MDI0eDc2OCAodGhlIGN1cnJlbnQgbWF4IHdlIGFkZCkuIE5vdyB0aGF0IHdlJ3JlIGdpdmlu
-Zw0KPiB1c2Vyc3BhY2UgdGhlIGhpbnQgdGhhdCBpdCBzaG91bGQgZGVmYXVsdCB0byA2NDB4
-NDgwIHBlcmhhcHMgaXQgd291bGQNCj4gYmUgT0sgdG8gb2ZmZXIgdGhlIG9wdGlvbnMgb2Yg
-dGhlIGhpZ2hlciByZXNvbHV0aW9uIG1vZGVzIGp1c3QgaW4gY2FzZQ0KPiB0aGV5IHdvcmsu
-IFRoaXMgZnVydGhlciBpbXByb3ZlbWVudCBpcyBsZWZ0IGFzIGFuIGV4ZXJjaXNlIHRvIHRo
-ZQ0KPiByZWFkZXIuDQo+IA0KPiBbMV0gaHR0cHM6Ly9zb3VyY2UuY2hyb21pdW0ub3JnL2No
-cm9taXVtL2Nocm9taXVtL3NyYy8rL2EwNTFmNzQxZDBhMTVjYWZmMjI1MTMwMWVmZTA4MWMz
-MGUwZjRhOTY6dWkvb3pvbmUvcGxhdGZvcm0vZHJtL2NvbW1vbi9kcm1fdXRpbC5jYztsPTQ4
-OA0KPiANCj4gU2lnbmVkLW9mZi1ieTogRG91Z2xhcyBBbmRlcnNvbiA8ZGlhbmRlcnNAY2hy
-b21pdW0ub3JnPg0KPiAtLS0NCj4gTm90ZSB0aGF0IHRoaXMgaXMgdGhlIHNlY29uZCBvZiB0
-d28gcmVsYXRlZCBhbmQgc2ltaWxhci1zb3VuZGluZyBidXQNCj4gZGlmZmVyZW50IHBhdGNo
-ZXMuIFNlZSBhbHNvICgiZHJtL3Byb2JlLWhlbHBlcjogRm9yIERQLCBhZGQgNjQweDQ4MCBp
-Zg0KPiBhbGwgb3RoZXIgbW9kZXMgYXJlIGJhZCIpIFsyXS4gSSdtIGhvcGluZyB0byBsYW5k
-IF9ib3RoXyBvZiB0aGUNCj4gcGF0Y2hlcyBzaW5jZSB0aGV5IGFkZHJlc3MgZGlmZmVyZW50
-IGlzc3Vlcy4gVGhpcyBwYXRjaCBhZGRyZXNzZXMgdGhlDQo+IGNhc2Ugb2YgYSBjb3JydXB0
-IEVESUQgYW5kIGhhdmluZyA2NDB4NDgwIGJlIHRoZSBkZWZhdWx0IGluIHRoZQ0KPiAiZ3Vl
-c3NlZCIgbW9kZXMuIFRoZSBvdGhlciBwYXRjaCBoYW5kbGVzIHRoZSBjYXNlIHdoZXJlIHRo
-ZSBFRElEDQo+IF9pc24ndF8gY29ycnVwdCBidXQgYWxsIHRoZSBtb2RlcyBsaXN0ZWQgY2Fu
-J3QgYmUgbWFkZSB3aXRoIHRoZQ0KPiBleGlzdGluZyBzaXR1YXRpb25zLiBUaGUgdHdvIHBh
-dGNoZXMgY2FuIGxhbmQgaW4gZWl0aGVyIG9yZGVyLg0KPiANCj4gQWxzbyBub3RlIHRoYXQg
-SSBkaWRuJ3QgY2FycnkgYW55IFRlc3RlZC1ieSAvIFJldmlld2VkLWJ5IHRhZ3Mgc2luY2UN
-Cj4gdGhlIHBhdGNoIGlzIG5vdyBxdWl0ZSBkaWZmZXJlbnQgKHlldCBhZ2FpbiBmb3IgdjIg
-dG8gdjMpLg0KPiANCj4gWzJdIGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3IvMjAyMjA1MTAx
-MzEzMDkudjIuMi5JNGFjN2Y1NWFhNDQ2Njk5ZjhjMjAwYTIzYzEwNDYzMjU2ZjZmNDM5ZkBj
-aGFuZ2VpZA0KPiANCj4gQ2hhbmdlcyBpbiB2MzoNCj4gLSBEb24ndCBzZXQgcHJlZmVycmVk
-LCBqdXN0IGRpc2FibGUgdGhlIHNvcnQuDQo+IA0KPiBDaGFuZ2VzIGluIHYyOg0KPiAtIERv
-bid0IG1vZGlmeSBkcm1fYWRkX21vZGVzX25vZWRpZCgpICdjYXVzZSB0aGF0J2xsIGJyZWFr
-IG90aGVycw0KPiAtIFNldCA2NDB4NDgwIGFzIHByZWZlcnJlZCBpbiBkcm1faGVscGVyX3By
-b2JlX3NpbmdsZV9jb25uZWN0b3JfbW9kZXMoKQ0KPiANCj4gICBkcml2ZXJzL2dwdS9kcm0v
-ZHJtX3Byb2JlX2hlbHBlci5jIHwgMTQgKysrKysrKysrKysrLS0NCj4gICAxIGZpbGUgY2hh
-bmdlZCwgMTIgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1n
-aXQgYS9kcml2ZXJzL2dwdS9kcm0vZHJtX3Byb2JlX2hlbHBlci5jIGIvZHJpdmVycy9ncHUv
-ZHJtL2RybV9wcm9iZV9oZWxwZXIuYw0KPiBpbmRleCA2ODIzNTk1MTI5OTYuLjIxZGQ2MGYz
-MGNjNyAxMDA2NDQNCj4gLS0tIGEvZHJpdmVycy9ncHUvZHJtL2RybV9wcm9iZV9oZWxwZXIu
-Yw0KPiArKysgYi9kcml2ZXJzL2dwdS9kcm0vZHJtX3Byb2JlX2hlbHBlci5jDQo+IEBAIC00
-MjUsNiArNDI1LDcgQEAgaW50IGRybV9oZWxwZXJfcHJvYmVfc2luZ2xlX2Nvbm5lY3Rvcl9t
-b2RlcyhzdHJ1Y3QgZHJtX2Nvbm5lY3RvciAqY29ubmVjdG9yLA0KPiAgIAlib29sIHZlcmJv
-c2VfcHJ1bmUgPSB0cnVlOw0KPiAgIAllbnVtIGRybV9jb25uZWN0b3Jfc3RhdHVzIG9sZF9z
-dGF0dXM7DQo+ICAgCXN0cnVjdCBkcm1fbW9kZXNldF9hY3F1aXJlX2N0eCBjdHg7DQo+ICsJ
-Ym9vbCBzb3J0X2xpc3QgPSB0cnVlOw0KPiAgIA0KPiAgIAlXQVJOX09OKCFtdXRleF9pc19s
-b2NrZWQoJmRldi0+bW9kZV9jb25maWcubXV0ZXgpKTsNCj4gICANCj4gQEAgLTUxNiw4ICs1
-MTcsMTYgQEAgaW50IGRybV9oZWxwZXJfcHJvYmVfc2luZ2xlX2Nvbm5lY3Rvcl9tb2Rlcyhz
-dHJ1Y3QgZHJtX2Nvbm5lY3RvciAqY29ubmVjdG9yLA0KPiAgIAkJY291bnQgPSBkcm1fYWRk
-X292ZXJyaWRlX2VkaWRfbW9kZXMoY29ubmVjdG9yKTsNCj4gICANCj4gICAJaWYgKGNvdW50
-ID09IDAgJiYgKGNvbm5lY3Rvci0+c3RhdHVzID09IGNvbm5lY3Rvcl9zdGF0dXNfY29ubmVj
-dGVkIHx8DQo+IC0JCQkgICBjb25uZWN0b3ItPnN0YXR1cyA9PSBjb25uZWN0b3Jfc3RhdHVz
-X3Vua25vd24pKQ0KPiArCQkJICAgY29ubmVjdG9yLT5zdGF0dXMgPT0gY29ubmVjdG9yX3N0
-YXR1c191bmtub3duKSkgew0KPiAgIAkJY291bnQgPSBkcm1fYWRkX21vZGVzX25vZWRpZChj
-b25uZWN0b3IsIDEwMjQsIDc2OCk7DQo+ICsJCS8qDQo+ICsJCSAqIFdhbnQgbG93ZXIgcmVz
-IG1vZGVzLCBsaWtlIDY0MHg0ODAsIGZpcnN0LiBUaGF0IGluZGljYXRlcw0KPiArCQkgKiB0
-byB1c2Vyc3BhY2UgdGhhdCB0aGVzZSBhcmUgImJldHRlciIgbW9kZXMuIFNpbmNlIHdlIGhh
-dmUNCj4gKwkJICogbm8gRURJRCB0aGUgbW9kZXMgYXJlIGEgZ3Vlc3MgYW55d2F5LCBzbyBn
-dWVzcyB0aGUgc2FmZXINCj4gKwkJICogbW9kZSBmaXJzdC4NCj4gKwkJICovDQo+ICsJCXNv
-cnRfbGlzdCA9IGZhbHNlOw0KPiArCX0NCj4gICAJY291bnQgKz0gZHJtX2hlbHBlcl9wcm9i
-ZV9hZGRfY21kbGluZV9tb2RlKGNvbm5lY3Rvcik7DQo+ICAgCWlmIChjb3VudCA9PSAwKQ0K
-PiAgIAkJZ290byBwcnVuZTsNCj4gQEAgLTU3Niw3ICs1ODUsOCBAQCBpbnQgZHJtX2hlbHBl
-cl9wcm9iZV9zaW5nbGVfY29ubmVjdG9yX21vZGVzKHN0cnVjdCBkcm1fY29ubmVjdG9yICpj
-b25uZWN0b3IsDQo+ICAgCWlmIChsaXN0X2VtcHR5KCZjb25uZWN0b3ItPm1vZGVzKSkNCj4g
-ICAJCXJldHVybiAwOw0KPiAgIA0KPiAtCWRybV9tb2RlX3NvcnQoJmNvbm5lY3Rvci0+bW9k
-ZXMpOw0KPiArCWlmIChzb3J0X2xpc3QpDQo+ICsJCWRybV9tb2RlX3NvcnQoJmNvbm5lY3Rv
-ci0+bW9kZXMpOw0KPiAgIA0KPiAgIAlEUk1fREVCVUdfS01TKCJbQ09OTkVDVE9SOiVkOiVz
-XSBwcm9iZWQgbW9kZXMgOlxuIiwgY29ubmVjdG9yLT5iYXNlLmlkLA0KPiAgIAkJCWNvbm5l
-Y3Rvci0+bmFtZSk7DQoNCi0tIA0KVGhvbWFzIFppbW1lcm1hbm4NCkdyYXBoaWNzIERyaXZl
-ciBEZXZlbG9wZXINClNVU0UgU29mdHdhcmUgU29sdXRpb25zIEdlcm1hbnkgR21iSA0KTWF4
-ZmVsZHN0ci4gNSwgOTA0MDkgTsO8cm5iZXJnLCBHZXJtYW55DQooSFJCIDM2ODA5LCBBRyBO
-w7xybmJlcmcpDQpHZXNjaMOkZnRzZsO8aHJlcjogSXZvIFRvdGV2DQo=
+Ack. Will create a single config for this interface.
 
---------------YFrukezgSqQ100MX0GePfkJ0--
+>
+>>>> +Date:          March 2022
+>>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> +Description:
+>>>> +		This stores the addresses of the registers which
+>>>> +		needs to be read in case of a hardware crash or
+>>>> +		manual software triggers. The address entered here
+>>>> +		are considered under read type instruction.
+>>>> +		Example:
+>>>> +		echo <1> <2> <3> >/sys/kernel/debug/dcc/../config_read
+>>>> +		1->Address to be considered for reading the value.
+>>>> +		2->The word count of the addresses, read n words
+>>>> +		   starting from address <1>.
+>>>> +		3->Can be a 1 or 0 which indicates if it is apb or ahb
+>>>> +		bus respectively.
+>>>> +
+>>>> +What:          /sys/kernel/debug/dcc/.../config_write
+>>>> +Date:          March 2022
+>>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> +Description:
+>>>> +		This file allows user to write a value to the register
+>>>> +		address given as argument. The reason for this feature
+>>>> +		of dcc is that for accessing certain registers it is
+>>>> +		necessary to set some bits of some other register.
+>>>> +		Example:
+>>>> +		echo <1> <2> <3> > /sys/bus/platform/devices/.../config_write
+>>>> +		1->Address to be considered for writing the value.
+>>>> +		2->The value that needs to be written at the location.
+>>>> +		3->Can be a 1 or 0 which indicates if it is apb or ahb
+>>>> +		bus respectively.
+>>>> +
+>>>> +What:          /sys/kernel/debug/dcc/.../config_reset
+>>>> +Date:          March 2022
+>>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> +Description:
+>>>> +		This file is used to reset the configuration of
+>>>> +		a dcc driver to the default configuration. This
+>>>> +		means that all the previous addresses stored in
+>>>> +		the driver gets removed and user needs to enter
+>>>> +		the address values from the start.
+>>>> +		Example:
+>>>> +		echo  1 > /sys/bus/platform/devices/.../config_reset
+>>>> +
+>>>> +What:          /sys/kernel/debug/dcc/.../config_loop
+>>>> +Date:		March 2022
+>>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> +Description:
+>>>> +		This file is used to enter the loop type addresses for
+>>>> +		dcc. DCC hardware provides feature to loop among multiple
+>>>> +		addresses. For debugging purposes register values need to
+>>>> +		be captured repeatedly in a loop. On giving the loop count
+>>>> +		as n, the value at address will be captured n times in a
+>>>> +		loop. At most 8 loop addresses can be configured at once.
+>>>> +		Example:
+>>>> +		echo <1> <2> <3> > /sys/kernel/debug/dcc/../config_loop
+>>>> +		1->The loop count, the number of times the value of the
+>>>> +		   addresses will be captured.
+>>>> +		2->The address count, total number of addresses to be
+>>>> +		   entered in this instruction.
+>>>> +		3->The series of addresses to be entered separated by a
+>>>> +		   space like <addr1> <addr2>... and so on.
+>>>> +
+>>>> +What:          /sys/kernel/debug/dcc/.../config_read_write
+>>>> +Date:          March 2022
+>>>> +Contact:       Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> +Description:
+>>>> +		This file is used to read the value of the register
+>>>> +		and then write the value given as an argument to the
+>>>> +		register address. The address argument should be given
+>>>> +		of the form <addr> <mask> <value>.For debugging purposes
+>>>> +		sometimes we need to first read from a register and then
+>>>> +		set some values to the register.
+>>>> +		Example:
+>>>> +		echo <1> <2> <3> > /sys/kernel/debug/dcc/.../config_read_write
+>>>> +		1->The address which needs to be considered for read then write.
+>>>> +		2->The value that needs to be written on the address.
+>>>> +		3->The mask of the value to be written.
+>>>> +
+>>>> +What:		/sys/kernel/debug/dcc/.../ready
+>>>> +Date:		March 2022
+>>>> +Contact	Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> +Description:
+>>>> +		This file is used to check the status of the dcc
+>>>> +		hardware if it's ready to take the inputs. A 0
+>>>> +		here indicates dcc is in a ready condition.
+>>>> +		Example:
+>>>> +		cat /sys/kernel/debug/dcc/.../ready
+>>>> +
+>>>> +What:		/sys/kernel/debug/dcc/.../curr_list
+>>> I still don't like the idea of having a single set of files to interface
+>>> with all N lists. I think you should discover how many lists you have
+>>> and create N directories of files, each on operating on a given list.
+>> As explained before there cannot be different files based on lists as
+>> the number of lists to be used varies across platforms where DCC is
+>> used.
+> Isn't this dcc->nr_link_list?
+Yes. This varies across different SoCs and also user may not have access 
+to all the lists supported by DCC.
+>
+>> Also we are giving the user the flexibility to configure
+>> multiple lists at one go whereas the dumps are collected in the form
+>> of separate lists that are configured by the user.
+>>
+> I'm not sure I follow what you're trying to say here.
+>
+> If we determine that nr_link_list is 2, you create a directory named 0
+> and one named 1, fill them with the interface files to operate on list 0
+> and list 1 respectively. Then you still allow the user to configure and
+> enable the 2 available lists?
+>
+> The difference is that it's clear how many lists you have and it's clear
+> when you poke at 0/config_read that you're referring to the first list
+> and poking 0/enable will mean the same list - there's no curr_list to
+> mux between them in the interface.
 
---------------e1LEwrNpciWji2gXoobnf7xw
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+So from DCC hardware perspective, it needs to be told that "list n 
+begins at x and ends at y". That is why the limitation of DCC
 
------BEGIN PGP SIGNATURE-----
+hardware is that the lists can only be configured sequentially and not 
+in a overlapping manner. So for example we need to enter
 
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmKCJz4FAwAAAAAACgkQlh/E3EQov+C7
-6w/9EjxyAWV8Zxt2As/C/qK1z2rrznyCrnQNVe7CBT+zrIDGnqa2TG1Ekfi1xF1dnQP6v9KPgPwg
-E19CxvPXvb2zB2fDSdyyV0ubvkcQtZHsj8nflWOFyvu3YLkXY4fHy7t2DxXV6DNbAbvJ3qEb+84v
-Qe7lZr/gPEUAGVfaZLddMCBOjJLhdbR+r+lUUWBNScexIu8fF6oR5tmQOaa4ju0e9d87CdbMdfAs
-MzcORy0D2Up2Auzc5h84/fmSRJaDYyCN8ROTJlAGb2aJR4In0yLKqI0+bi0YXgJ1Tgfs48M+rpM2
-4urshvoboCJ0btP69us1YlFBpVIg/Pd7S3dZGwr6y3A4NXuWXJgJcrL1CxLOLp8gUUHEP4eqlt3H
-FF3RKWXOS4WHezw75X6FcHLBTHgRPQTk1NqUGDczH+TubUaGYEHqYbESADRF0FgcvUAkgmVhPzDH
-q8xat3QJty1rcXtgZP1615afPLIzUINFZCAItYEJRinPvvsWOq+V+RtZlVCpNMUhw17Wnc/9I/S3
-PTfUA/aYUJ22KOnGhmP2w6JgOQ1a1umSnYajvnuH/c2KZtwnykmwdQ0Cir5WAwuphToyoQmZUKcV
-MnIqz0bIDHKUjaxFTEm7MV4JPInqgnPPPHo5NTBXKqRge8upeCgcHqtMLQDCEg8YCF0vizxNow3r
-ATI=
-=/SuJ
------END PGP SIGNATURE-----
+all the addresses to be stored for list n before jumping to any other 
+lists. Seeing this limitation, will it be advantageous to have
 
---------------e1LEwrNpciWji2gXoobnf7xw--
+different set of files for different lists as we will be configuring 
+them sequentially anyway?
+
+>
+> Regards,
+> Bjorn
+>
+>>>> +Date:		March 2022
+>>>> +Contact:	Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> +Description:
+>>>> +		This attribute is used to enter the linklist to be
+>>>> +		used while appending addresses. The range of values
+>>>> +		for this is advertised either by a register or is
+>>>> +		predefined. Max value for this can be till 8.
+>>>> +		Example:
+>>>> +		echo 0 > /sys/kernel/debug/dcc/...curr_list
+>>>> +
+>>> Regards,
+>>> Bjorn
