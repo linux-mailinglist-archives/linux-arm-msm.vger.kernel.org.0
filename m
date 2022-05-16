@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68F9F528D89
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 20:56:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9C9D528D9F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 21:03:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345216AbiEPS4k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 14:56:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55330 "EHLO
+        id S1345246AbiEPTDM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 15:03:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345208AbiEPS4h (ORCPT
+        with ESMTP id S232386AbiEPTDL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 14:56:37 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC95610FDF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 11:56:35 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id z15-20020a9d65cf000000b00605f064482cso10679156oth.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 11:56:35 -0700 (PDT)
+        Mon, 16 May 2022 15:03:11 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52F4A3EABB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 12:03:10 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id y20-20020a056830071400b00606a2ebd91bso10683737ots.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 12:03:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=MJx3UmouNiWNfqqDYIOXDPwtYD13RhsMbDA6eXvF/Sw=;
-        b=gC6y+jKfV/qj1AmBnZ0KeN/8oQPBeF/cIWz93DRzjsfOf05ZsxroN7urSre4hLmM+m
-         E7iQvgJYIVhZ44wg+GSt5fEC6xzfb3wQNbpYqkC5FT4OjpardXbuqt0QagsXt2msNd9U
-         gwoWARsqNYkWrUQqPZnJ5lHKag902yPhLHy1s=
+        bh=V4GahDx2+UnkOWB2njUSr2HS/Dy+k/intVgLF5yRzLM=;
+        b=QP66kbFap0dA2vLnSmHdxk2AoXOTdqe7hb6v4tnSQW8iqhqaz7qNKz9OLoio6gX7Cj
+         BqXaUE6kVM+ivPQf2VZUtfYbN1PZrrSOWIiRlwwYRuSAXD8IQ3tIUVtR+4L/ETIV280S
+         M94XYinqs+gK3IV95dVEbmtTOSLiN0/w2ovvE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=MJx3UmouNiWNfqqDYIOXDPwtYD13RhsMbDA6eXvF/Sw=;
-        b=JnEb88N3sUGo6jP+sBkZNJLJfo/cIQ5+8Y+CMVOyWwTF1i+s8aHeA2vKYc6/g7knqO
-         1CP8MjOKjCMUtUx93rp7qGntjHSwsHJZNEf5K5Ir+8iiexEja4a53YtyOi2jUlm1vEfH
-         rnGgwDrWiWlWcjdHc+VcFsTKMXadwYl8ujnaoOvAqyeWBfG/aFgSjV8HSzegqztMtlHS
-         8CGDBZfynwIxm4mV0P5VKZEU64rcocT3x8Px1drZrfEBrQmQxej1tSZnqPwKAop2cAvR
-         ufkZcCByShvz1Lh7/3yAIIRr6U9Q1SxlR7149O4O+MNJPi+Yg7ZGzBE5q5gUHcGFzRS3
-         X/pQ==
-X-Gm-Message-State: AOAM531v3r2ZbI166kLHOIS1bKdJejXHbOyyyygjVtuFC65ZvFf4h/92
-        7vVBtvMxxD7rl8L1+COpk219Mul2UJ6hF37u8EZJcw==
-X-Google-Smtp-Source: ABdhPJxW2uQNcDHTxeJaPy9aURBWojLRwuduj2z6Yw/04X8J1t4LFTEC6Ac0cOZHWux42qZgWJxITqgvegNN26EH6JA=
-X-Received: by 2002:a9d:63cd:0:b0:606:9e7f:79f8 with SMTP id
- e13-20020a9d63cd000000b006069e7f79f8mr6668728otl.77.1652727395199; Mon, 16
- May 2022 11:56:35 -0700 (PDT)
+        bh=V4GahDx2+UnkOWB2njUSr2HS/Dy+k/intVgLF5yRzLM=;
+        b=CWsx8tvSzjgs5Ea8C5cKZoRHiEB2CD+jdaFpUz15S4xbZERlGgT2r4/PQ0b5JuIngs
+         2QSZxtcny3miQnII9Am0BUWaQJr2Y+N6FbkbwKcLWGNpV2LAQ/h1vgUYle4/waHfZNID
+         hVKOlrcIVMEUuzO9Ggkdgg4jwuqB3T0h4khmZpS9X0rFLLdlOFD53u/cP78EQDKUldhc
+         XQ6ldPZdEZYeNI4ZtLTXihCWD6H1SEmNb++WvtmZBidRmfA9mXyIGG3lxwXsvpJRrQNV
+         ax2lH25wmQ0aLxihWbmwh8q0HwSWaWGpMDlOHd1Sj0GOZ+BT4IrsS4WqouZCEk2pWH0h
+         eJ4w==
+X-Gm-Message-State: AOAM530Hr3OCWfFn4sbrfoI9E4GRayqaBui1gDkEjJLqQzOBbz5L3JsV
+        upTbPuDQb+YJ638KkwDEbh+pU+hTmxZ1DdnTlSMvdg==
+X-Google-Smtp-Source: ABdhPJzIraMdyy+cf5N3cn2fEi0wvFOaIMKvaCnp5/je8pQqGNGQmIISz4raYx080wid7tlfrVJ4iY97vl4x2QO9CtI=
+X-Received: by 2002:a05:6830:13ce:b0:606:702b:87f0 with SMTP id
+ e14-20020a05683013ce00b00606702b87f0mr6480452otq.159.1652727789630; Mon, 16
+ May 2022 12:03:09 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 May 2022 11:56:34 -0700
+ HTTPREST; Mon, 16 May 2022 12:03:08 -0700
 MIME-Version: 1.0
-In-Reply-To: <1652275113-10277-7-git-send-email-quic_c_skakit@quicinc.com>
-References: <1652275113-10277-1-git-send-email-quic_c_skakit@quicinc.com> <1652275113-10277-7-git-send-email-quic_c_skakit@quicinc.com>
+In-Reply-To: <1652275113-10277-8-git-send-email-quic_c_skakit@quicinc.com>
+References: <1652275113-10277-1-git-send-email-quic_c_skakit@quicinc.com> <1652275113-10277-8-git-send-email-quic_c_skakit@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Mon, 16 May 2022 11:56:34 -0700
-Message-ID: <CAE-0n500ceOR0Fr6=DR9D=hXuDjtyNNVnP3J_B2RMLY5TGCUbg@mail.gmail.com>
-Subject: Re: [PATCH V12 6/9] mfd: pm8008: Use i2c_new_dummy_device() API
+Date:   Mon, 16 May 2022 12:03:08 -0700
+Message-ID: <CAE-0n51JeC7oobCYNCJ-rOi3n_FVPBjz7yFmtwKEDeqWcX0vFw@mail.gmail.com>
+Subject: Re: [PATCH V12 7/9] regulator: Add a regulator driver for the PM8008 PMIC
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Satya Priya <quic_c_skakit@quicinc.com>
@@ -72,18 +72,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya (2022-05-11 06:18:30)
-> Use i2c_new_dummy_device() to register pm8008-regulator
-> client present at a different address space, instead of
-> defining a separate DT node. This avoids calling the probe
-> twice for the same chip, once for each client pm8008-infra
-> and pm8008-regulator.
->
-> As a part of this define pm8008_regmap_init() to do regmap
-> init for both the clients and define pm8008_get_regmap() to
-> pass the regmap to the regulator driver.
->
-> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
-> ---
+Quoting Satya Priya (2022-05-11 06:18:31)
+> diff --git a/drivers/regulator/qcom-pm8008-regulator.c b/drivers/regulator/qcom-pm8008-regulator.c
+> new file mode 100644
+> index 0000000..0361f02
+> --- /dev/null
+> +++ b/drivers/regulator/qcom-pm8008-regulator.c
+> @@ -0,0 +1,221 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/* Copyright (c) 2022, The Linux Foundation. All rights reserved. */
+> +
+> +#include <linux/device.h>
+> +#include <linux/kernel.h>
+> +#include <linux/mfd/qcom_pm8008.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Is this include used?
+
+> +#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/regmap.h>
+> +#include <linux/regulator/driver.h>
+> +#include <linux/regulator/of_regulator.h>
+
+Is this include used?
+
+> +
+> +#define VSET_STEP_MV                   8
+> +#define VSET_STEP_UV                   (VSET_STEP_MV * 1000)
+> +
+> +#define LDO_ENABLE_REG(base)           ((base) + 0x46)
+> +#define ENABLE_BIT                     BIT(7)
+> +
+> +#define LDO_VSET_LB_REG(base)          ((base) + 0x40)
+> +
+> +#define LDO_STEPPER_CTL_REG(base)      ((base) + 0x3b)
+> +#define DEFAULT_VOLTAGE_STEPPER_RATE   38400
+> +#define STEP_RATE_MASK                 GENMASK(1, 0)
+> +
+> +struct pm8008_regulator_data {
+> +       const char                      *name;
+> +       const char                      *supply_name;
+> +       int                             min_uv;
+> +       int                             max_uv;
+> +       int                             min_dropout_uv;
+> +       const struct linear_range       *voltage_range;
+> +};
+> +
+> +struct pm8008_regulator {
+> +       struct device           *dev;
+> +       struct regmap           *regmap;
+> +       struct regulator_desc   rdesc;
+> +       u16                     base;
+> +       int                     step_rate;
+> +       int                     voltage_selector;
+> +};
+> +
+> +static const struct linear_range nldo_ranges[] = {
+> +       REGULATOR_LINEAR_RANGE(528000, 0, 122, 8000),
+> +};
+> +
+> +static const struct linear_range pldo_ranges[] = {
+> +       REGULATOR_LINEAR_RANGE(1504000, 0, 237, 8000),
+> +};
+> +
+> +static const struct pm8008_regulator_data reg_data[] = {
+> +       /* name  parent       min_uv  max_uv  headroom_uv voltage_range */
+> +       { "ldo1", "vdd_l1_l2", 528000, 1504000, 225000, nldo_ranges, },
+> +       { "ldo2", "vdd_l1_l2", 528000, 1504000, 225000, nldo_ranges, },
+> +       { "ldo3", "vdd_l3_l4", 1504000, 3400000, 300000, pldo_ranges, },
+> +       { "ldo4", "vdd_l3_l4", 1504000, 3400000, 300000, pldo_ranges, },
+> +       { "ldo5", "vdd_l5",    1504000, 3400000, 200000, pldo_ranges, },
+> +       { "ldo6", "vdd_l6",    1504000, 3400000, 200000, pldo_ranges, },
+> +       { "ldo7", "vdd_l7",    1504000, 3400000, 200000, pldo_ranges, },
+> +};
+> +
+> +static int pm8008_regulator_get_voltage(struct regulator_dev *rdev)
+> +{
+> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
+> +
+> +       return pm8008_reg->voltage_selector;
+> +}
+> +
+> +static inline int pm8008_write_voltage(struct pm8008_regulator *pm8008_reg,
+> +                                                       int mV)
+> +{
+> +       __le16 vset_raw;
+> +
+> +       vset_raw = cpu_to_le16(mV);
+> +
+> +       return regmap_bulk_write(pm8008_reg->regmap,
+> +                       LDO_VSET_LB_REG(pm8008_reg->base),
+> +                       (const void *)&vset_raw, sizeof(vset_raw));
+
+Does sparse complain about casting away __le16?
+
+> +}
+> +
+> +static int pm8008_regulator_set_voltage_time(struct regulator_dev *rdev,
+> +                               int old_uV, int new_uv)
+> +{
+> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
+> +
+> +       return DIV_ROUND_UP(abs(new_uv - old_uV), pm8008_reg->step_rate);
+> +}
+> +
