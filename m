@@ -2,132 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 517D35286DA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 16:23:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FA0C52874C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 May 2022 16:43:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244546AbiEPOXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 10:23:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59566 "EHLO
+        id S242519AbiEPOnv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 10:43:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244493AbiEPOXM (ORCPT
+        with ESMTP id S235268AbiEPOnu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 10:23:12 -0400
-Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F26FE3B03F;
-        Mon, 16 May 2022 07:23:10 -0700 (PDT)
-Date:   Mon, 16 May 2022 14:23:07 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1652710989;
-        bh=r0c6Fy6+bDH4824g2iGMHucscG/Y0NMZJhVGiSc6orw=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
-         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
-         Feedback-ID:Message-ID;
-        b=iy6O0EM5FeLCJHvKD9Tdi+Fhtvy9e/D6djEvwL4apmROygGU2tAaz4pu5qEdgLRx1
-         bOyhU7psCO2CwXRbhKhJIheslZYDtjfGASdkAANn07W8UP3vomMJcm+hvx3+w4z/n0
-         tTb/CMNPBsHSI+k3wZmDVlYcecx+2gvlSFmTV+kM=
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-input@vger.kernel.org,
-        phone-devel@vger.kernel.org
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     Caleb Connolly <caleb@connolly.tech>,
-        Jami Kettunen <jami.kettunen@somainline.org>
-Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: [PATCH 3/3] arm64: dts: qcom: msm8998-oneplus: add tri-state-key
-Message-ID: <20220516142158.1612109-3-caleb@connolly.tech>
-In-Reply-To: <20220516142158.1612109-1-caleb@connolly.tech>
-References: <20220516142158.1612109-1-caleb@connolly.tech>
-Feedback-ID: 10753939:user:proton
+        Mon, 16 May 2022 10:43:50 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B38902DD64
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 07:43:49 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id a23-20020a17090acb9700b001df4e9f4870so3086551pju.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 07:43:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4xPd51zy939NVBEotrgpcfDeP3YTrS+eiImf3uuWQYk=;
+        b=URqpWG+tQCo0B0z+EiUx8eEm3LkP8jqdiCzJJcGqEyaaKqLZ6e9trHZgWE2mmdjirs
+         +VXwK5XZcro7CBTFKTWEC6zNiU1BTFjOExDHzdZbLSaa0TyNnJEFYtSr9QOaJHCM+MrP
+         h58HRtiLsFVtFuQiqScl44bLQ84bvYYaaQxZUut4P92muAa+1XeO7pKMeXSfhOTR8roX
+         4ZaI4G4xGiJqoH0SHf3OVf4bJbyPe5SJxUnwKCEs/PEu9DWq7s2aYtLyXWrldI8Zl+j0
+         Ov7NYS9s96FkukaTngcb5vLjzl7iPwCDXqK80r2Loho4mvlSCBTdzgOfnELR5tESFM8e
+         AO4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4xPd51zy939NVBEotrgpcfDeP3YTrS+eiImf3uuWQYk=;
+        b=h5adEBAihdHwFLasVfUPXfEWFojX6agZdRPUK/0Kjy8IROVJwMMvhJ5wF9Q5jqsQyX
+         tliffB979DioOdcyCMDVcvL9Ln/8Ni18v41GsdRpXrlpmdSKgyNnJFXtb7x8rWz4EHrZ
+         xT9giqL5Tov97K6yxMXCVSkAbAeNvZsAnK0qt+C7gzn9E2VmkwJPhlhE1+oXBC9NSHUa
+         BIxYiiiI+h7lRnke8td5rwVXofTNRQnBntlnfcOePsLEjZ4FGdn/+r6OV47uSsrrExR0
+         DhHxdlMZSVvPE/4XH09/60wlmdxgDtMHQaOgCTqabAWELdeDEYpSP971zUbHwBly1JBP
+         rCag==
+X-Gm-Message-State: AOAM533WMP+BSITyjVFz0yAUZaR7lyQLOgTjTvyeCXKYQAfVs8KvoNip
+        jMH7d5xbT7rrJJtvnOrxxkUiAeOsDANPEy3yF0wJRQ==
+X-Google-Smtp-Source: ABdhPJyaT5uDQ4TotygR2N3udnaNMAmiSHsJCAkRMxVPOX+fzafhOA2wZgYN0W5QErhsEzGFMgAZujKPdTzdNUcQtHE=
+X-Received: by 2002:a17:90b:1e4e:b0:1dc:583c:398 with SMTP id
+ pi14-20020a17090b1e4e00b001dc583c0398mr19832864pjb.232.1652712229263; Mon, 16
+ May 2022 07:43:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20220509140439.1361352-1-yangyingliang@huawei.com>
+In-Reply-To: <20220509140439.1361352-1-yangyingliang@huawei.com>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Mon, 16 May 2022 16:43:38 +0200
+Message-ID: <CAG3jFyv8rjx2M9vZPbqNqT=ngv5JNt8PskQFR839fd6Z9gDVUw@mail.gmail.com>
+Subject: Re: [PATCH] media: camss: csid: fix wrong size passed to devm_kmalloc_array()
+To:     Yang Yingliang <yangyingliang@huawei.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, mchehab@kernel.org,
+        hverkuil-cisco@xs4all.nl, bryan.odonoghue@linaro.org,
+        vladimir.zapolskiy@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The tri-state-key is a 3-state mute slider found on the OnePlus 5.
-The default software maps the states to "mute", "vibrate" and "ring",
-expose them as generic switch events so that they can be configured
-by userspace.
+On Mon, 9 May 2022 at 15:53, Yang Yingliang <yangyingliang@huawei.com> wrote:
+>
+> 'supplies' is a pointer, the real size of struct regulator_bulk_data
+> should be pass to devm_kmalloc_array().
+>
+> Fixes: 0d8140179715 ("media: camss: Add regulator_bulk support")
+> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+> ---
+>  drivers/media/platform/qcom/camss/camss-csid.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+> index f993f349b66b..80628801cf09 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
+> @@ -666,7 +666,7 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
+>         if (csid->num_supplies) {
+>                 csid->supplies = devm_kmalloc_array(camss->dev,
+>                                                     csid->num_supplies,
+> -                                                   sizeof(csid->supplies),
+> +                                                   sizeof(*csid->supplies),
+>                                                     GFP_KERNEL);
+>                 if (!csid->supplies)
+>                         return -ENOMEM;
+> --
+> 2.25.1
+>
 
-Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-Signed-off-by: Jami Kettunen <jami.kettunen@somainline.org>
----
- .../boot/dts/qcom/msm8998-oneplus-common.dtsi | 43 +++++++++++++++++++
- 1 file changed, 43 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi b/arch/ar=
-m64/boot/dts/qcom/msm8998-oneplus-common.dtsi
-index 9823d48a91b1..9ae6b3e4fc32 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
-@@ -94,6 +94,41 @@ vol-up {
- =09=09};
- =09};
-
-+=09tri-state-key {
-+=09=09compatible =3D "gpio-keys";
-+=09=09label =3D "Tri-state key";
-+
-+=09=09pinctrl-names =3D "default";
-+=09=09pinctrl-0 =3D <&tri_state_key_default>;
-+
-+=09=09state-top {
-+=09=09=09label =3D "Tri-state key top";
-+=09=09=09linux,input-type =3D <EV_SW>;
-+=09=09=09linux,code =3D <SW_PROG1>;
-+=09=09=09gpios =3D <&tlmm 40 GPIO_ACTIVE_LOW>;
-+=09=09=09debounce-interval =3D <50>;
-+=09=09=09linux,can-disable;
-+=09=09};
-+
-+=09=09state-middle {
-+=09=09=09label =3D "Tri-state key middle";
-+=09=09=09linux,input-type =3D <EV_SW>;
-+=09=09=09linux,code =3D <SW_PROG2>;
-+=09=09=09gpios =3D <&tlmm 42 GPIO_ACTIVE_LOW>;
-+=09=09=09debounce-interval =3D <50>;
-+=09=09=09linux,can-disable;
-+=09=09};
-+
-+=09=09state-bottom {
-+=09=09=09label =3D "Tri-state key bottom";
-+=09=09=09linux,input-type =3D <EV_SW>;
-+=09=09=09linux,code =3D <SW_PROG3>;
-+=09=09=09gpios =3D <&tlmm 26 GPIO_ACTIVE_LOW>;
-+=09=09=09debounce-interval =3D <50>;
-+=09=09=09linux,can-disable;
-+=09=09};
-+=09};
-+
- =09gpio-hall-sensor {
- =09=09compatible =3D "gpio-keys";
- =09=09label =3D "Hall effect sensor";
-@@ -441,6 +476,14 @@ vreg_bob: bob {
- &tlmm {
- =09gpio-reserved-ranges =3D <0 4>, <81 4>;
-
-+=09/* The GPIOs have a hardware pullup */
-+=09tri_state_key_default: tri-state-pins {
-+=09=09=09pins =3D "gpio40", "gpio42", "gpio26";
-+=09=09=09function =3D "gpio";
-+=09=09=09drive-strength =3D <2>;
-+=09=09=09bias-disable;
-+=09};
-+
- =09hall_sensor_default: hall-sensor-default {
- =09=09pins =3D "gpio124";
- =09=09function =3D "gpio";
---
-2.36.1
-
-
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
