@@ -2,68 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16854529944
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 08:06:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A33A529971
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 08:21:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238612AbiEQGG3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 May 2022 02:06:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57440 "EHLO
+        id S239306AbiEQGVn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 May 2022 02:21:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235174AbiEQGG1 (ORCPT
+        with ESMTP id S231756AbiEQGVm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 May 2022 02:06:27 -0400
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9632A1A2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 23:06:26 -0700 (PDT)
-Received: by mail-oo1-xc34.google.com with SMTP id q7-20020a4adc47000000b0035f4d798376so4425086oov.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 23:06:26 -0700 (PDT)
+        Tue, 17 May 2022 02:21:42 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948F1443E6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 23:21:40 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id g12so5710251edq.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 May 2022 23:21:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=hCNmcVkJkyr6UREPk/U3gfOYerfjOeNt4hoZ5B1uXTk=;
-        b=cFZB+U9jeB3yfi38/Mfs3qMy7zVn/f9RjNOyAbXoQybgx9K6PuqkupAoXngkYu6PFP
-         Wao2XWHQxMac/ZOyF3nkJyEju6SlwTblxxWs/R4Ga5rJH5cf8UNtsUMEN5nPALJThdfr
-         OX40EDmD+6O2WIMQVW8mbnXI4zgwpveJpRNeI=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=wc3/EVjkhz+Iezw2lq8A3OB69X58dvuasJ9uoZXK6vo=;
+        b=HfZ+bb7kntTNtJOmreG6Dbv+qqechztgleb6DTAnIlLUJJS02lRkrAQDMUmoF503No
+         nGEmq5tVNeXe3gDOvL8aRcyvmIFKjW9xnGjjNcN+8Er5cybVDFKyEoA901fwI6CCPwpb
+         ku92O6xKNFADgWQmj6PQJhlpmO+uxsFt2wMxCqCZpCmAEP7mQxz0UtfD/bReieJuV4wl
+         wzvO/7NftI1IZSFGxYrYgKllMifs7S5D6jTsMxelznnUYtUW+yRcaxuLeyDtExGh7IhS
+         6IZURT5D5oibApX/Qmgg8OTVoQr20HCJhPQlmgWknri6YXN83IoJhh5uOEjzU7ivmf2M
+         9xMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=hCNmcVkJkyr6UREPk/U3gfOYerfjOeNt4hoZ5B1uXTk=;
-        b=gTrK/+aIgxR6NaObjwHj5o7tZ6+eUh0Q6MCyroLi71G7VHgKWdjyOot94Qt18kIu+z
-         WDEKoM2PyOpVjemsIyDIZIzmi8vf124Yt0i14/X3uy8toOydC/6wEw+drYmSSvJ3kTKb
-         R8EnojNAWFAFczT+vK8iwMOFToZQW95hlVUVJ/gUEohR2nlNvpUMkEgP6+R1eMF1JpyK
-         ziusSobbyiVddN175bf797WpII3IuHSPerkMT8Grbz2/IXOis2aPjmAjoKs9CPhzkeSW
-         D2jGMy5fxF9BVAOQOcGTlsGelO//zadWgLecGmOa/a+WNWqmrSVTHUAOG+7r/uCjvki3
-         +2Iw==
-X-Gm-Message-State: AOAM531Mku6ByAeLXyHYKmF10TttxOVVSKFt2ZdON4BeOI4DIe+vobBC
-        5r1N60jqJM+RwFXxrebD+T7kKGjvaa7cxNGDmy/zOg==
-X-Google-Smtp-Source: ABdhPJz3E5+o8ylS4apeBap5pfY7Cog+dvfGVMjGdgWuyn2+LmRYX7S/Cs7EjYLLIgeMzHEHVEj63CMyFfYwZLWsEsg=
-X-Received: by 2002:a4a:6f49:0:b0:35e:1902:1d3b with SMTP id
- i9-20020a4a6f49000000b0035e19021d3bmr7476202oof.1.1652767586267; Mon, 16 May
- 2022 23:06:26 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 May 2022 23:06:25 -0700
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=wc3/EVjkhz+Iezw2lq8A3OB69X58dvuasJ9uoZXK6vo=;
+        b=EYxkejqg/froIweMpBC09QQNHU1xaNJ8N1GoN/Ig2BMJt7DHfa4dREj23jW12PZDgg
+         +tuDiD7JrsMVkrFvAct0GhqtLeNpX03PNPZPAAXuo6o2IP+YhzPa+9ecWgPNKGrtBg7L
+         WPuj6qji0TgbA883yEnvRsqbHN0+ZUg9x5F0Ax5sMsLo16plAjaS6vvXmiy6h/iG67GL
+         9YEvBtLhccB/ryyzJHxDBtIEaNLFacF/i7o1Rz38N7C+/B2x25t3II3V26Z1QnG+PJnP
+         27sR3S9c9abvk551VFkCA+zoe4+oUQtghjW8bwDDrQHY5Fe5JzIZfepkSE0A+uOOuHSj
+         jZNw==
+X-Gm-Message-State: AOAM530+hLVcre9LZFyZOKqnEsW++tyTV484znO47TI4W5tgVcvBpnNr
+        GQX7FcWVEijS2C5IC/7N8NtV3A==
+X-Google-Smtp-Source: ABdhPJym9V7KYl2xSH3OCAtHgWbnK41dJm21ba5lq0sBFZVOY8Fls/Xj85PXXug9ZAfgz31Dj+J3oQ==
+X-Received: by 2002:a05:6402:390b:b0:42a:acb3:bb5 with SMTP id fe11-20020a056402390b00b0042aacb30bb5mr10734321edb.236.1652768499067;
+        Mon, 16 May 2022 23:21:39 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id m13-20020a17090677cd00b006f3ef214e0dsm617207ejn.115.2022.05.16.23.21.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 May 2022 23:21:38 -0700 (PDT)
+Message-ID: <0708c599-05cd-9357-cdd1-527fe87544dc@linaro.org>
+Date:   Tue, 17 May 2022 08:21:37 +0200
 MIME-Version: 1.0
-In-Reply-To: <4e14f1d5-2abc-8c30-d54d-7e542ca4eccf@linaro.org>
-References: <20220412194505.614002-1-swboyd@chromium.org> <YnKvoh+h07at8b65@builder.lan>
- <CAE-0n517iAS9KSdunMX18LpqDrQ4ac-yRCZq82j-XdExaGjCXA@mail.gmail.com>
- <CAE-0n53eXiz74iCHHQaC-eDFkuui9Y1xXvuqd2g0UnrwbYhZTg@mail.gmail.com> <4e14f1d5-2abc-8c30-d54d-7e542ca4eccf@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Mon, 16 May 2022 23:06:25 -0700
-Message-ID: <CAE-0n526x45m_con53GuZtTzKS8Fx-Gs1Y=uPEHY0ftO_aay_w@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: rpmh: Set wake/sleep state for BCM clks
-To:     Alex Elder <elder@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        patches@lists.linux.dev, Taniya Das <quic_tdas@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [v5 0/3] Add QCOM SNPS PHY overriding params support
+Content-Language: en-US
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com
+References: <1652723410-1630-1-git-send-email-quic_kriskura@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1652723410-1630-1-git-send-email-quic_kriskura@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,22 +85,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Alex Elder (2022-05-12 08:15:31)
-> On 5/11/22 5:04 PM, Stephen Boyd wrote:
-> >>> Will you take this in fixes, or do you want me to pick it for 5.19?
-> >>>
-> >> I'm waiting for Taniya to reply. For all I know this has no effect
-> >> because there's some sort of copy/paste from one state to another. Until
-> >> then it doesn't seem like we should do anything.
-> > Taniya told me that if there's no sleep or wake state set then active
-> > state remains even when the subsystem is in sleep. Not exactly
-> > copy/paste but at least it is consistent. We need a comment here so this
-> > doesn't come up again.
->
-> If I understand what you're saying here, your original patch is not
-> necessary, but there should be a comment in the code that explains
-> why that is the case.  Is that right?  And am I right to assume you
-> will be sending out a patch with such a comment?
->
+On 16/05/2022 19:50, Krishna Kurapati wrote:
+> Added support for overriding tuning parameters in QCOM SNPS PHY
+> from device tree. This parameter tuning is required to tune the
+> hs signal on dp/dm lines for electrical compliance to be successful.
 
-Yes.
+I commented at your v4 - please use proper PATCH subject. It is added
+automatically (with version) for example by git format-patch. Your mails
+escape regular filters - any reason why doing like that? More difficult
+for reviewers?
+
+
+Best regards,
+Krzysztof
