@@ -2,102 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC45C52AD0B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 22:54:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17EF352AD17
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 22:56:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353053AbiEQUx4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 May 2022 16:53:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46674 "EHLO
+        id S1352514AbiEQU4N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 May 2022 16:56:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353043AbiEQUxy (ORCPT
+        with ESMTP id S1353139AbiEQU4K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 May 2022 16:53:54 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6C6E52525;
-        Tue, 17 May 2022 13:53:51 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id en5so497547edb.1;
-        Tue, 17 May 2022 13:53:51 -0700 (PDT)
+        Tue, 17 May 2022 16:56:10 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7F195F41
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 May 2022 13:56:09 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id hh4so269097qtb.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 May 2022 13:56:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PAidMuA0ZfVLTFeYOY0jFETaKP5wFrL8y0MLkBWu2Mo=;
-        b=f4MOu4Orlds854J3Sjm8sYUcUV6qSn/fZ3l9OYZ5K4F6E9Y+oC9AAPkLy1eqvHjE1x
-         UuvM6w59Yo6rsmK78I+ZHrd/IztXVyb/mRdR4OH0jE2mytYs8Yd5ezAwobp/wQ1b3WeD
-         RgwIR/h8ABXxMXdBQylEYsuJZORtjxui+R2NfAtNZGsDkZ21LCgCFvIMGzxJUBOEMfG5
-         pyN9n9jLL5Vctr/o3kXuIdl0xfyC2UXnNiXVUY9j7ZnTwPTh3bmMWEyPSeJVZxpzDFE5
-         NRZfhXtqNBvEKJzO/I48LMBCd17P38CmAO74EMEki0I0d0K2uiGnx1k78oKjx0/c79k0
-         4l8A==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=IlwUjNSLf76IqlK4dytNhwOeLSPnXacyr795IjKBjN0=;
+        b=OhMMKe4D/Xy4ZfBgi4xNp/2vinjcK1iw9/dAHtcgVHLrurwYDrxu+nvOuw6/1QxysI
+         6QaUP0Xphjt8+WFHFz9mMPJCGlJ8cxXARBeTpcubZhogfi32h9bDuDPIM/ehqlanH+FG
+         zQC/R8uYxpXzjBokrAVv5F8CsznHIAKSvPdVLo2hXgt1ygUGIIN/PBS1VvfNQAUbj58r
+         iNqUWGaaQm4bqgvRit1H7duT8ehgKFPB94Dx3olM0Z3T2PlaC4kTe2Pci1ypIZU2kVLp
+         3LZqfU/RjwK3UIQjoEHTLemGexjTRhgHH6cF99pf93CP6bGgM/fe6fPUO/W8yVtiocm7
+         +Rmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PAidMuA0ZfVLTFeYOY0jFETaKP5wFrL8y0MLkBWu2Mo=;
-        b=SvylEEoHuclOLFxf1kLZI+4jQxDOjUQxlDPninok2g1TiTpsHqM2eNcnhtHOjPHFzn
-         rhJxeokdKWSj7BuxYufI+z45xduItz8OKC74YAQTTN71A5niYvrsW0rpw5ZVYSEi+vOP
-         kTfUtorQO1kMprnBD3b0iJVYpuEFTXmz/u3oUVvp9ZoXmrYKrUoWJhbvdRUc9kMwFUsy
-         x4MWu3EAgNYE3zSb3w9xhX/yA3hwq3skKPhfGnyudtobUNwmrcYMAISA2eQJTuLcQu+y
-         05jKK0C2M0sM8vOarMwaiUvA+tBfJlng4JtX+znSaGunpHo1Lrn0aeDOK0qvaltZz76X
-         8UJQ==
-X-Gm-Message-State: AOAM5321dqhfZYDj9ScOv0pAHHGbRjxO9yb+Upk+TzuV2hY0ZnTYB7om
-        fb4cq8bN8c3pv2FcVFCKtwc=
-X-Google-Smtp-Source: ABdhPJzHrBMHkcmpaUrEVq9M2mG0iY3Zq86tClH9XaiJXLfERoeVAlOjyc20MwK4KfGezBnTR1SIdQ==
-X-Received: by 2002:a50:fa8e:0:b0:42a:b1f4:91c7 with SMTP id w14-20020a50fa8e000000b0042ab1f491c7mr12779105edr.140.1652820831573;
-        Tue, 17 May 2022 13:53:51 -0700 (PDT)
-Received: from fedora.robimarko.hr ([188.252.220.143])
-        by smtp.googlemail.com with ESMTPSA id v22-20020a17090651d600b006f3ef214e10sm120907ejk.118.2022.05.17.13.53.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 May 2022 13:53:51 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v3 6/6] arm64: dts: ipq8074: add VQMMC supply
-Date:   Tue, 17 May 2022 22:53:41 +0200
-Message-Id: <20220517205341.536587-6-robimarko@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220517205341.536587-1-robimarko@gmail.com>
-References: <20220517205341.536587-1-robimarko@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=IlwUjNSLf76IqlK4dytNhwOeLSPnXacyr795IjKBjN0=;
+        b=Nqg0LXWvrK0JL4oh1L69iQOxO4CuM5GhWYheVBSbforZw7heT7+AxE1AMhYGPspw55
+         oupZj+EN5fBlm5YYxjWJmD29WTDNOXXT0ftLy7TP2LmeSQ4Qlgz0qVn6uRwi+nEZHk2E
+         d/lltWEq1AhQZHPXHqQSUXS3ZDc27dzLpuRjMQQe/I0jvh082aVOTcPZcA8ja9oXlNmE
+         YLSAiw9DZmBe0I1tSGpzCVFL5JyFYq83DXOfeEaety5c3XmgziKx1CUIeXSHiHNq86il
+         k/oF6Kfg77dkTwU48Mbfvz1F4u61nKxsZiqvRVHttO6cjM3nvUuKu3Lbptq5gfXbELMx
+         nNhA==
+X-Gm-Message-State: AOAM530RoMBkj67XKJAiO80XgwocV7uVd2rN+Zucsi1qs0AZLshZzAmy
+        xElaeNIw/Qyy5AzAnCzQVKOm7g==
+X-Google-Smtp-Source: ABdhPJzI8jTA6RPSQ/jSxS3vrh06ZHXlk0E56JG7bV/rr2t7IxudeVW3ddgVrP3RbcBI/Af2Qwrl9w==
+X-Received: by 2002:a05:622a:1a24:b0:2f3:bc7c:dade with SMTP id f36-20020a05622a1a2400b002f3bc7cdademr21557051qtb.647.1652820968738;
+        Tue, 17 May 2022 13:56:08 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id 78-20020a370a51000000b0069ffe63228fsm112755qkk.121.2022.05.17.13.56.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 May 2022 13:56:07 -0700 (PDT)
+Message-ID: <1cbd12ad-4147-5d97-ef7f-4104b630244b@linaro.org>
+Date:   Tue, 17 May 2022 15:56:06 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Remove ipa_fw_mem node on
+ trogdor
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
+References: <20220517193307.3034602-1-swboyd@chromium.org>
+ <ceb32b66-1341-d54f-a60a-5c342119c784@linaro.org>
+ <CAE-0n50rUW7Lqk4CwfSUgKYEJzwjXuVohAnbj9uKA=kEkXikyw@mail.gmail.com>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <CAE-0n50rUW7Lqk4CwfSUgKYEJzwjXuVohAnbj9uKA=kEkXikyw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SDHCI controller claims DDR, HS200 and HS400 1.8V support, however it
-cannot achieve those using the 2.95V I/O that is the default set by
-firmware.
+On 5/17/22 3:06 PM, Stephen Boyd wrote:
+> Quoting Alex Elder (2022-05-17 12:51:34)
+>> On 5/17/22 2:33 PM, Stephen Boyd wrote:
+>>> We don't use this carveout on trogdor boards, and having it defined in
+>>> the sc7180 SoC file causes an overlap message to be printed at boot.
+>>>
+>>>    OF: reserved mem: OVERLAP DETECTED!
+>>>    memory@86000000 (0x0000000086000000--0x000000008ec00000) overlaps with memory@8b700000 (0x000000008b700000--0x000000008b710000)
+>>>
+>>> Delete the node in the trogdor dtsi file to fix the overlap problem and
+>>> remove the error message.'
+>>
+>> Is the mpss_mem node (which defines 0x86000000-0x8ec00000) correct?
+> 
+> I think it is. Modem is working for me.
+> 
+>>
+>> You're right, we don't use that memory on Chrome OS, but I just
+>> wondered whether the other node might also have a problem.
+> 
+> What sort of problem are you thinking about?
 
-Since we know have access to the PMP8074 PMIC provided LDO that provides
-the I/O voltage set it as VQMMC supply so that higher speeds can actually
-be achieved.
+At some point in the past I think some of these carved out
+areas got updated (perhaps on sdm845?).  I.e. they were
+wrong, and got corrected later.  Some things worked despite
+that.  So the problem, for example, might be that the
+mpss region is bigger than it needs to be.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+I don't *assume* there's a problem, I was just asking,
+and maybe Bjorn or someone else can verify what's right.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index d1a0b77c38a4..fea3c4ee3565 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -476,6 +476,8 @@ sdhc_1: sdhci@7824900 {
- 			mmc-hs400-1_8v;
- 			bus-width = <8>;
- 
-+			vqmmc-supply = <&l11>;
-+
- 			status = "disabled";
- 		};
- 
--- 
-2.36.1
+I'm done for the day right now; otherwise I'd spend a
+little more time trying to track the information down
+myself...
+
+					-Alex
+
+
+>>
+>> I don't actually know...  Bjorn, do you?
+>>
 
