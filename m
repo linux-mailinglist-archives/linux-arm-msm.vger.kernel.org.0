@@ -2,92 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2FC952A395
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 15:37:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 543EA52A4AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 16:22:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343631AbiEQNhb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 May 2022 09:37:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34370 "EHLO
+        id S1348757AbiEQOWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 May 2022 10:22:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347934AbiEQNh3 (ORCPT
+        with ESMTP id S239837AbiEQOWA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 May 2022 09:37:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 1BDFE1834F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 May 2022 06:37:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1652794648;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=15idN99f0kdy1ioNBNYU0BPsvygdxflQgwoERNJQ43Y=;
-        b=ZURkhzQYPwzS53EUQPxo58NJbPDZOKTQg2Jm/fgTCi/7VymnV+foI02FdssIsCobNA2Aa0
-        YEcMOqKup5YGF7uS0ktOSudacxmfQWmOgAHMTZHLGvsOA9ScLQHv/CP/v1HWOGLR2bw7GP
-        cIYVcxAGHkdBuGaBwY02NcvDkngiXW8=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-661-sFHMKri0MEW7wfe_SwsuWQ-1; Tue, 17 May 2022 09:37:26 -0400
-X-MC-Unique: sFHMKri0MEW7wfe_SwsuWQ-1
-Received: by mail-qk1-f199.google.com with SMTP id 17-20020a370511000000b0069fd3b67d95so13705875qkf.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 May 2022 06:37:26 -0700 (PDT)
+        Tue, 17 May 2022 10:22:00 -0400
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4787D3F31D;
+        Tue, 17 May 2022 07:21:59 -0700 (PDT)
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-f165bc447fso14480609fac.6;
+        Tue, 17 May 2022 07:21:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=15idN99f0kdy1ioNBNYU0BPsvygdxflQgwoERNJQ43Y=;
-        b=HcICHTd5RslPfMROidPK3isukYPzodgfXJVDfcAYma740zvEtu1ZRZhwIUgunPaWXY
-         hqRmEfXB/ptl0thBg3ILBn88mhQbIo9YDT6K3YI55AYh3BBfV91jmmgDPNYA5EpisSAU
-         R/ex+NkyuAdKMPj/qv0lLaikqYdF/Sidw5jEn8owlr7L4HfeAoaV0pRu8YrukrJw5VKl
-         6TfnjPaLnuAezJlGK5DNlPTXJGkwUHWEC3GKShxC0tI0TVHLkxNYyf17HTjaFORIMh1b
-         UhkWzgZl1RlNNZTkCXOnJxjDih2e6MhNHvjerQfRYkG660kT7VkbD0JKheYTzkH/PfX+
-         iI/A==
-X-Gm-Message-State: AOAM5327jYM/oaYk/gpYZKyTLVbFLBzDkk4Tpz6KQfH237O8GW4xeK2y
-        EB+pNKE5LJIIDkKlyEeRcZhD6d6gYOrj/Wg6LSwaY66pbEWfSakXQPWUA7CYuoq4kIi0SdRWGbD
-        4Vs9sTexwv+rnm7VHHqnh3lsLlw==
-X-Received: by 2002:ad4:5767:0:b0:461:c1f6:ed22 with SMTP id r7-20020ad45767000000b00461c1f6ed22mr12896921qvx.95.1652794646298;
-        Tue, 17 May 2022 06:37:26 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzWEvTdc+kiU6iEuRRrusAk77g3OL8TxkCv+0zd1U2QhUvkif8YQ3Jge5KtB/ogqo4y8GtRnQ==
-X-Received: by 2002:ad4:5767:0:b0:461:c1f6:ed22 with SMTP id r7-20020ad45767000000b00461c1f6ed22mr12896886qvx.95.1652794646070;
-        Tue, 17 May 2022 06:37:26 -0700 (PDT)
-Received: from xps13 (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
-        by smtp.gmail.com with ESMTPSA id h13-20020ac846cd000000b002f39b99f6a3sm7397355qto.61.2022.05.17.06.37.25
+         :mime-version:content-disposition:in-reply-to;
+        bh=CGLw+fL3COQe9QIwj4OBRKj6JpcSM3QF4138gdMPdzE=;
+        b=ikGRGoc57+J5TFqxGeRAc3a3/+3tYUbcKiQhULmih7tH/uCKjgsDon8+DiSFPNGrXV
+         b7f3CGaEdR3aqAbVjHaz7FJZ/4jQl5pOKbwJHk2nQIL/8AEr7fxMNDeLsGs9F8fr5N+Y
+         cN2wQIGJ5DZqE/1FsraHvoZCxqv0ctDBYSRaxFukUWCrIWSNqD4emYhuiRAfayDp++QE
+         dWnf8mrLPr+CB1nNMs0KgNonvlzqL21e0qRu+ta+vijsKFLJZd3act4F4odYyMpg0aOL
+         PI5u68M708bbF1fBoTDinZ1GlCZiRzm/gwjntwy1UEzqcB5Ifc1wrh8bwNz82uMkWtNu
+         srbg==
+X-Gm-Message-State: AOAM530d5oEvsXbeFqI9Uh8YCF4HofKbA5zaVi8htaE4/3lMb/B+Z0P7
+        WPP/JJBpbZyLHbL6cwgx8g==
+X-Google-Smtp-Source: ABdhPJwkjZzrQtJW7pqXDLoSxK823lU3utXJvXWlEqV/zzdcAfsMM+H1ayUSQfIafy9OyB4u8Xqdjg==
+X-Received: by 2002:a05:6870:798a:b0:ee:35da:33da with SMTP id he10-20020a056870798a00b000ee35da33damr18416708oab.83.1652797318530;
+        Tue, 17 May 2022 07:21:58 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id p8-20020aca4208000000b00325cda1ffa2sm5118019oia.33.2022.05.17.07.21.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 May 2022 06:37:25 -0700 (PDT)
-Date:   Tue, 17 May 2022 09:37:25 -0400
-From:   Brian Masney <bmasney@redhat.com>
-To:     Parikshit Pareek <quic_ppareek@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Prasanna Kumar <quic_kprasan@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3] soc: qcom: Fix the id of SA8540P SoC
-Message-ID: <YoOlFezJvkGnui32@xps13>
-References: <20220513175849.4335-1-quic_ppareek@quicinc.com>
+        Tue, 17 May 2022 07:21:57 -0700 (PDT)
+Received: (nullmailer pid 959507 invoked by uid 1000);
+        Tue, 17 May 2022 14:21:56 -0000
+Date:   Tue, 17 May 2022 09:21:56 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Maulik Shah <quic_mkshah@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, ulf.hansson@linaro.org,
+        linux-kernel@vger.kernel.org, daniel.lezcano@linaro.org,
+        quic_rjendra@quicinc.com, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
+        rafael@kernel.org, quic_lsrao@quicinc.com
+Subject: Re: [PATCH v2 1/6] dt-bindings: soc: qcom: Update devicetree binding
+ document for rpmh-rsc
+Message-ID: <20220517142156.GA959450-robh@kernel.org>
+References: <1652275016-13423-1-git-send-email-quic_mkshah@quicinc.com>
+ <1652275016-13423-2-git-send-email-quic_mkshah@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220513175849.4335-1-quic_ppareek@quicinc.com>
-User-Agent: Mutt/2.2.1 (2022-02-19)
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <1652275016-13423-2-git-send-email-quic_mkshah@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 13, 2022 at 11:28:49PM +0530, Parikshit Pareek wrote:
-> Change the id of SA8540P to its correct value, i.e., 461.
+On Wed, 11 May 2022 18:46:51 +0530, Maulik Shah wrote:
+> The change documents power-domains property for RSC device.
+> This optional property points to corresponding PM domain node.
 > 
-> Fixes: 76ee15ae1b13 ("soc: qcom: socinfo: Add some more PMICs and SoCs")
-> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
-> Reviewed-by: Eric Chanudet <echanude@redhat.com>
-> Tested-by: Eric Chanudet <echanude@redhat.com>
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
 
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-
+Acked-by: Rob Herring <robh@kernel.org>
