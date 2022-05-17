@@ -2,73 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DCE8952AC46
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 21:51:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26D4052AC70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 22:06:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233185AbiEQTvj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 May 2022 15:51:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53792 "EHLO
+        id S240197AbiEQUGO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 May 2022 16:06:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235474AbiEQTvi (ORCPT
+        with ESMTP id S1352904AbiEQUGK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 May 2022 15:51:38 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 013FE48E72
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 May 2022 12:51:36 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id o190so20417288iof.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 May 2022 12:51:36 -0700 (PDT)
+        Tue, 17 May 2022 16:06:10 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4287AD12E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 May 2022 13:06:08 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 16so89077lju.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 May 2022 13:06:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=X0CjJufNCscwinSw/tM0ViQ1QozSI5Yl55fOvHEmMVA=;
-        b=nurwuf/z6wzgE+KkGJY+pIiR35UpqsAIalcZqaxDSdoqsKFungaf2X/80BYAHM1pA0
-         X5Jhbk/Sr+OoRO6ERIAiAY5yl7igFh5SrkyyirFDwEN/pr0NuU6XbVxrpziwVcUPJ9mi
-         EmEwJaY5u9WKcnCIfSMjLC1+1o7t6oBJTz/GXc2odPomQiDR+u5nengFwDx6Q7JcvMZ1
-         /c85SlkijcroS7w8fiRoE6a8sqs7JLG0rShfz3J+KRHv4o24xmxnVeVgJ03UASD49WOO
-         RJUq8XUUXF+Q1bCp0ZITNmG+RFPlsHnWBsZnb4PNDWGtM5PXzuB3CFJk1RIsAtZRI9RD
-         FvhQ==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=mvbsZxesHLOG63azhAKVTp/LJfiWJZzs4O+J5BDoyUM=;
+        b=ODsUmgzH2UowvsEapJxkiqWDkFIDzv3W31CBDdpz/yC6PKm7O/2B4zLG9QtCt6MAcA
+         t71NTTw7Qy0Cr+tcZ6Mgq/+a5MVKWLRvjRXvUgR5FR3/7DWlBkQ262dP8Bxc2Cqeip6Y
+         ZsDdwO0gMwrIjLgFAqX0GwMbWgm2N1/v/GfUo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=X0CjJufNCscwinSw/tM0ViQ1QozSI5Yl55fOvHEmMVA=;
-        b=MXeZlpkUIVZhzFRGBOjQUeBdiHb7sij1Aby0JGtClgm+2Cw0AtoCWz7BjL4/iVx+YB
-         tBfe92rz/ZpYOH16SBas07W8ZWM3Inj52k2L5OZXRjAvOxdo+iGuQCRYNdH7RAsLkJVu
-         44kBZ2l3y9A49onuwvMI0Taj2e2t94rA81/UKu00XlRQfz203IuwPGml8IrW1kSjOxgf
-         rlhnWzFOPavGKl476VY9jHqfZ1qQALiM2pOpa8Oq8rSrf2dtZFJQI1uzTJ7nlTHwbXC9
-         eoJDtjYYAMKRlDJTz8j6TQpVYKRZYDWupgysG8pdcsmLH4j5nH6Ptl+bEHn9Ccndhyut
-         /uGQ==
-X-Gm-Message-State: AOAM532uwWZgmXadU2Py/SeehCQjNmSSCZQr2xxSGJqUHnkYETpnzUnq
-        iIjR11516IE2MbNpt7Gd/2Vq5A==
-X-Google-Smtp-Source: ABdhPJzzUHBSKQZGPiaHYHds7KBaAbvtYcKoQ2eHzKRIL+FeUodWy8jYJUlf9JY/NPEE3YUiTq2A6w==
-X-Received: by 2002:a02:b384:0:b0:32e:3063:b340 with SMTP id p4-20020a02b384000000b0032e3063b340mr6154204jan.169.1652817096127;
-        Tue, 17 May 2022 12:51:36 -0700 (PDT)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id y1-20020a056602048100b0065a47e16f37sm58821iov.9.2022.05.17.12.51.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 May 2022 12:51:35 -0700 (PDT)
-Message-ID: <ceb32b66-1341-d54f-a60a-5c342119c784@linaro.org>
-Date:   Tue, 17 May 2022 14:51:34 -0500
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=mvbsZxesHLOG63azhAKVTp/LJfiWJZzs4O+J5BDoyUM=;
+        b=I+xanI6tTb+v5JCDhtkMhNU0hFIkSZB0vnlQxF3oxRtT+U3SZ/HU4X3BiPhwWnAGOK
+         3cqtoaN00K2JKM6462LQAK0hep01Mvf8YuCA8syFpb4sdtC8og4rver26P+jQHaJ9xKj
+         RU50yGje6yLtCqQqYUGMIkv1QlL7cnbvhjuFOHQy/UyrWQoPqbGfsql0LcdOmEBVtCiT
+         TAd8akJ4wWwAgUC/umGJtwoNO7uPwukSzAmYTvtYXK24ggg7xU3oN5KfX12Tix4PFG8P
+         R7UOrmc+29pH9n2SA7fCdq69bRkWyMt0sWOens9Ud+1ecbzMnRUKENP2GdIk4zLxL1gA
+         i0kA==
+X-Gm-Message-State: AOAM532M2XMrdQGenwCd1uVMItdwr+RgCOZHpBT0hOhRr8vbKd68FaS4
+        F/Gr1GZU/+Zw3MHZHGRhOnMrfZF7GJQwSGjzkVUKEw==
+X-Google-Smtp-Source: ABdhPJzcqorTOfRCis7RSf9b+7pvh+4jthqZQSdCXdNt0X8KbC2Rx0G8lw6zDck9C8VRzVof3upLg55ZcriE0z1b6Bg=
+X-Received: by 2002:a2e:5309:0:b0:253:af56:4fc0 with SMTP id
+ h9-20020a2e5309000000b00253af564fc0mr4585825ljb.341.1652817966524; Tue, 17
+ May 2022 13:06:06 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 17 May 2022 13:06:05 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Remove ipa_fw_mem node on
- trogdor
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+In-Reply-To: <ceb32b66-1341-d54f-a60a-5c342119c784@linaro.org>
+References: <20220517193307.3034602-1-swboyd@chromium.org> <ceb32b66-1341-d54f-a60a-5c342119c784@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 17 May 2022 13:06:05 -0700
+Message-ID: <CAE-0n50rUW7Lqk4CwfSUgKYEJzwjXuVohAnbj9uKA=kEkXikyw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Remove ipa_fw_mem node on trogdor
+To:     Alex Elder <elder@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
         linux-arm-msm@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
-References: <20220517193307.3034602-1-swboyd@chromium.org>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <20220517193307.3034602-1-swboyd@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,45 +67,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/17/22 2:33 PM, Stephen Boyd wrote:
-> We don't use this carveout on trogdor boards, and having it defined in
-> the sc7180 SoC file causes an overlap message to be printed at boot.
-> 
->   OF: reserved mem: OVERLAP DETECTED!
->   memory@86000000 (0x0000000086000000--0x000000008ec00000) overlaps with memory@8b700000 (0x000000008b700000--0x000000008b710000)
-> 
-> Delete the node in the trogdor dtsi file to fix the overlap problem and
-> remove the error message.'
+Quoting Alex Elder (2022-05-17 12:51:34)
+> On 5/17/22 2:33 PM, Stephen Boyd wrote:
+> > We don't use this carveout on trogdor boards, and having it defined in
+> > the sc7180 SoC file causes an overlap message to be printed at boot.
+> >
+> >   OF: reserved mem: OVERLAP DETECTED!
+> >   memory@86000000 (0x0000000086000000--0x000000008ec00000) overlaps with memory@8b700000 (0x000000008b700000--0x000000008b710000)
+> >
+> > Delete the node in the trogdor dtsi file to fix the overlap problem and
+> > remove the error message.'
+>
+> Is the mpss_mem node (which defines 0x86000000-0x8ec00000) correct?
 
-Is the mpss_mem node (which defines 0x86000000-0x8ec00000) correct?
+I think it is. Modem is working for me.
 
-You're right, we don't use that memory on Chrome OS, but I just
-wondered whether the other node might also have a problem.
+>
+> You're right, we don't use that memory on Chrome OS, but I just
+> wondered whether the other node might also have a problem.
 
-I don't actually know...  Bjorn, do you?
+What sort of problem are you thinking about?
 
-					-Alex
-
-> Cc: Alex Elder <elder@linaro.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Fixes: 310b266655a3 ("arm64: dts: qcom: sc7180: define ipa_fw_mem node")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->   arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index 732e1181af48..262224504921 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -42,6 +42,7 @@ charger-crit {
->    */
->   
->   /delete-node/ &hyp_mem;
-> +/delete-node/ &ipa_fw_mem;
->   /delete-node/ &xbl_mem;
->   /delete-node/ &aop_mem;
->   /delete-node/ &sec_apps_mem;
-> 
-> base-commit: 42226c989789d8da4af1de0c31070c96726d990c
-
+>
+> I don't actually know...  Bjorn, do you?
+>
