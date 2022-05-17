@@ -2,85 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A65095295E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 02:11:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 086C0529601
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 02:28:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231847AbiEQALj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 May 2022 20:11:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53952 "EHLO
+        id S236154AbiEQA2O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 May 2022 20:28:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230374AbiEQALi (ORCPT
+        with ESMTP id S235922AbiEQA2N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 May 2022 20:11:38 -0400
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B777863EF;
-        Mon, 16 May 2022 17:11:37 -0700 (PDT)
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-d39f741ba0so22292801fac.13;
-        Mon, 16 May 2022 17:11:37 -0700 (PDT)
+        Mon, 16 May 2022 20:28:13 -0400
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33A702E6AF;
+        Mon, 16 May 2022 17:28:12 -0700 (PDT)
+Received: by mail-oi1-f178.google.com with SMTP id w130so20697536oig.0;
+        Mon, 16 May 2022 17:28:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=B59B15X2Y9707ITMe3Q0ZoBhueaMaEM8WsTZOA0UaUI=;
-        b=k9Od3VBElk+dZsfFGmjrIczXTFr6MjGIwXflxcfNlXQSDLZ0eJs1wD6f+kkFcWV/nq
-         zxLFtWyY2u+PXO3ub0F/RwjvhZ53c+S1XdqWL5+Y02uFCZgFJmmtKbd2br0lKHr/rqrR
-         hVJz4WdLa62OiVCD/HsQNz/mda8mPAN2eNJ4NPrGu4Rtduc1r2V7MnoyDPcB9LXXEi43
-         3TWSYyMTOFmRaw8QwSFWpp3U/UBtLOkspWpphs29rCIHpSJxeGdJBZr5ogJaZ5bDtgEd
-         KJ3jBMaAW3inCIOfKcb3L4QWRNoAgkN9BdcX7LYdJ2Ivq2N2gvAM+khqbF00pAqfe4lS
-         zm0Q==
-X-Gm-Message-State: AOAM53304b+sDaJQ5Pc6GHqwJQB6YLD/So0fnmD3tKo7CmIL5P98BX93
-        aELFxjjnRA4btnpyFYUlbw==
-X-Google-Smtp-Source: ABdhPJy/FjSWyr0EuO88WWVHdVeVWy8f5dNYYK1eSBYd+d8aSX7IHAyFLoKjHN5yea6VyPWiXSOdNg==
-X-Received: by 2002:a05:6870:9a09:b0:e9:20a7:6cf6 with SMTP id fo9-20020a0568709a0900b000e920a76cf6mr16579934oab.122.1652746297033;
-        Mon, 16 May 2022 17:11:37 -0700 (PDT)
+        bh=I/PRWeG1YnE/JwHQMwD1ihP3Nmk0QEXI09vnmmG1I/c=;
+        b=Guq3jDhYFHr95e6ceON9DkOiTynAUJYiI97RivVaE0O6tGDjq4KMiUTNE/1qHaMHeI
+         86D+dkkMVZe4q9pz1ODYMRMMAhWXcbK7T2EVebHvQZPdMmJ/Uwbv3XyjEpQn2rZwbphO
+         aEk21DyEXf95Uq6gmES8JLfg62VZA36udsgcpNZPb8dx/Zxl+jyo/YT7Hgn1ffzJdP+n
+         aH2SjwzbWrEw2Xj2VHqi2+ZZ53/EG31DP6kDKIHmnij0zmzYLyWl8CD1qNLy8wvGcWgX
+         lGe7t4hUXZmo41P9dKsjhddj3tphnk2DnONH4SPYyvh3ddmOS362py0BhLbdmo7KWHrU
+         Mgsg==
+X-Gm-Message-State: AOAM531fdi3SsgaYsFtU7eRFlMsbBNO0dptTbBglcZa6G3462h75dy14
+        kp6yM46Eg2r4oG4743icNw==
+X-Google-Smtp-Source: ABdhPJwvzVvygq2R77xdkS3Qd2tI9QqB+QUPnXu1a1IvA0UAspMLsaoDdmtMdWPZ4suAnNykk0La4Q==
+X-Received: by 2002:a05:6808:d49:b0:328:ed5c:f8da with SMTP id w9-20020a0568080d4900b00328ed5cf8damr5388314oik.64.1652747291482;
+        Mon, 16 May 2022 17:28:11 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id x16-20020a056830245000b0060603221251sm4411822otr.33.2022.05.16.17.11.35
+        by smtp.gmail.com with ESMTPSA id eg1-20020a056870988100b000edf5a12baasm5990009oab.46.2022.05.16.17.28.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 May 2022 17:11:36 -0700 (PDT)
-Received: (nullmailer pid 3620853 invoked by uid 1000);
-        Tue, 17 May 2022 00:11:34 -0000
-Date:   Mon, 16 May 2022 19:11:34 -0500
+        Mon, 16 May 2022 17:28:10 -0700 (PDT)
+Received: (nullmailer pid 3650380 invoked by uid 1000);
+        Tue, 17 May 2022 00:28:09 -0000
+Date:   Mon, 16 May 2022 19:28:09 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-leds@vger.kernel.org,
-        Daniel Thompson <daniel.thompson@linaro.org>,
+Cc:     Stephen Boyd <sboyd@codeaurora.org>,
+        David Heidelberg <david@ixit.cz>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Luca Weiss <luca@z3ntu.xyz>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Lee Jones <lee.jones@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
-        Kiran Gunda <kgunda@codeaurora.org>
-Subject: Re: [PATCH 1/2] dt-bindings: leds: qcom-wled: fix number of addresses
-Message-ID: <20220517001134.GA3620793-robh@kernel.org>
-References: <20220505154702.422108-1-krzysztof.kozlowski@linaro.org>
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH 01/11] dt-bindings: pinctrl: qcom,pmic-gpio: document
+ PM8150L and PMM8155AU
+Message-ID: <20220517002809.GA3650315-robh@kernel.org>
+References: <20220507194913.261121-1-krzysztof.kozlowski@linaro.org>
+ <20220507194913.261121-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220505154702.422108-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220507194913.261121-2-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 05 May 2022 17:47:01 +0200, Krzysztof Kozlowski wrote:
-> On PM660L, PMI8994 and PMI8998, the WLED has two address spaces.  This
-> also fixes dtbs_check warnings like:
-> 
->   arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dtb: leds@d800: reg: [[55296], [55552]] is too long
+On Sat, 07 May 2022 21:49:03 +0200, Krzysztof Kozlowski wrote:
+> Add missing compatibles for devices: PM8150L and PMM8155AU.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../devicetree/bindings/leds/backlight/qcom-wled.yaml    | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Rob Herring <robh@kernel.org>
