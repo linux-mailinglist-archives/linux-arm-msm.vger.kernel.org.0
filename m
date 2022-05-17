@@ -2,165 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C510C529AB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 09:26:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD0A5529B77
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 09:52:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235896AbiEQH0i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 May 2022 03:26:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45850 "EHLO
+        id S241863AbiEQHwG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 May 2022 03:52:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241091AbiEQH0T (ORCPT
+        with ESMTP id S242014AbiEQHwE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 May 2022 03:26:19 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A260101C6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 May 2022 00:26:17 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id kq17so32936741ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 May 2022 00:26:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=mkv+AFLKZ6z0pAWxiMD1eopJToeMN6aA5f5FUcc/dXc=;
-        b=djzgp8BTUZLH3FFMHVMXHi+RtKuPZCyyi+WeIn35v+xQ0YLN/eVBWWr0O7nSEe5XRE
-         RSXkIbxBerlskygCynbFApJ5+f6ctyT9lXsQP64L4fkhhJfXFlPAUFKqg6KoWz+dnumx
-         ZSB68iDT0kCh0exTS0PUZ0Dg/PswM5X53OaD5UUpuJJkFIzSANPssYzujL7MMcXd90y4
-         mJ2x2Losq1/2oz42FgJ1HauyUdcxTAf397rPzQ43R1oi2+AudM987DF+q4Y6EfHoz8j5
-         k3NDeu80iCyecY7fmIqvzpaNO4JLDWdJyDbgbnbd2qk+YPcE9a54qZ/v5WvGeaSZP8Ld
-         46aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=mkv+AFLKZ6z0pAWxiMD1eopJToeMN6aA5f5FUcc/dXc=;
-        b=1WZz2LlQ7eW28rtTRhgNZucyXTf0Eek5FCMj/QBrfrjaEGKPJzdiBdRPK1XuW3poId
-         3cP7oDVDEsnjg2ryDt3OYFS2tG1yoPSnS3CYEJsOccxVtmM4UJN3BdeBCs4MTJIxPAe5
-         Py8CeOQN0SJa6qzKhBmpuaYI/PM7N90/g9Q4aaCjcGa7UJsj6CDFFGogMEb3VxiK8Yd4
-         TDg7evTVh/yZ1Z12caSaw2oNEf1fxPfbGZJuJurPMwfA5FUOSip2eYpeZnbmTrISs+HE
-         a/37eSZpt3YZ5ag5lR+W2zOhD1M3IDS0x+HjBxWCx2Qjk6gavoizITNdE9PlzjgFfJdZ
-         +djw==
-X-Gm-Message-State: AOAM5309pUrz0zthajTfJvo6PlaZFN3S05FmAtfuFsYLgTvYaTpcYT8Y
-        clsXIuKz6XgZ3P9WdhAo5WIMiQ==
-X-Google-Smtp-Source: ABdhPJwgO/s2grWZe3PZvtpp+Q5Pvo1W2bpG+p15ZvVLJiQz2sQvGpgkchxCLLh4NmCrawcJmR9+JQ==
-X-Received: by 2002:a17:906:9748:b0:6fa:8c68:af0e with SMTP id o8-20020a170906974800b006fa8c68af0emr19080152ejy.153.1652772375886;
-        Tue, 17 May 2022 00:26:15 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id hv6-20020a17090760c600b006f3ef214d9esm711213ejc.4.2022.05.17.00.26.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 May 2022 00:26:15 -0700 (PDT)
-Message-ID: <fa11d71b-d53e-1eb3-22db-e7237c523cd4@linaro.org>
-Date:   Tue, 17 May 2022 09:26:14 +0200
+        Tue, 17 May 2022 03:52:04 -0400
+Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECF6B1CB02;
+        Tue, 17 May 2022 00:52:01 -0700 (PDT)
+Received: from canpemm500007.china.huawei.com (unknown [172.30.72.57])
+        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4L2SwJ0nT3z1JCGB;
+        Tue, 17 May 2022 15:50:40 +0800 (CST)
+Received: from [10.174.179.215] (10.174.179.215) by
+ canpemm500007.china.huawei.com (7.192.104.62) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Tue, 17 May 2022 15:51:59 +0800
+Subject: Re: linux-next: Tree for May 16 (drm/msm: kconfig warning)
+To:     Randy Dunlap <rdunlap@infradead.org>,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        Linux Next Mailing List <linux-next@vger.kernel.org>
+CC:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>
+References: <20220516205718.2c5a52f9@canb.auug.org.au>
+ <e61b5844-2595-4138-bf64-5b4d48ec8a4f@infradead.org>
+From:   YueHaibing <yuehaibing@huawei.com>
+Message-ID: <65ec4f4f-5fba-73eb-e73c-81366d94ac0b@huawei.com>
+Date:   Tue, 17 May 2022 15:51:58 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH 1/6] dt-bindings: regulator: qcom,spmi-regulator: Convert
- to dtschema
+In-Reply-To: <e61b5844-2595-4138-bf64-5b4d48ec8a4f@infradead.org>
+Content-Type: text/plain; charset="utf-8"
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220515203118.474684-1-robimarko@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220515203118.474684-1-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.174.179.215]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ canpemm500007.china.huawei.com (7.192.104.62)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/05/2022 22:31, Robert Marko wrote:
-> Convert the bindings of Qualcomm SPMI regulators to DT schema.
+On 2022/5/16 23:10, Randy Dunlap wrote:
 > 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> ---
-> I am aware that syscon alone is not really acceptable, its converted
-> directly from the old text bindings.
+> On 5/16/22 03:57, Stephen Rothwell wrote:
+>> Hi all,
+>>
+>> Changes since 20220513:
+>>
 > 
-> There is also the issue of some MSM8994, MSM8996 and APQ8096 devices using
-> '#address-cells', '#size-cells', some even defining reg property for
-> regulators.
+> on i386 or x86_64:
 > 
-> Any advice on how to solve these issues is appreciated.
-> ---
->  .../regulator/qcom,spmi-regulator.yaml        | 176 ++++++++++++++++++
+> WARNING: unmet direct dependencies detected for DRM_DP_AUX_BUS
+>   Depends on [n]: HAS_IOMEM [=y] && DRM [=y] && OF [=n]
+>   Selected by [y]:
+>   - DRM_MSM [=y] && HAS_IOMEM [=y] && DRM [=y] && (ARCH_QCOM || SOC_IMX5 || COMPILE_TEST [=y]) && COMMON_CLK [=y] && IOMMU_SUPPORT [=y] && (QCOM_OCMEM [=n] || QCOM_OCMEM [=n]=n) && (QCOM_LLCC [=n] || QCOM_LLCC [=n]=n) && (QCOM_COMMAND_DB [=n] || QCOM_COMMAND_DB [=n]=n)
 
-You miss here the actual conversion... where is the removal of old file?
+This is fixed by
+https://www.spinics.net/lists/kernel/msg4349168.html
 
->  1 file changed, 176 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
-> new file mode 100644
-> index 000000000000..f7da310f1845
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
-> @@ -0,0 +1,176 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/regulator/qcom,spmi-regulator.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm SPMI Regulators
-> +
-> +maintainers:
-> +  - Robert Marko <robert.marko@sartura.hr>
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,pm660-regulators
-> +      - qcom,pm660l-regulators
-> +      - qcom,pm8004-regulators
-> +      - qcom,pm8005-regulators
-> +      - qcom,pm8226-regulators
-> +      - qcom,pm8841-regulators
-> +      - qcom,pm8916-regulators
-> +      - qcom,pm8941-regulators
-> +      - qcom,pm8950-regulators
-> +      - qcom,pm8994-regulators
-> +      - qcom,pmi8994-regulators
-> +      - qcom,pms405-regulators
-> +
-> +  qcom,saw-reg:
-> +    description: Reference to syscon node defining the SAW registers
-> +    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,pm8941-regulators
-> +    then:
-> +      properties:
-> +        interrupts:
-> +          items:
-> +            - description: Over-current protection interrupt for 5V S1
-> +            - description: Over-current protection interrupt for 5V S2
-> +        interrupt-names:
-> +          items:
-> +            - const: ocp-5vs1
-> +            - const: ocp-5vs2
-> +
-> +patternProperties:
-
-This goes just after "properties:"
-
-> +  ".*-supply$":
-> +    description: Input supply phandle(s) for this node
-> +    $ref: "/schemas/types.yaml#/definitions/phandle"
-> +
-
-Best regards,
-Krzysztof
+> 
+> Full randconfig file is attached.
+> 
