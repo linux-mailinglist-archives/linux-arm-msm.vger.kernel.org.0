@@ -2,80 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD0A5529B77
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 09:52:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E54D529BDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 10:12:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241863AbiEQHwG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 May 2022 03:52:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49080 "EHLO
+        id S238841AbiEQIMA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 May 2022 04:12:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242014AbiEQHwE (ORCPT
+        with ESMTP id S242524AbiEQIL6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 May 2022 03:52:04 -0400
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECF6B1CB02;
-        Tue, 17 May 2022 00:52:01 -0700 (PDT)
-Received: from canpemm500007.china.huawei.com (unknown [172.30.72.57])
-        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4L2SwJ0nT3z1JCGB;
-        Tue, 17 May 2022 15:50:40 +0800 (CST)
-Received: from [10.174.179.215] (10.174.179.215) by
- canpemm500007.china.huawei.com (7.192.104.62) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Tue, 17 May 2022 15:51:59 +0800
-Subject: Re: linux-next: Tree for May 16 (drm/msm: kconfig warning)
-To:     Randy Dunlap <rdunlap@infradead.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        Linux Next Mailing List <linux-next@vger.kernel.org>
-CC:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>
-References: <20220516205718.2c5a52f9@canb.auug.org.au>
- <e61b5844-2595-4138-bf64-5b4d48ec8a4f@infradead.org>
-From:   YueHaibing <yuehaibing@huawei.com>
-Message-ID: <65ec4f4f-5fba-73eb-e73c-81366d94ac0b@huawei.com>
-Date:   Tue, 17 May 2022 15:51:58 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
-MIME-Version: 1.0
-In-Reply-To: <e61b5844-2595-4138-bf64-5b4d48ec8a4f@infradead.org>
+        Tue, 17 May 2022 04:11:58 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA8283CA5B;
+        Tue, 17 May 2022 01:11:57 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0D8CAB81676;
+        Tue, 17 May 2022 08:11:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA72FC34118;
+        Tue, 17 May 2022 08:11:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652775114;
+        bh=llNkl7VjoDFq45GE9zLRv3fM/rdlrqyTYZ0Se5GgTdo=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=UtSmDl9WNRGU0BI0/WBNJk0fMEnYSZXzY4F9kNiqfmN/mKUBJDNFK5zySt5d4RR+f
+         dCsuRZ6NaYYyJTfcqgEu0o+eO5cQE6oOMQq/P3ppWwLfSa4ir2bUKkJbnKvRebhERZ
+         ACWmtMNRJSI47E/uEWw8WTb8S3np8wK/hKoL+JqwLabjODlI3aqMUTB3i8LDNFk1d9
+         kiHYXaw2sTdAmhSj18ZVzteVBAGIsEOHo4ksASJccQmrWzYv+slI7x9HdYgYOHdwa/
+         /bZt3LL5ovU/Sgw6fd8r/uU0QJErFhGO+QxhBXVh2so0W35vsGr4f/BqneXwKgQd5t
+         bkNbyss5hlqHw==
 Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.174.179.215]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- canpemm500007.china.huawei.com (7.192.104.62)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20220426212136.1543984-1-bjorn.andersson@linaro.org>
+References: <20220426212136.1543984-1-bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v4] clk: qcom: rcg2: Cache CFG register updates for parked RCGs
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Date:   Tue, 17 May 2022 01:11:52 -0700
+User-Agent: alot/0.10
+Message-Id: <20220517081154.AA72FC34118@smtp.kernel.org>
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022/5/16 23:10, Randy Dunlap wrote:
-> 
-> On 5/16/22 03:57, Stephen Rothwell wrote:
->> Hi all,
->>
->> Changes since 20220513:
->>
-> 
-> on i386 or x86_64:
-> 
-> WARNING: unmet direct dependencies detected for DRM_DP_AUX_BUS
->   Depends on [n]: HAS_IOMEM [=y] && DRM [=y] && OF [=n]
->   Selected by [y]:
->   - DRM_MSM [=y] && HAS_IOMEM [=y] && DRM [=y] && (ARCH_QCOM || SOC_IMX5 || COMPILE_TEST [=y]) && COMMON_CLK [=y] && IOMMU_SUPPORT [=y] && (QCOM_OCMEM [=n] || QCOM_OCMEM [=n]=n) && (QCOM_LLCC [=n] || QCOM_LLCC [=n]=n) && (QCOM_COMMAND_DB [=n] || QCOM_COMMAND_DB [=n]=n)
+Quoting Bjorn Andersson (2022-04-26 14:21:36)
+> As GDSCs are turned on and off some associated clocks are momentarily
+> enabled for house keeping purposes. For this, and similar, purposes the
+> "shared RCGs" will park the RCG on a source clock which is known to be
+> available.
+> When the RCG is parked, a safe clock source will be selected and
+> committed, then the original source would be written back and upon enable
+> the change back to the unparked source would be committed.
+>=20
+> But starting with SM8350 this fails, as the value in CFG is committed by
+> the GDSC handshake and without a ticking parent the GDSC enablement will
+> time out.
+>=20
+> This becomes a concrete problem if the runtime supended state of a
+> device includes disabling such rcg's parent clock. As the device
+> attempts to power up the domain again the rcg will fail to enable and
+> hence the GDSC enablement will fail, preventing the device from
+> returning from the suspended state.
+>=20
+> This can be seen in e.g. the display stack during probe on SM8350.
+>=20
+> To avoid this problem, the software needs to ensure that the RCG is
+> configured to a active parent clock while it is disabled. This is done
+> by caching the CFG register content while the shared RCG is parked on
+> this safe source.
+>=20
+> Writes to M, N and D registers are committed as they are requested. New
+> helpers for get_parent() and recalc_rate() are extracted from their
+> previous implementations and __clk_rcg2_configure() is modified to allow
+> it to operate on the cached value.
+>=20
+> Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as n=
+eeded")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
 
-This is fixed by
-https://www.spinics.net/lists/kernel/msg4349168.html
-
-> 
-> 
-> Full randconfig file is attached.
-> 
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
