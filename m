@@ -2,142 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A65D529FA8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 12:43:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFEAC52A096
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 May 2022 13:40:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343923AbiEQKnX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 May 2022 06:43:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45408 "EHLO
+        id S1345349AbiEQLkk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 May 2022 07:40:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229546AbiEQKnS (ORCPT
+        with ESMTP id S240513AbiEQLkk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 May 2022 06:43:18 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F09429CAD;
-        Tue, 17 May 2022 03:43:15 -0700 (PDT)
+        Tue, 17 May 2022 07:40:40 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F7223E5D5;
+        Tue, 17 May 2022 04:40:39 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id n8so14283281qke.11;
+        Tue, 17 May 2022 04:40:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652784195; x=1684320195;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=7p0dGKuqEbRbw64q/uX8k4TvVX18WXNffIzyoespWLo=;
-  b=ZBv1sodi6Dkxi95/dTxAJWQiZopCesSk76THFzKgy4kEkhIj2NGtvR3P
-   2EEruRHt67a42rZTaTkUVBJNNnh4Tuz02lgfR1lQr0hFRdVpWhQoj9T1u
-   IKItkcMezx/Bxhl33nSsiTsCc9jbRn/MOMmxnFiZXcj80V+0DK6AAqlMG
-   g=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 17 May 2022 03:43:15 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 May 2022 03:43:15 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 17 May 2022 03:43:15 -0700
-Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 17 May 2022 03:43:11 -0700
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-To:     <bjorn.andersson@linaro.org>, <mani@kernel.org>,
-        <jassisinghbrar@gmail.com>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <agross@kernel.org>, Prasad Sodagudi <quic_psodagud@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH v3] mailbox: qcom-ipcc: Log the pending interrupt during resume
-Date:   Tue, 17 May 2022 16:13:00 +0530
-Message-ID: <1652784180-10142-1-git-send-email-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uM51Zcymw4uk08szgMKZErz3xEoJBdUgSYcbBXV2GbY=;
+        b=pZfuPhwLGJ9jCe30O2q0IX3kvPhgLsZPkwgxHup2DQgixUYZvP/SsfbaP6LP3TjhBL
+         zYJtoxEXYWyeu5XmIGFr/pKFj1W+rHpuTgnxYtcATWMwS+tJGt9Bwocu720EqBGMdieQ
+         HaJoyP7jdb6+W4tF8xMarVherM3a1rkQmcW4o7zvlUTxp9B1kRXM+0tagy9QmYF08yZi
+         208byjI2U8jlP/6Zy0V5+h4VWn1NngxtzKHm/7ELURGMo6m8x0anyJFgBS0iZauS16az
+         ssLUgJwNUeXOFTyAdZ+VREOYIOJ4uVn42/eYRO+71TWGHyo9oRoYksLFzsDhBK6q9A+K
+         ITnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uM51Zcymw4uk08szgMKZErz3xEoJBdUgSYcbBXV2GbY=;
+        b=npWEEUoo2baqI4e6xXi2cUey4McAj0BoAqawmT7Lbts+EVF7kWAqzI3/eqF8xNttmD
+         AtBtmAxvK+Ch7frZVgAA98LZpqiWUnDjamlVahyeWEQCjjMJ+yRQXcbgofdmEYEEeIsa
+         KnhEBUVVBFzy+JpB/o3WlHxmONVf3ZzgU+buo4xbkdQuY9y1mMDkhseqwb1QbPaWPMga
+         AiaWfvjF3Q9sy3lhCW0wMJMpny9oBUMgzJLGN+QyeIuTJ1kYGJfo6pPh7OyoULIQnv/u
+         fLUacTT9FOGf+TQiXiEg41jESMrpZsVqCmqlsE9nVny80xGBPB2fO3o0o8P9Q4tyF3JW
+         zHMw==
+X-Gm-Message-State: AOAM530ZNLta/T+D0RIwD+v3fBXjwBhQ6nYNZUsaDMXk5k/zMv9GIOuE
+        b443VzAQIJRqKd6xpojGmMB5At1lPQVQze/3l0Q=
+X-Google-Smtp-Source: ABdhPJxNJYcB7qT1GnstL4Yc2ivjya6G/7KHE8kNzleGLFZI+uU9E//UH1YL+g9xhZ8AFHnCNyxrMddb7xpApyvWDMc=
+X-Received: by 2002:a05:620a:1a01:b0:69c:fda:7404 with SMTP id
+ bk1-20020a05620a1a0100b0069c0fda7404mr15931147qkb.522.1652787638429; Tue, 17
+ May 2022 04:40:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220515203118.474684-1-robimarko@gmail.com> <fa11d71b-d53e-1eb3-22db-e7237c523cd4@linaro.org>
+In-Reply-To: <fa11d71b-d53e-1eb3-22db-e7237c523cd4@linaro.org>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Tue, 17 May 2022 13:40:27 +0200
+Message-ID: <CAOX2RU6AtVY5HSqK6LJk24yK2LPMN8YP4ZFgfHa2geEgwQcAgg@mail.gmail.com>
+Subject: Re: [PATCH 1/6] dt-bindings: regulator: qcom,spmi-regulator: Convert
+ to dtschema
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        lgirdwood@gmail.com, broonie@kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Devicetree List <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Prasad Sodagudi <quic_psodagud@quicinc.com>
+On Tue, 17 May 2022 at 09:26, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 15/05/2022 22:31, Robert Marko wrote:
+> > Convert the bindings of Qualcomm SPMI regulators to DT schema.
+> >
+> > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > ---
+> > I am aware that syscon alone is not really acceptable, its converted
+> > directly from the old text bindings.
+> >
+> > There is also the issue of some MSM8994, MSM8996 and APQ8096 devices using
+> > '#address-cells', '#size-cells', some even defining reg property for
+> > regulators.
+> >
+> > Any advice on how to solve these issues is appreciated.
+> > ---
+> >  .../regulator/qcom,spmi-regulator.yaml        | 176 ++++++++++++++++++
+>
+> You miss here the actual conversion... where is the removal of old file?
 
-Enable logging of the pending interrupt that triggered device wakeup. This
-logging information helps to debug IRQs that cause periodic device wakeups
-by printing the detailed information of pending IPCC interrupts.
+Hi,
 
-Scenario: Device wakeup caused by Modem crash
-Logs:
-qcom-ipcc mailbox: virq: 182 triggered client-id: 2; signal-id: 2
+Oh yeah, sorry for forgetting this.
+Will fixup in v2.
 
-From the IPCC bindings it can further be understood that the client here is
-IPCC_CLIENT_MPSS and the signal was IPCC_MPROC_SIGNAL_SMP2P.
+>
+> >  1 file changed, 176 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+> > new file mode 100644
+> > index 000000000000..f7da310f1845
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+> > @@ -0,0 +1,176 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/regulator/qcom,spmi-regulator.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm SPMI Regulators
+> > +
+> > +maintainers:
+> > +  - Robert Marko <robert.marko@sartura.hr>
+> > +
+> > +properties:
+> > +  compatible:
+> > +    enum:
+> > +      - qcom,pm660-regulators
+> > +      - qcom,pm660l-regulators
+> > +      - qcom,pm8004-regulators
+> > +      - qcom,pm8005-regulators
+> > +      - qcom,pm8226-regulators
+> > +      - qcom,pm8841-regulators
+> > +      - qcom,pm8916-regulators
+> > +      - qcom,pm8941-regulators
+> > +      - qcom,pm8950-regulators
+> > +      - qcom,pm8994-regulators
+> > +      - qcom,pmi8994-regulators
+> > +      - qcom,pms405-regulators
+> > +
+> > +  qcom,saw-reg:
+> > +    description: Reference to syscon node defining the SAW registers
+> > +    $ref: "/schemas/types.yaml#/definitions/phandle"
+> > +
+> > +allOf:
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            enum:
+> > +              - qcom,pm8941-regulators
+> > +    then:
+> > +      properties:
+> > +        interrupts:
+> > +          items:
+> > +            - description: Over-current protection interrupt for 5V S1
+> > +            - description: Over-current protection interrupt for 5V S2
+> > +        interrupt-names:
+> > +          items:
+> > +            - const: ocp-5vs1
+> > +            - const: ocp-5vs2
+> > +
+> > +patternProperties:
+>
+> This goes just after "properties:"
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Prasad Sodagudi <quic_psodagud@quicinc.com>
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
+Will fixup in v2.
 
-V3:
- * Use pm_sleep_ptr and convert info to dbg [Mani]
- * Fixup commit message
-
-V2:
- * Fix build error when ipcc is a module [Kernel Test Bot]
-
- drivers/mailbox/qcom-ipcc.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
-
-diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index c5d963222014..5a42bc2a1083 100644
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -254,6 +254,24 @@ static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc,
- 	return devm_mbox_controller_register(dev, mbox);
- }
- 
-+static int qcom_ipcc_pm_resume(struct device *dev)
-+{
-+	struct qcom_ipcc *ipcc = dev_get_drvdata(dev);
-+	u32 hwirq;
-+	int virq;
-+
-+	hwirq = readl(ipcc->base + IPCC_REG_RECV_ID);
-+	if (hwirq == IPCC_NO_PENDING_IRQ)
-+		return 0;
-+
-+	virq = irq_find_mapping(ipcc->irq_domain, hwirq);
-+
-+	dev_dbg(dev, "virq: %d triggered client-id: %ld; signal-id: %ld\n", virq,
-+		FIELD_GET(IPCC_CLIENT_ID_MASK, hwirq), FIELD_GET(IPCC_SIGNAL_ID_MASK, hwirq));
-+
-+	return 0;
-+}
-+
- static int qcom_ipcc_probe(struct platform_device *pdev)
- {
- 	struct qcom_ipcc *ipcc;
-@@ -324,6 +342,10 @@ static const struct of_device_id qcom_ipcc_of_match[] = {
- };
- MODULE_DEVICE_TABLE(of, qcom_ipcc_of_match);
- 
-+static const struct dev_pm_ops qcom_ipcc_dev_pm_ops = {
-+	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(NULL, qcom_ipcc_pm_resume)
-+};
-+
- static struct platform_driver qcom_ipcc_driver = {
- 	.probe = qcom_ipcc_probe,
- 	.remove = qcom_ipcc_remove,
-@@ -331,6 +353,7 @@ static struct platform_driver qcom_ipcc_driver = {
- 		.name = "qcom-ipcc",
- 		.of_match_table = qcom_ipcc_of_match,
- 		.suppress_bind_attrs = true,
-+		.pm = pm_sleep_ptr(&qcom_ipcc_dev_pm_ops),
- 	},
- };
- 
--- 
-2.7.4
-
+Regards,
+Robert
+>
+> > +  ".*-supply$":
+> > +    description: Input supply phandle(s) for this node
+> > +    $ref: "/schemas/types.yaml#/definitions/phandle"
+> > +
+>
+> Best regards,
+> Krzysztof
