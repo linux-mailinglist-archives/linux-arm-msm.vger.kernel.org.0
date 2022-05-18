@@ -2,106 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3286952B970
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 14:14:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5E6A52BBFC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:16:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236294AbiERML0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 08:11:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42126 "EHLO
+        id S237015AbiERMsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 08:48:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236310AbiERMLP (ORCPT
+        with ESMTP id S237572AbiERMqF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 08:11:15 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 170A449CB2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 05:11:13 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id f4so3204770lfu.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 05:11:13 -0700 (PDT)
+        Wed, 18 May 2022 08:46:05 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D87511632AC;
+        Wed, 18 May 2022 05:43:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/ENvXu+nmn3kyb9H+0ZeCKYYHHyXbkqj1LHdwtAGdSg=;
-        b=whGvaDFXtPjWJjERWS3MYYHUgg39F7kI65IjOQv09J4z265YWLvU27qa6tdsTR7Eln
-         nT3Oq2UZF7zHS96hgzVIgjzMoZtwWlE2sHQGq7QJSJstqXXrHUKSOxK5o35iqc4X1qm/
-         BdmY6W23p3ZVWpbcgdp4lSZ4L4c2JeJCVF+W55wRnoIX7iHTUGW8/9xr4TYCw2g0d971
-         +B0qTyFdV7itCadyuD1K5LYVLv4uzeie/Y3SBzVhJqGR1UGtVUlVF3/4ayGLdgYyGcQQ
-         J9BWPUAxtYvWVaXbTi6aB730Y3rHRMo2pQ41/Q2SezRzYsbvI9gj54eteYOpZJj/bVt+
-         33Mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/ENvXu+nmn3kyb9H+0ZeCKYYHHyXbkqj1LHdwtAGdSg=;
-        b=SGHZh5ETGANhk4TXQAauBXsk5X6PLVEVmv0q+nElfMfh8r0kFIhzpnskYPWuxQniRJ
-         XcJ9ag4cLDTm2W+2TTyteDYhmAE+RSZSSRkLN36U7SvoPS1Qt53diCtE9oBxm3nMAtra
-         TA1Ao8AYaiPM+eO695i96IkZf95rB+cOiQ70wHtLM8Iry1hE+gh4GCO/hhkJZdfG+EQ2
-         pX/LQARa0nYEuxdRoSnZOyV293fpCQGmpXwoP0GgD/+NjHMvswdUUhVd+YlBvnOMfPt+
-         TtwIMa+6m5TjoW4k1ITRbdvgwzw2C6zKfN19BHbb983ICLxaaLRtkXnS8P1HzchP0o+9
-         mD4A==
-X-Gm-Message-State: AOAM532tSPPxxiBBKqTIqSXpt8aiF1AKva2e4ZQYzk+8O9dXcYmjbGPJ
-        RNGFjWGynGf+QKmED0mRFjNRPQ==
-X-Google-Smtp-Source: ABdhPJxeHTzzDWGQYLcuzUk6Jc2MaylhGO874SauCO4XaqINd6x6qsTPHrJq4q/KH4b8aHCf8iT4pg==
-X-Received: by 2002:a05:6512:6d2:b0:473:a7cb:8f06 with SMTP id u18-20020a05651206d200b00473a7cb8f06mr20341004lff.267.1652875871450;
-        Wed, 18 May 2022 05:11:11 -0700 (PDT)
-Received: from localhost.localdomain (mobile-access-b04822-211.dhcp.inet.fi. [176.72.34.211])
-        by smtp.gmail.com with ESMTPSA id o8-20020a2ebd88000000b0024f3d1daeccsm194460ljq.84.2022.05.18.05.11.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 May 2022 05:11:11 -0700 (PDT)
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To:     Robert Foss <robert.foss@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8250: camss: Add power-domain-names property
-Date:   Wed, 18 May 2022 15:11:04 +0300
-Message-Id: <20220518121104.951621-3-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20220518121104.951621-1-vladimir.zapolskiy@linaro.org>
-References: <20220518121104.951621-1-vladimir.zapolskiy@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652877785; x=1684413785;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=s1haGoMzWn+D78/Wjs5Eo95uLM9lSkcETlTB2+3u46w=;
+  b=hnpwlAkkzVzs23vGtWnOfs/wUZonfu7p2syRxT77kFgjRaBgptaGyWRy
+   YYYiBm8r2Oajs5yr+k9fV8Xhg4g7sBXtbvnNC+CC+2Vf3zZNLQg0WYlG3
+   dxcU+71xKU3D09DqeYMl7Ix3sgK4GFLhl4PTJQ1/2cnTmDp/Nq87w0ki4
+   4=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 18 May 2022 05:43:03 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2022 05:43:03 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 18 May 2022 05:43:02 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 18 May 2022 05:42:56 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>, <vkoul@kernel.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v2] ASoC: qcom: soundwire: Add support for controlling audio CGCR from HLOS
+Date:   Wed, 18 May 2022 18:12:35 +0530
+Message-ID: <1652877755-25120-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QCOM SM8250 camera subsystem depends on three power domains, at the moment
-all of them are not differentiated one from another, however the power
-domains compose a hierarchical structure with vfe0 and vfe1 as subdomains
-of titan_top, also managing vfe0 and vfe1 separately allows to get more
-fine-grained power control in runtime.
+Add support for controlling soundwire audio CGCR interface using clock
+framework to make hclk ungating with software. As per new hardware
+changes, software has to always ungate hclk if soundwire is operational
+and keep it running. This requirement is for latest LPASS chipsets for
+RX, TX and WSA path to work.
 
-The change should have no implications on any SM8250 CAMSS users, since
-none of the boards supported in upstream enables the camss device tree node.
-
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+This patch set depends on:
+    -- Clock driver patches for CGCR reset control support.
+	--- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638002
+	--- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=637998	
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 26afaa4f98fe..d7bd20412f06 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3289,6 +3289,7 @@ camss: camss@ac6a000 {
- 			power-domains = <&camcc IFE_0_GDSC>,
- 					<&camcc IFE_1_GDSC>,
- 					<&camcc TITAN_TOP_GDSC>;
-+			power-domain-names = "vfe0", "vfe1", "titan_top";
+Changes since v1:
+    -- Add audio cgcr reset control in runtime PM resume handler.
+    -- Update dependency list.
+
+ drivers/soundwire/qcom.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index da1ad7e..445e481 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -13,6 +13,7 @@
+ #include <linux/of_device.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
++#include <linux/reset.h>
+ #include <linux/slab.h>
+ #include <linux/pm_wakeirq.h>
+ #include <linux/slimbus.h>
+@@ -142,6 +143,7 @@ struct qcom_swrm_ctrl {
+ 	struct device *dev;
+ 	struct regmap *regmap;
+ 	void __iomem *mmio;
++	struct reset_control *audio_cgcr;
+ #ifdef CONFIG_DEBUG_FS
+ 	struct dentry *debugfs;
+ #endif
+@@ -656,6 +658,8 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
+ 	val = FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_ROW_CTRL_BMSK, ctrl->rows_index);
+ 	val |= FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_COL_CTRL_BMSK, ctrl->cols_index);
  
- 			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
- 				 <&gcc GCC_CAMERA_HF_AXI_CLK>,
++	reset_control_reset(ctrl->audio_cgcr);
++
+ 	ctrl->reg_write(ctrl, SWRM_MCP_FRAME_CTRL_BANK_ADDR(0), val);
+ 
+ 	/* Enable Auto enumeration */
+@@ -1333,6 +1337,10 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+ 	ctrl->bus.compute_params = &qcom_swrm_compute_params;
+ 	ctrl->bus.clk_stop_timeout = 300;
+ 
++	ctrl->audio_cgcr = devm_reset_control_get_exclusive(dev, "swr_audio_cgcr");
++	if (IS_ERR(ctrl->audio_cgcr))
++		dev_err(dev, "Failed to get audio_cgcr reset required for soundwire-v1.6.0\n");
++
+ 	ret = qcom_swrm_get_port_config(ctrl);
+ 	if (ret)
+ 		goto err_clk;
+@@ -1486,6 +1494,8 @@ static int __maybe_unused swrm_runtime_resume(struct device *dev)
+ 		qcom_swrm_get_device_status(ctrl);
+ 		sdw_handle_slave_status(&ctrl->bus, ctrl->status);
+ 	} else {
++		reset_control_reset(ctrl->audio_cgcr);
++
+ 		ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL, SWRM_MCP_BUS_CLK_START);
+ 		ctrl->reg_write(ctrl, SWRM_INTERRUPT_CLEAR,
+ 			SWRM_INTERRUPT_STATUS_MASTER_CLASH_DET);
 -- 
-2.33.0
+2.7.4
 
