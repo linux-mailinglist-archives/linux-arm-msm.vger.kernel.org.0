@@ -2,31 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87F2252BC94
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:16:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEEBB52BCE5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:17:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238110AbiERNkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 09:40:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55792 "EHLO
+        id S238089AbiERNms (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 09:42:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238109AbiERNkh (ORCPT
+        with ESMTP id S238078AbiERNmr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 09:40:37 -0400
+        Wed, 18 May 2022 09:42:47 -0400
 Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7395317066C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 06:40:35 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BB101A8E24
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 06:42:46 -0700 (PDT)
 Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id F3BBD2060E;
-        Wed, 18 May 2022 15:40:31 +0200 (CEST)
-Message-ID: <77726e82-eaef-4cce-514a-1df04e5c33ee@somainline.org>
-Date:   Wed, 18 May 2022 15:40:30 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id C2AE720602;
+        Wed, 18 May 2022 15:42:44 +0200 (CEST)
+Message-ID: <d60f32dc-a9f5-95ad-245e-6b9521d73fce@somainline.org>
+Date:   Wed, 18 May 2022 15:42:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.9.0
-Subject: Re: [PATCH v3 5/6] arm64: dts: ipq8074: add SPMI PMP8074 PMIC
+Subject: Re: [PATCH v3 4/6] regulator: qcom_spmi: Add support for PMP8074
  regulators
 To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
         bjorn.andersson@linaro.org, lgirdwood@gmail.com,
@@ -34,9 +34,9 @@ To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 References: <20220517205341.536587-1-robimarko@gmail.com>
- <20220517205341.536587-5-robimarko@gmail.com>
+ <20220517205341.536587-4-robimarko@gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220517205341.536587-5-robimarko@gmail.com>
+In-Reply-To: <20220517205341.536587-4-robimarko@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
@@ -50,76 +50,59 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 17/05/2022 22:53, Robert Marko wrote:
-> PMP8074 is used in IPQ8074 and provides S3 for cores,
-> S4 for UBI core and LDO11 for SDIO/eMMC.
+> PMP8074 is a companion PMIC for the Qualcomm IPQ8074 WiSoC-s.
 >
-> So, lets add the nodes in preparation for DVFS later.
+> It features 5 HF-SMPS and 13 LDO regulators.
+>
+> This commit adds support for S3 and S4 HF-SMPS buck regulators of
+> the HFS430 type and LDO11 of the HT_P150 type.
+> S3 is the CPU cluster voltage supply, S4 supplies the UBI32 NPU cores
+> and LDO11 is the SDIO/eMMC I/O voltage regulator required for high speeds.
 >
 > Signed-off-by: Robert Marko <robimarko@gmail.com>
 > ---
->   arch/arm64/boot/dts/qcom/ipq8074.dtsi | 34 +++++++++++++++++++++++++++
->   1 file changed, 34 insertions(+)
+>   drivers/regulator/qcom_spmi-regulator.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
 >
-> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> index 789fec7c6aa4..d1a0b77c38a4 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> @@ -5,6 +5,7 @@
+> diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+> index 38bbc70241ae..696b088aae40 100644
+> --- a/drivers/regulator/qcom_spmi-regulator.c
+> +++ b/drivers/regulator/qcom_spmi-regulator.c
+> @@ -2137,6 +2137,13 @@ static const struct spmi_regulator_data pms405_regulators[] = {
+>   	{ }
+>   };
 >   
->   #include <dt-bindings/interrupt-controller/arm-gic.h>
->   #include <dt-bindings/clock/qcom,gcc-ipq8074.h>
-> +#include <dt-bindings/spmi/spmi.h>
->   
->   / {
->   	model = "Qualcomm Technologies, Inc. IPQ8074";
-> @@ -421,6 +422,39 @@ spmi_bus: spmi@200f000 {
->   			interrupt-controller;
->   			#interrupt-cells = <4>;
->   			cell-index = <0>;
+> +static const struct spmi_regulator_data pmp8074_regulators[] = {
+
+Please sort the struct alphabletically.
+
+
+> +	{ "s3", 0x1a00, "vdd_s3"},
+> +	{ "s4", 0x1d00, "vdd_s4"},
+> +	{ "l11", 0x4a00, "vdd_l10_l11_l12_l13"},
+
+Are the other regulators somehow not controllable through SPMI? Please 
+leave a comment if that's the case.
+
+
+> +	{ }
+> +};
 > +
-> +			pmic@1 {
+>   static const struct of_device_id qcom_spmi_regulator_match[] = {
+>   	{ .compatible = "qcom,pm8004-regulators", .data = &pm8004_regulators },
+>   	{ .compatible = "qcom,pm8005-regulators", .data = &pm8005_regulators },
+> @@ -2150,6 +2157,7 @@ static const struct of_device_id qcom_spmi_regulator_match[] = {
+>   	{ .compatible = "qcom,pm660-regulators", .data = &pm660_regulators },
+>   	{ .compatible = "qcom,pm660l-regulators", .data = &pm660l_regulators },
+>   	{ .compatible = "qcom,pms405-regulators", .data = &pms405_regulators },
+> +	{ .compatible = "qcom,pmp8074-regulators", .data = &pmp8074_regulators },
 
-Hi!
-
-
-These nodes belong in the PMIC DTSI (check pm8150.dtsi and others alike 
-for reference).
+Please sort the compatible too.
 
 
 Konrad
 
-> +				compatible ="qcom,spmi-pmic";
-> +				reg = <0x1 SPMI_USID>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				regulators {
-> +					compatible = "qcom,pmp8074-regulators";
-> +
-> +					s3: s3 {
-> +						regulator-name = "vdd_s3";
-> +						regulator-min-microvolt = <592000>;
-> +						regulator-max-microvolt = <1064000>;
-> +						regulator-always-on;
-> +						regulator-boot-on;
-> +					};
-> +
-> +					s4: s4 {
-> +						regulator-name = "vdd_s4";
-> +						regulator-min-microvolt = <712000>;
-> +						regulator-max-microvolt = <992000>;
-> +						regulator-always-on;
-> +						regulator-boot-on;
-> +					};
-> +
-> +					l11: l11 {
-> +						regulator-name = "l11";
-> +						regulator-min-microvolt = <1800000>;
-> +						regulator-max-microvolt = <3300000>;
-> +					};
-> +				};
-> +			};
->   		};
->   
->   		sdhc_1: sdhci@7824900 {
+>   	{ }
+>   };
+>   MODULE_DEVICE_TABLE(of, qcom_spmi_regulator_match);
 >
