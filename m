@@ -2,65 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E3C652C01E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 19:09:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EE9E52BFF3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 19:09:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240405AbiERQnZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 12:43:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36944 "EHLO
+        id S240380AbiERQpO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 12:45:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240401AbiERQnY (ORCPT
+        with ESMTP id S240373AbiERQpN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 12:43:24 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D1E271DA1;
-        Wed, 18 May 2022 09:43:22 -0700 (PDT)
+        Wed, 18 May 2022 12:45:13 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AF4C1F90E7;
+        Wed, 18 May 2022 09:45:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652892203; x=1684428203;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=HWRBR0+UgN1qn8UzjMrMhlumkaHTOr4lbZ2cBy/KxG0=;
-  b=NMjqzpcWOaDws/9VFhS+zcW0/ixNgM6qR5WcPmlMwyGTYBksthP4xEkD
-   brwxrKGEmAjJjywlDcrxJsFAuKxRyf79pPXloOoprN0r9Z4ZQnEax+IkD
-   CXdInObDRAjrnphMehGZaXObYzGyL9goCLuC/boK4MJOmfZFUFDdyNkRS
+  t=1652892312; x=1684428312;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=IHD8R53ViZVfE2U9tkZ1tF0jKXT5TVgiPELK1dh1qKc=;
+  b=D5KGdAk+2MfVneK+z1BdgqQTutoDZPkPjJep+Pt3lBBagVkY5MuBacQm
+   ZA3gsU1b/p56r128MY4J+sTTTleHmFn+U79EX6EdpHk1LI87DxjaYVhyI
+   Ql0aZJKh3oqd0if8Uk/BXm/T/o0n7UBeNTflTazGEJLa/oLZkwOvZWoBp
    s=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 18 May 2022 09:43:22 -0700
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 18 May 2022 09:45:12 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2022 09:43:21 -0700
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2022 09:45:12 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 18 May 2022 09:43:21 -0700
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ 15.2.986.22; Wed, 18 May 2022 09:44:39 -0700
+Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 18 May 2022 09:43:20 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <bjorn.andersson@linaro.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 2/2] drm/msm/dp: delete vdda regulator related functions from eDP/DP controller
-Date:   Wed, 18 May 2022 09:43:06 -0700
-Message-ID: <1652892186-22346-3-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1652892186-22346-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1652892186-22346-1-git-send-email-quic_khsieh@quicinc.com>
+ 15.2.986.22; Wed, 18 May 2022 09:44:35 -0700
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+To:     <arnd@arndb.de>, <catalin.marinas@arm.com>, <rostedt@goodmis.org>
+CC:     <gregkh@linuxfoundation.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <coresight@lists.linaro.org>, <suzuki.poulose@arm.com>,
+        <maz@kernel.org>, <quic_psodagud@quicinc.com>,
+        <quic_tsoni@quicinc.com>, <will@kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Subject: [PATCHv15 0/9] lib/rwmmio/arm64: Add support to trace register reads/writes
+Date:   Wed, 18 May 2022 22:14:09 +0530
+Message-ID: <cover.1652891705.git.quic_saipraka@quicinc.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,216 +67,160 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Vdda regulators are related to both eDP and DP phy so that it should be
-managed at eDP and DP phy driver instead of controller. This patch remove
-vdda regulators related functions out of eDP/DP controller.
+Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
+are typically used to read/write from/to memory mapped registers
+and can cause hangs or some undefined behaviour in following cases,
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_parser.c | 14 ------
- drivers/gpu/drm/msm/dp/dp_parser.h |  6 ---
- drivers/gpu/drm/msm/dp/dp_power.c  | 95 +-------------------------------------
- 3 files changed, 2 insertions(+), 113 deletions(-)
+* If the access to the register space is unclocked, for example: if
+  there is an access to multimedia(MM) block registers without MM
+  clocks.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-index 8f9fed9..4ef2130 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.c
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-@@ -22,14 +22,6 @@
- #define DP_DEFAULT_P0_OFFSET	0x1000
- #define DP_DEFAULT_P0_SIZE	0x0400
- 
--static const struct dp_regulator_cfg sdm845_dp_reg_cfg = {
--	.num = 2,
--	.regs = {
--		{"vdda-1p2", 21800, 4 },	/* 1.2 V */
--		{"vdda-0p9", 36000, 32 },	/* 0.9 V */
--	},
--};
--
- static void __iomem *dp_ioremap(struct platform_device *pdev, int idx, size_t *len)
- {
- 	struct resource *res;
-@@ -298,12 +290,6 @@ static int dp_parser_parse(struct dp_parser *parser)
- 	if (rc)
- 		return rc;
- 
--	/* Map the corresponding regulator information according to
--	 * version. Currently, since we only have one supported platform,
--	 * mapping the regulator directly.
--	 */
--	parser->regulator_cfg = &sdm845_dp_reg_cfg;
--
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-index 3a4d797..b56b4d7 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.h
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-@@ -101,11 +101,6 @@ struct dp_reg_entry {
- 	int disable_load;
- };
- 
--struct dp_regulator_cfg {
--	int num;
--	struct dp_reg_entry regs[DP_DEV_REGULATOR_MAX];
--};
--
- /**
-  * struct dp_parser - DP parser's data exposed to clients
-  *
-@@ -121,7 +116,6 @@ struct dp_parser {
- 	struct dp_pinctrl pinctrl;
- 	struct dp_io io;
- 	struct dp_display_data disp_data;
--	const struct dp_regulator_cfg *regulator_cfg;
- 	u32 max_dp_lanes;
- 	struct drm_bridge *next_bridge;
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
-index d9e0117..b52ac1d 100644
---- a/drivers/gpu/drm/msm/dp/dp_power.c
-+++ b/drivers/gpu/drm/msm/dp/dp_power.c
-@@ -20,82 +20,10 @@ struct dp_power_private {
- 	struct clk *link_clk_src;
- 	struct clk *pixel_provider;
- 	struct clk *link_provider;
--	struct regulator_bulk_data supplies[DP_DEV_REGULATOR_MAX];
- 
- 	struct dp_power dp_power;
- };
- 
--static void dp_power_regulator_disable(struct dp_power_private *power)
--{
--	struct regulator_bulk_data *s = power->supplies;
--	const struct dp_reg_entry *regs = power->parser->regulator_cfg->regs;
--	int num = power->parser->regulator_cfg->num;
--	int i;
--
--	DBG("");
--	for (i = num - 1; i >= 0; i--)
--		if (regs[i].disable_load >= 0)
--			regulator_set_load(s[i].consumer,
--					   regs[i].disable_load);
--
--	regulator_bulk_disable(num, s);
--}
--
--static int dp_power_regulator_enable(struct dp_power_private *power)
--{
--	struct regulator_bulk_data *s = power->supplies;
--	const struct dp_reg_entry *regs = power->parser->regulator_cfg->regs;
--	int num = power->parser->regulator_cfg->num;
--	int ret, i;
--
--	DBG("");
--	for (i = 0; i < num; i++) {
--		if (regs[i].enable_load >= 0) {
--			ret = regulator_set_load(s[i].consumer,
--						 regs[i].enable_load);
--			if (ret < 0) {
--				pr_err("regulator %d set op mode failed, %d\n",
--					i, ret);
--				goto fail;
--			}
--		}
--	}
--
--	ret = regulator_bulk_enable(num, s);
--	if (ret < 0) {
--		pr_err("regulator enable failed, %d\n", ret);
--		goto fail;
--	}
--
--	return 0;
--
--fail:
--	for (i--; i >= 0; i--)
--		regulator_set_load(s[i].consumer, regs[i].disable_load);
--	return ret;
--}
--
--static int dp_power_regulator_init(struct dp_power_private *power)
--{
--	struct regulator_bulk_data *s = power->supplies;
--	const struct dp_reg_entry *regs = power->parser->regulator_cfg->regs;
--	struct platform_device *pdev = power->pdev;
--	int num = power->parser->regulator_cfg->num;
--	int i, ret;
--
--	for (i = 0; i < num; i++)
--		s[i].supply = regs[i].name;
--
--	ret = devm_regulator_bulk_get(&pdev->dev, num, s);
--	if (ret < 0) {
--		pr_err("%s: failed to init regulator, ret=%d\n",
--						__func__, ret);
--		return ret;
--	}
--
--	return 0;
--}
--
- static int dp_power_clk_init(struct dp_power_private *power)
- {
- 	int rc = 0;
-@@ -318,21 +246,10 @@ int dp_power_client_init(struct dp_power *dp_power)
- 
- 	pm_runtime_enable(&power->pdev->dev);
- 
--	rc = dp_power_regulator_init(power);
--	if (rc) {
--		DRM_ERROR("failed to init regulators %d\n", rc);
--		goto error;
--	}
--
- 	rc = dp_power_clk_init(power);
--	if (rc) {
-+	if (rc)
- 		DRM_ERROR("failed to init clocks %d\n", rc);
--		goto error;
--	}
--	return 0;
- 
--error:
--	pm_runtime_disable(&power->pdev->dev);
- 	return rc;
- }
- 
-@@ -365,22 +282,15 @@ int dp_power_init(struct dp_power *dp_power, bool flip)
- 	power = container_of(dp_power, struct dp_power_private, dp_power);
- 
- 	pm_runtime_get_sync(&power->pdev->dev);
--	rc = dp_power_regulator_enable(power);
--	if (rc) {
--		DRM_ERROR("failed to enable regulators, %d\n", rc);
--		goto exit;
--	}
- 
- 	rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
- 	if (rc) {
- 		DRM_ERROR("failed to enable DP core clocks, %d\n", rc);
--		goto err_clk;
-+		goto exit;
- 	}
- 
- 	return 0;
- 
--err_clk:
--	dp_power_regulator_disable(power);
- exit:
- 	pm_runtime_put_sync(&power->pdev->dev);
- 	return rc;
-@@ -393,7 +303,6 @@ int dp_power_deinit(struct dp_power *dp_power)
- 	power = container_of(dp_power, struct dp_power_private, dp_power);
- 
- 	dp_power_clk_enable(dp_power, DP_CORE_PM, false);
--	dp_power_regulator_disable(power);
- 	pm_runtime_put_sync(&power->pdev->dev);
- 	return 0;
- }
+* If the register space is protected and not set to be accessible from
+  non-secure world, for example: only EL3 (EL: Exception level) access
+  is allowed and any EL2/EL1 access is forbidden.
+
+* If xPU(memory/register protection units) is controlling access to
+  certain memory/register space for specific clients.
+
+and more...
+
+Such cases usually results in instant reboot/SErrors/NOC or interconnect
+hangs and tracing these register accesses can be very helpful to debug
+such issues during initial development stages and also in later stages.
+
+So use ftrace trace events to log such MMIO register accesses which
+provides rich feature set such as early enablement of trace events,
+filtering capability, dumping ftrace logs on console and many more.
+
+Sample output:
+
+rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
+rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
+
+This series is a follow-up for the series [1] and a recent series [2] making use
+of both.
+
+[1] https://lore.kernel.org/lkml/cover.1536430404.git.saiprakash.ranjan@codeaurora.org/
+[2] https://lore.kernel.org/lkml/1604631386-178312-1-git-send-email-psodagud@codeaurora.org/
+
+Note in v4 version, Arnd suggested to benchmark and compare size with callback
+based implementation, please see [3] for more details on that with brief comparison below.
+
+
+**Inline version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
+$ size vmlinux
+   text           data             bss     dec             hex         filename
+ 23884219        14284468         532568 38701255        24e88c7        vmlinux
+
+**Callback version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
+$ size vmlinux
+    text          data             bss     dec             hex        filename
+ 24108179        14279596         532568 38920343        251e097       vmlinux
+
+$ ./scripts/bloat-o-meter inline-vmlinux callback-vmlinux
+add/remove: 8/3 grow/shrink: 4889/89 up/down: 242244/-11564 (230680)
+Total: Before=25812612, After=26043292, chg +0.89%
+
+[3] https://lore.kernel.org/lkml/466449a1-36da-aaa9-7e4f-477f36b52c9e@quicinc.com/
+
+Changes in v15:
+* Fix unnecessary casts (Steve).
+
+Changes in v14:
+ * Add more description to disabling MMIO traces in geni serial drivers (Steve).
+
+Changes in v13:
+ * Remove the copyright update as one line change doesn't warrant it (Greg and Lawyers :))
+ * Update the comment about disabling MMIO traces in geni se and uart drivers.
+ * Add description for the build time flag to asm-generic/io.h.
+
+Changes in v12:
+ * Split the generic flag addition patch (Greg).
+ * Move the flag from makefile to driver .c file (Greg).
+
+Changes in v11:
+ * Use unsigned long for caller ip and current ip addr (Steven Rostedt).
+ * Include review tags from Arnd.
+
+Changes in v10:
+ * Use GENMASK(31, 0) for -Woverflow warning in irqchip tegra driver (Marc).
+ * Convert ETM4x ARM64 driver to use asm-generic IO memory barriers (Catalin).
+ * Collect ack from Catalin for arm64 change.
+
+Changes in v9:
+ * Use TRACE_EVENT_CLASS for rwmmio_write and post_write (Steven Rostedt).
+
+Changes in v8:
+ * Fix build error reported by kernel test robot.
+
+Changes in v7:
+ * Use lib/ instead of kernel/trace/ based on review comment by Steven Rostedt.
+
+Changes in v6:
+ * Implemented suggestions by Arnd Bergmann:
+   - Use arch independent IO barriers in arm64/asm
+   - Add ARCH_HAVE_TRACE_MMIO_ACCESS
+   - Add post read and post write logging support
+   - Remove tracepoint_active check
+ * Fix build error reported by kernel test robot.
+
+Changes in v5:
+ * Move arm64 to use asm-generic provided high level MMIO accessors (Arnd).
+ * Add inline logging for MMIO relaxed and non-relaxed accessors.
+ * Move nVHE KVM comment to makefile (Marc).
+ * Fix overflow warning due to switch to inline accessors instead of macro.
+ * Modify trace event field to include caller and parent details for more detailed logs.
+
+Changes in v4:
+ * Drop dynamic debug based filter support since that will be developed later with
+   the help from Steven (Ftrace maintainer).
+ * Drop value passed to writel as it is causing hangs when tracing is enabled.
+ * Code cleanup for trace event as suggested by Steven for earlier version.
+ * Fixed some build errors reported by 0-day bot.
+
+Changes in v3:
+ * Create a generic mmio header for instrumented version (Earlier suggested in [1]
+   by Will Deacon and recently [2] by Greg to have a generic version first).
+ * Add dynamic debug support to filter out traces which can be very useful for targeted
+   debugging specific to subsystems or drivers.
+ * Few modifications to the rwmmio trace event fields to include the mmio width and print
+   addresses in hex.
+ * Rewrote commit msg to explain some more about usecases.
+
+Prasad Sodagudi (1):
+  lib: Add register read/write tracing support
+
+Sai Prakash Ranjan (8):
+  arm64: io: Use asm-generic high level MMIO accessors
+  coresight: etm4x: Use asm-generic IO memory barriers
+  irqchip/tegra: Fix overflow implicit truncation warnings
+  drm/meson: Fix overflow implicit truncation warnings
+  KVM: arm64: Add a flag to disable MMIO trace for nVHE KVM
+  asm-generic/io: Add logging support for MMIO accessors
+  serial: qcom_geni_serial: Disable MMIO tracing for geni serial
+  soc: qcom: geni: Disable MMIO tracing for GENI SE
+
+ arch/Kconfig                                  |  3 +
+ arch/arm64/Kconfig                            |  1 +
+ arch/arm64/include/asm/io.h                   | 41 ++------
+ arch/arm64/kvm/hyp/nvhe/Makefile              |  7 +-
+ drivers/gpu/drm/meson/meson_viu.c             | 22 ++---
+ .../coresight/coresight-etm4x-core.c          |  8 +-
+ drivers/hwtracing/coresight/coresight-etm4x.h |  8 +-
+ drivers/irqchip/irq-tegra.c                   | 10 +-
+ drivers/soc/qcom/qcom-geni-se.c               |  3 +
+ drivers/tty/serial/qcom_geni_serial.c         |  3 +
+ include/asm-generic/io.h                      | 91 ++++++++++++++++-
+ include/trace/events/rwmmio.h                 | 97 +++++++++++++++++++
+ lib/Kconfig                                   |  7 ++
+ lib/Makefile                                  |  2 +
+ lib/trace_readwrite.c                         | 47 +++++++++
+ 15 files changed, 288 insertions(+), 62 deletions(-)
+ create mode 100644 include/trace/events/rwmmio.h
+ create mode 100644 lib/trace_readwrite.c
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.33.1
 
