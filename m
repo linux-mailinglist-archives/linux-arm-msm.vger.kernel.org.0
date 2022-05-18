@@ -2,69 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54C4652C31F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 21:17:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CF8152C32B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 21:19:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241855AbiERTOp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 15:14:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51928 "EHLO
+        id S234862AbiERTTN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 15:19:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241859AbiERTOm (ORCPT
+        with ESMTP id S236202AbiERTTM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 15:14:42 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47DAA218FD5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 12:14:40 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id n18so2685890plg.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 12:14:40 -0700 (PDT)
+        Wed, 18 May 2022 15:19:12 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C7521B5FA8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 12:19:11 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id w14so5262846lfl.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 12:19:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qK+m+Erb6YskG54m9a0bE+9PKUoSbB3wH6ButzQ9n3Q=;
-        b=G6JAvGTF4t35/9+wVonfb58EYzknmk/NVfYwjLaPGl23ONjHlJaLCqjVGRuAQkc/0s
-         9U1O3sBns3FNWh0jLoFRRObRkkS3I+MJizPhqtbNTQ1oTUSGXn96cHuw/qxzIYE6+WUm
-         8leVxiUwEFbFK6Ky9EHJmzA9792MfXYHYC8BYzB10DnIYzedRXQub2NG9AN3/xlCw91q
-         38sg9QwmjAIrhOs0tV83qp7hy8rxB4XWZdYQ6TlSSVwLuD3pNMR2rOjOJa/ZPnq557jd
-         Pbu9lDxH8xByPrfG1abG9Y45vA1Djl+3V1WP+rzOqaJggKfbSewzgujMO5XEuNjmm+Po
-         N2nQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=wvaWzADdM7DSnsBh4ZAoxyMLzUUhSncSX5FP71iYjVw=;
+        b=Z8gML/o1hRUDPMKBQF3J+hxlHRQjbgRezUGsNFhzYshnHrDtnN5CKiMLS3+AeoK8MQ
+         6+ZAMO62DkxqCgpCwMm/HfF+1CqhAYnlze04dZwLj1HaD7ezxwUhKxkr9op9bv/wyBrG
+         HkfamvtTe1GpixzfiT6KDMUlbnyZoaFw4rUb3iCYXgIpLxAX62+sfwLflSN9OEN+EWQM
+         FgAMLvzvVyj5dAFmlLkFBE3SQSxAfMlZ8Bxn3a1ie8/ocBbBxXc+0EfHpB6+mLKdiQub
+         uDeFTk8EBNqqtosaqpIQ0su8Ey2wFyf3uIOgn7kc0FhX+ULZDRKKXU66bcRAWQMc/x41
+         TRDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qK+m+Erb6YskG54m9a0bE+9PKUoSbB3wH6ButzQ9n3Q=;
-        b=FN5Plv5CHRXfG6IPBZB+gTdd3n0mRHd6vcDBDVlSTQ/Jk07v0H56kjbzG79Xt+wqyw
-         mO0coxj2SA/ZG+Uh3+5LX6TZ+EGhpnRqxNKHZE1sVZbu3/D1DKhw5M7g7yhVwypunsW9
-         /PXYq7iqa8YjBwJhZLdFRN0bvIJHkex0THvYEdgKph1CHEIm/3U9gL5wzzc80zpB9cv4
-         cuj3MeELU3FxDqRZ2CB/7lgmZuRU/xEDyuGgUqNmGo1ltrs8e4VsLvrwBem/mc2TH9rs
-         JR7mq4FE2GBAUvwYH3Hmwirodrkz0RdY73u3ZNnzPR9wNXOLaPgqGl3PhyqUqIlE4Ylg
-         aOgA==
-X-Gm-Message-State: AOAM5320vBj1v9pZccTI4KmLVLjTqKI/88emP3uub57zPoMSgb7lF3NL
-        IVAdFEbhbTM6tBSBBFNseqOmsyRFbTq3GEpeVfMWIQ==
-X-Google-Smtp-Source: ABdhPJzizzRytewvRzJhZwf64TDazyWn8WzPmuJAiEMTvXLBnDcBb1l3srZGk4ut908jU2tcbcWiOh0iOEl82lineq0=
-X-Received: by 2002:a17:90b:1e4e:b0:1dc:583c:398 with SMTP id
- pi14-20020a17090b1e4e00b001dc583c0398mr943991pjb.232.1652901279708; Wed, 18
- May 2022 12:14:39 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=wvaWzADdM7DSnsBh4ZAoxyMLzUUhSncSX5FP71iYjVw=;
+        b=D/CucTcAokyDrnAVutuPSCtrNFe+WmcGDoEF4PeyD8jAaDkH313yusGIs4+vP1/bwv
+         GhX1rgpdX8Bog5TNpGJ0oaPO9RishirpebiyxUlNFtFFKUkJbVGz/viVPS9fMI4JUmaa
+         upX92Yn0e/x53WwriYXBCGoroB9T5Dtm7gw5xggQy8Kko1ujCf0B4f9JweJqzd23Sjp2
+         9MHG77uuRDq7vtM8WOYa/eyShyKwhLkrZ0xUjh3Gn3ejKYLMTuGlVkamx1HT0PfgJp5y
+         r72ZjFD3M4xYsmr+ZlN8vHXDtndr2SmK+/Zpr9cbpERmDEscSgJthBVhJYv6pohd5e4t
+         0Cxg==
+X-Gm-Message-State: AOAM5332nRgCrjKdWo3X8r+b8GEHfUIk7CkZAxMUpn0AcHnaM4Oau5Wa
+        YEsoiBXZ2Irxr0r2v6K7mttsQQ==
+X-Google-Smtp-Source: ABdhPJzJSLZnoa2/JlL2grPwpJnM3CN6awJYDRZFGpqtIdAaPJYFgMmAcWEBTZQPDbHr+XCSzjji6g==
+X-Received: by 2002:ac2:4ac9:0:b0:471:f6da:640d with SMTP id m9-20020ac24ac9000000b00471f6da640dmr665727lfp.286.1652901549250;
+        Wed, 18 May 2022 12:19:09 -0700 (PDT)
+Received: from ?IPV6:2001:470:dd84:abc0::8a5? ([2001:470:dd84:abc0::8a5])
+        by smtp.gmail.com with ESMTPSA id d25-20020ac24c99000000b00477b624c0a8sm31111lfl.180.2022.05.18.12.19.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 May 2022 12:19:08 -0700 (PDT)
+Message-ID: <23cb9c6e-129f-df79-b734-aac1a92264a9@linaro.org>
+Date:   Wed, 18 May 2022 22:19:07 +0300
 MIME-Version: 1.0
-References: <20220504122725.179262-1-robert.foss@linaro.org>
- <20220504122725.179262-4-robert.foss@linaro.org> <20220516235057.GA3564535-robh@kernel.org>
-In-Reply-To: <20220516235057.GA3564535-robh@kernel.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Wed, 18 May 2022 21:14:27 +0200
-Message-ID: <CAG3jFyufJtYP_t8mmYWFgOHarbfOcu9VpbFFDO0DPdrB=XXHXw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/6] dt-bindings: clock: Add Qcom SM8350 GPUCC bindings
-To:     Rob Herring <robh@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, krzk+dt@kernel.org,
-        jonathan@marek.ca, tdas@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Dmitry Baryshkov <dmityr.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v6 2/5] clk: qcom: regmap: add PHY clock source
+ implementation
+Content-Language: en-GB
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>
+Cc:     Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20220513175339.2981959-1-dmitry.baryshkov@linaro.org>
+ <20220513175339.2981959-3-dmitry.baryshkov@linaro.org>
+ <20220518175808.EC29AC385A5@smtp.kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220518175808.EC29AC385A5@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,109 +87,164 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 17 May 2022 at 01:50, Rob Herring <robh@kernel.org> wrote:
->
-> On Wed, May 04, 2022 at 02:27:22PM +0200, Robert Foss wrote:
-> > Add device tree bindings for graphics clock controller for
-> > Qualcomm Technology Inc's SM8350 SoCs.
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > Reviewed-by: Dmitry Baryshkov <dmityr.baryshkov@linaro.org>
-> > ---
-> >  .../devicetree/bindings/clock/qcom,gpucc.yaml |  2 +
-> >  include/dt-bindings/clock/qcom,gpucc-sm8350.h | 52 +++++++++++++++++++
-> >  2 files changed, 54 insertions(+)
-> >  create mode 100644 include/dt-bindings/clock/qcom,gpucc-sm8350.h
-> >
-> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
-> > index 9ebcb1943b0a..4090cc7ea2ae 100644
-> > --- a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
-> > +++ b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
-> > @@ -20,6 +20,7 @@ description: |
-> >      dt-bindings/clock/qcom,gpucc-sm6350.h
-> >      dt-bindings/clock/qcom,gpucc-sm8150.h
-> >      dt-bindings/clock/qcom,gpucc-sm8250.h
-> > +    dt-bindings/clock/qcom,gpucc-sm8350.h
-> >
-> >  properties:
-> >    compatible:
-> > @@ -31,6 +32,7 @@ properties:
-> >        - qcom,sm6350-gpucc
-> >        - qcom,sm8150-gpucc
-> >        - qcom,sm8250-gpucc
-> > +      - qcom,sm8350-gpucc
-> >
-> >    clocks:
-> >      items:
-> > diff --git a/include/dt-bindings/clock/qcom,gpucc-sm8350.h b/include/dt-bindings/clock/qcom,gpucc-sm8350.h
-> > new file mode 100644
-> > index 000000000000..d2294e0d527e
-> > --- /dev/null
-> > +++ b/include/dt-bindings/clock/qcom,gpucc-sm8350.h
-> > @@ -0,0 +1,52 @@
-> > +/* SPDX-License-Identifier: GPL-2.0-only */
->
-> QCom reviewed and approved the license on this, right?
->
-> Dual license.
+On 18/05/2022 20:58, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2022-05-13 10:53:36)
+>> diff --git a/drivers/clk/qcom/clk-regmap-phy-mux.c b/drivers/clk/qcom/clk-regmap-phy-mux.c
+>> new file mode 100644
+>> index 000000000000..d7a45f7fa1aa
+>> --- /dev/null
+>> +++ b/drivers/clk/qcom/clk-regmap-phy-mux.c
+>> @@ -0,0 +1,62 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2022, Linaro Ltd.
+>> + */
+>> +
+>> +#include <linux/kernel.h>
+>> +#include <linux/bitops.h>
+>> +#include <linux/regmap.h>
+>> +#include <linux/export.h>
+> 
+> clk-provider.h for clk_hw/clk_ops usage. It helps with grep to identify
+> clk providers.
+> 
+>> +
+>> +#include "clk-regmap-phy-mux.h"
+> 
+> Same for clk-regmap.h, avoid include hell.
+> 
+>> +
+>> +static inline struct clk_regmap_phy_mux *to_clk_regmap_phy_mux(struct clk_hw *hw)
+>> +{
+>> +       return container_of(to_clk_regmap(hw), struct clk_regmap_phy_mux, clkr);
+>> +}
+>> +
+>> +static int phy_mux_is_enabled(struct clk_hw *hw)
+>> +{
+>> +       struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(hw);
+>> +       struct clk_regmap *clkr = to_clk_regmap(hw);
+>> +       unsigned int mask = GENMASK(phy_mux->width + phy_mux->shift - 1, phy_mux->shift);
+>> +       unsigned int val;
+>> +
+>> +       regmap_read(clkr->regmap, phy_mux->reg, &val);
+>> +       val = (val & mask) >> phy_mux->shift;
+> 
+> Can this use FIELD_GET?
+> 
+>> +
+>> +       WARN_ON(val != phy_mux->phy_src_val && val != phy_mux->ref_src_val);
+>> +
+>> +       return val == phy_mux->phy_src_val;
+>> +}
+>> +
+>> +static int phy_mux_enable(struct clk_hw *hw)
+>> +{
+>> +       struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(hw);
+>> +       struct clk_regmap *clkr = to_clk_regmap(hw);
+>> +       unsigned int mask = GENMASK(phy_mux->width + phy_mux->shift - 1, phy_mux->shift);
+>> +       unsigned int val;
+>> +
+>> +       val = phy_mux->phy_src_val << phy_mux->shift;
+> 
+> Can this use FIELD_PREP?
+> 
+>> +
+>> +       return regmap_update_bits(clkr->regmap, phy_mux->reg, mask, val);
+>> +}
+>> +
+>> +static void phy_mux_disable(struct clk_hw *hw)
+>> +{
+>> +       struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(hw);
+>> +       struct clk_regmap *clkr = to_clk_regmap(hw);
+>> +       unsigned int mask = GENMASK(phy_mux->width + phy_mux->shift - 1, phy_mux->shift);
+>> +       unsigned int val;
+>> +
+>> +       val = phy_mux->ref_src_val << phy_mux->shift;
+>> +
+>> +       regmap_update_bits(clkr->regmap, phy_mux->reg, mask, val);
+>> +}
+>> +
+>> +const struct clk_ops clk_regmap_phy_mux_ops = {
+>> +       .enable = phy_mux_enable,
+>> +       .disable = phy_mux_disable,
+>> +       .is_enabled = phy_mux_is_enabled,
+>> +};
+>> +EXPORT_SYMBOL_GPL(clk_regmap_phy_mux_ops);
+>> diff --git a/drivers/clk/qcom/clk-regmap-phy-mux.h b/drivers/clk/qcom/clk-regmap-phy-mux.h
+>> new file mode 100644
+>> index 000000000000..6260912191c5
+>> --- /dev/null
+>> +++ b/drivers/clk/qcom/clk-regmap-phy-mux.h
+>> @@ -0,0 +1,37 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2022, Linaro Ltd.
+>> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> + */
+>> +
+>> +#ifndef __QCOM_CLK_REGMAP_PHY_MUX_H__
+>> +#define __QCOM_CLK_REGMAP_PHY_MUX_H__
+>> +
+>> +#include <linux/clk-provider.h>
+>> +#include "clk-regmap.h"
+>> +
+>> +/*
+>> + * A special clock implementation for PHY pipe and symbols clock sources.
+> 
+> Remove "special" please. Everything is special :)
 
-Ah, yes. I'll change the license in v4 to:
+ack for the docs changes, will send shortly.
 
-/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> 
+>> + *
+>> + * If the clock is running off the from-PHY source, report it as enabled.
+> 
+> from-PHY is @phy_src_val? Maybe add that information like "from-PHY
+> source (@phy_src_val)"
+> 
+>> + * Report it as disabled otherwise (if it uses reference source).
+> 
+> Same for @ref_src_val
+> 
+>> + *
+>> + * This way the PHY will disable the pipe clock before turning off the GDSC,
+>> + * which in turn would lead to disabling corresponding pipe_clk_src (and thus
+>> + * it being parked to a safe, reference clock source). And vice versa, after
+>> + * enabling the GDSC the PHY will enable the pipe clock, which would cause
+>> + * pipe_clk_src to be switched from a safe source to the working one.
+> 
+> Might as well make it into real kernel-doc at the same time.
+> 
+>> + */
+>> +
+>> +struct clk_regmap_phy_mux {
+>> +       u32                     reg;
+>> +       u32                     shift;
+>> +       u32                     width;
+> 
+> Technically neither of these need to be u32 and could be u8 to save a
+> byte or two. The other thing is that possibly the width and shift never
+> changes? The RCG layout is pretty well fixed. Does hardcoding it work?
 
->
-> > +/*
-> > + * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
-> > + */
-> > +
-> > +#ifndef _DT_BINDINGS_CLK_QCOM_GPU_CC_SM8350_H
-> > +#define _DT_BINDINGS_CLK_QCOM_GPU_CC_SM8350_H
-> > +
-> > +/* GPU_CC clocks */
-> > +#define GPU_CC_AHB_CLK                       0
-> > +#define GPU_CC_CB_CLK                        1
-> > +#define GPU_CC_CRC_AHB_CLK           2
-> > +#define GPU_CC_CX_APB_CLK            3
-> > +#define GPU_CC_CX_GMU_CLK            4
-> > +#define GPU_CC_CX_QDSS_AT_CLK                5
-> > +#define GPU_CC_CX_QDSS_TRIG_CLK              6
-> > +#define GPU_CC_CX_QDSS_TSCTR_CLK     7
-> > +#define GPU_CC_CX_SNOC_DVM_CLK               8
-> > +#define GPU_CC_CXO_AON_CLK           9
-> > +#define GPU_CC_CXO_CLK                       10
-> > +#define GPU_CC_FREQ_MEASURE_CLK              11
-> > +#define GPU_CC_GMU_CLK_SRC           12
-> > +#define GPU_CC_GX_GMU_CLK            13
-> > +#define GPU_CC_GX_QDSS_TSCTR_CLK     14
-> > +#define GPU_CC_GX_VSENSE_CLK         15
-> > +#define GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK       16
-> > +#define GPU_CC_HUB_AHB_DIV_CLK_SRC   17
-> > +#define GPU_CC_HUB_AON_CLK           18
-> > +#define GPU_CC_HUB_CLK_SRC           19
-> > +#define GPU_CC_HUB_CX_INT_CLK                20
-> > +#define GPU_CC_HUB_CX_INT_DIV_CLK_SRC        21
-> > +#define GPU_CC_MND1X_0_GFX3D_CLK     22
-> > +#define GPU_CC_MND1X_1_GFX3D_CLK     23
-> > +#define GPU_CC_PLL0                  24
-> > +#define GPU_CC_PLL1                  25
-> > +#define GPU_CC_SLEEP_CLK             26
-> > +
-> > +/* GPU_CC resets */
-> > +#define GPUCC_GPU_CC_ACD_BCR         0
-> > +#define GPUCC_GPU_CC_CB_BCR          1
-> > +#define GPUCC_GPU_CC_CX_BCR          2
-> > +#define GPUCC_GPU_CC_FAST_HUB_BCR    3
-> > +#define GPUCC_GPU_CC_GFX3D_AON_BCR   4
-> > +#define GPUCC_GPU_CC_GMU_BCR         5
-> > +#define GPUCC_GPU_CC_GX_BCR          6
-> > +#define GPUCC_GPU_CC_XO_BCR          7
-> > +
-> > +/* GPU_CC GDSCRs */
-> > +#define GPU_CX_GDSC                  0
-> > +#define GPU_GX_GDSC                  1
-> > +
-> > +#endif
-> > --
-> > 2.34.1
-> >
-> >
+It seems, I can hardcode shift=0 and width=2.
+
+> 
+>> +       u32                     phy_src_val;
+>> +       u32                     ref_src_val;
+> 
+> I feel like "_val" is redundant. Just "ref_src" and "phy_src"? Shorter
+> is nice.
+
+I had this since I wanted to point that these are 'values', not the 
+enum-ed sources. But I can drop this now.
+
+> 
+>> +       struct clk_regmap       clkr;
+>> +};
+>> +
+>> +extern const struct clk_ops clk_regmap_phy_mux_ops;
+
+
+-- 
+With best wishes
+Dmitry
