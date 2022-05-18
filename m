@@ -2,139 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C5E6A52BBFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:16:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA0D552BCB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:17:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237015AbiERMsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 08:48:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33692 "EHLO
+        id S237089AbiERMsl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 08:48:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237572AbiERMqF (ORCPT
+        with ESMTP id S237312AbiERMsa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 08:46:05 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D87511632AC;
-        Wed, 18 May 2022 05:43:04 -0700 (PDT)
+        Wed, 18 May 2022 08:48:30 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BD381611F3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 05:48:04 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id r23so2583926wrr.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 05:48:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652877785; x=1684413785;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=s1haGoMzWn+D78/Wjs5Eo95uLM9lSkcETlTB2+3u46w=;
-  b=hnpwlAkkzVzs23vGtWnOfs/wUZonfu7p2syRxT77kFgjRaBgptaGyWRy
-   YYYiBm8r2Oajs5yr+k9fV8Xhg4g7sBXtbvnNC+CC+2Vf3zZNLQg0WYlG3
-   dxcU+71xKU3D09DqeYMl7Ix3sgK4GFLhl4PTJQ1/2cnTmDp/Nq87w0ki4
-   4=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 18 May 2022 05:43:03 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2022 05:43:03 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 18 May 2022 05:43:02 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 18 May 2022 05:42:56 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <vkoul@kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v2] ASoC: qcom: soundwire: Add support for controlling audio CGCR from HLOS
-Date:   Wed, 18 May 2022 18:12:35 +0530
-Message-ID: <1652877755-25120-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=QDRebOwKR1U7lf+8cC6DEw4q2LYFiJkBiZbjUsroBtA=;
+        b=VFaRnp4nJwGe6+K0h8fZQDYP5mjMH+aTJbeT60nygLmmb469VcltrQ6iMwJiEYNttV
+         4D4ZTqggYzl1/ZJBDkT4Xhrmx31nbBDFdah32gRN3iGBOSrOUdbh14K50Ycue1VUuG7W
+         Y0VDI416R7dTuWuaPW7VgbetqAEKAMlXpfJU/4FI8YPJDzPjgl6Hao4OZvJ8fhasSJOn
+         ht4CvN5xsGDQRe9ctRWXh8UTanBF5YXkBRHzot7VF9OpvbKZEexFfK6tTleUlsQQ7zLm
+         t9SHTSnO8546tiucnTUBlb/TkjG+0EK8b+x9sD9Keib5aoHcTkrboaKFuz8AIMqaA4av
+         Pzmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QDRebOwKR1U7lf+8cC6DEw4q2LYFiJkBiZbjUsroBtA=;
+        b=7t/+Jtlwp+pM7UrIWejzaZRIXLksN9cTEq5k/icQrkZvAVMPvYYR/Xxpu3SW/bYAog
+         1nUgHSK8D16GE+jJ7QdN0xbDtGq2Xpxzna/73U4oMW4wAO8F3V7iITXRghVIMoR10VmI
+         pVXTXBAtgX4C0zP9qRoURiyVXs44B0L4+Pu8qLoOmFf6nG8/9gFvJH83iCEr286pidNx
+         YFt/JsHmh6dmCGsqA7OkoX7WQ5JLm3E0WmbKy+uxr8of18DSyY4wplEzZ4J4pHj1vc2F
+         jj1fsvneuCkuA2UQxoVT+AARNtg6KRifAJMXRJsPwX/na0OLD/F2YD1WqTv1N03+1yf5
+         sNXg==
+X-Gm-Message-State: AOAM530gy/HRwBJVpvxo530CLQy77WFqh+UvLyWZoRhHIrFnwxKAe0d3
+        8HKn15xBtSpz6uH+3vJPjgBhUg==
+X-Google-Smtp-Source: ABdhPJxAJE+m5SmQKDYPjuDuk+UjAwN1tLOx3HmhZwD9VCHZO2OgecLZe+qruUro7ymOOQ+JRFmfNQ==
+X-Received: by 2002:adf:e186:0:b0:20d:910:6481 with SMTP id az6-20020adfe186000000b0020d09106481mr12650832wrb.522.1652878082781;
+        Wed, 18 May 2022 05:48:02 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id j20-20020a05600c2b9400b0039453fe55a7sm4188006wmc.35.2022.05.18.05.48.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 May 2022 05:48:02 -0700 (PDT)
+Message-ID: <f645fe49-8adf-c1b2-89be-e8ab8f620f16@linaro.org>
+Date:   Wed, 18 May 2022 13:48:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH] clk: qcom: camcc-sm8250: Fix halt on boot by reducing
+ driver's init level
+Content-Language: en-US
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20220518103554.949511-1-vladimir.zapolskiy@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20220518103554.949511-1-vladimir.zapolskiy@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for controlling soundwire audio CGCR interface using clock
-framework to make hclk ungating with software. As per new hardware
-changes, software has to always ungate hclk if soundwire is operational
-and keep it running. This requirement is for latest LPASS chipsets for
-RX, TX and WSA path to work.
+On 18/05/2022 11:35, Vladimir Zapolskiy wrote:
+> Access to I/O of SM8250 camera clock controller IP depends on enabled
+> GCC_CAMERA_AHB_CLK clock supplied by global clock controller, the latter
+> one is inited on subsys level, so, to satisfy the dependency, it would
+> make sense to deprive the init level of camcc-sm8250 driver.
+> 
+> If both drivers are compiled as built-in, there is a change that a board
+> won't boot up due to a race, which happens on the same init level.
+> 
+> Fixes: 5d66ca79b58c ("clk: qcom: Add camera clock controller driver for SM8250")
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>   drivers/clk/qcom/camcc-sm8250.c | 12 +-----------
+>   1 file changed, 1 insertion(+), 11 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/camcc-sm8250.c b/drivers/clk/qcom/camcc-sm8250.c
+> index 439eaafdcc86..ae4e9774f36e 100644
+> --- a/drivers/clk/qcom/camcc-sm8250.c
+> +++ b/drivers/clk/qcom/camcc-sm8250.c
+> @@ -2440,17 +2440,7 @@ static struct platform_driver cam_cc_sm8250_driver = {
+>   	},
+>   };
+>   
+> -static int __init cam_cc_sm8250_init(void)
+> -{
+> -	return platform_driver_register(&cam_cc_sm8250_driver);
+> -}
+> -subsys_initcall(cam_cc_sm8250_init);
+> -
+> -static void __exit cam_cc_sm8250_exit(void)
+> -{
+> -	platform_driver_unregister(&cam_cc_sm8250_driver);
+> -}
+> -module_exit(cam_cc_sm8250_exit);
+> +module_platform_driver(cam_cc_sm8250_driver);
+>   
+>   MODULE_DESCRIPTION("QTI CAMCC SM8250 Driver");
+>   MODULE_LICENSE("GPL v2");
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+So I tried this
+
+-                       clocks = <&gcc GCC_CAMERA_AHB_CLK>,
+-                                <&rpmhcc RPMH_CXO_CLK>,
++                       clocks = <&rpmhcc RPMH_CXO_CLK>,
+                                  <&rpmhcc RPMH_CXO_CLK_A>,
+                                  <&sleep_clk>;
+-                       clock-names = "iface", "bi_tcxo", "bi_tcxo_ao", 
+"sleep_clk";
++                       clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
+
+and the system wouldn't boot @ * 736ee37e2e8e - (tag: next-20220518, 
+linux-next/master) Add linux-next specific files for 20220518 (2 hours ago)
+
+If we do a grep
+
+grep subsys_init drivers/clk/qcom/camcc-*
+drivers/clk/qcom/camcc-sc7180.c:subsys_initcall(cam_cc_sc7180_init);
+drivers/clk/qcom/camcc-sc7280.c:subsys_initcall(cam_cc_sc7280_init);
+drivers/clk/qcom/camcc-sdm845.c:subsys_initcall(cam_cc_sdm845_init);
+drivers/clk/qcom/camcc-sm8250.c:subsys_initcall(cam_cc_sm8250_init);
+
+and
+
+arch/arm64/boot/dts/qcom/sc7180.dtsi:			       <&gcc GCC_CAMERA_AHB_CLK>,
+arch/arm64/boot/dts/qcom/sm8250.dtsi:			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
+
+I think the sc7180 has this same dependency loop. Probably needs the 
+same fix.
+
+Also not sure why sdm845 camcc doesn't declare a depends on 
+GCC_CAMERA_AHB_CLK - should it ?
+
+Recommend applying this same fix to sc718x
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 ---
-This patch set depends on:
-    -- Clock driver patches for CGCR reset control support.
-	--- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638002
-	--- https://patchwork.kernel.org/project/linux-arm-msm/list/?series=637998	
-
-Changes since v1:
-    -- Add audio cgcr reset control in runtime PM resume handler.
-    -- Update dependency list.
-
- drivers/soundwire/qcom.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index da1ad7e..445e481 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -13,6 +13,7 @@
- #include <linux/of_device.h>
- #include <linux/pm_runtime.h>
- #include <linux/regmap.h>
-+#include <linux/reset.h>
- #include <linux/slab.h>
- #include <linux/pm_wakeirq.h>
- #include <linux/slimbus.h>
-@@ -142,6 +143,7 @@ struct qcom_swrm_ctrl {
- 	struct device *dev;
- 	struct regmap *regmap;
- 	void __iomem *mmio;
-+	struct reset_control *audio_cgcr;
- #ifdef CONFIG_DEBUG_FS
- 	struct dentry *debugfs;
- #endif
-@@ -656,6 +658,8 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
- 	val = FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_ROW_CTRL_BMSK, ctrl->rows_index);
- 	val |= FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_COL_CTRL_BMSK, ctrl->cols_index);
- 
-+	reset_control_reset(ctrl->audio_cgcr);
-+
- 	ctrl->reg_write(ctrl, SWRM_MCP_FRAME_CTRL_BANK_ADDR(0), val);
- 
- 	/* Enable Auto enumeration */
-@@ -1333,6 +1337,10 @@ static int qcom_swrm_probe(struct platform_device *pdev)
- 	ctrl->bus.compute_params = &qcom_swrm_compute_params;
- 	ctrl->bus.clk_stop_timeout = 300;
- 
-+	ctrl->audio_cgcr = devm_reset_control_get_exclusive(dev, "swr_audio_cgcr");
-+	if (IS_ERR(ctrl->audio_cgcr))
-+		dev_err(dev, "Failed to get audio_cgcr reset required for soundwire-v1.6.0\n");
-+
- 	ret = qcom_swrm_get_port_config(ctrl);
- 	if (ret)
- 		goto err_clk;
-@@ -1486,6 +1494,8 @@ static int __maybe_unused swrm_runtime_resume(struct device *dev)
- 		qcom_swrm_get_device_status(ctrl);
- 		sdw_handle_slave_status(&ctrl->bus, ctrl->status);
- 	} else {
-+		reset_control_reset(ctrl->audio_cgcr);
-+
- 		ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL, SWRM_MCP_BUS_CLK_START);
- 		ctrl->reg_write(ctrl, SWRM_INTERRUPT_CLEAR,
- 			SWRM_INTERRUPT_STATUS_MASTER_CLASH_DET);
--- 
-2.7.4
-
+bod
