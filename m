@@ -2,195 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3045952C33E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 21:24:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05DB952C36E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 21:35:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241884AbiERTV4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 15:21:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50244 "EHLO
+        id S241920AbiERT3s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 15:29:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241829AbiERTVz (ORCPT
+        with ESMTP id S241821AbiERT3s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 15:21:55 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF95B140842
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 12:21:53 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id h8so3681068ljb.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 12:21:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=qZ26mcBQDZSLiRufaECwZ6oiziPAQxL7V+fcgunGTxg=;
-        b=aidLyug1DNbEWTzG8AgJcm9OTAYxyiW5rweO1JVUz/v6XPYK/cN20nISmy/hKzIBiw
-         HeTZ58cgZ8awu6MOzESGfR+4CcasU2CYQNkNkUHTPRy37/U6Lbaf8V+Twyd/tlBQ7qDA
-         nDhT2l//1iEqz1/WHSuIGw5oOOHqXPjylgsC4qNO33HlnhnTDrQulZfX5mANVHhB0mnb
-         pDAGYBY1hXAN+aFxPITKYwwuWRFLfOeqIkyPJxBJgK/F2GZZKH6PPgPF6uGUirLb/FXz
-         XTRn4lLAD3Bb8p9q54losG1V+biQmf0OBc+VSJo/KpO1Jd2PPOwZsoKSLbCj2tFB3xlv
-         BxRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=qZ26mcBQDZSLiRufaECwZ6oiziPAQxL7V+fcgunGTxg=;
-        b=ykgTUyz+Ol2sCL5+wE8JbI55JYVsE5yuYJrn2V/uo4aRAXPMI964KK4WzIZVNv49AK
-         JkV4NnGfgvYXGO7OVptpEkk7siXrzHSMi366IB/hyraj+CzjrD7+Gt3k3QvqnR2PsTmB
-         cGOcdff/3mS4yPk1GbWS73FsRN0HNV9sCaiaGDsEjFaQhSWB5TUy5tNmUCheQkSwogW6
-         eSHdhwDI787QQtAR83vYGlkGkF7l11P99rFGeJAnXzNfvxe2R1SN/UbYtn1RFvDsoH3P
-         rGIxmxnzQH7imFzTkHiQRFbsyj4vXKW23G2Rk1YkFZxGsxPxTJxs+FHxkG5kRdS9S+Rv
-         UN2Q==
-X-Gm-Message-State: AOAM530TsyDbG1VagfV/KH/FviG63s0Wgdke5ikmjn7Qaa2mMjhbRXkB
-        WwskgPAlyI2PGCgddyBVVx0fpw==
-X-Google-Smtp-Source: ABdhPJyCgcKtuQzRAFdToUxmBdUBiSg/dAyL5VJc0LcDBiTIR8b5L46jJhQ2mvP/6dqNQ0dUJwASuw==
-X-Received: by 2002:a2e:b98b:0:b0:24f:1b64:a7b7 with SMTP id p11-20020a2eb98b000000b0024f1b64a7b7mr483732ljp.331.1652901712157;
-        Wed, 18 May 2022 12:21:52 -0700 (PDT)
-Received: from [192.168.1.102] (mobile-access-b04822-211.dhcp.inet.fi. [176.72.34.211])
-        by smtp.gmail.com with ESMTPSA id f26-20020a19ae1a000000b0047255d211cesm30150lfc.253.2022.05.18.12.21.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 May 2022 12:21:51 -0700 (PDT)
-Message-ID: <0c1a180b-b46a-308e-a7bd-1168009e3e27@linaro.org>
-Date:   Wed, 18 May 2022 22:21:50 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] media: camss: Allocate camss struct as a managed device
- resource
-Content-Language: en-US
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+        Wed, 18 May 2022 15:29:48 -0400
+Received: from relmlie6.idc.renesas.com (relmlor2.renesas.com [210.160.252.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id BA2805EDE6;
+        Wed, 18 May 2022 12:29:45 -0700 (PDT)
+X-IronPort-AV: E=Sophos;i="5.91,235,1647270000"; 
+   d="scan'208";a="121408998"
+Received: from unknown (HELO relmlir5.idc.renesas.com) ([10.200.68.151])
+  by relmlie6.idc.renesas.com with ESMTP; 19 May 2022 04:29:45 +0900
+Received: from localhost.localdomain (unknown [10.226.36.204])
+        by relmlir5.idc.renesas.com (Postfix) with ESMTP id CE7764004CF5;
+        Thu, 19 May 2022 04:29:37 +0900 (JST)
+From:   Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+To:     Marc Zyngier <maz@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20220513080529.416245-1-vladimir.zapolskiy@linaro.org>
- <CAG3jFyuupy=rcY3Nsg=n52t_JZ1ePDW28RGMi=2Lzdx6LNRetA@mail.gmail.com>
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <CAG3jFyuupy=rcY3Nsg=n52t_JZ1ePDW28RGMi=2Lzdx6LNRetA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org,
+        Prabhakar <prabhakar.csengg@gmail.com>,
+        linux-renesas-soc@vger.kernel.org,
+        Phil Edworthy <phil.edworthy@renesas.com>,
+        Biju Das <biju.das.jz@bp.renesas.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Subject: [PATCH v4 0/7] Renesas RZ/G2L IRQC support
+Date:   Wed, 18 May 2022 20:29:17 +0100
+Message-Id: <20220518192924.20948-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+X-Mailer: git-send-email 2.17.1
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Robert,
+Hi All,
 
-On 5/18/22 21:46, Robert Foss wrote:
-> Hey Vladimir,
-> 
-> On Fri, 13 May 2022 at 10:05, Vladimir Zapolskiy
-> <vladimir.zapolskiy@linaro.org> wrote:
->>
->> The change simplifies driver's probe and remove functions, no functional
->> change is intended.
->>
->> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->> ---
->> The change is supposed to be applied on top of this one:
->>
->>    https://lore.kernel.org/linux-media/20220512082318.189398-1-vladimir.zapolskiy@linaro.org/
->>
->> drivers/media/platform/qcom/camss/camss.c | 33 +++++++----------------
->>   1 file changed, 10 insertions(+), 23 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
->> index e90fea28ac88..0f4908fa21e2 100644
->> --- a/drivers/media/platform/qcom/camss/camss.c
->> +++ b/drivers/media/platform/qcom/camss/camss.c
->> @@ -1751,7 +1751,7 @@ static int camss_probe(struct platform_device *pdev)
->>          struct camss *camss;
->>          int num_subdevs, ret;
->>
->> -       camss = kzalloc(sizeof(*camss), GFP_KERNEL);
->> +       camss = devm_kzalloc(dev, sizeof(*camss), GFP_KERNEL);
->>          if (!camss)
->>                  return -ENOMEM;
->>
->> @@ -1795,39 +1795,30 @@ static int camss_probe(struct platform_device *pdev)
->>                  camss->csid_num = 5;
->>                  camss->vfe_num = 5;
->>          } else {
->> -               ret = -EINVAL;
->> -               goto err_free;
->> +               return -EINVAL;
->>          }
->>
->>          camss->csiphy = devm_kcalloc(dev, camss->csiphy_num,
->>                                       sizeof(*camss->csiphy), GFP_KERNEL);
->> -       if (!camss->csiphy) {
->> -               ret = -ENOMEM;
->> -               goto err_free;
->> -       }
->> +       if (!camss->csiphy)
->> +               return -ENOMEM;
->>
->>          camss->csid = devm_kcalloc(dev, camss->csid_num, sizeof(*camss->csid),
->>                                     GFP_KERNEL);
->> -       if (!camss->csid) {
->> -               ret = -ENOMEM;
->> -               goto err_free;
->> -       }
->> +       if (!camss->csid)
->> +               return -ENOMEM;
->>
->>          if (camss->version == CAMSS_8x16 ||
->>              camss->version == CAMSS_8x96) {
->>                  camss->ispif = devm_kcalloc(dev, 1, sizeof(*camss->ispif), GFP_KERNEL);
->> -               if (!camss->ispif) {
->> -                       ret = -ENOMEM;
->> -                       goto err_free;
->> -               }
->> +               if (!camss->ispif)
->> +                       return -ENOMEM;
->>          }
->>
->>          camss->vfe = devm_kcalloc(dev, camss->vfe_num, sizeof(*camss->vfe),
->>                                    GFP_KERNEL);
->> -       if (!camss->vfe) {
->> -               ret = -ENOMEM;
->> -               goto err_free;
->> -       }
->> +       if (!camss->vfe)
->> +               return -ENOMEM;
->>
->>          v4l2_async_nf_init(&camss->notifier);
->>
->> @@ -1909,8 +1900,6 @@ static int camss_probe(struct platform_device *pdev)
->>          v4l2_device_unregister(&camss->v4l2_dev);
->>   err_cleanup:
->>          v4l2_async_nf_cleanup(&camss->notifier);
->> -err_free:
->> -       kfree(camss);
->>
->>          return ret;
->>   }
->> @@ -1929,8 +1918,6 @@ void camss_delete(struct camss *camss)
->>                  device_link_del(camss->genpd_link[i]);
->>                  dev_pm_domain_detach(camss->genpd[i], true);
->>          }
->> -
->> -       kfree(camss);
->>   }
->>
->>   /*
->> --
->> 2.33.0
->>
-> 
-> I'm  having issues applying this patch to upstream/master or
-> upstream-media/master, even when first applying the patch you
-> mentioned above.
+The RZ/G2L Interrupt Controller is a front-end for the GIC found on
+Renesas RZ/G2L SoC's with below pins:
+- IRQ sense select for 8 external interrupts, mapped to 8 GIC SPI
+  interrupts
+- GPIO pins used as external interrupt input pins out of GPIOINT0-122 a
+  maximum of only 32 can be mapped to 32 GIC SPI interrupts,
+- NMI edge select.
 
-you are right, there is a minor conflict in the second patch hunk...
+                                                             _____________
+                                                             |    GIC     |
+                                                             |  ________  |
+                                      ____________           | |        | |
+NMI --------------------------------->|          |  SPI0-479 | | GIC-600| |
+             _______                  |          |------------>|        | |
+             |      |                 |          |  PPI16-31 | |        | |
+             |      | IRQ0-IRQ7       |   IRQC   |------------>|        | |
+P0_P48_4 --->| GPIO |---------------->|          |           | |________| |
+             |      |GPIOINT0-122     |          |           |            |
+             |      |---------------->| TINT0-31 |           |            |
+             |______|                 |__________|           |____________|
 
-Please let me know a preferred branch/tag to use as the base, and
-I'll resend v2 of the change shortly, thank you in advance!
+The proposed patches add hierarchical IRQ domain, one in IRQC driver and
+another in pinctrl driver. Upon interrupt requests map the interrupt to
+GIC. Out of GPIOINT0-122 only 32 can be mapped to GIC SPI, this mapping is
+handled by the pinctrl and IRQC driver.
 
---
-Best wishes,
-Vladimir
+Cheers,
+Prabhakar
+
+Changes for v3->v4:
+* Updated description for interrupts-cells property in patch #1
+* Dropped the patch which overriding free callback in gpiolib
+* Used devm helpers in patch#2
+* Patch #4, #5 and #6 are newly added
+* In patch #7 dropped using gpio offset as hwirq
+* Implemented immutable GPIO in patch #7
+* Implemented child_offset_to_irq() callback in patch #7
+
+Changes for v2->v3:
+* Updated description for interrupts-cells property in patch #1
+* Included RB tag from Geert for binding patch
+* Fixed review comments pointed by Geert, Biju and Sergei.
+
+Changes for v1->v2:
+* Included RB tag from Rob
+* Fixed review comments pointed by Geert
+* included GPIO driver changes
+
+Changes for RFCV4 -> V1:
+* Used unevaluatedProperties.
+* Altered the sequence of reg property
+* Set the parent type
+* Used raw_spin_lock() instead of raw_spin_lock_irqsave()
+* Simplified parsing IRQ map.
+* Will send the GPIO and pinctrl changes as part of separate series
+
+Changes for RFC v4:
+* Used locking while RMW
+* Now using interrupts property instead of interrupt-map
+* Patch series depends on [0]
+* Updated binding doc
+* Fixed comments pointed by Andy
+
+[0] https://patchwork.kernel.org/project/linux-renesas-soc/patch/
+20220316200633.28974-1-prabhakar.mahadev-lad.rj@xxxxxxxxxxxxxx/
+
+Changes for RFC v3:
+-> Re-structured the driver as a hierarchical irq domain instead of chained
+-> made use of IRQCHIP_* macros
+-> dropped locking
+-> Added support for IRQ0-7 interrupts
+-> Introduced 2 new patches for GPIOLIB
+-> Switched to using GPIOLIB for irqdomains in pinctrl
+
+RFC v2: https://patchwork.kernel.org/project/linux-renesas-soc/cover/
+20210921193028.13099-1-prabhakar.mahadev-lad.rj@xxxxxxxxxxxxxx/
+
+RFC v1: https://patchwork.kernel.org/project/linux-renesas-soc/cover/
+20210803175109.1729-1-prabhakar.mahadev-lad.rj@xxxxxxxxxxxxxx/
+
+Lad Prabhakar (7):
+  dt-bindings: interrupt-controller: Add Renesas RZ/G2L Interrupt
+    Controller
+  irqchip: Add RZ/G2L IA55 Interrupt Controller driver
+  gpio: gpiolib: Add ngirq member to struct gpio_irq_chip
+  gpio: gpiolib: Dont assume child_offset_to_irq callback always
+    succeeds
+  gpio: gpiolib: Add a check to validate GPIO hwirq
+  dt-bindings: pinctrl: renesas,rzg2l-pinctrl: Document the properties
+    to handle GPIO IRQ
+  pinctrl: renesas: pinctrl-rzg2l: Add IRQ domain to handle GPIO
+    interrupt
+
+ .../renesas,rzg2l-irqc.yaml                   | 133 ++++++
+ .../pinctrl/renesas,rzg2l-pinctrl.yaml        |  16 +
+ drivers/gpio/gpio-tegra186.c                  |  14 +-
+ drivers/gpio/gpiolib.c                        |  38 +-
+ drivers/irqchip/Kconfig                       |   8 +
+ drivers/irqchip/Makefile                      |   1 +
+ drivers/irqchip/irq-renesas-rzg2l.c           | 425 ++++++++++++++++++
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c      |   7 +-
+ drivers/pinctrl/qcom/pinctrl-spmi-mpp.c       |   7 +-
+ drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c      |   7 +-
+ drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c       |   7 +-
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c       | 221 +++++++++
+ include/linux/gpio/driver.h                   |  17 +-
+ 13 files changed, 880 insertions(+), 21 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/interrupt-controller/renesas,rzg2l-irqc.yaml
+ create mode 100644 drivers/irqchip/irq-renesas-rzg2l.c
+
+-- 
+2.25.1
+
