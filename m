@@ -2,77 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 142CC52C30F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 21:13:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54C4652C31F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 21:17:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241775AbiERTJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 15:09:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59720 "EHLO
+        id S241855AbiERTOp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 15:14:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241755AbiERTJ0 (ORCPT
+        with ESMTP id S241859AbiERTOm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 15:09:26 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAAC7880F4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 12:09:24 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id q130so3657122ljb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 12:09:24 -0700 (PDT)
+        Wed, 18 May 2022 15:14:42 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47DAA218FD5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 12:14:40 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id n18so2685890plg.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 12:14:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=O3+TeHGlj78jW1XEh5KfQ6XWZQiUtFAgDTrtf5N/VEs=;
-        b=WQ0kW/nLEazXZzlIDWwWlBNO9Jq2o3fMine2DnwAcO7OE6qspEcJ4JiBzIzjNMGMS3
-         QBFV63dLFkVauC/gwYFGgxHNHaGVP5TQXaGiakU2/HdGfv7V3OXfVoCU739mlIiW0U70
-         3s8Gxd3vJpIeVcbhTzNacmQBk/2aOPzOqYD4HnOgrNUz4wUh/mhotzSm2usttv95oWi1
-         k0CyM1NAoECSbtnnWZHaDZotXe28p0IicEtf/fi6p2Wk/SKkxY5Cq2iair7/1M2JVkGG
-         m8tKsKnn1gf1nQu0rzQIhcRawx/+8FEaCOIvdXU8YoruRhc8XrimkYQvLefBuBeqhXnu
-         aalA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qK+m+Erb6YskG54m9a0bE+9PKUoSbB3wH6ButzQ9n3Q=;
+        b=G6JAvGTF4t35/9+wVonfb58EYzknmk/NVfYwjLaPGl23ONjHlJaLCqjVGRuAQkc/0s
+         9U1O3sBns3FNWh0jLoFRRObRkkS3I+MJizPhqtbNTQ1oTUSGXn96cHuw/qxzIYE6+WUm
+         8leVxiUwEFbFK6Ky9EHJmzA9792MfXYHYC8BYzB10DnIYzedRXQub2NG9AN3/xlCw91q
+         38sg9QwmjAIrhOs0tV83qp7hy8rxB4XWZdYQ6TlSSVwLuD3pNMR2rOjOJa/ZPnq557jd
+         Pbu9lDxH8xByPrfG1abG9Y45vA1Djl+3V1WP+rzOqaJggKfbSewzgujMO5XEuNjmm+Po
+         N2nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=O3+TeHGlj78jW1XEh5KfQ6XWZQiUtFAgDTrtf5N/VEs=;
-        b=Eqn9tfMGhKXgWG39bnQSDcOkz+QUnpRf8e9Q3eYe9iDlvyQ+iok9PUeNPgd2U/AMD0
-         LNbWQZXZaYH1Kjy9KWkYYlzFG5INtPKIha6G6rVnfM5wD4/QC8+iiWQ0L3Rn8qvKQPj3
-         RUpiF41Mj2d/kOYpx7QrO1Fg9IO9OZEPNvLb/M0y6z5tubqKAcj5SJFUuDqP12hwv/5g
-         c2LqbC9miU7WV+7F9XJD3GrbYdIxoR5bN/1GSP+H4isDZbChHnmETseVEKBXj7T8U7ZU
-         nI4XnFuujslT7SU/VYP59FMwVG9dTcRnHUuVAUgXfcdhjxNPDyJ5oVP89eg6RMfTmCtH
-         R1RA==
-X-Gm-Message-State: AOAM531GY9UIdBIWOKv+AqM46g9Qil3PmksIveZVpxodhrLm4rYjrOlV
-        7aV2adXdxR8DZl4+ZuBMZMGMbA==
-X-Google-Smtp-Source: ABdhPJxGsMPUlH6sy7idvon1aGjw7EO7PsAEp2KCBwesRxaQ8VvR5QjE31Lgazu67XBiso6tA2q3Ow==
-X-Received: by 2002:a05:651c:513:b0:250:5d51:46d3 with SMTP id o19-20020a05651c051300b002505d5146d3mr476161ljp.429.1652900963045;
-        Wed, 18 May 2022 12:09:23 -0700 (PDT)
-Received: from [192.168.1.102] (mobile-access-b04822-211.dhcp.inet.fi. [176.72.34.211])
-        by smtp.gmail.com with ESMTPSA id u13-20020ac248ad000000b0047255d21100sm32359lfg.47.2022.05.18.12.09.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 May 2022 12:09:22 -0700 (PDT)
-Message-ID: <33abcc93-13f1-d6f5-36a3-6ab796f124f9@linaro.org>
-Date:   Wed, 18 May 2022 22:09:21 +0300
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qK+m+Erb6YskG54m9a0bE+9PKUoSbB3wH6ButzQ9n3Q=;
+        b=FN5Plv5CHRXfG6IPBZB+gTdd3n0mRHd6vcDBDVlSTQ/Jk07v0H56kjbzG79Xt+wqyw
+         mO0coxj2SA/ZG+Uh3+5LX6TZ+EGhpnRqxNKHZE1sVZbu3/D1DKhw5M7g7yhVwypunsW9
+         /PXYq7iqa8YjBwJhZLdFRN0bvIJHkex0THvYEdgKph1CHEIm/3U9gL5wzzc80zpB9cv4
+         cuj3MeELU3FxDqRZ2CB/7lgmZuRU/xEDyuGgUqNmGo1ltrs8e4VsLvrwBem/mc2TH9rs
+         JR7mq4FE2GBAUvwYH3Hmwirodrkz0RdY73u3ZNnzPR9wNXOLaPgqGl3PhyqUqIlE4Ylg
+         aOgA==
+X-Gm-Message-State: AOAM5320vBj1v9pZccTI4KmLVLjTqKI/88emP3uub57zPoMSgb7lF3NL
+        IVAdFEbhbTM6tBSBBFNseqOmsyRFbTq3GEpeVfMWIQ==
+X-Google-Smtp-Source: ABdhPJzizzRytewvRzJhZwf64TDazyWn8WzPmuJAiEMTvXLBnDcBb1l3srZGk4ut908jU2tcbcWiOh0iOEl82lineq0=
+X-Received: by 2002:a17:90b:1e4e:b0:1dc:583c:398 with SMTP id
+ pi14-20020a17090b1e4e00b001dc583c0398mr943991pjb.232.1652901279708; Wed, 18
+ May 2022 12:14:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577 on
- cam1
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     mchehab@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
-        hfink@snap.com
-References: <20220518133004.342775-1-bryan.odonoghue@linaro.org>
- <20220518133004.342775-2-bryan.odonoghue@linaro.org>
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20220518133004.342775-2-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220504122725.179262-1-robert.foss@linaro.org>
+ <20220504122725.179262-4-robert.foss@linaro.org> <20220516235057.GA3564535-robh@kernel.org>
+In-Reply-To: <20220516235057.GA3564535-robh@kernel.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Wed, 18 May 2022 21:14:27 +0200
+Message-ID: <CAG3jFyufJtYP_t8mmYWFgOHarbfOcu9VpbFFDO0DPdrB=XXHXw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/6] dt-bindings: clock: Add Qcom SM8350 GPUCC bindings
+To:     Rob Herring <robh@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, krzk+dt@kernel.org,
+        jonathan@marek.ca, tdas@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Dmitry Baryshkov <dmityr.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,174 +72,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bryan,
+On Tue, 17 May 2022 at 01:50, Rob Herring <robh@kernel.org> wrote:
+>
+> On Wed, May 04, 2022 at 02:27:22PM +0200, Robert Foss wrote:
+> > Add device tree bindings for graphics clock controller for
+> > Qualcomm Technology Inc's SM8350 SoCs.
+> >
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > Reviewed-by: Dmitry Baryshkov <dmityr.baryshkov@linaro.org>
+> > ---
+> >  .../devicetree/bindings/clock/qcom,gpucc.yaml |  2 +
+> >  include/dt-bindings/clock/qcom,gpucc-sm8350.h | 52 +++++++++++++++++++
+> >  2 files changed, 54 insertions(+)
+> >  create mode 100644 include/dt-bindings/clock/qcom,gpucc-sm8350.h
+> >
+> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
+> > index 9ebcb1943b0a..4090cc7ea2ae 100644
+> > --- a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
+> > +++ b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
+> > @@ -20,6 +20,7 @@ description: |
+> >      dt-bindings/clock/qcom,gpucc-sm6350.h
+> >      dt-bindings/clock/qcom,gpucc-sm8150.h
+> >      dt-bindings/clock/qcom,gpucc-sm8250.h
+> > +    dt-bindings/clock/qcom,gpucc-sm8350.h
+> >
+> >  properties:
+> >    compatible:
+> > @@ -31,6 +32,7 @@ properties:
+> >        - qcom,sm6350-gpucc
+> >        - qcom,sm8150-gpucc
+> >        - qcom,sm8250-gpucc
+> > +      - qcom,sm8350-gpucc
+> >
+> >    clocks:
+> >      items:
+> > diff --git a/include/dt-bindings/clock/qcom,gpucc-sm8350.h b/include/dt-bindings/clock/qcom,gpucc-sm8350.h
+> > new file mode 100644
+> > index 000000000000..d2294e0d527e
+> > --- /dev/null
+> > +++ b/include/dt-bindings/clock/qcom,gpucc-sm8350.h
+> > @@ -0,0 +1,52 @@
+> > +/* SPDX-License-Identifier: GPL-2.0-only */
+>
+> QCom reviewed and approved the license on this, right?
+>
+> Dual license.
 
-On 5/18/22 16:30, Bryan O'Donoghue wrote:
-> The IMX577 is on CCI1/CSI2 providing four lanes of camera data.
-> 
-> An example media-ctl pipeline is:
-> 
-> media-ctl --reset
-> media-ctl -v -d /dev/media0 -V '"imx412 '20-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> 
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 98 ++++++++++++++++++++++++
->   1 file changed, 98 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> index 0e63f707b911..48b31790c434 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> @@ -1203,6 +1203,43 @@ sdc2_card_det_n: sd-card-det-n {
->   		function = "gpio";
->   		bias-pull-up;
->   	};
-> +
-> +	cam2_default: cam2-default {
-> +		rst {
-> +			pins = "gpio78";
-> +			function = "gpio";
-> +
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +
-> +		mclk {
-> +			pins = "gpio96";
-> +			function = "cam_mclk";
-> +
-> +			drive-strength = <16>;
-> +			bias-disable;
-> +		};
-> +	};
-> +
-> +	cam2_suspend: cam2-suspend {
-> +		rst {
-> +			pins = "gpio78";
-> +			function = "gpio";
-> +
-> +			drive-strength = <2>;
-> +			bias-pull-down;
-> +			output-low;
-> +		};
-> +
-> +		mclk {
-> +			pins = "gpio96";
-> +			function = "cam_mclk";
-> +
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +	};
+Ah, yes. I'll change the license in v4 to:
 
-I still stick to my opinion that the description of rst/mclk pins should
-be uniformly added to the SoC specific .dtsi file. The pins and functions
-in these device tree nodes are not changeable, a board file should just
-select proper pairs.
+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
 
-Do you have any objections to it?
-
->   };
->   
->   &uart12 {
-> @@ -1294,3 +1331,64 @@ &qup_spi0_data_clk {
->   	drive-strength = <6>;
->   	bias-disable;
->   };
-> +
-> +&camcc {
-> +	status = "okay";
-> +};
-> +
-> +&camss {
-> +	status = "okay";
-> +	vdda-phy-supply = <&vreg_l5a_0p88>;
-> +	vdda-pll-supply = <&vreg_l9a_1p2>;
-> +
-> +	ports {
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		/* The port index denotes CSIPHY id i.e. csiphy2 */
-> +		port@2 {
-> +			reg = <2>;
-> +			csiphy2_ep: endpoint {
-> +				clock-lanes = <7>;
-> +				data-lanes = <0 1 2 3>;
-> +				remote-endpoint = <&imx412_ep>;
-> +			};
-> +
-> +		};
-> +	};
-> +};
-> +
-> +&cci1 {
-> +	status = "okay";
-> +};
-> +
-> +&cci1_i2c0 {
-> +	camera@1a {
-> +		compatible = "sony,imx412";
-> +		reg = <0x1a>;
-> +
-> +		reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
-> +		pinctrl-names = "default", "suspend";
-> +		pinctrl-0 = <&cam2_default>;
-> +		pinctrl-1 = <&cam2_suspend>;
-> +
-> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +		assigned-clock-rates = <24000000>;
-> +
-> +		power-domains = <&camcc TITAN_TOP_GDSC>;
-
-Above 'power-domains' property is not needed, it shall be implied by CCI.
-
-> +		dovdd-supply  = <&vreg_l7f_1p8>;
-> +		avdd-supply = <&vdc_5v>;
-> +		dvdd-supply = <&vdc_5v>;
-> +
-> +		status = "okay";
-
-Here 'status' property is not needed.
-
-> +		port {
-> +			imx412_ep: endpoint {
-> +				clock-lanes = <1>;
-> +				link-frequencies = /bits/ 64 <600000000>;
-> +				data-lanes = <1 2 3 4>;
-> +				remote-endpoint = <&csiphy2_ep>;
-> +			};
-> +		};
-> +	};
-> +};
-
-I run on you branch on top of linux-next, but switch build options from modules to built-in
-
-    CONFIG_I2C_QCOM_CCI=y
-    CONFIG_VIDEO_QCOM_CAMSS=y
-
-I didn't get the sensor initialized and hence there is no /dev/media0 node:
-
-[    0.620205] i2c-qcom-cci ac50000.cci: Found 19200000 cci clk rate while 37500000 was expected
-[    0.620551] i2c 20-001a: Fixing up cyclic dependency with ac6a000.camss
-[    0.620754] imx412 20-001a: Looking up dovdd-supply from device tree
-[    0.620797] imx412 20-001a: Looking up avdd-supply from device tree
-[    0.620860] imx412 20-001a: Looking up dvdd-supply from device tree
-[    0.620876] duplicated lane 1 in clock-lanes, using defaults
-[    0.622789] imx412 20-001a: failed to find sensor: -5
-[    0.622880] imx412: probe of 20-001a failed with error -5
-
-I believe the problem could be related to CCI, please remind me, are there I2C bus pull-ups?
-
---
-Best wishes,
-Vladimir
+>
+> > +/*
+> > + * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
+> > + */
+> > +
+> > +#ifndef _DT_BINDINGS_CLK_QCOM_GPU_CC_SM8350_H
+> > +#define _DT_BINDINGS_CLK_QCOM_GPU_CC_SM8350_H
+> > +
+> > +/* GPU_CC clocks */
+> > +#define GPU_CC_AHB_CLK                       0
+> > +#define GPU_CC_CB_CLK                        1
+> > +#define GPU_CC_CRC_AHB_CLK           2
+> > +#define GPU_CC_CX_APB_CLK            3
+> > +#define GPU_CC_CX_GMU_CLK            4
+> > +#define GPU_CC_CX_QDSS_AT_CLK                5
+> > +#define GPU_CC_CX_QDSS_TRIG_CLK              6
+> > +#define GPU_CC_CX_QDSS_TSCTR_CLK     7
+> > +#define GPU_CC_CX_SNOC_DVM_CLK               8
+> > +#define GPU_CC_CXO_AON_CLK           9
+> > +#define GPU_CC_CXO_CLK                       10
+> > +#define GPU_CC_FREQ_MEASURE_CLK              11
+> > +#define GPU_CC_GMU_CLK_SRC           12
+> > +#define GPU_CC_GX_GMU_CLK            13
+> > +#define GPU_CC_GX_QDSS_TSCTR_CLK     14
+> > +#define GPU_CC_GX_VSENSE_CLK         15
+> > +#define GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK       16
+> > +#define GPU_CC_HUB_AHB_DIV_CLK_SRC   17
+> > +#define GPU_CC_HUB_AON_CLK           18
+> > +#define GPU_CC_HUB_CLK_SRC           19
+> > +#define GPU_CC_HUB_CX_INT_CLK                20
+> > +#define GPU_CC_HUB_CX_INT_DIV_CLK_SRC        21
+> > +#define GPU_CC_MND1X_0_GFX3D_CLK     22
+> > +#define GPU_CC_MND1X_1_GFX3D_CLK     23
+> > +#define GPU_CC_PLL0                  24
+> > +#define GPU_CC_PLL1                  25
+> > +#define GPU_CC_SLEEP_CLK             26
+> > +
+> > +/* GPU_CC resets */
+> > +#define GPUCC_GPU_CC_ACD_BCR         0
+> > +#define GPUCC_GPU_CC_CB_BCR          1
+> > +#define GPUCC_GPU_CC_CX_BCR          2
+> > +#define GPUCC_GPU_CC_FAST_HUB_BCR    3
+> > +#define GPUCC_GPU_CC_GFX3D_AON_BCR   4
+> > +#define GPUCC_GPU_CC_GMU_BCR         5
+> > +#define GPUCC_GPU_CC_GX_BCR          6
+> > +#define GPUCC_GPU_CC_XO_BCR          7
+> > +
+> > +/* GPU_CC GDSCRs */
+> > +#define GPU_CX_GDSC                  0
+> > +#define GPU_GX_GDSC                  1
+> > +
+> > +#endif
+> > --
+> > 2.34.1
+> >
+> >
