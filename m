@@ -2,124 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 559B352BC71
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:16:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C92152BC85
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:16:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237545AbiERNQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 09:16:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60210 "EHLO
+        id S237646AbiERNTf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 09:19:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237701AbiERNQO (ORCPT
+        with ESMTP id S237631AbiERNTe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 09:16:14 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBA0CF51
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 06:16:11 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id u27so1844078wru.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 06:16:11 -0700 (PDT)
+        Wed, 18 May 2022 09:19:34 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39E481157CC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 06:19:32 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id p8so2108175pfh.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 06:19:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Rh6wQCBkR7oMyW1zN2pausvljqsjVZL3XJzU9SfDUpo=;
-        b=cUn1kKMmi7cdY3ctWFDdkzs1a7hfg7f3KwiCEmqRvtfO+5B1msE1lkNXIV604u5B46
-         GRD3RJzZprWhcTD3LYEtRq4ROL49cBVK8eMHHUMRc+rj4Rsb/0vcLB5gkeLD94sLcrjy
-         lqFK8AXXhhMtEXN+Viq9clTePd5qUUTR/obCXuf+cR/ArKoTZGHcnCRhER44T58M6nHn
-         ARXYuGw9sjFh/NDXxr4kX9UcRjPlalTpJz6tFea8JlvFIbiFdixCV/v0aZkC/oEKUL+d
-         o+jNQ2CddvVwozyni9e+aIAIq1yaoCglL+V7JNc3r2RPr/lu9gnPc6ni1sBmAQDtr7VP
-         +Igg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=lKZB/6RoNEosL1ZhhmdbCbJfaDZXTaYhcWk4wRoTqMQ=;
+        b=TiZdooj/E3kGV+m+IxCHD//i1RFktljM4yI8thLxPLyttdCBD2pBRVy7gdWTxNfkdY
+         MIjn5bmaUDce3ZkI4A8aN4Pdl+3MRqua4jF5FHfFXsiofGpZwDYiLJyNSNsdqMKrLAVm
+         /qYtqby/etpEIQQub4ftdleYWh+d3048sBGe63NY9+ficUbuADiprl137BLlintNcq2v
+         A802YuD/nvdQCEodGIgt2Lxdd6aAO90Penhum1XMmJXCCci0/hwAK1evFeqpxOh1mky1
+         3We60ppHBCx+SUjtjg30CX6iBDLw3IwowCK+TuqDKyOR9GjLaPqG8eIZHAjHkbVmW5D/
+         PhbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Rh6wQCBkR7oMyW1zN2pausvljqsjVZL3XJzU9SfDUpo=;
-        b=odICp6gX8y6Hl4WVDADXvnenMNV2KBnxcTVvKJKhm05GPSA4HJy3q/aAKEfCnoA1fc
-         6wrKE7Z4Zn0YDTPDVGbpu5vFbKB620+G8Hj2Ik2DsuKgJ4LhKr+TYc4pOWmilgETW8ba
-         65cq2IhKcHW30fvaGwmO1NYdBcQ61vIe4rqtFLJNs7lmvPyN7meSdvAH6Nx77oo6wEbK
-         N/hCn8KWBWFJk6DhhuLUXxFiUt2nzPlbWiRUfKBa+Hu4ZuUKuLNE/KGLEMI0ih5hSbSl
-         lj7fMDvSjlDh5FIn4jIjCaL9PaGxgsRjjQWNfcM9VYysnEkdVk15hoFqamv2cZY65z9F
-         J8Xg==
-X-Gm-Message-State: AOAM530Y2Ypk9r8f7SyUGHC+Nt7JGfoiVtk856B1jwnEi5Wka6K2iSNU
-        bKE61tS1idQGCBmdldpd4+/pRg==
-X-Google-Smtp-Source: ABdhPJxka7e9stxcPVXKzz/VlWk0cco0iF3hAocbvpboVeT9UZlyhCVjUgDZzbAcVNaBrQAM09bNpQ==
-X-Received: by 2002:a05:6000:1143:b0:20e:59b5:f0c with SMTP id d3-20020a056000114300b0020e59b50f0cmr6473605wrx.398.1652879770461;
-        Wed, 18 May 2022 06:16:10 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id v9-20020adf8b49000000b0020c5253d8d2sm2109638wra.30.2022.05.18.06.16.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 May 2022 06:16:09 -0700 (PDT)
-Message-ID: <f691000f-00f9-33e7-26f8-564f52f44a19@nexus-software.ie>
-Date:   Wed, 18 May 2022 14:16:08 +0100
+        bh=lKZB/6RoNEosL1ZhhmdbCbJfaDZXTaYhcWk4wRoTqMQ=;
+        b=mnXMswmtfiVnQ48xFMW2NIGA0H7Tq9tZKlELe4oAiJ4C94/2P+5K46DWSeos7Hf1Sn
+         scE+Ete69j4WWokaQ9GXN+ZbejVAqoxgCyYHTbwBqXihvEZy9mvDEDA1ABI9Y5jWPcM8
+         2Yb/jvyS960+Ln5rAoo4sBIERwHhqL/FC3zxNNuQw19yOc2q7aQ7lS4iUXm9FvXyH/um
+         O5d/sF1Md74nKj3GatkYwDZl975SP2hxOifiVoP/ewGoiCQHcGMd+W/1nSY84fi6JGKs
+         EtDwJFQnqqgHTOy2wbMX1TFHaUAoMGVmogCA964lTUPKBEwIJ6ycKFcGeTGGQgFOogIE
+         zu1g==
+X-Gm-Message-State: AOAM531frdkB1Px+7d30NjTK1ysFQjAQHSTkJUq//H+ayAHkstdEP+Bd
+        1gYQmH3vbFzSz8BpB9kt7AoO
+X-Google-Smtp-Source: ABdhPJzzQNNyHE5cV8P7ycPwOWKLxudFG57eELbtV3RDyDz7x8L67cxSujGCQ0pczbQTtKmXHHLCpg==
+X-Received: by 2002:a05:6a00:f8b:b0:518:137a:112c with SMTP id ct11-20020a056a000f8b00b00518137a112cmr5629794pfb.8.1652879971672;
+        Wed, 18 May 2022 06:19:31 -0700 (PDT)
+Received: from localhost.localdomain ([117.217.181.192])
+        by smtp.gmail.com with ESMTPSA id b5-20020a170903228500b0015e8d4eb27esm1663908plh.200.2022.05.18.06.19.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 May 2022 06:19:31 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     bhelgaas@google.com, lorenzo.pieralisi@arm.com, kbusch@kernel.org,
+        hch@lst.de
+Cc:     linux-nvme@lists.infradead.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        svarbanov@mm-sol.com, bjorn.andersson@linaro.org, axboe@fb.com,
+        quic_vbadigan@quicinc.com, quic_krichai@quicinc.com,
+        quic_nitirawa@quicinc.com, vidyas@nvidia.com, sagi@grimberg.me,
+        linux-pm@vger.kernel.org, rafael@kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 0/3] PCI: Notify PCI drivers about powerdown during suspend
+Date:   Wed, 18 May 2022 18:49:10 +0530
+Message-Id: <20220518131913.26974-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH 0/2] media: dt-bindings: media: sm8250-camss: Add
- power-domain-names property
-Content-Language: en-US
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20220518121104.951621-1-vladimir.zapolskiy@linaro.org>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20220518121104.951621-1-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/05/2022 13:11, Vladimir Zapolskiy wrote:
-> QCOM SM8250 camera subsystem depends on three power domains, at the moment
-> all of them are not differentiated one from another, however the power
-> domains compose a hierarchical structure with vfe0 and vfe1 as subdomains
-> of titan_top, also managing vfe0 and vfe1 separately allows to get more
-> fine-grained power control in runtime.
-> 
-> The change relates to my review comment for v2 of CAMSS on SM8250 submission:
-> 
->     https://lore.kernel.org/all/13ad033e-cd5d-3a8c-b036-50a3ac4245c0@linaro.org/
-> 
-> Apparently it becomes important to manage CAMSS power domains much better for
-> newer platforms, this referes to platforms with Titan GDSC, for instance CAMSS
-> on SM8450 has 6 power domains, and dealing with them in bulk is not an option.
-> 
-> There was a note in commit 2f6f8af67203 ("media: camss: Refactor VFE power
-> domain toggling") about problems with power VFE domains on/off, but perhaps
-> it's related to the fact that Titan GDSC is a special power domain and VFE
-> are subdomains, the latter shall not be enabled earlier than the Titan, but
-> the driver did not construct a proper hierarchy and leaves a room for races.
-> 
-> The change should have no implications on any SM8250 CAMSS users, since
-> none of the supported in upstream boards enables the camss device tree node.
-> The correspondent changes in the driver will follow this dt specific series.
-> 
-> Most likely a similar change is required for SDM845 platform, but it would
-> need additional investigation and testing.
-> 
-> Vladimir Zapolskiy (2):
->    media: dt-bindings: media: sm8250-camss: Add power-domain-names property
->    arm64: dts: qcom: sm8250: camss: Add power-domain-names property
-> 
->   .../devicetree/bindings/media/qcom,sm8250-camss.yaml       | 7 +++++++
->   arch/arm64/boot/dts/qcom/sm8250.dtsi                       | 1 +
->   2 files changed, 8 insertions(+)
-> 
+Hi,
 
-This doesn't break anything for me on sm8250
+This series adds support for notifying the PCI drivers like NVMe about the
+transition of PCI devices into powerdown mode during system suspend.
 
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Background
+----------
 
-for both
+On Qcom SC7280 based Chrome platforms, the RPMh will turn off the power to all
+PCIe devices during system suspend for aggressive powersaving. Currently, there
+is no way for the PCI device drivers to learn about this situation. Some of the
+drivers assume that the power will be retained and some others assume that the
+power may be taken down.
+
+We faced the issue with NVMe PCI driver, where the driver expects the NVMe
+device to be in APST (Autonomous Power State Transition) state for power saving
+during system suspend. So when the power goes down, the NVMe driver fails to
+bringup the device during resume.
+
+Previous work
+-------------
+
+We tried to fix this issue in a couple of ways:
+
+1. The NVMe PCI driver checks for the existence of "StorageD3Enable" ACPI
+property in the suspend path. If the property is found, the driver assumes that
+the device may go to poweroff state and shutdowns the device accordingly.
+
+As like the ACPI based systems, we also tried to get the support in place for
+DT based systems. But that didn't get accepted:
+https://lore.kernel.org/all/Yl+6V3pWuyRYuVV8@infradead.org/T/
+
+2. Keith Busch proposed a module params based approach. The parameter when set,
+will allow the driver to support APST during suspend. Absence of that parameter
+will let the driver shutdown the device.
+
+This also did not get accepted:
+https://lore.kernel.org/linux-nvme/20220201165006.3074615-1-kbusch@kernel.org/
+
+Proposal
+--------
+
+Christoph suggested to add a notification in the PCI/PM core to let the NVMe
+driver know that the device will go into powerdown state during suspend.
+https://lore.kernel.org/all/Yg0wklcJ3ed76Jbk@infradead.org/
+
+Hence in this series, a "suspend_poweroff" flag is introduced in the host bridge
+struct. When this flag is set by the PCI RC drivers, the PCI device driver like
+NVMe can shutdown the device during suspend.
+
+In the coming days, the usage of this flag could be extended to other PCI
+drivers as well.
+
+In this series, the system suspend/resume support is also added to the Qcom
+PCIe RC driver for SC7280. During the suspend time, the RC driver will put the
+device into D3cold and recover it during resume. So even though RPMh is cutting
+off the power to PCIe domain, it is necessary to put the device in D3cold by
+the PCIe RC driver for proper working.
+
+Testing
+-------
+
+This series has been tested on SC7280 IDP board connected to a NVMe PCI device.
+
+Thanks,
+Mani
+
+Manivannan Sadhasivam (2):
+  PCI: Add a flag to notify PCI drivers about powerdown during suspend
+  nvme-pci: Make use of "suspend_poweroff" flag during system suspend
+
+Prasad Malisetty (1):
+  PCI: qcom: Add system PM support
+
+ drivers/nvme/host/pci.c                |   3 +-
+ drivers/pci/controller/dwc/pcie-qcom.c | 108 +++++++++++++++++++++++++
+ include/linux/pci.h                    |   2 +
+ 3 files changed, 112 insertions(+), 1 deletion(-)
+
+-- 
+2.25.1
+
