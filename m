@@ -2,71 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E4C952C076
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 19:10:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF7FE52C025
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 19:09:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240498AbiERQp5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 12:45:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47786 "EHLO
+        id S240510AbiERQrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 12:47:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240495AbiERQpy (ORCPT
+        with ESMTP id S240455AbiERQrr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 12:45:54 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B5842AD;
-        Wed, 18 May 2022 09:45:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652892348; x=1684428348;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=K0rrbc0K5LUJV5eVcZxJAUi8zXPdq/0qpUyGoqFCMP4=;
-  b=d6towLlnaCDJLfyKtGKGr2JLj0EUP8z9iWRAanUwq8LcixuWEfVAhlfy
-   z+pBlaYWUzyfNke4eK9/y+2HQbfYnC4k7YEVxgrmB69ThLqQbRqmrWFTR
-   /KInc6OZ7z3cyrbsa2oknATrKKBWZ7UajjWcx41aLZihMwOdVGOKAEoSs
-   U=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 18 May 2022 09:45:48 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2022 09:45:47 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 18 May 2022 09:45:47 -0700
-Received: from [10.50.12.117] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 18 May
- 2022 09:45:43 -0700
-Message-ID: <ff0c9375-9e44-36fb-427e-37d53a6a7b98@quicinc.com>
-Date:   Wed, 18 May 2022 22:15:40 +0530
+        Wed, 18 May 2022 12:47:47 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CE0A4E385
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 09:47:27 -0700 (PDT)
+Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7F2A320537;
+        Wed, 18 May 2022 18:47:25 +0200 (CEST)
+Message-ID: <6cb75a3e-49fd-bbe0-4e81-d6aec33b70a5@somainline.org>
+Date:   Wed, 18 May 2022 18:47:24 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCHv14 5/9] lib: Add register read/write tracing support
-Content-Language: en-US
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-To:     Steven Rostedt <rostedt@goodmis.org>
-CC:     <arnd@arndb.de>, <catalin.marinas@arm.com>,
-        <gregkh@linuxfoundation.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <maz@kernel.org>, <quic_psodagud@quicinc.com>,
-        <quic_tsoni@quicinc.com>, <will@kernel.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-References: <cover.1651663123.git.quic_saipraka@quicinc.com>
- <9827bae40f6f319f294d06859c9e3c7442f067f2.1651663123.git.quic_saipraka@quicinc.com>
- <20220518100721.18fb5876@gandalf.local.home>
- <c696ebfc-9a2a-7b12-7297-3be8a31a82d3@quicinc.com>
-In-Reply-To: <c696ebfc-9a2a-7b12-7297-3be8a31a82d3@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.9.0
+Subject: Re: [PATCH] clk: qcom: camcc-sm8250: Fix halt on boot by reducing
+ driver's init level
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20220518103554.949511-1-vladimir.zapolskiy@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220518103554.949511-1-vladimir.zapolskiy@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,20 +50,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/18/2022 8:48 PM, Sai Prakash Ranjan wrote:
-> Hi Steve,
->
-> On 5/18/2022 7:37 PM, Steven Rostedt wrote:
->>> +        (void *)(unsigned long)__entry->caller, __entry->width,
->> __entry->caller is already defined as "unsigned long", why the extra
->> typecast?
->
-> I remember seeing compilation errors without this change in early versions of
-> the series. Let me check this again.
->
->
 
-No warnings or errors without this extra cast, yay. New version posted.
+On 18/05/2022 12:35, Vladimir Zapolskiy wrote:
+> Access to I/O of SM8250 camera clock controller IP depends on enabled
+> GCC_CAMERA_AHB_CLK clock supplied by global clock controller, the latter
+> one is inited on subsys level, so, to satisfy the dependency, it would
+> make sense to deprive the init level of camcc-sm8250 driver.
 
-Thanks,
-Sai
+Hi,
+
+
+I believe this is due to the fact that this clock is falsely advertised 
+by the header and Linux does not know anything about it, because it is 
+handled by a magic write [1] (as I once said in a similar case, this was 
+going bite eventually..) instead and the index corresponding to the 
+define symbol is not initialized, hence it points to NULL. Adding the 
+clock properly in GCC would let the OF clock stuff handle it gracefully. 
+If that is the case, your patch disabling the clock controller block 
+(which I'm against unless there's abosolute need, as having the hw block 
+initialized properly should be possible regardless of the board, as it's 
+a generic SoC components) should not be necessary.
+
+That said, I can not test my theory right now.
+
+
+[1] 
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/clk/qcom/gcc-sm8250.c?h=next-20220518#n3647
+
+Konrad
+
+>
+> If both drivers are compiled as built-in, there is a change that a board
+> won't boot up due to a race, which happens on the same init level.
+>
+> Fixes: 5d66ca79b58c ("clk: qcom: Add camera clock controller driver for SM8250")
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>   drivers/clk/qcom/camcc-sm8250.c | 12 +-----------
+>   1 file changed, 1 insertion(+), 11 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/camcc-sm8250.c b/drivers/clk/qcom/camcc-sm8250.c
+> index 439eaafdcc86..ae4e9774f36e 100644
+> --- a/drivers/clk/qcom/camcc-sm8250.c
+> +++ b/drivers/clk/qcom/camcc-sm8250.c
+> @@ -2440,17 +2440,7 @@ static struct platform_driver cam_cc_sm8250_driver = {
+>   	},
+>   };
+>   
+> -static int __init cam_cc_sm8250_init(void)
+> -{
+> -	return platform_driver_register(&cam_cc_sm8250_driver);
+> -}
+> -subsys_initcall(cam_cc_sm8250_init);
+> -
+> -static void __exit cam_cc_sm8250_exit(void)
+> -{
+> -	platform_driver_unregister(&cam_cc_sm8250_driver);
+> -}
+> -module_exit(cam_cc_sm8250_exit);
+> +module_platform_driver(cam_cc_sm8250_driver);
+>   
+>   MODULE_DESCRIPTION("QTI CAMCC SM8250 Driver");
+>   MODULE_LICENSE("GPL v2");
+>
