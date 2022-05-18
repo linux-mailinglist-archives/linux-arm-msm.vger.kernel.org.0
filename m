@@ -2,129 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 844AB52C6A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 00:53:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AAD752C70A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 00:57:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230055AbiERWxE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 18:53:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59744 "EHLO
+        id S229901AbiERW5h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 18:57:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229927AbiERWxA (ORCPT
+        with ESMTP id S230470AbiERW45 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 18:53:00 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C74214C777
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 15:52:59 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id d17so3188547plg.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 15:52:59 -0700 (PDT)
+        Wed, 18 May 2022 18:56:57 -0400
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F4D955B8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 15:56:55 -0700 (PDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id t26so6161948ybt.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 15:56:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=89xJl/5AucW2svLYY82lzLas3d/413S0Fsu8gNXuG9M=;
-        b=BrtidlQe1FgptHjDWtJaGPrkEPtqkg0V2+26eRRvqBzgrLI/Xk3q2SRVlhKFUw3czv
-         ripjKhwfJzjJIGYlDMW15Yy+CMkyvuB13oJ8RDgbHk04q67vPa4HW0QR7ZUbiWU8NFGe
-         XNS0fCL9ZiPZayBM5GdFmA67fj4XhRGF4E/ig=
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=mZ3wqB4NmL7z6lpFr/h15h1rYqsZKafJnUpMVahbEPg=;
+        b=ovbcf3BPb/ZrA/FpQ+ZjErGDIEZ9sF3fYOxqsE4Z0xdiTlYY9UY36hS3ty6MLllddq
+         FdZzNc2PcFHW5cwKZ0FlQqx6F8uTY06Ab/cmT+eL89dkm6I4fHT5v6DDGzwY+fqIjM8b
+         RjeYQt93Ckr4p0lPVWY342OwWKznH6xDl4nV36uj7bwrBPcHFh3ePzF5GNEmu/mQBhIV
+         GwWDekgJIDWSV60014hyLdzt2NtjUStY8MI6SiwBWMH8LEBnRGkE0W6Db0zUE9IYWmDQ
+         Ifd6nbhkESdcIbQrjo3sdEfmdPtb1VAIHCw/LAZv1DOtvQwqLYnhML4dVDmuoYeMmVFn
+         q7TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=89xJl/5AucW2svLYY82lzLas3d/413S0Fsu8gNXuG9M=;
-        b=2kHEl9uljQNJqh9eGhw0TH6WCJPgU9zrVYvWtnQutlVuxbBVd04pFYmo0wAhalPe1C
-         keN4h3CV5Kj4uhdLsNHIpJI+y9Lq8t1WTggYfgYVusp/iM8W1ML3YFg7RF8xHwTMClVJ
-         o6rAG6NMfbSJX5SkOhaUSqqRllXpNCt/JNt91BlFvtXtR2hBNeK8iPGc8JtFkhuVnuNs
-         QmQT09AuOV5dTbnfqD9MTsvxGDxj8KQEMtbKgVwa1dIO9xolW7jBBvFwsYadtmVtu8oD
-         ibK+UQXdaqSQopAiUI6Gz8Nk32VE+MJsJdvhgeAEgnRBRZYX+xZIJ9E2MmZ/A9Wyprie
-         3cYw==
-X-Gm-Message-State: AOAM531Hhzs3f3E2G305nI5t1Sze6LyJEkk/pZCuxWRu1jhPthrJYc85
-        r9MJQvptW4YGcsYSoMDbPCM05w==
-X-Google-Smtp-Source: ABdhPJxGXJRcQd8UATDMy3zIg1etHJVVL5FlHgTkB/BAVp75YVd/+bX2Pn+xzQclDoPUJolDy6VxMQ==
-X-Received: by 2002:a17:903:1c6:b0:161:9fbc:5a6 with SMTP id e6-20020a17090301c600b001619fbc05a6mr1787688plh.65.1652914378674;
-        Wed, 18 May 2022 15:52:58 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:e229:79ea:227e:d9dd])
-        by smtp.gmail.com with UTF8SMTPSA id w26-20020a62c71a000000b0050dc7628167sm2490226pfg.65.2022.05.18.15.52.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 May 2022 15:52:58 -0700 (PDT)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, Kevin Lund <kglund@google.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7280: Enable wifi for Chrome OS boards
-Date:   Wed, 18 May 2022 15:52:55 -0700
-Message-Id: <20220518155252.1.I176d4254c79cfaafa38cbe36f066f02f819df9b6@changeid>
-X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=mZ3wqB4NmL7z6lpFr/h15h1rYqsZKafJnUpMVahbEPg=;
+        b=hjj/PayemMo6p7fCEApXtbN1YiZ5xJjDSObd3RsGsYPpnqidmGW+e2Wf5rQyz2LYPO
+         wKIrZ5QAyEytmhqakEYWbt5JRBltGyfil+BHKTHchm3E3lvdAqe1mIQ6FdUZFqsftQZD
+         ogxlMcufN8NMUxT2IYFBZ/zkcALGa1IH7uV2tI9VwTxBGADTF6bbbuSNmyxQf5ovw8G5
+         eKa+ulc+CxyzhZsAMo4BVS72gKY5Zcxm1MmGFMjjydZeNj6uDKfiykuwCGW4jHkLcwmT
+         8NCqkfLpCO8JWWeXhmVoRu5hKHafLxGBT+qL4VDIwIiYOMWJ7lX447LmlQnetlSo5atx
+         mE9g==
+X-Gm-Message-State: AOAM532bK6fjQhBMf185JbikkFgpHHHarmXkfEM7UhxavVWM30/97vHl
+        e1vZ1Ub/yusd7Z1sgg1H/DG0w3t3E3hV9WpDn4k=
+X-Google-Smtp-Source: ABdhPJyyLDAg+sVdsLTxwEXiZ5avjedwK/uWMP/Y3UWcChEjwDE+iXuY4kOycHY8vIqM/rcV0hLTcVdg0IN0RAQYgBc=
+X-Received: by 2002:a5b:f87:0:b0:64a:9aa6:e181 with SMTP id
+ q7-20020a5b0f87000000b0064a9aa6e181mr1852277ybh.157.1652914614913; Wed, 18
+ May 2022 15:56:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Received: by 2002:a05:7000:7143:0:0:0:0 with HTTP; Wed, 18 May 2022 15:56:53
+ -0700 (PDT)
+Reply-To: tonywenn@asia.com
+From:   Tony Wen <weboutloock4@gmail.com>
+Date:   Thu, 19 May 2022 06:56:53 +0800
+Message-ID: <CAE2_YrD=5bo8j9+ah-xptEBBV-HEC4=Gb0SRHf996phiopc3WQ@mail.gmail.com>
+Subject: engage
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:b2a listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.4933]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [weboutloock4[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [weboutloock4[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.4 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the 'wifi' and 'remoteproc_wpss' nodes for all sc7280
-based Chrome OS boards. Delete the corresponding entries from
-sc7280-idp.dtsi since this file includes sc7280-chrome-common.dtsi.
-
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
----
-
- arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 13 +++++++++++++
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           | 11 -----------
- 2 files changed, 13 insertions(+), 11 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-index 9f4a9c263c35..0002e389bbe2 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-@@ -91,7 +91,20 @@ &remoteproc_mpss {
- 	memory-region = <&mba_mem>, <&mpss_mem>;
- };
- 
-+&remoteproc_wpss {
-+	status = "okay";
-+	firmware-name = "ath11k/WCN6750/hw1.0/wpss.mdt";
-+};
-+
- /* Increase the size from 2.5MB to 8MB */
- &rmtfs_mem {
- 	reg = <0x0 0x9c900000 0x0 0x800000>;
- };
-+
-+&wifi {
-+	status = "okay";
-+
-+	wifi-firmware {
-+		iommus = <&apps_smmu 0x1c02 0x1>;
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 5eb668991e24..9cea8fc7ff8b 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -560,14 +560,3 @@ sw_ctrl: sw-ctrl {
- 		bias-pull-down;
- 	};
- };
--
--&remoteproc_wpss {
--	status = "okay";
--};
--
--&wifi {
--	status = "okay";
--	wifi-firmware {
--		iommus = <&apps_smmu 0x1c02 0x1>;
--	};
--};
--- 
-2.36.1.124.g0e6072fb45-goog
-
+Can I engage your services?
