@@ -2,135 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFF9B52C20B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 20:27:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C783252C228
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 20:27:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232212AbiERSLQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 14:11:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60330 "EHLO
+        id S241459AbiERS0R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 14:26:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237740AbiERSLE (ORCPT
+        with ESMTP id S241366AbiERS0F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 14:11:04 -0400
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A844123177;
-        Wed, 18 May 2022 11:11:02 -0700 (PDT)
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-f1d2ea701dso3742306fac.10;
-        Wed, 18 May 2022 11:11:02 -0700 (PDT)
+        Wed, 18 May 2022 14:26:05 -0400
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 452F17CDE7;
+        Wed, 18 May 2022 11:26:03 -0700 (PDT)
+Received: by mail-qv1-xf32.google.com with SMTP id y20so2108011qvx.3;
+        Wed, 18 May 2022 11:26:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nfgYoWCNYtN7yDfm2+d3s9VvRbNwsmq2M10lbEvV91w=;
+        b=BU4UhCSBQmodnhlemcE31H7c2P5bS4uD95BTXf+A6pZjh/XS3tC1t1En3GecHCtM0t
+         mXQzgOkt6y2dhDUY4NaqxzkRzFnNMxFB4vbJUXChGiDaCeCFkzu5wJklFunrx/hsoTT4
+         DDRXS8UCcvLanVCmZV8nJjMyto4R6qqi3P1Tm23y4csTS2oY7xthDULzOf5X+hnuKGaJ
+         X03is8tUWDjhmeZkDo6Ma0u3ZEmvm5T17uAkkGtZd6pAO5HEFbHOq5jKBTJEThCQyV8/
+         EMQVr/w2ANjh/ZxHtdzRLqqlA8lxcIh0UiG47/f0dRuTjnFXUSDrVFyIgBdYSFOEHDqo
+         hfLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2SbH21NI1RxYzUW8Fc68yUKxfiyOdhoY7sVVRkwTa5c=;
-        b=b0wyhlyp9ooTdbNyTPbV2vY5e4sfyc4FmaTotnr6Xg8E7BS6wgiiHKtqYsR1KEedxB
-         dDJ8fiYsHBSciCz+/ZuhEXa1TksqPxdId/27rygiJ0Wvj0RFxsfFOn+BqfczMjTCTcyk
-         W7vfHM9VCBYDluBuV02bjwsglMwnj1OOV5RI+VgyyilICd7q8OH78+uHJRLLui2lkrsZ
-         ej2xEAPKr5CwIn8p4ip/VK/iLsC9PHpWS7MOh4aOBUv9CO0ZxJWFM7J9FxZjYa1LeqiJ
-         0VDMovHoZ6dS3Gdl5UUX6yVjRsB6/7jjg4kOIMMxQMAWvEZBtxke1OM0JkSlJ3/zskZU
-         cfwg==
-X-Gm-Message-State: AOAM532UjxOCYX5L/qnyid4wi9TFpAtpuRDSYmIrRNXhgznlxTJO2Oyl
-        XDPCd7XLMqQRZv7sFXwLyA==
-X-Google-Smtp-Source: ABdhPJyY34Vx2sbvEO/kb6TuZqgF4pxQHTW0SZ1pk0lPygem0MFJXB98JiXyUZaeU/emLp1lwUyc5g==
-X-Received: by 2002:a05:6870:64a6:b0:f1:e54f:5923 with SMTP id cz38-20020a05687064a600b000f1e54f5923mr798509oab.123.1652897461805;
-        Wed, 18 May 2022 11:11:01 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id e133-20020acab58b000000b00325cda1ff99sm1019554oif.24.2022.05.18.11.11.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 May 2022 11:11:00 -0700 (PDT)
-Received: (nullmailer pid 3615615 invoked by uid 1000);
-        Wed, 18 May 2022 18:11:00 -0000
-Date:   Wed, 18 May 2022 13:11:00 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nfgYoWCNYtN7yDfm2+d3s9VvRbNwsmq2M10lbEvV91w=;
+        b=jEkzD9UEu6pILcZi/1ENbeJH4Hq/TWjVTgnaXOVX4TUzZpm+WdgRLN9Vdy/muXFNuY
+         uWzTT9Lv6ga4Zio3pFFppxWsVtOesA0B6NeRFFtov4GAeNI2ydW19QY89Y6ASDrGjjLn
+         F3OAqfRYH0/6nEnwy47LL7bYssq7cMOMdaBsHXIHDT7tWluqBcezOxRpD+ZfYXKhdcV/
+         Ie5kZRoj6v49L2kcTU5OY+d1/k0ddDnk9hlJDoutsF8i/hiB9Ja5qehR/LaKLQ906j8c
+         5MP1gb/fmECdQLiir5Uj0smk+IbPAKuNGGBHEcKWMY09CUim7oqK3HC3lYDgvjqeOK/O
+         31ZQ==
+X-Gm-Message-State: AOAM532XZ59VtOhDzBX4Jv/UX92XQMdB08L+J31totlxfI2bZdJaicUv
+        cV7Aw3gwk43uJDSkjGOqLYEGA8iPGgaeRffX/lk=
+X-Google-Smtp-Source: ABdhPJxjdpnM2ndfyB5ODLWDF8yv7yrQbec+TF3B+bzIAyN+RclUCT2TptIXCHT028RbwipcOB7Y/r3VopoJQUn8u/U=
+X-Received: by 2002:a05:6214:48f:b0:461:d4fe:4eed with SMTP id
+ ay15-20020a056214048f00b00461d4fe4eedmr859981qvb.48.1652898362364; Wed, 18
+ May 2022 11:26:02 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220517205341.536587-1-robimarko@gmail.com> <20220517205341.536587-4-robimarko@gmail.com>
+ <d60f32dc-a9f5-95ad-245e-6b9521d73fce@somainline.org> <CAOX2RU7jCdggA8y1cE4sfZLw_niDUNkG8pkJ=d=5mM1BbrrBQA@mail.gmail.com>
+In-Reply-To: <CAOX2RU7jCdggA8y1cE4sfZLw_niDUNkG8pkJ=d=5mM1BbrrBQA@mail.gmail.com>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Wed, 18 May 2022 20:25:51 +0200
+Message-ID: <CAOX2RU4wVXvm93Z5u1hEEUxn4S2YDGHVq_89Z7b-ryf0t7iJSg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] regulator: qcom_spmi: Add support for PMP8074 regulators
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] dt-bindings: mtd: qcom_nandc: document
- qcom,boot-pages binding
-Message-ID: <20220518181100.GG3302100-robh@kernel.org>
-References: <20220503154353.4367-1-ansuelsmth@gmail.com>
- <20220503154353.4367-3-ansuelsmth@gmail.com>
- <20220516184912.GA3063673-robh@kernel.org>
- <62840beb.1c69fb81.9bdaf.070c@mx.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <62840beb.1c69fb81.9bdaf.070c@mx.google.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        lgirdwood@gmail.com, broonie@kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Devicetree List <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 17, 2022 at 10:56:09PM +0200, Ansuel Smith wrote:
-> On Mon, May 16, 2022 at 01:49:12PM -0500, Rob Herring wrote:
-> > On Tue, May 03, 2022 at 05:43:53PM +0200, Ansuel Smith wrote:
-> > > Document new qcom,boot_pages binding used to apply special
-> > 
-> > s/boot_pages/boot-pages/
-> > 
-> > > read/write configuration to boot pages.
-> > > 
-> > > QCOM apply a special configuration where spare data is not protected
-> > > by ECC for some special pages (used for boot partition). Add
-> > > Documentation on how to declare these special pages.
-> > > 
-> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > > ---
-> > >  .../devicetree/bindings/mtd/qcom,nandc.yaml   | 22 +++++++++++++++++++
-> > >  1 file changed, 22 insertions(+)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-> > > index 84ad7ff30121..fafeca0cafff 100644
-> > > --- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-> > > +++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-> > > @@ -102,6 +102,26 @@ allOf:
-> > >              - const: rx
-> > >              - const: cmd
-> > >  
-> > > +  - if:
-> > > +      properties:
-> > > +        compatible:
-> > > +          contains:
-> > > +            enum:
-> > > +              - qcom,ipq8074-nand
-> > > +
-> > > +    then:
-> > > +      properties:
-> > > +        qcom,boot-pages:
-> > > +          $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> > 
-> > You need to define the dimensions. Something like this:
-> > 
-> >              items:
-> >                items:
-> >                  - description: offset
-> >                  - description: size
+On Wed, 18 May 2022 at 19:31, Robert Marko <robimarko@gmail.com> wrote:
+>
+> On Wed, 18 May 2022 at 15:42, Konrad Dybcio
+> <konrad.dybcio@somainline.org> wrote:
 > >
-> 
-> Considering this is not limited to one item how should I declare that an
-> user can declare multiple items? (the user can declare multiple zones)
-> Declaring minItems without a maxItems? 
-> 
-> I assume in the suggested form it's assumed
-> minItems: 1
-> maxItems: 1
-> so this would be problematic.
+> >
+> > On 17/05/2022 22:53, Robert Marko wrote:
+> > > PMP8074 is a companion PMIC for the Qualcomm IPQ8074 WiSoC-s.
+> > >
+> > > It features 5 HF-SMPS and 13 LDO regulators.
+> > >
+> > > This commit adds support for S3 and S4 HF-SMPS buck regulators of
+> > > the HFS430 type and LDO11 of the HT_P150 type.
+> > > S3 is the CPU cluster voltage supply, S4 supplies the UBI32 NPU cores
+> > > and LDO11 is the SDIO/eMMC I/O voltage regulator required for high speeds.
+> > >
+> > > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > > ---
+> > >   drivers/regulator/qcom_spmi-regulator.c | 8 ++++++++
+> > >   1 file changed, 8 insertions(+)
+> > >
+> > > diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+> > > index 38bbc70241ae..696b088aae40 100644
+> > > --- a/drivers/regulator/qcom_spmi-regulator.c
+> > > +++ b/drivers/regulator/qcom_spmi-regulator.c
+> > > @@ -2137,6 +2137,13 @@ static const struct spmi_regulator_data pms405_regulators[] = {
+> > >       { }
+> > >   };
+> > >
+> > > +static const struct spmi_regulator_data pmp8074_regulators[] = {
+> >
+> > Please sort the struct alphabletically.
+>
+> Hi,
+> Will fixup in v3.
+>
+> >
+> >
+> > > +     { "s3", 0x1a00, "vdd_s3"},
+> > > +     { "s4", 0x1d00, "vdd_s4"},
+> > > +     { "l11", 0x4a00, "vdd_l10_l11_l12_l13"},
+> >
+> > Are the other regulators somehow not controllable through SPMI? Please
+> > leave a comment if that's the case.
+>
+> No, they are all controllable via SPMI as far as I know.
+> Though the output table completely leaves out L7, L9, and L10.
+> L5 and L6 are specified as Ebuck-4 subtypes (0x3d), while L10 is not
+> listed at all (0x34).
 
-No, the outer 'items' being a schema rather than a list means it applies 
-to all items and does not set a size of (offset, size) pairs.
+Ok, I dug a bit further and L5/6 are HT_P600 and are easily supportable.
+L10 is an HT_P50 type but it's listed as unused and left disabled, I don't know
+its supported output voltage range.
 
-If you do have a maximum number, you could set the range.
+Regards,
+Robert
 
-Rob
+> These are not currently supported and I don't have enough information
+> to support them.
+> L1, L2, L3, L4, L7, L8, L9, L11, L12, and L13 appear to have their
+> subtype already supported.
+> L1, L2, L3, L8, L9 subtype (0x32)
+> L4 subtype (0x30)
+> L7, L11, L12, L13 subtype (0x35)
+>
+> S3, S4, and L11 are the most important ones.
+> >
+> >
+> > > +     { }
+> > > +};
+> > > +
+> > >   static const struct of_device_id qcom_spmi_regulator_match[] = {
+> > >       { .compatible = "qcom,pm8004-regulators", .data = &pm8004_regulators },
+> > >       { .compatible = "qcom,pm8005-regulators", .data = &pm8005_regulators },
+> > > @@ -2150,6 +2157,7 @@ static const struct of_device_id qcom_spmi_regulator_match[] = {
+> > >       { .compatible = "qcom,pm660-regulators", .data = &pm660_regulators },
+> > >       { .compatible = "qcom,pm660l-regulators", .data = &pm660l_regulators },
+> > >       { .compatible = "qcom,pms405-regulators", .data = &pms405_regulators },
+> > > +     { .compatible = "qcom,pmp8074-regulators", .data = &pmp8074_regulators },
+> >
+> > Please sort the compatible too.
+>
+> Will fixup in v3.
+>
+> Regards,
+> Robert
+> >
+> >
+> > Konrad
+> >
+> > >       { }
+> > >   };
+> > >   MODULE_DEVICE_TABLE(of, qcom_spmi_regulator_match);
+> > >
