@@ -2,168 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C783252C228
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 20:27:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62B3852C240
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 20:27:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241459AbiERS0R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 14:26:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58538 "EHLO
+        id S241446AbiERS0b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 14:26:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241366AbiERS0F (ORCPT
+        with ESMTP id S241483AbiERS0Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 14:26:05 -0400
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 452F17CDE7;
-        Wed, 18 May 2022 11:26:03 -0700 (PDT)
-Received: by mail-qv1-xf32.google.com with SMTP id y20so2108011qvx.3;
-        Wed, 18 May 2022 11:26:03 -0700 (PDT)
+        Wed, 18 May 2022 14:26:25 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BFC5190D35
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 11:26:23 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id e4so2971777ljb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 11:26:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nfgYoWCNYtN7yDfm2+d3s9VvRbNwsmq2M10lbEvV91w=;
-        b=BU4UhCSBQmodnhlemcE31H7c2P5bS4uD95BTXf+A6pZjh/XS3tC1t1En3GecHCtM0t
-         mXQzgOkt6y2dhDUY4NaqxzkRzFnNMxFB4vbJUXChGiDaCeCFkzu5wJklFunrx/hsoTT4
-         DDRXS8UCcvLanVCmZV8nJjMyto4R6qqi3P1Tm23y4csTS2oY7xthDULzOf5X+hnuKGaJ
-         X03is8tUWDjhmeZkDo6Ma0u3ZEmvm5T17uAkkGtZd6pAO5HEFbHOq5jKBTJEThCQyV8/
-         EMQVr/w2ANjh/ZxHtdzRLqqlA8lxcIh0UiG47/f0dRuTjnFXUSDrVFyIgBdYSFOEHDqo
-         hfLg==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=od5uWvVsPOq4I2jfpLO/cfL7S5BDWB+6iI2HjhmFDi8=;
+        b=YFi7YoiK2sCoELwEdEVKRfjqdXWbA905k1dvjTeVLCplX6bNiQP/OQNji20m5/I8PT
+         5/bpQ3GAVS1nt9PKEIIiGeJIu5HxotShLdncl6eM1JtDb8bnHdRi3r4u7Zia5EevqpcY
+         KAaHQDZGdTRrlIflRuhVU2RCL9TeDjGnSNelx9v+ffLnYHtc0/NXegxhtdNdCh8wRu6K
+         E+OmwCQezZG4k2VQMex1HglxK1OLmX8SYInqAkOKU2dD/JyCZNjo2mmAzTyjwwAhQtyr
+         giX6MbX+FhuP2LNH38gojAT/2wComJtGQiP/qcPFNp/xi0cQ0fn06ntCIqNOYEyUu83p
+         7Zjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nfgYoWCNYtN7yDfm2+d3s9VvRbNwsmq2M10lbEvV91w=;
-        b=jEkzD9UEu6pILcZi/1ENbeJH4Hq/TWjVTgnaXOVX4TUzZpm+WdgRLN9Vdy/muXFNuY
-         uWzTT9Lv6ga4Zio3pFFppxWsVtOesA0B6NeRFFtov4GAeNI2ydW19QY89Y6ASDrGjjLn
-         F3OAqfRYH0/6nEnwy47LL7bYssq7cMOMdaBsHXIHDT7tWluqBcezOxRpD+ZfYXKhdcV/
-         Ie5kZRoj6v49L2kcTU5OY+d1/k0ddDnk9hlJDoutsF8i/hiB9Ja5qehR/LaKLQ906j8c
-         5MP1gb/fmECdQLiir5Uj0smk+IbPAKuNGGBHEcKWMY09CUim7oqK3HC3lYDgvjqeOK/O
-         31ZQ==
-X-Gm-Message-State: AOAM532XZ59VtOhDzBX4Jv/UX92XQMdB08L+J31totlxfI2bZdJaicUv
-        cV7Aw3gwk43uJDSkjGOqLYEGA8iPGgaeRffX/lk=
-X-Google-Smtp-Source: ABdhPJxjdpnM2ndfyB5ODLWDF8yv7yrQbec+TF3B+bzIAyN+RclUCT2TptIXCHT028RbwipcOB7Y/r3VopoJQUn8u/U=
-X-Received: by 2002:a05:6214:48f:b0:461:d4fe:4eed with SMTP id
- ay15-20020a056214048f00b00461d4fe4eedmr859981qvb.48.1652898362364; Wed, 18
- May 2022 11:26:02 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=od5uWvVsPOq4I2jfpLO/cfL7S5BDWB+6iI2HjhmFDi8=;
+        b=RECixniUXoj/v6JT7e+EZbCIrPVdAS7eeeIoPLRKFenmuWKjHVoXjzx0Kz6ZJaT7mS
+         gOkzGMoBovPJnidn/SAIJVZ+VHi69r0+JsYQeKyRrLgFcARBmGRWSc73yJIfpNSB3KHW
+         8rUwfID3bXLa6ivAYjLhP6FHes6X/PWwb2V4s9G1fbtgGhjr/veHTsWXJ/y0M6Pm158b
+         BjS0W/ucBwyeqql5VxTNXID1p0muiFzDCAsVyNXuClJZ+3hgLHVjz4hLZm6UAdzWfhcE
+         FeM3ADe0caBMRyVyLt/ST7VdbTywgOyPCZHWNaNc41J9/SCePgClVLkSAnxbK3Zpe302
+         5eYA==
+X-Gm-Message-State: AOAM530V2CUnaql/U2Abd4jfmvyKoNPDLsyxx0FX0hv360/jIxREA3az
+        Zet41YLvqSZ+/9QQ7IMadNiLdrqhZm5BFA==
+X-Google-Smtp-Source: ABdhPJxENUsQBLAa4UkhjQW3jk2j4PMM065g3mgcmn31EqwZri4gX76qk8umBhxThR46lEc7Pnx8FQ==
+X-Received: by 2002:a2e:91cf:0:b0:24f:11ea:d493 with SMTP id u15-20020a2e91cf000000b0024f11ead493mr385182ljg.408.1652898381751;
+        Wed, 18 May 2022 11:26:21 -0700 (PDT)
+Received: from ?IPV6:2001:470:dd84:abc0::8a5? ([2001:470:dd84:abc0::8a5])
+        by smtp.gmail.com with ESMTPSA id h12-20020a19700c000000b00477baba9504sm22360lfc.40.2022.05.18.11.26.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 May 2022 11:26:21 -0700 (PDT)
+Message-ID: <783bbf39-779d-3ac8-a965-9d98ec1993ec@linaro.org>
+Date:   Wed, 18 May 2022 21:26:16 +0300
 MIME-Version: 1.0
-References: <20220517205341.536587-1-robimarko@gmail.com> <20220517205341.536587-4-robimarko@gmail.com>
- <d60f32dc-a9f5-95ad-245e-6b9521d73fce@somainline.org> <CAOX2RU7jCdggA8y1cE4sfZLw_niDUNkG8pkJ=d=5mM1BbrrBQA@mail.gmail.com>
-In-Reply-To: <CAOX2RU7jCdggA8y1cE4sfZLw_niDUNkG8pkJ=d=5mM1BbrrBQA@mail.gmail.com>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Wed, 18 May 2022 20:25:51 +0200
-Message-ID: <CAOX2RU4wVXvm93Z5u1hEEUxn4S2YDGHVq_89Z7b-ryf0t7iJSg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/6] regulator: qcom_spmi: Add support for PMP8074 regulators
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v6 3/5] clk: qcom: gcc-sm8450: use new
+ clk_regmap_pipe_src_ops for PCIe pipe clocks
+Content-Language: en-GB
+To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        lgirdwood@gmail.com, broonie@kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Devicetree List <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>
+Cc:     Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20220513175339.2981959-1-dmitry.baryshkov@linaro.org>
+ <20220513175339.2981959-4-dmitry.baryshkov@linaro.org>
+ <CAE-0n53wjtJpUeMswrkQq1mAQEEfXiUhuvq4W4t=7gMpkbsiNQ@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAE-0n53wjtJpUeMswrkQq1mAQEEfXiUhuvq4W4t=7gMpkbsiNQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 18 May 2022 at 19:31, Robert Marko <robimarko@gmail.com> wrote:
->
-> On Wed, 18 May 2022 at 15:42, Konrad Dybcio
-> <konrad.dybcio@somainline.org> wrote:
-> >
-> >
-> > On 17/05/2022 22:53, Robert Marko wrote:
-> > > PMP8074 is a companion PMIC for the Qualcomm IPQ8074 WiSoC-s.
-> > >
-> > > It features 5 HF-SMPS and 13 LDO regulators.
-> > >
-> > > This commit adds support for S3 and S4 HF-SMPS buck regulators of
-> > > the HFS430 type and LDO11 of the HT_P150 type.
-> > > S3 is the CPU cluster voltage supply, S4 supplies the UBI32 NPU cores
-> > > and LDO11 is the SDIO/eMMC I/O voltage regulator required for high speeds.
-> > >
-> > > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > > ---
-> > >   drivers/regulator/qcom_spmi-regulator.c | 8 ++++++++
-> > >   1 file changed, 8 insertions(+)
-> > >
-> > > diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
-> > > index 38bbc70241ae..696b088aae40 100644
-> > > --- a/drivers/regulator/qcom_spmi-regulator.c
-> > > +++ b/drivers/regulator/qcom_spmi-regulator.c
-> > > @@ -2137,6 +2137,13 @@ static const struct spmi_regulator_data pms405_regulators[] = {
-> > >       { }
-> > >   };
-> > >
-> > > +static const struct spmi_regulator_data pmp8074_regulators[] = {
-> >
-> > Please sort the struct alphabletically.
->
-> Hi,
-> Will fixup in v3.
->
-> >
-> >
-> > > +     { "s3", 0x1a00, "vdd_s3"},
-> > > +     { "s4", 0x1d00, "vdd_s4"},
-> > > +     { "l11", 0x4a00, "vdd_l10_l11_l12_l13"},
-> >
-> > Are the other regulators somehow not controllable through SPMI? Please
-> > leave a comment if that's the case.
->
-> No, they are all controllable via SPMI as far as I know.
-> Though the output table completely leaves out L7, L9, and L10.
-> L5 and L6 are specified as Ebuck-4 subtypes (0x3d), while L10 is not
-> listed at all (0x34).
+On 18/05/2022 20:59, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2022-05-13 10:53:37)
+>> diff --git a/drivers/clk/qcom/gcc-sm8450.c b/drivers/clk/qcom/gcc-sm8450.c
+>> index 593a195467ff..a140a89b73b4 100644
+>> --- a/drivers/clk/qcom/gcc-sm8450.c
+>> +++ b/drivers/clk/qcom/gcc-sm8450.c
+>> @@ -239,17 +218,21 @@ static const struct clk_parent_data gcc_parent_data_11[] = {
+>>          { .fw_name = "bi_tcxo" },
+>>   };
+>>
+>> -static struct clk_regmap_mux gcc_pcie_0_pipe_clk_src = {
+>> +static struct clk_regmap_phy_mux gcc_pcie_0_pipe_clk_src = {
+>>          .reg = 0x7b060,
+>>          .shift = 0,
+>>          .width = 2,
+>> -       .parent_map = gcc_parent_map_4,
+>> +       .phy_src_val = 0, /* pipe_clk */
+> 
+> Make a define? PCIE0_PIPE_CLK_SRC_VAL and drop the comment?
 
-Ok, I dug a bit further and L5/6 are HT_P600 and are easily supportable.
-L10 is an HT_P50 type but it's listed as unused and left disabled, I don't know
-its supported output voltage range.
+This value can change between the muxes. Thus I'd prefer not to do this.
+Compare it with the parent_maps, where we do not use defines for the 
+'val' part.
 
-Regards,
-Robert
+> 
+>> +       .ref_src_val = 2, /* bi_tcxo */
+>>          .clkr = {
+>>                  .hw.init = &(struct clk_init_data){
+>>                          .name = "gcc_pcie_0_pipe_clk_src",
+>> -                       .parent_data = gcc_parent_data_4,
+>> -                       .num_parents = ARRAY_SIZE(gcc_parent_data_4),
+>> -                       .ops = &clk_regmap_mux_closest_ops,
+>> +                       .parent_data = &(const struct clk_parent_data){
+>> +                               .fw_name = "pcie_0_pipe_clk",
+>> +                       },
+>> +                       .num_parents = 1,
+>> +                       .flags = CLK_SET_RATE_PARENT,
+>> +                       .ops = &clk_regmap_phy_mux_ops,
+>>                  },
+>>          },
+>>   };
 
-> These are not currently supported and I don't have enough information
-> to support them.
-> L1, L2, L3, L4, L7, L8, L9, L11, L12, and L13 appear to have their
-> subtype already supported.
-> L1, L2, L3, L8, L9 subtype (0x32)
-> L4 subtype (0x30)
-> L7, L11, L12, L13 subtype (0x35)
->
-> S3, S4, and L11 are the most important ones.
-> >
-> >
-> > > +     { }
-> > > +};
-> > > +
-> > >   static const struct of_device_id qcom_spmi_regulator_match[] = {
-> > >       { .compatible = "qcom,pm8004-regulators", .data = &pm8004_regulators },
-> > >       { .compatible = "qcom,pm8005-regulators", .data = &pm8005_regulators },
-> > > @@ -2150,6 +2157,7 @@ static const struct of_device_id qcom_spmi_regulator_match[] = {
-> > >       { .compatible = "qcom,pm660-regulators", .data = &pm660_regulators },
-> > >       { .compatible = "qcom,pm660l-regulators", .data = &pm660l_regulators },
-> > >       { .compatible = "qcom,pms405-regulators", .data = &pms405_regulators },
-> > > +     { .compatible = "qcom,pmp8074-regulators", .data = &pmp8074_regulators },
-> >
-> > Please sort the compatible too.
->
-> Will fixup in v3.
->
-> Regards,
-> Robert
-> >
-> >
-> > Konrad
-> >
-> > >       { }
-> > >   };
-> > >   MODULE_DEVICE_TABLE(of, qcom_spmi_regulator_match);
-> > >
+
+-- 
+With best wishes
+Dmitry
