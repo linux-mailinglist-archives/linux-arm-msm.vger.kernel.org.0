@@ -2,82 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EE6152C52C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 23:03:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8784952C575
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 23:22:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242720AbiERU5X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 16:57:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41956 "EHLO
+        id S243036AbiERVIz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 17:08:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242699AbiERU5V (ORCPT
+        with ESMTP id S243004AbiERVIy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 16:57:21 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FCDD1D8102
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 13:57:19 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id n24so4133154oie.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 13:57:19 -0700 (PDT)
+        Wed, 18 May 2022 17:08:54 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1961A1B437C;
+        Wed, 18 May 2022 14:08:53 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id n13so4283756ejv.1;
+        Wed, 18 May 2022 14:08:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=6+Q6Ia54N+h/zYeULcAq/1r7inK8vu27VxH+3POr9pM=;
-        b=FCfIeQDz7BEFc2r1x1Z4vqS879fyQaltiuhbDf7kyIEd01e9EjWvx8V2uS0KxqL2cg
-         5/ooo7xWRr1jJIr5XJpmK+kAO0lupumix2aX+yD4rTulnRzInTvkOc4yJBq5JIoeAPDA
-         O0GRoo1gzcQSR3ssnr/qC1+mGHSgg0b45C9bM=
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=poAMdlgLXQTMkIS8fgKzLL8994lxq2o1RAN5DIIIqcM=;
+        b=hUgrXKGHUGIZBbl8I9XYfH9uW4wflRL6A40xhqtOHNyn2s/ScMigiOPqQdAZBL+cTH
+         0IraWlSLjdwK2YmGmnAzHMnBljbl9SrVbtQRz4YTlJBmBUoCoNjrgYtrQfBoMKBZ0HrR
+         PnEvF4FL+Sa/mncStYhShm27o1tZ/8Zca2ZotDzV8BTgQ1DW8XjSuTZdKkRtrkpdFjEH
+         ljDnuncmS521mSvO6C+lahR5q7wZRcw22SaIHvJTcG71S0LcgtEjNVER2BYfukx8I5dt
+         yC6UIJ6kArq8rGydSn1pkfYC1LJCQlqgbHatZQ+FfVLh+X1abarikla8wxrTR8aG3X9Y
+         4XLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=6+Q6Ia54N+h/zYeULcAq/1r7inK8vu27VxH+3POr9pM=;
-        b=KkNZ8TtDtisfiL2l0Il+DnEbb4E47xXVYyvAPHX2m2B1GVyBJ6ljAifKRD7HVvvpZG
-         lbn9217XNN5zmtZrOAen2+I/mfNpWaB0O8v8JJ2FLzTkoyBnqdzTWPF43tUlWtYy39iE
-         WiHwjL2DMZa0BkG3T+D/wuDMkm9F178X2O8JWhSUIxCrkOwstcU521IddQsZuACrxBpT
-         q5YLynSfSCA5KMCZCHkR3H1DhAeVRP6DowgZPnCzjPKBVLTMT+QOdWvortyR5AoKDY87
-         orXlMd5HYcyHiA5OYP1OamCQhtNCNjY67Pe021HGeQFlyt/HmE6r5WxaSA3HcUy7r/4c
-         WHpA==
-X-Gm-Message-State: AOAM531uJVVBL/MqKtDnqPoShoXVx8CZfzeHoG3uwjNlbQO1Llb8pEoJ
-        IR2pO6ad7JIMJ+CvG552VUNSaj3g17I6zix0FRa2vA==
-X-Google-Smtp-Source: ABdhPJwOntt7o/KNEDNeAfpwY3gBusWaODLEh84L1Zfcy+bCLj4aybWd7ofKRirQbZPT5O0ha6jImqVdDYDMAgS1OwE=
-X-Received: by 2002:a05:6808:14c2:b0:326:c129:d308 with SMTP id
- f2-20020a05680814c200b00326c129d308mr796441oiw.193.1652907438996; Wed, 18 May
- 2022 13:57:18 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 18 May 2022 13:57:18 -0700
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=poAMdlgLXQTMkIS8fgKzLL8994lxq2o1RAN5DIIIqcM=;
+        b=Deml7xoBniVn7L9/s2jpQGrmcXPi7F13RPkE9yCQLkdCFeNuX2AERZVHU8X38Ixv/G
+         Z7MGEJ7VkAyY1liatNG0UKrOu7EVDkac3VNUEOoaHojUjV5YCE/QN40+1GRXYTsVm9v8
+         IHuYh3426sfzIJ0reYXpM4qGR8BKgrB7TQxOUpU6KrEbNaWH5PM9a2a2VXa/5zScxiT1
+         Lvn4fJ9RiLx/U1tZk4/0jT8ihWZAqKRGNVCFPDwwCgSm1CId3SCA1oFXoXSbumZ1WGFy
+         Sy1pQ/JkjZoorHqQQYlkIB3u401/uTZA6UYujM0TW27bCBl2RnfYGpbzSzJ9hXpz3gdX
+         BSFw==
+X-Gm-Message-State: AOAM5308vBx6mC0Yx3vMTbBL1n8+OtosnaMsoFJtGApev+GrJA/DocUs
+        8lcZFlm5BjjwK/jglZhEaWxbs3GLTsdppG8+ueE=
+X-Google-Smtp-Source: ABdhPJwFvYLZ+xzM7U+/4ei85VsSOTnLxcc8+TJ3t1hLtKLIWqJXDfgtbnn+8qMuueo8Iqc0vnAmUg/SsetyFMAie7o=
+X-Received: by 2002:a17:907:868e:b0:6fa:2fe2:92d6 with SMTP id
+ qa14-20020a170907868e00b006fa2fe292d6mr1296593ejc.639.1652908131493; Wed, 18
+ May 2022 14:08:51 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1652905444-10130-4-git-send-email-quic_khsieh@quicinc.com>
-References: <1652905444-10130-1-git-send-email-quic_khsieh@quicinc.com> <1652905444-10130-4-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 18 May 2022 13:57:18 -0700
-Message-ID: <CAE-0n51VJZ-mq+9=YH1J-F7rv7-8eA6A3DxpSDPRvssppKPFqQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] drm/msm/dp: delete vdda regulator related
- functions from eDP/DP controller
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dianders@chromium.org, dmitry.baryshkov@linaro.org,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220518192924.20948-1-prabhakar.mahadev-lad.rj@bp.renesas.com> <20220518192924.20948-6-prabhakar.mahadev-lad.rj@bp.renesas.com>
+In-Reply-To: <20220518192924.20948-6-prabhakar.mahadev-lad.rj@bp.renesas.com>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Wed, 18 May 2022 23:08:15 +0200
+Message-ID: <CAHp75VfbcYCH5XgnP9VB0hX0W3_jdvSBmXSB1ANMiT66yLQvOA@mail.gmail.com>
+Subject: Re: [PATCH v4 5/7] gpio: gpiolib: Add a check to validate GPIO hwirq
+To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Cc:     Marc Zyngier <maz@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Prabhakar <prabhakar.csengg@gmail.com>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        Phil Edworthy <phil.edworthy@renesas.com>,
+        Biju Das <biju.das.jz@bp.renesas.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-05-18 13:24:04)
-> Vdda regulators are related to both eDP and DP phy so that it should be
-> managed at eDP and DP phy driver instead of controller. This patch removes
-> vdda regulators related functions out of eDP/DP controller.
+On Wed, May 18, 2022 at 9:30 PM Lad Prabhakar
+<prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
 >
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
+> Add a check to validate GPIO hwirq is always within the range of hwirq_max
+> set in the GPIO irq domain.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+...
+
+> +                       if (WARN(hwirq >= domain->hwirq_max,
+> +                                "error: hwirq 0x%x is too large for %s\n",
+> +                                (int)hwirq, domain->name))
+
+Using castings in the printf() often points to possible mistakes or
+missed custom specifiers.
+
+...
+
+> +               if (WARN(hwirq >= domain->hwirq_max,
+> +                        "error: hwirq 0x%x is too large for %s\n", (int)hwirq, domain->name))
+
+Ditto.
+
+-- 
+With Best Regards,
+Andy Shevchenko
