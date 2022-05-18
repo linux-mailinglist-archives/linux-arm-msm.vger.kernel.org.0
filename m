@@ -2,47 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF7FE52C025
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 19:09:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BAE952BFF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 19:09:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240510AbiERQrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 12:47:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55632 "EHLO
+        id S240529AbiERQuW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 12:50:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240455AbiERQrr (ORCPT
+        with ESMTP id S240519AbiERQuV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 12:47:47 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CE0A4E385
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 09:47:27 -0700 (PDT)
-Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Wed, 18 May 2022 12:50:21 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D831FE1EB;
+        Wed, 18 May 2022 09:50:20 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7F2A320537;
-        Wed, 18 May 2022 18:47:25 +0200 (CEST)
-Message-ID: <6cb75a3e-49fd-bbe0-4e81-d6aec33b70a5@somainline.org>
-Date:   Wed, 18 May 2022 18:47:24 +0200
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1E2AC616EF;
+        Wed, 18 May 2022 16:50:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6A9C385A5;
+        Wed, 18 May 2022 16:50:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652892619;
+        bh=EKfo8rCNyIy8YeDE1LpF8Seb9BHiYKO7eUMI8MfUgBs=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=XaXPeOe1KI51PdJFOGclVzYI2pVIPi3mRdJtkiw+bz1rxLTBiJKOT5iCJwBDjQ7e4
+         08/7S6ec+vl1O1EAzMjFu1QJFY9hHfeug3613KdpEXc5IGIUXa4hpwxO2jiUCTlx8j
+         M5zS1Ij2juPbnLSZ3Gth+Exc4FG6TLVy39jYUfYgpNFWcz0RNFBRuJlG2PluOR4Gcq
+         TzihJWT8NUSt5VXcm4U8ZQ4xLpHx1ecS8XBt7KGJzO8lI9Plc6VvFoQ36sqJRe/yEa
+         T25CbOxQyCPcdPfD71VUvTc9ZcdTEqp1Kz+OGbeeqUsbOWq64z0plg8UtsCMxBclrI
+         uBXOXHofb08hg==
+Date:   Wed, 18 May 2022 11:50:17 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Keith Busch <kbusch@kernel.org>,
+        Christoph Hellwig <hch@lst.de>, linux-nvme@lists.infradead.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jens Axboe <axboe@fb.com>,
+        Veerabhadrarao Badiganti <quic_vbadigan@quicinc.com>,
+        quic_krichai@quicinc.com, Nitin Rawat <quic_nitirawa@quicinc.com>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Sagi Grimberg <sagi@grimberg.me>,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        Andy Gross <agross@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rajat Jain <rajatja@google.com>,
+        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
+        Rama Krishna <quic_ramkri@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kalle Valo <kvalo@kernel.org>
+Subject: Re: [PATCH 2/3] PCI: dwc: qcom: Set suspend_poweroff flag for SC7280
+Message-ID: <20220518165017.GA1145045@bhelgaas>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.0
-Subject: Re: [PATCH] clk: qcom: camcc-sm8250: Fix halt on boot by reducing
- driver's init level
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20220518103554.949511-1-vladimir.zapolskiy@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220518103554.949511-1-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220518035211.GA4791@thinkpad>
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -50,68 +73,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, May 18, 2022 at 09:22:11AM +0530, Manivannan Sadhasivam wrote:
+> On Tue, May 17, 2022 at 12:18:57PM -0500, Bjorn Helgaas wrote:
+> > [+cc Prasad, Andy, Rob, Krzysztof, Rajat, Saheed, Rama, Stephen,
+> > Dmitry, Kalle for connection to https://lore.kernel.org/lkml/CAE-0n53ho2DX2rqQMvvKAuDCfsWW62TceTaNPzv5Mn_NQ-U6dA@mail.gmail.com/T/]
+> > 
+> > Subject line convention for this file is "PCI: qcom:" (not "PCI: dwc:
+> > qcom:").
+> > 
+> > Find this from "git log --oneline drivers/pci/controller/dwc/pcie-qcom.c".
+> > 
+> > On Tue, May 17, 2022 at 08:41:34PM +0530, Manivannan Sadhasivam wrote:
+> > > On Mon, May 16, 2022 at 03:19:50PM -0500, Bjorn Helgaas wrote:
+> > > > On Fri, May 13, 2022 at 04:30:26PM +0530, Manivannan Sadhasivam wrote:
+> > > > > For aggressive power saving on SC7280 SoCs, the power for the
+> > > > > PCI devices will be taken off during system suspend. Hence,
+> > > > > notify the same to the PCI device drivers using
+> > > > > "suspend_poweroff" flag so that the drivers can prepare the PCI
+> > > > > devices to handle the poweroff and recover them during resume.
+> > > > 
+> > > > No doubt "power ... will be taken off during system suspend" is
+> > > > true, but this isn't very informative.  Is this a property of
+> > > > SC7280?  A choice made by the SC7280 driver?  Why is this not
+> > > > applicable to other systems?
+> > > 
+> > > The SC7280's RPMh firmware is cutting off the PCIe power domain
+> > > during system suspend. And as I explained in previous patch, the RC
+> > > driver itself may put the devices in D3cold conditionally on this
+> > > platform. The reason is to save power as this chipset is being used
+> > > in Chromebooks.
+> > 
+> > It looks like this should be squashed into the patch you mentioned:
+> > https://lore.kernel.org/lkml/CAE-0n53ho2DX2rqQMvvKAuDCfsWW62TceTaNPzv5Mn_NQ-U6dA@mail.gmail.com/T/
+> > 
+> > If Prasad's patch is applied without this, devices will be powered
+> > off, but nvme will not be prepared for it.  Apparently something would
+> > be broken in that case?
+> > 
+> 
+> Yes, but Prasad's patch is not yet reviewed so likely not get merged until
+> further respins.
 
-On 18/05/2022 12:35, Vladimir Zapolskiy wrote:
-> Access to I/O of SM8250 camera clock controller IP depends on enabled
-> GCC_CAMERA_AHB_CLK clock supplied by global clock controller, the latter
-> one is inited on subsys level, so, to satisfy the dependency, it would
-> make sense to deprive the init level of camcc-sm8250 driver.
+Ok.  Please work with Prasad to squash these as needed so there are no
+regressions along the way.
 
-Hi,
+> > Also, I think this patch should be reordered so the nvme driver is
+> > prepared for suspend_poweroff before the qcom driver starts setting
+> > it.  Otherwise there's a window where qcom sets suspend_poweroff and
+> > powers off devices, but nvme doesn't know about it, and I assume
+> > something will be broken in that case?
+> 
+> As per my understanding, patches in a series should not have build dependency
+> but they may depend on each other for functionality.
 
+Yes.  But if qcom starts powering off devices when nvme isn't
+expecting it, it sounds like nvme will regress until the patch that
+adds nvme support.  That temporary regression is what I want to avoid.
 
-I believe this is due to the fact that this clock is falsely advertised 
-by the header and Linux does not know anything about it, because it is 
-handled by a magic write [1] (as I once said in a similar case, this was 
-going bite eventually..) instead and the index corresponding to the 
-define symbol is not initialized, hence it points to NULL. Adding the 
-clock properly in GCC would let the OF clock stuff handle it gracefully. 
-If that is the case, your patch disabling the clock controller block 
-(which I'm against unless there's abosolute need, as having the hw block 
-initialized properly should be possible regardless of the board, as it's 
-a generic SoC components) should not be necessary.
-
-That said, I can not test my theory right now.
-
-
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/clk/qcom/gcc-sm8250.c?h=next-20220518#n3647
-
-Konrad
-
->
-> If both drivers are compiled as built-in, there is a change that a board
-> won't boot up due to a race, which happens on the same init level.
->
-> Fixes: 5d66ca79b58c ("clk: qcom: Add camera clock controller driver for SM8250")
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->   drivers/clk/qcom/camcc-sm8250.c | 12 +-----------
->   1 file changed, 1 insertion(+), 11 deletions(-)
->
-> diff --git a/drivers/clk/qcom/camcc-sm8250.c b/drivers/clk/qcom/camcc-sm8250.c
-> index 439eaafdcc86..ae4e9774f36e 100644
-> --- a/drivers/clk/qcom/camcc-sm8250.c
-> +++ b/drivers/clk/qcom/camcc-sm8250.c
-> @@ -2440,17 +2440,7 @@ static struct platform_driver cam_cc_sm8250_driver = {
->   	},
->   };
->   
-> -static int __init cam_cc_sm8250_init(void)
-> -{
-> -	return platform_driver_register(&cam_cc_sm8250_driver);
-> -}
-> -subsys_initcall(cam_cc_sm8250_init);
-> -
-> -static void __exit cam_cc_sm8250_exit(void)
-> -{
-> -	platform_driver_unregister(&cam_cc_sm8250_driver);
-> -}
-> -module_exit(cam_cc_sm8250_exit);
-> +module_platform_driver(cam_cc_sm8250_driver);
->   
->   MODULE_DESCRIPTION("QTI CAMCC SM8250 Driver");
->   MODULE_LICENSE("GPL v2");
->
+Bjorn
