@@ -2,243 +2,244 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 705E252BD17
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:17:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9270752BD6C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:18:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238411AbiEROFF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 10:05:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60574 "EHLO
+        id S238443AbiEROH3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 10:07:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238392AbiEROFE (ORCPT
+        with ESMTP id S238446AbiEROH0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 10:05:04 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EE52149156
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 07:05:02 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id s5so2640267ljd.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 07:05:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=4be4XubXmodsQyyIZAOkjAtM6Y2yi67Gjsh2Z2W5A8w=;
-        b=B6uPnx2xGjPw06R1UIM+lD30VHrMv5OhwsWQ8+ZAW5SxHNeWTpVOPGbmHSPVDlw+VD
-         9hM8p1R05Zt5FumNjBx203Sk2906de2TwWSKdYv6AM+idQZGWkVGnYe5oJuU74fkoGNs
-         pD1yeutRT8vpCyOKZQeL23PSd5ESE+XZOrlm0qkQCrS1ADSD1dezVE8xzc5SLkgldtw7
-         SHKsBotZV6yO6u5MK1s9oW2Hs32jctzRRsAUyekvWgy4tszBFmWIrrIMVUOi5IlxetsR
-         IaAi/eYrCeF88eTbVzVzbFNoGaRXRUJ2d81S7iyh2ZxOcT4OT9knD2aTze222THtluzM
-         H3nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=4be4XubXmodsQyyIZAOkjAtM6Y2yi67Gjsh2Z2W5A8w=;
-        b=zTf0vmHOCOaRAPoVdWgFFBnIl0byCcRDNTdtIMltndKhi3ASnJJEjImYeffW3XwY/w
-         t410P4XJn5tHQr6wMtvBHNBF5En4NaYEJ3WTBR+cV49+ZjRlhl4aXmLsiyCWyAK+pMFC
-         kkWgcuYrQs7wqqGO4gjjcdK0W3JJapfcYrATw7OCXkCYxQgwKigo4TperlxxjfcAd87+
-         oae+zL/FtNXcVPhvrZxy1QOLke1blf67bXMwBMGhEKU2KmfCI/GmE5q9/yJZl8rQ5igh
-         J7jQtErtuJAX33zRRMPmYpJPYgsynxAVNbOh4SJfwn9HUXoPXzo5axVxoZ7hV9/q4i+I
-         ELbg==
-X-Gm-Message-State: AOAM530fGJQsoaJWcJ5he9dLV7Fx9jKsHoY6pDzOfBIfmhVf1pgTIWuX
-        PDX/KmG2dFwXiurWgvQikufR3g==
-X-Google-Smtp-Source: ABdhPJyum/9upK7pIF0FGYulA7ZOiN+2Cg4PV9d6rFilhc3AYLNoZbZVZDEpBgHKeiY1v87z+TObOg==
-X-Received: by 2002:a2e:9e41:0:b0:253:c37c:378b with SMTP id g1-20020a2e9e41000000b00253c37c378bmr3573907ljk.202.1652882700578;
-        Wed, 18 May 2022 07:05:00 -0700 (PDT)
-Received: from [192.168.1.102] (mobile-access-b04822-211.dhcp.inet.fi. [176.72.34.211])
-        by smtp.gmail.com with ESMTPSA id q21-20020ac25295000000b0047255d211e4sm217587lfm.275.2022.05.18.07.04.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 May 2022 07:05:00 -0700 (PDT)
-Message-ID: <0864eed7-bba2-59ec-dc5f-b491ce114798@linaro.org>
-Date:   Wed, 18 May 2022 17:04:41 +0300
+        Wed, 18 May 2022 10:07:26 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FEC66A072;
+        Wed, 18 May 2022 07:07:25 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 16105618D8;
+        Wed, 18 May 2022 14:07:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A89C385A9;
+        Wed, 18 May 2022 14:07:23 +0000 (UTC)
+Date:   Wed, 18 May 2022 10:07:21 -0400
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     <arnd@arndb.de>, <catalin.marinas@arm.com>,
+        <gregkh@linuxfoundation.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <maz@kernel.org>, <quic_psodagud@quicinc.com>,
+        <quic_tsoni@quicinc.com>, <will@kernel.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>
+Subject: Re: [PATCHv14 5/9] lib: Add register read/write tracing support
+Message-ID: <20220518100721.18fb5876@gandalf.local.home>
+In-Reply-To: <9827bae40f6f319f294d06859c9e3c7442f067f2.1651663123.git.quic_saipraka@quicinc.com>
+References: <cover.1651663123.git.quic_saipraka@quicinc.com>
+        <9827bae40f6f319f294d06859c9e3c7442f067f2.1651663123.git.quic_saipraka@quicinc.com>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577 on
- cam1
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     mchehab@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
-        hfink@snap.com
-References: <20220518133004.342775-1-bryan.odonoghue@linaro.org>
- <20220518133004.342775-2-bryan.odonoghue@linaro.org>
- <58af3b06-97fe-fd29-b6e3-fa68737b1d96@somainline.org>
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <58af3b06-97fe-fd29-b6e3-fa68737b1d96@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+On Wed, 4 May 2022 16:58:24 +0530
+Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
 
-On 5/18/22 16:55, Konrad Dybcio wrote:
-> Hi!
-> 
-> 
-> On 18/05/2022 15:30, Bryan O'Donoghue wrote:
->> The IMX577 is on CCI1/CSI2 providing four lanes of camera data.
-> 
-> Commit says IMX577, code says IMX412.
-> 
-> 
->>
->> An example media-ctl pipeline is:
->>
->> media-ctl --reset
->> media-ctl -v -d /dev/media0 -V '"imx412 '20-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
->> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
->> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
->> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
->> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
->> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
->>
->> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>    arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 98 ++++++++++++++++++++++++
->>    1 file changed, 98 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
->> index 0e63f707b911..48b31790c434 100644
->> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
->> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
->> @@ -1203,6 +1203,43 @@ sdc2_card_det_n: sd-card-det-n {
->>    		function = "gpio";
->>    		bias-pull-up;
->>    	};
->> +
->> +	cam2_default: cam2-default {
->> +		rst {
->> +			pins = "gpio78";
->> +			function = "gpio";
->> +
->> +			drive-strength = <2>;
->> +			bias-disable;
-> 
-> Other pins in this DT don't have a newline between function and
-> drive-strength, please remove it for consistency.
-> 
-> 
->> +		};
->> +
->> +		mclk {
->> +			pins = "gpio96";
->> +			function = "cam_mclk";
->> +
->> +			drive-strength = <16>;
->> +			bias-disable;
->> +		};
->> +	};
->> +
->> +	cam2_suspend: cam2-suspend {
->> +		rst {
->> +			pins = "gpio78";
->> +			function = "gpio";
->> +
->> +			drive-strength = <2>;
->> +			bias-pull-down;
->> +			output-low;
->> +		};
->> +
->> +		mclk {
->> +			pins = "gpio96";
->> +			function = "cam_mclk";
->> +
->> +			drive-strength = <2>;
->> +			bias-disable;
->> +		};
->> +	};
->>    };
->>    
->>    &uart12 {
->> @@ -1294,3 +1331,64 @@ &qup_spi0_data_clk {
->>    	drive-strength = <6>;
->>    	bias-disable;
->>    };
->> +
->> +&camcc {
->> +	status = "okay";
->> +};
-> 
-> It's enabled by default.
-> 
+> +#include <linux/tracepoint.h>
+> +
+> +DECLARE_EVENT_CLASS(rwmmio_rw_template,
+> +
+> +	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+> +
+> +	TP_ARGS(caller, val, width, addr),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(unsigned long, caller)
+> +		__field(unsigned long, addr)
+> +		__field(u64, val)
+> +		__field(u8, width)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->caller = caller;
+> +		__entry->val = val;
+> +		__entry->addr = (unsigned long)(void *)addr;
+> +		__entry->width = width;
+> +	),
+> +
+> +	TP_printk("%pS width=%d val=%#llx addr=%#lx",
+> +		(void *)(unsigned long)__entry->caller, __entry->width,
 
-I'd prefer to see the camera clock controller disabled by default.
+__entry->caller is already defined as "unsigned long", why the extra
+typecast?
 
-https://lore.kernel.org/linux-devicetree/20220518091943.734478-1-vladimir.zapolskiy@linaro.org/
+> +		__entry->val, __entry->addr)
+> +);
+> +
+> +DEFINE_EVENT(rwmmio_rw_template, rwmmio_write,
+> +	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+> +	TP_ARGS(caller, val, width, addr)
+> +);
+> +
+> +DEFINE_EVENT(rwmmio_rw_template, rwmmio_post_write,
+> +	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+> +	TP_ARGS(caller, val, width, addr)
+> +);
+> +
+> +TRACE_EVENT(rwmmio_read,
+> +
+> +	TP_PROTO(unsigned long caller, u8 width, const volatile void __iomem *addr),
+> +
+> +	TP_ARGS(caller, width, addr),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(unsigned long, caller)
+> +		__field(unsigned long, addr)
+> +		__field(u8, width)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->caller = caller;
+> +		__entry->addr = (unsigned long)(void *)addr;
+> +		__entry->width = width;
+> +	),
+> +
+> +	TP_printk("%pS width=%d addr=%#lx",
+> +		 (void *)(unsigned long)__entry->caller, __entry->width, __entry->addr)
 
->> +
->> +&camss {
->> +	status = "okay";
->> +	vdda-phy-supply = <&vreg_l5a_0p88>;
->> +	vdda-pll-supply = <&vreg_l9a_1p2>;
->> +
->> +	ports {
-> 
-> Maybe the port definitions along with #-cells here and on camss could be
-> moved to the SoC DTSI?
-> 
 
-I agree with it.
+Same here.
 
->> +		#address-cells = <1>;
->> +		#size-cells = <0>;
->> +
->> +		/* The port index denotes CSIPHY id i.e. csiphy2 */
->> +		port@2 {
->> +			reg = <2>;
->> +			csiphy2_ep: endpoint {
->> +				clock-lanes = <7>;
->> +				data-lanes = <0 1 2 3>;
->> +				remote-endpoint = <&imx412_ep>;
->> +			};
->> +
->> +		};
->> +	};
->> +};
->> +
->> +&cci1 {
->> +	status = "okay";
->> +};
->> +
->> +&cci1_i2c0 {
->> +	camera@1a {
->> +		compatible = "sony,imx412";
->> +		reg = <0x1a>;
->> +
->> +		reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
->> +		pinctrl-names = "default", "suspend";
->> +		pinctrl-0 = <&cam2_default>;
->> +		pinctrl-1 = <&cam2_suspend>;
->> +
->> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
->> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
->> +		assigned-clock-rates = <24000000>;
->> +
->> +		power-domains = <&camcc TITAN_TOP_GDSC>;
->> +		dovdd-supply  = <&vreg_l7f_1p8>;
->> +		avdd-supply = <&vdc_5v>;
->> +		dvdd-supply = <&vdc_5v>;
->> +
->> +		status = "okay";
-> 
-> It's enabled by default.
-> 
+> +);
+> +
+> +TRACE_EVENT(rwmmio_post_read,
+> +
+> +	TP_PROTO(unsigned long caller, u64 val, u8 width, const volatile void __iomem *addr),
+> +
+> +	TP_ARGS(caller, val, width, addr),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(unsigned long, caller)
+> +		__field(unsigned long, addr)
+> +		__field(u64, val)
+> +		__field(u8, width)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->caller = caller;
+> +		__entry->val = val;
+> +		__entry->addr = (unsigned long)(void *)addr;
+> +		__entry->width = width;
+> +	),
+> +
+> +	TP_printk("%pS width=%d val=%#llx addr=%#lx",
+> +		 (void *)(unsigned long)__entry->caller, __entry->width,
 
---
-Best wishes,
-Vladimir
+And here.
+
+> +		 __entry->val, __entry->addr)
+> +);
+> +
+> +#endif /* _TRACE_RWMMIO_H */
+> +
+> +#include <trace/define_trace.h>
+> diff --git a/lib/Kconfig b/lib/Kconfig
+> index 087e06b4cdfd..5e2fd075724f 100644
+> --- a/lib/Kconfig
+> +++ b/lib/Kconfig
+> @@ -118,6 +118,13 @@ config INDIRECT_IOMEM_FALLBACK
+>  	  mmio accesses when the IO memory address is not a registered
+>  	  emulated region.
+>  
+> +config TRACE_MMIO_ACCESS
+> +	bool "Register read/write tracing"
+> +	depends on TRACING && ARCH_HAVE_TRACE_MMIO_ACCESS
+> +	help
+> +	  Create tracepoints for MMIO read/write operations. These trace events
+> +	  can be used for logging all MMIO read/write operations.
+> +
+>  source "lib/crypto/Kconfig"
+>  
+>  config CRC_CCITT
+> diff --git a/lib/Makefile b/lib/Makefile
+> index 6b9ffc1bd1ee..3df7d24e65d2 100644
+> --- a/lib/Makefile
+> +++ b/lib/Makefile
+> @@ -151,6 +151,8 @@ lib-y += logic_pio.o
+>  
+>  lib-$(CONFIG_INDIRECT_IOMEM) += logic_iomem.o
+>  
+> +obj-$(CONFIG_TRACE_MMIO_ACCESS) += trace_readwrite.o
+> +
+>  obj-$(CONFIG_GENERIC_HWEIGHT) += hweight.o
+>  
+>  obj-$(CONFIG_BTREE) += btree.o
+> diff --git a/lib/trace_readwrite.c b/lib/trace_readwrite.c
+> new file mode 100644
+> index 000000000000..88637038b30c
+> --- /dev/null
+> +++ b/lib/trace_readwrite.c
+> @@ -0,0 +1,47 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Register read and write tracepoints
+> + *
+> + * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/ftrace.h>
+> +#include <linux/module.h>
+> +#include <asm-generic/io.h>
+> +
+> +#define CREATE_TRACE_POINTS
+> +#include <trace/events/rwmmio.h>
+> +
+> +#ifdef CONFIG_TRACE_MMIO_ACCESS
+> +void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+
+Where's the header file that defines these functions? I would think it
+should be in this patch as well.
+
+-- Steve
+
+
+> +		    unsigned long caller_addr)
+> +{
+> +	trace_rwmmio_write(caller_addr, val, width, addr);
+> +}
+> +EXPORT_SYMBOL_GPL(log_write_mmio);
+> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_write);
+> +
+> +void log_post_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+> +			 unsigned long caller_addr)
+> +{
+> +	trace_rwmmio_post_write(caller_addr, val, width, addr);
+> +}
+> +EXPORT_SYMBOL_GPL(log_post_write_mmio);
+> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_post_write);
+> +
+> +void log_read_mmio(u8 width, const volatile void __iomem *addr,
+> +		   unsigned long caller_addr)
+> +{
+> +	trace_rwmmio_read(caller_addr, width, addr);
+> +}
+> +EXPORT_SYMBOL_GPL(log_read_mmio);
+> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_read);
+> +
+> +void log_post_read_mmio(u64 val, u8 width, const volatile void __iomem *addr,
+> +			unsigned long caller_addr)
+> +{
+> +	trace_rwmmio_post_read(caller_addr, val, width, addr);
+> +}
+> +EXPORT_SYMBOL_GPL(log_post_read_mmio);
+> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_post_read);
+> +#endif /* CONFIG_TRACE_MMIO_ACCESS */
+
