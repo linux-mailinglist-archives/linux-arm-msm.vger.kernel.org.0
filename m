@@ -2,78 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3822652BF2D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 18:13:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A85CA52BF4E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 18:13:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239471AbiERPfP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 11:35:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58114 "EHLO
+        id S239814AbiERQHz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 12:07:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239438AbiERPfN (ORCPT
+        with ESMTP id S239797AbiERQHy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 11:35:13 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D24979813
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 08:35:11 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id r6-20020a1c2b06000000b00396fee5ebc9so1259849wmr.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 08:35:11 -0700 (PDT)
+        Wed, 18 May 2022 12:07:54 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3C5F132A3E;
+        Wed, 18 May 2022 09:07:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=1k9s1VyRT5qdsyVYSsVS4g8dr+t4pbwtVP3vJMMJ0Tk=;
-        b=bF1gVETtXN5CfyL5cKmcje9earBCnj4fwq5VN2yE60xmijJpoefEOPoXwEEk+tJjcT
-         sm6kNbUeE2d+Zh+lu5/s8u15LR2kplEX3DGCocsjj8p0bMuwZ/vyXAsVq3B8E7oupPKH
-         TQW5Wno48QjJKHhDOBmJwtP6zsBMUSHdf9ub268Hzu0x3NWFBKAhbwASDgkOLQe9PMo2
-         59/d58F0T73mLdsEkK305K55D4gbbuhtDDCCxj0gpXF69Ug9sGW1i47LBF2daxrtkFDL
-         0jB7p0c4n2RRcnRUMVejy46LyR0/OvZ+aVs+cdW98czbvzUnIkqDM9d9ggvUkozu9ISf
-         wMYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=1k9s1VyRT5qdsyVYSsVS4g8dr+t4pbwtVP3vJMMJ0Tk=;
-        b=C8eC3PfWh7c+vzgz8otv1a09BiDLX//s/QcMNpFkUUTmAk4DnKM0web1HQBA4amnBS
-         cMSuAvvU7OgDk2UaIW9r3oR6YJWKp/nu2DPSirP472ji+DQLuhjqPVXbNDXPo+e+N+8/
-         HB8k0wu041Phlo8K+1+10mYFDnWUhCxnKC0mtTr9d1ng68ueZxU0R+BdfyVa8+y2Lyy5
-         PHIEXqJm1GI4DdhTpGmz6nBMvmFq6HcLDb7uJXjzQpkmYy4lQjk1D+Dpju/BMD0cmpWd
-         acEQY/9F8DRudQt1dEN2+6qINb/Yvext9en6WfRN2IYc+8Hn7Y6oFfRwyfoAYIUxKmCF
-         ifZQ==
-X-Gm-Message-State: AOAM530Wo6sdaJElzWbUn5AL48jRGpkNaSVfFtN7ptcPOyoZzOhO6IA+
-        gr62dyOsDjgLOUCunqCm1NcITw==
-X-Google-Smtp-Source: ABdhPJwVY1/mQkzWCqkeSRRRNIXzNrBBLXWpdqnQocArgEvAhBU811vAGXWm3Pw98/mwX21+ivwuAA==
-X-Received: by 2002:a1c:5459:0:b0:394:1191:a1ff with SMTP id p25-20020a1c5459000000b003941191a1ffmr486529wmi.96.1652888109964;
-        Wed, 18 May 2022 08:35:09 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id t12-20020adfba4c000000b0020c5253d91esm2273298wrg.106.2022.05.18.08.35.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 May 2022 08:35:09 -0700 (PDT)
-Message-ID: <22f4a9c7-31e6-10c1-6230-cbd3c0972fdc@linaro.org>
-Date:   Wed, 18 May 2022 16:35:08 +0100
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652890073; x=1684426073;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=lIMZKXFl8g4Cv2pg9aGtn7TJPKfW12wIqpWtwiAWWWQ=;
+  b=uAuw7XjIPAQnwN+V7Mun+wlqWqhIIipZeAtWL04gHY5rx9mAHvjf7jO5
+   XMxzFpgXGdh6dwsgEpTU5qt4qDFwKYc7bNmoHZlEownfGTrXbhgflaK/h
+   XvJy5U5HGIzBFO7A1RqswzvFsjk7AE2tC0xxpx18oxx/tra+Wb5oY1BCc
+   8=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 18 May 2022 09:07:52 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2022 09:07:52 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 18 May 2022 09:07:52 -0700
+Received: from [10.110.42.114] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 18 May
+ 2022 09:07:50 -0700
+Message-ID: <a2dda832-3aa0-a6da-85c9-2a8827e1feae@quicinc.com>
+Date:   Wed, 18 May 2022 09:07:48 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577 on
- cam1
+Subject: Re: [PATCH v1 1/2] phy/qcom: add regulator_set_load to edp/dp phy
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     vladimir.zapolskiy@linaro.org, mchehab@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
-        hfink@snap.com
-References: <20220518133004.342775-1-bryan.odonoghue@linaro.org>
- <20220518133004.342775-2-bryan.odonoghue@linaro.org>
- <58af3b06-97fe-fd29-b6e3-fa68737b1d96@somainline.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <58af3b06-97fe-fd29-b6e3-fa68737b1d96@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Vinod Koul <vkoul@kernel.org>
+CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <daniel@ffwll.ch>, <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>,
+        <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1652808360-9830-1-git-send-email-quic_khsieh@quicinc.com>
+ <1652808360-9830-2-git-send-email-quic_khsieh@quicinc.com>
+ <YoS8dMAhD9h+CtJa@matsya>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <YoS8dMAhD9h+CtJa@matsya>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-6.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,122 +73,171 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/05/2022 14:55, Konrad Dybcio wrote:
-> Hi!
-> 
-> 
-> On 18/05/2022 15:30, Bryan O'Donoghue wrote:
->> The IMX577 is on CCI1/CSI2 providing four lanes of camera data.
-> 
-> Commit says IMX577, code says IMX412.
-> 
-> 
 
-The silicon enabling code for imx412 from Sony is the same as is used on 
-imx577.
+On 5/18/2022 2:29 AM, Vinod Koul wrote:
+> On 17-05-22, 10:25, Kuogee Hsieh wrote:
+>
+> pls use the correct subsystem tag, "phy: xxx" in this case
+>
+>> This patch add regulator_set_load() to both eDP and DP phy driver
+>> to have totally control regulators.
+> Can you explain what is meant by "totally control regulators"
 
-We have an imx577. I'll explain the difference in the V2 commit though.
+Original regulator_set_load() is done by DP controller.
 
->>
->> An example media-ctl pipeline is:
->>
->> media-ctl --reset
->> media-ctl -v -d /dev/media0 -V '"imx412 
->> '20-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
->> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
->> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
->> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
->> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
->> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
->>
->> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F 
->> /dev/video0
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+This patch has moved regulator_set_load() from DP controller to DP phy.
+
+Therefore DP phy has total control of both vdda-phy and vda-pll regulators.
+
+
+>
+>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 >> ---
->>   arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 98 ++++++++++++++++++++++++
->>   1 file changed, 98 insertions(+)
+>>   drivers/phy/qualcomm/phy-qcom-edp.c | 25 +++++++++++++++++++++----
+>>   drivers/phy/qualcomm/phy-qcom-qmp.c | 24 ++++++++++++++++++++++++
+>>   2 files changed, 45 insertions(+), 4 deletions(-)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts 
->> b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
->> index 0e63f707b911..48b31790c434 100644
->> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
->> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
->> @@ -1203,6 +1203,43 @@ sdc2_card_det_n: sd-card-det-n {
->>           function = "gpio";
->>           bias-pull-up;
->>       };
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
+>> index cacd32f..9b55095 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-edp.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
+>> @@ -87,17 +87,24 @@ struct qcom_edp {
+>>   
+>>   	struct clk_bulk_data clks[2];
+>>   	struct regulator_bulk_data supplies[2];
+>> +	int enable_load[2];
+>> +	int disable_load[2];
+>>   };
+>>   
+>>   static int qcom_edp_phy_init(struct phy *phy)
+>>   {
+>>   	struct qcom_edp *edp = phy_get_drvdata(phy);
+>>   	int ret;
+>> +	int num_consumers = ARRAY_SIZE(edp->supplies);
+>> +	int i;
+>>   
+>> -	ret = regulator_bulk_enable(ARRAY_SIZE(edp->supplies), edp->supplies);
+>> +	ret = regulator_bulk_enable(num_consumers, edp->supplies);
+>>   	if (ret)
+>>   		return ret;
+>>   
+>> +	for (i = num_consumers - 1; i >= 0; --i)
+>> +		regulator_set_load(edp->supplies[i].consumer, edp->enable_load[i]);
 >> +
->> +    cam2_default: cam2-default {
->> +        rst {
->> +            pins = "gpio78";
->> +            function = "gpio";
+>>   	ret = clk_bulk_prepare_enable(ARRAY_SIZE(edp->clks), edp->clks);
+>>   	if (ret)
+>>   		goto out_disable_supplies;
+>> @@ -425,9 +432,15 @@ static int qcom_edp_phy_power_off(struct phy *phy)
+>>   static int qcom_edp_phy_exit(struct phy *phy)
+>>   {
+>>   	struct qcom_edp *edp = phy_get_drvdata(phy);
+>> +	int num_consumers = ARRAY_SIZE(edp->supplies);
+>> +	int i;
+>>   
+>>   	clk_bulk_disable_unprepare(ARRAY_SIZE(edp->clks), edp->clks);
+>> -	regulator_bulk_disable(ARRAY_SIZE(edp->supplies), edp->supplies);
 >> +
->> +            drive-strength = <2>;
->> +            bias-disable;
-> 
-> Other pins in this DT don't have a newline between function and 
-> drive-strength, please remove it for consistency.
-> 
-> 
->> +        };
+>> +	for (i = num_consumers - 1; i >= 0; --i)
+>> +		regulator_set_load(edp->supplies[i].consumer, edp->disable_load[i]);
 >> +
->> +        mclk {
->> +            pins = "gpio96";
->> +            function = "cam_mclk";
->> +
->> +            drive-strength = <16>;
->> +            bias-disable;
->> +        };
->> +    };
->> +
->> +    cam2_suspend: cam2-suspend {
->> +        rst {
->> +            pins = "gpio78";
->> +            function = "gpio";
->> +
->> +            drive-strength = <2>;
->> +            bias-pull-down;
->> +            output-low;
->> +        };
->> +
->> +        mclk {
->> +            pins = "gpio96";
->> +            function = "cam_mclk";
->> +
->> +            drive-strength = <2>;
->> +            bias-disable;
->> +        };
->> +    };
->>   };
->>   &uart12 {
->> @@ -1294,3 +1331,64 @@ &qup_spi0_data_clk {
->>       drive-strength = <6>;
->>       bias-disable;
->>   };
->> +
->> +&camcc {
->> +    status = "okay";
+>> +	regulator_bulk_disable(num_consumers, edp->supplies);
+>>   
+>>   	return 0;
+>>   }
+>> @@ -633,8 +646,12 @@ static int qcom_edp_phy_probe(struct platform_device *pdev)
+>>   	if (ret)
+>>   		return ret;
+>>   
+>> -	edp->supplies[0].supply = "vdda-phy";
+>> -	edp->supplies[1].supply = "vdda-pll";
+>> +	edp->supplies[0].supply = "vdda-1p2";
+>> +	edp->supplies[1].supply = "vdda-0p9";
+> These are documented in bindings, so cannot be removed, Reminder binding
+> is an ABI
+>   
+> You have not documented the new names either...
+>
+>> +	edp->enable_load[0] = 21800;	/* 1.2 V */
+>> +	edp->enable_load[1] = 36000;	/* 1.2 V */
+>> +	edp->disable_load[0] = 4;	/* 0.9 V */
+>> +	edp->disable_load[1] = 4;	/* 10.9V */
+> is that correct, 10.9V?
+>
+>>   	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(edp->supplies), edp->supplies);
+>>   	if (ret)
+>>   		return ret;
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+>> index b144ae1..c589231 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> This is a different driver, so should be a different patch!
+>
+>> @@ -3130,6 +3130,8 @@ struct qmp_phy_cfg {
+>>   	int num_resets;
+>>   	/* regulators to be requested */
+>>   	const char * const *vreg_list;
+>> +	const unsigned int *vreg_enable_load;
+>> +	const unsigned int *vreg_disable_load;
+>>   	int num_vregs;
+>>   
+>>   	/* array of registers with different offsets */
+>> @@ -3346,6 +3348,14 @@ static const char * const qmp_phy_vreg_l[] = {
+>>   	"vdda-phy", "vdda-pll",
+>>   };
+>>   
+>> +static const unsigned int qmp_phy_vreg_enable_load[] = {
+>> +	21800, 36000
 >> +};
-> 
-> It's enabled by default.
-
-I'm assuming Vladimir's patch to disable by default goes in.
-I'll include his patch as #1 in V2 so its clear on this point.
-
-> 
 >> +
->> +&camss {
->> +    status = "okay";
->> +    vdda-phy-supply = <&vreg_l5a_0p88>;
->> +    vdda-pll-supply = <&vreg_l9a_1p2>;
+>> +static const unsigned int qmp_phy_vreg_disable_load[] = {
+>> +	4, 32
+>> +};
 >> +
->> +    ports {
-> 
-> Maybe the port definitions along with #-cells here and on camss could be 
-> moved to the SoC DTSI?
-
-Makes sense.
-
----
-bod
+>>   static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
+>>   	.type			= PHY_TYPE_USB3,
+>>   	.nlanes			= 1,
+>> @@ -4072,6 +4082,8 @@ static const struct qmp_phy_cfg sm8250_usb3phy_cfg = {
+>>   	.reset_list		= msm8996_usb3phy_reset_l,
+>>   	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+>>   	.vreg_list		= qmp_phy_vreg_l,
+>> +	.vreg_enable_load	= qmp_phy_vreg_enable_load,
+>> +	.vreg_disable_load	= qmp_phy_vreg_disable_load,
+>>   	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+>>   	.regs			= qmp_v4_usb3phy_regs_layout,
+>>   
+>> @@ -4139,6 +4151,8 @@ static const struct qmp_phy_cfg sm8250_dpphy_cfg = {
+>>   	.reset_list		= msm8996_usb3phy_reset_l,
+>>   	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+>>   	.vreg_list		= qmp_phy_vreg_l,
+>> +	.vreg_enable_load	= qmp_phy_vreg_enable_load,
+>> +	.vreg_disable_load	= qmp_phy_vreg_disable_load,
+>>   	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+>>   	.regs			= qmp_v4_usb3phy_regs_layout,
+>>   
+>> @@ -5015,6 +5029,11 @@ static int qcom_qmp_phy_com_init(struct qmp_phy *qphy)
+>>   		goto err_reg_enable;
+>>   	}
+>>   
+>> +	if (cfg->vreg_enable_load) {
+>> +		for (i = cfg->num_vregs - 1; i >= 0; --i)
+>> +			regulator_set_load(qmp->vregs[i].consumer, cfg->vreg_enable_load[i]);
+>> +	}
+>> +
+>>   	for (i = 0; i < cfg->num_resets; i++) {
+>>   		ret = reset_control_assert(qmp->resets[i]);
+>>   		if (ret) {
+>> @@ -5116,6 +5135,11 @@ static int qcom_qmp_phy_com_exit(struct qmp_phy *qphy)
+>>   
+>>   	clk_bulk_disable_unprepare(cfg->num_clks, qmp->clks);
+>>   
+>> +	if (cfg->vreg_disable_load[i]) {
+>> +		for (i = cfg->num_vregs - 1; i >= 0; --i)
+>> +			regulator_set_load(qmp->vregs[i].consumer, cfg->vreg_disable_load[i]);
+>> +	}
+>> +
+>>   	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
+>>   
+>>   	mutex_unlock(&qmp->phy_mutex);
+>> -- 
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> a Linux Foundation Collaborative Project
