@@ -2,70 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1FA852BC7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:16:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 948A552BD2A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:17:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237925AbiERNaR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 09:30:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41138 "EHLO
+        id S237971AbiERNe3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 09:34:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237825AbiERNaQ (ORCPT
+        with ESMTP id S237956AbiERNe2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 09:30:16 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2557187040
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 06:30:09 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id f2so2775637wrc.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 06:30:09 -0700 (PDT)
+        Wed, 18 May 2022 09:34:28 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCA735EDCC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 06:34:26 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id h29so3692009lfj.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 06:34:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=foZ6dspy82cYGpwpKNdGArEFQ0gYRwohDRDgkelpCf4=;
-        b=oAp7EYC0w6+jz+ZodAbaRvi/HP3I2UUiqrOLuD5OHRoL6S22CYjwuZmqbLDOHmD7KI
-         j2KsChHSO/Dsn6ODEzkiUG82m2mPfIyYiodAyf8EZbfHOBJVMf12UZthilwLaWppwGT4
-         Dy8vPndPkR12duDcIpdNlBVidNwZa1gYoevNNIZtPVHU0fbmNfDkjUSgjW6bh9JZZQmT
-         EEWvD+n1kgP/3eSFF08tmcVExtz8aRnmjr+Bs4Y2ItCsSPj/gsxzwb4rDWWvCi1IGYYN
-         C4mho6dErPCP4N4NMzrfo3NRqVV6Fs+1HHdHLsZnolJwt/LDJK20KCwhsp0KiDJdtvpF
-         K4Qw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ah9AxJVzSaQ3+r9Loj2Ovb9Rw/v+KatzxO1BMfL+FaY=;
+        b=nFiI0A8F+bpe92lCYMZLjOahTBeLPTF7XoP3i/HugpXGpP01LeQ+Da0HOCdk1J/fV3
+         a5yB5CyBDxg1uaDGpxPC8rQgswKxkwHw7ZcV/e67uw/uONgEfI1d+AWYM0jY5iw8T05S
+         3TKoSH0uqQSR+FgCmnQAWUsHrXDaM4+SNjsMVZ63+5SJWJwUhmJZ5+jz8Ewaw5cTcXiY
+         wujJxKC3cjeYM9MigEjX6p8X11yvnaQd/LoAR1kD53l3HAXgMIpqhSP5DOyed5RGOI84
+         Rnymh3L840T62/uX5g4OjqLFC7wACi1j1+8PNcl+rF665jt7VRbwEpHAm4Bwq5OSqaTr
+         HEPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=foZ6dspy82cYGpwpKNdGArEFQ0gYRwohDRDgkelpCf4=;
-        b=xjMyQedDuRykwZh7ORTBFFLcZuQ0vT46vtCjgTh3Y7m+keSkppzLK7MYO/IBHoSSYC
-         UvgTeitC+WCO/N0v3g2rxfhLMPNC5t0vFOFPDU76iB3uCTgUE28D8tuK+HFIye094RaP
-         G/wmiwBNgJiLXZXIhEmNkrxYvEJcpkLNvfkYLeTPj9p/GAXO3PttoK0w/izomfCwkgUh
-         VjWbPmaDnioWK/aEV1OpyzhQyVjYmbQCXadmcsJkaJNGbNsHaPv19Cz5lF/S/tfX4T1p
-         JPwx8EZFQvlwhwJoTb5UEGh42jGd07vsHab4VfuENPjG+t+xPIQ68mrbftTs/0wtseIu
-         0f5w==
-X-Gm-Message-State: AOAM5307uGyHXsbT4TURUlhRGhAlLHMFOr3q/J1WT/pmr0BJqOoG+pM1
-        mcma7jpH0pvrc87CI9VNZOG4VA==
-X-Google-Smtp-Source: ABdhPJwWW357u1OYxJ1UGB7pS1idebUYuqZkILxJPfceVd8mb1bKABtlpxYfWjm6yx9of47cDJMuyA==
-X-Received: by 2002:adf:efcb:0:b0:20d:24e:a1ce with SMTP id i11-20020adfefcb000000b0020d024ea1cemr16802543wrp.159.1652880608083;
-        Wed, 18 May 2022 06:30:08 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id v14-20020a056000144e00b0020cdf6ecafbsm2905580wrx.81.2022.05.18.06.30.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 May 2022 06:30:07 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     vladimir.zapolskiy@linaro.org, mchehab@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
-        hfink@snap.com, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: [PATCH 1/1] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577 on cam1
-Date:   Wed, 18 May 2022 14:30:04 +0100
-Message-Id: <20220518133004.342775-2-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220518133004.342775-1-bryan.odonoghue@linaro.org>
-References: <20220518133004.342775-1-bryan.odonoghue@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ah9AxJVzSaQ3+r9Loj2Ovb9Rw/v+KatzxO1BMfL+FaY=;
+        b=QSTCqff7iusYp5yd4lBqr0UDNgIZ5dwmz3wFMYrAaJfMyufNZDiE3pMseQOx/M/JZw
+         r+3fpX4tRYw/WowLpqlkEhZ+6sWalBFA8J+mMq87sZR8rnEZ7dYUZbtzjmD76JPvTTwF
+         7AC8nbhYFh7TQp94f+Z3icD2eNNV66obO7tfDKXsfT/2xuj1jCv5ODl6dIiEHGyIFnPu
+         q6v1E8VSi+YIoFZb2Woah10l9fVRJrwmT2VbDMzESbIUMdTKz+lUYmSusAjRqKHTExt2
+         h6jEM19KB+seGlo9bRGcyo/D0B/agfDz36EaUkcEGa7hiapZrH6xWICjp6r/FdW824LH
+         mUWg==
+X-Gm-Message-State: AOAM532r8sZiC6G51I+zEGJcOjBGAE73QMKlEhTYCVVnVtPrIAT+ryJm
+        TWv0sJWxuO7NR/j6CkzSlw2DYwFRW8Gc5bz4
+X-Google-Smtp-Source: ABdhPJy6a4PUHZ2TmWJGHb6uoS9F6DhW9demiYpT4UUbMNLedvB+yPMrdBxn6atjBxVouRAXtP807g==
+X-Received: by 2002:a05:6512:554:b0:472:1891:a14b with SMTP id h20-20020a056512055400b004721891a14bmr20246331lfl.677.1652880865160;
+        Wed, 18 May 2022 06:34:25 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id v14-20020a2e960e000000b00253bff9ded8sm219930ljh.21.2022.05.18.06.34.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 May 2022 06:34:24 -0700 (PDT)
+Message-ID: <bc13e57f-9701-80c9-8c7a-e491fbcfd181@linaro.org>
+Date:   Wed, 18 May 2022 15:34:23 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v3 1/6] dt-bindings: regulator: qcom,spmi-regulator:
+ Convert to dtschema
+Content-Language: en-US
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        lgirdwood@gmail.com, broonie@kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Devicetree List <devicetree@vger.kernel.org>
+References: <20220517205341.536587-1-robimarko@gmail.com>
+ <2905b9ae-df66-eb12-60fd-306ea2d3d626@linaro.org>
+ <CAOX2RU4dH-iUMY8yebEEgdJRqm37AHBMH135YkNsnDJMPZCbPg@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAOX2RU4dH-iUMY8yebEEgdJRqm37AHBMH135YkNsnDJMPZCbPg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,138 +83,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The IMX577 is on CCI1/CSI2 providing four lanes of camera data.
+On 18/05/2022 15:25, Robert Marko wrote:
+>> I think we misunderstood each other. Old bindings indeed did not require
+>> the interrupts, although if present they should be always defined.
+>> Therefore here you should specify number of items and their names.
+> 
+> Yeah, I think we are misunderstanding each other.
+> 
+> Old text-based bindings specified the interrupts, but no naming or
+> number was enforced,
+> so I looked into the driver to see what is going on.
+> Only pm8941 has interrupts defined in the driver and DTS, so I added
+> those based on compatible
+> matching, the same as with supplies.
+> My logic was that it was only valid for interrupts to be described if
+> PM8941 was used as describing
+> interrupts for other regulator models will do nothing.
 
-An example media-ctl pipeline is:
+Indeed, you're right, thanks for explanation. Your patch in such case is
+correct way of conversion but allows any number of interrupts with any
+names, so it's to relaxed. Maybe then better go to previous version,
+where these interrupts were defined only for one variant. For other
+variants they would fail on as unevaluated?
 
-media-ctl --reset
-media-ctl -v -d /dev/media0 -V '"imx412 '20-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
-media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
-media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-
-yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
-
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 98 ++++++++++++++++++++++++
- 1 file changed, 98 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 0e63f707b911..48b31790c434 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -1203,6 +1203,43 @@ sdc2_card_det_n: sd-card-det-n {
- 		function = "gpio";
- 		bias-pull-up;
- 	};
-+
-+	cam2_default: cam2-default {
-+		rst {
-+			pins = "gpio78";
-+			function = "gpio";
-+
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		mclk {
-+			pins = "gpio96";
-+			function = "cam_mclk";
-+
-+			drive-strength = <16>;
-+			bias-disable;
-+		};
-+	};
-+
-+	cam2_suspend: cam2-suspend {
-+		rst {
-+			pins = "gpio78";
-+			function = "gpio";
-+
-+			drive-strength = <2>;
-+			bias-pull-down;
-+			output-low;
-+		};
-+
-+		mclk {
-+			pins = "gpio96";
-+			function = "cam_mclk";
-+
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
- };
- 
- &uart12 {
-@@ -1294,3 +1331,64 @@ &qup_spi0_data_clk {
- 	drive-strength = <6>;
- 	bias-disable;
- };
-+
-+&camcc {
-+	status = "okay";
-+};
-+
-+&camss {
-+	status = "okay";
-+	vdda-phy-supply = <&vreg_l5a_0p88>;
-+	vdda-pll-supply = <&vreg_l9a_1p2>;
-+
-+	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		/* The port index denotes CSIPHY id i.e. csiphy2 */
-+		port@2 {
-+			reg = <2>;
-+			csiphy2_ep: endpoint {
-+				clock-lanes = <7>;
-+				data-lanes = <0 1 2 3>;
-+				remote-endpoint = <&imx412_ep>;
-+			};
-+
-+		};
-+	};
-+};
-+
-+&cci1 {
-+	status = "okay";
-+};
-+
-+&cci1_i2c0 {
-+	camera@1a {
-+		compatible = "sony,imx412";
-+		reg = <0x1a>;
-+
-+		reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
-+		pinctrl-names = "default", "suspend";
-+		pinctrl-0 = <&cam2_default>;
-+		pinctrl-1 = <&cam2_suspend>;
-+
-+		clocks = <&camcc CAM_CC_MCLK2_CLK>;
-+		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
-+		assigned-clock-rates = <24000000>;
-+
-+		power-domains = <&camcc TITAN_TOP_GDSC>;
-+		dovdd-supply  = <&vreg_l7f_1p8>;
-+		avdd-supply = <&vdc_5v>;
-+		dvdd-supply = <&vdc_5v>;
-+
-+		status = "okay";
-+		port {
-+			imx412_ep: endpoint {
-+				clock-lanes = <1>;
-+				link-frequencies = /bits/ 64 <600000000>;
-+				data-lanes = <1 2 3 4>;
-+				remote-endpoint = <&csiphy2_ep>;
-+			};
-+		};
-+	};
-+};
--- 
-2.36.1
-
+Best regards,
+Krzysztof
