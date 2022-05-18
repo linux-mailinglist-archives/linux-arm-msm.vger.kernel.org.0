@@ -2,148 +2,252 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE03752C2FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 21:02:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 142CC52C30F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 21:13:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241736AbiERTB5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 15:01:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57306 "EHLO
+        id S241775AbiERTJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 15:09:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241745AbiERTBz (ORCPT
+        with ESMTP id S241755AbiERTJ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 15:01:55 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23AFB3526C;
-        Wed, 18 May 2022 12:01:54 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id r188-20020a1c44c5000000b003946c466c17so3699459wma.4;
-        Wed, 18 May 2022 12:01:54 -0700 (PDT)
+        Wed, 18 May 2022 15:09:26 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAAC7880F4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 12:09:24 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id q130so3657122ljb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 12:09:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:from:to:subject:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rBZnRO68NWo3V5gqiqABKmLdz8NjuPd3CbKCN2Cz/cM=;
-        b=gKUIj8Ge35wSfOVwEdHduPahXbAzwGd8SskUVAoHshrofyjcZoeby0X7wFdYx7u1q8
-         MnbWe7PLjcF5/CnGMS41f9DC53DH+5qoAeYYlIkqoytoWRxweNxNTiGES5owVyfgnGie
-         YGyCANJ7NxqfnedK2/FbZJJA8f7z83WKsux1pm01qs71XM2H3r4LnuBhTmcDUYP574qX
-         DRuaxngNaxTLeBEnEQfIf6fnYRfNWn0LzBXBugzHN6JXFO578ctmVEH1QFd4iL3GVvp1
-         8Ocn4Ab8dpl4tfiIKOf+dt9ZFVFi87cX/21EU4X2wVXZ2eZhJoCLJ9emamYoWlfOHgr/
-         7YtQ==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=O3+TeHGlj78jW1XEh5KfQ6XWZQiUtFAgDTrtf5N/VEs=;
+        b=WQ0kW/nLEazXZzlIDWwWlBNO9Jq2o3fMine2DnwAcO7OE6qspEcJ4JiBzIzjNMGMS3
+         QBFV63dLFkVauC/gwYFGgxHNHaGVP5TQXaGiakU2/HdGfv7V3OXfVoCU739mlIiW0U70
+         3s8Gxd3vJpIeVcbhTzNacmQBk/2aOPzOqYD4HnOgrNUz4wUh/mhotzSm2usttv95oWi1
+         k0CyM1NAoECSbtnnWZHaDZotXe28p0IicEtf/fi6p2Wk/SKkxY5Cq2iair7/1M2JVkGG
+         m8tKsKnn1gf1nQu0rzQIhcRawx/+8FEaCOIvdXU8YoruRhc8XrimkYQvLefBuBeqhXnu
+         aalA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:from:to:subject:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rBZnRO68NWo3V5gqiqABKmLdz8NjuPd3CbKCN2Cz/cM=;
-        b=OSQUdR76ItnigVy+EurODJLDQ2yNsd7FJN35UzXo04Dhz1HGws8woOctDabjQ6AV+f
-         vlhtussuScpY8ahnBdDoSahQ/VIbBRCYnP3gwBg1sASb8q67C4nmkh6vhmYFAWSoASEx
-         uu+hK39e6cJvMTNVoOuzsQO8iB/BT0ycmdz8vdiHoC8KHTu/GqyDzLO/NU0tHEKvRtjc
-         Z2tmLaC/nNz34r5BQZN5Aeq+fWSVzKQx8eZh8uU+FT16VLYSyiZeHYQy8l+8zCqekoCi
-         AYjKcTFgtjkXM8vC433UYb493vdtMCZnStltfZmFk6+OYSxCjTsVF9JnTUqFermlZneT
-         R0lg==
-X-Gm-Message-State: AOAM532vO52rROScO6qffjUD+MPMV6uvkMaoddjJr/yCkDoZb+loGo0z
-        GUXtQMyvvJHO1XtJGOn9NL0=
-X-Google-Smtp-Source: ABdhPJwFABL9st5eY1kCZPAqEZTG5BH2l111z7uQRFbd2WAbEua6u8ho/o92KmJ7E6hl6JcXlsiVqg==
-X-Received: by 2002:a05:600c:354a:b0:394:8fa4:73bc with SMTP id i10-20020a05600c354a00b003948fa473bcmr1186452wmq.37.1652900512510;
-        Wed, 18 May 2022 12:01:52 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.gmail.com with ESMTPSA id c14-20020a05600c0a4e00b003942a244ec4sm2527846wmq.9.2022.05.18.12.01.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 May 2022 12:01:52 -0700 (PDT)
-Message-ID: <628542a0.1c69fb81.8800.d06a@mx.google.com>
-X-Google-Original-Message-ID: <YoVCnbKs3xgDNnzT@Ansuel-xps.>
-Date:   Wed, 18 May 2022 21:01:49 +0200
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] dt-bindings: mtd: qcom_nandc: document
- qcom,boot-pages binding
-References: <20220518184256.21238-1-ansuelsmth@gmail.com>
- <20220518184256.21238-3-ansuelsmth@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=O3+TeHGlj78jW1XEh5KfQ6XWZQiUtFAgDTrtf5N/VEs=;
+        b=Eqn9tfMGhKXgWG39bnQSDcOkz+QUnpRf8e9Q3eYe9iDlvyQ+iok9PUeNPgd2U/AMD0
+         LNbWQZXZaYH1Kjy9KWkYYlzFG5INtPKIha6G6rVnfM5wD4/QC8+iiWQ0L3Rn8qvKQPj3
+         RUpiF41Mj2d/kOYpx7QrO1Fg9IO9OZEPNvLb/M0y6z5tubqKAcj5SJFUuDqP12hwv/5g
+         c2LqbC9miU7WV+7F9XJD3GrbYdIxoR5bN/1GSP+H4isDZbChHnmETseVEKBXj7T8U7ZU
+         nI4XnFuujslT7SU/VYP59FMwVG9dTcRnHUuVAUgXfcdhjxNPDyJ5oVP89eg6RMfTmCtH
+         R1RA==
+X-Gm-Message-State: AOAM531GY9UIdBIWOKv+AqM46g9Qil3PmksIveZVpxodhrLm4rYjrOlV
+        7aV2adXdxR8DZl4+ZuBMZMGMbA==
+X-Google-Smtp-Source: ABdhPJxGsMPUlH6sy7idvon1aGjw7EO7PsAEp2KCBwesRxaQ8VvR5QjE31Lgazu67XBiso6tA2q3Ow==
+X-Received: by 2002:a05:651c:513:b0:250:5d51:46d3 with SMTP id o19-20020a05651c051300b002505d5146d3mr476161ljp.429.1652900963045;
+        Wed, 18 May 2022 12:09:23 -0700 (PDT)
+Received: from [192.168.1.102] (mobile-access-b04822-211.dhcp.inet.fi. [176.72.34.211])
+        by smtp.gmail.com with ESMTPSA id u13-20020ac248ad000000b0047255d21100sm32359lfg.47.2022.05.18.12.09.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 May 2022 12:09:22 -0700 (PDT)
+Message-ID: <33abcc93-13f1-d6f5-36a3-6ab796f124f9@linaro.org>
+Date:   Wed, 18 May 2022 22:09:21 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220518184256.21238-3-ansuelsmth@gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577 on
+ cam1
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     mchehab@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
+        hfink@snap.com
+References: <20220518133004.342775-1-bryan.odonoghue@linaro.org>
+ <20220518133004.342775-2-bryan.odonoghue@linaro.org>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20220518133004.342775-2-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 18, 2022 at 08:42:56PM +0200, Ansuel Smith wrote:
-> Document new qcom,boot-pages binding used to apply special
-> read/write configuration to boot pages.
+Hi Bryan,
+
+On 5/18/22 16:30, Bryan O'Donoghue wrote:
+> The IMX577 is on CCI1/CSI2 providing four lanes of camera data.
 > 
-> QCOM apply a special configuration where spare data is not protected
-> by ECC for some special pages (used for boot partition). Add
-> Documentation on how to declare these special pages.
+> An example media-ctl pipeline is:
 > 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> media-ctl --reset
+> media-ctl -v -d /dev/media0 -V '"imx412 '20-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
+> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
+> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> 
+> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  .../devicetree/bindings/mtd/qcom,nandc.yaml   | 26 +++++++++++++++++++
->  1 file changed, 26 insertions(+)
+>   arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 98 ++++++++++++++++++++++++
+>   1 file changed, 98 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-> index 84ad7ff30121..3b8244db2ae8 100644
-> --- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-> +++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-> @@ -102,6 +102,30 @@ allOf:
->              - const: rx
->              - const: cmd
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,ipq8074-nand
+> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> index 0e63f707b911..48b31790c434 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> @@ -1203,6 +1203,43 @@ sdc2_card_det_n: sd-card-det-n {
+>   		function = "gpio";
+>   		bias-pull-up;
+>   	};
+> +
+> +	cam2_default: cam2-default {
+> +		rst {
+> +			pins = "gpio78";
+> +			function = "gpio";
+> +
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +
+> +		mclk {
+> +			pins = "gpio96";
+> +			function = "cam_mclk";
+> +
+> +			drive-strength = <16>;
+> +			bias-disable;
+> +		};
+> +	};
+> +
+> +	cam2_suspend: cam2-suspend {
+> +		rst {
+> +			pins = "gpio78";
+> +			function = "gpio";
+> +
+> +			drive-strength = <2>;
+> +			bias-pull-down;
+> +			output-low;
+> +		};
+> +
+> +		mclk {
+> +			pins = "gpio96";
+> +			function = "cam_mclk";
+> +
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +	};
 
-Ignore this revision, this is wrong since this should be ipq8064...
-Will resend tomorrow v4 with this fixed. 
+I still stick to my opinion that the description of rst/mclk pins should
+be uniformly added to the SoC specific .dtsi file. The pins and functions
+in these device tree nodes are not changeable, a board file should just
+select proper pairs.
 
-> +
-> +    then:
-> +      properties:
-> +        qcom,boot-pages:
-> +          $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> +          items:
-> +            items:
-> +              - description: offset
-> +              - description: size
-> +          description:
-> +            Some special page used by boot partition have spare data
-> +            not protected by ECC. Use this to declare these special page
-> +            by defining first the offset and then the size.
-> +
-> +            It's in the form of <offset1 size1 offset2 size2 offset3 ...>
-> +
-> +            Refer to the ipq8064 example on how to use this special binding.
-> +
->  required:
->    - compatible
->    - reg
-> @@ -135,6 +159,8 @@ examples:
->          nand-ecc-strength = <4>;
->          nand-bus-width = <8>;
->  
-> +        qcom,boot-pages = <0x0 0x58a0000>;
-> +
->          partitions {
->            compatible = "fixed-partitions";
->            #address-cells = <1>;
-> -- 
-> 2.34.1
-> 
+Do you have any objections to it?
 
--- 
-	Ansuel
+>   };
+>   
+>   &uart12 {
+> @@ -1294,3 +1331,64 @@ &qup_spi0_data_clk {
+>   	drive-strength = <6>;
+>   	bias-disable;
+>   };
+> +
+> +&camcc {
+> +	status = "okay";
+> +};
+> +
+> +&camss {
+> +	status = "okay";
+> +	vdda-phy-supply = <&vreg_l5a_0p88>;
+> +	vdda-pll-supply = <&vreg_l9a_1p2>;
+> +
+> +	ports {
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		/* The port index denotes CSIPHY id i.e. csiphy2 */
+> +		port@2 {
+> +			reg = <2>;
+> +			csiphy2_ep: endpoint {
+> +				clock-lanes = <7>;
+> +				data-lanes = <0 1 2 3>;
+> +				remote-endpoint = <&imx412_ep>;
+> +			};
+> +
+> +		};
+> +	};
+> +};
+> +
+> +&cci1 {
+> +	status = "okay";
+> +};
+> +
+> +&cci1_i2c0 {
+> +	camera@1a {
+> +		compatible = "sony,imx412";
+> +		reg = <0x1a>;
+> +
+> +		reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
+> +		pinctrl-names = "default", "suspend";
+> +		pinctrl-0 = <&cam2_default>;
+> +		pinctrl-1 = <&cam2_suspend>;
+> +
+> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
+> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
+> +		assigned-clock-rates = <24000000>;
+> +
+> +		power-domains = <&camcc TITAN_TOP_GDSC>;
+
+Above 'power-domains' property is not needed, it shall be implied by CCI.
+
+> +		dovdd-supply  = <&vreg_l7f_1p8>;
+> +		avdd-supply = <&vdc_5v>;
+> +		dvdd-supply = <&vdc_5v>;
+> +
+> +		status = "okay";
+
+Here 'status' property is not needed.
+
+> +		port {
+> +			imx412_ep: endpoint {
+> +				clock-lanes = <1>;
+> +				link-frequencies = /bits/ 64 <600000000>;
+> +				data-lanes = <1 2 3 4>;
+> +				remote-endpoint = <&csiphy2_ep>;
+> +			};
+> +		};
+> +	};
+> +};
+
+I run on you branch on top of linux-next, but switch build options from modules to built-in
+
+    CONFIG_I2C_QCOM_CCI=y
+    CONFIG_VIDEO_QCOM_CAMSS=y
+
+I didn't get the sensor initialized and hence there is no /dev/media0 node:
+
+[    0.620205] i2c-qcom-cci ac50000.cci: Found 19200000 cci clk rate while 37500000 was expected
+[    0.620551] i2c 20-001a: Fixing up cyclic dependency with ac6a000.camss
+[    0.620754] imx412 20-001a: Looking up dovdd-supply from device tree
+[    0.620797] imx412 20-001a: Looking up avdd-supply from device tree
+[    0.620860] imx412 20-001a: Looking up dvdd-supply from device tree
+[    0.620876] duplicated lane 1 in clock-lanes, using defaults
+[    0.622789] imx412 20-001a: failed to find sensor: -5
+[    0.622880] imx412: probe of 20-001a failed with error -5
+
+I believe the problem could be related to CCI, please remind me, are there I2C bus pull-ups?
+
+--
+Best wishes,
+Vladimir
