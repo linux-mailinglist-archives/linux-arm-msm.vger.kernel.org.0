@@ -2,113 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6596E52BBF6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:16:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 705E252BD17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 May 2022 16:17:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238224AbiEROAP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 10:00:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42324 "EHLO
+        id S238411AbiEROFF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 10:05:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbiEROAO (ORCPT
+        with ESMTP id S238392AbiEROFE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 10:00:14 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B7541B184A;
-        Wed, 18 May 2022 07:00:13 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id h3so1660442qtn.4;
-        Wed, 18 May 2022 07:00:13 -0700 (PDT)
+        Wed, 18 May 2022 10:05:04 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EE52149156
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 07:05:02 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id s5so2640267ljd.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 May 2022 07:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IzOS+GlQNt2K4QiqlD0wmcPgVEFauW0EWl1uwO2WAzo=;
-        b=izpDwXjEmWbNrmbdx7spk/mq3rK/P72H5Acyamh8wltb1mz19T5rG6WQK2032v8IRE
-         a75fotZLaUVHeBngtTEUUZa9J0fTi+MUrnonWxqyb3qaQXQyrxX5gV93fB569YS2rvSz
-         CIHVoxEiRSbUdtEOlW8IGtZe7cfml4AhRlJO7gB5SIb9MKk0ZDh2MH78/K+EHQRtaVBD
-         dWM65/VE++xHH3BCeJ3ob2sXN2vciITB4AnTnP26aZQaX27IP9vcAI4+18ve44RXeuBU
-         tcM8qDQc3oO183uhaavsAoMDBqCMwWY6JygIAlmqTT+X8wANX/W7LsQcO7LLPUPdlesH
-         tPqw==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=4be4XubXmodsQyyIZAOkjAtM6Y2yi67Gjsh2Z2W5A8w=;
+        b=B6uPnx2xGjPw06R1UIM+lD30VHrMv5OhwsWQ8+ZAW5SxHNeWTpVOPGbmHSPVDlw+VD
+         9hM8p1R05Zt5FumNjBx203Sk2906de2TwWSKdYv6AM+idQZGWkVGnYe5oJuU74fkoGNs
+         pD1yeutRT8vpCyOKZQeL23PSd5ESE+XZOrlm0qkQCrS1ADSD1dezVE8xzc5SLkgldtw7
+         SHKsBotZV6yO6u5MK1s9oW2Hs32jctzRRsAUyekvWgy4tszBFmWIrrIMVUOi5IlxetsR
+         IaAi/eYrCeF88eTbVzVzbFNoGaRXRUJ2d81S7iyh2ZxOcT4OT9knD2aTze222THtluzM
+         H3nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IzOS+GlQNt2K4QiqlD0wmcPgVEFauW0EWl1uwO2WAzo=;
-        b=Vb30fwb5IgEnOsmvMTTMe4CfUzEBjt/lmqTTR2bkRW+kJ8qFLegaHXCt3emNJfsz88
-         2qwo/rncw2WmirVDrlPvMNdHF4NyMdGZ0mX4s2lffWSR/nA9/QxPcAeXbhYP9EJgmTI/
-         d6yJGRkzI4v5QHM5nXaFWVvS8aRLG0Osh42kwUq+2nxrxnAV5EO1RGwo3APbT5r82jDd
-         8EASXA5Y+7xBCJTP106ThQzJjzgUgcsgdaQPAE3Ac7DbIO2+96vVLxZSF85/pF5i7njL
-         j/vDpn1LWAgHM+iSbqQI5vVG+tmQX0bEvIyVHTh094oZi0etF2XF4wgj/RdB0la+spsK
-         3kag==
-X-Gm-Message-State: AOAM531Fj6AVrrQ6wAl/HGehV3LTO3JjMsUK//d4dF+JWdESmomWUGl7
-        seC7lomcgbcFmuWFfjLnsLm5+UuxIKV8sdDk/GTYKiNLbtg=
-X-Google-Smtp-Source: ABdhPJyvdr7g5GFNdj+2jig0J6P9vWfdywsKI8871NPXUvkpwLUHgmozsZ5LLrXAoArPgj1OISaIUzfKxV6VunJRLo4=
-X-Received: by 2002:a05:622a:606:b0:2f3:da55:bd1b with SMTP id
- z6-20020a05622a060600b002f3da55bd1bmr24606901qta.546.1652882411268; Wed, 18
- May 2022 07:00:11 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=4be4XubXmodsQyyIZAOkjAtM6Y2yi67Gjsh2Z2W5A8w=;
+        b=zTf0vmHOCOaRAPoVdWgFFBnIl0byCcRDNTdtIMltndKhi3ASnJJEjImYeffW3XwY/w
+         t410P4XJn5tHQr6wMtvBHNBF5En4NaYEJ3WTBR+cV49+ZjRlhl4aXmLsiyCWyAK+pMFC
+         kkWgcuYrQs7wqqGO4gjjcdK0W3JJapfcYrATw7OCXkCYxQgwKigo4TperlxxjfcAd87+
+         oae+zL/FtNXcVPhvrZxy1QOLke1blf67bXMwBMGhEKU2KmfCI/GmE5q9/yJZl8rQ5igh
+         J7jQtErtuJAX33zRRMPmYpJPYgsynxAVNbOh4SJfwn9HUXoPXzo5axVxoZ7hV9/q4i+I
+         ELbg==
+X-Gm-Message-State: AOAM530fGJQsoaJWcJ5he9dLV7Fx9jKsHoY6pDzOfBIfmhVf1pgTIWuX
+        PDX/KmG2dFwXiurWgvQikufR3g==
+X-Google-Smtp-Source: ABdhPJyum/9upK7pIF0FGYulA7ZOiN+2Cg4PV9d6rFilhc3AYLNoZbZVZDEpBgHKeiY1v87z+TObOg==
+X-Received: by 2002:a2e:9e41:0:b0:253:c37c:378b with SMTP id g1-20020a2e9e41000000b00253c37c378bmr3573907ljk.202.1652882700578;
+        Wed, 18 May 2022 07:05:00 -0700 (PDT)
+Received: from [192.168.1.102] (mobile-access-b04822-211.dhcp.inet.fi. [176.72.34.211])
+        by smtp.gmail.com with ESMTPSA id q21-20020ac25295000000b0047255d211e4sm217587lfm.275.2022.05.18.07.04.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 May 2022 07:05:00 -0700 (PDT)
+Message-ID: <0864eed7-bba2-59ec-dc5f-b491ce114798@linaro.org>
+Date:   Wed, 18 May 2022 17:04:41 +0300
 MIME-Version: 1.0
-References: <20220517205341.536587-1-robimarko@gmail.com> <2905b9ae-df66-eb12-60fd-306ea2d3d626@linaro.org>
- <CAOX2RU4dH-iUMY8yebEEgdJRqm37AHBMH135YkNsnDJMPZCbPg@mail.gmail.com> <bc13e57f-9701-80c9-8c7a-e491fbcfd181@linaro.org>
-In-Reply-To: <bc13e57f-9701-80c9-8c7a-e491fbcfd181@linaro.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Wed, 18 May 2022 16:00:00 +0200
-Message-ID: <CAOX2RU6sW5x-Ufbgz5pxWRnOMj=jrTXqHuba5USKgBnfc+KeJA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/6] dt-bindings: regulator: qcom,spmi-regulator:
- Convert to dtschema
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        lgirdwood@gmail.com, broonie@kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Devicetree List <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577 on
+ cam1
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     mchehab@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
+        hfink@snap.com
+References: <20220518133004.342775-1-bryan.odonoghue@linaro.org>
+ <20220518133004.342775-2-bryan.odonoghue@linaro.org>
+ <58af3b06-97fe-fd29-b6e3-fa68737b1d96@somainline.org>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <58af3b06-97fe-fd29-b6e3-fa68737b1d96@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 18 May 2022 at 15:34, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 18/05/2022 15:25, Robert Marko wrote:
-> >> I think we misunderstood each other. Old bindings indeed did not require
-> >> the interrupts, although if present they should be always defined.
-> >> Therefore here you should specify number of items and their names.
-> >
-> > Yeah, I think we are misunderstanding each other.
-> >
-> > Old text-based bindings specified the interrupts, but no naming or
-> > number was enforced,
-> > so I looked into the driver to see what is going on.
-> > Only pm8941 has interrupts defined in the driver and DTS, so I added
-> > those based on compatible
-> > matching, the same as with supplies.
-> > My logic was that it was only valid for interrupts to be described if
-> > PM8941 was used as describing
-> > interrupts for other regulator models will do nothing.
->
-> Indeed, you're right, thanks for explanation. Your patch in such case is
-> correct way of conversion but allows any number of interrupts with any
-> names, so it's to relaxed. Maybe then better go to previous version,
-> where these interrupts were defined only for one variant. For other
-> variants they would fail on as unevaluated?
+Hi Konrad,
 
-Yeah, that was my intention with not having interrupts as the generic property.
-I will remove them as generic property and only allow them per
-compatible, cause I tested
-adding interrupts to a PMIC DTS that does not allow them and make
-dtbs_check will
-warn about those being unevaluated.
+On 5/18/22 16:55, Konrad Dybcio wrote:
+> Hi!
+> 
+> 
+> On 18/05/2022 15:30, Bryan O'Donoghue wrote:
+>> The IMX577 is on CCI1/CSI2 providing four lanes of camera data.
+> 
+> Commit says IMX577, code says IMX412.
+> 
+> 
+>>
+>> An example media-ctl pipeline is:
+>>
+>> media-ctl --reset
+>> media-ctl -v -d /dev/media0 -V '"imx412 '20-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
+>> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
+>> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+>> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+>> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
+>> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+>>
+>> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
+>>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> ---
+>>    arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 98 ++++++++++++++++++++++++
+>>    1 file changed, 98 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+>> index 0e63f707b911..48b31790c434 100644
+>> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+>> @@ -1203,6 +1203,43 @@ sdc2_card_det_n: sd-card-det-n {
+>>    		function = "gpio";
+>>    		bias-pull-up;
+>>    	};
+>> +
+>> +	cam2_default: cam2-default {
+>> +		rst {
+>> +			pins = "gpio78";
+>> +			function = "gpio";
+>> +
+>> +			drive-strength = <2>;
+>> +			bias-disable;
+> 
+> Other pins in this DT don't have a newline between function and
+> drive-strength, please remove it for consistency.
+> 
+> 
+>> +		};
+>> +
+>> +		mclk {
+>> +			pins = "gpio96";
+>> +			function = "cam_mclk";
+>> +
+>> +			drive-strength = <16>;
+>> +			bias-disable;
+>> +		};
+>> +	};
+>> +
+>> +	cam2_suspend: cam2-suspend {
+>> +		rst {
+>> +			pins = "gpio78";
+>> +			function = "gpio";
+>> +
+>> +			drive-strength = <2>;
+>> +			bias-pull-down;
+>> +			output-low;
+>> +		};
+>> +
+>> +		mclk {
+>> +			pins = "gpio96";
+>> +			function = "cam_mclk";
+>> +
+>> +			drive-strength = <2>;
+>> +			bias-disable;
+>> +		};
+>> +	};
+>>    };
+>>    
+>>    &uart12 {
+>> @@ -1294,3 +1331,64 @@ &qup_spi0_data_clk {
+>>    	drive-strength = <6>;
+>>    	bias-disable;
+>>    };
+>> +
+>> +&camcc {
+>> +	status = "okay";
+>> +};
+> 
+> It's enabled by default.
+> 
 
-Regards,
-Robert
->
-> Best regards,
-> Krzysztof
+I'd prefer to see the camera clock controller disabled by default.
+
+https://lore.kernel.org/linux-devicetree/20220518091943.734478-1-vladimir.zapolskiy@linaro.org/
+
+>> +
+>> +&camss {
+>> +	status = "okay";
+>> +	vdda-phy-supply = <&vreg_l5a_0p88>;
+>> +	vdda-pll-supply = <&vreg_l9a_1p2>;
+>> +
+>> +	ports {
+> 
+> Maybe the port definitions along with #-cells here and on camss could be
+> moved to the SoC DTSI?
+> 
+
+I agree with it.
+
+>> +		#address-cells = <1>;
+>> +		#size-cells = <0>;
+>> +
+>> +		/* The port index denotes CSIPHY id i.e. csiphy2 */
+>> +		port@2 {
+>> +			reg = <2>;
+>> +			csiphy2_ep: endpoint {
+>> +				clock-lanes = <7>;
+>> +				data-lanes = <0 1 2 3>;
+>> +				remote-endpoint = <&imx412_ep>;
+>> +			};
+>> +
+>> +		};
+>> +	};
+>> +};
+>> +
+>> +&cci1 {
+>> +	status = "okay";
+>> +};
+>> +
+>> +&cci1_i2c0 {
+>> +	camera@1a {
+>> +		compatible = "sony,imx412";
+>> +		reg = <0x1a>;
+>> +
+>> +		reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
+>> +		pinctrl-names = "default", "suspend";
+>> +		pinctrl-0 = <&cam2_default>;
+>> +		pinctrl-1 = <&cam2_suspend>;
+>> +
+>> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
+>> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
+>> +		assigned-clock-rates = <24000000>;
+>> +
+>> +		power-domains = <&camcc TITAN_TOP_GDSC>;
+>> +		dovdd-supply  = <&vreg_l7f_1p8>;
+>> +		avdd-supply = <&vdc_5v>;
+>> +		dvdd-supply = <&vdc_5v>;
+>> +
+>> +		status = "okay";
+> 
+> It's enabled by default.
+> 
+
+--
+Best wishes,
+Vladimir
