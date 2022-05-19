@@ -2,102 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 084F052CD59
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 09:42:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A830652CDB7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 09:58:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234907AbiESHlx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 03:41:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57302 "EHLO
+        id S235071AbiESH6I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 03:58:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234916AbiESHlq (ORCPT
+        with ESMTP id S235112AbiESH5x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 03:41:46 -0400
-Received: from sonic303-20.consmr.mail.sg3.yahoo.com (sonic303-20.consmr.mail.sg3.yahoo.com [106.10.242.37])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 575182ED6B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 00:41:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com.tw; s=s2048; t=1652946102; bh=KFQJ4TCx83Yzf8f1QZbIar6Bez2FngpEsoK+1YSWJPI=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To; b=qHiqp2m8MbbEJaXWFunsLC78dtjOm4dayf9cnjfAz834T3gquASFpYPCf5btX1RL9IhmKWnR7e4o3aWwJHDow5P2PwBM6plkeeZpBuQRlmLTNxi5z66zLy1XtOF6njP7XjNhtbnqwqDomSnTsdhUAa9XVDleacrKFa/mtdejBk1CmCz6y68F8oFNs6RuacWirD61FAODEnovMDLWsOc3Ydukof/94KhxDz0uJJZ0BuiqL+K8ia0Kw/RtcAjXkfoGLnJl99QdpMXooiixiWxSkd4m0XxjLhaNIDVPO+vRRz0VhCZRcOHamQqEmIAxFEgVmFBgtF/BtYNtO4PwW8qErg==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1652946102; bh=4NYapRmeyc3dEMMdJ55NqAq5KZ2BH17GqvMK+0KDSJo=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=XMPJRIJgVAsHDg4LDf1qXUn8cdfSeQnjbOaKfIKUqHZhXaBywHj2UJOi6a+FDzTwyCzamC2996kbc8jxmR1LMkLyKnjzL1RQji1Lx1d4Wm6KEwrrE+oSJlQ5bmSZie4ukVk3pg98OKgwUwkExzHbMGG2zO7NKh1N47LVIVjjPPY/3yv/G1BFwRrZLmCvLcCPG9/TAGa+Kar5wjT3HQfK4s8n+TZsw6iixs3xEkOsM1ua+xQP7/LmZSGuzPQEl1JAWeJiGv1rB66WRmCkF6xIHe6NaWK66PE9ZXLPNvRIW8ipNSZ2UYbJhRjgKMWV2vPN42NHWsfyy56CkJ7NtaiovA==
-X-YMail-OSG: hKBfT4sVM1l0nxhozhQtNUAh0GgN0hVs3L_Go_UUoiPUojGfwIoxTzZihtwih11
- kGL4IpYRYfqLssT2AY.zzPmX13TrPYq9UrrqQOEk9fl_FQFQi_PbFXvvKq5Amyi_O4v.Id9vP0Tv
- r5ENhNybKXsTuXPFPda0FafwLBz88WBk8csNpFlUsK2si5Fvxeimi7GUwOUW3LHviFTUcqqzRAvI
- ZdaT25RuY66vpqqOfIOcx4PKCL17YtwBjURXiZY9mpoLg8MR56bQMXArVQU4rjTxU8Avsu1UOLRo
- Y9YJUEoL8yALAY6aALLzDCCDo_7w5fzabt0JHXj2d1TNSIIjdQUQ.c0u7mfRe99dA8vExgK93WEN
- KGtPqMOZ_J7CL_Ef29..5r_Hcz93gQjB_9jeWoAKvDHk6un3KNz_MLrHrrNhxgVsEYFF5yALkaVE
- se5sqKfv.Wb.nmNvH48neNKVdWWNqF93dQzwIMFPIl4uh5goYvTW0Wg6fRQLaInYQraylRLt._4A
- nCFU4EEFEi2USD4kwDkr21lA5HbOSF0mnNsMDmKJme.AQVLiTj.ailsF7JlZR74Qx.i_1LWxeg.y
- zEU_xe2iVyYpYO.JlS8PgX2W.UqVTsVbkr3tKQqPepzwfRvUkMi4_ASXyMVgvTUCD_PK5W37lQA7
- aOPlRV0j2zJ20h2.GRTKltBOD9SkAaF7xxphIlIvbLd_9usn.zZcL0JXfvAGsQwIK3KonIB7MhZl
- oXr7Rae65irlEzY88XDpZgvFsVrZ3yH82b1R5Wqp5khW93Qp9Yt6eGF8zKmwkibslZYrW1KL9dQh
- a3VMYZhNbsawriwNsW2Uj8_rNwAJ8.kIu8DpxYzEoabNb5jDE3qW_b0knZblLU1zgCajZFJiwATN
- tHdeDm4W5j3yOYH.4.wRUvTlJTNDJ8MGzMcQIu5evVcLI.PKApFWbJT0DDyNuUOE3esuoVu5NunT
- 1xFmc6iSq7RqhZLkm5PJWBbCHK.AMswm9WQ7PltyYSCBzrpBDCCjSFkWfWbmEBypxPIHj7fE9UP0
- BCSgVY0AH.GvLCDJQJ2eB69M.uysT976hJYRpw68Lxx04xydqSoEE3wtuzfUBxvCo8Hhz4HEyuSd
- ttbIbednE8yorw0FGTe4l2s_VYY5b2mCIxd2vk9c4fGB2teg.aTAHzhm.357e_wBQ3hnQh03goGZ
- Ld9zeat21sMETnLZ8m1JT.2s.7qNhYe2bC5.UQJiDEhUzqZlyCkdy0ExMlT5FdnVUFIVDDse7gDG
- FtXB7KNYGrPKm55Igtsg5VAkHtOzyyeNv5JtmX1Oj_n2jdlIJ_OsQTjZvniOvRUMx_sW.P3QylPV
- S.5ujbsxGnSS4bDmiDa1bakXLb29Z6CBDuDt8ipXY0wGs12zjX3Opd9PkStDVO0JJs8ck16olgU0
- OnjEWIFJKL4MeI7X9wwXNNWN5p1s4APRYmgPsJYJK9up3pbvT_Fg85SG0smXOdA1jveq.RiE2F_j
- 9Xfg.Ezhpfneoy5W_MJOmwJiWk5FNi8vplq_dxJfH4Ex5r.85saSOWvM6cQmA2H.RcVYUDxMfq1d
- TywdDVDKpuQspuCL_xJ6roi4TeYE.HzhWvsv4yZebkKFfz8CkuHygDEBP4sHoxIVLksNi8tL8Crp
- SRnKycQdsBdSTy2MzX7FZOcBI9X5WRKnWtj6dj3DGXRmMkmEBDu2oHI8ABvvHmfN74E6uNV1u.EY
- wV27_AVvHn8utyvdTjc6KfG1OQTHZo1lh1aNPx3oSx0cuerQ_6_892xgAmFHuJ1cXtMireTEsdHZ
- gC7LKpIjLnGrE3259PDtMfH.NoZYqGCceWQR87JGD6VRCRzEi8GPUzhJQ0stFo7OKIdulABYmCtK
- FbNA6B8tD81gBWgokmGCtR7A4eBwTT88RBhebiqXcMFUrnNZXb.PD07xeWrfwERdx1mQhKNzyu.t
- C5eRAOqUsBaE4.Se7kq5PjskqSWzLgUeu.pHNroNC2ZpXzGAtOgZgVnqGMPKETXVk_Ot._m2e7It
- P95yspLIToiEOg9NJOl.W3h8QfUzq9h4EK4kGsNkpEALuk_mDY7k42wNQ4bxV1NLPM5E9TAsS7Yo
- icgfbmi_eaZAtyginUpj0nhwQ1SdFitgiqsB6mbj5NtqJb4cD7E9UbP3W0VpGM2vHjeWZr425PGL
- TL.5wqnTNQFJdn6cYtfLCnsQ9yV815c_SrbjfOsc24la2WSwFld.Z3lYA5cRTNrufvWHwLT8rtHN
- l7eMUxeS1XQVr51HjIXjPJzrR2nG2nVXi4G7NE9Zg2xdx7VtasrFi2LhzCQOalv79q1pzVmemW8i
- qdBQe0w--
-X-Sonic-MF: <ae40515@yahoo.com.tw>
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic303.consmr.mail.sg3.yahoo.com with HTTP; Thu, 19 May 2022 07:41:42 +0000
-Received: by hermes--canary-production-sg3-7959d4d9bd-9z8f2 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID ff485e39d08ac88db91aa318bdd89cc4;
-          Thu, 19 May 2022 07:41:39 +0000 (UTC)
-From:   Alec Su <ae40515@yahoo.com.tw>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, sboyd@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, y.oudjana@protonmail.com,
-        Alec Su <ae40515@yahoo.com.tw>
-Subject: [PATCH 2/2] dt-bindings: arm: qcom: Document xiaomi,natrium board
-Date:   Thu, 19 May 2022 07:41:12 +0000
-Message-Id: <20220519074112.25600-3-ae40515@yahoo.com.tw>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20220519074112.25600-1-ae40515@yahoo.com.tw>
-References: <20220519074112.25600-1-ae40515@yahoo.com.tw>
+        Thu, 19 May 2022 03:57:53 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 926C74EDE2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 00:57:50 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id bu29so7766092lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 00:57:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=HuQzDaY35vfZCNmG9Su+PiSDK9SQEsPfjOSbF3l6cC0=;
+        b=obiMfT5pYrKc5nD9WjR1fPoAWUdsYHQYvWfrZsK0XVoJ3HcPczoiBrgaDkB1kI7gJN
+         s1vjqH9l82aaKLDfHaeGyJ6LHAIirrRbSCFSfWiOzlykRRGkIUNYUFIWG9lXU2EcpmhZ
+         zsUpzih/JZjhLEzEWETifdvNVbxtkdLM9dDz2Fn8RUseOExHe3W7d5VoQrSQuuZ9NgMZ
+         4JGkx/IzK5ckpxjaFTUiX6qCyyXHtCIgjFc8RmDjF8/4O3Ksw+5xjcEsNEMrirm57pkT
+         UNcqoXWGtayaKzTCyfAS3stDt6CB3uIpMwEn/wE8HKKBo6ci85J5i3YskN4AihbaIsWr
+         tw0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=HuQzDaY35vfZCNmG9Su+PiSDK9SQEsPfjOSbF3l6cC0=;
+        b=o6rs5TY8PmThmKIsggMMCQt+tEeze23QiuCe0JbXobEZhU8Mkljj0PgROLi8CUIsYb
+         JNx8PSYFAkTL892S+ufTwkZnthyjypx4Jr9UBD+qw9abYnZ5m8NN6yBEx7l72V6h+HOA
+         ovxyfaFIwysaRw8LLctQ2FGvM7kV4zn7S08gbnZRDUvVPf02T838LVB5ex0OWiCrXTNa
+         AfCjn8iOafCjNC8Su8hOUyGWh1ZPqLz2zPUKMJyYQKAB27pM5GpxhqvatoiqaLXmS7U5
+         PWeB7YlCY1EroRCHc6O4MT//pJh14Qj6zn8HHTGFcGI1/t36mjzbovO/jZqKid5n03pZ
+         6u5g==
+X-Gm-Message-State: AOAM530IdZYLQZphnIGYRx9CFGowsbohryPta41GQ4jOL267bMnwdcmV
+        bqxsKUCn4ajUkiBvNlPC0Q13bg==
+X-Google-Smtp-Source: ABdhPJyjOZMebZ4F64Blucw+z1ogLvaM6ccKb1Ss80lgGRWP0/rwRrml8FXa2EG+VUlJ4MxAk7zZIg==
+X-Received: by 2002:a05:6512:b14:b0:477:c0fd:6dad with SMTP id w20-20020a0565120b1400b00477c0fd6dadmr2326962lfu.15.1652947068937;
+        Thu, 19 May 2022 00:57:48 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id m1-20020a056512114100b0047255d211f1sm192467lfg.288.2022.05.19.00.57.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 May 2022 00:57:48 -0700 (PDT)
+Message-ID: <c577027b-1f8a-404c-368f-cc24aa3f6d48@linaro.org>
+Date:   Thu, 19 May 2022 09:57:47 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 1/2] mailbox: correct kerneldoc
+Content-Language: en-US
+To:     Jassi Brar <jassisinghbrar@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Tushar Khandelwal <Tushar.Khandelwal@arm.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Peng Fan <peng.fan@nxp.com>, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+References: <20220501103428.111286-1-krzysztof.kozlowski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220501103428.111286-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document Xiaomi Mi 5s Plus (xiaomi-natrium) smartphone which is based on
-Snapdragon 821 SoC.
+On 01/05/2022 12:34, Krzysztof Kozlowski wrote:
+> Correct kerneldoc warnings like:
+> 
+>   drivers/mailbox/arm_mhu_db.c:47:
+>     warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
+>   drivers/mailbox/qcom-ipcc.c:58:
+>     warning: Function parameter or member 'num_chans' not described in 'qcom_ipcc'
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Signed-off-by: Alec Su <ae40515@yahoo.com.tw>
----
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Any comments on these patches? These fix warnings and they wait for
+almost three weeks to be applied...
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 5c06d1bfc046..7ee852079d13 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -190,6 +190,7 @@ properties:
-               - sony,kagura-row
-               - sony,keyaki-row
-               - xiaomi,gemini
-+              - xiaomi,natrium
-               - xiaomi,scorpio
-           - const: qcom,msm8996
- 
--- 
-2.35.3
+Can we get the warnings fixed?
 
+
+Best regards,
+Krzysztof
