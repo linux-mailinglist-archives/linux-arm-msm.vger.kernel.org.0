@@ -2,59 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CDBE52CFAD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 11:48:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2F8F52CFB6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 11:50:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236247AbiESJsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 05:48:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46266 "EHLO
+        id S236276AbiESJt4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 05:49:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235319AbiESJsI (ORCPT
+        with ESMTP id S234343AbiESJty (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 05:48:08 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 850DD6970F;
-        Thu, 19 May 2022 02:48:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 215EFB823D1;
-        Thu, 19 May 2022 09:48:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A86C34115;
-        Thu, 19 May 2022 09:48:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652953684;
-        bh=57BVf0E0AW4jg42qrBzZjFie9oQ3lk6GdIX4iZM+xc0=;
-        h=From:To:Cc:Subject:Date:From;
-        b=EjYKQHD5vZbV/WE575LbKi5vNrbR3Rr9gDl7yghC7vaQ+c5Wx1etsL8kokUYhDXy6
-         7/xrFpVo1z62Ht48NVoW3QmPQ+bmQUJXT8207va7qXUUdTONzgps9ZQkK7ZAVoeLOR
-         z4rsCqwp6TPPNJpt8nLdTHUu/ZmnN6yX4Q8ubGP7PeyPV3gYbdVgVRWp2RWhiqY45h
-         NnEhUga/pss3k50AQMcEnp7IMkR0wTMCwBgQXMvqD6sH4GVFumo3Vlll5xwPvlzXOL
-         TqkfBGKKQc4Gxo6Fad1ah4I7H1jmBtYH5I6ZB4+qHMC8+VoxznrQtUXhU9NXgl9mNM
-         YIS7ZzfoVWHFg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1nrclJ-00060Q-K5; Thu, 19 May 2022 11:48:06 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     Rob Herring <robh@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Thu, 19 May 2022 05:49:54 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95C3C6D4DE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 02:49:51 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id u23so8190823lfc.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 02:49:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=3HichTrqN7F9p1vtnqjU5qG7qAFUNf2AyIapQ12NpO8=;
+        b=pj52zUeXesTLyc14JaXUdAxTtMtGZg3T2DIN7nnsHPu4wc7dPGcrZgTVR6iYcfDcEV
+         0KHIB957wnozL49rQMLpSyaoT/OxqPlNgY/1TtBfop9FgGdEidY1e+g3aLmDcE3WyuEf
+         AeJiSSJrjqV+sD3efpF3U55A8l67ZjfE/p/FbYBYzeNWCajdGFi8xZBgMTZBl52SlqjR
+         B/AV/ORXHNl+c7f4YUThrLOVDVfGs5+v0yXM133bZAuzgCPehiDH+ir9f/HT3VhRvbva
+         ABJPXYJczVzo9npFPu0g1whzQBoFZQUH0oXbTk6wfkOz6A68etpse5pby80OUhDfUrQs
+         77PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=3HichTrqN7F9p1vtnqjU5qG7qAFUNf2AyIapQ12NpO8=;
+        b=PzU0uccGcIQ9bdU/VDT9jrvdd2NFFTLi1O2KSEBmrcD25Q8h9B5VAmmulysBivepJn
+         lov+kgoBa9DEHn+lxGw7LOq2jyitKJRVmxZcnxqrAvvMfX2FzdyWQXynBF49FWppYfBZ
+         76c5X1Gn5rYeSwqaTN9cQxuRAeWpR/tx7Z2j7gZiX+NCvP51oAOovstJXM3AYuciAO53
+         Ptzp3evPH+hsn1EPlmrDIXIoYtIzZnPEmgbmX3WQ5Pkr2lwPHHIy8uDOUbcGUJwHElJo
+         UMl07HsSt4Huh4cjR7qU/kaAB4/fietJW+pspvatqydjc73Bfwb7zrrXToO6A+lZXa8q
+         NzuA==
+X-Gm-Message-State: AOAM531C1iDzh0p4BpHZzQG5UZhcZsrJhLtSw7iWB8PzMZkVY9J8gEja
+        Kvs/aeIu3yAZBAQcYaeVE8KkEg==
+X-Google-Smtp-Source: ABdhPJwbFiP8G5XIBQ8Y6aMcJ9tjLVMxwvS1jPlinGma7O6miaJ7rs+vKHNMkbhuXXrYedSK3N/XsQ==
+X-Received: by 2002:a05:6512:32c1:b0:473:dade:84e8 with SMTP id f1-20020a05651232c100b00473dade84e8mr2704281lfg.652.1652953789533;
+        Thu, 19 May 2022 02:49:49 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id j9-20020ac253a9000000b0047255d210f0sm232517lfh.31.2022.05.19.02.49.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 May 2022 02:49:48 -0700 (PDT)
+Message-ID: <4183e3fb-6fe2-ed81-2d75-1b3865b191a2@linaro.org>
+Date:   Thu, 19 May 2022 11:49:47 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v6 1/3] dt-bindings: phy: qcom,usb-snps-femto-v2: Add phy
+ override params bindings
+Content-Language: en-US
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] PCI: qcom: Add support for modular builds
-Date:   Thu, 19 May 2022 11:46:46 +0200
-Message-Id: <20220519094646.23009-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.35.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+References: <1652934489-23386-1-git-send-email-quic_kriskura@quicinc.com>
+ <1652934489-23386-2-git-send-email-quic_kriskura@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1652934489-23386-2-git-send-email-quic_kriskura@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,105 +88,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow the Qualcomm PCIe controller driver to be built as a module, which
-is useful for multi-platform kernels as well as during development.
+On 19/05/2022 06:28, Krishna Kurapati wrote:
+> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> 
+> Add device tree bindings for SNPS phy tuning parameters.
+> 
+> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/pci/controller/dwc/Kconfig     |  2 +-
- drivers/pci/controller/dwc/pcie-qcom.c | 36 +++++++++++++++++++++++---
- 2 files changed, 34 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-index 62ce3abf0f19..230f56d1a268 100644
---- a/drivers/pci/controller/dwc/Kconfig
-+++ b/drivers/pci/controller/dwc/Kconfig
-@@ -168,7 +168,7 @@ config PCI_HISI
- 	  Hip05 and Hip06 SoCs
- 
- config PCIE_QCOM
--	bool "Qualcomm PCIe controller"
-+	tristate "Qualcomm PCIe controller"
- 	depends on OF && (ARCH_QCOM || COMPILE_TEST)
- 	depends on PCI_MSI_IRQ_DOMAIN
- 	select PCIE_DW_HOST
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 8523b5ef9d16..e25d5c09657c 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -16,7 +16,7 @@
- #include <linux/io.h>
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
--#include <linux/init.h>
-+#include <linux/module.h>
- #include <linux/of_device.h>
- #include <linux/of_gpio.h>
- #include <linux/pci.h>
-@@ -1425,6 +1425,15 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
- 	return ret;
- }
- 
-+static void qcom_pcie_host_deinit(struct qcom_pcie *pcie)
-+{
-+	qcom_ep_reset_assert(pcie);
-+	if (pcie->cfg->ops->post_deinit)
-+		pcie->cfg->ops->post_deinit(pcie);
-+	phy_power_off(pcie->phy);
-+	pcie->cfg->ops->deinit(pcie);
-+}
-+
- static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
- 	.host_init = qcom_pcie_host_init,
- };
-@@ -1651,6 +1660,22 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
-+static int qcom_pcie_remove(struct platform_device *pdev)
-+{
-+	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
-+	struct device *dev = &pdev->dev;
-+
-+	dw_pcie_host_deinit(&pcie->pci->pp);
-+	qcom_pcie_host_deinit(pcie);
-+
-+	phy_exit(pcie->phy);
-+
-+	pm_runtime_put_sync(dev);
-+	pm_runtime_disable(dev);
-+
-+	return 0;
-+}
-+
- static const struct of_device_id qcom_pcie_match[] = {
- 	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
- 	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
-@@ -1669,6 +1694,7 @@ static const struct of_device_id qcom_pcie_match[] = {
- 	{ .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(of, qcom_pcie_match);
- 
- static void qcom_fixup_class(struct pci_dev *dev)
- {
-@@ -1684,10 +1710,14 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
- 
- static struct platform_driver qcom_pcie_driver = {
- 	.probe = qcom_pcie_probe,
-+	.remove = qcom_pcie_remove,
- 	.driver = {
- 		.name = "qcom-pcie",
--		.suppress_bind_attrs = true,
- 		.of_match_table = qcom_pcie_match,
- 	},
- };
--builtin_platform_driver(qcom_pcie_driver);
-+module_platform_driver(qcom_pcie_driver);
-+
-+MODULE_AUTHOR("Stanimir Varbanov <svarbanov@mm-sol.com>");
-+MODULE_DESCRIPTION("Qualcomm PCIe root complex driver");
-+MODULE_LICENSE("GPL");
--- 
-2.35.1
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
+
+Best regards,
+Krzysztof
