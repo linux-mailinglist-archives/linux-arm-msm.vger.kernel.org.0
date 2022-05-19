@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E10F752CCBE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 09:20:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BE1452CCC4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 09:23:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234648AbiESHUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 03:20:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34832 "EHLO
+        id S234528AbiESHXM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 03:23:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234528AbiESHUV (ORCPT
+        with ESMTP id S234399AbiESHXK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 03:20:21 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50DB16F4BB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 00:20:20 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id w14so7488151lfl.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 00:20:20 -0700 (PDT)
+        Thu, 19 May 2022 03:23:10 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F6DA7E1D6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 00:23:09 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id u7so4462258ljd.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 00:23:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :references:from:in-reply-to:content-transfer-encoding;
-        bh=fdfSYz0vm9MQWJbSUfogROrxBfQQh8tD8bxvI5Fs7cI=;
-        b=bbtch6XAWiN/DV2yOgt38hEl0PAk2t1n0PBAqWjkC07CKF2r50NEYLvYe/ajQO6DcL
-         d9DV1AvR3EEGEbk+0vYrhRy1NQt960fzcROv5qDeTy8ne3IGxckoRyzheI5dPQTxIz7S
-         UDF0rSA/3Cw7cMLZSIEDIk8uT1p2/71/hxT0yY0TFc3355n0CoxymE3WFNU9DT4nF2tv
-         FeewUQe0FPJz7aNuzhm9YORUey8hvLIl6ZpXV8DNGWm4EFvUT54sLBjnSLPvvdSYcjzG
-         3fk+BeIaVq33X9s6Z8kZVHoxNPECcQJqPwiTBpC7EIiPR8lsD56zFJoYiju+wtUpYs+e
-         X7Jg==
+        bh=RDS+R7kv4kqSF00p+RWbaotyXSwPC07y+iylpR+DVkQ=;
+        b=kWsk9Mw07o61WnL2Ul9s50tphJqRp26k/7J3Cy2LfngowlbcqT7Lq+DIBaAO9PRQ3z
+         W67bNrRsVBFOS4ZDFYZZqdocOfnTvpEz7llVlUj+ojySoWa8S7rY+PtPrKLYGIUwe63J
+         4FLrUvPJMt4e1EFzLEO1crPWdOpojJVtmD+6bGc7XeX6MH6YPzQC/Bp5JD4QL8XkkWI6
+         ry+CkITz9C9FF6KYKyVT6m7VufsnhUR+2yI9SmOgwgDVO0RHwXTJ0n2y4eJJyd7oOzix
+         Q9+BMzQN7wazuF4jWldj6xCl3vzUaGYX8ltKUuCXaiaqlzszUtDp6d+2byxsdsdnQNGb
+         rm9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=fdfSYz0vm9MQWJbSUfogROrxBfQQh8tD8bxvI5Fs7cI=;
-        b=UBDgkaM4XcGFU4VAiE0xav4qA8sL5OpsMUNWSI8ljB/MhKtqCT7zUSuW7g6u1UhsGL
-         H0tRm+fxMG2KxzgimG6S6kOOGMg5Xm21i7RzyflndbW7AH6NGz8ABveanG+L2XcRIzpe
-         vSA+sCHF5D6TwWH5XUgBEYF1ln2+/LIshm3ahMhnJtwYW6hjghAZMOOy0b6q6qodmjf3
-         MFksD4r5A1fjXr1byohor29IPvvCwZOyqJH+EFvDXM8Zb4UzaD6hfSDRSVpmK9fTVYWH
-         DvsvH+p+eywGq4OhG8DjAv40cHQHWk/Eo/+FI42X7IS56fP55JtLJIqOVWVaLTEDtb+1
-         h4gQ==
-X-Gm-Message-State: AOAM533cehUAKUYD227wncH2ya3ZL1Iei6A+DttlgAc9rS/yF6kTyYw5
-        6pylsqU5qzWBiEalPvziivTJ7g==
-X-Google-Smtp-Source: ABdhPJxoi/rsKjcwuY1nKxd+QQG6REhVdwGjY1Dy9hu/ZPzMp0gtsds4YLqAgc7BAe5dP8hSj4xH2Q==
-X-Received: by 2002:a05:6512:1585:b0:448:3936:a5a0 with SMTP id bp5-20020a056512158500b004483936a5a0mr2318972lfb.108.1652944818555;
-        Thu, 19 May 2022 00:20:18 -0700 (PDT)
+        bh=RDS+R7kv4kqSF00p+RWbaotyXSwPC07y+iylpR+DVkQ=;
+        b=5KtTXDAZBMLCAdEApiQUlSqFayr9olwV+KV548cqCC9PO50GdfopNTHhXWdM5jqvml
+         ehxCL2xgsTMB+vrCca3SJEXZEdibnTEFbrWV/uEUV44vEiLdTITKnXPXIE+Y3jfhGl2w
+         GOAahRA6VH4ql1STqqts+BO7vYMqfsFoU4KDYHQkNG7nb87Nqoo6HVbB2dCrVyjYSLN0
+         tu2Ry01h+ude3tJqfGUkBiEUds3lsJrkqH8wIfdCsT4corEHQCKN7p8Ar8Pdt5uWu6gg
+         OBFwMdh1iDDqahtaYZWEoqDvZX2K4yogfCfM+wRVdR/W2RLOGNssXVI2JJA8qu+anSZ6
+         210A==
+X-Gm-Message-State: AOAM530mUlzSZqTTKJWYbT1rl8To9k1PIHuZxr5B/FATtO2eGufiCNVa
+        G4LKti8xJIG0OM3iLxbhaMQP1A==
+X-Google-Smtp-Source: ABdhPJznxBDWCH+ijcOPUlprywGhnlV0Z0a3QRSs1g97Y+aVVkWE/Eq/f88xbY8kvpLtw+uaGo6PbA==
+X-Received: by 2002:a05:651c:887:b0:247:f630:d069 with SMTP id d7-20020a05651c088700b00247f630d069mr1900295ljq.514.1652944987565;
+        Thu, 19 May 2022 00:23:07 -0700 (PDT)
 Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id t1-20020a2e9c41000000b0024f3d1daeb1sm479424ljj.57.2022.05.19.00.20.17
+        by smtp.gmail.com with ESMTPSA id e20-20020a2ea554000000b0024f3d1daed2sm157674ljn.90.2022.05.19.00.23.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 May 2022 00:20:18 -0700 (PDT)
-Message-ID: <4b295be3-ae3b-f977-6922-d1505b7843f0@linaro.org>
-Date:   Thu, 19 May 2022 09:20:17 +0200
+        Thu, 19 May 2022 00:23:07 -0700 (PDT)
+Message-ID: <07c8cac0-ab85-19a7-de2c-14f6dc1c496a@linaro.org>
+Date:   Thu, 19 May 2022 09:23:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.1
-Subject: Re: [PATCH 2/8] firmware: qcom_scm-legacy: correct kerneldoc
+Subject: Re: [PATCH 1/8] clk: qcom: alpha-pll: correct kerneldoc
 Content-Language: en-US
 To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -63,10 +63,10 @@ To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
 References: <20220501103520.111561-1-krzysztof.kozlowski@linaro.org>
- <20220501103520.111561-2-krzysztof.kozlowski@linaro.org>
- <20220519000350.DD5C0C385A9@smtp.kernel.org>
+ <2f73874b-430a-48d2-4739-b06eebed1ea8@linaro.org>
+ <20220519001438.E534DC385A9@smtp.kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220519000350.DD5C0C385A9@smtp.kernel.org>
+In-Reply-To: <20220519001438.E534DC385A9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,24 +79,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/05/2022 02:03, Stephen Boyd wrote:
-> Quoting Krzysztof Kozlowski (2022-05-01 03:35:14)
->> diff --git a/drivers/firmware/qcom_scm-legacy.c b/drivers/firmware/qcom_scm-legacy.c
->> index 1829ba220576..7854af4abc62 100644
->> --- a/drivers/firmware/qcom_scm-legacy.c
->> +++ b/drivers/firmware/qcom_scm-legacy.c
->> @@ -120,6 +120,9 @@ static void __scm_legacy_do(const struct arm_smccc_args *smc,
->>  /**
->>   * scm_legacy_call() - Sends a command to the SCM and waits for the command to
->>   * finish processing.
->> + * @dev:       device
->> + * @desc:      descriptor structure containing arguments and return values
->> + * @res:        results from SMC/HVC call
+On 19/05/2022 02:14, Stephen Boyd wrote:
+> Quoting Krzysztof Kozlowski (2022-05-17 09:46:49)
+>> On 01/05/2022 12:35, Krzysztof Kozlowski wrote:
+>>> Correct kerneldoc warning:
+>>>
+>>>   drivers/clk/qcom/clk-alpha-pll.c:1450:
+>>>     warning: expecting prototype for clk_lucid_pll_configure(). Prototype was for clk_trion_pll_configure() instead
+>>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> Any comments on entire set?
 > 
-> I think only SMC call is possible so drop HVC to not be confusing.
+> Please send a cover letter next time. Also they're simply "qcom" related
+> but otherwise I'm not sure why they aren't sent to individual subsystem
+> lists. They don't depend on each other to build, right?
 
-Sure.
-
+Indeed, they can go via separate subsystems. I'll split the series in v2.
 
 Best regards,
 Krzysztof
