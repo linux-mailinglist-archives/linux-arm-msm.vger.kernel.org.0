@@ -2,91 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28F9C52CB88
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 07:40:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7547B52CBA4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 07:51:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234045AbiESFkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 01:40:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45308 "EHLO
+        id S234219AbiESFvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 01:51:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232611AbiESFkr (ORCPT
+        with ESMTP id S229815AbiESFvP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 01:40:47 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58EBD389;
-        Wed, 18 May 2022 22:40:45 -0700 (PDT)
+        Thu, 19 May 2022 01:51:15 -0400
+X-Greylist: delayed 83263 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 18 May 2022 22:51:10 PDT
+Received: from zg8tmtyylji0my4xnjqunzqa.icoremail.net (zg8tmtyylji0my4xnjqunzqa.icoremail.net [162.243.164.74])
+        by lindbergh.monkeyblade.net (Postfix) with SMTP id 373195DA1A;
+        Wed, 18 May 2022 22:51:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652938846; x=1684474846;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=N95pkwbu4izN6QqsZsdSNkwCyLorSYTPgc1DJCQgzAw=;
-  b=kymqE7XshrKlB7qmXm+2Amdp/Dd/pE2cwO9/rJb8fXwZPfCrcWCMbxMK
-   21L9JpdAHXEiu1lEE1DLBjGBqITQ+aE+7BKdqTyK+lXExuZmbeZP4Pj65
-   dDy83W7k4PJ1yaRTgu8Z3nnr55fqCGYHyihb7NzY1KezJMS/ygFBIN3hC
-   Y=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 18 May 2022 22:40:45 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2022 22:40:45 -0700
-Received: from bgodavar-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 18 May 2022 22:40:41 -0700
-From:   Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
-To:     <marcel@holtmann.org>, <johan.hedberg@gmail.com>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-CC:     <mka@chromium.org>, <linux-bluetooth@vger.kernel.org>,
-        <quic_hemantg@quicinc.com>, <quic_bgodavar@quicinc.com>,
-        <quic_rjliao@quicinc.com>, <mcchou@chromium.org>
-Subject: [PATCH v1] MAINTAINERS: add maintainers for qualcomm uart based BT drivers
-Date:   Thu, 19 May 2022 11:10:24 +0530
-Message-ID: <1652938824-28976-1-git-send-email-quic_bgodavar@quicinc.com>
+        d=pku.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:Date:
+        Message-Id:In-Reply-To:References; bh=pYmFxl5EX9FT7BHXjR4DHU5ZJg
+        yGAjXjcQaIbNKJXKE=; b=MCWf5bvh5uU6WiiccZj3Ar5RGbHE3eCBM/nHVmkPqC
+        2GaaKDPmNkMN9zWQhhU55rhg/OJ6YtaZbj5YJAbtD32HeX5slwP6WBKqWjZSnkHk
+        wgkMm+uUUPmm99L+8u59/g+uMhGwMsPHSzUgilmKF+ok/IXeJQyM+eYdGzcKhV1U
+        w=
+Received: from localhost (unknown [10.129.21.144])
+        by front02 (Coremail) with SMTP id 54FpogCnKXbC2oViDtOTBg--.16956S2;
+        Thu, 19 May 2022 13:50:58 +0800 (CST)
+From:   Yongzhi Liu <lyz_cs@pku.edu.cn>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, jic23@kernel.org,
+        lars@metafoo.de
+Cc:     linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, fuyq@stu.pku.edu.cn,
+        Yongzhi Liu <lyz_cs@pku.edu.cn>
+Subject: [PATCH v2] iio: vadc: Fix potential dereference of NULL pointer
+Date:   Wed, 18 May 2022 22:50:55 -0700
+Message-Id: <1652939455-123139-1-git-send-email-lyz_cs@pku.edu.cn>
 X-Mailer: git-send-email 2.7.4
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <YoUtezVzsPB8MAEO@google.com>
+References: <YoUtezVzsPB8MAEO@google.com>
+X-CM-TRANSID: 54FpogCnKXbC2oViDtOTBg--.16956S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7urWfuFyktr18KrWxGryfJFb_yoW8CF43pa
+        yktayrKry2ka1fJ3WftFWDXryaqw42q3yUGFWxJ3W3Ar43trnYyw1aqw1FkFn7uFWxC3ya
+        yr4YyFnYgr4Dur7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDU0xBIdaVrnRJUUUkK1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
+        w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
+        IY67AKxVWDJVCq3wA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2
+        z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcV
+        Aq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j
+        6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64
+        vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVCm-wCF04k20xvY0x0EwIxGrwCF
+        04k20xvE74AGY7Cv6cx26w4UJr1UMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrV
+        AFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCI
+        c40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267
+        AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_
+        Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUbXdbU
+        UUUUU==
+X-CM-SenderInfo: irzqijirqukmo6sn3hxhgxhubq/1tbiAwELBlPy7vJhCwABsZ
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adding myself and rocky Liao as a maintainers for qualcomm
-uart based bluetooth drivers.
+The return value of vadc_get_channel() needs to be checked
+to avoid use of NULL pointer. Fix this by adding the null
+pointer check on prop.
 
-Signed-off-by: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
+Fixes: 0917de94c ("iio: vadc: Qualcomm SPMI PMIC voltage ADC driver")
+
+Signed-off-by: Yongzhi Liu <lyz_cs@pku.edu.cn>
 ---
- MAINTAINERS | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/iio/adc/qcom-spmi-vadc.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 69b597a..22d4d00 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -16295,6 +16295,16 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/net/qcom,bam-dmux.yaml
- F:	drivers/net/wwan/qcom_bam_dmux.c
+diff --git a/drivers/iio/adc/qcom-spmi-vadc.c b/drivers/iio/adc/qcom-spmi-vadc.c
+index 34202ba..9fa61fb 100644
+--- a/drivers/iio/adc/qcom-spmi-vadc.c
++++ b/drivers/iio/adc/qcom-spmi-vadc.c
+@@ -358,14 +358,25 @@ static int vadc_measure_ref_points(struct vadc_priv *vadc)
+ 	vadc->graph[VADC_CALIB_ABSOLUTE].dx = VADC_ABSOLUTE_RANGE_UV;
  
-+QUALCOMM BLUETOOTH DRIVER
-+M:	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
-+M:	Rocky Liao <quic_rjliao@quicinc.com>
-+L:	linux-bluetooth@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
-+F:	drivers/bluetooth/btqca.c
-+F:	drivers/bluetooth/btqca.h
-+F:	drivers/bluetooth/hci_qca.c
-+
- QUALCOMM CAMERA SUBSYSTEM DRIVER
- M:	Robert Foss <robert.foss@linaro.org>
- M:	Todor Tomov <todor.too@gmail.com>
+ 	prop = vadc_get_channel(vadc, VADC_REF_1250MV);
++	if (!prop) {
++		dev_err(vadc->dev, "Please define 1.25V channel\n");
++		ret = -ENODEV;
++		goto err;
++	}
+ 	ret = vadc_do_conversion(vadc, prop, &read_1);
+ 	if (ret)
+ 		goto err;
+ 
+ 	/* Try with buffered 625mV channel first */
+ 	prop = vadc_get_channel(vadc, VADC_SPARE1);
+-	if (!prop)
++	if (!prop) {
+ 		prop = vadc_get_channel(vadc, VADC_REF_625MV);
++		if (!prop) {
++			dev_err(vadc->dev, "Please define 0.625V channel\n");
++			ret = -ENODEV;
++			goto err;
++		}
++	}
+ 
+ 	ret = vadc_do_conversion(vadc, prop, &read_2);
+ 	if (ret)
+@@ -381,11 +392,21 @@ static int vadc_measure_ref_points(struct vadc_priv *vadc)
+ 
+ 	/* Ratiometric calibration */
+ 	prop = vadc_get_channel(vadc, VADC_VDD_VADC);
++	if (!prop) {
++		dev_err(vadc->dev, "Please define VDD channel\n");
++		ret = -ENODEV;
++		goto err;
++	}
+ 	ret = vadc_do_conversion(vadc, prop, &read_1);
+ 	if (ret)
+ 		goto err;
+ 
+ 	prop = vadc_get_channel(vadc, VADC_GND_REF);
++	if (!prop) {
++		dev_err(vadc->dev, "Please define GND channel\n");
++		ret = -ENODEV;
++		goto err;
++	}
+ 	ret = vadc_do_conversion(vadc, prop, &read_2);
+ 	if (ret)
+ 		goto err;
 -- 
 2.7.4
 
