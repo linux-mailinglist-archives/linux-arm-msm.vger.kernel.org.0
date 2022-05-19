@@ -2,72 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13AF152D201
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 14:07:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 559CA52D2DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 14:47:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237688AbiESMGs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 08:06:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53214 "EHLO
+        id S230045AbiESMrB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 08:47:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237651AbiESMGg (ORCPT
+        with ESMTP id S229667AbiESMrA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 08:06:36 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C2A017060;
-        Thu, 19 May 2022 05:06:26 -0700 (PDT)
+        Thu, 19 May 2022 08:47:00 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CCE259966
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 05:46:56 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id d15so8930619lfk.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 05:46:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652961993; x=1684497993;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=D5j1Ifb/J4M13HhjxMm8U24f9WHy6ZigKkypuV4JDek=;
-  b=wBJdeAdGZxx04WLGY/g3ykivQLUJCANgkCuUysK1W6GDFpOSvvrwr/p2
-   2M8BxraTirdMkZTMmSXwm4JSu4Q43ErUtoXFwiQENIsuZlLl4tP0IEgSN
-   7KdekgsTcbEGx7tAr3Fei9N8AysyNpYAa7AokoHvy9fEmZ/NoiSjKEpJM
-   A=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 19 May 2022 05:06:26 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 05:06:25 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 19 May 2022 05:06:25 -0700
-Received: from [10.50.18.252] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 19 May
- 2022 05:06:21 -0700
-Message-ID: <ce66745c-3182-f3b7-ec21-7cbf39e5278a@quicinc.com>
-Date:   Thu, 19 May 2022 17:36:17 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=vJNbUJe0I9bP1Pb8oaCFC6Y74eStu1CcrBu2o8mA4K8=;
+        b=Jy3PNajkRCtSCyOwWUvByidPiRuaczMd5h0dLGUVGPGr3KW8M6wBBLf/mjcAZnhmlk
+         +xDXwbgkzAWKFHNGEQEkRG/Fhifw3WPj86qUi15EShfXfq5Ygzjjb2TEJqiO9sQ1vnWt
+         G3THZOByZqygoZh+XurzGpZtIx+C9ZUSrFaJ44WX6M14jI/Ko4EAbr2XH29uO95VYdSm
+         6URnK2wsma+OaargCHDf4/yBHC3+kZNL78uGaVmy/p3dkjZE2NdW2E7Pq9ASypGMrXPY
+         w0eBNrOOGZYaBua2ngP0TlmElTPmFe+cEAlDE8VgUFfz9RSudIKyjRZ1WK0Yu41wf+tO
+         WVtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=vJNbUJe0I9bP1Pb8oaCFC6Y74eStu1CcrBu2o8mA4K8=;
+        b=GgirkF47k5+HBrA5ZGhdlnR3wWA0wz1ste21vOUlAuKda5zjLJuTHhIO0StU++vCcE
+         J5ZjZyEEG76WHH0tncsXSk4iPrvVymjfBJnPTbz1eg5aLyAVLprz4gTrgWxtE5QIs2ei
+         APRDVJiGadONQ0cRW+5mJFzAUDR56PsbLyr6d/k8Ha+JfqvF0fcNRKwi59jKgT+0fsex
+         p1Andrp1aXXWIoX30uNdvMdr4exqgRU3PhxMdBvEfOfwJ/XoOW0r47d1RtsWYQbMl8ql
+         M6lpMscf4y2V9pimFmUzkSPu2FKJk859uVhvlRhR6GNvC25/rdPSEJGcaxtvyIU/KlKx
+         SBqQ==
+X-Gm-Message-State: AOAM533UD1tko6yomkXifjK+UJew/3Xr4i0t19SSRtNURgY0f73rQJN+
+        6bDJ7NhEYMtKBQL3/OQ7glbsrQ==
+X-Google-Smtp-Source: ABdhPJycTA4+DGk4OsEDZYKf1XzCRbMtOTP4sw0tmlEGpAE+f2HTPwuH4+0TRq43pvsMZGWNjVCvsA==
+X-Received: by 2002:a05:6512:3195:b0:473:a219:1b0f with SMTP id i21-20020a056512319500b00473a2191b0fmr3258272lfe.439.1652964414752;
+        Thu, 19 May 2022 05:46:54 -0700 (PDT)
+Received: from ?IPV6:2001:470:dd84:abc0::8a5? ([2001:470:dd84:abc0::8a5])
+        by smtp.gmail.com with ESMTPSA id d23-20020a2e3317000000b0024f3d1daebdsm563370ljc.69.2022.05.19.05.46.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 May 2022 05:46:54 -0700 (PDT)
+Message-ID: <40f29157-52c0-001f-6c14-fb90b351756a@linaro.org>
+Date:   Thu, 19 May 2022 15:46:53 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH V12 7/9] regulator: Add a regulator driver for the PM8008
- PMIC
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: Removal of qcom,board-id and qcom,msm-id
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_collinsd@quicinc.com>,
-        <quic_subbaram@quicinc.com>, <quic_jprakash@quicinc.com>
-References: <1652275113-10277-1-git-send-email-quic_c_skakit@quicinc.com>
- <1652275113-10277-8-git-send-email-quic_c_skakit@quicinc.com>
- <CAE-0n51JeC7oobCYNCJ-rOi3n_FVPBjz7yFmtwKEDeqWcX0vFw@mail.gmail.com>
-From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-In-Reply-To: <CAE-0n51JeC7oobCYNCJ-rOi3n_FVPBjz7yFmtwKEDeqWcX0vFw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Rob Herring <robh@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
+        Olof Johansson <olof@lixom.net>
+Cc:     "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
+ <35051bec-98ea-b4c5-f734-06b3f22f3562@linaro.org>
+ <8a90ffbc-b376-9115-fb91-0b46d98873b7@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <8a90ffbc-b376-9115-fb91-0b46d98873b7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,120 +81,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 19/05/2022 14:53, Krzysztof Kozlowski wrote:
+> On 19/05/2022 13:39, Dmitry Baryshkov wrote:
+>> On 19/05/2022 13:44, Krzysztof Kozlowski wrote:
+>>> Hi,
+>>>
+>>> There was an old effort of removal of qcom,board-id and qcom,msm-id
+>>> properties from Qualcomm SoC-based boards like [1].
+>>>
+>>> First approach was to document them, which (obviously) was not well
+>>> received [2] [3] [4].
+>>>
+>>> The solution from Stephen was to encode these in the board compatible,
+>>> so bootloader can extract that information. That seemed to receive
+>>> positive comments, at least from Rob. [5]
+>>>
+>>> It was 2015... ~7 years later we are still things doing the same way,
+>>> still with undocumented properties: qcom,board-id and qcom,msm-id.
+>>>
+>>>
+>>> I would like to revive that topic, but before I start doing something
+>>> pointless - any guidance on last patch from Stephen [5]? Was it ok? Some
+>>> early NAKs?
+>>
+>> I do not quite fancy the idea of using extra tools to process dtb files.
+>> At this moment it is possible to concatenate several kernel-generated
+>> dtb files together. AOSP developers use this to have an image that boots
+>> on both RB3 and RB5 boards.
+>>
+>> I think that changing compat strings only makes sense if Qualcomm would
+>> use such compat strings in future. Otherwise we end up in a position
+>> where we have custom bootloaders for the RB3/RB5/etc, but the majority
+>> of the board requires extra processing steps.
+> 
+> This was discussed in [2] [3] and [4] (previous links) and did not pass.
+> 
+> Do you have any new arguments for above objections from Arnd, Olof and
+> Rob? I don't think patch will get accepted if previous concerns during
+> review are not addressed...
 
-On 5/17/2022 12:33 AM, Stephen Boyd wrote:
-> Quoting Satya Priya (2022-05-11 06:18:31)
->> diff --git a/drivers/regulator/qcom-pm8008-regulator.c b/drivers/regulator/qcom-pm8008-regulator.c
->> new file mode 100644
->> index 0000000..0361f02
->> --- /dev/null
->> +++ b/drivers/regulator/qcom-pm8008-regulator.c
->> @@ -0,0 +1,221 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/* Copyright (c) 2022, The Linux Foundation. All rights reserved. */
->> +
->> +#include <linux/device.h>
->> +#include <linux/kernel.h>
->> +#include <linux/mfd/qcom_pm8008.h>
->> +#include <linux/module.h>
->> +#include <linux/of.h>
-> Is this include used?
+I'm not sure if the patches to the dtbTool have landed or not.
+Anyway, as I said, I don't think post-processing the dtb is good way to 
+go. It makes extremely hard to check that the dtb, used by the kernel or 
+being a part of the boot.img, corresponds to this or that compiled dtb.
 
+> 
+>>
+>> So, I think, we should drop the unspecified usid aliases, document the
+>> board-id/msm-id/pmic-id properties and stick with them.
+> 
+> The existing properties need anyway documenting, probably as deprecated
+> so the schema can pass, because we cannot fix the bootloaders easly.
+> 
+>> They might be
+>> ugly, but they are expected/processed by the majority of devices present
+>> in the wild.
+> 
+> Any change in DTS affects only future devices, so not in the wild...
 
-This is used for of_property_read_* APIs.
+It affects existing devices that have deployed bootloaders. So far we 
+could workaround thus by enforcing a single dtb attached to the kernel 
+image. However this doesn't play well for the distro (or AOSP) kernels, 
+where we'd like to have multiple dtb image attached.
 
-
->> +#include <linux/of_device.h>
->> +#include <linux/platform_device.h>
->> +#include <linux/regmap.h>
->> +#include <linux/regulator/driver.h>
->> +#include <linux/regulator/of_regulator.h>
-> Is this include used?
-
-
-This is not required, I will remove this.
-
-
->> +
->> +#define VSET_STEP_MV                   8
->> +#define VSET_STEP_UV                   (VSET_STEP_MV * 1000)
->> +
->> +#define LDO_ENABLE_REG(base)           ((base) + 0x46)
->> +#define ENABLE_BIT                     BIT(7)
->> +
->> +#define LDO_VSET_LB_REG(base)          ((base) + 0x40)
->> +
->> +#define LDO_STEPPER_CTL_REG(base)      ((base) + 0x3b)
->> +#define DEFAULT_VOLTAGE_STEPPER_RATE   38400
->> +#define STEP_RATE_MASK                 GENMASK(1, 0)
->> +
->> +struct pm8008_regulator_data {
->> +       const char                      *name;
->> +       const char                      *supply_name;
->> +       int                             min_uv;
->> +       int                             max_uv;
->> +       int                             min_dropout_uv;
->> +       const struct linear_range       *voltage_range;
->> +};
->> +
->> +struct pm8008_regulator {
->> +       struct device           *dev;
->> +       struct regmap           *regmap;
->> +       struct regulator_desc   rdesc;
->> +       u16                     base;
->> +       int                     step_rate;
->> +       int                     voltage_selector;
->> +};
->> +
->> +static const struct linear_range nldo_ranges[] = {
->> +       REGULATOR_LINEAR_RANGE(528000, 0, 122, 8000),
->> +};
->> +
->> +static const struct linear_range pldo_ranges[] = {
->> +       REGULATOR_LINEAR_RANGE(1504000, 0, 237, 8000),
->> +};
->> +
->> +static const struct pm8008_regulator_data reg_data[] = {
->> +       /* name  parent       min_uv  max_uv  headroom_uv voltage_range */
->> +       { "ldo1", "vdd_l1_l2", 528000, 1504000, 225000, nldo_ranges, },
->> +       { "ldo2", "vdd_l1_l2", 528000, 1504000, 225000, nldo_ranges, },
->> +       { "ldo3", "vdd_l3_l4", 1504000, 3400000, 300000, pldo_ranges, },
->> +       { "ldo4", "vdd_l3_l4", 1504000, 3400000, 300000, pldo_ranges, },
->> +       { "ldo5", "vdd_l5",    1504000, 3400000, 200000, pldo_ranges, },
->> +       { "ldo6", "vdd_l6",    1504000, 3400000, 200000, pldo_ranges, },
->> +       { "ldo7", "vdd_l7",    1504000, 3400000, 200000, pldo_ranges, },
->> +};
->> +
->> +static int pm8008_regulator_get_voltage(struct regulator_dev *rdev)
->> +{
->> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
->> +
->> +       return pm8008_reg->voltage_selector;
->> +}
->> +
->> +static inline int pm8008_write_voltage(struct pm8008_regulator *pm8008_reg,
->> +                                                       int mV)
->> +{
->> +       __le16 vset_raw;
->> +
->> +       vset_raw = cpu_to_le16(mV);
->> +
->> +       return regmap_bulk_write(pm8008_reg->regmap,
->> +                       LDO_VSET_LB_REG(pm8008_reg->base),
->> +                       (const void *)&vset_raw, sizeof(vset_raw));
-> Does sparse complain about casting away __le16?
+> 
+>>
+>>> [1]
+>>> https://elixir.bootlin.com/linux/v5.18-rc7/source/arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts#L14
+>>>
+>>> [2] https://lore.kernel.org/all/7229476.C4So9noUlf@wuerfel/
+>>> [3]
+>>> https://lore.kernel.org/all/1450371534-10923-20-git-send-email-mtitinger+renesas@baylibre.com/
+>>> [4] https://lore.kernel.org/all/20151119153640.GC893@linaro.org/
+>>> [5]
+>>> https://lore.kernel.org/all/1448062280-15406-1-git-send-email-sboyd@codeaurora.org/
 
 
-No.
-
-
->> +}
->> +
->> +static int pm8008_regulator_set_voltage_time(struct regulator_dev *rdev,
->> +                               int old_uV, int new_uv)
->> +{
->> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
->> +
->> +       return DIV_ROUND_UP(abs(new_uv - old_uV), pm8008_reg->step_rate);
->> +}
->> +
+-- 
+With best wishes
+Dmitry
