@@ -2,64 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10B0052DA0F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 18:21:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D45552DA8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 18:47:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233979AbiESQVg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 12:21:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48550 "EHLO
+        id S241669AbiESQre (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 12:47:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242065AbiESQV0 (ORCPT
+        with ESMTP id S234294AbiESQrd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 12:21:26 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 281A7C03B2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 09:21:24 -0700 (PDT)
+        Thu, 19 May 2022 12:47:33 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC5215B88D;
+        Thu, 19 May 2022 09:47:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652977284; x=1684513284;
-  h=message-id:date:mime-version:to:cc:from:subject:
-   content-transfer-encoding;
-  bh=OgFPRDCgT5PDUUJnCeD3XeLnIAuSjY8zzzo6IowuC5Y=;
-  b=U8JK0OD7jGiDB67r11RtZyZzvsEJzxMZF69IIiMJlRXufHObXyGIkoMm
-   sdy8R35Ne3S0G1e/60IbflIzUgUNHDA2vyf320bhzfyPyc9KX2PEiU1Kz
-   dlWymEBerh7eFn7VYaVyuwLsRYK8t9Qa1YWmPZC0QYp17eCtyntFivpbx
+  t=1652978852; x=1684514852;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=LXflJd7Y5VHLQK0MN/gT14zJ94O0px+SUp5tuELlX4Y=;
+  b=a7lQh8ruUi5PU7MLLuzE8E8FFtoY75MCcPLv2Gp6uUa6Ek4vGcJKTvvP
+   IfYuvwYjpXX+cVaeHUi4bZWZzgpMRppABKqR25XarR/ny2dSnGOP8prHq
+   NBDmLy63vDAQyppmdzsW+pYf/iNSkuX3UF0O5wyyTcW8Ad6gYZuPxaCqg
    w=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 19 May 2022 09:21:23 -0700
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 19 May 2022 09:47:32 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 09:21:23 -0700
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 09:47:31 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 19 May 2022 09:21:23 -0700
-Received: from [10.38.246.15] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 19 May
- 2022 09:21:21 -0700
-Message-ID: <b011d51d-d634-123e-bf5f-27219ee33151@quicinc.com>
-Date:   Thu, 19 May 2022 09:21:19 -0700
+ 15.2.986.22; Thu, 19 May 2022 09:47:31 -0700
+Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 19 May 2022 09:47:27 -0700
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC:     <ohad@wizery.com>, <agross@kernel.org>,
+        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <mka@chromium.org>, Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH v4 0/3] Add support for proxy interconnect bandwidth votes
+Date:   Thu, 19 May 2022 22:17:02 +0530
+Message-ID: <1652978825-5304-1-git-send-email-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: [GIT PULL] drm/msm: drm-msm-fixes-2022-05-19
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
@@ -73,58 +64,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob
+Add proxy interconnect bandwidth votes during modem bootup on SC7280 SoCs.
 
-Here is the pull request for the fixes for 5.19.
+V4:
+ * Remove older bindings [Matthias/Krzysztof]
+ * Convert sc7180/sc7280 to yaml and leave the rest to Sireesh's series
+ * Rebased on v2 of Krzysztof's bindings cleanups
+ * Misc. Fixes [Krzysztof]
 
-Just a few more changes on top of msm-fixes-staging.
+V3:
+ * Re-ordered clock list, fixed pdc_sync typo [Rob/Matthias]
 
-Mainly it has the foll fixes:
+V2:
+ * Dropped patch 3 from version 1 [Sub with Bjorn's patch]
+ * Add YAML support [Krzysztof]
+ * Drop interconnect names [Bjorn]
 
-- Limiting WB modes to max sspp linewidth
-- Fixing the supported rotations to add 180 back for IGT
-- Fix to handle pm_runtime_get_sync() errors to avoid unclocked access
-   in the bind() path for dpu driver
-- Fix the irq_free() without request issue which was a big-time
-   hitter in the CI-runs.
+ Depends on:
+ https://lore.kernel.org/lkml/20220517070113.18023-1-krzysztof.kozlowski@linaro.org/
 
-Thanks
+Sibi Sankar (3):
+  arm64: dts: qcom: sc7280: Add proxy interconnect requirements for
+    modem
+  dt-bindings: remoteproc: qcom: Convert SC7280 MSS bindings to YAML
+  dt-bindings: remoteproc: qcom: Convert SC7180 MSS bindings to YAML
 
-Abhinav
+ .../devicetree/bindings/remoteproc/qcom,q6v5.txt   |  47 +---
+ .../bindings/remoteproc/qcom,sc7180-mss-pil.yaml   | 236 +++++++++++++++++++
+ .../bindings/remoteproc/qcom,sc7280-mss-pil.yaml   | 250 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi |   1 +
+ 4 files changed, 489 insertions(+), 45 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
 
+-- 
+2.7.4
 
-
-The following changes since commit 947a844bb3ebff0f4736d244d792ce129f6700d7:
-
-   drm: msm: fix possible memory leak in mdp5_crtc_cursor_set() 
-(2022-05-18 11:05:21 -0700)
-
-are available in the git repository at:
-
-   https://gitlab.freedesktop.org/abhinavk/msm.git/ tags/msm-next-5.19-fixes
-
-for you to fetch changes up to 64b22a0da12adb571c01edd671ee43634ebd7e41:
-
-   drm/msm/dpu: handle pm_runtime_get_sync() errors in bind path 
-(2022-05-18 18:32:03 -0700)
-
-----------------------------------------------------------------
-5.19 fixes for msm-next
-
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-----------------------------------------------------------------
-Abhinav Kumar (3):
-       drm/msm/dpu: limit writeback modes according to max_linewidth
-       drm/msm/dpu: add DRM_MODE_ROTATE_180 back to supported rotations
-       drm/msm/dpu: handle pm_runtime_get_sync() errors in bind path
-
-Dmitry Baryshkov (1):
-       drm/msm: don't free the IRQ if it was not requested
-
-  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 4 +++-
-  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 2 +-
-  drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 4 +++-
-  drivers/gpu/drm/msm/msm_drv.c                 | 7 ++++++-
-  drivers/gpu/drm/msm/msm_kms.h                 | 1 +
-  5 files changed, 14 insertions(+), 4 deletions(-)
