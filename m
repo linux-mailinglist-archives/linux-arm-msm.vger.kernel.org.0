@@ -2,110 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F8C852D025
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 12:08:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD34952D0A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 12:36:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235461AbiESKIE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 06:08:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36972 "EHLO
+        id S236329AbiESKgr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 06:36:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232667AbiESKID (ORCPT
+        with ESMTP id S236897AbiESKgN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 06:08:03 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D36DA7740;
-        Thu, 19 May 2022 03:08:02 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id f9so9039622ejc.0;
-        Thu, 19 May 2022 03:08:02 -0700 (PDT)
+        Thu, 19 May 2022 06:36:13 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CE4821807
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 03:36:11 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id bq30so8380718lfb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 03:36:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EZvPkAeujwgNKCH5EMvSfalxGi18lEkG+bj2iAM0yAs=;
-        b=jLOnF0e7IvKq0dViMCad++sS/fMzl1uvK8JrCKAnJ8R/TGlg3fdAeTxdFfmrkYDg7I
-         KZ/MY7YpSK86SmKcjAJ8Hepr8OoTq3DoJ1tlflZmNQ3+8mtkpTpKjvxp5H9JkadBoWTM
-         F3TKYyy1q83krbp92fH28aMfL7MhgnFiQVIQgHsSPiP8J6X8kvEE+ingczbeOz7Oy+g/
-         x472XDt1dNPEqSoQo5dGfGevS/JIsxg4Ac5NRg88wGRY02FmWhy5ci9mCXC1Hct5mcuX
-         DivoBjJmvk4KGKIgUvevNHnWKrfdrvrl9oc8u+wev/CDk+fs1gJLS0B9yfEWYqmcD/yj
-         t9dA==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:cc:references:in-reply-to:content-transfer-encoding;
+        bh=sy2/y6OgW1NgZ7/PdGhR7Fma4RE9LOWz1g6YWKekTR4=;
+        b=ChCff4nRJjkCJSeKmXc7tPcaQer2xgkhAUqjk1Q1ARYSGKCLN2emGKuawzfW26VZ4b
+         PQZxnUqYeaj2EImRC7U8dbJX9INqDNZak0lq5N8urtlr5Crp8QYONe3mdspXdWmHMbxa
+         ZLx4oVRhiq2JzTfYL8Lg8kWuwkzjwRfsrkzpBNEF0GSQxTwLaov76COe65BI98svjaKG
+         5qljFeJvf8Dz5Al2U6ae1yN4mpqMTthvdqA2Zgp5qTu454Xptp54nbrJotJTkM6XO3+1
+         B/AP7W1Hx3PTk1/Ggzij4fiLjymFgyX0ZNezYW4icYXE5O+SuJMEZqWNRxltxx4fMxyn
+         kNww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EZvPkAeujwgNKCH5EMvSfalxGi18lEkG+bj2iAM0yAs=;
-        b=h7J7bnM8u/P0hTKvf2DgsDzxGheBaaHIA9FO98YqNqKROvo9t8s/IQU1IoCMYxi6uJ
-         Ybbf8B9zghzbdwLaScJQCiWA1O3Pdk+e64mU4xWVgxhuPT97sJDP5z0/0ejBNjFoVK7h
-         rjIL6QiEMQ9elz+1fu4plxlZ6kwROrNp5o4o96xPrJfqFRmaRy1tj057b/PLWZ2oNHDv
-         7uDnH0TWfu2riSOvJLrpxf4EhStaxs1nQ1IYSk3e38J1uqowrTPDLA07yGOCzCR3NZiA
-         EGKrI+Uql2P9GVimZ4AVGRZrkL5khagKsS/YTCoEA9vOtABHNKMTJtNQ8EjcjgmpCn9V
-         TrkQ==
-X-Gm-Message-State: AOAM532us8p0P4bXmBN3k1/4jFAqwagttCwp4zReaeDFAIAq8dm6EdSB
-        32951UPxB9p70e5Ytyoa1fD8iK5xZ06ecgrA6IM=
-X-Google-Smtp-Source: ABdhPJzJayPSTOH8apl4X7mFph72vPHSGtbxYNMETu8oPZt5Ra6jCHh52C93NfRy/hJ4wplCEVFMXJnKsXs6wcDGcMw=
-X-Received: by 2002:a17:907:a088:b0:6f4:f661:f77a with SMTP id
- hu8-20020a170907a08800b006f4f661f77amr3494449ejc.77.1652954880656; Thu, 19
- May 2022 03:08:00 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:from:to:cc:references:in-reply-to
+         :content-transfer-encoding;
+        bh=sy2/y6OgW1NgZ7/PdGhR7Fma4RE9LOWz1g6YWKekTR4=;
+        b=PTZL1bHwsFT00JDUsXiz/7n0ZBldX8RZpA5RvbGAwlNQe18JeANUOhXFXsWg7vOgN7
+         FvOvZov7WxluP/ftyanz7fERGuEWFFXrLDrMB2zeLFwOGpbFQyskxNGNGXgAIRHN2Sa/
+         NeuXpLCXHVYAb6xLINu8N+6J9wx0Ds+Zzp9ydeucH+JqbQli984K/bHE8WmmGGt4i5Ih
+         qu2ieQ41eF1AzEuN0xzhEHGFZEzqWYnueQJsqy1eyjhSY59dd/7TOfETX0U4ALyYyQDW
+         fWvXapTBgQ4CS1hoa27xSQXWUFtVoOOH/udQMW0O9FpJ15B2aflcWsRKfFdtHDiXhDJg
+         6/2A==
+X-Gm-Message-State: AOAM530tW14yGmcKdyLu91RMjbfxMv0cfvkbwYMkLoFsh92eq1frLceK
+        wUpX1JvSp9FVvNxsAaLOkBA7Tg==
+X-Google-Smtp-Source: ABdhPJwookZsCmvNd/+8Z5SuzDn88heC2mdYIuN2UlaW4HW8nilYRtc7s0a4vhmT3LiQlFotY0/Mkg==
+X-Received: by 2002:a05:6512:ba5:b0:477:ab03:5fba with SMTP id b37-20020a0565120ba500b00477ab035fbamr2853316lfv.220.1652956569844;
+        Thu, 19 May 2022 03:36:09 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id d24-20020a056512369800b0047255d211fbsm240796lfs.298.2022.05.19.03.36.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 May 2022 03:36:09 -0700 (PDT)
+Message-ID: <db32d4b6-9a88-4f4a-2ab8-878b21d502ac@linaro.org>
+Date:   Thu, 19 May 2022 12:36:08 +0200
 MIME-Version: 1.0
-References: <20220518192924.20948-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <CAHp75VeyU4Ox76wz9VfT8qEKHsE1eAo2iw27Lro1tmjJB0npMg@mail.gmail.com> <CA+V-a8tp0T=ojr3hB-QacOvV5sCZ29YXspPzKSSpGHUA8_1XDA@mail.gmail.com>
-In-Reply-To: <CA+V-a8tp0T=ojr3hB-QacOvV5sCZ29YXspPzKSSpGHUA8_1XDA@mail.gmail.com>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Thu, 19 May 2022 12:07:23 +0200
-Message-ID: <CAHp75VcauAsM2dTsS2CjOTc1_fwd-oT=A+yU6LzQ+vwQRAHjBg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/7] Renesas RZ/G2L IRQC support
-To:     "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
-Cc:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Biju Das <biju.das.jz@bp.renesas.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: msm8996-xiaomi-natrium: Add support
+ for Xiaomi Mi 5s Plus
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Andy Gross <agross@kernel.org>
+Cc:     Alec Su <ae40515@yahoo.com.tw>, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        sboyd@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220519074112.25600-1-ae40515@yahoo.com.tw>
+ <20220519074112.25600-2-ae40515@yahoo.com.tw>
+ <3644ad8a-d5d8-8ea2-b659-029619c64f1f@linaro.org>
+ <NqQY5WA6i6jOhK8lZ-YD4kWA57qJCSIGJE6_xAQmOiFJ4a-msHcn7oakouduiLhODYlfWVvgr-E5S6m43Ab6EUFa0ZPYV0kPGeYbVV7zpUI=@protonmail.com>
+ <3bb95350-01cc-b15b-3589-16019e3e9105@linaro.org>
+ <b459bbd2-26c6-1af1-b1ee-d4cf5f49cdaa@linaro.org>
+In-Reply-To: <b459bbd2-26c6-1af1-b1ee-d4cf5f49cdaa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 19, 2022 at 6:07 AM Lad, Prabhakar
-<prabhakar.csengg@gmail.com> wrote:
-> On Wed, May 18, 2022 at 10:10 PM Andy Shevchenko
-> <andy.shevchenko@gmail.com> wrote:
-> > On Wed, May 18, 2022 at 9:29 PM Lad Prabhakar
-> > <prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
+On 19/05/2022 12:06, Krzysztof Kozlowski wrote:
+> On 19/05/2022 12:01, Krzysztof Kozlowski wrote:
+>> On 19/05/2022 11:57, Yassine Oudjana wrote:
+>>>>
+>>>> There is no such property documented. Either add bindings, or drop.
+>>>>
+>>>>> + qcom,board-id = <47 0>;
+>>>>
+>>>>
+>>>> The same.
+>>>
+>>> These properties are already used in many device trees; they are
+>>> needed to let the bootloader pick a DTB, but yes they aren't
+>>> documented currently. devicetree/bindings/arm/qcom.yaml would
+>>> probably be a good place to put them.
+>>
+>> Which means each person is using them and not caring about
+>> documenting... they need to be documented. I am not even sure if they
+>> should be accepted.
+>>
+>> The DTS describes hardware, not bootloader specific details. The
+>> hardware - board - is defined by compatible and bootloader should use
+>> it. Adding new properties because someone decided "I don't like
+>> compatibles" is not appropriate.
+> 
+> There is prior art:
+> https://lkml.org/lkml/2015/10/26/651
+> https://lore.kernel.org/all/CAL_JsqJAOEvs08Jydn9wWtM7-Oxd=MmmDER48VRF7z3Gkzt0CQ@mail.gmail.com/
 
-...
+I found the discussions and I see it stalled. No objection from my side
+on this one here. We should solve it on other level.,
 
-> > > GIC. Out of GPIOINT0-122 only 32 can be mapped to GIC SPI, this mapping is
-> > > handled by the pinctrl and IRQC driver.
-> >
-> > Where is the explanation on why valid_mask can't be used instead?
-> >
-> The .valid_mask option is one time setting but what I need is
-> something dynamic i.e. out of 392 GPIO pins any 32 can be used as an
-> interrupt pin. Also with this patch we also save on memory here [0].
 
-Which internal APIs are bound to valid_mask not to be updated?
-
--- 
-With Best Regards,
-Andy Shevchenko
+Best regards,
+Krzysztof
