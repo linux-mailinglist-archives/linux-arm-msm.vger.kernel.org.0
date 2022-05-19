@@ -2,71 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 26D4252D128
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 13:09:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9740D52D144
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 13:16:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237267AbiESLJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 07:09:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40340 "EHLO
+        id S237350AbiESLQ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 07:16:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237130AbiESLJL (ORCPT
+        with ESMTP id S237325AbiESLQ1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 07:09:11 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66B8EB0421
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 04:09:08 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id m6so5833020ljb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 04:09:08 -0700 (PDT)
+        Thu, 19 May 2022 07:16:27 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3F7445781
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 04:16:23 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id s5so5805755ljd.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 04:16:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=d9tsDzycNDQtyXb+uzUhE/Vj3/eBul9/CRUr39TZ7YM=;
-        b=tvEsLWk3oy5qYfUCcCnVNJNqpOEnBOhzyZDZUkaVXXsdEVlOTgYN59oUlIizbV3K4s
-         D2WJt1YzT8vpjaaOpTnMvPkO5W91XTUbuGZzG+UnQT1p7FayUURJ6tcqy7Q/Og7EDHLn
-         jBNgrJkmsBJNU65K4C9Cy0Gfz3iGhDie5JBv7jTcGmrrOubpi+5RK7KGaSubtivuYQQJ
-         W7XcKPMkvAe/gpNSw8kAV+5SJu7fZichfL0qcWaAdvSl9Wl8LrlA9CUBjVs00fyyn0r3
-         g7Id/6p6Bpm/iCSp4wndiSYLtoPGvY0FAxWUSy8OLYshQ3wKHXXOUrFNB6b6MUZVrElt
-         wshA==
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=gXflK4UhrUagmJzU5oFjeXwmmPoO0pXf0gC0h4SEjzU=;
+        b=JyAT2f/j1K+rUcpbXtyGc7AumEcnByBEXSHbbkXCi1Ld+lUxLk3WTfaswX1HzsySfS
+         R6XSnyce/W7E2rneBqfyypjVtWTC+y/UQP09dqI8+7QZUom8UUy/GbUBM5JGw8KfR8Xv
+         dWfxPJadbxEAbEExRUDh1lDgAWiX5+P8xZM47ob4Q5Us1Szu8l7l7Ey0cHDC9Ez+xmSA
+         CT4SAy+wXzivS2eaAjmDw7ulNOU0h3c/OtRrDa4wX5GeK3EFqncJSzKKvyCI7QPQCtcU
+         TbbOLlimehGl+KDT2S8p/Zj2Va/xFNIjKR9QCn+B8IW6HRTYo0a7tq/4ouXYAh+TNPxC
+         x0KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=d9tsDzycNDQtyXb+uzUhE/Vj3/eBul9/CRUr39TZ7YM=;
-        b=tWTh8e5TbDfmczqMYOy8O/L3TFml2jOdqdcYrQ0AxYSyQ4BY9oDe3NNjUoVpJk46c+
-         rhYb/uWmtlT0CDSLg2E86OYJInSdFPl8zbAjMwTzfGFEAVU8VJtu5an3uWeHyOvqPAfC
-         pNrO5Zcon+ULC7b/CeT4szzsI2MWdCTM4lHmh0YpyUvuPqMGjcRrBaxTAfZxbVic2kht
-         jJqChbG7gpqZLiScV9SxU/DicfDJx/2Gu/lSaGyevMt51Jzm5hfwtSWugm8soVf+VZqK
-         qUUxohuJw9pb2K7Q7PkY717C0tUuXY5oGJNirrjYVtoXSL4WJlZncMoouWr7H25gpduA
-         zZSQ==
-X-Gm-Message-State: AOAM533gZ3GDa0ItnBwN4DnCRMa9e5TMBozBrVAxJffvhbSMlgqCRLQ7
-        dq975rA7VS92qxe+cLZTcBO6yA==
-X-Google-Smtp-Source: ABdhPJygQr09G7a7f1Eid+lKDW1Ht335u5ibdZu4/60chhKSqwbj8nDeaJfqLkos6Ah1zqEuywyxKQ==
-X-Received: by 2002:a2e:9e41:0:b0:253:c37c:378b with SMTP id g1-20020a2e9e41000000b00253c37c378bmr2333147ljk.202.1652958546776;
-        Thu, 19 May 2022 04:09:06 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id m18-20020ac24292000000b00477a6c2d2e3sm251405lfh.229.2022.05.19.04.09.05
+        bh=gXflK4UhrUagmJzU5oFjeXwmmPoO0pXf0gC0h4SEjzU=;
+        b=6O4kWFYDmT/6f8zR1CbG6vsUkoAdd4u/ogQqvUDbFFgGKnfHGyQM7C5tzPPC6zQYYI
+         +Nfq8ET1+Wa+d2cFz5ixWl0S6hWF9WYVuxx05mUMOiR0eVzQnp9hgNYDpcsB9gdehmtY
+         Q8WPHbIqCJR/vm1awo6recHMv1JWNNrcCfgjbP96Re/8495crvI9WxKBCW9uuFsJNtMh
+         6LQrC6qP+5BG3HL/vv7Q/L5grmZME4zg6MqfMDi79NOxZEVFKbE7KTXT0pA6mBVXJbKU
+         /EzYaZksg40VbP211r9ZfjskzhLrNj3xkFzI4Tsp4apCME3XjFhfyCzNYw62Ftm0sFZ1
+         rEGw==
+X-Gm-Message-State: AOAM531EHfQkJXkkLl8L5aCBSxTjkAb/x2DmSkgLFhKe7NqifDe0Y34f
+        2NrFFV36B5Oe6100fdeq3+8How==
+X-Google-Smtp-Source: ABdhPJxor+uJT9MTp9D/hfxSooOEP7GXMOniqoHd77e+746+hg/qoqk2uRExOR7X8Zsu51Jk0B+LZw==
+X-Received: by 2002:a2e:a406:0:b0:253:c7e8:d4e8 with SMTP id p6-20020a2ea406000000b00253c7e8d4e8mr2367271ljn.205.1652958982061;
+        Thu, 19 May 2022 04:16:22 -0700 (PDT)
+Received: from ?IPV6:2001:470:dd84:abc0::8a5? ([2001:470:dd84:abc0::8a5])
+        by smtp.gmail.com with ESMTPSA id w10-20020ac254aa000000b0047255d21117sm256076lfk.70.2022.05.19.04.16.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 May 2022 04:09:06 -0700 (PDT)
-Message-ID: <7f9418b5-cc1f-bb9c-583e-97490fc69684@linaro.org>
-Date:   Thu, 19 May 2022 13:09:05 +0200
+        Thu, 19 May 2022 04:16:21 -0700 (PDT)
+Message-ID: <fa94b8f3-a88d-5d9c-9d8a-7c0316f15cfa@linaro.org>
+Date:   Thu, 19 May 2022 14:16:19 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.1
-Subject: Re: [PATCH v4 1/6] dt-bindings: regulator: qcom,spmi-regulator:
- Convert to dtschema
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        konrad.dybcio@somainline.org
-References: <20220518184825.1034976-1-robimarko@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220518184825.1034976-1-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v6 2/5] clk: qcom: regmap: add PHY clock source
+ implementation
+Content-Language: en-GB
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>
+Cc:     Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20220513175339.2981959-1-dmitry.baryshkov@linaro.org>
+ <20220513175339.2981959-3-dmitry.baryshkov@linaro.org>
+ <20220518175808.EC29AC385A5@smtp.kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220518175808.EC29AC385A5@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -78,14 +87,157 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/05/2022 20:48, Robert Marko wrote:
-> Convert the bindings of Qualcomm SPMI regulators to DT schema.
+On 18/05/2022 20:58, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2022-05-13 10:53:36)
+>> diff --git a/drivers/clk/qcom/clk-regmap-phy-mux.c b/drivers/clk/qcom/clk-regmap-phy-mux.c
+>> new file mode 100644
+>> index 000000000000..d7a45f7fa1aa
+>> --- /dev/null
+>> +++ b/drivers/clk/qcom/clk-regmap-phy-mux.c
+>> @@ -0,0 +1,62 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2022, Linaro Ltd.
+>> + */
+>> +
+>> +#include <linux/kernel.h>
+>> +#include <linux/bitops.h>
+>> +#include <linux/regmap.h>
+>> +#include <linux/export.h>
 > 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> clk-provider.h for clk_hw/clk_ops usage. It helps with grep to identify
+> clk providers.
+> 
+>> +
+>> +#include "clk-regmap-phy-mux.h"
+> 
+> Same for clk-regmap.h, avoid include hell.
+
+I couldn't catch this comment. I think we need clk-regmap.h in 
+clk-regmap-phy-mux.h as clk_regmap is a part of defined structure.
+
+>> +
+>> +static inline struct clk_regmap_phy_mux *to_clk_regmap_phy_mux(struct clk_hw *hw)
+>> +{
+>> +       return container_of(to_clk_regmap(hw), struct clk_regmap_phy_mux, clkr);
+>> +}
+>> +
+>> +static int phy_mux_is_enabled(struct clk_hw *hw)
+>> +{
+>> +       struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(hw);
+>> +       struct clk_regmap *clkr = to_clk_regmap(hw);
+>> +       unsigned int mask = GENMASK(phy_mux->width + phy_mux->shift - 1, phy_mux->shift);
+>> +       unsigned int val;
+>> +
+>> +       regmap_read(clkr->regmap, phy_mux->reg, &val);
+>> +       val = (val & mask) >> phy_mux->shift;
+> 
+> Can this use FIELD_GET?
+> 
+>> +
+>> +       WARN_ON(val != phy_mux->phy_src_val && val != phy_mux->ref_src_val);
+>> +
+>> +       return val == phy_mux->phy_src_val;
+>> +}
+>> +
+>> +static int phy_mux_enable(struct clk_hw *hw)
+>> +{
+>> +       struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(hw);
+>> +       struct clk_regmap *clkr = to_clk_regmap(hw);
+>> +       unsigned int mask = GENMASK(phy_mux->width + phy_mux->shift - 1, phy_mux->shift);
+>> +       unsigned int val;
+>> +
+>> +       val = phy_mux->phy_src_val << phy_mux->shift;
+> 
+> Can this use FIELD_PREP?
+> 
+>> +
+>> +       return regmap_update_bits(clkr->regmap, phy_mux->reg, mask, val);
+>> +}
+>> +
+>> +static void phy_mux_disable(struct clk_hw *hw)
+>> +{
+>> +       struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(hw);
+>> +       struct clk_regmap *clkr = to_clk_regmap(hw);
+>> +       unsigned int mask = GENMASK(phy_mux->width + phy_mux->shift - 1, phy_mux->shift);
+>> +       unsigned int val;
+>> +
+>> +       val = phy_mux->ref_src_val << phy_mux->shift;
+>> +
+>> +       regmap_update_bits(clkr->regmap, phy_mux->reg, mask, val);
+>> +}
+>> +
+>> +const struct clk_ops clk_regmap_phy_mux_ops = {
+>> +       .enable = phy_mux_enable,
+>> +       .disable = phy_mux_disable,
+>> +       .is_enabled = phy_mux_is_enabled,
+>> +};
+>> +EXPORT_SYMBOL_GPL(clk_regmap_phy_mux_ops);
+>> diff --git a/drivers/clk/qcom/clk-regmap-phy-mux.h b/drivers/clk/qcom/clk-regmap-phy-mux.h
+>> new file mode 100644
+>> index 000000000000..6260912191c5
+>> --- /dev/null
+>> +++ b/drivers/clk/qcom/clk-regmap-phy-mux.h
+>> @@ -0,0 +1,37 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2022, Linaro Ltd.
+>> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> + */
+>> +
+>> +#ifndef __QCOM_CLK_REGMAP_PHY_MUX_H__
+>> +#define __QCOM_CLK_REGMAP_PHY_MUX_H__
+>> +
+>> +#include <linux/clk-provider.h>
+>> +#include "clk-regmap.h"
+>> +
+>> +/*
+>> + * A special clock implementation for PHY pipe and symbols clock sources.
+> 
+> Remove "special" please. Everything is special :)
+> 
+>> + *
+>> + * If the clock is running off the from-PHY source, report it as enabled.
+> 
+> from-PHY is @phy_src_val? Maybe add that information like "from-PHY
+> source (@phy_src_val)"
+> 
+>> + * Report it as disabled otherwise (if it uses reference source).
+> 
+> Same for @ref_src_val
+> 
+>> + *
+>> + * This way the PHY will disable the pipe clock before turning off the GDSC,
+>> + * which in turn would lead to disabling corresponding pipe_clk_src (and thus
+>> + * it being parked to a safe, reference clock source). And vice versa, after
+>> + * enabling the GDSC the PHY will enable the pipe clock, which would cause
+>> + * pipe_clk_src to be switched from a safe source to the working one.
+> 
+> Might as well make it into real kernel-doc at the same time.
+> 
+>> + */
+>> +
+>> +struct clk_regmap_phy_mux {
+>> +       u32                     reg;
+>> +       u32                     shift;
+>> +       u32                     width;
+> 
+> Technically neither of these need to be u32 and could be u8 to save a
+> byte or two. The other thing is that possibly the width and shift never
+> changes? The RCG layout is pretty well fixed. Does hardcoding it work?
+> 
+>> +       u32                     phy_src_val;
+>> +       u32                     ref_src_val;
+> 
+> I feel like "_val" is redundant. Just "ref_src" and "phy_src"? Shorter
+> is nice.
+> 
+>> +       struct clk_regmap       clkr;
+>> +};
+>> +
+>> +extern const struct clk_ops clk_regmap_phy_mux_ops;
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
