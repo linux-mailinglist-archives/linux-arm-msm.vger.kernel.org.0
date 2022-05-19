@@ -2,151 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9969952D1D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 13:54:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5801052D1F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 14:02:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237572AbiESLyE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 07:54:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60528 "EHLO
+        id S233511AbiESMBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 08:01:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237553AbiESLyC (ORCPT
+        with ESMTP id S230251AbiESMBs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 07:54:02 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F0F7B82F0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 04:54:01 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id d15so8687516lfk.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 04:54:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ynDwu8qGPWur+txmdTa4k/0YDzFSlIMmuvwA/VUCzcg=;
-        b=jWqkmG8QV2PoxNQ+o66kt3qtyZtYpeRrP0rJugh+e9gH7kcVEzZP/yKcacr0y3PwnM
-         p6GWvmgX/7czZPAsvDZ4xZjdAlAzssas+2F3n7NaeCxka+Qx6SVxBqHy74aV1LUSP8wE
-         b78Aubz4phDjpsq/KvNzv5s6HoFZGaagE66QShjpuCgkg85VUbpimlSM6/iTU/awIcqd
-         eVdvZ90WBF24MmzYWZdtQfbJMQF4l7BxFR33NPOKECuK1l/MNwaGxcNgOYkAgWQoclVh
-         Ho+xvNP3G7uobjrmOL7i2LM3vbraoxMEUu3ldCiaf3dlfttj4WWpDkrWcDHg0i1HIxCa
-         7oMQ==
+        Thu, 19 May 2022 08:01:48 -0400
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A45EDB41CA;
+        Thu, 19 May 2022 05:01:46 -0700 (PDT)
+Received: by mail-qk1-f170.google.com with SMTP id b20so4531148qkc.6;
+        Thu, 19 May 2022 05:01:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=ynDwu8qGPWur+txmdTa4k/0YDzFSlIMmuvwA/VUCzcg=;
-        b=fwGhXf54ENHiiD4+3lb2VB+cI2TlCRzk14C7Y+PtqEy/TIHp9r8dZQWJ44PPU0ITcv
-         r6Ips2ldMVmfg6cWAdafR+H26hIxdm/r5V2jb0/7KktGW0w7Sas2wPayRw3eVDoy0Byq
-         nuycpMJUwMIGpSei425W2RJz88nX4C5n3omqTTGNCr3VZkWauC7I3tN6REkKGc1lY1lq
-         LDixAByEKNNrV5O9NiFHJp7PGSM9cFofnnES0sbrZPBuDocqFsD4qf+0YJpTC9NJR/Bq
-         10TTLlKC6hPWJKDHc92A8KPa75mkkvIyId2E//p+/IX81YPxcqkRuRsq3fp0XePZq16n
-         FTEQ==
-X-Gm-Message-State: AOAM5307FSfGcV1Rf/losJgaK9sSSGr9WGuNkgkumlusdTOhuwWLJHwe
-        TywjTwfQNnIEqW2jlx51WEjKHQ==
-X-Google-Smtp-Source: ABdhPJyy+batuU6U7KxzGS5lRyhCFXqpKpfzC73MofPOeIr+/BfU8dM/DOOI35JzL47clkdUE0q8CQ==
-X-Received: by 2002:a05:6512:2397:b0:473:a6d9:5138 with SMTP id c23-20020a056512239700b00473a6d95138mr3117561lfv.332.1652961239433;
-        Thu, 19 May 2022 04:53:59 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id o22-20020a2e9456000000b0024f3d1dae84sm571111ljh.12.2022.05.19.04.53.58
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=32e726iWwMNC0xRIbGojngVmwOTaI+USQV4X78pDi0k=;
+        b=TKKqX8UB1dkKMujJjE60CMD0GPbt+ecSObdbVO8u+uj+Lvl4wpI4k+C8IehJi90Dc1
+         AEpqGnmA3bFHkpUWoPdKbQSRrHxBz574SlPQYEOFrco+j/J6BRVeNuZXQoJpbq/2LMdI
+         bqm+sx4wrAX3yeLF9Yxq+tycpg4NfyqplkKJo1+mCroczlli4bmsmAJuORd8KlkuytGm
+         W6nfUhdTogs4kyqjzEisvyFQ+7afTCMzEsOm0NiwgoSLymFXgnpUy4BNGo60TBkBeZZ1
+         VBzaqgSKTtiQZ0UfR9pv99r+Uf1n468xUuVlNF5ERyOuWVdIMVTUDm/x/cdoQjKUTJ62
+         Y9aA==
+X-Gm-Message-State: AOAM532w23kb6U0KVMcJW7cFTeJPGSK6Y70HYBitZi3zyt3/jmW4MvAb
+        AiW8DkXhZuk6Y3oYlrTB72a7d8ffx7hV9Q==
+X-Google-Smtp-Source: ABdhPJxq0tN9iWpWh5IGAus3fAeZAP4zCMY2KjZ59jWDLFegdyv6SWNAXqnoEVSEmNFsXCsNTgdrZg==
+X-Received: by 2002:ae9:ef85:0:b0:6a3:2a1c:fe65 with SMTP id d127-20020ae9ef85000000b006a32a1cfe65mr2730537qkg.300.1652961705565;
+        Thu, 19 May 2022 05:01:45 -0700 (PDT)
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
+        by smtp.gmail.com with ESMTPSA id g206-20020a379dd7000000b0069fcf0da629sm1102111qke.134.2022.05.19.05.01.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 May 2022 04:53:58 -0700 (PDT)
-Message-ID: <8a90ffbc-b376-9115-fb91-0b46d98873b7@linaro.org>
-Date:   Thu, 19 May 2022 13:53:57 +0200
+        Thu, 19 May 2022 05:01:41 -0700 (PDT)
+Received: by mail-yb1-f170.google.com with SMTP id p139so8588149ybc.11;
+        Thu, 19 May 2022 05:01:40 -0700 (PDT)
+X-Received: by 2002:a25:4289:0:b0:64d:746f:5311 with SMTP id
+ p131-20020a254289000000b0064d746f5311mr3785817yba.89.1652961700211; Thu, 19
+ May 2022 05:01:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: Removal of qcom,board-id and qcom,msm-id
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+References: <20220518192924.20948-1-prabhakar.mahadev-lad.rj@bp.renesas.com> <20220518192924.20948-7-prabhakar.mahadev-lad.rj@bp.renesas.com>
+In-Reply-To: <20220518192924.20948-7-prabhakar.mahadev-lad.rj@bp.renesas.com>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Thu, 19 May 2022 14:01:28 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdXz7ZtC_63hUckrEeB3uocNG0iKbA4i3xDsuyL48m_7qQ@mail.gmail.com>
+Message-ID: <CAMuHMdXz7ZtC_63hUckrEeB3uocNG0iKbA4i3xDsuyL48m_7qQ@mail.gmail.com>
+Subject: Re: [PATCH v4 6/7] dt-bindings: pinctrl: renesas,rzg2l-pinctrl:
+ Document the properties to handle GPIO IRQ
+To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Cc:     Marc Zyngier <maz@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
-        Olof Johansson <olof@lixom.net>
-Cc:     "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
- <35051bec-98ea-b4c5-f734-06b3f22f3562@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <35051bec-98ea-b4c5-f734-06b3f22f3562@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Prabhakar <prabhakar.csengg@gmail.com>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        Phil Edworthy <phil.edworthy@renesas.com>,
+        Biju Das <biju.das.jz@bp.renesas.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/05/2022 13:39, Dmitry Baryshkov wrote:
-> On 19/05/2022 13:44, Krzysztof Kozlowski wrote:
->> Hi,
->>
->> There was an old effort of removal of qcom,board-id and qcom,msm-id
->> properties from Qualcomm SoC-based boards like [1].
->>
->> First approach was to document them, which (obviously) was not well
->> received [2] [3] [4].
->>
->> The solution from Stephen was to encode these in the board compatible,
->> so bootloader can extract that information. That seemed to receive
->> positive comments, at least from Rob. [5]
->>
->> It was 2015... ~7 years later we are still things doing the same way,
->> still with undocumented properties: qcom,board-id and qcom,msm-id.
->>
->>
->> I would like to revive that topic, but before I start doing something
->> pointless - any guidance on last patch from Stephen [5]? Was it ok? Some
->> early NAKs?
-> 
-> I do not quite fancy the idea of using extra tools to process dtb files. 
-> At this moment it is possible to concatenate several kernel-generated 
-> dtb files together. AOSP developers use this to have an image that boots 
-> on both RB3 and RB5 boards.
-> 
-> I think that changing compat strings only makes sense if Qualcomm would 
-> use such compat strings in future. Otherwise we end up in a position 
-> where we have custom bootloaders for the RB3/RB5/etc, but the majority 
-> of the board requires extra processing steps.
+Hi Prabhakar,
 
-This was discussed in [2] [3] and [4] (previous links) and did not pass.
+On Wed, May 18, 2022 at 9:30 PM Lad Prabhakar
+<prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
+> Document the required properties to handle GPIO IRQ.
+>
+> Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-Do you have any new arguments for above objections from Arnd, Olof and
-Rob? I don't think patch will get accepted if previous concerns during
-review are not addressed...
+Thanks for your patch!
 
-> 
-> So, I think, we should drop the unspecified usid aliases, document the 
-> board-id/msm-id/pmic-id properties and stick with them. 
+> --- a/Documentation/devicetree/bindings/pinctrl/renesas,rzg2l-pinctrl.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/renesas,rzg2l-pinctrl.yaml
+> @@ -126,6 +139,9 @@ examples:
+>              gpio-controller;
+>              #gpio-cells = <2>;
+>              gpio-ranges = <&pinctrl 0 0 392>;
+> +            interrupt-controller;
+> +            #interrupt-cells = <2>;
+> +            interrupt-parent = <&irqc>;
 
-The existing properties need anyway documenting, probably as deprecated
-so the schema can pass, because we cannot fix the bootloaders easly.
+I think the "interrupt-parent" property can be dropped from the example.
 
-> They might be 
-> ugly, but they are expected/processed by the majority of devices present 
-> in the wild.
+>              clocks = <&cpg CPG_MOD R9A07G044_GPIO_HCLK>;
+>              resets = <&cpg R9A07G044_GPIO_RSTN>,
+>                       <&cpg R9A07G044_GPIO_PORT_RESETN>,
 
-Any change in DTS affects only future devices, so not in the wild...
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
-> 
->> [1]
->> https://elixir.bootlin.com/linux/v5.18-rc7/source/arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts#L14
->>
->> [2] https://lore.kernel.org/all/7229476.C4So9noUlf@wuerfel/
->> [3]
->> https://lore.kernel.org/all/1450371534-10923-20-git-send-email-mtitinger+renesas@baylibre.com/
->> [4] https://lore.kernel.org/all/20151119153640.GC893@linaro.org/
->> [5]
->> https://lore.kernel.org/all/1448062280-15406-1-git-send-email-sboyd@codeaurora.org/
->>
->> Best regards,
->> Krzysztof
-> 
-> 
+Gr{oetje,eeting}s,
 
+                        Geert
 
-Best regards,
-Krzysztof
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
