@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05FCC52D71B
+	by mail.lfdr.de (Postfix) with ESMTP id D206552D71C
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 17:12:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240534AbiESPMc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 11:12:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43908 "EHLO
+        id S240539AbiESPM3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 11:12:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240529AbiESPM0 (ORCPT
+        with ESMTP id S240534AbiESPM0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 19 May 2022 11:12:26 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7AACC3D04
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 08:12:24 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id o190so6061609iof.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 08:12:24 -0700 (PDT)
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A7E2D6832
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 08:12:26 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id r27so6114120iot.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 08:12:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6+Fem4lozWtl3MTEsgHhD7kgm6g1Bv+TgSucDp8qwU4=;
-        b=r8lduLPLV/+WJPs6xI0z67kdZYr4bhBq7UBDVx0J2I2/QhR92iwg/faGLrSIQp+SVc
-         oPqcaYoq8nQwo3b727CCcKbujGQw8gtgmSR8zdRhRFgzrjxAm0nwezkpDCMjGN8cC3Tj
-         gr2UnFJuvASHof5uaMd7mQ6nOJYcKFfwYi8fwh+K94DO4eluJqd53qqbAACScC+Gy/2r
-         UF+d3O0iP/pqmA3smXJjUQyQOkDEWp1e5C8FRqD74EMDkR6fKblLTMwIqKqEBEC4mqHc
-         vQtQsSoikiNSAJ0i+bynrEb5QLUJnx1GXrkYtL1GZPI8IMARs5QUtVqB6bjdpmX1jKbs
-         XG7g==
+        bh=nxAxEwpYxRir5k7Jix50x061l0SV3yP8iku6r8UOnSA=;
+        b=GyyvoV+ytXOA2P3NDeGlTeLxNHXyVMiiYsn1E0p9TKjM0y/A7rGysu5MzWAXgrv+pI
+         bjwi0hYOxRIQLw3rrLghEtc5k/k1nE/DL+tOVB7Bc/OIg1Wys+0dci+S11biuhuzVFi6
+         0IoIP6Q14G0KH2gUM8a8d5+olWg195t5bK/3TUDA4tApBgaNS+4OH1JK/hoxUlAmsZmU
+         E7ie1HplfnGNAb+O6kiKT2xYSa/x+ymbV97h6OF134q++epAPCgtdpA3eY8urg5ci1cW
+         gB6ODaaTqf9dgZC5syipKoJz8c3BIdI886kVNi9SExCCm8XF8KWbBKMeLffdc+GEy8+Y
+         hNCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6+Fem4lozWtl3MTEsgHhD7kgm6g1Bv+TgSucDp8qwU4=;
-        b=dUwWrXt0iZwqDwp4Xd7LCNFZINpf+m7LlgncEVcc/lPu01IFHVpGAHslLlcLslduil
-         apDAWieHl1UMZdtQc0rSJ1zU7ClJCbEECKu5LnwV0YFfG+Ak8JNM8UiT8dPjD+uBphtc
-         6RN+FqJ771fJSRkCcLDZh99N3aIqJUgufzYszBctJr6mjmE4c9H5Q79INeDTdBUS0Twj
-         DzM4xzLkbiZcnj6oalPLwAsB2lgsThrK1CFlj/cc5i9nrN1rByd9cOmz24n0CUCfJN1t
-         Fgd17+QqSJTbZjYOSG5Y8a417gdpInIUUbl2uIs9EjB/YSlgjWPyHHwypjnYAVIPwePN
-         a5pg==
-X-Gm-Message-State: AOAM5329QkIo4XDeu5bRsWbC5nqEWjmRfGfdKBK0hzknnnB+OrGKEDjr
-        cBzW0493RePaNKWbV80yDoHNsw==
-X-Google-Smtp-Source: ABdhPJxBWtqaGJIJb1L/gDMiDvisXZovCsnyBQNBra6+I7P0WT7dPYuwficRbqp0p8zoo1epJtVNzQ==
-X-Received: by 2002:a6b:5017:0:b0:65b:aa4:96cf with SMTP id e23-20020a6b5017000000b0065b0aa496cfmr2820248iob.47.1652973144210;
-        Thu, 19 May 2022 08:12:24 -0700 (PDT)
+        bh=nxAxEwpYxRir5k7Jix50x061l0SV3yP8iku6r8UOnSA=;
+        b=yDab2VUl18qu0SRxQx89M/8/kmcFVOO76Ta+tqgWvUH3Wo10v8fKgSxDRVH6NCI8n7
+         rUbH/JFO+WatvGhSzQpKvTbbB08MRLRxmj+VqdofWvGC6tJdn12UGzsyRmydkvnHirFx
+         cuyuYE29b9SQjA0aY8w1as77fCEiky2XMruBAaRQ2BntU8aO5IvkxPQ1jqyKtsWUJf7J
+         cSoKJLzATCQ/46hAqX/+7S/suITl5RBHHAoBRmb+uTXZ+/KU/ZgvVSgHGXQBjNcmJZS0
+         8TdZ/h/9nn5oPlXiW1UlNkKhY2jLnfGkyG57E4YkruNqLPe+tCQvp6S+cvIF3qnkAXcy
+         3jUQ==
+X-Gm-Message-State: AOAM5323MH+Z8RLShiBdqahzOJnf+CA4wSvM9y9TXNFy/bOiYq+sFzZp
+        ADkgQOjb2ETuEknjDSWZrrCEzQ==
+X-Google-Smtp-Source: ABdhPJyyOlkq7X/Nwk1VOwKXMx7MI5/Mg1ETxQfe2iRM/hPc6uGSFVFek5Obl/7c1xpP8f37E7Ogtg==
+X-Received: by 2002:a5d:9bd9:0:b0:65e:1a97:fa70 with SMTP id d25-20020a5d9bd9000000b0065e1a97fa70mr2738456ion.48.1652973145598;
+        Thu, 19 May 2022 08:12:25 -0700 (PDT)
 Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id g6-20020a025b06000000b0032e271a558csm683887jab.168.2022.05.19.08.12.23
+        by smtp.gmail.com with ESMTPSA id g6-20020a025b06000000b0032e271a558csm683887jab.168.2022.05.19.08.12.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 08:12:23 -0700 (PDT)
+        Thu, 19 May 2022 08:12:24 -0700 (PDT)
 From:   Alex Elder <elder@linaro.org>
 To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
         pabeni@redhat.com
@@ -56,9 +56,9 @@ Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
         quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
         elder@kernel.org, netdev@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 3/7] net: ipa: ignore endianness if there is no header
-Date:   Thu, 19 May 2022 10:12:13 -0500
-Message-Id: <20220519151217.654890-4-elder@linaro.org>
+Subject: [PATCH net-next 4/7] net: ipa: open-code ether_setup()
+Date:   Thu, 19 May 2022 10:12:14 -0500
+Message-Id: <20220519151217.654890-5-elder@linaro.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220519151217.654890-1-elder@linaro.org>
 References: <20220519151217.654890-1-elder@linaro.org>
@@ -74,74 +74,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If we program an RX endpoint to have no header (header length is 0),
-header-related endpoint configuration values are meaningless and are
-ignored.
-
-The only case we support that defines a header is QMAP endpoints.
-In ipa_endpoint_init_hdr_ext() we set the endianness mask value
-unconditionally, but it should not be done if there is no header
-(meaning it is not configured for QMAP).
-
-Set the endianness conditionally, and rearrange the logic in that
-function slightly to avoid testing the qmap flag twice.
-
-Delete an incorrect comment in ipa_endpoint_init_aggr().
+About half of the fields set by the call in ipa_modem_netdev_setup()
+are overwritten after the call.  Instead, just skip the call, and
+open-code the (other) assignments it makes to the net_device
+structure fields.
 
 Signed-off-by: Alex Elder <elder@linaro.org>
 ---
- drivers/net/ipa/ipa_endpoint.c | 30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+ drivers/net/ipa/ipa_modem.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
-index e133eb2bebcfb..3fcd7c64c9bba 100644
---- a/drivers/net/ipa/ipa_endpoint.c
-+++ b/drivers/net/ipa/ipa_endpoint.c
-@@ -587,19 +587,23 @@ static void ipa_endpoint_init_hdr_ext(struct ipa_endpoint *endpoint)
- 	struct ipa *ipa = endpoint->ipa;
- 	u32 val = 0;
+diff --git a/drivers/net/ipa/ipa_modem.c b/drivers/net/ipa/ipa_modem.c
+index 27d87097433f0..dd6464ced2546 100644
+--- a/drivers/net/ipa/ipa_modem.c
++++ b/drivers/net/ipa/ipa_modem.c
+@@ -9,6 +9,8 @@
+ #include <linux/netdevice.h>
+ #include <linux/skbuff.h>
+ #include <linux/if_rmnet.h>
++#include <linux/etherdevice.h>
++#include <net/pkt_sched.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/remoteproc/qcom_rproc.h>
  
--	val |= HDR_ENDIANNESS_FMASK;		/* big endian */
-+	if (endpoint->data->qmap) {
-+		/* We have a header, so we must specify its endianness */
-+		val |= HDR_ENDIANNESS_FMASK;	/* big endian */
- 
--	/* A QMAP header contains a 6 bit pad field at offset 0.  The RMNet
--	 * driver assumes this field is meaningful in packets it receives,
--	 * and assumes the header's payload length includes that padding.
--	 * The RMNet driver does *not* pad packets it sends, however, so
--	 * the pad field (although 0) should be ignored.
--	 */
--	if (endpoint->data->qmap && !endpoint->toward_ipa) {
--		val |= HDR_TOTAL_LEN_OR_PAD_VALID_FMASK;
--		/* HDR_TOTAL_LEN_OR_PAD is 0 (pad, not total_len) */
--		val |= HDR_PAYLOAD_LEN_INC_PADDING_FMASK;
--		/* HDR_TOTAL_LEN_OR_PAD_OFFSET is 0 */
-+		/* A QMAP header contains a 6 bit pad field at offset 0.
-+		 * The RMNet driver assumes this field is meaningful in
-+		 * packets it receives, and assumes the header's payload
-+		 * length includes that padding.  The RMNet driver does
-+		 * *not* pad packets it sends, however, so the pad field
-+		 * (although 0) should be ignored.
-+		 */
-+		if (!endpoint->toward_ipa) {
-+			val |= HDR_TOTAL_LEN_OR_PAD_VALID_FMASK;
-+			/* HDR_TOTAL_LEN_OR_PAD is 0 (pad, not total_len) */
-+			val |= HDR_PAYLOAD_LEN_INC_PADDING_FMASK;
-+			/* HDR_TOTAL_LEN_OR_PAD_OFFSET is 0 */
-+		}
- 	}
- 
- 	/* HDR_PAYLOAD_LEN_INC_PADDING is 0 */
-@@ -759,8 +763,6 @@ static void ipa_endpoint_init_aggr(struct ipa_endpoint *endpoint)
- 
- 			close_eof = rx_data->aggr_close_eof;
- 			val |= aggr_sw_eof_active_encoded(version, close_eof);
--
--			/* AGGR_HARD_BYTE_LIMIT_ENABLE is 0 */
- 		} else {
- 			val |= u32_encode_bits(IPA_ENABLE_DEAGGR,
- 					       AGGR_EN_FMASK);
+@@ -203,15 +205,20 @@ static const struct net_device_ops ipa_modem_ops = {
+ static void ipa_modem_netdev_setup(struct net_device *netdev)
+ {
+ 	netdev->netdev_ops = &ipa_modem_ops;
+-	ether_setup(netdev);
+-	/* No header ops (override value set by ether_setup()) */
++
+ 	netdev->header_ops = NULL;
+ 	netdev->type = ARPHRD_RAWIP;
+ 	netdev->hard_header_len = 0;
++	netdev->min_header_len = ETH_HLEN;
++	netdev->min_mtu = ETH_MIN_MTU;
+ 	netdev->max_mtu = IPA_MTU;
+ 	netdev->mtu = netdev->max_mtu;
+ 	netdev->addr_len = 0;
++	netdev->tx_queue_len = DEFAULT_TX_QUEUE_LEN;
+ 	netdev->flags &= ~(IFF_BROADCAST | IFF_MULTICAST);
++	netdev->priv_flags |= IFF_TX_SKB_SHARING;
++	eth_broadcast_addr(netdev->broadcast);
++
+ 	/* The endpoint is configured for QMAP */
+ 	netdev->needed_headroom = sizeof(struct rmnet_map_header);
+ 	netdev->needed_tailroom = IPA_NETDEV_TAILROOM;
 -- 
 2.32.0
 
