@@ -2,138 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 59B7052DD5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 21:01:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C96BE52DDBD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 21:23:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244281AbiESTBj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 15:01:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58600 "EHLO
+        id S244473AbiESTXL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 15:23:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244275AbiESTBd (ORCPT
+        with ESMTP id S243925AbiESTXG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 15:01:33 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5F93532FC;
-        Thu, 19 May 2022 12:01:29 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id k126so3387738wme.2;
-        Thu, 19 May 2022 12:01:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=iFLnLP7/OEuz4wdRDIn1ORAc4gGIzikzoEkwYYDgvJg=;
-        b=pEKTjR6x27IA9qHOPQmR8lGbD+qmD1MFFfvO5Fo2WxWCMdjGvVNsnGfhtxeJcJwavw
-         2Jz75TW+zFV8/MyE+XkuDCk7JgfbjfYB1AJpPOKrtIvURmna+8dfDA39Vl3zlLuGJ1tu
-         JITeyYoywHsvh0ZvySVoVcT3K6evGfCgd9unj85iqx9Hy3xNA9muKVgOxiF3qiKngM0R
-         hBbQEn+BU8I1fOOxTxaTeYNoi/XU/ZkZ6sm21AJ+HepoxwlOW8BGoeU1T04FROIesBYw
-         eaafM4qQsE/o6eXy8FpLrQib86NqfEDu0mFlKe6Jci0UWjYPEiFo+DpcU+CX2d9NZ4rc
-         zjqA==
+        Thu, 19 May 2022 15:23:06 -0400
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7120C58E43;
+        Thu, 19 May 2022 12:23:05 -0700 (PDT)
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-f1eafa567cso4539458fac.8;
+        Thu, 19 May 2022 12:23:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=iFLnLP7/OEuz4wdRDIn1ORAc4gGIzikzoEkwYYDgvJg=;
-        b=SUjjqaKDvaGw8CCxsPpeEWtaVgeJDM5VQN1jkaCGfxf334fpRenENArx79X7CXzsT7
-         zZMmwnh0/tkmLN8AKt/Df7wT7njQ9tQxYovdLOAHUOV8//LZRuxYni3v1/PNp88Y5aS0
-         kPXj2gmkDokuaXc/aMKSDajNnOy0LOtJrSQV6rgWnrMdq73n75nCC4pfAwOYiH57uLbs
-         OyEyVOpKpylBJldAL9V/QbZQyPa9bl3YnmTvcG8ycouZe25W45z1TTfTdjXwzON00qnL
-         MAJmu9NqdM2iKTE6lNOG4SEhLrexElc+unm+Ik7hogcTeJa9Qbuk1ODyMEbChfSon0XT
-         TJLA==
-X-Gm-Message-State: AOAM531aZa6rcI+O/gyLWSBY8cyG6LN0T6xsBSF8xyVlS+kDq3ro8Igx
-        xgdf/xY73xDkoMlZY9Y8jfw=
-X-Google-Smtp-Source: ABdhPJzBDLRZjlSbYLz0uYv/HMjZXBE35+YIa6k2BqBn3h6pAKwLPh6Ct9EGeA+dXiOIsb3a3+w+qg==
-X-Received: by 2002:a05:600c:acf:b0:397:345f:fe10 with SMTP id c15-20020a05600c0acf00b00397345ffe10mr2022718wmr.15.1652986887545;
-        Thu, 19 May 2022 12:01:27 -0700 (PDT)
-Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
-        by smtp.googlemail.com with ESMTPSA id h11-20020a05600c414b00b00395b809dfd3sm333767wmm.12.2022.05.19.12.01.26
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=xUdBpJfFH6LsWjA2eoyMRt5PLk894PaKnYn1kRRc6EM=;
+        b=S3p/lOOvitntaO0p4qxXxG3uRZB7nk+Ha4aZOGejrs50Wbi/mW0Zhd/JVN/f8AqsBC
+         Btar3UDwkW0/OOLNUSL4UW1MCCb7R0eWYd9SEnS7n7del3Owa+/H+U9jrXddkWh+c5NW
+         ho0r4HicsYsUySJXx+qwRm2KNJEpGbsdltjHZWh8iz0qZu8gvS44L0uAtVqvia9rthc5
+         X525jYjrTeVwudjAlvqQidMYGWxboW8rmo+E3TOEXdM+1Q8Uv5ibbDzwef0BlavIl1oM
+         4luguN8jKmWNjEWGUTdOwSGjCx8hDo5sWmTD4sj4Z85OAUcJ5GYfBiixMMQcePPIHVUs
+         LKRw==
+X-Gm-Message-State: AOAM530+mdkTYxvIsAHkRS7dpfC+hVCJrBcYCFuBiYPhJTxT0Bm/EhdL
+        E9G/oEGhNR6/IPsrpKjGwg==
+X-Google-Smtp-Source: ABdhPJxlKaVBcMdiefUM0cnmhHo2Lr8eBJpDbB9PytEPQAGPaO56TKyr0H1SyDe14GDzXH7AZl00sg==
+X-Received: by 2002:a05:6870:6307:b0:e9:6ed6:cb2f with SMTP id s7-20020a056870630700b000e96ed6cb2fmr3606109oao.26.1652988184484;
+        Thu, 19 May 2022 12:23:04 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id i186-20020acab8c3000000b00325cda1ffb9sm43087oif.56.2022.05.19.12.23.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 12:01:27 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>
-Subject: [PATCH v4 2/2] dt-bindings: mtd: qcom_nandc: document qcom,boot-pages binding
-Date:   Thu, 19 May 2022 21:01:12 +0200
-Message-Id: <20220519190112.6344-3-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220519190112.6344-1-ansuelsmth@gmail.com>
-References: <20220519190112.6344-1-ansuelsmth@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 19 May 2022 12:23:03 -0700 (PDT)
+Received: (nullmailer pid 2044191 invoked by uid 1000);
+        Thu, 19 May 2022 19:23:01 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, robh+dt@kernel.org,
+        mka@chromium.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, agross@kernel.org, mathieu.poirier@linaro.org,
+        devicetree@vger.kernel.org, ohad@wizery.com,
+        krzysztof.kozlowski+dt@linaro.org, bjorn.andersson@linaro.org,
+        linux-remoteproc@vger.kernel.org
+In-Reply-To: <1652978825-5304-3-git-send-email-quic_sibis@quicinc.com>
+References: <1652978825-5304-1-git-send-email-quic_sibis@quicinc.com> <1652978825-5304-3-git-send-email-quic_sibis@quicinc.com>
+Subject: Re: [PATCH v4 2/3] dt-bindings: remoteproc: qcom: Convert SC7280 MSS bindings to YAML
+Date:   Thu, 19 May 2022 14:23:01 -0500
+Message-Id: <1652988181.135820.2044190.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document new qcom,boot-pages binding used to apply special
-read/write configuration to boot pages.
+On Thu, 19 May 2022 22:17:04 +0530, Sibi Sankar wrote:
+> Convert SC7280 MSS PIL loading bindings to YAML.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+> 
+> v4:
+>  * Remove older bindings [Matthias/Krzysztof]
+>  * Misc. Fixes [Krzysztof]
+>  * Rebased on v2 of Krzysztof's bindings cleanups
+> 
+> v3:
+>  * Re-ordered clock list, fixed pdc_sync typo [Rob/Matthias]
+> 
+>  .../devicetree/bindings/remoteproc/qcom,q6v5.txt   |  31 +--
+>  .../bindings/remoteproc/qcom,sc7280-mss-pil.yaml   | 250 +++++++++++++++++++++
+>  2 files changed, 252 insertions(+), 29 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+> 
 
-QCOM apply a special configuration where spare data is not protected
-by ECC for some special pages (used for boot partition). Add
-Documentation on how to declare these special pages.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- .../devicetree/bindings/mtd/qcom,nandc.yaml   | 26 +++++++++++++++++++
- 1 file changed, 26 insertions(+)
+yamllint warnings/errors:
 
-diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-index 84ad7ff30121..a59ae9525f4e 100644
---- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-+++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
-@@ -102,6 +102,30 @@ allOf:
-             - const: rx
-             - const: cmd
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,ipq806x-nand
-+
-+    then:
-+      properties:
-+        qcom,boot-pages:
-+          $ref: /schemas/types.yaml#/definitions/uint32-matrix
-+          items:
-+            items:
-+              - description: offset
-+              - description: size
-+          description:
-+            Some special page used by boot partition have spare data
-+            not protected by ECC. Use this to declare these special page
-+            by defining first the offset and then the size.
-+
-+            It's in the form of <offset1 size1 offset2 size2 offset3 ...>
-+
-+            Refer to the ipq8064 example on how to use this special binding.
-+
- required:
-   - compatible
-   - reg
-@@ -135,6 +159,8 @@ examples:
-         nand-ecc-strength = <4>;
-         nand-bus-width = <8>;
- 
-+        qcom,boot-pages = <0x0 0x58a0000>;
-+
-         partitions {
-           compatible = "fixed-partitions";
-           #address-cells = <1>;
--- 
-2.34.1
+dtschema/dtc warnings/errors:
+./Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/remoteproc/qcom,glink-edge.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.example.dtb: remoteproc@4080000: glink-edge: False schema does not allow {'interrupts-extended': [[4294967295, 2, 0, 1]], 'mboxes': [[4294967295, 2, 0]], 'label': ['modem'], 'qcom,remote-pid': [[1]]}
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
 
