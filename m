@@ -2,75 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E48D52CF98
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 11:42:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CDBE52CFAD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 11:48:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230336AbiESJmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 05:42:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39182 "EHLO
+        id S236247AbiESJsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 05:48:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236134AbiESJmX (ORCPT
+        with ESMTP id S235319AbiESJsI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 05:42:23 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1EDC70904
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 02:42:20 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id bu29so8197680lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 02:42:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=+xMBzEP7HnrsA/bBBLkdtfe9uSDUca26IcPy4XzJi24=;
-        b=Kow9ZdcaH6ap8Q4N0y5qSZTWG4b4K6qIZ4hqX+LuIJmevu88BjA0hNx9fg4UnoqrGP
-         P+NcxxYKF30OqCwAYdhnH1QZZo0TEcaiOWcLJZTslbrNWtz3N+Ko92MBcDU3wRNBOFNR
-         1ouZK7WpaMgfwozJ//YsUWZg1XD4snyzoDmPcWGm1gutDDAU638+dheaSNH0Lu0nyCDG
-         glNp49i9vyOEuwIb56t0dow35YykSV93uRhadhDQJt+yJBBVO0S9O6JdNnsSb39TY1TK
-         EYb05E/fmjEcJBRVbjzDRkt6+uCVZF64znwMXtIwnk1S0E7VE4aawYx24807vf/DKwHO
-         ftvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=+xMBzEP7HnrsA/bBBLkdtfe9uSDUca26IcPy4XzJi24=;
-        b=NA76oJLG56UQ9bdO5SkbhH7NL4UgFNlHmdb923NuVfZO6KXsBN5G2+kBH3KYyXeXKy
-         FF1oqg8v6/F0Lv5C5OtKt9FN2IfqUFZ9N6x9a/RN64ta8FsQkU8ma2wJsmhwJsfIGnlN
-         67+YwKUx+6hKJBb62SD0G07atJr32KUJIozhkRtyw3tOE3O5naR9tiYZ7hsogU/oE4al
-         a3Q4/Tcaue7FLwFj9tMsdlMzjvc/tCxffB1MSuY4Bjb7Q3LhjHUp0HoJys0x5HR9RaQZ
-         mfzuhyXodhZdm2DOKwLJrrvo8udQKCQV+CAkDzgujioKIlnrMSQmAIu+GJEWgC7TSdc/
-         gCgg==
-X-Gm-Message-State: AOAM531H28B6zpk6EmxDE6gi+f6j94o0X2LtNcwwqiKcFnM9ewxGCOSh
-        lwNoEta0f2ruwsLaxnWWoeoZ3w==
-X-Google-Smtp-Source: ABdhPJwDypc66On0VtE9CE227+I5UlM4RfdjeftrFlijPUO8b9PlNBNV+QrsNje4PUHKwEa4nX0Cyw==
-X-Received: by 2002:a05:6512:6d5:b0:473:c36f:b5a8 with SMTP id u21-20020a05651206d500b00473c36fb5a8mr2747401lff.679.1652953339189;
-        Thu, 19 May 2022 02:42:19 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id q30-20020ac2515e000000b0047255d2112asm229728lfd.89.2022.05.19.02.42.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 May 2022 02:42:18 -0700 (PDT)
-Message-ID: <3644ad8a-d5d8-8ea2-b659-029619c64f1f@linaro.org>
-Date:   Thu, 19 May 2022 11:42:17 +0200
+        Thu, 19 May 2022 05:48:08 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 850DD6970F;
+        Thu, 19 May 2022 02:48:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 215EFB823D1;
+        Thu, 19 May 2022 09:48:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A86C34115;
+        Thu, 19 May 2022 09:48:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652953684;
+        bh=57BVf0E0AW4jg42qrBzZjFie9oQ3lk6GdIX4iZM+xc0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=EjYKQHD5vZbV/WE575LbKi5vNrbR3Rr9gDl7yghC7vaQ+c5Wx1etsL8kokUYhDXy6
+         7/xrFpVo1z62Ht48NVoW3QmPQ+bmQUJXT8207va7qXUUdTONzgps9ZQkK7ZAVoeLOR
+         z4rsCqwp6TPPNJpt8nLdTHUu/ZmnN6yX4Q8ubGP7PeyPV3gYbdVgVRWp2RWhiqY45h
+         NnEhUga/pss3k50AQMcEnp7IMkR0wTMCwBgQXMvqD6sH4GVFumo3Vlll5xwPvlzXOL
+         TqkfBGKKQc4Gxo6Fad1ah4I7H1jmBtYH5I6ZB4+qHMC8+VoxznrQtUXhU9NXgl9mNM
+         YIS7ZzfoVWHFg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1nrclJ-00060Q-K5; Thu, 19 May 2022 11:48:06 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Rob Herring <robh@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH] PCI: qcom: Add support for modular builds
+Date:   Thu, 19 May 2022 11:46:46 +0200
+Message-Id: <20220519094646.23009-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: msm8996-xiaomi-natrium: Add support
- for Xiaomi Mi 5s Plus
-Content-Language: en-US
-To:     Alec Su <ae40515@yahoo.com.tw>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, sboyd@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, y.oudjana@protonmail.com
-References: <20220519074112.25600-1-ae40515@yahoo.com.tw>
- <20220519074112.25600-2-ae40515@yahoo.com.tw>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220519074112.25600-2-ae40515@yahoo.com.tw>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,476 +62,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/05/2022 09:41, Alec Su wrote:
-> Add the device tree for Xiaomi Mi 5s Plus (natrium).
-> 
-> Signed-off-by: Alec Su <ae40515@yahoo.com.tw>
-> Reviewed-by: Yassine Oudjana <y.oudjana@protonmail.com>
+Allow the Qualcomm PCIe controller driver to be built as a module, which
+is useful for multi-platform kernels as well as during development.
 
-This is the first patch, so the review tag is a bit unexepected. Was it
-really given?
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+ drivers/pci/controller/dwc/Kconfig     |  2 +-
+ drivers/pci/controller/dwc/pcie-qcom.c | 36 +++++++++++++++++++++++---
+ 2 files changed, 34 insertions(+), 4 deletions(-)
 
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/msm8996-xiaomi-natrium.dts  | 419 ++++++++++++++++++
->  2 files changed, 420 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 2f8aec2cc6db..3ae7ecd369fb 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -37,6 +37,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-sony-xperia-tone-dora.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-sony-xperia-tone-kagura.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-sony-xperia-tone-keyaki.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-xiaomi-gemini.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-xiaomi-natrium.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-xiaomi-scorpio.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-asus-novago-tp370ql.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-fxtec-pro1.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts
-> new file mode 100644
-> index 000000000000..212ff0fbf262
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts
-> @@ -0,0 +1,419 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*> + * Copyright (c) 2022, Alec Su <ae40515@yahoo.com.tw>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "msm8996-xiaomi-common.dtsi"
-> +#include "pmi8996.dtsi"
-> +#include <dt-bindings/sound/qcom,q6afe.h>
-> +#include <dt-bindings/sound/qcom,q6asm.h>
-> +
-> +/ {
-> +	model = "Xiaomi Mi 5s Plus";
-> +	compatible = "xiaomi,natrium", "qcom,msm8996";
-> +	chassis-type = "handset";
-> +	qcom,msm-id = <305 0x10000>;
+diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+index 62ce3abf0f19..230f56d1a268 100644
+--- a/drivers/pci/controller/dwc/Kconfig
++++ b/drivers/pci/controller/dwc/Kconfig
+@@ -168,7 +168,7 @@ config PCI_HISI
+ 	  Hip05 and Hip06 SoCs
+ 
+ config PCIE_QCOM
+-	bool "Qualcomm PCIe controller"
++	tristate "Qualcomm PCIe controller"
+ 	depends on OF && (ARCH_QCOM || COMPILE_TEST)
+ 	depends on PCI_MSI_IRQ_DOMAIN
+ 	select PCIE_DW_HOST
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 8523b5ef9d16..e25d5c09657c 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -16,7 +16,7 @@
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
+ #include <linux/kernel.h>
+-#include <linux/init.h>
++#include <linux/module.h>
+ #include <linux/of_device.h>
+ #include <linux/of_gpio.h>
+ #include <linux/pci.h>
+@@ -1425,6 +1425,15 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+ 	return ret;
+ }
+ 
++static void qcom_pcie_host_deinit(struct qcom_pcie *pcie)
++{
++	qcom_ep_reset_assert(pcie);
++	if (pcie->cfg->ops->post_deinit)
++		pcie->cfg->ops->post_deinit(pcie);
++	phy_power_off(pcie->phy);
++	pcie->cfg->ops->deinit(pcie);
++}
++
+ static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
+ 	.host_init = qcom_pcie_host_init,
+ };
+@@ -1651,6 +1660,22 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
++static int qcom_pcie_remove(struct platform_device *pdev)
++{
++	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
++	struct device *dev = &pdev->dev;
++
++	dw_pcie_host_deinit(&pcie->pci->pp);
++	qcom_pcie_host_deinit(pcie);
++
++	phy_exit(pcie->phy);
++
++	pm_runtime_put_sync(dev);
++	pm_runtime_disable(dev);
++
++	return 0;
++}
++
+ static const struct of_device_id qcom_pcie_match[] = {
+ 	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
+ 	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
+@@ -1669,6 +1694,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+ 	{ .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(of, qcom_pcie_match);
+ 
+ static void qcom_fixup_class(struct pci_dev *dev)
+ {
+@@ -1684,10 +1710,14 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
+ 
+ static struct platform_driver qcom_pcie_driver = {
+ 	.probe = qcom_pcie_probe,
++	.remove = qcom_pcie_remove,
+ 	.driver = {
+ 		.name = "qcom-pcie",
+-		.suppress_bind_attrs = true,
+ 		.of_match_table = qcom_pcie_match,
+ 	},
+ };
+-builtin_platform_driver(qcom_pcie_driver);
++module_platform_driver(qcom_pcie_driver);
++
++MODULE_AUTHOR("Stanimir Varbanov <svarbanov@mm-sol.com>");
++MODULE_DESCRIPTION("Qualcomm PCIe root complex driver");
++MODULE_LICENSE("GPL");
+-- 
+2.35.1
 
-There is no such property documented. Either add bindings, or drop.
-
-> +	qcom,board-id = <47 0>;
-
-The same.
-
-> +};
-> +
-> +&adsp_pil {
-> +	firmware-name = "qcom/msm8996/natrium/adsp.mbn";
-> +};
-> +
-> +&blsp2_i2c6 {
-> +	synaptics@20 {
-> +		compatible = "syna,rmi4-i2c";
-> +		reg = <0x20>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-
-Why do you have address/size cells here?
-
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <125 IRQ_TYPE_LEVEL_LOW>;
-> +		vdda-supply = <&vreg_l6a_1p8>;
-> +		vdd-supply = <&vdd_3v2_tp>;
-> +		reset-gpios = <&tlmm 89 GPIO_ACTIVE_LOW>;
-> +
-> +		pinctrl-names = "default", "sleep";
-> +		pinctrl-0 = <&touchscreen_default>;
-> +		pinctrl-1 = <&touchscreen_sleep>;
-> +	};
-> +
-
-No need for blank line.
-
-> +};
-> +
-> +&dsi0 {
-> +	status = "okay";
-> +
-> +	vdd-supply = <&vreg_l2a_1p25>;
-> +	vdda-supply = <&vreg_l19a_3p3>;
-> +	vddio-supply = <&vreg_l14a_1p8>;
-> +
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&mdss_dsi_default &mdss_te_default>;
-> +	pinctrl-1 = <&mdss_dsi_sleep &mdss_te_sleep>;
-> +
-> +	panel: panel@0 {
-> +		compatible = "jdi,fhd-r63452";
-> +		reg = <0>;
-> +		reset-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
-> +		backlight = <&pmi8994_wled>;
-> +
-> +		port {
-> +			panel_in: endpoint {
-> +				remote-endpoint = <&dsi0_out>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&dsi0_out {
-> +	remote-endpoint = <&panel_in>;
-> +};
-> +
-> +&gpu {
-> +	zap-shader {
-> +		firmware-name = "qcom/msm8996/natrium/a530_zap.mbn";
-> +	};
-> +};
-> +
-> +&mss_pil {
-> +	firmware-name = "qcom/msm8996/natrium/mba.mbn",
-> +			"qcom/msm8996/natrium/modem.mbn";
-> +};
-> +
-> +&pmi8994_wled {
-> +	status = "okay";
-> +
-> +	qcom,num-strings = <2>;
-> +	qcom,enabled-strings = <0 1>;
-> +	qcom,switching-freq = <600>;
-> +};
-> +
-> +&q6asmdai {
-> +	dai@0 {
-> +		reg = <0>;
-> +	};
-> +
-> +	dai@1 {
-> +		reg = <1>;
-> +	};
-> +
-> +	dai@2 {
-> +		reg = <2>;
-> +	};
-> +};
-> +
-> +&slpi_pil {
-> +	firmware-name = "qcom/msm8996/natrium/slpi.mbn";
-> +};
-> +
-> +&sound {
-> +	compatible = "qcom,apq8096-sndcard";
-> +	model = "natrium";
-> +	audio-routing =	"RX_BIAS", "MCLK";
-> +
-> +	mm1-dai-link {
-> +		link-name = "MultiMedia1";
-> +		cpu {
-> +			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
-> +		};
-> +	};
-> +
-> +	mm2-dai-link {
-> +		link-name = "MultiMedia2";
-> +		cpu {
-> +			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
-> +		};
-> +	};
-> +
-> +	mm3-dai-link {
-> +		link-name = "MultiMedia3";
-> +		cpu {
-> +			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA3>;
-> +		};
-> +	};
-> +
-> +	slim-dai-link {
-> +		link-name = "SLIM Playback";
-> +		cpu {
-> +			sound-dai = <&q6afedai SLIMBUS_6_RX>;
-> +		};
-> +
-> +		platform {
-> +			sound-dai = <&q6routing>;
-> +		};
-> +
-> +		codec {
-> +			sound-dai = <&wcd9335 6>;
-> +		};
-> +	};
-> +
-> +	slimcap-dai-link {
-> +		link-name = "SLIM Capture";
-> +		cpu {
-> +			sound-dai = <&q6afedai SLIMBUS_0_TX>;
-> +		};
-> +
-> +		platform {
-> +			sound-dai = <&q6routing>;
-> +		};
-> +
-> +		codec {
-> +			sound-dai = <&wcd9335 1>;
-> +		};
-> +	};
-> +};
-> +
-> +&venus {
-> +	firmware-name = "qcom/msm8996/natrium/venus.mbn";
-> +};
-> +
-> +&rpm_requests {
-> +	pm8994-regulators {
-> +		vreg_l3a_0p875: l3 {
-> +			regulator-name = "vreg_l3a_0p875";
-> +			regulator-min-microvolt = <850000>;
-> +			regulator-max-microvolt = <1300000>;
-> +		};
-> +		vreg_l11a_1p1: l11 {
-> +			regulator-name = "vreg_l11a_1p1";
-> +			regulator-min-microvolt = <1100000>;
-> +			regulator-max-microvolt = <1100000>;
-> +		};
-> +		vreg_l17a_2p8: l17 {
-> +			regulator-name = "vreg_l17a_2p8";
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <2800000>;
-> +		};
-> +		vreg_l18a_2p8: l18 {
-> +			regulator-name = "vreg_l18a_2p8";
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <2800000>;
-> +		};
-> +		vreg_l29a_2p8: l29 {
-> +			regulator-name = "vreg_l29a_2p8";
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <2800000>;
-> +		};
-> +	};
-> +};
-> +
-> +&pm8994_gpios {
-> +	gpio-line-names =
-> +		"NC",			/* GPIO_1  */
-> +		"VOL_UP_N",		/* GPIO_2  */
-> +		"SPKR_ID",		/* GPIO_3  */
-> +		"PWM_HAPTICS",		/* GPIO_4  */
-> +		"INFARED_DRV",		/* GPIO_5  */
-> +		"NC",			/* GPIO_6  */
-> +		"KEYPAD_LED_EN_A",	/* GPIO_7  */
-> +		"WL_EN",		/* GPIO_8  */
-> +		"3P3_ENABLE",		/* GPIO_9  */
-> +		"NC",			/* GPIO_10 */
-> +		"NC",			/* GPIO_11 */
-> +		"NC",			/* GPIO_12 */
-> +		"NC",			/* GPIO_13 */
-> +		"NC",			/* GPIO_14 */
-> +		"DIVCLK1_CDC",		/* GPIO_15 */
-> +		"DIVCLK2_HAPTICS",	/* GPIO_16 */
-> +		"NC",			/* GPIO_17 */
-> +		"32KHz_CLK_IN",		/* GPIO_18 */
-> +		"BT_EN",		/* GPIO_19 */
-> +		"PMIC_SLB",		/* GPIO_20 */
-> +		"UIM_BATT_ALARM",	/* GPIO_21 */
-> +		"NC";			/* GPIO_22 */
-> +};
-> +
-> +&pm8994_mpps {
-> +	gpio-line-names =
-> +		"NC",			/* MPP_1 */
-> +		"CCI_TIMER1",		/* MPP_2 */
-> +		"PMIC_SLB",		/* MPP_3 */
-> +		"EXT_FET_WLED_PWR_EN_N",/* MPP_4 */
-> +		"NC",			/* MPP_5 */
-> +		"NC",			/* MPP_6 */
-> +		"NC",			/* MPP_7 */
-> +		"NC";			/* MPP_8 */
-> +};
-> +
-> +&pmi8994_gpios {
-> +	gpio-line-names =
-> +		"NC",			/* GPIO_1  */
-> +		"SPKR_PA_EN",		/* GPIO_2  */
-> +		"NC",			/* GPIO_3  */
-> +		"NC",			/* GPIO_4  */
-> +		"NC",			/* GPIO_5  */
-> +		"NC",			/* GPIO_6  */
-> +		"NC",			/* GPIO_7  */
-> +		"NC",			/* GPIO_8  */
-> +		"NC",			/* GPIO_9  */
-> +		"NC";			/* GPIO_10 */
-> +};
-> +
-> +&tlmm {
-> +	gpio-line-names =
-> +		"ESE_SPI_MOSI",		/* GPIO_0   */
-> +		"ESE_SPI_MISO",		/* GPIO_1   */
-> +		"NC",			/* GPIO_2   */
-> +		"ESE_SPI_CLK",		/* GPIO_3   */
-> +		"MSM_UART_TX",		/* GPIO_4   */
-> +		"MSM_UART_RX",		/* GPIO_5   */
-> +		"NFC_I2C_SDA",		/* GPIO_6   */
-> +		"NFC_I2C_SCL",		/* GPIO_7   */
-> +		"LCD0_RESET_N",		/* GPIO_8   */
-> +		"NFC_IRQ",		/* GPIO_9   */
-> +		"LCD_TE",		/* GPIO_10  */
-> +		"LCD_ID_DET1",		/* GPIO_11  */
-> +		"NFC_DISABLE",		/* GPIO_12  */
-> +		"CAM_MCLK0",		/* GPIO_13  */
-> +		"CAM_MCLK1",		/* GPIO_14  */
-> +		"CAM_MCLK2",		/* GPIO_15  */
-> +		"ESE_PWR_REQ",		/* GPIO_16  */
-> +		"CCI_I2C_SDA0",		/* GPIO_17  */
-> +		"CCI_I2C_SCL0",		/* GPIO_18  */
-> +		"CCI_I2C_SDA1",		/* GPIO_19  */
-> +		"CCI_I2C_SCL1",		/* GPIO_20  */
-> +		"NFC_DWL_REQ",		/* GPIO_21  */
-> +		"CCI_TIMER1",		/* GPIO_22  */
-> +		"WEBCAM1_RESET_N",	/* GPIO_23  */
-> +		"ESE_IRQ",		/* GPIO_24  */
-> +		"NC",			/* GPIO_25  */
-> +		"WEBCAM1_STANDBY",	/* GPIO_26  */
-> +		"NC",			/* GPIO_27  */
-> +		"NC",			/* GPIO_28  */
-> +		"NC",			/* GPIO_29  */
-> +		"CAM_VDD_1P2_EN_2",	/* GPIO_30  */
-> +		"CAM_RESET_0",		/* GPIO_31  */
-> +		"CAM_RESET_1",		/* GPIO_32  */
-> +		"NC",			/* GPIO_33  */
-> +		"NC",			/* GPIO_34  */
-> +		"PCI_E0_RST_N",		/* GPIO_35  */
-> +		"PCI_E0_CLKREQ_N",	/* GPIO_36  */
-> +		"PCI_E0_WAKE",		/* GPIO_37  */
-> +		"CHARGER_INT",		/* GPIO_38  */
-> +		"CHARGER_RESET",	/* GPIO_39  */
-> +		"NC",			/* GPIO_40  */
-> +		"QCA_UART_TXD",		/* GPIO_41  */
-> +		"QCA_UART_RXD",		/* GPIO_42  */
-> +		"QCA_UART_CTS",		/* GPIO_43  */
-> +		"QCA_UART_RTS",		/* GPIO_44  */
-> +		"MAWC_UART_TX",		/* GPIO_45  */
-> +		"MAWC_UART_RX",		/* GPIO_46  */
-> +		"NC",			/* GPIO_47  */
-> +		"NC",			/* GPIO_48  */
-> +		"NC",			/* GPIO_49  */
-> +		"FP_SPI_RST",		/* GPIO_50  */
-> +		"TYPEC_I2C_SDA",	/* GPIO_51  */
-> +		"TYPEC_I2C_SCL",	/* GPIO_52  */
-> +		"CODEC_INT2_N",		/* GPIO_53  */
-> +		"CODEC_INT1_N",		/* GPIO_54  */
-> +		"APPS_I2C7_SDA",	/* GPIO_55  */
-> +		"APPS_I2C7_SCL",	/* GPIO_56  */
-> +		"FORCE_USB_BOOT",	/* GPIO_57  */
-> +		"NC",			/* GPIO_58  */
-> +		"NC",			/* GPIO_59  */
-> +		"NC",			/* GPIO_60  */
-> +		"NC",			/* GPIO_61  */
-> +		"ESE_RSTN",		/* GPIO_62  */
-> +		"TYPEC_INT",		/* GPIO_63  */
-> +		"CODEC_RESET_N",	/* GPIO_64  */
-> +		"PCM_CLK",		/* GPIO_65  */
-> +		"PCM_SYNC",		/* GPIO_66  */
-> +		"PCM_DIN",		/* GPIO_67  */
-> +		"PCM_DOUT",		/* GPIO_68  */
-> +		"CDC_44K1_CLK",		/* GPIO_69  */
-> +		"SLIMBUS_CLK",		/* GPIO_70  */
-> +		"SLIMBUS_DATA0",	/* GPIO_71  */
-> +		"SLIMBUS_DATA1",	/* GPIO_72  */
-> +		"LDO_5V_IN_EN",		/* GPIO_73  */
-> +		"TYPEC_EN_N",		/* GPIO_74  */
-> +		"NC",			/* GPIO_75  */
-> +		"NC",			/* GPIO_76  */
-> +		"NC",			/* GPIO_77  */
-> +		"NC",			/* GPIO_78  */
-> +		"NC",			/* GPIO_79  */
-> +		"SENSOR_RESET_N",	/* GPIO_80  */
-> +		"FP_SPI_MOSI",		/* GPIO_81  */
-> +		"FP_SPI_MISO",		/* GPIO_82  */
-> +		"FP_SPI_CS_N",		/* GPIO_83  */
-> +		"FP_SPI_CLK",		/* GPIO_84  */
-> +		"NC",			/* GPIO_85  */
-> +		"CAM_VDD_1P2_EN",	/* GPIO_86  */
-> +		"MSM_TS_I2C_SDA",	/* GPIO_87  */
-> +		"MSM_TS_I2C_SCL",	/* GPIO_88  */
-> +		"TS_RESOUT_N",		/* GPIO_89  */
-> +		"ESE_SPI_CS_N",		/* GPIO_90  */
-> +		"NC",			/* GPIO_91  */
-> +		"CAM2_AVDD_EN",		/* GPIO_92  */
-> +		"CAM2_VCM_EN",		/* GPIO_93  */
-> +		"NC",			/* GPIO_94  */
-> +		"NC",			/* GPIO_95  */
-> +		"NC",			/* GPIO_96  */
-> +		"GRFC_0",		/* GPIO_97  */
-> +		"GRFC_1",		/* GPIO_98  */
-> +		"NC",			/* GPIO_99  */
-> +		"GRFC_3",		/* GPIO_100 */
-> +		"GRFC_4",		/* GPIO_101 */
-> +		"GRFC_5",		/* GPIO_102 */
-> +		"NC",			/* GPIO_103 */
-> +		"GRFC_7",		/* GPIO_104 */
-> +		"UIM2_DATA",		/* GPIO_105 */
-> +		"UIM2_CLK",		/* GPIO_106 */
-> +		"UIM2_RESET",		/* GPIO_107 */
-> +		"UIM2_PRESENT",		/* GPIO_108 */
-> +		"UIM1_DATA",		/* GPIO_109 */
-> +		"UIM1_CLK",		/* GPIO_110 */
-> +		"UIM1_RESET",		/* GPIO_111 */
-> +		"UIM1_PRESENT",		/* GPIO_112 */
-> +		"UIM_BATT_ALARM",	/* GPIO_113 */
-> +		"GRFC_8",		/* GPIO_114 */
-> +		"GRFC_9",		/* GPIO_115 */
-> +		"TX_GTR_THRES",		/* GPIO_116 */
-> +		"ACCEL_INT",		/* GPIO_117 */
-> +		"GYRO_INT",		/* GPIO_118 */
-> +		"COMPASS_INT",		/* GPIO_119 */
-> +		"PROXIMITY_INT_N",	/* GPIO_120 */
-> +		"FP_IRQ",		/* GPIO_121 */
-> +		"P_SENSE",		/* GPIO_122 */
-> +		"HALL_INTR2",		/* GPIO_123 */
-> +		"HALL_INTR1",		/* GPIO_124 */
-> +		"TS_INT_N",		/* GPIO_125 */
-> +		"NC",			/* GPIO_126 */
-> +		"GRFC_11",		/* GPIO_127 */
-> +		"NC",			/* GPIO_128 */
-> +		"EXT_GPS_LNA_EN",	/* GPIO_129 */
-> +		"NC",			/* GPIO_130 */
-> +		"LCD_ID_DET2",		/* GPIO_131 */
-> +		"LCD_TE2",		/* GPIO_132 */
-> +		"GRFC_14",		/* GPIO_133 */
-> +		"GSM_TX2_PHASE_D",	/* GPIO_134 */
-> +		"NC",			/* GPIO_135 */
-> +		"GRFC_15",		/* GPIO_136 */
-> +		"RFFE3_DATA",		/* GPIO_137 */
-> +		"RFFE3_CLK",		/* GPIO_138 */
-> +		"NC",			/* GPIO_139 */
-> +		"NC",			/* GPIO_140 */
-> +		"RFFE5_DATA",		/* GPIO_141 */
-> +		"RFFE5_CLK",		/* GPIO_142 */
-> +		"NC",			/* GPIO_143 */
-> +		"COEX_UART_TX",		/* GPIO_144 */
-> +		"COEX_UART_RX",		/* GPIO_145 */
-> +		"RFFE2_DATA",		/* GPIO_146 */
-> +		"RFFE2_CLK",		/* GPIO_147 */
-> +		"RFFE1_DATA",		/* GPIO_148 */
-> +		"RFFE1_CLK";		/* GPIO_149 */
-> +
-> +	touchscreen_default: touchscreen_default {
-
-No underscores in node names.
-
-> +		pins = "gpio89", "gpio125";
-> +		function = "gpio";
-> +		drive-strength = <10>;
-> +		bias-pull-up;
-> +	};
-> +
-> +	touchscreen_sleep: touchscreen_sleep {
-
-The same.
-
-> +		pins = "gpio89", "gpio125";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-> +};
-
-
-Best regards,
-Krzysztof
