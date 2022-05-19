@@ -2,140 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C492252DBF4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 19:52:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E5E752DD55
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 21:01:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243439AbiESRwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 13:52:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51304 "EHLO
+        id S244264AbiESTBi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 15:01:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243427AbiESRwa (ORCPT
+        with ESMTP id S243651AbiESTB3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 13:52:30 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F27513D29;
-        Thu, 19 May 2022 10:50:53 -0700 (PDT)
+        Thu, 19 May 2022 15:01:29 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BECD8286ED;
+        Thu, 19 May 2022 12:01:26 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id w4so8417876wrg.12;
+        Thu, 19 May 2022 12:01:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652982653; x=1684518653;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=5kM8wfwdVVMpu4XIfWch6CVxolwvVx9Fn/lj75QXlMQ=;
-  b=ObgsH0SRuC7UHCT5ldlmMwZY5YLyDaX/IRHfHEP2rf59ierUxXwWZiYH
-   gDkH3g1ZS3C9OTjpSf9ZIDCISOODJ2eexDSxAKHRPETdhh3ICYR6zvL7m
-   UHPw7U/F2pPsJHHpNrYwGxqNJsrAmgd/TYvKyqDRTR9FF/oflliCnOhTb
-   c=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 19 May 2022 10:50:53 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 10:50:52 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 19 May 2022 10:50:51 -0700
-Received: from [10.110.100.160] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 19 May
- 2022 10:50:49 -0700
-Message-ID: <089aaf55-084b-9a29-629c-3096930fac3b@quicinc.com>
-Date:   Thu, 19 May 2022 10:50:48 -0700
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AnHJhI+ziwlPwu5NQv9qfEIlA0yv7rIa46hdD1NJODM=;
+        b=ZrADJC4tGLoNcGAx8Qx4Eb5CgbinQIveNghZ//NlZ8fWbRVGQ7LKm7TcI5hQhWwtIi
+         CWxfO5AbVAJwpI1Vck1+m97SJaLJFmWp9HxcucF8wENR1bYBt4ZvM9eiT8PILEnjX1iz
+         CR69gxZYZTZ0TdSPFAjmvTGRgWYczpVOkphmgREswSfNdrDeN4yKoqPjMnFDCX6E27Il
+         yqIBAKkdVQ5/ONOLwuQlQk4lnDVyF/iLieKy9sjvEX3K/Zv3xIP72WPpV/21SzBnVqil
+         Fx4bQKv2B5OhD9uENiKov8Co1Tufwqgbe8PQgh7qWPXXBkH90kFUWbbeA+qMBRqO0Ttc
+         Bx/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AnHJhI+ziwlPwu5NQv9qfEIlA0yv7rIa46hdD1NJODM=;
+        b=FNVBhAUAOs/E9KMByFocCWNLp98FTebuYAC3L0Pdpm2eDd9bKzGSX19ToOVR18pugY
+         OBtwCebua4Xdq9PDHpNTzkFOTzvSjbGDHvvm9GDmdloR7YsDXPtYQz0qZd4urNSv0TOb
+         i0/NcflDhb7VnA13ykyB9DWSxPpyqbPxZ7ogwWdAQpMMXBMRW32Spksf242iUJ1ffSQP
+         w75ni9ql5NfW4z20VM9MuVENogzyuU4+q4xL9hO85Jc8u1WwU/i+z0Cyg65qtWXxesWs
+         72nKRkY9gxvPGVq/x8lQ3BQz1SbqfyyK0ASUTUOcfYetkCN3nofAdEiJOiyeMbuQLMdj
+         iI8A==
+X-Gm-Message-State: AOAM5333FZxmHbPbdQ/URFrHtN+wt15ZMw62OEGUojuuiBIWxi+HV/7k
+        PwpnXXjM9xExLidwLDpjjkZAqAylusM=
+X-Google-Smtp-Source: ABdhPJyvhOD959sAuMcgvEsVvIrvXhEaFh8Ke8XoUH7NYV+vpHFVBmrCAta15kxCI5oIdxA6psDWsg==
+X-Received: by 2002:a5d:47c5:0:b0:20e:73a0:79a0 with SMTP id o5-20020a5d47c5000000b0020e73a079a0mr1901351wrc.632.1652986885110;
+        Thu, 19 May 2022 12:01:25 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.googlemail.com with ESMTPSA id h11-20020a05600c414b00b00395b809dfd3sm333767wmm.12.2022.05.19.12.01.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 May 2022 12:01:24 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>
+Subject: [PATCH v4 0/2] Add support for unprotected spare data page
+Date:   Thu, 19 May 2022 21:01:10 +0200
+Message-Id: <20220519190112.6344-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v7] drm/msm/dp: Always clear mask bits to disable
- interrupts at dp_ctrl_reset_irq_ctrl()
-Content-Language: en-US
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1652804494-19650-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <1652804494-19650-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Some background about this.
+On original qsdk ipq8064 based firmware there was a big separation from
+boot partition and user partition. With boot partition we refer to
+partition used to init the router (bootloader, spm firmware and other
+internal stuff) With user partition we refer to linux partition and data
+partition not used to init the router.
+When someone had to write to these boot partition a special mode was
+needed, to switch the nand driver to this special configuration.
 
-On 5/17/2022 9:21 AM, Kuogee Hsieh wrote:
+Upstream version of the nandc driver totally dropped this and the result
+is that if someone try to read data from these partition a CRC warning
+is printed and if someone try to write that (if for example someone
+wants to replace the bootloader) result is a broken system as the data
+is badly written.
 
-Is anyone has comments on this patch?
-> dp_catalog_ctrl_reset() will software reset DP controller. But it will
-> not reset programmable registers to default value. DP driver still have
-> to clear mask bits to interrupt status registers to disable interrupts
-> after software reset of controller.
->
-> At current implementation, dp_ctrl_reset_irq_ctrl() will software reset dp
-> controller but did not call dp_catalog_ctrl_enable_irq(false) to clear hpd
-> related interrupt mask bits to disable hpd related interrupts due to it
-> mistakenly think hpd related interrupt mask bits will be cleared by software
-> reset of dp controller automatically. This mistake may cause system to crash
-> during suspending procedure due to unexpected irq fired and trigger event
-> thread to access dp controller registers with controller clocks are disabled.
->
-> This patch fixes system crash during suspending problem by removing "enable"
-> flag condition checking at dp_ctrl_reset_irq_ctrl() so that hpd related
-> interrupt mask bits are cleared to prevent unexpected from happening.
->
-> Changes in v2:
-> -- add more details commit text
->
-> Changes in v3:
-> -- add synchrons_irq()
-> -- add atomic_t suspended
->
-> Changes in v4:
-> -- correct Fixes's commit ID
-> -- remove synchrons_irq()
->
-> Changes in v5:
-> -- revise commit text
->
-> Changes in v6:
-> -- add event_lock to protect "suspended"
->
-> Changes in v7:
-> -- delete "suspended" flag
->
-> Fixes: 989ebe7bc446 ("drm/msm/dp: do not initialize phy until plugin interrupt received")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/dp/dp_ctrl.c | 9 +++++++--
->   1 file changed, 7 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index 5356856..5ddb4e8 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1380,8 +1380,13 @@ void dp_ctrl_reset_irq_ctrl(struct dp_ctrl *dp_ctrl, bool enable)
->   
->   	dp_catalog_ctrl_reset(ctrl->catalog);
->   
-> -	if (enable)
-> -		dp_catalog_ctrl_enable_irq(ctrl->catalog, enable);
-> +	/*
-> +	 * all dp controller programmable registers will not
-> +	 * be reset to default value after DP_SW_RESET
-> +	 * therefore interrupt mask bits have to be updated
-> +	 * to enable/disable interrupts
-> +	 */
-> +	dp_catalog_ctrl_enable_irq(ctrl->catalog, enable);
->   }
->   
->   void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl)
+This series comes to fix this.
+
+A user can declare offset and size of these special partition using the
+qcom,boot-pages binding.
+
+An initial implementation of this assumed that the boot-pages started
+from the start of the nand but we discover that some device have backup
+of these special partition and we can have situation where we have this
+partition scheme
+- APPSBL (require special mode)
+- APPSBLENV (doesn't require special mode)
+- ART
+- APPSBLBK (back of APPSBL require special mode)
+- APPSBLENVBK (back of APPSBLENV doesn't require special mode)
+With this configuration we need to declare sparse boot page and we can't
+assume boot-pages always starts from the start of the nand.
+
+A user can use this form to declare sparse boot pages
+qcom,boot-pages = <0x0 0x0c80000 0x0c80000 0x0500000>;
+
+The driver internally will parse this array, convert it to nand pages
+and check internally on every read/write if this special configuration
+should used for that page or the normal one.
+
+The reason for all of this is that qcom FOR SOME REASON, disable ECC for
+spare data only for these boot partition and we need to reflect this
+special configuration to mute these warning and to permit actually
+writing to these pages.
+
+v4:
+- Fix wrong compatible set for boot-pages (ipq8074 instead of ipq806x)
+v3:
+- Fix typo in Docmunetation commit desription
+- Add items description for uint32-matrix
+v2:
+- Add fixes from Krzysztof in Documentation
+
+Ansuel Smith (2):
+  mtd: nand: raw: qcom_nandc: add support for unprotected spare data
+    pages
+  dt-bindings: mtd: qcom_nandc: document qcom,boot-pages binding
+
+ .../devicetree/bindings/mtd/qcom,nandc.yaml   |  26 +++
+ drivers/mtd/nand/raw/qcom_nandc.c             | 148 +++++++++++++++++-
+ 2 files changed, 169 insertions(+), 5 deletions(-)
+
+-- 
+2.34.1
+
