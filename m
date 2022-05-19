@@ -2,123 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A2AFD52CABF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 06:11:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3CD252CAD3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 06:23:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231635AbiESELu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 00:11:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55180 "EHLO
+        id S229995AbiESEXS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 00:23:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229766AbiESELu (ORCPT
+        with ESMTP id S231826AbiESEXR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 00:11:50 -0400
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E70E22ED6B;
-        Wed, 18 May 2022 21:11:47 -0700 (PDT)
-Received: by mail-yb1-xb2e.google.com with SMTP id d137so6918663ybc.13;
-        Wed, 18 May 2022 21:11:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bFhlKzSaR6ttt7NqrtERyj3kXNktY+qnVphxc8I2l0o=;
-        b=BLfRsxcxlMi1Y5o++ywuASu81Qy2RkoVzIqFvd9q60/wi4GOhQkpVF9uKahxFeTwRZ
-         czRMCieOd03+oLJ/WHdZVi4UIHixQ+f8v0pdmfqeuJtRnCF6OAGYOoymq9ip2NSuLXez
-         EBTgyk/roqURkeCZA+YCJ6BMpQj9vwFjcoj8y9Gs1rvnN4GhisBv5mvEvJ4xo0lf+2S9
-         6xr118IQC4uWY5gRORMlzH4peJ5j3S8oxVnaRDGrqFgQOkcmwH9gplr6h/MXz/WlbXMz
-         oPuSlvVBi6OxZV5JOjBxAYWNP0P5CmPNZwMecvmd+x4BhnONptjdLGXWQrBqB1MoNd/+
-         ZG0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bFhlKzSaR6ttt7NqrtERyj3kXNktY+qnVphxc8I2l0o=;
-        b=ZU35FBwTd9LP9B66dLmogxm6f0e2Cq5/SMX8ADDOqs3p4rTnfhjlvibTwqwZ7Ldj8k
-         qeEp5ITckQLtbmdI7q+59qJS+yadVD7az8wz27BSAbuchQ+GMe74x2pmBHpLE9QNqKYY
-         2f+PI30Zck/FQ6vyqfssIvg7CBXl6MOcC134Flqwozqig5/T1pR6Yi/42V5mcIMnXbIT
-         v8EAKG/LSaLJrMTs1qr8cKCLKN/k/bdcgEkWLb57At4WB6+g+o/S1W4YJiKQJBw3GWZ0
-         jE5B22Nhz5O0OQecukY4vB/L5NcWaV/J3ZAtct4xrX9SFJVDsDVoMeO1Gr9kbx1TTdEQ
-         6Uvg==
-X-Gm-Message-State: AOAM531g9JRtb+dK8Zdoj1wLJVtNV/96ziZJ3l/2SqcudE7vljP+UHSi
-        y1pG6j0I9eJGjAOAnWLrhg5JJ518VFK/B+P5RC8=
-X-Google-Smtp-Source: ABdhPJxrPNHuFfLZdogkAdNbyNhC5Zol80t3bYRV9oHaQG2OfwbsEqx86Ha17cwk8YkMoFGq+CnFUJJwK1lceIbxSZQ=
-X-Received: by 2002:a25:2488:0:b0:64e:a74d:fc7e with SMTP id
- k130-20020a252488000000b0064ea74dfc7emr2557167ybk.563.1652933507213; Wed, 18
- May 2022 21:11:47 -0700 (PDT)
+        Thu, 19 May 2022 00:23:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC634506FB;
+        Wed, 18 May 2022 21:23:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6B27B6198B;
+        Thu, 19 May 2022 04:23:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AACC385B8;
+        Thu, 19 May 2022 04:23:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1652934195;
+        bh=6ta6aaI6tZYd4czjbXO9LuG4HfvGWt2Y/Ts7jlbhP/0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=j16VJIovr/SGv3ZmRNnW+P/VjcCm3XxU8S+Q2r7Is31qpQ7HK7uFdFMjj8HCFi/3o
+         vcKDWB1ojUKaatdsHkBTngatO1oglaywdWX91smvl6wqZeGenURDV0wO6jYpJg700A
+         CsyO2bgguOOYbqsNJlRCjLGtx/rIN6/CFCgZtzqecDKPwUwtsEnhncXG54lpgUpqiw
+         TsGppih04cBPrElfBzM3OU99RG5JF445YX3QTAPlqF3v9ThQ6hcV2F5Ngs2ktgx+l1
+         7vkSwnTHp5pEm99S1Vxa6KgpF71ahYnh+Mle9yR6HGuJU2wKS37EOzH7dxmRTUd/Z9
+         PYPT/fckxC7AA==
+Date:   Thu, 19 May 2022 09:53:11 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        daniel@ffwll.ch, airlied@linux.ie, agross@kernel.org,
+        dmitry.baryshkov@linaro.org, bjorn.andersson@linaro.org,
+        quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 2/3] phy/qualcomm: add regulator_set_load to dp phy
+Message-ID: <YoXGL908lcypSaQc@matsya>
+References: <1652909790-16245-1-git-send-email-quic_khsieh@quicinc.com>
+ <1652909790-16245-3-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
-References: <20220518192924.20948-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20220518192924.20948-6-prabhakar.mahadev-lad.rj@bp.renesas.com> <CAHp75VfbcYCH5XgnP9VB0hX0W3_jdvSBmXSB1ANMiT66yLQvOA@mail.gmail.com>
-In-Reply-To: <CAHp75VfbcYCH5XgnP9VB0hX0W3_jdvSBmXSB1ANMiT66yLQvOA@mail.gmail.com>
-From:   "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
-Date:   Thu, 19 May 2022 05:11:22 +0100
-Message-ID: <CA+V-a8vBxtHeRqo9a9w7wWyAF28stZqoUt-cE1iYKNE4BDNc0w@mail.gmail.com>
-Subject: Re: [PATCH v4 5/7] gpio: gpiolib: Add a check to validate GPIO hwirq
-To:     Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Biju Das <biju.das.jz@bp.renesas.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1652909790-16245-3-git-send-email-quic_khsieh@quicinc.com>
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Andy,
+On 18-05-22, 14:36, Kuogee Hsieh wrote:
+> This patch add regulator_set_load() before enable regulator at
+> DP phy driver.
 
-Thank you for the review.
+sigh! still wrong tags!
 
-On Wed, May 18, 2022 at 10:08 PM Andy Shevchenko
-<andy.shevchenko@gmail.com> wrote:
->
-> On Wed, May 18, 2022 at 9:30 PM Lad Prabhakar
-> <prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
-> >
-> > Add a check to validate GPIO hwirq is always within the range of hwirq_max
-> > set in the GPIO irq domain.
->
-> ...
->
-> > +                       if (WARN(hwirq >= domain->hwirq_max,
-> > +                                "error: hwirq 0x%x is too large for %s\n",
-> > +                                (int)hwirq, domain->name))
->
-> Using castings in the printf() often points to possible mistakes or
-> missed custom specifiers.
->
-Right, I picked up the printf() just a few lines above where it did
-the same exact thing. I will update it in the next version.
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> index b144ae1..20ac446 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> @@ -3130,6 +3130,7 @@ struct qmp_phy_cfg {
+>  	int num_resets;
+>  	/* regulators to be requested */
+>  	const char * const *vreg_list;
+> +	const unsigned int *vreg_enable_load;
+>  	int num_vregs;
+>  
+>  	/* array of registers with different offsets */
+> @@ -3346,6 +3347,10 @@ static const char * const qmp_phy_vreg_l[] = {
+>  	"vdda-phy", "vdda-pll",
+>  };
+>  
+> +static const unsigned int qmp_phy_vreg_enable_load[] = {
+> +	21800, 36000
+> +};
+> +
+>  static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
+>  	.type			= PHY_TYPE_USB3,
+>  	.nlanes			= 1,
+> @@ -4072,6 +4077,7 @@ static const struct qmp_phy_cfg sm8250_usb3phy_cfg = {
+>  	.reset_list		= msm8996_usb3phy_reset_l,
+>  	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+>  	.vreg_list		= qmp_phy_vreg_l,
+> +	.vreg_enable_load	= qmp_phy_vreg_enable_load,
+>  	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+>  	.regs			= qmp_v4_usb3phy_regs_layout,
+>  
+> @@ -4139,6 +4145,7 @@ static const struct qmp_phy_cfg sm8250_dpphy_cfg = {
+>  	.reset_list		= msm8996_usb3phy_reset_l,
+>  	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+>  	.vreg_list		= qmp_phy_vreg_l,
+> +	.vreg_enable_load	= qmp_phy_vreg_enable_load,
+>  	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+>  	.regs			= qmp_v4_usb3phy_regs_layout,
+>  
+> @@ -5008,6 +5015,11 @@ static int qcom_qmp_phy_com_init(struct qmp_phy *qphy)
+>  		return 0;
+>  	}
+>  
+> +	if (cfg->vreg_enable_load) {
+> +		for (i = cfg->num_vregs - 1; i >= 0; --i)
+> +			regulator_set_load(qmp->vregs[i].consumer, cfg->vreg_enable_load[i]);
+> +	}
+> +
+>  	/* turn on regulator supplies */
+>  	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
+>  	if (ret) {
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 
-> ...
->
-> > +               if (WARN(hwirq >= domain->hwirq_max,
-> > +                        "error: hwirq 0x%x is too large for %s\n", (int)hwirq, domain->name))
->
-> Ditto.
->
-Will drop castings.
-
-Cheers,
-Prabhakar
+-- 
+~Vinod
