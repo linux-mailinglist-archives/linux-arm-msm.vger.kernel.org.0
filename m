@@ -2,59 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0188352D384
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 15:05:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CEC552D3A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 15:12:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238414AbiESNFw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 09:05:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55366 "EHLO
+        id S238383AbiESNMc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 09:12:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238431AbiESNFu (ORCPT
+        with ESMTP id S233781AbiESNMa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 09:05:50 -0400
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A9A65FBB;
-        Thu, 19 May 2022 06:05:48 -0700 (PDT)
-Received: by mail-oi1-f178.google.com with SMTP id s188so2576871oie.4;
-        Thu, 19 May 2022 06:05:48 -0700 (PDT)
+        Thu, 19 May 2022 09:12:30 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4594AEE24
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 06:12:28 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 27so1222591ljw.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 06:12:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Tbdzb2bRxg6928mKfr1eQOs/EHKsEy71qlxik1ZfHuc=;
+        b=tPZRoKf1FlzJiaJ/LSleGDTLKgl7yH7IGkYrmC9jz8fvV59szPSLEx9tzbAJuOYU8k
+         hllYDvJHQtHZNRxc1bZ0kYGluAm3oi81WSbXFp7wA8pUYdqZZYxUDbQkVIvSGveNfZQ5
+         ordtsUr+t5+4hUODc0Ikjsi9nK1nRTPDpO8ewpxWr9wC7+U+6cP/97mUOeC2H5hsoTWY
+         s/2pWEkuiucEchrCOqINbhN+8T85nI3kof5SooGUz6erEZYnsbQQn29SsqevWcRxij4e
+         kr1RoaRklvO6n+JCOxp/U+f2f+3BWg2GCVk2xGxCv7oFjTGbiUgt9vN7Y49/IjMSOc/i
+         Vzxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=Gt17Lfq2MMgEmt6V/TKx+0AiZ00DH5GmbDvbL37/fjw=;
-        b=bfT4tnqPg5ysrJOcizp4HogidXlJ0jyWuU36Pl8Nu0/VsHZG4EUaQxUTJhLeg3XyjP
-         2ewk1ulmca2D/SSd1cw7Z55axta65Jf3Hh0uK2u4PBufoUMDXSfJj4mDMl/7CEQzXc0e
-         /0HdZn7YvHEjTnvRkPigvLy1Fs+tTxauV6079udCQjEA6W0l4vO8UcvWRJKW3KZeNiBR
-         Mv+zuQtf9/i67+ARp3eIFFtJSZrgQzZg0EwvZyfV6jN6mBAi8fBstUGPz1zs1A+I77q0
-         kTKiWIk6Lw+rwh1xzxobkymL5Dvr6DgwBS1hAILupnkQZ7fqIj3uA1n3vwhdNuI1Spoa
-         3y7g==
-X-Gm-Message-State: AOAM532BoO9b1SNzRXpasBiu3cdVInHA3t7AKbzgwfjq2jYgSsJDyYGq
-        XM1UTAh4DU8RIOqwnhk2XA==
-X-Google-Smtp-Source: ABdhPJxuHzH+IqaJFjpxSmZnR3V5wGp3HRGfFGUUEJOESPOJAfQKGPapqfE24wE16oUt84cf9LCAzw==
-X-Received: by 2002:aca:c0c5:0:b0:325:9ed4:a240 with SMTP id q188-20020acac0c5000000b003259ed4a240mr2515515oif.289.1652965547373;
-        Thu, 19 May 2022 06:05:47 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id y130-20020aca3288000000b00325cda1ff8dsm1834839oiy.12.2022.05.19.06.05.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 06:05:46 -0700 (PDT)
-Received: (nullmailer pid 1359567 invoked by uid 1000);
-        Thu, 19 May 2022 13:05:39 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Alec Su <ae40515@yahoo.com.tw>
-Cc:     linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, y.oudjana@protonmail.com,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        sboyd@codeaurora.org
-In-Reply-To: <20220519074112.25600-3-ae40515@yahoo.com.tw>
-References: <20220519074112.25600-1-ae40515@yahoo.com.tw> <20220519074112.25600-3-ae40515@yahoo.com.tw>
-Subject: Re: [PATCH 2/2] dt-bindings: arm: qcom: Document xiaomi,natrium board
-Date:   Thu, 19 May 2022 08:05:39 -0500
-Message-Id: <1652965539.974526.1359566.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Tbdzb2bRxg6928mKfr1eQOs/EHKsEy71qlxik1ZfHuc=;
+        b=70iNwYG7zq5DVN6F0JTEqbysbIIRLGDuzSvbf+vKCx6DaSU3YEvFVICcKzLy+epHed
+         vw8qbImIQTAs087iUOQcOE/J6TrzuWJ/km60vnzJt4Z8Tn78+bxNAvzE598AKoIhkeVu
+         SUVToZR0xPws2anrm2X5g4Jmllqyh/pRT9jE7rF8UBbyxFI9vMnP6sLJ0AFpJDuTFx+B
+         Hc6Zr3T+VgV9YAvqftG2JIM9XuvCYtqXrsiAD6J9diMrus2b5ni2q0GG5aSjP3XSi6xv
+         GVgi1rcGuHiD/diNhi58V/sVlrE1XZJ5ZKajuEmUtgTRvmElQQzYPUzArAA2aBDWTkxj
+         yzCA==
+X-Gm-Message-State: AOAM5309knuSwFeJpJPnOJhwtEfB/KNVE7aiDXPnnZkb73bdhaw3Jght
+        ZzEFM6Bic+EQq4/Uhdx2eHpvt8PBng3b0NnbHkfIvA==
+X-Google-Smtp-Source: ABdhPJwnhgPHFqa5mGfL1upSwxPA4GdglCVq6IdM8730POYTcoZpgJGdmGeVx20WdRrQeXywDLaSPOPlVzmQrnlRv1k=
+X-Received: by 2002:a2e:954c:0:b0:253:d9bf:9f55 with SMTP id
+ t12-20020a2e954c000000b00253d9bf9f55mr469067ljh.300.1652965947206; Thu, 19
+ May 2022 06:12:27 -0700 (PDT)
+MIME-Version: 1.0
+References: <1652275016-13423-1-git-send-email-quic_mkshah@quicinc.com> <1652275016-13423-3-git-send-email-quic_mkshah@quicinc.com>
+In-Reply-To: <1652275016-13423-3-git-send-email-quic_mkshah@quicinc.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 19 May 2022 15:11:51 +0200
+Message-ID: <CAPDyKFqVU_8d_eMWHPByc5JiCdQGnYfWFc9HRv83X55N8UYCfg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] soc: qcom: rpmh-rsc: Attach RSC to cluster PM domain
+To:     Maulik Shah <quic_mkshah@quicinc.com>
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        rafael@kernel.org, daniel.lezcano@linaro.org,
+        quic_lsrao@quicinc.com, quic_rjendra@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,87 +68,167 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 May 2022 07:41:12 +0000, Alec Su wrote:
-> Document Xiaomi Mi 5s Plus (xiaomi-natrium) smartphone which is based on
-> Snapdragon 821 SoC.
-> 
-> Signed-off-by: Alec Su <ae40515@yahoo.com.tw>
+On Wed, 11 May 2022 at 15:17, Maulik Shah <quic_mkshah@quicinc.com> wrote:
+>
+> From: Lina Iyer <ilina@codeaurora.org>
+>
+> RSC is part the CPU subsystem and powers off the CPU domains when all
+> the CPUs and no RPMH transactions are pending from any of the drivers.
+> The RSC needs to flush the 'sleep' and 'wake' votes that are critical
+> for saving power when all the CPUs are in idle.
+>
+> Let's make RSC part of the CPU PM domains, by attaching it to the
+> cluster power domain. Registering for PM domain notifications, RSC
+> driver can be notified that the last CPU is powering down. When the last
+> CPU is powering down the domain, let's flush the 'sleep' and 'wake'
+> votes that are stored in the data buffers into the hardware and also
+> write next wakeup in CONTROL_TCS.
+>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+
+Kind regards
+Uffe
+
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
-
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
-
-Full log is available here: https://patchwork.ozlabs.org/patch/
-
-
-/: compatible: 'oneOf' conditional failed, one must be fixed:
-	arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dtb
-	arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dtb
-	arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dtb
-	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dtb
-	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dtb
-	arch/arm64/boot/dts/qcom/msm8916-mtp.dtb
-	arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dtb
-	arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dtb
-	arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dtb
-	arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dtb
-	arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dtb
-	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dtb
-	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dtb
-	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dtb
-	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dtb
-	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r4.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dtb
-	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dtb
-	arch/arm64/boot/dts/qcom/sc7280-crd.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dtb
-	arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb
-	arch/arm64/boot/dts/qcom/sc7280-idp2.dtb
-	arch/arm64/boot/dts/qcom/sc7280-idp.dtb
-	arch/arm64/boot/dts/qcom/sm8150-hdk.dtb
-	arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dtb
-	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-bahamut.dtb
-	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-griffin.dtb
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dtb
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dtb
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dtb
-	arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dtb
-	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dtb
-	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dtb
-	arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dtb
-
+>  drivers/soc/qcom/rpmh-internal.h |  4 ++-
+>  drivers/soc/qcom/rpmh-rsc.c      | 67 +++++++++++++++++++++++++++++++++++++---
+>  2 files changed, 66 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
+> index 344ba68..cd3d6ce 100644
+> --- a/drivers/soc/qcom/rpmh-internal.h
+> +++ b/drivers/soc/qcom/rpmh-internal.h
+> @@ -97,7 +97,8 @@ struct rpmh_ctrlr {
+>   * @rsc_pm:             CPU PM notifier for controller.
+>   *                      Used when solver mode is not present.
+>   * @cpus_in_pm:         Number of CPUs not in idle power collapse.
+> - *                      Used when solver mode is not present.
+> + *                      Used when solver mode and "power-domains" is not present.
+> + * @genpd_nb:           PM Domain notifier for cluster genpd notifications.
+>   * @tcs:                TCS groups.
+>   * @tcs_in_use:         S/W state of the TCS; only set for ACTIVE_ONLY
+>   *                      transfers, but might show a sleep/wake TCS in use if
+> @@ -117,6 +118,7 @@ struct rsc_drv {
+>         int id;
+>         int num_tcs;
+>         struct notifier_block rsc_pm;
+> +       struct notifier_block genpd_nb;
+>         atomic_t cpus_in_pm;
+>         struct tcs_group tcs[TCS_TYPE_NR];
+>         DECLARE_BITMAP(tcs_in_use, MAX_TCS_NR);
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index 01c2f50c..050b5f5c 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -14,10 +14,13 @@
+>  #include <linux/kernel.h>
+>  #include <linux/list.h>
+>  #include <linux/module.h>
+> +#include <linux/notifier.h>
+>  #include <linux/of.h>
+>  #include <linux/of_irq.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/pm_domain.h>
+> +#include <linux/pm_runtime.h>
+>  #include <linux/slab.h>
+>  #include <linux/spinlock.h>
+>  #include <linux/wait.h>
+> @@ -834,6 +837,50 @@ static int rpmh_rsc_cpu_pm_callback(struct notifier_block *nfb,
+>         return ret;
+>  }
+>
+> +/**
+> + * rpmh_rsc_pd_callback() - Check if any of the AMCs are busy.
+> + * @nfb:    Pointer to the genpd notifier block in struct rsc_drv.
+> + * @action: GENPD_NOTIFY_PRE_OFF, GENPD_NOTIFY_OFF, GENPD_NOTIFY_PRE_ON or GENPD_NOTIFY_ON.
+> + * @v:      Unused
+> + *
+> + * This function is given to dev_pm_genpd_add_notifier() so we can be informed
+> + * about when cluster-pd is going down. When cluster go down we know no more active
+> + * transfers will be started so we write sleep/wake sets. This function gets
+> + * called from cpuidle code paths and also at system suspend time.
+> + *
+> + * If AMCs are not busy then writes cached sleep and wake messages to TCSes.
+> + * The firmware then takes care of triggering them when entering deepest low power modes.
+> + *
+> + * Return:
+> + * * NOTIFY_OK          - success
+> + * * NOTIFY_BAD         - failure
+> + */
+> +static int rpmh_rsc_pd_callback(struct notifier_block *nfb,
+> +                               unsigned long action, void *v)
+> +{
+> +       struct rsc_drv *drv = container_of(nfb, struct rsc_drv, genpd_nb);
+> +
+> +       /* We don't need to lock as genpd on/off are serialized */
+> +       if ((action == GENPD_NOTIFY_PRE_OFF) &&
+> +           (rpmh_rsc_ctrlr_is_busy(drv) || rpmh_flush(&drv->client)))
+> +               return NOTIFY_BAD;
+> +
+> +       return NOTIFY_OK;
+> +}
+> +
+> +static int rpmh_rsc_pd_attach(struct rsc_drv *drv, struct device *dev)
+> +{
+> +       int ret;
+> +
+> +       pm_runtime_enable(dev);
+> +       drv->genpd_nb.notifier_call = rpmh_rsc_pd_callback;
+> +       ret = dev_pm_genpd_add_notifier(dev, &drv->genpd_nb);
+> +       if (ret)
+> +               pm_runtime_disable(dev);
+> +
+> +       return ret;
+> +}
+> +
+>  static int rpmh_probe_tcs_config(struct platform_device *pdev,
+>                                  struct rsc_drv *drv, void __iomem *base)
+>  {
+> @@ -963,7 +1010,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+>                 return ret;
+>
+>         /*
+> -        * CPU PM notification are not required for controllers that support
+> +        * CPU PM/genpd notification are not required for controllers that support
+>          * 'HW solver' mode where they can be in autonomous mode executing low
+>          * power mode to power down.
+>          */
+> @@ -971,8 +1018,14 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+>         solver_config &= DRV_HW_SOLVER_MASK << DRV_HW_SOLVER_SHIFT;
+>         solver_config = solver_config >> DRV_HW_SOLVER_SHIFT;
+>         if (!solver_config) {
+> -               drv->rsc_pm.notifier_call = rpmh_rsc_cpu_pm_callback;
+> -               cpu_pm_register_notifier(&drv->rsc_pm);
+> +               if (pdev->dev.pm_domain) {
+> +                       ret = rpmh_rsc_pd_attach(drv, &pdev->dev);
+> +                       if (ret)
+> +                               return ret;
+> +               } else {
+> +                       drv->rsc_pm.notifier_call = rpmh_rsc_cpu_pm_callback;
+> +                       cpu_pm_register_notifier(&drv->rsc_pm);
+> +               }
+>         }
+>
+>         /* Enable the active TCS to send requests immediately */
+> @@ -985,7 +1038,13 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+>
+>         dev_set_drvdata(&pdev->dev, drv);
+>
+> -       return devm_of_platform_populate(&pdev->dev);
+> +       ret = devm_of_platform_populate(&pdev->dev);
+> +       if (ret && pdev->dev.pm_domain) {
+> +               dev_pm_genpd_remove_notifier(&pdev->dev);
+> +               pm_runtime_disable(&pdev->dev);
+> +       }
+> +
+> +       return ret;
+>  }
+>
+>  static const struct of_device_id rpmh_drv_match[] = {
+> --
+> 2.7.4
+>
