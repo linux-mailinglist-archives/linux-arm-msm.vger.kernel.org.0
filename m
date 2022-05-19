@@ -2,84 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E84252D9CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 18:07:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10B0052DA0F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 18:21:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241739AbiESQHj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 12:07:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52396 "EHLO
+        id S233979AbiESQVg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 12:21:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241750AbiESQHf (ORCPT
+        with ESMTP id S242065AbiESQV0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 12:07:35 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 984B436B4E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 09:07:33 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id m1so5220139plx.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 09:07:33 -0700 (PDT)
+        Thu, 19 May 2022 12:21:26 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 281A7C03B2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 09:21:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=vCPJKfu2oCo3i3xfxQhF4mnOjWu7Adqh9L+m1Zagfr0=;
-        b=GaqVQKsxA6ix9Bsatt+I5CsjaAIQEaSZbzLk9E1xDSCgs0QZQNX+z/1BGz4/N4qGU2
-         FUsGHNI3UZZcPeYGbFu400r/YKfLxm6JLeUq/lUS/1O87JVFh/LPzyXkA8CW3/gOVW81
-         +15tbkWi0q+owvBHGj9l2DYhTXl1PqNkQzPtY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=vCPJKfu2oCo3i3xfxQhF4mnOjWu7Adqh9L+m1Zagfr0=;
-        b=i7ZTfHiYjZKmRLznzSswA+TuP61JLRESBBCSgW4MUE85oLLGPb5T8bf2uh3iudu7+O
-         EJZ2bye45E9NRsne/dPdsAYtbdfD84t1mM+gkxnD+v9q4X6LeZI+m8qas36pWcCUbRBQ
-         eklxd7AcGuXnyoOSENbwfiAV7dq6z58bZ8hECSwz8Jdj2/OPtYrujpvV3Go+OFvnHnt6
-         EaYqRUtCfl8L2f70CZMeaGDoLsOQI0yCfgmG3+IJclKLBXbUTKwyqYDZ05XgPHj3Gm3o
-         Ubac3RMqYLAlUes1Q8+u/Ecf3zpgfpU1mriSFV8bVDefbzydzOUNJctR+bEwamkq0C3R
-         sUDg==
-X-Gm-Message-State: AOAM533FpJ1ElkD0K3SEGbYe5jWljzjSTUM97sUMVg2MZ+CySrhtyGzq
-        mO7N2GtYhR3ZDKiOb4DxyCUrGg==
-X-Google-Smtp-Source: ABdhPJwLsJF8qU7yTq05vzlOk9lTd0uC0zK41oeCXBlgmhVRtr/qW6q2lxRAhULfDPPc4BNK/MrikA==
-X-Received: by 2002:a17:903:1c1:b0:161:aa16:f279 with SMTP id e1-20020a17090301c100b00161aa16f279mr5496491plh.88.1652976452932;
-        Thu, 19 May 2022 09:07:32 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:e229:79ea:227e:d9dd])
-        by smtp.gmail.com with UTF8SMTPSA id d132-20020a621d8a000000b0050dc76281bcsm4290876pfd.150.2022.05.19.09.07.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 May 2022 09:07:32 -0700 (PDT)
-Date:   Thu, 19 May 2022 09:07:31 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Judy Hsiao <judyhsiao@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        dianders@chromium.org, cychiang@google.com, judyhsiao@google.com,
-        tzungbi@chromium.org, swboyd@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [v1 3/3] arm64: dts: qcom: sc7280: include
- sc7280-herobrine-audio-rt5682.dtsi in villager and herobrine-r1
-Message-ID: <YoZrQ0kkNoqtPHU0@google.com>
-References: <20220519084119.675990-1-judyhsiao@chromium.org>
- <20220519084119.675990-4-judyhsiao@chromium.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652977284; x=1684513284;
+  h=message-id:date:mime-version:to:cc:from:subject:
+   content-transfer-encoding;
+  bh=OgFPRDCgT5PDUUJnCeD3XeLnIAuSjY8zzzo6IowuC5Y=;
+  b=U8JK0OD7jGiDB67r11RtZyZzvsEJzxMZF69IIiMJlRXufHObXyGIkoMm
+   sdy8R35Ne3S0G1e/60IbflIzUgUNHDA2vyf320bhzfyPyc9KX2PEiU1Kz
+   dlWymEBerh7eFn7VYaVyuwLsRYK8t9Qa1YWmPZC0QYp17eCtyntFivpbx
+   w=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 19 May 2022 09:21:23 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 09:21:23 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 19 May 2022 09:21:23 -0700
+Received: from [10.38.246.15] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 19 May
+ 2022 09:21:21 -0700
+Message-ID: <b011d51d-d634-123e-bf5f-27219ee33151@quicinc.com>
+Date:   Thu, 19 May 2022 09:21:19 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220519084119.675990-4-judyhsiao@chromium.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: [GIT PULL] drm/msm: drm-msm-fixes-2022-05-19
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 19, 2022 at 08:41:19AM +0000, Judy Hsiao wrote:
-> Include sc7280-herobrine-audio-rt5682.dtsi in villager and herobrine-r1 as
-> these boards use rt5682 codec.
-> 
-> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+Hi Rob
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Here is the pull request for the fixes for 5.19.
+
+Just a few more changes on top of msm-fixes-staging.
+
+Mainly it has the foll fixes:
+
+- Limiting WB modes to max sspp linewidth
+- Fixing the supported rotations to add 180 back for IGT
+- Fix to handle pm_runtime_get_sync() errors to avoid unclocked access
+   in the bind() path for dpu driver
+- Fix the irq_free() without request issue which was a big-time
+   hitter in the CI-runs.
+
+Thanks
+
+Abhinav
+
+
+
+The following changes since commit 947a844bb3ebff0f4736d244d792ce129f6700d7:
+
+   drm: msm: fix possible memory leak in mdp5_crtc_cursor_set() 
+(2022-05-18 11:05:21 -0700)
+
+are available in the git repository at:
+
+   https://gitlab.freedesktop.org/abhinavk/msm.git/ tags/msm-next-5.19-fixes
+
+for you to fetch changes up to 64b22a0da12adb571c01edd671ee43634ebd7e41:
+
+   drm/msm/dpu: handle pm_runtime_get_sync() errors in bind path 
+(2022-05-18 18:32:03 -0700)
+
+----------------------------------------------------------------
+5.19 fixes for msm-next
+
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+----------------------------------------------------------------
+Abhinav Kumar (3):
+       drm/msm/dpu: limit writeback modes according to max_linewidth
+       drm/msm/dpu: add DRM_MODE_ROTATE_180 back to supported rotations
+       drm/msm/dpu: handle pm_runtime_get_sync() errors in bind path
+
+Dmitry Baryshkov (1):
+       drm/msm: don't free the IRQ if it was not requested
+
+  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 4 +++-
+  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 2 +-
+  drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 4 +++-
+  drivers/gpu/drm/msm/msm_drv.c                 | 7 ++++++-
+  drivers/gpu/drm/msm/msm_kms.h                 | 1 +
+  5 files changed, 14 insertions(+), 4 deletions(-)
