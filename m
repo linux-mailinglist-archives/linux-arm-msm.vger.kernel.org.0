@@ -2,125 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5801052D1F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 14:02:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13AF152D201
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 14:07:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233511AbiESMBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 08:01:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48218 "EHLO
+        id S237688AbiESMGs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 08:06:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230251AbiESMBs (ORCPT
+        with ESMTP id S237651AbiESMGg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 08:01:48 -0400
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A45EDB41CA;
-        Thu, 19 May 2022 05:01:46 -0700 (PDT)
-Received: by mail-qk1-f170.google.com with SMTP id b20so4531148qkc.6;
-        Thu, 19 May 2022 05:01:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=32e726iWwMNC0xRIbGojngVmwOTaI+USQV4X78pDi0k=;
-        b=TKKqX8UB1dkKMujJjE60CMD0GPbt+ecSObdbVO8u+uj+Lvl4wpI4k+C8IehJi90Dc1
-         AEpqGnmA3bFHkpUWoPdKbQSRrHxBz574SlPQYEOFrco+j/J6BRVeNuZXQoJpbq/2LMdI
-         bqm+sx4wrAX3yeLF9Yxq+tycpg4NfyqplkKJo1+mCroczlli4bmsmAJuORd8KlkuytGm
-         W6nfUhdTogs4kyqjzEisvyFQ+7afTCMzEsOm0NiwgoSLymFXgnpUy4BNGo60TBkBeZZ1
-         VBzaqgSKTtiQZ0UfR9pv99r+Uf1n468xUuVlNF5ERyOuWVdIMVTUDm/x/cdoQjKUTJ62
-         Y9aA==
-X-Gm-Message-State: AOAM532w23kb6U0KVMcJW7cFTeJPGSK6Y70HYBitZi3zyt3/jmW4MvAb
-        AiW8DkXhZuk6Y3oYlrTB72a7d8ffx7hV9Q==
-X-Google-Smtp-Source: ABdhPJxq0tN9iWpWh5IGAus3fAeZAP4zCMY2KjZ59jWDLFegdyv6SWNAXqnoEVSEmNFsXCsNTgdrZg==
-X-Received: by 2002:ae9:ef85:0:b0:6a3:2a1c:fe65 with SMTP id d127-20020ae9ef85000000b006a32a1cfe65mr2730537qkg.300.1652961705565;
-        Thu, 19 May 2022 05:01:45 -0700 (PDT)
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
-        by smtp.gmail.com with ESMTPSA id g206-20020a379dd7000000b0069fcf0da629sm1102111qke.134.2022.05.19.05.01.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 May 2022 05:01:41 -0700 (PDT)
-Received: by mail-yb1-f170.google.com with SMTP id p139so8588149ybc.11;
-        Thu, 19 May 2022 05:01:40 -0700 (PDT)
-X-Received: by 2002:a25:4289:0:b0:64d:746f:5311 with SMTP id
- p131-20020a254289000000b0064d746f5311mr3785817yba.89.1652961700211; Thu, 19
- May 2022 05:01:40 -0700 (PDT)
+        Thu, 19 May 2022 08:06:36 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C2A017060;
+        Thu, 19 May 2022 05:06:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652961993; x=1684497993;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=D5j1Ifb/J4M13HhjxMm8U24f9WHy6ZigKkypuV4JDek=;
+  b=wBJdeAdGZxx04WLGY/g3ykivQLUJCANgkCuUysK1W6GDFpOSvvrwr/p2
+   2M8BxraTirdMkZTMmSXwm4JSu4Q43ErUtoXFwiQENIsuZlLl4tP0IEgSN
+   7KdekgsTcbEGx7tAr3Fei9N8AysyNpYAa7AokoHvy9fEmZ/NoiSjKEpJM
+   A=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 19 May 2022 05:06:26 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 05:06:25 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 19 May 2022 05:06:25 -0700
+Received: from [10.50.18.252] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 19 May
+ 2022 05:06:21 -0700
+Message-ID: <ce66745c-3182-f3b7-ec21-7cbf39e5278a@quicinc.com>
+Date:   Thu, 19 May 2022 17:36:17 +0530
 MIME-Version: 1.0
-References: <20220518192924.20948-1-prabhakar.mahadev-lad.rj@bp.renesas.com> <20220518192924.20948-7-prabhakar.mahadev-lad.rj@bp.renesas.com>
-In-Reply-To: <20220518192924.20948-7-prabhakar.mahadev-lad.rj@bp.renesas.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Thu, 19 May 2022 14:01:28 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdXz7ZtC_63hUckrEeB3uocNG0iKbA4i3xDsuyL48m_7qQ@mail.gmail.com>
-Message-ID: <CAMuHMdXz7ZtC_63hUckrEeB3uocNG0iKbA4i3xDsuyL48m_7qQ@mail.gmail.com>
-Subject: Re: [PATCH v4 6/7] dt-bindings: pinctrl: renesas,rzg2l-pinctrl:
- Document the properties to handle GPIO IRQ
-To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Cc:     Marc Zyngier <maz@kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH V12 7/9] regulator: Add a regulator driver for the PM8008
+ PMIC
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Prabhakar <prabhakar.csengg@gmail.com>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Biju Das <biju.das.jz@bp.renesas.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>
+CC:     Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_collinsd@quicinc.com>,
+        <quic_subbaram@quicinc.com>, <quic_jprakash@quicinc.com>
+References: <1652275113-10277-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1652275113-10277-8-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n51JeC7oobCYNCJ-rOi3n_FVPBjz7yFmtwKEDeqWcX0vFw@mail.gmail.com>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+In-Reply-To: <CAE-0n51JeC7oobCYNCJ-rOi3n_FVPBjz7yFmtwKEDeqWcX0vFw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Prabhakar,
 
-On Wed, May 18, 2022 at 9:30 PM Lad Prabhakar
-<prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
-> Document the required properties to handle GPIO IRQ.
->
-> Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+On 5/17/2022 12:33 AM, Stephen Boyd wrote:
+> Quoting Satya Priya (2022-05-11 06:18:31)
+>> diff --git a/drivers/regulator/qcom-pm8008-regulator.c b/drivers/regulator/qcom-pm8008-regulator.c
+>> new file mode 100644
+>> index 0000000..0361f02
+>> --- /dev/null
+>> +++ b/drivers/regulator/qcom-pm8008-regulator.c
+>> @@ -0,0 +1,221 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/* Copyright (c) 2022, The Linux Foundation. All rights reserved. */
+>> +
+>> +#include <linux/device.h>
+>> +#include <linux/kernel.h>
+>> +#include <linux/mfd/qcom_pm8008.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+> Is this include used?
 
-Thanks for your patch!
 
-> --- a/Documentation/devicetree/bindings/pinctrl/renesas,rzg2l-pinctrl.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/renesas,rzg2l-pinctrl.yaml
-> @@ -126,6 +139,9 @@ examples:
->              gpio-controller;
->              #gpio-cells = <2>;
->              gpio-ranges = <&pinctrl 0 0 392>;
-> +            interrupt-controller;
-> +            #interrupt-cells = <2>;
-> +            interrupt-parent = <&irqc>;
+This is used for of_property_read_* APIs.
 
-I think the "interrupt-parent" property can be dropped from the example.
 
->              clocks = <&cpg CPG_MOD R9A07G044_GPIO_HCLK>;
->              resets = <&cpg R9A07G044_GPIO_RSTN>,
->                       <&cpg R9A07G044_GPIO_PORT_RESETN>,
+>> +#include <linux/of_device.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/regmap.h>
+>> +#include <linux/regulator/driver.h>
+>> +#include <linux/regulator/of_regulator.h>
+> Is this include used?
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
-Gr{oetje,eeting}s,
+This is not required, I will remove this.
 
-                        Geert
 
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+>> +
+>> +#define VSET_STEP_MV                   8
+>> +#define VSET_STEP_UV                   (VSET_STEP_MV * 1000)
+>> +
+>> +#define LDO_ENABLE_REG(base)           ((base) + 0x46)
+>> +#define ENABLE_BIT                     BIT(7)
+>> +
+>> +#define LDO_VSET_LB_REG(base)          ((base) + 0x40)
+>> +
+>> +#define LDO_STEPPER_CTL_REG(base)      ((base) + 0x3b)
+>> +#define DEFAULT_VOLTAGE_STEPPER_RATE   38400
+>> +#define STEP_RATE_MASK                 GENMASK(1, 0)
+>> +
+>> +struct pm8008_regulator_data {
+>> +       const char                      *name;
+>> +       const char                      *supply_name;
+>> +       int                             min_uv;
+>> +       int                             max_uv;
+>> +       int                             min_dropout_uv;
+>> +       const struct linear_range       *voltage_range;
+>> +};
+>> +
+>> +struct pm8008_regulator {
+>> +       struct device           *dev;
+>> +       struct regmap           *regmap;
+>> +       struct regulator_desc   rdesc;
+>> +       u16                     base;
+>> +       int                     step_rate;
+>> +       int                     voltage_selector;
+>> +};
+>> +
+>> +static const struct linear_range nldo_ranges[] = {
+>> +       REGULATOR_LINEAR_RANGE(528000, 0, 122, 8000),
+>> +};
+>> +
+>> +static const struct linear_range pldo_ranges[] = {
+>> +       REGULATOR_LINEAR_RANGE(1504000, 0, 237, 8000),
+>> +};
+>> +
+>> +static const struct pm8008_regulator_data reg_data[] = {
+>> +       /* name  parent       min_uv  max_uv  headroom_uv voltage_range */
+>> +       { "ldo1", "vdd_l1_l2", 528000, 1504000, 225000, nldo_ranges, },
+>> +       { "ldo2", "vdd_l1_l2", 528000, 1504000, 225000, nldo_ranges, },
+>> +       { "ldo3", "vdd_l3_l4", 1504000, 3400000, 300000, pldo_ranges, },
+>> +       { "ldo4", "vdd_l3_l4", 1504000, 3400000, 300000, pldo_ranges, },
+>> +       { "ldo5", "vdd_l5",    1504000, 3400000, 200000, pldo_ranges, },
+>> +       { "ldo6", "vdd_l6",    1504000, 3400000, 200000, pldo_ranges, },
+>> +       { "ldo7", "vdd_l7",    1504000, 3400000, 200000, pldo_ranges, },
+>> +};
+>> +
+>> +static int pm8008_regulator_get_voltage(struct regulator_dev *rdev)
+>> +{
+>> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
+>> +
+>> +       return pm8008_reg->voltage_selector;
+>> +}
+>> +
+>> +static inline int pm8008_write_voltage(struct pm8008_regulator *pm8008_reg,
+>> +                                                       int mV)
+>> +{
+>> +       __le16 vset_raw;
+>> +
+>> +       vset_raw = cpu_to_le16(mV);
+>> +
+>> +       return regmap_bulk_write(pm8008_reg->regmap,
+>> +                       LDO_VSET_LB_REG(pm8008_reg->base),
+>> +                       (const void *)&vset_raw, sizeof(vset_raw));
+> Does sparse complain about casting away __le16?
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+
+No.
+
+
+>> +}
+>> +
+>> +static int pm8008_regulator_set_voltage_time(struct regulator_dev *rdev,
+>> +                               int old_uV, int new_uv)
+>> +{
+>> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
+>> +
+>> +       return DIV_ROUND_UP(abs(new_uv - old_uV), pm8008_reg->step_rate);
+>> +}
+>> +
