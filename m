@@ -2,62 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 406FA52D35F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 14:59:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A69252D368
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 15:02:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbiESM7j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 08:59:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40774 "EHLO
+        id S232700AbiESNCJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 09:02:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238437AbiESM6c (ORCPT
+        with ESMTP id S237330AbiESNCI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 08:58:32 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3D87D4116
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 05:57:22 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id l13so2311542lfp.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 05:57:22 -0700 (PDT)
+        Thu, 19 May 2022 09:02:08 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A3B62A28
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 06:02:05 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id w14so8937181lfl.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 06:02:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=aR2yuG7QP+r0gTdgSYaStSwxJ8RwX7Q4zTzPF1+Nqpo=;
-        b=ugf1SX9wx9gVA5R+ln6Qge7zlhYGL9u69t98IcOLpR2ZZuDf8lWSidfc/I1zpVDDlu
-         LISZs8hVFvJmY51NVTHChdmyTjuJyPnVNH41hUkedD/zty+U1ScXHzS9LYxEQqXQXxyN
-         8G8cJYqLju8kBpG/UiZTAywiABeYxP5o4pDDOep916FcuzV2YB2GhqN3YTmNqEp7CCgz
-         h9F4cXdkbqYZlO3mkV027tkz+G5jpERUdi/iCNXiJ82J+lnASxPUkN9XC4ipILd/hJOv
-         xO9v4qBzBuXHqNC2X7InYJm6HP7o2vIlAHSwJUYm8ItFSLeOwqajZAf4zDx8JW8ls6/N
-         YwpA==
+        bh=ZSu0XTILVshJ9x+raeV7MMtJ9MSB+JWGEzTTcAYgGH8=;
+        b=xqED8FRRBUVTJs7yZwduUBlQVzuTT6nBQqS8MK6cY4tL4aSDZSi5uEDOJeQkjNDaPN
+         G8YSKiHjSHkGbcos8Waq3CA5OaE7m3AQ8fcvT8MARoiuiJUfjTxrGZpJmIX5Js3HHQdo
+         xaT6kf/P4GruZnyXpl+5b/UVlDa14h+BGYixzLR9AmpwXeEY82HH1tn4ZzjhwOSsHOE/
+         kujzLJWw5HlwRzqYnhohpDYWZMe9H2ovChf7ZJrWULZD2bzNg0zCMKwbXzY1xJGW+r5G
+         E4B6PuJ45TgHO0NE5Tp/TKHh6LCqbIqQDV3P/+kRu2Gjg03dItAs60osg+4Grcx6zX1f
+         2w/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=aR2yuG7QP+r0gTdgSYaStSwxJ8RwX7Q4zTzPF1+Nqpo=;
-        b=T76BqDzng/jZnCII2iX8egTaQTYotIlicmZy+YtIv4UHzzm+ui4dbyTfI/qJaT5Ptn
-         QvkmI6TeuBiDzyCGNmJrydZtab1fksacoAuiBvUBHNm5Lf3+BH6H0Fdh/1EGOxBSsqmS
-         Ya3BtOdhd0AacgT7fg2uVbzfAmXQRuB4aPj3xJLrUW9fQsMUS6bpj4+exeXiuJG/E2KP
-         RQJR8h6tk34xleuY9zI31Efxv/nsG9WvGUTIACGKo4ScpBRE0FjLj3b5b/h2xWauyRCI
-         XLLhxh03j6VygjIZv5JHmq1vxQDWXGgty5P1jRZVdLIi3i/xTJP3mGOIn199EDALN20B
-         bnbw==
-X-Gm-Message-State: AOAM532YYk6FgsNYh+RJGp1mx0LIZ+ErkUGD/VrMSUdTMr+hlMtg53dH
-        ccG3BtaGviLk0EBHDXI5cJRbNGnA/ahDT6Mi2i0kJw==
-X-Google-Smtp-Source: ABdhPJztFL7Pqq1gQj+cNoDZZBXAghknXzjA/pEu2EUSHDZR2mOUec0RwrCi6yWoH7KOlQioB5K2JxOh2ikuEeqNWRA=
-X-Received: by 2002:a05:6512:3b27:b0:477:96e9:b962 with SMTP id
- f39-20020a0565123b2700b0047796e9b962mr3293651lfv.373.1652965040195; Thu, 19
- May 2022 05:57:20 -0700 (PDT)
+        bh=ZSu0XTILVshJ9x+raeV7MMtJ9MSB+JWGEzTTcAYgGH8=;
+        b=PWGqT68sR6HOLiuAW/KgZXLqUdGtGkOCqxGASFjblk3b1geduVhg7ZENazye7YiXLr
+         MILY2GZ5X8gU5AIvuAChLPRBZN15gXIzFSjvVyxzfbAYEBSIbKoAt5l7OPb5xWf9WMVS
+         Jq7YApvBxiXSPuXf3vhxgguzD41yBO78AF4nGb2EtrRUaLbTa4lfA/LW1OAGtoTmWyuB
+         1ZptiU5uU2hWltUQjc7l4JVEvkPYq8ngMNTaAusQ5kkhNcZna5Dn9Fg+eV1D7bnSp/pw
+         qBdQKjjsi7nL4Ze7nKAhJ1LUSntIoZbTQUnwTLG0N4fPEbl6O6l3aTrPwGBbxzgJvJaF
+         wlrw==
+X-Gm-Message-State: AOAM5319zIzW+mfYIVT0yoQVTLB52thmXaGH95Ii2fATSIQT++pjcsVr
+        AWQ5G/C+Kuef0Ew2OeJElF5JLSIA6gZogwqZOp3nFQ==
+X-Google-Smtp-Source: ABdhPJylwHp+PNUHX0L3veOS1GtM4Mw0E0JPCmgEyCyRHaCw2NGWeTZfPTo+jpC/foRCai/LLqJubn4J1RgwqQDBofA=
+X-Received: by 2002:a05:6512:70b:b0:477:a832:7d07 with SMTP id
+ b11-20020a056512070b00b00477a8327d07mr3144930lfs.71.1652965323773; Thu, 19
+ May 2022 06:02:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <1652275016-13423-1-git-send-email-quic_mkshah@quicinc.com> <1652275016-13423-5-git-send-email-quic_mkshah@quicinc.com>
-In-Reply-To: <1652275016-13423-5-git-send-email-quic_mkshah@quicinc.com>
+References: <1652275016-13423-1-git-send-email-quic_mkshah@quicinc.com> <1652275016-13423-2-git-send-email-quic_mkshah@quicinc.com>
+In-Reply-To: <1652275016-13423-2-git-send-email-quic_mkshah@quicinc.com>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 19 May 2022 14:56:44 +0200
-Message-ID: <CAPDyKFp+38XR9osX91quAMG6CbLYaAcetgPqFM53rinfT4ar+Q@mail.gmail.com>
-Subject: Re: [PATCH v2 4/6] PM: domains: Store the closest hrtimer event of
- the domain CPUs
+Date:   Thu, 19 May 2022 15:01:27 +0200
+Message-ID: <CAPDyKFoDmTMfGNsvv-DJqrV-xX=nLKfR-fjSOB_1JBbHm+nzqA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] dt-bindings: soc: qcom: Update devicetree binding
+ document for rpmh-rsc
 To:     Maulik Shah <quic_mkshah@quicinc.com>
 Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
         linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
         rafael@kernel.org, daniel.lezcano@linaro.org,
-        quic_lsrao@quicinc.com, quic_rjendra@quicinc.com
+        quic_lsrao@quicinc.com, quic_rjendra@quicinc.com,
+        devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -71,136 +72,52 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Wed, 11 May 2022 at 15:17, Maulik Shah <quic_mkshah@quicinc.com> wrote:
 >
-> The arch timer can not wake up the Qualcomm Technologies, Inc. (QTI)
-> SoCs when the deepest CPUidle modes results in the SoC also to enter
-> the low power mode.
+> The change documents power-domains property for RSC device.
+> This optional property points to corresponding PM domain node.
 >
-> RSC is part of CPU subsystem and APSS rsc device is attached to cluster
-> power domain. RSC has to setup next hrtimer wakeup in CONTROL_TCS which
-> can wakeup the SoC from deepest low power states. The CONTROL_TCS does
-> this by writing next wakeup in always on domain timer when the SoC is
-> entering the low power state.
->
-> Add dev_pm_genpd_get_next_hrtimer() to get the genpd wakeup time.
->
+> Cc: devicetree@vger.kernel.org
 > Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
-> ---
->  drivers/base/power/domain.c          | 24 ++++++++++++++++++++++++
->  drivers/base/power/domain_governor.c |  1 +
->  include/linux/pm_domain.h            |  7 +++++++
->  3 files changed, 32 insertions(+)
->
-> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> index 18cd796..f0d70d0 100644
-> --- a/drivers/base/power/domain.c
-> +++ b/drivers/base/power/domain.c
-> @@ -487,6 +487,29 @@ void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
->  }
->  EXPORT_SYMBOL_GPL(dev_pm_genpd_set_next_wakeup);
->
-> +/**
-> + * dev_pm_genpd_get_next_hrtimer - Return genpd domain next_hrtimer.
-> + *
-> + * @dev: Device to handle
-> + *
-> + * Returns the aggregated domain wakeup time for CPU PM domain
-> + * when all the subdomains are off.
 
-To further clarify when this function should be used, I think that we
-should state that it should typically be called from a consumer of a
-genpd on/off-notifier at GENPD_NOTIFY_PRE_OFF. This also means that
-the genpd's lock is being held across the function.
-
-> + */
-> +ktime_t dev_pm_genpd_get_next_hrtimer(struct device *dev)
-> +{
-> +       struct generic_pm_domain *genpd;
-> +
-> +       genpd = dev_to_genpd_safe(dev);
-> +       if (!genpd)
-> +               return KTIME_MAX;
-> +
-> +       if (atomic_read(&genpd->sd_count) > 0)
-> +               return KTIME_MAX;
-
-This above isn't needed, assuming we clarify the description of the
-function and when it should be called.
-
-> +
-> +       return genpd->next_hrtimer;
-> +}
-> +EXPORT_SYMBOL_GPL(dev_pm_genpd_get_next_hrtimer);
-> +
->  static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
->  {
->         unsigned int state_idx = genpd->state_idx;
-> @@ -1998,6 +2021,7 @@ int pm_genpd_init(struct generic_pm_domain *genpd,
->         genpd->max_off_time_changed = true;
->         genpd->provider = NULL;
->         genpd->has_provider = false;
-> +       genpd->next_hrtimer = KTIME_MAX;
->         genpd->accounting_time = ktime_get_mono_fast_ns();
->         genpd->domain.ops.runtime_suspend = genpd_runtime_suspend;
->         genpd->domain.ops.runtime_resume = genpd_runtime_resume;
-> diff --git a/drivers/base/power/domain_governor.c b/drivers/base/power/domain_governor.c
-> index cd08c58..a4c7dd8 100644
-> --- a/drivers/base/power/domain_governor.c
-> +++ b/drivers/base/power/domain_governor.c
-> @@ -363,6 +363,7 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
->                                 domain_wakeup = next_hrtimer;
->                 }
->         }
-> +       genpd->next_hrtimer = domain_wakeup;
-
-There should be no point to set this, unless cpu_power_down_ok() are
-returning true. Therefore I suggest you move this a few lines further
-down, where cpu_power_down_ok() actually returns true.
-
->
->         /* The minimum idle duration is from now - until the next wakeup. */
->         idle_duration_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
-> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> index 043d48e..6d9fb79 100644
-> --- a/include/linux/pm_domain.h
-> +++ b/include/linux/pm_domain.h
-> @@ -17,6 +17,7 @@
->  #include <linux/notifier.h>
->  #include <linux/spinlock.h>
->  #include <linux/cpumask.h>
-> +#include <linux/time64.h>
->
->  /*
->   * Flags to control the behaviour of a genpd.
-> @@ -136,6 +137,7 @@ struct generic_pm_domain {
->         struct gpd_dev_ops dev_ops;
->         s64 max_off_time_ns;    /* Maximum allowed "suspended" time. */
->         ktime_t next_wakeup;    /* Maintained by the domain governor */
-> +       ktime_t next_hrtimer;   /* Next hrtimer for the CPU PM domain */
->         bool max_off_time_changed;
->         bool cached_power_down_ok;
->         bool cached_power_down_state_idx;
-> @@ -228,6 +230,7 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
->  int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
->  int dev_pm_genpd_remove_notifier(struct device *dev);
->  void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
-> +ktime_t dev_pm_genpd_get_next_hrtimer(struct device *dev);
->
->  extern struct dev_power_governor simple_qos_governor;
->  extern struct dev_power_governor pm_domain_always_on_gov;
-> @@ -289,6 +292,10 @@ static inline int dev_pm_genpd_remove_notifier(struct device *dev)
->  static inline void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
->  { }
->
-> +static inline ktime_t dev_pm_genpd_get_next_hrtimer(struct device *dev)
-> +{
-> +       return KTIME_MAX;
-> +}
->  #define simple_qos_governor            (*(struct dev_power_governor *)(NULL))
->  #define pm_domain_always_on_gov                (*(struct dev_power_governor *)(NULL))
->  #endif
-> --
-> 2.7.4
->
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 
 Kind regards
 Uffe
+
+
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
+> index f5ecf4a..7683cc9 100644
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
+> @@ -110,6 +110,9 @@ properties:
+>        - const: drv-2
+>        - const: drv-3
+>
+> +  power-domains:
+> +    maxItems: 1
+> +
+>    bcm-voter:
+>      $ref: /schemas/interconnect/qcom,bcm-voter.yaml#
+>
+> @@ -162,6 +165,7 @@ examples:
+>                            <SLEEP_TCS   3>,
+>                            <WAKE_TCS    3>,
+>                            <CONTROL_TCS 1>;
+> +        power-domains = <&CLUSTER_PD>;
+>        };
+>
+>    - |
+> @@ -208,6 +212,7 @@ examples:
+>                            <SLEEP_TCS   3>,
+>                            <WAKE_TCS    3>,
+>                            <CONTROL_TCS 0>;
+> +        power-domains = <&CLUSTER_PD>;
+>
+>          clock-controller {
+>              compatible = "qcom,sm8350-rpmh-clk";
+> --
+> 2.7.4
+>
