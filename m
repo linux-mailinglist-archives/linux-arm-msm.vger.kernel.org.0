@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EDA1852C84B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 02:03:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 266E252C853
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 02:05:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231444AbiESADz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 May 2022 20:03:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60308 "EHLO
+        id S231529AbiESAFo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 May 2022 20:05:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231428AbiESADy (ORCPT
+        with ESMTP id S231968AbiESAF1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 May 2022 20:03:54 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B197A46C;
-        Wed, 18 May 2022 17:03:53 -0700 (PDT)
+        Wed, 18 May 2022 20:05:27 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F09AD80A6;
+        Wed, 18 May 2022 17:05:15 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 4B656B8225A;
-        Thu, 19 May 2022 00:03:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5C0C385A9;
-        Thu, 19 May 2022 00:03:50 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 38ACA6177A;
+        Thu, 19 May 2022 00:05:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAA0C385A5;
+        Thu, 19 May 2022 00:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652918631;
-        bh=sV3eHN3f7GLTVlHaLT/mBGjih2EUwa1UeZSc6G+S4f4=;
+        s=k20201202; t=1652918714;
+        bh=k6jAiKZFDtgwweX5wl2BqyK+v6NKhDb2w9LlWR81qLs=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=aPrXboX0Nt14KiibsUiIHwLx2MnZMyfiNT2T9rKuiYQU3mdMdevXcSgsqckC9bvON
-         y/+C1AKWOrJm54poH/92qmfKbqsmabW8Y/4mkfFLDll1pvmLNUMg1fccSW0+H2xB8M
-         Vm/9gC2IGo2w4j/4KQbEjVKtpbxBk1fnfKcDgvRtAUq+y9Fm2/3bm6kDvHQ85Tu8f9
-         7R1sl/jCq7yqOL+tzhJ5OZAht28UWVs7lWnS0zKIAO746K+LXxV4Wf8X25OADunOCI
-         jObrdFKZ2N/jcFXmLBg3lwjwUqXtlKvGvCuohTM/kahaixVSWwoJy4CVfmI7zscCyO
-         PxGGUrBljiKtQ==
+        b=aoHlqq6dMijyBAf3lcomjHcd3eB5Ig5tZSFw2ltmJTNLTNOaLkhJwPhlHAEQPTQoF
+         Tqp4R7TkSxu7uypPAmYSTly0i+KK4pVT9m4YnWTF+aykBiS3eMCNc7Cmp266wC/x+3
+         Uzse3Jp3vfeMaX9gJ+uQ0jx+K2NPinZ0wi1H/mJJpBX0Wet9ORTQPVrr5wH80uZiPL
+         LJTouTNjK6/oer7C873ELiQsiiK2lsFOhEfWY6C0Cycw9DAb6jPj/NxZ9m4xXFcD9h
+         mQVwMF4HOi8l3vO5meAGiHhUjbiBCxsL/NHLyDggrJRZe8KzOsh7WtCLyrcJ9ahTjy
+         8FKq8gB1y5w8w==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220501103520.111561-2-krzysztof.kozlowski@linaro.org>
-References: <20220501103520.111561-1-krzysztof.kozlowski@linaro.org> <20220501103520.111561-2-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 2/8] firmware: qcom_scm-legacy: correct kerneldoc
+In-Reply-To: <20220501103520.111561-3-krzysztof.kozlowski@linaro.org>
+References: <20220501103520.111561-1-krzysztof.kozlowski@linaro.org> <20220501103520.111561-3-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 3/8] remoteproc: qcom: correct kerneldoc
 From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -47,9 +47,9 @@ To:     Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Date:   Wed, 18 May 2022 17:03:49 -0700
+Date:   Wed, 18 May 2022 17:05:12 -0700
 User-Agent: alot/0.10
-Message-Id: <20220519000350.DD5C0C385A9@smtp.kernel.org>
+Message-Id: <20220519000514.8EAA0C385A5@smtp.kernel.org>
 X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -60,26 +60,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krzysztof Kozlowski (2022-05-01 03:35:14)
-> diff --git a/drivers/firmware/qcom_scm-legacy.c b/drivers/firmware/qcom_s=
-cm-legacy.c
-> index 1829ba220576..7854af4abc62 100644
-> --- a/drivers/firmware/qcom_scm-legacy.c
-> +++ b/drivers/firmware/qcom_scm-legacy.c
-> @@ -120,6 +120,9 @@ static void __scm_legacy_do(const struct arm_smccc_ar=
-gs *smc,
->  /**
->   * scm_legacy_call() - Sends a command to the SCM and waits for the comm=
-and to
->   * finish processing.
-> + * @dev:       device
-> + * @desc:      descriptor structure containing arguments and return valu=
-es
-> + * @res:        results from SMC/HVC call
+Quoting Krzysztof Kozlowski (2022-05-01 03:35:15)
+> Correct kerneldoc warnings like:
+>=20
+>   drivers/remoteproc/qcom_common.c:68:
+>     warning: expecting prototype for struct minidump_subsystem_toc. Proto=
+type was for struct minidump_subsystem instead
+>=20
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
 
-I think only SMC call is possible so drop HVC to not be confusing.
-
->   *
->   * A note on cache maintenance:
->   * Note that any buffers that are expected to be accessed by the secure =
-world
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
