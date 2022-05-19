@@ -2,285 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E95B852E05B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 01:12:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2320152E0E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 01:53:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245717AbiESXML (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 19:12:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51550 "EHLO
+        id S1343776AbiESXvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 19:51:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245730AbiESXMJ (ORCPT
+        with ESMTP id S242895AbiESXva (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 19:12:09 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 890441053C6;
-        Thu, 19 May 2022 16:11:59 -0700 (PDT)
+        Thu, 19 May 2022 19:51:30 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1B9631353
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 16:51:27 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id v10so6334168pgl.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 16:51:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653001919; x=1684537919;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=rI5ZKSOJKM0Bcjv9f134lRqpnioCEqKK1pNus30VpcY=;
-  b=bctnYYIbbmRUCZN5KCG48F52IAzjb/BOAVfQKdUIhubHxkXU7mI1Nypl
-   j1Fgc0VQKmm+fyk7Qt3JNkH1lg0FHNmL24F5Rg4pq1TPAYNcTijYasetm
-   TvxzsspZ7aCWyULlzTZuBDIIC3IWQWHqLdIGAOYbrf0g47fg97ZQVh3je
-   M=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 19 May 2022 16:11:59 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 16:11:59 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 19 May 2022 16:11:58 -0700
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 19 May 2022 16:11:57 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <bjorn.andersson@linaro.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v6 3/3] drm/msm/dp: delete vdda regulator related functions from eDP/DP controller
-Date:   Thu, 19 May 2022 16:11:42 -0700
-Message-ID: <1653001902-26910-4-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1653001902-26910-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1653001902-26910-1-git-send-email-quic_khsieh@quicinc.com>
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=O68zOwYSR6b5bIhMSQfgIGQAc/cdqbvjZPUOTjfh09U=;
+        b=gfq/frvCvea+Jl6JVCs1ZnXx5YZ0mp2A2abNlzF2s1fF+s7AzqcGazJmmNCb0KNec1
+         SEy2fOrPkGUDjf4hzrsvvImF+GP4koXcKJDVLDEZW3cy9mDDq8vBNdh3K8GxLU+l48SL
+         uY3ACHgkzO5q9VYZ5ncO9sHAMFGRBHXLhaB60=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=O68zOwYSR6b5bIhMSQfgIGQAc/cdqbvjZPUOTjfh09U=;
+        b=wMOyc0McvjeDZk18HIynMN3iqwwE1QVhq2mCTzy7GXQfRaB9VRGkbCtPkEWrfaNYhv
+         493HdDHXcEznk59Ru925ZwKneGknvFLY9S4S/1CCkGrR5hCBANKM9e1Ulf0S7d1TObg2
+         zV9chhaB+FcZN6RSIJ2kF5axsOYj3C+X5j3dLeUhYfTsOVKvqz1Uab41dRg3XfwXCten
+         KfU8E8YO1VVGFSc2MldzgwRMzfiBzlR87DGm68VOMfBVWpYoKnlW45iedY9UfjNKDLnN
+         B1f9N7Zeq4dxr1w95j2f4s2nTxK2T2wzqLOar/H8Ny4Xbtj1239ly5LJICSlJHXY61ra
+         Qz4w==
+X-Gm-Message-State: AOAM532hHW1nEJGTB9M7IdGntKMC+/NwwK11dE98gsKHcWDH/dUaIYqz
+        KhpSoh67xepkGthcbcxtdWePdA==
+X-Google-Smtp-Source: ABdhPJyamfEkeHtpOdtcg6ZxrEdQGZCexKa9myBcRzDRrg9mGVcijU6CctbM2iy+F++LJtTegbPK0A==
+X-Received: by 2002:aa7:83d0:0:b0:50c:eb2b:8e8a with SMTP id j16-20020aa783d0000000b0050ceb2b8e8amr6950116pfn.31.1653004287251;
+        Thu, 19 May 2022 16:51:27 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:e45f:1f3c:299b:4d86])
+        by smtp.gmail.com with ESMTPSA id m2-20020a6545c2000000b003c18ab7389asm4128992pgr.36.2022.05.19.16.51.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 May 2022 16:51:26 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        "Joseph S . Barrera III" <joebar@chromium.org>,
+        patches@lists.linux.dev, devicetree@vger.kernel.org,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Julius Werner <jwerner@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v3 1/5] dt-bindings: Document how Chromebooks with depthcharge boot
+Date:   Thu, 19 May 2022 16:51:05 -0700
+Message-Id: <20220519164914.v3.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid>
+X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Vdda regulators are related to both eDP and DP phy so that it should be
-managed at eDP and DP phy driver instead of controller. This patch removes
-vdda regulators related functions out of eDP/DP controller.
+This documents how many Chromebooks pick the device tree that will be
+passed to the OS and can help understand the revisions / skus listed
+as the top-level "compatible" in many Chromebooks.
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
- drivers/gpu/drm/msm/dp/dp_parser.c | 14 ------
- drivers/gpu/drm/msm/dp/dp_parser.h |  6 ---
- drivers/gpu/drm/msm/dp/dp_power.c  | 95 +-------------------------------------
- 3 files changed, 2 insertions(+), 113 deletions(-)
+In my opinion this could land through the Qualcomm dts64 tree, mostly
+because I want to land bindings patches in that tree that refer to
+it. Since it's a new file it seems like there ought to be few
+objections?
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-index 8f9fed9..4ef2130 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.c
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-@@ -22,14 +22,6 @@
- #define DP_DEFAULT_P0_OFFSET	0x1000
- #define DP_DEFAULT_P0_SIZE	0x0400
- 
--static const struct dp_regulator_cfg sdm845_dp_reg_cfg = {
--	.num = 2,
--	.regs = {
--		{"vdda-1p2", 21800, 4 },	/* 1.2 V */
--		{"vdda-0p9", 36000, 32 },	/* 0.9 V */
--	},
--};
--
- static void __iomem *dp_ioremap(struct platform_device *pdev, int idx, size_t *len)
- {
- 	struct resource *res;
-@@ -298,12 +290,6 @@ static int dp_parser_parse(struct dp_parser *parser)
- 	if (rc)
- 		return rc;
- 
--	/* Map the corresponding regulator information according to
--	 * version. Currently, since we only have one supported platform,
--	 * mapping the regulator directly.
--	 */
--	parser->regulator_cfg = &sdm845_dp_reg_cfg;
--
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-index 3a4d797..b56b4d7 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.h
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-@@ -101,11 +101,6 @@ struct dp_reg_entry {
- 	int disable_load;
- };
- 
--struct dp_regulator_cfg {
--	int num;
--	struct dp_reg_entry regs[DP_DEV_REGULATOR_MAX];
--};
--
- /**
-  * struct dp_parser - DP parser's data exposed to clients
-  *
-@@ -121,7 +116,6 @@ struct dp_parser {
- 	struct dp_pinctrl pinctrl;
- 	struct dp_io io;
- 	struct dp_display_data disp_data;
--	const struct dp_regulator_cfg *regulator_cfg;
- 	u32 max_dp_lanes;
- 	struct drm_bridge *next_bridge;
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
-index d9e0117..b52ac1d 100644
---- a/drivers/gpu/drm/msm/dp/dp_power.c
-+++ b/drivers/gpu/drm/msm/dp/dp_power.c
-@@ -20,82 +20,10 @@ struct dp_power_private {
- 	struct clk *link_clk_src;
- 	struct clk *pixel_provider;
- 	struct clk *link_provider;
--	struct regulator_bulk_data supplies[DP_DEV_REGULATOR_MAX];
- 
- 	struct dp_power dp_power;
- };
- 
--static void dp_power_regulator_disable(struct dp_power_private *power)
--{
--	struct regulator_bulk_data *s = power->supplies;
--	const struct dp_reg_entry *regs = power->parser->regulator_cfg->regs;
--	int num = power->parser->regulator_cfg->num;
--	int i;
--
--	DBG("");
--	for (i = num - 1; i >= 0; i--)
--		if (regs[i].disable_load >= 0)
--			regulator_set_load(s[i].consumer,
--					   regs[i].disable_load);
--
--	regulator_bulk_disable(num, s);
--}
--
--static int dp_power_regulator_enable(struct dp_power_private *power)
--{
--	struct regulator_bulk_data *s = power->supplies;
--	const struct dp_reg_entry *regs = power->parser->regulator_cfg->regs;
--	int num = power->parser->regulator_cfg->num;
--	int ret, i;
--
--	DBG("");
--	for (i = 0; i < num; i++) {
--		if (regs[i].enable_load >= 0) {
--			ret = regulator_set_load(s[i].consumer,
--						 regs[i].enable_load);
--			if (ret < 0) {
--				pr_err("regulator %d set op mode failed, %d\n",
--					i, ret);
--				goto fail;
--			}
--		}
--	}
--
--	ret = regulator_bulk_enable(num, s);
--	if (ret < 0) {
--		pr_err("regulator enable failed, %d\n", ret);
--		goto fail;
--	}
--
--	return 0;
--
--fail:
--	for (i--; i >= 0; i--)
--		regulator_set_load(s[i].consumer, regs[i].disable_load);
--	return ret;
--}
--
--static int dp_power_regulator_init(struct dp_power_private *power)
--{
--	struct regulator_bulk_data *s = power->supplies;
--	const struct dp_reg_entry *regs = power->parser->regulator_cfg->regs;
--	struct platform_device *pdev = power->pdev;
--	int num = power->parser->regulator_cfg->num;
--	int i, ret;
--
--	for (i = 0; i < num; i++)
--		s[i].supply = regs[i].name;
--
--	ret = devm_regulator_bulk_get(&pdev->dev, num, s);
--	if (ret < 0) {
--		pr_err("%s: failed to init regulator, ret=%d\n",
--						__func__, ret);
--		return ret;
--	}
--
--	return 0;
--}
--
- static int dp_power_clk_init(struct dp_power_private *power)
- {
- 	int rc = 0;
-@@ -318,21 +246,10 @@ int dp_power_client_init(struct dp_power *dp_power)
- 
- 	pm_runtime_enable(&power->pdev->dev);
- 
--	rc = dp_power_regulator_init(power);
--	if (rc) {
--		DRM_ERROR("failed to init regulators %d\n", rc);
--		goto error;
--	}
--
- 	rc = dp_power_clk_init(power);
--	if (rc) {
-+	if (rc)
- 		DRM_ERROR("failed to init clocks %d\n", rc);
--		goto error;
--	}
--	return 0;
- 
--error:
--	pm_runtime_disable(&power->pdev->dev);
- 	return rc;
- }
- 
-@@ -365,22 +282,15 @@ int dp_power_init(struct dp_power *dp_power, bool flip)
- 	power = container_of(dp_power, struct dp_power_private, dp_power);
- 
- 	pm_runtime_get_sync(&power->pdev->dev);
--	rc = dp_power_regulator_enable(power);
--	if (rc) {
--		DRM_ERROR("failed to enable regulators, %d\n", rc);
--		goto exit;
--	}
- 
- 	rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
- 	if (rc) {
- 		DRM_ERROR("failed to enable DP core clocks, %d\n", rc);
--		goto err_clk;
-+		goto exit;
- 	}
- 
- 	return 0;
- 
--err_clk:
--	dp_power_regulator_disable(power);
- exit:
- 	pm_runtime_put_sync(&power->pdev->dev);
- 	return rc;
-@@ -393,7 +303,6 @@ int dp_power_deinit(struct dp_power *dp_power)
- 	power = container_of(dp_power, struct dp_power_private, dp_power);
- 
- 	dp_power_clk_enable(dp_power, DP_CORE_PM, false);
--	dp_power_regulator_disable(power);
- 	pm_runtime_put_sync(&power->pdev->dev);
- 	return 0;
- }
+Changes in v3:
+- Fix up typos as per Matthias.
+- Move under Documentation/arm/google/ as per Krzysztof.
+- Add missing newline at end of file.
+
+Changes in v2:
+- ("Document how Chromebooks with depthcharge boot") new for v2.
+
+ .../arm/google/chromebook-boot-flow.rst       | 63 +++++++++++++++++++
+ 1 file changed, 63 insertions(+)
+ create mode 100644 Documentation/arm/google/chromebook-boot-flow.rst
+
+diff --git a/Documentation/arm/google/chromebook-boot-flow.rst b/Documentation/arm/google/chromebook-boot-flow.rst
+new file mode 100644
+index 000000000000..92d8a658ceaa
+--- /dev/null
++++ b/Documentation/arm/google/chromebook-boot-flow.rst
+@@ -0,0 +1,63 @@
++.. SPDX-License-Identifier: GPL-2.0
++
++======================================
++Chromebook Boot Flow
++======================================
++
++Most recent Chromebooks that use device tree are using the opensource
++depthcharge bootloader. Depthcharge expects the OS to be packaged as a "FIT
++Image" which contains an OS image as well as a collection of device trees. It
++is up to depthcharge to pick the right device tree from the FIT Image and
++provide it to the OS.
++
++The scheme that depthcharge uses to pick the device tree takes into account
++three variables:
++- Board name, specified at compile time.
++- Board revision number, read from GPIO strappings at boot time.
++- SKU number, read from GPIO strappings at boot time.
++
++For recent Chromebooks, depthcharge creates a match list that looks like this:
++- google,$(BOARD)-rev$(REV)-sku$(SKU)
++- google,$(BOARD)-rev$(REV)
++- google,$(BOARD)-sku$(SKU)
++- google,$(BOARD)
++
++Note that some older Chromebooks use a slightly different list that may
++not include sku matching or may prioritize sku/rev differently.
++
++Note that for some boards there may be extra board-specific logic to inject
++extra compatibles into the list, but this is uncommon.
++
++Depthcharge will look through all device trees in the FIT image trying to
++find one that matches the most specific compatible. It will then look
++through all device trees in the FIT image trying to find the one that
++matches the _second most_ specific compatible, etc.
++
++When searching for a device tree, depthcharge doesn't care where the
++compatible falls within a given device tree. As an example, if we're on
++board "lazor", rev 4, sku 0 and we have two device trees:
++- "google,lazor-rev5-sku0", "google,lazor-rev4-sku0", "qcom,sc7180"
++- "google,lazor", "qcom,sc7180"
++
++Then depthcharge will pick the first device tree even though
++"google,lazor-rev4-sku0" was the second compatible listed in that device tree.
++This is because it is a more specific compatible than "google,lazor".
++
++It should be noted that depthcharge does not have any smarts to try to
++match board or SKU revisions that are "close by". That is to say that
++if depthcharge knows it's on "rev4" of a board but there is no "rev4"
++device tree then depthcharge _won't_ look for a "rev3" device tree.
++
++In general when any significant changes are made to a board the board
++revision number is increased even if none of those changes need to
++be reflected in the device tree. Thus it's fairly common to see device
++trees with multiple revisions.
++
++It should be noted that, taking into account the above system that
++depthcharge has, the most flexibility is achieved if the device tree
++supporting the newest revision(s) of a board omits the "-rev{REV}"
++compatible strings. When this is done then if you get a new board
++revision and try to run old software on it then we'll at pick the most
++reasonable device tree. If it turns out that the new revision actually
++has no device-tree visible changes then we'll not only pick the most
++reasonable device tree, we'll pick the exact right one.
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.36.1.124.g0e6072fb45-goog
 
