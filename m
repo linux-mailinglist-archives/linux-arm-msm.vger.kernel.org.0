@@ -2,143 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D27B552CF74
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 11:32:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C25952CF7E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 11:36:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231254AbiESJbd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 05:31:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46232 "EHLO
+        id S236170AbiESJgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 05:36:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236155AbiESJbc (ORCPT
+        with ESMTP id S236139AbiESJgG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 05:31:32 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 526545C858;
-        Thu, 19 May 2022 02:31:31 -0700 (PDT)
+        Thu, 19 May 2022 05:36:06 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84F0839819
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 02:36:04 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id bq30so8127624lfb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 02:36:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1652952691; x=1684488691;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=ffzJdDsrpiOXwHfaBnfKeYfCI/DEp+tB96pIcEPg41s=;
-  b=FxOHe/DqDJcqI4B7CDKTA7iZ21quTEteaV5OI0yZQ+iiycY6TLV24rNC
-   4TJG4Om6asnVu/E1Hgwvj+5aN/WqZ0gzThNEoOHsqrx5q7M7MFq+L9APJ
-   cPVvRfm/tR56eDCyoazgUX6BrfeWmKEQ5K+K5dvnUAfDZTxLWToa3LMoh
-   M=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 19 May 2022 02:31:30 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 02:31:30 -0700
-Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 19 May 2022 02:31:27 -0700
-From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-To:     <linux-media@vger.kernel.org>, <stanimir.varbanov@linaro.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <vboma@qti.qualcomm.com>, <quic_vgarodia@quicinc.com>
-Subject: [PATCH] media: venus: hfi_platform: Correct supported codecs for sc7280
-Date:   Thu, 19 May 2022 15:01:18 +0530
-Message-ID: <1652952678-14747-1-git-send-email-quic_vgarodia@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=onybpRz7wsYWveJovLHOrWhVwS59mEc1/1KqKRSfSM8=;
+        b=olD6VpysjkH0jLBOwKjjLej//tuHVwkIXXvAbGNnkujihoM1hth00fHiy4HmnOqNz5
+         NurMeKarjQ4KzGRViIgyAzi5Zk/wL2z6jKZ9zBzmX3bRmP4WD59B3/rBulhbLuq4l9Ud
+         VpvxatVl+qtrBoAguRV04PA8ETpuSwLaxmnQuxAyU5sfk0ILo5BMwn2SAUUljJMXbKUc
+         DLPQa2FbCUKLE1RGq39iGIZvCPgv4D9vLYptATyWeLzJJg4Dq4/tC7D2Ra/x4uw67gMa
+         5VF+imrYYgwcuqyZjksGQ0UHackcL+i3IEl9XQ1bnqU3fDXW0d+ACJW8CtXn7kZePN4e
+         gdxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=onybpRz7wsYWveJovLHOrWhVwS59mEc1/1KqKRSfSM8=;
+        b=EmBDSnVzbNjaE8os4voA9wFXfuKSijxK0Nzi1iJWpbY4AHkHqWZ075TRYareiJGS77
+         1FVzXDR5hWPVLuCxQRx8iVm52aIdWaB/Sz9cHpppoosmVNTD7C/VywTuxaOiyB/ESBlP
+         bltiOYDFi8ojTxZpp778G3+Ct1QGSioTXEhga7Io6sTJmnQmOsYNP8aykVvKriTm3HAJ
+         Ber6wDVJy9ZR5ngAPUc/pG1tnbrVmoBnilQ7K5Fq35jfEO5Ggde4oV/Fwit35JEo370k
+         6VgBECUoGEXroKNy4SjuOHlwykJjJMEoDF36Gd4AtmMTplX7NzErHkG6fuRhJ2ebQqCH
+         p5ow==
+X-Gm-Message-State: AOAM533/iyJ5amK/o/HafDEqlzUwvofhOgDzrXZwgvlofyalsvcZGs/g
+        UXeZBxsqT8Y47gJ7Pbbjv3wBZQ==
+X-Google-Smtp-Source: ABdhPJxntgUVPNj76bvSLwp38vj4ad1KYCyoyK/YGXfzgWo8T9TlfdVXZQL9W1xLmskk+oq6gg6EgQ==
+X-Received: by 2002:ac2:4c51:0:b0:473:ab19:87d9 with SMTP id o17-20020ac24c51000000b00473ab1987d9mr2679623lfk.634.1652952962883;
+        Thu, 19 May 2022 02:36:02 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id o25-20020ac25e39000000b0047255d21153sm226325lfg.130.2022.05.19.02.36.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 May 2022 02:36:02 -0700 (PDT)
+Message-ID: <9425835f-1674-225e-9558-7b2ba1952879@linaro.org>
+Date:   Thu, 19 May 2022 11:36:01 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 2/2] dt-bindings: arm: qcom: Document xiaomi,natrium board
+Content-Language: en-US
+To:     Alec Su <ae40515@yahoo.com.tw>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, sboyd@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, y.oudjana@protonmail.com
+References: <20220519074112.25600-1-ae40515@yahoo.com.tw>
+ <20220519074112.25600-3-ae40515@yahoo.com.tw>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220519074112.25600-3-ae40515@yahoo.com.tw>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-VP8 codec is deprecated for sc7280 SOC. Fix in platform layer to
-update the supported codecs accordingly.
+On 19/05/2022 09:41, Alec Su wrote:
+> Document Xiaomi Mi 5s Plus (xiaomi-natrium) smartphone which is based on
+> Snapdragon 821 SoC.
+> 
+> Signed-off-by: Alec Su <ae40515@yahoo.com.tw>
 
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
----
- drivers/media/platform/qcom/venus/hfi_parser.c   |  6 ++++--
- drivers/media/platform/qcom/venus/hfi_platform.c | 21 +++++++++++++++++++++
- drivers/media/platform/qcom/venus/hfi_platform.h |  2 ++
- 3 files changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
-index 5b8389b..6cf74b2 100644
---- a/drivers/media/platform/qcom/venus/hfi_parser.c
-+++ b/drivers/media/platform/qcom/venus/hfi_parser.c
-@@ -234,6 +234,7 @@ static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
- 	const struct hfi_plat_caps *caps = NULL;
- 	u32 enc_codecs, dec_codecs, count = 0;
- 	unsigned int entries;
-+	int ret;
- 
- 	plat = hfi_platform_get(core->res->hfi_version);
- 	if (!plat)
-@@ -242,8 +243,9 @@ static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
- 	if (inst)
- 		return 0;
- 
--	if (plat->codecs)
--		plat->codecs(&enc_codecs, &dec_codecs, &count);
-+	ret = hfi_platform_get_codecs(core, &enc_codecs, &dec_codecs, &count);
-+	if (ret)
-+		return ret;
- 
- 	if (plat->capabilities)
- 		caps = plat->capabilities(&entries);
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
-index f16f896..bc9b431 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform.c
-+++ b/drivers/media/platform/qcom/venus/hfi_platform.c
-@@ -2,7 +2,9 @@
- /*
-  * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-  */
-+#include <linux/of_device.h>
- #include "hfi_platform.h"
-+#include "core.h"
- 
- const struct hfi_platform *hfi_platform_get(enum hfi_version version)
- {
-@@ -66,3 +68,22 @@ hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec, u32 session_
- 	return freq;
- }
- 
-+int
-+hfi_platform_get_codecs(struct venus_core *core, u32 *enc_codecs, u32 *dec_codecs, u32 *count)
-+{
-+	const struct hfi_platform *plat;
-+
-+	plat = hfi_platform_get(core->res->hfi_version);
-+	if (!plat)
-+		return -EINVAL;
-+
-+	plat->codecs(enc_codecs, dec_codecs, count);
-+
-+	if (of_device_is_compatible(core->dev->of_node, "qcom,sc7280-venus")) {
-+		*enc_codecs &= ~HFI_VIDEO_CODEC_VP8;
-+		*dec_codecs &= ~HFI_VIDEO_CODEC_VP8;
-+	}
-+
-+	return 0;
-+}
-+
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
-index 1dcf408..ec89a90 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform.h
-+++ b/drivers/media/platform/qcom/venus/hfi_platform.h
-@@ -66,4 +66,6 @@ unsigned long hfi_platform_get_codec_vsp_freq(enum hfi_version version, u32 code
- 					      u32 session_type);
- unsigned long hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec,
- 					     u32 session_type);
-+int hfi_platform_get_codecs(struct venus_core *core, u32 *enc_codecs, u32 *dec_codecs,
-+			    u32 *count);
- #endif
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
+
+Best regards,
+Krzysztof
