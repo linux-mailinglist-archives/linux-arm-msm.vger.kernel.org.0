@@ -2,59 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD3A852DBB2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 19:48:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C492252DBF4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 19:52:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243116AbiESRsV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 13:48:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51168 "EHLO
+        id S243439AbiESRwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 13:52:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243157AbiESRsT (ORCPT
+        with ESMTP id S243427AbiESRwa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 13:48:19 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 308A9AFB13;
-        Thu, 19 May 2022 10:48:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B9B4561917;
-        Thu, 19 May 2022 17:48:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E440FC34100;
-        Thu, 19 May 2022 17:48:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652982498;
-        bh=vLjIopQ/K98k8gpYLk/oPjiMCD9lvMAme/cdGzHW1Hk=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=KnNOMhlbM1GBTVdlLNeF2nhjakCHIzahZvc7P95GQRXy6LZnhxzaDKidDEo2F4zfe
-         HozAfii9GWZ1ONI5t78LLW5WSCfRIBYNEom42SHsLClPP4QXYJai524Hhca+i96DrX
-         8CIE606Jp/7qoK+p6/gkWRInE9slgum/3PuI7R8c84yTkTW/zSi1Zn+3hetDzLVwRM
-         N5Wwc69+iUIf0JQB9N9agFNzZlsD7e8mqF88AXCaBZsfPXDmQFXCDw0kYC87jL+4bT
-         Pm5Up4EGbCzGPU4+rVNDUwZtOQZJKW/xKP7mMWSrvqGTVtkgOEg6dAfVkAbjJwu417
-         oyzAGEYnS4+wA==
-Message-ID: <92ba193f-f56a-ca67-925b-e9f839ae2357@kernel.org>
-Date:   Thu, 19 May 2022 20:48:12 +0300
+        Thu, 19 May 2022 13:52:30 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F27513D29;
+        Thu, 19 May 2022 10:50:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652982653; x=1684518653;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=5kM8wfwdVVMpu4XIfWch6CVxolwvVx9Fn/lj75QXlMQ=;
+  b=ObgsH0SRuC7UHCT5ldlmMwZY5YLyDaX/IRHfHEP2rf59ierUxXwWZiYH
+   gDkH3g1ZS3C9OTjpSf9ZIDCISOODJ2eexDSxAKHRPETdhh3ICYR6zvL7m
+   UHPw7U/F2pPsJHHpNrYwGxqNJsrAmgd/TYvKyqDRTR9FF/oflliCnOhTb
+   c=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 19 May 2022 10:50:53 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 10:50:52 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 19 May 2022 10:50:51 -0700
+Received: from [10.110.100.160] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 19 May
+ 2022 10:50:49 -0700
+Message-ID: <089aaf55-084b-9a29-629c-3096930fac3b@quicinc.com>
+Date:   Thu, 19 May 2022 10:50:48 -0700
 MIME-Version: 1.0
-Subject: Re: [PATCH 5/2] dt-bindings: interconnect: Remove sc7180/sdx55 ipa
- compatibles
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH v7] drm/msm/dp: Always clear mask bits to disable
+ interrupts at dp_ctrl_reset_irq_ctrl()
 Content-Language: en-US
-To:     Alex Elder <elder@linaro.org>, Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-References: <20220412220033.1273607-1-swboyd@chromium.org>
- <20220415005828.1980055-1-swboyd@chromium.org>
- <20220415005828.1980055-3-swboyd@chromium.org>
- <a17603a8-f273-0dde-8e84-3c0616ff04aa@linaro.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <a17603a8-f273-0dde-8e84-3c0616ff04aa@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
+        <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1652804494-19650-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <1652804494-19650-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -63,55 +72,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17.05.22 1:16, Alex Elder wrote:
-> On 4/14/22 7:58 PM, Stephen Boyd wrote:
->> These interconnects are modeled as clks, not interconnects, therefore
->> remove the compatibles from the binding as they're unused.
->>
->> Cc: Alex Elder <elder@linaro.org>
->> Cc: Taniya Das <quic_tdas@quicinc.com>
->> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
->> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->> ---
->>
->> I don't know who should apply this. Probably whoever takes the dtsi
->> patches, Bjorn?, because otherwise dt_bindings_check will fail.
-> 
-> I don't see this commit applied anywhere, though I
-> might have missed it.  Is this for Bjorn, or Georgi,
-> or someone else?
 
-I merged it as Bjorn has already sent his pull request.
+On 5/17/2022 9:21 AM, Kuogee Hsieh wrote:
 
-Thanks,
-Georgi
-
-> 
->                      -Alex
-> 
->>   Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml | 2 --
->>   1 file changed, 2 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml 
->> b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
->> index 5a911be0c2ea..ab859150c7f7 100644
->> --- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
->> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
->> @@ -31,7 +31,6 @@ properties:
->>         - qcom,sc7180-config-noc
->>         - qcom,sc7180-dc-noc
->>         - qcom,sc7180-gem-noc
->> -      - qcom,sc7180-ipa-virt
->>         - qcom,sc7180-mc-virt
->>         - qcom,sc7180-mmss-noc
->>         - qcom,sc7180-npu-noc
->> @@ -68,7 +67,6 @@ properties:
->>         - qcom,sdm845-mem-noc
->>         - qcom,sdm845-mmss-noc
->>         - qcom,sdm845-system-noc
->> -      - qcom,sdx55-ipa-virt
->>         - qcom,sdx55-mc-virt
->>         - qcom,sdx55-mem-noc
->>         - qcom,sdx55-system-noc
-> 
-
+Is anyone has comments on this patch?
+> dp_catalog_ctrl_reset() will software reset DP controller. But it will
+> not reset programmable registers to default value. DP driver still have
+> to clear mask bits to interrupt status registers to disable interrupts
+> after software reset of controller.
+>
+> At current implementation, dp_ctrl_reset_irq_ctrl() will software reset dp
+> controller but did not call dp_catalog_ctrl_enable_irq(false) to clear hpd
+> related interrupt mask bits to disable hpd related interrupts due to it
+> mistakenly think hpd related interrupt mask bits will be cleared by software
+> reset of dp controller automatically. This mistake may cause system to crash
+> during suspending procedure due to unexpected irq fired and trigger event
+> thread to access dp controller registers with controller clocks are disabled.
+>
+> This patch fixes system crash during suspending problem by removing "enable"
+> flag condition checking at dp_ctrl_reset_irq_ctrl() so that hpd related
+> interrupt mask bits are cleared to prevent unexpected from happening.
+>
+> Changes in v2:
+> -- add more details commit text
+>
+> Changes in v3:
+> -- add synchrons_irq()
+> -- add atomic_t suspended
+>
+> Changes in v4:
+> -- correct Fixes's commit ID
+> -- remove synchrons_irq()
+>
+> Changes in v5:
+> -- revise commit text
+>
+> Changes in v6:
+> -- add event_lock to protect "suspended"
+>
+> Changes in v7:
+> -- delete "suspended" flag
+>
+> Fixes: 989ebe7bc446 ("drm/msm/dp: do not initialize phy until plugin interrupt received")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/dp/dp_ctrl.c | 9 +++++++--
+>   1 file changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index 5356856..5ddb4e8 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1380,8 +1380,13 @@ void dp_ctrl_reset_irq_ctrl(struct dp_ctrl *dp_ctrl, bool enable)
+>   
+>   	dp_catalog_ctrl_reset(ctrl->catalog);
+>   
+> -	if (enable)
+> -		dp_catalog_ctrl_enable_irq(ctrl->catalog, enable);
+> +	/*
+> +	 * all dp controller programmable registers will not
+> +	 * be reset to default value after DP_SW_RESET
+> +	 * therefore interrupt mask bits have to be updated
+> +	 * to enable/disable interrupts
+> +	 */
+> +	dp_catalog_ctrl_enable_irq(ctrl->catalog, enable);
+>   }
+>   
+>   void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl)
