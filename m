@@ -2,91 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F4FA52CDCF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 10:04:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27BC952CE82
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 May 2022 10:41:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232049AbiESIDW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 04:03:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47114 "EHLO
+        id S234745AbiESIlk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 04:41:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235123AbiESIDV (ORCPT
+        with ESMTP id S232134AbiESIlh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 04:03:21 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6039D579B5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 01:03:18 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id d15so7723798lfk.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 01:03:18 -0700 (PDT)
+        Thu, 19 May 2022 04:41:37 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AE655EDFD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 01:41:35 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id z7-20020a17090abd8700b001df78c7c209so8176869pjr.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 01:41:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=h+5XYMbcVG/ukMH+8rM5pkWmGEN5A1VDZBupz3IskQ4=;
-        b=ookNFxXo3dqEYboeqhuxEAIDVKM2ggkLyyJZrAXTVDXa5x4KcT3z346tW+efpnrjmX
-         S+56zMWLsReakocli3x4AXTS6EqN32Nr2yCmZy03cUO4PcNLp1h6yCHSiA4+YFQ7WMRU
-         LICyzxNlOt5FHOVfS3CFn1v/esPjRtQ1eNyKuNk+bg3N84W2THm/XuJ1JDJhpRv/Xh98
-         ZFQT/WlNnMoVu4UXqHIARzIW/yx0OUE6MMvP7MhZup2YEdqEjZbW1gHifpJa9qdhmkEs
-         HgHgYcV2D6Ona9aCCBBoA/5TAJ5K/8qobzisYfzFzNB5MOKFhRJqh1B5wd9qQcunFkyM
-         gY/A==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9F4LJppyqE41q1h43fo/X8VtHTZjJ9e8kf5fIIkbl00=;
+        b=WJFhyIJFYS9f3bR81kq8k7S1IT6b4ctmIlFV09o1nN6goqGhtWhRtp729/39pPXNCP
+         eOWyRZfzQgZUADV66in2saYgYZg2XqVqOtr9kpUVn+f184+8c4eNOMBtIbyO/s/e2bzx
+         TMynds0f5ujgx7YWNE9URnPppPuj+8cw8OkAM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=h+5XYMbcVG/ukMH+8rM5pkWmGEN5A1VDZBupz3IskQ4=;
-        b=C/ngziMmOKzt8xyQS9+OQPfayWCvGyCXu2ncL3buacdTYUPULWxZltHb0crrdIIoHF
-         p0UsneX1ZoBpmFNT8rHMm55TmI3SESto8u5sdjikxrpB21jqhtxnTh6PYQOYlnulujZg
-         iC5gOoT0cEgHGHoXpiZRjUE5rzC4T3GPRF65CEZczQRC+Q1HbuIpkeUBfUyzvIV/oXiP
-         JC19pc/SLBecljNMYvw9VdxGwLE3ljNv8NvGBBzBkb6Lg9jWpW/DKYr4w1XJQ3Root3O
-         YWx6nTrXXXaP+k2GLDzGTjz49m4ZYN8g8haxUpV3bOCZrMZBYQUjA4C9moqTKyD/nSDM
-         D8JA==
-X-Gm-Message-State: AOAM531N2IpjXe3yAvXHWG+gT7rybaNrnc00iXL10YnsQT3IwHZ4QEMN
-        wi1hv9DFix/TUJXaNRCQkAJJ5w==
-X-Google-Smtp-Source: ABdhPJzcdAmmROIvWFwwSM91fShqeasCgr925FoWEh4W9HiVHNX3YCiZf/CDs2u8H05VevxjMEcRTA==
-X-Received: by 2002:a05:6512:449:b0:477:cb59:9fe5 with SMTP id y9-20020a056512044900b00477cb599fe5mr558965lfk.40.1652947396699;
-        Thu, 19 May 2022 01:03:16 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id n14-20020ac242ce000000b0047255d211b8sm195035lfl.231.2022.05.19.01.03.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 May 2022 01:03:16 -0700 (PDT)
-Message-ID: <65a4c28d-6702-3a9f-f837-1ea69a428777@linaro.org>
-Date:   Thu, 19 May 2022 10:03:14 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [RFC PATCH v2 4/6] PM: opp: allow control of multiple clocks
-Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        bh=9F4LJppyqE41q1h43fo/X8VtHTZjJ9e8kf5fIIkbl00=;
+        b=d6+svtFJgJR8ho3PHf3WajxKigLF4tNj7C4eIx0Zgwmi3KFUZnFRhLhruwka3vJwst
+         7YhjBUcT7Z9SVPvLgRRSgAj8/u8v8kgAIVgfNdvt5IUm8oC/z3K+sMAzSv0+9NeMgNSt
+         R7quilogIq7BNoTlFPD2UHbEzDBFbR60cSJbfB9NmJjGUgce5q2t8OkuPHq56Ds4rZXw
+         rBnEn46/CK4TRLdczOJEs+QT/BTPvrJI3OF4wSARs/t4HkPYL/CK4tRXsLjxlPuLPRy4
+         0M8sZMw+9C5YlwuvbWRNKwJMf0IuEHx9xSko3rxOOwJC9rtr+rewI35Dh4ND6Yn84Nsq
+         XeHg==
+X-Gm-Message-State: AOAM530SKn/1encD+D2vu8a+Z8CzBddbHBAkeydUMJKkFrgmnTFfoVCi
+        v5QErQWXqq2wirBLyjHXPb8vAg==
+X-Google-Smtp-Source: ABdhPJw+iNDACAe/dSBqzUI0O4XQGEgN1hO5zC0/gT+10HZzsJJK95BJlERBpDdb3hhiVNO/UA37vg==
+X-Received: by 2002:a17:902:b495:b0:15f:2a7b:b9d2 with SMTP id y21-20020a170902b49500b0015f2a7bb9d2mr3889302plr.20.1652949695018;
+        Thu, 19 May 2022 01:41:35 -0700 (PDT)
+Received: from judyhsiao0319.c.googlers.com.com (164.135.233.35.bc.googleusercontent.com. [35.233.135.164])
+        by smtp.gmail.com with ESMTPSA id m10-20020a170902f20a00b0015f33717794sm3066185plc.42.2022.05.19.01.41.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 May 2022 01:41:34 -0700 (PDT)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
-References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
- <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
- <20220425072710.v6gwo4gu3aouezg4@vireshk-i7>
- <dea39b1f-0091-2690-7f07-108d07ef9f3c@linaro.org>
- <20220510044053.ykn6ygnbeokhzrsa@vireshk-i7>
- <1e533194-7047-8342-b426-f607fddbfaa3@linaro.org>
- <20220511050643.hd5tcrojb3wkbg7t@vireshk-i7>
- <20220518235708.1A04CC385A9@smtp.kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220518235708.1A04CC385A9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
+        judyhsiao@google.com, tzungbi@chromium.org, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Judy Hsiao <judyhsiao@chromium.org>
+Subject: [v1 0/3] Add dtsi for sc7280 boards that using rt5682 codec
+Date:   Thu, 19 May 2022 08:41:16 +0000
+Message-Id: <20220519084119.675990-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -95,39 +71,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/05/2022 01:57, Stephen Boyd wrote:
-> Quoting Viresh Kumar (2022-05-10 22:06:43)
->> On 10-05-22, 15:09, Krzysztof Kozlowski wrote:
->>> On 10/05/2022 06:40, Viresh Kumar wrote:
->>>> IMHO, this is broken by design. I can easily see that someone wants to
->>>> have few variants of all other frequencies for the same frequency of
->>>> the so called "main" clock, i.e. multiple OPPs with same "main" freq
->>>> value.  I don't think we can mark the clocks "main" or otherwise as
->>>> easily for every platform.
->>>>
->>>> Stephen, any inputs on this ?
->>>
->>> In such case, matching opps by frequency would be a quite different API.
->>> The drivers can use now:
->>> https://github.com/krzk/linux/commit/ebc31798494fcc66389ae409dce6d9489c16156a#diff-b6370444c32afa2e55d9b6150f355ba6f4d20c5ed5da5399ea8295d323de8267R1200
->>>
->>> If you assume that this frequency can be used for multiple OPPs, then
->>> the API should be different. Something like:
->>> int dev_pm_opp_set_rate(struct device *dev, unsigned long *target_freqs,
->>>                         size_t num_freqs);
->>
->> At this point I am not looking for a new API, but just continuing the discussion
->> to understand what different hardwares want or look like.
-> 
-> I think for UFS they don't want a rate API at all. They want to set a
-> "clock gear" and that translates into whatever that means for OPP; be it
-> a clk frequency (or two), an interconnect bandwidth (or multiple?), and some
-> performance state (or many) for any power domains. I think the gear
-> design is built into the UFS spec. If it isn't then I'm misremembering
-> things.
+Put sound node and lpass_cpu node settings for boards that use rt5682
+codec in the sc7280-herobrine-audio-rt5682.dtsi as there are different
+choices of headset codec for herobrine projects. Common audio setting
+for the internal speaker is in sc7280-herobrine.dtsi.
 
-Yes, true. The clock frequencies are still changed with each gear, but
-in general the UFS indeed operates on gear concept.
+Judy Hsiao (3):
+  arm64: dts: qcom: sc7280: Add drive strength property for secondary
+    MI2S
+  arm64: dts: qcom: sc7280: Add sc7280-herobrine-audio-rt5682.dtsi
+  arm64: dts: qcom: sc7280: include sc7280-herobrine-audio-rt5682.dtsi
+    in villager and herobrine-r1
 
-Best regards,
-Krzysztof
+ .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 121 ++++++++++++++++++
+ .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 +
+ .../dts/qcom/sc7280-herobrine-villager-r0.dts |   1 +
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  14 ++
+ 4 files changed, 137 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
+
+-- 
+2.36.1.124.g0e6072fb45-goog
+
