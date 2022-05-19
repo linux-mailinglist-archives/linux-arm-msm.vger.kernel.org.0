@@ -2,55 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDD7E52DFD5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 00:13:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBF9452DFF9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 00:31:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245364AbiESWN0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 18:13:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34522 "EHLO
+        id S238859AbiESWbP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 18:31:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237755AbiESWNZ (ORCPT
+        with ESMTP id S233817AbiESWbO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 18:13:25 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F01E5AEDD;
-        Thu, 19 May 2022 15:13:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 0E567B828AA;
-        Thu, 19 May 2022 22:13:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCD3C385AA;
-        Thu, 19 May 2022 22:13:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1652998401;
-        bh=EhDdM7epHX9M88QHEaZ6KEcngcsL6EzezvL86BA/qvk=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=mSMnHB2LYlct4HqsAGisrXJrlzO/233uMmDVPNlG5O41+0Pq3B6Fg7pwj2pBs4VFa
-         F+AcqKhP0MnJJAfxhY/9K0QgN5QlR3v6Vdrxa7VUsTgfpOovPy6N001uHdZ7dnyYNW
-         +laAig2cWGmmSHlni2WZIB4FdVX2IyC2uE8rZC0R8L37KxTtuRrKpYpTLRBRiEehen
-         3fYS9URY461hYeY0L+ewR4ZOxhz/3Id0RXNOHW7w94KuQ4TfWR+QmDQaKz/GguS8A8
-         XskhX9wx5VR9JS9Xtd/5XiPtkU0nRjrFGIhQxzJX4U+xbn00+lSihsEJz8FGJhPUyr
-         GNVs/Cc4hXNEA==
-Content-Type: text/plain; charset="utf-8"
+        Thu, 19 May 2022 18:31:14 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A954A9FD2;
+        Thu, 19 May 2022 15:31:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1652999472; x=1684535472;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=bDLidO+uz/WxZLgd7T0KPUs7o3mI46xraJxkCn7ZFMc=;
+  b=L3bmzxmvKv0afo4OS0Cl3vprFCz4ygPt8+5thrqcpI0TsSTFMv/tB3GB
+   Ra84KiwHRxeIvkx8knnfaOROkXK/WC3FfEgcB9A+jbGxHB6Ac96R/UtPC
+   qRp3vOnmALkUpMyLH/tnDSBNduAwtNtIAHkcEZkybHN/ECzglUQo4Wj6L
+   k=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 19 May 2022 15:31:10 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 15:31:09 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 19 May 2022 15:30:38 -0700
+Received: from [10.110.88.175] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 19 May
+ 2022 15:30:37 -0700
+Message-ID: <27515993-18f3-8891-4835-9b6a8d7f86b0@quicinc.com>
+Date:   Thu, 19 May 2022 15:30:37 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220519073330.7187-1-krzysztof.kozlowski@linaro.org>
-References: <20220519073330.7187-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2 1/3] rpmsg: qcom: glink: replace strncpy() with strscpy_pad()
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-Date:   Thu, 19 May 2022 15:13:19 -0700
-User-Agent: alot/0.10
-Message-Id: <20220519221321.9CCD3C385AA@smtp.kernel.org>
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v6] dt-bindings: power: reset: qcom-pon: update "reg"
+ property details
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+CC:     <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <sre@kernel.org>,
+        <linux-input@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <bjorn.andersson@linaro.org>,
+        <swboyd@chromium.org>, <linux-doc@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        David Collins <quic_collinsd@quicinc.com>
+References: <20220422191239.6271-1-quic_amelende@quicinc.com>
+ <20220422191239.6271-2-quic_amelende@quicinc.com>
+ <YmcWZLp2X8UYOVas@robh.at.kernel.org>
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+In-Reply-To: <YmcWZLp2X8UYOVas@robh.at.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -59,25 +73,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krzysztof Kozlowski (2022-05-19 00:33:28)
-> The use of strncpy() is considered deprecated for NUL-terminated
-> strings[1]. Replace strncpy() with strscpy_pad(), to keep existing
-> pad-behavior of strncpy, similarly to commit 08de420a8014 ("rpmsg:
-> glink: Replace strncpy() with strscpy_pad()").  This fixes W=3D1 warning:
->=20
->   In function =E2=80=98qcom_glink_rx_close=E2=80=99,
->     inlined from =E2=80=98qcom_glink_work=E2=80=99 at ../drivers/rpmsg/qc=
-om_glink_native.c:1638:4:
->   drivers/rpmsg/qcom_glink_native.c:1549:17: warning: =E2=80=98strncpy=E2=
-=80=99 specified bound 32 equals destination size [-Wstringop-truncation]
->    1549 |                 strncpy(chinfo.name, channel->name, sizeof(chin=
-fo.name));
->=20
-> [1] https://www.kernel.org/doc/html/latest/process/deprecated.html#strncp=
-y-on-nul-terminated-strings
->=20
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->=20
-> ---
 
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+
+On 4/25/2022 2:45 PM, Rob Herring wrote:
+> On Fri, Apr 22, 2022 at 12:12:38PM -0700, Anjelique Melendez wrote:
+>> From: David Collins <collinsd@quicinc.com>
+>>
+>> Update the description of "reg" property to add the PON_PBS base
+>> address along with PON_HLOS base address.  Also add "reg-names"
+>> property description.
+>>
+>> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
+>> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+>> ---
+>>  .../bindings/power/reset/qcom,pon.yaml | 19 ++++++++++++++++++-
+>>  1 file changed, 18 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+>> index 353f155d..65ec8197 100644
+>> --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+>> +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+>> @@ -26,7 +26,24 @@ properties:
+>>        - qcom,pm8998-pon
+>>  
+>>    reg:
+>> -    maxItems: 1
+>> +    description: |
+>> +      Specifies the SPMI base address for the PON (power-on) peripheral.  For
+>> +      PMICs that have the PON peripheral (GEN3) split into PON_HLOS and PON_PBS
+>> +      (e.g. PMK8350), this can hold addresses of both PON_HLOS and PON_PBS
+>> +      peripherals.  In that case, the PON_PBS address needs to be specified to
+>> +      facilitate software debouncing on some PMICs.
+>> +    minItems: 1
+>> +    maxItems: 2
+>> +
+>> +  reg-names:
+>> +    description: |
+>> +      For PON GEN1 and GEN2, it should be "pon".  For PON GEN3 it should include
+>> +      "pon_hlos" and optionally "pon_pbs".
+>> +    minItems: 1
+>> +    items:
+>> +      - const: pon_hlos
+>> +      - const: pon_pbs
+>> +      - const: pon
+> 
+> Did you test that 'reg-names = "pon";' works? It doesn't. The schema 
+> says 'pon' is the 3rd entry in reg-names.
+> 
+> As 'reg-names' is new I thin this should be:
+> 
+> items:
+>   - const: hlos
+>   - const: pbs
+> 
+> And if there's 1 entry, then 'reg-names' should not be there.
+> 
+> Rob
+
+currently reg-names is not consumed by the pm8941 driver but rather for users to understand
+what each reg address is associated with. 
+With this being the case would the following be acceptable?
+	minItems: 1
+	maxItems: 2
+	items:
+    	    anyOf:
+     	      - const: pon_hlos
+     	      - const: pon_pbs
+     	      - const: pon
+
+If not we would be ok with getting rid of the reg-name property.
