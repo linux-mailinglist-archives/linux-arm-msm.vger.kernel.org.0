@@ -2,104 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3740252EC27
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 14:33:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE2B552EC47
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 14:40:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349281AbiETMdT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 08:33:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53402 "EHLO
+        id S1348478AbiETMk0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 08:40:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349340AbiETMdK (ORCPT
+        with ESMTP id S242723AbiETMkY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 08:33:10 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE7DC166093
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 05:33:06 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id f4so14019800lfu.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 05:33:06 -0700 (PDT)
+        Fri, 20 May 2022 08:40:24 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78423EC3FD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 05:40:23 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id v8so12170979lfd.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 05:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0nYhv1nPF+LOWvBH2h9U+emDwliIywhBz9unRXuVff8=;
-        b=CDIy1o7JzUQ8oO1748IY88xdw8Ua+rGPADPPyoThG/Xnlz/eHKS4pb2QGraPmx2knR
-         upjQAjqiHsd3dsMrTZnGFpmPoq4DpY1EP5OHEBoluomy6KSQaBUQVgy0WSLcfXJz3yKE
-         nmS4P72VtJSS+7h54PJUGI6I+MOcF33XNV6H7p8lxvaApeDM1ef5T85CdoUgA3mbvhx4
-         Drf4ql4fyKQMyc7KLxDJSkLCvDtEx/W3mmP0LgFPQlJxVOMHgwsqbAoDCDIqmEuRTmJT
-         b4eEh+r+AGI15VYc2PgfIM2f+s7NzQSjkhzqd18caoEIChhFhAFad1zSV/oatzFndsJJ
-         28mg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ESS8z0gPMrp8HIeiYMl+g1p08r+rLx+Me8BHX8Ar2TU=;
+        b=aFc0u3o5KrmNm5Q6tXwxKrAXg5dEA4bfQwQE2ltIXx+JW6M9Q0GwJOn/02cj8eXzj+
+         kNvi/KjggsBopr/czDNjPMu4E50A0QLVVIjorC7iqca4De+bQPb20N5VRdE4hoPLDCoC
+         A+ZbcwvGECMcfTrYkHrvIEd3pNZWbnLbJvt3qeykIlTyADIx9C6I4pRGmOym1qaE1qIZ
+         hloo3JdzCMVbV5J6kmNv3BRNZRepxVpuyctMfbX3STPepg9lM8T/wMQcZioM5Gls7uKj
+         hWDO8frhbJqPett7F4+/uGf5FPsagWH4K1NQfVrWUtbPtBOh5ohZfPnUBBAD2zLlcMFV
+         YyLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0nYhv1nPF+LOWvBH2h9U+emDwliIywhBz9unRXuVff8=;
-        b=1DYmjOCcGbA4yPW1x/cd5/8Rr5Sw5qmjSGd4Qhp5ZjjPN/q+Fb3rUXoYMU+8VmEK9G
-         q9THS/XYFGiD6oiR7t+vOo/9YuUCvRZ7BkuyXz15CxwI6TQLgNPgRq409SIrw810GwOk
-         WYI+b7YeMhr35VWcui7BMgWpa58o++npleKz8auM5z3HvyHf4i9B0I9QE6lOwLICgLC2
-         yOMwYGcBNIVQo8EoDGXiNxJy5pgweB2U9WLpSL1X0R2IAscqB5rJLrh99Pot4l8GLX8K
-         +KJyybfo2fD0SWb1bIq+J6r2Ut9mwKVSNDuslD+tB9QGH19MapJmI0FvLICD+DTfkGCN
-         SIJg==
-X-Gm-Message-State: AOAM532f5kMKRjY58ndiaZrCjussbfo9A3PBN1xbM/V31K5Q8SytIXFZ
-        qLbYoRwmQzpVvWN4wmfuRGtNBw==
-X-Google-Smtp-Source: ABdhPJzH0eTCGcr4er18fwN1OAwNl7z7bDJwYFHVl/nuToICzEzhRN22hemPJ9frItGFrqfqVlRceg==
-X-Received: by 2002:a05:6512:139a:b0:474:15ce:9204 with SMTP id p26-20020a056512139a00b0047415ce9204mr6535256lfa.461.1653049986242;
-        Fri, 20 May 2022 05:33:06 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ESS8z0gPMrp8HIeiYMl+g1p08r+rLx+Me8BHX8Ar2TU=;
+        b=neE13TUTvd14wtrt199I7Uyo7Mh0ygceF5ZjQs+hcUiPg2ANJEFplSxx9bELVm6MmQ
+         iKhGtJtRFFg4Phin+f3ZWfxw249Q9N9ZAhEASlhfOzhNHAl5VDzTjaIJTzEos130U9mC
+         L+RS34iXyrAeffq+2VKil4JHNQG5y1Yz5NRvHao0qiCH+X6Jj8FbsDwkdULoVh6lRG0x
+         aCbEOcayO7AxS1wZm3bmNc2gYI9YO4iSZljaSBI6NEmasnqsrGt4Vx9k62sCDqzBTX9k
+         /VROcnkE8d9VLd+3vU1KiSF2BVfGHT6RLgP9vFzxn0nxvLHlAFtelP1Yn59apbfjW/VM
+         M4Cw==
+X-Gm-Message-State: AOAM532fcwCldSEeRj7V/mrhKZ9jHzm5r5zx0+y+Zn64AQOmNHBGie23
+        aRpjtNjrcH6vKPqNLh6I81nRJQ==
+X-Google-Smtp-Source: ABdhPJwql+NjrHt8F4k/y365IWTQb7IIoDgwwLF1vRtJTRvgiv6JlgM5b4hVo25CLdEg1Qh3hepZLg==
+X-Received: by 2002:a05:6512:1315:b0:474:40c9:41a7 with SMTP id x21-20020a056512131500b0047440c941a7mr7008676lfu.319.1653050421835;
+        Fri, 20 May 2022 05:40:21 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id a14-20020a056512374e00b0047255d211bfsm643973lfs.238.2022.05.20.05.33.05
+        by smtp.gmail.com with ESMTPSA id v5-20020a056512348500b004744d5f8f26sm650039lfr.52.2022.05.20.05.40.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 05:33:05 -0700 (PDT)
+        Fri, 20 May 2022 05:40:21 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 9/9] dt-bindings: arm: qcom: add missing SM8350 board compatibles
-Date:   Fri, 20 May 2022 14:32:52 +0200
-Message-Id: <20220520123252.365762-9-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] dt-bindings: arm: qcom: switch maintainer to Bjorn
+Date:   Fri, 20 May 2022 14:40:18 +0200
+Message-Id: <20220520124018.367004-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220520123252.365762-1-krzysztof.kozlowski@linaro.org>
-References: <20220520123252.365762-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,TVD_PH_BODY_ACCOUNTS_PRE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document several board compatibles already present in Linux kernel.
+Emails to Stephen bounce since long time ("Recipient address rejected:
+undeliverable address: No such user here."), so change maintainer to
+Qualcomm platform maintainer.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+
+Although Stephen uses his @kernel.org account but the address is still
+not updated, so I guess these files are abandoned. Otherwise if they are
+not abandoned, please update the email address.
+
+It would be nice if folks from CodeAurora updated their addresses,
+because these bounces happen since some time and are annoying.
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index abc5f709678c..25ae8a850be1 100644
+index 25ae8a850be1..d137fe371935 100644
 --- a/Documentation/devicetree/bindings/arm/qcom.yaml
 +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -319,8 +319,11 @@ properties:
+@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: QCOM device tree bindings
  
-       - items:
-           - enum:
-+              - microsoft,surface-duo2
-               - qcom,sm8350-hdk
-               - qcom,sm8350-mtp
-+              - sony,pdx214-generic
-+              - sony,pdx215-generic
-           - const: qcom,sm8350
+ maintainers:
+-  - Stephen Boyd <sboyd@codeaurora.org>
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
  
-       - items:
+ description: |
+   Some qcom based bootloaders identify the dtb blob based on a set of
 -- 
 2.32.0
 
