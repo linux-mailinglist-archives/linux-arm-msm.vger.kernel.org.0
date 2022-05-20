@@ -2,64 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BC9152F000
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 18:04:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23E7D52F011
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 18:08:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234174AbiETQEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 12:04:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52120 "EHLO
+        id S1351363AbiETQID (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 12:08:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242089AbiETQEF (ORCPT
+        with ESMTP id S1351362AbiETQIA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 12:04:05 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ADDE17CE46;
-        Fri, 20 May 2022 09:04:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 44BFAB82C4E;
-        Fri, 20 May 2022 16:04:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4171C34100;
-        Fri, 20 May 2022 16:04:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653062642;
-        bh=YeGJKPJHDvFCGBv8yruGYmLxXgiUwVSyw6y7dTSAUI0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=m0j9iT85np1fFZ5QWV09+pUu0gNYGIVcWBJwLhVAsebcsCPuDH+JnhAtwrYW688Iu
-         6EeiG5xxks8XZ5IDDLwXeSKOJkzIl5tLiTRN0ReyzSTUqjHTWoeD75CqUWeShSzqFp
-         a2t3R1eM9di5CIVhcb4MUVM9qg6r/m8VYqZ5eF5TqxlcB4Ae52kWz/tYoLcN6pQVfv
-         i5afkKafkeu3F9hMtIL3UVV4y16qj5oSIDJX66OQmalwV4eJfy+HWWaDD0jdqpKvua
-         p8TGatdpiERqFkbtUvmB5DDe5B4segNjkQFLBFV2O/011GhElbR+U+p9xAiRKzndyo
-         0syphMemdWX0w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ns56g-00085Y-4Q; Fri, 20 May 2022 18:04:02 +0200
-Date:   Fri, 20 May 2022 18:04:02 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: Re: [PATCH v7 2/6] clk: qcom: regmap: add PHY clock source
- implementation
-Message-ID: <Yoe78gvFkSB+UF7w@hovoldconsulting.com>
-References: <20220520015844.1190511-1-dmitry.baryshkov@linaro.org>
- <20220520015844.1190511-3-dmitry.baryshkov@linaro.org>
+        Fri, 20 May 2022 12:08:00 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7D92179C2A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 09:07:58 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id w200so8114876pfc.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 09:07:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CnA/uZftv5ibDJtyyKJZc9HKIOvccsTGLZumziMaAAw=;
+        b=bUsNviV8m7NGmgUISpwui0rgRQH4+2/JgKB4mQ30RXUjqYj9doqedIBePSHfjjakPU
+         P1FDqWXqyjj5uSi9tiB7jr2R7Gn306/SXB+GwPS4gSlWw9Xq9uOBCqteSUBd0cV/8NZo
+         qJnLtA1T22ZCevI1gtAgLbf3Hz2liN2XWFJac=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CnA/uZftv5ibDJtyyKJZc9HKIOvccsTGLZumziMaAAw=;
+        b=qiZeRH0E/kT03r/EvD3Rj5vwa2T1Vy1VBlHjcsxEggYTMd5Zlf8bVsoAHr85/TVfgF
+         RZFp8iPeu0NK1o9kGGiAwOdJ5U3SO5wGjYlvXi4U1H3Ol9nti6ZDudA/VgQYX/35XV4V
+         d7Iq4f6cM/4j5wwVerzXJuWjTeTnX9fwOtTPqH3E4di7eTxaHNUh5OCAAj37hZ7cTuXl
+         x2xIhykNykCCRyq2sufJKsDBe2Zjj/ZdZbq/BuQPWiF7SSMSjZ8MLbfaE6CB77JnRmDZ
+         JJUEJijlBe9CNh7yGk1VsZtDi/i4DdYX7bKI9xiLURM/RD3OjrBzd8LeMutKFbKrc2JN
+         +eaw==
+X-Gm-Message-State: AOAM532riYST9W7i9e/Uhj6xHP+/sndboaIOalmCOx9xuoU26WKSfCvL
+        SeRmZmzb2PeDKa3OpllDcOf2Ow==
+X-Google-Smtp-Source: ABdhPJxd/yvJkwiqDYr992Plqw9QYTomQlW8ZR82tuUc2HFppBnlFrAW0OLzlh1XNGOKtM09EZ11EA==
+X-Received: by 2002:a05:6a00:851:b0:518:50a9:32f5 with SMTP id q17-20020a056a00085100b0051850a932f5mr5841117pfk.47.1653062878068;
+        Fri, 20 May 2022 09:07:58 -0700 (PDT)
+Received: from judyhsiao0319.c.googlers.com.com (164.135.233.35.bc.googleusercontent.com. [35.233.135.164])
+        by smtp.gmail.com with ESMTPSA id iw3-20020a170903044300b00161a2d98a8esm5856138plb.226.2022.05.20.09.07.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 May 2022 09:07:57 -0700 (PDT)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
+        judyhsiao@google.com, tzungbi@chromium.org, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Judy Hsiao <judyhsiao@chromium.org>
+Subject: [v2 0/3] Add dtsi for sc7280 herobrine boards that using rt5682 codec
+Date:   Fri, 20 May 2022 16:07:51 +0000
+Message-Id: <20220520160754.1141281-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220520015844.1190511-3-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -68,152 +71,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 20, 2022 at 04:58:40AM +0300, Dmitry Baryshkov wrote:
-> On recent Qualcomm platforms the QMP PIPE clocks feed into a set of
-> muxes which must be parked to the "safe" source (bi_tcxo) when
-> corresponding GDSC is turned off and on again. Currently this is
-> handcoded in the PCIe driver by reparenting the gcc_pipe_N_clk_src
-> clock. However the same code sequence should be applied in the
-> pcie-qcom endpoint, USB3 and UFS drivers.
-> 
-> Rather than copying this sequence over and over again, follow the
-> example of clk_rcg2_shared_ops and implement this parking in the
-> enable() and disable() clock operations. Supplement the regmap-mux with
-> the new clk_regmap_phy_mux type, which implements such multiplexers
-> as a simple gate clocks.
-> 
-> This is possible since each of these multiplexers has just two clock
-> sources: one coming from the PHY and a reference (XO) one.  If the clock
-> is running off the from-PHY source, report it as enabled. Report it as
-> disabled otherwise (if it uses reference source).
-> 
-> This way the PHY will disable the pipe clock before turning off the
-> GDSC, which in turn would lead to disabling corresponding pipe_clk_src
-> (and thus it being parked to a safe, reference clock source). And vice
-> versa, after enabling the GDSC the PHY will enable the pipe clock, which
-> would cause pipe_clk_src to be switched from a safe source to the
-> working one.
-> 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Put sound node and lpass_cpu node settings for boards that use rt5682
+codec in the sc7280-herobrine-audio-rt5682.dtsi as there are different
+choices of headset codec for herobrine projects. Common audio setting
+for the internal speaker is in sc7280-herobrine.dtsi.
 
-I haven't reviewed or tested this version yet...
+This series depends on:
+"Add lpass pin control support for audio on sc7280 based targets" [1]
+"Add soundcard support for sc7280 based platforms" [2]
 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/clk/qcom/Makefile             |  1 +
->  drivers/clk/qcom/clk-regmap-phy-mux.c | 53 +++++++++++++++++++++++++++
->  drivers/clk/qcom/clk-regmap.h         | 17 +++++++++
->  3 files changed, 71 insertions(+)
->  create mode 100644 drivers/clk/qcom/clk-regmap-phy-mux.c
-> 
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index dff6aeb980e6..6d242f46bd1d 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -11,6 +11,7 @@ clk-qcom-y += clk-branch.o
->  clk-qcom-y += clk-regmap-divider.o
->  clk-qcom-y += clk-regmap-mux.o
->  clk-qcom-y += clk-regmap-mux-div.o
-> +clk-qcom-y += clk-regmap-phy-mux.o
->  clk-qcom-$(CONFIG_KRAIT_CLOCKS) += clk-krait.o
->  clk-qcom-y += clk-hfpll.o
->  clk-qcom-y += reset.o
-> diff --git a/drivers/clk/qcom/clk-regmap-phy-mux.c b/drivers/clk/qcom/clk-regmap-phy-mux.c
-> new file mode 100644
-> index 000000000000..dc96714a6175
-> --- /dev/null
-> +++ b/drivers/clk/qcom/clk-regmap-phy-mux.c
-> @@ -0,0 +1,53 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022, Linaro Ltd.
-> + */
-> +
-> +#include <linux/clk-provider.h>
-> +#include <linux/bitops.h>
-> +#include <linux/regmap.h>
-> +#include <linux/export.h>
-> +
-> +#include "clk-regmap.h"
-> +
-> +#define PHY_MUX_MASK		GENMASK(1, 0)
-> +#define PHY_MUX_PHY_SRC		0
-> +#define PHY_MUX_REF_SRC		2
-> +
-> +static int phy_mux_is_enabled(struct clk_hw *hw)
-> +{
-> +	struct clk_regmap *clkr = to_clk_regmap(hw);
-> +	unsigned int val;
-> +
-> +	regmap_read(clkr->regmap, clkr->enable_reg, &val);
-> +	val = FIELD_GET(PHY_MUX_MASK, val);
-> +
-> +	WARN_ON(val != PHY_MUX_PHY_SRC && val != PHY_MUX_REF_SRC);
-> +
-> +	return val == PHY_MUX_PHY_SRC;
-> +}
-> +
-> +static int phy_mux_enable(struct clk_hw *hw)
-> +{
-> +	struct clk_regmap *clkr = to_clk_regmap(hw);
-> +
-> +	return regmap_update_bits(clkr->regmap, clkr->enable_reg,
-> +				  PHY_MUX_MASK,
-> +				  FIELD_PREP(PHY_MUX_MASK, PHY_MUX_PHY_SRC));
-> +}
-> +
-> +static void phy_mux_disable(struct clk_hw *hw)
-> +{
-> +	struct clk_regmap *clkr = to_clk_regmap(hw);
-> +
-> +	regmap_update_bits(clkr->regmap, clkr->enable_reg,
-> +			   PHY_MUX_MASK,
-> +			   FIELD_PREP(PHY_MUX_MASK, PHY_MUX_REF_SRC));
-> +}
+[1] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638776
+[2] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=643589
 
-I prefer the implementation where you had a dedicated struct
-clk_regmap_phy_mux to match the ops rather than repurpose the clk_regmap
-and its enable_reg.
+Changes Since V1:
+    -- Remove sound-dai-cells in sound node.
+    -- Add dependency list.
+    -- Update patch subject.
 
-This is a mux and that should be reflected in the implementation (even if
-it's modelled as a gate).
+Judy Hsiao (3):
+  arm64: dts: qcom: sc7280: herobrine: Add pinconf settings for mi2s1
+  arm64: dts: qcom: sc7280: Add sc7280-herobrine-audio-rt5682.dtsi
+  arm64: dts: qcom: sc7280: include sc7280-herobrine-audio-rt5682.dtsi
+    in villager and herobrine-r1
 
-This will also make it easier to add further fields which there are
-indications that we may need to do pretty soon.
+ .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 120 ++++++++++++++++++
+ .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 +
+ .../dts/qcom/sc7280-herobrine-villager-r0.dts |   1 +
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  14 ++
+ 4 files changed, 136 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
 
-> +
-> +const struct clk_ops clk_regmap_phy_mux_ops = {
-> +	.enable = phy_mux_enable,
-> +	.disable = phy_mux_disable,
-> +	.is_enabled = phy_mux_is_enabled,
-> +};
-> +EXPORT_SYMBOL_GPL(clk_regmap_phy_mux_ops);
-> diff --git a/drivers/clk/qcom/clk-regmap.h b/drivers/clk/qcom/clk-regmap.h
-> index 14ec659a3a77..a58cd1d790fe 100644
-> --- a/drivers/clk/qcom/clk-regmap.h
-> +++ b/drivers/clk/qcom/clk-regmap.h
-> @@ -35,4 +35,21 @@ int clk_enable_regmap(struct clk_hw *hw);
->  void clk_disable_regmap(struct clk_hw *hw);
->  int devm_clk_register_regmap(struct device *dev, struct clk_regmap *rclk);
->  
-> +/*
-> + * A clock implementation for PHY pipe and symbols clock muxes.
-> + *
-> + * If the clock is running off the from-PHY source, report it as enabled.
-> + * Report it as disabled otherwise (if it uses reference source).
-> + *
-> + * This way the PHY will disable the pipe clock before turning off the GDSC,
-> + * which in turn would lead to disabling corresponding pipe_clk_src (and thus
-> + * it being parked to a safe, reference clock source). And vice versa, after
-> + * enabling the GDSC the PHY will enable the pipe clock, which would cause
-> + * pipe_clk_src to be switched from a safe source to the working one.
-> + *
-> + * For some platforms this should be used for the UFS symbol_clk_src clocks
-> + * too.
-> + */
-> +extern const struct clk_ops clk_regmap_phy_mux_ops;
-> +
->  #endif
+-- 
+2.36.1.124.g0e6072fb45-goog
 
-Johan
