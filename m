@@ -2,81 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9029252E9F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 12:34:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7303152EA0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 12:40:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348160AbiETKd4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 06:33:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37518 "EHLO
+        id S1346494AbiETKkP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 06:40:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348164AbiETKdz (ORCPT
+        with ESMTP id S239447AbiETKkO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 06:33:55 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACC2B91540
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 03:33:51 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id l13so6915707lfp.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 03:33:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=LVuXV2CFkZpxeowkVLO5pGMYN265kJ7DW3lBIgIDU24=;
-        b=InUnde+pllALKVumjbiMlajeXmkUXICnixbwvCZrM07LAT6bLxW2RoJIoKVpAIqEBP
-         SQ454Q8b4hJzKlVazi/dNpk4cl2AuL2k8V5V+nOHwbnU50c+GaysxSlep6oIuwFtqQWv
-         DvmNc7Qcg85PjEvJlfbMNfT1/FFRsRdi+Lwk7R8Bgi0azdLVrnumkgnJQyIQB9DeDXje
-         j1y6gASuRwcFkP4PtezD0X9dqQgplOIID9/Yy73lmjbEUTQB1EgCnIRXtEL3VRW80Jwk
-         5QFy0Vy9jgDdT8kK+4uCTMpiUAfw4i5iAVCVuSXtU1wXtkHIQQqfKl+oYGH0xfaiNsRv
-         G2rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=LVuXV2CFkZpxeowkVLO5pGMYN265kJ7DW3lBIgIDU24=;
-        b=Ot4qOspYT4/iYuoDO15llgn6QCjCGo4mnXKyPLBvuKBvg6qYZGSxhvQDuzJOIXieZI
-         bb0JwiUJyaqe3n3kcPXA0OCmzo94MLxvjjjdWdp/wgV8VWfaOlWnS665t+oYm7GkeeLT
-         09cU/7GyCJD9IcFNJN97oJGE7v+jZf0r47n23XbjIIYoBtDIMo4wAztGu5s2AlvmqoY/
-         SmaoeXzpZ5oGWpTO+PETrhrh3xU66Kgg5SvmqO+VArJ4Jf+LK2Mjs0ro/lUJs6f+1qcb
-         +B6bAErc+v54KpRwKDebAerTi52ED6LqJtfUvUEtYl8wCZbnlQggHMZkzzJ6jScwTwG/
-         mIoA==
-X-Gm-Message-State: AOAM532LGt2aeLiQAIFhWcZTI3UIHxJT1+g25IjvjJoXrJm28oVhpbN1
-        e9A+GUy5yDdTFySc2hNgMD4F+g==
-X-Google-Smtp-Source: ABdhPJxV/WhaALYTuCSJnI35g5RQjc0IJIDrx2kW3apuDK+PAwurIeIvcZtE3yzf68WdR3a92Q9bmQ==
-X-Received: by 2002:a05:6512:1108:b0:477:93a5:328e with SMTP id l8-20020a056512110800b0047793a5328emr6571383lfg.546.1653042830064;
-        Fri, 20 May 2022 03:33:50 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id u2-20020a2ea162000000b0024f3d1daef5sm262248ljl.125.2022.05.20.03.33.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 May 2022 03:33:49 -0700 (PDT)
-Message-ID: <d1072c55-9e1c-83df-0184-7405448bbade@linaro.org>
-Date:   Fri, 20 May 2022 12:33:48 +0200
+        Fri, 20 May 2022 06:40:14 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D22A14D25;
+        Fri, 20 May 2022 03:40:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9348161D5C;
+        Fri, 20 May 2022 10:40:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D76DBC385AA;
+        Fri, 20 May 2022 10:40:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1653043212;
+        bh=g6zNZqVbanCPTDs5cIvElaN3qts4ZfAe5SNVVWewXK4=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=dg42xwN8jDWAMZnCUdafc3zcBW0p9yYWKnPHScJJVU139Q2lwrMnVqviZChl22jDT
+         YjGIPE6vqoPb090mlc1fYgYxv6wM4FSvBXjSMzk706TkHhzk/GIdLkWm7Z+stxP3x8
+         7Mdxx9/U/ZJhOw0l4hdSD5tT0H1bXCwATTxXxPANGEPHxocG9n9839xHvH5aC21urs
+         tFOEpwvmpzdKanG7FXnknNMPfDav+XO66GqY2SxHf7m6HxOXUKn7nN2j1Gxk/tCCIQ
+         /FZxDiMn3YKbzpnVrMVZYroNUYEASB5Lu7KQGAG0OYC36iJ38EsW9HzSKxSsiWDpQu
+         fNuOh4uGs+cvg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B8C94F03935;
+        Fri, 20 May 2022 10:40:12 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v2 3/5] dt-bindings: interconnect: qcom: Reuse new
- rpmh-common bindings
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Odelu Kukatla <okukatla@codeaurora.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next 0/7] net: ipa: a mix of patches
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <165304321275.19589.18261388904544139086.git-patchwork-notify@kernel.org>
+Date:   Fri, 20 May 2022 10:40:12 +0000
+References: <20220519151217.654890-1-elder@linaro.org>
+In-Reply-To: <20220519151217.654890-1-elder@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, mka@chromium.org, evgreen@chromium.org,
+        bjorn.andersson@linaro.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20220520070318.48521-1-luca.weiss@fairphone.com>
- <20220520070318.48521-4-luca.weiss@fairphone.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220520070318.48521-4-luca.weiss@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,57 +62,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/05/2022 09:03, Luca Weiss wrote:
-> Stop defining the properties twice and use the ones provided in the new
-> qcom,rpmh-common.yaml.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
-> Changes since v1:
-> * New patch
-> 
->  .../bindings/interconnect/qcom,rpmh.yaml      | 22 +++++--------------
->  1 file changed, 5 insertions(+), 17 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-> index fae3363fed02..e822dc099339 100644
-> --- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-> @@ -18,6 +18,9 @@ description: |
->     least one RPMh device child node pertaining to their RSC and each provider
->     can map to multiple RPMh resources.
->  
-> +allOf:
-> +  - $ref: qcom,rpmh-common.yaml#
-> +
->  properties:
->    reg:
->      maxItems: 1
-> @@ -131,28 +134,13 @@ properties:
->        - qcom,sm8450-pcie-anoc
->        - qcom,sm8450-system-noc
->  
-> -  '#interconnect-cells':
-> -    enum: [ 1, 2 ]
-> -
-> -  qcom,bcm-voters:
-> -    $ref: /schemas/types.yaml#/definitions/phandle-array
-> -    items:
-> -      maxItems: 1
-> -    description: |
-> -      List of phandles to qcom,bcm-voter nodes that are required by
-> -      this interconnect to send RPMh commands.
-> -
-> -  qcom,bcm-voter-names:
-> -    description: |
-> -      Names for each of the qcom,bcm-voters specified.
-> +  '#interconnect-cells': true
->  
+Hello:
 
-So this explains why your previous patch had such values... The order is
-messed up - first you move common parts to common file, then you add
-SM6350 support.
+This series was applied to netdev/net-next.git (master)
+by David S. Miller <davem@davemloft.net>:
+
+On Thu, 19 May 2022 10:12:10 -0500 you wrote:
+> This series includes a mix of things things that are generally
+> minor.  The first four are sort of unrelated fixes, and summarizing
+> them here wouldn't be that helpful.
+> 
+> The last three together make it so only the "configuration data" we
+> need after initialization is saved for later use.  Most such data is
+> used only during driver initialization.  But endpoint configuration
+> is needed later, so the last patch saves a copy of that.  Eventually
+> we'll want to support reconfiguring endpoints at runtime as well,
+> and this will facilitate that.
+> 
+> [...]
+
+Here is the summary with links:
+  - [net-next,1/7] net: ipa: drop an unneeded transaction reference
+    https://git.kernel.org/netdev/net-next/c/c15f950d1495
+  - [net-next,2/7] net: ipa: rename a GSI error code
+    https://git.kernel.org/netdev/net-next/c/c9d92cf28c0c
+  - [net-next,3/7] net: ipa: ignore endianness if there is no header
+    (no matching commit)
+  - [net-next,4/7] net: ipa: open-code ether_setup()
+    https://git.kernel.org/netdev/net-next/c/75944b040bbc
+  - [net-next,5/7] net: ipa: move endpoint configuration data definitions
+    https://git.kernel.org/netdev/net-next/c/f0488c540e8a
+  - [net-next,6/7] net: ipa: rename a few endpoint config data types
+    https://git.kernel.org/netdev/net-next/c/cf4e73a1667e
+  - [net-next,7/7] net: ipa: save a copy of endpoint default config
+    https://git.kernel.org/netdev/net-next/c/660e52d651ab
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-Best regards,
-Krzysztof
