@@ -2,368 +2,254 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1B8852E642
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 09:28:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAACA52E8FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 11:40:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235945AbiETH20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 03:28:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36178 "EHLO
+        id S1347741AbiETJkA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 05:40:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233629AbiETH2Y (ORCPT
+        with ESMTP id S1347744AbiETJj7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 03:28:24 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B8AE14B67B;
-        Fri, 20 May 2022 00:28:23 -0700 (PDT)
+        Fri, 20 May 2022 05:39:59 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01FCE5EBFA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 02:39:57 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id v8so11431171lfd.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 02:39:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653031704; x=1684567704;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=uY+O5EhdZu9YBVmFyJzpvxbmSECkXQf4QiywGDu3zjM=;
-  b=TOehi5Njh+LHsGosjz+MgzYeYC4i0rY1Fk3UaAFAqiYKHwlI0ajMFTI0
-   qoj+fWyshTNNp64VoJXkSm4LLYr95b5u3V5MdkWZeCdrOIHDLdz+s8iEd
-   zwdrgIPIg9f9k8pw7HubwpeOz906zJ3Mzq80w0dU7BbHmoKIla8V2IeNQ
-   c=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 20 May 2022 00:28:23 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2022 00:28:23 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 20 May 2022 00:28:22 -0700
-Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 20 May 2022 00:28:18 -0700
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-To:     <bjorn.andersson@linaro.org>, <dmitry.baryshkov@linaro.org>
-CC:     <agross@kernel.org>, <mathieu.poirier@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH] remoteproc: qcom: pas: Add decrypt shutdown support for modem
-Date:   Fri, 20 May 2022 12:58:04 +0530
-Message-ID: <1653031684-14771-1-git-send-email-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nIrxXltCmueBY34pWQ4AMY9dGbvH7DLXorjaRE3m0Bc=;
+        b=F6ek65GBoWU0tPnHAwzaZB7WNP1gJTIzu7211iYqgNr0PgCbWSKQYRqdQmcIp59iFF
+         M/yeFbx8fUpUxBXu1+kAbp25Fp4J3/dPYWUqeo9fvlaC9yaRa/M34jDaF2xXFFFPo+0W
+         myVFfwHMdtXSucZfG3Zj1iqVIc20G3Wf17HmPMOtXu5Zi1355MLTXW/vh9fcVl2rJHUI
+         Pd0yEmYhxMKbCd7LmynwZYv8MYxKORDH8NyKCKmQLEDpGLptvE0IvBK0jkXlwj5FlAwE
+         lF95UQFNw6i7AYor6N43wohPg+zPFCx1Mbh+kwsbpDwR/YPOAAF49M+NGZrgWC1Nxtuq
+         4IUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nIrxXltCmueBY34pWQ4AMY9dGbvH7DLXorjaRE3m0Bc=;
+        b=iC6zaSyqbznWp6on3YJ+c23//IvHZGh4qU5oNm5RPvoIWOP4SCqbOu9NcftSx4Mo2v
+         QgrT4Suv2VbGcbAh3ygl1c5yB9SJtoDjykGvNt4d9mauoEn94433n/FLJ192AECAz7+8
+         sf0BnJdSmlHhvLqOaNmSZLavGWvnjHMdntnbTuYfgUfZO9SMSVGuKnbq22dFFAXxw2vX
+         x10jSMf2Bd6/aGvVsopKwFz6Gu/S5Q5hu2M9x3MRTR5hpjcNhpHa0YpMWPY9Jbyq0IiM
+         ATeRvgrFMWTKXY93TxnjxzPqBoO3XX+reKmTM+Xep8nxh9p1rKAW/C95I2N5JCgxVYIq
+         xL9w==
+X-Gm-Message-State: AOAM5311rTxioo4HqDd0yhkswu3aG3qBuKJ1VbPOC1A9X4Mmewo7AEol
+        Dcs3WW67T1+WfOpG6JBEr69I40PqOtMG5DwfaYovDg==
+X-Google-Smtp-Source: ABdhPJzW84M+1Qgp5yRR/hyYidx+pFoqmn49zPcwAsl1goLonHenRJaiVr96+biBWVRxxE6uyOe/3aDt0ghvTrgRzEY=
+X-Received: by 2002:a05:6512:5cb:b0:472:f7e:a5f5 with SMTP id
+ o11-20020a05651205cb00b004720f7ea5f5mr6208082lfo.358.1653039595270; Fri, 20
+ May 2022 02:39:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <1652275016-13423-1-git-send-email-quic_mkshah@quicinc.com> <1652275016-13423-7-git-send-email-quic_mkshah@quicinc.com>
+In-Reply-To: <1652275016-13423-7-git-send-email-quic_mkshah@quicinc.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 20 May 2022 11:39:16 +0200
+Message-ID: <CAPDyKFqCdc206GX3s3PqExrp==mfJQ6m-u0F_ij_tLXbcv8G6Q@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] soc: qcom: rpmh-rsc: Write CONTROL_TCS with next
+ timer wakeup
+To:     Maulik Shah <quic_mkshah@quicinc.com>
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        rafael@kernel.org, daniel.lezcano@linaro.org,
+        quic_lsrao@quicinc.com, quic_rjendra@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The initial shutdown request to modem on SM8450 SoCs would start the
-decryption process and will keep returning errors until the modem shutdown
-is complete. Fix this by retrying shutdowns in fixed intervals.
+On Wed, 11 May 2022 at 15:17, Maulik Shah <quic_mkshah@quicinc.com> wrote:
+>
+> The next wakeup timer value needs to be set in always on domain timer
+> as the arch timer interrupt can not wakeup the SoC if after the deepest
+> CPUidle states the SoC also enters deepest low power state.
+>
+> To wakeup the SoC in such scenarios the earliest wakeup time is set in
+> CONTROL_TCS and the firmware takes care of setting up its own timer in
+> always on domain with next wakeup time. The timer wakes up the RSC and
+> sets resources back to wake state.
+>
+> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
 
-Err Logs on modem shutdown:
-qcom_q6v5_pas 4080000.remoteproc: failed to shutdown: -22
-remoteproc remoteproc3: can't stop rproc: -22
+I didn't forget to review this, but please allow me a few more days to
+think a little bit more about this.
 
-Fixes: 5cef9b48458d ("remoteproc: qcom: pas: Add SM8450 remoteproc support")
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
- drivers/remoteproc/qcom_q6v5_pas.c | 67 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 66 insertions(+), 1 deletion(-)
+Kind regards
+Uffe
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 6ae39c5653b1..d04c4b877e12 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -8,6 +8,7 @@
-  */
- 
- #include <linux/clk.h>
-+#include <linux/delay.h>
- #include <linux/firmware.h>
- #include <linux/interrupt.h>
- #include <linux/kernel.h>
-@@ -29,6 +30,8 @@
- #include "qcom_q6v5.h"
- #include "remoteproc_internal.h"
- 
-+#define ADSP_DECRYPT_SHUTDOWN_DELAY_MS	100
-+
- struct adsp_data {
- 	int crash_reason_smem;
- 	const char *firmware_name;
-@@ -36,6 +39,7 @@ struct adsp_data {
- 	unsigned int minidump_id;
- 	bool has_aggre2_clk;
- 	bool auto_boot;
-+	bool decrypt_shutdown;
- 
- 	char **proxy_pd_names;
- 
-@@ -65,6 +69,7 @@ struct qcom_adsp {
- 	unsigned int minidump_id;
- 	int crash_reason_smem;
- 	bool has_aggre2_clk;
-+	bool decrypt_shutdown;
- 	const char *info_name;
- 
- 	struct completion start_done;
-@@ -128,6 +133,20 @@ static void adsp_pds_disable(struct qcom_adsp *adsp, struct device **pds,
- 	}
- }
- 
-+static int adsp_decrypt_shutdown(struct qcom_adsp *adsp)
-+{
-+	int retry_num = 50;
-+	int ret = -EINVAL;
-+
-+	while (retry_num && ret) {
-+		msleep(ADSP_DECRYPT_SHUTDOWN_DELAY_MS);
-+		ret = qcom_scm_pas_shutdown(adsp->pas_id);
-+		retry_num--;
-+	}
-+
-+	return ret;
-+}
-+
- static int adsp_unprepare(struct rproc *rproc)
- {
- 	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
-@@ -249,6 +268,9 @@ static int adsp_stop(struct rproc *rproc)
- 		dev_err(adsp->dev, "timed out on wait\n");
- 
- 	ret = qcom_scm_pas_shutdown(adsp->pas_id);
-+	if (ret && adsp->decrypt_shutdown)
-+		ret = adsp_decrypt_shutdown(adsp);
-+
- 	if (ret)
- 		dev_err(adsp->dev, "failed to shutdown: %d\n", ret);
- 
-@@ -459,6 +481,7 @@ static int adsp_probe(struct platform_device *pdev)
- 	adsp->pas_id = desc->pas_id;
- 	adsp->has_aggre2_clk = desc->has_aggre2_clk;
- 	adsp->info_name = desc->sysmon_name;
-+	adsp->decrypt_shutdown = desc->decrypt_shutdown;
- 	platform_set_drvdata(pdev, adsp);
- 
- 	device_wakeup_enable(adsp->dev);
-@@ -533,6 +556,7 @@ static const struct adsp_data adsp_resource_init = {
- 		.pas_id = 1,
- 		.has_aggre2_clk = false,
- 		.auto_boot = true,
-+		.decrypt_shutdown = false,
- 		.ssr_name = "lpass",
- 		.sysmon_name = "adsp",
- 		.ssctl_id = 0x14,
-@@ -544,6 +568,7 @@ static const struct adsp_data sdm845_adsp_resource_init = {
- 		.pas_id = 1,
- 		.has_aggre2_clk = false,
- 		.auto_boot = true,
-+		.decrypt_shutdown = false,
- 		.load_state = "adsp",
- 		.ssr_name = "lpass",
- 		.sysmon_name = "adsp",
-@@ -556,6 +581,7 @@ static const struct adsp_data sm6350_adsp_resource = {
- 	.pas_id = 1,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"lcx",
- 		"lmx",
-@@ -573,6 +599,7 @@ static const struct adsp_data sm8150_adsp_resource = {
- 		.pas_id = 1,
- 		.has_aggre2_clk = false,
- 		.auto_boot = true,
-+		.decrypt_shutdown = false,
- 		.proxy_pd_names = (char*[]){
- 			"cx",
- 			NULL
-@@ -589,6 +616,7 @@ static const struct adsp_data sm8250_adsp_resource = {
- 	.pas_id = 1,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"lcx",
- 		"lmx",
-@@ -606,6 +634,7 @@ static const struct adsp_data sm8350_adsp_resource = {
- 	.pas_id = 1,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"lcx",
- 		"lmx",
-@@ -623,6 +652,7 @@ static const struct adsp_data msm8996_adsp_resource = {
- 		.pas_id = 1,
- 		.has_aggre2_clk = false,
- 		.auto_boot = true,
-+		.decrypt_shutdown = false,
- 		.proxy_pd_names = (char*[]){
- 			"cx",
- 			NULL
-@@ -638,6 +668,7 @@ static const struct adsp_data cdsp_resource_init = {
- 	.pas_id = 18,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.ssr_name = "cdsp",
- 	.sysmon_name = "cdsp",
- 	.ssctl_id = 0x17,
-@@ -649,6 +680,7 @@ static const struct adsp_data sdm845_cdsp_resource_init = {
- 	.pas_id = 18,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.load_state = "cdsp",
- 	.ssr_name = "cdsp",
- 	.sysmon_name = "cdsp",
-@@ -661,6 +693,7 @@ static const struct adsp_data sm6350_cdsp_resource = {
- 	.pas_id = 18,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"cx",
- 		"mx",
-@@ -678,6 +711,7 @@ static const struct adsp_data sm8150_cdsp_resource = {
- 	.pas_id = 18,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"cx",
- 		NULL
-@@ -694,6 +728,7 @@ static const struct adsp_data sm8250_cdsp_resource = {
- 	.pas_id = 18,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"cx",
- 		NULL
-@@ -710,6 +745,7 @@ static const struct adsp_data sc8280xp_nsp0_resource = {
- 	.pas_id = 18,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"nsp",
- 		NULL
-@@ -725,6 +761,7 @@ static const struct adsp_data sc8280xp_nsp1_resource = {
- 	.pas_id = 30,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"nsp",
- 		NULL
-@@ -740,6 +777,7 @@ static const struct adsp_data sm8350_cdsp_resource = {
- 	.pas_id = 18,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"cx",
- 		"mxc",
-@@ -758,6 +796,26 @@ static const struct adsp_data mpss_resource_init = {
- 	.minidump_id = 3,
- 	.has_aggre2_clk = false,
- 	.auto_boot = false,
-+	.decrypt_shutdown = false,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		"mss",
-+		NULL
-+	},
-+	.load_state = "modem",
-+	.ssr_name = "mpss",
-+	.sysmon_name = "modem",
-+	.ssctl_id = 0x12,
-+};
-+
-+static const struct adsp_data sm8450_mpss_resource = {
-+	.crash_reason_smem = 421,
-+	.firmware_name = "modem.mdt",
-+	.pas_id = 4,
-+	.minidump_id = 3,
-+	.has_aggre2_clk = false,
-+	.auto_boot = false,
-+	.decrypt_shutdown = true,
- 	.proxy_pd_names = (char*[]){
- 		"cx",
- 		"mss",
-@@ -775,6 +833,7 @@ static const struct adsp_data sc8180x_mpss_resource = {
- 	.pas_id = 4,
- 	.has_aggre2_clk = false,
- 	.auto_boot = false,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"cx",
- 		NULL
-@@ -791,6 +850,7 @@ static const struct adsp_data slpi_resource_init = {
- 		.pas_id = 12,
- 		.has_aggre2_clk = true,
- 		.auto_boot = true,
-+		.decrypt_shutdown = false,
- 		.proxy_pd_names = (char*[]){
- 			"ssc_cx",
- 			NULL
-@@ -806,6 +866,7 @@ static const struct adsp_data sm8150_slpi_resource = {
- 		.pas_id = 12,
- 		.has_aggre2_clk = false,
- 		.auto_boot = true,
-+		.decrypt_shutdown = false,
- 		.proxy_pd_names = (char*[]){
- 			"lcx",
- 			"lmx",
-@@ -823,6 +884,7 @@ static const struct adsp_data sm8250_slpi_resource = {
- 	.pas_id = 12,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"lcx",
- 		"lmx",
-@@ -840,6 +902,7 @@ static const struct adsp_data sm8350_slpi_resource = {
- 	.pas_id = 12,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"lcx",
- 		"lmx",
-@@ -856,6 +919,7 @@ static const struct adsp_data wcss_resource_init = {
- 	.firmware_name = "wcnss.mdt",
- 	.pas_id = 6,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.ssr_name = "mpss",
- 	.sysmon_name = "wcnss",
- 	.ssctl_id = 0x12,
-@@ -867,6 +931,7 @@ static const struct adsp_data sdx55_mpss_resource = {
- 	.pas_id = 4,
- 	.has_aggre2_clk = false,
- 	.auto_boot = true,
-+	.decrypt_shutdown = false,
- 	.proxy_pd_names = (char*[]){
- 		"cx",
- 		"mss",
-@@ -916,7 +981,7 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,sm8450-adsp-pas", .data = &sm8350_adsp_resource},
- 	{ .compatible = "qcom,sm8450-cdsp-pas", .data = &sm8350_cdsp_resource},
- 	{ .compatible = "qcom,sm8450-slpi-pas", .data = &sm8350_slpi_resource},
--	{ .compatible = "qcom,sm8450-mpss-pas", .data = &mpss_resource_init},
-+	{ .compatible = "qcom,sm8450-mpss-pas", .data = &sm8450_mpss_resource},
- 	{ },
- };
- MODULE_DEVICE_TABLE(of, adsp_of_match);
--- 
-2.7.4
-
+> ---
+>  drivers/soc/qcom/rpmh-internal.h |  3 ++
+>  drivers/soc/qcom/rpmh-rsc.c      | 61 ++++++++++++++++++++++++++++++++++++++++
+>  drivers/soc/qcom/rpmh.c          |  4 ++-
+>  3 files changed, 67 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
+> index 7866bb1..39f5358 100644
+> --- a/drivers/soc/qcom/rpmh-internal.h
+> +++ b/drivers/soc/qcom/rpmh-internal.h
+> @@ -112,6 +112,7 @@ struct rpmh_ctrlr {
+>   * @tcs_wait:           Wait queue used to wait for @tcs_in_use to free up a
+>   *                      slot
+>   * @client:             Handle to the DRV's client.
+> + * @dev:                RSC device.
+>   */
+>  struct rsc_drv {
+>         const char *name;
+> @@ -127,12 +128,14 @@ struct rsc_drv {
+>         spinlock_t lock;
+>         wait_queue_head_t tcs_wait;
+>         struct rpmh_ctrlr client;
+> +       struct device *dev;
+>  };
+>
+>  int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg);
+>  int rpmh_rsc_write_ctrl_data(struct rsc_drv *drv,
+>                              const struct tcs_request *msg);
+>  void rpmh_rsc_invalidate(struct rsc_drv *drv);
+> +void rpmh_rsc_write_next_wakeup(struct rsc_drv *drv);
+>
+>  void rpmh_tx_done(const struct tcs_request *msg, int r);
+>  int rpmh_flush(struct rpmh_ctrlr *ctrlr);
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index 8e01697..25b838b 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/io.h>
+>  #include <linux/iopoll.h>
+>  #include <linux/kernel.h>
+> +#include <linux/ktime.h>
+>  #include <linux/list.h>
+>  #include <linux/module.h>
+>  #include <linux/notifier.h>
+> @@ -25,6 +26,7 @@
+>  #include <linux/spinlock.h>
+>  #include <linux/wait.h>
+>
+> +#include <clocksource/arm_arch_timer.h>
+>  #include <soc/qcom/cmd-db.h>
+>  #include <soc/qcom/tcs.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> @@ -49,6 +51,14 @@
+>  #define DRV_NCPT_MASK                  0x1F
+>  #define DRV_NCPT_SHIFT                 27
+>
+> +/* Offsets for CONTROL TCS Registers */
+> +#define RSC_DRV_CTL_TCS_DATA_HI                0x38
+> +#define RSC_DRV_CTL_TCS_DATA_HI_MASK   0xFFFFFF
+> +#define RSC_DRV_CTL_TCS_DATA_HI_VALID  BIT(31)
+> +#define RSC_DRV_CTL_TCS_DATA_LO                0x40
+> +#define RSC_DRV_CTL_TCS_DATA_LO_MASK   0xFFFFFFFF
+> +#define RSC_DRV_CTL_TCS_DATA_SIZE      32
+> +
+>  /* Offsets for common TCS Registers, one bit per TCS */
+>  #define RSC_DRV_IRQ_ENABLE             0x00
+>  #define RSC_DRV_IRQ_STATUS             0x04
+> @@ -142,6 +152,14 @@
+>   *  +---------------------------------------------------+
+>   */
+>
+> +#define USECS_TO_CYCLES(time_usecs)                    \
+> +       xloops_to_cycles((time_usecs) * 0x10C7UL)
+> +
+> +static inline unsigned long xloops_to_cycles(unsigned long xloops)
+> +{
+> +       return (xloops * loops_per_jiffy * HZ) >> 32;
+> +}
+> +
+>  static inline void __iomem *
+>  tcs_reg_addr(const struct rsc_drv *drv, int reg, int tcs_id)
+>  {
+> @@ -757,6 +775,48 @@ static bool rpmh_rsc_ctrlr_is_busy(struct rsc_drv *drv)
+>  }
+>
+>  /**
+> + * rpmh_rsc_write_next_wakeup() - Write next wakeup in CONTROL_TCS.
+> + * @drv: The controller
+> + *
+> + * Writes maximum wakeup cycles when called from suspend.
+> + * Writes earliest hrtimer wakeup when called from idle.
+> + */
+> +void rpmh_rsc_write_next_wakeup(struct rsc_drv *drv)
+> +{
+> +       ktime_t now, wakeup;
+> +       u64 wakeup_us, wakeup_cycles = ~0;
+> +       u32 lo, hi;
+> +
+> +       if (!drv->tcs[CONTROL_TCS].num_tcs || !drv->genpd_nb.notifier_call)
+> +               return;
+> +
+> +       /* Set highest time when system (timekeeping) is suspended */
+> +       if (system_state == SYSTEM_SUSPEND)
+> +               goto exit;
+> +
+> +       /* Find the earliest hrtimer wakeup from online cpus */
+> +       wakeup = dev_pm_genpd_get_next_hrtimer(drv->dev);
+> +
+> +       /* Find the relative wakeup in kernel time scale */
+> +       now = ktime_get();
+> +       wakeup = ktime_sub(wakeup, now);
+> +       wakeup_us = ktime_to_us(wakeup);
+> +
+> +       /* Convert the wakeup to arch timer scale */
+> +       wakeup_cycles = USECS_TO_CYCLES(wakeup_us);
+> +       wakeup_cycles += arch_timer_read_counter();
+> +
+> +exit:
+> +       lo = wakeup_cycles & RSC_DRV_CTL_TCS_DATA_LO_MASK;
+> +       hi = wakeup_cycles >> RSC_DRV_CTL_TCS_DATA_SIZE;
+> +       hi &= RSC_DRV_CTL_TCS_DATA_HI_MASK;
+> +       hi |= RSC_DRV_CTL_TCS_DATA_HI_VALID;
+> +
+> +       writel_relaxed(lo, drv->base + RSC_DRV_CTL_TCS_DATA_LO);
+> +       writel_relaxed(hi, drv->base + RSC_DRV_CTL_TCS_DATA_HI);
+> +}
+> +
+> +/**
+>   * rpmh_rsc_cpu_pm_callback() - Check if any of the AMCs are busy.
+>   * @nfb:    Pointer to the notifier block in struct rsc_drv.
+>   * @action: CPU_PM_ENTER, CPU_PM_ENTER_FAILED, or CPU_PM_EXIT.
+> @@ -1035,6 +1095,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+>         INIT_LIST_HEAD(&drv->client.batch_cache);
+>
+>         dev_set_drvdata(&pdev->dev, drv);
+> +       drv->dev = &pdev->dev;
+>
+>         ret = devm_of_platform_populate(&pdev->dev);
+>         if (ret && pdev->dev.pm_domain) {
+> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+> index 01765ee..3a53ed9 100644
+> --- a/drivers/soc/qcom/rpmh.c
+> +++ b/drivers/soc/qcom/rpmh.c
+> @@ -450,7 +450,7 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+>
+>         if (!ctrlr->dirty) {
+>                 pr_debug("Skipping flush, TCS has latest data.\n");
+> -               goto exit;
+> +               goto write_next_wakeup;
+>         }
+>
+>         /* Invalidate the TCSes first to avoid stale data */
+> @@ -479,6 +479,8 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+>
+>         ctrlr->dirty = false;
+>
+> +write_next_wakeup:
+> +       rpmh_rsc_write_next_wakeup(ctrlr_to_drv(ctrlr));
+>  exit:
+>         spin_unlock(&ctrlr->cache_lock);
+>         return ret;
+> --
+> 2.7.4
+>
