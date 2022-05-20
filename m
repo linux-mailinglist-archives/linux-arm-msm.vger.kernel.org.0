@@ -2,193 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FB3852EBF4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 14:21:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75B5452EC1D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 14:33:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349228AbiETMUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 08:20:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55626 "EHLO
+        id S1349270AbiETMdB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 08:33:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349295AbiETMUG (ORCPT
+        with ESMTP id S1349281AbiETMc7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 08:20:06 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DF53166094;
-        Fri, 20 May 2022 05:19:59 -0700 (PDT)
+        Fri, 20 May 2022 08:32:59 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1115215EA69
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 05:32:58 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id g16so9525875lja.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 05:32:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653049199; x=1684585199;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=HeLhfci8syf2l4bw3M58ZqcMx7lpDd8BhHPU5FZxupE=;
-  b=YE0ogg8xYjzLxiY6yuBYm08+9DP+ZWs4rCy0q4mYZVszLJrahfOytyCI
-   Lnb1Cc4dK6TarWAP3i234b8irxcMK6phBVRAj29rJLUJJqDN2jovd4sV4
-   KV45G1XaDD+XMwv+2HQB+pp8rW8juvUnzt+5FcGuHMNFHZjR6kC0Bb+ki
-   g=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 20 May 2022 05:19:58 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2022 05:20:00 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 20 May 2022 05:19:58 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 20 May 2022 05:19:54 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v12 12/12] arm64: dts: qcom: sc7280: Add sound node for CRD 3.0/3.1
-Date:   Fri, 20 May 2022 17:48:44 +0530
-Message-ID: <1653049124-24713-13-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1653049124-24713-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1653049124-24713-1-git-send-email-quic_srivasam@quicinc.com>
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ReOeJsmpu+BaTYzKPPlHlTM1nf1CXN91im4L/TGzwnQ=;
+        b=T+BpzhqCcc47SVS46L/C2eaaTAuGxPim3Dpd1AGzVgfY9fKxUxjdQVT11ctfdzIqWh
+         AMBdWNJkqo4QlKvyeaR6TZQmkIlIAgxrNfOPPI7qC2asA4rjJBENKdQxHt2CDCVob7Kt
+         J48mgDFSpKxjpy8+/IK8mfshOK4UoQnCU7N0BlGobM29FAb2ZaM7JbwoHnRAhjSyAyG/
+         Cq8NSPyQCl169pkfceEhwck2bZM1wcTD75/a39cjg4cPxLbwSMhwRehdfRV0/yZW6mYT
+         +duaabFguvu1GJjaumgRtz2mlGV9j7cm6IkTCai23UsAogDhxT/iHPiOX77h09nzXUv4
+         BZYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ReOeJsmpu+BaTYzKPPlHlTM1nf1CXN91im4L/TGzwnQ=;
+        b=MgV02Aaqo2zph0Fpr8HZoAGbbDXdludrG5wSpkG4OyCwOUP+6g2EWXRYN55MfDMwbb
+         yKNT2vsofaXXt2FvLcvgYGHFE9ZpaQWdn7E/sAweg0FI0ObKrmEX5LvluXcp3eT134Qc
+         JJdmxVbU9oow6LXVHaiOrRwf2LszIbmNGTt7XHlcS9DR3pFksaUlddQybnSzN0wYADVD
+         NpCVBfDOiXkClAIcjryDDHhmdPvrcXFFNkRPS2fq2MP4J3DUsE602jHMRGa13SRyEgzP
+         5Vt1FmEIpD/pWCh+WvKOGtGm4Tz2dG4Fa7+FfN4Wc3uCOyeFwSORtpwp663E1HidiXoM
+         HI/g==
+X-Gm-Message-State: AOAM531s//x2tZq8IVT5wv+/HtUwiALtCBC+Ykr5KNNeufaTgOg5F28I
+        5NQFo5qxqngt21A5/54GulEyhA==
+X-Google-Smtp-Source: ABdhPJyqsu3QP5zYukyBbNps+EoU12GdYm3/EwEJjlf/QAtklRQgTb5YX55m+lF1PO6hyFX9/gavwA==
+X-Received: by 2002:a2e:9d93:0:b0:253:c9bd:288 with SMTP id c19-20020a2e9d93000000b00253c9bd0288mr5413369ljj.223.1653049976431;
+        Fri, 20 May 2022 05:32:56 -0700 (PDT)
+Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id a14-20020a056512374e00b0047255d211bfsm643973lfs.238.2022.05.20.05.32.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 May 2022 05:32:55 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH 1/9] dt-bindings: arm: qcom: fix Alcatel OneTouch Idol 3 compatibles
+Date:   Fri, 20 May 2022 14:32:44 +0200
+Message-Id: <20220520123252.365762-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add dt nodes for sound card support on rev5+ (aka CRD 3.0/3.1) boards,
-which is using WCD9385 headset playback, capture, I2S speaker playback
-and DMICs via VA macro.
+The MSM8916 Alcatel OneTouch Idol 3 does not use MTP fallbacks in
+compatibles:
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+  msm8916-alcatel-idol347.dtb: /: compatible: 'oneOf' conditional failed, one must be fixed:
+    ['alcatel,idol347', 'qcom,msm8916'] is too short
+
+Reported-by: Rob Herring <robh@kernel.org>
+Fixes: e9dd2f7204ed ("dt-bindings: arm: qcom: Document alcatel,idol347 board")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts | 98 +++++++++++++++++++++++
- 1 file changed, 98 insertions(+)
+ Documentation/devicetree/bindings/arm/qcom.yaml | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-index e8a596c..81d0dfb 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
-@@ -13,6 +13,104 @@
- 	model = "Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+)";
- 	compatible = "google,hoglin", "qcom,sc7280";
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 5c06d1bfc046..b7dd61df7ec0 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -153,14 +153,13 @@ properties:
+           - const: qcom,msm8974
  
-+	sound: sound {
-+		compatible = "google,sc7280-herobrine";
-+		model = "sc7280-wcd938x-max98360a-1mic";
-+
-+		audio-routing =
-+			"IN1_HPHL", "HPHL_OUT",
-+			"IN2_HPHR", "HPHR_OUT",
-+			"AMIC1", "MIC BIAS1",
-+			"AMIC2", "MIC BIAS2",
-+			"VA DMIC0", "MIC BIAS1",
-+			"VA DMIC1", "MIC BIAS1",
-+			"VA DMIC2", "MIC BIAS3",
-+			"VA DMIC3", "MIC BIAS3",
-+			"TX SWR_ADC0", "ADC1_OUTPUT",
-+			"TX SWR_ADC1", "ADC2_OUTPUT",
-+			"TX SWR_ADC2", "ADC3_OUTPUT",
-+			"TX SWR_DMIC0", "DMIC1_OUTPUT",
-+			"TX SWR_DMIC1", "DMIC2_OUTPUT",
-+			"TX SWR_DMIC2", "DMIC3_OUTPUT",
-+			"TX SWR_DMIC3", "DMIC4_OUTPUT",
-+			"TX SWR_DMIC4", "DMIC5_OUTPUT",
-+			"TX SWR_DMIC5", "DMIC6_OUTPUT",
-+			"TX SWR_DMIC6", "DMIC7_OUTPUT",
-+			"TX SWR_DMIC7", "DMIC8_OUTPUT";
-+
-+		qcom,msm-mbhc-hphl-swh = <1>;
-+		qcom,msm-mbhc-gnd-swh = <1>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		#sound-dai-cells = <0>;
-+
-+		dai-link@0 {
-+			link-name = "MAX98360A";
-+			reg = <0>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu MI2S_SECONDARY>;
-+			};
-+
-+			codec {
-+				sound-dai = <&max98360a>;
-+			};
-+		};
-+
-+		dai-link@1 {
-+			link-name = "DisplayPort";
-+			reg = <1>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_DP_RX>;
-+			};
-+
-+			codec {
-+				sound-dai = <&mdss_dp>;
-+			};
-+		};
-+
-+		dai-link@2 {
-+			link-name = "WCD9385 Playback";
-+			reg = <2>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_CDC_DMA_RX0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&wcd9385 0>, <&swr0 0>, <&lpass_rx_macro 0>;
-+			};
-+		};
-+
-+		dai-link@3 {
-+			link-name = "WCD9385 Capture";
-+			reg = <3>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_CDC_DMA_TX3>;
-+			};
-+
-+			codec {
-+				sound-dai = <&wcd9385 1>, <&swr1 0>, <&lpass_tx_macro 0>;
-+			};
-+		};
-+
-+		dai-link@4 {
-+			link-name = "DMIC";
-+			reg = <4>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_CDC_DMA_VA_TX0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&lpass_va_macro 0>;
-+			};
-+		};
-+	};
-+
- 	/* FIXED REGULATORS */
+       - items:
+-          - enum:
+-              - alcatel,idol347
+           - const: qcom,msm8916-mtp/1
+           - const: qcom,msm8916-mtp
+           - const: qcom,msm8916
  
- 	/*
+       - items:
+           - enum:
++              - alcatel,idol347
+               - longcheer,l8150
+               - samsung,a3u-eur
+               - samsung,a5u-eur
 -- 
-2.7.4
+2.32.0
 
