@@ -2,81 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4835252F47A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 22:35:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9021D52F469
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 22:29:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353012AbiETUfe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 16:35:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59654 "EHLO
+        id S1353455AbiETU3l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 16:29:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353488AbiETUfe (ORCPT
+        with ESMTP id S1353454AbiETU3k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 16:35:34 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A36519FF53
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 13:35:32 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id n13so15735154ejv.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 13:35:32 -0700 (PDT)
+        Fri, 20 May 2022 16:29:40 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12721197F5A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 13:29:39 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id g184so8666025pgc.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 13:29:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PUvHmCiaUykxHI8OvIFLVAwT2TJ4ujC+7HAZA4KLm9o=;
-        b=E7VekmNmqzzPvnMy92tHR6mFRFrwHRPFMUmM3juUv3W7Caij6EZHqbPF7ji6Ppk5ak
-         cLMD4QdxKzTo9OL54y8cUEo8NCYpKVhEHKEn+bt4ImwfTax8nV5J7UHC/HtAlpSHRNly
-         +trvejQGwU/eryTVgCTqDvA6Vvw0FwAohxVZg=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=nEjFcr7dEWn0xw/FF93sBsAqLUkAO0bOI5T7Xg501FU=;
+        b=UP3J/+XvTlR0rmymET+I+IY4BR1wCtj/EfdXeY308JRGgbdTxv7PMWJUHjxLz1Ndhe
+         3KFZF8V13kzJ+zhBemZKhnvnt55654FaPAFy2WdwTbUP6AZKt1y+XFNGCmpW7kDS6i/k
+         TFpKbnx6CxX4lZO5SmQNgpgACTxD7ZFxYSDWY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PUvHmCiaUykxHI8OvIFLVAwT2TJ4ujC+7HAZA4KLm9o=;
-        b=wLYFKB+Z51d7TIPwxsEo0LO6w2zVD2oRa0wx/TbbRyWEPtaA3EA9U4FceA+cTzZ7Jp
-         lqSGGONbzpzku75Tn0doknOny3i030Fn+wq31rFDukadqqGnVVZSdH/P1xcn5MZCjy1E
-         PB385c2w+2R6J5YNVK2ASIRThYwj4mUWlk8eTFnS49fBAoBnezczmeytGZvE1pxt1W1B
-         U+X22a1akd5qLKkYT79tZ7pQBUEKPwiBUMZL4akQlJIwg2J5ZeCVNKru1xgv8gcFOJ1z
-         845KL8DJbClDGP/tGqgkMoCi3awwvN4Kfcv6W284qMY79mm6Fd6UUYu1SsjVUF7709Xb
-         K0Xg==
-X-Gm-Message-State: AOAM532WcAhX4pS3vbiMnhZ2XQLZN3HoSUg90b6ZYZ3suM1osKijqd9A
-        EYKA3uISelFKqYYjtL0/eTh6kNA3BPe3te4Jieo=
-X-Google-Smtp-Source: ABdhPJy5UVCS3i+8mwEdGdfS8808XXGgHjNkmXvUN9Ot2hBY2Oz3CfToxWnHIkCxSAkx5OfiKasyeg==
-X-Received: by 2002:a17:907:8a21:b0:6f4:d2e5:4d17 with SMTP id sc33-20020a1709078a2100b006f4d2e54d17mr10480288ejc.196.1653078930696;
-        Fri, 20 May 2022 13:35:30 -0700 (PDT)
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com. [209.85.128.51])
-        by smtp.gmail.com with ESMTPSA id l6-20020a1709060e0600b006feb0e12a5esm921184eji.7.2022.05.20.13.35.30
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nEjFcr7dEWn0xw/FF93sBsAqLUkAO0bOI5T7Xg501FU=;
+        b=S3UcSIUgI3PHf+dGcttXugBhr8ElUGzsVHb5FMFG+e1h0qVsn5saZA7Tjj05YS6Vrr
+         SZewQ7QhQsJvSewhxZBw3nvi/fDjgJjP3wxTikC5UmTCKTo0dEPFHD7LviEiC//OXePa
+         bUAkqXUBh2KyGfJtfNAB6b6xCNO4ZbGCxIjqT7KJCOXA/jIebzPsLnmwQK73x879y01M
+         uCUVilISFPOb2njOF64piDStTKOliw7j4Z6GFoaZeixmL+ORFLdBSmuMoZiKKbrJw13k
+         6ng5rUEzo78WmRZH20ulFGWiQgYzYU3ju/Cudpe/Ow4x4h6/xKT7+6fUuVL6G3Y75r+1
+         tDEA==
+X-Gm-Message-State: AOAM531P8xrvSWj3YahvPiDwX2hW+jGM3U2WqSBew9mc7G83GnFSXe9Y
+        HYJc0MkSghAZm0r9ImHzSZX8bNfUzAVAyQ==
+X-Google-Smtp-Source: ABdhPJyGcUmlbs3+tAA96dhSTmHtvw2Llqwqu/jc1LPrXg5xc9VIXWshNbdb/JaGTnxIwWVxVYd6aA==
+X-Received: by 2002:a63:b25d:0:b0:3f6:5842:2685 with SMTP id t29-20020a63b25d000000b003f658422685mr6850794pgo.363.1653078578605;
+        Fri, 20 May 2022 13:29:38 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:5332:2096:60a3:3455])
+        by smtp.gmail.com with UTF8SMTPSA id n5-20020a170903110500b0015e8d4eb1d9sm167036plh.35.2022.05.20.13.29.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 May 2022 13:35:30 -0700 (PDT)
-Received: by mail-wm1-f51.google.com with SMTP id v191-20020a1cacc8000000b00397001398c0so7435385wme.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 13:35:29 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f13:b0:394:8978:7707 with SMTP id
- l19-20020a05600c4f1300b0039489787707mr10309201wmq.34.1653078530208; Fri, 20
- May 2022 13:28:50 -0700 (PDT)
+        Fri, 20 May 2022 13:29:38 -0700 (PDT)
+Date:   Fri, 20 May 2022 13:29:37 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Enable keyboard backlight for
+ villager
+Message-ID: <Yof6MeM1Ohthe7Fq@google.com>
+References: <20220520124834.1.I7c51c6255bb53086a82c5b3f4fafffcc5ccbc4ae@changeid>
+ <CAD=FV=X4GBLoTuOcHetAFXWLQKFF0yn=E5yv0ExTg8Mwrw1iUw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20220510192944.2408515-1-dianders@chromium.org>
- <20220510122726.v3.3.Iba4b9bf6c7a1ee5ea2835ad7bd5eaf84d7688520@changeid> <CAA8EJpqBnR_-YaNj-hc6fjfeRX-aTBhuzCFKg77QEyANu37cnA@mail.gmail.com>
-In-Reply-To: <CAA8EJpqBnR_-YaNj-hc6fjfeRX-aTBhuzCFKg77QEyANu37cnA@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 20 May 2022 13:28:37 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VBkCZXL-6LnHMSCOwbUn5t8m0bhLRVh7R64w0Ce6FOvg@mail.gmail.com>
-Message-ID: <CAD=FV=VBkCZXL-6LnHMSCOwbUn5t8m0bhLRVh7R64w0Ce6FOvg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] drm/bridge: Add devm_drm_bridge_add()
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Philip Chen <philipchen@chromium.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=X4GBLoTuOcHetAFXWLQKFF0yn=E5yv0ExTg8Mwrw1iUw@mail.gmail.com>
 X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -87,29 +75,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Tue, May 10, 2022 at 5:22 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Tue, 10 May 2022 at 22:30, Douglas Anderson <dianders@chromium.org> wrote:
+On Fri, May 20, 2022 at 12:57:50PM -0700, Doug Anderson wrote:
+> Hi,
+> 
+> On Fri, May 20, 2022 at 12:48 PM Matthias Kaehlcke <mka@chromium.org> wrote:
 > >
-> > This adds a devm managed version of drm_bridge_add(). Like other
-> > "devm" function listed in drm_bridge.h, this function takes an
-> > explicit "dev" to use for the lifetime management. A few notes:
-> > * In general we have a "struct device" for bridges that makes a good
-> >   candidate for where the lifetime matches exactly what we want.
-> > * The "bridge->dev->dev" device appears to be the encoder
-> >   device. That's not the right device to use for lifetime management.
+> > Villager has a backlit keyboard, enable support for the backlight.
 > >
-> > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
->
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > ---
+> >
+> >  arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dts | 8 ++++++++
+> >  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi            | 2 +-
+> >  2 files changed, 9 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dts
+> > index d3d6ffad4eff..b6a6a1454883 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dts
+> > @@ -58,6 +58,10 @@ &ap_sar_sensor1 {
+> >         status = "okay";
+> >  };
+> >
+> > +&keyboard_backlight {
+> > +       status = "okay";
+> > +};
+> 
+> Instead of doing this, can you just get rid of the status = "disabled"
+> in herobrine.dtsi? I don't think there's any benefit to having two
+> levels of "disabled" in the herobrine device tree.
 
-Thanks for the review! For now I'll hold off on landing this until
-sometime has time to review the other patches in the series. While not
-technically required, it seems weird to add the devm function without
-any callers.
+Sure.
 
--Doug
+I guess the 'disabled' status was put as a micro-optimization to avoid
+probing the 'pwm-leds' driver on boards that don't have any such LEDs. In
+practical terms it shouldn't really make a difference in terms of memory
+or CPU.
