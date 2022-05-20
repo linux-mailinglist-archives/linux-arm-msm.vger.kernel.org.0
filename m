@@ -2,106 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49D9252E208
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 03:34:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E91D252E21A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 03:39:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241547AbiETBez (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 21:34:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50888 "EHLO
+        id S1344571AbiETBjo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 21:39:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232853AbiETBez (ORCPT
+        with ESMTP id S234047AbiETBjo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 21:34:55 -0400
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F9AB9B190;
-        Thu, 19 May 2022 18:34:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1653010494; x=1684546494;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=1PD0LUvvtmIb9K8Grpc51OrTQynCSoemBKxewL9TVZA=;
-  b=edYL3pYTqZAuOX7FA7LjxKZh+aKG98S9RXOlCsoLl8SBoDsioiHBOU9t
-   RzDeCNht9Qu2Edrl0TF15In9LaEQYjziVZsEInjgcN3ZadUUJNWebZjUE
-   20kgD/rjNlp3fzjt6e3FsALs2mDWzabfjjdZGtZOREqAFI+zoaLLHXS43
-   Svg/RLYxPT0sR3IZxFEV0mQHrJ1t2vqupyBwTC9clOz43tSoPUMwUDs9j
-   5l5lB8ErRBTCgdKMZnnMYi2Ba0w4reRHbdyXqPFAoWIrTVPe8LK7WNIi4
-   eQQCp0V0Gs7CwjZsgzLRC9HUHfZm8glBzVAr1eAnS31zbR40M25Enkjqy
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10352"; a="297754779"
-X-IronPort-AV: E=Sophos;i="5.91,238,1647327600"; 
-   d="scan'208";a="297754779"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 18:34:54 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,238,1647327600"; 
-   d="scan'208";a="743240182"
-Received: from lkp-server02.sh.intel.com (HELO 242b25809ac7) ([10.239.97.151])
-  by orsmga005.jf.intel.com with ESMTP; 19 May 2022 18:34:51 -0700
-Received: from kbuild by 242b25809ac7 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nrrXW-000488-OU;
-        Fri, 20 May 2022 01:34:50 +0000
-Date:   Fri, 20 May 2022 09:34:31 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Alec Su <ae40515@yahoo.com.tw>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, sboyd@codeaurora.org
-Cc:     kbuild-all@lists.01.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        y.oudjana@protonmail.com, Alec Su <ae40515@yahoo.com.tw>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: msm8996-xiaomi-natrium: Add
- support for Xiaomi Mi 5s Plus
-Message-ID: <202205200926.TE2gqa0N-lkp@intel.com>
-References: <20220519074112.25600-2-ae40515@yahoo.com.tw>
+        Thu, 19 May 2022 21:39:44 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB0BA9D07D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 18:39:42 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id k2so6084907qtp.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 18:39:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SuTumshxfmQSff783bfM7dkeojcdsq2Dy5++uaDGngM=;
+        b=jpF2BnRc/lHDfrO29tpAde7HLvwuXynvtU50/LbumpUMVkYmTUt1FM6EFD+fI9I39b
+         SiTN+rVS57+BZIGEYP7rZrNAQOa+XVUz6FkTL0vXBGgcy/huOi+K7FV+jsPVrzDgG4kS
+         CbGLM1KfS78jDb+tE6q2vd21NcLahfZVe26T6iBBzxlkC1yZmj/uZPMIS5OE9lrjFxSz
+         pqnW3h0Eby3RoMNuHIFl/vktZrYyNhyLBjzEW33UXGAw52p6wepSsgxTHHRiUzRxQPjY
+         FeXg8BNi2l1mBdacL5pgwixAZDiTAUzRuF4iQGwYNrbnrmuWU4ddJynkMYgVZ0Kvrx3v
+         lvGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SuTumshxfmQSff783bfM7dkeojcdsq2Dy5++uaDGngM=;
+        b=ciue3FxhnpPYBxEJ+Yg3G4Dz5D1VMUJkBxbyhNj8qAg4WU4UrVkTNyru7P3jKMtDJF
+         7nyXIpdOG9Ng4wQQQUrG8OIz83lOGJ6nPcL9s+jjTWALx0Gt2nX0OyKGenT4YxB62QcR
+         1D0HHO20O7EWmUQ0nzp/nP39yQi2h4BKSyl3aJ9++aETJBdu11+ZZh4GlNfXWz8Z+4vU
+         Akqhq4199ikndGLvxNjINljXd0vVY7g1fqeSOM+jDVNYw7XzLpLIRNA/f9nzxzcnVgnQ
+         +UFoXlE5+rn5cKzrpU4/Tf0/8DzEWUKqoaCjdx+ca+BiQaaJo3lcluPO9st8yN2LVcgE
+         FheQ==
+X-Gm-Message-State: AOAM533Jy1IinUc+O1GuHvk3wa9Lo3YDYajyL5NXaDzsnaAT58b08hLB
+        hb3RLc3nfkBOs67EK2hwUbKsL4AlixqkqfNiVyneBQ==
+X-Google-Smtp-Source: ABdhPJwPpQxTT2b5TQoj7i/anXLCP4hFsOQ7l0kInn/8xQOfE94BkR4bA90/+ftmo9sJOcnbLmBu+kf1a79nAEeru+8=
+X-Received: by 2002:ac8:4e45:0:b0:2f9:fc2:ee3a with SMTP id
+ e5-20020ac84e45000000b002f90fc2ee3amr5016433qtw.370.1653010781900; Thu, 19
+ May 2022 18:39:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220519074112.25600-2-ae40515@yahoo.com.tw>
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
+ <35051bec-98ea-b4c5-f734-06b3f22f3562@linaro.org> <8a90ffbc-b376-9115-fb91-0b46d98873b7@linaro.org>
+ <40f29157-52c0-001f-6c14-fb90b351756a@linaro.org> <20220519221227.B66D3C385AA@smtp.kernel.org>
+In-Reply-To: <20220519221227.B66D3C385AA@smtp.kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 20 May 2022 04:39:30 +0300
+Message-ID: <CAA8EJpqjcAcoooaZ6iTSCy4B1x4=HTUgvJ4VqX_Fr_hSMEbfDA@mail.gmail.com>
+Subject: Re: Removal of qcom,board-id and qcom,msm-id
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Olof Johansson <olof@lixom.net>, Rob Herring <robh@kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Alec,
+On Fri, 20 May 2022 at 01:12, Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> Quoting Dmitry Baryshkov (2022-05-19 05:46:53)
+> > On 19/05/2022 14:53, Krzysztof Kozlowski wrote:
+> > > On 19/05/2022 13:39, Dmitry Baryshkov wrote:
+> > >> On 19/05/2022 13:44, Krzysztof Kozlowski wrote:
+> > >>> Hi,
+> > >>>
+> > >>> There was an old effort of removal of qcom,board-id and qcom,msm-id
+> > >>> properties from Qualcomm SoC-based boards like [1].
+> > >>>
+> > >>> First approach was to document them, which (obviously) was not well
+> > >>> received [2] [3] [4].
+> > >>>
+> > >>> The solution from Stephen was to encode these in the board compatible,
+> > >>> so bootloader can extract that information. That seemed to receive
+> > >>> positive comments, at least from Rob. [5]
+> > >>>
+> > >>> It was 2015... ~7 years later we are still things doing the same way,
+> > >>> still with undocumented properties: qcom,board-id and qcom,msm-id.
+> > >>>
+> > >>>
+> > >>> I would like to revive that topic, but before I start doing something
+> > >>> pointless - any guidance on last patch from Stephen [5]? Was it ok? Some
+> > >>> early NAKs?
+> > >>
+> > >> I do not quite fancy the idea of using extra tools to process dtb files.
+> > >> At this moment it is possible to concatenate several kernel-generated
+> > >> dtb files together. AOSP developers use this to have an image that boots
+> > >> on both RB3 and RB5 boards.
+> > >>
+> > >> I think that changing compat strings only makes sense if Qualcomm would
+> > >> use such compat strings in future. Otherwise we end up in a position
+> > >> where we have custom bootloaders for the RB3/RB5/etc, but the majority
+> > >> of the board requires extra processing steps.
+> > >
+> > > This was discussed in [2] [3] and [4] (previous links) and did not pass.
+> > >
+> > > Do you have any new arguments for above objections from Arnd, Olof and
+> > > Rob? I don't think patch will get accepted if previous concerns during
+> > > review are not addressed...
+> >
+> > I'm not sure if the patches to the dtbTool have landed or not.
+> > Anyway, as I said, I don't think post-processing the dtb is good way to
+> > go. It makes extremely hard to check that the dtb, used by the kernel or
+> > being a part of the boot.img, corresponds to this or that compiled dtb.
+>
+> One option would be to work it into upstream DTC :P Then the properties
+> could be injected during the compilation stage. Note that DTC already
+> injects properties like linux,phandle so I'm not really following how
+> dtbTool mucking with the DTB is any different.
 
-Thank you for the patch! Yet something to improve:
+See, after running make dtbs you get a set of artifacts, Image.gz and
+set of dtbs (yes, extended with phandle/linux,phandle).
+Then one generates a boot.img. Now without the dtbTool step you can
+dissect the boot.img and verify that dtbs match what you've
+generated/provided/etc.
+If one employs dtbTool, there no simple way to match dtbs from
+boot.img with dtbs from kernel build process. This might be required
+e.g. to check what the user has been testing, etc.
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on v5.18-rc7]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+> Can you elaborate on what
+> is extremely hard? Would working dtbTool into the kernel build process
+> alleviate any issues?
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Alec-Su/arm64-dts-qcom-msm8996-xiaomi-natrium-Add-support-for-Xiaomi-Mi-5s-Plus/20220519-164217
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-config: arm64-randconfig-r022-20220518 (https://download.01.org/0day-ci/archive/20220520/202205200926.TE2gqa0N-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/b35e1afb49b50a1d68a67f66a3eb6c4259f329fb
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Alec-Su/arm64-dts-qcom-msm8996-xiaomi-natrium-Add-support-for-Xiaomi-Mi-5s-Plus/20220519-164217
-        git checkout b35e1afb49b50a1d68a67f66a3eb6c4259f329fb
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
+From my point of view, yet, it will. So will e.g. using any
+preprocessor magic to generate such properties during the dts->dtb
+process.
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+>
+> I vaguely recall that the properties had to be extracted during the
+> boot.img creation process to create a table of contents header. But
+> after some time the bootloader started scanning the DTBs directly for
+> the vendor properties and thus the header was deprecated/removed. If the
+> bootloader is doing the scanning then I'm not sure what is preventing
+> the properties from being documented and allowed. I think the main
+> rejection was that the properties were added purely to be extracted
+> during post processing and placed into the table of contents header,
+> i.e. they weren't actually used by the kernel or the bootloader. If they
+> are now used by the bootloader it sounds OK to me if they're kept
+> around.
 
-All errors (new ones prefixed by >>):
-
->> Error: arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts:79.1-9 Label or path mss_pil not found
->> Error: arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts:106.1-10 Label or path slpi_pil not found
-   FATAL ERROR: Syntax error parsing input tree
+Yes, as far as I understand, they are used by the bootloader directly.
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+With best wishes
+Dmitry
