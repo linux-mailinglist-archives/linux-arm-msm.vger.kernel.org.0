@@ -2,131 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAA8752F159
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 19:15:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78AD152F1A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 19:29:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352070AbiETRN3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 13:13:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45100 "EHLO
+        id S244014AbiETR15 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 13:27:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238817AbiETRN2 (ORCPT
+        with ESMTP id S237873AbiETR14 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 13:13:28 -0400
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A809AAFAFD;
-        Fri, 20 May 2022 10:13:27 -0700 (PDT)
-Received: from fraeml713-chm.china.huawei.com (unknown [172.18.147.207])
-        by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4L4YFx32Hbz6H6mq;
-        Sat, 21 May 2022 01:13:09 +0800 (CST)
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- fraeml713-chm.china.huawei.com (10.206.15.32) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Fri, 20 May 2022 19:13:25 +0200
-Received: from localhost (10.122.247.231) by lhreml710-chm.china.huawei.com
- (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Fri, 20 May
- 2022 18:13:24 +0100
-Date:   Fri, 20 May 2022 18:13:23 +0100
-From:   Jonathan Cameron <Jonathan.Cameron@huawei.com>
-To:     Yongzhi Liu <lyz_cs@pku.edu.cn>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <jic23@kernel.org>, <lars@metafoo.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <fuyq@stu.pku.edu.cn>
-Subject: Re: [PATCH v2] iio: vadc: Fix potential dereference of NULL pointer
-Message-ID: <20220520181323.00002892@huawei.com>
-In-Reply-To: <1652939455-123139-1-git-send-email-lyz_cs@pku.edu.cn>
-References: <YoUtezVzsPB8MAEO@google.com>
-        <1652939455-123139-1-git-send-email-lyz_cs@pku.edu.cn>
-Organization: Huawei Technologies R&D (UK) Ltd.
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
+        Fri, 20 May 2022 13:27:56 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 864E717CE43
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 10:27:55 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id r71so8325965pgr.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 10:27:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=eIM1HdMIym/tfM1e3BFituEEkL9gJaLLK7OzFTcJTA4=;
+        b=XkKfGcuzRDKMqh54Y+kww3omZXwBRjJcTjn7vbihRG3zBkjQOZ8/EQmVuyr28kSsHv
+         ZMj8UDHoF2NQi8mqGNIGvyrEiY4WB2mrifWA0HWSt/IlVlsi+JgoLmRE9+FWglvclKuY
+         HfHcun63PhTnLaV/cOX5LE+wmPuQZJKOvdISk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=eIM1HdMIym/tfM1e3BFituEEkL9gJaLLK7OzFTcJTA4=;
+        b=P9fLqH40Y2iE1shGHHDo6EmUap+rhH2t0qK508npi0bEhMWGgwjS/f0He04WjLBK7p
+         GGZWln52cjOvrlJacXpILOiTglXhdiiSlUFrncxpEHO838PP7QVeKTJx+O5XP1w4bN32
+         v2R5+JE6mCBkbfV+pJRYHdcVa1oSRx6/HfvmyzdYpFzloLbR3TZUralct3C7KtoNZqsg
+         M/tn5W8fJw32miJ7k/ChkWbtM/wttHRA/tFT9g8kZr2NcgcZYoQ8obGrCBiGXPVcudc2
+         Gh3tE930B1AIlTZduvnMtUzCDA30QKL6Q5/gkZ3I+c5u0klbSWQzhQtV2pwEDUWL2muw
+         L56g==
+X-Gm-Message-State: AOAM533A/v8to/fsWA/X/KAqorm9aJxObwj0mBCQSZFOH6/8e5XAJ9um
+        KPBZ6g7PA7zQW8BgzSiR2fPRpw==
+X-Google-Smtp-Source: ABdhPJw9BRVJIjFyI4cGbNFd8lKlV9t4on+fnb4eGMokHuQ26Vlyf0akHhXVo2qy5r/Mc/nwv6DPzA==
+X-Received: by 2002:a05:6a00:18a6:b0:518:54e7:aeb3 with SMTP id x38-20020a056a0018a600b0051854e7aeb3mr5471821pfh.49.1653067675092;
+        Fri, 20 May 2022 10:27:55 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:5332:2096:60a3:3455])
+        by smtp.gmail.com with UTF8SMTPSA id g20-20020a633754000000b003f27f91135asm1999pgn.76.2022.05.20.10.27.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 May 2022 10:27:54 -0700 (PDT)
+Date:   Fri, 20 May 2022 10:27:53 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        dianders@chromium.org, cychiang@google.com, judyhsiao@google.com,
+        tzungbi@chromium.org, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [v2 1/3] arm64: dts: qcom: sc7280: herobrine: Add pinconf
+ settings for mi2s1
+Message-ID: <YofPmWtqy+xTLnND@google.com>
+References: <20220520161004.1141554-1-judyhsiao@chromium.org>
+ <20220520161004.1141554-2-judyhsiao@chromium.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.247.231]
-X-ClientProxiedBy: lhreml737-chm.china.huawei.com (10.201.108.187) To
- lhreml710-chm.china.huawei.com (10.201.108.61)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220520161004.1141554-2-judyhsiao@chromium.org>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 18 May 2022 22:50:55 -0700
-Yongzhi Liu <lyz_cs@pku.edu.cn> wrote:
-
-> The return value of vadc_get_channel() needs to be checked
-> to avoid use of NULL pointer. Fix this by adding the null
-> pointer check on prop.
+On Fri, May 20, 2022 at 04:10:02PM +0000, Judy Hsiao wrote:
+> 1. Add drive strength property for mi2s1 on sc7280 based platforms.
+> 2. Disbale the pull-up mi2s1_data0, mi2s1_sclk.
 > 
-> Fixes: 0917de94c ("iio: vadc: Qualcomm SPMI PMIC voltage ADC driver")
-> 
-> Signed-off-by: Yongzhi Liu <lyz_cs@pku.edu.cn>
-This function has a lot of goto err; where err just results in
-a print.
+> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
 
-My suggestion is to just drop that print and use
-error specific prints as you have done here, then use direct returns.
-
-> ---
->  drivers/iio/adc/qcom-spmi-vadc.c | 23 ++++++++++++++++++++++-
->  1 file changed, 22 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iio/adc/qcom-spmi-vadc.c b/drivers/iio/adc/qcom-spmi-vadc.c
-> index 34202ba..9fa61fb 100644
-> --- a/drivers/iio/adc/qcom-spmi-vadc.c
-> +++ b/drivers/iio/adc/qcom-spmi-vadc.c
-> @@ -358,14 +358,25 @@ static int vadc_measure_ref_points(struct vadc_priv *vadc)
->  	vadc->graph[VADC_CALIB_ABSOLUTE].dx = VADC_ABSOLUTE_RANGE_UV;
->  
->  	prop = vadc_get_channel(vadc, VADC_REF_1250MV);
-> +	if (!prop) {
-> +		dev_err(vadc->dev, "Please define 1.25V channel\n");
-> +		ret = -ENODEV;
-> +		goto err;
-> +	}
->  	ret = vadc_do_conversion(vadc, prop, &read_1);
->  	if (ret)
->  		goto err;
->  
->  	/* Try with buffered 625mV channel first */
->  	prop = vadc_get_channel(vadc, VADC_SPARE1);
-> -	if (!prop)
-> +	if (!prop) {
->  		prop = vadc_get_channel(vadc, VADC_REF_625MV);
-> +		if (!prop) {
-> +			dev_err(vadc->dev, "Please define 0.625V channel\n");
-> +			ret = -ENODEV;
-> +			goto err;
-> +		}
-> +	}
->  
->  	ret = vadc_do_conversion(vadc, prop, &read_2);
->  	if (ret)
-> @@ -381,11 +392,21 @@ static int vadc_measure_ref_points(struct vadc_priv *vadc)
->  
->  	/* Ratiometric calibration */
->  	prop = vadc_get_channel(vadc, VADC_VDD_VADC);
-> +	if (!prop) {
-> +		dev_err(vadc->dev, "Please define VDD channel\n");
-> +		ret = -ENODEV;
-> +		goto err;
-> +	}
->  	ret = vadc_do_conversion(vadc, prop, &read_1);
->  	if (ret)
->  		goto err;
->  
->  	prop = vadc_get_channel(vadc, VADC_GND_REF);
-> +	if (!prop) {
-> +		dev_err(vadc->dev, "Please define GND channel\n");
-> +		ret = -ENODEV;
-> +		goto err;
-> +	}
->  	ret = vadc_do_conversion(vadc, prop, &read_2);
->  	if (ret)
->  		goto err;
-
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
