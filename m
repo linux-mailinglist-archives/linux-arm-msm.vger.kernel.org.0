@@ -2,112 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AE2252E2B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 04:54:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F75E52E54C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 08:50:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344843AbiETCx7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 22:53:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40786 "EHLO
+        id S1346008AbiETGua (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 02:50:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343908AbiETCx6 (ORCPT
+        with ESMTP id S1344788AbiETGu1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 22:53:58 -0400
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01AB6B82F8;
-        Thu, 19 May 2022 19:53:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1653015237; x=1684551237;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=3k+B1YhQtDjjzNzSzWyBbPTZcYPfDZ9P6ZK83umeHFU=;
-  b=P0Avw0cxVUh03g6Z0IfFGf6yrFt7TjYVi2Kp6v/7EJ18FQKxFuaTzHgb
-   80AXbmUE6j6LwbRQfBW1IzwAUte+Pw/jppDKd/sgJPNGpPJtcumC0oJfd
-   RSTphKMbcVLzUrKEQD9i/1Piqv2FKb0TH5dcyDUF2kAffMNA50DppO6I5
-   GdUDaxsK74k8+/NDd2pfL7zUoXIkCCpBlQ0YMLLAsjhR93gHNoMNnBgSW
-   3QE+3z/rjSPjuckYy/Otqc6jWDm5qWvqGfP2noMQelmOj2XTYHd/LVGUA
-   pcP9T4S+F+lg1HQZ7BFjzI/R7mJmPeEoBepqgd1goCHkOwtm6S9tmJnsy
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10352"; a="333084921"
-X-IronPort-AV: E=Sophos;i="5.91,238,1647327600"; 
-   d="scan'208";a="333084921"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 19:53:56 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,238,1647327600"; 
-   d="scan'208";a="674397628"
-Received: from lkp-server02.sh.intel.com (HELO 242b25809ac7) ([10.239.97.151])
-  by fmsmga002.fm.intel.com with ESMTP; 19 May 2022 19:53:52 -0700
-Received: from kbuild by 242b25809ac7 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nrsm0-0004DS-9Y;
-        Fri, 20 May 2022 02:53:52 +0000
-Date:   Fri, 20 May 2022 10:53:07 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Judy Hsiao <judyhsiao@chromium.org>, Andy Gross <agross@kernel.org>
-Cc:     kbuild-all@lists.01.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
-        judyhsiao@google.com, tzungbi@chromium.org, swboyd@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Judy Hsiao <judyhsiao@chromium.org>
-Subject: Re: [v1 1/3] arm64: dts: qcom: sc7280: Add drive strength property
- for secondary MI2S
-Message-ID: <202205201035.VNGXOfUp-lkp@intel.com>
-References: <20220519084119.675990-2-judyhsiao@chromium.org>
+        Fri, 20 May 2022 02:50:27 -0400
+Received: from sonic310-19.consmr.mail.sg3.yahoo.com (sonic310-19.consmr.mail.sg3.yahoo.com [106.10.244.139])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE5BB14CDF3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 23:50:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com.tw; s=s2048; t=1653029423; bh=Bg0GyWkRQ32E40FTHxnXsOYSvnmFjGWIAVTZCNkrdwQ=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=CHLV1LhzxA4y2FSei4uUhy+69Mu0/zIWsli0B3v2BVfd5nZQQuA0y8qkHwRZDsXzXVwZWzDXaZKzT2bfcv9vNc7I5DUjz3J0XKjLSpNRnye0hweR1ELQOwqoSQsnWFpUWLB+oGCSMUUdJ2ABX7WiIz6EYPYscg/Z0eCgVXVtz4YpaIQLYdb3PrEBccEuRh7Mp34JjF3WO1R457jW6lkMOsKAFGZUbgo/Dp1nUWhNpo31TuG3uHfyGbmNSwHuLEIK3ju4YYh1bQmHCS0Ql1qHLaNFCaEvijI/V7q8nC9o5+koYO/tfVYu8KaIA+PXG6Jr3TxPSWXW8daYapY7jOk7Mg==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1653029423; bh=IslfAe35xkPKH5HC/1lKUO0bgGuSky7LDBgMhtUDCit=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=hDB7wDqaWU3My/oyPEFJHy1eUGQOIe50lrLvUxTUxkpXUeEck6K0eEw3cIQ4Yb4aUo6rMZ47ZUOSeaWRDugMhezjxcuo6Z9KbO1Xd68Gq7E/zz8nGLih60GDuH5TGQKeHXXX5TxhVEP/BHvWUAKfKxPBW6+LHnVtVcxI7KUeg3XUAbtKUTPjxzqOoDd71e/vmP8F9I7LHrUwGNVCwvxD2uOS8SM0qS9w0+rJi7NTIU2mts59hWSj1+T+lhFqLwKk4GiR1ZnqQE8GGSSv4HHzhWesdzOhFl5kxpoITRmpqtiEuJp3kRdwgQ0ZZlzjBcSwa/VM6VC/kJ7ZMczclZ0UuA==
+X-YMail-OSG: sUp5xacVM1n6C0gMSx2eQjzpQOj9yPQB3k01ga4JuEJIzFvHSAyCXYGb6grteXx
+ h74QwQWVKzogZ8bmLUcwuBI9HPr2a7iqgxLStuvmLlkCD6L86k46lzcb9Rh_rWENt5JegZkXBQIw
+ N6MEc0fQ4x.UEnIXQv5csRRFhDuzpJBxE8KsUtUZiMGmdUiu9cGJYf6zYwNEOll5VUK5AzopOZ3.
+ UnwD76T6mXI2jGwsiuaiJDqJ46EZONCzvARNRpvbLElmke7789Q7WF4MbNx54j6jwTOza7E_yjv9
+ boy75eNTaYbyuUlVbE7An3C6sn59mHF7oS59U979lFXrVLY1iO7DXKr3wS1AHWMU_Bcf7eXtFwpS
+ l7WU_yXRQGEtqbclxVvnqBQnWWtEXELzeXMAgqCc4I0ZBXnydQ_dGy5gwATL_9c7QA1GK6st8m9G
+ I6DQ_HCjJGOuAIsKmJsdvmEafVWeWCgeRqxUBGHA1cp357bDY2OiNFiZa7ippXGjRNZCdr9P3Dvw
+ 2Cmpae4tk3mvg.yx9wyEQYhd2a75bhn9q5P8oHABcfe9QoW9WyYiBhLKiq.9xYMrfDsCWFmhXFo0
+ V4UnkB954MmIWXRzgiXRGTfd15Iey8Z5Md3Yv01JAx.803T..jk.m0Yu6ID9.xKXqsw5MbQ7B78m
+ VJdZYML.XK0Rt1ZiX3Jm5zvAueG_s4NA.LLlPS11qOoYwVgEUCjc4IcFl5o9efIOAKIkGJZDXlp.
+ nAX3q5oTfOobo0zTgUc7VcqmmNClEkgqXD9yqfubnbRJrGY0zw1TCXlfzQc9BlJcCDm5PMVpALh1
+ nO1OPcX4HiKsHtQ4CHHb3h0C4oGBBp_78wzTnG_ok8eyVcbZzfYXqF796Saq.3NvcEdg1IBIA6AK
+ z1pzPEHzeTJtlFJG0Z7ylLWcpOFAF40mnLWPGhf0Od4ytZyAXt1n.I3zVv5zh3Ni2wlXueNeQddw
+ I4NFhvhoOvi2.lOjhIGdlUHFD0A7bJKgVmOh0gVXyyT6avuf61HkMQjrlZwIi_OwP432GCIYMFcZ
+ wwdmLfOQpa_X3i0H0w.psf.YF2.j46J2g_K0u_FlJpCbJqVJtdVRY.Hds3YTVQjJb_vUc9oA6V9d
+ ULZO7.6d63vgEyNj_usG6zjfHPGMwIifXIZUoCPs2mMPtFr8dYh8dgueyOJUDYOYszfa2oOj99wq
+ s1hChaISXsQeCl9qStROKnLbsN3qB9NU8kOfNIVRudlXkyJNgJcMmjel_z4WLACuVogzG6bCbutm
+ pvcJxRVNKl4hnfZvX19_7VqgQ2r13GTSYjRo_JTR_Rg4ZRuFKfe8AaNw5qtq6YhvsNjHkq0WTSnS
+ tYGGmv6GArpXOhmyJSDcHC6po9vTxfcJhrSYr3I9kiFtbG1UFwFANnMahh.OTxOOOknAwxPf1_Il
+ K_oadIr1sfcfdcg0hYHFyQaEsFuslw5F5qnWdqWor7i29ymDCgomALjBvloadDVvr_SixDAJUfw2
+ _dB6LShESWYdg34PR_kQouAJoWmAPWRpxlLkkl1KG_ONdMIPEzUjUMWIcE1MaevNfgL4bSWFUJ00
+ smtJRXD.0pk3eNPSBdp4i2KdWzuAkdIa3am4DXP4P79davaLTBNtOofeJcchXHgEsCDMcsgVklYu
+ RjM0EL_BWJ4i49Jo7ZEdL3m2_lCwCB6_lP5YJ_CJaZZwO.NMfcIGpraC9xJuNlC3cMBcPAQqeRSe
+ pz.B67Eyc_Wb45yso2TarJOLLBZGRhX95nRwumUYOXyfeE4NYZBxBsqF6sVb9genUtdAKXCQVMVP
+ rM6lC2wqVtlpxE2g2SWAwme4f5WKxdUIm1seWG6svxczoGYM2sjn5Np5HE5_72j9zO3vXsLKj1o.
+ Xwms0.EnykdRJo0fcJvxgTJoPwvhfJKokfpMaCK.ok5Pxl2mVEx0O5BUoQe2BpST2CxTpYcgQ6UN
+ m4WWoCfmjBJ9eH1Liklw6ZvxV0MCw.1qWBhnwZjhh0Zpuc0L1.vmi1BAmJRFYh1kqc1waPhjTNj5
+ BwekY4Ag68H6w48yrmVdcxHWaJQwMRpobXzWGg2oZgoyBkG7U3o5oISTYcFSSnp6DEm046RxZdXu
+ DMzOi1Y0E.NN_yE6w7_zoJPf77f8q2.QMJg0E9xw6FEWX4rQ_8HjscGt9wsui7x.yiePlesjoL3j
+ oaulUTDprOOo_f8xJIsU6grE7WZA.PI4LMHQTOfuKhz2Hx9nAVRI84lhp_KTyBCxlmUOqmXPO0xg
+ PoWl05cjYUsaQTYTBIqicUJyXZ7MsxLcA55QVOM.wxr2lmAJ9IRHfxl.EeE6socpTteM9HrHA.UY
+ PpUeFLy0t
+X-Sonic-MF: <ae40515@yahoo.com.tw>
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic310.consmr.mail.sg3.yahoo.com with HTTP; Fri, 20 May 2022 06:50:23 +0000
+Received: by hermes--canary-production-sg3-7959d4d9bd-9nmmr (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 5604052a25d99ee7dc2ed819d2227320;
+          Fri, 20 May 2022 06:50:19 +0000 (UTC)
+From:   Alec Su <ae40515@yahoo.com.tw>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, sboyd@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, y.oudjana@protonmail.com,
+        Alec Su <ae40515@yahoo.com.tw>
+Subject: [PATCH v2 0/2] Add support for Xiaomi Mi 5s Plus
+Date:   Fri, 20 May 2022 06:50:11 +0000
+Message-Id: <20220520065013.25808-1-ae40515@yahoo.com.tw>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220519084119.675990-2-judyhsiao@chromium.org>
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+References: <20220520065013.25808-1-ae40515.ref@yahoo.com.tw>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Judy,
+This series adds the device tree for Xiaomi Mi 5s Plus (xiaomi-natrium)
+smartphone which is based on Snapdragon 821 SoC.
 
-Thank you for the patch! Yet something to improve:
+Changes since v1:
+- Adjust the sequence of the patches in this series.
+- Remove the unnecessary line and properties in the device tree.
+- Rename the nodes contain underscores.
 
-[auto build test ERROR on soc/for-next]
-[also build test ERROR on v5.18-rc7]
-[cannot apply to robh/for-next arm/for-next arm64/for-next/core clk/clk-next kvmarm/next rockchip/for-next shawnguo/for-next keystone/next]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Alec Su (2):
+  dt-bindings: arm: qcom: Document xiaomi,natrium board
+  arm64: dts: qcom: msm8996-xiaomi-natrium: Add support for Xiaomi Mi 5s
+    Plus
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Judy-Hsiao/Add-dtsi-for-sc7280-boards-that-using-rt5682-codec/20220519-164227
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git for-next
-config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20220520/202205201035.VNGXOfUp-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/b59ef0e3880c11efecbe61bebfe9352c76bf96f4
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Judy-Hsiao/Add-dtsi-for-sc7280-boards-that-using-rt5682-codec/20220519-164227
-        git checkout b59ef0e3880c11efecbe61bebfe9352c76bf96f4
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> Error: arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi:615.1-13 Label or path mi2s1_data0 not found
->> Error: arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi:620.1-12 Label or path mi2s1_sclk not found
->> Error: arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi:625.1-10 Label or path mi2s1_ws not found
-   FATAL ERROR: Syntax error parsing input tree
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/msm8996-xiaomi-natrium.dts  | 416 ++++++++++++++++++
+ 3 files changed, 418 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.35.3
+
