@@ -2,66 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CAACA52E8FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 11:40:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92D0052E9A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 12:10:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347741AbiETJkA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 05:40:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56302 "EHLO
+        id S1348047AbiETKK1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 06:10:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347744AbiETJj7 (ORCPT
+        with ESMTP id S1348025AbiETKKY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 05:39:59 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01FCE5EBFA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 02:39:57 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id v8so11431171lfd.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 02:39:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nIrxXltCmueBY34pWQ4AMY9dGbvH7DLXorjaRE3m0Bc=;
-        b=F6ek65GBoWU0tPnHAwzaZB7WNP1gJTIzu7211iYqgNr0PgCbWSKQYRqdQmcIp59iFF
-         M/yeFbx8fUpUxBXu1+kAbp25Fp4J3/dPYWUqeo9fvlaC9yaRa/M34jDaF2xXFFFPo+0W
-         myVFfwHMdtXSucZfG3Zj1iqVIc20G3Wf17HmPMOtXu5Zi1355MLTXW/vh9fcVl2rJHUI
-         Pd0yEmYhxMKbCd7LmynwZYv8MYxKORDH8NyKCKmQLEDpGLptvE0IvBK0jkXlwj5FlAwE
-         lF95UQFNw6i7AYor6N43wohPg+zPFCx1Mbh+kwsbpDwR/YPOAAF49M+NGZrgWC1Nxtuq
-         4IUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nIrxXltCmueBY34pWQ4AMY9dGbvH7DLXorjaRE3m0Bc=;
-        b=iC6zaSyqbznWp6on3YJ+c23//IvHZGh4qU5oNm5RPvoIWOP4SCqbOu9NcftSx4Mo2v
-         QgrT4Suv2VbGcbAh3ygl1c5yB9SJtoDjykGvNt4d9mauoEn94433n/FLJ192AECAz7+8
-         sf0BnJdSmlHhvLqOaNmSZLavGWvnjHMdntnbTuYfgUfZO9SMSVGuKnbq22dFFAXxw2vX
-         x10jSMf2Bd6/aGvVsopKwFz6Gu/S5Q5hu2M9x3MRTR5hpjcNhpHa0YpMWPY9Jbyq0IiM
-         ATeRvgrFMWTKXY93TxnjxzPqBoO3XX+reKmTM+Xep8nxh9p1rKAW/C95I2N5JCgxVYIq
-         xL9w==
-X-Gm-Message-State: AOAM5311rTxioo4HqDd0yhkswu3aG3qBuKJ1VbPOC1A9X4Mmewo7AEol
-        Dcs3WW67T1+WfOpG6JBEr69I40PqOtMG5DwfaYovDg==
-X-Google-Smtp-Source: ABdhPJzW84M+1Qgp5yRR/hyYidx+pFoqmn49zPcwAsl1goLonHenRJaiVr96+biBWVRxxE6uyOe/3aDt0ghvTrgRzEY=
-X-Received: by 2002:a05:6512:5cb:b0:472:f7e:a5f5 with SMTP id
- o11-20020a05651205cb00b004720f7ea5f5mr6208082lfo.358.1653039595270; Fri, 20
- May 2022 02:39:55 -0700 (PDT)
+        Fri, 20 May 2022 06:10:24 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3795FDE30B;
+        Fri, 20 May 2022 03:10:23 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E0F1BB82A9B;
+        Fri, 20 May 2022 10:10:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE44C385AA;
+        Fri, 20 May 2022 10:10:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1653041420;
+        bh=CUMRaFpSPQsGGTUY5dQB0cjmuiT3DOYu/+5/nWnfIC8=;
+        h=From:To:Cc:Subject:Date:From;
+        b=dwY/xH/YIgScadFiE0VQ+FH4oMMWNt6dh+KkUmDm0vz79CR8HagGf7EJ2mtlw3Bag
+         wYCN7bIDor44zskmOfZ9vVk96nbJIYymlFgqBfDZySRdNLYZlAeYJKC0DqmAWdUvru
+         cByn1e/pGH8SuTaVaaT85HyCIF411e2H8uFQESeox8wyyAr9PJfpkJ5xwlsq/IHQmx
+         rRMuWdBkevMGErvi4oO7LE2JzNzc5KmpDTDNWHKhC1oZ8UFD7VOlOphZMj+esBVPk3
+         ZX0yEuOpUZ77ULK6pXthkvDyP1EeiNg0wOMMlV2pgDbvrqUH8E6CXvmM87IG5dgGyu
+         r73lttmFAALig==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1nrzaO-00056u-8E; Fri, 20 May 2022 12:10:20 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 0/3] clk: qcom: gdsc: add support for collapse-vote registers
+Date:   Fri, 20 May 2022 12:09:45 +0200
+Message-Id: <20220520100948.19622-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-References: <1652275016-13423-1-git-send-email-quic_mkshah@quicinc.com> <1652275016-13423-7-git-send-email-quic_mkshah@quicinc.com>
-In-Reply-To: <1652275016-13423-7-git-send-email-quic_mkshah@quicinc.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 20 May 2022 11:39:16 +0200
-Message-ID: <CAPDyKFqCdc206GX3s3PqExrp==mfJQ6m-u0F_ij_tLXbcv8G6Q@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] soc: qcom: rpmh-rsc: Write CONTROL_TCS with next
- timer wakeup
-To:     Maulik Shah <quic_mkshah@quicinc.com>
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        rafael@kernel.org, daniel.lezcano@linaro.org,
-        quic_lsrao@quicinc.com, quic_rjendra@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,187 +58,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 11 May 2022 at 15:17, Maulik Shah <quic_mkshah@quicinc.com> wrote:
->
-> The next wakeup timer value needs to be set in always on domain timer
-> as the arch timer interrupt can not wakeup the SoC if after the deepest
-> CPUidle states the SoC also enters deepest low power state.
->
-> To wakeup the SoC in such scenarios the earliest wakeup time is set in
-> CONTROL_TCS and the firmware takes care of setting up its own timer in
-> always on domain with next wakeup time. The timer wakes up the RSC and
-> sets resources back to wake state.
->
-> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+Recent Qualcomm platforms have APCS collapse-vote registers that allow
+for sharing GDSCs with other masters (e.g. LPASS).
+    
+Add support for using such vote registers instead of the control
+register when updating the GDSC power state.
 
-I didn't forget to review this, but please allow me a few more days to
-think a little bit more about this.
+Note that the gcc-sc8280xp driver has not yet been merged. [1]
 
-Kind regards
-Uffe
+Johan
 
-> ---
->  drivers/soc/qcom/rpmh-internal.h |  3 ++
->  drivers/soc/qcom/rpmh-rsc.c      | 61 ++++++++++++++++++++++++++++++++++++++++
->  drivers/soc/qcom/rpmh.c          |  4 ++-
->  3 files changed, 67 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
-> index 7866bb1..39f5358 100644
-> --- a/drivers/soc/qcom/rpmh-internal.h
-> +++ b/drivers/soc/qcom/rpmh-internal.h
-> @@ -112,6 +112,7 @@ struct rpmh_ctrlr {
->   * @tcs_wait:           Wait queue used to wait for @tcs_in_use to free up a
->   *                      slot
->   * @client:             Handle to the DRV's client.
-> + * @dev:                RSC device.
->   */
->  struct rsc_drv {
->         const char *name;
-> @@ -127,12 +128,14 @@ struct rsc_drv {
->         spinlock_t lock;
->         wait_queue_head_t tcs_wait;
->         struct rpmh_ctrlr client;
-> +       struct device *dev;
->  };
->
->  int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg);
->  int rpmh_rsc_write_ctrl_data(struct rsc_drv *drv,
->                              const struct tcs_request *msg);
->  void rpmh_rsc_invalidate(struct rsc_drv *drv);
-> +void rpmh_rsc_write_next_wakeup(struct rsc_drv *drv);
->
->  void rpmh_tx_done(const struct tcs_request *msg, int r);
->  int rpmh_flush(struct rpmh_ctrlr *ctrlr);
-> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> index 8e01697..25b838b 100644
-> --- a/drivers/soc/qcom/rpmh-rsc.c
-> +++ b/drivers/soc/qcom/rpmh-rsc.c
-> @@ -12,6 +12,7 @@
->  #include <linux/io.h>
->  #include <linux/iopoll.h>
->  #include <linux/kernel.h>
-> +#include <linux/ktime.h>
->  #include <linux/list.h>
->  #include <linux/module.h>
->  #include <linux/notifier.h>
-> @@ -25,6 +26,7 @@
->  #include <linux/spinlock.h>
->  #include <linux/wait.h>
->
-> +#include <clocksource/arm_arch_timer.h>
->  #include <soc/qcom/cmd-db.h>
->  #include <soc/qcom/tcs.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> @@ -49,6 +51,14 @@
->  #define DRV_NCPT_MASK                  0x1F
->  #define DRV_NCPT_SHIFT                 27
->
-> +/* Offsets for CONTROL TCS Registers */
-> +#define RSC_DRV_CTL_TCS_DATA_HI                0x38
-> +#define RSC_DRV_CTL_TCS_DATA_HI_MASK   0xFFFFFF
-> +#define RSC_DRV_CTL_TCS_DATA_HI_VALID  BIT(31)
-> +#define RSC_DRV_CTL_TCS_DATA_LO                0x40
-> +#define RSC_DRV_CTL_TCS_DATA_LO_MASK   0xFFFFFFFF
-> +#define RSC_DRV_CTL_TCS_DATA_SIZE      32
-> +
->  /* Offsets for common TCS Registers, one bit per TCS */
->  #define RSC_DRV_IRQ_ENABLE             0x00
->  #define RSC_DRV_IRQ_STATUS             0x04
-> @@ -142,6 +152,14 @@
->   *  +---------------------------------------------------+
->   */
->
-> +#define USECS_TO_CYCLES(time_usecs)                    \
-> +       xloops_to_cycles((time_usecs) * 0x10C7UL)
-> +
-> +static inline unsigned long xloops_to_cycles(unsigned long xloops)
-> +{
-> +       return (xloops * loops_per_jiffy * HZ) >> 32;
-> +}
-> +
->  static inline void __iomem *
->  tcs_reg_addr(const struct rsc_drv *drv, int reg, int tcs_id)
->  {
-> @@ -757,6 +775,48 @@ static bool rpmh_rsc_ctrlr_is_busy(struct rsc_drv *drv)
->  }
->
->  /**
-> + * rpmh_rsc_write_next_wakeup() - Write next wakeup in CONTROL_TCS.
-> + * @drv: The controller
-> + *
-> + * Writes maximum wakeup cycles when called from suspend.
-> + * Writes earliest hrtimer wakeup when called from idle.
-> + */
-> +void rpmh_rsc_write_next_wakeup(struct rsc_drv *drv)
-> +{
-> +       ktime_t now, wakeup;
-> +       u64 wakeup_us, wakeup_cycles = ~0;
-> +       u32 lo, hi;
-> +
-> +       if (!drv->tcs[CONTROL_TCS].num_tcs || !drv->genpd_nb.notifier_call)
-> +               return;
-> +
-> +       /* Set highest time when system (timekeeping) is suspended */
-> +       if (system_state == SYSTEM_SUSPEND)
-> +               goto exit;
-> +
-> +       /* Find the earliest hrtimer wakeup from online cpus */
-> +       wakeup = dev_pm_genpd_get_next_hrtimer(drv->dev);
-> +
-> +       /* Find the relative wakeup in kernel time scale */
-> +       now = ktime_get();
-> +       wakeup = ktime_sub(wakeup, now);
-> +       wakeup_us = ktime_to_us(wakeup);
-> +
-> +       /* Convert the wakeup to arch timer scale */
-> +       wakeup_cycles = USECS_TO_CYCLES(wakeup_us);
-> +       wakeup_cycles += arch_timer_read_counter();
-> +
-> +exit:
-> +       lo = wakeup_cycles & RSC_DRV_CTL_TCS_DATA_LO_MASK;
-> +       hi = wakeup_cycles >> RSC_DRV_CTL_TCS_DATA_SIZE;
-> +       hi &= RSC_DRV_CTL_TCS_DATA_HI_MASK;
-> +       hi |= RSC_DRV_CTL_TCS_DATA_HI_VALID;
-> +
-> +       writel_relaxed(lo, drv->base + RSC_DRV_CTL_TCS_DATA_LO);
-> +       writel_relaxed(hi, drv->base + RSC_DRV_CTL_TCS_DATA_HI);
-> +}
-> +
-> +/**
->   * rpmh_rsc_cpu_pm_callback() - Check if any of the AMCs are busy.
->   * @nfb:    Pointer to the notifier block in struct rsc_drv.
->   * @action: CPU_PM_ENTER, CPU_PM_ENTER_FAILED, or CPU_PM_EXIT.
-> @@ -1035,6 +1095,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
->         INIT_LIST_HEAD(&drv->client.batch_cache);
->
->         dev_set_drvdata(&pdev->dev, drv);
-> +       drv->dev = &pdev->dev;
->
->         ret = devm_of_platform_populate(&pdev->dev);
->         if (ret && pdev->dev.pm_domain) {
-> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-> index 01765ee..3a53ed9 100644
-> --- a/drivers/soc/qcom/rpmh.c
-> +++ b/drivers/soc/qcom/rpmh.c
-> @@ -450,7 +450,7 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
->
->         if (!ctrlr->dirty) {
->                 pr_debug("Skipping flush, TCS has latest data.\n");
-> -               goto exit;
-> +               goto write_next_wakeup;
->         }
->
->         /* Invalidate the TCSes first to avoid stale data */
-> @@ -479,6 +479,8 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
->
->         ctrlr->dirty = false;
->
-> +write_next_wakeup:
-> +       rpmh_rsc_write_next_wakeup(ctrlr_to_drv(ctrlr));
->  exit:
->         spin_unlock(&ctrlr->cache_lock);
->         return ret;
-> --
-> 2.7.4
->
+
+[1] https://lore.kernel.org/all/20220505025457.1693716-1-bjorn.andersson@linaro.org/
+
+
+Johan Hovold (3):
+  clk: qcom: gdsc: add collapse-bit helper
+  clk: qcom: gdsc: add support for collapse-vote registers
+  clk: qcom: gcc-sc8280xp: use collapse-voting for PCIe GDSCs
+
+ drivers/clk/qcom/gcc-sc8280xp.c | 21 +++++++++++++++++++++
+ drivers/clk/qcom/gdsc.c         | 28 ++++++++++++++++++++++------
+ drivers/clk/qcom/gdsc.h         |  4 ++++
+ 3 files changed, 47 insertions(+), 6 deletions(-)
+
+-- 
+2.35.1
+
