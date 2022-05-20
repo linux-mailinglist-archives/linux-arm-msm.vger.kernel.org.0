@@ -2,169 +2,471 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C130052E121
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 02:23:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E4F452E165
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 02:52:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343950AbiETAXq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 20:23:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36822 "EHLO
+        id S1344096AbiETAwm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 20:52:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244137AbiETAXp (ORCPT
+        with ESMTP id S232937AbiETAwm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 20:23:45 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38A5212B01C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 17:23:43 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id m20so12761688ejj.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 17:23:43 -0700 (PDT)
+        Thu, 19 May 2022 20:52:42 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C282741999;
+        Thu, 19 May 2022 17:52:40 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id t6so9445286wra.4;
+        Thu, 19 May 2022 17:52:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NkNsmxiQk+nW3UDbjO7QxzvaqncjAzBvhuR1VH6Vk60=;
-        b=bA4kB8OhrG3AO6xz5No7HEoss1T72t7wOhdeRdSsdZLYCzD5aJYviGdcdpnznfPifZ
-         yuRj+lDxOoXXam02skD8mXDZraaqUDT3pVNFce59ArewYDhYNcYKJahlU2Ir6PagSJtJ
-         9VEQUM21705l7JBJccvc9ZdGE5VGkEK28WMdE=
+        d=gmail.com; s=20210112;
+        h=message-id:date:from:to:cc:subject:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8wmu68V4CsX/EUhtdLMZtJOtGaV8vxzQ5sczCJqnhcM=;
+        b=NT5kma0B7Op4v2qovqLRUNpC6SqHdqRVsspUeL4JOFv0uoOWMVa5xL2KWipXwhCATy
+         8BWz8tjm3Ta4bflZp1Ev59HwdwK7evHDpFx6gKeUneLZ9OPr7ci0m8mKBxjJpw2QePlo
+         XlrCGrJ7vj828yV3jF9K50FWfEd1Z6tVdR4ClhBHE1SvwEzAliKtP8HV88kgVmNhGt4w
+         BKBQBokvWv1RH96525koPJtWHNc2DCywF1W2CzDT07Bp7jv0bWyinSbCOTEvTNQFMrq6
+         PRN9WfEV57n9Op3wqTeG6xbpP4xdMR7NDFRPysdFIb/8tvJfXDWu0F9zWCfUTHvbxuIC
+         WA0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NkNsmxiQk+nW3UDbjO7QxzvaqncjAzBvhuR1VH6Vk60=;
-        b=Beri1A302Dy1Bpv5QO5slz13HyLUNEHdlRpk9Q8LYhM57Wuw89IX6deHB30l8wZyao
-         k0BUaz+KjHvfZ4yFWxKJLdWTEq+H09gS37rpr6hpXWhabtP2RqGYg9Dvkt0MkLaLWUDT
-         0JtdA0uygOdlhW6NxHh4097WpF9uK89KUPUmWe7ikbvLv2EOhDLVbIjD5oQ3NLwmyfpP
-         aczP314XUAkw3tvydmByKAsF50KRjAJw9FQG8nOv85bsxVUSW/bM5xEUV9aELpO/Achf
-         4TXYHrv5VEeflKD5J6PVZiK99ArroLQYVcRMToLibccMTsBD99CKnEQ7MRc1WBuNN+6V
-         YkwA==
-X-Gm-Message-State: AOAM532XRP3x2W+T9a97I5T3MW66Dw/lY500zyRLhmINX1ksAefHQbPY
-        WoLXThqSXih25m8am65+TIwp4SNXzZZkYjhmICk=
-X-Google-Smtp-Source: ABdhPJyjohFR2nEaZFBPFIFjSGS0GShpDrjviDUSw/xhkvWEc3QRTi0B7XlAaWiLk/Pkk0xks3f0wQ==
-X-Received: by 2002:a17:907:9690:b0:6f5:160a:25b8 with SMTP id hd16-20020a170907969000b006f5160a25b8mr6669734ejc.504.1653006221459;
-        Thu, 19 May 2022 17:23:41 -0700 (PDT)
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com. [209.85.128.49])
-        by smtp.gmail.com with ESMTPSA id a2-20020aa7d742000000b0042617ba638esm3462400eds.24.2022.05.19.17.23.39
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 May 2022 17:23:39 -0700 (PDT)
-Received: by mail-wm1-f49.google.com with SMTP id v191-20020a1cacc8000000b00397001398c0so5950521wme.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 17:23:39 -0700 (PDT)
-X-Received: by 2002:a05:600c:3c99:b0:392:b49c:7b79 with SMTP id
- bg25-20020a05600c3c9900b00392b49c7b79mr5830883wmb.199.1653006218866; Thu, 19
- May 2022 17:23:38 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8wmu68V4CsX/EUhtdLMZtJOtGaV8vxzQ5sczCJqnhcM=;
+        b=LFR7gVKKXgQ/QYchyVglMRtPIm7vn7uidvopUDoVEgj7nKHcRou3fRpV3wDouAdZXx
+         IXWf/7gtedVJPsdmgkig/wnE73Xkr+5QEw9RPyXoI2jc4pvWF051GU6985g1mcWXWX2i
+         VMe11lOM4/7+Sga3U4w+hvITuDgkv37xgxRpZphtQbzLHntgqPX5Me5++U6hXq/Z5fa+
+         vpEgqKxOL4Hyyqzzu23tnZhADwoSRGYqhd30G3pyYclYGMS6DTI8wPLYz/vcuK2fTahR
+         L+TgZb4vDyWRj0db0OKTsjkWHC3LXheFvB28aUpph31r9RYHWEIB1ypGXdia3SFKdV2D
+         bWYQ==
+X-Gm-Message-State: AOAM530U0BxftzxMKlem+H2s+4FptYvBZE4ymZg2+xDgnqjk6Xkn+55N
+        P7fQvwd3DNaUdudyFh5jS4A=
+X-Google-Smtp-Source: ABdhPJwc8Bb01KOPGzN1thsODDHXEi1v+DZ6lfdVI+U7aMQ4AnhZTFY7m7MqzcIcJIx0+cRpfWhBnQ==
+X-Received: by 2002:a05:6000:1acc:b0:20c:67ff:e8b7 with SMTP id i12-20020a0560001acc00b0020c67ffe8b7mr6170381wry.646.1653007959005;
+        Thu, 19 May 2022 17:52:39 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-190.ip85.fastwebnet.it. [93.42.70.190])
+        by smtp.gmail.com with ESMTPSA id e30-20020adfa45e000000b0020c5253d8e6sm916921wra.50.2022.05.19.17.52.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 May 2022 17:52:38 -0700 (PDT)
+Message-ID: <6286e656.1c69fb81.27e64.4cfc@mx.google.com>
+X-Google-Original-Message-ID: <YobmVODvpR9Uk0Hu@Ansuel-xps.>
+Date:   Fri, 20 May 2022 02:52:36 +0200
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Chanwoo Choi <cw00.choi@samsung.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] devfreq: qcom: Add L2 Krait Cache devfreq scaling
+ driver
+References: <CGME20200929162941epcas1p4a6f524f2406785934918c2a9f556ae4b@epcas1p4.samsung.com>
+ <20200929162926.139-1-ansuelsmth@gmail.com>
+ <53bcf684-54e7-13e2-2b41-26b6791f7469@samsung.com>
 MIME-Version: 1.0
-References: <20220509161733.v2.1.Ia8651894026707e4fa61267da944ff739610d180@changeid>
-In-Reply-To: <20220509161733.v2.1.Ia8651894026707e4fa61267da944ff739610d180@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 19 May 2022 17:23:26 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XWYFDMYvZJWDnV2Yc+5X=NThYnE78aOeMrhrEvBiDLkQ@mail.gmail.com>
-Message-ID: <CAD=FV=XWYFDMYvZJWDnV2Yc+5X=NThYnE78aOeMrhrEvBiDLkQ@mail.gmail.com>
-Subject: Re: [PATCH v2] drm: Document the power requirements for DP AUX transfers
-To:     dri-devel <dri-devel@lists.freedesktop.org>
-Cc:     Robert Foss <robert.foss@linaro.org>,
-        Lyude Paul <lyude@redhat.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Maxime Ripard <maxime@cerno.tech>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Kees Cook <keescook@chromium.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <53bcf684-54e7-13e2-2b41-26b6791f7469@samsung.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, May 20, 2022 at 10:11:16AM +0900, Chanwoo Choi wrote:
+> Hi Ansuel,
+> 
+> 
+> The 5.19-rc1 will support the cpu based scaling support[2]
+> as your needed. So that if you use passive governor with CPUFREQ_PARENT_DEV,
+> you can scale the cache frequency according to cpu frequency change.
+> 
+> [1] https://patchwork.kernel.org/project/linux-pm/patch/3acd6c32-6e78-dfc2-3e45-84f69a7d5f36@samsung.com/
+> [2] PM / devfreq: Add cpu based scaling support to passive governor
+> 
+> 
+> Best Regards,
+> Chanwoo Choi
+>
 
-On Mon, May 9, 2022 at 4:18 PM Douglas Anderson <dianders@chromium.org> wrote:
->
-> When doing DP AUX transfers there are two actors that need to be
-> powered in order for the DP AUX transfer to work: the DP source and
-> the DP sink. Commit bacbab58f09d ("drm: Mention the power state
-> requirement on side-channel operations") added some documentation
-> saying that the DP source is required to power itself up (if needed)
-> to do AUX transfers. However, that commit doesn't talk anything about
-> the DP sink.
->
-> For full fledged DP the sink isn't really a problem. It's expected
-> that if an external DP monitor isn't plugged in that attempting to do
-> AUX transfers won't work. It's also expected that if a DP monitor is
-> plugged in (and thus asserting HPD) then AUX transfers will work.
->
-> When we're looking at eDP, however, things are less obvious. Let's add
-> some documentation about expectations. Here's what we'll say:
->
-> 1. We don't expect the DP AUX transfer function to power on an eDP
-> panel. If an eDP panel is physically connected but powered off then it
-> makes sense for the transfer to fail.
->
-> 2. We'll document that the official way to power on a panel is via the
-> bridge chain, specifically by making sure that the panel's prepare
-> function has been called (which is called by
-> panel_bridge_pre_enable()). It's already specified in the kernel doc
-> of drm_panel_prepare() that this is the way to power the panel on and
-> also that after this call "it is possible to communicate with any
-> integrated circuitry via a command bus."
->
-> 3. We'll also document that for code running in the panel driver
-> itself that it is legal for the panel driver to power itself up
-> however it wants (it doesn't need to officially call
-> drm_panel_pre_enable()) and then it can do AUX bus transfers. This is
-> currently the way that edp-panel works when it's running atop the DP
-> AUX bus.
->
-> NOTE: there was much discussion of all of this in response to v1 [1]
-> of this patch. A summary of that is:
-> * With the Intel i195 driver, apparently eDP panels do get powered
->   up. We won't forbid this but it is expected that code that wants to
->   run on a variety of platforms should ensure that the drm_panel's
->   prepare() function has been called.
-> * There is at least a reasonable amount of agreement that the
->   transfer() functions itself shouldn't be responsible for powering
->   the panel. It's proposed that if we need the DP AUX dev nodes to be
->   robust for eDP that the code handling the DP AUX dev nodes could
->   handle powering the panel by ensuring that the panel's prepare()
->   call was made. Potentially drm_dp_aux_dev_get_by_minor() could be a
->   good place to do this. This is left as a future exercise. Until
->   that's fixed the DP AUX dev nodes for eDP are probably best just
->   used for debugging.
-> * If a panel could be in PSR and DP AUX via the dev node needs to be
->   reliable then we need to be able to pull the panel out of PSR. On
->   i915 this is also apparently handled as part of the transfer()
->   function.
->
-> [1] https://lore.kernel.org/r/20220503162033.1.Ia8651894026707e4fa61267da944ff739610d180@changeid
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Lyude Paul <lyude@redhat.com>
-> ---
-> Hopefully I've resolved everything here to everyone's
-> satisfaction. There's no crazy hurry here. I'll give this a week or so
-> and then land it on drm-misc if there is no additional discussion.
->
-> Changes in v2:
-> - Updated wording as per discussion on v1.
-> - Updated commit message as per discussion on v1.
-> - Add pointer to v1 discussion for future reference.
->
->  include/drm/display/drm_dp_helper.h | 16 +++++++++++++---
->  1 file changed, 13 insertions(+), 3 deletions(-)
+Oh wow thanks a lot for this. Wonder if this is finally the right time
+for a correct handling of cache scaling for krait. Will rework this and
+send a new version with the new implementation!
+Again thanks.
 
-Pushed to drm-misc-next:
+> On 9/30/20 1:29 AM, Ansuel Smith wrote:
+> > Qcom L2 Krait CPUs use the generic cpufreq-dt driver and doesn't actually
+> > scale the Cache frequency when the CPU frequency is changed. This
+> > devfreq driver register with the cpu notifier and scale the Cache
+> > based on the max Freq across all core as the CPU cache is shared across
+> > all of them. If provided this also scale the voltage of the regulator
+> > attached to the CPU cache. The scaling logic is based on the CPU freq
+> > and the 3 scaling interval are set by the device dts.
+> > 
+> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > ---
+> > v2:
+> > * Change cpu-freq to qcom,cpu-freq
+> > * Skip freq change if prev is the same target freq
+> > 
+> >  drivers/devfreq/Kconfig               |  10 +
+> >  drivers/devfreq/Makefile              |   1 +
+> >  drivers/devfreq/krait-cache-devfreq.c | 301 ++++++++++++++++++++++++++
+> >  3 files changed, 312 insertions(+)
+> >  create mode 100644 drivers/devfreq/krait-cache-devfreq.c
+> > 
+> > diff --git a/drivers/devfreq/Kconfig b/drivers/devfreq/Kconfig
+> > index 37dc40d1fcfb..99051aaf9c5e 100644
+> > --- a/drivers/devfreq/Kconfig
+> > +++ b/drivers/devfreq/Kconfig
+> > @@ -143,6 +143,16 @@ config ARM_RK3399_DMC_DEVFREQ
+> >  	  It sets the frequency for the memory controller and reads the usage counts
+> >  	  from hardware.
+> >  
+> > +config ARM_KRAIT_CACHE_DEVFREQ
+> > +	tristate "Scaling support for Krait CPU Cache Devfreq"
+> > +	depends on ARCH_QCOM || COMPILE_TEST
+> > +	help
+> > +	  This adds the DEVFREQ driver for the Krait CPU L2 Cache shared by all cores.
+> > +
+> > +	  The driver register with the cpufreq notifier and find the right frequency
+> > +	  based on the max frequency across all core and the range set in the device
+> > +	  dts. If provided this scale also the regulator attached to the l2 cache.
+> > +
+> >  source "drivers/devfreq/event/Kconfig"
+> >  
+> >  endif # PM_DEVFREQ
+> > diff --git a/drivers/devfreq/Makefile b/drivers/devfreq/Makefile
+> > index 3ca1ad0ecb97..bb87925a6a2d 100644
+> > --- a/drivers/devfreq/Makefile
+> > +++ b/drivers/devfreq/Makefile
+> > @@ -14,6 +14,7 @@ obj-$(CONFIG_ARM_IMX8M_DDRC_DEVFREQ)	+= imx8m-ddrc.o
+> >  obj-$(CONFIG_ARM_RK3399_DMC_DEVFREQ)	+= rk3399_dmc.o
+> >  obj-$(CONFIG_ARM_TEGRA_DEVFREQ)		+= tegra30-devfreq.o
+> >  obj-$(CONFIG_ARM_TEGRA20_DEVFREQ)	+= tegra20-devfreq.o
+> > +obj-$(CONFIG_ARM_KRAIT_CACHE_DEVFREQ)	+= krait-cache-devfreq.o
+> >  
+> >  # DEVFREQ Event Drivers
+> >  obj-$(CONFIG_PM_DEVFREQ_EVENT)		+= event/
+> > diff --git a/drivers/devfreq/krait-cache-devfreq.c b/drivers/devfreq/krait-cache-devfreq.c
+> > new file mode 100644
+> > index 000000000000..101a13b6927a
+> > --- /dev/null
+> > +++ b/drivers/devfreq/krait-cache-devfreq.c
+> > @@ -0,0 +1,301 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +
+> > +#include <linux/kernel.h>
+> > +#include <linux/init.h>
+> > +#include <linux/module.h>
+> > +#include <linux/cpufreq.h>
+> > +#include <linux/devfreq.h>
+> > +#include <linux/of.h>
+> > +#include <linux/platform_device.h>
+> > +#include <linux/clk.h>
+> > +#include <linux/slab.h>
+> > +#include <linux/regulator/consumer.h>
+> > +#include <linux/pm_opp.h>
+> > +
+> > +#include "governor.h"
+> > +
+> > +struct krait_data {
+> > +	struct device *dev;
+> > +	struct devfreq *devfreq;
+> > +
+> > +	struct clk *l2_clk;
+> > +
+> > +	unsigned long *freq_table; /* L2 bus clock rate */
+> > +	unsigned int *l2_cpufreq; /* L2 target CPU frequency */
+> > +
+> > +	struct notifier_block nb;
+> > +};
+> > +
+> > +static int krait_cache_set_opp(struct dev_pm_set_opp_data *data)
+> > +{
+> > +	unsigned long old_freq = data->old_opp.rate, freq = data->new_opp.rate;
+> > +	struct dev_pm_opp_supply *supply = &data->new_opp.supplies[0];
+> > +	struct regulator *reg = data->regulators[0];
+> > +	struct clk *clk = data->clk;
+> > +	struct krait_data *kdata;
+> > +	unsigned long idle_freq;
+> > +	int ret;
+> > +
+> > +	kdata = (struct krait_data *)dev_get_drvdata(data->dev);
+> > +
+> > +	idle_freq = kdata->freq_table[0];
+> > +
+> > +	if (reg) {
+> > +		ret = regulator_set_voltage_triplet(reg, supply->u_volt_min,
+> > +						    supply->u_volt,
+> > +						    supply->u_volt_max);
+> > +		if (ret)
+> > +			goto exit;
+> > +	}
+> > +
+> > +	/*
+> > +	 * Set to idle bin if switching from normal to high bin
+> > +	 * or vice versa. It has been notice that a bug is triggered
+> > +	 * in cache scaling when more than one bin is scaled, to fix
+> > +	 * this we first need to transition to the base rate and then
+> > +	 * to target rate
+> > +	 */
+> > +	if (likely(freq != idle_freq && old_freq != idle_freq)) {
+> > +		ret = clk_set_rate(clk, idle_freq);
+> > +		if (ret)
+> > +			goto exit;
+> > +	}
+> > +
+> > +	ret = clk_set_rate(clk, freq);
+> > +	if (ret)
+> > +		goto exit;
+> > +
+> > +exit:
+> > +	return ret;
+> > +};
+> > +
+> > +static int krait_cache_target(struct device *dev, unsigned long *freq,
+> > +			      u32 flags)
+> > +{
+> > +	return dev_pm_opp_set_rate(dev, *freq);
+> > +};
+> > +
+> > +static int krait_cache_get_dev_status(struct device *dev,
+> > +				      struct devfreq_dev_status *stat)
+> > +{
+> > +	struct krait_data *data = dev_get_drvdata(dev);
+> > +
+> > +	stat->busy_time = 0;
+> > +	stat->total_time = 0;
+> > +	stat->current_frequency = clk_get_rate(data->l2_clk);
+> > +
+> > +	return 0;
+> > +};
+> > +
+> > +static int krait_cache_get_cur_freq(struct device *dev, unsigned long *freq)
+> > +{
+> > +	struct krait_data *data = dev_get_drvdata(dev);
+> > +
+> > +	*freq = clk_get_rate(data->l2_clk);
+> > +
+> > +	return 0;
+> > +};
+> > +
+> > +static struct devfreq_dev_profile tegra_devfreq_profile = {
+> > +	.target = krait_cache_target,
+> > +	.get_dev_status = krait_cache_get_dev_status,
+> > +	.get_cur_freq = krait_cache_get_cur_freq
+> > +};
+> > +
+> > +static int krait_cache_notifier(struct notifier_block *nb, unsigned long action,
+> > +				void *v)
+> > +{
+> > +	struct cpufreq_freqs *freqs;
+> > +	unsigned int cpu, cur_cpu;
+> > +	struct krait_data *data;
+> > +	struct devfreq *devfreq;
+> > +	unsigned long freq;
+> > +	int ret = 0;
+> > +
+> > +	if (action != CPUFREQ_POSTCHANGE)
+> > +		return NOTIFY_OK;
+> > +
+> > +	data = container_of(nb, struct krait_data, nb);
+> > +	devfreq = data->devfreq;
+> > +
+> > +	mutex_lock_nested(&devfreq->lock, SINGLE_DEPTH_NESTING);
+> > +
+> > +	freqs = (struct cpufreq_freqs *)v;
+> > +	freq = freqs->new;
+> > +	cur_cpu = freqs->policy->cpu;
+> > +
+> > +	/* find the max freq across all core */
+> > +	for_each_present_cpu(cpu)
+> > +		if (cpu != cur_cpu)
+> > +			freq = max(freq, (unsigned long)cpufreq_quick_get(cpu));
+> > +
+> > +	devfreq->governor->get_target_freq(devfreq, &freq);
+> > +
+> > +	if (devfreq->previous_freq == freq)
+> > +		goto out;
+> > +
+> > +	ret = devfreq->profile->target(data->dev, &freq, 0);
+> > +	if (ret < 0)
+> > +		goto out;
+> > +
+> > +	if (devfreq->profile->freq_table &&
+> > +	    (devfreq_update_status(devfreq, freq)))
+> > +		dev_err(data->dev,
+> > +			"Couldn't update frequency transition information.\n");
+> > +
+> > +	devfreq->previous_freq = freq;
+> > +
+> > +out:
+> > +	mutex_unlock(&devfreq->lock);
+> > +	return notifier_from_errno(ret);
+> > +};
+> > +
+> > +static int krait_cache_governor_get_target(struct devfreq *devfreq,
+> > +					   unsigned long *freq)
+> > +{
+> > +	unsigned int *l2_cpufreq;
+> > +	unsigned long *freq_table;
+> > +	unsigned long target_freq = *freq;
+> > +	struct krait_data *data = dev_get_drvdata(devfreq->dev.parent);
+> > +
+> > +	l2_cpufreq = data->l2_cpufreq;
+> > +	freq_table = data->freq_table;
+> > +
+> > +	/*
+> > +	 * Find the highest l2 freq interval based on the max cpufreq
+> > +	 * across all core
+> > +	 */
+> > +	while (*(l2_cpufreq = l2_cpufreq + 1) && target_freq >= *l2_cpufreq)
+> > +		freq_table = freq_table + 1;
+> > +
+> > +	*freq = *freq_table;
+> > +
+> > +	return 0;
+> > +};
+> > +
+> > +static int krait_cache_governor_event_handler(struct devfreq *devfreq,
+> > +					      unsigned int event, void *data)
+> > +{
+> > +	struct krait_data *kdata = dev_get_drvdata(devfreq->dev.parent);
+> > +	int ret = 0;
+> > +
+> > +	switch (event) {
+> > +	case DEVFREQ_GOV_START:
+> > +		kdata->nb.notifier_call = krait_cache_notifier;
+> > +		ret = cpufreq_register_notifier(&kdata->nb,
+> > +						CPUFREQ_TRANSITION_NOTIFIER);
+> > +		break;
+> > +
+> > +	case DEVFREQ_GOV_STOP:
+> > +		cpufreq_unregister_notifier(&kdata->nb,
+> > +					    CPUFREQ_TRANSITION_NOTIFIER);
+> > +		break;
+> > +	}
+> > +
+> > +	return ret;
+> > +};
+> > +
+> > +static struct devfreq_governor krait_devfreq_governor = {
+> > +	.name = "krait_governor",
+> > +	.get_target_freq = krait_cache_governor_get_target,
+> > +	.event_handler = krait_cache_governor_event_handler,
+> > +	.immutable = true,
+> > +};
+> > +
+> > +static int krait_cache_probe(struct platform_device *pdev)
+> > +{
+> > +	int ret, count;
+> > +	struct opp_table *table;
+> > +	struct krait_data *data;
+> > +	struct device *dev = &pdev->dev;
+> > +	struct device_node *node = dev->of_node;
+> > +
+> > +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+> > +	if (!data)
+> > +		return -ENOMEM;
+> > +
+> > +	data->dev = dev;
+> > +
+> > +	data->l2_clk = devm_clk_get(dev, "l2");
+> > +	if (IS_ERR(data->l2_clk))
+> > +		return PTR_ERR(data->l2_clk);
+> > +
+> > +	table = dev_pm_opp_set_regulators(dev, (const char *[]){ "l2" }, 1);
+> > +	if (IS_ERR(table)) {
+> > +		ret = PTR_ERR(table);
+> > +		dev_err(dev, "failed to set regulators %d\n", ret);
+> > +		return ret;
+> > +	}
+> > +
+> > +	ret = PTR_ERR_OR_ZERO(
+> > +		dev_pm_opp_register_set_opp_helper(dev, krait_cache_set_opp));
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	ret = dev_pm_opp_of_add_table(dev);
+> > +	if (ret) {
+> > +		dev_err(dev, "failed to parse L2 freq thresholds\n");
+> > +		return ret;
+> > +	}
+> > +
+> > +	count = dev_pm_opp_get_opp_count(dev);
+> > +
+> > +	data->l2_cpufreq =
+> > +		devm_kzalloc(dev, sizeof(unsigned int) * count, GFP_KERNEL);
+> > +	if (!data->l2_cpufreq)
+> > +		return -ENOMEM;
+> > +
+> > +	ret = of_property_read_u32_array(node, "qcom,l2-cpufreq", data->l2_cpufreq,
+> > +					 count);
+> > +	if (ret) {
+> > +		dev_err(dev, "failed to parse L2 cpufreq thresholds\n");
+> > +		return ret;
+> > +	}
+> > +
+> > +	ret = devfreq_add_governor(&krait_devfreq_governor);
+> > +	if (ret) {
+> > +		dev_err(&pdev->dev, "Failed to add governor: %d\n", ret);
+> > +		return ret;
+> > +	}
+> > +
+> > +	platform_set_drvdata(pdev, data);
+> > +
+> > +	data->devfreq = devfreq_add_device(&pdev->dev, &tegra_devfreq_profile,
+> > +					   "krait_governor", NULL);
+> > +
+> > +	/* Cache freq_table to quickly get it when needed */
+> > +	data->freq_table = data->devfreq->profile->freq_table;
+> > +
+> > +	if (IS_ERR(data->devfreq))
+> > +		return PTR_ERR(data->devfreq);
+> > +
+> > +	return 0;
+> > +};
+> > +
+> > +static int krait_cache_remove(struct platform_device *pdev)
+> > +{
+> > +	struct krait_data *data = platform_get_drvdata(pdev);
+> > +
+> > +	dev_pm_opp_remove_table(data->dev);
+> > +
+> > +	return 0;
+> > +};
+> > +
+> > +static const struct of_device_id krait_cache_match_table[] = {
+> > +	{ .compatible = "qcom,krait-cache" },
+> > +	{}
+> > +};
+> > +
+> > +static struct platform_driver krait_cache_driver = {
+> > +	.probe		= krait_cache_probe,
+> > +	.remove		= krait_cache_remove,
+> > +	.driver		= {
+> > +		.name   = "krait-cache-scaling",
+> > +		.of_match_table = krait_cache_match_table,
+> > +	},
+> > +};
+> > +module_platform_driver(krait_cache_driver);
+> > +
+> > +MODULE_DESCRIPTION("Krait CPU Cache Scaling driver");
+> > +MODULE_AUTHOR("Ansuel Smith <ansuelsmth@gmail.com>");
+> > +MODULE_LICENSE("GPL v2");
+> > 
+> 
+> 
+> -- 
+> Best Regards,
+> Chanwoo Choi
+> Samsung Electronics
 
-69ef4a192bba drm: Document the power requirements for DP AUX transfers
+-- 
+	Ansuel
