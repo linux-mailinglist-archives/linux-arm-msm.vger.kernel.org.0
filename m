@@ -2,57 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4838F52E9A3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 12:10:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB11752E9E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 12:32:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348043AbiETKK0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 06:10:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51314 "EHLO
+        id S1348129AbiETKcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 06:32:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242192AbiETKKW (ORCPT
+        with ESMTP id S1348116AbiETKcF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 06:10:22 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A806BDE30B;
-        Fri, 20 May 2022 03:10:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3F6A661CFD;
-        Fri, 20 May 2022 10:10:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EEEEC34113;
-        Fri, 20 May 2022 10:10:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653041420;
-        bh=GTkcfKFZihRoPL88FJ6O6bK52tDtWhzjFXKqXM8uLMU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=k5vFWXgJwENjVzROfnACwPaIx7dBioOe+Xeh/4wV4mOvVaw5MXeMY0WFDYsxNlnZZ
-         hWGFB2RBQcsVvOLQo6QpTycHHLMwRIJw/v/6krufCoNzFtSI/P66B720GJzsHliwFA
-         Av3HrXU2Gl9RaLx8FUimeJA8IH1t8SoW52nfyIdyO70jPYpETVzS8AlVcyBentnJeh
-         unSe2OrJufUicrXff5GnpYhXz37huQHsVDY9Xa9PHHdmSkRMmJJx5TN3FUy/JJAe4Z
-         8nsbGgYwLAK480T3rrraLEzz9aikRe6c9a/5WTRv9TxNGzeT+0o4c6/vN5N+L6GL83
-         gYMNci5dr4+IA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1nrzaO-000572-IC; Fri, 20 May 2022 12:10:20 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 3/3] clk: qcom: gcc-sc8280xp: use collapse-voting for PCIe GDSCs
-Date:   Fri, 20 May 2022 12:09:48 +0200
-Message-Id: <20220520100948.19622-4-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220520100948.19622-1-johan+linaro@kernel.org>
-References: <20220520100948.19622-1-johan+linaro@kernel.org>
+        Fri, 20 May 2022 06:32:05 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EFC18CB12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 03:32:02 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id y32so13568608lfa.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 03:32:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=jLoKShXnvK18g/hpxDcb3w46Wn4GpvoKRXUZYRWFidQ=;
+        b=YVHFkRD0MqPNxaUsIcx9HwSiCoSSee9T33zSd9hqf9PotLf1FcnGR0Pws1wO1JLgE4
+         e/6KIHa32HILZ5k73we7TDs6M4/NRbs2yA9gqSyxYYzGtVOKNjs+WeJBPV/vYcm1R9Gg
+         JD9oOUG3n0ADg9Ax4OdqLzX/nhE4s+rtOJOjQ/+5Q6dASz+i3MBSNb658knV0FUq00wC
+         1I2ahV40H9IJZ91kOQS8kmHsa5ClU10iVATVVwg73lqphQ1vOGCBiESQpMwntUhdu6iV
+         pkTlg7/QlybhBJSrM+wCNQOc9+Q+J7rKZ7CEH/WE0ZS3hi30FIC93l5syWL9aNoAkMRo
+         hC3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=jLoKShXnvK18g/hpxDcb3w46Wn4GpvoKRXUZYRWFidQ=;
+        b=lbk+hfXQITSJb7ioXclA4ozOk0Znd3Nsd5gDSD0dDJcjTQOwNg7LnXOzy4E8jyCfQu
+         1CVXb5+BPHvPJT2HnmcboeMLGBeMa4xhLbwWm0WFeUPzGntJu3dimsJOAhnqkIAP41Iu
+         Hp5Z7HEMmoA6TGBsKtpvmMikzx6Zc1tvJfquL50UPPY4GrBk2QvflKMa0UNdQYRgrfYg
+         XI2LD8sLpt3Ubhs19Cq7i6JIa3UOEUEtDYKoPcWx40QTlNDcT5ZI/ivd1ZEvRJZzxPST
+         iHMyghUKYF3ptOI4IuM1LQpM49RrfkwCns+BdMzDtyBO5x+AG2RpOjMunrYIESAm0Fmj
+         Gk1g==
+X-Gm-Message-State: AOAM531JfHXu7CRtuseeKpf7IpFHc6uC44FIuY2Bza3RCat2LMl1idej
+        zQFB0PZDLaYZwEGymFlrH/nA1/Rn/ypZO4fv
+X-Google-Smtp-Source: ABdhPJwBIkQUvVaiMkEgWaWOZv0PfIymapoTpMeWHBZ0HTws3HEolBrTMYZvdVTLI6OZbthBhCE1kA==
+X-Received: by 2002:a05:6512:3d89:b0:473:9e0e:8c4c with SMTP id k9-20020a0565123d8900b004739e0e8c4cmr6566185lfv.160.1653042720823;
+        Fri, 20 May 2022 03:32:00 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id h4-20020ac250c4000000b00477be45fb23sm563728lfm.56.2022.05.20.03.31.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 May 2022 03:32:00 -0700 (PDT)
+Message-ID: <7b451dfb-8353-4a4e-1834-a01feaa267d2@linaro.org>
+Date:   Fri, 20 May 2022 12:31:58 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v2 2/5] dt-bindings: interconnect: Add Qualcomm SM6350 NoC
+ support
+Content-Language: en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Odelu Kukatla <okukatla@codeaurora.org>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220520070318.48521-1-luca.weiss@fairphone.com>
+ <20220520070318.48521-3-luca.weiss@fairphone.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220520070318.48521-3-luca.weiss@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,101 +84,172 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PCIe GDSCs can be shared with other masters and should use the APCS
-collapse-vote register when updating the power state.
+On 20/05/2022 09:03, Luca Weiss wrote:
+> Add bindings for Qualcomm SM6350 Network-On-Chip interconnect devices.
+> 
+> As SM6350 has two pairs of NoCs sharing the same reg, allow this in the
+> binding documentation, as was done for qcm2290.
+> 
+> Because the main qcom,rpmh.yaml file is getting too complicated for our
+> use cases, create a new qcom,rpmh-common.yaml and a separate
+> qcom,sm6350-rpmh.yaml that defines our new bindings.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+> Changes since v1:
+> * Split sm6350 into separate yaml with new rpmh-common.yaml
+> 
+>  .../interconnect/qcom,rpmh-common.yaml        |  41 +++++
+>  .../interconnect/qcom,sm6350-rpmh.yaml        |  82 ++++++++++
+>  .../dt-bindings/interconnect/qcom,sm6350.h    | 148 ++++++++++++++++++
+>  3 files changed, 271 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,rpmh-common.yaml
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sm6350-rpmh.yaml
+>  create mode 100644 include/dt-bindings/interconnect/qcom,sm6350.h
+> 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh-common.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-common.yaml
+> new file mode 100644
+> index 000000000000..6121eea3e87d
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-common.yaml
+> @@ -0,0 +1,41 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/interconnect/qcom,rpmh-common.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm RPMh Network-On-Chip Interconnect
+> +
+> +maintainers:
+> +  - Georgi Djakov <georgi.djakov@linaro.org>
+> +  - Odelu Kukatla <okukatla@codeaurora.org>
 
-This is specifically also needed to be able to disable power domains
-that have been enabled by boot firmware using the vote register.
+Is this valid email address?
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/clk/qcom/gcc-sc8280xp.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+> +
+> +description: |
+> +   RPMh interconnect providers support system bandwidth requirements through
+> +   RPMh hardware accelerators known as Bus Clock Manager (BCM). The provider is
+> +   able to communicate with the BCM through the Resource State Coordinator (RSC)
+> +   associated with each execution environment. Provider nodes must point to at
+> +   least one RPMh device child node pertaining to their RSC and each provider
+> +   can map to multiple RPMh resources.
+> +
+> +properties:
+> +  '#interconnect-cells':
+> +    enum: [ 1, 2 ]
 
-diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-index 887db5324ab8..4d7db13ed708 100644
---- a/drivers/clk/qcom/gcc-sc8280xp.c
-+++ b/drivers/clk/qcom/gcc-sc8280xp.c
-@@ -6778,58 +6778,79 @@ static struct clk_branch gcc_video_vcodec_throttle_clk = {
- 
- static struct gdsc pcie_0_tunnel_gdsc = {
- 	.gdscr = 0xa4004,
-+	.collapse_ctrl = 0x52128,
-+	.collapse_mask = BIT(0),
- 	.pd = {
- 		.name = "pcie_0_tunnel_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
- };
- 
- static struct gdsc pcie_1_tunnel_gdsc = {
- 	.gdscr = 0x8d004,
-+	.collapse_ctrl = 0x52128,
-+	.collapse_mask = BIT(1),
- 	.pd = {
- 		.name = "pcie_1_tunnel_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
- };
- 
- static struct gdsc pcie_2a_gdsc = {
- 	.gdscr = 0x9d004,
-+	.collapse_ctrl = 0x52128,
-+	.collapse_mask = BIT(2),
- 	.pd = {
- 		.name = "pcie_2a_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
- };
- 
- static struct gdsc pcie_2b_gdsc = {
- 	.gdscr = 0x9e004,
-+	.collapse_ctrl = 0x52128,
-+	.collapse_mask = BIT(3),
- 	.pd = {
- 		.name = "pcie_2b_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
- };
- 
- static struct gdsc pcie_3a_gdsc = {
- 	.gdscr = 0xa0004,
-+	.collapse_ctrl = 0x52128,
-+	.collapse_mask = BIT(4),
- 	.pd = {
- 		.name = "pcie_3a_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
- };
- 
- static struct gdsc pcie_3b_gdsc = {
- 	.gdscr = 0xa2004,
-+	.collapse_ctrl = 0x52128,
-+	.collapse_mask = BIT(5),
- 	.pd = {
- 		.name = "pcie_3b_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
- };
- 
- static struct gdsc pcie_4_gdsc = {
- 	.gdscr = 0x6b004,
-+	.collapse_ctrl = 0x52128,
-+	.collapse_mask = BIT(6),
- 	.pd = {
- 		.name = "pcie_4_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
- };
- 
- static struct gdsc ufs_card_gdsc = {
--- 
-2.35.1
+Why this is an enum?
 
+> +
+> +  qcom,bcm-voters:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    items:
+
+Please implement my previous comments.
+
+> +      maxItems: 1
+> +    description: |
+
+No need for |
+
+> +      List of phandles to qcom,bcm-voter nodes that are required by
+> +      this interconnect to send RPMh commands.
+> +
+> +  qcom,bcm-voter-names:
+
+What names do you expect here?
+
+> +    description: |
+
+Ditto.
+
+> +      Names for each of the qcom,bcm-voters specified.
+> +
+> +required:
+> +  - '#interconnect-cells'
+> +  - qcom,bcm-voters
+> +
+> +additionalProperties: true
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sm6350-rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sm6350-rpmh.yaml
+> new file mode 100644
+> index 000000000000..89fe17c31b8f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sm6350-rpmh.yaml
+> @@ -0,0 +1,82 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/interconnect/qcom,sm6350-rpmh.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SM6350 RPMh Network-On-Chip Interconnect
+> +
+> +maintainers:
+> +  - Luca Weiss <luca.weiss@fairphone.com>
+> +
+> +description: |
+> +  Qualcomm RPMh-based interconnect provider on SM6350.
+> +
+> +allOf:
+> +  - $ref: qcom,rpmh-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sm6350-aggre1-noc
+> +      - qcom,sm6350-aggre2-noc
+> +      - qcom,sm6350-config-noc
+> +      - qcom,sm6350-dc-noc
+> +      - qcom,sm6350-gem-noc
+> +      - qcom,sm6350-mmss-noc
+> +      - qcom,sm6350-npu-noc
+> +      - qcom,sm6350-system-noc
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  '#interconnect-cells': true
+
+Since you defined it as enum in rpmh-common, you really expect here
+different values?
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +unevaluatedProperties: false
+> +
+> +patternProperties:
+
+This goes after "properties".
+
+> +  '^interconnect-[a-z0-9\-]+$':
+> +    type: object
+> +    description:
+> +      The interconnect providers do not have a separate QoS register space,
+> +      but share parent's space.
+> +    $ref: qcom,rpmh-common.yaml#
+> +
+> +    properties:
+> +      compatible:
+> +        enum:
+> +          - qcom,sm6350-clk-virt
+> +          - qcom,sm6350-compute-noc
+> +
+> +      '#interconnect-cells': true
+
+Same problem.
+
+> +
+> +    required:
+> +      - compatible
+> +
+> +    unevaluatedProperties: false
+> +
+
+
+Best regards,
+Krzysztof
