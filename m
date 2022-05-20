@@ -2,62 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B63B652F5DC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 00:49:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD6D552F5E2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 00:53:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236779AbiETWtW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 18:49:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60670 "EHLO
+        id S1353971AbiETWxa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 18:53:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230504AbiETWtU (ORCPT
+        with ESMTP id S1353969AbiETWx3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 18:49:20 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C31D1179C1A;
-        Fri, 20 May 2022 15:49:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 3374BCE2B14;
-        Fri, 20 May 2022 22:49:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56AA5C385A9;
-        Fri, 20 May 2022 22:49:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653086956;
-        bh=QUSuhqBatMv8a5rfEeAnWy70VQgOK4AIq2PZHng3jEo=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=hnN5/2oY8U65cCyKnn/alQ9Tsc5vqCKaACJJVs6QupvrwF7Lb2r/78IBzIFN8Rm2s
-         j0R7HfW6Di/h4KZNeyN5J6SdKklckpd4pbO86hPNcVUS/I4yLIjNLwZReDtK9/MIWI
-         2X1D60VXtd/WzylqG03HYtx9tGQTro9ZXuPhp2Md5LFb1mEMT87PHMWmTwKOnQT/nE
-         EFcXophlTAocIBVwGqTnjMsKRX2awH9skaIdk50vG18BsN3KSeZ/ngO9xNKYrl2UUi
-         qWxjp7KqXUrT4rnkzcKOw5bBl1INz7iVqSUz2PsQV7uyyCT8bNC9bDqIPKRoGPdYLK
-         rmmCjrm3vzpXg==
-Content-Type: text/plain; charset="utf-8"
+        Fri, 20 May 2022 18:53:29 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09ADDB0424
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 15:53:28 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id x12so8861367pgj.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 15:53:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=o22h3oPMlsnIXryLoOAHFqdN5N7JnmoMxor1pOpYCAw=;
+        b=Nr4q8UMKXI8g+fSga4XE9e6j5zTO7pxyCGKLHwzhXugoMHEsve5aEokrP+7MAknMc5
+         VBx/CEppMHbPiipvADeMycCYbIlpKSkWjB7Y+JHVcPFqyEb0HXy07eLPTonHh0IZVsw2
+         fJnMuP0ERavpR5om8GMQEqUqFTqf6igNRojVI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=o22h3oPMlsnIXryLoOAHFqdN5N7JnmoMxor1pOpYCAw=;
+        b=56X2QDO//VbgLvMQ2aW4wLW3DyDRziFJi9Bn5PQxRd0ehSsJ1uR1NzlqlHmuV/13Wf
+         Cc3hcNS6ZVcg2zRjs00ucUgsF6hhBBal5o1rZ6v9CobtursKed0/QyiIhGRhqFjH0oZy
+         eUv+sV95LgbTLiFXDIYkhT4k0N3aMZDqc3kzBNP8mlPvXAWfSzy4b9/iIglacsDSr0CY
+         IXp0V0dFNZ62fHZzXXO8IzmyOFsMGmkLQGoDGmKioLIw02D09BRlLlPIWBIYCwFivJD/
+         3If1m5e0I7jB7Pkg14qVJfcASyvNrHg8E+40efvGwXpUqUOzX/gY5KWpVje2c6xV4UU9
+         EcWg==
+X-Gm-Message-State: AOAM530QtBvekuvpywIUvV3d6QdVXPOrLTwV2KdtXR9Tlo+uUmaGybc/
+        okdLEWcfnfSRbqWp1Z8FNCyVcQ==
+X-Google-Smtp-Source: ABdhPJx7JOARztXZqHURTgRX5Op7Y7PuxbJuHlf06rQcT7xomGOQb80ozWjhRMthGXBemfvTsSgk9A==
+X-Received: by 2002:a05:6a00:1826:b0:518:4c8b:c5db with SMTP id y38-20020a056a00182600b005184c8bc5dbmr7803168pfa.22.1653087207535;
+        Fri, 20 May 2022 15:53:27 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:b090:3896:c312:c4df])
+        by smtp.gmail.com with ESMTPSA id g24-20020a1709029f9800b0015e8d4eb1fbsm258368plq.69.2022.05.20.15.53.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 May 2022 15:53:27 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>, matvore@chromium.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2] soc: qcom: socinfo: Add an ID for sc7180P
+Date:   Fri, 20 May 2022 15:53:10 -0700
+Message-Id: <20220520155305.v2.1.I26eca1856f99e6160d30de6d50ecab60e6226354@changeid>
+X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <fa94b8f3-a88d-5d9c-9d8a-7c0316f15cfa@linaro.org>
-References: <20220513175339.2981959-1-dmitry.baryshkov@linaro.org> <20220513175339.2981959-3-dmitry.baryshkov@linaro.org> <20220518175808.EC29AC385A5@smtp.kernel.org> <fa94b8f3-a88d-5d9c-9d8a-7c0316f15cfa@linaro.org>
-Subject: Re: [PATCH v6 2/5] clk: qcom: regmap: add PHY clock source implementation
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-clk@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Krzysztof =?utf-8?q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Date:   Fri, 20 May 2022 15:49:14 -0700
-User-Agent: alot/0.10
-Message-Id: <20220520224916.56AA5C385A9@smtp.kernel.org>
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -66,24 +68,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-05-19 04:16:19)
-> On 18/05/2022 20:58, Stephen Boyd wrote:
-> > Quoting Dmitry Baryshkov (2022-05-13 10:53:36)
-> >> diff --git a/drivers/clk/qcom/clk-regmap-phy-mux.c b/drivers/clk/qcom/=
-clk-regmap-phy-mux.c
-> >> new file mode 100644
-> >> index 000000000000..d7a45f7fa1aa
-> >> --- /dev/null
-> >> +++ b/drivers/clk/qcom/clk-regmap-phy-mux.c
-[...]
-> >> +
-> >> +#include "clk-regmap-phy-mux.h"
-> >=20
-> > Same for clk-regmap.h, avoid include hell.
->=20
-> I couldn't catch this comment. I think we need clk-regmap.h in=20
-> clk-regmap-phy-mux.h as clk_regmap is a part of defined structure.
->=20
+Some sc7180 Chromebooks actually have sc7180P (known by many names,
+apparently, including possibly sc7180 Pro and sc7185). This is a
+sc7180 part that has slightly higher clock speeds.
 
-Don't rely on implicit includes. It makes changing header files error
-prone. Also, please trim replies.
+The official ID numbrer allocated to these devices by Qualcomm is 495
+so we'll add an entry to the table for them. Note that currently
+shipping BIOS for these devices will actually end up reporting an ID
+of 407 due to a bug but eventually a new BIOS will be released which
+corrects it to 495.
+
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+Changes in v2:
+- Switch from 407 to 495.
+
+ drivers/soc/qcom/socinfo.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index cee579a267a6..c2c879ccc6c0 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -332,6 +332,7 @@ static const struct soc_id soc_id[] = {
+ 	{ 480, "SM8450" },
+ 	{ 482, "SM8450" },
+ 	{ 487, "SC7280" },
++	{ 495, "SC7180P" },
+ };
+ 
+ static const char *socinfo_machine(struct device *dev, unsigned int id)
+-- 
+2.36.1.124.g0e6072fb45-goog
+
