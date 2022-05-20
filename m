@@ -2,67 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E91D252E21A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 03:39:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FD9052E24D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 04:00:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344571AbiETBjo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 21:39:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59402 "EHLO
+        id S1344635AbiETB6v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 21:58:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234047AbiETBjo (ORCPT
+        with ESMTP id S1344586AbiETB6u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 21:39:44 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB0BA9D07D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 18:39:42 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id k2so6084907qtp.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 18:39:42 -0700 (PDT)
+        Thu, 19 May 2022 21:58:50 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8B4EEBE88
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 18:58:48 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id g16so8165482lja.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 18:58:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SuTumshxfmQSff783bfM7dkeojcdsq2Dy5++uaDGngM=;
-        b=jpF2BnRc/lHDfrO29tpAde7HLvwuXynvtU50/LbumpUMVkYmTUt1FM6EFD+fI9I39b
-         SiTN+rVS57+BZIGEYP7rZrNAQOa+XVUz6FkTL0vXBGgcy/huOi+K7FV+jsPVrzDgG4kS
-         CbGLM1KfS78jDb+tE6q2vd21NcLahfZVe26T6iBBzxlkC1yZmj/uZPMIS5OE9lrjFxSz
-         pqnW3h0Eby3RoMNuHIFl/vktZrYyNhyLBjzEW33UXGAw52p6wepSsgxTHHRiUzRxQPjY
-         FeXg8BNi2l1mBdacL5pgwixAZDiTAUzRuF4iQGwYNrbnrmuWU4ddJynkMYgVZ0Kvrx3v
-         lvGw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rI7Y4P9SCkMcqvtK5Rv4N2uvGcPonNFOcit2B7JJbwg=;
+        b=bCrGTseHMnu40q7z4FTSUPlil5+yLztnKlgGkTZTRiNTQGRiOogYiZhAGBDhIwyN+u
+         I2Aw71dgFZ/v32Mak0VE48W0XB07yf6yDzzCkhXlunndeSqX0bU7p6Y/pUros4PpBAgW
+         NVeOokZUHXUkjqoKfUzGBnsHx/CQ4TsamPwKhX9o7GDPypXF2CJyEqgfCMHw11LIW429
+         v1TS3WU6LDBPqjmpGLUzA427+sVpNPJ0MiMXV3gBGEFq4ZKXrj+W5DkL64WEZHodbjnv
+         /j9l8rh5+oq/BWq7ibeCKkUB0emFqsm/kBUlhL+Nvio3XI44ajuE11bhPTKL3USOSMrB
+         qT3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SuTumshxfmQSff783bfM7dkeojcdsq2Dy5++uaDGngM=;
-        b=ciue3FxhnpPYBxEJ+Yg3G4Dz5D1VMUJkBxbyhNj8qAg4WU4UrVkTNyru7P3jKMtDJF
-         7nyXIpdOG9Ng4wQQQUrG8OIz83lOGJ6nPcL9s+jjTWALx0Gt2nX0OyKGenT4YxB62QcR
-         1D0HHO20O7EWmUQ0nzp/nP39yQi2h4BKSyl3aJ9++aETJBdu11+ZZh4GlNfXWz8Z+4vU
-         Akqhq4199ikndGLvxNjINljXd0vVY7g1fqeSOM+jDVNYw7XzLpLIRNA/f9nzxzcnVgnQ
-         +UFoXlE5+rn5cKzrpU4/Tf0/8DzEWUKqoaCjdx+ca+BiQaaJo3lcluPO9st8yN2LVcgE
-         FheQ==
-X-Gm-Message-State: AOAM533Jy1IinUc+O1GuHvk3wa9Lo3YDYajyL5NXaDzsnaAT58b08hLB
-        hb3RLc3nfkBOs67EK2hwUbKsL4AlixqkqfNiVyneBQ==
-X-Google-Smtp-Source: ABdhPJwPpQxTT2b5TQoj7i/anXLCP4hFsOQ7l0kInn/8xQOfE94BkR4bA90/+ftmo9sJOcnbLmBu+kf1a79nAEeru+8=
-X-Received: by 2002:ac8:4e45:0:b0:2f9:fc2:ee3a with SMTP id
- e5-20020ac84e45000000b002f90fc2ee3amr5016433qtw.370.1653010781900; Thu, 19
- May 2022 18:39:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
- <35051bec-98ea-b4c5-f734-06b3f22f3562@linaro.org> <8a90ffbc-b376-9115-fb91-0b46d98873b7@linaro.org>
- <40f29157-52c0-001f-6c14-fb90b351756a@linaro.org> <20220519221227.B66D3C385AA@smtp.kernel.org>
-In-Reply-To: <20220519221227.B66D3C385AA@smtp.kernel.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rI7Y4P9SCkMcqvtK5Rv4N2uvGcPonNFOcit2B7JJbwg=;
+        b=5v8jc/87BUbZd0fSaLuNYO4iAx+8/fUqodMNJXse8a39bIMr1qX775rvNPCBVUX0Je
+         bMrbOxYm72nBFCFKOinlA7toSSLF1cC+4psit1o5/F1otCHuIt1bUrsprx9rk1/Zmkzp
+         ShOQWhfKsptAmYRVHph2OcCWVgGseOCFSp7SFIWRtxZSIaJ3PWoW6yyudBMYrncnGjeS
+         pGHdEb2xP52COLvDx/j04fJMn2lSsJpc4WxxOS/ZmxuPLQjQz5FzWqNUiIu+NbbGGqlr
+         9Da0vrtjG5SNOURL3gyS3KMk2Vn/0BOWuK2vFJnO/SHH6vJL/Sd3eLyixCxajQLY2TZ7
+         s8Mg==
+X-Gm-Message-State: AOAM532vR+iP1bBhTUywINgCnpVx/hV8EIJAsfiR8/E7z2/+NqD8NQC5
+        A7nhs5SsOW/lPsXrCvEQzXrjLg==
+X-Google-Smtp-Source: ABdhPJwz10pUK4fM57T//QKpNJQzy9Obh6zw03R3lVoB6SGuKxxbmYxwHQi/xkle2R0Ioda8PrGqxA==
+X-Received: by 2002:a2e:9159:0:b0:253:a141:4cd1 with SMTP id q25-20020a2e9159000000b00253a1414cd1mr4313093ljg.145.1653011927067;
+        Thu, 19 May 2022 18:58:47 -0700 (PDT)
+Received: from eriador.lan ([2001:470:dd84:abc0::8a5])
+        by smtp.gmail.com with ESMTPSA id u28-20020ac24c3c000000b0047255d21192sm467370lfq.193.2022.05.19.18.58.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 May 2022 18:58:46 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 20 May 2022 04:39:30 +0300
-Message-ID: <CAA8EJpqjcAcoooaZ6iTSCy4B1x4=HTUgvJ4VqX_Fr_hSMEbfDA@mail.gmail.com>
-Subject: Re: Removal of qcom,board-id and qcom,msm-id
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Olof Johansson <olof@lixom.net>, Rob Herring <robh@kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pci@vger.kernel.org
+Subject: [PATCH v7 0/6] PCI: qcom: Rework pipe_clk/pipe_clk_src handling
+Date:   Fri, 20 May 2022 04:58:38 +0300
+Message-Id: <20220520015844.1190511-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -73,90 +76,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 20 May 2022 at 01:12, Stephen Boyd <sboyd@kernel.org> wrote:
->
-> Quoting Dmitry Baryshkov (2022-05-19 05:46:53)
-> > On 19/05/2022 14:53, Krzysztof Kozlowski wrote:
-> > > On 19/05/2022 13:39, Dmitry Baryshkov wrote:
-> > >> On 19/05/2022 13:44, Krzysztof Kozlowski wrote:
-> > >>> Hi,
-> > >>>
-> > >>> There was an old effort of removal of qcom,board-id and qcom,msm-id
-> > >>> properties from Qualcomm SoC-based boards like [1].
-> > >>>
-> > >>> First approach was to document them, which (obviously) was not well
-> > >>> received [2] [3] [4].
-> > >>>
-> > >>> The solution from Stephen was to encode these in the board compatible,
-> > >>> so bootloader can extract that information. That seemed to receive
-> > >>> positive comments, at least from Rob. [5]
-> > >>>
-> > >>> It was 2015... ~7 years later we are still things doing the same way,
-> > >>> still with undocumented properties: qcom,board-id and qcom,msm-id.
-> > >>>
-> > >>>
-> > >>> I would like to revive that topic, but before I start doing something
-> > >>> pointless - any guidance on last patch from Stephen [5]? Was it ok? Some
-> > >>> early NAKs?
-> > >>
-> > >> I do not quite fancy the idea of using extra tools to process dtb files.
-> > >> At this moment it is possible to concatenate several kernel-generated
-> > >> dtb files together. AOSP developers use this to have an image that boots
-> > >> on both RB3 and RB5 boards.
-> > >>
-> > >> I think that changing compat strings only makes sense if Qualcomm would
-> > >> use such compat strings in future. Otherwise we end up in a position
-> > >> where we have custom bootloaders for the RB3/RB5/etc, but the majority
-> > >> of the board requires extra processing steps.
-> > >
-> > > This was discussed in [2] [3] and [4] (previous links) and did not pass.
-> > >
-> > > Do you have any new arguments for above objections from Arnd, Olof and
-> > > Rob? I don't think patch will get accepted if previous concerns during
-> > > review are not addressed...
-> >
-> > I'm not sure if the patches to the dtbTool have landed or not.
-> > Anyway, as I said, I don't think post-processing the dtb is good way to
-> > go. It makes extremely hard to check that the dtb, used by the kernel or
-> > being a part of the boot.img, corresponds to this or that compiled dtb.
->
-> One option would be to work it into upstream DTC :P Then the properties
-> could be injected during the compilation stage. Note that DTC already
-> injects properties like linux,phandle so I'm not really following how
-> dtbTool mucking with the DTB is any different.
+PCIe pipe clk (and some other clocks) must be parked to the "safe"
+source (bi_tcxo) when corresponding GDSC is turned off and on again.
+Currently this is handcoded in the PCIe driver by reparenting the
+gcc_pipe_N_clk_src clock.
 
-See, after running make dtbs you get a set of artifacts, Image.gz and
-set of dtbs (yes, extended with phandle/linux,phandle).
-Then one generates a boot.img. Now without the dtbTool step you can
-dissect the boot.img and verify that dtbs match what you've
-generated/provided/etc.
-If one employs dtbTool, there no simple way to match dtbs from
-boot.img with dtbs from kernel build process. This might be required
-e.g. to check what the user has been testing, etc.
+Instead of doing it manually, follow the approach used by
+clk_rcg2_shared_ops and implement this parking in the enable() and
+disable() clock operations for respective pipe clocks.
 
-> Can you elaborate on what
-> is extremely hard? Would working dtbTool into the kernel build process
-> alleviate any issues?
+Changes since v6:
+ - Switched the ops to use GENMASK/FIELD_GET/FIELD_PUT (Stephen),
+ - As all pipe/symbol clock source clocks have the same register (and
+   parents) layout, hardcode all the values. If the need arises, this
+   can be changed later (Stephen),
+ - Fixed commit messages and comments (suggested by Johan),
+ - Added revert for the clk_regmap_mux_safe that have been already
+   picked up by Bjorn.
 
-From my point of view, yet, it will. So will e.g. using any
-preprocessor magic to generate such properties during the dts->dtb
-process.
+Changes since v5:
+ - Rename the clock to clk-regmap-phy-mux and the enable/disable values
+   to phy_src_val and ref_src_val respectively (as recommended by
+   Johan).
 
->
-> I vaguely recall that the properties had to be extracted during the
-> boot.img creation process to create a table of contents header. But
-> after some time the bootloader started scanning the DTBs directly for
-> the vendor properties and thus the header was deprecated/removed. If the
-> bootloader is doing the scanning then I'm not sure what is preventing
-> the properties from being documented and allowed. I think the main
-> rejection was that the properties were added purely to be extracted
-> during post processing and placed into the table of contents header,
-> i.e. they weren't actually used by the kernel or the bootloader. If they
-> are now used by the bootloader it sounds OK to me if they're kept
-> around.
+Changes since v4:
+ - Renamed the clock to clk-regmap-pipe-src,
+ - Added mention of PCIe2 PHY to the commit message,
+ - Expanded commit messages to mention additional pipe clock details.
 
-Yes, as far as I understand, they are used by the bootloader directly.
+Changes since v3:
+ - Replaced the clock multiplexer implementation with branch-like clock.
+
+Changes since v2:
+ - Added is_enabled() callback
+ - Added default parent to the pipe clock configuration
+
+Changes since v1:
+ - Rebased on top of [1].
+ - Removed erroneous Fixes tag from the patch 4.
+
+Changes since RFC:
+ - Rework clk-regmap-mux fields. Specify safe parent as P_* value rather
+   than specifying the register value directly
+ - Expand commit message to the first patch to specially mention that
+   it is required only on newer generations of Qualcomm chipsets.
+
+Dmitry Baryshkov (6):
+  PCI: qcom: Remove unnecessary pipe_clk handling
+  clk: qcom: regmap: add PHY clock source implementation
+  clk: qcom: gcc-sm8450: use new clk_regmap_phy_mux_ops for PCIe pipe
+    clocks
+  clk: qcom: gcc-sc7280: use new clk_regmap_phy_mux_ops for PCIe pipe
+    clocks
+  Revert "clk: qcom: regmap-mux: add pipe clk implementation"
+  PCI: qcom: Drop manual pipe_clk_src handling
+
+ drivers/clk/qcom/Makefile              |  1 +
+ drivers/clk/qcom/clk-regmap-mux.c      | 78 -------------------------
+ drivers/clk/qcom/clk-regmap-mux.h      |  3 -
+ drivers/clk/qcom/clk-regmap-phy-mux.c  | 53 +++++++++++++++++
+ drivers/clk/qcom/clk-regmap.h          | 17 ++++++
+ drivers/clk/qcom/gcc-sc7280.c          | 70 +++++++---------------
+ drivers/clk/qcom/gcc-sm8450.c          | 72 +++++++----------------
+ drivers/pci/controller/dwc/pcie-qcom.c | 81 +-------------------------
+ 8 files changed, 118 insertions(+), 257 deletions(-)
+ create mode 100644 drivers/clk/qcom/clk-regmap-phy-mux.c
 
 -- 
-With best wishes
-Dmitry
+2.35.1
+
