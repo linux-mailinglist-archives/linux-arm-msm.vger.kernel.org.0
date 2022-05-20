@@ -2,77 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0386E52F2D8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 20:32:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84DC352F34B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 20:38:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232346AbiETSce (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 14:32:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41644 "EHLO
+        id S1353004AbiETSi2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 14:38:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350103AbiETSb5 (ORCPT
+        with ESMTP id S1353006AbiETSiW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 14:31:57 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82D804C7A8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 11:31:32 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id u30so15741108lfm.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 11:31:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=5FZ3X9pyACFPn7qxDpNcYlsLDiN9axBa1lcjcR2eStw=;
-        b=hdczd8Cwb0mgdDGQ11Ih2/DGqWB6Bc9f3PzTxKyx14nXGUBxsZePQptaEoNMDM8jLB
-         dIRDk7EggIMk/agdJy8ujcU535QSooPkeDVjnKlyFRIlcoJc8/SzACBCDNuSArMDLjd2
-         vI5w7UCykpaihPScOuO4K2OP1bHHc4AiDTeqZsx1OzGQxvJUtG3KBwVgBqHMc/dZCAok
-         +Vk8RuhFFUQINg+jVZlN403TkGX+xHFyVxGKZSRbEu7bMt1OOynjASKFZVUk1ayELQRQ
-         cgiE9I5hGFN4+aOYd15fauB79FtoVb1suKWqElDIiZrOhHNEiGVVvwFlfxpzNDELmHQ6
-         6yuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=5FZ3X9pyACFPn7qxDpNcYlsLDiN9axBa1lcjcR2eStw=;
-        b=QB/M//IqyycR1PQbhkPyO6TtuDsuebhw0heDCzTL3QoDwX7jgdFceiAqP/FvzroNNP
-         98/AJF0BeSKM9NgaYO8e5q6awmC8PmVdjQCZQlKefLZm14TiAgov7zmp2QcfXPNbAPy4
-         jk5MhG5hiGIeRO8cmtBZoJv/GgrSWIVzmFJ4wZ+0j2/z3Cm+ngxNVD72S2IUDJ5WYgYi
-         zBdqXZWlEShUgZ8amElsCI090QEjsTk7BzXasLr1moHWqqe4/WAXs/mjNcFyQtGjL3st
-         0MkKTVqNmks/+px3MGgFnKJsx99W0lui9CTQtTkRinFXCfjYlMD0ZW+QhfabFUQFORPL
-         iUAw==
-X-Gm-Message-State: AOAM532DF8EfaObwtG5r+v0w1PvVy01nW6I2IOqZ7r2K24g6BsVAO695
-        XROMEzcpXo9DFQq4ocdMIQt+dOjEm+ZPXg==
-X-Google-Smtp-Source: ABdhPJwTmIcrpw8gZc+R7s1tSYDqwRsexgK/B4TQTuUZcczwTh5FqdQcprp9UFbtVLez7gflypTlpw==
-X-Received: by 2002:a05:6512:2347:b0:478:5a69:6dc4 with SMTP id p7-20020a056512234700b004785a696dc4mr1492837lfu.478.1653071489912;
-        Fri, 20 May 2022 11:31:29 -0700 (PDT)
-Received: from eriador.lan ([2001:470:dd84:abc0::8a5])
-        by smtp.gmail.com with ESMTPSA id t22-20020a2e9556000000b0024f3d1daef4sm392951ljh.124.2022.05.20.11.31.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 11:31:29 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        Johan Hovold <johan@kernel.org>
-Subject: [PATCH v11 7/7] dt-bindings: mfd: qcom,qca639x: add binding for QCA639x defvice
-Date:   Fri, 20 May 2022 21:31:14 +0300
-Message-Id: <20220520183114.1356599-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220520183114.1356599-1-dmitry.baryshkov@linaro.org>
-References: <20220520183114.1356599-1-dmitry.baryshkov@linaro.org>
+        Fri, 20 May 2022 14:38:22 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01365195E9E;
+        Fri, 20 May 2022 11:37:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1653071874;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=fNRYO8dhunH6gTFMW4B0+U3cBEjh7ezQfz7spc+5niE=;
+    b=AC/laK6HjBc9W5TPCyb0XNB9Y6B1uWIGNow92kzskn+oSrhSIUTQjGumJH3uTHaQGC
+    uDYPB2hbRs80PJtyDcBfx1A4RSjfKZHdb0M4N5GRhrSoUzzW4bJZjkY8xrAwB+NwtlFc
+    8bKEZgTYwrr1wy38iAPzqrlZUq8oVft5l8QV2wVzQcJbCpAHe9aC+ZGPLfCx98USAlV1
+    mkzCLvAthUnENXSRaKn1wFfhpWVaaGxE1KgQ9Rlq1s77Ue79nB1tGsdj0rZTEblxxzBL
+    C0wysKnHOjdSpbe7ypm++PolLj9EONC9m2a53CXYer4EjrcD3GEAKXF2HDpe8VyQGEDj
+    kWVg==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrK85lg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.45.0 AUTH)
+    with ESMTPSA id 9056edy4KIbsHfv
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 20 May 2022 20:37:54 +0200 (CEST)
+Date:   Fri, 20 May 2022 20:37:53 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v1] dt-bindings: clock: qcom: Relicense to GPL2 + BSD
+Message-ID: <YofgAd/nAejaATli@gerhold.net>
+References: <20220520124447.31289-1-robert.foss@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220520124447.31289-1-robert.foss@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,107 +60,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm QCA639x is a family of WiFi + Bluetooth SoCs, with BT part
-being controlled through the UART and WiFi being present on PCIe bus.
-Both blocks share common power sources. Add binding to describe power
-sequencing required to power up this device.
+On Fri, May 20, 2022 at 02:44:47PM +0200, Robert Foss wrote:
+> Qualcomm has given permission for all the dt-bindings to be dual
+> licensed. All of the Linaro authored bindings are easy to change, in
+> terms of the permissions & copyrights, so they've been bundled in this
+> commit.
+> 
+> Additionally clean up the syntax of some of the copyright statements.
+> 
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> ---
+> 
+> There are more Qcom bindings that should have the license updated
+> to GPL2+BSD, but since they haven't been authored or copyrighted
+> by Linaro, I think I'll have to hunt down the authors individually.
+> 
+>  include/dt-bindings/clock/qcom,gcc-msm8998.h          | 2 +-
+>  include/dt-bindings/clock/qcom,rpmcc.h                | 2 +-
+>  include/dt-bindings/clock/qcom,rpmh.h                 | 6 ++++--
+> 
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../devicetree/bindings/mfd/qcom,qca639x.yaml | 84 +++++++++++++++++++
- 1 file changed, 84 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/mfd/qcom,qca639x.yaml
+At least these 3 have contributors outside Qualcomm and Linaro.
+Doesn't this mean you would still need to contact all of them
+and see if they are fine with relicensing their contribution?
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,qca639x.yaml b/Documentation/devicetree/bindings/mfd/qcom,qca639x.yaml
-new file mode 100644
-index 000000000000..d43c75da136f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/mfd/qcom,qca639x.yaml
-@@ -0,0 +1,84 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/mfd/qcom,qca639x.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Qualcomm QCA639x WiFi + Bluetoot SoC bindings
-+
-+maintainers:
-+  - Andy Gross <agross@kernel.org>
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+
-+description: |
-+  This binding describes thes Qualcomm QCA6390 or QCA6391 power supplies and
-+  enablement pins.
-+
-+properties:
-+  compatible:
-+    const: qcom,qca639x
-+
-+  '#power-domain-cells':
-+    const: 0
-+
-+  pinctrl-0: true
-+  pinctrl-1: true
-+
-+  pinctrl-names:
-+    items:
-+      - const: default
-+      - const: active
-+
-+  vddaon-supply:
-+    description:
-+      0.95V always-on LDO power input
-+
-+  vddpmu-supply:
-+    description:
-+      0.95V LDO power input to PMU
-+
-+  vddrfa1-supply:
-+    description:
-+      0.95V LDO power input to RFA
-+
-+  vddrfa2-supply:
-+    description:
-+      1.25V LDO power input to RFA
-+
-+  vddrfa3-supply:
-+    description:
-+      2V LDO power input to RFA
-+
-+  vddpcie1-supply:
-+    description:
-+      1.25V LDO power input to PCIe part
-+
-+  vddpcie2-supply:
-+    description:
-+      2V LDO power input to PCIe part
-+
-+  vddio-supply:
-+    description:
-+      1.8V VIO input
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    qca639x: qca639x {
-+      compatible = "qcom,qca639x";
-+      #power-domain-cells = <0>;
-+
-+      vddaon-supply = <&vreg_s6a_0p95>;
-+      vddpmu-supply = <&vreg_s2f_0p95>;
-+      vddrfa1-supply = <&vreg_s2f_0p95>;
-+      vddrfa2-supply = <&vreg_s8c_1p3>;
-+      vddrfa3-supply = <&vreg_s5a_1p9>;
-+      vddpcie1-supply = <&vreg_s8c_1p3>;
-+      vddpcie2-supply = <&vreg_s5a_1p9>;
-+      vddio-supply = <&vreg_s4a_1p8>;
-+      pinctrl-names = "default", "active";
-+      pinctrl-0 = <&wlan_default_state &bt_default_state>;
-+      pinctrl-1 = <&wlan_active_state &bt_active_state>;
-+    };
-+...
--- 
-2.35.1
+I don't want to make this more complicated than necessary, but it's
+probably better to be careful when it comes to licensing stuff...
 
+(Although personally I think it feels a bit weird to discuss copyright
+ for a bunch of "numbered names"...)
+
+Thanks,
+Stephan
