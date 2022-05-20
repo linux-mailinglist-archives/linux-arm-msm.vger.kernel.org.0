@@ -2,175 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4599E52EA42
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 12:50:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7599852EB09
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 13:42:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348322AbiETKul (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 06:50:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39118 "EHLO
+        id S236542AbiETLmO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 07:42:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348345AbiETKui (ORCPT
+        with ESMTP id S236262AbiETLmN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 06:50:38 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E6CE793A1;
-        Fri, 20 May 2022 03:50:37 -0700 (PDT)
+        Fri, 20 May 2022 07:42:13 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5C47A5012
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 04:42:10 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id ck4so10832117ejb.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 04:42:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653043837; x=1684579837;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=DHrHW0BTO8G2BHU2v8y0jzk3Zo4we65ITDQbzNpM/c8=;
-  b=F99+8GKpbIj7wenYeLSyH42Kp5xwPTvwpicOZE6bPLAkekMZdpnzmPzw
-   KFEKrsMN7P4L3UV4Q7Kq4mumJEljOAcmzk3gHxb+kfYkz2BwtSInu54EQ
-   YwlWBBKagIHBepkct/usrIoBaU4oVKUrF30OoOlstZcwMlwt1MP+8oFN7
-   Y=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 20 May 2022 03:50:37 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2022 03:50:37 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 20 May 2022 03:50:37 -0700
-Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 20 May 2022 03:50:32 -0700
-From:   Satya Priya <quic_c_skakit@quicinc.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
-        <quic_jprakash@quicinc.com>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Subject: [PATCH V13 9/9] arm64: dts: qcom: sc7280: Add pm8008 support for sc7280-idp
-Date:   Fri, 20 May 2022 16:19:37 +0530
-Message-ID: <1653043777-24003-10-git-send-email-quic_c_skakit@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1653043777-24003-1-git-send-email-quic_c_skakit@quicinc.com>
-References: <1653043777-24003-1-git-send-email-quic_c_skakit@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        d=fairphone.com; s=fair;
+        h=mime-version:content-transfer-encoding:date:message-id:cc:subject
+         :from:to:references:in-reply-to;
+        bh=wS/ZZ/XGdYJivGUIc7glIv8A/QnED+cfdPx1Mf0OR3o=;
+        b=GB72r8xYURZ6bzQkm22Tu7tonI4ZKXJGQRhTtyxiRTudpMondZELrlYY1Xhwk/RTh7
+         5Zeda7d68kYmu4UCNIN7fS1lTpbwBNmqbf4icxZKokgVZAw3IURsvL0hYvjRsQQt94SW
+         8g3F5Vr/0cKVHhCmBXZcWzC0wiq7c3V0JSaC3VnVhKiPnqLTbIVVrxOldU6Csho//iAb
+         i+1fml2hr9pQ0FUoqm5dGGC4coiMNgTvLt6e50kn9jusRG5SCBeCbTcL00riYCnnhFaf
+         YFkN3NQQ4g90z5x59jFrDWx4eRldBx1pjejiDJWfm3XVu8iRY29x1FFUUaukXe6wZQ0h
+         /hHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:content-transfer-encoding:date
+         :message-id:cc:subject:from:to:references:in-reply-to;
+        bh=wS/ZZ/XGdYJivGUIc7glIv8A/QnED+cfdPx1Mf0OR3o=;
+        b=N2S9gfoJrXJIFQ1Q1UEqYNNznVtN83Uj6kCtBp33ovyO0M4AyooHLWK10iURUQKv71
+         8sOA/4NqDiPl8vlz/cmH9QIIaZ6LbUueWl0272Hcb2WpaGly86f/nHdJrHO7fvdEfQnK
+         5apT/D9CGUQRq0nofKEfkjeQ74BSWKcgdFhP9WRWoi6HU3zdWYMFHHmWPcwtB+zB1xeB
+         4zpKtOh5mERxkINdovTm9eZmCCc0ysXce9Zq0lvPUD+qiWKwiyYKxFINbVdXN40PyXta
+         S57dhxyblfGlmK+ffUsAwD/AFQB2vYbLkG/At1ShlHSDqiCdiqD+koTOeweL3UrreOnC
+         x/IA==
+X-Gm-Message-State: AOAM532ZSUG+P5irEgMZaDtSQ6nd2VLG6kByFJ/SxS7P7VnxYYTVGD3Q
+        iQsB7LUTYbIRyHEgv5ER8FvbYA==
+X-Google-Smtp-Source: ABdhPJy7fnm73XK7inxXakUomDMt4LomtggIToBNbNojpFIo5Eg5Y2uqDhzYDPx7fPeRzTTy50Yt/g==
+X-Received: by 2002:a17:906:7b82:b0:6f3:ee8d:b959 with SMTP id s2-20020a1709067b8200b006f3ee8db959mr8591524ejo.458.1653046929316;
+        Fri, 20 May 2022 04:42:09 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id w6-20020a170907270600b006f3ef214dedsm3036390ejk.83.2022.05.20.04.42.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 May 2022 04:42:08 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Fri, 20 May 2022 13:42:08 +0200
+Message-Id: <CK4K8B8KQICX.LX0G6HW66RNU@otso>
+Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        "Georgi Djakov" <djakov@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Odelu Kukatla" <okukatla@codeaurora.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 3/5] dt-bindings: interconnect: qcom: Reuse new
+ rpmh-common bindings
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>
+X-Mailer: aerc 0.9.0
+References: <20220520070318.48521-1-luca.weiss@fairphone.com>
+ <20220520070318.48521-4-luca.weiss@fairphone.com>
+ <d1072c55-9e1c-83df-0184-7405448bbade@linaro.org>
+In-Reply-To: <d1072c55-9e1c-83df-0184-7405448bbade@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add pm8008 infra and regulators support for sc7280 idp.
+Hi Krzysztof,
 
-Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
----
-Changes in V13:
- - None.
+On Fri May 20, 2022 at 12:33 PM CEST, Krzysztof Kozlowski wrote:
+> On 20/05/2022 09:03, Luca Weiss wrote:
+> > Stop defining the properties twice and use the ones provided in the new
+> > qcom,rpmh-common.yaml.
+> >=20
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > ---
+> > Changes since v1:
+> > * New patch
+> >=20
+> >  .../bindings/interconnect/qcom,rpmh.yaml      | 22 +++++--------------
+> >  1 file changed, 5 insertions(+), 17 deletions(-)
+> >=20
+> > diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.y=
+aml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+> > index fae3363fed02..e822dc099339 100644
+> > --- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+> > +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+> > @@ -18,6 +18,9 @@ description: |
+> >     least one RPMh device child node pertaining to their RSC and each p=
+rovider
+> >     can map to multiple RPMh resources.
+> > =20
+> > +allOf:
+> > +  - $ref: qcom,rpmh-common.yaml#
+> > +
+> >  properties:
+> >    reg:
+> >      maxItems: 1
+> > @@ -131,28 +134,13 @@ properties:
+> >        - qcom,sm8450-pcie-anoc
+> >        - qcom,sm8450-system-noc
+> > =20
+> > -  '#interconnect-cells':
+> > -    enum: [ 1, 2 ]
+> > -
+> > -  qcom,bcm-voters:
+> > -    $ref: /schemas/types.yaml#/definitions/phandle-array
+> > -    items:
+> > -      maxItems: 1
+> > -    description: |
+> > -      List of phandles to qcom,bcm-voter nodes that are required by
+> > -      this interconnect to send RPMh commands.
+> > -
+> > -  qcom,bcm-voter-names:
+> > -    description: |
+> > -      Names for each of the qcom,bcm-voters specified.
+> > +  '#interconnect-cells': true
+> > =20
+>
+> So this explains why your previous patch had such values... The order is
+> messed up - first you move common parts to common file, then you add
+> SM6350 support.
 
-Changes in V12:
- - None.
+Right, that makes much more sense. Will split out qcom,rpmh-common first
+and use in rpmh.yaml and then afterwards introduce sm6350.
 
-Changes in V11:
- - Add ldos and parent supplies directly under pm8008@8 node.
+Regards
+Luca
 
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 66 ++++++++++++++++++++++++++++++++
- 1 file changed, 66 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 5eb6689..166812e 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -271,6 +271,63 @@
- 	};
- };
- 
-+pm8008_bus: &i2c1 {
-+	status = "okay";
-+};
-+
-+#include "pm8008.dtsi"
-+
-+&pm8008 {
-+	interrupt-parent = <&tlmm>;
-+	interrupts = <24 IRQ_TYPE_EDGE_RISING>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pm8008_active>;
-+
-+	reset-gpios = <&pm8350c_gpios 4 GPIO_ACTIVE_LOW>;
-+
-+	vdd_l1_l2-supply = <&vreg_s8b_1p2>;
-+	vdd_l3_l4-supply = <&vreg_s1b_1p8>;
-+	vdd_l5-supply = <&vreg_bob>;
-+	vdd_l6-supply = <&vreg_bob>;
-+	vdd_l7-supply = <&vreg_bob>;
-+};
-+
-+&pm8008_l1 {
-+	regulator-min-microvolt = <950000>;
-+	regulator-max-microvolt = <1300000>;
-+};
-+
-+&pm8008_l2 {
-+	regulator-min-microvolt = <950000>;
-+	regulator-max-microvolt = <1250000>;
-+};
-+
-+&pm8008_l3 {
-+	regulator-min-microvolt = <1650000>;
-+	regulator-max-microvolt = <3000000>;
-+};
-+
-+&pm8008_l4 {
-+	regulator-min-microvolt = <1504000>;
-+	regulator-max-microvolt = <1600000>;
-+};
-+
-+&pm8008_l5 {
-+	regulator-min-microvolt = <2600000>;
-+	regulator-max-microvolt = <3000000>;
-+};
-+
-+&pm8008_l6 {
-+	regulator-min-microvolt = <2600000>;
-+	regulator-max-microvolt = <3000000>;
-+};
-+
-+&pm8008_l7 {
-+	regulator-min-microvolt = <3000000>;
-+	regulator-max-microvolt = <3544000>;
-+};
-+
- &qfprom {
- 	vcc-supply = <&vreg_l1c_1p8>;
- };
-@@ -383,6 +440,15 @@
- 	drive-strength = <2>;
- };
- 
-+&pm8350c_gpios {
-+	pm8008_active: pm8008-active {
-+		pins = "gpio4";
-+		function = "normal";
-+		bias-disable;
-+		power-source = <0>;
-+	};
-+};
-+
- &qspi_cs0 {
- 	bias-disable;
- };
--- 
-2.7.4
+>
+>
+> Best regards,
+> Krzysztof
 
