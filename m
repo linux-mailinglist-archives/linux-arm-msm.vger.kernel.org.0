@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3036B52EC2A
+	by mail.lfdr.de (Postfix) with ESMTP id C8C2152EC2C
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 14:33:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349349AbiETMdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 08:33:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53196 "EHLO
+        id S1349360AbiETMdU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 08:33:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349312AbiETMdF (ORCPT
+        with ESMTP id S1349316AbiETMdL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 08:33:05 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60AF115A778
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 05:33:04 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id l13so7406958lfp.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 05:33:04 -0700 (PDT)
+        Fri, 20 May 2022 08:33:11 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1296916609E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 05:33:07 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id br17so1758595lfb.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 05:33:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hRNYPngTV+U+MXi/lSp4vZpHzlUN8RyLOj3ZsKeL1G4=;
-        b=l6tzYjvUol1igMfcE1sAQeFoh0wrBh2vxblUVk8bco+xUl8Fm5Ow69Xopuqdsb5BAP
-         bc1hQX0D829cx+784vZX7jMmbPe/tqALc08p99X8j/PhbYTkxQyNIBqlpmjOw6TSpwtG
-         1U0Lw3dNXjdgTn4veFZmNW6o0+1223UBYOPqphOL1r09K5Y6DM8tU8LhbttgvcAud+C6
-         XdKesSy6TIQ1yyWuawyt8j3nvJW70aqrSrJAkCIBHOqxUygd48s4D0/lvu+5bRWsYUoZ
-         unZiOIC+5vvKkClXl0ki7VnA8R5WT/oExVw615UYzt1ppw4AMHrNyTcSiiyAPwcNI+MD
-         EOtQ==
+        bh=Hn3/9kUSa1/kuIhOYNB1KYwxshqDjg7Lqg5RGdir50Q=;
+        b=GTnkzypVpWOR58+R3H1CHNGDU57dIHIQa9bX4qEssKnYbQmaeDGq8hM850mBnNo5zx
+         YBrM3kOxfR8t3ZRiDMvHRVo6C0hPxa9/1JjG0PtfLvETPU8L2pREFiZy4j+WQWfPE8md
+         EKTxZ2alLFMLyPz59p2Kd8BYWhn6cM72dnCt7LEYcA1JSSAy2kneAiumPc55yrR5eDdr
+         +I1ZE6eZpGubLarXHWZj7zmzM27BA+Zotj8kCeLLfF51vZaeiH4+TyKmAjbfOzgcMCMp
+         ewqDWn0owSfEhq15M0KWK7mKoBlKhfJ3MJp/U0sTQ3cmImNW0jWszy53hpCgaEXURFvl
+         /hUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hRNYPngTV+U+MXi/lSp4vZpHzlUN8RyLOj3ZsKeL1G4=;
-        b=iPDoEVHdELRibCwz3ssUj4kj0Qbyqq41AWNMhUa7WzxL0Yc8FoAD8bH/RVC9/URIGU
-         1UcXa73RhvftyOAP39HpsHshdPFfMfQtuNDti9Yj8pKjbiB+tq6f0XASXimaPmbToXsj
-         Tihf8Qvn5jamH8FvIPw9HhuKvM2e2UM6cPfNux8XXWdf5HSRRRnhHh2183tYb9BpdYYo
-         Idl1X2j6nG9feBEdBuCGmqEWr8WMyaxTvmJb9j0+BfFJjWO5neGlj1q7iLBlmXJRXiNL
-         pMM3DJoVeFJ+X5MGtyU3isL+BihUn34ZMynpkKCbV6BN8Zo8qpkQPesmecagmras6JvS
-         nc+g==
-X-Gm-Message-State: AOAM531JrGNT16e3sHAZ0fzpjD+9Mvy1MWPHbcO8eGIZ3Eb1TaBF4yzD
-        ZzWMwaG6TSQVP+99XN6ynEA4Cw==
-X-Google-Smtp-Source: ABdhPJwJ0WSDAtXXmEVPvzjb6YV3MaY/0VDb2R7sc/gkBysh+OexhqhKzoTU19ay/TnRVXDfLlYyGw==
-X-Received: by 2002:a05:6512:2806:b0:478:54db:fa23 with SMTP id cf6-20020a056512280600b0047854dbfa23mr1718508lfb.253.1653049983941;
-        Fri, 20 May 2022 05:33:03 -0700 (PDT)
+        bh=Hn3/9kUSa1/kuIhOYNB1KYwxshqDjg7Lqg5RGdir50Q=;
+        b=E/dsb/4clA1i1a+mPcI/fkBA0hWFsq/eyMePDa/rQ3O24/JYr4hvprc++X+LEmvDQM
+         TbO+KmrQdDZZXdIJJvkpvEGZFPuQ7yQlx3qamMd0PPr2fpGKldhHXCU1T0Defy6MECsV
+         ZCRZ2YwGR2rKiI3c0LMW2vXF6iRMBYUYLFLd6fDguiuQ05SZdK+l0syW+o7AFyNoSrif
+         ziC2yFCZniH3o+R2GRjlOox4fMZal2lWrUsA6NHqLYQFhiID1BpjX8OwQMQoz45bhkQG
+         3DY0qNHoYlh8tk1Z7FtP+jBaNc3YctMoxI1YsujswKU1UsNpoIIpghdqyb/cWDGiWICf
+         ey+w==
+X-Gm-Message-State: AOAM533ytEZ+lZE/w2cPMspkDyk5WOANOji4t8aa7CLf5sawLbbFzukn
+        9VczODU+WUpPS97Vmf2GIXbnVg==
+X-Google-Smtp-Source: ABdhPJxyK4/5DD5Ttz5+aitQgtY5m2pgRLdttq2MCPEn7e2qdAntd/di98ShYfStffq2IN+/ziz/XA==
+X-Received: by 2002:a05:6512:3e24:b0:478:55ff:8e44 with SMTP id i36-20020a0565123e2400b0047855ff8e44mr1320030lfv.78.1653049985071;
+        Fri, 20 May 2022 05:33:05 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id a14-20020a056512374e00b0047255d211bfsm643973lfs.238.2022.05.20.05.33.02
+        by smtp.gmail.com with ESMTPSA id a14-20020a056512374e00b0047255d211bfsm643973lfs.238.2022.05.20.05.33.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 05:33:03 -0700 (PDT)
+        Fri, 20 May 2022 05:33:04 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -59,9 +59,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 7/9] dt-bindings: arm: qcom: add missing SM8150 board compatibles
-Date:   Fri, 20 May 2022 14:32:50 +0200
-Message-Id: <20220520123252.365762-7-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 8/9] dt-bindings: arm: qcom: add missing SM8250 board compatibles
+Date:   Fri, 20 May 2022 14:32:51 +0200
+Message-Id: <20220520123252.365762-8-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220520123252.365762-1-krzysztof.kozlowski@linaro.org>
 References: <20220520123252.365762-1-krzysztof.kozlowski@linaro.org>
@@ -69,7 +69,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,23 +81,22 @@ Document several board compatibles already present in Linux kernel.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/devicetree/bindings/arm/qcom.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index a08f297c9d5d..7b6deb766c6c 100644
+index 7b6deb766c6c..abc5f709678c 100644
 --- a/Documentation/devicetree/bindings/arm/qcom.yaml
 +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -301,7 +301,11 @@ properties:
- 
+@@ -311,7 +311,10 @@ properties:
        - items:
            - enum:
-+              - microsoft,surface-duo
-+              - qcom,sm8150-hdk
-               - qcom,sm8150-mtp
-+              - sony,bahamut-generic
-+              - sony,griffin-generic
-           - const: qcom,sm8150
+               - qcom,qrb5165-rb5
++              - qcom,sm8250-hdk
+               - qcom,sm8250-mtp
++              - sony,pdx203-generic
++              - sony,pdx206-generic
+           - const: qcom,sm8250
  
        - items:
 -- 
