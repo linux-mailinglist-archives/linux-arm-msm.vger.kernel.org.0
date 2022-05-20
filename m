@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F7AE52F383
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 20:58:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C057B52F3A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 21:07:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353107AbiETS6A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 14:58:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37666 "EHLO
+        id S1353156AbiETTHY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 15:07:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353137AbiETS4D (ORCPT
+        with ESMTP id S1345410AbiETTHX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 14:56:03 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A13EBE6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 11:55:47 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id y12so9622916ior.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 11:55:47 -0700 (PDT)
+        Fri, 20 May 2022 15:07:23 -0400
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5ABA195BD3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 12:07:21 -0700 (PDT)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-f18e6ff0f6so11305388fac.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 12:07:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=doVlcQ6Xlwn2BqCTeY/iG09ipnCZzy9t3u/uMA+1XFU=;
-        b=fZZsDJJrboSe4IKnxyoJSpV9nG4DIyCBw3i1qGKRzT7ZyiZ1D6SRzHzdAfSeT7Rb87
-         amgtbD5Podj6C7xp1Ep+hPQFdnknmfUd3RT7e0Mnic403zG21KF36hamsWtXSxPgwU2c
-         IkWJB99HnUAN+K2XjKEiuPEASJytbu72xcDNcKlXxxZMhLw7kJX+oDn55Y4OdAt93faG
-         C9Umg0D8N+zZ/eafFOtyQPWof8qCx2L33IkBToZ6seDrmLFt6LeR60Cg3PbklmpgooKD
-         Sli0cLr9i2Ua4SMxAQhU+Q0Fkb899oRCgXOMNu9K4AfEtw5j2QYO4ck7mgwGpq+PXG8k
-         3Xvw==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=nihMNKg/Cee52sDZgIzDCYQdEGAz2qYL7OpwXO++SRk=;
+        b=Xzzdw+qOUg6OXEC6WX8aZ1fXI2d76UtEKEll96yvfxKwyLcQKj/n4uMJDsdxKR8Kh3
+         CLc9+NimGVuwpkzvs6o/El+Bo8J37wsXEpvP/XZxH5R59MsSoB+OL8ratu/uc9jTkxrQ
+         MwJ5uD2OsRF/hjJ4TmXsFrBtfEkLd4GcmRSJE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=doVlcQ6Xlwn2BqCTeY/iG09ipnCZzy9t3u/uMA+1XFU=;
-        b=tNgtLjQYTWvhrMkhQ9Q9IujJA6YRDqaQxbb3C8AcUDuCFbriA4OsjOMvClq+Ngvw8s
-         Oxo2v0jnSlD0B21nS4Dkw1DFPwWYjRo59J+OrjesY+hm5J5P/+QbY4Qc96DLLh/gfCDo
-         STzQEvWvy9JdUcYKFLsKgNH8BPfKeGCcj32d9op1lp0BFx38CU8FE5CEWkbIcuGtjAoV
-         qjbWJfjC42fBpnyUnLpfCvAw9QpiefQtQiC8yD76P5QIz2Pfz1shhvHLz+Qz2C6NWOq2
-         tS27PgxEnt9ZZ5shrC74uaqMuj9oVmH84/z5+hIBl7IqJrhfO8T11ELknIthhcIhsOuP
-         u6wg==
-X-Gm-Message-State: AOAM532hZT3vmQpi863f5ryxJRZUZ66Ma1iUz15EaY7H+GmaL+lclKc2
-        KH6dqg9Q0SuZQ7wUJqO1iT90Yw==
-X-Google-Smtp-Source: ABdhPJy6V1vTe1zz3jCZ5jBx46z3InfbrmSKe+OrxZ52VboJkNW4lCWa/9QEfijW+NblkRpqme+Wuw==
-X-Received: by 2002:a02:6619:0:b0:32e:25b7:d9ed with SMTP id k25-20020a026619000000b0032e25b7d9edmr6108523jac.30.1653072946839;
-        Fri, 20 May 2022 11:55:46 -0700 (PDT)
-Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id a6-20020a056638058600b0032b3a7817acsm871958jar.112.2022.05.20.11.55.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 11:55:46 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 8/8] net: ipa: use data space for command opcodes
-Date:   Fri, 20 May 2022 13:55:33 -0500
-Message-Id: <20220520185533.877920-9-elder@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220520185533.877920-1-elder@linaro.org>
-References: <20220520185533.877920-1-elder@linaro.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=nihMNKg/Cee52sDZgIzDCYQdEGAz2qYL7OpwXO++SRk=;
+        b=tiLmdoYjqlGA38Oq8F7jtW0yhHoax1EJOyiU/xFMU+CyEY5MSEBOZf8Ve09sLLD6hS
+         cnutXtuKG1Qq7kJYoJcnfL2TD5gAer3cB2uvRXQ9+fFPItcGd8OWTcSbd7ShvabxFmIb
+         koUjnI5RdggW9Ym20sphMecKy9RYNJZDDEKb1nVxa7jX8o/DXTYL+yRboH54CJi++i1N
+         A6ZQZTCOpNw4xH816IX2PyyilSsn3NyXHoPAcU1el607uLro5dF/K7D0lGHJXxXv35Mp
+         t3FzQv3bb/2AfORAPXK4UjQOqqvjdENEIhEuuHuf3QXNg5Y06Ht/tri5fBAM6YCgV9ng
+         /yAw==
+X-Gm-Message-State: AOAM53045qPmdELRtAK+cXp3rGLlyrq/a+gV7rHsuAw+hrkah4i7VTHX
+        LlY1uvw8K81TWLSs2/PftOshgWXcLtfmBLFAG3zWtQ==
+X-Google-Smtp-Source: ABdhPJxIC9bDA4i/ZggEJB0rWG96ePG3EUgyO1b8ubjEfLF0xE6tjuSnzDqSm6ZyeHYmPQkHU+YybI/U0OJccJHUwV8=
+X-Received: by 2002:a05:6870:240d:b0:f1:b878:e97c with SMTP id
+ n13-20020a056870240d00b000f1b878e97cmr6170490oap.193.1653073641117; Fri, 20
+ May 2022 12:07:21 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 20 May 2022 12:07:20 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <031ebead-4b0d-8493-d8f8-96f2ff9d938a@quicinc.com>
+References: <1652978825-5304-1-git-send-email-quic_sibis@quicinc.com>
+ <1652978825-5304-2-git-send-email-quic_sibis@quicinc.com> <YoaqDcB6wkd4zOWR@ripper>
+ <031ebead-4b0d-8493-d8f8-96f2ff9d938a@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 20 May 2022 12:07:20 -0700
+Message-ID: <CAE-0n53hDDoetQW0Bz7noq4peuNCyrGsXaJdjFj=4sMkGeZFgw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/3] arm64: dts: qcom: sc7280: Add proxy interconnect
+ requirements for modem
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,33 +73,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The 64-bit data field in a transaction is not used for commands.
-And the opcode array is *only* used for commands.  They're
-(currently) the same size; save a little space in the transaction
-structure by enclosing the two fields in a union.
+Quoting Sibi Sankar (2022-05-20 11:08:52)
+> Hey Bjorn,
+> Thanks for taking time to review the series.
+>
+> On 5/20/22 2:05 AM, Bjorn Andersson wrote:
+> > On Thu 19 May 09:47 PDT 2022, Sibi Sankar wrote:
+> >
+> >> Add interconnects that are required to be proxy voted upon during modem
+> >> bootup on SC7280 SoCs.
+> >
+> > This looks reasonable, but how come the vote is only for DDR frequency?
+> > What about the buses between modem and ddr?
+>
+> The proxy votes that are put in aren't for perf related reasons, the
+> modem was getting llcc timeouts while trying to read contents from
+> memory. The hw team recommended the proxy votes as the fix.
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/gsi_trans.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/ipa/gsi_trans.h b/drivers/net/ipa/gsi_trans.h
-index 99ce2cba0dc3c..020c3b32de1d7 100644
---- a/drivers/net/ipa/gsi_trans.h
-+++ b/drivers/net/ipa/gsi_trans.h
-@@ -60,8 +60,10 @@ struct gsi_trans {
- 	u8 used;			/* # entries used in sgl[] */
- 	u32 len;			/* total # bytes across sgl[] */
- 
--	void *data;
--	u8 cmd_opcode[IPA_COMMAND_TRANS_TRE_MAX];
-+	union {
-+		void *data;
-+		u8 cmd_opcode[IPA_COMMAND_TRANS_TRE_MAX];
-+	};
- 	struct scatterlist *sgl;
- 	enum dma_data_direction direction;
- 
--- 
-2.32.0
-
+Presumably the bootloader sets up some initial modem and ddr bus
+bandwidth requests? Or the modem bootloader stage (MSA?) handles that
+part?
