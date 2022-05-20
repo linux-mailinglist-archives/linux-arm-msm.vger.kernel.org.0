@@ -2,66 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 798A552EB1E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 13:50:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09CE552EB3E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 13:54:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348704AbiETLuc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 07:50:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56708 "EHLO
+        id S1348802AbiETLyN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 07:54:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345130AbiETLua (ORCPT
+        with ESMTP id S1348792AbiETLyM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 07:50:30 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 510F5132A2E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 04:50:29 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id m13so720986qtx.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 04:50:29 -0700 (PDT)
+        Fri, 20 May 2022 07:54:12 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AB8D15E499
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 04:54:10 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id f4so13851730lfu.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 04:54:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iZEBHi6WzsLrPiLUokXbaSvp5d1QJNTLQ47lEV5k7Z0=;
-        b=yOon8bz1OOMxbEixXt3P5VbNIXBlEcbwOkaEZeoGByvTd+KkM36CKDnBMvO+I+UtyO
-         aUkT7jd5fZy/R+s3xA+6I6/fG4W9ToGMO885GMGEYAcGnsSCYAdq+e/7vyjQG0wlUydN
-         K76BOnC1Rd7Ytv/rOgs0I3GZSIvDIh9JYimQ5uUFtp75H8cFosvOBbGRvKyakNys6Qm1
-         qEgKBBQhx5o/AQJCOgAY8dRTeZ/1ao8BxTYflcqW3v+VEPMLCeLmUC1h2n+od+8fQDle
-         eG3p90Dwz9RAyYoJQU6wZCB9dEcN+TK0oiLRvw8/vlDOYJS2Q27J8oVEwdAWrgeWrSn7
-         s5pw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=rSuzs4n4Sskm3JHT6PT66YWFV3PUZnimPTSzRD2tWSg=;
+        b=wpU0Xbi3qNPhIsGbn3dTnIJjM0guksk6R0+2fenSiGhdpViMAQwecBOTD6TSGuyT+E
+         uUB+KkSPJLE2hZE1m+XHi+XvIEOYhdcwkMwKILksmRBLUSEF0AChl22J2FR+pR8Y6aoM
+         I6/nj+/ttx8o2pLGwFJmgVnxj/97Rp3IPxhNEoUV5nPKZTBvpzDr3ZGvseVYJROTwCte
+         u4DUBrDePqhdXtUs4xQWmHYCUHf4tfeMllUs7Pr7MU2nW8LpOHLwL5+MIHHyNC+B3n4G
+         6f5gY/5q/MMUUfU/9/CRzhAghdlEx6ErskRuy18t0iwPlUpIVTM9kMf4eZgqm4ztSp7A
+         DdMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iZEBHi6WzsLrPiLUokXbaSvp5d1QJNTLQ47lEV5k7Z0=;
-        b=T+TyYBvNBjtXdM/5KBj2EkFcmGjUxV3M43plcZrZYS3DEtxhXqxEFOFrsITIeK9HrP
-         dUcMC0s7Kl9yjtXutvQMDMrpVD2htIvkxxuXq3VqZRYt3pCYSrg4M933+SQIc4x1HNEB
-         NMd7UhhV1BHEHOrqs80k9Z5cezl6rwZKxMoaUF5GJ2eAFvPupyS9EffFkbcoitcaM1om
-         0K7BUViLEKm/2sdSOXhiMKQaap9sxBabE8waKaUxam8XD+8lzSA0+RTR/bP2qr1SjPtk
-         1ZRWILlJqWXdLCCiaYC5+z6ZqFRmEXQ1mK9qh7xG/fwNCNAssxGdNz8JXAEiSfMa3VvR
-         /EAQ==
-X-Gm-Message-State: AOAM533FKMdxMhHSkcZz8+MUBoqUUNIfrx6LWmuK/uATXqODjWz+u7bj
-        ziLZruCUsu+uZxWTPiq/i9JyIleMJ96HBZ4dItTrIw==
-X-Google-Smtp-Source: ABdhPJwIol1CXrm1YTqhC7kWPjSb0EgtqanlpqQ/2DRk0sShD2Vjaedtz42xmIcmD9Outn3iio+5v/AdPgPNvIHSl5A=
-X-Received: by 2002:a05:622a:4f:b0:2f3:e77c:2c7e with SMTP id
- y15-20020a05622a004f00b002f3e77c2c7emr7131500qtw.62.1653047428466; Fri, 20
- May 2022 04:50:28 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=rSuzs4n4Sskm3JHT6PT66YWFV3PUZnimPTSzRD2tWSg=;
+        b=KXyHVn8SMtNBkvcOG2nqeTWFqaCXoTtO117UzxnamLyTYKf6wAvabkEpNBXVLXEXfF
+         POaxBA2XuQO8454Ixj0g5rY/T6dOhLzTPnVp1w/6xZUFdK1ViXk2xTxBVDBJEr863VX3
+         qjYrAuC2twZ/GYnGRx7EGNRFKFbcxnNrPY+Ti1mzbc/Q0R+dRmg/pWHea0kUK9GZUPkA
+         9UFPXq8BmAwn9XhPK0+irfkE2AV9KTyp9bL48U/J/A0x4J1kbnplhMSw6GskR1hx2Las
+         6IsNik7rr+vH/IsaAeftiJ6z92N0rsjZSjx+AMZRzQT3rjJk2o4EWiXbGsonIIgWYRrA
+         2XRg==
+X-Gm-Message-State: AOAM5330OS1fcV4zxVMbLR0y7xc48xB+LKMlZq4Sayjz3RaUiPGqxS5g
+        N1OVdHY1EkMqK4NFWLLpDmKowA==
+X-Google-Smtp-Source: ABdhPJwHbS3B+g10NGZBGRxnNDfdHe7p/uRXjL55A1oYzFJvqnTHUNryLFfceBT55K+P1aalTA9hvg==
+X-Received: by 2002:ac2:43a1:0:b0:478:5867:5047 with SMTP id t1-20020ac243a1000000b0047858675047mr1004918lfl.37.1653047648614;
+        Fri, 20 May 2022 04:54:08 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id o12-20020ac2494c000000b0047255d211a5sm632074lfi.212.2022.05.20.04.54.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 May 2022 04:54:08 -0700 (PDT)
+Message-ID: <dc883b3b-9eba-e883-cedb-e848b13cf746@linaro.org>
+Date:   Fri, 20 May 2022 13:54:06 +0200
 MIME-Version: 1.0
-References: <20220520100948.19622-1-johan+linaro@kernel.org> <20220520100948.19622-2-johan+linaro@kernel.org>
-In-Reply-To: <20220520100948.19622-2-johan+linaro@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 20 May 2022 14:50:17 +0300
-Message-ID: <CAA8EJpr3_+iS_ntG0pgfG647Ou4Q60sk+-Roc9GJ-0qM5W710g@mail.gmail.com>
-Subject: Re: [PATCH 1/3] clk: qcom: gdsc: add collapse-bit helper
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 2/2] dt-bindings: arm: qcom: Document xiaomi,natrium board
+Content-Language: en-US
+To:     Alec Su <ae40515@yahoo.com.tw>, Rob Herring <robh@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, y.oudjana@protonmail.com,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        sboyd@codeaurora.org
+References: <20220519074112.25600-1-ae40515@yahoo.com.tw>
+ <20220519074112.25600-3-ae40515@yahoo.com.tw>
+ <1652965539.974526.1359566.nullmailer@robh.at.kernel.org>
+ <7e5ecca1-aef7-ce90-7797-7f8be3b55715@yahoo.com.tw>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <7e5ecca1-aef7-ce90-7797-7f8be3b55715@yahoo.com.tw>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,81 +80,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 20 May 2022 at 13:10, Johan Hovold <johan+linaro@kernel.org> wrote:
->
-> Add a helper for updating the SW_COLLAPSE bit during initialisation and
-> state updates.
->
+On 20/05/2022 03:23, Alec Su wrote:
+> On 2022/5/19 21:05, Rob Herring wrote:
+>> On Thu, 19 May 2022 07:41:12 +0000, Alec Su wrote:
+>>> Document Xiaomi Mi 5s Plus (xiaomi-natrium) smartphone which is based on
+>>> Snapdragon 821 SoC.
+
+> 
+> I checked the full log. These warnings seem not the new warning caused
+> by the patch series. Look like these device trees are trying to match
+> with each of the compatible strings in qcom.yaml.
 
 
-> Note that the update during initialisation was relying on the
-> SW_COLLAPSE bit not having been set earlier rather than passing in zero
-> explicitly to clear the collapse vote.
+Yes, I'll fix them.
 
-I think this part deserves a separate commit with proper Fixes: tag.
-
->
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  drivers/clk/qcom/gdsc.c | 23 +++++++++++++++++------
->  1 file changed, 17 insertions(+), 6 deletions(-)
->
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index 44520efc6c72..c676416e685f 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -132,10 +132,24 @@ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
->         return -ETIMEDOUT;
->  }
->
-> +static int gdsc_update_collapse_bit(struct gdsc *sc, bool val)
-> +{
-> +       u32 reg, mask;
-> +       int ret;
-> +
-> +       reg = sc->gdscr;
-> +       mask = SW_COLLAPSE_MASK;
-> +
-> +       ret = regmap_update_bits(sc->regmap, reg, mask, val ? mask : 0);
-> +       if (ret)
-> +               return ret;
-> +
-> +       return 0;
-> +}
-> +
->  static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
->  {
->         int ret;
-> -       u32 val = (status == GDSC_ON) ? 0 : SW_COLLAPSE_MASK;
->
->         if (status == GDSC_ON && sc->rsupply) {
->                 ret = regulator_enable(sc->rsupply);
-> @@ -143,9 +157,7 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
->                         return ret;
->         }
->
-> -       ret = regmap_update_bits(sc->regmap, sc->gdscr, SW_COLLAPSE_MASK, val);
-> -       if (ret)
-> -               return ret;
-> +       ret = gdsc_update_collapse_bit(sc, status == GDSC_OFF);
->
->         /* If disabling votable gdscs, don't poll on status */
->         if ((sc->flags & VOTABLE) && status == GDSC_OFF) {
-> @@ -425,8 +437,7 @@ static int gdsc_init(struct gdsc *sc)
->                  * If a Votable GDSC is ON, make sure we have a Vote.
->                  */
->                 if (sc->flags & VOTABLE) {
-> -                       ret = regmap_update_bits(sc->regmap, sc->gdscr,
-> -                                                SW_COLLAPSE_MASK, val);
-> +                       ret = gdsc_update_collapse_bit(sc, false);
->                         if (ret)
->                                 return ret;
->                 }
-> --
-> 2.35.1
->
-
-
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
