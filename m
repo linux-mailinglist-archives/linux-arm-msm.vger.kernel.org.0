@@ -2,76 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5F5052E24C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 04:00:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AE2252E2B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 04:54:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344656AbiETB7B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 May 2022 21:59:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34942 "EHLO
+        id S1344843AbiETCx7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 May 2022 22:53:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344647AbiETB7A (ORCPT
+        with ESMTP id S1343908AbiETCx6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 May 2022 21:59:00 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7041EBE88
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 18:58:57 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id p4so10580087lfg.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 May 2022 18:58:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=L3xLjgH+8H4EuxOCFISCfGIFUbJpaGjNZmkPZUl6M0Q=;
-        b=k+kTD0BsQCqxWnJPhXthgz2W6eu3qIVt77qqLex2Bm3TCaOzDhrZtAgExVL6khTO+o
-         oXddtjn+sECi0SDCRC2JVCSfKRZUs7HOkmVJgZ016IFRjd5WnFnyYitpJYbbbCV3CqGX
-         28AX8N5PBW0LTf2zhJR1OsxxigkffC+L4DGrb7QJZDGQf9gw3g0EoiYj8f55LfSOXx5Y
-         9ssSdZvZHdTbwJmHAkBsE/o+tasyZBit3G6wW3r6iTLvvTvwGC+bzQoL6X4YTM4/tIWh
-         ENK19yf9cWCpI8ByxGQft4AWBf4k9702SvUjZWe0qahuhJn23lTEUCajOPgCyeZZWs1N
-         qMKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=L3xLjgH+8H4EuxOCFISCfGIFUbJpaGjNZmkPZUl6M0Q=;
-        b=hLdYc8k7RGxfm1f/vyyLIEa3Xz53HOYb+UEibpwG84q5ezHD9S/54U4j3GMZUnQ+yC
-         otRYRsSMs/v6D4XKdkbuDKHh0jSD/WFnJyAGf3weDNA5YXT3k6Sm7WJUM55SpKvcJAEC
-         HdEj3a3+bo48jJby2F4s9rClLpM4mlDhSrRiCT2bopaLQgm7aoZe9o8wiAkjk5+pEcyq
-         rXd2W6HT77LuqBIFDG5sijnLoTAt6E36Ki3Ysq6xGOI281mS4jVKTMTJKB79jWA/Z3QE
-         54hw5EG4M8EKxyx4dUI3ZsuWubRUAFXiHUMYtL0nStYpnAst/V9/MFsqcw1N5lq/FHQ6
-         slJg==
-X-Gm-Message-State: AOAM5317TtK8WuNIxl4d3L+h8Lg3AVFBwo8Bc2YPECl6lfwmoM8OnS/m
-        JEi8BMa6oQVhLiLh11jEq/uH7w==
-X-Google-Smtp-Source: ABdhPJxPgbBdldNejWDEpLjukmM3vcPsaxAe8mGP1132d9rKDzXNSGjh6VcswmPGM0ApTWZTuHl2Sg==
-X-Received: by 2002:a19:c20b:0:b0:477:bec9:4f99 with SMTP id l11-20020a19c20b000000b00477bec94f99mr5352313lfc.274.1653011935961;
-        Thu, 19 May 2022 18:58:55 -0700 (PDT)
-Received: from eriador.lan ([2001:470:dd84:abc0::8a5])
-        by smtp.gmail.com with ESMTPSA id u28-20020ac24c3c000000b0047255d21192sm467370lfq.193.2022.05.19.18.58.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 18:58:55 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 19 May 2022 22:53:58 -0400
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01AB6B82F8;
+        Thu, 19 May 2022 19:53:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1653015237; x=1684551237;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=3k+B1YhQtDjjzNzSzWyBbPTZcYPfDZ9P6ZK83umeHFU=;
+  b=P0Avw0cxVUh03g6Z0IfFGf6yrFt7TjYVi2Kp6v/7EJ18FQKxFuaTzHgb
+   80AXbmUE6j6LwbRQfBW1IzwAUte+Pw/jppDKd/sgJPNGpPJtcumC0oJfd
+   RSTphKMbcVLzUrKEQD9i/1Piqv2FKb0TH5dcyDUF2kAffMNA50DppO6I5
+   GdUDaxsK74k8+/NDd2pfL7zUoXIkCCpBlQ0YMLLAsjhR93gHNoMNnBgSW
+   3QE+3z/rjSPjuckYy/Otqc6jWDm5qWvqGfP2noMQelmOj2XTYHd/LVGUA
+   pcP9T4S+F+lg1HQZ7BFjzI/R7mJmPeEoBepqgd1goCHkOwtm6S9tmJnsy
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10352"; a="333084921"
+X-IronPort-AV: E=Sophos;i="5.91,238,1647327600"; 
+   d="scan'208";a="333084921"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2022 19:53:56 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,238,1647327600"; 
+   d="scan'208";a="674397628"
+Received: from lkp-server02.sh.intel.com (HELO 242b25809ac7) ([10.239.97.151])
+  by fmsmga002.fm.intel.com with ESMTP; 19 May 2022 19:53:52 -0700
+Received: from kbuild by 242b25809ac7 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1nrsm0-0004DS-9Y;
+        Fri, 20 May 2022 02:53:52 +0000
+Date:   Fri, 20 May 2022 10:53:07 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Judy Hsiao <judyhsiao@chromium.org>, Andy Gross <agross@kernel.org>
+Cc:     kbuild-all@lists.01.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>
-Subject: [PATCH v7 6/6] PCI: qcom: Drop manual pipe_clk_src handling
-Date:   Fri, 20 May 2022 04:58:44 +0300
-Message-Id: <20220520015844.1190511-7-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220520015844.1190511-1-dmitry.baryshkov@linaro.org>
-References: <20220520015844.1190511-1-dmitry.baryshkov@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
+        judyhsiao@google.com, tzungbi@chromium.org, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Judy Hsiao <judyhsiao@chromium.org>
+Subject: Re: [v1 1/3] arm64: dts: qcom: sc7280: Add drive strength property
+ for secondary MI2S
+Message-ID: <202205201035.VNGXOfUp-lkp@intel.com>
+References: <20220519084119.675990-2-judyhsiao@chromium.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220519084119.675990-2-judyhsiao@chromium.org>
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,131 +72,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Manual reparenting of pipe_clk_src is being replaced with the parking of
-the clock with clk_disable()/clk_enable() in the phy driver. Drop
-redundant code switching of the pipe clock between the PHY clock source
-and the safe bi_tcxo.
+Hi Judy,
 
-Cc: Prasad Malisetty <quic_pmaliset@quicinc.com>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 39 +-------------------------
- 1 file changed, 1 insertion(+), 38 deletions(-)
+Thank you for the patch! Yet something to improve:
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 91e58edc7ea9..e83085e1bf4b 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -164,9 +164,6 @@ struct qcom_pcie_resources_2_7_0 {
- 	int num_clks;
- 	struct regulator_bulk_data supplies[2];
- 	struct reset_control *pci_reset;
--	struct clk *pipe_clk_src;
--	struct clk *phy_pipe_clk;
--	struct clk *ref_clk_src;
- };
- 
- union qcom_pcie_resources {
-@@ -192,7 +189,6 @@ struct qcom_pcie_ops {
- 
- struct qcom_pcie_cfg {
- 	const struct qcom_pcie_ops *ops;
--	unsigned int pipe_clk_need_muxing:1;
- 	unsigned int has_tbu_clk:1;
- 	unsigned int has_ddrss_sf_tbu_clk:1;
- 	unsigned int has_aggre0_clk:1;
-@@ -1158,20 +1154,6 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
- 	if (ret < 0)
- 		return ret;
- 
--	if (pcie->cfg->pipe_clk_need_muxing) {
--		res->pipe_clk_src = devm_clk_get(dev, "pipe_mux");
--		if (IS_ERR(res->pipe_clk_src))
--			return PTR_ERR(res->pipe_clk_src);
--
--		res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
--		if (IS_ERR(res->phy_pipe_clk))
--			return PTR_ERR(res->phy_pipe_clk);
--
--		res->ref_clk_src = devm_clk_get(dev, "ref");
--		if (IS_ERR(res->ref_clk_src))
--			return PTR_ERR(res->ref_clk_src);
--	}
--
- 	return 0;
- }
- 
-@@ -1189,10 +1171,6 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
- 		return ret;
- 	}
- 
--	/* Set TCXO as clock source for pcie_pipe_clk_src */
--	if (pcie->cfg->pipe_clk_need_muxing)
--		clk_set_parent(res->pipe_clk_src, res->ref_clk_src);
--
- 	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
- 	if (ret < 0)
- 		goto err_disable_regulators;
-@@ -1254,18 +1232,8 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
- 	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
- 
- 	clk_bulk_disable_unprepare(res->num_clks, res->clks);
--	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
--}
- 
--static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
--{
--	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
--
--	/* Set pipe clock as clock source for pcie_pipe_clk_src */
--	if (pcie->cfg->pipe_clk_need_muxing)
--		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
--
--	return 0;
-+	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
- }
- 
- static int qcom_pcie_link_up(struct dw_pcie *pci)
-@@ -1441,7 +1409,6 @@ static const struct qcom_pcie_ops ops_2_7_0 = {
- 	.init = qcom_pcie_init_2_7_0,
- 	.deinit = qcom_pcie_deinit_2_7_0,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
--	.post_init = qcom_pcie_post_init_2_7_0,
- };
- 
- /* Qcom IP rev.: 1.9.0 */
-@@ -1450,7 +1417,6 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
- 	.init = qcom_pcie_init_2_7_0,
- 	.deinit = qcom_pcie_deinit_2_7_0,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
--	.post_init = qcom_pcie_post_init_2_7_0,
- 	.config_sid = qcom_pcie_config_sid_sm8250,
- };
- 
-@@ -1488,7 +1454,6 @@ static const struct qcom_pcie_cfg sm8250_cfg = {
- static const struct qcom_pcie_cfg sm8450_pcie0_cfg = {
- 	.ops = &ops_1_9_0,
- 	.has_ddrss_sf_tbu_clk = true,
--	.pipe_clk_need_muxing = true,
- 	.has_aggre0_clk = true,
- 	.has_aggre1_clk = true,
- };
-@@ -1496,14 +1461,12 @@ static const struct qcom_pcie_cfg sm8450_pcie0_cfg = {
- static const struct qcom_pcie_cfg sm8450_pcie1_cfg = {
- 	.ops = &ops_1_9_0,
- 	.has_ddrss_sf_tbu_clk = true,
--	.pipe_clk_need_muxing = true,
- 	.has_aggre1_clk = true,
- };
- 
- static const struct qcom_pcie_cfg sc7280_cfg = {
- 	.ops = &ops_1_9_0,
- 	.has_tbu_clk = true,
--	.pipe_clk_need_muxing = true,
- };
- 
- static const struct qcom_pcie_cfg sc8180x_cfg = {
+[auto build test ERROR on soc/for-next]
+[also build test ERROR on v5.18-rc7]
+[cannot apply to robh/for-next arm/for-next arm64/for-next/core clk/clk-next kvmarm/next rockchip/for-next shawnguo/for-next keystone/next]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Judy-Hsiao/Add-dtsi-for-sc7280-boards-that-using-rt5682-codec/20220519-164227
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git for-next
+config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20220520/202205201035.VNGXOfUp-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/b59ef0e3880c11efecbe61bebfe9352c76bf96f4
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Judy-Hsiao/Add-dtsi-for-sc7280-boards-that-using-rt5682-codec/20220519-164227
+        git checkout b59ef0e3880c11efecbe61bebfe9352c76bf96f4
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+>> Error: arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi:615.1-13 Label or path mi2s1_data0 not found
+>> Error: arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi:620.1-12 Label or path mi2s1_sclk not found
+>> Error: arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi:625.1-10 Label or path mi2s1_ws not found
+   FATAL ERROR: Syntax error parsing input tree
+
 -- 
-2.35.1
-
+0-DAY CI Kernel Test Service
+https://01.org/lkp
