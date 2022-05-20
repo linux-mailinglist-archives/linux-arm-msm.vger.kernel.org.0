@@ -2,151 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3783152ECE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 15:14:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D625D52EE0F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 16:24:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347547AbiETNOQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 09:14:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47938 "EHLO
+        id S1350249AbiETOYk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 10:24:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236665AbiETNOP (ORCPT
+        with ESMTP id S1350237AbiETOYj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 09:14:15 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0EB149DB1;
-        Fri, 20 May 2022 06:14:14 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id q8so9859451oif.13;
-        Fri, 20 May 2022 06:14:14 -0700 (PDT)
+        Fri, 20 May 2022 10:24:39 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67DBC166D7E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 07:24:35 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id u30so14589113lfm.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 07:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=J1TqYWvInWBNVGCPH/z2pZbWfdCQqeAMqP1BbNQTqhs=;
-        b=dJTZzvLoQ/LOjQgXGJKHVj1eCw3vf2YVGrT7mIWG8OX78B1yXTJTcbxbjNz/NWlMGr
-         YdI+WV2E3uR/ibEb/SgCUGfY6Mqj5g5X6/nXAFEd9SkKwYSuspKOAV49eIL7uC5BfrFD
-         GlxOAy2821DPIsTeIKzTZNvb5Z2Lvf9vp4U6K0bdNC7rMgBLD+u33XM4GJkgHCM4o+pb
-         pN+vPywZ1Jv25E50VjhVVSZDlg9NP5CGMQDliA8HWxZ/EO1VN0mmgeJQUZdKzXSmrhwV
-         QzngA/A4HJbjNmeVlRrnJx2pBMEJ9pjn5V8yMDNN6DTXpBJGONru6kP7wlLfHlEJbkbs
-         3Yzw==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=8qK1C/fXcj1Bx31GwrbgIHQcHFBncp+gQ5Gc0QhkCVs=;
+        b=XX0K4MWrxSFsvmT0HwgfuHMG+PL/FDHT2earFmJZKpu92EmvkETnV90r/whOD+/lL/
+         nGVWqi/eYsZYX2P8CBT16ewGnaf+AMkQk/1oQm2tdWIH3Fe4KXAWxkkSUCiTSqomOoCK
+         WmDEeN67QmThoa9r3L66RSklPVtI/Ja/zILbnI/URnPDcTYIEPEVpyxBW48RUS+xTHnr
+         C1ZCvj2Mr3gvzekOMt6lDvaxKe3SgWMSMxhcqKjm3V7jipK6Ktbo5JKqe60kmm3Vhs6E
+         SMCGwv7oQ92A5Q2QjLfxfBwIeIvz6D0LWbSY26f2rZmldPZ31ChLWmA+T2EJGcDpyekH
+         z5Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:message-id:date:mime-version:user-agent
-         :subject:content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=J1TqYWvInWBNVGCPH/z2pZbWfdCQqeAMqP1BbNQTqhs=;
-        b=l9Lec2lylpFhRaByTGaaRN47pHGekHjQ1taNzLcAVKmfnaliNuQGEDXnzfKltJirte
-         wpk+nItHCp4SUapcDYMTqJFHVtZ/UB/dDW765bN5k/3BsHfmhu/D7tVHuFq48Z0yt1A3
-         H5Z8NRBVl+eab6aIJHfPQaJreBR1O8PYVUFXKf6xdZG7Hteyjqk9X8oSma5M84iCi/5q
-         yqNe4v/frRmjwxJKKjmwCraRv44WBIqUTQEYgZVTep7qsjdfYiRNsYqMBsySpAGt3yL4
-         wkwPkf6g0gXnkN+GFXa1exT4f19N/pb3MmFjBVbCwEz/7LFqvXwvEtvzbeMLZwoeuIeK
-         qmxQ==
-X-Gm-Message-State: AOAM532T2udDn2dvdxGye2LnCPoFzJa3ZzHazHAnpacIiJKIaOzPKLO4
-        GLD8K75P6K7a+8opnC2l4Os=
-X-Google-Smtp-Source: ABdhPJzU22VIvkGyaVF3avLKa6ozH9kxgKgJqekRfWSD7N6WH8eRCArP/5ENzxPQFqJwygJBvySwOg==
-X-Received: by 2002:a05:6808:1308:b0:326:8e54:e93f with SMTP id y8-20020a056808130800b003268e54e93fmr5436156oiv.274.1653052453675;
-        Fri, 20 May 2022 06:14:13 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id eq37-20020a056870a92500b000e686d13883sm959266oab.29.2022.05.20.06.14.09
+        bh=8qK1C/fXcj1Bx31GwrbgIHQcHFBncp+gQ5Gc0QhkCVs=;
+        b=TH9BaoCjbqsTNErDj9qV8xJ0tzyeZeIh4twUs0zCAGDRtXK4z+b9He+KEBo0mzpitd
+         hCXjeHWTYA3swLUrQhiYG+sRrqwGpH6TVivbG5fZe7h4pPphFv/X6n6Tot3bWt07L+X8
+         jp4edXlF9xTFMZWcSWgEVSC3MU0oXWPOSOjXT+wz6088X98AlB1983Pc6vwKulY1Prph
+         Hn5TXUfpsKLqAcGsbcWpuaMEuvr+rIM4IGR/Csy85D6L1D+yY0TfK6DiDq4B/Z7UYYOr
+         eu+N8wDHVsw8F6sHlNHo8MCIfJa/XxULY3FCyZIFhhnfpJ6y2PdZjBa//F56B/SJGFTA
+         meig==
+X-Gm-Message-State: AOAM533qNfS8+2Qpu88jQbK1tE3c5UNxUpdu9umB2pSiYGJL1f20uRbF
+        oDn5xSa1Djkg8fzNwAGhwhbMKQ==
+X-Google-Smtp-Source: ABdhPJwwrJPm4H3reVCsciJsAq6hR9ACJ31onH+YD27Kg88MIvoXnWyGyYu+ftDUc43IRAua/VsZiA==
+X-Received: by 2002:a05:6512:110d:b0:473:d519:5764 with SMTP id l13-20020a056512110d00b00473d5195764mr7385296lfg.128.1653056673730;
+        Fri, 20 May 2022 07:24:33 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id o25-20020a056512051900b0047255d2117asm678537lfb.169.2022.05.20.07.24.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 May 2022 06:14:11 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <f262df9e-ae89-f961-8b5e-1f4166eb1470@roeck-us.net>
-Date:   Fri, 20 May 2022 06:14:09 -0700
+        Fri, 20 May 2022 07:24:33 -0700 (PDT)
+Message-ID: <b9487ffe-7ed5-077c-3c2c-886746457365@linaro.org>
+Date:   Fri, 20 May 2022 16:24:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.1
-Subject: Re: [PATCH] drm/msm/adreno: Do not propagate void return values
+Subject: Re: [PATCH v2 2/5] dt-bindings: interconnect: Add Qualcomm SM6350 NoC
+ support
 Content-Language: en-US
-To:     Geert Uytterhoeven <geert@linux-m68k.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <483795c4fb7d215a3f2089c55df29a0064eb021b.1653051029.git.geert@linux-m68k.org>
-From:   Guenter Roeck <linux@roeck-us.net>
-In-Reply-To: <483795c4fb7d215a3f2089c55df29a0064eb021b.1653051029.git.geert@linux-m68k.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Odelu Kukatla <okukatla@codeaurora.org>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220520070318.48521-1-luca.weiss@fairphone.com>
+ <20220520070318.48521-3-luca.weiss@fairphone.com>
+ <7b451dfb-8353-4a4e-1834-a01feaa267d2@linaro.org>
+ <CK4KPEWM9165.2LR9ZUG2GGK6Q@otso>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CK4KPEWM9165.2LR9ZUG2GGK6Q@otso>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/20/22 05:53, Geert Uytterhoeven wrote:
-> With sparse ("make C=2"), lots of
+On 20/05/2022 14:04, Luca Weiss wrote:
+> Hi Krzysztof,
 > 
->    error: return expression in void function
+> Thanks for the review!
 > 
-> messages are seen.
+> On Fri May 20, 2022 at 12:31 PM CEST, Krzysztof Kozlowski wrote:
+>> On 20/05/2022 09:03, Luca Weiss wrote:
+>>> Add bindings for Qualcomm SM6350 Network-On-Chip interconnect devices.
+>>>
+>>> As SM6350 has two pairs of NoCs sharing the same reg, allow this in the
+>>> binding documentation, as was done for qcm2290.
+>>>
+>>> Because the main qcom,rpmh.yaml file is getting too complicated for our
+>>> use cases, create a new qcom,rpmh-common.yaml and a separate
+>>> qcom,sm6350-rpmh.yaml that defines our new bindings.
+>>>
+>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> ---
+>>> Changes since v1:
+>>> * Split sm6350 into separate yaml with new rpmh-common.yaml
+>>>
+>>>  .../interconnect/qcom,rpmh-common.yaml        |  41 +++++
+>>>  .../interconnect/qcom,sm6350-rpmh.yaml        |  82 ++++++++++
+>>>  .../dt-bindings/interconnect/qcom,sm6350.h    | 148 ++++++++++++++++++
+>>>  3 files changed, 271 insertions(+)
+>>>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,rpmh-common.yaml
+>>>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sm6350-rpmh.yaml
+>>>  create mode 100644 include/dt-bindings/interconnect/qcom,sm6350.h
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh-common.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-common.yaml
+>>> new file mode 100644
+>>> index 000000000000..6121eea3e87d
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-common.yaml
+>>> @@ -0,0 +1,41 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/interconnect/qcom,rpmh-common.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm RPMh Network-On-Chip Interconnect
+>>> +
+>>> +maintainers:
+>>> +  - Georgi Djakov <georgi.djakov@linaro.org>
+>>> +  - Odelu Kukatla <okukatla@codeaurora.org>
+>>
+>> Is this valid email address?
 > 
-> Fix this by removing the return statements to propagate void return
-> values.
+> Will put Georgi and Bjorn as maintainers, as per your other email.
 > 
-> Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+>>
+>>> +
+>>> +description: |
+>>> +   RPMh interconnect providers support system bandwidth requirements through
+>>> +   RPMh hardware accelerators known as Bus Clock Manager (BCM). The provider is
+>>> +   able to communicate with the BCM through the Resource State Coordinator (RSC)
+>>> +   associated with each execution environment. Provider nodes must point to at
+>>> +   least one RPMh device child node pertaining to their RSC and each provider
+>>> +   can map to multiple RPMh resources.
+>>> +
+>>> +properties:
+>>> +  '#interconnect-cells':
+>>> +    enum: [ 1, 2 ]
+>>
+>> Why this is an enum?
+> 
+> As a start, just adding that the definitions are copied from
+> qcom,rpmh.yaml so it's not my invention :) Of course that doesn't mean
+> that it should be improved where possible!
+> 
+> Either value is supported by the driver (and used upstream). But perhaps
+> it can use a description to define what the 'parameters' mean.
+> 
+> The second (optional) parameters "is to support different bandwidth
+> configurations that are toggled by RPMh, depending on the power state of
+> the CPU."[0]
+> 
+> A commit message for sc7180 calls it the "tag information" and "The
+> consumers can specify the path tag as an additional argument to the
+> endpoints."[1]
+> 
+> Not sure how to properly describe the first property, I guess the
+> interconnect endpoint? Maybe Georgi can help here.
+> 
+> 
+> [0] https://lore.kernel.org/linux-arm-msm/b079a211-d387-7958-bbe2-c41cac00d269@kernel.org/
+> [1] https://git.kernel.org/torvalds/c/e23b122
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Hm, indeed driver supports variable values. It's fine then.
 
-> ---
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 2 +-
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.h | 4 ++--
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
->   3 files changed, 4 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 3e325e2a2b1b68eb..d137136d93f3b4ca 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -504,7 +504,7 @@ static void a6xx_rpmh_stop(struct a6xx_gmu *gmu)
->   
->   static inline void pdc_write(void __iomem *ptr, u32 offset, u32 value)
->   {
-> -	return msm_writel(value, ptr + (offset << 2));
-> +	msm_writel(value, ptr + (offset << 2));
->   }
->   
->   static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev,
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> index 84bd516f01e895b2..e034935b3986f9f2 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> @@ -98,7 +98,7 @@ static inline u32 gmu_read(struct a6xx_gmu *gmu, u32 offset)
->   
->   static inline void gmu_write(struct a6xx_gmu *gmu, u32 offset, u32 value)
->   {
-> -	return msm_writel(value, gmu->mmio + (offset << 2));
-> +	msm_writel(value, gmu->mmio + (offset << 2));
->   }
->   
->   static inline void
-> @@ -138,7 +138,7 @@ static inline u32 gmu_read_rscc(struct a6xx_gmu *gmu, u32 offset)
->   
->   static inline void gmu_write_rscc(struct a6xx_gmu *gmu, u32 offset, u32 value)
->   {
-> -	return msm_writel(value, gmu->rscc + (offset << 2));
-> +	msm_writel(value, gmu->rscc + (offset << 2));
->   }
->   
->   #define gmu_poll_timeout_rscc(gmu, addr, val, cond, interval, timeout) \
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index ccc4fcf7a630f49a..d671b75f3289fdff 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1446,7 +1446,7 @@ static void a6xx_llc_rmw(struct a6xx_gpu *a6xx_gpu, u32 reg, u32 mask, u32 or)
->   
->   static void a6xx_llc_write(struct a6xx_gpu *a6xx_gpu, u32 reg, u32 value)
->   {
-> -	return msm_writel(value, a6xx_gpu->llc_mmio + (reg << 2));
-> +	msm_writel(value, a6xx_gpu->llc_mmio + (reg << 2));
->   }
->   
->   static void a6xx_llc_deactivate(struct a6xx_gpu *a6xx_gpu)
+>>
+>>> +
+>>> +  qcom,bcm-voters:
+>>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>>> +    items:
+>>
+>> Please implement my previous comments.
+> 
+> Sorry, I looked over the comment in v1.
+> 
+> As far as I can tell in current code only 1 item is used.
+> 
+> If the second parameter of_bcm_voter_get would be used as non-NULL then
+> qcom,bcm-voter-names gets looked up and the N-th value in qcom,bcm-voters
+> used. But currently qcom,bcm-voter-names is not actively used so only
+> one gets used.
+> 
+> Do you have a recommendation what to put here? A synthetic limit like
+> 32 just to have a number there?
 
+Let's go with maxItems:1, for both fields.
+
+> 
+>>
+>>> +      maxItems: 1
+>>> +    description: |
+>>
+>> No need for |
+> 
+> ack
+> 
+>>
+>>> +      List of phandles to qcom,bcm-voter nodes that are required by
+>>> +      this interconnect to send RPMh commands.
+>>> +
+>>> +  qcom,bcm-voter-names:
+>>
+>> What names do you expect here?
+> 
+> Currently unused in mainline but newer downstream kernels[2] use "hlos"
+> as first parameter, and e.g. "disp" as second one that goes to a
+> qcom,bcm-voter that's a child of disp_rsc. Not sure exactly what that
+> does.
+> 
+> [2] https://github.com/atomsand/android_kernel_qcom_devicetree/blob/a6d50810116e8314d64eb63b8862c207b974e0c7/qcom/waipio.dtsi#L1701-L1793
+
+The bindings example uses apps and disp, so here would be only "apps".
+
+>>> +
+>>> +  '#interconnect-cells': true
+>>
+>> Since you defined it as enum in rpmh-common, you really expect here
+>> different values?
+> 
+> Doesn't ": true" here just mean we want the value from the allOf: -
+> $ref?
+> But we could in theory make interconnect-cells only accept <2> for
+> sm6350.
+
+Yes, and the $ref defines it as [1, 2], so initially I thought this
+should be narrowed. However it seems 1 or 2 are still valid for all of
+Qcom interconnects, so your "true" is correct.
+
+
+Best regards,
+Krzysztof
