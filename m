@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B75E52F378
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 20:56:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C61152F37B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 20:56:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353104AbiETSzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 14:55:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36500 "EHLO
+        id S1353053AbiETSz6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 14:55:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353064AbiETSzn (ORCPT
+        with ESMTP id S1353082AbiETSzq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 14:55:43 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5709F185433
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 11:55:41 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id o190so9597469iof.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 11:55:41 -0700 (PDT)
+        Fri, 20 May 2022 14:55:46 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EDCD185C9B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 11:55:42 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id l15so6129160ilh.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 11:55:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hNHj18Pk290f11iq3jTbhbcmsqgCknmENNznS9C6gdk=;
-        b=dqHLsh3tn3jkidCJNB+bMwdBj9+NtYIWwexUQVbAJ1tqq+ntacQ/ZYS4Q5tSiBgb0h
-         3SClUOps2jpSYxEyM3+SlcrfqvaAqwdwo6XH3WUF9FO12863+FF25MfY93JGHa8+GmRn
-         zuK5vd4j9jkqlsRRpRtu0wtzAfwvZN3ziy6JuulpjQ6EGW05REEZAoH3WIv5VjXlmIGQ
-         /6RLSmn1R/aY2uvqpXfbK9kEeaJvbuDOHs7u/CcdZvsh6v/M7EczNT3PP06zADZmW7fr
-         cWwDBb9pw3FQjhx8zzGGj36qR08im8phxHUITZNv4pITJ9zGDZ8KM0dQMRqBGGuhQ/It
-         NaRg==
+        bh=O/hJEGVRLdpoiwk4u/5VFj9MSjRvGNpyvBvim/3YzJc=;
+        b=fyxtyUOPH8fSOEgdE0y9DVnA9Bce0Rxr9m/nXyNCi/MjPsaNhmCxa2UksO4vjv15Lb
+         Y5yU3BVWRCVO3Yt92Y/b2qOLlGOySjmB3XzP7x1Joj6hRNtCnbmO6oLcq/oXNxbo0cZX
+         Cnxmc56jFUZ0/gV8dsF8jKmVw7FuYqzmPJY4U4S86/o1Pn60MOw5HQjTj8nVFXSQPSDz
+         c2z0g7P8nilOugVErsywgXgxCKtEkMdYttUlkwby9fCBGs66xz2SR/OIPWrTvXJ6Q2pE
+         b5xqZOY3qbpU42XYnsmhYziGMeE8myjJJd7g4xwoAT/U//T6Qlgzm8XfLIwV41mOflhp
+         Rauw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hNHj18Pk290f11iq3jTbhbcmsqgCknmENNznS9C6gdk=;
-        b=dEIit73FWW12ZA4LB3hjtwBtu980Bxnb4FW4bXIPy3DWPg6cDlFUMrgoNwNzJT+Jwq
-         UY53DCt7WPWLSXccNYMxCjPGNnD+5dwcFdnXnPjvjfuHDkZtn64dTIVa6pUFpJeCApMt
-         fY0cJd2fEAW8+aLGQkIYmrE4/3R99KKAkM2hO1ByWlh4ZWiEOc/kMVp7DxV2cJGK4CTB
-         /TWEsrUTtLbG6M+19gfo4DX2+nOz4P1JmV9XoZcQTGMj/5IRaVuNlS6UZDMYVG/OxVM2
-         C63Y9wL0bon8HLV4Sk9jhkl54MVAyFgY63RK3gNJpw/vH86apS6aRqyEdzUgcAJyVgcM
-         uI0Q==
-X-Gm-Message-State: AOAM5328Bj+LZ6PEFMtwVwJOD4SbeRSwAibVDWk6qspEGxedNJ3tLVIQ
-        ro1owFjNpiATAnXXiyYG62I2yQ==
-X-Google-Smtp-Source: ABdhPJzY4f/Deixez5oJJUHkJcS5TZIbS2qXwBxpQ+xWyyjHuZZw9Dj2bKeYqD5QOaoxKlYYwy9LDg==
-X-Received: by 2002:a5e:8419:0:b0:65e:4ea1:243d with SMTP id h25-20020a5e8419000000b0065e4ea1243dmr3718700ioj.70.1653072940516;
-        Fri, 20 May 2022 11:55:40 -0700 (PDT)
+        bh=O/hJEGVRLdpoiwk4u/5VFj9MSjRvGNpyvBvim/3YzJc=;
+        b=xlio1OF+6DoQCsiXeiqvnj6JfuScMnxf0hyZH4Rf0pM7NKzkTQblzqWYMhesdhm1d2
+         V6E2o4PMP7ZgN39svqTQ1Nc1HlernRjya7+3jc7wBZjrdnJoIvpPsTEK2MmYD1dSb5B1
+         kMjKtXk9KPhhE7v6LA2EbKcTIccrU/hzU3dmnfRsd/ckpv3L1nGa7nZQjsj9zeWrSPdm
+         VNAakGYWUhds4MmrtgLsU2JYtSPE6wOIK9Z4ukv1DY+3fUQnGGJoyvsYcf+j2YZAz+YZ
+         NI2tA3wGgVah4W3t6WCI4BBqkwTaupJ0peuv2AxDTm0KfL7ewYySb5uvqF62HlFZWjV1
+         6AYg==
+X-Gm-Message-State: AOAM531eKmZc3RktYXbCCh6PldzlZnKsz8GDqtftBCwVbCByDkM6eNSO
+        nADlUbu008SGGcw9PRnZOgfCmyCX9dICXA==
+X-Google-Smtp-Source: ABdhPJwcAwB3/qjOMNJzHWE4YVnRSuOpM+eHNwES2j1f4iGrDzXRTl+y0z8GItv1yVndQfNBJFS19A==
+X-Received: by 2002:a05:6e02:17ce:b0:2d1:1c16:5084 with SMTP id z14-20020a056e0217ce00b002d11c165084mr5995717ilu.88.1653072941585;
+        Fri, 20 May 2022 11:55:41 -0700 (PDT)
 Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id a6-20020a056638058600b0032b3a7817acsm871958jar.112.2022.05.20.11.55.39
+        by smtp.gmail.com with ESMTPSA id a6-20020a056638058600b0032b3a7817acsm871958jar.112.2022.05.20.11.55.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 11:55:40 -0700 (PDT)
+        Fri, 20 May 2022 11:55:41 -0700 (PDT)
 From:   Alex Elder <elder@linaro.org>
 To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
         pabeni@redhat.com
@@ -56,9 +56,9 @@ Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
         quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
         elder@kernel.org, netdev@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 2/8] net: ipa: support hard aggregation limits
-Date:   Fri, 20 May 2022 13:55:27 -0500
-Message-Id: <20220520185533.877920-3-elder@linaro.org>
+Subject: [PATCH net-next 3/8] net: ipa: specify RX aggregation time limit in config data
+Date:   Fri, 20 May 2022 13:55:28 -0500
+Message-Id: <20220520185533.877920-4-elder@linaro.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220520185533.877920-1-elder@linaro.org>
 References: <20220520185533.877920-1-elder@linaro.org>
@@ -74,204 +74,240 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a new flag for AP receive endpoints that indicates whether
-a "hard limit" is used as a criterion for closing aggregation.
-Add comments explaining the difference between "hard" and "soft"
-aggregation limits.
+Don't assume that a 500 microsecond time limit should be used for
+all receive endpoints that support aggregation.  Instead, specify
+the time limit to use in the configuration data.
 
-Pass a flag to ipa_aggr_size_kb() so it computes the proper
-aggregation size value whether using hard or soft limits.  Move
-that function earlier in "ipa_endpoint.c" so it can be used
-without a forward-reference.
+Set a 500 microsecond limit for all existing RX endpoints, as before.
 
-Update ipa_endpoint_data_valid_one() so it validates endpoints whose
-data indicate a hard aggregation limit is used, and so it reports
-set aggregation flags for endpoints without aggregation enabled.
+Checking for overflow for the time limit field is a bit complicated.
+Rather than duplicate a lot of code in ipa_endpoint_data_valid_one(),
+call WARN() if any value is found to be too large when encoding it.
 
 Signed-off-by: Alex Elder <elder@linaro.org>
 ---
- drivers/net/ipa/ipa_endpoint.c | 89 +++++++++++++++++++++-------------
- drivers/net/ipa/ipa_endpoint.h | 15 +++++-
- 2 files changed, 69 insertions(+), 35 deletions(-)
+ drivers/net/ipa/ipa_data-v3.1.c   |  2 ++
+ drivers/net/ipa/ipa_data-v3.5.1.c |  2 ++
+ drivers/net/ipa/ipa_data-v4.11.c  |  2 ++
+ drivers/net/ipa/ipa_data-v4.2.c   |  2 ++
+ drivers/net/ipa/ipa_data-v4.5.c   |  2 ++
+ drivers/net/ipa/ipa_data-v4.9.c   |  2 ++
+ drivers/net/ipa/ipa_endpoint.c    | 21 +++++++++++++++++----
+ drivers/net/ipa/ipa_endpoint.h    |  6 ++++++
+ 8 files changed, 35 insertions(+), 4 deletions(-)
 
+diff --git a/drivers/net/ipa/ipa_data-v3.1.c b/drivers/net/ipa/ipa_data-v3.1.c
+index 8ff351aefd23f..00f4e506e6e51 100644
+--- a/drivers/net/ipa/ipa_data-v3.1.c
++++ b/drivers/net/ipa/ipa_data-v3.1.c
+@@ -103,6 +103,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 				.rx = {
+ 					.buffer_size	= 8192,
+ 					.pad_align	= ilog2(sizeof(u32)),
++					.aggr_time_limit = 500,
+ 				},
+ 			},
+ 		},
+@@ -150,6 +151,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 				.aggregation	= true,
+ 				.rx = {
+ 					.buffer_size	= 8192,
++					.aggr_time_limit = 500,
+ 					.aggr_close_eof	= true,
+ 				},
+ 			},
+diff --git a/drivers/net/ipa/ipa_data-v3.5.1.c b/drivers/net/ipa/ipa_data-v3.5.1.c
+index d1c466abddb22..b7e32e87733eb 100644
+--- a/drivers/net/ipa/ipa_data-v3.5.1.c
++++ b/drivers/net/ipa/ipa_data-v3.5.1.c
+@@ -94,6 +94,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 				.rx = {
+ 					.buffer_size	= 8192,
+ 					.pad_align	= ilog2(sizeof(u32)),
++					.aggr_time_limit = 500,
+ 				},
+ 			},
+ 		},
+@@ -142,6 +143,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 				.aggregation	= true,
+ 				.rx = {
+ 					.buffer_size	= 8192,
++					.aggr_time_limit = 500,
+ 					.aggr_close_eof	= true,
+ 				},
+ 			},
+diff --git a/drivers/net/ipa/ipa_data-v4.11.c b/drivers/net/ipa/ipa_data-v4.11.c
+index b1991cc6f0ca6..1be823e5c5c22 100644
+--- a/drivers/net/ipa/ipa_data-v4.11.c
++++ b/drivers/net/ipa/ipa_data-v4.11.c
+@@ -88,6 +88,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 				.rx = {
+ 					.buffer_size	= 8192,
+ 					.pad_align	= ilog2(sizeof(u32)),
++					.aggr_time_limit = 500,
+ 				},
+ 			},
+ 		},
+@@ -135,6 +136,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 				.aggregation	= true,
+ 				.rx = {
+ 					.buffer_size	= 32768,
++					.aggr_time_limit = 500,
+ 					.aggr_close_eof	= true,
+ 				},
+ 			},
+diff --git a/drivers/net/ipa/ipa_data-v4.2.c b/drivers/net/ipa/ipa_data-v4.2.c
+index 1190a43e8743c..683f1f91042f4 100644
+--- a/drivers/net/ipa/ipa_data-v4.2.c
++++ b/drivers/net/ipa/ipa_data-v4.2.c
+@@ -84,6 +84,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 				.rx = {
+ 					.buffer_size	= 8192,
+ 					.pad_align	= ilog2(sizeof(u32)),
++					.aggr_time_limit = 500,
+ 				},
+ 			},
+ 		},
+@@ -132,6 +133,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 				.aggregation	= true,
+ 				.rx = {
+ 					.buffer_size	= 8192,
++					.aggr_time_limit = 500,
+ 					.aggr_close_eof	= true,
+ 				},
+ 			},
+diff --git a/drivers/net/ipa/ipa_data-v4.5.c b/drivers/net/ipa/ipa_data-v4.5.c
+index 944f72b0f285e..79398f286a9cf 100644
+--- a/drivers/net/ipa/ipa_data-v4.5.c
++++ b/drivers/net/ipa/ipa_data-v4.5.c
+@@ -97,6 +97,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 				.rx = {
+ 					.buffer_size	= 8192,
+ 					.pad_align	= ilog2(sizeof(u32)),
++					.aggr_time_limit = 500,
+ 				},
+ 			},
+ 		},
+@@ -144,6 +145,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 				.aggregation	= true,
+ 				.rx = {
+ 					.buffer_size	= 8192,
++					.aggr_time_limit = 500,
+ 					.aggr_close_eof	= true,
+ 				},
+ 			},
+diff --git a/drivers/net/ipa/ipa_data-v4.9.c b/drivers/net/ipa/ipa_data-v4.9.c
+index 16786bff7ef84..4b96efd05cf22 100644
+--- a/drivers/net/ipa/ipa_data-v4.9.c
++++ b/drivers/net/ipa/ipa_data-v4.9.c
+@@ -89,6 +89,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 				.rx = {
+ 					.buffer_size	= 8192,
+ 					.pad_align	= ilog2(sizeof(u32)),
++					.aggr_time_limit = 500,
+ 				},
+ 			},
+ 		},
+@@ -136,6 +137,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 				.aggregation	= true,
+ 				.rx = {
+ 					.buffer_size	= 8192,
++					.aggr_time_limit = 500,
+ 					.aggr_close_eof	= true,
+ 				},
+ 			},
 diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
-index 3ad97fbf6884e..6079670bd8605 100644
+index 6079670bd8605..586529511cf6b 100644
 --- a/drivers/net/ipa/ipa_endpoint.c
 +++ b/drivers/net/ipa/ipa_endpoint.c
-@@ -81,6 +81,24 @@ static u32 aggr_byte_limit_max(enum ipa_version version)
- 	return field_max(aggr_byte_limit_fmask(false));
- }
+@@ -35,7 +35,6 @@
+ #define IPA_ENDPOINT_QMAP_METADATA_MASK		0x000000ff /* host byte order */
  
-+/* Compute the aggregation size value to use for a given buffer size */
-+static u32 ipa_aggr_size_kb(u32 rx_buffer_size, bool aggr_hard_limit)
-+{
-+	/* A hard aggregation limit will not be crossed; aggregation closes
-+	 * if saving incoming data would cross the hard byte limit boundary.
-+	 *
-+	 * With a soft limit, aggregation closes *after* the size boundary
-+	 * has been crossed.  In that case the limit must leave enough space
-+	 * after that limit to receive a full MTU of data plus overhead.
-+	 */
-+	if (!aggr_hard_limit)
-+		rx_buffer_size -= IPA_MTU + IPA_RX_BUFFER_OVERHEAD;
-+
-+	/* The byte limit is encoded as a number of kilobytes */
-+
-+	return rx_buffer_size / SZ_1K;
-+}
-+
- static bool ipa_endpoint_data_valid_one(struct ipa *ipa, u32 count,
- 			    const struct ipa_gsi_endpoint_data *all_data,
- 			    const struct ipa_gsi_endpoint_data *data)
-@@ -93,7 +111,9 @@ static bool ipa_endpoint_data_valid_one(struct ipa *ipa, u32 count,
- 		return true;
+ #define IPA_ENDPOINT_RESET_AGGR_RETRY_MAX	3
+-#define IPA_AGGR_TIME_LIMIT			500	/* microseconds */
  
- 	if (!data->toward_ipa) {
-+		const struct ipa_endpoint_rx *rx_config;
- 		u32 buffer_size;
-+		u32 aggr_size;
- 		u32 limit;
+ /** enum ipa_status_opcode - status element opcode hardware values */
+ enum ipa_status_opcode {
+@@ -142,6 +141,13 @@ static bool ipa_endpoint_data_valid_one(struct ipa *ipa, u32 count,
+ 			bool result = true;
  
- 		if (data->endpoint.filter_support) {
-@@ -107,8 +127,10 @@ static bool ipa_endpoint_data_valid_one(struct ipa *ipa, u32 count,
- 		if (data->ee_id != GSI_EE_AP)
- 			return true;
- 
--		buffer_size = data->endpoint.config.rx.buffer_size;
-+		rx_config = &data->endpoint.config.rx;
-+
- 		/* The buffer size must hold an MTU plus overhead */
-+		buffer_size = rx_config->buffer_size;
- 		limit = IPA_MTU + IPA_RX_BUFFER_OVERHEAD;
- 		if (buffer_size < limit) {
- 			dev_err(dev, "RX buffer size too small for RX endpoint %u (%u < %u)\n",
-@@ -116,27 +138,39 @@ static bool ipa_endpoint_data_valid_one(struct ipa *ipa, u32 count,
- 			return false;
- 		}
- 
--		/* For an endpoint supporting receive aggregation, the
--		 * aggregation byte limit defines the point at which an
--		 * aggregation window will close.  It is programmed into the
--		 * IPA hardware as a number of KB.  We don't use "hard byte
--		 * limit" aggregation, so we need to supply enough space in
--		 * a receive buffer to hold a complete MTU plus normal skb
--		 * overhead *after* that aggregation byte limit has been
--		 * crossed.
--		 *
--		 * This check just ensures the receive buffer size doesn't
--		 * exceed what's representable in the aggregation limit field.
-+		if (!data->endpoint.config.aggregation) {
-+			bool result = true;
-+
-+			/* No aggregation; check for bogus aggregation data */
-+			if (rx_config->aggr_hard_limit) {
-+				dev_err(dev, "hard limit with no aggregation for RX endpoint %u\n",
+ 			/* No aggregation; check for bogus aggregation data */
++			if (rx_config->aggr_time_limit) {
++				dev_err(dev,
++					"time limit with no aggregation for RX endpoint %u\n",
 +					data->endpoint_id);
 +				result = false;
 +			}
 +
-+			if (rx_config->aggr_close_eof) {
-+				dev_err(dev, "close EOF with no aggregation for RX endpoint %u\n",
-+					data->endpoint_id);
-+				result = false;
-+			}
-+
-+			return result;	/* Nothing more to check */
-+		}
-+
-+		/* For an endpoint supporting receive aggregation, the byte
-+		 * limit defines the point at which aggregation closes.  This
-+		 * check ensures the receive buffer size doesn't result in a
-+		 * limit that exceeds what's representable in the aggregation
-+		 * byte limit field.
- 		 */
--		if (data->endpoint.config.aggregation) {
--			limit += SZ_1K * aggr_byte_limit_max(ipa->version);
--			if (buffer_size - NET_SKB_PAD > limit) {
--				dev_err(dev, "RX buffer size too large for aggregated RX endpoint %u (%u > %u)\n",
--					data->endpoint_id,
--					buffer_size - NET_SKB_PAD, limit);
-+		aggr_size = ipa_aggr_size_kb(buffer_size - NET_SKB_PAD,
-+					     rx_config->aggr_hard_limit);
-+		limit = aggr_byte_limit_max(ipa->version);
-+		if (aggr_size > limit) {
-+			dev_err(dev, "aggregated size too large for RX endpoint %u (%u KB > %u KB)\n",
-+				data->endpoint_id, aggr_size, limit);
+ 			if (rx_config->aggr_hard_limit) {
+ 				dev_err(dev, "hard limit with no aggregation for RX endpoint %u\n",
+ 					data->endpoint_id);
+@@ -722,9 +728,13 @@ static u32 aggr_time_limit_encoded(enum ipa_version version, u32 limit)
  
--				return false;
--			}
-+			return false;
- 		}
+ 	if (version < IPA_VERSION_4_5) {
+ 		/* We set aggregation granularity in ipa_hardware_config() */
+-		limit = DIV_ROUND_CLOSEST(limit, IPA_AGGR_GRANULARITY);
++		fmask = aggr_time_limit_fmask(true);
++		val = DIV_ROUND_CLOSEST(limit, IPA_AGGR_GRANULARITY);
++		WARN(val > field_max(fmask),
++		     "aggr_time_limit too large (%u > %u usec)\n",
++		     val, field_max(fmask) * IPA_AGGR_GRANULARITY);
  
- 		return true;	/* Nothing more to check for RX */
-@@ -670,18 +704,6 @@ static void ipa_endpoint_init_mode(struct ipa_endpoint *endpoint)
- 	iowrite32(val, endpoint->ipa->reg_virt + offset);
- }
+-		return u32_encode_bits(limit, aggr_time_limit_fmask(true));
++		return u32_encode_bits(val, fmask);
+ 	}
  
--/* Compute the aggregation size value to use for a given buffer size */
--static u32 ipa_aggr_size_kb(u32 rx_buffer_size)
--{
--	/* We don't use "hard byte limit" aggregation, so we define the
--	 * aggregation limit such that our buffer has enough space *after*
--	 * that limit to receive a full MTU of data, plus overhead.
--	 */
--	rx_buffer_size -= IPA_MTU + IPA_RX_BUFFER_OVERHEAD;
--
--	return rx_buffer_size / SZ_1K;
--}
--
- /* Encoded values for AGGR endpoint register fields */
- static u32 aggr_byte_limit_encoded(enum ipa_version version, u32 limit)
- {
-@@ -753,7 +775,8 @@ static void ipa_endpoint_init_aggr(struct ipa_endpoint *endpoint)
- 			val |= u32_encode_bits(IPA_GENERIC, AGGR_TYPE_FMASK);
- 
- 			buffer_size = rx_config->buffer_size;
--			limit = ipa_aggr_size_kb(buffer_size - NET_SKB_PAD);
-+			limit = ipa_aggr_size_kb(buffer_size - NET_SKB_PAD,
-+						 rx_config->aggr_hard_limit);
+ 	/* IPA v4.5 expresses the time limit using Qtime.  The AP has
+@@ -739,6 +749,9 @@ static u32 aggr_time_limit_encoded(enum ipa_version version, u32 limit)
+ 		/* Have to use pulse generator 1 (millisecond granularity) */
+ 		gran_sel = AGGR_GRAN_SEL_FMASK;
+ 		val = DIV_ROUND_CLOSEST(limit, 1000);
++		WARN(val > field_max(fmask),
++		     "aggr_time_limit too large (%u > %u usec)\n",
++		     limit, field_max(fmask) * 1000);
+ 	} else {
+ 		/* We can use pulse generator 0 (100 usec granularity) */
+ 		gran_sel = 0;
+@@ -779,7 +792,7 @@ static void ipa_endpoint_init_aggr(struct ipa_endpoint *endpoint)
+ 						 rx_config->aggr_hard_limit);
  			val |= aggr_byte_limit_encoded(version, limit);
  
- 			limit = IPA_AGGR_TIME_LIMIT;
+-			limit = IPA_AGGR_TIME_LIMIT;
++			limit = rx_config->aggr_time_limit;
+ 			val |= aggr_time_limit_encoded(version, limit);
+ 
+ 			/* AGGR_PKT_LIMIT is 0 (unlimited) */
 diff --git a/drivers/net/ipa/ipa_endpoint.h b/drivers/net/ipa/ipa_endpoint.h
-index 3ab62fb892ec6..1e72a9695d3d9 100644
+index 1e72a9695d3d9..01790c60bee8d 100644
 --- a/drivers/net/ipa/ipa_endpoint.h
 +++ b/drivers/net/ipa/ipa_endpoint.h
-@@ -59,21 +59,32 @@ struct ipa_endpoint_tx {
+@@ -59,6 +59,7 @@ struct ipa_endpoint_tx {
   * struct ipa_endpoint_rx - Endpoint configuration for RX endpoints
   * @buffer_size:	requested receive buffer size (bytes)
   * @pad_align:		power-of-2 boundary to which packet payload is aligned
-+ * @aggr_hard_limit:	whether aggregation closes before or after boundary
++ * @aggr_time_limit:	time before aggregation closes (microseconds)
+  * @aggr_hard_limit:	whether aggregation closes before or after boundary
   * @aggr_close_eof:	whether aggregation closes on end-of-frame
   * @holb_drop:		whether to drop packets to avoid head-of-line blocking
-  *
-+ * The actual size of the receive buffer is rounded up if necessary
-+ * to be a power-of-2 number of pages.
-+ *
-  * With each packet it transfers, the IPA hardware can perform certain
-  * transformations of its packet data.  One of these is adding pad bytes
-  * to the end of the packet data so the result ends on a power-of-2 boundary.
-  *
-  * It is also able to aggregate multiple packets into a single receive buffer.
+@@ -74,6 +75,10 @@ struct ipa_endpoint_tx {
   * Aggregation is "open" while a buffer is being filled, and "closes" when
-- * certain criteria are met.  One of those criteria is the sender indicating
-- * a "frame" consisting of several transfers has ended.
-+ * certain criteria are met.
+  * certain criteria are met.
+  *
++ * A time limit can be specified to close aggregation.  Aggregation will be
++ * closed if this period passes after data is first written into a receive
++ * buffer.  If not specified, no time limit is imposed.
 + *
-+ * Insufficient space available in the receive buffer can close aggregation.
-+ * The aggregation byte limit defines the point (in units of 1024 bytes) in
-+ * the buffer where aggregation closes.  With a "soft" aggregation limit,
-+ * aggregation closes when a packet written to the buffer *crosses* that
-+ * aggregation limit.  With a "hard" aggregation limit, aggregation will
-+ * close *before* writing a packet that would cross that boundary.
-  */
+  * Insufficient space available in the receive buffer can close aggregation.
+  * The aggregation byte limit defines the point (in units of 1024 bytes) in
+  * the buffer where aggregation closes.  With a "soft" aggregation limit,
+@@ -84,6 +89,7 @@ struct ipa_endpoint_tx {
  struct ipa_endpoint_rx {
  	u32 buffer_size;
  	u32 pad_align;
-+	bool aggr_hard_limit;
++	u32 aggr_time_limit;
+ 	bool aggr_hard_limit;
  	bool aggr_close_eof;
  	bool holb_drop;
- };
 -- 
 2.32.0
 
