@@ -2,84 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCD4E52F20A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 20:07:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4C9152F214
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 May 2022 20:09:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349410AbiETSHO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 14:07:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56476 "EHLO
+        id S1352404AbiETSJD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 14:09:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352372AbiETSHN (ORCPT
+        with ESMTP id S231983AbiETSJC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 14:07:13 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84B9818C064
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 11:07:11 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id p22so15626118lfo.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 11:07:11 -0700 (PDT)
+        Fri, 20 May 2022 14:09:02 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B70A018C059;
+        Fri, 20 May 2022 11:08:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=mAvXka/K4vTJUVKh3HywAZKjh1VdtKdtrBO8nUgt5Kg=;
-        b=PCNc9mYnLFMk26nSYKsrGsijruCcAel2lWQCYv9ECe28Fo9kSEsSMMaTSQM6ge+ABP
-         osBN3Jq7eGDCxyxDubAUNSy/QdOrMbPd8m8a2jjy1d++mWkBOmHtUZvyKF40o+UgVF+b
-         MKXCHwBSiRSfFBklCPeE0Yn/8veTWixIekjBLXWziP7q6nnp39oJpWvCKZGkAcMSuIgY
-         H92FAPwmaK1N2DceUhzwqz4cvuvhZuRrXS7j0QTvXhCJTzlsGEZxbUhn53whzDupCLUg
-         w1P9Ygz0ed2axHdtch68jpb2AQspu+M/JeD2J9IVTBAdzIy9TN8u6dwg9jPs+zuw0qNM
-         18cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=mAvXka/K4vTJUVKh3HywAZKjh1VdtKdtrBO8nUgt5Kg=;
-        b=cAKWsXtmQv6032w7TZM6AQ+uyN+rJc86ipI+QO3Cq9QKk10E590LlU0q93qotFdRzB
-         pXOg+nBeH44eMRJsbp9BFuPSV00EpIB5aVUP2BliwaQ3KMJh4s2j2r099fjvDvFMIAbJ
-         HXY8rn4qh0Wg4Jd0Jxby57ttTcbS2pSae6YKQs5TKTw30uxzmQyOgeDjbG+HEK8y/8pL
-         nqnr9Rw+oa8u0/tasp9rsA7+rfeDwWtlRLxnGcLYeiGzOK+9z2xMvVVfGaBpKkUg+isY
-         8+cPdEWB33b1ViMuXxnIL75U4ro7PdKbw/Q5VPzCaiXMYt57nInLGXwA0HXaXoZWPoij
-         WIwg==
-X-Gm-Message-State: AOAM533kG8ZBDYANY4h5zZh882JGCIOdleWier/jb8NadzJ8grCGixr7
-        u09xFQRSLxwln1rWV78SeKwShA==
-X-Google-Smtp-Source: ABdhPJwBww574ZY9b1SAauSjxGUH1kZvIesP7vieS+Ben2OWqZcPw3ilAvLP2FM61MpucttomLTlfQ==
-X-Received: by 2002:a05:6512:a92:b0:45c:6b70:c892 with SMTP id m18-20020a0565120a9200b0045c6b70c892mr7719027lfu.124.1653070029620;
-        Fri, 20 May 2022 11:07:09 -0700 (PDT)
-Received: from ?IPV6:2001:470:dd84:abc0::8a5? ([2001:470:dd84:abc0::8a5])
-        by smtp.gmail.com with ESMTPSA id q11-20020ac25fcb000000b0047255d211bcsm740429lfg.235.2022.05.20.11.07.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 May 2022 11:07:09 -0700 (PDT)
-Message-ID: <ad3c5881-9e59-795d-0735-f23ba815a31b@linaro.org>
-Date:   Fri, 20 May 2022 21:07:07 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1653070139; x=1684606139;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=knFYaVRPtMVRb8qpLq9fJgECyjoHfreaopnzSRfpyUM=;
+  b=yuDshxUd0lESpZVtck8DrZAy2NG/+U1xaQNGbtEAtOFJWaNTWXg2G1Ew
+   4GtOKgpv/QfcAj97SGwYLLV4GKDlcsJjM9dxyJ4evRbudkYLpvOoEeX3s
+   v26hRIIY311nPwixVyQPgrXNZFfgETiXz4Q2thidcX5VQ+R2z9hjBsFWg
+   E=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 20 May 2022 11:08:59 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2022 11:08:59 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 20 May 2022 11:08:58 -0700
+Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 20 May
+ 2022 11:08:55 -0700
+Subject: Re: [PATCH v4 1/3] arm64: dts: qcom: sc7280: Add proxy interconnect
+ requirements for modem
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <ohad@wizery.com>, <agross@kernel.org>,
+        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <mka@chromium.org>
+References: <1652978825-5304-1-git-send-email-quic_sibis@quicinc.com>
+ <1652978825-5304-2-git-send-email-quic_sibis@quicinc.com>
+ <YoaqDcB6wkd4zOWR@ripper>
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+Message-ID: <031ebead-4b0d-8493-d8f8-96f2ff9d938a@quicinc.com>
+Date:   Fri, 20 May 2022 23:38:52 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v10 06/10] PCI: dwc: Handle MSIs routed to multiple GIC
- interrupts
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220513172622.2968887-1-dmitry.baryshkov@linaro.org>
- <20220513172622.2968887-7-dmitry.baryshkov@linaro.org>
- <YoS/wwkZoaFc76u1@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YoS/wwkZoaFc76u1@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <YoaqDcB6wkd4zOWR@ripper>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,126 +73,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/05/2022 12:43, Johan Hovold wrote:
-> On Fri, May 13, 2022 at 08:26:18PM +0300, Dmitry Baryshkov wrote:
->> On some of Qualcomm platforms each group of 32 MSI vectors is routed to the
->> separate GIC interrupt. Implement support for such configurations by
->> parsing "msi0" ... "msiN" interrupts and attaching them to the chained
->> handler.
+Hey Bjorn,
+Thanks for taking time to review the series.
+
+On 5/20/22 2:05 AM, Bjorn Andersson wrote:
+> On Thu 19 May 09:47 PDT 2022, Sibi Sankar wrote:
+> 
+>> Add interconnects that are required to be proxy voted upon during modem
+>> bootup on SC7280 SoCs.
+> 
+> This looks reasonable, but how come the vote is only for DDR frequency?
+> What about the buses between modem and ddr?
+
+The proxy votes that are put in aren't for perf related reasons, the
+modem was getting llcc timeouts while trying to read contents from 
+memory. The hw team recommended the proxy votes as the fix.
+
+-Sibi
+
+> 
+> Regards,
+> Bjorn
+> 
 >>
->> Note, that if DT doesn't list an array of MSI interrupts and uses single
->> "msi" IRQ, the driver will limit the amount of supported MSI vectors
->> accordingly (to 32).
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 >> ---
->>   .../pci/controller/dwc/pcie-designware-host.c | 38 ++++++++++++++++++-
->>   drivers/pci/controller/dwc/pcie-designware.h  |  1 +
->>   2 files changed, 38 insertions(+), 1 deletion(-)
+>>   arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 1 +
+>>   1 file changed, 1 insertion(+)
 >>
->> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
->> index 70f0435907c1..320a968dd366 100644
->> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
->> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
->> @@ -288,6 +288,11 @@ static void dw_pcie_msi_init(struct pcie_port *pp)
->>   	dw_pcie_writel_dbi(pci, PCIE_MSI_ADDR_HI, upper_32_bits(msi_target));
->>   }
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+>> index 9f4a9c263c35..91aad86cc708 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+>> @@ -88,6 +88,7 @@
+>>   	status = "okay";
+>>   	compatible = "qcom,sc7280-mss-pil";
+>>   	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
+>> +	interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
+>>   	memory-region = <&mba_mem>, <&mpss_mem>;
+>>   };
 >>   
->> +static const char * const split_msi_names[] = {
->> +	"msi0", "msi1", "msi2", "msi3",
->> +	"msi4", "msi5", "msi6", "msi7",
->> +};
->> +
->>   static int dw_pcie_msi_host_init(struct pcie_port *pp)
->>   {
->>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
->> @@ -300,17 +305,48 @@ static int dw_pcie_msi_host_init(struct pcie_port *pp)
->>   	for (ctrl = 0; ctrl < num_ctrls; ctrl++)
->>   		pp->irq_mask[ctrl] = ~0;
->>   
->> +	if (pp->has_split_msi_irq) {
-> 
-> You don't need to add this configuration parameter as it can be inferred
-> from the devicetree (e.g. if "msi0" is specified).
-> 
->> +		/*
->> +		 * Parse as many IRQs as described in the DTS. If there are
->> +		 * none, fallback to the single "msi" IRQ.
->> +		 */
->> +		for (ctrl = 0; ctrl < num_ctrls; ctrl++) {
->> +			int irq;
->> +
->> +			if (pp->msi_irq[ctrl])
->> +				continue;
->> +
->> +			irq = platform_get_irq_byname(pdev, split_msi_names[ctrl]);
-> 
-> You need to use platform_get_irq_byname_optional() here or an error will
-> still printed if the number of "msi" interrupts is less than 8.
-> 
->> +			if (irq == -ENXIO) {
->> +				num_ctrls = ctrl;
->> +				break;
->> +			} else if (irq < 0) {
->> +				return dev_err_probe(dev, irq,
->> +						     "Failed to parse MSI IRQ '%s'\n",
->> +						     split_msi_names[ctrl]);
->> +			}
->> +
->> +			pp->msi_irq[ctrl] = irq;
->> +		}
->> +
->> +		if (num_ctrls == 0)
->> +			num_ctrls = 1;
->> +	}
->> +
->>   	if (!pp->msi_irq[0]) {
->>   		int irq = platform_get_irq_byname_optional(pdev, "msi");
->>   
->>   		if (irq < 0) {
->>   			irq = platform_get_irq(pdev, 0);
->>   			if (irq < 0)
->> -				return irq;
->> +				return dev_err_probe(dev, irq, "Failed to parse MSI irq\n");
->>   		}
->>   		pp->msi_irq[0] = irq;
->>   	}
->>   
->> +	pp->num_vectors = min_t(u32, pp->num_vectors, num_ctrls * MAX_MSI_IRQS_PER_CTRL);
->> +	dev_dbg(dev, "Using %d MSI vectors\n", pp->num_vectors);
-> 
-> Can you rework the handling of num_vectors == 0 (in dw_pcie_host_init())
-> so that the number is always inferred from the number of "msi"
-> interrupts without having to pass in num_vectors == MAX_MSI_IRQS?
-
-It wasn't that easy, but I think I ended up doing it properly.
-
-> 
-> That is
-> 
-> 	num_vectors == 0 && "msi" => num_vectors = MSI_DEF_NUM_VECTORS (32)
-> 	num_vectors == 0 && "msi0".."msin" => num_vectors = n * MAX_MSI_IRQS_PER_CTRL (n * 32)
-> 
->> +
->>   	pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
->>   
->>   	ret = dw_pcie_allocate_domains(pp);
->> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
->> index 9c1a38b0a6b3..3aa840a5b19c 100644
->> --- a/drivers/pci/controller/dwc/pcie-designware.h
->> +++ b/drivers/pci/controller/dwc/pcie-designware.h
->> @@ -179,6 +179,7 @@ struct dw_pcie_host_ops {
->>   
->>   struct pcie_port {
->>   	bool			has_msi_ctrl:1;
->> +	bool			has_split_msi_irq:1;
->>   	u64			cfg0_base;
->>   	void __iomem		*va_cfg0_base;
->>   	u32			cfg0_size;
-> 
-> Johan
-
-
--- 
-With best wishes
-Dmitry
+>> -- 
+>> 2.7.4
+>>
