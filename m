@@ -2,110 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 62DB052F8C0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 06:50:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 701C752F8CE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 07:01:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349910AbiEUEui (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 May 2022 00:50:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36774 "EHLO
+        id S243718AbiEUFBX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 May 2022 01:01:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349247AbiEUEug (ORCPT
+        with ESMTP id S230102AbiEUFBW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 May 2022 00:50:36 -0400
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E356ABF4C;
-        Fri, 20 May 2022 21:50:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1653108635; x=1684644635;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=itrPZ10vCeHTeIr/aBAglfxYV5UcpuxZ5RfmgaB90ME=;
-  b=EJM7hO7NJWfcxPPKxVfAMs8Z8yhkP8VrNI6VXLwBP4YNXXJP/RwIHtAo
-   ZyAEt+ThfJzA5nTILgz7RGYV7TLAa6yG1aDLJmNQwqeOXddmjMzMHbdaa
-   3hUBHdbFxHxlkQ3DF5oO0heusqeYThLZpAU4IlrJRmmKEMgwlUlkf3Yq/
-   Mladc3sSPGDKL0uLCeBQel/tMZiDJ5J/4W7ru4nDgxOIRuCDmOuLjubJX
-   9S2ntzlgiUCo05OAi5tH5NTkuwtMl1lgat/ylM1sf4+X3l/eKrK2DRrVE
-   bH115v14+OsdkL1la7Gc4GHy2VlDGgAGq51pyt0OIKYZSX0STnNjRfylH
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10353"; a="260392867"
-X-IronPort-AV: E=Sophos;i="5.91,240,1647327600"; 
-   d="scan'208";a="260392867"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2022 21:50:33 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,240,1647327600"; 
-   d="scan'208";a="576507411"
-Received: from lkp-server02.sh.intel.com (HELO 242b25809ac7) ([10.239.97.151])
-  by fmsmga007.fm.intel.com with ESMTP; 20 May 2022 21:50:30 -0700
-Received: from kbuild by 242b25809ac7 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nsH4P-0005wk-Dn;
-        Sat, 21 May 2022 04:50:29 +0000
-Date:   Sat, 21 May 2022 12:50:26 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     kbuild-all@lists.01.org, vladimir.zapolskiy@linaro.org,
-        mchehab@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
-        hfink@snap.com, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577 on
- cam1
-Message-ID: <202205211233.z5zpxDvl-lkp@intel.com>
-References: <20220518133004.342775-2-bryan.odonoghue@linaro.org>
+        Sat, 21 May 2022 01:01:22 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A01BF15A2A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 22:01:20 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id 30-20020a9d0121000000b0060ae97b9967so3716179otu.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 22:01:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=UDZikmMmW7LOzsqIKZTF2VDpB2asoObujnIee+1iKNY=;
+        b=AhhaXBrzRd+nwAFIiNxrEAC/SaV/MgI8LvHywhtLFr9VtKyhi5wBqo1dcSCmGKjN+Q
+         oL5jLN4RZCNte7cb24HNsFGamFSvPxJQTjrLqk5E55yxFJO/xolDOXC9VJPJ1tpjOSJE
+         nwu/Muu56VxqTQDE+T8d+UdqTYjStkJj6Ec1w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=UDZikmMmW7LOzsqIKZTF2VDpB2asoObujnIee+1iKNY=;
+        b=oVOU+4D0iKVdRSN/REKle4YjCr4eeUsCGmkFUJMoWK4QRYddh33K3Lb98rUvpgodvs
+         dzues2F8gk/FKuVJZJezg2Lt4r5iFhcsdTr29PPdCMEEu2+Qj67tsAqmZyHkG7gzxWJy
+         aBtKVyxaejlEGfOgFErVAc5vXxrZur0/DwRzjfYrR7HcKZrcfTWTyfS6sMCNkuxHbuXS
+         t7wxhXgIXbT2a6WZPhATw38xUCRNVT0WxpjPmjaxbaJMgvXDVFvh7qRq68n4TqZf1d3j
+         JckEHBEs8Hj+ui7lfk3W8CjdeykYQuh0fsRS4CY9hs/tc3wwh3tSOdgbUxkmFUis2uiA
+         KWTw==
+X-Gm-Message-State: AOAM533bjxzgr1COTCQZel7jGwhOA0bXciOB7cSbmhiy80p3w3fcBcEr
+        FEtoIUCLh66Y5ICg+5yLpOFcRiXhoL8nDAPeTDdKtg==
+X-Google-Smtp-Source: ABdhPJw2H/9RSW7B0qvFpp3EOJxZL1aXhQhGDUiRoZhZl36I3tUWGyRJz/81nw1c3KAvwm96RO/Ni8d0d8GQdpEcTm4=
+X-Received: by 2002:a9d:63cd:0:b0:606:9e7f:79f8 with SMTP id
+ e13-20020a9d63cd000000b006069e7f79f8mr5288634otl.77.1653109279965; Fri, 20
+ May 2022 22:01:19 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 20 May 2022 22:01:19 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220518133004.342775-2-bryan.odonoghue@linaro.org>
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20220520155305.v2.1.I26eca1856f99e6160d30de6d50ecab60e6226354@changeid>
+References: <20220520155305.v2.1.I26eca1856f99e6160d30de6d50ecab60e6226354@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 20 May 2022 22:01:19 -0700
+Message-ID: <CAE-0n50=dM90ekon-rA3zBV7DKt4xL4GHgzSigW2uOPL6HTnBA@mail.gmail.com>
+Subject: Re: [PATCH v2] soc: qcom: socinfo: Add an ID for sc7180P
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     matvore@chromium.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bryan,
+Quoting Douglas Anderson (2022-05-20 15:53:10)
+> Some sc7180 Chromebooks actually have sc7180P (known by many names,
+> apparently, including possibly sc7180 Pro and sc7185). This is a
+> sc7180 part that has slightly higher clock speeds.
+>
+> The official ID numbrer allocated to these devices by Qualcomm is 495
 
-I love your patch! Yet something to improve:
+s/numbrer/number/
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on v5.18-rc7]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+> so we'll add an entry to the table for them. Note that currently
+> shipping BIOS for these devices will actually end up reporting an ID
+> of 407 due to a bug but eventually a new BIOS will be released which
+> corrects it to 495.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Bryan-O-Donoghue/Switch-on-IMX577-on-RB5/20220518-213438
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20220521/202205211233.z5zpxDvl-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/9d9ad87ded5bf5f2f790a549863ad3d63b7336f3
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Bryan-O-Donoghue/Switch-on-IMX577-on-RB5/20220518-213438
-        git checkout 9d9ad87ded5bf5f2f790a549863ad3d63b7336f3
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
-
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> Error: arch/arm64/boot/dts/qcom/qrb5165-rb5.dts:1335.1-7 Label or path camcc not found
->> Error: arch/arm64/boot/dts/qcom/qrb5165-rb5.dts:1339.1-7 Label or path camss not found
->> Error: arch/arm64/boot/dts/qcom/qrb5165-rb5.dts:1361.1-6 Label or path cci1 not found
->> Error: arch/arm64/boot/dts/qcom/qrb5165-rb5.dts:1375.20-21 syntax error
-   FATAL ERROR: Unable to parse input tree
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
