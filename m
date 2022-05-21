@@ -2,46 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA79152FB3B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 13:14:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7676F52FB58
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 13:14:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348821AbiEULNn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 May 2022 07:13:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48312 "EHLO
+        id S1354991AbiEULN7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 May 2022 07:13:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350642AbiEULMQ (ORCPT
+        with ESMTP id S1354898AbiEULMt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 May 2022 07:12:16 -0400
+        Sat, 21 May 2022 07:12:49 -0400
 Received: from mail3-relais-sop.national.inria.fr (mail3-relais-sop.national.inria.fr [192.134.164.104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87C742ED70;
-        Sat, 21 May 2022 04:12:07 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57C184F9C2;
+        Sat, 21 May 2022 04:12:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=inria.fr; s=dc;
   h=from:to:cc:subject:date:message-id:mime-version:
    content-transfer-encoding;
-  bh=VlTqO9iHIDSjv7qWppQ7vdZBA2XKfkhsHv8HI9x2iF0=;
-  b=mSZdQ/rOUlQRW8ZCETVsw3oBv79/b7595cN0gjZSrHiGNOp5VfcCemNE
-   8iXM8flfF3Shqo8kEi8s2SJOOCl5x2hFfV91XWSL4+y4ic2uKd5jTOwrF
-   k5olQVXWXPfrLXYYiJhsA/mv2N0RG06hVF2xYDANUJFNwnvJceSeWGZO4
-   Y=;
+  bh=gzpQJI/4l4hMaFVZeeSTL4mFsKH6STSl0UKXBUWewJE=;
+  b=oHGj8diLmpgthet+7zwIdUD8xrcky8GS0VRlcE0kb53O5GiQ/+221HBv
+   iyVAXhfwlnF3NZBo1UwYBsxHjWHzDwH4feJUCYDqA9aSrKOA23MWRtdCY
+   hvivKaSc+X4Ln2ilomXm0Ik7/LFyufqnzXXvzA/d0nF+NdclN/hKuAzqX
+   U=;
 Authentication-Results: mail3-relais-sop.national.inria.fr; dkim=none (message not signed) header.i=none; spf=SoftFail smtp.mailfrom=Julia.Lawall@inria.fr; dmarc=fail (p=none dis=none) d=inria.fr
 X-IronPort-AV: E=Sophos;i="5.91,242,1647298800"; 
-   d="scan'208";a="14727929"
+   d="scan'208";a="14727967"
 Received: from i80.paris.inria.fr (HELO i80.paris.inria.fr.) ([128.93.90.48])
-  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2022 13:11:58 +0200
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2022 13:12:03 +0200
 From:   Julia Lawall <Julia.Lawall@inria.fr>
-To:     Amit Kucheria <amitk@kernel.org>
+To:     Andy Gross <agross@kernel.org>
 Cc:     kernel-janitors@vger.kernel.org,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] thermal/drivers/tsens: fix typo in comment
-Date:   Sat, 21 May 2022 13:10:44 +0200
-Message-Id: <20220521111145.81697-34-Julia.Lawall@inria.fr>
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] dmaengine: qcom: fix typo in comment
+Date:   Sat, 21 May 2022 13:11:12 +0200
+Message-Id: <20220521111145.81697-62-Julia.Lawall@inria.fr>
 X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -61,20 +57,20 @@ Detected with the help of Coccinelle.
 Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
 
 ---
- drivers/thermal/qcom/tsens.c |    2 +-
+ include/linux/dma/qcom-gpi-dma.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 7963ee33bf75..c96a188b73e1 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -26,7 +26,7 @@
-  * @up_viol:        upper threshold violated
-  * @up_thresh:      upper threshold temperature value
-  * @up_irq_mask:    mask register for upper threshold irqs
-- * @up_irq_clear:   clear register for uppper threshold irqs
-+ * @up_irq_clear:   clear register for upper threshold irqs
-  * @low_viol:       lower threshold violated
-  * @low_thresh:     lower threshold temperature value
-  * @low_irq_mask:   mask register for lower threshold irqs
+diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
+index f46dc3372f11..6680dd1a43c6 100644
+--- a/include/linux/dma/qcom-gpi-dma.h
++++ b/include/linux/dma/qcom-gpi-dma.h
+@@ -26,7 +26,7 @@ enum spi_transfer_cmd {
+  * @clk_div: source clock divider
+  * @clk_src: serial clock
+  * @cmd: spi cmd
+- * @fragmentation: keep CS assserted at end of sequence
++ * @fragmentation: keep CS asserted at end of sequence
+  * @cs: chip select toggle
+  * @set_config: set peripheral config
+  * @rx_len: receive length for buffer
 
