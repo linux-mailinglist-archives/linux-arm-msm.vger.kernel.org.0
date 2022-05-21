@@ -2,75 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4111952F61C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 01:21:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3BD552F68E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 02:07:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245620AbiETXV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 19:21:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58746 "EHLO
+        id S233295AbiEUAH1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 May 2022 20:07:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234434AbiETXV5 (ORCPT
+        with ESMTP id S232019AbiEUAH0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 19:21:57 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A31291966A6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 16:21:55 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id gi33so9661495ejc.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 16:21:55 -0700 (PDT)
+        Fri, 20 May 2022 20:07:26 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4596185CBA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 17:07:24 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id i27so18242679ejd.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 17:07:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=f989wjQBWky1VnvYFagt1zjTfmuK0hLH870FJFKov5Q=;
-        b=V+kj5frWT026Sqek0GhQVobd/rXWEguXk45ZmlnyWIvQCGnsAhnGB4YNjWneQ9yzIo
-         nXGaoT/lYx6hAxi0VlTEH2ST42EmfMSwH/eh2HQhA2aSYo3PaApIA++ilEBadxkzs6As
-         ILXzSTtH1x1yby8OP+C8kScsWWyWM+hnoBoVE=
+         :cc:content-transfer-encoding;
+        bh=5Hxa6+qS9fIPO89ddVWrccYQHlKE1/5D9kW9MMuathA=;
+        b=BsLD0XyXQ6aUCt8XdDDdgGJx+e5CnjRgib2MXW3YMcy9F0tjwKE/PR2zGvDsh4ybfo
+         BZ2cjEIABtYk0dWKUDXWwvfb7NO9dp99AxzPhlbN55/jlO9oNey5Wi/tZEBV9ufUL3A0
+         M2AJvVZ+jvu39U7CUih5oopgEUx5/RTQrULf0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=f989wjQBWky1VnvYFagt1zjTfmuK0hLH870FJFKov5Q=;
-        b=0f74hdm5YYXq/uqUMWme+W0/lT/SJV8UTZxq5oWJYY8mso8gdfp9xHReKhqnDOCKyM
-         nxw7Fg7QQEOTTom7eJdRAWcS6M2wfy5hxNiwUDk42QhvK/a4d0HCxscIWKzaJ+uqCtxp
-         O3rbxFMpfjsXuNMAO7a00VL1TOb79F8DwAZAyhZe8rQnIt5wdWd9VUJw1I0MlS6D74kD
-         XsP5wBMcYR2lybHTePyhObJM5HSiY/fHN2QrgkCoztXRKXj42u6jo5PRSzGP+LLY0uTb
-         AKIowrw8jGymifnItwoAeMaNwliDmvZpez31qxbYdDWdZR1BSyn9QlgoKBeRSRU5FihZ
-         rsPQ==
-X-Gm-Message-State: AOAM532uCF+O/nTJB/Vc6je5H5bihfkyq5jNakwVfDz/pvfVBsGcNBby
-        1rGonm6V5vr7aCKgIUepxuBHMyY5mhYU3OQIhJk=
-X-Google-Smtp-Source: ABdhPJymvjTwIShFwvm/Ad7csZdRu3+gbll398f+GkJyZphyWd25/wZnaN+kafVP4bpLccaKax247Q==
-X-Received: by 2002:a17:907:6d22:b0:6f4:85c1:5a07 with SMTP id sa34-20020a1709076d2200b006f485c15a07mr10535388ejc.733.1653088913985;
-        Fri, 20 May 2022 16:21:53 -0700 (PDT)
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com. [209.85.221.48])
-        by smtp.gmail.com with ESMTPSA id n9-20020a17090673c900b006f3ef214de7sm3594590ejl.77.2022.05.20.16.21.52
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5Hxa6+qS9fIPO89ddVWrccYQHlKE1/5D9kW9MMuathA=;
+        b=baS8VVhl9Dn2M+0jf6kODLpwEQhZpw1MbD3u8b14LthubwZpGJhqgxb5v5s/w10FNB
+         1SHg093QCeCdHGjb9HzELUxjwW76/5repA0T7ACRlnqFKScHmd0uWUwyvs8GDxS+RtEG
+         hkePRhTGZXhQI8ipPrJKrsymnG4PvpKHMZ+reiod5p4OeJM2SRJ+QTIoiYWYA1YJ/MvL
+         Q231VtI2/VkOlbJrjDFEpZ4449gjJu4K8FHcdrx/H/oMXSt/UKwa15XUMEba2iEZQM3U
+         uJE3+Y4Lrj6clwigIo16SX2MbtEWdOrQ+mthlIDzFx78YTocHrLl5KiWmF1s4Ksek5ef
+         AQlg==
+X-Gm-Message-State: AOAM531wKj21uItk5G4HFMdByom0UzogucHBZAJ0w8D9/XX5WAUCqVYc
+        25nwdKax2sSWUs8He453fGjnAXP8obzEZCcDszE=
+X-Google-Smtp-Source: ABdhPJxRdmvYUE5KtmABGtC4ASz7MvOHA2wR7iRGsTiSyEqbFKVmVJDCKEjUcj+cYZsiuxL7Lr63lw==
+X-Received: by 2002:a17:906:6985:b0:6fe:988b:d248 with SMTP id i5-20020a170906698500b006fe988bd248mr9515019ejr.226.1653091643093;
+        Fri, 20 May 2022 17:07:23 -0700 (PDT)
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com. [209.85.218.45])
+        by smtp.gmail.com with ESMTPSA id qp24-20020a170907a21800b006f3ef214e5bsm1739889ejc.193.2022.05.20.17.07.22
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 May 2022 16:21:52 -0700 (PDT)
-Received: by mail-wr1-f48.google.com with SMTP id w4so13274129wrg.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 16:21:52 -0700 (PDT)
-X-Received: by 2002:a5d:5085:0:b0:20d:5f6:63fa with SMTP id
- a5-20020a5d5085000000b0020d05f663famr9821782wrt.679.1653088911844; Fri, 20
- May 2022 16:21:51 -0700 (PDT)
+        Fri, 20 May 2022 17:07:22 -0700 (PDT)
+Received: by mail-ej1-f45.google.com with SMTP id jx22so4803703ejb.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 May 2022 17:07:22 -0700 (PDT)
+X-Received: by 2002:a05:6000:1c03:b0:20e:5cac:1eb5 with SMTP id
+ ba3-20020a0560001c0300b0020e5cac1eb5mr10297360wrb.422.1653091321358; Fri, 20
+ May 2022 17:02:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220520231355.1559104-1-swboyd@chromium.org>
-In-Reply-To: <20220520231355.1559104-1-swboyd@chromium.org>
+References: <20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
+ <5857c510-9783-a483-8414-65d7350618d6@suse.de>
+In-Reply-To: <5857c510-9783-a483-8414-65d7350618d6@suse.de>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 20 May 2022 16:21:39 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WFnq42qBgsASPD9_71zFehO3kW2jPWPaD8L5AzixCbjA@mail.gmail.com>
-Message-ID: <CAD=FV=WFnq42qBgsASPD9_71zFehO3kW2jPWPaD8L5AzixCbjA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: Remove duplicate sc7180-trogdor include
- on lazor
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+Date:   Fri, 20 May 2022 17:01:49 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X99EWmRk82ako7cL7BWPEsTG=L7VVBVDFX5qKc1MifSA@mail.gmail.com>
+Message-ID: <CAD=FV=X99EWmRk82ako7cL7BWPEsTG=L7VVBVDFX5qKc1MifSA@mail.gmail.com>
+Subject: Re: [PATCH v3] drm/probe-helper: Make 640x480 first if no EDID
+To:     Thomas Zimmermann <tzimmermann@suse.de>,
+        =?UTF-8?Q?St=C3=A9phane_Marchesin?= <marcheu@chromium.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "Joseph S. Barrera III" <joebar@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,29 +93,216 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Fri, May 20, 2022 at 4:14 PM Stephen Boyd <swboyd@chromium.org> wrote:
+On Mon, May 16, 2022 at 3:28 AM Thomas Zimmermann <tzimmermann@suse.de> wro=
+te:
 >
-> The sc7180-trogdor-lazor-*.dtsi files all include sc7180-trogdor.dtsi
-> and sc7180-trogdor-lazor.dtsi, so including it here in the
-> sc7180-trogdor-lazor.dtsi file means we have a duplicate include after
-> commit 19794489fa24 ("arm64: dts: qcom: Only include sc7180.dtsi in
-> sc7180-trogdor.dtsi"). We include the sc7180-trogdor.dtsi file in a
-> board like sc7180-trogdor-lazor-r1.dts so that we can include the
-> display bridge snippet (e.g. sc7180-trogdor-ti-sn65dsi86.dtsi) instead
-> of making ever increasing variants like
-> sc7180-trogdor-lazor-ti-sn65dsi86.dtsi.
+> Hi Douglas,
 >
-> Fix this by dropping the include and making a note that the
-> sc7180-trogdor-lazor.dtsi file must be included after
-> sc7180-trogdor.dtsi
+> I understand that you're trying to tell userspace that the modelist has
+> been made up, but it's not something that should be done via fragile
+> heuristics IMHO.
 >
-> Reported-by: Douglas Anderson <dianders@chromium.org>
-> Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Fixes: 19794489fa24 ("arm64: dts: qcom: Only include sc7180.dtsi in sc7180-trogdor.dtsi")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> I looked at the Chromium source code that you linked, but I cannot say
+> whether it's doing the correct thing. It all depends on what your
+> program needs.
+>
+> In that function, you could also search for 'DRM_MODE_TYPE_USERDEF'.
+> It's the mode that the user specified on the kernel command line. If
+> Chromium's automatic mode selection fails, you'd give your users direct
+> control over it.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+That doesn't really work for Chrome OS. Certainly a kernel hacker
+could do this, but it's not something I could imagine us exposing to
+an average user of a Chromebook.
+
+
+> When there's no flagged mode or if
+> /sys/class/drm/card<...>/status contains "unconnected", you can assume
+> that the modelist is artificial and try the modes in an appropriate order=
+.
+
+So "no flagged" means that nothing is marked as preferred, correct?
+
+...so I guess what you're suggesting is that the order that the kernel
+is presenting the modes to userspace is not ABI. If there are no
+preferred modes then userspace shouldn't necessarily assume that the
+first mode returned is the best mode. Instead it should assume that if
+there is no preferred mode then the mode list is made up and it should
+make its own decisions about the best mode to start with. If this is
+the ABI from the kernel then plausibly I could convince people to
+change userspace to pick 640x480 first in this case.
+
+> If we really want the kernel to give additional guarantees, we should
+> have a broader discussion about this topic IMHO.
+
+Sure. I've added St=C3=A9phane Marchesin to this thread in case he wants to
+chime in about anything.
+
+Overall, my take on the matter:
+
+* Mostly I got involved because, apparently, a DP compliance test was
+failing. The compliance test was upset that when it presented us with
+no EDID that we didn't default to 640x480. There was a push to make a
+fix for this in the Qualcomm specific driver but that didn't sit right
+with me.
+
+* On all devices I'm currently working with (laptops), the DP is a
+secondary display. If a user was trying to plug in a display with a
+bad EDID and the max mode (1024x768) didn't work, they could just use
+the primary display to choose a different resolution. It seems
+unlikely a user would truly be upset and would probably be happy they
+could get their broken display to work at all. Even if this is a
+primary display, I believe there are documented key combos to change
+the resolution of the primary display even if you can't see anything.
+
+* That all being said, defaulting to 640x480 when there's no EDID made
+sense to me, especially since it's actually defined in the DP spec. So
+I'm trying to do the right thing and solve this corner case. That
+being said, if it's truly controversial I can just drop it.
+
+
+So I guess my plan will be to give St=C3=A9phane a little while in case he
+wants to chime in. If not then I guess I'll try a Chrome patch...
+...and if that doesn't work, I'll just drop it.
+
+
+> Best regards
+> Thomas
+>
+> [1]
+> https://elixir.bootlin.com/linux/v5.17.8/source/drivers/gpu/drm/drm_sysfs=
+.c#L196
+>
+> Am 13.05.22 um 22:06 schrieb Douglas Anderson:
+> > If we're unable to read the EDID for a display because it's corrupt /
+> > bogus / invalid then we'll add a set of standard modes for the
+> > display. Since we have no true information about the connected
+> > display, these modes are essentially guesses but better than nothing.
+> > None of the modes returned is marked as preferred, but the modes are
+> > currently sorted such that the higher resolution modes are listed
+> > first.
+> >
+> > When userspace sees these modes presented by the kernel it needs to
+> > figure out which one to pick. At least one userspace, ChromeOS [1]
+> > seems to use the rules:
+> > 1. Try to pick the first mode marked as preferred.
+> > 2. If no modes were marked as preferred then pick the first mode.
+> >
+> > The rules above seem pretty reasonable, but they have unfortunate side
+> > effect that when we have no EDID present we'll default to the highest
+> > resolution (least likely to work) mode.
+> >
+> > Let's change things slightly. In the case of a failed EDID read we
+> > still won't mark anything preferred but we _won't_ sort the modes at
+> > the end of drm_helper_probe_single_connector_modes(). The
+> > drm_add_modes_noedid() adds 640x480 first and so by skipping the call
+> > to drm_mode_sort() it will stay first. That will be a hint to
+> > userspace to default to 640x480.
+> >
+> > This change makes userspace that behaves like ChromeOS does compliant
+> > with section 4.2.2.6 (EDID Corruption Detection) of the DP 1.4a Link
+> > CTS. That section indicates that, at least on DP, if we have a corrupt
+> > EDID userspace may allow other modes to be tried but should default to
+> > 640x480 in the absence of more information. Note that if
+> > drm_add_modes_noedid() ever changes to _not_ list 640x480 first we
+> > might need to do more here, but that seems unlikely and, in any case,
+> > it would be caught by a future run of DP compliance testing.
+> >
+> > Note: this change could pave the way to further improvement to
+> > drm_helper_probe_single_connector_modes(). Specifically, in the case
+> > of no EDID we could add additional "standard" modes that are riskier
+> > than 1024x768 (the current max we add). Now that we're giving
+> > userspace the hint that it should default to 640x480 perhaps it would
+> > be OK to offer the options of the higher resolution modes just in case
+> > they work. This further improvement is left as an exercise to the
+> > reader.
+> >
+> > [1] https://source.chromium.org/chromium/chromium/src/+/a051f741d0a15ca=
+ff2251301efe081c30e0f4a96:ui/ozone/platform/drm/common/drm_util.cc;l=3D488
+> >
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+> > Note that this is the second of two related and similar-sounding but
+> > different patches. See also ("drm/probe-helper: For DP, add 640x480 if
+> > all other modes are bad") [2]. I'm hoping to land _both_ of the
+> > patches since they address different issues. This patch addresses the
+> > case of a corrupt EDID and having 640x480 be the default in the
+> > "guessed" modes. The other patch handles the case where the EDID
+> > _isn't_ corrupt but all the modes listed can't be made with the
+> > existing situations. The two patches can land in either order.
+> >
+> > Also note that I didn't carry any Tested-by / Reviewed-by tags since
+> > the patch is now quite different (yet again for v2 to v3).
+> >
+> > [2] https://lore.kernel.org/r/20220510131309.v2.2.I4ac7f55aa446699f8c20=
+0a23c10463256f6f439f@changeid
+> >
+> > Changes in v3:
+> > - Don't set preferred, just disable the sort.
+> >
+> > Changes in v2:
+> > - Don't modify drm_add_modes_noedid() 'cause that'll break others
+> > - Set 640x480 as preferred in drm_helper_probe_single_connector_modes()
+> >
+> >   drivers/gpu/drm/drm_probe_helper.c | 14 ++++++++++++--
+> >   1 file changed, 12 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_p=
+robe_helper.c
+> > index 682359512996..21dd60f30cc7 100644
+> > --- a/drivers/gpu/drm/drm_probe_helper.c
+> > +++ b/drivers/gpu/drm/drm_probe_helper.c
+> > @@ -425,6 +425,7 @@ int drm_helper_probe_single_connector_modes(struct =
+drm_connector *connector,
+> >       bool verbose_prune =3D true;
+> >       enum drm_connector_status old_status;
+> >       struct drm_modeset_acquire_ctx ctx;
+> > +     bool sort_list =3D true;
+> >
+> >       WARN_ON(!mutex_is_locked(&dev->mode_config.mutex));
+> >
+> > @@ -516,8 +517,16 @@ int drm_helper_probe_single_connector_modes(struct=
+ drm_connector *connector,
+> >               count =3D drm_add_override_edid_modes(connector);
+> >
+> >       if (count =3D=3D 0 && (connector->status =3D=3D connector_status_=
+connected ||
+> > -                        connector->status =3D=3D connector_status_unkn=
+own))
+> > +                        connector->status =3D=3D connector_status_unkn=
+own)) {
+> >               count =3D drm_add_modes_noedid(connector, 1024, 768);
+> > +             /*
+> > +              * Want lower res modes, like 640x480, first. That indica=
+tes
+> > +              * to userspace that these are "better" modes. Since we h=
+ave
+> > +              * no EDID the modes are a guess anyway, so guess the saf=
+er
+> > +              * mode first.
+> > +              */
+> > +             sort_list =3D false;
+> > +     }
+> >       count +=3D drm_helper_probe_add_cmdline_mode(connector);
+> >       if (count =3D=3D 0)
+> >               goto prune;
+> > @@ -576,7 +585,8 @@ int drm_helper_probe_single_connector_modes(struct =
+drm_connector *connector,
+> >       if (list_empty(&connector->modes))
+> >               return 0;
+> >
+> > -     drm_mode_sort(&connector->modes);
+> > +     if (sort_list)
+> > +             drm_mode_sort(&connector->modes);
+> >
+> >       DRM_DEBUG_KMS("[CONNECTOR:%d:%s] probed modes :\n", connector->ba=
+se.id,
+> >                       connector->name);
+>
+> --
+> Thomas Zimmermann
+> Graphics Driver Developer
+> SUSE Software Solutions Germany GmbH
+> Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+> (HRB 36809, AG N=C3=BCrnberg)
+> Gesch=C3=A4ftsf=C3=BChrer: Ivo Totev
