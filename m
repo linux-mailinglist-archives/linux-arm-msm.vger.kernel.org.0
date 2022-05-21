@@ -2,98 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C15C552FE1D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 18:30:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE21752FE2F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 18:38:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241999AbiEUQaS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 May 2022 12:30:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41682 "EHLO
+        id S235343AbiEUQhw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 May 2022 12:37:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234823AbiEUQaR (ORCPT
+        with ESMTP id S243521AbiEUQhu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 May 2022 12:30:17 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 134DF5DA59
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 09:30:16 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id v8so17042277lfd.8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 09:30:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=PGBKowGCoeyprTPxflo5hOw6ZsrzCB6ERHnnGHq/KYo=;
-        b=Ypcu4oldjujCnq1a0IGwU6jLY5+8WCUreESJXATi6Qovw+IleuNJSO+2jmPE1XWKN0
-         hKc/k0bwQUKpkype0T6QU478eaxR6ZCQacT93XOrauRrCx4iQxj3At2h59XbPN8abk8+
-         HEx4xTZX/v1EW7hr2lDTU3zbvCPeVyzsy1lXY/Q+j2ZqpmXDbYt/TzJ7klquZyXBfKaZ
-         QO0Hdde9Vto5oLZtIgEmiIA81Cw7FR96CkBYYXP7HL6awGac1mvigRv7wMLceJreNYP0
-         2LKAsGzJE2/M7u9v52sM+vdncj4VlWx8+4GaNtXB9wju5Xj27dFs2Cz6cRCePxIEukum
-         VTaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=PGBKowGCoeyprTPxflo5hOw6ZsrzCB6ERHnnGHq/KYo=;
-        b=bySmWd4hy8kHktc9A86yvrLEsKD3K1s6mdhusVNKF/DOPAkJ4dqpZybbxCNSe0Nm3z
-         F2269SlnTQFpRj6UJGxg4/0cvjU7xYP5K9vKJuwn5rYY+qgWrodAq8zbFR7k0p0QZM8j
-         Cirh6J2ky9u9JBfToy1kMXhLqHpeu3+LEcWryZDvFROSQyon+XSIetKyBJjr3bekhQrU
-         pxNuVA5LbAZXDE81z9MJqv8v22hFjuX2mL+Kw9qdVO/GqJCPCmLKdfFLzplhYpv9MZNh
-         JhjU92Y7XXYypnZqI7+AYyHsTDBy0tPmpiaI2gJXOMT4QWF1UWeaGWl5992e/X8AAKhj
-         h3Rg==
-X-Gm-Message-State: AOAM5338QaX4asLrrkayvKlG+cuw0fdL3LWCTbEpZElaS1m8/3IqGQWW
-        R939rI2dmvoZeRpcmUBbJmUKdQ==
-X-Google-Smtp-Source: ABdhPJxL6iU3sfYlXLAgwObscAzISzM2kLl9BJSHVBNyiFP7oul0c4GdOkN3gD7jEf6gm2Ysq+6zZg==
-X-Received: by 2002:a05:6512:e8f:b0:477:b08c:1727 with SMTP id bi15-20020a0565120e8f00b00477b08c1727mr10740433lfb.309.1653150614443;
-        Sat, 21 May 2022 09:30:14 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id q20-20020a19a414000000b0047255d211e2sm1107915lfc.273.2022.05.21.09.30.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 May 2022 09:30:13 -0700 (PDT)
-Message-ID: <d89c882d-08ed-a212-a451-55f08235fa7f@linaro.org>
-Date:   Sat, 21 May 2022 18:30:12 +0200
+        Sat, 21 May 2022 12:37:50 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFFC360D90;
+        Sat, 21 May 2022 09:37:45 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id EE475B808BC;
+        Sat, 21 May 2022 16:37:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3840C385A5;
+        Sat, 21 May 2022 16:37:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1653151062;
+        bh=oLAo7yoCIIJydsY2tXSPp0MW8Xnzu9IsjAh2zBPQAtI=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=DKKm5Y7tM0gSXmHEndCZolm0CK7SQisTs0ONk8+uP7CaKvS58Z5CHSu2ksNiMnqNY
+         dnPLoinO++K0LQAHDE8hPITnLSobPt3212wFir9lJq67802KdtHyl9C53hInzigcrb
+         Yovk4B6HD5tSTBfUbN0WMLtgiC2wICaB1/VYaC0gjt0YkQAB3Z5QjqPJDGiqGQ915A
+         gO6VMs9+JiaKYK8zjK62Lc+FxqFm2DVpd6FtMKJDeL6KE7Jy1DPwe1c4wK9/RPeIN2
+         ACeRvDxVt5L/R5bvFWiCqpLmbErdYQ+wGEju0aP9KfMHTqoWbqCRaoj7vMuSv66iFt
+         sAcV2BdTOnygw==
+Message-ID: <a1adf68a-f6a4-1c01-f539-1bf3e21ce00b@kernel.org>
+Date:   Sat, 21 May 2022 18:37:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.1
 Subject: Re: [PATCH v6 11/11] dt-bindings: arm: qcom: document sda660 SoC and
  ifc6560 board
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 References: <20220521152049.1490220-1-dmitry.baryshkov@linaro.org>
  <20220521152049.1490220-12-dmitry.baryshkov@linaro.org>
- <20220521162051.jufjhqzz4wte3h6z@SoMainline.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220521162051.jufjhqzz4wte3h6z@SoMainline.org>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <20220521152049.1490220-12-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/05/2022 18:20, Marijn Suijten wrote:
-> On 2022-05-21 18:20:49, Dmitry Baryshkov wrote:
->> Add binding documentation for the Inforce IFC6560 board which uses
->> Snapdragon SDA660.
->>
->> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 21/05/2022 17:20, Dmitry Baryshkov wrote:
+> Add binding documentation for the Inforce IFC6560 board which uses
+> Snapdragon SDA660.
 > 
-> Nit: don't dt-bindings patches go _before_ using these in dts?  In ohter
-> words, should patch 10 and 11 be swapped?
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 129cdd246223..ac4ee0f874ea 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -41,6 +41,7 @@ description: |
+>          sa8155p
+>          sc7180
+>          sc7280
+> +        sda660
 
-Yes, they should.
+I wanted to base my work on top of it, but this patch does not apply. I
+think you based it on something out of date, also judging by my old
+email address you are using (in each patchset). The patches should be
+based on current development tree.
+
 
 Best regards,
 Krzysztof
