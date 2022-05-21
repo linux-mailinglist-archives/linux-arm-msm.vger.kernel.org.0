@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0408E52FD9B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 17:14:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5777652FD9F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 17:14:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244961AbiEUPOq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 May 2022 11:14:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38296 "EHLO
+        id S1345787AbiEUPOr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 May 2022 11:14:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244879AbiEUPOo (ORCPT
+        with ESMTP id S244933AbiEUPOp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 May 2022 11:14:44 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC26456210
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 08:14:41 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id y32so18776723lfa.6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 08:14:41 -0700 (PDT)
+        Sat, 21 May 2022 11:14:45 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E02656214
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 08:14:43 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id u7so11800579ljd.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 08:14:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=IVrVm4lSXqU5biEI9mdh0jre39IASlXjjmo6QOig9Tg=;
-        b=SwTmFKXT+/5fPsDfWxS6xOsleNDsDZUYcGxqWB5+m2IiMPPvVJSxl8+NeJeue960sT
-         7fusG/WujXGe5l3qNTROQu+D5AaPYqrzxEyRbl9NEj52/BIGjbiO5JGjOGDttT5qpQnL
-         eUiVj1w+gbv7wWzhCE7aEnCz35y2OPYvcSRauHMv0OOTttkVbHo/JQ9WxH+/XjcF2hsU
-         sBma0pWirzLqONUe23yxMNpMR8JP4NeftMuXC+UfC7NGUKamwClp1DJoko2J1fhxyy6m
-         HEqqIBEvkAWyLEUckCIz+P0ohCYQCb24WpWDsvUDA0vmiXYMtYmp7i5Hd915cKVerxbz
-         kvUw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=UwkwcGKoksv09GJQbCQ4l/+czpMeUCe0OFbPY533J+4=;
+        b=d/TxhrfImNz5hVaB9J0qBolh/53XhZVIBisENi8rpOFJLetbWurTyn/8XbD8wtOkvM
+         eJ66alCCmzDZ9AhH2QSaWfykM01ZysMcLFhyP2ccux+m+4P7W6ml2YSielJbaJNyF4Wd
+         ZrT6glpjmDiYWXvodKresSKkabi3x/O03lOKKUGGX+1FAqjFVy8Q/B0w5xnVGApjl/DX
+         GqEazPBAdihKCej+RpZ6SxZq7CA8AftU0aGrBK1oIYqa+X0UT/rRRtZEQRPNrQ8oATwa
+         HGcHEu2b0vpeFandhZEETxj34v3CP2NyfZJkREise3CAKRpv2DVKjXzFOl6Dn2jjY/Ry
+         MSbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=IVrVm4lSXqU5biEI9mdh0jre39IASlXjjmo6QOig9Tg=;
-        b=DLJ9TJpwkAiUJbluxCakLaektjqqSNedTiSOkm/J01llG4aHhOQfIOvybvxuAdrbRF
-         WnOCfvcyF2jJuPPAa7VIed7UV3XgUWriY3KzAyfOlvh0whrRqQSvAq8FJA+gE5GWknfh
-         fQOtqleDevV39LRERxK6JEh3i7i+O79V6PSG6J66J1AAagqtGDcBiUlns1h9KbqeKkJJ
-         yQQ3nyssMS+0jWI478DYbGfKrS+rE/oL4ctG7Na/7hGg2kNlCEV8h2vah+f4KtUN9qMd
-         suKMFiDrdnQ6+Q/hKKcOeDh0NOE1bmPAcU1UX8CUUwGIWXQK6jsNpjuL/nx//nENaAML
-         NYdQ==
-X-Gm-Message-State: AOAM533RJcnpDSOWJb5ceRkXYYMiHg2Ajm+HN5UlaePRHp8Lt4Ep9a2g
-        ERBnsPLY1xA5no7qIXD8o5NTrA==
-X-Google-Smtp-Source: ABdhPJyxroTl2iSpRmG+DIWc3EEE2wlSHABfRDwZDTTP7JwHUOuhvZnNzsDi1ATHf4/MvY7fLFLv+w==
-X-Received: by 2002:a05:6512:1321:b0:477:9f1a:a5dd with SMTP id x33-20020a056512132100b004779f1aa5ddmr10623558lfu.443.1653146080255;
-        Sat, 21 May 2022 08:14:40 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=UwkwcGKoksv09GJQbCQ4l/+czpMeUCe0OFbPY533J+4=;
+        b=Q900fqs7CiI0kH3P+LlS3n/H6dOqAnaPcoczUiGhxLu9HZImZkh5hLk8FY0TN7ElS3
+         wEuns5AxgR4g8X2MzDMj8YCA93Mz/qrDg4STOVwVwZCXYciKXnoAl3lWG4gKKNRk/ftt
+         FPVMB4Vb13xmkdaXI+lWAP50UUQNtpd/jljGe7boTa5rXZouOVhOMXURwbzeCXp3ud0v
+         XDgLuz7Lhy7QaqBeogkkFoXiSoD1o9I6lcW/JaFmWp27Wb+okUgzQIn+5eDC9wOcFBdk
+         3iQjeFHNP5U7KH9e6YXxZhoiV0pUuj4YhXMD9nqp5y4MdbniTXQ7LXXt70xh0+la2F3+
+         Gnrg==
+X-Gm-Message-State: AOAM533SxPuwEe/QWce23C274wtPfWrv9mE4aHHdcFIxnH06kXMS7MR9
+        7DSHmKATmvX4PSbgQWM8SXD3yw==
+X-Google-Smtp-Source: ABdhPJxTvEP2E71Kg4FwVPHnJedh1yiQhNPMwH8JMw32maTSl42FHBWVjh8bAoRUzC5/nL8YDiE9tw==
+X-Received: by 2002:a05:651c:510:b0:24f:545c:9362 with SMTP id o16-20020a05651c051000b0024f545c9362mr8436171ljp.263.1653146081931;
+        Sat, 21 May 2022 08:14:41 -0700 (PDT)
 Received: from eriador.lumag.spb.ru ([94.25.229.156])
-        by smtp.gmail.com with ESMTPSA id v22-20020a2e7a16000000b0024f3d1daedfsm716849ljc.103.2022.05.21.08.14.38
+        by smtp.gmail.com with ESMTPSA id v22-20020a2e7a16000000b0024f3d1daedfsm716849ljc.103.2022.05.21.08.14.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 May 2022 08:14:39 -0700 (PDT)
+        Sat, 21 May 2022 08:14:41 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -56,11 +56,13 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v6 0/4] arm: qcom: qcom-apq8064: add separate device node for tsens
-Date:   Sat, 21 May 2022 18:14:33 +0300
-Message-Id: <20220521151437.1489111-1-dmitry.baryshkov@linaro.org>
+        devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>
+Subject: [PATCH v6 1/4] dt-bindings: clock: qcom,gcc-apq8064: move msm8960 compat from gcc-other.yaml
+Date:   Sat, 21 May 2022 18:14:34 +0300
+Message-Id: <20220521151437.1489111-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220521151437.1489111-1-dmitry.baryshkov@linaro.org>
+References: <20220521151437.1489111-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,47 +75,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently gcc-msm8960 driver manually creates tsens device. Instantiate
-the device using DT node instead. This makes the APQ8064 follow the
-IPQ8064 device tree schema (which is also closer to the way tsens
-devices are described on newer Qualcomm platforms).
+MSM8960 shares the design (and the driver) of the global clock
+controller with APQ8064. Move it from clock/qcom,gcc-other.yaml to
+clock/qcom,gcc-apq8064.yaml.
 
-Compatibility with the previous devices trees is kept intact.
+As the example in gcc-other.yaml was using qcom,gcc-msm8960 compat string,
+change it to qcom,gcc-msm8974.
 
-Changes since v5:
-- Inherited the gcc-msm8960 patch from another patchseries.
-- Marked old nvmem/thermal sensor properties as deprecated (Krzyshtof).
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ .../devicetree/bindings/clock/qcom,gcc-apq8064.yaml         | 6 ++++--
+ Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml | 5 ++---
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-Changes since v4:
-- Added thermal-sensor description to the qcom,gcc-apq8064 schema
-
-Changes since v3:
-- Fix a typo qcom,gcc-msm8060 -> qcom,gcc-msm8960 (noted by Krzyshtof)
-- Fixed indentation in the example (also noted by Krzyshtof)
-
-Changes since v2:
-- Remove patches merged by Daniel
-- Rephrase commit messages to emphasize that these changes make apq8064
-  follow ipq8064
-
-Changes since v1:
-- populate child devices in gcc-msm8960
-- add syscon to the gcc device tree node
-
-Dmitry Baryshkov (4):
-  dt-bindings: clock: qcom,gcc-apq8064: move msm8960 compat from
-    gcc-other.yaml
-  dt-bindings: clock: qcom,gcc-apq8064: split tsens to the child node
-  clk: qcom: gcc-msm8960: create tsens device if there are no child
-    nodes
-  arm: dts: qcom-apq8064: create tsens device node
-
- .../bindings/clock/qcom,gcc-apq8064.yaml      | 40 ++++++++++++++-----
- .../bindings/clock/qcom,gcc-other.yaml        |  5 +--
- arch/arm/boot/dts/qcom-apq8064.dtsi           | 25 ++++++++----
- drivers/clk/qcom/gcc-msm8960.c                |  6 ++-
- 4 files changed, 55 insertions(+), 21 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+index 9fafcb080069..bd7b04c75e50 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+@@ -4,7 +4,7 @@
+ $id: http://devicetree.org/schemas/clock/qcom,gcc-apq8064.yaml#
+ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+-title: Qualcomm Global Clock & Reset Controller Binding for APQ8064
++title: Qualcomm Global Clock & Reset Controller Binding for APQ8064/MSM8960
+ 
+ allOf:
+   - $ref: qcom,gcc.yaml#
+@@ -23,7 +23,9 @@ description: |
+ 
+ properties:
+   compatible:
+-    const: qcom,gcc-apq8064
++    enum:
++      - qcom,gcc-apq8064
++      - qcom,gcc-msm8960
+ 
+   nvmem-cells:
+     minItems: 1
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+index 142402f29d98..8c54af4ae6d2 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+@@ -47,7 +47,6 @@ properties:
+       - qcom,gcc-msm8916
+       - qcom,gcc-msm8939
+       - qcom,gcc-msm8953
+-      - qcom,gcc-msm8960
+       - qcom,gcc-msm8974
+       - qcom,gcc-msm8974pro
+       - qcom,gcc-msm8974pro-ac
+@@ -61,10 +60,10 @@ required:
+ unevaluatedProperties: false
+ 
+ examples:
+-  # Example for GCC for MSM8960:
++  # Example for GCC for MSM8974:
+   - |
+     clock-controller@900000 {
+-      compatible = "qcom,gcc-msm8960";
++      compatible = "qcom,gcc-msm8974";
+       reg = <0x900000 0x4000>;
+       #clock-cells = <1>;
+       #reset-cells = <1>;
 -- 
 2.35.1
 
