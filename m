@@ -2,125 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF14F52F931
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 08:14:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31C1C52FA36
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 11:18:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238998AbiEUGOt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 May 2022 02:14:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56248 "EHLO
+        id S231176AbiEUJSD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 May 2022 05:18:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233827AbiEUGOs (ORCPT
+        with ESMTP id S230144AbiEUJSA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 May 2022 02:14:48 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6040F166696;
-        Fri, 20 May 2022 23:14:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653113685; x=1684649685;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=88h/XalmwpDNbt5yjyOWwQF42/+dZnwpPutE6jurIgQ=;
-  b=pmPbP2xduwmAoyr9upRgZ6pqJARGWpFOU95YojDWjVGscpv06uqPLd7r
-   qB7AImcbIp4nJTPfUmOjWSp3kHULj7+wMJOBWx61Lcu3Wiha4klc287xZ
-   nq70OokbY387Iv7qsej4lFJlz7RqMS2XsbwyPUGfj71Eeohy2G6t8WWWw
-   E=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 20 May 2022 23:14:44 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2022 23:14:44 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 20 May 2022 23:14:43 -0700
-Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 20 May
- 2022 23:14:41 -0700
-Subject: Re: [PATCH 2/2 V2] remoteproc: qcom: Add full coredump fallback
- mechanism
-To:     Yogesh Lal <quic_ylal@quicinc.com>, <bjorn.andersson@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Siddharth Gupta <sidgup@codeaurora.org>
-References: <1652181930-22212-1-git-send-email-quic_ylal@quicinc.com>
- <1652181930-22212-2-git-send-email-quic_ylal@quicinc.com>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <271132da-4a6a-afd9-4509-47035dd18a8e@quicinc.com>
-Date:   Sat, 21 May 2022 11:44:38 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Sat, 21 May 2022 05:18:00 -0400
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A33513C0A8;
+        Sat, 21 May 2022 02:17:58 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id C199B5C00E0;
+        Sat, 21 May 2022 05:17:55 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Sat, 21 May 2022 05:17:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
+        :cc:content-transfer-encoding:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to; s=fm3; t=1653124675; x=
+        1653211075; bh=tSnVUwRgkIan0g05mJZYFNNv+SUzSaOd09kahxAg1rw=; b=h
+        95GWU0jeLj958g55gzl2t8b8Id8N4+oKTBAfK5Sste9K6tC/nU5FY9iB5TtjE8Bm
+        1xF3vxIGNxTvG+OujgkuJshqEVBGO6bIYtyoJjK6AIdj69Hwnk/HVJiaW4G/wBmk
+        vQ5pHzCtJlM84hts9w5bZnxrB2zCEuJJ+chsfPIzVJS7gttf6KItSr1JT2GyPd4K
+        Nph0cnoF7nZAdRBEk4gmELoM5p+/yDE2hbtWDgxPdI73tyDHQguwtcjikh0pvFUJ
+        iBHiGYUERPSWuRbh7CIymRE+vC0G/bhdMII3UIcSU1leUDDURq/uU+eRrd3jdNyh
+        BbLsqKISsG0yvPAj5KxDQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:date:date:feedback-id:feedback-id:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1653124675; x=
+        1653211075; bh=tSnVUwRgkIan0g05mJZYFNNv+SUzSaOd09kahxAg1rw=; b=F
+        BzyzQSXPexamp04Xoi34eEM+p28ClmXflxOxvz3uDnS6d3QUmMPI8ha+HwqlzCjG
+        izV4OWOYKe2yoM5zkFPhsl1GeB20Ao9xiaIqXdScG2MqX8d+lvkqwQxuzpJwrWBG
+        QKEzEcRyFUkAHgLCI35Pb1R/zN3AsUzNY+vVzIavtyyoV6m2dN4kD7TLydiUOpe2
+        d8J6gBijtxuR7+f0JSicuAjb1wV0Un2360muscfugOcXJ26w1JuG1Ffx4QOtO6MO
+        W7sqW5e3E6rfgmbL7J1iaRX0AHMmK6X9RLvBidKTNSA/+QEKoJeS0xOvG2jGQZg+
+        V2wcQHxg4Wz20ythBnpiw==
+X-ME-Sender: <xms:Qq6IYrXi6tgcwroDAryeztq43ACQIuhqzJpcoWhczgMMJZNEU9-Tmg>
+    <xme:Qq6IYjlBg6ADlBd46elz5uAARkP3tUhBMioqx8fybJ3EFN9K9YcPBXjSKDUgdLcbO
+    Qj8avwGehF5E1axsz0>
+X-ME-Received: <xmr:Qq6IYnZTaMoJGd8BI1YIUhLV8qoOtSKl4zQW3A-ju3uoD8C73UdypDcZcvJZxLJVMcrd9KD99xuQx1kUUNLWm7ZPR_tGJzHfeW8WeYE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrieeigddtjecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtugfgjgesthhqredttddtvdenucfhrhhomhepofgrgihi
+    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
+    htthgvrhhnpeetgfelgefggeekkefggfeludeiudffjeffgeevveekjedukedtudeuteef
+    teefgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hmrgigihhmvgestggvrhhnohdrthgvtghh
+X-ME-Proxy: <xmx:Qq6IYmX5EnMoY8tVNERTNOlE1aC4PNwXAAeTgMvNnFEuaZnpbIJOOg>
+    <xmx:Qq6IYlmyhMafBCp4RU2B7oUKV5gboicdUv3xQI71wcpPPgdfN2vNlg>
+    <xmx:Qq6IYjeCrtdgEjHaIAVLxD03RqqyPWuIjjuWEbF2sCBjq0iX1D-zaw>
+    <xmx:Q66IYq-3CSZZbbSQClpxpipR4iPen0OzP1gwUntfhLdUAK-ne95P8Q>
+Feedback-ID: i8771445c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 21 May 2022 05:17:54 -0400 (EDT)
+Date:   Sat, 21 May 2022 11:17:51 +0200
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     dri-devel@lists.freedesktop.org,
+        Hsin-Yi Wang <hsinyi@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Philip Chen <philipchen@chromium.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 3/4] drm/bridge: Add devm_drm_bridge_add()
+Message-ID: <20220521091751.opeiqbmc5c2okdq6@houat>
+References: <20220510192944.2408515-1-dianders@chromium.org>
+ <20220510122726.v3.3.Iba4b9bf6c7a1ee5ea2835ad7bd5eaf84d7688520@changeid>
 MIME-Version: 1.0
-In-Reply-To: <1652181930-22212-2-git-send-email-quic_ylal@quicinc.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20220510122726.v3.3.Iba4b9bf6c7a1ee5ea2835ad7bd5eaf84d7688520@changeid>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Yogesh,
-Looks like you missed adding the patch that uses the exported
-rproc_cleanup api.
+Hi,
 
+On Tue, May 10, 2022 at 12:29:43PM -0700, Douglas Anderson wrote:
+> This adds a devm managed version of drm_bridge_add(). Like other
+> "devm" function listed in drm_bridge.h, this function takes an
+> explicit "dev" to use for the lifetime management. A few notes:
+> * In general we have a "struct device" for bridges that makes a good
+>   candidate for where the lifetime matches exactly what we want.
+> * The "bridge->dev->dev" device appears to be the encoder
+>   device. That's not the right device to use for lifetime management.
+>=20
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-On 5/10/22 4:55 PM, Yogesh Lal wrote:
-> From: Siddharth Gupta <sidgup@codeaurora.org>
-> 
-> If a remoteproc's firmware does not support minidump but the driver
-> adds an ID, the minidump driver does not collect any coredumps when
-> the remoteproc crashes. This hinders the purpose of coredump
-> collection. This change adds a fallback mechanism in the event of a
-> crash.
-> 
+If we are to introduce more managed helpers, I think it'd be wiser to
+introduce them as DRM-managed, and not device managed.
 
-Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+Otherwise, you'll end up in a weird state when a device has been removed
+but the DRM device is still around.
 
-> Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
-> Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
-> ---
->   drivers/remoteproc/qcom_common.c   | 7 +++++--
->   drivers/remoteproc/qcom_q6v5_pas.c | 1 +
->   2 files changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-> index 4b91e3c..b3fdc66 100644
-> --- a/drivers/remoteproc/qcom_common.c
-> +++ b/drivers/remoteproc/qcom_common.c
-> @@ -163,8 +163,11 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id)
->   	 */
->   	if (subsystem->regions_baseptr == 0 ||
->   	    le32_to_cpu(subsystem->status) != 1 ||
-> -	    le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED ||
-> -	    le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
-> +	    le32_to_cpu(subsystem->enabled) != MD_SS_ENABLED) {
-> +		return rproc_coredump(rproc);
-> +	}
-> +
-> +	if (le32_to_cpu(subsystem->encryption_status) != MD_SS_ENCR_DONE) {
->   		dev_err(&rproc->dev, "Minidump not ready, skipping\n");
->   		return;
->   	}
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 401b1ec..6e5cbca 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -274,6 +274,7 @@ static const struct rproc_ops adsp_minidump_ops = {
->   	.start = adsp_start,
->   	.stop = adsp_stop,
->   	.da_to_va = adsp_da_to_va,
-> +	.parse_fw = qcom_register_dump_segments,
->   	.load = adsp_load,
->   	.panic = adsp_panic,
->   	.coredump = adsp_minidump,
-> 
+Maxime
