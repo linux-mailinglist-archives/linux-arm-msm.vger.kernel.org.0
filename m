@@ -2,74 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BEC4852FD50
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 16:33:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87CA852FD54
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 16:34:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350049AbiEUOdO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 May 2022 10:33:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59760 "EHLO
+        id S237288AbiEUOen (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 May 2022 10:34:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355228AbiEUOdM (ORCPT
+        with ESMTP id S1355226AbiEUOel (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 May 2022 10:33:12 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CD9C5F8E4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 07:33:10 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id p22so18649120lfo.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 07:33:09 -0700 (PDT)
+        Sat, 21 May 2022 10:34:41 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD6246004A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 07:34:38 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id v9so3176783lja.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 07:34:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Hn1tpaExx4W+/e0w4YZThPk8OvIZPTL/mPjUx1/h2t4=;
-        b=cKZtkaIjNKIn8y6S+OXauTN4MPMFZ8458LigpDSBhWV76hYXxYBdqHWjYYzTFz9gzK
-         9J8yEJ9NsTW4U0FxzdG4RKJr4DMj81BSBvuJgKyYZ77lvujT3ufH15rxd+/L8KtBb5le
-         LeQSrU494fo6TMGAJQOP2cTf+5AIZ6EO/EIzZIRIpF5Lpp8/AwKlx79/PRfwcHw93UrB
-         kr/NZdnBb0ysyfY96bSS0k4xXjPormKhzj5JKYhy/rspkqFDzHc4Cnr8TVt0YDItzc+o
-         9Rd63W88lrb2ERvIb9uW6v5IKs0EmuW2S+GdliJIqeuQzRlG1AI9rtaxLb4F2rwojlAm
-         Vlcg==
+        bh=f7yVVGhzAgX1cWIFxsEPVC/NZ8WTsH47DeAlTWO+NH8=;
+        b=pJnyO8fTiM1uh0/+6gzuwB8Lm+k+0s1DoxJ6NEYcYRMFeboq5U/TWwx9VqivjeU93w
+         /49LkANyMd25AZmGp/ZFp7GRJSWFHU1ybhUwEKC/+AlLRH9ltufi3Glt6G/N6qGpn6eG
+         sEE+2uLsmuqsRq6RiNqG84mNDg1flMoCXA77FeO9Hsj1M+/X1FuKKQwu3QP/Y3VHsH+M
+         0zsd5/QGQcXVDkobMRuizgY4+9tjiorHmXXNZU4ASS1/dH4gk2IkxtjlbjSWY0S56ylc
+         dcNPyHOfHMXIXkY2qyNPTRIVbF8RQtKgok9DctF+IPmMIytqHc/xvg/voXj31KTU3qcR
+         9UMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Hn1tpaExx4W+/e0w4YZThPk8OvIZPTL/mPjUx1/h2t4=;
-        b=WGLJTCbX6cw0iLZJNk3AALkhDdv1a7KnuhMx32G+JTK9qm8DjdtIFAEYYWEqg3OxRI
-         YVP9FgxiKQXWn78THUg1G8Stv2zk+6AtdiFnsrw2W3LwLT2+5gT7MYzeca+picIWtJyJ
-         uPhY6n6Qg7VluCf6vtG0avXu7vt/su5cshq3lMuYQRz4iy4mnCHDRXgdMCVIlKIoxhNC
-         wWK1u0VnoJwW0cp4HLK5NBcGKDUu2+oAmnAxBjOzLoms855in5uET1Z6/04OpqAQS/jV
-         doUtIMLvAEUXKWqM5xKi32Hd+QweEEWv0eT8x/+wyfaWu3X+5yvQvJ5+yOrNjVKAwio8
-         8O1Q==
-X-Gm-Message-State: AOAM5307SB8RcrLVhRH9kzJp0LjBuWZxRnn4PVI0kJp5Ph+sYnynMJNi
-        1G9O0hYppC1Q5FZmSBNKbbAuxg==
-X-Google-Smtp-Source: ABdhPJyx6Mwjo8UHnCdnLrCqjRw6qNRdRwXtYGACm3ClOhYNuNa7LoKqXYd5gtbZXBA3V855VgXOlQ==
-X-Received: by 2002:a05:6512:ad2:b0:478:623e:ca73 with SMTP id n18-20020a0565120ad200b00478623eca73mr1771941lfu.290.1653143588422;
-        Sat, 21 May 2022 07:33:08 -0700 (PDT)
+        bh=f7yVVGhzAgX1cWIFxsEPVC/NZ8WTsH47DeAlTWO+NH8=;
+        b=fHkc2urn5oiVT8EWDOW4WnRRCP2TszRpMJedbPJRh/BrFBZRk3B1F5c/hi3Tipy1aL
+         XKjnHjqZO8mBRYC7r8p8gfb1fGTl0vqy9AnS50Sl6kvxmr5sWKyulWI23ysi7FS6UIKd
+         JUXZtwsWhYeazwHT7G9AfqNKmVSnquHAbn0XLcF1Ob3rSFYQxgxDbAES09lkTJ7A3obs
+         MUggKXG6ISi8vFYemA69FyPH9kLSi4UmMsl6ZqW2mqCnAwWNvls0BwNED8e9/EvNhVZ6
+         L0D85b5qHxiWziMwvqP17PBdaNQynfcqBkId45nEGGCcP2X443i8J/3fYkio+TS9myKm
+         K6mQ==
+X-Gm-Message-State: AOAM530WnYjx3iQzbkM7zpVTC18QjLzBBrnZbS+HNa3OdAWjQackR3Ff
+        63sj2qnUYPcb0/7gP1NSuflYeQ==
+X-Google-Smtp-Source: ABdhPJzOQn60TUnZO4u+U3g2asg2RR3pDQG64PXg2esjG8zR00whkH3p3r3N0KD3a24ADNBiu+O2Jg==
+X-Received: by 2002:a2e:8049:0:b0:253:e065:3720 with SMTP id p9-20020a2e8049000000b00253e0653720mr3148047ljg.123.1653143677270;
+        Sat, 21 May 2022 07:34:37 -0700 (PDT)
 Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id s25-20020a2e81d9000000b00253bb2564cbsm726024ljg.134.2022.05.21.07.33.06
+        by smtp.gmail.com with ESMTPSA id z14-20020ac24f8e000000b0044a1527df04sm1081289lfs.3.2022.05.21.07.34.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 May 2022 07:33:07 -0700 (PDT)
-Message-ID: <2a7ff8d1-9ef8-af6c-e541-80417aba7782@linaro.org>
-Date:   Sat, 21 May 2022 16:33:06 +0200
+        Sat, 21 May 2022 07:34:36 -0700 (PDT)
+Message-ID: <371ce290-1deb-bff2-112b-71be8c005b37@linaro.org>
+Date:   Sat, 21 May 2022 16:34:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.1
-Subject: Re: [PATCH v4 2/3] dt-bindings: remoteproc: qcom: Convert SC7280 MSS
+Subject: Re: [PATCH v4 3/3] dt-bindings: remoteproc: qcom: Convert SC7180 MSS
  bindings to YAML
 Content-Language: en-US
-To:     Sibi Sankar <quic_sibis@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org
-Cc:     ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
+To:     Rob Herring <robh@kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     bjorn.andersson@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org
+        swboyd@chromium.org, mka@chromium.org
 References: <1652978825-5304-1-git-send-email-quic_sibis@quicinc.com>
- <1652978825-5304-3-git-send-email-quic_sibis@quicinc.com>
- <CAE-0n50iYAUmj6GEdCuOJ1d_SgeeFWtoxqWf7qN=jZ_js4wBcQ@mail.gmail.com>
- <1289c2e4-5607-b515-88b1-f44585e62cd3@quicinc.com>
+ <1652978825-5304-4-git-send-email-quic_sibis@quicinc.com>
+ <20220520224011.GA374485-robh@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1289c2e4-5607-b515-88b1-f44585e62cd3@quicinc.com>
+In-Reply-To: <20220520224011.GA374485-robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,120 +80,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/05/2022 20:46, Sibi Sankar wrote:
->>> +  memory-region:
->>> +    maxItems: 2
->>> +    description: Phandle reference to the reserved-memory for the MBA region followed
->>> +                 by the modem region.
->>> +
->>> +  firmware-name:
->>> +    $ref: /schemas/types.yaml#/definitions/string-array
->>> +    maxItems: 2
->>
->> Instead of maxItems can this be
->>
->>         items:
->>           - description: Name of MBA firmware
->> 	 - description: Name of modem firmware
->>
->> so that we know the order? Same for 'memory-region' above.
+On 21/05/2022 00:40, Rob Herring wrote:
+> On Thu, May 19, 2022 at 10:17:05PM +0530, Sibi Sankar wrote:
+>> Convert SC7180 MSS PIL loading bindings to YAML.
 > 
-> ack
-> 
->>
->>> +    description:
->>> +      The name of the MBA and modem firmware to be loaded for this remote processor.
->>> +
->>> +  qcom,halt-regs:
->>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->>
->> Should this have maxItems: 1? Or that's implicit from description?
-> 
-> It's implicit!
+> I suppose there is a reason the sc7180 is being split out and the only 
+> one converted, but this doesn't tell me.
 
-I am not aware of such implicit rule in schema. maxItems are always
-required. If this is maxItems:1 it is not even an array.
-
-> 
->>
->>> +    description:
->>> +      Phandle reference to a syscon representing TCSR followed by the
->>> +      four offsets within syscon for q6, modem, nc and vq6 halt registers.
->>> +
->>> +  qcom,ext-regs:
->>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->>
->> Should this have min/maxItems: 2?
-> 
-> ack
-
-You should also define the items. This applies to all such fields. Check
-the examples of syscon consumers.
-
-> 
->>
->>> +    description:
->>> +      Two phandle references to syscons representing TCSR_REG and TCSR register
->>> +      space followed by the two offsets within the syscon to force_clk_en/rscc_disable
->>> +      and axim1_clk_off/crypto_clk_off registers respectively.
->>> +
->>> +  qcom,qaccept-regs:
->>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->>> +    description:
->>> +      Phandle reference to a syscon representing TCSR followed by the
->>> +      three offsets within syscon for mdm, cx and axi qaccept registers.
->>> +
->>> +  qcom,qmp:
->>> +    $ref: /schemas/types.yaml#/definitions/phandle
->>> +    description: Reference to the AOSS side-channel message RAM.
->>> +
->>> +  qcom,smem-states:
->>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->>> +    description: States used by the AP to signal the Hexagon core
->>> +    items:
->>> +      - description: Stop the modem
->>
->> This one did items for a phandle array so I think we should follow the
->> same above.
-> 
-> ack
-> 
->>
->>> +
->>> +  qcom,smem-state-names:
->>> +    description: The names of the state bits used for SMP2P output
->>> +    const: stop
->>> +
->>> +  glink-edge:
->>> +    $ref: qcom,glink-edge.yaml#
->>> +    description:
->>> +      Qualcomm G-Link subnode which represents communication edge, channels
->>> +      and devices related to the DSP.
->> [..]
->>> +        power-domain-names = "cx", "mss";
->>> +
->>> +        memory-region = <&mba_mem>, <&mpss_mem>;
->>> +
->>> +        qcom,qmp = <&aoss_qmp>;
->>> +
->>> +        qcom,smem-states = <&modem_smp2p_out 0>;
->>> +        qcom,smem-state-names = "stop";
->>> +
->>> +        resets = <&aoss_reset AOSS_CC_MSS_RESTART>,
->>> +                 <&pdc_reset PDC_MODEM_SYNC_RESET>;
->>> +        reset-names = "mss_restart", "pdc_reset";
->>> +
->>> +        qcom,halt-regs = <&tcsr_mutex 0x23000 0x25000 0x28000 0x33000>;
->>> +        qcom,ext-regs = <&tcsr 0x10000 0x10004 &tcsr_mutex 0x26004 0x26008>;
->>
->> Because it's two items I'd expect:
->> 	
->> 	<&tcsr 0x10000 0x10004>, <&tcsr_mutex 0x26004 0x26008>;
-> 
-> I guess both the ways work since the driver uses
-> of_parse_phandle_with_fixed_args.
-
-But only one is correct...
+I am also confused, especially that last time I pointed out that there
+is work already:
+https://lore.kernel.org/all/20220511161602.117772-7-sireeshkodali1@gmail.com/
 
 
 Best regards,
