@@ -2,55 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB5F552F830
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 05:52:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BA3052F83C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 06:06:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231553AbiEUDwd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 May 2022 23:52:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59202 "EHLO
+        id S238590AbiEUEG3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 May 2022 00:06:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232048AbiEUDwc (ORCPT
+        with ESMTP id S233506AbiEUEG3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 May 2022 23:52:32 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9DDB5C853;
-        Fri, 20 May 2022 20:52:30 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 60589B82E0E;
-        Sat, 21 May 2022 03:52:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD9AC385A9;
-        Sat, 21 May 2022 03:52:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653105148;
-        bh=IJFPrEy8FPKljy7dggxaDoQSTSF/XCWVm/MCYmWCcfA=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=U/coIXKJ31ChOzrurF+JcO+Q4+6Cwm5xCBWbJrbmXUxUccXGs8axElsM9s4EFqhGZ
-         sjFfIUISCeRV30dJRAx62/Y59WPmy5/0WYnmt/UTRGR9hr1GtgFnUonFXf17f89S3q
-         lMJ/xPeFeIah2Hf0VNbwZE5GnARHzUdSy7R54guubey/GiHZK6e/IC9n0vddp3+hvl
-         ZWZySjOZoRKARD9rDp0oePaAgvnXgFYLBeV991KreOCQACrC1FUqsMruKFW9DevAxV
-         aFN/1t4mZRxJKBskSVXQqjL9EbBCXA0kFfIMvc/unDPaKzZDEQIPU6RJvKh5NMZWbE
-         yJrdEhUOQv9GQ==
-Content-Type: text/plain; charset="utf-8"
+        Sat, 21 May 2022 00:06:29 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12D8F814A7;
+        Fri, 20 May 2022 21:06:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1653105988; x=1684641988;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=bY1CIUKqGJCO/khWDalEZ0ZkWi/2j8BFDc2NSAfiS9o=;
+  b=YgncMWC25qQa84/WabU1zKcVWMi1VE0ZD6YftubjD5ubs3oC/kM6FJ2i
+   haBgDIQ4XGz+us1/YPHvxgZGpNY+sqC8bCrnoqcB0yUoownL6R5Haai8C
+   WZi8iXOdO37CIB/9LSQ8SgO8tYUjUq6oQ5j4tyufJ1ZTQWPRO+dM/sDCo
+   c=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 20 May 2022 21:06:27 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2022 21:06:27 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 20 May 2022 21:06:25 -0700
+Received: from [10.50.38.245] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 20 May
+ 2022 21:06:23 -0700
+Message-ID: <1c51c9c6-e0d5-8616-8ba1-ef870bfb96ec@quicinc.com>
+Date:   Sat, 21 May 2022 09:36:20 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220520100948.19622-3-johan+linaro@kernel.org>
-References: <20220520100948.19622-1-johan+linaro@kernel.org> <20220520100948.19622-3-johan+linaro@kernel.org>
-Subject: Re: [PATCH 2/3] clk: qcom: gdsc: add support for collapse-vote registers
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-Date:   Fri, 20 May 2022 20:52:26 -0700
-User-Agent: alot/0.10
-Message-Id: <20220521035228.1FD9AC385A9@smtp.kernel.org>
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v2] soc: qcom: socinfo: Add an ID for sc7180P
+Content-Language: en-US
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     Stephen Boyd <swboyd@chromium.org>, <matvore@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20220520155305.v2.1.I26eca1856f99e6160d30de6d50ecab60e6226354@changeid>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <20220520155305.v2.1.I26eca1856f99e6160d30de6d50ecab60e6226354@changeid>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -59,15 +68,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Johan Hovold (2022-05-20 03:09:47)
-> Recent Qualcomm platforms have APCS collapse-vote registers that allow
-> for sharing GDSCs with other masters (e.g. LPASS).
+On 5/21/2022 4:23 AM, Douglas Anderson wrote:
+> Some sc7180 Chromebooks actually have sc7180P (known by many names,
+> apparently, including possibly sc7180 Pro and sc7185). This is a
+> sc7180 part that has slightly higher clock speeds.
+>
+> The official ID numbrer allocated to these devices by Qualcomm is 495
+> so we'll add an entry to the table for them. Note that currently
+> shipping BIOS for these devices will actually end up reporting an ID
+> of 407 due to a bug but eventually a new BIOS will be released which
+> corrects it to 495.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+> Changes in v2:
+> - Switch from 407 to 495.
+>
+>   drivers/soc/qcom/socinfo.c | 1 +
+>   1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+> index cee579a267a6..c2c879ccc6c0 100644
+> --- a/drivers/soc/qcom/socinfo.c
+> +++ b/drivers/soc/qcom/socinfo.c
+> @@ -332,6 +332,7 @@ static const struct soc_id soc_id[] = {
+>   	{ 480, "SM8450" },
+>   	{ 482, "SM8450" },
+>   	{ 487, "SC7280" },
+> +	{ 495, "SC7180P" },
+>   };
+>   
+>   static const char *socinfo_machine(struct device *dev, unsigned int id)
 
-Maybe just say 'with other subsystems' because LPASS is an entire
-subsystem.
+Reviewed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 
->=20
-> Add support for using such vote registers instead of the control
-> register when updating the GDSC power state.
->=20
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+-Sai
