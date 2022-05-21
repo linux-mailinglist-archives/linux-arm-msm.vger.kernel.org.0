@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5777652FD9F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 17:14:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A54D52FDA0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 17:14:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345787AbiEUPOr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 May 2022 11:14:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38318 "EHLO
+        id S244960AbiEUPOs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 May 2022 11:14:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244933AbiEUPOp (ORCPT
+        with ESMTP id S244849AbiEUPOq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 May 2022 11:14:45 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E02656214
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 08:14:43 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id u7so11800579ljd.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 08:14:43 -0700 (PDT)
+        Sat, 21 May 2022 11:14:46 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE3D5554AB
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 08:14:44 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id u23so18814281lfc.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 08:14:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UwkwcGKoksv09GJQbCQ4l/+czpMeUCe0OFbPY533J+4=;
-        b=d/TxhrfImNz5hVaB9J0qBolh/53XhZVIBisENi8rpOFJLetbWurTyn/8XbD8wtOkvM
-         eJ66alCCmzDZ9AhH2QSaWfykM01ZysMcLFhyP2ccux+m+4P7W6ml2YSielJbaJNyF4Wd
-         ZrT6glpjmDiYWXvodKresSKkabi3x/O03lOKKUGGX+1FAqjFVy8Q/B0w5xnVGApjl/DX
-         GqEazPBAdihKCej+RpZ6SxZq7CA8AftU0aGrBK1oIYqa+X0UT/rRRtZEQRPNrQ8oATwa
-         HGcHEu2b0vpeFandhZEETxj34v3CP2NyfZJkREise3CAKRpv2DVKjXzFOl6Dn2jjY/Ry
-         MSbA==
+        bh=VVarr+wlKczHhvGEneB7r7hNaYtZ6ivj5K80jWk2asc=;
+        b=M5JifwsdzwyPZNDYQXt7O1u2MS26aMbhQtbIfnz0TQygy4PIsAulCxiUiievMny7iw
+         3A8tw6jmyzHUmU1cFavoVKCnALBvgir5J8bAoIg9no3+Ls0N/AN1KsoBLFh6DIoN62mU
+         fZeoXve/OmK7n6RrXNTxuV6xdMdHkQRrBGoKX2BaVoZvKV/fboSAA63Ka+ZswOR4hm0y
+         Nvhc5gSX7W/nFdPNuVLWocUtaxPCXEzozdpie3SQrtgdLnZpgTaaf6dNnc4H2BbWS57s
+         JUE4up2E0mi0uAp2KCO8kc1+4hIIZ4NdJlOlZYKchW6w5IHl2/SjKcScRnpYQ5EYX0FE
+         Hb1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UwkwcGKoksv09GJQbCQ4l/+czpMeUCe0OFbPY533J+4=;
-        b=Q900fqs7CiI0kH3P+LlS3n/H6dOqAnaPcoczUiGhxLu9HZImZkh5hLk8FY0TN7ElS3
-         wEuns5AxgR4g8X2MzDMj8YCA93Mz/qrDg4STOVwVwZCXYciKXnoAl3lWG4gKKNRk/ftt
-         FPVMB4Vb13xmkdaXI+lWAP50UUQNtpd/jljGe7boTa5rXZouOVhOMXURwbzeCXp3ud0v
-         XDgLuz7Lhy7QaqBeogkkFoXiSoD1o9I6lcW/JaFmWp27Wb+okUgzQIn+5eDC9wOcFBdk
-         3iQjeFHNP5U7KH9e6YXxZhoiV0pUuj4YhXMD9nqp5y4MdbniTXQ7LXXt70xh0+la2F3+
-         Gnrg==
-X-Gm-Message-State: AOAM533SxPuwEe/QWce23C274wtPfWrv9mE4aHHdcFIxnH06kXMS7MR9
-        7DSHmKATmvX4PSbgQWM8SXD3yw==
-X-Google-Smtp-Source: ABdhPJxTvEP2E71Kg4FwVPHnJedh1yiQhNPMwH8JMw32maTSl42FHBWVjh8bAoRUzC5/nL8YDiE9tw==
-X-Received: by 2002:a05:651c:510:b0:24f:545c:9362 with SMTP id o16-20020a05651c051000b0024f545c9362mr8436171ljp.263.1653146081931;
-        Sat, 21 May 2022 08:14:41 -0700 (PDT)
+        bh=VVarr+wlKczHhvGEneB7r7hNaYtZ6ivj5K80jWk2asc=;
+        b=iibKlaWOKxhFh7Y9jUMm8a2VBjbspHWI0yd9HHgftuz1IGJpn20FLrkF4Tk3KWQ2YO
+         0ENWvcKxmDHoqlamJBpr3kLlejQeo74I5fMUmuoWmA2aF3UMplocG91/DkrlTjiE7jDq
+         YYdrsa54lyKyqQ2VplN7b5T1qrIhYGgKRnaItGm5UHjleitsbbrZUSTt4o7ukglf1QKl
+         SbPPBI0wXjs6bZQ/xDsZnS+aBVQNgNhDSZ9ILsyOEGYiz/1XveCh5o5Oi5wfEEBrNNmF
+         QoqyjrUtv51ZlvTna1HpmLPTLiNFAQNjAT5w/gH+iZZS2a+9CnC5ZclEGGdf4uPJYUc4
+         DzAg==
+X-Gm-Message-State: AOAM531Ircfmpvx4yAuCze6nckNSW1vNdM2NbYa+r9HcA0J8+LwLKwki
+        ZBS3yTxXr6u1iiLrQ8mdGgyQ1Q==
+X-Google-Smtp-Source: ABdhPJyKjpnNSczdV//dV5+10vvmiTK5sRfHgh4MMuiNVNHGy0sYHByFthv2ZcYEQaFThVg6fhh9lg==
+X-Received: by 2002:a05:6512:1045:b0:473:bded:116c with SMTP id c5-20020a056512104500b00473bded116cmr10368348lfb.390.1653146083375;
+        Sat, 21 May 2022 08:14:43 -0700 (PDT)
 Received: from eriador.lumag.spb.ru ([94.25.229.156])
-        by smtp.gmail.com with ESMTPSA id v22-20020a2e7a16000000b0024f3d1daedfsm716849ljc.103.2022.05.21.08.14.40
+        by smtp.gmail.com with ESMTPSA id v22-20020a2e7a16000000b0024f3d1daedfsm716849ljc.103.2022.05.21.08.14.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 May 2022 08:14:41 -0700 (PDT)
+        Sat, 21 May 2022 08:14:42 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -56,10 +56,10 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>
-Subject: [PATCH v6 1/4] dt-bindings: clock: qcom,gcc-apq8064: move msm8960 compat from gcc-other.yaml
-Date:   Sat, 21 May 2022 18:14:34 +0300
-Message-Id: <20220521151437.1489111-2-dmitry.baryshkov@linaro.org>
+        devicetree@vger.kernel.org
+Subject: [PATCH v6 2/4] dt-bindings: clock: qcom,gcc-apq8064: split tsens to the child node
+Date:   Sat, 21 May 2022 18:14:35 +0300
+Message-Id: <20220521151437.1489111-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220521151437.1489111-1-dmitry.baryshkov@linaro.org>
 References: <20220521151437.1489111-1-dmitry.baryshkov@linaro.org>
@@ -67,7 +67,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,69 +75,96 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8960 shares the design (and the driver) of the global clock
-controller with APQ8064. Move it from clock/qcom,gcc-other.yaml to
-clock/qcom,gcc-apq8064.yaml.
+Split tsens properties to the child node of the gcc. This follows the
+lead of ipq8064 (which also uses a separate node for tsens) and makes
+device tree closer to other platforms, where tsens is a completely
+separate device.
 
-As the example in gcc-other.yaml was using qcom,gcc-msm8960 compat string,
-change it to qcom,gcc-msm8974.
-
-Reviewed-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../devicetree/bindings/clock/qcom,gcc-apq8064.yaml         | 6 ++++--
- Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml | 5 ++---
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ .../bindings/clock/qcom,gcc-apq8064.yaml      | 40 ++++++++++++++-----
+ 1 file changed, 30 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-index 9fafcb080069..bd7b04c75e50 100644
+index bd7b04c75e50..3cf404c9325a 100644
 --- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
 +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/clock/qcom,gcc-apq8064.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Qualcomm Global Clock & Reset Controller Binding for APQ8064
-+title: Qualcomm Global Clock & Reset Controller Binding for APQ8064/MSM8960
- 
- allOf:
-   - $ref: qcom,gcc.yaml#
-@@ -23,7 +23,9 @@ description: |
+@@ -23,13 +23,25 @@ description: |
  
  properties:
    compatible:
--    const: qcom,gcc-apq8064
-+    enum:
-+      - qcom,gcc-apq8064
-+      - qcom,gcc-msm8960
+-    enum:
+-      - qcom,gcc-apq8064
+-      - qcom,gcc-msm8960
++    oneOf:
++      - items:
++          - enum:
++              - qcom,gcc-apq8064
++              - qcom,gcc-msm8960
++          - const: syscon
++      - enum:
++          - qcom,gcc-apq8064
++          - qcom,gcc-msm8960
++        deprecated: true
++
++  thermal-sensor:
++    description: child tsens device
++    $ref: /schemas/thermal/qcom-tsens.yaml#
  
    nvmem-cells:
      minItems: 1
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-index 142402f29d98..8c54af4ae6d2 100644
---- a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-@@ -47,7 +47,6 @@ properties:
-       - qcom,gcc-msm8916
-       - qcom,gcc-msm8939
-       - qcom,gcc-msm8953
--      - qcom,gcc-msm8960
-       - qcom,gcc-msm8974
-       - qcom,gcc-msm8974pro
-       - qcom,gcc-msm8974pro-ac
-@@ -61,10 +60,10 @@ required:
+     maxItems: 2
++    deprecated: true
+     description:
+       Qualcomm TSENS (thermal sensor device) on some devices can
+       be part of GCC and hence the TSENS properties can also be part
+@@ -39,31 +51,39 @@ properties:
+ 
+   nvmem-cell-names:
+     minItems: 1
++    deprecated: true
+     items:
+       - const: calib
+       - const: calib_backup
+ 
+   '#thermal-sensor-cells':
+     const: 1
++    deprecated: true
+ 
+ required:
+   - compatible
+-  - nvmem-cells
+-  - nvmem-cell-names
+-  - '#thermal-sensor-cells'
+ 
  unevaluatedProperties: false
  
  examples:
--  # Example for GCC for MSM8960:
-+  # Example for GCC for MSM8974:
    - |
      clock-controller@900000 {
--      compatible = "qcom,gcc-msm8960";
-+      compatible = "qcom,gcc-msm8974";
-       reg = <0x900000 0x4000>;
+-      compatible = "qcom,gcc-apq8064";
++      compatible = "qcom,gcc-apq8064", "syscon";
+       reg = <0x00900000 0x4000>;
+-      nvmem-cells = <&tsens_calib>, <&tsens_backup>;
+-      nvmem-cell-names = "calib", "calib_backup";
        #clock-cells = <1>;
        #reset-cells = <1>;
+       #power-domain-cells = <1>;
+-      #thermal-sensor-cells = <1>;
++
++      thermal-sensor {
++        compatible = "qcom,msm8960-tsens";
++
++        nvmem-cells = <&tsens_calib>, <&tsens_backup>;
++        nvmem-cell-names = "calib", "calib_backup";
++        interrupts = <0 178 4>;
++        interrupt-names = "uplow";
++
++        #qcom,sensors = <11>;
++        #thermal-sensor-cells = <1>;
++      };
+     };
+ ...
 -- 
 2.35.1
 
