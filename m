@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C57C752FE59
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 18:47:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32BA452FE64
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 May 2022 18:48:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239186AbiEUQqd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 May 2022 12:46:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39820 "EHLO
+        id S245731AbiEUQqU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 May 2022 12:46:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355461AbiEUQqH (ORCPT
+        with ESMTP id S1355471AbiEUQqJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 May 2022 12:46:07 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 474D212D1D
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 09:46:06 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id c19so5921221lfv.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 09:46:06 -0700 (PDT)
+        Sat, 21 May 2022 12:46:09 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B070A13D21
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 09:46:08 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id e4so12102706ljb.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 May 2022 09:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zRW+nitNdiyJveLQkWDP36MSIJ7syqdFIWi2TI2HCgY=;
-        b=Bv/dAc+VzEsQCIsBmd0Miu5xiEkNXBxebVCMj/8aWCD9am4WJqyWegU7xw2vQsvkwm
-         T5vRvJrNfW8Bt1SY95HmlqhePEgKlpHwPJUXLNnWl4lRRlogUt2a0WwKnig+0IKFsAuJ
-         +RDcv+gZzj7FcD/8maBNwZHe7o2oMbfeQ4ztQehPP897xQu+HuI9dLaXL9dfCP8N36Zv
-         8FeaAKQ9dgKCJslawUeU9KY6IjF4eoyAeh9HrqW2FerINJNtP3QqZxOLYbFuZWurtSnG
-         HEKXgenjDHBcz1smtBZbmg8CJZsFgPpVlqxFREoILWN+uianc8vwgIQdt6508++tUKdT
-         fEYA==
+        bh=stngkL0RmyeNZ/fdBaP2L/F7X3WyYtQ0gVTbEDDbddg=;
+        b=SMthyzGRbzKJc/rV+q6hhRGMvt44E5G9ac5+8ykipclkMwlSimPbMoVRSPlgCiU1vr
+         qFp5oVGBZ4fCXxjykXKzkA3SCiDq2Wm2JGOKruHldrv1YNXgKZBr0McJkMtYiU0Jpg3b
+         yjUMyTAtB8QXl2vbhfefvAcLVNWkm2HHna9BOVTWXHBG/POhIpB6xGeod6Djhr1j/mK9
+         Jc1+VSuju/DLfEJ81aYtn15q13tcFwMlRpjpIIVgsYeMxnUuEgkMp/l4XSBPUeBUptdr
+         k7JUcMTXsZalJOIo4Bjpn1kkmXhH3NsmIpXXMn0GvKvMunn0Ae2YMOrklB3mxoLNLKpq
+         vNJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zRW+nitNdiyJveLQkWDP36MSIJ7syqdFIWi2TI2HCgY=;
-        b=Ph5pqbCZ4re0j7W7jTLM7MUIBuVh8T7Ae7AFvrCTlTBpmzPJiEcIFnpNcQRWIjHkkW
-         wFZ7nUhxWGBRyEmhx9ZnLfH1EkiaGE1mZa4bIQXTqO+EQE3LsaeXjHiFT5WeRXiSSqr5
-         E7napFzaE8EEkaGbfcMYF1TgigFADyJ3L+574skkIDmE8v0y3562nX9AvIaDfnsSqv55
-         SshGSuCHc92TWcxxHJ0P/o3jxA62Ng9dEs+UeSWcBnAEwx8mJafoHFOS3E+LKx00d7AB
-         1Af+78gXu/jvGhhdyhZ+d58qKW5RFr1NnnO7qgvmXJ98Zq8Qtfnkl/Q5hu1tG5+eH40o
-         qMRg==
-X-Gm-Message-State: AOAM533GOCIud7u/ToDjsNudunyip0HjNt5i8ohxlY0AsSokS3eAsw61
-        IM7hpyEeAdqveV76c7Mlj51Xpg==
-X-Google-Smtp-Source: ABdhPJwMLxE9peJiV5bTCFMHmJLCBB/4xmpluVOGXyg/k2jOobRsPXPTbFA6benVUrkt7ZCzSk8jqA==
-X-Received: by 2002:ac2:46e8:0:b0:477:ba2c:a68b with SMTP id q8-20020ac246e8000000b00477ba2ca68bmr10766667lfo.55.1653151565843;
-        Sat, 21 May 2022 09:46:05 -0700 (PDT)
+        bh=stngkL0RmyeNZ/fdBaP2L/F7X3WyYtQ0gVTbEDDbddg=;
+        b=5uU+K/aakJ4DCig8aDHs97SQL/qofPh2irn/8daNzqKQbAVDmQBi+7crUNhIJjoyrm
+         NcnXGFlduSKHhB4X32q6hAcTJUtSanT8xkLXqMlwA0N4L8Z8ZifpFXRGRj3NdYotg6cU
+         BQWYnZV4VpnoQ/2Bag8DGoZ2hjsOlVGy8mOq41kRhad/rRqG9Bgnguas4PNJjhiHm1xA
+         Psa+fmSp4Uj2utzhRGXy7hkMyjjCbeyw1NvZ5axhrD/3b7PKHx65bvP0RflDm6YlVnPF
+         JrFRQ1jKwin+DmPKu1WFjDX8P8kosy0MMCM1S5YX6PJoWeFOP+YgwnRkCNuoKTrKA17A
+         ew9w==
+X-Gm-Message-State: AOAM530CtWRltfSwrZWqODAWT4AFBQQO9gDG2WhHZavuP2GXj4CDRXpL
+        s1nW6rTN+peqVvSvSLT8zXcLBg==
+X-Google-Smtp-Source: ABdhPJygyX/Tk5i8nH+7Dtf7xniCJXE2hnCZ/hjaeA4lAmJSyoGVAf10EhM/cRhBlZ4FM7kT0D0Gvg==
+X-Received: by 2002:a2e:a90b:0:b0:253:cb9a:65fd with SMTP id j11-20020a2ea90b000000b00253cb9a65fdmr8358348ljq.417.1653151567093;
+        Sat, 21 May 2022 09:46:07 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id f26-20020a19ae1a000000b0047255d211cesm1114282lfc.253.2022.05.21.09.46.04
+        by smtp.gmail.com with ESMTPSA id f26-20020a19ae1a000000b0047255d211cesm1114282lfc.253.2022.05.21.09.46.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 May 2022 09:46:05 -0700 (PDT)
+        Sat, 21 May 2022 09:46:06 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -56,9 +56,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 11/12] arm64: dts: qcom: ipq6018-cp01-c1: fix Micron SPI NOR compatible
-Date:   Sat, 21 May 2022 18:45:49 +0200
-Message-Id: <20220521164550.91115-11-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 12/12] arm64: dts: qcom: msm8998-mtp: correct board compatible
+Date:   Sat, 21 May 2022 18:45:50 +0200
+Message-Id: <20220521164550.91115-12-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220521164550.91115-1-krzysztof.kozlowski@linaro.org>
 References: <20220521164550.91115-1-krzysztof.kozlowski@linaro.org>
@@ -66,7 +66,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,26 +74,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The proper compatible for Micron n25q128a11 SPI NOR flash should include
-vendor-prefix.
+Add qcom,msm8998 SoC fallback to the board compatible.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts | 2 +-
+ arch/arm64/boot/dts/qcom/msm8998-mtp.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-index 821cb7c0c183..d9a8c2e68ae1 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-@@ -43,7 +43,7 @@ flash@0 {
- 		#address-cells = <1>;
- 		#size-cells = <1>;
- 		reg = <0>;
--		compatible = "n25q128a11";
-+		compatible = "micron,n25q128a11", "jedec,spi-nor";
- 		spi-max-frequency = <50000000>;
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dts b/arch/arm64/boot/dts/qcom/msm8998-mtp.dts
+index 66540d2ca13b..db240a3207dc 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dts
+@@ -7,7 +7,7 @@
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. MSM8998 v1 MTP";
+-	compatible = "qcom,msm8998-mtp";
++	compatible = "qcom,msm8998-mtp", "qcom,msm8998";
+ 
+ 	qcom,board-id = <8 0>;
  };
 -- 
 2.32.0
