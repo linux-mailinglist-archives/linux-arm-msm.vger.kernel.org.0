@@ -2,78 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A197D5304E4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 May 2022 19:10:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C5C85305AE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 May 2022 21:53:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347955AbiEVRKi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 May 2022 13:10:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39440 "EHLO
+        id S234152AbiEVTwS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 May 2022 15:52:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243247AbiEVRKg (ORCPT
+        with ESMTP id S236211AbiEVTwH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 May 2022 13:10:36 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B849A3AA43
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 May 2022 10:10:34 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id h14so17967502wrc.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 May 2022 10:10:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=UC29fQRATexTT7tJzzddZ4rno6ylvbw/uHwKcWDyCEE=;
-        b=p28KdpWyxvmBBqgGUVYoQNauk6dvzewKdhb69i+ywXo4dc1zSCobjzRGwYRYRvEE5F
-         3xWJfjot8sqqWL+Vcpy5xztbdIwzPaFW4fZaf5xeJbAuwT9L+7T6gezExk/ZZoJ0AFbZ
-         MOX9/QfszSYEmaHiHv8pmYLtmRpXkS4Gv5XAKW9epALT9W9+HRln4LQJj01iKrQjHi4Y
-         5DMxzyQg6FWsn5eJEmlYLMBgKkK7Nxg6TXxfmAdzzRG78xHbCF3s2xQ0BNtcBwxcwkdY
-         qsvW/SIL53EsXLXUQnCOkwQM8Tx0NQlRShLvYJVmF+3jixq5F59jRZpJoThLNrJVKhV0
-         zBjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=UC29fQRATexTT7tJzzddZ4rno6ylvbw/uHwKcWDyCEE=;
-        b=fuLQkbjBrsQSJB3BnrP0tWLX3a7W2jBM3d9hSSV9CIEHmDpNZm7tcDYIeEf9M31Fl4
-         b/trM42Klf42iseX9hgMJEaenxelHQCoHhEoZhucW+ucp9anLRubE7U5o9frg9w7CIjN
-         pUfUgwzi0rSQdTkTNRv8225HB1bjg+2TFUk9Z6uDtYHa9QxbXkPbeTjFp3PL8qjfXgSs
-         44H0upvccteVBjIvD+iqwrS6PZ46b1EDDZs8ZCG1KVITzMu8aJZyitSl6ZOJ+ZC4oBsh
-         iCmPp6ZGLTNaHEDZwcGr/l0zhnl8/yuXf687kGqe3Qb5U6eWfg8IqtwvrrYR/MVc7NLN
-         bdpA==
-X-Gm-Message-State: AOAM531Qksg7ux2ryjX62+6JSWWleDNBy/eXab0hiWGWIm3INYAJd7Yc
-        InjOM+GSR4sOsdGD0YdEfWBrmA==
-X-Google-Smtp-Source: ABdhPJxp94yPqyr6oChze4h7ciJv1e+SH3bxLIjuxj6SYnkGaQCd+h8o9Bj9MHbehTvZ+6UT1rH9cw==
-X-Received: by 2002:adf:dbce:0:b0:20c:f507:8ef9 with SMTP id e14-20020adfdbce000000b0020cf5078ef9mr15958406wrj.29.1653239433052;
-        Sun, 22 May 2022 10:10:33 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id k41-20020a05600c1ca900b0039747cf8354sm2144778wms.39.2022.05.22.10.10.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 May 2022 10:10:32 -0700 (PDT)
-Message-ID: <19c92f9d-fa1c-fbe8-50ef-324da3e00695@linaro.org>
-Date:   Sun, 22 May 2022 18:10:31 +0100
+        Sun, 22 May 2022 15:52:07 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4C9C102
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 May 2022 12:51:47 -0700 (PDT)
+Received: from asfdasdfasdf2.riviera.ds.pw.edu.pl (riviera.nat.ds.pw.edu.pl [194.29.137.1])
+        (using TLSv1.3 with cipher TLS_CHACHA20_POLY1305_SHA256 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA512)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 348C41FC90;
+        Sun, 22 May 2022 21:51:44 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     krzysztof.kozlowski@linaro.org
+Cc:     agross@kernel.org, arnd@arndb.de, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, olof@lixom.net, robh@kernel.org,
+        sboyd@kernel.org, Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: Re: Removal of qcom,board-id and qcom,msm-id
+Date:   Sun, 22 May 2022 21:51:38 +0200
+Message-Id: <20220522195138.35943-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.32.0 (Apple Git-132)
+In-Reply-To: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
+References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577 on
- cam1
-Content-Language: en-US
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     mchehab@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
-        hfink@snap.com
-References: <20220518133004.342775-1-bryan.odonoghue@linaro.org>
- <20220518133004.342775-2-bryan.odonoghue@linaro.org>
- <33abcc93-13f1-d6f5-36a3-6ab796f124f9@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <33abcc93-13f1-d6f5-36a3-6ab796f124f9@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,49 +44,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/05/2022 20:09, Vladimir Zapolskiy wrote:
-> 
-> I run on you branch on top of linux-next, but switch build options from 
-> modules to built-in
-> 
->     CONFIG_I2C_QCOM_CCI=y
->     CONFIG_VIDEO_QCOM_CAMSS=y
-> 
-> I didn't get the sensor initialized and hence there is no /dev/media0 node:
-> 
-> [    0.620205] i2c-qcom-cci ac50000.cci: Found 19200000 cci clk rate 
-> while 37500000 was expected
-> [    0.620551] i2c 20-001a: Fixing up cyclic dependency with ac6a000.camss
-> [    0.620754] imx412 20-001a: Looking up dovdd-supply from device tree
-> [    0.620797] imx412 20-001a: Looking up avdd-supply from device tree
-> [    0.620860] imx412 20-001a: Looking up dvdd-supply from device tree
-> [    0.620876] duplicated lane 1 in clock-lanes, using defaults
-> [    0.622789] imx412 20-001a: failed to find sensor: -5
-> [    0.622880] imx412: probe of 20-001a failed with error -5
-> 
-> I believe the problem could be related to CCI, please remind me, are 
-> there I2C bus pull-ups?
+Hi,
 
-Hmm.
+removing these properties will not bring almost any benefit (other than making
+some checks happy any saving some <200 LoC) and will make the lives of almost
+all people doing independent development for linux-on-msm harder. There are
+almost unironically like 3 people outside Linaro and QUIC who have
+non-vendor-fused development boards AND the sources to rebuild the
+bootloader on their own. Making it harder to boot is only going to
+discourage people from developing on these devices, which is already not
+that pleasant, especially with newer platforms where you have to fight with
+the oh-so-bright ideas of Android boot chain..
 
-Just trying to replicate this on linux-next
+This only concerns devices released before sm8350, as the new ones will not
+even boot with these properties present (or at least SONY Sagami, but I
+doubt it's an isolated case), so other than completing support for older
+devices, it won't be an issue going forward, anyway. But there are give
+or take 50 locked down devices in mainline right now, and many more waiting
+to be upstreamed in various downstream close-to-mainline trees that should
+not be disregarded just because Qualcomm is far from the best at making
+their BSP software stack clean.
 
-https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=linux-next-22-05-22%2bimx577-rb5
+One solution is to chainload another, (n+1)-stage bootloader, but this is
+not ideal, as:
 
-root@linaro-gnome:~# zcat /proc/config.gz | grep -e CONFIG_I2C_QCOM_CCI 
--e CONFIG_VIDEO_QCOM_CAMSS
-CONFIG_I2C_QCOM_CCI=y
-CONFIG_VIDEO_QCOM_CAMSS=y
+1) the stock bootloader can boot Linux just fine on most devices (except
+for single exceptions, where beloved OEMs didn't implement arm64 booting or
+something)
 
-root@linaro-gnome:~# uname -a
-Linux linaro-gnome 5.18.0-rc7-next-20220518-00006-g3beef4d1d353-dirty 
-#40 SMP PREEMPT Sun May 22 17:53:29 IST 2022 aarch64 GNU/Linux
+2) the boot chain on MSM is already 3- or 4- stage and adding to that will
+only create an unnecessary mess
 
-root@linaro-gnome:~# cam -l
-Available cameras:
-1: 'imx412' (/base/soc@0/cci@ac50000/i2c-bus@0/camera@1a)
+3) the job of kernel people is not to break userspace. If the
+device can not even exit bootloader after a kernel upgrade, it's a big
+failure.
 
-are you compiling everything in ?
+If you *really really really* want these either gone or documented, we can
+for example use them in the SOCID driver, read the values from DTB and
+compare against what SMEM has to say and for example print a warning when
+there are inconsistencies or use it as a fallback when it fails for any
+reason, such as using a newer SoC on an older kernel, without updates
+for SOCID read (which are sometimes necessary, which was the case for 8450
+recently, iirc).
 
----
-bod
+My stance is to just leave them as is, as moving them anywhere, or removing
+them at all will cause unnecessary mess and waste time that could have been
+spent on more glaring issues..
+
+Konrad
