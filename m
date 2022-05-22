@@ -2,130 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99DE6530488
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 May 2022 18:28:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B1845304C3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 May 2022 18:54:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348704AbiEVQ2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 May 2022 12:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37638 "EHLO
+        id S1344562AbiEVQyd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 May 2022 12:54:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348017AbiEVQ22 (ORCPT
+        with ESMTP id S235505AbiEVQyd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 May 2022 12:28:28 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D4BB14087;
-        Sun, 22 May 2022 09:28:27 -0700 (PDT)
-Received: from g550jk.arnhem.chello.nl (a246182.upc-a.chello.nl [62.163.246.182])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 188C6CCD4E;
-        Sun, 22 May 2022 16:28:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1653236900; bh=ZlU+QqaeeUpgg6ydwdW9tHYSbBg1JjP1qdMb8cM8JSE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=hP3NdJf6PTBiI/nZloaHgFq06IVg0B4nvzxBOzwW1puRDXe7bq3v9VvUKjhtE3ZAn
-         tWEeap2QOohVKt/BdbTAWCpfv23yPfccYqkUeOapjMPbABlc8d9MSEMG/Ru5uF5Zad
-         P7JbsE9Np1pU1STE6hVEcHDsT0xZKNJGpJRN/uZ8=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        matti.lehtimaki@gmail.com, Luca Weiss <luca@z3ntu.xyz>
-Subject: [RFC PATCH 14/14] [DNM] media: camss: hacks for MSM8974
-Date:   Sun, 22 May 2022 18:28:02 +0200
-Message-Id: <20220522162802.208275-15-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.36.0
-In-Reply-To: <20220522162802.208275-1-luca@z3ntu.xyz>
-References: <20220522162802.208275-1-luca@z3ntu.xyz>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        Sun, 22 May 2022 12:54:33 -0400
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net (zg8tmtyylji0my4xnjqumte4.icoremail.net [162.243.164.118])
+        by lindbergh.monkeyblade.net (Postfix) with SMTP id 6C0CE36337;
+        Sun, 22 May 2022 09:54:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=pku.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:Date:
+        Message-Id:In-Reply-To:References; bh=FGZe097WBUerFoXf/6/a2nhHrO
+        +VYMroMKwXN5U/eEI=; b=bJ3aXjeiSCt2Li9wwQILv7ojB+x8R6xOJD3S4I0nvs
+        mV3iDoVHzgVogn8qx8KP/3SHOQSR7Du3tJp2gjJS/axFotx3xqXSZfnbFGxjYjLQ
+        6HI9QshCtt8IGZog0H6DnIooY/800ubMZHMtaAZKHZogt3xOvOyf1lbX1d3unZ58
+        E=
+Received: from localhost (unknown [10.129.21.144])
+        by front01 (Coremail) with SMTP id 5oFpogCnrqaeaopiCibIBw--.13484S2;
+        Mon, 23 May 2022 00:53:51 +0800 (CST)
+From:   Yongzhi Liu <lyz_cs@pku.edu.cn>
+To:     jic23@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        lars@metafoo.de, svarbanov@mm-sol.com, iivanov@mm-sol.com,
+        jonathan.cameron@huawei.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, fuyq@stu.pku.edu.cn,
+        Yongzhi Liu <lyz_cs@pku.edu.cn>
+Subject: [PATCH v4] iio: vadc: Fix potential dereference of NULL pointer
+Date:   Sun, 22 May 2022 09:53:47 -0700
+Message-Id: <1653238427-73587-1-git-send-email-lyz_cs@pku.edu.cn>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <20220522120109.7ead18a7@jic23-huawei>
+References: <20220522120109.7ead18a7@jic23-huawei>
+X-CM-TRANSID: 5oFpogCnrqaeaopiCibIBw--.13484S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Kw4fuF4DZF17JFW8XFWUArb_yoW5JF1rpa
+        9IqayrGry7Ka1fJFyfAF4DJr1aqw42qFW8CFWxGanxAr1ayrnYyr4aq3WFkFn5CFyxCw45
+        Ar4jvFn09FsrtF7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDU0xBIdaVrnRJUUU921xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
+        w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
+        IY67AKxVWDJVCq3wA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2
+        z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzx
+        vE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWU
+        JVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7V
+        AKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2kIc2xKxwCY02Av
+        z4vE-syl42xK82IYc2Ij64vIr41l42xK82IY6x8ErcxFaVAv8VWkJr1UJwCFx2IqxVCFs4
+        IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1r
+        MI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJV
+        WUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j
+        6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYx
+        BIdaVFxhVjvjDU0xZFpf9x0JUdHUDUUUUU=
+X-CM-SenderInfo: irzqijirqukmo6sn3hxhgxhubq/1tbiAwEMBlPy7vKeCwASsy
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove IOMMU_DMA dependency from VIDEO_QCOM_CAMSS: We don't have IOMMU
-on msm8974 yet.
+The return value of vadc_get_channel() needs to be checked to
+avoid use of NULL pointer. vadc_do_conversion() already provides
+error prints in at least some of it's error paths. Thus it is
+reasonable to add the null pointer check on prop and drop the
+extra reporting in vadc_measure_ref_points().
 
-DMA_SG -> DMA_CONTIG: Taking a photo without this works but is offset
-and doing weird stuff.
-
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Signed-off-by: Yongzhi Liu <lyz_cs@pku.edu.cn>
 ---
- drivers/media/platform/qcom/camss/Kconfig       |  4 ++--
- drivers/media/platform/qcom/camss/camss-video.c | 14 +++++++-------
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ drivers/iio/adc/qcom-spmi-vadc.c | 38 ++++++++++++++++++++++++++++----------
+ 1 file changed, 28 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/Kconfig b/drivers/media/platform/qcom/camss/Kconfig
-index 4eda48cb1adf..e382fd77ecc3 100644
---- a/drivers/media/platform/qcom/camss/Kconfig
-+++ b/drivers/media/platform/qcom/camss/Kconfig
-@@ -2,8 +2,8 @@ config VIDEO_QCOM_CAMSS
- 	tristate "Qualcomm V4L2 Camera Subsystem driver"
- 	depends on V4L_PLATFORM_DRIVERS
- 	depends on VIDEO_DEV
--	depends on (ARCH_QCOM && IOMMU_DMA) || COMPILE_TEST
-+	depends on ARCH_QCOM || COMPILE_TEST
- 	select MEDIA_CONTROLLER
- 	select VIDEO_V4L2_SUBDEV_API
--	select VIDEOBUF2_DMA_SG
-+	select VIDEOBUF2_DMA_CONTIG
- 	select V4L2_FWNODE
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index ca955808fd6d..885a809cc941 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -13,7 +13,7 @@
- #include <media/v4l2-device.h>
- #include <media/v4l2-ioctl.h>
- #include <media/v4l2-mc.h>
--#include <media/videobuf2-dma-sg.h>
-+#include <media/videobuf2-dma-contig.h>
+diff --git a/drivers/iio/adc/qcom-spmi-vadc.c b/drivers/iio/adc/qcom-spmi-vadc.c
+index 34202ba..43a52b1 100644
+--- a/drivers/iio/adc/qcom-spmi-vadc.c
++++ b/drivers/iio/adc/qcom-spmi-vadc.c
+@@ -358,22 +358,33 @@ static int vadc_measure_ref_points(struct vadc_priv *vadc)
+ 	vadc->graph[VADC_CALIB_ABSOLUTE].dx = VADC_ABSOLUTE_RANGE_UV;
  
- #include "camss-video.h"
- #include "camss.h"
-@@ -410,15 +410,15 @@ static int video_buf_init(struct vb2_buffer *vb)
- 						   vb);
- 	const struct v4l2_pix_format_mplane *format =
- 						&video->active_fmt.fmt.pix_mp;
--	struct sg_table *sgt;
-+	//struct sg_table *sgt;
- 	unsigned int i;
+ 	prop = vadc_get_channel(vadc, VADC_REF_1250MV);
++	if (!prop) {
++		dev_err(vadc->dev, "Please define 1.25V channel\n");
++		ret = -ENODEV;
++		return ret;
++	}
+ 	ret = vadc_do_conversion(vadc, prop, &read_1);
+ 	if (ret)
+-		goto err;
++		return ret;
  
- 	for (i = 0; i < format->num_planes; i++) {
--		sgt = vb2_dma_sg_plane_desc(vb, i);
--		if (!sgt)
--			return -EFAULT;
-+		//sgt = vb2_dma_sg_plane_desc(vb, i);
-+		//if (!sgt)
-+		//	return -EFAULT;
+ 	/* Try with buffered 625mV channel first */
+ 	prop = vadc_get_channel(vadc, VADC_SPARE1);
+-	if (!prop)
++	if (!prop) {
+ 		prop = vadc_get_channel(vadc, VADC_REF_625MV);
++		if (!prop) {
++			dev_err(vadc->dev, "Please define 0.625V channel\n");
++			ret = -ENODEV;
++			return ret;
++		}
++	}
  
--		buffer->addr[i] = sg_dma_address(sgt->sgl);
-+		buffer->addr[i] = vb2_dma_contig_plane_dma_addr(vb, i); //sg_dma_address(sgt->sgl);
+ 	ret = vadc_do_conversion(vadc, prop, &read_2);
+ 	if (ret)
+-		goto err;
++		return ret;
+ 
+ 	if (read_1 == read_2) {
+ 		ret = -EINVAL;
+-		goto err;
++		return ret;
  	}
  
- 	if (format->pixelformat == V4L2_PIX_FMT_NV12 ||
-@@ -966,7 +966,7 @@ int msm_video_register(struct camss_video *video, struct v4l2_device *v4l2_dev,
+ 	vadc->graph[VADC_CALIB_ABSOLUTE].dy = read_1 - read_2;
+@@ -381,25 +392,32 @@ static int vadc_measure_ref_points(struct vadc_priv *vadc)
  
- 	q = &video->vb2_q;
- 	q->drv_priv = video;
--	q->mem_ops = &vb2_dma_sg_memops;
-+	q->mem_ops = &vb2_dma_contig_memops;
- 	q->ops = &msm_video_vb2_q_ops;
- 	q->type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
- 	q->io_modes = VB2_DMABUF | VB2_MMAP | VB2_READ;
+ 	/* Ratiometric calibration */
+ 	prop = vadc_get_channel(vadc, VADC_VDD_VADC);
++	if (!prop) {
++		dev_err(vadc->dev, "Please define VDD channel\n");
++		ret = -ENODEV;
++		return ret;
++	}
+ 	ret = vadc_do_conversion(vadc, prop, &read_1);
+ 	if (ret)
+-		goto err;
++		return ret;
+ 
+ 	prop = vadc_get_channel(vadc, VADC_GND_REF);
++	if (!prop) {
++		dev_err(vadc->dev, "Please define GND channel\n");
++		ret = -ENODEV;
++		return ret;
++	}
+ 	ret = vadc_do_conversion(vadc, prop, &read_2);
+ 	if (ret)
+-		goto err;
++		return ret;
+ 
+ 	if (read_1 == read_2) {
+ 		ret = -EINVAL;
+-		goto err;
++		return ret;
+ 	}
+ 
+ 	vadc->graph[VADC_CALIB_RATIOMETRIC].dy = read_1 - read_2;
+ 	vadc->graph[VADC_CALIB_RATIOMETRIC].gnd = read_2;
+-err:
+-	if (ret)
+-		dev_err(vadc->dev, "measure reference points failed\n");
+ 
+ 	return ret;
+ }
 -- 
-2.36.0
+2.7.4
 
