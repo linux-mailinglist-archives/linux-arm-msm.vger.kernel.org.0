@@ -2,119 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9036E53165B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 22:50:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 381DB531A59
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 22:55:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239105AbiEWRBE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 13:01:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32792 "EHLO
+        id S240497AbiEWR22 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 13:28:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239049AbiEWRBD (ORCPT
+        with ESMTP id S242425AbiEWR1n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 13:01:03 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ABC3112
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 10:00:58 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id i27so30114335ejd.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 10:00:58 -0700 (PDT)
+        Mon, 23 May 2022 13:27:43 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DB07CB5F;
+        Mon, 23 May 2022 10:23:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+yqE1pGHx1x3KKc79e6Yq8sNIx1yXpNzstv/8bzqb5s=;
-        b=ZjtsMPgQV6WFMaPsFE5wXrme9HyysqJfDxmCwYeAGbvKIHUWff1Cpyv4vRAIzb2+6g
-         CaBM3u9mN7ChwiUoZn0x2jmbmh8Ids9Twb+q9Mx4bev++DIoBHEX+JPi/peV3/cHXpnt
-         ki/dDbMZHLrt1JuRTfIjOmj46abGOccIRmJ+w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+yqE1pGHx1x3KKc79e6Yq8sNIx1yXpNzstv/8bzqb5s=;
-        b=gzXWuogFSsxQ/6k/DrgJCgHR9EaHzFomA+/8p1VrXp2i7u+dyLNZGnFXQ7Hmw3hQj3
-         llUBtrV96i9vh3+wnX3Ne7aMYciEqSJuQfl58AQbGaEWqK8+fCggRRu0H5XRqF6ojSAn
-         UqZ+Da/VYU7FXWZNUJzxWnUJGwubSiYCmNMnykNweinskqXT1dS2uekO6lKYxatqUa3i
-         hD8pIvZDQYd9MVfk5K1Zo1OXkk+mxHBXTIXJlTOfuumM33ZnrSwqaFHXeO0ku40Rhp4R
-         yjveTPovCEf30NSjRE3LNqcZfmSVbrb7c3PthFaJldywzCWXNX+5iFu0q3J7x4hwjDVX
-         iUmQ==
-X-Gm-Message-State: AOAM531fqWMttIzVrPzeVKs8BWD07gyskBI/i+T659zVyjKoGkam6pES
-        vfSaZ4ydmO6UnffEynNz14jKG5wlwbuN6aRZVhs=
-X-Google-Smtp-Source: ABdhPJyUoz7JoGSVC20XyjSebNuLQEggIxIH6zMKhWUiiVx/o/N42Xa7YcpbFEvXbqSiReacoV+bew==
-X-Received: by 2002:a17:906:9b92:b0:6fd:e4ce:e416 with SMTP id dd18-20020a1709069b9200b006fde4cee416mr20768186ejc.394.1653325256896;
-        Mon, 23 May 2022 10:00:56 -0700 (PDT)
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com. [209.85.221.46])
-        by smtp.gmail.com with ESMTPSA id p3-20020a056402074300b0042617ba63a5sm8446834edy.47.2022.05.23.10.00.53
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 May 2022 10:00:54 -0700 (PDT)
-Received: by mail-wr1-f46.google.com with SMTP id h5so21140065wrb.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 10:00:53 -0700 (PDT)
-X-Received: by 2002:a05:6000:1c03:b0:20e:5cac:1eb5 with SMTP id
- ba3-20020a0560001c0300b0020e5cac1eb5mr19994642wrb.422.1653325252721; Mon, 23
- May 2022 10:00:52 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1653326601; x=1684862601;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=dHMAzDZ8V9eE7VWggUzuRgfi+1UxoewsEYqpet3YSy4=;
+  b=AJNnbCiv5Yql8xQ4CicU9JEdSRwRe2V1cp2BHvh9ZdjlBCwJi67dR5Iq
+   WtZfyfIojPEtll6rOWOFTYv0zXWfxf/w4HMIOAA7gj9lhtW05+xZI8SXI
+   TmpQ9c9TUug5ibjVOcjoJ5NkbU0hyl/XFz6N93vNQSNuDAxfYZJFIobFr
+   U=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 23 May 2022 10:19:09 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 10:19:09 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 23 May 2022 10:19:08 -0700
+Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 23 May 2022 10:19:04 -0700
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        "Joerg Roedel" <joro@8bytes.org>
+CC:     <iommu@lists.linux-foundation.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@chromium.org>, <quic_guptap@quicinc.com>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Subject: [PATCH] iommu/arm-smmu-qcom: Add debug support for TLB sync timeouts
+Date:   Mon, 23 May 2022 22:48:47 +0530
+Message-ID: <20220523171847.21929-1-quic_saipraka@quicinc.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-References: <20220510192944.2408515-1-dianders@chromium.org>
- <20220510122726.v3.3.Iba4b9bf6c7a1ee5ea2835ad7bd5eaf84d7688520@changeid> <20220521091751.opeiqbmc5c2okdq6@houat>
-In-Reply-To: <20220521091751.opeiqbmc5c2okdq6@houat>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 23 May 2022 10:00:39 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Wea0LT5umK4Xg87cDikim+dSuyLndfydO3_DnTujZr9Q@mail.gmail.com>
-Message-ID: <CAD=FV=Wea0LT5umK4Xg87cDikim+dSuyLndfydO3_DnTujZr9Q@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] drm/bridge: Add devm_drm_bridge_add()
-To:     Maxime Ripard <maxime@cerno.tech>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Philip Chen <philipchen@chromium.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+TLB sync timeouts can be due to various reasons such as TBU power down
+or pending TCU/TBU invalidation/sync and so on. Debugging these often
+require dumping of some implementation defined registers to know the
+status of TBU/TCU operations and some of these registers are not
+accessible in non-secure world such as from kernel and requires SMC
+calls to read them in the secure world. So, add this debug support
+to dump implementation defined registers for TLB sync timeout issues.
 
-On Sat, May 21, 2022 at 2:17 AM Maxime Ripard <maxime@cerno.tech> wrote:
->
-> Hi,
->
-> On Tue, May 10, 2022 at 12:29:43PM -0700, Douglas Anderson wrote:
-> > This adds a devm managed version of drm_bridge_add(). Like other
-> > "devm" function listed in drm_bridge.h, this function takes an
-> > explicit "dev" to use for the lifetime management. A few notes:
-> > * In general we have a "struct device" for bridges that makes a good
-> >   candidate for where the lifetime matches exactly what we want.
-> > * The "bridge->dev->dev" device appears to be the encoder
-> >   device. That's not the right device to use for lifetime management.
-> >
-> > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
->
-> If we are to introduce more managed helpers, I think it'd be wiser to
-> introduce them as DRM-managed, and not device managed.
->
-> Otherwise, you'll end up in a weird state when a device has been removed
-> but the DRM device is still around.
+Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+---
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 50 ++++++++++++++++++++++
+ drivers/iommu/arm/arm-smmu/arm-smmu.c      |  2 +
+ drivers/iommu/arm/arm-smmu/arm-smmu.h      |  4 ++
+ 3 files changed, 56 insertions(+)
 
-I'm kinda confused. In this case there is no DRM device for the bridge
-and, as per my CL description, "bridge-dev->dev" appears to be the
-encoder device. I wasn't personally involved in discussions about it,
-but I was under the impression that this was expected / normal. Thus
-we can't make this DRM-managed.
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 7820711c4560..22e9a0085475 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -5,11 +5,19 @@
+ 
+ #include <linux/acpi.h>
+ #include <linux/adreno-smmu-priv.h>
++#include <linux/delay.h>
+ #include <linux/of_device.h>
+ #include <linux/qcom_scm.h>
+ 
+ #include "arm-smmu.h"
+ 
++#define QCOM_DUMMY_VAL	-1
++
++/* Implementation Defined Register Space 0 registers */
++#define QCOM_SMMU_STATS_SYNC_INV_TBU_ACK	0x5dc
++#define QCOM_SMMU_TBU_PWR_STATUS		0x2204
++#define QCOM_SMMU_MMU2QSS_AND_SAFE_WAIT_CNTR	0x2670
++
+ struct qcom_smmu {
+ 	struct arm_smmu_device smmu;
+ 	bool bypass_quirk;
+@@ -22,6 +30,46 @@ static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+ 	return container_of(smmu, struct qcom_smmu, smmu);
+ }
+ 
++static void qcom_smmu_tlb_sync(struct arm_smmu_device *smmu, int page,
++				int sync, int status)
++{
++	u32 sync_inv_ack, sync_inv_progress, tbu_pwr_status;
++	unsigned int spin_cnt, delay;
++	u32 reg;
++	int ret;
++
++	arm_smmu_writel(smmu, page, sync, QCOM_DUMMY_VAL);
++	for (delay = 1; delay < TLB_LOOP_TIMEOUT; delay *= 2) {
++		for (spin_cnt = TLB_SPIN_COUNT; spin_cnt > 0; spin_cnt--) {
++			reg = arm_smmu_readl(smmu, page, status);
++			if (!(reg & ARM_SMMU_sTLBGSTATUS_GSACTIVE))
++				return;
++			cpu_relax();
++		}
++		udelay(delay);
++	}
++
++	sync_inv_ack = arm_smmu_readl(smmu, ARM_SMMU_IMPL_DEF0,
++				      QCOM_SMMU_STATS_SYNC_INV_TBU_ACK);
++
++	ret = qcom_scm_io_readl(smmu->ioaddr + QCOM_SMMU_TBU_PWR_STATUS,
++				&tbu_pwr_status);
++	if (ret)
++		dev_err_ratelimited(smmu->dev,
++				    "Failed to read TBU power status: %d\n", ret);
++
++	ret = qcom_scm_io_readl(smmu->ioaddr + QCOM_SMMU_MMU2QSS_AND_SAFE_WAIT_CNTR,
++				&sync_inv_progress);
++	if (ret)
++		dev_err_ratelimited(smmu->dev,
++				    "Failed to read SAFE WAIT counter: %d\n", ret);
++
++	dev_err_ratelimited(smmu->dev,
++			    "TLB sync timed out -- SMMU may be deadlocked\n"
++			    "TBU: sync_inv_ack %#x power_status %#x sync_inv_progress %#x\n",
++			    sync_inv_ack, tbu_pwr_status, sync_inv_progress);
++}
++
+ static void qcom_adreno_smmu_write_sctlr(struct arm_smmu_device *smmu, int idx,
+ 		u32 reg)
+ {
+@@ -374,6 +422,7 @@ static const struct arm_smmu_impl qcom_smmu_impl = {
+ 	.def_domain_type = qcom_smmu_def_domain_type,
+ 	.reset = qcom_smmu500_reset,
+ 	.write_s2cr = qcom_smmu_write_s2cr,
++	.tlb_sync = qcom_smmu_tlb_sync,
+ };
+ 
+ static const struct arm_smmu_impl qcom_adreno_smmu_impl = {
+@@ -382,6 +431,7 @@ static const struct arm_smmu_impl qcom_adreno_smmu_impl = {
+ 	.reset = qcom_smmu500_reset,
+ 	.alloc_context_bank = qcom_adreno_smmu_alloc_context_bank,
+ 	.write_sctlr = qcom_adreno_smmu_write_sctlr,
++	.tlb_sync = qcom_smmu_tlb_sync,
+ };
+ 
+ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+index 2ed3594f384e..4c5b51109835 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+@@ -2099,6 +2099,8 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+ 	if (IS_ERR(smmu->base))
+ 		return PTR_ERR(smmu->base);
+ 	ioaddr = res->start;
++	smmu->ioaddr = ioaddr;
++
+ 	/*
+ 	 * The resource size should effectively match the value of SMMU_TOP;
+ 	 * stash that temporarily until we know PAGESIZE to validate it with.
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+index 2b9b42fb6f30..8cf6567d970f 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+@@ -278,6 +278,7 @@ struct arm_smmu_device {
+ 	struct device			*dev;
+ 
+ 	void __iomem			*base;
++	phys_addr_t			ioaddr;
+ 	unsigned int			numpage;
+ 	unsigned int			pgshift;
+ 
+@@ -502,6 +503,9 @@ static inline void arm_smmu_writeq(struct arm_smmu_device *smmu, int page,
+ 
+ #define ARM_SMMU_GR0		0
+ #define ARM_SMMU_GR1		1
++
++#define ARM_SMMU_IMPL_DEF0	2
++
+ #define ARM_SMMU_CB(s, n)	((s)->numpage + (n))
+ 
+ #define arm_smmu_gr0_read(s, o)		\
+-- 
+2.33.1
 
--Doug
