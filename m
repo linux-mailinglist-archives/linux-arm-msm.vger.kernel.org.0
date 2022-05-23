@@ -2,78 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02A21530F2F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 15:18:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EA8D530F9B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 15:18:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235580AbiEWMj7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 08:39:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56110 "EHLO
+        id S235831AbiEWNDs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 09:03:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235562AbiEWMj6 (ORCPT
+        with ESMTP id S235729AbiEWNDs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 08:39:58 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B83D14F9F6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 05:39:56 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id y32so25332914lfa.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 05:39:56 -0700 (PDT)
+        Mon, 23 May 2022 09:03:48 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDF372DF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 06:03:45 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id bu29so25537813lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 06:03:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=EOL04jP+eE7dVuOg6hEIwWWUW4POczWVTnduH9YcGb0=;
-        b=dscp7lxuXzvAvazXh3XQfmCEddLWn7+ErSWIbZNaa9GV1Dqom5OGQotT1L1vQ40DAr
-         tV+QngMbMinXVaEpFNFUwkuuQcHqPmOWlLg935FyQ/pv365F2DT7ldFDo1cIQOxQIB5k
-         jckxpnwO24VrNYVA7QT9OXE57kv4eu9UXkgvrGE6GMG/k5lxqdMm8sI8hSZO41JxGR4y
-         RDJ4BjpOB5ZZjxx4tISidy3rFFT8CWdujpKaOe/4HyFBGpSNOAxpJSlHIEy4wMrU/Ete
-         /af8YceSz7WRPilhyxLJ5wX0AMt/U++FV4rz6xF4S/2CWIxSJFJ87TE4pDyhah0hbz6l
-         J+pA==
+        bh=z71NrWZ4zknsDrIoo+iB7dCvZtP2uMdNm3QPfhAif8o=;
+        b=bzd1qj/qFKT8OfqgUqAT3Wtl+EmZf7RH0b71HR/rrXg8NYApV+cGqSsZ+AZV1V7rud
+         9ySbTNcdwNtJIoHRuyQX5bQxvsNdJENR3BC1hgHyooGer/9nIJjCpCKjNxpRKMqQ9W/A
+         IPQBEGPFJLoQPL7Fl7RiTgbRFCEq2VnZlHO9aFBDQH1aydu8ZTsj0xa9XQOQy/tJ1r53
+         j5DHW2fuqbA+sGi8IMlHjwcM2FrfzGOvjtfpyGce7NTiWd9j4qHpH0JsTjIaGDEHb3Wz
+         FnAoSBkQWGH23lna51WTqbWpLOnainyACCGSdLrCkHZ+fBjR1AytIi+4qVeKiS0R5+2H
+         ziwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=EOL04jP+eE7dVuOg6hEIwWWUW4POczWVTnduH9YcGb0=;
-        b=rgKbT0DrFRyByd01NKBrr7bhsl80cSU8Ea1tNUgU2bK5MvHLdaye6L9xhK7BEbZgyP
-         UnKjS5PdGm1dOm49KAHX5VRcyqVp1FscDc7W8shuv3rDU3wlFuZMh83cNBwLA3EF5xfL
-         CpUe/HTOX6F+C6/oBRgsdu4YxGIY5OdADtZe+mrbNOT/wPl97OeWp066pZvI3ySXTLHW
-         DiDh5SvJYYR8UUTwUgz3+bq7MR/6vevHu/XYZWoqcAZy/oqTR6VbwZ15ndQowOWvw/Il
-         6Peqa5kyFVnpSMKZZjQvB08LdPEy8zpLYoz4GthFck4ucdeYzsKfkOXEIpY8U8PEu37u
-         YxnQ==
-X-Gm-Message-State: AOAM530qm11sE8mvhJM1OByjvjnVMzMoXPNBFGdk802eZ93/7cU3zZRT
-        Npm2RKU3Wm8WVzXPNwAfZ7r0fg==
-X-Google-Smtp-Source: ABdhPJwo0PC3SioId0jNkNXBGwmBVrE8rg9qaxlN6Ax4/CUHq/r3fHvRNB3t0H78ZX4YRjchIypaWA==
-X-Received: by 2002:a05:6512:3b93:b0:474:188b:1c99 with SMTP id g19-20020a0565123b9300b00474188b1c99mr16289628lfv.549.1653309594979;
-        Mon, 23 May 2022 05:39:54 -0700 (PDT)
+        bh=z71NrWZ4zknsDrIoo+iB7dCvZtP2uMdNm3QPfhAif8o=;
+        b=3H3LDQPIXpvxDPGijQRaCQAKAEhTILpJGjeWLMBa133JbYVEb5jVIpKZwNHrs1T11N
+         PK1CPajOB3I/hBHODRBKuToazsHvdo83I2w+/48MVVJOhaLqBA18ATiWfXxlLHK2q/Di
+         8xmd73wal8TBZZlv9MePdyvYaB1jU8n4id1O0X1EcLcZmsa31mtBucycHbsLZXUGsivN
+         nEpA8yPoZHCjkx5wtUxPQQoulVYd/Pu5p7jB5/HNPxfFWL7mZFKM15xn29B/uBmKaprZ
+         jLSWridCxaW4QEphUqR4+vC7ROk8uX12ok8oqP+uA8J/3nAKwV+vrPwBbMAb1rim+FTt
+         zdaQ==
+X-Gm-Message-State: AOAM531uFNmI38lyPBoRU6eqIzJ3t4BaEqlo7Bqa7tKrx4uI4wsISoPX
+        srjBkbRVr8inXpd7kEcnG8oi8g==
+X-Google-Smtp-Source: ABdhPJyq6y9OSMA4U7e6i2YMcuLgOdxRayWbuMH/9MhLJwISF/h6mzK0bZFByAbvBLNQzUdsZ7wHag==
+X-Received: by 2002:a05:6512:2256:b0:473:d27f:dd93 with SMTP id i22-20020a056512225600b00473d27fdd93mr16900739lfu.512.1653311024297;
+        Mon, 23 May 2022 06:03:44 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b23-20020ac25637000000b00477b11144e9sm1959703lff.66.2022.05.23.05.39.54
+        by smtp.gmail.com with ESMTPSA id f10-20020ac2508a000000b0047255d2115csm1968683lfm.139.2022.05.23.06.03.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 May 2022 05:39:54 -0700 (PDT)
-Message-ID: <638d6986-616f-4a1c-f1d0-82835b000b2a@linaro.org>
-Date:   Mon, 23 May 2022 15:39:53 +0300
+        Mon, 23 May 2022 06:03:43 -0700 (PDT)
+Message-ID: <1af9f5ff-2115-1809-15b1-fea306a11877@linaro.org>
+Date:   Mon, 23 May 2022 16:03:43 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.1
-Subject: Re: [RFC PATCH 00/14] CAMSS support for MSM8974
+Subject: Re: [PATCH v11 0/7] PCI: qcom: Fix higher MSI vectors handling
 Content-Language: en-GB
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        matti.lehtimaki@gmail.com
-References: <20220522162802.208275-1-luca@z3ntu.xyz>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220520183114.1356599-1-dmitry.baryshkov@linaro.org>
+ <Yos6zKHUKywKcmzy@hovoldconsulting.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220522162802.208275-1-luca@z3ntu.xyz>
+In-Reply-To: <Yos6zKHUKywKcmzy@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -84,74 +85,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/05/2022 19:27, Luca Weiss wrote:
-> This RFC series adds support for CAMSS and CCI that are found on
-> msm8974, including the OV8865 found on the FP2.
+On 23/05/2022 10:42, Johan Hovold wrote:
+> On Fri, May 20, 2022 at 09:31:07PM +0300, Dmitry Baryshkov wrote:
+>> I have replied with my Tested-by to the patch at [2], which has landed
+>> in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
+>> Add support for handling MSIs from 8 endpoints"). However lately I
+>> noticed that during the tests I still had 'pcie_pme=nomsi', so the
+>> device was not forced to use higher MSI vectors.
+>>
+>> After removing this option I noticed that hight MSI vectors are not
+>> delivered on tested platforms. After additional research I stumbled upon
+>> a patch in msm-4.14 ([1]), which describes that each group of MSI
+>> vectors is mapped to the separate interrupt. Implement corresponding
+>> mapping.
+>>
+>> The first patch in the series is a revert of  [2] (landed in pci-next).
+>> Either both patches should be applied or both should be dropped.
+>>
+>> Patchseries dependecies: [3] (for the schema change).
+>>
+>> Changes since v10:
+>>   - Remove has_split_msi_irqs flag. Trust DT and use split MSI IRQs if
+>>     they are described in the DT. This removes the need for the
+>>     pcie-qcom.c changes (everything is handled by the core (suggested by
+>>     Johan).
 > 
-> The only reason it's marked RFC is that CAMSS doesn't behave properly on
-> this SoC without the last commit which is obviously not upstreamable.
-> Not sure if this should be a blocker for including most of the other
-> patches because other than that it seems to work fine and I can get a
-> picture from the camera sensor. When/if msm8974 gets IOMMU support I
-> hope this should be resolved and it works without this hack.
+> You could also mention the rebase and fixed warnings with less than
+> eight msi.
+>   
+>> [1] https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/commit/671a3d5f129f4bfe477152292ada2194c8440d22
+>> [2] https://lore.kernel.org/linux-arm-msm/20211214101319.25258-1-manivannan.sadhasivam@linaro.org/
+>> [3] https://lore.kernel.org/linux-arm-msm/20220422211002.2012070-1-dmitry.baryshkov@linaro.org/
+>>
+>>
+>> Dmitry Baryshkov (7):
+>>    PCI: dwc: Convert msi_irq to the array
+>>    PCI: dwc: split MSI IRQ parsing/allocation to a separate function
+>>    PCI: dwc: Handle MSIs routed to multiple GIC interrupts
+>>    PCI: dwc: Implement special ISR handler for split MSI IRQ setup
+>>    dt-bindings: PCI: qcom: Support additional MSI interrupts
+>>    arm64: dts: qcom: sm8250: provide additional MSI interrupts
+>>    dt-bindings: mfd: qcom,qca639x: add binding for QCA639x defvice
 > 
-> I think at least the CCI patches could get applied as they're not
-> dependent on the CAMSS hack?
+> Looks like you used the wrong offsets from HEAD or something when
+> generating the series as the first two patches ([1] above, which is not
+> yet in linux-next, and the dw_pcie_free_msi() fix) are now missing and
+> the last patch is new and unrelated.
 
-I'd also vote for the camcc patches to be applied.
-
-As for the camss, I'd suggest to get them verified to work properly with 
-a hacked/non-upstreamable/etc. IOMMU driver if one exists. Otherwise we 
-can easily get into a situation where we merge up code that contains 
-bugs itself.
-
-Another option might be to actually check whether the device has an 
-IOMMU attached (see device_iommu_mapped()) and to select whether the 
-driver should use SG or CONTIG depending on that.
-
-As an additional note regarding the offset issue you've mentioned. It 
-looks like there is an issue with the swiotlb. On the IFC6410 (apq8064, 
-no IOMMU) I got an issue with the PCI-attached networking card. Received 
-packets are offset by 4 (IIRC) bytes. The same type of adapter works on 
-db820c (apq8096, working IOMMU). What kind of issues did you observe 
-with the camss? If it looks like the issue I had, it might be a symptom 
-of a more generic issue.
+Ugh. Please excuse me.
 
 > 
-> Luca Weiss (5):
->    dt-bindings: i2c: qcom-cci: add QCOM MSM8974 compatible
->    ARM: dts: qcom: msm8974: add CCI bus
->    ARM: dts: qcom: msm8974: add CAMSS node
->    ARM: dts: qcom: msm8974-FP2: Add OV8865 rear camera
->    [DNM] media: camss: hacks for MSM8974
-> 
-> Matti Lehtimäki (9):
->    media: dt-bindings: media: camss: Add qcom,msm8974-camss binding
->    media: camss: Add CAMSS_8x74 camss version
->    media: camss: vfe: Add support for 8x74
->    media: camss: video: Add support for 8x74
->    media: camss: csid: Add support for 8x74
->    media: camss: ispif: Add support for 8x74
->    media: camss: csiphy: Add support for 8x74
->    media: camss: Add 8x74 resources
->    i2c: qcom-cci: add msm8974 compatible
-> 
->   .../devicetree/bindings/i2c/i2c-qcom-cci.txt  |   7 +-
->   .../bindings/media/qcom,msm8974-camss.yaml    | 321 ++++++++++++++++++
->   arch/arm/boot/dts/qcom-msm8974.dtsi           | 184 ++++++++++
->   .../dts/qcom-msm8974pro-fairphone-fp2.dts     |  70 ++++
->   drivers/i2c/busses/i2c-qcom-cci.c             |  35 ++
->   drivers/media/platform/qcom/camss/Kconfig     |   4 +-
->   .../media/platform/qcom/camss/camss-csid.c    |   3 +-
->   .../media/platform/qcom/camss/camss-csiphy.c  |   4 +-
->   .../media/platform/qcom/camss/camss-ispif.c   |   5 +-
->   drivers/media/platform/qcom/camss/camss-vfe.c |   7 +-
->   .../media/platform/qcom/camss/camss-video.c   |  17 +-
->   drivers/media/platform/qcom/camss/camss.c     | 161 +++++++++
->   drivers/media/platform/qcom/camss/camss.h     |   1 +
->   13 files changed, 801 insertions(+), 18 deletions(-)
->   create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8974-camss.yaml
-> 
+> Johan
 
 
 -- 
