@@ -2,118 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7E30530B4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 11:03:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18311530B9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 11:03:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232261AbiEWI57 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 04:57:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51536 "EHLO
+        id S232470AbiEWJCg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 05:02:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232273AbiEWI56 (ORCPT
+        with ESMTP id S232447AbiEWJCb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 04:57:58 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CA6137BCB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 01:57:57 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id ds11so13455077pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 01:57:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1pYAgnzo2YXXPjeEjGklM5QuN3QjhD47g11mzbPUw+A=;
-        b=fBjrkdIIUOKdjuwYiKpU+vPbSSc1KwCxIphHwgr5tSN18GxeGK/B1O1sm4jRrjgqGb
-         zUc9eJdRGVuFKDZSDNc9ggsKVO0EGEeQp6RumTd0IG+bs50/zR4FNpFOOz41CYqHW45k
-         Vs7dBXerXzyeiAXBAYuPdTrwz8TGfFgc/Gf1aGCNSkSngrC9hoqdMEa4i8mlewPJpD23
-         JQ1AOgwkGlGVzhVH4UeY/dGInHnHUu14JSR3lO65argT+uvy8kSwwhA7fpZeM/TaOQPt
-         gNoA1Q+LjgCi8fcGPaPLEwHSPP52s4BKsns+sftSRGowefHmaNUiAJo3F1jMuI2Xrhkp
-         mMnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1pYAgnzo2YXXPjeEjGklM5QuN3QjhD47g11mzbPUw+A=;
-        b=L0iTK2tzMbrvI9hhmaHqpYHwPv4gtv2slWxUJEBJfIE0vGqU4LRYAbnmbaZFfII2sJ
-         4bGiRSSAv3rparSb/sv2ugntgdDeESZrMTBtistfVzvD7ZBC2TK3+h2wlTt9rWrqbk69
-         YpREmLYz/VBFeZCSXrTLmQ/1WAnyK2tm5L0HouoN7RJyRhZnXNB0ssPj1SPNBVW4nOaH
-         QLq0sh0MXmI00w2pC+1XT9GnFeh/+i1tZZB0aetPxhYJ7VhGjCf5VkMwQowcPG4/bE0I
-         fJA287y9BmSXq6bn/loInAUKTeonmEjaToD1pRYR+ssfDzk3INQ33Us63PBVh1OyUSEj
-         oiBw==
-X-Gm-Message-State: AOAM533a3j0SybmvLCwP225qfmrWpACefEnVma9BXiKjq0xRQFH6FzQg
-        Em/8r1ZIYZ2XXm+B8Mv953FtvanNvZ6KRW7XFzuCYg==
-X-Google-Smtp-Source: ABdhPJzQjUmsY1uzuoBK7JFpJwVjDmowYMXcr16Irn5o1uHnxf27mIUaEFlfATsfhvAcR0kfZWhM2uZMHTBsUCII8CI=
-X-Received: by 2002:a17:903:1c6:b0:161:9fbc:5a6 with SMTP id
- e6-20020a17090301c600b001619fbc05a6mr21913131plh.65.1653296276851; Mon, 23
- May 2022 01:57:56 -0700 (PDT)
+        Mon, 23 May 2022 05:02:31 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 49AB52181E;
+        Mon, 23 May 2022 02:02:20 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 184B51FB;
+        Mon, 23 May 2022 02:02:19 -0700 (PDT)
+Received: from [10.57.34.201] (unknown [10.57.34.201])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 93FA13F73D;
+        Mon, 23 May 2022 02:02:15 -0700 (PDT)
+Message-ID: <ab027359-02be-2204-8a09-b1e5170bdba8@arm.com>
+Date:   Mon, 23 May 2022 10:02:13 +0100
 MIME-Version: 1.0
-References: <20220519214133.1728979-1-vladimir.zapolskiy@linaro.org> <20220519214133.1728979-3-vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20220519214133.1728979-3-vladimir.zapolskiy@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Mon, 23 May 2022 10:57:45 +0200
-Message-ID: <CAG3jFys-BEb6AeYYef_Wqa-LvnkJjsBOT0QeGg=0ytikf_dEog@mail.gmail.com>
-Subject: Re: [PATCH 2/2] clk: qcom: camcc-sm8250: Fix topology around
- titan_top power domain
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.9.0
+Subject: Re: [PATCH v7 03/10] dt-bindings: arm: Adds CoreSight TPDM hardware
+ definitions
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Cc:     Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20220509133947.20987-1-quic_jinlmao@quicinc.com>
+ <20220509133947.20987-4-quic_jinlmao@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20220509133947.20987-4-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-10.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 May 2022 at 23:41, Vladimir Zapolskiy
-<vladimir.zapolskiy@linaro.org> wrote:
->
-> On SM8250 two found VFE GDSC power domains shall not be operated, if
-> titan top is turned off, thus the former power domains will be set as
-> subdomains by a GDSC registration routine.
->
-> Fixes: 5d66ca79b58c ("clk: qcom: Add camera clock controller driver for SM8250")
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->  drivers/clk/qcom/camcc-sm8250.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/drivers/clk/qcom/camcc-sm8250.c b/drivers/clk/qcom/camcc-sm8250.c
-> index 439eaafdcc86..d68376077d51 100644
-> --- a/drivers/clk/qcom/camcc-sm8250.c
-> +++ b/drivers/clk/qcom/camcc-sm8250.c
-> @@ -2205,6 +2205,8 @@ static struct clk_branch cam_cc_sleep_clk = {
->         },
->  };
->
-> +static struct gdsc titan_top_gdsc;
-> +
->  static struct gdsc bps_gdsc = {
->         .gdscr = 0x7004,
->         .pd = {
-> @@ -2238,6 +2240,7 @@ static struct gdsc ife_0_gdsc = {
->                 .name = "ife_0_gdsc",
->         },
->         .flags = POLL_CFG_GDSCR,
-> +       .parent = &titan_top_gdsc.pd,
->         .pwrsts = PWRSTS_OFF_ON,
->  };
->
-> @@ -2247,6 +2250,7 @@ static struct gdsc ife_1_gdsc = {
->                 .name = "ife_1_gdsc",
->         },
->         .flags = POLL_CFG_GDSCR,
-> +       .parent = &titan_top_gdsc.pd,
->         .pwrsts = PWRSTS_OFF_ON,
->  };
->
-> --
-> 2.33.0
->
+Cc: Rob Herring
 
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Hi
+
+Please Cc Rob for any new DT/Yaml additions. I have done so now.
+
+
+
+
+On 09/05/2022 14:39, Mao Jinlong wrote:
+> Adds new coresight-tpdm.yaml file describing the bindings required
+> to define tpdm in the device trees.
+> 
+> Reviewed-by: Mike Leach <mike.leach@linaro.org>
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+
+Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+
+> ---
+>   .../bindings/arm/coresight-tpdm.yaml          | 99 +++++++++++++++++++
+>   .../devicetree/bindings/arm/coresight.txt     |  7 ++
+>   MAINTAINERS                                   |  1 +
+>   3 files changed, 107 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml b/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
+> new file mode 100644
+> index 000000000000..451342d3d8b7
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
+> @@ -0,0 +1,99 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/coresight-tpdm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Trace, Profiling and Diagnostics Monitor - TPDM
+> +
+> +description: |
+> +  The TPDM or Monitor serves as data collection component for various dataset
+> +  types specified in the QPMDA spec. It covers Implementation defined ((ImplDef),
+> +  Basic Counts (BC), Tenure Counts (TC), Continuous Multi-Bit (CMB), and Discrete
+> +  Single Bit (DSB). It performs data collection in the data producing clock
+> +  domain and transfers it to the data collection time domain, generally ATB
+> +  clock domain.
+> +
+> +  The primary use case of the TPDM is to collect data from different data
+> +  sources and send it to a TPDA for packetization, timestamping, and funneling.
+> +
+> +maintainers:
+> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
+> +  - Tao Zhang <quic_taozha@quicinc.com>
+> +
+> +properties:
+> +  $nodename:
+> +    pattern: "^tpdm(@[0-9a-f]+)$"
+> +  compatible:
+> +    items:
+> +      - const: qcom,coresight-tpdm
+> +      - const: arm,primecell
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +   items:
+> +     - const: apb_pclk
+> +
+> +  out-ports:
+> +    description: |
+> +      Output connections from the TPDM to coresight funnle/tpda.
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +    properties:
+> +      port:
+> +        description: Output connection from the TPDM to coresight
+> +            funnel/tpda.
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  # minimum TPDM definition. TPDM connect to coresight funnel.
+> +  - |
+> +    tpdm@6980000 {
+> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
+> +      reg = <0x6980000 0x1000>;
+> +
+> +      clocks = <&aoss_qmp>;
+> +      clock-names = "apb_pclk";
+> +
+> +      out-ports {
+> +        port {
+> +          tpdm_turing_out_funnel_turing: endpoint {
+> +            remote-endpoint =
+> +              <&funnel_turing_in_tpdm_turing>;
+> +          };
+> +        };
+> +      };
+> +    };
+> +  # minimum TPDM definition. TPDM connect to coresight TPDA.
+> +  - |
+> +    tpdm@684c000 {
+> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
+> +      reg = <0x684c000 0x1000>;
+> +
+> +      clocks = <&aoss_qmp>;
+> +      clock-names = "apb_pclk";
+> +
+> +      out-ports {
+> +        port {
+> +          tpdm_prng_out_tpda_qdss: endpoint {
+> +            remote-endpoint =
+> +              <&tpda_qdss_in_tpdm_prng>;
+> +          };
+> +        };
+> +      };
+> +    };
+> +
+> +...
+> diff --git a/Documentation/devicetree/bindings/arm/coresight.txt b/Documentation/devicetree/bindings/arm/coresight.txt
+> index c68d93a35b6c..f7ce8af48574 100644
+> --- a/Documentation/devicetree/bindings/arm/coresight.txt
+> +++ b/Documentation/devicetree/bindings/arm/coresight.txt
+> @@ -52,6 +52,10 @@ its hardware characteristcs.
+>   			"arm,coresight-cti", "arm,primecell";
+>   			See coresight-cti.yaml for full CTI definitions.
+>   
+> +		- Trace, Profiling and Diagnostics Monitor (TPDM):
+> +			"qcom,coresight-tpdm", "arm,primecell";
+> +			See coresight-tpdm.yaml for full TPDM definitions.
+> +
+>   	* reg: physical base address and length of the register
+>   	  set(s) of the component.
+>   
+> @@ -82,6 +86,9 @@ its hardware characteristcs.
+>   * Required properties for Coresight Cross Trigger Interface (CTI)
+>   	See coresight-cti.yaml for full CTI definitions.
+>   
+> +* Required properties for Trace, Profiling and Diagnostics Monitor (TPDM)
+> +	See coresight-tpdm.yaml for full TPDM definitions.
+> +
+>   * Required properties for devices that don't show up on the AMBA bus, such as
+>     non-configurable replicators and non-configurable funnels:
+>   
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index edc96cdb85e8..28d32b3f3f5c 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1978,6 +1978,7 @@ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/coresight/linux.git
+>   F:	Documentation/ABI/testing/sysfs-bus-coresight-devices-*
+>   F:	Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
+>   F:	Documentation/devicetree/bindings/arm/coresight-cti.yaml
+> +F:	Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
+>   F:	Documentation/devicetree/bindings/arm/coresight.txt
+>   F:	Documentation/devicetree/bindings/arm/ete.yaml
+>   F:	Documentation/devicetree/bindings/arm/trbe.yaml
+
