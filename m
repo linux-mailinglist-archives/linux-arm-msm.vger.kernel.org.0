@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BF5D531936
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 22:54:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42C605316C2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 22:52:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243342AbiEWSjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 14:39:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34778 "EHLO
+        id S242525AbiEWSjU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 14:39:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243518AbiEWSjB (ORCPT
+        with ESMTP id S243564AbiEWSjC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 14:39:01 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0AD217704E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 11:18:56 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id e4so17647797ljb.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 11:18:56 -0700 (PDT)
+        Mon, 23 May 2022 14:39:02 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D7241756B6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 11:19:02 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id u30so26971334lfm.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 11:19:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ehKk4ge3DC9pykbdkeYI6agoIdBh2fm+WXac8dMgbuk=;
-        b=yz99lvp/cBW3esg55WvVR/jSAV4oMPeOHaY0zGczi7srwpJ7FNUpQFfR6utEWrFImE
-         vG9QamxzyP+1A+cTCnRfsvm5IxmwT27oh8CnGoi4oGNTldYLElps+jzMWCpVGnbW1MQS
-         gK5kxk7Meeri/pnob7a8MFxOejo4w0DP25RZZXox2x6D7Iz+7ZVWXgdMnxVHtEdNfQIp
-         7rEx1dVUhNsDVSHgPeKE+fvTrz2L4FJahu4FPUuFhXH2FYnSY9GqnQEpky/HtxtToy9Y
-         cDz625bldUwScSKyZRNZp/Cxmx8fWexJcBuXZT/1CbHviwazY9kyZTK4EcFCYRQ5QiSZ
-         deMA==
+        bh=1mZRKoAR0n1jV+jZj9UVi3wo0Q+85S7wOpbcs2QsaFo=;
+        b=FWIatS0sam294VCrFts2zWr5ckKiDeLZ3N7JTFFPCLVsoLi4F9k3cicbQk1xghJVHz
+         1fmsYDF2vge4mTHz74yhy/La41d/clhsh7ogqnvsuPF2206647YBbicfRxEeQ1AqQJi5
+         qXcYShPmgn3mark45EjDxuv31v5635EZWN3xJ+lTXvbF1dI3y+K3uxXCUwfxjbnTyoZs
+         i7AplehF6gm/8WyA8IV44sYRsTLmqH736CIXlbdMQ/d8phUNR1dC2l6nEarhYlvxP/Jj
+         2HYA+7wpIQMxUazkE5MuEqIHphJK9TVIbsZZeBVr7kZrFQxKelc412qOznBLwY1N9O0o
+         My9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ehKk4ge3DC9pykbdkeYI6agoIdBh2fm+WXac8dMgbuk=;
-        b=jH7fn2ETFviD7ozP6ps1vRWMWF4eRfVOEoWraRBbmCYvItWdsPoQuke7qMFUIdiXUU
-         O5Inzszl9PkPF05QtwW8Ayo67FbZ/9SmHJE/csVNfmq3LiO+ok/u0U7Ok1UsQnr0JHLY
-         ujP4Db8g0GRqQBf9UYO3cV5DFyqFECqfDuc0Ahwvos3wnH0fN8FVKfZr9GC41ogSX9o0
-         UbTRdZPQzpYP8HsdQ3wivFKueiTBWAwP4eznphS4O+o7mKZganYy9KtcLpbYJQjL9Xth
-         DJMjtAY/3FhogBdc/byY+og0rachTQPo9mjANjtGjXMHt1jNZDlJ7zJ+GJQ/Nspy5TLR
-         7C3A==
-X-Gm-Message-State: AOAM531pi1AFGavVVRmufDA/7b/2iVPZAQGc1P+VzFihARF0cE73lNSl
-        bBC3/3qfweNOK1JGlVmIikvGHA==
-X-Google-Smtp-Source: ABdhPJxqM26Xqndgkj6RRecNAfe9S+thj/fXb8hKhlAe1VW/0vKTChpdf9JKPIs6Pt6vemxQCvVZRg==
-X-Received: by 2002:a2e:a4af:0:b0:253:cef9:f655 with SMTP id g15-20020a2ea4af000000b00253cef9f655mr14010957ljm.276.1653329921234;
-        Mon, 23 May 2022 11:18:41 -0700 (PDT)
+        bh=1mZRKoAR0n1jV+jZj9UVi3wo0Q+85S7wOpbcs2QsaFo=;
+        b=KN3hnpf4gYL7fWFe4GAM5fH2ziGep0LKxXWqPllrURkFb5+LIhkPtjGMWhCzPGnKhH
+         YoOS1uNTPFlVkkxDLFMgLOYBGX058TPg9cFyIBVWHj44t4EDpmBBIw4w6/8aYumRALSL
+         bGycxRO/o+DvhGJBlx+u8c30YX/SqZq0YWVjrn0Zu1tUxX/ECVIDV/JyQ+wBYOLcCiI2
+         37OjP23Vsd2euPY2TKn3lz6Pgp+rBjJBJ8NA2Pi1Ey2cQnfTdJaq+AZhcHy38ito23Og
+         2MY6S/h2OvTMYLIB4jg+teo+IkHrIZmyALP7/QU7o+XAf2ZwpSIjNzeSv/AT0ECaQLgT
+         2Sqw==
+X-Gm-Message-State: AOAM530GMwPgLYlBo64bQHcqxR/Z/W6aCX2RU7ZI41agtv8yNG0pnKYQ
+        il+oYx9OSJ3a1T5Ob81fGxdAYQ==
+X-Google-Smtp-Source: ABdhPJxQEll9+16jyCkGzy065ax2aqI2Q+GVrNUSG22VJzXyHa6sHvGfaZOi6sNMWNDIF4unsDASxQ==
+X-Received: by 2002:a05:6512:1092:b0:478:689e:a8dc with SMTP id j18-20020a056512109200b00478689ea8dcmr6562792lfg.33.1653329922277;
+        Mon, 23 May 2022 11:18:42 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j20-20020a2e6e14000000b0024f3d1daedesm1904127ljc.102.2022.05.23.11.18.40
+        by smtp.gmail.com with ESMTPSA id j20-20020a2e6e14000000b0024f3d1daedesm1904127ljc.102.2022.05.23.11.18.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 11:18:40 -0700 (PDT)
+        Mon, 23 May 2022 11:18:41 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v12 3/8] PCI: dwc: Convert msi_irq to the array
-Date:   Mon, 23 May 2022 21:18:31 +0300
-Message-Id: <20220523181836.2019180-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v12 4/8] PCI: dwc: split MSI IRQ parsing/allocation to a separate function
+Date:   Mon, 23 May 2022 21:18:32 +0300
+Message-Id: <20220523181836.2019180-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220523181836.2019180-1-dmitry.baryshkov@linaro.org>
 References: <20220523181836.2019180-1-dmitry.baryshkov@linaro.org>
@@ -79,157 +79,131 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm version of DWC PCIe controller supports more than 32 MSI
-interrupts, but they are routed to separate interrupts in groups of 32
-vectors. To support such configuration, change the msi_irq field into an
-array. Let the DWC core handle all interrupts that were set in this
-array.
+Split handling of MSI host IRQs to a separate dw_pcie_msi_host_init()
+function. The code is complex enough to warrant a separate function.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/pci/controller/dwc/pci-dra7xx.c       |  2 +-
- drivers/pci/controller/dwc/pci-exynos.c       |  2 +-
- .../pci/controller/dwc/pcie-designware-host.c | 30 +++++++++++--------
- drivers/pci/controller/dwc/pcie-designware.h  |  2 +-
- drivers/pci/controller/dwc/pcie-keembay.c     |  2 +-
- drivers/pci/controller/dwc/pcie-spear13xx.c   |  2 +-
- drivers/pci/controller/dwc/pcie-tegra194.c    |  2 +-
- 7 files changed, 24 insertions(+), 18 deletions(-)
+ .../pci/controller/dwc/pcie-designware-host.c | 98 +++++++++++--------
+ 1 file changed, 56 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
-index dfcdeb432dc8..0919c96dcdbd 100644
---- a/drivers/pci/controller/dwc/pci-dra7xx.c
-+++ b/drivers/pci/controller/dwc/pci-dra7xx.c
-@@ -483,7 +483,7 @@ static int dra7xx_add_pcie_port(struct dra7xx_pcie *dra7xx,
- 		return pp->irq;
- 
- 	/* MSI IRQ is muxed */
--	pp->msi_irq = -ENODEV;
-+	pp->msi_irq[0] = -ENODEV;
- 
- 	ret = dra7xx_pcie_init_irq_domain(pp);
- 	if (ret < 0)
-diff --git a/drivers/pci/controller/dwc/pci-exynos.c b/drivers/pci/controller/dwc/pci-exynos.c
-index 467c8d1cd7e4..4f2010bd9cd7 100644
---- a/drivers/pci/controller/dwc/pci-exynos.c
-+++ b/drivers/pci/controller/dwc/pci-exynos.c
-@@ -292,7 +292,7 @@ static int exynos_add_pcie_port(struct exynos_pcie *ep,
- 	}
- 
- 	pp->ops = &exynos_pcie_host_ops;
--	pp->msi_irq = -ENODEV;
-+	pp->msi_irq[0] = -ENODEV;
- 
- 	ret = dw_pcie_host_init(pp);
- 	if (ret) {
 diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index af91fe69f542..8dd913f69de7 100644
+index 8dd913f69de7..a076abe6611c 100644
 --- a/drivers/pci/controller/dwc/pcie-designware-host.c
 +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -257,8 +257,11 @@ int dw_pcie_allocate_domains(struct pcie_port *pp)
+@@ -288,6 +288,60 @@ static void dw_pcie_msi_init(struct pcie_port *pp)
+ 	dw_pcie_writel_dbi(pci, PCIE_MSI_ADDR_HI, upper_32_bits(msi_target));
+ }
  
- static void dw_pcie_free_msi(struct pcie_port *pp)
- {
--	if (pp->msi_irq > 0)
--		irq_set_chained_handler_and_data(pp->msi_irq, NULL, NULL);
-+	u32 ctrl;
++static int dw_pcie_msi_host_init(struct pcie_port *pp)
++{
++	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
++	struct device *dev = pci->dev;
++	struct platform_device *pdev = to_platform_device(dev);
++	int ret;
++	u32 ctrl, num_ctrls;
 +
-+	for (ctrl = 0; ctrl < MAX_MSI_CTRLS; ctrl++)
++	num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
++	for (ctrl = 0; ctrl < num_ctrls; ctrl++)
++		pp->irq_mask[ctrl] = ~0;
++
++	if (!pp->msi_irq[0]) {
++		int irq = platform_get_irq_byname_optional(pdev, "msi");
++
++		if (irq < 0) {
++			irq = platform_get_irq(pdev, 0);
++			if (irq < 0)
++				return irq;
++		}
++		pp->msi_irq[0] = irq;
++	}
++
++	pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
++
++	ret = dw_pcie_allocate_domains(pp);
++	if (ret)
++		return ret;
++
++	for (ctrl = 0; ctrl < num_ctrls; ctrl++)
 +		if (pp->msi_irq[ctrl] > 0)
-+			irq_set_chained_handler_and_data(pp->msi_irq[ctrl], NULL, NULL);
- 
- 	irq_domain_remove(pp->msi_domain);
- 	irq_domain_remove(pp->irq_domain);
-@@ -368,13 +371,15 @@ int dw_pcie_host_init(struct pcie_port *pp)
- 			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
- 				pp->irq_mask[ctrl] = ~0;
- 
--			if (!pp->msi_irq) {
--				pp->msi_irq = platform_get_irq_byname_optional(pdev, "msi");
--				if (pp->msi_irq < 0) {
--					pp->msi_irq = platform_get_irq(pdev, 0);
--					if (pp->msi_irq < 0)
--						return pp->msi_irq;
-+			if (!pp->msi_irq[0]) {
-+				int irq = platform_get_irq_byname_optional(pdev, "msi");
++			irq_set_chained_handler_and_data(pp->msi_irq[ctrl],
++							 dw_chained_msi_isr,
++							 pp);
 +
-+				if (irq < 0) {
-+					irq = platform_get_irq(pdev, 0);
-+					if (irq < 0)
-+						return irq;
- 				}
-+				pp->msi_irq[0] = irq;
- 			}
- 
- 			pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
-@@ -383,10 +388,11 @@ int dw_pcie_host_init(struct pcie_port *pp)
- 			if (ret)
++	ret = dma_set_mask(pci->dev, DMA_BIT_MASK(32));
++	if (ret)
++		dev_warn(pci->dev, "Failed to set DMA mask to 32-bit. Devices with only 32-bit MSI support may not work properly\n");
++
++	pp->msi_data = dma_map_single_attrs(pci->dev, &pp->msi_msg,
++					    sizeof(pp->msi_msg),
++					    DMA_FROM_DEVICE,
++					    DMA_ATTR_SKIP_CPU_SYNC);
++	ret = dma_mapping_error(pci->dev, pp->msi_data);
++	if (ret) {
++		dev_err(pci->dev, "Failed to map MSI data\n");
++		pp->msi_data = 0;
++		dw_pcie_free_msi(pp);
++		return ret;
++	}
++
++	return 0;
++}
++
+ int dw_pcie_host_init(struct pcie_port *pp)
+ {
+ 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+@@ -365,49 +419,9 @@ int dw_pcie_host_init(struct pcie_port *pp)
+ 			if (ret < 0)
  				return ret;
- 
--			if (pp->msi_irq > 0)
--				irq_set_chained_handler_and_data(pp->msi_irq,
--							    dw_chained_msi_isr,
--							    pp);
-+			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
-+				if (pp->msi_irq[ctrl] > 0)
-+					irq_set_chained_handler_and_data(pp->msi_irq[ctrl],
-+									 dw_chained_msi_isr,
-+									 pp);
- 
- 			ret = dma_set_mask(pci->dev, DMA_BIT_MASK(32));
- 			if (ret)
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 7d6e9b7576be..9c1a38b0a6b3 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -187,7 +187,7 @@ struct pcie_port {
- 	u32			io_size;
- 	int			irq;
- 	const struct dw_pcie_host_ops *ops;
--	int			msi_irq;
-+	int			msi_irq[MAX_MSI_CTRLS];
- 	struct irq_domain	*irq_domain;
- 	struct irq_domain	*msi_domain;
- 	u16			msi_msg;
-diff --git a/drivers/pci/controller/dwc/pcie-keembay.c b/drivers/pci/controller/dwc/pcie-keembay.c
-index 1ac29a6eef22..297e6e926c00 100644
---- a/drivers/pci/controller/dwc/pcie-keembay.c
-+++ b/drivers/pci/controller/dwc/pcie-keembay.c
-@@ -338,7 +338,7 @@ static int keembay_pcie_add_pcie_port(struct keembay_pcie *pcie,
- 	int ret;
- 
- 	pp->ops = &keembay_pcie_host_ops;
--	pp->msi_irq = -ENODEV;
-+	pp->msi_irq[0] = -ENODEV;
- 
- 	ret = keembay_pcie_setup_msi_irq(pcie);
- 	if (ret)
-diff --git a/drivers/pci/controller/dwc/pcie-spear13xx.c b/drivers/pci/controller/dwc/pcie-spear13xx.c
-index 1569e82b5568..cc7776833810 100644
---- a/drivers/pci/controller/dwc/pcie-spear13xx.c
-+++ b/drivers/pci/controller/dwc/pcie-spear13xx.c
-@@ -172,7 +172,7 @@ static int spear13xx_add_pcie_port(struct spear13xx_pcie *spear13xx_pcie,
+ 		} else if (pp->has_msi_ctrl) {
+-			u32 ctrl, num_ctrls;
+-
+-			num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
+-			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
+-				pp->irq_mask[ctrl] = ~0;
+-
+-			if (!pp->msi_irq[0]) {
+-				int irq = platform_get_irq_byname_optional(pdev, "msi");
+-
+-				if (irq < 0) {
+-					irq = platform_get_irq(pdev, 0);
+-					if (irq < 0)
+-						return irq;
+-				}
+-				pp->msi_irq[0] = irq;
+-			}
+-
+-			pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
+-
+-			ret = dw_pcie_allocate_domains(pp);
+-			if (ret)
++			ret = dw_pcie_msi_host_init(pp);
++			if (ret < 0)
+ 				return ret;
+-
+-			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
+-				if (pp->msi_irq[ctrl] > 0)
+-					irq_set_chained_handler_and_data(pp->msi_irq[ctrl],
+-									 dw_chained_msi_isr,
+-									 pp);
+-
+-			ret = dma_set_mask(pci->dev, DMA_BIT_MASK(32));
+-			if (ret)
+-				dev_warn(pci->dev, "Failed to set DMA mask to 32-bit. Devices with only 32-bit MSI support may not work properly\n");
+-
+-			pp->msi_data = dma_map_single_attrs(pci->dev, &pp->msi_msg,
+-						      sizeof(pp->msi_msg),
+-						      DMA_FROM_DEVICE,
+-						      DMA_ATTR_SKIP_CPU_SYNC);
+-			ret = dma_mapping_error(pci->dev, pp->msi_data);
+-			if (ret) {
+-				dev_err(pci->dev, "Failed to map MSI data\n");
+-				pp->msi_data = 0;
+-				goto err_free_msi;
+-			}
+ 		}
  	}
  
- 	pp->ops = &spear13xx_pcie_host_ops;
--	pp->msi_irq = -ENODEV;
-+	pp->msi_irq[0] = -ENODEV;
- 
- 	ret = dw_pcie_host_init(pp);
- 	if (ret) {
-diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index cc2678490162..7056072637ab 100644
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -2262,7 +2262,7 @@ static void tegra194_pcie_shutdown(struct platform_device *pdev)
- 
- 	disable_irq(pcie->pci.pp.irq);
- 	if (IS_ENABLED(CONFIG_PCI_MSI))
--		disable_irq(pcie->pci.pp.msi_irq);
-+		disable_irq(pcie->pci.pp.msi_irq[0]);
- 
- 	tegra194_pcie_pme_turnoff(pcie);
- 	tegra_pcie_unconfig_controller(pcie);
 -- 
 2.35.1
 
