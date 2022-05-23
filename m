@@ -2,129 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A879531C55
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 22:57:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 463D0531712
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 22:52:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242098AbiEWSJK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 14:09:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45920 "EHLO
+        id S244244AbiEWST2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 14:19:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343809AbiEWSIk (ORCPT
+        with ESMTP id S245628AbiEWSSU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 14:08:40 -0400
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9703956757;
-        Mon, 23 May 2022 10:51:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1653328307; x=1684864307;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=uZr5P/6fGVrb/f5Wy8Y9usW4kb9alNg7rTyBMTx9lZg=;
-  b=QmzIs7y/McxjsHdj4Sx6bThXikeIis/i8LcrhE2Y5qKx+VYjp2ntv005
-   TFy5Hj2i39SRFjvS01J49p2oQJkInGVKaBkZkvS4A0L5qcZasuC7mVzfo
-   H6RfDneNP+njpT5Q2JPNLGaoG5qTQ0/Mghrruh9SNSYNciXDR49xRx6P0
-   ZAsperglivIArlazk8lboqP60YIV6GD+7xldBLeab5UT4B8To/cib43k/
-   smeh9XwrF+X+36BnOyoG/gIPLbGqvw3zib33DdQ8hZcbgVqbWWgHhbOVF
-   c0nzF7ZOJ+5QLLvp07CrHk5Dr2BMdm3jVsRxc9+1ZriDpGefNQvEv7m9p
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10356"; a="270876862"
-X-IronPort-AV: E=Sophos;i="5.91,246,1647327600"; 
-   d="scan'208";a="270876862"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 10:51:16 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,246,1647327600"; 
-   d="scan'208";a="716816774"
-Received: from lkp-server01.sh.intel.com (HELO db63a1be7222) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 23 May 2022 10:51:13 -0700
-Received: from kbuild by db63a1be7222 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1ntCD3-0001KQ-9H;
-        Mon, 23 May 2022 17:51:13 +0000
-Date:   Tue, 24 May 2022 01:50:32 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Taniya Das <quic_tdas@quicinc.com>,
+        Mon, 23 May 2022 14:18:20 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3F165DD36;
+        Mon, 23 May 2022 10:57:02 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id h8so18112417ljb.6;
+        Mon, 23 May 2022 10:57:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bOlYsdGBjB8la7xfDxJ83baKM4S1nbqwnMPOp413tZ8=;
+        b=XulNbwRW0NjEWCEnZSzm0Gq/3TvyuwtTwqHPQBDZFKe0nwSuv4sY+Gqbrnny+R5/jx
+         8jhRUwSCHPdZuGn76v3OuSYCy0sCm1fMsD4edv/qPUuxYYlRu4Lp3JkSppnV+xwktmQj
+         0l0FNHs4WTUaxkdNlBxJ8QoxokkPG7ZBRgJvlbes/0k44G4eKDVe3KlXyOXGDQVjEUUK
+         vwrL1COxrm62BlICzbZl7jnF550PGr2vRRAp9KuP4Ez8dZcjN1Kfn1TmXMSUCWw7b4Go
+         142po8BcO0k2n6JiDvQQA2gOaHNeQSnwd0Nr5LQpKqO1SSuxfz7JuV7uqQoUXv7sxp1W
+         vsdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bOlYsdGBjB8la7xfDxJ83baKM4S1nbqwnMPOp413tZ8=;
+        b=7FChkw3qqNTrUDoS3wCxL0ub01IEBPaZH1BGQmuP8rs5rVZefYxveqvsNEmo1CkGyl
+         pttN0oTbbNpEtCYek2u22J9NzHItqaWcvAs5DXrokYVLJ9gHKOcGOu5vu0tS9g8WLgOr
+         f9cPkCrxBJNN7ebLoQXoAiyqGIWfQYpxRNwgZnu2PAPUtbksc28bpTQCESEiU6pLYjjv
+         2ZfMMucLv1uIPBwa384GKRFP42V3+YRVl60Zh5O0y6Tz1xAHtNAIoog16qs9wui9FO46
+         VR8pwSPBb4liXSiV6Ngp87uB+JiBHsD1PGrfKtDzEUKSvl2A7UWGN0JMR+8p6atY1Syg
+         12+w==
+X-Gm-Message-State: AOAM533lfl61v9SNN7F2nu8ByvjeSWAnVHO1I2663RHvJ5uJ741SAVlR
+        c9NYDguFr//Ml9OzP4oBbG/zPm1Dr3bUGA==
+X-Google-Smtp-Source: ABdhPJxP57/kkoig/xX65Iulf97/ByC+R673sxqZviml4DwkB2Z0HHmnwHfpK1UjyfgoMOgovfl9Wg==
+X-Received: by 2002:a05:651c:10a8:b0:253:c8a7:3afd with SMTP id k8-20020a05651c10a800b00253c8a73afdmr13839377ljn.431.1653328468359;
+        Mon, 23 May 2022 10:54:28 -0700 (PDT)
+Received: from nergzd-desktop.localdomain ([194.39.226.133])
+        by smtp.gmail.com with ESMTPSA id x9-20020a056512078900b0047255d211f9sm2087743lfr.296.2022.05.23.10.54.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 May 2022 10:54:27 -0700 (PDT)
+From:   Markuss Broks <markuss.broks@gmail.com>
+To:     linux-kernel@vger.kernel.org, jic23@kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Markuss Broks <markuss.broks@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Song Qiang <songqiang1304521@gmail.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     kbuild-all@lists.01.org, Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <quic_tdas@quicinc.com>
-Subject: Re: [PATCH v5] arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio
- clock controllers
-Message-ID: <202205240130.JscI0RkD-lkp@intel.com>
-References: <20220523100058.26241-1-quic_tdas@quicinc.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v5 0/5] Add support for ToF sensor on Yoshino platform
+Date:   Mon, 23 May 2022 20:53:39 +0300
+Message-Id: <20220523175344.5845-1-markuss.broks@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220523100058.26241-1-quic_tdas@quicinc.com>
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Taniya,
+This series adds support for the ToF proximity sensor installed on
+Yoshino devices. As part of this series, support handling the reset
+GPIO and VDD supply by the VL53L0X driver. Also stop hardcoding the
+interrupt type, since on Yoshino devices it seems that edge triggering
+doesn't work properly.
 
-Thank you for the patch! Yet something to improve:
+Tested on Sony Xperia XZ1 (poplar).
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on v5.18]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Taniya-Das/arm64-dts-qcom-sc7280-Add-lpasscore-lpassaudio-clock-controllers/20220523-180437
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-config: arm64-randconfig-r026-20220522 (https://download.01.org/0day-ci/archive/20220524/202205240130.JscI0RkD-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/6a56b4899f4e80f53613ce8e9569e2d1ca46f46a
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Taniya-Das/arm64-dts-qcom-sc7280-Add-lpasscore-lpassaudio-clock-controllers/20220523-180437
-        git checkout 6a56b4899f4e80f53613ce8e9569e2d1ca46f46a
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
+v2:
+- Fix a nasty issue: turns out grouping the pinctrl makes it not apply,
+which was the main cause of edge interrupts not working correctly and
+having to use level interrupts, which caused a large amount of false
+detections.
+- handle the irq type more gracefully: if it's not provided, default
+to falling edge, but if it's provided, then use the provided one.
+v3:
+- add irq.h header (forgot to commit)
+- reword commit message (already initialized -> pre-initialized)
+v4:
+- reorder powering on and power off action (Jonathan)
+- sort pinctrls by GPIO number (Konrad)
+v5:
+- "This patch adds..." -> "Add ..." (Krzysztof)
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
+Markuss Broks (5):
+  dt-bindings: proximity: vl53l0x: Document optional supply and GPIO
+    properties
+  proximity: vl53l0x: Get interrupt type from DT
+  proximity: vl53l0x: Handle the VDD regulator
+  proximity: vl53l0x: Handle the reset GPIO
+  arm64: dts: qcom: msm8998-xperia: Introduce ToF sensor support
 
-All errors (new ones prefixed by >>):
-
-   In file included from arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dts:17:
->> arch/arm64/boot/dts/qcom/sc7280.dtsi:11:10: fatal error: dt-bindings/clock/qcom,lpassaudiocc-sc7280.h: No such file or directory
-      11 | #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   compilation terminated.
-
-
-vim +11 arch/arm64/boot/dts/qcom/sc7280.dtsi
-
-  > 11	#include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
-    12	#include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
-    13	#include <dt-bindings/clock/qcom,rpmh.h>
-    14	#include <dt-bindings/clock/qcom,videocc-sc7280.h>
-    15	#include <dt-bindings/gpio/gpio.h>
-    16	#include <dt-bindings/interconnect/qcom,osm-l3.h>
-    17	#include <dt-bindings/interconnect/qcom,sc7280.h>
-    18	#include <dt-bindings/interrupt-controller/arm-gic.h>
-    19	#include <dt-bindings/mailbox/qcom-ipcc.h>
-    20	#include <dt-bindings/power/qcom-rpmpd.h>
-    21	#include <dt-bindings/reset/qcom,sdm845-aoss.h>
-    22	#include <dt-bindings/reset/qcom,sdm845-pdc.h>
-    23	#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-    24	#include <dt-bindings/thermal/thermal.h>
-    25	
+ .../bindings/iio/proximity/st,vl53l0x.yaml    |  5 ++
+ .../dts/qcom/msm8998-sony-xperia-yoshino.dtsi | 34 +++++++++++++
+ drivers/iio/proximity/vl53l0x-i2c.c           | 50 ++++++++++++++++++-
+ 3 files changed, 88 insertions(+), 1 deletion(-)
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.35.1
+
