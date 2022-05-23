@@ -2,74 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4B2B531DD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 23:34:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03F43531DE3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 23:38:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbiEWVeu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 17:34:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37710 "EHLO
+        id S230033AbiEWViw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 17:38:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229625AbiEWVeu (ORCPT
+        with ESMTP id S229604AbiEWViv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 17:34:50 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 818C3AFAE1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 14:34:48 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id c15-20020a9d684f000000b0060b097c71ecso4062210oto.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 14:34:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=onnXCDVFR2p0bkmrLOEm4kEGm5J7UYI9BrUeYSXAoUQ=;
-        b=Tfn49lXjd54jumyNgfrzDgRV0VoOxC+tJeaBGbaDkknpbrqJZmKU43ZLBPaoe9bLcD
-         cIvJHMFlKiAQCMvWcSjdNg6xu6mi9S0T3ZFarrfqA0EW2pTiQ4ar/mtX3bpJuaJgdDe7
-         40BXa4mejaHLKheMyMKrWcCcuQUhKjs2FgTA14SJYIVBIY7GRCx6i+5NlZh4bkPFlOO1
-         8Dr2boMmxWIX7xWXEJBYAfQPiwXbKS3IRaT/lVOOcR1nGJuXuBOB4tLsa6L8CHo0McS4
-         W7VkvkqAdy+yGc8Hz7b9/uwXEBD4owhrz9/yfnQjtjc4ZH2uaMgvtl22YIFpunYpcE5j
-         9V+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=onnXCDVFR2p0bkmrLOEm4kEGm5J7UYI9BrUeYSXAoUQ=;
-        b=GtNoiXgxoemEvNwMsn8SoT1/3hA29skWufxLPqAjTdflUk1TPARUgFnujvppU5fyID
-         2oPmhhB+e88ZlcQEAvuUQY5NDm05Ws8DsgW6FR+TDzYrbei1bZo4+F+LtH9adwyopQLU
-         QDuecMA3FTU0h53dixnLo4WxoDEBhGrKzaRcYpsTFL7jRcBBUIWuKz7fLIQ0Jbhdy7MW
-         HcNtHcjp8L8FjylxGpRdUaRxmmzdGnBUKXd0yJzWPVhxt1eKrn4mIRGJ1tqwT+7WSnTQ
-         94C1u1MrjLTxt5ltNoXtFVJe9GzBhQ4ts7JOtynw+rNpAmh8cwDzoF4txpQgthzXq3cy
-         7leg==
-X-Gm-Message-State: AOAM533T1gd6kXbTsAWUmbUStpjcWRjLdEplRETrM2zkG43DORir6VZ5
-        QvbbGEqubBrsta4u07pqDFn5Ag==
-X-Google-Smtp-Source: ABdhPJzpV6X12N/BqQG+AHKu1RjSWPMwb8YXulMJ9dtUfKMvgDZDU8dzDBWtTuCWpQGNyq75ZYdYng==
-X-Received: by 2002:a05:6830:25c2:b0:606:ed20:da5c with SMTP id d2-20020a05683025c200b00606ed20da5cmr9357393otu.234.1653341687785;
-        Mon, 23 May 2022 14:34:47 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id h18-20020a056830401200b0060603221278sm4353619ots.72.2022.05.23.14.34.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 14:34:47 -0700 (PDT)
-Date:   Mon, 23 May 2022 16:34:45 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Trilok Soni <quic_tsoni@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Mon, 23 May 2022 17:38:51 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E63856FB6;
+        Mon, 23 May 2022 14:38:49 -0700 (PDT)
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id F35032051B;
+        Mon, 23 May 2022 23:38:46 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        agross@kernel.org, arnd@arndb.de, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        olof@lixom.net, robh@kernel.org, sboyd@kernel.org
-Subject: Re: Removal of qcom,board-id and qcom,msm-id
-Message-ID: <Yov99WPNrGRg86sS@builder.lan>
-References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
- <20220522195138.35943-1-konrad.dybcio@somainline.org>
- <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
- <02ab0276-b078-fe66-8596-fcec4378722b@somainline.org>
- <49a52870-9aab-c4bd-2077-66732f42bbba@linaro.org>
- <196459ad-704d-020c-c485-842f613ae618@quicinc.com>
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rajeev Nandan <quic_rajeevny@quicinc.com>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH 0/9] drm/msm/dsi_phy: Replace parent names with clk_hw pointers
+Date:   Mon, 23 May 2022 23:38:28 +0200
+Message-Id: <20220523213837.1016542-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <196459ad-704d-020c-c485-842f613ae618@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,110 +57,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 23 May 11:41 CDT 2022, Trilok Soni wrote:
+As stated in [1] I promised to tackle and send this series.
 
-> Hello Krzysztof,
-> 
-> On 5/23/2022 5:14 AM, Krzysztof Kozlowski wrote:
-> > On 23/05/2022 14:02, Konrad Dybcio wrote:
-> > > 
-> > > On 23/05/2022 09:21, Krzysztof Kozlowski wrote:
-> > > > On 22/05/2022 21:51, Konrad Dybcio wrote:
-> > > > > Hi,
-> > > > > 
-> > > > > removing these properties will not bring almost any benefit (other than making
-> > > > > some checks happy any saving some <200 LoC) and will make the lives of almost
-> > > > > all people doing independent development for linux-on-msm harder. There are
-> > > > > almost unironically like 3 people outside Linaro and QUIC who have
-> > > > > non-vendor-fused development boards AND the sources to rebuild the
-> > > > > bootloader on their own. Making it harder to boot is only going to
-> > > > > discourage people from developing on these devices, which is already not
-> > > > > that pleasant, especially with newer platforms where you have to fight with
-> > > > > the oh-so-bright ideas of Android boot chain..
-> > > > > 
-> > > > > This only concerns devices released before sm8350, as the new ones will not
-> > > > > even boot with these properties present (or at least SONY Sagami, but I
-> > > > > doubt it's an isolated case), so other than completing support for older
-> > > > > devices, it won't be an issue going forward, anyway. But there are give
-> > > > > or take 50 locked down devices in mainline right now, and many more waiting
-> > > > > to be upstreamed in various downstream close-to-mainline trees that should
-> > > > > not be disregarded just because Qualcomm is far from the best at making
-> > > > > their BSP software stack clean.
-> > > > I actually wonder why do you need these properties for community work on
-> > > > such boards? You ship kernel with one concatenated DTB and the
-> > > > bootloader does not need the board-id/msm-id fields, doesn't it?
-> > > 
-> > > If that were the case, I would have never complained about this! It's
-> > > the bootloader itself that needs it, you can see it in a "Best match
-> > > [blah blah] 258/0x1000/...." log line, where it walks through the
-> > > appended (or otherwise compiled into the boot.img) DTBs and looks for
-> > > matches for the burnt-in msm-, board- and (on newer-older platforms)
-> > > pmic-id. If it cannot find these, it refuses to boot with an Android
-> > > Verified Boot red state and you get a not-so-nice "Your device has been
-> > > unlocked and the boot image is not working" or something like this on
-> > > your screen.
-> > > 
-> > > 
-> > > > 
-> > > > Not mentioning that in the past bootloader was actually not using these
-> > > > properties at all, because it was the dtbTool who was parsing them.
-> > > 
-> > > Not sure when that was the case, maybe with very old arm32 bootloaders
-> > > in the times before I did development on Qualcomm devices.
-> > > 
-> > > 
-> > > >    So
-> > > > in any case either your device works fine without these properties or
-> > > > you have to use dtbTool, right?
-> > > 
-> > > To the best of my idea, wrong :( Unless the vendor modified the LK/XBL
-> > > code on their own, it looks for a "best match" (but if it's not a
-> > > precise match, it won't even bother trying to boot, just fyi..), meaning
-> > > it tries to go through a list of SoC ID and revision pairs (msm-id),
-> > > board IDs (board-id) and PMIC id+rev pairs (pmic-id) and if no match is
-> > > found, it doesn't even exit the bootloader and says something like "no
-> > > dtbs found".
-> > 
-> > This would mean that dtbTool as described in the actual patch [1] is not
-> > used and bootloader ignores the table. If that's the case, the commit
-> > and requirement of such complex board-foundry-pmic-compatibles should be
-> > dropped. So I am getting now to what Dmitry said...
-> > 
-> > [1]
-> > https://lore.kernel.org/all/1448062280-15406-2-git-send-email-sboyd@codeaurora.org/
-> 
-> 
-> The link above is from 2015. Lot has changed downstream. Most of what was
-> mentioned by Konrad is right. Application bootloader acts on picking on
-> platform DTBO based on the platform ID plus some combinations like PMIC etc;
-> These platform DTBOs gets overlay on top of SOC DTB by the Application
-> bootloader.
-> 
-> We have moved to DTBO for all the latest targets, but I can understand that
-> some old targets at upstream could be using the very old approaches.
-> 
-> Downstream all of the platforms including the DTBO files will need board-id
-> and msm-id since we also do the compile time stitching of dtb + dtbo and
-> dtbo + dtbo to generate the proper SOC DTB and PLATFORM DTBOs which gets
-> flashed in the DTBO partition and follows the Android boot requirements.
-> Application bootloader then picks the right Platform DTBO as mentioned above
-> w/ the right SOC DTB. It gets more complicated w/ GKI new requirements every
-> year (better for GKI, may not be better for upstream kernel + downstream
-> bootloader combination).
-> 
+parent_hw pointers are easier to manage and cheaper to use than
+repeatedly formatting the parent name and subsequently leaving the clk
+framework to perform lookups based on that name.
 
-FWIW, this doesn't fit with the upstream model at all. In particular the
-DTBO that comes with the devices are not compatible with any upstream
-DTB.
+This series starts out by adding extra constructors for divider, mux and
+fixed-factor clocks that have parent_hw(s) pointer argument(s) instead
+of some DT index or name.  Followed by individual patches performing the
+conversion, one DSI PHY at a time.
 
-As such, the first step to run an upstream DTB+kernel is to zero out the
-dtbo partitions.
+dsi_phy_28nm_8960 includes an extra fixup to replace "eternal"
+devm_kzalloc allocations (for the lifetime of the device) with
+stack-local char arrays, like all the other DSI PHY drivers.
 
+I couldn't help but notice that clock names are wildly varying:
 
-With the DTBO cleared, most devices (all Qualcomm reference devices) can
-be booted with the dtb appended to the Image.gz, without the
-qcom,{board,msm}-id. As such I would say things are working okay
-currently.
+- Some use underscores in the _clk suffix where others have nothing;
+- Some have an _ after the %d, others have not;
+- Some use a _pll suffix after dsi%d or even _phy_pll suffix.
 
-Regards,
-Bjorn
+Are there any thoughts or feelings towards unifying these?
+Theoretically no clock names are used anywhere in the kernel, and
+everything is based on a phandle + index in DT (I have yet to validate
+this).  Obviously no .name/.fw_name will be updated to not break DT.
+
+Which, by the way, is there a particular reason for:
+
+  #define DSI_BYTE_PLL_CLK		0
+  #define DSI_PIXEL_PLL_CLK		1
+
+To not be in the dt-bindings and used in the DT?
+
+And with enough future improvements out of the way, let's round out this
+patch-series by stating that it has been successfully tested on:
+
+- Sony Nile Discovery (Xperia XA2 Ultra): 14nm;
+- Sony Seine PDX201 (Xperia 10II): 14nm;
+- Sony Loire Suzu (Xperia X): 28nm.
+
+And no diff is observed in debugfs's clk_summary.
+
+Unfortunately all other devices in my collection with a 7/10nm DSI PHY
+have a DSC panel which we have yet to get working.
+
+[1]: https://lore.kernel.org/linux-arm-msm/20220502214235.s5plebunh4ttjhge@SoMainline.org/
+
+Marijn Suijten (9):
+  clk: divider: Introduce devm_clk_hw_register_divider_parent_hw()
+  clk: mux: Introduce devm_clk_hw_register_mux_parent_hws()
+  clk: fixed-factor: Introduce *clk_hw_register_fixed_factor_parent_hw()
+  drm/msm/dsi_phy_28nm: Replace parent names with clk_hw pointers
+  drm/msm/dsi_phy_28nm_8960: Replace parent names with clk_hw pointers
+  drm/msm/dsi_phy_28nm_8960: Use stack memory for temporary clock names
+  drm/msm/dsi_phy_14nm: Replace parent names with clk_hw pointers
+  drm/msm/dsi_phy_10nm: Replace parent names with clk_hw pointers
+  drm/msm/dsi_phy_7nm: Replace parent names with clk_hw pointers
+
+ drivers/clk/clk-fixed-factor.c                | 57 ++++++++++--
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c    | 92 ++++++++-----------
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c    | 36 ++++----
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c    | 52 +++++------
+ .../gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c   | 26 ++----
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c     | 92 +++++++++----------
+ include/linux/clk-provider.h                  | 34 +++++++
+ 7 files changed, 209 insertions(+), 180 deletions(-)
+
+--
+2.36.1
