@@ -2,74 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C98925312A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 18:22:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1DAF53124A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 18:22:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237005AbiEWOZT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 10:25:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34298 "EHLO
+        id S237168AbiEWOcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 10:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237117AbiEWOZR (ORCPT
+        with ESMTP id S237177AbiEWOcl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 10:25:17 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89C185A582;
-        Mon, 23 May 2022 07:25:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 17E7AB81100;
-        Mon, 23 May 2022 14:25:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC4DC385A9;
-        Mon, 23 May 2022 14:25:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653315912;
-        bh=4vLh4ue1tMMosFDoK6263Dar2yYqNCg/G7FWJAgLPp8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=r/qpw7GGCIz7a5LLJurI22VqpnfZPjCvUilv1WtvGhte7xO3Zl4zmE0M9g7GC3NGG
-         rGKDBc6/bHSkH6bE3mKH9G1LtslYjnqyyeptjtibGprZDPkKLueriLMdselH4vnA44
-         LPPPZHvmWc3AsbVqQ+gJNDiGFZYcrF4FJdbdJWrz9UBGg8ML7flJhJAYF7Gm2MCGjb
-         0ng2XYOQ6E4h+M91DkR5eoUZ+Y7dcnO4E0Cz7wEbwAT5sMXOSpRJxBKKhC2Xu1cfYT
-         SKH/4XHglOuFn16JEX3bNahmLeW37KB6Yu8BE2dTtsutcMO/YsOZNrd2p0LAzqiyGu
-         pR5o/ewDnTIMw==
-Received: by mail-ed1-f49.google.com with SMTP id g12so19369632edq.4;
-        Mon, 23 May 2022 07:25:12 -0700 (PDT)
-X-Gm-Message-State: AOAM530XevtgSa9wN2p6npVkyjHN21bseyPwEwAK96QFaZYSIN/AYgaH
-        W23PYC14X9A3+Ze/b8W1mEw0b6oJxgvGLiLT4g==
-X-Google-Smtp-Source: ABdhPJwoOeWMZ55frHI3XEH4l/rWGlWP0SKbPSv8LWz5GQV6XKBYerjQpqXQjeWUQavlCQXH9Ze9HnGb4cM8NySG3R4=
-X-Received: by 2002:a05:6402:1e93:b0:42b:5134:6bf6 with SMTP id
- f19-20020a0564021e9300b0042b51346bf6mr9903039edf.40.1653315911050; Mon, 23
- May 2022 07:25:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220509133947.20987-1-quic_jinlmao@quicinc.com>
- <20220509133947.20987-9-quic_jinlmao@quicinc.com> <beba5968-3115-3c09-cda6-67095ca55226@arm.com>
-In-Reply-To: <beba5968-3115-3c09-cda6-67095ca55226@arm.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Mon, 23 May 2022 09:24:57 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqK8Z_J2xaOsBM-U4hhHPgQCudd=SGmPqwdipArWmTXJYw@mail.gmail.com>
-Message-ID: <CAL_JsqK8Z_J2xaOsBM-U4hhHPgQCudd=SGmPqwdipArWmTXJYw@mail.gmail.com>
-Subject: Re: [PATCH v7 08/10] dt-bindings: arm: Adds CoreSight TPDA hardware definitions
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Coresight ML <coresight@lists.linaro.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Mon, 23 May 2022 10:32:41 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EA2F2DA92
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 07:32:37 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id y13so28504251eje.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 07:32:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair;
+        h=mime-version:content-transfer-encoding:date:message-id:cc:subject
+         :from:to:references:in-reply-to;
+        bh=mlEN37RGVVHIHvr+/hBakjwM1KtuFOZ5STJWC6VPCe4=;
+        b=Rcj4RHh43jilygk/Vks3FrXhRojthZEyi5e2TNhpmMYxd9vZI96vQ9WaZOyTTw7Am8
+         FpK6yZOa40KBLEsOTHiassJOaUUZVs2jXPuV2dIKLl46bdK6lwUOmR+f/8pBfm0FRS2+
+         cS3bssbbTMu/a/92yFs9/Ou3qcRZoCM4wwu5uJxOZGQr7TM40i9HEB/tPD4WMx/DPYTA
+         +NPXoSYnVdLSPjy4fM8ZRZfsCXoIvuDJ/GflHI7aDqnd2mC8nh6SHaY9XuhX3CmLGil3
+         W59GLADwbzpdcsyiqZ/MGGQX0R7/nzkCtn7NwXaRe97p54CU2epvXC50b9mzLvUEH/CJ
+         HS/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:content-transfer-encoding:date
+         :message-id:cc:subject:from:to:references:in-reply-to;
+        bh=mlEN37RGVVHIHvr+/hBakjwM1KtuFOZ5STJWC6VPCe4=;
+        b=SQB4DUMyTlBCvO3hUpCTOPpHEJiBlGrhYZzsduPh8mF6tI82zgrMPfJ8GJ7sD11WTg
+         MEy4Cc/3zuPv8Gg3IbtNcpx760pQHgLJIq/e8NEwGthaZ8Wi2z8NcPg+iB9bS3FA+94X
+         F6JLx1dnHcY9I/a7X00jUb5Ug7QEhhkbKASfMBNeP7MPbpmu6UNuNNkO3ZOq3xWeuJfp
+         rGkVl6KsgeaOe+F6pUWndKcU/sFFm445LZG8ALDsytLjtn9hlenzvBR11aftC2wKCCwe
+         KSmat7QzIkjsctls+tEYez8pPp6H7zblvke7aCm5RAjIvuQbTb73r94Cfd+2dx39KH/b
+         gMWA==
+X-Gm-Message-State: AOAM531YNM7XPhuGIQYpCWMXpa5eZXEhDAYZc7YbgpA1Knd0lKiDl6CO
+        a3x+x82NGhch8z+d/6qz11eCGg==
+X-Google-Smtp-Source: ABdhPJyusWKZbqf11Faic6AnpiRE4C9fByFH9k2mbyP2EBgTg9fTPLO26mlUksfmbTdWrZopA5QUqg==
+X-Received: by 2002:a17:907:1612:b0:6fe:d943:312f with SMTP id hb18-20020a170907161200b006fed943312fmr5489472ejc.263.1653316355711;
+        Mon, 23 May 2022 07:32:35 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id y7-20020a1709060a8700b006fec3b2e4f3sm2334343ejf.205.2022.05.23.07.32.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 May 2022 07:32:35 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Mon, 23 May 2022 16:32:34 +0200
+Message-Id: <CK77QG2WNJ7B.EIXG4S6SVQ2D@otso>
+Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        "Georgi Djakov" <djakov@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Odelu Kukatla" <okukatla@codeaurora.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 2/5] dt-bindings: interconnect: Add Qualcomm SM6350
+ NoC support
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>
+X-Mailer: aerc 0.9.0
+References: <20220520070318.48521-1-luca.weiss@fairphone.com>
+ <20220520070318.48521-3-luca.weiss@fairphone.com>
+ <7b451dfb-8353-4a4e-1834-a01feaa267d2@linaro.org>
+ <CK4KPEWM9165.2LR9ZUG2GGK6Q@otso>
+ <b9487ffe-7ed5-077c-3c2c-886746457365@linaro.org>
+In-Reply-To: <b9487ffe-7ed5-077c-3c2c-886746457365@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,182 +84,200 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 23, 2022 at 4:44 AM Suzuki K Poulose <suzuki.poulose@arm.com> wrote:
->
-> Cc: Rob Herring
->
+Hi Krzysztof,
 
-Will or will not have any effect...
+On Fri May 20, 2022 at 4:24 PM CEST, Krzysztof Kozlowski wrote:
+> On 20/05/2022 14:04, Luca Weiss wrote:
+> > Hi Krzysztof,
+> >=20
+> > Thanks for the review!
+> >=20
+> > On Fri May 20, 2022 at 12:31 PM CEST, Krzysztof Kozlowski wrote:
+> >> On 20/05/2022 09:03, Luca Weiss wrote:
+> >>> Add bindings for Qualcomm SM6350 Network-On-Chip interconnect devices=
+.
+> >>>
+> >>> As SM6350 has two pairs of NoCs sharing the same reg, allow this in t=
+he
+> >>> binding documentation, as was done for qcm2290.
+> >>>
+> >>> Because the main qcom,rpmh.yaml file is getting too complicated for o=
+ur
+> >>> use cases, create a new qcom,rpmh-common.yaml and a separate
+> >>> qcom,sm6350-rpmh.yaml that defines our new bindings.
+> >>>
+> >>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> >>> ---
+> >>> Changes since v1:
+> >>> * Split sm6350 into separate yaml with new rpmh-common.yaml
+> >>>
+> >>>  .../interconnect/qcom,rpmh-common.yaml        |  41 +++++
+> >>>  .../interconnect/qcom,sm6350-rpmh.yaml        |  82 ++++++++++
+> >>>  .../dt-bindings/interconnect/qcom,sm6350.h    | 148 ++++++++++++++++=
+++
+> >>>  3 files changed, 271 insertions(+)
+> >>>  create mode 100644 Documentation/devicetree/bindings/interconnect/qc=
+om,rpmh-common.yaml
+> >>>  create mode 100644 Documentation/devicetree/bindings/interconnect/qc=
+om,sm6350-rpmh.yaml
+> >>>  create mode 100644 include/dt-bindings/interconnect/qcom,sm6350.h
+> >>>
+> >>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh=
+-common.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-com=
+mon.yaml
+> >>> new file mode 100644
+> >>> index 000000000000..6121eea3e87d
+> >>> --- /dev/null
+> >>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-common=
+.yaml
+> >>> @@ -0,0 +1,41 @@
+> >>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> >>> +%YAML 1.2
+> >>> +---
+> >>> +$id: http://devicetree.org/schemas/interconnect/qcom,rpmh-common.yam=
+l#
+> >>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> >>> +
+> >>> +title: Qualcomm RPMh Network-On-Chip Interconnect
+> >>> +
+> >>> +maintainers:
+> >>> +  - Georgi Djakov <georgi.djakov@linaro.org>
+> >>> +  - Odelu Kukatla <okukatla@codeaurora.org>
+> >>
+> >> Is this valid email address?
+> >=20
+> > Will put Georgi and Bjorn as maintainers, as per your other email.
+> >=20
+> >>
+> >>> +
+> >>> +description: |
+> >>> +   RPMh interconnect providers support system bandwidth requirements=
+ through
+> >>> +   RPMh hardware accelerators known as Bus Clock Manager (BCM). The =
+provider is
+> >>> +   able to communicate with the BCM through the Resource State Coord=
+inator (RSC)
+> >>> +   associated with each execution environment. Provider nodes must p=
+oint to at
+> >>> +   least one RPMh device child node pertaining to their RSC and each=
+ provider
+> >>> +   can map to multiple RPMh resources.
+> >>> +
+> >>> +properties:
+> >>> +  '#interconnect-cells':
+> >>> +    enum: [ 1, 2 ]
+> >>
+> >> Why this is an enum?
+> >=20
+> > As a start, just adding that the definitions are copied from
+> > qcom,rpmh.yaml so it's not my invention :) Of course that doesn't mean
+> > that it should be improved where possible!
+> >=20
+> > Either value is supported by the driver (and used upstream). But perhap=
+s
+> > it can use a description to define what the 'parameters' mean.
+> >=20
+> > The second (optional) parameters "is to support different bandwidth
+> > configurations that are toggled by RPMh, depending on the power state o=
+f
+> > the CPU."[0]
+> >=20
+> > A commit message for sc7180 calls it the "tag information" and "The
+> > consumers can specify the path tag as an additional argument to the
+> > endpoints."[1]
+> >=20
+> > Not sure how to properly describe the first property, I guess the
+> > interconnect endpoint? Maybe Georgi can help here.
+> >=20
+> >=20
+> > [0] https://lore.kernel.org/linux-arm-msm/b079a211-d387-7958-bbe2-c41ca=
+c00d269@kernel.org/
+> > [1] https://git.kernel.org/torvalds/c/e23b122
+>
+> Hm, indeed driver supports variable values. It's fine then.
+>
+> >=20
+> >>
+> >>> +
+> >>> +  qcom,bcm-voters:
+> >>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> >>> +    items:
+> >>
+> >> Please implement my previous comments.
+> >=20
+> > Sorry, I looked over the comment in v1.
+> >=20
+> > As far as I can tell in current code only 1 item is used.
+> >=20
+> > If the second parameter of_bcm_voter_get would be used as non-NULL then
+> > qcom,bcm-voter-names gets looked up and the N-th value in qcom,bcm-vote=
+rs
+> > used. But currently qcom,bcm-voter-names is not actively used so only
+> > one gets used.
+> >=20
+> > Do you have a recommendation what to put here? A synthetic limit like
+> > 32 just to have a number there?
+>
+> Let's go with maxItems:1, for both fields.
 
-Please use get_maintainers.pl and send your patches to the right
-lists/maintainers. DT patches only get reviewed if sent to DT list. So
-please resend to the DT list. But before you do, I can tell this
-binding hasn't been tested so fix all the warnings first.
+Do you mean adjusting the example using:
 
-Rob
+  qcom,bcm-voter-names =3D "apps", "disp";
+  qcom,bcm-voters =3D <&apps_bcm_voter>, <&disp_bcm_voter>;
+
+in qcom,rpmh.yaml then? Otherwise validation fails with maxItems: 1
 
 >
+> >=20
+> >>
+> >>> +      maxItems: 1
+> >>> +    description: |
+> >>
+> >> No need for |
+> >=20
+> > ack
+> >=20
+> >>
+> >>> +      List of phandles to qcom,bcm-voter nodes that are required by
+> >>> +      this interconnect to send RPMh commands.
+> >>> +
+> >>> +  qcom,bcm-voter-names:
+> >>
+> >> What names do you expect here?
+> >=20
+> > Currently unused in mainline but newer downstream kernels[2] use "hlos"
+> > as first parameter, and e.g. "disp" as second one that goes to a
+> > qcom,bcm-voter that's a child of disp_rsc. Not sure exactly what that
+> > does.
+> >=20
+> > [2] https://github.com/atomsand/android_kernel_qcom_devicetree/blob/a6d=
+50810116e8314d64eb63b8862c207b974e0c7/qcom/waipio.dtsi#L1701-L1793
 >
-> On 09/05/2022 14:39, Mao Jinlong wrote:
-> > Adds new coresight-tpda.yaml file describing the bindings required
-> > to define tpda in the device trees.
-> >
-> > Reviewed-by: Mike Leach <mike.leach@linaro.org>
-> > Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> > Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> > ---
-> >   .../bindings/arm/coresight-tpda.yaml          | 119 ++++++++++++++++++
-> >   MAINTAINERS                                   |   1 +
-> >   2 files changed, 120 insertions(+)
-> >   create mode 100644 Documentation/devicetree/bindings/arm/coresight-tpda.yaml
-> >
-> > diff --git a/Documentation/devicetree/bindings/arm/coresight-tpda.yaml b/Documentation/devicetree/bindings/arm/coresight-tpda.yaml
-> > new file mode 100644
-> > index 000000000000..4948ac13e7f8
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/arm/coresight-tpda.yaml
-> > @@ -0,0 +1,119 @@
-> > +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> > +# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/arm/coresight-tpda.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Trace, Profiling and Diagnostics Aggregator - TPDA
-> > +
-> > +description: |
-> > +  TPDAs are responsible for packetization and timestamping of data sets
-> > +  utilizing the MIPI STPv2 packet protocol. Pulling data sets from one or
-> > +  more attached TPDM and pushing the resultant (packetized) data out a
-> > +  master ATB interface. Performing an arbitrated ATB interleaving (funneling)
-> > +  task for free-flowing data from TPDM (i.e. CMB and DSB data set flows).
-> > +
-> > +maintainers:
-> > +  - Mao Jinlong <quic_jinlmao@quicinc.com>
-> > +  - Tao Zhang <quic_taozha@quicinc.com>
-> > +
-> > +properties:
-> > +  $nodename:
-> > +    pattern: "^tpda(@[0-9a-f]+)$"
-> > +  compatible:
-> > +    items:
-> > +      - const: qcom,coresight-tpda
-> > +      - const: arm,primecell
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  clocks:
-> > +    maxItems: 1
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: apb_pclk
-> > +
-> > +  in-ports:
-> > +    type: object
-> > +    description: |
-> > +      Input connections from TPDM to TPDA
-> > +    $ref: /schemas/graph.yaml#/properties/ports
-> > +
+> The bindings example uses apps and disp, so here would be only "apps".
+
+Here also the above, allow only "apps" for now in the binding and remove
+"disp" from example?
+
+Regards
+Luca
+
 >
-> --->8---
-> > +    properties:
-> > +      '#address-cells':
-> > +        const: 1
-> > +
-> > +      '#size-cells':
-> > +        const: 0
-> > +
-> > +    patternProperties:
-> > +      "^port@[0-9a-f]+$":
-> > +        type: object
-> > +        required:
-> > +          - reg
-> > +
-> > +    required:
-> > +      - '#size-cells'
-> > +      - '#address-cells'
+> >>> +
+> >>> +  '#interconnect-cells': true
+> >>
+> >> Since you defined it as enum in rpmh-common, you really expect here
+> >> different values?
+> >=20
+> > Doesn't ": true" here just mean we want the value from the allOf: -
+> > $ref?
+> > But we could in theory make interconnect-cells only accept <2> for
+> > sm6350.
 >
-> ---8<---
->
-> I believe the above snippet is not needed and is covered by the generic
-> ports.
+> Yes, and the $ref defines it as [1, 2], so initially I thought this
+> should be narrowed. However it seems 1 or 2 are still valid for all of
+> Qcom interconnects, so your "true" is correct.
 >
 >
-> > +
-> > +  out-ports:
-> > +    type: object
-> > +    description: |
-> > +      Output connections from the TPDA to legacy CoreSight trace bus.
-> > +    $ref: /schemas/graph.yaml#/properties/ports
-> > +
-> > +    properties:
-> > +     port:
-> > +       description:
-> > +         Output connection from the TPDA to legacy CoreSight Trace bus.
-> > +       $ref: /schemas/graph.yaml#/properties/port
-> > +
-> > +required:
-> > +    - compatible
-> > +    - reg
-> > +    - clocks
-> > +    - clock-names
-> > +    - in-ports
-> > +    - out-ports
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  # minimum tpda definition.
-> > +  - |
-> > +    tpda@6004000 {
-> > +       compatible = "qcom,coresight-tpda", "arm,primecell";
-> > +       reg = <0x6004000 0x1000>;
-> > +
-> > +       qcom,tpda-atid = <65>;
-> > +
-> > +       clocks = <&aoss_qmp>;
-> > +       clock-names = "apb_pclk";
-> > +
-> > +       in-ports {
-> > +         #address-cells = <1>;
-> > +         #size-cells = <0>;
-> > +
-> > +        port@0 {
-> > +          reg = <0>;
-> > +          tpda_qdss_0_in_tpdm_dcc: endpoint {
-> > +            remote-endpoint =
-> > +              <&tpdm_dcc_out_tpda_qdss_0>;
-> > +            };
-> > +        };
-> > +      };
-> > +
-> > +       out-ports {
-> > +         port {
-> > +                 tpda_qdss_out_funnel_in0: endpoint {
-> > +                    remote-endpoint =
-> > +                    <&funnel_in0_in_tpda_qdss>;
-> > +                  };
-> > +          };
-> > +       };
-> > +    };
-> > +
-> > +...
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 28d32b3f3f5c..5d2d8c0ee340 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -1978,6 +1978,7 @@ T:      git git://git.kernel.org/pub/scm/linux/kernel/git/coresight/linux.git
-> >   F:  Documentation/ABI/testing/sysfs-bus-coresight-devices-*
-> >   F:  Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
-> >   F:  Documentation/devicetree/bindings/arm/coresight-cti.yaml
-> > +F:   Documentation/devicetree/bindings/arm/coresight-tpda.yaml
-> >   F:  Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
-> >   F:  Documentation/devicetree/bindings/arm/coresight.txt
-> >   F:  Documentation/devicetree/bindings/arm/ete.yaml
->
-> Otherwise looks good to me.
->
-> Suzuki
+> Best regards,
+> Krzysztof
+
