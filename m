@@ -2,74 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A2AA3530A3B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 10:00:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05504530A69
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 10:01:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229863AbiEWHZi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 03:25:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50406 "EHLO
+        id S230400AbiEWHmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 03:42:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230316AbiEWHZU (ORCPT
+        with ESMTP id S230402AbiEWHmY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 03:25:20 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84BD34617C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 00:21:15 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id l13so17331287lfp.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 00:21:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=SEfmqDqkFEX696SZ2gTxY8Wvy6BNeXZ6T0MQiA7SKio=;
-        b=qIGf2F71X4+l3ZnR4VTUsUYTa4+nP1usaz9fXtcqUsBc+DxabJd0Pek3M+IJ1Q9WiV
-         kdvIGOOEnJFHCRUkR41HhjDFjY/OJjpOdSPnTpwgaad5yjmScNqjOO9tUYJXx3HTpyKV
-         76ui4a1JNwJX/yrVaif5FjIj4G2PL0b2/zAI2ijK/xJCqoeaJlizpfIFgLFA6x2kG/mm
-         C4qWRgmuRFqRmpifygp3pnWYhDhSzcRHwQlWnj1pzOuO7W+LT5IgUA/Z4pc8QvMINHea
-         4agHejBEy0Ll1+epo+y1v3PpZw9SUvyB3QuyKDVxtsTlAyR1GEI/eUNlSgMikcV/t+By
-         Sryg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=SEfmqDqkFEX696SZ2gTxY8Wvy6BNeXZ6T0MQiA7SKio=;
-        b=wa2EOk5xvq5OmRPjYRJkhi08XNvUI3XZGdGaTvjkHrvUphzjIjBqg/ob9omPkk+tQU
-         NNJlfOfFsasDk7ZJ0W/YoZzb3s9nlnZ4yKAnFHtnI++T9NxPd6j/1UhbTKHNcQRXjpb3
-         O0DPRtxlDJhjH+Qir+2hzjxupMxxW4mnnnvcmE1ThgaJh23pDbY4k9zydYCev40Gh2u4
-         RaFHRVVE1TTtV6GmrqIGuYh8Gj/xc+CNfvpvJhymQL+znzlvF0XHeYbDj54qR8H6zxAj
-         nYtsxHNj4+zTWlCMJ0IzkkzMpIgPuvEBSrZQChhsCC9oCF3m5q7UGS/oTThC+rC1Y1Q3
-         EDaQ==
-X-Gm-Message-State: AOAM5332ZSTrXXJ+5230Or2/xdxaPxOfI1kCcQAEH9vEyAutowghWf3S
-        2awor6/z8zBMmuaOw0GVGyX3W/AsY+VUhHIQ
-X-Google-Smtp-Source: ABdhPJzySbuijwZ7sGwLLG5uguH3+PrkjAEfjkhpoIN1N2Ky3SeI9U+ELPWCH8rKPGQyNwITp/kjeA==
-X-Received: by 2002:a05:6512:280b:b0:477:b181:223d with SMTP id cf11-20020a056512280b00b00477b181223dmr15453250lfb.146.1653290473825;
-        Mon, 23 May 2022 00:21:13 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id 4-20020ac24824000000b0047255d211c8sm1821422lft.247.2022.05.23.00.21.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 May 2022 00:21:13 -0700 (PDT)
-Message-ID: <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
-Date:   Mon, 23 May 2022 09:21:12 +0200
+        Mon, 23 May 2022 03:42:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF10F17AAD;
+        Mon, 23 May 2022 00:42:08 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 53BC1611EA;
+        Mon, 23 May 2022 07:42:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B264CC385A9;
+        Mon, 23 May 2022 07:42:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1653291727;
+        bh=HAjPqoyDD6oHGanrXj5u75+aRxLCv20nYIubEPTBqpo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Yl18+CX+VP/9hYN/HE7P3LbzW6fCp4NMkC7qFpZDMKoOvcqmQITxeGG5uXpov5jUt
+         XRMScnFLJA+mZYF8TOrA/R2Q+FuV44ZXAm46F2gSAadgbTTpF1gBnwKIra2G73usVj
+         OibCFyHe8Xug86Ck6FLc+wpXisPqBDGNgHcWcv97JOolI3y2vRe2n2qZtDBzrSw3tm
+         oD1kqI9q236yKbj19vQlfofGRKUH441Z6G4U/sfanFoHgyn4fsfshAHAu6dMz2gpGo
+         OaFdTv0KtDJNWR70PvFIR+MlE69bW1enP/xXnJqHzr2rt4T02M5FTS6NU5fr7xeDma
+         /f9a536ppnXKQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1nt2hY-0001Xt-Cu; Mon, 23 May 2022 09:42:04 +0200
+Date:   Mon, 23 May 2022 09:42:04 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v11 0/7] PCI: qcom: Fix higher MSI vectors handling
+Message-ID: <Yos6zKHUKywKcmzy@hovoldconsulting.com>
+References: <20220520183114.1356599-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: Removal of qcom,board-id and qcom,msm-id
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     agross@kernel.org, arnd@arndb.de, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, olof@lixom.net, robh@kernel.org,
-        sboyd@kernel.org
-References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
- <20220522195138.35943-1-konrad.dybcio@somainline.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220522195138.35943-1-konrad.dybcio@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220520183114.1356599-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,73 +67,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/05/2022 21:51, Konrad Dybcio wrote:
-> Hi,
+On Fri, May 20, 2022 at 09:31:07PM +0300, Dmitry Baryshkov wrote:
+> I have replied with my Tested-by to the patch at [2], which has landed
+> in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
+> Add support for handling MSIs from 8 endpoints"). However lately I
+> noticed that during the tests I still had 'pcie_pme=nomsi', so the
+> device was not forced to use higher MSI vectors.
 > 
-> removing these properties will not bring almost any benefit (other than making
-> some checks happy any saving some <200 LoC) and will make the lives of almost
-> all people doing independent development for linux-on-msm harder. There are
-> almost unironically like 3 people outside Linaro and QUIC who have
-> non-vendor-fused development boards AND the sources to rebuild the
-> bootloader on their own. Making it harder to boot is only going to
-> discourage people from developing on these devices, which is already not
-> that pleasant, especially with newer platforms where you have to fight with
-> the oh-so-bright ideas of Android boot chain..
+> After removing this option I noticed that hight MSI vectors are not
+> delivered on tested platforms. After additional research I stumbled upon
+> a patch in msm-4.14 ([1]), which describes that each group of MSI
+> vectors is mapped to the separate interrupt. Implement corresponding
+> mapping.
 > 
-> This only concerns devices released before sm8350, as the new ones will not
-> even boot with these properties present (or at least SONY Sagami, but I
-> doubt it's an isolated case), so other than completing support for older
-> devices, it won't be an issue going forward, anyway. But there are give
-> or take 50 locked down devices in mainline right now, and many more waiting
-> to be upstreamed in various downstream close-to-mainline trees that should
-> not be disregarded just because Qualcomm is far from the best at making
-> their BSP software stack clean.
+> The first patch in the series is a revert of  [2] (landed in pci-next).
+> Either both patches should be applied or both should be dropped.
+> 
+> Patchseries dependecies: [3] (for the schema change).
+> 
+> Changes since v10:
+>  - Remove has_split_msi_irqs flag. Trust DT and use split MSI IRQs if
+>    they are described in the DT. This removes the need for the
+>    pcie-qcom.c changes (everything is handled by the core (suggested by
+>    Johan).
 
-I actually wonder why do you need these properties for community work on
-such boards? You ship kernel with one concatenated DTB and the
-bootloader does not need the board-id/msm-id fields, doesn't it?
-
-Not mentioning that in the past bootloader was actually not using these
-properties at all, because it was the dtbTool who was parsing them. So
-in any case either your device works fine without these properties or
-you have to use dtbTool, right?
-
+You could also mention the rebase and fixed warnings with less than
+eight msi.
+ 
+> [1] https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/commit/671a3d5f129f4bfe477152292ada2194c8440d22
+> [2] https://lore.kernel.org/linux-arm-msm/20211214101319.25258-1-manivannan.sadhasivam@linaro.org/
+> [3] https://lore.kernel.org/linux-arm-msm/20220422211002.2012070-1-dmitry.baryshkov@linaro.org/
 > 
-> One solution is to chainload another, (n+1)-stage bootloader, but this is
-> not ideal, as:
 > 
-> 1) the stock bootloader can boot Linux just fine on most devices (except
-> for single exceptions, where beloved OEMs didn't implement arm64 booting or
-> something)
-> 
-> 2) the boot chain on MSM is already 3- or 4- stage and adding to that will
-> only create an unnecessary mess
-> 
-> 3) the job of kernel people is not to break userspace. If the
-> device can not even exit bootloader after a kernel upgrade, it's a big
-> failure.
+> Dmitry Baryshkov (7):
+>   PCI: dwc: Convert msi_irq to the array
+>   PCI: dwc: split MSI IRQ parsing/allocation to a separate function
+>   PCI: dwc: Handle MSIs routed to multiple GIC interrupts
+>   PCI: dwc: Implement special ISR handler for split MSI IRQ setup
+>   dt-bindings: PCI: qcom: Support additional MSI interrupts
+>   arm64: dts: qcom: sm8250: provide additional MSI interrupts
+>   dt-bindings: mfd: qcom,qca639x: add binding for QCA639x defvice
 
-The job of kernel people is to follow bindings and since they were
-introduced 7 years ago, I would say there was plenty of time for that.
+Looks like you used the wrong offsets from HEAD or something when
+generating the series as the first two patches ([1] above, which is not
+yet in linux-next, and the dw_pcie_free_msi() fix) are now missing and
+the last patch is new and unrelated.
 
-If the dtbTool support for the bindings is there, then there is no
-breakage, because you had to use dtbTool before so you have to use now.
-
-> 
-> If you *really really really* want these either gone or documented, we can
-> for example use them in the SOCID driver, read the values from DTB and
-> compare against what SMEM has to say and for example print a warning when
-> there are inconsistencies or use it as a fallback when it fails for any
-> reason, such as using a newer SoC on an older kernel, without updates
-> for SOCID read (which are sometimes necessary, which was the case for 8450
-> recently, iirc).
-> 
-> My stance is to just leave them as is, as moving them anywhere, or removing
-> them at all will cause unnecessary mess and waste time that could have been
-> spent on more glaring issues..
-> 
-> Konrad
-
-
-Best regards,
-Krzysztof
+Johan
