@@ -2,71 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C796A531E36
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 23:50:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAE51531E47
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 00:01:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbiEWVuv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 17:50:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38872 "EHLO
+        id S229832AbiEWWBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 18:01:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230154AbiEWVut (ORCPT
+        with ESMTP id S230443AbiEWWBN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 17:50:49 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 750B057B17
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 14:50:47 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id v66so19408005oib.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 14:50:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=PrIU1gcRB8dmQ65bmWWWNZIOcHETarJSBHB2kE+QF+I=;
-        b=LtEMLEBk9c/QEpm/uus7HwOM7klph6uVq/ukoHJUBsdWu/9q51vcvTw6f6R8Hfq88k
-         2qaZlAZmIxaxbUEDhJxkooU0oWB5G8ogNlDmUghAtSD6S5gD5L3Hf5I5S0/sUEAkxXG8
-         R2JJHpCvrlUoO300qtXN72s/l907Zj5W0+Iq8I5Yip5FGU/cGYB1niQByjnaUftjNLaX
-         BH86Lga7vWkDWTGRpkLdqb0vaMDtUXNUpqef0d1Cmk0x9xnjukShREsAuoOAWIbD3mAC
-         OIp5OWE8U/EyXABbBuYTHIfrVekV+M/V0okSwmHTafOU77qzI3Dv/Iuze/rOe7M3PIun
-         i+BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=PrIU1gcRB8dmQ65bmWWWNZIOcHETarJSBHB2kE+QF+I=;
-        b=51yDdfOvF2paDIcW1LcOq6OWcWTeZvYZjRoMljEQj1U6kQdcP6IZCLY94pAL8BRLWh
-         XF1nX0X8IHElDATnQLV39go74AUyUtd3c92tJwBi5JB3ogmj0Po8NDRVY4iSm3hsmwoQ
-         NfzoS15++G7e83vESIyZGbs9JDobFm2hSjkS+lxk8f83PmG0Bxczn9i4jAmSB64RT4Fs
-         cTTNj1E/jFht8oQo5SEb0PSoJBmL2/GfUVLHeD0/7eQHotEBAKxfdiTTs+J5Ly0i6swL
-         yieUTRL3snMAHbe1wavkw+SOMC/OvACjvfaHl6ZID6Epj2PFgtnLbtgaJtSMeQN037ru
-         80cg==
-X-Gm-Message-State: AOAM533digUPdAHPEvj5wI9xMh/obzCh6sUtcAUUUTbQyumnxY4dvhiz
-        +xnZMx6SCArBetCLIxRun1r3jA==
-X-Google-Smtp-Source: ABdhPJwdvAAXCoWTlQKC78e1ucFkB7MkXixv02NwxoluxSAsYLkOCFdJXX2bFlakX9l1BRRlRd6EgQ==
-X-Received: by 2002:aca:f188:0:b0:326:160e:590a with SMTP id p130-20020acaf188000000b00326160e590amr586026oih.209.1653342646754;
-        Mon, 23 May 2022 14:50:46 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id p13-20020a0568301d4d00b0060603221236sm4402693oth.6.2022.05.23.14.50.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 14:50:45 -0700 (PDT)
-Date:   Mon, 23 May 2022 16:50:44 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>, agross@kernel.org,
-        arnd@arndb.de, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        olof@lixom.net, robh@kernel.org, sboyd@kernel.org
-Subject: Re: Removal of qcom,board-id and qcom,msm-id
-Message-ID: <YowBtNkZ678ns4Ob@builder.lan>
-References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
- <20220522195138.35943-1-konrad.dybcio@somainline.org>
- <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
+        Mon, 23 May 2022 18:01:13 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27F606160
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 15:01:10 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 0F6FC2013A;
+        Tue, 24 May 2022 00:01:09 +0200 (CEST)
+Date:   Tue, 24 May 2022 00:01:07 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Pavel Machek <pavel@ucw.cz>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Richard Purdie <rpurdie@rpsys.net>,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-leds@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/2] leds: Add driver for Qualcomm LPG
+Message-ID: <20220523220107.6wmpp2ohw63p4mjh@SoMainline.org>
+References: <20170323055435.29197-1-bjorn.andersson@linaro.org>
+ <20220523163038.GA9124@duo.ucw.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <20220523163038.GA9124@duo.ucw.cz>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,110 +47,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 23 May 02:21 CDT 2022, Krzysztof Kozlowski wrote:
-
-> On 22/05/2022 21:51, Konrad Dybcio wrote:
-> > Hi,
-> > 
-> > removing these properties will not bring almost any benefit (other than making
-> > some checks happy any saving some <200 LoC) and will make the lives of almost
-> > all people doing independent development for linux-on-msm harder. There are
-> > almost unironically like 3 people outside Linaro and QUIC who have
-> > non-vendor-fused development boards AND the sources to rebuild the
-> > bootloader on their own. Making it harder to boot is only going to
-> > discourage people from developing on these devices, which is already not
-> > that pleasant, especially with newer platforms where you have to fight with
-> > the oh-so-bright ideas of Android boot chain..
-> > 
-> > This only concerns devices released before sm8350, as the new ones will not
-> > even boot with these properties present (or at least SONY Sagami, but I
-> > doubt it's an isolated case), so other than completing support for older
-> > devices, it won't be an issue going forward, anyway. But there are give
-> > or take 50 locked down devices in mainline right now, and many more waiting
-> > to be upstreamed in various downstream close-to-mainline trees that should
-> > not be disregarded just because Qualcomm is far from the best at making
-> > their BSP software stack clean.
+On 2022-05-23 18:30:38, Pavel Machek wrote:
+> Hi!
 > 
-> I actually wonder why do you need these properties for community work on
-> such boards? You ship kernel with one concatenated DTB and the
-> bootloader does not need the board-id/msm-id fields, doesn't it?
-> 
-
-During the last years all reference devices that I know of has allowed
-us to boot Image.gz+dtb concatenated kernels without
-qcom,{board-msm}-id.
-
-There's however been several end-user devices that for some reason
-refuse to accept the concatenated dtb unless these values matches.
-
-> Not mentioning that in the past bootloader was actually not using these
-> properties at all, because it was the dtbTool who was parsing them. So
-> in any case either your device works fine without these properties or
-> you have to use dtbTool, right?
-> 
-
-Unfortunately not. There are the devices which accepts a single appended
-dtb without these properties, but beyond that it's been a large mix.
-
-I've seen cases where dtbTool packs up a number of dtbs, but the loaded
-one still need to have these properties, and there are devices out there
-that supports multiple appended dtbs etc.
-
-
-Last but not least, forcing everyone to use dtbTool adds a
-non-standardized tool to everyone's workflow, a tool that has to be kept
-up to date with the compatible to msm/board-id mapping.
-
+> > The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
+> > PMICs from Qualcomm. It can operate on fixed parameters or based on a
+> > lookup-table, altering the duty cycle over time - which provides the
+> > means for e.g. hardware assisted transitions of LED brightness.
 > > 
-> > One solution is to chainload another, (n+1)-stage bootloader, but this is
-> > not ideal, as:
-> > 
-> > 1) the stock bootloader can boot Linux just fine on most devices (except
-> > for single exceptions, where beloved OEMs didn't implement arm64 booting or
-> > something)
-> > 
-> > 2) the boot chain on MSM is already 3- or 4- stage and adding to that will
-> > only create an unnecessary mess
-> > 
-> > 3) the job of kernel people is not to break userspace. If the
-> > device can not even exit bootloader after a kernel upgrade, it's a big
-> > failure.
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> The job of kernel people is to follow bindings and since they were
-> introduced 7 years ago, I would say there was plenty of time for that.
-> 
+> I'd really like to see the patch fixing the pattern interface (or
+> disabling it). I don't want to push the tree to Linus with that bug.
 
-We're following the bindings and don't pick board-id or msm-id unless
-there's a particular reason for it - which typically is that the
-downstream bootloader requires it - we don't use the properties on the
-kernel side.
+(I couldn't help but be confused for a minute by this being a reply to
+the original v1 patchset from March 2017 :) )
 
-> If the dtbTool support for the bindings is there, then there is no
-> breakage, because you had to use dtbTool before so you have to use now.
-> 
+Does that mean there's still some time to review / pick up [1]
+(LPG enablement for PM660L)?  And even more so for [2] (fixing the use
+of a software-pattern variable in the hardware-pattern code) which
+complements Bjorn's series but hasn't been looked at ever since last
+year.
 
-Among all the platforms I maintain, MSM8916 (db410c) is the only one
-where I use dtbTool - because it refuses to accept the concatenated
-dtb.
+I wouldn't mind picking up this issue (discussed in the v14 series at
+[3]) and unblock you sending the tree to Linus without reverting, if
+Bjorn doesn't have the bandwidth for it currently.  But I will need
+confirmation that patches sent in my name actually get looked at...
+Thanks!
 
-Regards,
-Bjorn
+- Marijn
 
-> > 
-> > If you *really really really* want these either gone or documented, we can
-> > for example use them in the SOCID driver, read the values from DTB and
-> > compare against what SMEM has to say and for example print a warning when
-> > there are inconsistencies or use it as a fallback when it fails for any
-> > reason, such as using a newer SoC on an older kernel, without updates
-> > for SOCID read (which are sometimes necessary, which was the case for 8450
-> > recently, iirc).
-> > 
-> > My stance is to just leave them as is, as moving them anywhere, or removing
-> > them at all will cause unnecessary mess and waste time that could have been
-> > spent on more glaring issues..
-> > 
-> > Konrad
-> 
-> 
-> Best regards,
-> Krzysztof
+[1]: https://lore.kernel.org/linux-leds/20220511190718.764445-1-marijn.suijten@somainline.org/
+[2]: https://lore.kernel.org/linux-leds/20210915080252.69147-1-marijn.suijten@somainline.org/
+[3]: https://lore.kernel.org/linux-leds/YnvhleAI5RW0ZvkV@ripper/T/#m6cb0d8df051bbcd3772d068640ccd784678ad47b
