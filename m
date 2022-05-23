@@ -2,227 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F55B531386
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 18:24:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 874ED5314A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 18:25:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236342AbiEWNkD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 09:40:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51876 "EHLO
+        id S236355AbiEWNn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 09:43:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236326AbiEWNkC (ORCPT
+        with ESMTP id S236402AbiEWNnx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 09:40:02 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEB1454BF9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 06:39:59 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id u23so25664841lfc.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 06:39:59 -0700 (PDT)
+        Mon, 23 May 2022 09:43:53 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB7BA37A3B;
+        Mon, 23 May 2022 06:43:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=7jVIoyXDoN8BUaXwgx72nxc8bY3gSk2cGnS+pPrO6YI=;
-        b=N7Icjhgo9jczhWrqVMUjdJbL2WO6Ll9oe6tZ2viprpIUaf71DwfU0rnyRAXW6XurJR
-         AYDGI0z/2rYKfJbxgShe6vWCsGnENWLJFD/B+G+incKjN3f19CBYo3YMLnEDlOPttOdE
-         GFW7qmb/C4qP/QJqY4vyVnFIVIDwms9bAfshrjfi/rrGOXT4o+CIA4lAnpmv/sdomKv3
-         pjIBw0duxpQgD2bSx2bIQuqQdhXS+c6qxS6VAUIUspTv/7KjfyJjw5fR+RvCY/uvkNN/
-         ihvmT1Kbky9MGkJOMzLZJwOmVaJnGNDrNQv/GI6SYtx2zO29PFkBJeokxXADNeVyHvEX
-         Fdtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=7jVIoyXDoN8BUaXwgx72nxc8bY3gSk2cGnS+pPrO6YI=;
-        b=KzpJvvTezURp6xHBbAPZIs6vALc1zEroePqsNYfAOnBsHn3EJ12y6U+NoXtB1gxCw2
-         FFHQC10Bh4OhgMhQIjh51PrvS5kFZ2LgyZzR7mRDoX7QasB12XrzUqzV1OBn5qbgmRgC
-         6S3V04TVlKsk+LHkokIm8FwMlMc1fG2/xzLuMzKyzhwEPBy5kGpO9wJ52FAtuokeiI3M
-         FVQJdEigrEFdMLwLhNFPRqm2fL0qAPkveRr9ybXLGkQUNFKUQmM9xfzUzMwJ+Dex+ECw
-         71WUqfFL+qkW81PzZOmpNA49W1Spbl9qjxK59Hr/XzFhZ6rCI2Q1nN8u62y+cz94EYxN
-         Rs8Q==
-X-Gm-Message-State: AOAM53053ddMZs38/XbmRsS38PhADMwP/I9mKZcXRfbAscI1Xvu1L0mQ
-        qn5tfB/oud8fHiP7PSvEXOkgiw==
-X-Google-Smtp-Source: ABdhPJxm4/cQN0TPD9jcD041vnU1p5Wwv6GY89h3dMAa3runVjnRLnAeAW11yi0gz29FUf7wXL7qDw==
-X-Received: by 2002:a05:6512:3f15:b0:477:ce24:4e1f with SMTP id y21-20020a0565123f1500b00477ce244e1fmr13087186lfa.355.1653313198006;
-        Mon, 23 May 2022 06:39:58 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id d19-20020a2e3313000000b0024b14fa6061sm1840791ljc.1.2022.05.23.06.39.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 May 2022 06:39:57 -0700 (PDT)
-Message-ID: <8ce50a9f-241d-c37a-15e9-1a97d410f61e@linaro.org>
-Date:   Mon, 23 May 2022 16:39:56 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1653313432; x=1684849432;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=KKtqzfSJppySwBuxIlKKqfvFWggjOV2misI2aY9/k1A=;
+  b=wI3JEq3jKgo1YiLgHdHRVztc5upAzQNy7rkwGFP/6yrll2uoSOCH51I5
+   pE+eVcvz8LI1sms170R4KMATswDpPq88iLYbwV6nt1lHE/TnqajellKaA
+   WCO8/f9m1pmGqr3eRWPd7fkAWcZkBaP2QkBfB2qUZYloUUHM4OWCyYHq5
+   4=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 23 May 2022 06:43:52 -0700
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 06:43:52 -0700
+Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 23 May 2022 06:43:50 -0700
+From:   Vikash Garodia <quic_vgarodia@quicinc.com>
+To:     <linux-media@vger.kernel.org>, <stanimir.varbanov@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <vboma@qti.qualcomm.com>, <quic_vgarodia@quicinc.com>
+Subject: [PATCH v2] media: venus: hfi_platform: Correct supported codecs for sc7280
+Date:   Mon, 23 May 2022 19:13:41 +0530
+Message-ID: <1653313421-29105-1-git-send-email-quic_vgarodia@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v11 3/7] PCI: dwc: Handle MSIs routed to multiple GIC
- interrupts
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220520183114.1356599-1-dmitry.baryshkov@linaro.org>
- <20220520183114.1356599-4-dmitry.baryshkov@linaro.org>
- <Yos9fkgxAN1jJ4jO@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <Yos9fkgxAN1jJ4jO@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/05/2022 10:53, Johan Hovold wrote:
-> On Fri, May 20, 2022 at 09:31:10PM +0300, Dmitry Baryshkov wrote:
->> On some of Qualcomm platforms each group of 32 MSI vectors is routed to the
->> separate GIC interrupt. Implement support for such configurations by
->> parsing "msi0" ... "msiN" interrupts and attaching them to the chained
->> handler.
->>
->> Note, that if DT doesn't list an array of MSI interrupts and uses single
->> "msi" IRQ, the driver will limit the amount of supported MSI vectors
->> accordingly (to 32).
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../pci/controller/dwc/pcie-designware-host.c | 58 +++++++++++++++++--
->>   1 file changed, 54 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
->> index a076abe6611c..381bc24d5715 100644
->> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
->> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
->> @@ -288,6 +288,43 @@ static void dw_pcie_msi_init(struct pcie_port *pp)
->>   	dw_pcie_writel_dbi(pci, PCIE_MSI_ADDR_HI, upper_32_bits(msi_target));
->>   }
->>   
->> +static const char * const split_msi_names[] = {
->> +	"msi0", "msi1", "msi2", "msi3",
->> +	"msi4", "msi5", "msi6", "msi7",
->> +};
->> +
->> +static int dw_pcie_parse_split_msi_irq(struct pcie_port *pp)
->> +{
->> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
->> +	struct device *dev = pci->dev;
->> +	struct platform_device *pdev = to_platform_device(dev);
->> +	int irq;
->> +	u32 ctrl;
->> +
->> +	irq = platform_get_irq_byname_optional(pdev, split_msi_names[0]);
->> +	if (irq == -ENXIO)
->> +		return -ENXIO;
-> 
-> You still need to check for other errors and -EPROBE_DEFER here.
+VP8 codec is deprecated for sc7280 SOC. Fix in platform layer to
+update the supported codecs accordingly.
 
-I think even the if (irq < 0) return irq; will work here.
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+Change since v1:
+ Review comments addressed(from Stanimir)
 
-> 
->> +
->> +	pp->msi_irq[0] = irq;
->> +
->> +	/* Parse as many IRQs as described in the DTS. */
-> 
-> s/DTS/devicetree/
-> 
->> +	for (ctrl = 1; ctrl < MAX_MSI_CTRLS; ctrl++) {
->> +		irq = platform_get_irq_byname_optional(pdev, split_msi_names[ctrl]);
->> +		if (irq == -ENXIO)
->> +			break;
->> +		if (irq < 0)
->> +			return dev_err_probe(dev, irq,
->> +					     "Failed to parse MSI IRQ '%s'\n",
->> +					     split_msi_names[ctrl]);
->> +
->> +		pp->msi_irq[ctrl] = irq;
->> +	}
->> +
->> +	pp->num_vectors = ctrl * MAX_MSI_IRQS_PER_CTRL;
->> +
->> +	return 0;
->> +}
->> +
->>   static int dw_pcie_msi_host_init(struct pcie_port *pp)
->>   {
->>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
->> @@ -295,22 +332,34 @@ static int dw_pcie_msi_host_init(struct pcie_port *pp)
->>   	struct platform_device *pdev = to_platform_device(dev);
->>   	int ret;
->>   	u32 ctrl, num_ctrls;
->> +	bool has_split_msi_irq = false;
-> 
-> This one should go in the follow-on patch that starts using it.
-> 
->> -	num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
->> -	for (ctrl = 0; ctrl < num_ctrls; ctrl++)
->> +	for (ctrl = 0; ctrl < MAX_MSI_CTRLS; ctrl++)
->>   		pp->irq_mask[ctrl] = ~0;
->>   
->> +	if (!pp->msi_irq[0]) {
->> +		ret = dw_pcie_parse_split_msi_irq(pp);
->> +		if (ret < 0 && ret != -ENXIO)
->> +			return ret;
->> +	}
->> +
->> +	if (!pp->num_vectors)
->> +		pp->num_vectors = MSI_DEF_NUM_VECTORS;
-> 
-> This works, but now you override num_vectors unconditionally when using
-> split msis (and not just when num_vectors is set to zero) >
-> Is it work allowing to use num_vectors as a maximum as in previous
-> versions (if only for consistency)?
+ drivers/media/platform/qcom/venus/hfi_parser.c   |  6 ++++--
+ drivers/media/platform/qcom/venus/hfi_platform.c | 22 ++++++++++++++++++++++
+ drivers/media/platform/qcom/venus/hfi_platform.h |  2 ++
+ 3 files changed, 28 insertions(+), 2 deletions(-)
 
-Let me take a look.
-
-> 
->> +	num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
->> +
->>   	if (!pp->msi_irq[0]) {
->>   		int irq = platform_get_irq_byname_optional(pdev, "msi");
->>   
->>   		if (irq < 0) {
->>   			irq = platform_get_irq(pdev, 0);
->>   			if (irq < 0)
->> -				return irq;
->> +				return dev_err_probe(dev, irq, "Failed to parse MSI irq\n");
->>   		}
->>   		pp->msi_irq[0] = irq;
->>   	}
->>   
->> +	dev_dbg(dev, "Using %d MSI vectors\n", pp->num_vectors);
->> +
->>   	pp->msi_irq_chip = &dw_pci_msi_bottom_irq_chip;
->>   
->>   	ret = dw_pcie_allocate_domains(pp);
->> @@ -407,7 +456,8 @@ int dw_pcie_host_init(struct pcie_port *pp)
->>   				     of_property_read_bool(np, "msi-parent") ||
->>   				     of_property_read_bool(np, "msi-map"));
->>   
->> -		if (!pp->num_vectors) {
->> +		/* for the has_msi_ctrl the default assignment is handled inside dw_pcie_msi_host_init() */
->> +		if (!pp->has_msi_ctrl && !pp->num_vectors) {
->>   			pp->num_vectors = MSI_DEF_NUM_VECTORS;
->>   		} else if (pp->num_vectors > MAX_MSI_IRQS) {
->>   			dev_err(dev, "Invalid number of vectors\n");
-> 
-> Johan
-
-
+diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+index 5b8389b..6cf74b2 100644
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -234,6 +234,7 @@ static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
+ 	const struct hfi_plat_caps *caps = NULL;
+ 	u32 enc_codecs, dec_codecs, count = 0;
+ 	unsigned int entries;
++	int ret;
+ 
+ 	plat = hfi_platform_get(core->res->hfi_version);
+ 	if (!plat)
+@@ -242,8 +243,9 @@ static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
+ 	if (inst)
+ 		return 0;
+ 
+-	if (plat->codecs)
+-		plat->codecs(&enc_codecs, &dec_codecs, &count);
++	ret = hfi_platform_get_codecs(core, &enc_codecs, &dec_codecs, &count);
++	if (ret)
++		return ret;
+ 
+ 	if (plat->capabilities)
+ 		caps = plat->capabilities(&entries);
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
+index f16f896..f07f554 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform.c
++++ b/drivers/media/platform/qcom/venus/hfi_platform.c
+@@ -2,7 +2,9 @@
+ /*
+  * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+  */
++#include <linux/of_device.h>
+ #include "hfi_platform.h"
++#include "core.h"
+ 
+ const struct hfi_platform *hfi_platform_get(enum hfi_version version)
+ {
+@@ -66,3 +68,23 @@ hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec, u32 session_
+ 	return freq;
+ }
+ 
++int
++hfi_platform_get_codecs(struct venus_core *core, u32 *enc_codecs, u32 *dec_codecs, u32 *count)
++{
++	const struct hfi_platform *plat;
++
++	plat = hfi_platform_get(core->res->hfi_version);
++	if (!plat)
++		return -EINVAL;
++
++	if (plat->codecs)
++		plat->codecs(enc_codecs, dec_codecs, count);
++
++	if (of_device_is_compatible(core->dev->of_node, "qcom,sc7280-venus")) {
++		*enc_codecs &= ~HFI_VIDEO_CODEC_VP8;
++		*dec_codecs &= ~HFI_VIDEO_CODEC_VP8;
++	}
++
++	return 0;
++}
++
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
+index 1dcf408..ec89a90 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform.h
++++ b/drivers/media/platform/qcom/venus/hfi_platform.h
+@@ -66,4 +66,6 @@ unsigned long hfi_platform_get_codec_vsp_freq(enum hfi_version version, u32 code
+ 					      u32 session_type);
+ unsigned long hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec,
+ 					     u32 session_type);
++int hfi_platform_get_codecs(struct venus_core *core, u32 *enc_codecs, u32 *dec_codecs,
++			    u32 *count);
+ #endif
 -- 
-With best wishes
-Dmitry
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
