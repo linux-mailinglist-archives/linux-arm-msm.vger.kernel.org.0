@@ -2,282 +2,344 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1DAF53124A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 18:22:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 220395311F0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 18:21:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237168AbiEWOcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 10:32:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55548 "EHLO
+        id S237143AbiEWOpn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 10:45:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237177AbiEWOcl (ORCPT
+        with ESMTP id S237290AbiEWOpk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 10:32:41 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EA2F2DA92
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 07:32:37 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id y13so28504251eje.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 07:32:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=mime-version:content-transfer-encoding:date:message-id:cc:subject
-         :from:to:references:in-reply-to;
-        bh=mlEN37RGVVHIHvr+/hBakjwM1KtuFOZ5STJWC6VPCe4=;
-        b=Rcj4RHh43jilygk/Vks3FrXhRojthZEyi5e2TNhpmMYxd9vZI96vQ9WaZOyTTw7Am8
-         FpK6yZOa40KBLEsOTHiassJOaUUZVs2jXPuV2dIKLl46bdK6lwUOmR+f/8pBfm0FRS2+
-         cS3bssbbTMu/a/92yFs9/Ou3qcRZoCM4wwu5uJxOZGQr7TM40i9HEB/tPD4WMx/DPYTA
-         +NPXoSYnVdLSPjy4fM8ZRZfsCXoIvuDJ/GflHI7aDqnd2mC8nh6SHaY9XuhX3CmLGil3
-         W59GLADwbzpdcsyiqZ/MGGQX0R7/nzkCtn7NwXaRe97p54CU2epvXC50b9mzLvUEH/CJ
-         HS/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:content-transfer-encoding:date
-         :message-id:cc:subject:from:to:references:in-reply-to;
-        bh=mlEN37RGVVHIHvr+/hBakjwM1KtuFOZ5STJWC6VPCe4=;
-        b=SQB4DUMyTlBCvO3hUpCTOPpHEJiBlGrhYZzsduPh8mF6tI82zgrMPfJ8GJ7sD11WTg
-         MEy4Cc/3zuPv8Gg3IbtNcpx760pQHgLJIq/e8NEwGthaZ8Wi2z8NcPg+iB9bS3FA+94X
-         F6JLx1dnHcY9I/a7X00jUb5Ug7QEhhkbKASfMBNeP7MPbpmu6UNuNNkO3ZOq3xWeuJfp
-         rGkVl6KsgeaOe+F6pUWndKcU/sFFm445LZG8ALDsytLjtn9hlenzvBR11aftC2wKCCwe
-         KSmat7QzIkjsctls+tEYez8pPp6H7zblvke7aCm5RAjIvuQbTb73r94Cfd+2dx39KH/b
-         gMWA==
-X-Gm-Message-State: AOAM531YNM7XPhuGIQYpCWMXpa5eZXEhDAYZc7YbgpA1Knd0lKiDl6CO
-        a3x+x82NGhch8z+d/6qz11eCGg==
-X-Google-Smtp-Source: ABdhPJyusWKZbqf11Faic6AnpiRE4C9fByFH9k2mbyP2EBgTg9fTPLO26mlUksfmbTdWrZopA5QUqg==
-X-Received: by 2002:a17:907:1612:b0:6fe:d943:312f with SMTP id hb18-20020a170907161200b006fed943312fmr5489472ejc.263.1653316355711;
-        Mon, 23 May 2022 07:32:35 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id y7-20020a1709060a8700b006fec3b2e4f3sm2334343ejf.205.2022.05.23.07.32.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 May 2022 07:32:35 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 23 May 2022 16:32:34 +0200
-Message-Id: <CK77QG2WNJ7B.EIXG4S6SVQ2D@otso>
-Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        "Georgi Djakov" <djakov@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Odelu Kukatla" <okukatla@codeaurora.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 2/5] dt-bindings: interconnect: Add Qualcomm SM6350
- NoC support
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>
-X-Mailer: aerc 0.9.0
-References: <20220520070318.48521-1-luca.weiss@fairphone.com>
- <20220520070318.48521-3-luca.weiss@fairphone.com>
- <7b451dfb-8353-4a4e-1834-a01feaa267d2@linaro.org>
- <CK4KPEWM9165.2LR9ZUG2GGK6Q@otso>
- <b9487ffe-7ed5-077c-3c2c-886746457365@linaro.org>
-In-Reply-To: <b9487ffe-7ed5-077c-3c2c-886746457365@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mon, 23 May 2022 10:45:40 -0400
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2187C2981A;
+        Mon, 23 May 2022 07:45:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1653317139; x=1684853139;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=4cY3U0qUZX2gkEN7s8AW/OO5A3CZgRPoURBalADkt0M=;
+  b=hHY0XgmlPwMMVawFVPqXkjFO3Q3SfbSxkWe2dqle5YCP8bDj9pNsefMh
+   6u4sG4rdgIaHKXJXwajT9WDxhf/uiKCW/tLimbpkRINVzgY40Yd3PueAg
+   haS1OdmE9UnzSmc7gCYjEjt2yjL1K6rUJdvs51kAd3WnyQsPBYXYJkfq3
+   /ousshDCE3qdv8WsvSoamTDU4FCqi2gf+TkgI8iVABsCRXIseKFs5eLTn
+   RxwHafqpnpgZolCio6LSJW710R1Sn8Q/2v/+h9tnMO398CSkPJwv8sNzd
+   FTvUbexoPjwv+DjS4a6fJv6lODS+c4ztYuX0glK7BgzQ5Yvaf4+zEjxpp
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10356"; a="253119430"
+X-IronPort-AV: E=Sophos;i="5.91,246,1647327600"; 
+   d="scan'208";a="253119430"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 07:45:38 -0700
+X-IronPort-AV: E=Sophos;i="5.91,246,1647327600"; 
+   d="scan'208";a="548006740"
+Received: from tlehuche-mobl1.ger.corp.intel.com (HELO [10.213.213.125]) ([10.213.213.125])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 07:45:34 -0700
+Message-ID: <84e03c5f-a3af-6592-d19a-a2f5d20b92fb@linux.intel.com>
+Date:   Mon, 23 May 2022 15:45:33 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v4 12/13] drm/msm: Utilize gpu scheduler priorities
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        freedreno@lists.freedesktop.org,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20210728010632.2633470-1-robdclark@gmail.com>
+ <20210728010632.2633470-13-robdclark@gmail.com>
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Organization: Intel Corporation UK Plc
+In-Reply-To: <20210728010632.2633470-13-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
+        NICE_REPLY_A,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
 
-On Fri May 20, 2022 at 4:24 PM CEST, Krzysztof Kozlowski wrote:
-> On 20/05/2022 14:04, Luca Weiss wrote:
-> > Hi Krzysztof,
-> >=20
-> > Thanks for the review!
-> >=20
-> > On Fri May 20, 2022 at 12:31 PM CEST, Krzysztof Kozlowski wrote:
-> >> On 20/05/2022 09:03, Luca Weiss wrote:
-> >>> Add bindings for Qualcomm SM6350 Network-On-Chip interconnect devices=
-.
-> >>>
-> >>> As SM6350 has two pairs of NoCs sharing the same reg, allow this in t=
-he
-> >>> binding documentation, as was done for qcm2290.
-> >>>
-> >>> Because the main qcom,rpmh.yaml file is getting too complicated for o=
-ur
-> >>> use cases, create a new qcom,rpmh-common.yaml and a separate
-> >>> qcom,sm6350-rpmh.yaml that defines our new bindings.
-> >>>
-> >>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> >>> ---
-> >>> Changes since v1:
-> >>> * Split sm6350 into separate yaml with new rpmh-common.yaml
-> >>>
-> >>>  .../interconnect/qcom,rpmh-common.yaml        |  41 +++++
-> >>>  .../interconnect/qcom,sm6350-rpmh.yaml        |  82 ++++++++++
-> >>>  .../dt-bindings/interconnect/qcom,sm6350.h    | 148 ++++++++++++++++=
-++
-> >>>  3 files changed, 271 insertions(+)
-> >>>  create mode 100644 Documentation/devicetree/bindings/interconnect/qc=
-om,rpmh-common.yaml
-> >>>  create mode 100644 Documentation/devicetree/bindings/interconnect/qc=
-om,sm6350-rpmh.yaml
-> >>>  create mode 100644 include/dt-bindings/interconnect/qcom,sm6350.h
-> >>>
-> >>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh=
--common.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-com=
-mon.yaml
-> >>> new file mode 100644
-> >>> index 000000000000..6121eea3e87d
-> >>> --- /dev/null
-> >>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-common=
-.yaml
-> >>> @@ -0,0 +1,41 @@
-> >>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> >>> +%YAML 1.2
-> >>> +---
-> >>> +$id: http://devicetree.org/schemas/interconnect/qcom,rpmh-common.yam=
-l#
-> >>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >>> +
-> >>> +title: Qualcomm RPMh Network-On-Chip Interconnect
-> >>> +
-> >>> +maintainers:
-> >>> +  - Georgi Djakov <georgi.djakov@linaro.org>
-> >>> +  - Odelu Kukatla <okukatla@codeaurora.org>
-> >>
-> >> Is this valid email address?
-> >=20
-> > Will put Georgi and Bjorn as maintainers, as per your other email.
-> >=20
-> >>
-> >>> +
-> >>> +description: |
-> >>> +   RPMh interconnect providers support system bandwidth requirements=
- through
-> >>> +   RPMh hardware accelerators known as Bus Clock Manager (BCM). The =
-provider is
-> >>> +   able to communicate with the BCM through the Resource State Coord=
-inator (RSC)
-> >>> +   associated with each execution environment. Provider nodes must p=
-oint to at
-> >>> +   least one RPMh device child node pertaining to their RSC and each=
- provider
-> >>> +   can map to multiple RPMh resources.
-> >>> +
-> >>> +properties:
-> >>> +  '#interconnect-cells':
-> >>> +    enum: [ 1, 2 ]
-> >>
-> >> Why this is an enum?
-> >=20
-> > As a start, just adding that the definitions are copied from
-> > qcom,rpmh.yaml so it's not my invention :) Of course that doesn't mean
-> > that it should be improved where possible!
-> >=20
-> > Either value is supported by the driver (and used upstream). But perhap=
-s
-> > it can use a description to define what the 'parameters' mean.
-> >=20
-> > The second (optional) parameters "is to support different bandwidth
-> > configurations that are toggled by RPMh, depending on the power state o=
-f
-> > the CPU."[0]
-> >=20
-> > A commit message for sc7180 calls it the "tag information" and "The
-> > consumers can specify the path tag as an additional argument to the
-> > endpoints."[1]
-> >=20
-> > Not sure how to properly describe the first property, I guess the
-> > interconnect endpoint? Maybe Georgi can help here.
-> >=20
-> >=20
-> > [0] https://lore.kernel.org/linux-arm-msm/b079a211-d387-7958-bbe2-c41ca=
-c00d269@kernel.org/
-> > [1] https://git.kernel.org/torvalds/c/e23b122
->
-> Hm, indeed driver supports variable values. It's fine then.
->
-> >=20
-> >>
-> >>> +
-> >>> +  qcom,bcm-voters:
-> >>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> >>> +    items:
-> >>
-> >> Please implement my previous comments.
-> >=20
-> > Sorry, I looked over the comment in v1.
-> >=20
-> > As far as I can tell in current code only 1 item is used.
-> >=20
-> > If the second parameter of_bcm_voter_get would be used as non-NULL then
-> > qcom,bcm-voter-names gets looked up and the N-th value in qcom,bcm-vote=
-rs
-> > used. But currently qcom,bcm-voter-names is not actively used so only
-> > one gets used.
-> >=20
-> > Do you have a recommendation what to put here? A synthetic limit like
-> > 32 just to have a number there?
->
-> Let's go with maxItems:1, for both fields.
+Hi Rob,
 
-Do you mean adjusting the example using:
+On 28/07/2021 02:06, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> The drm/scheduler provides additional prioritization on top of that
+> provided by however many number of ringbuffers (each with their own
+> priority level) is supported on a given generation.  Expose the
+> additional levels of priority to userspace and map the userspace
+> priority back to ring (first level of priority) and schedular priority
+> (additional priority levels within the ring).
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Acked-by: Christian König <christian.koenig@amd.com>
+> ---
+>   drivers/gpu/drm/msm/adreno/adreno_gpu.c |  4 +-
+>   drivers/gpu/drm/msm/msm_gem_submit.c    |  4 +-
+>   drivers/gpu/drm/msm/msm_gpu.h           | 58 ++++++++++++++++++++++++-
+>   drivers/gpu/drm/msm/msm_submitqueue.c   | 35 +++++++--------
+>   include/uapi/drm/msm_drm.h              | 14 +++++-
+>   5 files changed, 88 insertions(+), 27 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index bad4809b68ef..748665232d29 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -261,8 +261,8 @@ int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value)
+>   			return ret;
+>   		}
+>   		return -EINVAL;
+> -	case MSM_PARAM_NR_RINGS:
+> -		*value = gpu->nr_rings;
+> +	case MSM_PARAM_PRIORITIES:
+> +		*value = gpu->nr_rings * NR_SCHED_PRIORITIES;
+>   		return 0;
+>   	case MSM_PARAM_PP_PGTABLE:
+>   		*value = 0;
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> index 450efe59abb5..c2ecec5b11c4 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -59,7 +59,7 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
+>   	submit->gpu = gpu;
+>   	submit->cmd = (void *)&submit->bos[nr_bos];
+>   	submit->queue = queue;
+> -	submit->ring = gpu->rb[queue->prio];
+> +	submit->ring = gpu->rb[queue->ring_nr];
+>   	submit->fault_dumped = false;
+>   
+>   	INIT_LIST_HEAD(&submit->node);
+> @@ -749,7 +749,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+>   	/* Get a unique identifier for the submission for logging purposes */
+>   	submitid = atomic_inc_return(&ident) - 1;
+>   
+> -	ring = gpu->rb[queue->prio];
+> +	ring = gpu->rb[queue->ring_nr];
+>   	trace_msm_gpu_submit(pid_nr(pid), ring->id, submitid,
+>   		args->nr_bos, args->nr_cmds);
+>   
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+> index b912cacaecc0..0e4b45bff2e6 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.h
+> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+> @@ -250,6 +250,59 @@ struct msm_gpu_perfcntr {
+>   	const char *name;
+>   };
+>   
+> +/*
+> + * The number of priority levels provided by drm gpu scheduler.  The
+> + * DRM_SCHED_PRIORITY_KERNEL priority level is treated specially in some
+> + * cases, so we don't use it (no need for kernel generated jobs).
+> + */
+> +#define NR_SCHED_PRIORITIES (1 + DRM_SCHED_PRIORITY_HIGH - DRM_SCHED_PRIORITY_MIN)
+> +
+> +/**
+> + * msm_gpu_convert_priority - Map userspace priority to ring # and sched priority
+> + *
+> + * @gpu:        the gpu instance
+> + * @prio:       the userspace priority level
+> + * @ring_nr:    [out] the ringbuffer the userspace priority maps to
+> + * @sched_prio: [out] the gpu scheduler priority level which the userspace
+> + *              priority maps to
+> + *
+> + * With drm/scheduler providing it's own level of prioritization, our total
+> + * number of available priority levels is (nr_rings * NR_SCHED_PRIORITIES).
+> + * Each ring is associated with it's own scheduler instance.  However, our
+> + * UABI is that lower numerical values are higher priority.  So mapping the
+> + * single userspace priority level into ring_nr and sched_prio takes some
+> + * care.  The userspace provided priority (when a submitqueue is created)
+> + * is mapped to ring nr and scheduler priority as such:
+> + *
+> + *   ring_nr    = userspace_prio / NR_SCHED_PRIORITIES
+> + *   sched_prio = NR_SCHED_PRIORITIES -
+> + *                (userspace_prio % NR_SCHED_PRIORITIES) - 1
+> + *
+> + * This allows generations without preemption (nr_rings==1) to have some
+> + * amount of prioritization, and provides more priority levels for gens
+> + * that do have preemption.
 
-  qcom,bcm-voter-names =3D "apps", "disp";
-  qcom,bcm-voters =3D <&apps_bcm_voter>, <&disp_bcm_voter>;
+I am exploring how different drivers handle priority levels and this 
+caught my eye.
 
-in qcom,rpmh.yaml then? Otherwise validation fails with maxItems: 1
+Is the implication of the last paragraphs that on hw with nr_rings > 1, 
+ring + 1 preempts ring? If so I am wondering does the "spreading" of 
+user visible priorities by NR_SCHED_PRIORITIES creates a non-preemptable 
+levels within every "bucket" or how does that work?
 
->
-> >=20
-> >>
-> >>> +      maxItems: 1
-> >>> +    description: |
-> >>
-> >> No need for |
-> >=20
-> > ack
-> >=20
-> >>
-> >>> +      List of phandles to qcom,bcm-voter nodes that are required by
-> >>> +      this interconnect to send RPMh commands.
-> >>> +
-> >>> +  qcom,bcm-voter-names:
-> >>
-> >> What names do you expect here?
-> >=20
-> > Currently unused in mainline but newer downstream kernels[2] use "hlos"
-> > as first parameter, and e.g. "disp" as second one that goes to a
-> > qcom,bcm-voter that's a child of disp_rsc. Not sure exactly what that
-> > does.
-> >=20
-> > [2] https://github.com/atomsand/android_kernel_qcom_devicetree/blob/a6d=
-50810116e8314d64eb63b8862c207b974e0c7/qcom/waipio.dtsi#L1701-L1793
->
-> The bindings example uses apps and disp, so here would be only "apps".
+Regards,
 
-Here also the above, allow only "apps" for now in the binding and remove
-"disp" from example?
+Tvrtko
 
-Regards
-Luca
-
->
-> >>> +
-> >>> +  '#interconnect-cells': true
-> >>
-> >> Since you defined it as enum in rpmh-common, you really expect here
-> >> different values?
-> >=20
-> > Doesn't ": true" here just mean we want the value from the allOf: -
-> > $ref?
-> > But we could in theory make interconnect-cells only accept <2> for
-> > sm6350.
->
-> Yes, and the $ref defines it as [1, 2], so initially I thought this
-> should be narrowed. However it seems 1 or 2 are still valid for all of
-> Qcom interconnects, so your "true" is correct.
->
->
-> Best regards,
-> Krzysztof
-
+> + */
+> +static inline int msm_gpu_convert_priority(struct msm_gpu *gpu, int prio,
+> +		unsigned *ring_nr, enum drm_sched_priority *sched_prio)
+> +{
+> +	unsigned rn, sp;
+> +
+> +	rn = div_u64_rem(prio, NR_SCHED_PRIORITIES, &sp);
+> +
+> +	/* invert sched priority to map to higher-numeric-is-higher-
+> +	 * priority convention
+> +	 */
+> +	sp = NR_SCHED_PRIORITIES - sp - 1;
+> +
+> +	if (rn >= gpu->nr_rings)
+> +		return -EINVAL;
+> +
+> +	*ring_nr = rn;
+> +	*sched_prio = sp;
+> +
+> +	return 0;
+> +}
+> +
+>   /**
+>    * A submitqueue is associated with a gl context or vk queue (or equiv)
+>    * in userspace.
+> @@ -257,7 +310,8 @@ struct msm_gpu_perfcntr {
+>    * @id:        userspace id for the submitqueue, unique within the drm_file
+>    * @flags:     userspace flags for the submitqueue, specified at creation
+>    *             (currently unusued)
+> - * @prio:      the submitqueue priority
+> + * @ring_nr:   the ringbuffer used by this submitqueue, which is determined
+> + *             by the submitqueue's priority
+>    * @faults:    the number of GPU hangs associated with this submitqueue
+>    * @ctx:       the per-drm_file context associated with the submitqueue (ie.
+>    *             which set of pgtables do submits jobs associated with the
+> @@ -272,7 +326,7 @@ struct msm_gpu_perfcntr {
+>   struct msm_gpu_submitqueue {
+>   	int id;
+>   	u32 flags;
+> -	u32 prio;
+> +	u32 ring_nr;
+>   	int faults;
+>   	struct msm_file_private *ctx;
+>   	struct list_head node;
+> diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
+> index 682ba2a7c0ec..32a55d81b58b 100644
+> --- a/drivers/gpu/drm/msm/msm_submitqueue.c
+> +++ b/drivers/gpu/drm/msm/msm_submitqueue.c
+> @@ -68,6 +68,8 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+>   	struct msm_gpu_submitqueue *queue;
+>   	struct msm_ringbuffer *ring;
+>   	struct drm_gpu_scheduler *sched;
+> +	enum drm_sched_priority sched_prio;
+> +	unsigned ring_nr;
+>   	int ret;
+>   
+>   	if (!ctx)
+> @@ -76,8 +78,9 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+>   	if (!priv->gpu)
+>   		return -ENODEV;
+>   
+> -	if (prio >= priv->gpu->nr_rings)
+> -		return -EINVAL;
+> +	ret = msm_gpu_convert_priority(priv->gpu, prio, &ring_nr, &sched_prio);
+> +	if (ret)
+> +		return ret;
+>   
+>   	queue = kzalloc(sizeof(*queue), GFP_KERNEL);
+>   
+> @@ -86,24 +89,13 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+>   
+>   	kref_init(&queue->ref);
+>   	queue->flags = flags;
+> -	queue->prio = prio;
+> +	queue->ring_nr = ring_nr;
+>   
+> -	ring = priv->gpu->rb[prio];
+> +	ring = priv->gpu->rb[ring_nr];
+>   	sched = &ring->sched;
+>   
+> -	/*
+> -	 * TODO we can allow more priorities than we have ringbuffers by
+> -	 * mapping:
+> -	 *
+> -	 *    ring = prio / 3;
+> -	 *    ent_prio = DRM_SCHED_PRIORITY_MIN + (prio % 3);
+> -	 *
+> -	 * Probably avoid using DRM_SCHED_PRIORITY_KERNEL as that is
+> -	 * treated specially in places.
+> -	 */
+>   	ret = drm_sched_entity_init(&queue->entity,
+> -			DRM_SCHED_PRIORITY_NORMAL,
+> -			&sched, 1, NULL);
+> +			sched_prio, &sched, 1, NULL);
+>   	if (ret) {
+>   		kfree(queue);
+>   		return ret;
+> @@ -134,16 +126,19 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+>   int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx)
+>   {
+>   	struct msm_drm_private *priv = drm->dev_private;
+> -	int default_prio;
+> +	int default_prio, max_priority;
+>   
+>   	if (!priv->gpu)
+>   		return -ENODEV;
+>   
+> +	max_priority = (priv->gpu->nr_rings * NR_SCHED_PRIORITIES) - 1;
+> +
+>   	/*
+> -	 * Select priority 2 as the "default priority" unless nr_rings is less
+> -	 * than 2 and then pick the lowest priority
+> +	 * Pick a medium priority level as default.  Lower numeric value is
+> +	 * higher priority, so round-up to pick a priority that is not higher
+> +	 * than the middle priority level.
+>   	 */
+> -	default_prio = clamp_t(uint32_t, 2, 0, priv->gpu->nr_rings - 1);
+> +	default_prio = DIV_ROUND_UP(max_priority, 2);
+>   
+>   	INIT_LIST_HEAD(&ctx->submitqueues);
+>   
+> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
+> index f075851021c3..6b8fffc28a50 100644
+> --- a/include/uapi/drm/msm_drm.h
+> +++ b/include/uapi/drm/msm_drm.h
+> @@ -73,11 +73,19 @@ struct drm_msm_timespec {
+>   #define MSM_PARAM_MAX_FREQ   0x04
+>   #define MSM_PARAM_TIMESTAMP  0x05
+>   #define MSM_PARAM_GMEM_BASE  0x06
+> -#define MSM_PARAM_NR_RINGS   0x07
+> +#define MSM_PARAM_PRIORITIES 0x07  /* The # of priority levels */
+>   #define MSM_PARAM_PP_PGTABLE 0x08  /* => 1 for per-process pagetables, else 0 */
+>   #define MSM_PARAM_FAULTS     0x09
+>   #define MSM_PARAM_SUSPENDS   0x0a
+>   
+> +/* For backwards compat.  The original support for preemption was based on
+> + * a single ring per priority level so # of priority levels equals the #
+> + * of rings.  With drm/scheduler providing additional levels of priority,
+> + * the number of priorities is greater than the # of rings.  The param is
+> + * renamed to better reflect this.
+> + */
+> +#define MSM_PARAM_NR_RINGS   MSM_PARAM_PRIORITIES
+> +
+>   struct drm_msm_param {
+>   	__u32 pipe;           /* in, MSM_PIPE_x */
+>   	__u32 param;          /* in, MSM_PARAM_x */
+> @@ -304,6 +312,10 @@ struct drm_msm_gem_madvise {
+>   
+>   #define MSM_SUBMITQUEUE_FLAGS (0)
+>   
+> +/*
+> + * The submitqueue priority should be between 0 and MSM_PARAM_PRIORITIES-1,
+> + * a lower numeric value is higher priority.
+> + */
+>   struct drm_msm_submitqueue {
+>   	__u32 flags;   /* in, MSM_SUBMITQUEUE_x */
+>   	__u32 prio;    /* in, Priority level */
