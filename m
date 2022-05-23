@@ -2,132 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7FDD53140A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 18:25:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B05B8531309
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 18:23:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237842AbiEWP3x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 11:29:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42932 "EHLO
+        id S237881AbiEWPa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 11:30:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237797AbiEWP3x (ORCPT
+        with ESMTP id S237880AbiEWPaS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 11:29:53 -0400
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99AD85EBDE;
-        Mon, 23 May 2022 08:29:51 -0700 (PDT)
-Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 4D8711F6C6;
-        Mon, 23 May 2022 17:29:47 +0200 (CEST)
-Message-ID: <f8e569e4-9a6b-75eb-5094-f3e2d9a1ecf8@somainline.org>
-Date:   Mon, 23 May 2022 17:29:42 +0200
+        Mon, 23 May 2022 11:30:18 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37E845F8F9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 08:30:14 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id u27so21084370wru.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 08:30:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Ki3nds2SQ94u+QBYsM2M4nRb9kIMl7mDNBezsS/vkEM=;
+        b=rO9GbfvfUDpR9XSGaMJqCDjRuDT9PA5XwA39wI3I3qGonALuDWn/2a4bfMlKjQq2p0
+         Mux1YrI+RbwOYPtyOz5SaKGnHtPYTIvIIFRrEISd8mrBfNCYVb1364u8X0D1LxnJRwL4
+         gVJQ/rGnnimhnnhY+gSKEnr6SQxblnz8WLXciIeVsIKg3/ZEODkbkJbV77QDTIZDwjF4
+         it8hegHYVjDsHANXb3P8XH5TU04PpJAEgxEJR9lRCOsmURJatQEng/dHfZ8VsBa6nil9
+         fJNlr1sj8RAZYXFihHC7uaZUoMmvg+udvBeOR2yxXsyRW2vP+qYEE01X/io87as3sQU3
+         H0aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Ki3nds2SQ94u+QBYsM2M4nRb9kIMl7mDNBezsS/vkEM=;
+        b=uFvtwMRVRDL6ReaEMJz5Gxnmbf75djP5ZdQbAXOZtHPcrjWxxm4BsHyg4x7jqSOTEx
+         15bnzKL+xYu2l/I338yWUbeQuazSscqTzxcqg4Nlj9UTDZcL4+6ElYOlx7BmtBEEaUlu
+         lVFAPrjkEZerzK0bZc2OM16ayCh5d8f2QUVLqL1gX31GsQsZtRNiLYTcXeTR/C3PgfNi
+         8Sj8aQnOOwICJYSiaPrkpcKJ+upvvWkwVDNtbD175kkwQYffHjukb7BEz2YZIBwH9j5j
+         XWyqzDXtt04oT2oi2KZJLhmMZtYxeuRa7mXsvyk0oUFPdz1wIVKErYQlJJcKGEprCIX3
+         if8Q==
+X-Gm-Message-State: AOAM532HEiQbZ5gsT3qlFEobcq8KhrE5gXVyEgsxtKPjR8Dnsqx64Pk5
+        Re/d5jc9LfFQZqKwT0a54Sh1pg==
+X-Google-Smtp-Source: ABdhPJwAJmOXRtRNxDFU4DMCZoOjdk2vta2oozn3g6xqMgmjEBCafG5oHJTXYfnCa7somrhPoe6ccw==
+X-Received: by 2002:a5d:4f08:0:b0:20f:c7dc:8477 with SMTP id c8-20020a5d4f08000000b0020fc7dc8477mr9794083wru.713.1653319812641;
+        Mon, 23 May 2022 08:30:12 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id l24-20020adfa398000000b0020fcaba73bcsm7125690wrb.104.2022.05.23.08.30.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 May 2022 08:30:11 -0700 (PDT)
+Message-ID: <625094db-a1e7-b62c-9862-6e5b20420c97@linaro.org>
+Date:   Mon, 23 May 2022 16:30:10 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.1
-Subject: Re: Removal of qcom,board-id and qcom,msm-id
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     agross@kernel.org, arnd@arndb.de, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, olof@lixom.net, robh@kernel.org,
-        sboyd@kernel.org
-References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
- <20220522195138.35943-1-konrad.dybcio@somainline.org>
- <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
- <02ab0276-b078-fe66-8596-fcec4378722b@somainline.org>
- <49a52870-9aab-c4bd-2077-66732f42bbba@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <49a52870-9aab-c4bd-2077-66732f42bbba@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577 on
+ cam1
+Content-Language: en-US
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     mchehab@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
+        hfink@snap.com
+References: <20220518133004.342775-1-bryan.odonoghue@linaro.org>
+ <20220518133004.342775-2-bryan.odonoghue@linaro.org>
+ <33abcc93-13f1-d6f5-36a3-6ab796f124f9@linaro.org>
+ <19c92f9d-fa1c-fbe8-50ef-324da3e00695@linaro.org>
+ <e7bbe076-a1d1-a005-8110-5d35bc0d80de@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <e7bbe076-a1d1-a005-8110-5d35bc0d80de@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 23/05/2022 14:50, Vladimir Zapolskiy wrote:
+> it's some kind of a race related to probes of CAMSS, CCI and IMX412 
+> drivers.
+> 
+> Since I'm able to reproduce it, I'll take the analysis on myself, and it 
+> does not
+> interfere with your patch series.
 
-On 23/05/2022 14:14, Krzysztof Kozlowski wrote:
-> On 23/05/2022 14:02, Konrad Dybcio wrote:
->> On 23/05/2022 09:21, Krzysztof Kozlowski wrote:
->>> On 22/05/2022 21:51, Konrad Dybcio wrote:
->>>> Hi,
->>>>
->>>> removing these properties will not bring almost any benefit (other than making
->>>> some checks happy any saving some <200 LoC) and will make the lives of almost
->>>> all people doing independent development for linux-on-msm harder. There are
->>>> almost unironically like 3 people outside Linaro and QUIC who have
->>>> non-vendor-fused development boards AND the sources to rebuild the
->>>> bootloader on their own. Making it harder to boot is only going to
->>>> discourage people from developing on these devices, which is already not
->>>> that pleasant, especially with newer platforms where you have to fight with
->>>> the oh-so-bright ideas of Android boot chain..
->>>>
->>>> This only concerns devices released before sm8350, as the new ones will not
->>>> even boot with these properties present (or at least SONY Sagami, but I
->>>> doubt it's an isolated case), so other than completing support for older
->>>> devices, it won't be an issue going forward, anyway. But there are give
->>>> or take 50 locked down devices in mainline right now, and many more waiting
->>>> to be upstreamed in various downstream close-to-mainline trees that should
->>>> not be disregarded just because Qualcomm is far from the best at making
->>>> their BSP software stack clean.
->>> I actually wonder why do you need these properties for community work on
->>> such boards? You ship kernel with one concatenated DTB and the
->>> bootloader does not need the board-id/msm-id fields, doesn't it?
->> If that were the case, I would have never complained about this! It's
->> the bootloader itself that needs it, you can see it in a "Best match
->> [blah blah] 258/0x1000/...." log line, where it walks through the
->> appended (or otherwise compiled into the boot.img) DTBs and looks for
->> matches for the burnt-in msm-, board- and (on newer-older platforms)
->> pmic-id. If it cannot find these, it refuses to boot with an Android
->> Verified Boot red state and you get a not-so-nice "Your device has been
->> unlocked and the boot image is not working" or something like this on
->> your screen.
->>
->>
->>> Not mentioning that in the past bootloader was actually not using these
->>> properties at all, because it was the dtbTool who was parsing them.
->> Not sure when that was the case, maybe with very old arm32 bootloaders
->> in the times before I did development on Qualcomm devices.
->>
->>
->>>    So
->>> in any case either your device works fine without these properties or
->>> you have to use dtbTool, right?
->> To the best of my idea, wrong :( Unless the vendor modified the LK/XBL
->> code on their own, it looks for a "best match" (but if it's not a
->> precise match, it won't even bother trying to boot, just fyi..), meaning
->> it tries to go through a list of SoC ID and revision pairs (msm-id),
->> board IDs (board-id) and PMIC id+rev pairs (pmic-id) and if no match is
->> found, it doesn't even exit the bootloader and says something like "no
->> dtbs found".
-> This would mean that dtbTool as described in the actual patch [1] is not
-> used and bootloader ignores the table. If that's the case, the commit
-> and requirement of such complex board-foundry-pmic-compatibles should be
-> dropped. So I am getting now to what Dmitry said...
->
-> [1]
-> https://lore.kernel.org/all/1448062280-15406-2-git-send-email-sboyd@codeaurora.org/
+Ah, I think I have it pretty much narrowed down now. Needed to switch 
+off modules entirely.
 
-This solution assumes everybody is using the so-called QCDT images, 
-which is not necessarily the case, as not all bootloaders (even if they 
-should, as their base BSP tags sometimes imply) support that. Others, in 
-turn, require that and will not recognize appended DTBs properly for 
-reasons unknown..
+First probe fails, second probe succeeds.
 
+Thanks anyway, I think I'm close to fix.
 
-I once went as far as writing up solutions to getting a boot on almost 
-all combinations of these.. I may even still have it stashed somewhere.. 
-things get crazy when you factor in DTBO and GKI..
-
-
-Konrad
-
->
->
-> Best regards,
-> Krzysztof
+---
+bod
