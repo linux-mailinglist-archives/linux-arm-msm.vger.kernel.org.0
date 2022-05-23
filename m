@@ -2,208 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 381DB531A59
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 22:55:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C803C531C51
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 22:57:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240497AbiEWR22 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 13:28:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38714 "EHLO
+        id S241088AbiEWRd5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 13:33:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242425AbiEWR1n (ORCPT
+        with ESMTP id S241189AbiEWRcr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 13:27:43 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DB07CB5F;
-        Mon, 23 May 2022 10:23:21 -0700 (PDT)
+        Mon, 23 May 2022 13:32:47 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B4427982A;
+        Mon, 23 May 2022 10:27:28 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-30007f11f88so24447917b3.7;
+        Mon, 23 May 2022 10:27:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653326601; x=1684862601;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=dHMAzDZ8V9eE7VWggUzuRgfi+1UxoewsEYqpet3YSy4=;
-  b=AJNnbCiv5Yql8xQ4CicU9JEdSRwRe2V1cp2BHvh9ZdjlBCwJi67dR5Iq
-   WtZfyfIojPEtll6rOWOFTYv0zXWfxf/w4HMIOAA7gj9lhtW05+xZI8SXI
-   TmpQ9c9TUug5ibjVOcjoJ5NkbU0hyl/XFz6N93vNQSNuDAxfYZJFIobFr
-   U=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 23 May 2022 10:19:09 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 10:19:09 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 23 May 2022 10:19:08 -0700
-Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 23 May 2022 10:19:04 -0700
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        "Joerg Roedel" <joro@8bytes.org>
-CC:     <iommu@lists.linux-foundation.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@chromium.org>, <quic_guptap@quicinc.com>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Subject: [PATCH] iommu/arm-smmu-qcom: Add debug support for TLB sync timeouts
-Date:   Mon, 23 May 2022 22:48:47 +0530
-Message-ID: <20220523171847.21929-1-quic_saipraka@quicinc.com>
-X-Mailer: git-send-email 2.33.1
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sTAZGlEUmX/o2HerHezmpZJYpBk/Tk//TO+SFL1h0zA=;
+        b=pN4ceqx3jRqPDNbZxMO8S9NplGCGhu5NZGlEejwVpgTIpU/7Eyj86+mcv240DqoKIB
+         TPReO8r/4SM21FZvUgntCTTdurUlJ5mLo9g7bqG2ocJDosfEmIwHXyrGOCjbU6wDOs83
+         fG+rkIVl2t+Wktu9X0gBXqVOb6OuX/sxcB1Tg84f8HyAyOknb8mjSP/YMihayC/Qx7NP
+         fuFYzJxMzGEv7uzFInqftcmOkkT9vmmRLaOns7cghOZG5ZeJcBheQyROBJE9eWAN0EMF
+         +DsJDJdA3qPlMOz334GBPaxozXAt7G7i852jHnf7qWw6v0Rv3Ozp3qB31ZCsWZ22wW2M
+         B/CA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sTAZGlEUmX/o2HerHezmpZJYpBk/Tk//TO+SFL1h0zA=;
+        b=fM4WvityEK09LtVeUHKX7MRRqGhtDxoXenIoCogx6bicGf5m511pZfKIx4oe+8HUyz
+         bJKgsKUPaxsOvxh4zUGE3Yk/gzzO+YRuc6FPkmSXrjo7lmZpTIIQfv65yf/Khof2r6Ue
+         3h1kIh8qXwVKWCleBFZPrbwmMs/1dVuMWqFl9lD6eQGXmcKhyI1iy+7HyDqDpNLXG3Cf
+         +3aUHR+H3WZhsYQvTcDUgo55p7IGI84/GN9DlJXmjwpQv7NvAfJNFkq6qpnxTpQJJxOf
+         MyfKzwdejX+xdlsg+eSngjUTu0BZReI/YJM0FKo/JJNv5DxxVQ0zkrR/qdZUMPocNAPr
+         TSag==
+X-Gm-Message-State: AOAM530RLopEba7IH4Wh/08EUH9tfM/RCXnPugXdUft0Iz8UFOPknU/J
+        T5nJz69PrMBW6K4uI6zxZpZGQM/SqLtdFqMXiOeMeIlvjt4=
+X-Google-Smtp-Source: ABdhPJyfb8N3rzOUX/Kjr0IcB2wzgmkTx8SdieSrc6hUMHn9O6f7sUVSBxw6MHCLQeIkZi6lnS9ZRTgE+qAWFNZBBrU=
+X-Received: by 2002:a0d:e2ca:0:b0:2ff:369c:a3ee with SMTP id
+ l193-20020a0de2ca000000b002ff369ca3eemr25119387ywe.292.1653326847797; Mon, 23
+ May 2022 10:27:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220518192924.20948-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20220518192924.20948-4-prabhakar.mahadev-lad.rj@bp.renesas.com> <CACRpkda1pfL8tk0S_0bHvj4kWYrLTTeOz3b_A9qK5DJwHWeTXw@mail.gmail.com>
+In-Reply-To: <CACRpkda1pfL8tk0S_0bHvj4kWYrLTTeOz3b_A9qK5DJwHWeTXw@mail.gmail.com>
+From:   "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Date:   Mon, 23 May 2022 18:27:01 +0100
+Message-ID: <CA+V-a8uR6EHr9ZqbBkLLKwLTPO4asthYaWTYE8c4NGFUt9Gmcg@mail.gmail.com>
+Subject: Re: [PATCH v4 3/7] gpio: gpiolib: Add ngirq member to struct gpio_irq_chip
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        Phil Edworthy <phil.edworthy@renesas.com>,
+        Biju Das <biju.das.jz@bp.renesas.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-TLB sync timeouts can be due to various reasons such as TBU power down
-or pending TCU/TBU invalidation/sync and so on. Debugging these often
-require dumping of some implementation defined registers to know the
-status of TBU/TCU operations and some of these registers are not
-accessible in non-secure world such as from kernel and requires SMC
-calls to read them in the secure world. So, add this debug support
-to dump implementation defined registers for TLB sync timeout issues.
+Hi Linus,
 
-Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 50 ++++++++++++++++++++++
- drivers/iommu/arm/arm-smmu/arm-smmu.c      |  2 +
- drivers/iommu/arm/arm-smmu/arm-smmu.h      |  4 ++
- 3 files changed, 56 insertions(+)
+Thank you for the review.
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 7820711c4560..22e9a0085475 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -5,11 +5,19 @@
- 
- #include <linux/acpi.h>
- #include <linux/adreno-smmu-priv.h>
-+#include <linux/delay.h>
- #include <linux/of_device.h>
- #include <linux/qcom_scm.h>
- 
- #include "arm-smmu.h"
- 
-+#define QCOM_DUMMY_VAL	-1
-+
-+/* Implementation Defined Register Space 0 registers */
-+#define QCOM_SMMU_STATS_SYNC_INV_TBU_ACK	0x5dc
-+#define QCOM_SMMU_TBU_PWR_STATUS		0x2204
-+#define QCOM_SMMU_MMU2QSS_AND_SAFE_WAIT_CNTR	0x2670
-+
- struct qcom_smmu {
- 	struct arm_smmu_device smmu;
- 	bool bypass_quirk;
-@@ -22,6 +30,46 @@ static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
- 	return container_of(smmu, struct qcom_smmu, smmu);
- }
- 
-+static void qcom_smmu_tlb_sync(struct arm_smmu_device *smmu, int page,
-+				int sync, int status)
-+{
-+	u32 sync_inv_ack, sync_inv_progress, tbu_pwr_status;
-+	unsigned int spin_cnt, delay;
-+	u32 reg;
-+	int ret;
-+
-+	arm_smmu_writel(smmu, page, sync, QCOM_DUMMY_VAL);
-+	for (delay = 1; delay < TLB_LOOP_TIMEOUT; delay *= 2) {
-+		for (spin_cnt = TLB_SPIN_COUNT; spin_cnt > 0; spin_cnt--) {
-+			reg = arm_smmu_readl(smmu, page, status);
-+			if (!(reg & ARM_SMMU_sTLBGSTATUS_GSACTIVE))
-+				return;
-+			cpu_relax();
-+		}
-+		udelay(delay);
-+	}
-+
-+	sync_inv_ack = arm_smmu_readl(smmu, ARM_SMMU_IMPL_DEF0,
-+				      QCOM_SMMU_STATS_SYNC_INV_TBU_ACK);
-+
-+	ret = qcom_scm_io_readl(smmu->ioaddr + QCOM_SMMU_TBU_PWR_STATUS,
-+				&tbu_pwr_status);
-+	if (ret)
-+		dev_err_ratelimited(smmu->dev,
-+				    "Failed to read TBU power status: %d\n", ret);
-+
-+	ret = qcom_scm_io_readl(smmu->ioaddr + QCOM_SMMU_MMU2QSS_AND_SAFE_WAIT_CNTR,
-+				&sync_inv_progress);
-+	if (ret)
-+		dev_err_ratelimited(smmu->dev,
-+				    "Failed to read SAFE WAIT counter: %d\n", ret);
-+
-+	dev_err_ratelimited(smmu->dev,
-+			    "TLB sync timed out -- SMMU may be deadlocked\n"
-+			    "TBU: sync_inv_ack %#x power_status %#x sync_inv_progress %#x\n",
-+			    sync_inv_ack, tbu_pwr_status, sync_inv_progress);
-+}
-+
- static void qcom_adreno_smmu_write_sctlr(struct arm_smmu_device *smmu, int idx,
- 		u32 reg)
- {
-@@ -374,6 +422,7 @@ static const struct arm_smmu_impl qcom_smmu_impl = {
- 	.def_domain_type = qcom_smmu_def_domain_type,
- 	.reset = qcom_smmu500_reset,
- 	.write_s2cr = qcom_smmu_write_s2cr,
-+	.tlb_sync = qcom_smmu_tlb_sync,
- };
- 
- static const struct arm_smmu_impl qcom_adreno_smmu_impl = {
-@@ -382,6 +431,7 @@ static const struct arm_smmu_impl qcom_adreno_smmu_impl = {
- 	.reset = qcom_smmu500_reset,
- 	.alloc_context_bank = qcom_adreno_smmu_alloc_context_bank,
- 	.write_sctlr = qcom_adreno_smmu_write_sctlr,
-+	.tlb_sync = qcom_smmu_tlb_sync,
- };
- 
- static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-index 2ed3594f384e..4c5b51109835 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -2099,6 +2099,8 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
- 	if (IS_ERR(smmu->base))
- 		return PTR_ERR(smmu->base);
- 	ioaddr = res->start;
-+	smmu->ioaddr = ioaddr;
-+
- 	/*
- 	 * The resource size should effectively match the value of SMMU_TOP;
- 	 * stash that temporarily until we know PAGESIZE to validate it with.
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-index 2b9b42fb6f30..8cf6567d970f 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-@@ -278,6 +278,7 @@ struct arm_smmu_device {
- 	struct device			*dev;
- 
- 	void __iomem			*base;
-+	phys_addr_t			ioaddr;
- 	unsigned int			numpage;
- 	unsigned int			pgshift;
- 
-@@ -502,6 +503,9 @@ static inline void arm_smmu_writeq(struct arm_smmu_device *smmu, int page,
- 
- #define ARM_SMMU_GR0		0
- #define ARM_SMMU_GR1		1
-+
-+#define ARM_SMMU_IMPL_DEF0	2
-+
- #define ARM_SMMU_CB(s, n)	((s)->numpage + (n))
- 
- #define arm_smmu_gr0_read(s, o)		\
--- 
-2.33.1
+On Thu, May 19, 2022 at 2:26 PM Linus Walleij <linus.walleij@linaro.org> wrote:
+>
+> On Wed, May 18, 2022 at 9:30 PM Lad Prabhakar
+> <prabhakar.mahadev-lad.rj@bp.renesas.com> wrote:
+>
+> > Supported GPIO IRQs by the chip is not always equal to the number of GPIO
+> > pins. For example on Renesas RZ/G2L SoC where it has GPIO0-122 pins but at
+> > a given point a maximum of only 32 GPIO pins can be used as IRQ lines in
+> > the IRQC domain.
+> >
+> > This patch adds ngirq member to struct gpio_irq_chip and passes this as a
+> > size to irq_domain_create_hierarchy()/irq_domain_create_simple() if it is
+> > being set in the driver otherwise fallbacks to using ngpio.
+> >
+> > Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+>
+> NAK
+>
+> As pointed out this is a property of the hardware and thus you should
+> derive this property of the hardware from the compatible string.
+>
+> For example by passing per-variant .data in struct of_device_id.
+>
+> Unique hardware properties means unique hardware means it should
+> have a unique compatible string. Otherwise something is wrong
+> with the compatibles.
+>
+Agreed, I will drop this.
 
+Cheers,
+Prabhakar
