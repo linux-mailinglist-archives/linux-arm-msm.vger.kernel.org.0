@@ -2,157 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 965ED531413
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 18:25:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDFBA5312C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 18:23:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238033AbiEWPgo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 11:36:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60366 "EHLO
+        id S238078AbiEWPpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 11:45:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238054AbiEWPgm (ORCPT
+        with ESMTP id S234711AbiEWPpi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 11:36:42 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E1E62F036
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 08:36:38 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id v8so24315573lfd.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 08:36:37 -0700 (PDT)
+        Mon, 23 May 2022 11:45:38 -0400
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net (zg8tmtyylji0my4xnjqumte4.icoremail.net [162.243.164.118])
+        by lindbergh.monkeyblade.net (Postfix) with SMTP id 78FA4278;
+        Mon, 23 May 2022 08:45:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=fy8sndVmymYnHbsd90BxGo19Ch5pC4BtvDtl6wCgwzI=;
-        b=CIZ7mIEMv1gh2SbkBbFcVFXuXuPPQnihIVDJX+tgvWkOBdGKRt2O7wv/skEgMs9LAb
-         R0q8c+rSkW9c0yYHyclcPLwr63PLV0U7Hkk+8vLan1QsV51ahf5WY5H+9gDcwqGZFxgW
-         It6kWZBcZzvZP0aapzjK8LPgIze4+MUB3GwssJRXVSlS/SibDCrlpc+HTGpu3ZD2/+am
-         oMBWJXFcRoAyHTDuCkk/5eACnwKrcbpvsMRLYpx6saAjs+e3NwtOMFcAsQnKhokh3x3e
-         zo/x+il7VyCwPLqGk0ekSYtDzYFk6p3YhlWf5Fo2JRzgmcjopJOabOPlo52bd7+bi2Dg
-         BH7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=fy8sndVmymYnHbsd90BxGo19Ch5pC4BtvDtl6wCgwzI=;
-        b=Z4P8l33q9zbcKyVbErvzgudccfeWXwIIE0tMF80CQqY2099il4Ub6+1jV2RLy9wZ54
-         Cm8xEVrfKR/IyK/Jm0PchsjljzPRAD9f/xNHc+sHqf36pDBGELHXUeLOKU08BAkPr6U7
-         JtXJc0WMPCUEyK+TBO3ZgTB2JiNNrn3P646L4qj3qQD8SaC9U9qgwoi42kVlQLLn6pnx
-         lcT8wG33OZrneagNLylIEMuNg8bgUs5BQ+fmgXUmzNxhZ3ihr1HcCb0u6CqzBqRQQvfb
-         QUlUtsx5mHMA0gygDkZCGhzK8fadFSWXJWgbJ91nZe+BP3O8iE6gRgsjCSGY2Hs5XJ6N
-         CbJA==
-X-Gm-Message-State: AOAM533y4ZWoCKOJuLkqDeJI3LUNSLjFuruRJXh0CxTHB5Ax0v6/keSa
-        iL2ZcMwiPD+KQcPooHHcMGouPw==
-X-Google-Smtp-Source: ABdhPJwM+QfBAgrq5Qhp7c49bsGzccLRV/RrGdKF+ztxnpFARSizzfmXG8uB0XN/toLfj+JZR5ABHQ==
-X-Received: by 2002:a05:6512:3f26:b0:473:edee:7250 with SMTP id y38-20020a0565123f2600b00473edee7250mr16079456lfa.685.1653320196237;
-        Mon, 23 May 2022 08:36:36 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id t5-20020a056512208500b0047255d211cfsm2033134lfr.254.2022.05.23.08.36.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 May 2022 08:36:35 -0700 (PDT)
-Message-ID: <363d3be3-575d-260f-ece1-0b56b3c134ba@linaro.org>
-Date:   Mon, 23 May 2022 18:36:34 +0300
+        d=pku.edu.cn; s=dkim; h=Received:Date:From:To:Cc:Subject:
+        In-Reply-To:References:Content-Transfer-Encoding:Content-Type:
+        MIME-Version:Message-ID; bh=SarvGZ87dmgOXP19qr9K62mIuiEHpy939i/H
+        e2PcsV4=; b=BDl0MMOX444Z1IqDHYOSkLhUEaBjg2/X0DSqp9YWgUoOhnopLLHX
+        9jSL8ni2ZN64xMMjzIlTvl9e66yzacczk1Xavi/sxgDDU9zqW9rYqb/bchhU30x5
+        FdSlU/aHee61++QwZ+wIAr9dTZdSd6piQdDOCNsUC5FDOxry84PvSFQ=
+Received: by ajax-webmail-front02 (Coremail) ; Mon, 23 May 2022 23:45:16
+ +0800 (GMT+08:00)
+X-Originating-IP: [10.129.37.75]
+Date:   Mon, 23 May 2022 23:45:16 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From:   =?UTF-8?B?5YiY5rC45b+X?= <lyz_cs@pku.edu.cn>
+To:     "andy shevchenko" <andy.shevchenko@gmail.com>
+Cc:     "andy gross" <agross@kernel.org>,
+        "bjorn andersson" <bjorn.andersson@linaro.org>,
+        "jonathan cameron" <jic23@kernel.org>,
+        "lars-peter clausen" <lars@metafoo.de>,
+        "stanimir varbanov" <svarbanov@mm-sol.com>,
+        "ivan t. ivanov" <iivanov@mm-sol.com>,
+        "jonathan cameron" <jonathan.cameron@huawei.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-iio <linux-iio@vger.kernel.org>,
+        "linux kernel mailing list" <linux-kernel@vger.kernel.org>,
+        fuyq@stu.pku.edu.cn
+Subject: Re: Re: [PATCH] hv_netvsc: Fix potential dereference of NULL
+ pointer
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
+ Copyright (c) 2002-2022 www.mailtech.cn
+ mispb-1ea67e80-64e4-49d5-bd9f-3beeae24b9f2-pku.edu.cn
+In-Reply-To: <CAHp75Vc+fubwb0PGqVyDs5Np10ZW06F2REVKK=G26zOKT8gvFQ@mail.gmail.com>
+References: <20220520181323.00002892@huawei.com>
+ <1653103862-36104-1-git-send-email-lyz_cs@pku.edu.cn>
+ <CAHp75Vc+fubwb0PGqVyDs5Np10ZW06F2REVKK=G26zOKT8gvFQ@mail.gmail.com>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v11 3/7] PCI: dwc: Handle MSIs routed to multiple GIC
- interrupts
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220520183114.1356599-1-dmitry.baryshkov@linaro.org>
- <20220520183114.1356599-4-dmitry.baryshkov@linaro.org>
- <Yos9fkgxAN1jJ4jO@hovoldconsulting.com>
- <8ce50a9f-241d-c37a-15e9-1a97d410f61e@linaro.org>
- <YouUCuzjo5u+OEXS@hovoldconsulting.com>
- <0bc58862-75be-aaa0-9983-6ed2fa2079ec@linaro.org>
- <YoupEr0TkgEa1S+/@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YoupEr0TkgEa1S+/@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Message-ID: <2f9c2f19.3e20a.180f19810d9.Coremail.lyz_cs@pku.edu.cn>
+X-Coremail-Locale: en_US
+X-CM-TRANSID: 54FpogDnaXYMrIti7nH2Bg--.38396W
+X-CM-SenderInfo: irzqijirqukmo6sn3hxhgxhubq/1tbiAwEMBlPy7vKeCwAas6
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VW7Jw
+        CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+        daVFxhVjvjDU=
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,RCVD_IN_DNSWL_LOW,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/05/2022 18:32, Johan Hovold wrote:
-> On Mon, May 23, 2022 at 06:17:19PM +0300, Dmitry Baryshkov wrote:
->> On 23/05/2022 17:02, Johan Hovold wrote:
->>> On Mon, May 23, 2022 at 04:39:56PM +0300, Dmitry Baryshkov wrote:
->>>> On 23/05/2022 10:53, Johan Hovold wrote:
->>>>> On Fri, May 20, 2022 at 09:31:10PM +0300, Dmitry Baryshkov wrote:
->>>
->>>>>> +static int dw_pcie_parse_split_msi_irq(struct pcie_port *pp)
->>>>>> +{
->>>>>> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
->>>>>> +	struct device *dev = pci->dev;
->>>>>> +	struct platform_device *pdev = to_platform_device(dev);
->>>>>> +	int irq;
->>>>>> +	u32 ctrl;
->>>>>> +
->>>>>> +	irq = platform_get_irq_byname_optional(pdev, split_msi_names[0]);
->>>>>> +	if (irq == -ENXIO)
->>>>>> +		return -ENXIO;
->>>>>
->>>>> You still need to check for other errors and -EPROBE_DEFER here.
->>>>
->>>> I think even the if (irq < 0) return irq; will work here.
->>>
->>> No need to print errors unless -EPROBEDEFER as you do below?
->>
->> There is no separate print for the dw_pcie_parse_split_msi_irq() errors.
-> 
-> I don't understand what you're referring to here.
-> 
-> My question is: Why would you not be printing error messages for msi0 as
-> you are for msi1..msi7 in the loop below.
-
-Yeah, this seems like a correct idea. Thank you!
-
-> 
->>>>>> +
->>>>>> +	pp->msi_irq[0] = irq;
->>>>>> +
->>>>>> +	/* Parse as many IRQs as described in the DTS. */
->>>>>
->>>>> s/DTS/devicetree/
->>>>>
->>>>>> +	for (ctrl = 1; ctrl < MAX_MSI_CTRLS; ctrl++) {
->>>>>> +		irq = platform_get_irq_byname_optional(pdev, split_msi_names[ctrl]);
->>>>>> +		if (irq == -ENXIO)
->>>>>> +			break;
->>>>>> +		if (irq < 0)
->>>>>> +			return dev_err_probe(dev, irq,
->>>>>> +					     "Failed to parse MSI IRQ '%s'\n",
->>>>>> +					     split_msi_names[ctrl]);
->>>>>> +
->>>>>> +		pp->msi_irq[ctrl] = irq;
->>>>>> +	}
->>>>>> +
->>>>>> +	pp->num_vectors = ctrl * MAX_MSI_IRQS_PER_CTRL;
->>>>>> +
->>>>>> +	return 0;
->>>>>> +}
-> 
-> Johan
-
-
--- 
-With best wishes
-Dmitry
+CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiAiQW5keSBTaGV2Y2hlbmtv
+IiA8YW5keS5zaGV2Y2hlbmtvQGdtYWlsLmNvbT4KPiBTZW50IFRpbWU6IDIwMjItMDUtMjMgMjM6
+MjE6NTQgKE1vbmRheSkKPiBUbzogIllvbmd6aGkgTGl1IiA8bHl6X2NzQHBrdS5lZHUuY24+Cj4g
+Q2M6ICJBbmR5IEdyb3NzIiA8YWdyb3NzQGtlcm5lbC5vcmc+LCAiQmpvcm4gQW5kZXJzc29uIiA8
+Ympvcm4uYW5kZXJzc29uQGxpbmFyby5vcmc+LCAiSm9uYXRoYW4gQ2FtZXJvbiIgPGppYzIzQGtl
+cm5lbC5vcmc+LCAiTGFycy1QZXRlciBDbGF1c2VuIiA8bGFyc0BtZXRhZm9vLmRlPiwgIlN0YW5p
+bWlyIFZhcmJhbm92IiA8c3ZhcmJhbm92QG1tLXNvbC5jb20+LCAiSXZhbiBULiBJdmFub3YiIDxp
+aXZhbm92QG1tLXNvbC5jb20+LCAiSm9uYXRoYW4gQ2FtZXJvbiIgPGpvbmF0aGFuLmNhbWVyb25A
+aHVhd2VpLmNvbT4sIGxpbnV4LWFybS1tc20gPGxpbnV4LWFybS1tc21Admdlci5rZXJuZWwub3Jn
+PiwgbGludXgtaWlvIDxsaW51eC1paW9Admdlci5rZXJuZWwub3JnPiwgIkxpbnV4IEtlcm5lbCBN
+YWlsaW5nIExpc3QiIDxsaW51eC1rZXJuZWxAdmdlci5rZXJuZWwub3JnPiwgZnV5cUBzdHUucGt1
+LmVkdS5jbgo+IFN1YmplY3Q6IFJlOiBbUEFUQ0hdIGh2X25ldHZzYzogRml4IHBvdGVudGlhbCBk
+ZXJlZmVyZW5jZSBvZiBOVUxMIHBvaW50ZXIKPiAKPiBPbiBTYXQsIE1heSAyMSwgMjAyMiBhdCA2
+OjI3IEFNIFlvbmd6aGkgTGl1IDxseXpfY3NAcGt1LmVkdS5jbj4gd3JvdGU6Cj4gPgo+ID4gVGhl
+IHJldHVybiB2YWx1ZSBvZiBuZXR2c2NfZGV2aW5mb19nZXQoKQo+ID4gbmVlZHMgdG8gYmUgY2hl
+Y2tlZCB0byBhdm9pZCB1c2Ugb2YgTlVMTAo+ID4gcG9pbnRlciBpbiBjYXNlIG9mIGFuIGFsbG9j
+YXRpb24gZmFpbHVyZS4KPiAKPiA+IEZpeGVzOiAwZWZlZWE1ZmIgKCJodl9uZXR2c2M6IEFkZCB0
+aGUgc3VwcG9ydCBvZiBoaWJlcm5hdGlvbiIpCj4gPgo+ID4gU2lnbmVkLW9mZi1ieTogWW9uZ3po
+aSBMaXUgPGx5el9jc0Bwa3UuZWR1LmNuPgo+CgpUaGFua3MgZm9yIHlvdXIgcmVwbHkgYW5kIGFk
+dmljZS4KCj4gRm9yIHRoZSBmdXR1cmUgaW5kZXBlbmRlbnRseSBvZiB0aGUgc3Vic3lzdGVtIG9y
+IG1haWxpbmcgbGlzdCwgdGhlIHRhZwo+IGJsb2NrIChhYm92ZSkgbXVzdG4ndCBoYXZlIGxhbmsg
+bGluZXMuCj4KPiAtLSAKPiBXaXRoIEJlc3QgUmVnYXJkcywKPiBBbmR5IFNoZXZjaGVua28K
