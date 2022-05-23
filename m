@@ -2,111 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 040C4531E25
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 23:44:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C796A531E36
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 23:50:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229898AbiEWVoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 17:44:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59970 "EHLO
+        id S229491AbiEWVuv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 17:50:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbiEWVoy (ORCPT
+        with ESMTP id S230154AbiEWVut (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 17:44:54 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AA30D5E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 14:44:53 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8E0EE1F644;
-        Mon, 23 May 2022 23:44:51 +0200 (CEST)
-Date:   Mon, 23 May 2022 23:44:42 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH] drm/msm/dsi: pll_7nm: remove unsupported dividers for
- DSI pixel clock
-Message-ID: <20220523214442.3tc5injctsqjwc5e@SoMainline.org>
-References: <20220501195620.4135080-1-dmitry.baryshkov@linaro.org>
- <CAE-0n51uV-BpuPSrTFiN2wvzh3+==WMU85j8kdi-td0X4xs8kg@mail.gmail.com>
- <20220502214235.s5plebunh4ttjhge@SoMainline.org>
- <f01f5ace-4ae9-2b65-2ce8-fb2cdc0a5af1@linaro.org>
+        Mon, 23 May 2022 17:50:49 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 750B057B17
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 14:50:47 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id v66so19408005oib.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 14:50:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=PrIU1gcRB8dmQ65bmWWWNZIOcHETarJSBHB2kE+QF+I=;
+        b=LtEMLEBk9c/QEpm/uus7HwOM7klph6uVq/ukoHJUBsdWu/9q51vcvTw6f6R8Hfq88k
+         2qaZlAZmIxaxbUEDhJxkooU0oWB5G8ogNlDmUghAtSD6S5gD5L3Hf5I5S0/sUEAkxXG8
+         R2JJHpCvrlUoO300qtXN72s/l907Zj5W0+Iq8I5Yip5FGU/cGYB1niQByjnaUftjNLaX
+         BH86Lga7vWkDWTGRpkLdqb0vaMDtUXNUpqef0d1Cmk0x9xnjukShREsAuoOAWIbD3mAC
+         OIp5OWE8U/EyXABbBuYTHIfrVekV+M/V0okSwmHTafOU77qzI3Dv/Iuze/rOe7M3PIun
+         i+BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PrIU1gcRB8dmQ65bmWWWNZIOcHETarJSBHB2kE+QF+I=;
+        b=51yDdfOvF2paDIcW1LcOq6OWcWTeZvYZjRoMljEQj1U6kQdcP6IZCLY94pAL8BRLWh
+         XF1nX0X8IHElDATnQLV39go74AUyUtd3c92tJwBi5JB3ogmj0Po8NDRVY4iSm3hsmwoQ
+         NfzoS15++G7e83vESIyZGbs9JDobFm2hSjkS+lxk8f83PmG0Bxczn9i4jAmSB64RT4Fs
+         cTTNj1E/jFht8oQo5SEb0PSoJBmL2/GfUVLHeD0/7eQHotEBAKxfdiTTs+J5Ly0i6swL
+         yieUTRL3snMAHbe1wavkw+SOMC/OvACjvfaHl6ZID6Epj2PFgtnLbtgaJtSMeQN037ru
+         80cg==
+X-Gm-Message-State: AOAM533digUPdAHPEvj5wI9xMh/obzCh6sUtcAUUUTbQyumnxY4dvhiz
+        +xnZMx6SCArBetCLIxRun1r3jA==
+X-Google-Smtp-Source: ABdhPJwdvAAXCoWTlQKC78e1ucFkB7MkXixv02NwxoluxSAsYLkOCFdJXX2bFlakX9l1BRRlRd6EgQ==
+X-Received: by 2002:aca:f188:0:b0:326:160e:590a with SMTP id p130-20020acaf188000000b00326160e590amr586026oih.209.1653342646754;
+        Mon, 23 May 2022 14:50:46 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id p13-20020a0568301d4d00b0060603221236sm4402693oth.6.2022.05.23.14.50.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 May 2022 14:50:45 -0700 (PDT)
+Date:   Mon, 23 May 2022 16:50:44 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>, agross@kernel.org,
+        arnd@arndb.de, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        olof@lixom.net, robh@kernel.org, sboyd@kernel.org
+Subject: Re: Removal of qcom,board-id and qcom,msm-id
+Message-ID: <YowBtNkZ678ns4Ob@builder.lan>
+References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
+ <20220522195138.35943-1-konrad.dybcio@somainline.org>
+ <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f01f5ace-4ae9-2b65-2ce8-fb2cdc0a5af1@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-05-03 01:02:42, Dmitry Baryshkov wrote:
-> On 03/05/2022 00:42, Marijn Suijten wrote:
-> > On 2022-05-02 13:47:51, Stephen Boyd wrote:
-> >> Quoting Dmitry Baryshkov (2022-05-01 12:56:20)
-> >>> Remove dividers that are not recommended for DSI DPHY mode when setting
-> >>
-> >> Is "DPHY" intentional or just "PHY" should be here?
-> >>
-> >>> up the clock tree for the DSI pixel clock.
-> >>>
-> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>> ---
-> >>
-> >> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> >>
-> >>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 10 ++++------
-> >>>   1 file changed, 4 insertions(+), 6 deletions(-)
-> >>>
-> >>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> >>> index 6e506feb111f..66ed1919a1db 100644
-> >>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> >>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> >>> @@ -687,15 +687,13 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
-> >>>                  snprintf(clk_name, 32, "dsi%d_pclk_mux", pll_7nm->phy->id);
-> >>>                  snprintf(parent, 32, "dsi%d_pll_bit_clk", pll_7nm->phy->id);
-> >>>                  snprintf(parent2, 32, "dsi%d_pll_by_2_bit_clk", pll_7nm->phy->id);
-> >>> -               snprintf(parent3, 32, "dsi%d_pll_out_div_clk", pll_7nm->phy->id);
-> >>> -               snprintf(parent4, 32, "dsi%d_pll_post_out_div_clk", pll_7nm->phy->id);
-> >>>
-> >>>                  hw = devm_clk_hw_register_mux(dev, clk_name,
-> >>>                                          ((const char *[]){
-> >>> -                                       parent, parent2, parent3, parent4
-> >>> -                                       }), 4, 0, pll_7nm->phy->base +
-> >>> +                                       parent, parent2,
-> >>> +                                       }), 2, 0, pll_7nm->phy->base +
-> >>>                                          REG_DSI_7nm_PHY_CMN_CLK_CFG1,
-> >>> -                                       0, 2, 0, NULL);
-> >>> +                                       0, 1, 0, NULL);
-> >>
-> >> Can you followup with a patch to move to clk_parent_data instead of
-> >> strings?
+On Mon 23 May 02:21 CDT 2022, Krzysztof Kozlowski wrote:
+
+> On 22/05/2022 21:51, Konrad Dybcio wrote:
+> > Hi,
 > > 
-> > Dmitry and I discussed this a while ago, and I actually have patches in
-> > progress converting this.  Dmitry, if you haven't started on the
-> > conversion yet, perhaps it's efficient if I respin my efforts and submit
-> > them soon?
+> > removing these properties will not bring almost any benefit (other than making
+> > some checks happy any saving some <200 LoC) and will make the lives of almost
+> > all people doing independent development for linux-on-msm harder. There are
+> > almost unironically like 3 people outside Linaro and QUIC who have
+> > non-vendor-fused development boards AND the sources to rebuild the
+> > bootloader on their own. Making it harder to boot is only going to
+> > discourage people from developing on these devices, which is already not
+> > that pleasant, especially with newer platforms where you have to fight with
+> > the oh-so-bright ideas of Android boot chain..
+> > 
+> > This only concerns devices released before sm8350, as the new ones will not
+> > even boot with these properties present (or at least SONY Sagami, but I
+> > doubt it's an isolated case), so other than completing support for older
+> > devices, it won't be an issue going forward, anyway. But there are give
+> > or take 50 locked down devices in mainline right now, and many more waiting
+> > to be upstreamed in various downstream close-to-mainline trees that should
+> > not be disregarded just because Qualcomm is far from the best at making
+> > their BSP software stack clean.
 > 
-> Yes, please. I'm under the pile of other things. Your patches will be 
-> appreciated. You don't have to convert all PHYs at once.
+> I actually wonder why do you need these properties for community work on
+> such boards? You ship kernel with one concatenated DTB and the
+> bootloader does not need the board-id/msm-id fields, doesn't it?
+> 
 
-Holding to my promise, the patches are now available on the lists:
+During the last years all reference devices that I know of has allowed
+us to boot Image.gz+dtb concatenated kernels without
+qcom,{board-msm}-id.
 
-https://lore.kernel.org/linux-arm-msm/20220523213837.1016542-1-marijn.suijten@somainline.org/T/#t
+There's however been several end-user devices that for some reason
+refuse to accept the concatenated dtb unless these values matches.
 
-It was more convenient to convert the remaining PHYs on top of the
-14/28nm I had already done, it's mostly trivial work anyway.
+> Not mentioning that in the past bootloader was actually not using these
+> properties at all, because it was the dtbTool who was parsing them. So
+> in any case either your device works fine without these properties or
+> you have to use dtbTool, right?
+> 
 
-- Marijn
+Unfortunately not. There are the devices which accepts a single appended
+dtb without these properties, but beyond that it's been a large mix.
+
+I've seen cases where dtbTool packs up a number of dtbs, but the loaded
+one still need to have these properties, and there are devices out there
+that supports multiple appended dtbs etc.
+
+
+Last but not least, forcing everyone to use dtbTool adds a
+non-standardized tool to everyone's workflow, a tool that has to be kept
+up to date with the compatible to msm/board-id mapping.
+
+> > 
+> > One solution is to chainload another, (n+1)-stage bootloader, but this is
+> > not ideal, as:
+> > 
+> > 1) the stock bootloader can boot Linux just fine on most devices (except
+> > for single exceptions, where beloved OEMs didn't implement arm64 booting or
+> > something)
+> > 
+> > 2) the boot chain on MSM is already 3- or 4- stage and adding to that will
+> > only create an unnecessary mess
+> > 
+> > 3) the job of kernel people is not to break userspace. If the
+> > device can not even exit bootloader after a kernel upgrade, it's a big
+> > failure.
+> 
+> The job of kernel people is to follow bindings and since they were
+> introduced 7 years ago, I would say there was plenty of time for that.
+> 
+
+We're following the bindings and don't pick board-id or msm-id unless
+there's a particular reason for it - which typically is that the
+downstream bootloader requires it - we don't use the properties on the
+kernel side.
+
+> If the dtbTool support for the bindings is there, then there is no
+> breakage, because you had to use dtbTool before so you have to use now.
+> 
+
+Among all the platforms I maintain, MSM8916 (db410c) is the only one
+where I use dtbTool - because it refuses to accept the concatenated
+dtb.
+
+Regards,
+Bjorn
+
+> > 
+> > If you *really really really* want these either gone or documented, we can
+> > for example use them in the SOCID driver, read the values from DTB and
+> > compare against what SMEM has to say and for example print a warning when
+> > there are inconsistencies or use it as a fallback when it fails for any
+> > reason, such as using a newer SoC on an older kernel, without updates
+> > for SOCID read (which are sometimes necessary, which was the case for 8450
+> > recently, iirc).
+> > 
+> > My stance is to just leave them as is, as moving them anywhere, or removing
+> > them at all will cause unnecessary mess and waste time that could have been
+> > spent on more glaring issues..
+> > 
+> > Konrad
+> 
+> 
+> Best regards,
+> Krzysztof
