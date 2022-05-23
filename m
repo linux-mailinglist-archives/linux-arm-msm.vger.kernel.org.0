@@ -2,158 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D016531DC7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 23:30:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4B2B531DD3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 23:34:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231410AbiEWVaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 17:30:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54806 "EHLO
+        id S229680AbiEWVeu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 17:34:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231465AbiEWVaF (ORCPT
+        with ESMTP id S229625AbiEWVeu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 17:30:05 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 595FAA3381;
-        Mon, 23 May 2022 14:30:04 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id p19so1092113wmg.2;
-        Mon, 23 May 2022 14:30:04 -0700 (PDT)
+        Mon, 23 May 2022 17:34:50 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 818C3AFAE1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 14:34:48 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id c15-20020a9d684f000000b0060b097c71ecso4062210oto.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 14:34:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=szpHbyssy3pR92tHPw2c+r7gOFG688ltDB8dep/mxSw=;
-        b=O+1anRyYFBUQoaX7dUDxSVnoc5f4zDJd+/tIByNkeoinJxa5tIeVZZpelKrE0FqoNo
-         OZgOVS31HeCzlfDb7tpu0Be1eVBZxWJPzx7RfH2OCO73s9WyPFwuoXtDGVVoB8AMb2Yi
-         56M5xUiEf1zCzMnZcBzNT/4cAh1b1CeRF9ah6nVWB8X/UOoWIpJcAXgmi0Ha7udrcy1j
-         699DxcjWIUoATgdE/um3C9/U7wZz6TNAULxRaQoR+jxSfvrh4tyY1twMsgEek7fEEaHk
-         HQ8GOPxI6lv0JPF2hHhzzGpJBDsmH9exbxIWte78wVwxrA5y9b0RzzUaWBtwFS3VzxCJ
-         lCdw==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=onnXCDVFR2p0bkmrLOEm4kEGm5J7UYI9BrUeYSXAoUQ=;
+        b=Tfn49lXjd54jumyNgfrzDgRV0VoOxC+tJeaBGbaDkknpbrqJZmKU43ZLBPaoe9bLcD
+         cIvJHMFlKiAQCMvWcSjdNg6xu6mi9S0T3ZFarrfqA0EW2pTiQ4ar/mtX3bpJuaJgdDe7
+         40BXa4mejaHLKheMyMKrWcCcuQUhKjs2FgTA14SJYIVBIY7GRCx6i+5NlZh4bkPFlOO1
+         8Dr2boMmxWIX7xWXEJBYAfQPiwXbKS3IRaT/lVOOcR1nGJuXuBOB4tLsa6L8CHo0McS4
+         W7VkvkqAdy+yGc8Hz7b9/uwXEBD4owhrz9/yfnQjtjc4ZH2uaMgvtl22YIFpunYpcE5j
+         9V+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=szpHbyssy3pR92tHPw2c+r7gOFG688ltDB8dep/mxSw=;
-        b=cqcrjN9hT293kJKNVS0KxOZFoxK6DVxpXCAWMIPwnPjxefaDddMYSNZC15CKM5NGZX
-         amlqvKnSxHH5vCyToXyR7Pez6LC/AZLsM99g+LJ6Hduqfz6d7xYiLuMbxiunsD/dIvv7
-         oTUGN/efGLdIVTETd/tbkvJRmEPvNPBd64f+CkRrDjfRD1UG1jfu5mw4DgCyLWRh9Q48
-         huN4Ry4auEnJseWJlkRrBlKHRc/IK9P0OKDYcvKRBLhYDt8PHOkbYEj430FtWa6Dbhgs
-         XP4O/J/fsLjX8drwJcL/pJIHtxJxCU2BvO8i7R18epoAmGQzobeLsws+GiX4GcnaBbsL
-         wGqg==
-X-Gm-Message-State: AOAM533dI2z9TsvVL8R7JetZNFOBaeDB7M8CcAFyVwj7YslBwoTxnIE1
-        NIRsXPfH/YmQ7HEYc+KZI6chbMT5G8/xIqaZkbDQmno0
-X-Google-Smtp-Source: ABdhPJxeVgPf7mVaaoeUZX7Sv2I4aDpFJhfiYqkaHPVJOp3ofkBKRrCA81w/4FTYvTcWJlq3mZoJGSG6A79jb7vL0zU=
-X-Received: by 2002:a05:600c:3843:b0:397:476f:ceb8 with SMTP id
- s3-20020a05600c384300b00397476fceb8mr860129wmr.200.1653341402568; Mon, 23 May
- 2022 14:30:02 -0700 (PDT)
-MIME-Version: 1.0
-References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
- <20220522195138.35943-1-konrad.dybcio@somainline.org> <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
-In-Reply-To: <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 23 May 2022 14:29:50 -0700
-Message-ID: <CAF6AEGuX9eL8DmBqRj79F3Z9QCAczZDA+Xz-t9CjKQ5+6Phtrw@mail.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=onnXCDVFR2p0bkmrLOEm4kEGm5J7UYI9BrUeYSXAoUQ=;
+        b=GtNoiXgxoemEvNwMsn8SoT1/3hA29skWufxLPqAjTdflUk1TPARUgFnujvppU5fyID
+         2oPmhhB+e88ZlcQEAvuUQY5NDm05Ws8DsgW6FR+TDzYrbei1bZo4+F+LtH9adwyopQLU
+         QDuecMA3FTU0h53dixnLo4WxoDEBhGrKzaRcYpsTFL7jRcBBUIWuKz7fLIQ0Jbhdy7MW
+         HcNtHcjp8L8FjylxGpRdUaRxmmzdGnBUKXd0yJzWPVhxt1eKrn4mIRGJ1tqwT+7WSnTQ
+         94C1u1MrjLTxt5ltNoXtFVJe9GzBhQ4ts7JOtynw+rNpAmh8cwDzoF4txpQgthzXq3cy
+         7leg==
+X-Gm-Message-State: AOAM533T1gd6kXbTsAWUmbUStpjcWRjLdEplRETrM2zkG43DORir6VZ5
+        QvbbGEqubBrsta4u07pqDFn5Ag==
+X-Google-Smtp-Source: ABdhPJzpV6X12N/BqQG+AHKu1RjSWPMwb8YXulMJ9dtUfKMvgDZDU8dzDBWtTuCWpQGNyq75ZYdYng==
+X-Received: by 2002:a05:6830:25c2:b0:606:ed20:da5c with SMTP id d2-20020a05683025c200b00606ed20da5cmr9357393otu.234.1653341687785;
+        Mon, 23 May 2022 14:34:47 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id h18-20020a056830401200b0060603221278sm4353619ots.72.2022.05.23.14.34.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 May 2022 14:34:47 -0700 (PDT)
+Date:   Mon, 23 May 2022 16:34:45 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Trilok Soni <quic_tsoni@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        agross@kernel.org, arnd@arndb.de, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        olof@lixom.net, robh@kernel.org, sboyd@kernel.org
 Subject: Re: Removal of qcom,board-id and qcom,msm-id
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Olof Johansson <olof@lixom.net>, Rob Herring <robh@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <Yov99WPNrGRg86sS@builder.lan>
+References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
+ <20220522195138.35943-1-konrad.dybcio@somainline.org>
+ <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
+ <02ab0276-b078-fe66-8596-fcec4378722b@somainline.org>
+ <49a52870-9aab-c4bd-2077-66732f42bbba@linaro.org>
+ <196459ad-704d-020c-c485-842f613ae618@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <196459ad-704d-020c-c485-842f613ae618@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 23, 2022 at 1:21 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 22/05/2022 21:51, Konrad Dybcio wrote:
-> > Hi,
-> >
-> > removing these properties will not bring almost any benefit (other than making
-> > some checks happy any saving some <200 LoC) and will make the lives of almost
-> > all people doing independent development for linux-on-msm harder. There are
-> > almost unironically like 3 people outside Linaro and QUIC who have
-> > non-vendor-fused development boards AND the sources to rebuild the
-> > bootloader on their own. Making it harder to boot is only going to
-> > discourage people from developing on these devices, which is already not
-> > that pleasant, especially with newer platforms where you have to fight with
-> > the oh-so-bright ideas of Android boot chain..
-> >
-> > This only concerns devices released before sm8350, as the new ones will not
-> > even boot with these properties present (or at least SONY Sagami, but I
-> > doubt it's an isolated case), so other than completing support for older
-> > devices, it won't be an issue going forward, anyway. But there are give
-> > or take 50 locked down devices in mainline right now, and many more waiting
-> > to be upstreamed in various downstream close-to-mainline trees that should
-> > not be disregarded just because Qualcomm is far from the best at making
-> > their BSP software stack clean.
->
-> I actually wonder why do you need these properties for community work on
-> such boards? You ship kernel with one concatenated DTB and the
-> bootloader does not need the board-id/msm-id fields, doesn't it?
->
-> Not mentioning that in the past bootloader was actually not using these
-> properties at all, because it was the dtbTool who was parsing them. So
-> in any case either your device works fine without these properties or
-> you have to use dtbTool, right?
->
-> >
-> > One solution is to chainload another, (n+1)-stage bootloader, but this is
-> > not ideal, as:
-> >
-> > 1) the stock bootloader can boot Linux just fine on most devices (except
-> > for single exceptions, where beloved OEMs didn't implement arm64 booting or
-> > something)
-> >
-> > 2) the boot chain on MSM is already 3- or 4- stage and adding to that will
-> > only create an unnecessary mess
-> >
-> > 3) the job of kernel people is not to break userspace. If the
-> > device can not even exit bootloader after a kernel upgrade, it's a big
-> > failure.
->
-> The job of kernel people is to follow bindings and since they were
-> introduced 7 years ago, I would say there was plenty of time for that.
+On Mon 23 May 11:41 CDT 2022, Trilok Soni wrote:
 
-Then we should document these fields to reflect reality, rather than
-remove them.  The kernel isn't the only consumer of dtb ;-)
+> Hello Krzysztof,
+> 
+> On 5/23/2022 5:14 AM, Krzysztof Kozlowski wrote:
+> > On 23/05/2022 14:02, Konrad Dybcio wrote:
+> > > 
+> > > On 23/05/2022 09:21, Krzysztof Kozlowski wrote:
+> > > > On 22/05/2022 21:51, Konrad Dybcio wrote:
+> > > > > Hi,
+> > > > > 
+> > > > > removing these properties will not bring almost any benefit (other than making
+> > > > > some checks happy any saving some <200 LoC) and will make the lives of almost
+> > > > > all people doing independent development for linux-on-msm harder. There are
+> > > > > almost unironically like 3 people outside Linaro and QUIC who have
+> > > > > non-vendor-fused development boards AND the sources to rebuild the
+> > > > > bootloader on their own. Making it harder to boot is only going to
+> > > > > discourage people from developing on these devices, which is already not
+> > > > > that pleasant, especially with newer platforms where you have to fight with
+> > > > > the oh-so-bright ideas of Android boot chain..
+> > > > > 
+> > > > > This only concerns devices released before sm8350, as the new ones will not
+> > > > > even boot with these properties present (or at least SONY Sagami, but I
+> > > > > doubt it's an isolated case), so other than completing support for older
+> > > > > devices, it won't be an issue going forward, anyway. But there are give
+> > > > > or take 50 locked down devices in mainline right now, and many more waiting
+> > > > > to be upstreamed in various downstream close-to-mainline trees that should
+> > > > > not be disregarded just because Qualcomm is far from the best at making
+> > > > > their BSP software stack clean.
+> > > > I actually wonder why do you need these properties for community work on
+> > > > such boards? You ship kernel with one concatenated DTB and the
+> > > > bootloader does not need the board-id/msm-id fields, doesn't it?
+> > > 
+> > > If that were the case, I would have never complained about this! It's
+> > > the bootloader itself that needs it, you can see it in a "Best match
+> > > [blah blah] 258/0x1000/...." log line, where it walks through the
+> > > appended (or otherwise compiled into the boot.img) DTBs and looks for
+> > > matches for the burnt-in msm-, board- and (on newer-older platforms)
+> > > pmic-id. If it cannot find these, it refuses to boot with an Android
+> > > Verified Boot red state and you get a not-so-nice "Your device has been
+> > > unlocked and the boot image is not working" or something like this on
+> > > your screen.
+> > > 
+> > > 
+> > > > 
+> > > > Not mentioning that in the past bootloader was actually not using these
+> > > > properties at all, because it was the dtbTool who was parsing them.
+> > > 
+> > > Not sure when that was the case, maybe with very old arm32 bootloaders
+> > > in the times before I did development on Qualcomm devices.
+> > > 
+> > > 
+> > > >    So
+> > > > in any case either your device works fine without these properties or
+> > > > you have to use dtbTool, right?
+> > > 
+> > > To the best of my idea, wrong :( Unless the vendor modified the LK/XBL
+> > > code on their own, it looks for a "best match" (but if it's not a
+> > > precise match, it won't even bother trying to boot, just fyi..), meaning
+> > > it tries to go through a list of SoC ID and revision pairs (msm-id),
+> > > board IDs (board-id) and PMIC id+rev pairs (pmic-id) and if no match is
+> > > found, it doesn't even exit the bootloader and says something like "no
+> > > dtbs found".
+> > 
+> > This would mean that dtbTool as described in the actual patch [1] is not
+> > used and bootloader ignores the table. If that's the case, the commit
+> > and requirement of such complex board-foundry-pmic-compatibles should be
+> > dropped. So I am getting now to what Dmitry said...
+> > 
+> > [1]
+> > https://lore.kernel.org/all/1448062280-15406-2-git-send-email-sboyd@codeaurora.org/
+> 
+> 
+> The link above is from 2015. Lot has changed downstream. Most of what was
+> mentioned by Konrad is right. Application bootloader acts on picking on
+> platform DTBO based on the platform ID plus some combinations like PMIC etc;
+> These platform DTBOs gets overlay on top of SOC DTB by the Application
+> bootloader.
+> 
+> We have moved to DTBO for all the latest targets, but I can understand that
+> some old targets at upstream could be using the very old approaches.
+> 
+> Downstream all of the platforms including the DTBO files will need board-id
+> and msm-id since we also do the compile time stitching of dtb + dtbo and
+> dtbo + dtbo to generate the proper SOC DTB and PLATFORM DTBOs which gets
+> flashed in the DTBO partition and follows the Android boot requirements.
+> Application bootloader then picks the right Platform DTBO as mentioned above
+> w/ the right SOC DTB. It gets more complicated w/ GKI new requirements every
+> year (better for GKI, may not be better for upstream kernel + downstream
+> bootloader combination).
+> 
 
-> If the dtbTool support for the bindings is there, then there is no
-> breakage, because you had to use dtbTool before so you have to use now.
+FWIW, this doesn't fit with the upstream model at all. In particular the
+DTBO that comes with the devices are not compatible with any upstream
+DTB.
 
-I don't believe this was the case?  At any rate, why are we trying so
-hard to make our lives harder?  Let's just acknowledge reality
-(bootloader uses these fields), document it, and move on with life
+As such, the first step to run an upstream DTB+kernel is to zero out the
+dtbo partitions.
 
-BR,
--R
 
-> >
-> > If you *really really really* want these either gone or documented, we can
-> > for example use them in the SOCID driver, read the values from DTB and
-> > compare against what SMEM has to say and for example print a warning when
-> > there are inconsistencies or use it as a fallback when it fails for any
-> > reason, such as using a newer SoC on an older kernel, without updates
-> > for SOCID read (which are sometimes necessary, which was the case for 8450
-> > recently, iirc).
-> >
-> > My stance is to just leave them as is, as moving them anywhere, or removing
-> > them at all will cause unnecessary mess and waste time that could have been
-> > spent on more glaring issues..
-> >
-> > Konrad
->
->
-> Best regards,
-> Krzysztof
+With the DTBO cleared, most devices (all Qualcomm reference devices) can
+be booted with the dtb appended to the Image.gz, without the
+qcom,{board,msm}-id. As such I would say things are working okay
+currently.
+
+Regards,
+Bjorn
