@@ -2,86 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52E005319D4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 22:55:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56B27531AA0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 22:55:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241504AbiEWSrp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 14:47:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36824 "EHLO
+        id S232167AbiEWTjx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 15:39:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242287AbiEWSrj (ORCPT
+        with ESMTP id S232194AbiEWTjg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 14:47:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8177F35DE0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 11:31:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1653330622;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=+GHDu8bX018Pj56HhIIQXnjcT5ZvQ3bky+5co5y7CGo=;
-        b=GxdkuVQwAKotC5mXQEw2wmn84Dyt4pwmCpvHYswabV4SVjmATsenFyPekfR+Xt5kIn0FL2
-        TZozsXW79oAsSsvT+8oz7H1iaybe/3TPGw/i7w1tY3MxVp9Eqin24sGNYc7uNIWgmSsJUv
-        ax/2AwFojxR+lbnmRkUgVFYdj2NmqqE=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-25-JxosqX3bMjuXOqw74srEzA-1; Mon, 23 May 2022 14:30:21 -0400
-X-MC-Unique: JxosqX3bMjuXOqw74srEzA-1
-Received: by mail-qt1-f198.google.com with SMTP id d13-20020ac85acd000000b002f3be21793dso12137154qtd.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 11:30:20 -0700 (PDT)
+        Mon, 23 May 2022 15:39:36 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FBE0DFF4C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 12:32:08 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id s14so13973218plk.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 12:32:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1wnCjP5k4eX2zs3WnXnoMhMGUr28/cypjl3o/2Z6tes=;
+        b=f96L1AT0mMjn1RyAtdZVgkH33HDZ3/VSA/ng8TU23JHBipyGveEAF7DkL2d00oCE6H
+         zIMx6xWWYXMx89FXNceFqwrVXxVGbmsTeNwpkhojYLOXsICJ9JOQ1LKjsOgCtbFgOoK2
+         kZqvPnK/6aGbuIab5p6ELE0mTUnLLj4sS8rFM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+GHDu8bX018Pj56HhIIQXnjcT5ZvQ3bky+5co5y7CGo=;
-        b=6LFgPukBS10qLiFb+3WIVBChdqCn37gJIFewGoc3D2ee18NP1BpjexR1T+on09Zv6o
-         brXi4MEUpG2amNZ530qNsoDKHEKU8JkNv8DhDNkRuEuRt2PMk9k06VDjR3BaoPC95Fu5
-         FXkDrYuqSOSOIex6EzqbF2lcfLl3prm/B9tktoE49fIA5zxWOQg0fR/XHw+8IptXxMIC
-         6oAofbjQkU1fJ/Y50gBMqadv/QAItNdFMvDWf2vUk5kqQCDJbEYrBF9BE51sYHOFFw2z
-         OiYUmHgaxEfLLir8kt4ubuxFIl+sjTSaevLbv7O4H8XusPGikM30s7H+7AXBxkGqD2o4
-         qiXw==
-X-Gm-Message-State: AOAM531GO3ExQDCCcs/HoA5D4UgBG1O+M1jP2OaETW9F/tX3P9JNbX6G
-        kB3Q+9HnF4rq3Lj8PdJ4LDeOysVCBZfwUD86FvgZrFIzbZ7gpV68b67ezHfNR2rcCoCzNSGhG9q
-        QokBGVzvTbtOJoSjd26uvpLoFWw==
-X-Received: by 2002:a05:620a:29ce:b0:6a0:e9a:f7a2 with SMTP id s14-20020a05620a29ce00b006a00e9af7a2mr14909664qkp.479.1653330620340;
-        Mon, 23 May 2022 11:30:20 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyiHkoWHUvw+vM4ygrqlFJMksFa2jJVr/bYTmHbbZwPGQtQuPfxdNSMdEAKmnGv/bC5IUBo3Q==
-X-Received: by 2002:a05:620a:29ce:b0:6a0:e9a:f7a2 with SMTP id s14-20020a05620a29ce00b006a00e9af7a2mr14909649qkp.479.1653330620095;
-        Mon, 23 May 2022 11:30:20 -0700 (PDT)
-Received: from xps13 (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
-        by smtp.gmail.com with ESMTPSA id m201-20020a37a3d2000000b006a34f6a7840sm4630388qke.57.2022.05.23.11.30.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 11:30:19 -0700 (PDT)
-Date:   Mon, 23 May 2022 14:30:18 -0400
-From:   Brian Masney <bmasney@redhat.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1wnCjP5k4eX2zs3WnXnoMhMGUr28/cypjl3o/2Z6tes=;
+        b=7AlPrEF3Up2ikL3qb7czvg50XO7JWuMZzyP1Thw8KfEywY1+9lbDJQoECMFZs/uAR7
+         K/K+xGrf3uAWAK5xcQ0kZumO/SF61iD1aYZqn5WxBZvNDaoHGXxrxlZ1wSqiZDHqlsK+
+         hzqJ2MQw0QjekCst5IJ0CJPY7tCtYv09VBN6MLOrAEltD3WImsZbxndKzL3uFxFtWPUu
+         OaFhbg7BbvPRkFNyd+A968Q6wzPT8N6Br+OtNbXbsjPZYaIn4TG7+Gm0gnEqwh9BmY1G
+         8EVfIIBSfrhAw/pchMBcupYKvymy1hQZHS2+rND9WRxA37lV6ctZGdRgWXR11QPqfMw5
+         gNGg==
+X-Gm-Message-State: AOAM531yHiY1Q0yyXM4AFNO1TWxRJUGz0y7aGd6mdvPuf5dvDeBnIE35
+        Wovg/JQYMzNGA5Q/nS8Vcl7FbA==
+X-Google-Smtp-Source: ABdhPJxX6NxzBbaQ+Q2IdSpZVtxZcdeQA8n0q/eIC47fkQbMLtVd2ZTJsqFGaSkDZy+dM6YShA+Ltw==
+X-Received: by 2002:a17:903:1104:b0:15f:bce:1a0c with SMTP id n4-20020a170903110400b0015f0bce1a0cmr23570068plh.149.1653334327861;
+        Mon, 23 May 2022 12:32:07 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:46dd:d5d8:48f6:713e])
+        by smtp.gmail.com with UTF8SMTPSA id p8-20020a637f48000000b003c14af50631sm5138505pgn.73.2022.05.23.12.32.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 May 2022 12:32:07 -0700 (PDT)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        matti.lehtimaki@gmail.com
-Subject: Re: [RFC PATCH 00/14] CAMSS support for MSM8974
-Message-ID: <YovSurcGlyPW7v9s@xps13>
-References: <20220522162802.208275-1-luca@z3ntu.xyz>
- <638d6986-616f-4a1c-f1d0-82835b000b2a@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH v2 1/2] arm64: dts: qcom: sc7280: herobrine: Don't disable the keyboard backlight node
+Date:   Mon, 23 May 2022 12:32:03 -0700
+Message-Id: <20220523123157.v2.1.I47ec78581907f7ef024f10bc085f970abf01ec11@changeid>
+X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <638d6986-616f-4a1c-f1d0-82835b000b2a@linaro.org>
-User-Agent: Mutt/2.2.1 (2022-02-19)
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,37 +69,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 23, 2022 at 03:39:53PM +0300, Dmitry Baryshkov wrote:
-> On 22/05/2022 19:27, Luca Weiss wrote:
-> > This RFC series adds support for CAMSS and CCI that are found on
-> > msm8974, including the OV8865 found on the FP2.
-> > 
-> > The only reason it's marked RFC is that CAMSS doesn't behave properly on
-> > this SoC without the last commit which is obviously not upstreamable.
-> > Not sure if this should be a blocker for including most of the other
-> > patches because other than that it seems to work fine and I can get a
-> > picture from the camera sensor. When/if msm8974 gets IOMMU support I
-> > hope this should be resolved and it works without this hack.
-> > 
-> > I think at least the CCI patches could get applied as they're not
-> > dependent on the CAMSS hack?
-> 
-> I'd also vote for the camcc patches to be applied.
-> 
-> As for the camss, I'd suggest to get them verified to work properly with a
-> hacked/non-upstreamable/etc. IOMMU driver if one exists. Otherwise we can
-> easily get into a situation where we merge up code that contains bugs
-> itself.
+On herobrine boards the keyboard backlight is controlled through the
+PWM LED driver. Currently both the PWM LED node and the node for the
+keyboard backlight are disabled in sc7280-herobrine.dtsi, which
+requires boards with a backlit keyboard to enable both nodes. There
+are no other PWM LEDs on herobrine boards besides the keyboard
+backlight, delete the 'disabled' status from the keyboard backlight
+node, with that boards only have to enable the 'pwmleds' node for
+keyboard backlight support.
 
-Last I checked, there's no IOMMU driver for msm8974 that works with an
-upstream kernel at the moment. About 2 years ago, I took a stab at
-attempting to enable IOMMU for the display and ran into some issues that
-I documented at:
+Also add a label to the 'pwmleds' node to allow board files to refer to
+it with a phandle.
 
-https://lore.kernel.org/lkml/20200109002606.35653-1-masneyb@onstation.org/
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+---
 
-I'm not familiar with this part of the hardware and haven't had time
-since then to look into this further.
+(no changes since v1)
 
-Brian
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index 9cb1bc8ed6b5..55b513912e79 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -295,11 +295,10 @@ pp1200_wf_cam: pp1200-wf-cam-regulator {
+ 
+ 	/* BOARD-SPECIFIC TOP LEVEL NODES */
+ 
+-	pwmleds {
++	pwmleds: pwmleds {
+ 		compatible = "pwm-leds";
+ 		status = "disabled";
+ 		keyboard_backlight: keyboard-backlight {
+-			status = "disabled";
+ 			label = "cros_ec::kbd_backlight";
+ 			pwms = <&cros_ec_pwm 0>;
+ 			max-brightness = <1023>;
+-- 
+2.36.1.124.g0e6072fb45-goog
 
