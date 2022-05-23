@@ -2,54 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BAE8531EC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 00:47:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C623C531ED4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 00:50:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229892AbiEWWrR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 18:47:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53026 "EHLO
+        id S230228AbiEWWuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 18:50:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229832AbiEWWrR (ORCPT
+        with ESMTP id S230335AbiEWWuX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 18:47:17 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED6D252B0B;
-        Mon, 23 May 2022 15:47:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 86B726154C;
-        Mon, 23 May 2022 22:47:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3A3C385A9;
-        Mon, 23 May 2022 22:47:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653346033;
-        bh=dM9xjGcIELwAk7SXfwRMkmck1pzZU48ZxvNuSCmz8to=;
-        h=From:To:Cc:Subject:Date:From;
-        b=NNT3O4KskyBq7fc/YZH4aWnVJknHVxdhCxk8QLMu7cr109aCMGdNOPLSN6TTna3FY
-         0NHWg5sWrQDIyEMBQokGHB0Y6FVWnzzt14g5Ks9n7SrZVBHbBmV74DuRtAcrrZBFQa
-         WpeSuQ28M29oJlrJh6hu57EfqYCtkCLPnaUm/o0a6/aaeQ7ZE/GAWXtW2Iv2/J5jyF
-         NvSRBm7MLKFohnofWfFWk/5+N9b1kJ+4oUDlDpHll2kX2Hyq2zBF8x4b9sb5No2qmO
-         i0wIfuK8DroytBp3gTZzei6xPv+FSI6n/MLU1TXYKWk5An8KXzQOJ0IRjG1qnBT3G4
-         5r0zZq146hOEw==
-From:   Nathan Chancellor <nathan@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     Sibi Sankar <quic_sibis@quicinc.com>,
-        Prasad Sodagudi <quic_psodagud@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH] mailbox: qcom-ipcc: Fix -Wunused-function with CONFIG_PM_SLEEP=n
-Date:   Mon, 23 May 2022 15:47:02 -0700
-Message-Id: <20220523224702.2002652-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.36.1
+        Mon, 23 May 2022 18:50:23 -0400
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8D0E8A30A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 15:50:19 -0700 (PDT)
+Received: by mail-qk1-x72e.google.com with SMTP id v11so13949372qkf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 15:50:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=RupDdku696YI2aJ6LFtSWAU5mlc/9wa0HAPdVsaaX/g=;
+        b=R74stxJhmvV8DOQAtRBN0/hGyLdW6u51nBr0b0EvrakKeyBawMzZGF95fa6y18lmTh
+         SKeUFQl0ZVdMxd+mPnH0+IOovnvAM3oXBlz8XbzBjiQ8DGTqYfguS+rNgCLQG757PsqM
+         3V+iv7wk6dRbJTm9w1guUxDiXAYsNiyP+OXyR5UApn35Q7fnRQpqNts40p4cVyyRm0Vq
+         WdzU4P/iL3F0TcsmWvm2UvYDTuA8Xqzam5VgvuBOpwO5fFqER3xAGsu9Zb4eASs3TUTr
+         2BGNOejDyBEl3knkhGfD07/RHO2bv3sXPvNEEzT87txTupfaYaEhdA1rMNh5/Im2xyIF
+         EaKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RupDdku696YI2aJ6LFtSWAU5mlc/9wa0HAPdVsaaX/g=;
+        b=yvW7y0WiBpcFidphW/3PEyRZnuoYlrbGEtU1OYTa7W5iwKic8zM3resXrCm8CCkC7w
+         nnyClC+1qHJ71xsKvYzpc3alBDXpD9vuvrBuGWHrPxVsXoT/lt0DNJy98Vclg60DfIFX
+         Us4GyP0sNYVvBL33ckCI7Ocj4rLO7agborVqjL3rGKAuHV2I6YE7QyszYNZgOjbtm56u
+         ztjuwsZks0R00WXlCQu+PAHmm4SyrNuujMlb1Yb0QVbGC0O6GDaiLzLQXJAIzPu2wxRL
+         3pE7sRltaui9zkOy3qSKWXEo57aMGzi8jmR9AUo9gG6pmCBe3Hs420mI6TcBjBLvQuaj
+         0TVA==
+X-Gm-Message-State: AOAM531y+u1Q7AE96UHTN7xvh6fSocKryuG9xa99tf2LHLALx7nxUc6l
+        WugsfciL2lGSvBgmideh3u1diRuI8X6nLQzyuMHD3A==
+X-Google-Smtp-Source: ABdhPJzZdapOYYj/QSmAr5fRdCMSDzn5R35SYPpAvq0ZsnvOd7pRBzd1D2aYKF1/xQ4y3KqMOChYjVUwSAl6uMA8JBA=
+X-Received: by 2002:a05:620a:2a11:b0:6a0:4ae4:fee6 with SMTP id
+ o17-20020a05620a2a1100b006a04ae4fee6mr15742412qkp.30.1653346218984; Mon, 23
+ May 2022 15:50:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220523213837.1016542-1-marijn.suijten@somainline.org> <20220523213837.1016542-8-marijn.suijten@somainline.org>
+In-Reply-To: <20220523213837.1016542-8-marijn.suijten@somainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 24 May 2022 01:50:08 +0300
+Message-ID: <CAA8EJpr5iY8=VX8ixY7BOrzkqhvg=bJcP+WCHW03d7rmYo+_VQ@mail.gmail.com>
+Subject: Re: [PATCH 7/9] drm/msm/dsi_phy_14nm: Replace parent names with
+ clk_hw pointers
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rajeev Nandan <quic_rajeevny@quicinc.com>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,41 +83,129 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When CONFIG_PM_SLEEP is not set, there is a warning that
-qcom_ipcc_pm_resume() is unused:
+On Tue, 24 May 2022 at 00:38, Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> parent_hw pointers are easier to manage and cheaper to use than
+> repeatedly formatting the parent name and subsequently leaving the clk
+> framework to perform lookups based on that name.
+>
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-  drivers/mailbox/qcom-ipcc.c:258:12: error: 'qcom_ipcc_pm_resume' defined but not used [-Werror=unused-function]
-    258 | static int qcom_ipcc_pm_resume(struct device *dev)
-        |            ^~~~~~~~~~~~~~~~~~~
-  cc1: all warnings being treated as errors
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Commit 1a3c7bb08826 ("PM: core: Add new *_PM_OPS macros, deprecate old
-ones") reworked the PM_OPS macros to avoid this problem. Use
-NOIRQ_SYSTEM_SLEEP_PM_OPS directly so that qcom_ipcc_pm_resume() always
-appears to be used to the compiler, even though it will be dead code
-eliminated in the !CONFIG_PM_SLEEP case.
+Nit: my rant regarding syntax changes applies here too.
 
-Fixes: c25f77899753 ("mailbox: qcom-ipcc: Log the pending interrupt during resume")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/mailbox/qcom-ipcc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> ---
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 36 ++++++++++------------
+>  1 file changed, 17 insertions(+), 19 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> index 8199c53567f4..574f95ab2f22 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> @@ -764,14 +764,14 @@ static int dsi_14nm_set_usecase(struct msm_dsi_phy *phy)
+>
+>  static struct clk_hw *pll_14nm_postdiv_register(struct dsi_pll_14nm *pll_14nm,
+>                                                 const char *name,
+> -                                               const char *parent_name,
+> +                                               const struct clk_hw *parent_hw,
+>                                                 unsigned long flags,
+>                                                 u8 shift)
+>  {
+>         struct dsi_pll_14nm_postdiv *pll_postdiv;
+>         struct device *dev = &pll_14nm->phy->pdev->dev;
+>         struct clk_init_data postdiv_init = {
+> -               .parent_names = (const char *[]) { parent_name },
+> +               .parent_hws = (const struct clk_hw *[]) { parent_hw },
+>                 .num_parents = 1,
+>                 .name = name,
+>                 .flags = flags,
+> @@ -800,7 +800,7 @@ static struct clk_hw *pll_14nm_postdiv_register(struct dsi_pll_14nm *pll_14nm,
+>
+>  static int pll_14nm_register(struct dsi_pll_14nm *pll_14nm, struct clk_hw **provided_clocks)
+>  {
+> -       char clk_name[32], parent[32], vco_name[32];
+> +       char clk_name[32], vco_name[32];
+>         struct clk_init_data vco_init = {
+>                 .parent_data = &(const struct clk_parent_data) {
+>                         .fw_name = "ref",
+> @@ -811,7 +811,7 @@ static int pll_14nm_register(struct dsi_pll_14nm *pll_14nm, struct clk_hw **prov
+>                 .ops = &clk_ops_dsi_pll_14nm_vco,
+>         };
+>         struct device *dev = &pll_14nm->phy->pdev->dev;
+> -       struct clk_hw *hw;
+> +       struct clk_hw *hw, *n1_postdiv, *n1_postdivby2;
+>         int ret;
+>
+>         DBG("DSI%d", pll_14nm->phy->id);
+> @@ -824,48 +824,46 @@ static int pll_14nm_register(struct dsi_pll_14nm *pll_14nm, struct clk_hw **prov
+>                 return ret;
+>
+>         snprintf(clk_name, 32, "dsi%dn1_postdiv_clk", pll_14nm->phy->id);
+> -       snprintf(parent, 32, "dsi%dvco_clk", pll_14nm->phy->id);
+>
+>         /* N1 postdiv, bits 0-3 in REG_DSI_14nm_PHY_CMN_CLK_CFG0 */
+> -       hw = pll_14nm_postdiv_register(pll_14nm, clk_name, parent,
+> -                                      CLK_SET_RATE_PARENT, 0);
+> -       if (IS_ERR(hw))
+> -               return PTR_ERR(hw);
+> +       n1_postdiv = pll_14nm_postdiv_register(pll_14nm, clk_name,
+> +                       &pll_14nm->clk_hw, CLK_SET_RATE_PARENT, 0);
+> +       if (IS_ERR(n1_postdiv))
+> +               return PTR_ERR(n1_postdiv);
+>
+>         snprintf(clk_name, 32, "dsi%dpllbyte", pll_14nm->phy->id);
+> -       snprintf(parent, 32, "dsi%dn1_postdiv_clk", pll_14nm->phy->id);
+>
+>         /* DSI Byte clock = VCO_CLK / N1 / 8 */
+> -       hw = devm_clk_hw_register_fixed_factor(dev, clk_name, parent,
+> -                                         CLK_SET_RATE_PARENT, 1, 8);
+> +       hw = devm_clk_hw_register_fixed_factor_parent_hw(dev, clk_name,
+> +                       n1_postdiv, CLK_SET_RATE_PARENT, 1, 8);
+>         if (IS_ERR(hw))
+>                 return PTR_ERR(hw);
+>
+>         provided_clocks[DSI_BYTE_PLL_CLK] = hw;
+>
+>         snprintf(clk_name, 32, "dsi%dn1_postdivby2_clk", pll_14nm->phy->id);
+> -       snprintf(parent, 32, "dsi%dn1_postdiv_clk", pll_14nm->phy->id);
+>
+>         /*
+>          * Skip the mux for now, force DSICLK_SEL to 1, Add a /2 divider
+>          * on the way. Don't let it set parent.
+>          */
+> -       hw = devm_clk_hw_register_fixed_factor(dev, clk_name, parent, 0, 1, 2);
+> -       if (IS_ERR(hw))
+> -               return PTR_ERR(hw);
+> +       n1_postdivby2 = devm_clk_hw_register_fixed_factor_parent_hw(dev,
+> +                       clk_name, n1_postdiv, 0, 1, 2);
+> +       if (IS_ERR(n1_postdivby2))
+> +               return PTR_ERR(n1_postdivby2);
+>
+>         snprintf(clk_name, 32, "dsi%dpll", pll_14nm->phy->id);
+> -       snprintf(parent, 32, "dsi%dn1_postdivby2_clk", pll_14nm->phy->id);
+>
+>         /* DSI pixel clock = VCO_CLK / N1 / 2 / N2
+>          * This is the output of N2 post-divider, bits 4-7 in
+>          * REG_DSI_14nm_PHY_CMN_CLK_CFG0. Don't let it set parent.
+>          */
+> -       hw = pll_14nm_postdiv_register(pll_14nm, clk_name, parent, 0, 4);
+> +       hw = pll_14nm_postdiv_register(pll_14nm, clk_name, n1_postdivby2,
+> +                       0, 4);
+>         if (IS_ERR(hw))
+>                 return PTR_ERR(hw);
+>
+> -       provided_clocks[DSI_PIXEL_PLL_CLK]      = hw;
+> +       provided_clocks[DSI_PIXEL_PLL_CLK] = hw;
+>
+>         return 0;
+>  }
+> --
+> 2.36.1
+>
 
-diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index 2583b20cdeb7..31d58b7d55fe 100644
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -344,7 +344,7 @@ static const struct of_device_id qcom_ipcc_of_match[] = {
- MODULE_DEVICE_TABLE(of, qcom_ipcc_of_match);
- 
- static const struct dev_pm_ops qcom_ipcc_dev_pm_ops = {
--	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(NULL, qcom_ipcc_pm_resume)
-+	NOIRQ_SYSTEM_SLEEP_PM_OPS(NULL, qcom_ipcc_pm_resume)
- };
- 
- static struct platform_driver qcom_ipcc_driver = {
 
-base-commit: bca1a1004615efe141fd78f360ecc48c60bc4ad5
 -- 
-2.36.1
-
+With best wishes
+Dmitry
