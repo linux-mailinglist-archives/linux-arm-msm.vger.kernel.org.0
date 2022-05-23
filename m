@@ -2,103 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93479530CBD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 12:40:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA7C0530FEC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 15:19:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233869AbiEWKHk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 06:07:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53494 "EHLO
+        id S235317AbiEWMCm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 08:02:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233908AbiEWKHi (ORCPT
+        with ESMTP id S235322AbiEWMCl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 06:07:38 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E04347ACC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 03:07:35 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id p4so23270702lfg.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 03:07:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=2thMnipGQrwbIYaTpOIQFKO3y25BWCRS7OoW10wpgPY=;
-        b=gOYwbOEE0W/hGPnlp8cI+mSGkdABURnhZLtBSkEr/fnoUYgGhm5LtYOd5ZDT/33etE
-         d8Ibx95fMhsrpIdwMmHd94qinfWKsSNicrn+OoihHpl/J43cbm4m2UuQTg1tCvowHqEA
-         3/7FFW5aJ/6Tl6ObLR1eXSiYoV/D0FBdrzUdEDZQvus3LdE6v3phScBjxPJfww5hPkG1
-         a7KfbZdNVdEwgi3c2dnGPnMN3EBy6wIosOP4NrpkK++x/yuwD43DiGu3+XVHdbLAFKnz
-         n6Gws1leh/w6RS1FJKYec3eJmH34zhLc9v6I7ROxp/iBRQ/ZCRw8KR0gCQAqNYBC7tuW
-         MoJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=2thMnipGQrwbIYaTpOIQFKO3y25BWCRS7OoW10wpgPY=;
-        b=LP7flwSNZL4S4xDtSeagwImRD+bLd1JW/J00XV/NrwLX6cG35rMa12z/aLdsVcD/RW
-         B/RKk9ijxhVoTYniesrmWYJhEDJzAg/8lDPjJC4mxbQ43rUnZ5wAXi4BKcmyJpp/Cu3Y
-         8HVUwu4mXYV73N+x86TTueIBkg8gpR75ySBxiAjnMp6YuTcjy11IxB1LbWdQrzz4neA/
-         4SohHsFJUBZ0tny+NAFrcUXI1BUZ1KOa82sLOSoNq0/xcDH/2Yku+O8avtj5k9qns0or
-         DGwjWIZAQtr7trFz2Pv/JdzkWZkjb2tieMWtkcwSXR0fM1YBuCVccsC4D9VjmM9l7RRw
-         kSyQ==
-X-Gm-Message-State: AOAM532kAeBzSeSZchxNhLLYsfYKHUtGWz7Q00+tHjwdndYR+ii2Tm16
-        TQdJ1DXHKWGx6zzlIxvpdQ1oPw==
-X-Google-Smtp-Source: ABdhPJxs8EtqrTUt1LqsTXVl5KTJ4MPW7EjahL3tb7tKaF5mJmTmcP25Vknm6BhNib3K941QpLUjEA==
-X-Received: by 2002:a05:6512:32c1:b0:478:710f:d375 with SMTP id f1-20020a05651232c100b00478710fd375mr2677764lfg.147.1653300453721;
-        Mon, 23 May 2022 03:07:33 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id h26-20020a19701a000000b0047255d210fesm1894356lfc.45.2022.05.23.03.07.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 May 2022 03:07:33 -0700 (PDT)
-Message-ID: <36e378f1-9628-b22a-b3bf-2d5ae9e2da33@linaro.org>
-Date:   Mon, 23 May 2022 12:07:32 +0200
+        Mon, 23 May 2022 08:02:41 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DFDE2AD7;
+        Mon, 23 May 2022 05:02:37 -0700 (PDT)
+Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B0E1B3F600;
+        Mon, 23 May 2022 14:02:34 +0200 (CEST)
+Message-ID: <02ab0276-b078-fe66-8596-fcec4378722b@somainline.org>
+Date:   Mon, 23 May 2022 14:02:33 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [RFC PATCH 09/14] dt-bindings: i2c: qcom-cci: add QCOM MSM8974
- compatible
-Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        matti.lehtimaki@gmail.com
-References: <20220522162802.208275-1-luca@z3ntu.xyz>
- <20220522162802.208275-10-luca@z3ntu.xyz>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220522162802.208275-10-luca@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.9.1
+Subject: Re: Removal of qcom,board-id and qcom,msm-id
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     agross@kernel.org, arnd@arndb.de, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, olof@lixom.net, robh@kernel.org,
+        sboyd@kernel.org
+References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
+ <20220522195138.35943-1-konrad.dybcio@somainline.org>
+ <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/05/2022 18:27, Luca Weiss wrote:
-> Add the compatible for the CCI found in MSM8974 which supports two I2C
-> masters.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
->  Documentation/devicetree/bindings/i2c/i2c-qcom-cci.txt | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
-> 
+
+On 23/05/2022 09:21, Krzysztof Kozlowski wrote:
+> On 22/05/2022 21:51, Konrad Dybcio wrote:
+>> Hi,
+>>
+>> removing these properties will not bring almost any benefit (other than making
+>> some checks happy any saving some <200 LoC) and will make the lives of almost
+>> all people doing independent development for linux-on-msm harder. There are
+>> almost unironically like 3 people outside Linaro and QUIC who have
+>> non-vendor-fused development boards AND the sources to rebuild the
+>> bootloader on their own. Making it harder to boot is only going to
+>> discourage people from developing on these devices, which is already not
+>> that pleasant, especially with newer platforms where you have to fight with
+>> the oh-so-bright ideas of Android boot chain..
+>>
+>> This only concerns devices released before sm8350, as the new ones will not
+>> even boot with these properties present (or at least SONY Sagami, but I
+>> doubt it's an isolated case), so other than completing support for older
+>> devices, it won't be an issue going forward, anyway. But there are give
+>> or take 50 locked down devices in mainline right now, and many more waiting
+>> to be upstreamed in various downstream close-to-mainline trees that should
+>> not be disregarded just because Qualcomm is far from the best at making
+>> their BSP software stack clean.
+> I actually wonder why do you need these properties for community work on
+> such boards? You ship kernel with one concatenated DTB and the
+> bootloader does not need the board-id/msm-id fields, doesn't it?
+
+If that were the case, I would have never complained about this! It's 
+the bootloader itself that needs it, you can see it in a "Best match 
+[blah blah] 258/0x1000/...." log line, where it walks through the 
+appended (or otherwise compiled into the boot.img) DTBs and looks for 
+matches for the burnt-in msm-, board- and (on newer-older platforms) 
+pmic-id. If it cannot find these, it refuses to boot with an Android 
+Verified Boot red state and you get a not-so-nice "Your device has been 
+unlocked and the boot image is not working" or something like this on 
+your screen.
 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> Not mentioning that in the past bootloader was actually not using these
+> properties at all, because it was the dtbTool who was parsing them.
+
+Not sure when that was the case, maybe with very old arm32 bootloaders 
+in the times before I did development on Qualcomm devices.
 
 
-Best regards,
-Krzysztof
+>   So
+> in any case either your device works fine without these properties or
+> you have to use dtbTool, right?
+
+To the best of my idea, wrong :( Unless the vendor modified the LK/XBL 
+code on their own, it looks for a "best match" (but if it's not a 
+precise match, it won't even bother trying to boot, just fyi..), meaning 
+it tries to go through a list of SoC ID and revision pairs (msm-id), 
+board IDs (board-id) and PMIC id+rev pairs (pmic-id) and if no match is 
+found, it doesn't even exit the bootloader and says something like "no 
+dtbs found".
+
+
+And hence, they are absolutely necessary one way or another.
+
+
+Konrad
+
+>
+>> One solution is to chainload another, (n+1)-stage bootloader, but this is
+>> not ideal, as:
+>>
+>> 1) the stock bootloader can boot Linux just fine on most devices (except
+>> for single exceptions, where beloved OEMs didn't implement arm64 booting or
+>> something)
+>>
+>> 2) the boot chain on MSM is already 3- or 4- stage and adding to that will
+>> only create an unnecessary mess
+>>
+>> 3) the job of kernel people is not to break userspace. If the
+>> device can not even exit bootloader after a kernel upgrade, it's a big
+>> failure.
+> The job of kernel people is to follow bindings and since they were
+> introduced 7 years ago, I would say there was plenty of time for that.
+>
+> If the dtbTool support for the bindings is there, then there is no
+> breakage, because you had to use dtbTool before so you have to use now.
+>
+>> If you *really really really* want these either gone or documented, we can
+>> for example use them in the SOCID driver, read the values from DTB and
+>> compare against what SMEM has to say and for example print a warning when
+>> there are inconsistencies or use it as a fallback when it fails for any
+>> reason, such as using a newer SoC on an older kernel, without updates
+>> for SOCID read (which are sometimes necessary, which was the case for 8450
+>> recently, iirc).
+>>
+>> My stance is to just leave them as is, as moving them anywhere, or removing
+>> them at all will cause unnecessary mess and waste time that could have been
+>> spent on more glaring issues..
+>>
+>> Konrad
+>
+> Best regards,
+> Krzysztof
