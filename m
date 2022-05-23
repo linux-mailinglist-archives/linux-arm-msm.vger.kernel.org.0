@@ -2,38 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 18311530B9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 11:03:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68074530DED
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 May 2022 12:42:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232470AbiEWJCg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 05:02:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33350 "EHLO
+        id S232701AbiEWJLy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 05:11:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232447AbiEWJCb (ORCPT
+        with ESMTP id S232636AbiEWJLx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 05:02:31 -0400
+        Mon, 23 May 2022 05:11:53 -0400
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 49AB52181E;
-        Mon, 23 May 2022 02:02:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 0524246642;
+        Mon, 23 May 2022 02:11:52 -0700 (PDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 184B51FB;
-        Mon, 23 May 2022 02:02:19 -0700 (PDT)
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AD9DFED1;
+        Mon, 23 May 2022 02:11:51 -0700 (PDT)
 Received: from [10.57.34.201] (unknown [10.57.34.201])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 93FA13F73D;
-        Mon, 23 May 2022 02:02:15 -0700 (PDT)
-Message-ID: <ab027359-02be-2204-8a09-b1e5170bdba8@arm.com>
-Date:   Mon, 23 May 2022 10:02:13 +0100
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 009023F73D;
+        Mon, 23 May 2022 02:11:48 -0700 (PDT)
+Message-ID: <00c30f02-de4e-6bd1-f220-00ae114ef91f@arm.com>
+Date:   Mon, 23 May 2022 10:11:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.9.0
-Subject: Re: [PATCH v7 03/10] dt-bindings: arm: Adds CoreSight TPDM hardware
- definitions
+Subject: Re: [PATCH v7 04/10] coresight-tpdm: Add DSB dataset support
 To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
         Mathieu Poirier <mathieu.poirier@linaro.org>,
         Alexander Shishkin <alexander.shishkin@linux.intel.com>,
         Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh@kernel.org>
+        Mike Leach <mike.leach@linaro.org>
 Cc:     Leo Yan <leo.yan@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
@@ -46,9 +44,9 @@ Cc:     Leo Yan <leo.yan@linaro.org>,
         linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>
 References: <20220509133947.20987-1-quic_jinlmao@quicinc.com>
- <20220509133947.20987-4-quic_jinlmao@quicinc.com>
+ <20220509133947.20987-5-quic_jinlmao@quicinc.com>
 From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20220509133947.20987-4-quic_jinlmao@quicinc.com>
+In-Reply-To: <20220509133947.20987-5-quic_jinlmao@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-10.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
@@ -60,172 +58,166 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Cc: Rob Herring
-
 Hi
 
-Please Cc Rob for any new DT/Yaml additions. I have done so now.
-
-
-
-
 On 09/05/2022 14:39, Mao Jinlong wrote:
-> Adds new coresight-tpdm.yaml file describing the bindings required
-> to define tpdm in the device trees.
+> TPDM serves as data collection component for various dataset types.
+> DSB(Discrete Single Bit) is one of the dataset types. DSB subunit
+> can be enabled for data collection by writing 1 to the first bit of
+> DSB_CR register. This change is to add enable/disable function for
+> DSB dataset by writing DSB_CR register.
+
+The patch looks good to me, except for some minor comment below.
+
 > 
-> Reviewed-by: Mike Leach <mike.leach@linaro.org>
 > Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
 > Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-
-Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-
 > ---
->   .../bindings/arm/coresight-tpdm.yaml          | 99 +++++++++++++++++++
->   .../devicetree/bindings/arm/coresight.txt     |  7 ++
->   MAINTAINERS                                   |  1 +
->   3 files changed, 107 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
+>   drivers/hwtracing/coresight/coresight-tpdm.c | 58 ++++++++++++++++++++
+>   drivers/hwtracing/coresight/coresight-tpdm.h | 23 ++++++++
+>   2 files changed, 81 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml b/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
-> new file mode 100644
-> index 000000000000..451342d3d8b7
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
-> @@ -0,0 +1,99 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/coresight-tpdm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Trace, Profiling and Diagnostics Monitor - TPDM
-> +
-> +description: |
-> +  The TPDM or Monitor serves as data collection component for various dataset
-> +  types specified in the QPMDA spec. It covers Implementation defined ((ImplDef),
-> +  Basic Counts (BC), Tenure Counts (TC), Continuous Multi-Bit (CMB), and Discrete
-> +  Single Bit (DSB). It performs data collection in the data producing clock
-> +  domain and transfers it to the data collection time domain, generally ATB
-> +  clock domain.
-> +
-> +  The primary use case of the TPDM is to collect data from different data
-> +  sources and send it to a TPDA for packetization, timestamping, and funneling.
-> +
-> +maintainers:
-> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
-> +  - Tao Zhang <quic_taozha@quicinc.com>
-> +
-> +properties:
-> +  $nodename:
-> +    pattern: "^tpdm(@[0-9a-f]+)$"
-> +  compatible:
-> +    items:
-> +      - const: qcom,coresight-tpdm
-> +      - const: arm,primecell
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +   items:
-> +     - const: apb_pclk
-> +
-> +  out-ports:
-> +    description: |
-> +      Output connections from the TPDM to coresight funnle/tpda.
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +    properties:
-> +      port:
-> +        description: Output connection from the TPDM to coresight
-> +            funnel/tpda.
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  # minimum TPDM definition. TPDM connect to coresight funnel.
-> +  - |
-> +    tpdm@6980000 {
-> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
-> +      reg = <0x6980000 0x1000>;
-> +
-> +      clocks = <&aoss_qmp>;
-> +      clock-names = "apb_pclk";
-> +
-> +      out-ports {
-> +        port {
-> +          tpdm_turing_out_funnel_turing: endpoint {
-> +            remote-endpoint =
-> +              <&funnel_turing_in_tpdm_turing>;
-> +          };
-> +        };
-> +      };
-> +    };
-> +  # minimum TPDM definition. TPDM connect to coresight TPDA.
-> +  - |
-> +    tpdm@684c000 {
-> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
-> +      reg = <0x684c000 0x1000>;
-> +
-> +      clocks = <&aoss_qmp>;
-> +      clock-names = "apb_pclk";
-> +
-> +      out-ports {
-> +        port {
-> +          tpdm_prng_out_tpda_qdss: endpoint {
-> +            remote-endpoint =
-> +              <&tpda_qdss_in_tpdm_prng>;
-> +          };
-> +        };
-> +      };
-> +    };
-> +
-> +...
-> diff --git a/Documentation/devicetree/bindings/arm/coresight.txt b/Documentation/devicetree/bindings/arm/coresight.txt
-> index c68d93a35b6c..f7ce8af48574 100644
-> --- a/Documentation/devicetree/bindings/arm/coresight.txt
-> +++ b/Documentation/devicetree/bindings/arm/coresight.txt
-> @@ -52,6 +52,10 @@ its hardware characteristcs.
->   			"arm,coresight-cti", "arm,primecell";
->   			See coresight-cti.yaml for full CTI definitions.
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index 6a4e2a35053d..70df888ac565 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -20,7 +20,28 @@
 >   
-> +		- Trace, Profiling and Diagnostics Monitor (TPDM):
-> +			"qcom,coresight-tpdm", "arm,primecell";
-> +			See coresight-tpdm.yaml for full TPDM definitions.
+>   DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
+>   
+> +static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
+> +{
+> +	u32 val;
 > +
->   	* reg: physical base address and length of the register
->   	  set(s) of the component.
->   
-> @@ -82,6 +86,9 @@ its hardware characteristcs.
->   * Required properties for Coresight Cross Trigger Interface (CTI)
->   	See coresight-cti.yaml for full CTI definitions.
->   
-> +* Required properties for Trace, Profiling and Diagnostics Monitor (TPDM)
-> +	See coresight-tpdm.yaml for full TPDM definitions.
+> +	/* Set the enable bit of DSB control register to 1 */
+> +	val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
+> +	val |= TPDM_DSB_CR_ENA;
+> +	writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
+> +}
 > +
->   * Required properties for devices that don't show up on the AMBA bus, such as
->     non-configurable replicators and non-configurable funnels:
+>   /* TPDM enable operations */
+> +static void _tpdm_enable(struct tpdm_drvdata *drvdata)
+> +{
+> +	CS_UNLOCK(drvdata->base);
+> +
+> +	/* Check if DSB datasets is present for TPDM. */
+> +	if (drvdata->datasets & BIT(TPDM_DS_DSB))
+> +		tpdm_enable_dsb(drvdata);
+> +
+> +	CS_LOCK(drvdata->base);
+> +}
+> +
+>   static int tpdm_enable(struct coresight_device *csdev,
+>   		       struct perf_event *event, u32 mode)
+>   {
+> @@ -32,6 +53,7 @@ static int tpdm_enable(struct coresight_device *csdev,
+>   		return -EBUSY;
+>   	}
 >   
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index edc96cdb85e8..28d32b3f3f5c 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1978,6 +1978,7 @@ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/coresight/linux.git
->   F:	Documentation/ABI/testing/sysfs-bus-coresight-devices-*
->   F:	Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
->   F:	Documentation/devicetree/bindings/arm/coresight-cti.yaml
-> +F:	Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
->   F:	Documentation/devicetree/bindings/arm/coresight.txt
->   F:	Documentation/devicetree/bindings/arm/ete.yaml
->   F:	Documentation/devicetree/bindings/arm/trbe.yaml
+> +	_tpdm_enable(drvdata);
+>   	drvdata->enable = true;
+>   	mutex_unlock(&drvdata->lock);
+>   
+> @@ -39,7 +61,29 @@ static int tpdm_enable(struct coresight_device *csdev,
+>   	return 0;
+>   }
+>   
+> +static void tpdm_disable_dsb(struct tpdm_drvdata *drvdata)
+> +{
+> +	u32 val;
+> +
+> +	/* Set the enable bit of DSB control register to 0 */
+> +	val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
+> +	val &= ~TPDM_DSB_CR_ENA;
+> +	writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
+> +}
+> +
+>   /* TPDM disable operations */
+> +static void _tpdm_disable(struct tpdm_drvdata *drvdata)
+> +{
+> +	CS_UNLOCK(drvdata->base);
+> +
+> +	/* Check if DSB datasets is present for TPDM. */
+> +	if (drvdata->datasets & BIT(TPDM_DS_DSB))
+> +		tpdm_disable_dsb(drvdata);
+> +
+> +	CS_LOCK(drvdata->base);
+> +
 
+nit: extra new line.
+> +}
+> +
+>   static void tpdm_disable(struct coresight_device *csdev,
+>   			 struct perf_event *event)
+>   {
+> @@ -51,6 +95,7 @@ static void tpdm_disable(struct coresight_device *csdev,
+>   		return;
+>   	}
+>   
+> +	_tpdm_disable(drvdata);
+>   	drvdata->enable = false;
+>   	mutex_unlock(&drvdata->lock);
+>   
+> @@ -66,6 +111,18 @@ static const struct coresight_ops tpdm_cs_ops = {
+>   	.source_ops	= &tpdm_source_ops,
+>   };
+>   
+> +static void tpdm_init_default_data(struct tpdm_drvdata *drvdata)
+> +{
+> +	int i;
+> +	u32 pidr;
+> +
+> +	CS_UNLOCK(drvdata->base);
+> +	/*  Get the datasets present on the TPDM. */
+> +	pidr = readl_relaxed(drvdata->base + CORESIGHT_PERIPHIDR0);
+> +	drvdata->datasets |= pidr & GENMASK(TPDM_DATASETS - 1, 0);
+> +	CS_LOCK(drvdata->base);
+> +}
+> +
+>   static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
+>   {
+>   	struct device *dev = &adev->dev;
+> @@ -104,6 +161,7 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
+>   	if (IS_ERR(drvdata->csdev))
+>   		return PTR_ERR(drvdata->csdev);
+>   
+> +	tpdm_init_default_data(drvdata);
+>   	/* Decrease pm refcount when probe is done.*/
+>   	pm_runtime_put(&adev->dev);
+>   
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
+> index 94a7748a5426..f95aaad9c653 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+> @@ -6,6 +6,27 @@
+>   #ifndef _CORESIGHT_CORESIGHT_TPDM_H
+>   #define _CORESIGHT_CORESIGHT_TPDM_H
+>   
+> +/* The max number of the datasets that TPDM supports */
+> +#define TPDM_DATASETS       7
+> +
+> +/* DSB Subunit Registers */
+> +#define TPDM_DSB_CR		(0x780)
+> +/* Enable bit for DSB subunit */
+> +#define TPDM_DSB_CR_ENA		BIT(0)
+> +
+> +/**
+> + * This enum is for PERIPHIDR0 register of TPDM.
+> + * The fields [6:0] of PERIPHIDR0 are used to determine what
+> + * interfaces and subunits are present on a given TPDM.
+> + *
+> + * PERIPHIDR0[0] : Fix to 1 if ImplDef subunit present, else 0
+> + * PERIPHIDR0[1] : Fix to 1 if DSB subunit present, else 0
+> + */
+> +enum tpdm_dataset {
+> +	TPDM_DS_IMPLDEF,
+> +	TPDM_DS_DSB,
+> +};
+
+Please could we name this explicitly to indicate the register field they 
+appear in ? e.g,
+
+#define TPDM_PIDR0_DS_IMPDEF	BIT(0)
+#define	TPDM_PIDR0_DS_DSB	BIT(1)
+
+Suzuki
