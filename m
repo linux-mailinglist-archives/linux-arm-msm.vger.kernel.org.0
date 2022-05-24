@@ -2,79 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAA3F5323D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 09:15:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC5E953240B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 09:27:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234732AbiEXHPr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 03:15:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46016 "EHLO
+        id S234399AbiEXH1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 03:27:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232183AbiEXHPq (ORCPT
+        with ESMTP id S235225AbiEXH1q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 03:15:46 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B77C85AA66;
-        Tue, 24 May 2022 00:15:45 -0700 (PDT)
+        Tue, 24 May 2022 03:27:46 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FA42980BB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 00:27:43 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id c14so15748842pfn.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 00:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653376545; x=1684912545;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=o1deSnlVZaJUiL95RTHbdcraQdrqHnneaLqHhAeeC18=;
-  b=RSKwbAX+jJK8NtYmeDZLTizW5pjwSuS2R0tcft+GJVKtwZnFkxAHaQRN
-   OPp+qpywgApLFGJCbqxqyAUtLsvruifOH9sq/YS95sgFbLKvLmjSPbYyv
-   DngZ4nJQE+2amo0NJBs3omrSYc4JI+L8YAabrv7GJlDCa/MRLIeZxqrPf
-   w=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 24 May 2022 00:15:45 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 May 2022 00:15:45 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 24 May 2022 00:15:44 -0700
-Received: from [10.239.133.9] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 24 May
- 2022 00:15:39 -0700
-Message-ID: <ec586900-f4eb-18ee-57cb-17b9a7193b1e@quicinc.com>
-Date:   Tue, 24 May 2022 15:15:37 +0800
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tsv75/jMSG9IE7z+FFdGkSFpTdlyLS1N1PmQi6VFqBI=;
+        b=wvLcdRoTzjduYLMmkssoeHZpDzj+D6Li3c0sGg6dhznKpbBFocVHCep91+LKPeyu6A
+         adf8V3sSKAOctotcch5S4mjMvRTbGhUus5+QA9diimFJsnt8A7i6RD2y60WXwsSGiVdh
+         bgwJnqToDTyrZHPGBmo0VfUmcmMllbbq6FQB+bPb997SkUODY+yapFzKf5qaekHLwqXu
+         +UX9XXuscTRgo2MU9b9/+1PWDINJRaRuHj42B7O7KiR1jhJSTJoTBSaL8gJ2Gt9CqoYy
+         eR7pDrcyhkAJYgcV8Nobpd9IwwO8hEcjkrUHmcHmfpQH8XlOqP3WIr1mmEMAnLuWDQDE
+         MRTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tsv75/jMSG9IE7z+FFdGkSFpTdlyLS1N1PmQi6VFqBI=;
+        b=VuXAsre3k5Z94WX/yxZFELeeTFboMmpWS7kQpJHOdtf03uMJGvugS73E0d7pIfD09o
+         22/EML5/SILOumOkz3sgAIM6ZYHZT1uqxCIx18eX3lHHQ3+JO+vDZQN6ru3nuB5ncWFW
+         r0XiozyzqL6mB5I1ZDppE9iupfTZY+tp8Daq8P/69OuwjoOcqw0l4v41tNmxiQiZqRSa
+         ecwccmQ35KxKzuaYvqny93WJ+ZDrZTFC5Tx/m1NU58zyfPfK1X0rZFVm0NNnA85mfHLB
+         Yp8vfxkstiQb7b09JnfRowc2wvAsez54RtxCA5suzTUFwS4hAq/6iK1/vArSD7I4xiNF
+         I8wg==
+X-Gm-Message-State: AOAM533nlTNcMgZs7LmgzPlBQzP8lkWW6p+bR50m4eSp1tVnoqte79wk
+        Xq4PoEt/8rNPyx/tKij1C0rVHTdahI1Dw9Miy6dyjg==
+X-Google-Smtp-Source: ABdhPJw3ORe/h7f5dIvOTqYeutYcfp1EKqFSPpJWeNvmseS55Kkvyhwnm9kIFnPx97OSfYOHlmOBlicekC0ETSFOvdM=
+X-Received: by 2002:a05:6a00:228c:b0:518:9533:4a1e with SMTP id
+ f12-20020a056a00228c00b0051895334a1emr11198767pfe.79.1653377262793; Tue, 24
+ May 2022 00:27:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH v7 04/10] coresight-tpdm: Add DSB dataset support
-Content-Language: en-US
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>
-CC:     Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20220509133947.20987-1-quic_jinlmao@quicinc.com>
- <20220509133947.20987-5-quic_jinlmao@quicinc.com>
- <00c30f02-de4e-6bd1-f220-00ae114ef91f@arm.com>
- <c6c37c9c-c68d-a945-d4df-526212924678@arm.com>
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <c6c37c9c-c68d-a945-d4df-526212924678@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+References: <MEYP282MB2374837FFCB18B12BFDEDE80FDCF9@MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM>
+In-Reply-To: <MEYP282MB2374837FFCB18B12BFDEDE80FDCF9@MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 24 May 2022 09:27:06 +0200
+Message-ID: <CAMZdPi8c1HqxgGW2woTF=0wUv_gV+pn5q088fYZ=KV0p=avJfA@mail.gmail.com>
+Subject: Re: [PATCH v2] bus: mhi: host: Add support for Quectel EM120 FCCL.
+To:     Yonglin Tan <yonglin.tan@outlook.com>
+Cc:     mani@kernel.org, gregkh@linuxfoundation.org,
+        quic_hemantk@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,63 +67,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Suzuki,
+On Mon, 16 May 2022 at 08:38, Yonglin Tan <yonglin.tan@outlook.com> wrote:
+>
+> The product's enumeration align with previous
+> Quectel EM120R-GL, so the EM120 FCCL would use
+> the same config as Quectel EM120R-GL.
+>
+> Signed-off-by: Yonglin Tan <yonglin.tan@outlook.com>
 
-On 5/23/2022 5:24 PM, Suzuki K Poulose wrote:
-> On 23/05/2022 10:11, Suzuki K Poulose wrote:
->> Hi
->>
->> On 09/05/2022 14:39, Mao Jinlong wrote:
->>> TPDM serves as data collection component for various dataset types.
->>> DSB(Discrete Single Bit) is one of the dataset types. DSB subunit
->>> can be enabled for data collection by writing 1 to the first bit of
->>> DSB_CR register. This change is to add enable/disable function for
->>> DSB dataset by writing DSB_CR register.
->>
->> The patch looks good to me, except for some minor comment below.
->>
->>>
->>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>> ---
->>>   drivers/hwtracing/coresight/coresight-tpdm.c | 58 
->>> ++++++++++++++++++++
->>>   drivers/hwtracing/coresight/coresight-tpdm.h | 23 ++++++++
->>>   2 files changed, 81 insertions(+)
->>>
->>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
->>> b/drivers/hwtracing/coresight/coresight-tpdm.c
->>> index 6a4e2a35053d..70df888ac565 100644
->>> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
->>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
->>> @@ -20,7 +20,28 @@
->>>   DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
->>> +static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
->>> +{
->>> +    u32 val;
->>> +
->>> +    /* Set the enable bit of DSB control register to 1 */
->>> +    val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
->>> +    val |= TPDM_DSB_CR_ENA;
->>> +    writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
->>> +}
->>> +
+Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+
+> ---
 >
+> V2:
+> Fixed the format errors in the patch description.
 >
+>  drivers/bus/mhi/host/pci_generic.c | 2 ++
+>  1 file changed, 2 insertions(+)
 >
->>>   /* TPDM enable operations */
->>> +static void _tpdm_enable(struct tpdm_drvdata *drvdata)
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 8416267..0a6469c 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -557,6 +557,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>                 .driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+>         { PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
+>                 .driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+> +       { PCI_DEVICE(0x1eac, 0x2001), /* EM120R-GL for FCCL (sdx24) */
+> +               .driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+>         /* T99W175 (sdx55), Both for eSIM and Non-eSIM */
+>         { PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
+>                 .driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> --
+> 2.7.4
 >
->
->>>   /* TPDM disable operations */
->>> +static void _tpdm_disable(struct tpdm_drvdata *drvdata)
->
-> Missed this. The general convention is to use:
->
-> __tpdm_disable()
-> __tpdm_enable();
-I will address your comments.
->
-> So, please switch to the names above.
->
-> Suzuki
