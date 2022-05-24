@@ -2,62 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4927453209B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 04:05:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63A725320AE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 04:08:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233023AbiEXCEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 22:04:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39292 "EHLO
+        id S233125AbiEXCGz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 22:06:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231326AbiEXCEx (ORCPT
+        with ESMTP id S233144AbiEXCGy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 22:04:53 -0400
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5ABA986CF;
-        Mon, 23 May 2022 19:04:52 -0700 (PDT)
-Received: by mail-oi1-f171.google.com with SMTP id w130so19974014oig.0;
-        Mon, 23 May 2022 19:04:52 -0700 (PDT)
+        Mon, 23 May 2022 22:06:54 -0400
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA9706D3AB;
+        Mon, 23 May 2022 19:06:52 -0700 (PDT)
+Received: by mail-oi1-f170.google.com with SMTP id i66so19891385oia.11;
+        Mon, 23 May 2022 19:06:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=vmmjhxRYn3NE3b5jfw8VfnnrkCiUVhOKLxzKMNvq1N0=;
-        b=bVISsRmAr67T3YfehNcrx1QVJ2vRaT2a5jJBddl9GkY4WH6anXtmMEUYHO2E8D3z5e
-         sIvPq+2EXuMUhh0KzbNAsQhr7LBYeTwoz032NsF0QaSvfKddNfv/ZmF70Flz3IdKwyHJ
-         hgF8Se0XhR+GOUm/4kJQszQ31vbsCisSJcThm1RIHFxzidKhYwtY238nVd6b92jDqXbo
-         1bZO8eZVqSLtegjeFAenm9RTI1trPH4mCboZK9i+uqRJfN9QV0qjgeE5fUSBsv7LaGnd
-         URahX/wLoU2qOAKQZOHNHMULedt4laRZz6mJg3xK2KfMbaS1zd4uX9NbqVJ2ZxV2jD7I
-         nK9A==
-X-Gm-Message-State: AOAM5301RZfmPTHdTdwQ8V2vd7r0Zo4zJ7x7+HkM4qKLxBVIHzCCZDsg
-        JuWf3AZ+7ipjB4GoIaNGag==
-X-Google-Smtp-Source: ABdhPJwfRKBvjfI8EBTg8Td1U85383uxtnx4krnSmBmak3g12YxPar0L58FpkpJ463TYWXG1UIXK3w==
-X-Received: by 2002:a05:6808:1202:b0:322:dc37:2c3b with SMTP id a2-20020a056808120200b00322dc372c3bmr1164376oil.298.1653357892257;
-        Mon, 23 May 2022 19:04:52 -0700 (PDT)
+        bh=Q2EDROOSrbqPNpsPn0fwyesh9TCqxhLM25BxpcKmgGQ=;
+        b=x1h6oPwcf2KA3pe9aUK/WXrB9ZetDTdIAlUt41ya9tHKCNjfALs7MLcGi0Us91uCwB
+         ZON7f564fALFtOUnf7A8eqxFFfKKrU5e/FMC6P/26LNHthA6KsdKWyuNaKXPjvZn38HH
+         lXqR8yYFDeBIwEJ8TQ82yvbUne4zdxGhuGkgXhzKfg6KXs3V0BKVZTwzCnVS3bMMnbQu
+         9xSfgYQvC+5/DQtD0I3IMExHpDtNc4HTUFnoRATebqTwcHTiHL+WK+zfi7JaEfXgF99O
+         XmrDcxpJ5iZKzYkVnvWrJtPrXSd9FOI7Ea775EJoTFKwoaAZfbdnOHp2npXVyspEiXX/
+         4aFA==
+X-Gm-Message-State: AOAM5312Y9pEncKCnH3PWKtbJ6SwEkUsKrJXpjiItM75LK05y9kbtyi4
+        DuQxw28n2IMx8BJ+WmSm1A==
+X-Google-Smtp-Source: ABdhPJy7VbkC9VvK40Cbz/x+9ObPFhVCPmQWe7VwrKRoxHQuCk6GKzWpIqLyO85vo/39KvA3WInvhA==
+X-Received: by 2002:a05:6808:2125:b0:32b:1ba0:8b05 with SMTP id r37-20020a056808212500b0032b1ba08b05mr1101250oiw.20.1653358012155;
+        Mon, 23 May 2022 19:06:52 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id b129-20020aca3487000000b0032af475f733sm4630449oia.28.2022.05.23.19.04.51
+        by smtp.gmail.com with ESMTPSA id u190-20020acaabc7000000b00325cda1ffb8sm4606078oie.55.2022.05.23.19.06.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 19:04:51 -0700 (PDT)
-Received: (nullmailer pid 2604285 invoked by uid 1000);
-        Tue, 24 May 2022 02:04:50 -0000
-Date:   Mon, 23 May 2022 21:04:50 -0500
+        Mon, 23 May 2022 19:06:51 -0700 (PDT)
+Received: (nullmailer pid 2607411 invoked by uid 1000);
+        Tue, 24 May 2022 02:06:50 -0000
+Date:   Mon, 23 May 2022 21:06:50 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v7 10/11] dt-bindings: arm: qcom: document sda660 SoC and
- ifc6560 board
-Message-ID: <20220524020450.GA2604251-robh@kernel.org>
-References: <20220521202708.1509308-1-dmitry.baryshkov@linaro.org>
- <20220521202708.1509308-11-dmitry.baryshkov@linaro.org>
+To:     Taniya Das <quic_tdas@quicinc.com>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette =?iso-8859-1?Q?=A0?= 
+        <mturquette@baylibre.com>, linux-arm-msm@vger.kernel.org,
+        linux-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: clock: Add resets for LPASS audio
+ clock controller for SC7280
+Message-ID: <20220524020650.GA2605976-robh@kernel.org>
+References: <20220523092314.14252-1-quic_tdas@quicinc.com>
+ <20220523092314.14252-2-quic_tdas@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220521202708.1509308-11-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220523092314.14252-2-quic_tdas@quicinc.com>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -69,16 +67,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 21 May 2022 23:27:07 +0300, Dmitry Baryshkov wrote:
-> Add binding documentation for the Inforce IFC6560 board which uses
-> Snapdragon SDA660.
+On Mon, May 23, 2022 at 02:53:12PM +0530, Taniya Das wrote:
+> Add support for LPASS audio clock gating for RX/TX/SWA core bus clocks
+> for SC7280. Update reg property min/max items in YAML schema.
 > 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fixes: 57405b795504 ("dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7280").
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  .../clock/qcom,sc7280-lpasscorecc.yaml        | 20 ++++++++++++++++---
+>  .../clock/qcom,lpassaudiocc-sc7280.h          |  5 +++++
+>  2 files changed, 22 insertions(+), 3 deletions(-)
 > 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
+> index bad9135489de..f066e8c57bbf 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
+> @@ -22,6 +22,8 @@ properties:
+> 
+>    clock-names: true
+> 
+> +  reg: true
+> +
+>    compatible:
+>      enum:
+>        - qcom,sc7280-lpassaoncc
+> @@ -38,8 +40,8 @@ properties:
+>    '#power-domain-cells':
+>      const: 1
+> 
+> -  reg:
+> -    maxItems: 1
+> +  '#reset-cells':
+> +    const: 1
+> 
+>  required:
+>    - compatible
+> @@ -69,6 +71,12 @@ allOf:
+>            items:
+>              - const: bi_tcxo
+>              - const: lpass_aon_cc_main_rcg_clk_src
+> +
+> +        reg:
+> +          maxItems: 2
 
-Acked-by: Rob Herring <robh@kernel.org>
+Don't need maxItems. 2 is implied from 'items' length.
+
+> +          items:
+> +            - description: lpass core cc register
+> +            - description: lpass audio csr register
+>    - if:
+>        properties:
+>          compatible:
+> @@ -90,6 +98,8 @@ allOf:
+>              - const: bi_tcxo_ao
+>              - const: iface
+> 
+> +        reg:
+> +          maxItems: 1
+>    - if:
+>        properties:
+>          compatible:
+> @@ -108,6 +118,8 @@ allOf:
+>            items:
+>              - const: bi_tcxo
+> 
+> +        reg:
+> +          maxItems: 1
+>  examples:
+>    - |
+>      #include <dt-bindings/clock/qcom,rpmh.h>
+> @@ -116,13 +128,15 @@ examples:
+>      #include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
+>      lpass_audiocc: clock-controller@3300000 {
+>        compatible = "qcom,sc7280-lpassaudiocc";
+> -      reg = <0x3300000 0x30000>;
+> +      reg = <0x3300000 0x30000>,
+> +            <0x32a9000 0x1000>;
+>        clocks = <&rpmhcc RPMH_CXO_CLK>,
+>                 <&lpass_aon LPASS_AON_CC_MAIN_RCG_CLK_SRC>;
+>        clock-names = "bi_tcxo", "lpass_aon_cc_main_rcg_clk_src";
+>        power-domains = <&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
+>        #clock-cells = <1>;
+>        #power-domain-cells = <1>;
+> +      #reset-cells = <1>;
+>      };
+> 
+>    - |
+> diff --git a/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h b/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
+> index 20ef2ea673f3..22dcd47d4513 100644
+> --- a/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
+> +++ b/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
+> @@ -24,6 +24,11 @@
+>  #define LPASS_AUDIO_CC_RX_MCLK_CLK			14
+>  #define LPASS_AUDIO_CC_RX_MCLK_CLK_SRC			15
+> 
+> +/* LPASS AUDIO CC CSR */
+> +#define LPASS_AUDIO_SWR_RX_CGCR				0
+> +#define LPASS_AUDIO_SWR_TX_CGCR				1
+> +#define LPASS_AUDIO_SWR_WSA_CGCR			2
+> +
+>  /* LPASS_AON_CC clocks */
+>  #define LPASS_AON_CC_PLL				0
+>  #define LPASS_AON_CC_PLL_OUT_EVEN			1
+> --
+> 2.17.1
+> 
+> 
