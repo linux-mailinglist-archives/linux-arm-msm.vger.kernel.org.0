@@ -2,72 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5022E53207B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 04:00:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96043532083
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 04:01:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232615AbiEXCA2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 22:00:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55666 "EHLO
+        id S232873AbiEXCBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 22:01:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231771AbiEXCA2 (ORCPT
+        with ESMTP id S232871AbiEXCBH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 22:00:28 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F9207CB0E;
-        Mon, 23 May 2022 19:00:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653357627; x=1684893627;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=YPB0asuW4QnalTPM5VsbF/tGwT6gB2yuiGMXkA+T7fA=;
-  b=CBoNZ5okCX8eyUaTSrgo7dN/xkEk2Y9QIcjoB9yG2AViLJGMDrL8jyMy
-   mXdtPdJ22hFO+hRVvoSulGV8j1ApM0gaf1giYVssW7T51PiMlZgltrbNQ
-   EavOoSWMBSx26nZi/s+09N/9Hvduk+gDWfGwSY4PZVLjOksolNz/e/Nsn
-   4=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 23 May 2022 19:00:27 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 19:00:26 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 23 May 2022 19:00:25 -0700
-Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 23 May
- 2022 19:00:21 -0700
-Subject: Re: [PATCH v4 3/3] dt-bindings: remoteproc: qcom: Convert SC7180 MSS
- bindings to YAML
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh@kernel.org>
-CC:     <bjorn.andersson@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <ohad@wizery.com>, <agross@kernel.org>,
-        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <mka@chromium.org>
-References: <1652978825-5304-1-git-send-email-quic_sibis@quicinc.com>
- <1652978825-5304-4-git-send-email-quic_sibis@quicinc.com>
- <20220520224011.GA374485-robh@kernel.org>
- <371ce290-1deb-bff2-112b-71be8c005b37@linaro.org>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <a5ad7884-d2c5-aeb0-405e-0121bb51f0a1@quicinc.com>
-Date:   Tue, 24 May 2022 07:30:18 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Mon, 23 May 2022 22:01:07 -0400
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F8FB10EF;
+        Mon, 23 May 2022 19:01:04 -0700 (PDT)
+Received: by mail-oi1-f177.google.com with SMTP id q10so19912147oia.9;
+        Mon, 23 May 2022 19:01:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=c4giYbPNIH7g7Y76hLicS+hGBBEopepvtOywRplLSr0=;
+        b=Mf/pqRr3hU+yhANKaJxEevb6Ausze7Df6Bx96I22ucnvMnavSXdzM6FeJ3VEIcF3NI
+         erd+LjU76oNlDuSX7PPteDPu3+uUi2gkwng+14GErI2yBuoXr+yhmyr9aVO9XolDBfJf
+         LakXkC884KUYzCcw6fEPa/++eQp7Nfkguu0xztiEhe4ViuDcWJdaOLGfD4OnxIyX8A8K
+         ZB3HTHPtKJbo/ZEXTf/nkUkUrOhD90WUJQQnitQWR4b3cVb5SAaRlEegc+Nq5qNwgevE
+         lJOXcfQUsoLOBgNYlFek8//7x3Gk5iUjemhrFeUYw+IRiUTnCDQ81qD4HOYvDu/zIzvJ
+         983A==
+X-Gm-Message-State: AOAM532LDLyH2hRn4jwGT74OSbQGLDXvbxcQJIXBNq7gwmkvdn7iLJMQ
+        BGNZUQOtv0knvt1oP+GmAMmKt9QH7A==
+X-Google-Smtp-Source: ABdhPJwunOxW+pSPVgQOr8FWb3/m6E/fl3a1UFwGAMujh8dvWDKRCvjj2LXyhvaChE8fqt7OaAzy+Q==
+X-Received: by 2002:a05:6808:f01:b0:32a:ef93:b955 with SMTP id m1-20020a0568080f0100b0032aef93b955mr1070571oiw.212.1653357663380;
+        Mon, 23 May 2022 19:01:03 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id k5-20020a056870870500b000e686d1386fsm4457738oam.9.2022.05.23.19.01.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 May 2022 19:01:02 -0700 (PDT)
+Received: (nullmailer pid 2597403 invoked by uid 1000);
+        Tue, 24 May 2022 02:01:01 -0000
+Date:   Mon, 23 May 2022 21:01:01 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 02/12] dt-bindings: arm: qcom: add missing MSM8998 board
+ compatibles
+Message-ID: <20220524020101.GA2597370-robh@kernel.org>
+References: <20220521164550.91115-1-krzysztof.kozlowski@linaro.org>
+ <20220521164550.91115-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <371ce290-1deb-bff2-112b-71be8c005b37@linaro.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220521164550.91115-2-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,33 +68,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Rob/Krzysztof,
-
-On 5/21/22 8:04 PM, Krzysztof Kozlowski wrote:
-> On 21/05/2022 00:40, Rob Herring wrote:
->> On Thu, May 19, 2022 at 10:17:05PM +0530, Sibi Sankar wrote:
->>> Convert SC7180 MSS PIL loading bindings to YAML.
->>
->> I suppose there is a reason the sc7180 is being split out and the only
->> one converted, but this doesn't tell me.
+On Sat, 21 May 2022 18:45:40 +0200, Krzysztof Kozlowski wrote:
+> Document board compatibles already present in Linux kernel.
 > 
-> I am also confused, especially that last time I pointed out that there
-> is work already:
-> https://lore.kernel.org/all/20220511161602.117772-7-sireeshkodali1@gmail.com/
-
-https://lore.kernel.org/all/e3543961-1645-b02a-c869-f8fa1ad2d41c@quicinc.com/#t
-
-The reason for the split was discussed on the list ^^, thought it
-wouldn't make much sense adding any of it to the commit message.
-Also since Krzysztof said he wanted a alignment between Sireesh/me
-we did exchange mails saying I'll take care of SC7180/SC7280 (since
-they had pas compatible which is overridden by mss compatible) and
-he could continue with the rest.
-
--Sibi
-
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 > 
-> 
-> Best regards,
-> Krzysztof
-> 
+
+Acked-by: Rob Herring <robh@kernel.org>
