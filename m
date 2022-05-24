@@ -2,56 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D4E8532BC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 15:57:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0649C532BE2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 16:02:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230081AbiEXN5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 09:57:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32774 "EHLO
+        id S238075AbiEXOCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 10:02:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbiEXN5r (ORCPT
+        with ESMTP id S238066AbiEXOCO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 09:57:47 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4646187A01;
-        Tue, 24 May 2022 06:57:44 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D6667615FD;
-        Tue, 24 May 2022 13:57:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E74FC385AA;
-        Tue, 24 May 2022 13:57:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653400663;
-        bh=7EPAVyGw4FJEo+Mq2KYGYXHGHQj1HBWBkXyw+Zrf6ZI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=WyjH87XhmyYaPHMnfIiS7A+kpm/hM+RKzsovZO1jOXTFgwzqkQJfzzoKfwYzm24v3
-         IWek3evaJdi1j5RKfLE2taJsalyjewq7F5NjTwdgvMEmmjq1DpHHLRaX9enic9J87O
-         MeD8p1t+4yREHV5oY/NqNx2caN6JMrv3yyxuz8dVw2oK691PPpGKGDXfWmvXiTqsx7
-         xDce7Kldw7/3y6iZSVO3mFGXL48DSDQFSCu+2+02VFGVKGbXskCwJ5KhK1hTpVx4qh
-         pHi6NMW+3bD0c4OgG55/A7b4mW210d/8SgTrcjsCKMkPoI9bE61UU8B9WZqp+nQTRT
-         xFHmOG+AabMhQ==
-Date:   Tue, 24 May 2022 19:27:35 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Guenter Roeck <linux@roeck-us.net>
-Cc:     Sibi Sankar <quic_sibis@quicinc.com>, bjorn.andersson@linaro.org,
-        jassisinghbrar@gmail.com, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        Prasad Sodagudi <quic_psodagud@quicinc.com>
-Subject: Re: [PATCH v3] mailbox: qcom-ipcc: Log the pending interrupt during
- resume
-Message-ID: <20220524135735.GD5745@thinkpad>
-References: <1652784180-10142-1-git-send-email-quic_sibis@quicinc.com>
- <20220524134825.GA4188122@roeck-us.net>
+        Tue, 24 May 2022 10:02:14 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3778A3FDBB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 07:02:12 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id p19so2209143wmg.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 07:02:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sqf3aADiltdClrrlBqK9iuPQhOsobmKVutlcvdUuPOw=;
+        b=S0MSdkj1h7I6qxUoPqr6SjfQuxm44YfuMUZxpamDCVz4sbAhPsdCBA6h+4f1sPfyWe
+         ereYc96/w2uTZ87XB0W7CMo2jbvCJDgBaig2/iqtb0fwjuwt0uoRq2PGZIFdcQFIPxKE
+         aSmDsb/4p8vqBBzg3jAfQlUJRviSdd7HXblSzKcPjC6U/1JVCYvXyZ+3O2DQ9mlTcsiw
+         grLGxshUn1RZi6Ck4bTP1FoVZQ4ePGIOMVNgNG5AE9DOjHe2dS4Omj8tCRKJcpEaqyld
+         s/tJr+VLwcqxsvQUP7zrMEyQFh4j0qMI9cfJ38OlO8qLWMURvd59OjuYsjlz2bxFV+pY
+         2V1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sqf3aADiltdClrrlBqK9iuPQhOsobmKVutlcvdUuPOw=;
+        b=Qew0Z8ipJHOf8W0WPjx3xzKwx8E1NKMmBm3Eqxiq+T5PyFVoDDJ3sDxETxNCLCdt9a
+         YI17EQWeubvCdBRjL3ewM6e2qd3oCWVX2QXV5nDbcBwwoj09rSEtg+HH0VLcaMBD6R8M
+         M1Yc4WZ6cwaHiuhj/xWsc5x5UHuKi2xFSB7Vq1CbFYaAAOD+FlIVFwOCxSmrjnRGg8/R
+         dG9VrSBvct3PvktJPsLA2ILyVc+otUCa5D5BKtZHqFzLR86ezdLOUVJw9lRCH5sdNYeR
+         BEJNwoCGzwfxYYYhCf3H4++8CZicdA1Rz39L0uKeU3oHh6Ttaauhr9sQiGU3cy8pyP+L
+         4SmQ==
+X-Gm-Message-State: AOAM5300wjIogERML97kEKOkebivW6aEJq6tfw4X3h8UCIsR+KlL/uZV
+        Ajwsh6uyuYSnGgPxck2wQCZbzw==
+X-Google-Smtp-Source: ABdhPJwPcnsIpMdSgU4cMCyaF/GbDGQ7PpPRBQvG3CnmZnZqXdWwM4kHuKq7zxc5TbDhyMivPHo3/w==
+X-Received: by 2002:a05:600c:209:b0:397:4a0f:7 with SMTP id 9-20020a05600c020900b003974a0f0007mr3883119wmi.91.1653400930565;
+        Tue, 24 May 2022 07:02:10 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id f9-20020adfc989000000b0020c5253d8e0sm12829030wrh.44.2022.05.24.07.02.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 May 2022 07:02:09 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     vladimir.zapolskiy@linaro.org, mchehab@kernel.org,
+        robh+dt@kernel.org, krzk+dt@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
+        hfink@snap.com, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v2 0/4] Switch on IMX577 on RB5 with a new CCI fix
+Date:   Tue, 24 May 2022 15:02:03 +0100
+Message-Id: <20220524140207.2758605-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220524134825.GA4188122@roeck-us.net>
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,105 +72,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 24, 2022 at 06:48:25AM -0700, Guenter Roeck wrote:
-> On Tue, May 17, 2022 at 04:13:00PM +0530, Sibi Sankar wrote:
-> > From: Prasad Sodagudi <quic_psodagud@quicinc.com>
-> > 
-> > Enable logging of the pending interrupt that triggered device wakeup. This
-> > logging information helps to debug IRQs that cause periodic device wakeups
-> > by printing the detailed information of pending IPCC interrupts.
-> > 
-> > Scenario: Device wakeup caused by Modem crash
-> > Logs:
-> > qcom-ipcc mailbox: virq: 182 triggered client-id: 2; signal-id: 2
-> > 
-> > >From the IPCC bindings it can further be understood that the client here is
-> > IPCC_CLIENT_MPSS and the signal was IPCC_MPROC_SIGNAL_SMP2P.
-> > 
-> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> > Signed-off-by: Prasad Sodagudi <quic_psodagud@quicinc.com>
-> > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> > ---
-> > 
-> > V3:
-> >  * Use pm_sleep_ptr and convert info to dbg [Mani]
-> 
-> Unfortunately, this results in
-> 
-> drivers/mailbox/qcom-ipcc.c:258:12: error: 'qcom_ipcc_pm_resume' defined but not used
-> 
-> on builds with PM disabled, as seen in next-20220524.
-> 
+V2:
 
-Yep, I missed it during review :(
+- Adds fix for bug identified by Vladimir
+  The CCI i2c_adapter_add() and pm_runtime_enable() are racy.
+  This is a generic problem not related to the rb5/imx577 but, for the sake
+  of our conversation/review's context I'll add it into this series.
+- Include Vladimir's camcc patch
+  I've also opted to include Vladimir's disable of camcc to make the enable
+  of it in my patchset logical.
+- Move address/size cells Konrad
+- Remove newline in pin definitions - Konrad
+- Remove sensor 'status = "okay"' - Konrad
+- Add comment to qrb5165-rb5.dts re: imx412 and imx577 difference - Konrad
+- Move pin definitions to 8250 dtsi - Vladimir
+- Drop power domain from sensor definition - Vladimir
+- Correct to "add to cam2" not "cam1" in commit log - bod
 
-But the fix has been submitted:
-https://patchwork.kernel.org/project/linux-arm-msm/patch/20220523224702.2002652-1-nathan@kernel.org/
+To make verification of the CCI race eaiser I've provided a defconfig both
+with and without modules enabled.
 
-Thanks,
-Mani
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=linux-next-24-05-22%2bimx577-rb5
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=linux-next-24-05-22%2bimx577-rb5-compiled-in
 
-> Guenter
-> 
-> >  * Fixup commit message
-> > 
-> > V2:
-> >  * Fix build error when ipcc is a module [Kernel Test Bot]
-> > 
-> >  drivers/mailbox/qcom-ipcc.c | 23 +++++++++++++++++++++++
-> >  1 file changed, 23 insertions(+)
-> > 
-> > diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-> > index c5d963222014..5a42bc2a1083 100644
-> > --- a/drivers/mailbox/qcom-ipcc.c
-> > +++ b/drivers/mailbox/qcom-ipcc.c
-> > @@ -254,6 +254,24 @@ static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc,
-> >  	return devm_mbox_controller_register(dev, mbox);
-> >  }
-> >  
-> > +static int qcom_ipcc_pm_resume(struct device *dev)
-> > +{
-> > +	struct qcom_ipcc *ipcc = dev_get_drvdata(dev);
-> > +	u32 hwirq;
-> > +	int virq;
-> > +
-> > +	hwirq = readl(ipcc->base + IPCC_REG_RECV_ID);
-> > +	if (hwirq == IPCC_NO_PENDING_IRQ)
-> > +		return 0;
-> > +
-> > +	virq = irq_find_mapping(ipcc->irq_domain, hwirq);
-> > +
-> > +	dev_dbg(dev, "virq: %d triggered client-id: %ld; signal-id: %ld\n", virq,
-> > +		FIELD_GET(IPCC_CLIENT_ID_MASK, hwirq), FIELD_GET(IPCC_SIGNAL_ID_MASK, hwirq));
-> > +
-> > +	return 0;
-> > +}
-> > +
-> >  static int qcom_ipcc_probe(struct platform_device *pdev)
-> >  {
-> >  	struct qcom_ipcc *ipcc;
-> > @@ -324,6 +342,10 @@ static const struct of_device_id qcom_ipcc_of_match[] = {
-> >  };
-> >  MODULE_DEVICE_TABLE(of, qcom_ipcc_of_match);
-> >  
-> > +static const struct dev_pm_ops qcom_ipcc_dev_pm_ops = {
-> > +	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(NULL, qcom_ipcc_pm_resume)
-> > +};
-> > +
-> >  static struct platform_driver qcom_ipcc_driver = {
-> >  	.probe = qcom_ipcc_probe,
-> >  	.remove = qcom_ipcc_remove,
-> > @@ -331,6 +353,7 @@ static struct platform_driver qcom_ipcc_driver = {
-> >  		.name = "qcom-ipcc",
-> >  		.of_match_table = qcom_ipcc_of_match,
-> >  		.suppress_bind_attrs = true,
-> > +		.pm = pm_sleep_ptr(&qcom_ipcc_dev_pm_ops),
-> >  	},
-> >  };
-> >  
-> > -- 
-> > 2.7.4
-> > 
+git diff linaro/linux-next-22-05-22+imx577-rb5 linaro/linux-next-24-05-22+imx577-rb5
+
+V1:
+Linux-next now has everything we need to switch on this sensor both in the
+qcom DTS and in the imx412 driver.
+
+After this, no further dts or driver work is required to capture images on
+the RB5.
+
+Here's a bootable linux-next with a kernel config. I added Vladimir's
+power-domain changes on-top to verify nothing breaks for me.
+
+https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=linux-next-18-05-22%2bimx577-rb5
+
+Bryan O'Donoghue (3):
+  i2c: qcom-cci: Fix ordering of pm_runtime_xx and i2c_add_adapter
+  arm64: dts: qcom: sm8250: camss: Define ports address/size cells
+  arm64: dts: qcom: qrb5165-rb5: Enable the IMX577 on cam2
+
+Vladimir Zapolskiy (1):
+  arm64: dts: qcom: sm8250: Disable camcc by default
+
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 60 ++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi     | 39 +++++++++++++++
+ drivers/i2c/busses/i2c-qcom-cci.c        | 14 ++++--
+ 3 files changed, 108 insertions(+), 5 deletions(-)
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.36.1
+
