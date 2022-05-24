@@ -2,63 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F1C65320E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 04:22:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DE235320EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 04:23:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232632AbiEXCWs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 22:22:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47962 "EHLO
+        id S232645AbiEXCXE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 22:23:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232291AbiEXCWr (ORCPT
+        with ESMTP id S233295AbiEXCXD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 22:22:47 -0400
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E560087A37;
-        Mon, 23 May 2022 19:22:45 -0700 (PDT)
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-f1eafa567cso17288532fac.8;
-        Mon, 23 May 2022 19:22:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NXEBGH1igk9e3z9Y6u2blcmbyg4RK2wb/5/BrMVpFzU=;
-        b=j0cLrc5zSXw06JOlGMB5GcMkhbvbJoduIUSdvqUyGr2g0juESEN85+EJg21FyNiseD
-         NrKI6bJZKQQfGrYR+N39Qmu769ud0TWWdUnpRXqaCQY6H67496oI5zVcmJ1dF9JffxhH
-         LZnFmE0FGdxZ6vianT9tTh7fn1qb3Ra2VlLYyX4f03yGDt8QlOwY2uZ4godja2oeDrkc
-         WGoOa24pjJ60dp2lel1tFnU7cgyvUJy5OcndNFRbSyagqhHx0mgG/iXnsrvzR4vUfrdv
-         PpsYSs2YQgBJnqdo6APTD7vs1CTZAQwiwcQVTTs2uHtDJsGNjkhBbvDdddcvQ2kKrkLh
-         qa6A==
-X-Gm-Message-State: AOAM530MTcmVgbLiHRQQbOSr4dWlT8NZVOYbVZ9/cb5HbGnYD45EvdUr
-        bp9WXQm4rfQSGc9DLJUgn1XEPEoFzQ==
-X-Google-Smtp-Source: ABdhPJxLSa5VNzYEQba/2tTj13w5ORdvhkgZwQ4MRUUkW+L2rg8CQTUIdp15642t/X3N3fcjgZzpzg==
-X-Received: by 2002:a05:6870:2425:b0:de:2fb0:1caa with SMTP id n37-20020a056870242500b000de2fb01caamr1246688oap.115.1653358965229;
-        Mon, 23 May 2022 19:22:45 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id o1-20020a056870a50100b000e90544b79fsm4383944oal.41.2022.05.23.19.22.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 19:22:44 -0700 (PDT)
-Received: (nullmailer pid 2632195 invoked by uid 1000);
-        Tue, 24 May 2022 02:22:43 -0000
-Date:   Mon, 23 May 2022 21:22:43 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, konrad.dybcio@somainline.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v5 1/7] dt-bindings: regulator: qcom,spmi-regulator:
- Convert to dtschema
-Message-ID: <20220524022243.GA2625732-robh@kernel.org>
-References: <20220519133015.484639-1-robimarko@gmail.com>
+        Mon, 23 May 2022 22:23:03 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7D9D9CC9D;
+        Mon, 23 May 2022 19:23:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1653358982; x=1684894982;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=0de7OZdEDnotdHJVDJmUKMnd7Q0VBtn1A0ZCxSDuzPQ=;
+  b=bCK74XKGe2HxcgEttobw7Us0WHqYzzAv/NopWsCV7T7ZD63ml77meuP8
+   yQxojCCEh3ilnFU3p5I7uWjA+24KjZboEAkxeyujxybx2C05pOEZwu/cS
+   KIFdc3rrl379m2O852yAcTv5f8J6p/o0/6beoZ6oE6WDAou9ltmXZj35J
+   Q=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 23 May 2022 19:23:02 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 19:23:01 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 23 May 2022 19:23:00 -0700
+Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 23 May
+ 2022 19:22:57 -0700
+Subject: Re: [PATCH v4 2/3] dt-bindings: remoteproc: qcom: Convert SC7280 MSS
+ bindings to YAML
+To:     Stephen Boyd <swboyd@chromium.org>, <bjorn.andersson@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>
+CC:     <ohad@wizery.com>, <agross@kernel.org>,
+        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mka@chromium.org>
+References: <1652978825-5304-1-git-send-email-quic_sibis@quicinc.com>
+ <1652978825-5304-3-git-send-email-quic_sibis@quicinc.com>
+ <CAE-0n50iYAUmj6GEdCuOJ1d_SgeeFWtoxqWf7qN=jZ_js4wBcQ@mail.gmail.com>
+ <1289c2e4-5607-b515-88b1-f44585e62cd3@quicinc.com>
+ <CAE-0n52tbS2zvOWb4+2cbL7uth0Z3AJ-O6e0WH_xtQsMyu4A7A@mail.gmail.com>
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+Message-ID: <c3a3f28b-06a4-0039-eb7b-833debd3f95d@quicinc.com>
+Date:   Tue, 24 May 2022 07:52:53 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220519133015.484639-1-robimarko@gmail.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+In-Reply-To: <CAE-0n52tbS2zvOWb4+2cbL7uth0Z3AJ-O6e0WH_xtQsMyu4A7A@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,34 +74,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 19, 2022 at 03:30:09PM +0200, Robert Marko wrote:
-> Convert the bindings of Qualcomm SPMI regulators to DT schema.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-> Changes in v4:
-> * Remove blank interrupts and interrupt-names as generic properties
-> to only allow them per compatible
-> 
-> Changes in v3:
-> * Remove quotes around refs
-> * Use much stricter regex for regulator node matching
-> * Add supply matching per compatible
-> * Add blank interrupts and interrupt-names as generic properties
-> 
-> Changes in v2:
-> * Remove the forgotten text bindings
-> * Move allOf after patternProperties
-> * Use my private email as the maintainer email
-> 
-> I am aware that syscon alone is not really acceptable, its converted
-> directly from the old text bindings.
-> 
-> Any advice on how to solve this is appreciated.
 
-Add a compatible for the block in question, but that means you have to 
-have a schema for it. Or you can just drop the node. This binding isn't 
-really about that node.
 
-Rob
+On 5/21/22 1:40 AM, Stephen Boyd wrote:
+> Quoting Sibi Sankar (2022-05-20 11:46:58)
+>> On 5/20/22 4:05 AM, Stephen Boyd wrote:
+>>> Quoting Sibi Sankar (2022-05-19 09:47:04)
+>>>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+>>>> new file mode 100644
+>>>> index 000000000000..a936d84eefa6
+>>>> --- /dev/null
+>>>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+>>>> +        resets = <&aoss_reset AOSS_CC_MSS_RESTART>,
+>>>> +                 <&pdc_reset PDC_MODEM_SYNC_RESET>;
+>>>> +        reset-names = "mss_restart", "pdc_reset";
+>>>> +
+>>>> +        qcom,halt-regs = <&tcsr_mutex 0x23000 0x25000 0x28000 0x33000>;
+>>>> +        qcom,ext-regs = <&tcsr 0x10000 0x10004 &tcsr_mutex 0x26004 0x26008>;
+>>>
+>>> Because it's two items I'd expect:
+>>>
+>>>        <&tcsr 0x10000 0x10004>, <&tcsr_mutex 0x26004 0x26008>;
+>>
+>> I guess both the ways work since the driver uses
+>> of_parse_phandle_with_fixed_args.
+> 
+> See commit 39bd2b6a3783 ("dt-bindings: Improve phandle-array schemas")
+> for why the way you have it is not preferred.
+
+Sure, I'll fix the dt up and update the example.
+
+-Sibi
+
+> 
