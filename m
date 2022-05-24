@@ -2,114 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F917532FAF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 19:33:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 516E4532FB9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 19:41:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233656AbiEXRdr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 13:33:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51026 "EHLO
+        id S240035AbiEXRli (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 13:41:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234928AbiEXRdp (ORCPT
+        with ESMTP id S240005AbiEXRlg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 13:33:45 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 519FD6A056
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 10:33:44 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id rq11so14679090ejc.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 10:33:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=TDDiVK/0RrLn3b/aahT7btm7i296B2V0gGDLOx8X1ZY=;
-        b=qBqVLj0xgRV22kdm183vJuStce0HuTo2gKgvnAjIFKwH65LuG+Tf0xOhNXRzvTXICs
-         Tsi1vuETbH3G8ZqjfFnydAFMGGb1/8HPBxixEueqj+mULEsvfNBY/rYzthky1af8QVHf
-         pNlTnyhFJOduccrjtYdrZ9JcqmEdIKyiQJd62Yh9jpnONAzSNLLvZesxrJ2gPDSE+aWX
-         Nf9nnIOlQ+2ljoBsmwSI4HWrLhxZ8465YQ2fi+Tl3M4QSAzUNuMoErrPyxgkHj4xBRpj
-         sWa90IvRxFO4UZ34rlhA1uS1dDljxy+J4EKXs6wo5wdybfMS6eXdJ2ZjbD1xIwv/CAZ3
-         4KKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=TDDiVK/0RrLn3b/aahT7btm7i296B2V0gGDLOx8X1ZY=;
-        b=uj0NqXRPX7dh5udVIQkrZoXlR8xxZ/TVyM6c9xhHB5uzkd7qcEdMdDcRmEiDw13Trb
-         bJcP5pSv+FwqChzdNHB8hCQVxhnNYGy3kGMkBCQr4xUyt86Z9y2WgCVMqQxwW1PWEloF
-         vm+0DsSjUAwXAMYDKN8+nJljpp1n4jjDA/qg8SILf2cZfCfDJ4KUXs7TogLh3DuFcrP8
-         TJQNo1oqSQC+i+X9AQUq2O0XYv8hF54/R3jP3ZsaRoeOWgPj2PHJRaWrA5t28Ottp+qL
-         XFmR5i+sFIKawFbtu8bwTqPCRLX63b6wDqH1qsZmFi3sHS0+bGUF3u+tOjvf4iiK6wxT
-         WcRw==
-X-Gm-Message-State: AOAM533xrYirVvEvBLxlsGDAijS1oehvym8yuyvun32cX5Kqz/L0BKyb
-        /BujVHbFbmEkRQ9ITtdtbQJRFA==
-X-Google-Smtp-Source: ABdhPJw7idjF6lR2c/kScDlKjd/kk16xrz+CaaIEfnwGa6wCZpqyj8x7XEUhkdjJq4pGJueB1TiovQ==
-X-Received: by 2002:a17:906:a11a:b0:6fe:9814:70eb with SMTP id t26-20020a170906a11a00b006fe981470ebmr23763019ejy.118.1653413622914;
-        Tue, 24 May 2022 10:33:42 -0700 (PDT)
-Received: from [192.168.0.177] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id ay18-20020a056402203200b0042aa08c7799sm9560487edb.62.2022.05.24.10.33.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 May 2022 10:33:42 -0700 (PDT)
-Message-ID: <9badcfce-1db2-5381-bab8-8e52b875cebd@linaro.org>
-Date:   Tue, 24 May 2022 19:33:41 +0200
+        Tue, 24 May 2022 13:41:36 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACDEE27FEA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 10:41:34 -0700 (PDT)
+Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E53323F685;
+        Tue, 24 May 2022 20:03:46 +0200 (CEST)
+Message-ID: <c240075d-55d1-28f6-18ad-3897e55f8e59@somainline.org>
+Date:   Tue, 24 May 2022 19:41:30 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v4 3/3] dt-bindings: remoteproc: qcom: Convert SC7180 MSS
- bindings to YAML
-Content-Language: en-US
-To:     Sibi Sankar <quic_sibis@quicinc.com>, Rob Herring <robh@kernel.org>
-Cc:     bjorn.andersson@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, mka@chromium.org
-References: <1652978825-5304-1-git-send-email-quic_sibis@quicinc.com>
- <1652978825-5304-4-git-send-email-quic_sibis@quicinc.com>
- <20220520224011.GA374485-robh@kernel.org>
- <371ce290-1deb-bff2-112b-71be8c005b37@linaro.org>
- <a5ad7884-d2c5-aeb0-405e-0121bb51f0a1@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <a5ad7884-d2c5-aeb0-405e-0121bb51f0a1@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.9.1
+Subject: Re: [PATCH] clk: qcom: camcc-sm8250: Fix halt on boot by reducing
+ driver's init level
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20220518103554.949511-1-vladimir.zapolskiy@linaro.org>
+ <6cb75a3e-49fd-bbe0-4e81-d6aec33b70a5@somainline.org>
+ <c1f4cfa7-f7f3-a72a-b48b-97071906398c@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <c1f4cfa7-f7f3-a72a-b48b-97071906398c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/05/2022 04:00, Sibi Sankar wrote:
-> Hey Rob/Krzysztof,
-> 
-> On 5/21/22 8:04 PM, Krzysztof Kozlowski wrote:
->> On 21/05/2022 00:40, Rob Herring wrote:
->>> On Thu, May 19, 2022 at 10:17:05PM +0530, Sibi Sankar wrote:
->>>> Convert SC7180 MSS PIL loading bindings to YAML.
->>>
->>> I suppose there is a reason the sc7180 is being split out and the only
->>> one converted, but this doesn't tell me.
+
+On 18/05/2022 19:24, Vladimir Zapolskiy wrote:
+> Hi Konrad,
+>
+> On 5/18/22 19:47, Konrad Dybcio wrote:
 >>
->> I am also confused, especially that last time I pointed out that there
->> is work already:
->> https://lore.kernel.org/all/20220511161602.117772-7-sireeshkodali1@gmail.com/
-> 
-> https://lore.kernel.org/all/e3543961-1645-b02a-c869-f8fa1ad2d41c@quicinc.com/#t
-> 
-> The reason for the split was discussed on the list ^^, thought it
-> wouldn't make much sense adding any of it to the commit message.
-> Also since Krzysztof said he wanted a alignment between Sireesh/me
-> we did exchange mails saying I'll take care of SC7180/SC7280 (since
-> they had pas compatible which is overridden by mss compatible) and
-> he could continue with the rest.
+>> On 18/05/2022 12:35, Vladimir Zapolskiy wrote:
+>>> Access to I/O of SM8250 camera clock controller IP depends on enabled
+>>> GCC_CAMERA_AHB_CLK clock supplied by global clock controller, the 
+>>> latter
+>>> one is inited on subsys level, so, to satisfy the dependency, it would
+>>> make sense to deprive the init level of camcc-sm8250 driver.
+>>
+>> Hi,
+>>
+>> I believe this is due to the fact that this clock is falsely advertised
+>> by the header and Linux does not know anything about it, because it is
+>> handled by a magic write [1] (as I once said in a similar case, this was
+>> going bite eventually..) instead and the index corresponding to the
+>> define symbol is not initialized, hence it points to NULL. Adding the
+>
+> your observation is correct in my opinion, however it does not change the
+> identified root cause of the problem, and my rationale remains the same,
+> the camera clock controller should be initialized after the GCC, thus
+> this change, and currently the critical fix, remains valid.
+>
+>> clock properly in GCC would let the OF clock stuff handle it gracefully.
+>
+> If/when the clock is properly added in the GCC, then it will open an
+> option to clk_prepare_enable() it in the CAMCC driver, so at least it's
+> a point to keep it described in a dts as it's done right from the 
+> beginning,
+> especially because the platform dtsi describes the hardware properly.
+> To add a real CCF clock would be my preference, but, as I've said above,
+> even if it happens, it does not belittle the presented change.
+>
+>> If that is the case, your patch disabling the clock controller block
+>> (which I'm against unless there's abosolute need, as having the hw block
+>> initialized properly should be possible regardless of the board, as it's
+>> a generic SoC components) should not be necessary.
+>
+> Here I do oppose, I believe board dts files should explicitly describe
+> enabled IPs in accordance to actual board peripherals. For instance it's
+> unclear why CAMCC or e.g. CAMSS should be enabled by default on a board
+> without camera sensors at all. I understand that there is an option to
+> explicitly disable some particular device tree nodes in board files, but
+> it is against common practicalities.
+>
+> Also above I do neglect the fact that the GCC clock is always enabled,
+> irrelatively of its actual usage by probably disabled CAMCC.
+
+I think there's an opportunity to save some power here by keeping the 
+camss ahb disabled by default.. That would include removing the magic 
+write from gcc probe, adding the gcc ahb as a proper clock and adding a 
+camss consumer to it (possibly with both fw_name and name fields in 
+parent_data to keep backwards compat, even though i don't think any 
+board uses camera hw upstream, so we may break it here with a good 
+justification). Then we could keep camcc enabled by default on all 
+boards, and if there are no users, the clocks would just be parked to xo 
+or disabled entirely, instead of inheriting an unknown configuration.
 
 
-Sounds good to me, but Rob's got a point - this background should be
-better explained.
+Konrad
 
-
-Best regards,
-Krzysztof
+>
+> -- 
+> Best wishes,
+> Vladimir
+>
+>> That said, I can not test my theory right now.
+>>
+>>
+>> [1]
+>> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/clk/qcom/gcc-sm8250.c?h=next-20220518#n3647 
+>>
+>>
+>> Konrad
+>>
+>>>
+>>> If both drivers are compiled as built-in, there is a change that a 
+>>> board
+>>> won't boot up due to a race, which happens on the same init level.
+>>>
+>>> Fixes: 5d66ca79b58c ("clk: qcom: Add camera clock controller driver 
+>>> for SM8250")
+>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> ---
+>>>    drivers/clk/qcom/camcc-sm8250.c | 12 +-----------
+>>>    1 file changed, 1 insertion(+), 11 deletions(-)
+>>>
+>>> diff --git a/drivers/clk/qcom/camcc-sm8250.c 
+>>> b/drivers/clk/qcom/camcc-sm8250.c
+>>> index 439eaafdcc86..ae4e9774f36e 100644
+>>> --- a/drivers/clk/qcom/camcc-sm8250.c
+>>> +++ b/drivers/clk/qcom/camcc-sm8250.c
+>>> @@ -2440,17 +2440,7 @@ static struct platform_driver 
+>>> cam_cc_sm8250_driver = {
+>>>        },
+>>>    };
+>>>    -static int __init cam_cc_sm8250_init(void)
+>>> -{
+>>> -    return platform_driver_register(&cam_cc_sm8250_driver);
+>>> -}
+>>> -subsys_initcall(cam_cc_sm8250_init);
+>>> -
+>>> -static void __exit cam_cc_sm8250_exit(void)
+>>> -{
+>>> -    platform_driver_unregister(&cam_cc_sm8250_driver);
+>>> -}
+>>> -module_exit(cam_cc_sm8250_exit);
+>>> +module_platform_driver(cam_cc_sm8250_driver);
+>>>       MODULE_DESCRIPTION("QTI CAMCC SM8250 Driver");
+>>>    MODULE_LICENSE("GPL v2");
+>>>
