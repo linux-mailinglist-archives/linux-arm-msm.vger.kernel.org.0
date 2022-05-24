@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE763532BE1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 16:02:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAC7A532BEB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 16:02:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238078AbiEXOCR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 10:02:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38988 "EHLO
+        id S238070AbiEXOCW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 10:02:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231281AbiEXOCO (ORCPT
+        with ESMTP id S238079AbiEXOCR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 10:02:14 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AA6841316
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 07:02:13 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id c190-20020a1c35c7000000b0038e37907b5bso1503221wma.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 07:02:13 -0700 (PDT)
+        Tue, 24 May 2022 10:02:17 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13FA03FDBB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 07:02:15 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id u27so25038544wru.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 07:02:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5mhXJbAqcgTA4KWN8H8AXnpke49ZRdi4wrpj76K6Kgc=;
-        b=G4IYSvljgIaJ8D7CbXZ8ZTGNlBhC8ZJEkiFFe4/VgEZ4ayxT9sz/RUrl+u+mGqF6D7
-         pX+r4VIucEoGZ+xWS5l71vorfyTLIRDipriFyM7i08So4Po/MDdKVnLoHm0W3MF7d2Ja
-         8286NQ7ZOwCXSTklo9hRhkdd5b1DWPy55Tj6sDAn7W6jFeHYHC8hS/NBUVkBtiBvGZa7
-         kFKvZK8tWbOsCjcUIqhng4VhdIrW2mXtqFYEHaOFHlwkEqUdVS/SyHkplXO3bQ6BILAX
-         tN85jZ6H5Yd/lLpipDHEItXggB1uewAL6vm4ew3kold8e3q9Lt1U+XCEUy9e6wN9pcBg
-         sfqQ==
+        bh=sgUjeNlYCE2nYrQ7xP8GeK8Sj5Es/x6D2DUJducPl+M=;
+        b=ULzV1Hc8Tsz7s8NR1qeuBqJZjnNMjGDsSk1eh67MSsDYWMG8uAWOUMzkGnIi9gLEqW
+         aGx3UOuXgJXBr6Vq70q9DqLuFprSw+U/2Wbl5OuTdAxylt6/r9cz2HL+eh9Xq8RX52C+
+         p3GCYt4Fd1D2rti++gjT8J+qNF9awwCgu0Pm4D4ccrgYiXTF8OXAe+hyYKG5nyYB/v5g
+         i2pGMs30/9plGElLHTRf9/rWOVbWfb2avMYoF8l/PsOa6doETPXO7bZBpV/O+6xgWBYs
+         K01xufFo6SGSET0vnshmGF1XrlTdZiwtt+JKtT6zgX9lkpGISin62Jc4GpIy2PUUZz9D
+         4neA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5mhXJbAqcgTA4KWN8H8AXnpke49ZRdi4wrpj76K6Kgc=;
-        b=z3DSW6Pg9YsxbvGmS3+JuYLUK192jmbZCkYl4d+zoQskbvUB1f4aCZYg5uEky/OnA2
-         LV/CW1PCG0hdWQ1BbP1HxUfJxv7HUJK5n7QcXrEfJ+tKARb6XEPEpHOZtSpK8xTHqgXq
-         vFWofzMZpsFFXz0/ERdHjsSMKTyb/dn6hXdQGfNxtkAold+oE4TseIDgXEgrsLybrHkx
-         LTYiPNOokBchH0V3AmDKXwCU431Pug+n8qObH65o5eFFVMv4y3GSi2ch/q4NII1wD+Zb
-         eW+OF8WWWXdnM9fQWbZHo6FPlnSIzHxwCOZtpiiQg78if11WtQby8euxll5K/E8LCLSl
-         pu3w==
-X-Gm-Message-State: AOAM533sBKVB3kVbUtXJHAcjzWkKt1qWG4bap1tpSlXow4MK5DryBsp6
-        f6bBI/lqeYKyaWmKCe06em5u5g==
-X-Google-Smtp-Source: ABdhPJxGjXM5D1+3NyM22sjywl+lIjmmgPdGLTImyxax0NR8FmreG4ZYBqLqU8ZJPz38USbY0UUT/Q==
-X-Received: by 2002:a05:600c:4fcc:b0:397:5a83:fac5 with SMTP id o12-20020a05600c4fcc00b003975a83fac5mr3435937wmq.107.1653400931852;
-        Tue, 24 May 2022 07:02:11 -0700 (PDT)
+        bh=sgUjeNlYCE2nYrQ7xP8GeK8Sj5Es/x6D2DUJducPl+M=;
+        b=eU0+pOo/Qq1zsvWbqH+bqKMMzhuh7QKUpaQ7BDM54czND7iv/RkBE9UEVH53y1WlUa
+         ptOyLh459kUf9efX6QTbIsKgQUEkiCr1H2NxmL2JXzgcOP9KoeZHT8SmYpAI7nrcihEC
+         /ZL1f+gLTo3XJvhiFiB9nb6oIK5CzU1KrKk7rzZwpGdPIFildaIMg4eHKOIqOHY0CWet
+         VScRElet+oVzfq9vFVO6QdZImymNoHOlTndCIZZftDDBq8p3/d0/n1Hpo6Ssjmqb+SID
+         mreMH4yz4pRwYCuj81oP62IjiAr1qXQxyWaku3SzGDxhwj6N+D5rYKZ/d0NZKxtdxQ7S
+         7jog==
+X-Gm-Message-State: AOAM533gsOxt2J0c0afRoYBb6WxjrILJEIrVX5cQ9g2Rndvcjccw6++G
+        kArLTVrTmrMpq1ICIKZ7fRlcTw==
+X-Google-Smtp-Source: ABdhPJyAzPo3Qyl20Ytz0mMvnvs68j4Zrn+qxWtypGt2QO0yt6mFQJz/zTX/wgyb7luUvzEQuf4FoQ==
+X-Received: by 2002:a5d:4529:0:b0:20d:1108:8d76 with SMTP id j9-20020a5d4529000000b0020d11088d76mr23186161wra.60.1653400933501;
+        Tue, 24 May 2022 07:02:13 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id f9-20020adfc989000000b0020c5253d8e0sm12829030wrh.44.2022.05.24.07.02.10
+        by smtp.gmail.com with ESMTPSA id f9-20020adfc989000000b0020c5253d8e0sm12829030wrh.44.2022.05.24.07.02.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 07:02:11 -0700 (PDT)
+        Tue, 24 May 2022 07:02:12 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
         bjorn.andersson@linaro.org
@@ -56,9 +56,9 @@ Cc:     vladimir.zapolskiy@linaro.org, mchehab@kernel.org,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
         hfink@snap.com, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: [PATCH v2 1/4] i2c: qcom-cci: Fix ordering of pm_runtime_xx and i2c_add_adapter
-Date:   Tue, 24 May 2022 15:02:04 +0100
-Message-Id: <20220524140207.2758605-2-bryan.odonoghue@linaro.org>
+Subject: [PATCH v2 2/4] arm64: dts: qcom: sm8250: Disable camcc by default
+Date:   Tue, 24 May 2022 15:02:05 +0100
+Message-Id: <20220524140207.2758605-3-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.36.1
 In-Reply-To: <20220524140207.2758605-1-bryan.odonoghue@linaro.org>
 References: <20220524140207.2758605-1-bryan.odonoghue@linaro.org>
@@ -66,7 +66,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,59 +74,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When we compile-in the CCI along with the imx412 driver and run on the RB5
-we see that i2c_add_adapter() causes the probe of the imx412 driver to
-happen.
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-This probe tries to perform an i2c xfer() and the xfer() in i2c-qcom-cci.c
-fails on pm_runtime_get() because the i2c-qcom-cci.c::probe() function has
-not completed to pm_runtime_enable(dev).
+At the moment there are no changes in SM8250 board files, which require
+camera clock controller to run, whenever it is needed for a particular
+board, the status of camcc device node will be changed in a board file.
 
-Fix this sequence by ensuring pm_runtime_xxx() calls happen prior to adding
-the i2c adapter.
-
-Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
-Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/i2c/busses/i2c-qcom-cci.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-index 5c7cc862f08f..90d02effeae9 100644
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -638,6 +638,11 @@ static int cci_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		goto error;
- 
-+	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
-+	pm_runtime_use_autosuspend(dev);
-+	pm_runtime_set_active(dev);
-+	pm_runtime_enable(dev);
-+
- 	for (i = 0; i < cci->data->num_masters; i++) {
- 		if (!cci->master[i].cci)
- 			continue;
-@@ -649,14 +654,13 @@ static int cci_probe(struct platform_device *pdev)
- 		}
- 	}
- 
--	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
--	pm_runtime_use_autosuspend(dev);
--	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
--
- 	return 0;
- 
- error_i2c:
-+	pm_runtime_put(dev);
-+	pm_runtime_disable(dev);
-+	pm_runtime_dont_use_autosuspend(dev);
-+
- 	for (--i ; i >= 0; i--) {
- 		if (cci->master[i].cci) {
- 			i2c_del_adapter(&cci->master[i].adap);
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index cf0c97bd5ad3..2bc11cad3a44 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -3407,6 +3407,7 @@ camcc: clock-controller@ad00000 {
+ 			clock-names = "iface", "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
+ 			power-domains = <&rpmhpd SM8250_MMCX>;
+ 			required-opps = <&rpmhpd_opp_low_svs>;
++			status = "disabled";
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+ 			#power-domain-cells = <1>;
 -- 
 2.36.1
 
