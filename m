@@ -2,210 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BB10532BF0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 16:04:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11500532BFF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 16:10:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238072AbiEXOC1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 10:02:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39492 "EHLO
+        id S237558AbiEXOJo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 10:09:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238084AbiEXOCV (ORCPT
+        with ESMTP id S230209AbiEXOJo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 10:02:21 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 828A04476E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 07:02:17 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id e2so14247762wrc.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 07:02:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=iXbAKg7nw/YPVpQzpMSW7CFDer8OTk9OFR3468QMlVU=;
-        b=wRRSomMBWyLZtSm2GUksoxH8N5afcVR+fFJzKt0dzUhOp2edGNa6q92q+5LfkFoJIB
-         c3wQ0YXdqN7uy65UARftVHRryTFY1eH/vM6a1zd+RXV3iM1rTQAmXvVMrsVJdKinpLxi
-         3Qg/FF7C9DXilpHYaMvGdzhqBOv9ycLVstHi0xl5cNPZgkYBMEeWHSwxkZwtw/zFlCHk
-         Ziuby3RJsNzJNFcyut5fQzqotk2AweF9ErmV9rRrhP3rv8N2lhPMKmPygvjUdE0PrT9Z
-         kYctfvfN7TfiPRjhtd52Eo+OpbD5V68MMTwnLEC6H7R27fqSwjcDoHaF5pWYUdQ3HDEy
-         1o9A==
+        Tue, 24 May 2022 10:09:44 -0400
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65D5027FDA;
+        Tue, 24 May 2022 07:09:43 -0700 (PDT)
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-edeb6c3642so22373416fac.3;
+        Tue, 24 May 2022 07:09:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=iXbAKg7nw/YPVpQzpMSW7CFDer8OTk9OFR3468QMlVU=;
-        b=59ZlxZJX29R8vOGCDn6IN6260aJ0rZszevQtPDOgr2FzDrl/qcjwROp9m+LoNrSHR9
-         AHZ1No7qa9AudEGuSQdkfzcT8ySzq6jCRVSlNKrtRehtIcxpx9vZW1SkSF4SlegBNC93
-         l2lpsEKe6zYQHfplEETMI6KbHaGJw2cvSj+HKRj5H9P4GP72JQL5epX2Zu9bVsjJxBnJ
-         YQ+iY1G/9SDFaeELGEkZWy3bci9GxhHjz7Jwef991eQfDldl3LGJqebfK/eLFwAvtcrk
-         IH73KIv+lXlc/AWFoOHpPjeBRHNXjG1bQJv1eAmqGdIrgQ7C0x8TK+U2ubi4qoIf7lNy
-         AHSQ==
-X-Gm-Message-State: AOAM533QmmrLLGXjV4sFGOGq9U1mBr/3Fkus7xAJsFS9pmU5Si+F+dZX
-        MJhIreYsfw95jA2en8Lqm9KrmA==
-X-Google-Smtp-Source: ABdhPJzRAOMMaVGBLAFkdiNofBhPnbs39YQqKXkic4KUDYR0N2nuJv43ZCMpgcG+fzpbHenTIJ+s6A==
-X-Received: by 2002:adf:d1ec:0:b0:20e:58c3:6998 with SMTP id g12-20020adfd1ec000000b0020e58c36998mr23067468wrd.280.1653400936241;
-        Tue, 24 May 2022 07:02:16 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id f9-20020adfc989000000b0020c5253d8e0sm12829030wrh.44.2022.05.24.07.02.14
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nG80lP1Xa2erat+zWawIK5ymOe8Cuz6sDbYS9+ykkrA=;
+        b=xA7cQC+JDISweNmgTwA+kkLsnhn4XHS0rFoZUxZDcnYc1pI0TXbNVpmpfcdDM24u5q
+         PghtN+TOv+bEZVni+uZX55gfNTalLQaYYc9TwCBbQTc3zn1lbLA/HAiFEMK1mdqgRs0W
+         Zns+3aNiet0y5vyuMWhv7t/KfmzIL/IEoBm9WywDWRBFN/OSiC7/C0Ein0xLPvfrWNey
+         ++7978EAUcGme+3tgvheYxce/vhqiI0zK3BKX8F/UjP/38iAV8ML3daeae7IQ3g5aVbf
+         pn/p3G9y6u0E78vWVHAub3hGaBHKJ/VJejFUGBpQqd0AhkpRzjgwErE+SJaLxGUIyk7r
+         Slwg==
+X-Gm-Message-State: AOAM532wsuA/EmAz3mhRgKPzGtsSpox2oZhLP1j1f8l178KVQqTfFy2k
+        Z2E5x2Dd8wjYHswuMks0gA==
+X-Google-Smtp-Source: ABdhPJzQJqlYCgtjgQgfukGhoMZ9vX8fGvWFxtOAAHoPf47UrRhdP+w+huaQWy1Q5wEXsjg773nsYQ==
+X-Received: by 2002:a05:6870:524c:b0:f2:ae90:dae1 with SMTP id o12-20020a056870524c00b000f2ae90dae1mr732345oai.198.1653401382620;
+        Tue, 24 May 2022 07:09:42 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id y41-20020a4a982c000000b0035eb4e5a6c7sm5392287ooi.29.2022.05.24.07.09.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 07:02:15 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     vladimir.zapolskiy@linaro.org, mchehab@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
-        hfink@snap.com, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: [PATCH v2 4/4] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577 on cam2
-Date:   Tue, 24 May 2022 15:02:07 +0100
-Message-Id: <20220524140207.2758605-5-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220524140207.2758605-1-bryan.odonoghue@linaro.org>
-References: <20220524140207.2758605-1-bryan.odonoghue@linaro.org>
+        Tue, 24 May 2022 07:09:41 -0700 (PDT)
+Received: (nullmailer pid 3697144 invoked by uid 1000);
+        Tue, 24 May 2022 14:09:40 -0000
+Date:   Tue, 24 May 2022 09:09:40 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     bjorn.andersson@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, mka@chromium.org
+Subject: Re: [PATCH v4 3/3] dt-bindings: remoteproc: qcom: Convert SC7180 MSS
+ bindings to YAML
+Message-ID: <20220524140940.GA3687200-robh@kernel.org>
+References: <1652978825-5304-1-git-send-email-quic_sibis@quicinc.com>
+ <1652978825-5304-4-git-send-email-quic_sibis@quicinc.com>
+ <20220520224011.GA374485-robh@kernel.org>
+ <b495fa6c-6964-d8fa-0baf-acd719cd8779@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b495fa6c-6964-d8fa-0baf-acd719cd8779@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The IMX577 is on CCI1/CSI2 providing four lanes of camera data.
+On Tue, May 24, 2022 at 07:40:51AM +0530, Sibi Sankar wrote:
+> Hey Rob,
+> Thanks for taking time to review the series.
+> 
+> On 5/21/22 4:10 AM, Rob Herring wrote:
+> > On Thu, May 19, 2022 at 10:17:05PM +0530, Sibi Sankar wrote:
+> > > Convert SC7180 MSS PIL loading bindings to YAML.
+> > 
+> > I suppose there is a reason the sc7180 is being split out and the only
+> > one converted, but this doesn't tell me.
+> 
+> https://lore.kernel.org/all/e3543961-1645-b02a-c869-f8fa1ad2d41c@quicinc.com/#t
+> 
+> The reason for the split was discussed on the list ^^, thought it
+> wouldn't make much sense adding any of it to the commit message.
 
-An example media-ctl pipeline is:
+Why not? If you did, then we wouldn't be having this conversation.
 
-media-ctl --reset
-media-ctl -v -d /dev/media0 -V '"imx412 '20-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
-media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
-media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+Commit messages, at a minimum, should answer why are you making the 
+change. They don't really need to explain what the change is. We can all 
+read the diff to understand that.
 
-yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
-
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 60 ++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sm8250.dtsi     | 33 +++++++++++++
- 2 files changed, 93 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 0e63f707b911..756ddeb7530b 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -1294,3 +1294,63 @@ &qup_spi0_data_clk {
- 	drive-strength = <6>;
- 	bias-disable;
- };
-+
-+&camcc {
-+	status = "okay";
-+};
-+
-+&camss {
-+	status = "okay";
-+	vdda-phy-supply = <&vreg_l5a_0p88>;
-+	vdda-pll-supply = <&vreg_l9a_1p2>;
-+
-+	ports {
-+		/* The port index denotes CSIPHY id i.e. csiphy2 */
-+		port@2 {
-+			reg = <2>;
-+			csiphy2_ep: endpoint {
-+				clock-lanes = <7>;
-+				data-lanes = <0 1 2 3>;
-+				remote-endpoint = <&imx412_ep>;
-+			};
-+
-+		};
-+	};
-+};
-+
-+&cci1 {
-+	status = "okay";
-+};
-+
-+&cci1_i2c0 {
-+	camera@1a {
-+		/*
-+		 * rb5 ships with an imx577. camx code from qcom treats imx412
-+		 * and imx577 the same way. Absent better data do the same here.
-+		 */
-+		compatible = "sony,imx412";
-+		reg = <0x1a>;
-+
-+		reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
-+		pinctrl-names = "default", "suspend";
-+		pinctrl-0 = <&cam2_default>;
-+		pinctrl-1 = <&cam2_suspend>;
-+
-+		clocks = <&camcc CAM_CC_MCLK2_CLK>;
-+		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
-+		assigned-clock-rates = <24000000>;
-+
-+		dovdd-supply  = <&vreg_l7f_1p8>;
-+		avdd-supply = <&vdc_5v>;
-+		dvdd-supply = <&vdc_5v>;
-+
-+		port {
-+			imx412_ep: endpoint {
-+				clock-lanes = <1>;
-+				link-frequencies = /bits/ 64 <600000000>;
-+				data-lanes = <1 2 3 4>;
-+				remote-endpoint = <&csiphy2_ep>;
-+			};
-+		};
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index aa9a13364865..2b65ec2806d0 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3788,6 +3788,39 @@ tlmm: pinctrl@f100000 {
- 			gpio-ranges = <&tlmm 0 0 181>;
- 			wakeup-parent = <&pdc>;
- 
-+			cam2_default: cam2-default {
-+				rst {
-+					pins = "gpio78";
-+					function = "gpio";
-+					drive-strength = <2>;
-+					bias-disable;
-+				};
-+
-+				mclk {
-+					pins = "gpio96";
-+					function = "cam_mclk";
-+					drive-strength = <16>;
-+					bias-disable;
-+				};
-+			};
-+
-+			cam2_suspend: cam2-suspend {
-+				rst {
-+					pins = "gpio78";
-+					function = "gpio";
-+					drive-strength = <2>;
-+					bias-pull-down;
-+					output-low;
-+				};
-+
-+				mclk {
-+					pins = "gpio96";
-+					function = "cam_mclk";
-+					drive-strength = <2>;
-+					bias-disable;
-+				};
-+			};
-+
- 			cci0_default: cci0-default {
- 				cci0_i2c0_default: cci0-i2c0-default {
- 					/* SDA, SCL */
--- 
-2.36.1
-
+Rob
