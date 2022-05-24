@@ -2,61 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 585A75321CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 05:59:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 948DA532263
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 07:19:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234068AbiEXD7r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 23:59:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36074 "EHLO
+        id S230343AbiEXFTr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 01:19:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233309AbiEXD7r (ORCPT
+        with ESMTP id S233535AbiEXFTq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 23:59:47 -0400
+        Tue, 24 May 2022 01:19:46 -0400
 Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CB0A4EA21;
-        Mon, 23 May 2022 20:59:46 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C15CE7938B;
+        Mon, 23 May 2022 22:19:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653364786; x=1684900786;
+  t=1653369584; x=1684905584;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=JtQtked8sKOZnAnbX7HvpbDPMaLU9/DINVcMbDa20Ac=;
-  b=YwwUePaTheA5QGBsEQoZrTlddgDvfmVzkh7S8XcFD66wjRvzCix6UEg/
-   F7kMM8lQOl7pDLdphPRzoUd0TEpu0O4m8CmnFpz9VlgyF51GMps4fmMgE
-   1LUwnEC1pWzwGpq1l7l6MAyJLrBzJe/rDqDa2JzjgTxp54R4BpaJMInnM
-   s=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 23 May 2022 20:59:46 -0700
+  bh=Y70m4zoFMo/2xMKYhPGTkP2g/JnmhAQgI6QzWYKSkZE=;
+  b=GE4u9oMXWLxUFAshU6Vx5HQY1Yf7oJrLjdY3NKC5CIBUX4joWTxJ+oxV
+   fMTVjbf3OqYU/8gPxdm4HLtB9OVTDST94ZLrn21OFjut/BiTAfPDm3yc4
+   pV6/pCm1AS88owEMw4P3ExzrlEjVs5Plk2+seh8h2eLRVvQT1rFjXSC/8
+   Y=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 23 May 2022 22:19:44 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 20:59:46 -0700
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 22:19:43 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 23 May 2022 20:59:45 -0700
-Received: from [10.50.42.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ 15.2.986.22; Mon, 23 May 2022 22:19:43 -0700
+Received: from [10.216.49.5] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 23 May
- 2022 20:59:41 -0700
-Message-ID: <5544ba12-8a7a-3bc5-1416-c8c707500c9d@quicinc.com>
-Date:   Tue, 24 May 2022 09:29:38 +0530
+ 2022 22:19:36 -0700
+Message-ID: <c0217be0-2c69-8dcb-45c4-a8bd47063da0@quicinc.com>
+Date:   Tue, 24 May 2022 10:49:32 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [PATCHv15 5/9] lib: Add register read/write tracing support
+Subject: Re: [PATCH V6 4/5] mmc: debugfs: Add debug fs error state entry for
+ mmc driver
 Content-Language: en-US
-To:     <arnd@arndb.de>, <rostedt@goodmis.org>
-CC:     <gregkh@linuxfoundation.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <coresight@lists.linaro.org>, <suzuki.poulose@arm.com>,
-        <maz@kernel.org>, <quic_psodagud@quicinc.com>,
-        <quic_tsoni@quicinc.com>, <will@kernel.org>,
-        <catalin.marinas@arm.com>
-References: <cover.1652891705.git.quic_saipraka@quicinc.com>
- <f6d1b9e9d70968b506bdfd1b77129cb751b9df9d.1652891705.git.quic_saipraka@quicinc.com>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <f6d1b9e9d70968b506bdfd1b77129cb751b9df9d.1652891705.git.quic_saipraka@quicinc.com>
+To:     Adrian Hunter <adrian.hunter@intel.com>, <ulf.hansson@linaro.org>,
+        <wsa+renesas@sang-engineering.com>, <shawn.lin@rock-chips.com>,
+        <yoshihiro.shimoda.uh@renesas.com>, <digetx@gmail.com>,
+        <quic_asutoshd@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_rampraka@quicinc.com>,
+        <quic_pragalla@quicinc.com>, <quic_sartgarg@quicinc.com>,
+        <quic_nitirawa@quicinc.com>, <quic_sayalil@quicinc.com>,
+        Liangliang Lu <quic_luliang@quicinc.com>,
+        "Bao D . Nguyen" <quic_nguyenb@quicinc.com>
+References: <1652857340-6040-1-git-send-email-quic_c_sbhanu@quicinc.com>
+ <1652857340-6040-5-git-send-email-quic_c_sbhanu@quicinc.com>
+ <79590e32-5505-7a0c-81b4-0efd5c8f156f@intel.com>
+From:   "Sajida Bhanu (Temp)" <quic_c_sbhanu@quicinc.com>
+In-Reply-To: <79590e32-5505-7a0c-81b4-0efd5c8f156f@intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -72,60 +76,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Steve,
+Hi Adrian,
 
-On 5/18/2022 10:14 PM, Sai Prakash Ranjan wrote:
-> From: Prasad Sodagudi <psodagud@codeaurora.org>
->
-> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
-> are typically used to read/write from/to memory mapped registers
-> and can cause hangs or some undefined behaviour in following few
-> cases,
->
-> * If the access to the register space is unclocked, for example: if
->    there is an access to multimedia(MM) block registers without MM
->    clocks.
->
-> * If the register space is protected and not set to be accessible from
->    non-secure world, for example: only EL3 (EL: Exception level) access
->    is allowed and any EL2/EL1 access is forbidden.
->
-> * If xPU(memory/register protection units) is controlling access to
->    certain memory/register space for specific clients.
->
-> and more...
->
-> Such cases usually results in instant reboot/SErrors/NOC or interconnect
-> hangs and tracing these register accesses can be very helpful to debug
-> such issues during initial development stages and also in later stages.
->
-> So use ftrace trace events to log such MMIO register accesses which
-> provides rich feature set such as early enablement of trace events,
-> filtering capability, dumping ftrace logs on console and many more.
->
-> Sample output:
->
-> rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
-> rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
-> rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
-> rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
->
-> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
-> Co-developed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-> ---
->   arch/Kconfig                  |  3 ++
->   arch/arm64/Kconfig            |  1 +
->   include/trace/events/rwmmio.h | 97 +++++++++++++++++++++++++++++++++++
->   lib/Kconfig                   |  7 +++
->   lib/Makefile                  |  2 +
->   lib/trace_readwrite.c         | 47 +++++++++++++++++
->   6 files changed, 157 insertions(+)
->   create mode 100644 include/trace/events/rwmmio.h
->   create mode 100644 lib/trace_readwrite.c
+Thanks for the review.
 
-How does this version look?
+Please find the inline comments.
 
 Thanks,
-Sai
 
+Sajida
+
+On 5/23/2022 12:45 PM, Adrian Hunter wrote:
+> On 18/05/22 10:02, Shaik Sajida Bhanu wrote:
+>> Add debug fs entry error state to query eMMC and SD card errors statistics.
+>> If any errors occurred in eMMC and SD card driver level then
+>> err_state value will be set to 1.
+>>
+>> Signed-off-by: Liangliang Lu <quic_luliang@quicinc.com>
+>> Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
+>> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+>> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+> Could use debugfs_create_file_unsafe() (see below)
+>
+> Otherwise:
+>
+> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Sure Thank you
+>
+>> ---
+>>   drivers/mmc/core/debugfs.c | 23 +++++++++++++++++++++++
+>>   1 file changed, 23 insertions(+)
+>>
+>> diff --git a/drivers/mmc/core/debugfs.c b/drivers/mmc/core/debugfs.c
+>> index 6aa5a60..3c7908d 100644
+>> --- a/drivers/mmc/core/debugfs.c
+>> +++ b/drivers/mmc/core/debugfs.c
+>> @@ -223,6 +223,27 @@ static int mmc_clock_opt_set(void *data, u64 val)
+>>   DEFINE_DEBUGFS_ATTRIBUTE(mmc_clock_fops, mmc_clock_opt_get, mmc_clock_opt_set,
+>>   	"%llu\n");
+>>   
+>> +static int mmc_err_state_get(void *data, u64 *val)
+>> +{
+>> +	struct mmc_host *host = data;
+>> +	int i;
+>> +
+>> +	if (!host)
+>> +		return -EINVAL;
+>> +
+>> +	*val = 0;
+>> +	for (i = 0; i < MMC_ERR_MAX; i++) {
+>> +		if (host->err_stats[i]) {
+>> +			*val = 1;
+>> +			break;
+>> +		}
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +DEFINE_DEBUGFS_ATTRIBUTE(mmc_err_state, mmc_err_state_get, NULL, "%llu\n");
+>> +
+>>   static int mmc_err_stats_show(struct seq_file *file, void *data)
+>>   {
+>>   	struct mmc_host *host = (struct mmc_host *)file->private;
+>> @@ -289,6 +310,8 @@ void mmc_add_host_debugfs(struct mmc_host *host)
+>>   	debugfs_create_file_unsafe("clock", S_IRUSR | S_IWUSR, root, host,
+>>   				   &mmc_clock_fops);
+>>   
+>> +	debugfs_create_file("err_state", 0600, root, host,
+>> +			    &mmc_err_state);
+> This could use debugfs_create_file_unsafe()
+Sure
+>
+>>   	debugfs_create_file("err_stats", 0600, root, host,
+>>   			    &mmc_err_stats_fops);
+>>   
