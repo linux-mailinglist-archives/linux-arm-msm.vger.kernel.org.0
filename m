@@ -2,79 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E601D531F4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 01:43:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 676A6531FC9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 02:19:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230296AbiEWXnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 19:43:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57010 "EHLO
+        id S232110AbiEXATr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 20:19:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229513AbiEWXnO (ORCPT
+        with ESMTP id S232520AbiEXATj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 19:43:14 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 486A48A049
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 16:43:13 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id q20so3968497qtw.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 16:43:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vo71c+n/wCWfUYChsCch/TOZTAc6RqS7hic8WUvcoIw=;
-        b=b1HZCTlc0FaASasHRCD5Y4kmWzTiLs2LaQl7/CXAt9GX3aDYUTR+mEWyBmw6QyDjt0
-         kqoqMhMB7Pb3sbK/HKSgcZG0lKxupwMeKXRmTekoG+0tSkivdjQZ4FQVz23bKT9fKurd
-         gFH178OzpkErKGL+s0tqPjvX6Q/YMAxaQ0BoEB5n8E3Z34ZOQsdTCMGjsAQxXESXvteq
-         vNVOIS9eoKRtkaVRQ4oz4jZMWxwJHYLdIuxnM3g2JKYoP8Yr+Gx2yzwrrrYIOiQe99ET
-         7UXJKrS42Tnbe12+4yhg0jflTmXsJbahMHsA1CgFxMKNVA/2xzXV1sWrEPEVqWdPse5m
-         iRVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vo71c+n/wCWfUYChsCch/TOZTAc6RqS7hic8WUvcoIw=;
-        b=0FQOhU59QVPHwtD7OzgNErqISNZ6OYnewjRC9xSe8N/WD54qGwmIyNoEQsl4cvSIUa
-         f5UFPQhEbMHLBAfOKKXj/2AkuX2tTgVNKlIwlxeCkfI2MxRDSpUcO9XMkd3MfhuqugH9
-         HkSR15PwqJor/ii5rdfy8kiPEy/ZvLTusdomquV29tUVwFLBiWmwWtvzHQafshOmTYiD
-         iwg6kwEDV/nks36ijS7uyka2rxBZYLtr0Jxnz/M6B8MZNzw8dtV/jNvJoQUNYQfKuIuW
-         xwtmF0bBptqCjTGExR3Ky5GYDjkUFqb+Ir6o41Nj/W8Co0+2nT0HZkIbZ69M9avrc8qi
-         5MBA==
-X-Gm-Message-State: AOAM530OfB+9F5s+Jgy9V4mSz/d7+ac3DcQT7tFpUVKuKXhhaIsv0iuV
-        rNQzOzBVOZgcb1zF+Jx5CdRBItauMki7s7GPg2oThQ==
-X-Google-Smtp-Source: ABdhPJzUW9RhiGAZVdELoGYpBS6ZpU1N20WruTBeXfIZLJ+KEXjedEvFNxLgd/OJk3jzcNbkBvu6dH9ebgySiUvx914=
-X-Received: by 2002:ac8:5e54:0:b0:2f3:f4ee:efbd with SMTP id
- i20-20020ac85e54000000b002f3f4eeefbdmr17894617qtx.295.1653349392378; Mon, 23
- May 2022 16:43:12 -0700 (PDT)
+        Mon, 23 May 2022 20:19:39 -0400
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4547D95A0D;
+        Mon, 23 May 2022 17:18:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1653351533; x=1684887533;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ZriWVXpTBb1rmEbtXs+vi59sS36pz9Vpa0z2W2c2tv0=;
+  b=bfyEsH6V+ToixvQRGecfsTvH7kAOFOf5LGmW3RwPKuIGsW8Pf11JChiD
+   61Z8cNyh4HWnkF4h8cfEA+MwZXB/bonfchHZ9VGvHFQnwhXR/Jd7LAjRB
+   Fj2EPcN4pSm4TaAZR1u+zDW1KUxE5xBRI7D7UgGOhxBpJiWht5vRUer/M
+   9hQkyjqfmcPt3qmTwGDwXf6LwKHHNkA/BQAO3zXPZ54N8KajcHKgqy6Of
+   SQuGQ0apTRD7qqKK9K0ciVtuMuEp8mhcCCnzCcT/QvjwdL6j4hzdy8Ihx
+   FD/jKxXahncCC9i2DTS/1ksIN15YGIIFkgqOy7qgTynGGzS2QFS8Ekwmi
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10356"; a="273387786"
+X-IronPort-AV: E=Sophos;i="5.91,247,1647327600"; 
+   d="scan'208";a="273387786"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 17:18:51 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,247,1647327600"; 
+   d="scan'208";a="558909749"
+Received: from lkp-server01.sh.intel.com (HELO db63a1be7222) ([10.239.97.150])
+  by orsmga002.jf.intel.com with ESMTP; 23 May 2022 17:18:48 -0700
+Received: from kbuild by db63a1be7222 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1ntIG7-0001XK-ED;
+        Tue, 24 May 2022 00:18:47 +0000
+Date:   Tue, 24 May 2022 08:18:39 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <helgaas@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     kbuild-all@lists.01.org, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v12 6/8] PCI: dwc: Implement special ISR handler for
+ split MSI IRQ setup
+Message-ID: <202205240801.7l6SF2Hv-lkp@intel.com>
+References: <20220523181836.2019180-7-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-References: <20220523213837.1016542-1-marijn.suijten@somainline.org>
-In-Reply-To: <20220523213837.1016542-1-marijn.suijten@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 24 May 2022 02:43:01 +0300
-Message-ID: <CAA8EJprEjOWRh98V3sprjXZJZMeR25Bz1U3a_uX_KhRbU48srQ@mail.gmail.com>
-Subject: Re: [PATCH 0/9] drm/msm/dsi_phy: Replace parent names with clk_hw pointers
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rajeev Nandan <quic_rajeevny@quicinc.com>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220523181836.2019180-7-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,107 +76,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Dmitry,
 
-On Tue, 24 May 2022 at 00:38, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> As stated in [1] I promised to tackle and send this series.
->
-> parent_hw pointers are easier to manage and cheaper to use than
-> repeatedly formatting the parent name and subsequently leaving the clk
-> framework to perform lookups based on that name.
->
-> This series starts out by adding extra constructors for divider, mux and
-> fixed-factor clocks that have parent_hw(s) pointer argument(s) instead
-> of some DT index or name.  Followed by individual patches performing the
-> conversion, one DSI PHY at a time.
->
-> dsi_phy_28nm_8960 includes an extra fixup to replace "eternal"
-> devm_kzalloc allocations (for the lifetime of the device) with
-> stack-local char arrays, like all the other DSI PHY drivers.
->
-> I couldn't help but notice that clock names are wildly varying:
->
-> - Some use underscores in the _clk suffix where others have nothing;
-> - Some have an _ after the %d, others have not;
-> - Some use a _pll suffix after dsi%d or even _phy_pll suffix.
->
-> Are there any thoughts or feelings towards unifying these?
-> Theoretically no clock names are used anywhere in the kernel, and
-> everything is based on a phandle + index in DT (I have yet to validate
-> this).  Obviously no .name/.fw_name will be updated to not break DT.
+Thank you for the patch! Perhaps something to improve:
 
-I'd say, leave them as is. Even if they are historical, we don't have
-a strong pressure to change them.
+[auto build test WARNING on helgaas-pci/next]
+[cannot apply to robh/for-next v5.18]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-Significant number of older platforms still use names to identify the
-clock. And moreover apq8096/msm8960 uses dsi1/dsi2 instead of
-dsi0/dsi1.
+url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/PCI-qcom-Fix-higher-MSI-vectors-handling/20220524-024956
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/helgaas/pci.git next
+config: mips-allyesconfig (https://download.01.org/0day-ci/archive/20220524/202205240801.7l6SF2Hv-lkp@intel.com/config)
+compiler: mips-linux-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/35aa0471e2ee4f0f21b01fbcfe6a4a425e968596
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Dmitry-Baryshkov/PCI-qcom-Fix-higher-MSI-vectors-handling/20220524-024956
+        git checkout 35aa0471e2ee4f0f21b01fbcfe6a4a425e968596
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=mips SHELL=/bin/bash drivers/pci/controller/dwc/
 
-Probably we should call the next cycle "The Cycle of clocks cleaning".
-I can volunteer to take care of 8960/8064/8016/8996, as at least I can
-test them. But if you wish, you (or anybody else of course) can take
-any of these platforms too, just ping me, so that I won't spend time
-duplicating somebody's efforts.
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
-> Which, by the way, is there a particular reason for:
->
->   #define DSI_BYTE_PLL_CLK              0
->   #define DSI_PIXEL_PLL_CLK             1
->
-> To not be in the dt-bindings and used in the DT?
+All warnings (new ones prefixed by >>):
 
-Before my restructure of the DSI PHY subsys, each driver defined them
-separately. And the idea of moving them to a dt-bindings header didn't
-come to my mind. Feel free to do so, it looks like a good idea.
-Just as a note, DP PHY also uses 0 for the link clock and 1 for the
-pixel clock. What do you think about having a single header for these
-names?
-
->
-> And with enough future improvements out of the way, let's round out this
-> patch-series by stating that it has been successfully tested on:
->
-> - Sony Nile Discovery (Xperia XA2 Ultra): 14nm;
-> - Sony Seine PDX201 (Xperia 10II): 14nm;
-> - Sony Loire Suzu (Xperia X): 28nm.
->
-> And no diff is observed in debugfs's clk_summary.
->
-> Unfortunately all other devices in my collection with a 7/10nm DSI PHY
-> have a DSC panel which we have yet to get working.
-
-I will test it on RB3 (10nm) and RB5 (7nm) during one of the next few days.
-
->
-> [1]: https://lore.kernel.org/linux-arm-msm/20220502214235.s5plebunh4ttjhge@SoMainline.org/
->
-> Marijn Suijten (9):
->   clk: divider: Introduce devm_clk_hw_register_divider_parent_hw()
->   clk: mux: Introduce devm_clk_hw_register_mux_parent_hws()
->   clk: fixed-factor: Introduce *clk_hw_register_fixed_factor_parent_hw()
->   drm/msm/dsi_phy_28nm: Replace parent names with clk_hw pointers
->   drm/msm/dsi_phy_28nm_8960: Replace parent names with clk_hw pointers
->   drm/msm/dsi_phy_28nm_8960: Use stack memory for temporary clock names
->   drm/msm/dsi_phy_14nm: Replace parent names with clk_hw pointers
->   drm/msm/dsi_phy_10nm: Replace parent names with clk_hw pointers
->   drm/msm/dsi_phy_7nm: Replace parent names with clk_hw pointers
->
->  drivers/clk/clk-fixed-factor.c                | 57 ++++++++++--
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c    | 92 ++++++++-----------
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c    | 36 ++++----
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c    | 52 +++++------
->  .../gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c   | 26 ++----
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c     | 92 +++++++++----------
->  include/linux/clk-provider.h                  | 34 +++++++
->  7 files changed, 209 insertions(+), 180 deletions(-)
->
-> --
-> 2.36.1
+   drivers/pci/controller/dwc/pcie-designware-host.c: In function 'dw_split_msi_isr':
+>> drivers/pci/controller/dwc/pcie-designware-host.c:116:25: warning: variable 'pci' set but not used [-Wunused-but-set-variable]
+     116 |         struct dw_pcie *pci;
+         |                         ^~~
 
 
+vim +/pci +116 drivers/pci/controller/dwc/pcie-designware-host.c
+
+   108	
+   109	static void dw_split_msi_isr(struct irq_desc *desc)
+   110	{
+   111		struct irq_chip *chip = irq_desc_get_chip(desc);
+   112		int irq = irq_desc_get_irq(desc);
+   113		struct pcie_port *pp;
+   114		int i;
+   115		u32 num_ctrls;
+ > 116		struct dw_pcie *pci;
+   117	
+   118		chained_irq_enter(chip, desc);
+   119	
+   120		pp = irq_desc_get_handler_data(desc);
+   121		pci = to_dw_pcie_from_pp(pp);
+   122	
+   123		/*
+   124		 * Unlike generic dw_handle_msi_irq(), we can determine which group of
+   125		 * MSIs triggered the IRQ, so process just that group.
+   126		 */
+   127		num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
+   128	
+   129		for (i = 0; i < num_ctrls; i++) {
+   130			if (pp->msi_irq[i] == irq) {
+   131				dw_handle_single_msi_group(pp, i);
+   132				break;
+   133			}
+   134		}
+   135	
+   136		WARN_ON_ONCE(i == num_ctrls);
+   137	
+   138		chained_irq_exit(chip, desc);
+   139	}
+   140	
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://01.org/lkp
