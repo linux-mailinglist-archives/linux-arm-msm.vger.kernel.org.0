@@ -2,118 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B5335327CA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 12:35:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACD2F5327D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 12:39:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236263AbiEXKel (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 06:34:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40062 "EHLO
+        id S235809AbiEXKft (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 06:35:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236256AbiEXKei (ORCPT
+        with ESMTP id S234773AbiEXKfs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 06:34:38 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F002A84A07;
-        Tue, 24 May 2022 03:34:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653388477; x=1684924477;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=7bLxu0Hjz0PUqMYxQi85Gh6Ti17eu9E4ZUowKR/f+aQ=;
-  b=T/MfLI4YxZ04dB5K4pzwa5zyso80WznSyinyQ5zG6tGlw0hIwzVbvxAt
-   RBQzmQJH8mq4bgFFHff2sq3WP/fxAwXmxFB+RVSA4aKVTHTnfjTqPWfja
-   T9j5KDQOvs1eXl7g/dBDyKUyr21t0QnAyl/PHVH76as+ZGcDeOMsI2FmV
-   M=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 24 May 2022 03:34:36 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 May 2022 03:34:35 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 24 May 2022 03:34:34 -0700
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 24 May 2022 03:34:28 -0700
-Date:   Tue, 24 May 2022 16:04:25 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 24 May 2022 06:35:48 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA64470902
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 03:35:47 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 85E53B817BC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 10:35:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1BBC385AA;
+        Tue, 24 May 2022 10:35:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1653388545;
+        bh=gwBQJB78CCphDTIy50bjriGtJcPqoXOiI/qgg5bZ34M=;
+        h=From:To:Cc:Subject:Date:From;
+        b=WAaa2wtSlhxP+AHfoFOc7dz4elSiiUuzyEy1vVdV+SwfuFrdYunPJskyJPChaiIxC
+         BTyqcwwyxlDOCdGAbnn3uICkHK8zjZzXNd1eCEOX8dBQOst+aEYkMJjh8DTsDS3ANj
+         L0iMjphD/gyDwZQX18/+J7Lj+OXSsBcU0IipLFNONzZvRVJ1oXEYkD7+0ryzxHKFSt
+         +o8pgUM9j1hAxWopwkURSx7V9YAYGi0L1fz11uKuV2Vuvo1RXD9v6AdPXrusjFsYUe
+         F3as93AT0Kdb2i5/8N4SRkQhidQ13dhB8SI1gTUv+gJO4faL/ooWLnUvugDuGj9h7/
+         75Cd6qtQPPKmA==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        "Matthias Kaehlcke" <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Subject: Re: [PATCH v17 1/5] dt-bindings: usb: dwc3: Add wakeup-source
- property support
-Message-ID: <20220524103425.GM15121@hu-pkondeti-hyd.qualcomm.com>
-References: <1653387228-28110-1-git-send-email-quic_kriskura@quicinc.com>
- <1653387228-28110-2-git-send-email-quic_kriskura@quicinc.com>
+        Vinod Koul <vkoul@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        kernel test robot <yujie.liu@intel.com>
+Subject: [PATCH] drm/msm/disp/dpu1: remove supoerflous init
+Date:   Tue, 24 May 2022 16:05:34 +0530
+Message-Id: <20220524103534.2520439-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1653387228-28110-2-git-send-email-quic_kriskura@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 24, 2022 at 03:43:44PM +0530, Krishna Kurapati wrote:
-> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> 
-> Added support for wakeup-source property. This property can be
-> used to check and power down the phy during system suspend if
-> wake up is not supported.
-> 
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/usb/snps,dwc3.yaml | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-> index f4471f8..4d4de2f 100644
-> --- a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-> +++ b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-> @@ -341,6 +341,11 @@ properties:
->        This port is used with the 'usb-role-switch' property  to connect the
->        dwc3 to type C connector.
->  
-> +  wakeup-source:
-> +    $ref: /schemas/types.yaml#/definitions/flag
-> +    description:
-> +      Enable USB remote wakeup.
-> +
->  unevaluatedProperties: false
->  
->  required:
-> -- 
-> 2.7.4
-> 
-Looks good to me. I see that Krzysztof already acked this patch.
+Commit 58dca9810749 ("drm/msm/disp/dpu1: Add support for DSC in
+encoder") added dsc_common_mode variable which was set to zero but then
+again programmed, so drop the supoerflous init.
 
-Thanks,
-Pavan
+Fixes: 58dca9810749 ("drm/msm/disp/dpu1: Add support for DSC in encoder")
+Reported-by: kernel test robot <yujie.liu@intel.com>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 51f24ba68375..388125c8bda1 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1798,7 +1798,6 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
+ 		}
+ 	}
+ 
+-	dsc_common_mode = 0;
+ 	pic_width = dsc->drm->pic_width;
+ 
+ 	dsc_common_mode = DSC_MODE_MULTIPLEX | DSC_MODE_SPLIT_PANEL;
+-- 
+2.34.1
+
