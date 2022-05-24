@@ -2,71 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A2BA9532832
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 12:50:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E83A532906
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 13:31:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233418AbiEXKt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 06:49:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35980 "EHLO
+        id S235214AbiEXLap (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 07:30:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbiEXKt6 (ORCPT
+        with ESMTP id S236672AbiEXLal (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 06:49:58 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45F1D5F8DA;
-        Tue, 24 May 2022 03:49:57 -0700 (PDT)
+        Tue, 24 May 2022 07:30:41 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD690880D8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 04:30:39 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id x7so11275186qta.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 04:30:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653389397; x=1684925397;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=Tk/huaI+Brj6VolyTS3vaRaaffgo18jJiY/piQh5zVQ=;
-  b=JMxdD/KNFlqL2GSVFSTx3Owy9pgL4I27Vp7arGu5oDpqZzC3tGfikt3+
-   K2CzFZTNgbq/UfqsSyBW1FfXuTvUztDXQG2CBDv30GDvd3algQDBZoQxK
-   5nyvdqZJ3svKIJYhzU2CPXY73Ig7+HusftXvy0wLhWB4HaNtRpx0gLnyD
-   A=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 24 May 2022 03:49:56 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 May 2022 03:49:56 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 24 May 2022 03:49:55 -0700
-Received: from [10.216.5.195] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 24 May
- 2022 03:49:49 -0700
-Message-ID: <51b8aca1-e038-4907-e973-ebdbebaf9b28@quicinc.com>
-Date:   Tue, 24 May 2022 16:19:47 +0530
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bGLq4W32TEzpUZBXnWRpdyd7/FBRGgFvTqPNT1jEfoA=;
+        b=OAKqDk3Zf2X9iX5TDmh7ABpCDzVGMUrpUY8i6x6nJcwoF12F3W5mAEj2t6xv93hbYo
+         SvZnm8yU58A2KMSqCKgsdkPWHTmFO3UvANgtMFVocPMJjBCD0RYArw+Sy6P/NnWM6gb+
+         ihqbRdP+zooyMawnQUTMNCamUE5z+YXZx1552uiZbUDlzzWCpj4HnqUx4hRx/IXA1Rm1
+         GiAhUUo0rV41YOoBdkwhrYkuU6uuUh6G4KaQVc6aLMdIcxF1ABvti9SSrLXXNuvrqMga
+         9Ax5oakjTNn8gmAYKrgJVk7GMmLq5D8gtAURyFnoJVQfLbT3YXQCtx/dAKBVDECSxjkP
+         Rn8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bGLq4W32TEzpUZBXnWRpdyd7/FBRGgFvTqPNT1jEfoA=;
+        b=La5J5HkJH02bjp3KDv1Hw1fhEs2gnfG/23ms7C0LtcRdknzweyqltqysq3FKgwfrsj
+         U/xZdi0Io9jM4K8rRC5uat0Lg9YYZqkZBF1CqRMMf51+syDp4ybX1mjLt6s4tqHcUDLh
+         p5fqSGh0QuU1i3LvXDYyBG1A+xt9BQ6qOnw7hFqGeHR2BkxDDH+AgfjSXJJ/fd4CjrAS
+         9xmF1PB3xDxKB/qnXLau70uRVGzwV3/VKS8uvQcoa5B7ZMjyHNudWYLNlGowJE/L4lhP
+         c+SkyXNTsmjGxUNxks2HyHazere2Zx7eSBomtAMzcS/V7RTAlsehqle8c1engbeYTuFk
+         c/dQ==
+X-Gm-Message-State: AOAM532XOJ/A29/Ma75fWMZG4MOLYSDvFP9TXjcBQ051sAjwBJnvIxi8
+        KBOOEzPPJUHI3+oaR37zTQH5FAZAUzxkAcZkhYYTjg==
+X-Google-Smtp-Source: ABdhPJzWUliZZ3coRed1/OyusyZ5AuNUEzDPp+9amUhMmBiouK3cjF+RoHYC0NtfjmsJyLr1LVC9fSARx4kUKXhxdD8=
+X-Received: by 2002:a05:622a:188e:b0:2f3:dc9f:946 with SMTP id
+ v14-20020a05622a188e00b002f3dc9f0946mr19907509qtc.682.1653391839062; Tue, 24
+ May 2022 04:30:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v2] ASoC: qcom: soundwire: Add support for controlling
- audio CGCR from HLOS
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <alsa-devel@alsa-project.org>, <bgoswami@quicinc.com>,
-        <bjorn.andersson@linaro.org>, <broonie@kernel.org>,
-        <devicetree@vger.kernel.org>, <judyhsiao@chromium.org>,
-        <lgirdwood@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <perex@perex.cz>,
-        <quic_plai@quicinc.com>, <quic_rohkumar@quicinc.com>,
-        <robh+dt@kernel.org>, <srinivas.kandagatla@linaro.org>,
-        <tiwai@suse.com>, <vkoul@kernel.org>
-References: <1652877755-25120-1-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n53g9rWks+euk5KHBzmJNEB3xLbJzMgCxN52DO5x+9-Wgg@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <CAE-0n53g9rWks+euk5KHBzmJNEB3xLbJzMgCxN52DO5x+9-Wgg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+References: <20220524103534.2520439-1-vkoul@kernel.org>
+In-Reply-To: <20220524103534.2520439-1-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 24 May 2022 14:30:28 +0300
+Message-ID: <CAA8EJpp0F+wP0Uoz+i07f0C1H4UJVdJdPrFquvGUEMB8gQUu-g@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/disp/dpu1: remove supoerflous init
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        kernel test robot <yujie.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,25 +69,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 5/21/2022 8:43 AM, Stephen Boyd wrote:
-Thanks for your time Stephen!!!
-> Quoting Srinivasa Rao Mandadapu (2022-05-18 05:42:35)
->> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
->> index da1ad7e..445e481 100644
->> --- a/drivers/soundwire/qcom.c
->> +++ b/drivers/soundwire/qcom.c
->> @@ -1333,6 +1337,10 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->>          ctrl->bus.compute_params = &qcom_swrm_compute_params;
->>          ctrl->bus.clk_stop_timeout = 300;
->>
->> +       ctrl->audio_cgcr = devm_reset_control_get_exclusive(dev, "swr_audio_cgcr");
->> +       if (IS_ERR(ctrl->audio_cgcr))
->> +               dev_err(dev, "Failed to get audio_cgcr reset required for soundwire-v1.6.0\n");
-> Why is there no return on error here? Is the reset optional?
-Yes it's optional. For older platforms this is not required.
+On Tue, 24 May 2022 at 13:35, Vinod Koul <vkoul@kernel.org> wrote:
 >
->> +
->>          ret = qcom_swrm_get_port_config(ctrl);
->>          if (ret)
->>                  goto err_clk;
+> Commit 58dca9810749 ("drm/msm/disp/dpu1: Add support for DSC in
+> encoder") added dsc_common_mode variable which was set to zero but then
+> again programmed, so drop the supoerflous init.
+>
+> Fixes: 58dca9810749 ("drm/msm/disp/dpu1: Add support for DSC in encoder")
+> Reported-by: kernel test robot <yujie.liu@intel.com>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 51f24ba68375..388125c8bda1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1798,7 +1798,6 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
+>                 }
+>         }
+>
+> -       dsc_common_mode = 0;
+>         pic_width = dsc->drm->pic_width;
+>
+>         dsc_common_mode = DSC_MODE_MULTIPLEX | DSC_MODE_SPLIT_PANEL;
+> --
+> 2.34.1
+>
+
+
+-- 
+With best wishes
+Dmitry
