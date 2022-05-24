@@ -2,67 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 164D5532EDC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 18:22:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB754532F0F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 18:35:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239338AbiEXQWL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 12:22:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42182 "EHLO
+        id S232913AbiEXQfr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 12:35:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234046AbiEXQWK (ORCPT
+        with ESMTP id S231355AbiEXQfr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 12:22:10 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC747424A1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 09:22:09 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id 135so12883080qkm.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 09:22:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FbPeWCEe/rxIHEa/hiVBgobEzhmZYhzLM/LYaOtDRPU=;
-        b=Y3gcWPAaJ4hpmL2L+n26Ut0AF4CraALFauvu7s+2olFZzWxG4GRq2Bmq4l+G2t77cP
-         tYgtSfPXtyoNdtna9YMwOBuOmCsscJsxzvGJFtqD2auaIeIjejQKv0/gccH39w80YSpa
-         /pHsgYkYF7jKbbSEbNCxgEkyGOiiipfiz51/xcFxnIK1KPmGPYRdtPn7isN0fZt4NKl1
-         DM603a+yq55Z+nVvnn235F+1vbLLwdtDz+AwjDFI5j8rq/fTUzGr9K+7dWyrDApMgyh7
-         tp1aJgSy/fk3kZQMfxiZXCznaUXnM6Fw79bz9/H+1VhsoSq/I9un5DlTRQhyGbG+JnpR
-         Eg0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FbPeWCEe/rxIHEa/hiVBgobEzhmZYhzLM/LYaOtDRPU=;
-        b=Scm/Mz3eNlPP7/yUTKvF8pp9CzB878lRlv6WPzS/5hez6i159JnaoFEewjAMZp5Lo5
-         JKAF+jg7VSeMJMVycOlnQAEmyUWJ5gOUD1/thSq2TLNpmZxWgk8FDBLtUwXwE/OVfpQL
-         8gLnnfc7MFlob6c9vEZKt6d05Ac3WInDzjjiWuWq424bWW4MPYVezddTOrkCqCu9YbwN
-         U81ReCLK6pIQYsJspgCxl1yK6Pp66DLhamw/bGiL9VT3DZSSQrjhPkz6DPsJnfHhvr2c
-         I+pJxiz9u3cMlRkOHBDXlZFJbD3RsTQuEcnDUb9dRY5trNmPMp5plkqwCBSq03d0SDa8
-         6m/w==
-X-Gm-Message-State: AOAM533OSQ4i/jWnFlcAPEi3iAidlNCXTLBNKtG/dxYscK9X5tEqQ5Jt
-        xiXD8YQnwNnjSB1Ge/iOebvsPzftog4R5BKUIGEXiQ==
-X-Google-Smtp-Source: ABdhPJzRM19vBhddeLT/0BQNWI+Y6tQxm9OEixBDWjgY2AVJx9Oo+xKjyEUF8zeMSB0OVfETg+HNBW/nEzA9vCsaRR4=
-X-Received: by 2002:a05:620a:2a0f:b0:6a0:2734:a92e with SMTP id
- o15-20020a05620a2a0f00b006a02734a92emr17609575qkp.593.1653409328778; Tue, 24
- May 2022 09:22:08 -0700 (PDT)
+        Tue, 24 May 2022 12:35:47 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC3B5DD19;
+        Tue, 24 May 2022 09:35:46 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B34B8B8172E;
+        Tue, 24 May 2022 16:35:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF225C34113;
+        Tue, 24 May 2022 16:35:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1653410143;
+        bh=7/CXSpGFetqZ4K6+jyYYWqzkzTNkmovMcnAT+IEJp3w=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=kOPC/JlisBhQTK5OLXuCEZI8htrS8JzZKBU0BOx++mHa6e9Qwi7ztkP3BWa6UvTKJ
+         KwCM5neBp94iprroRaL5xchAd8UKbs4Sb3Y8zGf9jpVhqt2CFA4r85bRKbud91XKbR
+         TcuwYHqHB6nuMfTJ9ENxhcudOrj4jp991/c2FpmemJH4uvWl1CYfaBKqNVEevdd65B
+         8yHxlnYA0KoeZ0ZOJ5LKjoI+zsKMCCbc7cng79gGHRgJR1yCToHejfN3876XNgZ1Fc
+         VxJeN/G7z35z2FWR3ZD89NiuKS/KG15I5WZdQZ7qDDqjAau9hK0oO0AOw8597TXGro
+         iCyvOEd1OMopw==
+Date:   Tue, 24 May 2022 11:35:40 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v12 0/8] PCI: qcom: Fix higher MSI vectors handling
+Message-ID: <20220524163540.GA252985@bhelgaas>
 MIME-Version: 1.0
-References: <20220524140207.2758605-1-bryan.odonoghue@linaro.org> <20220524140207.2758605-5-bryan.odonoghue@linaro.org>
-In-Reply-To: <20220524140207.2758605-5-bryan.odonoghue@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 24 May 2022 19:21:57 +0300
-Message-ID: <CAA8EJpqUkeReqnhcURpftpJmFth9-3OGQoAkFqd7Y06EjfraRg@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577
- on cam2
-To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, vladimir.zapolskiy@linaro.org,
-        mchehab@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
-        hfink@snap.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpomokT1whO+6UMSoqSxWdexDc7yWF3ZVK=CJveBGZntXQ@mail.gmail.com>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,156 +63,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 24 May 2022 at 17:02, Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
->
-> The IMX577 is on CCI1/CSI2 providing four lanes of camera data.
+On Tue, May 24, 2022 at 07:17:42PM +0300, Dmitry Baryshkov wrote:
+> On Tue, 24 May 2022 at 17:53, Bjorn Helgaas <helgaas@kernel.org> wrote:
+> >
+> > On Mon, May 23, 2022 at 09:18:28PM +0300, Dmitry Baryshkov wrote:
+> > > I have replied with my Tested-by to the patch at [2], which has landed
+> > > in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
+> > > Add support for handling MSIs from 8 endpoints"). However lately I
+> > > noticed that during the tests I still had 'pcie_pme=nomsi', so the
+> > > device was not forced to use higher MSI vectors.
+> > >
+> > > After removing this option I noticed that hight MSI vectors are not
+> > > delivered on tested platforms. After additional research I stumbled upon
+> > > a patch in msm-4.14 ([1]), which describes that each group of MSI
+> > > vectors is mapped to the separate interrupt. Implement corresponding
+> > > mapping.
+> > >
+> > > The first patch in the series is a revert of  [2] (landed in pci-next).
+> > > Either both patches should be applied or both should be dropped.
+> >
+> > 20f1bfb8dd62 is currently on Lorenzo's pci/qcom branch:
+> >
+> >   $ git log --oneline remotes/lorenzo/pci/qcom
+> >   bddedfeb1315 dt-bindings: PCI: qcom: Add schema for sc7280 chipset
+> >   a6f2d6b1b349 dt-bindings: PCI: qcom: Specify reg-names explicitly
+> >   81dab110d351 dt-bindings: PCI: qcom: Do not require resets on msm8996 platforms
+> >   5383d16f0607 dt-bindings: PCI: qcom: Convert to YAML
+> >   3ae93c5a9718 PCI: qcom: Fix unbalanced PHY init on probe errors
+> >   b986db29edbb PCI: qcom: Fix runtime PM imbalance on probe errors
+> >   dcd9011f591a PCI: qcom: Fix pipe clock imbalance
+> >   3007ba831ccd PCI: qcom: Add SM8150 SoC support
+> >   f52d2a0f0d32 dt-bindings: pci: qcom: Document PCIe bindings for SM8150 SoC
+> >   20f1bfb8dd62 PCI: qcom: Add support for handling MSIs from 8 endpoints
+> >   312310928417 Linux 5.18-rc1
+> >
+> > Is it safe for me to just drop that single patch before sending the
+> > pull request for v5.19?  Then target the rest of this series for
+> > v5.20?
+> 
+> Yes and yes.
 
-By default the RB5 doesn't employ the navigation mezzanine. Thus I
-suggest adding a new DTS file that will include the qrb5165-rb5.dts
-and extend it with camcc/camss setup.
-
-I remember, this was discussed back and forth. I think it's time we
-either create a working repo for mezzanines or push default setups
-into the kernel.
-I'd vote for the later option.
-
->
-> An example media-ctl pipeline is:
->
-> media-ctl --reset
-> media-ctl -v -d /dev/media0 -V '"imx412 '20-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
->
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
->
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 60 ++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sm8250.dtsi     | 33 +++++++++++++
->  2 files changed, 93 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> index 0e63f707b911..756ddeb7530b 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> @@ -1294,3 +1294,63 @@ &qup_spi0_data_clk {
->         drive-strength = <6>;
->         bias-disable;
->  };
-> +
-> +&camcc {
-> +       status = "okay";
-> +};
-> +
-> +&camss {
-> +       status = "okay";
-> +       vdda-phy-supply = <&vreg_l5a_0p88>;
-> +       vdda-pll-supply = <&vreg_l9a_1p2>;
-> +
-> +       ports {
-> +               /* The port index denotes CSIPHY id i.e. csiphy2 */
-> +               port@2 {
-> +                       reg = <2>;
-> +                       csiphy2_ep: endpoint {
-> +                               clock-lanes = <7>;
-> +                               data-lanes = <0 1 2 3>;
-> +                               remote-endpoint = <&imx412_ep>;
-> +                       };
-> +
-> +               };
-> +       };
-> +};
-> +
-> +&cci1 {
-> +       status = "okay";
-> +};
-> +
-> +&cci1_i2c0 {
-> +       camera@1a {
-> +               /*
-> +                * rb5 ships with an imx577. camx code from qcom treats imx412
-> +                * and imx577 the same way. Absent better data do the same here.
-> +                */
-> +               compatible = "sony,imx412";
-> +               reg = <0x1a>;
-> +
-> +               reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
-> +               pinctrl-names = "default", "suspend";
-> +               pinctrl-0 = <&cam2_default>;
-> +               pinctrl-1 = <&cam2_suspend>;
-> +
-> +               clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +               assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +               assigned-clock-rates = <24000000>;
-> +
-> +               dovdd-supply  = <&vreg_l7f_1p8>;
-> +               avdd-supply = <&vdc_5v>;
-> +               dvdd-supply = <&vdc_5v>;
-> +
-> +               port {
-> +                       imx412_ep: endpoint {
-> +                               clock-lanes = <1>;
-> +                               link-frequencies = /bits/ 64 <600000000>;
-> +                               data-lanes = <1 2 3 4>;
-> +                               remote-endpoint = <&csiphy2_ep>;
-> +                       };
-> +               };
-> +       };
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index aa9a13364865..2b65ec2806d0 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -3788,6 +3788,39 @@ tlmm: pinctrl@f100000 {
->                         gpio-ranges = <&tlmm 0 0 181>;
->                         wakeup-parent = <&pdc>;
->
-> +                       cam2_default: cam2-default {
-> +                               rst {
-> +                                       pins = "gpio78";
-> +                                       function = "gpio";
-> +                                       drive-strength = <2>;
-> +                                       bias-disable;
-> +                               };
-> +
-> +                               mclk {
-> +                                       pins = "gpio96";
-> +                                       function = "cam_mclk";
-> +                                       drive-strength = <16>;
-> +                                       bias-disable;
-> +                               };
-> +                       };
-> +
-> +                       cam2_suspend: cam2-suspend {
-> +                               rst {
-> +                                       pins = "gpio78";
-> +                                       function = "gpio";
-> +                                       drive-strength = <2>;
-> +                                       bias-pull-down;
-> +                                       output-low;
-> +                               };
-> +
-> +                               mclk {
-> +                                       pins = "gpio96";
-> +                                       function = "cam_mclk";
-> +                                       drive-strength = <2>;
-> +                                       bias-disable;
-> +                               };
-> +                       };
-> +
->                         cci0_default: cci0-default {
->                                 cci0_i2c0_default: cci0-i2c0-default {
->                                         /* SDA, SCL */
-> --
-> 2.36.1
->
-
-
--- 
-With best wishes
-Dmitry
+Great, thank you!  I have dropped that one from my "next" branch.
