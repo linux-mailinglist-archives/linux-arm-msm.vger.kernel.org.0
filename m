@@ -2,99 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFA27532F2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 18:44:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98E99532F80
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 19:17:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239539AbiEXQol (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 12:44:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48790 "EHLO
+        id S237636AbiEXRRq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 13:17:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235090AbiEXQol (ORCPT
+        with ESMTP id S239546AbiEXRRp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 12:44:41 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5646C63BDE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 09:44:39 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id x12so2279628wrg.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 09:44:39 -0700 (PDT)
+        Tue, 24 May 2022 13:17:45 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C8873562
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 10:17:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Rwol75CyD22GB+azy1Wfb8UM7WKUYecam29j0+8w0Ds=;
-        b=AcYNkjrduWPhMPZ9eJMqBTw39Am01PGf/zmGJPTUGgbAUn87jaKs/ueKmdyGsfZVnn
-         O56OtEvddGE+Y/w7Rk6YMRm/Ch7fLM3zN84ngKys0xL39qiY+kNirzmMoQ27iQQuG1BP
-         1ZU/75TGmGS97T10Gb6roP/OvW5XxC7TR6yIvgsGLV4N9sMvpicXph3wHok//4xSbXSQ
-         b0POhcs7UXUn+0Toonc5tyAE/5GfQ3vtY41pQ1yEGsxeuLInH5f2VLrI6vj9nkMC3gik
-         FCdcGRwNOER9zYFEiBkmLqAftjCnmv79ntDGZoHjzUerPfbq1OWg2Ie6+QdvwvujTXjO
-         DcDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Rwol75CyD22GB+azy1Wfb8UM7WKUYecam29j0+8w0Ds=;
-        b=P6a2k9CVGtq+aBI01W3eXNPmwpEIXsBrV8iBq9wYwWXeolKlxR9+4u+VUn0bCHz6eT
-         Ico5ugfyYYhRCHI3EA1ei8spdS1zBvGyR/HDQGh4pbF0x5fjBlqJPo+Ynea+Epr1IWoW
-         Xy92m9nj4hnDZfVa4sa8o00skScDx6mcJ5SPIoWXS0mpJermW6ixy54RfgbR4XjTQ45H
-         vxwa8HVtLu1rH1pnEsn2FrTixamsrU+wX8jIZkojIZq+kqXBDf+6arcAGWNPRNuJCiJp
-         5jLtAHr9bP9p3wrUSzloHY5WN98DF0+I4D8xTMmBqCJ0QgDfXjO/WCyZaqe8SQtl+w2T
-         +6pA==
-X-Gm-Message-State: AOAM533nYcBbJ+M4o8giGNQudzC9oV5rQPbbUnXP1XD0sYhbXhNCq6V2
-        XvPUXZAs3FJkKKqQ3j1xN1VOXA==
-X-Google-Smtp-Source: ABdhPJx1U0/7EZnEBQLMEiIuCol1THiU31e5Z21aOY17NPbYAijEjm+yap7k148vhVFlfzqRnG7PKg==
-X-Received: by 2002:a5d:6c64:0:b0:20f:f413:8af8 with SMTP id r4-20020a5d6c64000000b0020ff4138af8mr2847216wrz.129.1653410677949;
-        Tue, 24 May 2022 09:44:37 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id e8-20020adfa448000000b0020c5253d8e5sm13594295wra.49.2022.05.24.09.44.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 May 2022 09:44:37 -0700 (PDT)
-Message-ID: <dc087955-4d00-454e-b242-7741ded6aa5b@nexus-software.ie>
-Date:   Tue, 24 May 2022 17:44:36 +0100
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1653412662; x=1684948662;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=DoOUN0UTfeRv6bBPpzkewrxRvmKM7X4VuHkvCLosprE=;
+  b=TwUPVxKgATv4Vok2U5ckNJ3/VUlq00CikOzgiNxF+gQr85oflFGZ1J/+
+   gZ4g4k9smZs8Qfs8aRb6WTxJOyDp+sKy71e6N+ZZBc3rUU3CWeZNLp+wD
+   OJVrfHXeehHaywPS5sQYA1SkiheFdN44bzDQizzmjrMrrFQAieubruxSD
+   Q=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 24 May 2022 10:17:42 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 May 2022 10:17:41 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 24 May 2022 10:17:41 -0700
+Received: from [10.38.240.101] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 24 May
+ 2022 10:17:39 -0700
+Message-ID: <83713f0b-2fcc-afe8-899a-4e3e634543bb@quicinc.com>
+Date:   Tue, 24 May 2022 10:17:37 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577
- on cam2
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/disp/dpu1: remove supoerflous init
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, vladimir.zapolskiy@linaro.org,
-        mchehab@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
-        hfink@snap.com
-References: <20220524140207.2758605-1-bryan.odonoghue@linaro.org>
- <20220524140207.2758605-5-bryan.odonoghue@linaro.org>
- <CAA8EJpqUkeReqnhcURpftpJmFth9-3OGQoAkFqd7Y06EjfraRg@mail.gmail.com>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <CAA8EJpqUkeReqnhcURpftpJmFth9-3OGQoAkFqd7Y06EjfraRg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Vinod Koul <vkoul@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        kernel test robot <yujie.liu@intel.com>
+References: <20220524103534.2520439-1-vkoul@kernel.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220524103534.2520439-1-vkoul@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/05/2022 17:21, Dmitry Baryshkov wrote:
-> On Tue, 24 May 2022 at 17:02, Bryan O'Donoghue
-> <bryan.odonoghue@linaro.org> wrote:
->>
->> The IMX577 is on CCI1/CSI2 providing four lanes of camera data.
+
+
+On 5/24/2022 3:35 AM, Vinod Koul wrote:
+> Commit 58dca9810749 ("drm/msm/disp/dpu1: Add support for DSC in
+> encoder") added dsc_common_mode variable which was set to zero but then
+> again programmed, so drop the supoerflous init.
+Both in the subject line and here, typo
+supoerflous ---> superfluous
+
+Other than that,
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
 > 
-> By default the RB5 doesn't employ the navigation mezzanine. Thus I
-> suggest adding a new DTS file that will include the qrb5165-rb5.dts
-> and extend it with camcc/camss setup.
-
-It makes sense to me.
-
-I'll wait to hear from Robert and Bjorn. We can take the opportunity to 
-do it for RB3 too.
-
----
-bod
+> Fixes: 58dca9810749 ("drm/msm/disp/dpu1: Add support for DSC in encoder")
+> Reported-by: kernel test robot <yujie.liu@intel.com>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 51f24ba68375..388125c8bda1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1798,7 +1798,6 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
+>   		}
+>   	}
+>   
+> -	dsc_common_mode = 0;
+>   	pic_width = dsc->drm->pic_width;
+>   
+>   	dsc_common_mode = DSC_MODE_MULTIPLEX | DSC_MODE_SPLIT_PANEL;
