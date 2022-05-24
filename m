@@ -2,105 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB754532F0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 18:35:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFA27532F2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 18:44:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232913AbiEXQfr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 12:35:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34544 "EHLO
+        id S239539AbiEXQol (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 12:44:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231355AbiEXQfr (ORCPT
+        with ESMTP id S235090AbiEXQol (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 12:35:47 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC3B5DD19;
-        Tue, 24 May 2022 09:35:46 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B34B8B8172E;
-        Tue, 24 May 2022 16:35:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF225C34113;
-        Tue, 24 May 2022 16:35:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653410143;
-        bh=7/CXSpGFetqZ4K6+jyYYWqzkzTNkmovMcnAT+IEJp3w=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=kOPC/JlisBhQTK5OLXuCEZI8htrS8JzZKBU0BOx++mHa6e9Qwi7ztkP3BWa6UvTKJ
-         KwCM5neBp94iprroRaL5xchAd8UKbs4Sb3Y8zGf9jpVhqt2CFA4r85bRKbud91XKbR
-         TcuwYHqHB6nuMfTJ9ENxhcudOrj4jp991/c2FpmemJH4uvWl1CYfaBKqNVEevdd65B
-         8yHxlnYA0KoeZ0ZOJ5LKjoI+zsKMCCbc7cng79gGHRgJR1yCToHejfN3876XNgZ1Fc
-         VxJeN/G7z35z2FWR3ZD89NiuKS/KG15I5WZdQZ7qDDqjAau9hK0oO0AOw8597TXGro
-         iCyvOEd1OMopw==
-Date:   Tue, 24 May 2022 11:35:40 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v12 0/8] PCI: qcom: Fix higher MSI vectors handling
-Message-ID: <20220524163540.GA252985@bhelgaas>
+        Tue, 24 May 2022 12:44:41 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5646C63BDE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 09:44:39 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id x12so2279628wrg.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 09:44:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Rwol75CyD22GB+azy1Wfb8UM7WKUYecam29j0+8w0Ds=;
+        b=AcYNkjrduWPhMPZ9eJMqBTw39Am01PGf/zmGJPTUGgbAUn87jaKs/ueKmdyGsfZVnn
+         O56OtEvddGE+Y/w7Rk6YMRm/Ch7fLM3zN84ngKys0xL39qiY+kNirzmMoQ27iQQuG1BP
+         1ZU/75TGmGS97T10Gb6roP/OvW5XxC7TR6yIvgsGLV4N9sMvpicXph3wHok//4xSbXSQ
+         b0POhcs7UXUn+0Toonc5tyAE/5GfQ3vtY41pQ1yEGsxeuLInH5f2VLrI6vj9nkMC3gik
+         FCdcGRwNOER9zYFEiBkmLqAftjCnmv79ntDGZoHjzUerPfbq1OWg2Ie6+QdvwvujTXjO
+         DcDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Rwol75CyD22GB+azy1Wfb8UM7WKUYecam29j0+8w0Ds=;
+        b=P6a2k9CVGtq+aBI01W3eXNPmwpEIXsBrV8iBq9wYwWXeolKlxR9+4u+VUn0bCHz6eT
+         Ico5ugfyYYhRCHI3EA1ei8spdS1zBvGyR/HDQGh4pbF0x5fjBlqJPo+Ynea+Epr1IWoW
+         Xy92m9nj4hnDZfVa4sa8o00skScDx6mcJ5SPIoWXS0mpJermW6ixy54RfgbR4XjTQ45H
+         vxwa8HVtLu1rH1pnEsn2FrTixamsrU+wX8jIZkojIZq+kqXBDf+6arcAGWNPRNuJCiJp
+         5jLtAHr9bP9p3wrUSzloHY5WN98DF0+I4D8xTMmBqCJ0QgDfXjO/WCyZaqe8SQtl+w2T
+         +6pA==
+X-Gm-Message-State: AOAM533nYcBbJ+M4o8giGNQudzC9oV5rQPbbUnXP1XD0sYhbXhNCq6V2
+        XvPUXZAs3FJkKKqQ3j1xN1VOXA==
+X-Google-Smtp-Source: ABdhPJx1U0/7EZnEBQLMEiIuCol1THiU31e5Z21aOY17NPbYAijEjm+yap7k148vhVFlfzqRnG7PKg==
+X-Received: by 2002:a5d:6c64:0:b0:20f:f413:8af8 with SMTP id r4-20020a5d6c64000000b0020ff4138af8mr2847216wrz.129.1653410677949;
+        Tue, 24 May 2022 09:44:37 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id e8-20020adfa448000000b0020c5253d8e5sm13594295wra.49.2022.05.24.09.44.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 May 2022 09:44:37 -0700 (PDT)
+Message-ID: <dc087955-4d00-454e-b242-7741ded6aa5b@nexus-software.ie>
+Date:   Tue, 24 May 2022 17:44:36 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpomokT1whO+6UMSoqSxWdexDc7yWF3ZVK=CJveBGZntXQ@mail.gmail.com>
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: qrb5165-rb5: Enable the IMX577
+ on cam2
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, vladimir.zapolskiy@linaro.org,
+        mchehab@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, mmitkov@quicinc.com, jgrahsl@snap.com,
+        hfink@snap.com
+References: <20220524140207.2758605-1-bryan.odonoghue@linaro.org>
+ <20220524140207.2758605-5-bryan.odonoghue@linaro.org>
+ <CAA8EJpqUkeReqnhcURpftpJmFth9-3OGQoAkFqd7Y06EjfraRg@mail.gmail.com>
+From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <CAA8EJpqUkeReqnhcURpftpJmFth9-3OGQoAkFqd7Y06EjfraRg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 24, 2022 at 07:17:42PM +0300, Dmitry Baryshkov wrote:
-> On Tue, 24 May 2022 at 17:53, Bjorn Helgaas <helgaas@kernel.org> wrote:
-> >
-> > On Mon, May 23, 2022 at 09:18:28PM +0300, Dmitry Baryshkov wrote:
-> > > I have replied with my Tested-by to the patch at [2], which has landed
-> > > in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
-> > > Add support for handling MSIs from 8 endpoints"). However lately I
-> > > noticed that during the tests I still had 'pcie_pme=nomsi', so the
-> > > device was not forced to use higher MSI vectors.
-> > >
-> > > After removing this option I noticed that hight MSI vectors are not
-> > > delivered on tested platforms. After additional research I stumbled upon
-> > > a patch in msm-4.14 ([1]), which describes that each group of MSI
-> > > vectors is mapped to the separate interrupt. Implement corresponding
-> > > mapping.
-> > >
-> > > The first patch in the series is a revert of  [2] (landed in pci-next).
-> > > Either both patches should be applied or both should be dropped.
-> >
-> > 20f1bfb8dd62 is currently on Lorenzo's pci/qcom branch:
-> >
-> >   $ git log --oneline remotes/lorenzo/pci/qcom
-> >   bddedfeb1315 dt-bindings: PCI: qcom: Add schema for sc7280 chipset
-> >   a6f2d6b1b349 dt-bindings: PCI: qcom: Specify reg-names explicitly
-> >   81dab110d351 dt-bindings: PCI: qcom: Do not require resets on msm8996 platforms
-> >   5383d16f0607 dt-bindings: PCI: qcom: Convert to YAML
-> >   3ae93c5a9718 PCI: qcom: Fix unbalanced PHY init on probe errors
-> >   b986db29edbb PCI: qcom: Fix runtime PM imbalance on probe errors
-> >   dcd9011f591a PCI: qcom: Fix pipe clock imbalance
-> >   3007ba831ccd PCI: qcom: Add SM8150 SoC support
-> >   f52d2a0f0d32 dt-bindings: pci: qcom: Document PCIe bindings for SM8150 SoC
-> >   20f1bfb8dd62 PCI: qcom: Add support for handling MSIs from 8 endpoints
-> >   312310928417 Linux 5.18-rc1
-> >
-> > Is it safe for me to just drop that single patch before sending the
-> > pull request for v5.19?  Then target the rest of this series for
-> > v5.20?
+On 24/05/2022 17:21, Dmitry Baryshkov wrote:
+> On Tue, 24 May 2022 at 17:02, Bryan O'Donoghue
+> <bryan.odonoghue@linaro.org> wrote:
+>>
+>> The IMX577 is on CCI1/CSI2 providing four lanes of camera data.
 > 
-> Yes and yes.
+> By default the RB5 doesn't employ the navigation mezzanine. Thus I
+> suggest adding a new DTS file that will include the qrb5165-rb5.dts
+> and extend it with camcc/camss setup.
 
-Great, thank you!  I have dropped that one from my "next" branch.
+It makes sense to me.
+
+I'll wait to hear from Robert and Bjorn. We can take the opportunity to 
+do it for RB3 too.
+
+---
+bod
