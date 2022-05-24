@@ -2,78 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B952532087
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 04:01:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 950A853208D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 04:01:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231740AbiEXCBY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 22:01:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57326 "EHLO
+        id S232931AbiEXCBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 22:01:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232925AbiEXCBW (ORCPT
+        with ESMTP id S232975AbiEXCBi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 22:01:22 -0400
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 788C513FBB;
-        Mon, 23 May 2022 19:01:18 -0700 (PDT)
-Received: by mail-oi1-f175.google.com with SMTP id v66so19916694oib.3;
-        Mon, 23 May 2022 19:01:18 -0700 (PDT)
+        Mon, 23 May 2022 22:01:38 -0400
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D368922285;
+        Mon, 23 May 2022 19:01:32 -0700 (PDT)
+Received: by mail-ot1-f43.google.com with SMTP id r12-20020a056830448c00b0060aec7b7a54so7610409otv.5;
+        Mon, 23 May 2022 19:01:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=5qo6oIZWbq4qWvahiEhRnoALTtCaoaxc3DmWDmrh6ks=;
-        b=PovWt+SHqzil9fbiL2EyDVuo8nULph9zprKA2JRVLdRf3RMtZ3t56oO1Zmoxd3Uwjk
-         gIsQhojIFcVN3IRpuIvphLWNvAeVYWASrU8ku1WByY5RNfhhxVaOE+VYj80Z20l/EYFy
-         aK1V0AM2Gp9RYBhG0hbSAWSF+yZ1q+fMwsHydKZF9i6LUTRc2eYqJ34QugswgyDl50b6
-         Iv+hzYuag+g5OMUjkegU+y8X8tdyxFEZ5Su+HRwHxy48zlcfgJkiVl3kT1R+ZVjlB7gG
-         NK9Qg7Yd2/2kiMwt7OdeRwbmrHn6fBLtsXC/UEVd/KlS7jxk4oyRx10ly0bjJ53s327I
-         EU+A==
-X-Gm-Message-State: AOAM533/P68PCj73GR/RweGtYNFRopsdTGzFYuo/FwRcNCYJJmitoGv7
-        fYGQyQi/gVXCFxxzJkQGKg==
-X-Google-Smtp-Source: ABdhPJx34W9B5vH7ruc+ne9Isp1RvUiKS0lIcO5Ge5TcrX7D1pot8FDCw3Bk9obY4NDoLvFQ4e5EBQ==
-X-Received: by 2002:aca:1014:0:b0:32b:2825:ad28 with SMTP id 20-20020aca1014000000b0032b2825ad28mr1099628oiq.238.1653357677472;
-        Mon, 23 May 2022 19:01:17 -0700 (PDT)
+        bh=3Mup20IopJTPRvYzjtHMLvLcw0RYXFS52otXL309fRo=;
+        b=cYI7QWy6FhCmm1VzMbI0M4dcmYqEdxcfL5mE6Y2lLqeN/wPf6IDLRmnzyF93nIfljd
+         VhwHWzEFRjyaH5VirjEDZumsmydhbv62TYXCB5dbQYRjiyuCjKZdh8ne1fxJsIpXudsw
+         RLBEX9bI1OOY6gK7iN/bDVeD1RH4nIERx1vFz5WPuM9RjUbAAxmjGpf37BT3BYV4WYNM
+         W5H8f8P7ljI2eCY0jeVSQbYDvi7HWZfSglf/hz00cGl6tnvbeNIdcZmS9YW517RWi/cb
+         x/qLWsbyNJJV5jbUu3AjNgoyFMNgvJBSx8Mh7gpT2IVlJ1BQF2WCGJ8e2bfB++F9kCZL
+         5I2Q==
+X-Gm-Message-State: AOAM530jX+ZvzSm9ifPoJxm7BhmjDN5/X1w/i5wlL5OEIKS7RyAP6o6W
+        puU3rqy7gmkx6MG+ac9F8LCJVZtQNw==
+X-Google-Smtp-Source: ABdhPJwjoS8k4lq+ol/GKRB3gQD/b4SVCxslRMi/2Wa3S0HfpLb0c+tmNBqZuas8Hh0xX84CPkCYLA==
+X-Received: by 2002:a9d:6b98:0:b0:60b:c54:e22b with SMTP id b24-20020a9d6b98000000b0060b0c54e22bmr3728888otq.357.1653357691623;
+        Mon, 23 May 2022 19:01:31 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id k5-20020a056870870500b000e686d1386fsm4457946oam.9.2022.05.23.19.01.16
+        by smtp.gmail.com with ESMTPSA id f4-20020a9d2c04000000b0060a426ee09asm4576604otb.19.2022.05.23.19.01.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 19:01:16 -0700 (PDT)
-Received: (nullmailer pid 2597857 invoked by uid 1000);
-        Tue, 24 May 2022 02:01:16 -0000
-Date:   Mon, 23 May 2022 21:01:16 -0500
+        Mon, 23 May 2022 19:01:31 -0700 (PDT)
+Received: (nullmailer pid 2598293 invoked by uid 1000);
+        Tue, 24 May 2022 02:01:30 -0000
+Date:   Mon, 23 May 2022 21:01:30 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: Re: [PATCH 03/12] dt-bindings: arm: qcom: add missing MSM8992 board
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 04/12] dt-bindings: arm: qcom: add missing QCS404 board
  compatibles
-Message-ID: <20220524020116.GA2597807-robh@kernel.org>
+Message-ID: <20220524020130.GA2598243-robh@kernel.org>
 References: <20220521164550.91115-1-krzysztof.kozlowski@linaro.org>
- <20220521164550.91115-3-krzysztof.kozlowski@linaro.org>
+ <20220521164550.91115-4-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220521164550.91115-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220521164550.91115-4-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 21 May 2022 18:45:41 +0200, Krzysztof Kozlowski wrote:
+On Sat, 21 May 2022 18:45:42 +0200, Krzysztof Kozlowski wrote:
 > Document board compatibles already present in Linux kernel.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
