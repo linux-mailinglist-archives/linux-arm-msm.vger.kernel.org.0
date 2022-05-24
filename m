@@ -2,85 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83036532FA6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 19:31:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F917532FAF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 19:33:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239985AbiEXRbC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 13:31:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42272 "EHLO
+        id S233656AbiEXRdr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 13:33:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239959AbiEXRa4 (ORCPT
+        with ESMTP id S234928AbiEXRdp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 13:30:56 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F8BD82140
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 10:30:54 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id q15so828325edb.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 10:30:54 -0700 (PDT)
+        Tue, 24 May 2022 13:33:45 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 519FD6A056
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 10:33:44 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id rq11so14679090ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 10:33:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=JdewMav35aHVc1L9YMxiXtQ+2iHYmgrdFRlYVwhspmQ=;
-        b=DZYZYWW9v10znjdgPPOnrdrolsTZI7ASyy2HuqGbinN63RMtDZ0l1TkQBEMiiYt45V
-         b7cZcFd6yFmKzT+1PuYCALVxXJsMwZOaFUpAZMVApIIb7NGPDEqclHi+zdf7S6+sDImv
-         qXATqbtN2IeZsV9LkRSV2mFX3+VjOeRE5BekC2BVBpR5sSHKOBelMTfgBLqwXzG3vOIq
-         K1yI27ULkithIOT/WPiZ0ImM9uVRgD9NBG4oqZAazJysSAKouYmGO6+jZVVxjjIFcand
-         RiGiU25Do/zJYQCyuUA+0FDn6HRkC4jLwE0LL0Gi763t+e5Zc4rHYT8CYvPXPNwMi6pj
-         yf/Q==
+        bh=TDDiVK/0RrLn3b/aahT7btm7i296B2V0gGDLOx8X1ZY=;
+        b=qBqVLj0xgRV22kdm183vJuStce0HuTo2gKgvnAjIFKwH65LuG+Tf0xOhNXRzvTXICs
+         Tsi1vuETbH3G8ZqjfFnydAFMGGb1/8HPBxixEueqj+mULEsvfNBY/rYzthky1af8QVHf
+         pNlTnyhFJOduccrjtYdrZ9JcqmEdIKyiQJd62Yh9jpnONAzSNLLvZesxrJ2gPDSE+aWX
+         Nf9nnIOlQ+2ljoBsmwSI4HWrLhxZ8465YQ2fi+Tl3M4QSAzUNuMoErrPyxgkHj4xBRpj
+         sWa90IvRxFO4UZ34rlhA1uS1dDljxy+J4EKXs6wo5wdybfMS6eXdJ2ZjbD1xIwv/CAZ3
+         4KKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=JdewMav35aHVc1L9YMxiXtQ+2iHYmgrdFRlYVwhspmQ=;
-        b=7otQfX2/lTTmitRkVD4XuSlG1xyndSjX7sz17KGUlCe4jS27goXpQ+tiBtedAANBJU
-         nI1b15Ap+1lBUp5/cFWAI9twq4HgMCj0RB7g6UcXhW3OKyVIgOdSHfnZVnZ7uVsy1+B4
-         Qd3YRe1S9qKE3oOlRGcwPyA7im9TlL/sRPWruXRI4Eb+4lqN0MaBgt2jsb0x2P5BTHHm
-         GxApBT8kgBmruOKEeMCM/FKA9lGe6E7O56Zwkn/auSWr1dFxkM9SwFUwR5/vl8hmdusG
-         zf32ASm+ZLhUeRbhQE3BHm35FHhdhKax8LTsNj+10nFRokaMDM9i9zyGslT3w8INvSMs
-         WHrQ==
-X-Gm-Message-State: AOAM532lkgXUYib4BOT8ZowmwKGRCmDoPlSvr0TpEH4zBGpv2a1pNJgY
-        afX9vOqYAd/4O/eNVrx+Xi74/Q==
-X-Google-Smtp-Source: ABdhPJzLwvfqIhM0418Nd6FwrngpMY/o0fyd+b+of5/IIfKtQs964W+WpfZ7dMJsxtkLlKz0CFp6ug==
-X-Received: by 2002:a50:ee18:0:b0:42a:b57c:2532 with SMTP id g24-20020a50ee18000000b0042ab57c2532mr29925115eds.169.1653413452951;
-        Tue, 24 May 2022 10:30:52 -0700 (PDT)
+        bh=TDDiVK/0RrLn3b/aahT7btm7i296B2V0gGDLOx8X1ZY=;
+        b=uj0NqXRPX7dh5udVIQkrZoXlR8xxZ/TVyM6c9xhHB5uzkd7qcEdMdDcRmEiDw13Trb
+         bJcP5pSv+FwqChzdNHB8hCQVxhnNYGy3kGMkBCQr4xUyt86Z9y2WgCVMqQxwW1PWEloF
+         vm+0DsSjUAwXAMYDKN8+nJljpp1n4jjDA/qg8SILf2cZfCfDJ4KUXs7TogLh3DuFcrP8
+         TJQNo1oqSQC+i+X9AQUq2O0XYv8hF54/R3jP3ZsaRoeOWgPj2PHJRaWrA5t28Ottp+qL
+         XFmR5i+sFIKawFbtu8bwTqPCRLX63b6wDqH1qsZmFi3sHS0+bGUF3u+tOjvf4iiK6wxT
+         WcRw==
+X-Gm-Message-State: AOAM533xrYirVvEvBLxlsGDAijS1oehvym8yuyvun32cX5Kqz/L0BKyb
+        /BujVHbFbmEkRQ9ITtdtbQJRFA==
+X-Google-Smtp-Source: ABdhPJw7idjF6lR2c/kScDlKjd/kk16xrz+CaaIEfnwGa6wCZpqyj8x7XEUhkdjJq4pGJueB1TiovQ==
+X-Received: by 2002:a17:906:a11a:b0:6fe:9814:70eb with SMTP id t26-20020a170906a11a00b006fe981470ebmr23763019ejy.118.1653413622914;
+        Tue, 24 May 2022 10:33:42 -0700 (PDT)
 Received: from [192.168.0.177] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id j4-20020a170906104400b006f3ef214db4sm7456300ejj.26.2022.05.24.10.30.51
+        by smtp.gmail.com with ESMTPSA id ay18-20020a056402203200b0042aa08c7799sm9560487edb.62.2022.05.24.10.33.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 May 2022 10:30:51 -0700 (PDT)
-Message-ID: <03beddbd-24ff-16bd-b254-ab4764cb7ca0@linaro.org>
-Date:   Tue, 24 May 2022 19:30:50 +0200
+        Tue, 24 May 2022 10:33:42 -0700 (PDT)
+Message-ID: <9badcfce-1db2-5381-bab8-8e52b875cebd@linaro.org>
+Date:   Tue, 24 May 2022 19:33:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.1
-Subject: Re: [PATCH v2 2/5] dt-bindings: interconnect: Add Qualcomm SM6350 NoC
- support
+Subject: Re: [PATCH v4 3/3] dt-bindings: remoteproc: qcom: Convert SC7180 MSS
+ bindings to YAML
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Odelu Kukatla <okukatla@codeaurora.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220520070318.48521-1-luca.weiss@fairphone.com>
- <20220520070318.48521-3-luca.weiss@fairphone.com>
- <7b451dfb-8353-4a4e-1834-a01feaa267d2@linaro.org>
- <CK4KPEWM9165.2LR9ZUG2GGK6Q@otso>
- <b9487ffe-7ed5-077c-3c2c-886746457365@linaro.org>
- <CK77QG2WNJ7B.EIXG4S6SVQ2D@otso>
+To:     Sibi Sankar <quic_sibis@quicinc.com>, Rob Herring <robh@kernel.org>
+Cc:     bjorn.andersson@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, mka@chromium.org
+References: <1652978825-5304-1-git-send-email-quic_sibis@quicinc.com>
+ <1652978825-5304-4-git-send-email-quic_sibis@quicinc.com>
+ <20220520224011.GA374485-robh@kernel.org>
+ <371ce290-1deb-bff2-112b-71be8c005b37@linaro.org>
+ <a5ad7884-d2c5-aeb0-405e-0121bb51f0a1@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CK77QG2WNJ7B.EIXG4S6SVQ2D@otso>
+In-Reply-To: <a5ad7884-d2c5-aeb0-405e-0121bb51f0a1@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,164 +82,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/05/2022 16:32, Luca Weiss wrote:
-> Hi Krzysztof,
+On 24/05/2022 04:00, Sibi Sankar wrote:
+> Hey Rob/Krzysztof,
 > 
-> On Fri May 20, 2022 at 4:24 PM CEST, Krzysztof Kozlowski wrote:
->> On 20/05/2022 14:04, Luca Weiss wrote:
->>> Hi Krzysztof,
+> On 5/21/22 8:04 PM, Krzysztof Kozlowski wrote:
+>> On 21/05/2022 00:40, Rob Herring wrote:
+>>> On Thu, May 19, 2022 at 10:17:05PM +0530, Sibi Sankar wrote:
+>>>> Convert SC7180 MSS PIL loading bindings to YAML.
 >>>
->>> Thanks for the review!
->>>
->>> On Fri May 20, 2022 at 12:31 PM CEST, Krzysztof Kozlowski wrote:
->>>> On 20/05/2022 09:03, Luca Weiss wrote:
->>>>> Add bindings for Qualcomm SM6350 Network-On-Chip interconnect devices.
->>>>>
->>>>> As SM6350 has two pairs of NoCs sharing the same reg, allow this in the
->>>>> binding documentation, as was done for qcm2290.
->>>>>
->>>>> Because the main qcom,rpmh.yaml file is getting too complicated for our
->>>>> use cases, create a new qcom,rpmh-common.yaml and a separate
->>>>> qcom,sm6350-rpmh.yaml that defines our new bindings.
->>>>>
->>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>>>> ---
->>>>> Changes since v1:
->>>>> * Split sm6350 into separate yaml with new rpmh-common.yaml
->>>>>
->>>>>  .../interconnect/qcom,rpmh-common.yaml        |  41 +++++
->>>>>  .../interconnect/qcom,sm6350-rpmh.yaml        |  82 ++++++++++
->>>>>  .../dt-bindings/interconnect/qcom,sm6350.h    | 148 ++++++++++++++++++
->>>>>  3 files changed, 271 insertions(+)
->>>>>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,rpmh-common.yaml
->>>>>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sm6350-rpmh.yaml
->>>>>  create mode 100644 include/dt-bindings/interconnect/qcom,sm6350.h
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh-common.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-common.yaml
->>>>> new file mode 100644
->>>>> index 000000000000..6121eea3e87d
->>>>> --- /dev/null
->>>>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh-common.yaml
->>>>> @@ -0,0 +1,41 @@
->>>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>>>> +%YAML 1.2
->>>>> +---
->>>>> +$id: http://devicetree.org/schemas/interconnect/qcom,rpmh-common.yaml#
->>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>>> +
->>>>> +title: Qualcomm RPMh Network-On-Chip Interconnect
->>>>> +
->>>>> +maintainers:
->>>>> +  - Georgi Djakov <georgi.djakov@linaro.org>
->>>>> +  - Odelu Kukatla <okukatla@codeaurora.org>
->>>>
->>>> Is this valid email address?
->>>
->>> Will put Georgi and Bjorn as maintainers, as per your other email.
->>>
->>>>
->>>>> +
->>>>> +description: |
->>>>> +   RPMh interconnect providers support system bandwidth requirements through
->>>>> +   RPMh hardware accelerators known as Bus Clock Manager (BCM). The provider is
->>>>> +   able to communicate with the BCM through the Resource State Coordinator (RSC)
->>>>> +   associated with each execution environment. Provider nodes must point to at
->>>>> +   least one RPMh device child node pertaining to their RSC and each provider
->>>>> +   can map to multiple RPMh resources.
->>>>> +
->>>>> +properties:
->>>>> +  '#interconnect-cells':
->>>>> +    enum: [ 1, 2 ]
->>>>
->>>> Why this is an enum?
->>>
->>> As a start, just adding that the definitions are copied from
->>> qcom,rpmh.yaml so it's not my invention :) Of course that doesn't mean
->>> that it should be improved where possible!
->>>
->>> Either value is supported by the driver (and used upstream). But perhaps
->>> it can use a description to define what the 'parameters' mean.
->>>
->>> The second (optional) parameters "is to support different bandwidth
->>> configurations that are toggled by RPMh, depending on the power state of
->>> the CPU."[0]
->>>
->>> A commit message for sc7180 calls it the "tag information" and "The
->>> consumers can specify the path tag as an additional argument to the
->>> endpoints."[1]
->>>
->>> Not sure how to properly describe the first property, I guess the
->>> interconnect endpoint? Maybe Georgi can help here.
->>>
->>>
->>> [0] https://lore.kernel.org/linux-arm-msm/b079a211-d387-7958-bbe2-c41cac00d269@kernel.org/
->>> [1] https://git.kernel.org/torvalds/c/e23b122
+>>> I suppose there is a reason the sc7180 is being split out and the only
+>>> one converted, but this doesn't tell me.
 >>
->> Hm, indeed driver supports variable values. It's fine then.
->>
->>>
->>>>
->>>>> +
->>>>> +  qcom,bcm-voters:
->>>>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->>>>> +    items:
->>>>
->>>> Please implement my previous comments.
->>>
->>> Sorry, I looked over the comment in v1.
->>>
->>> As far as I can tell in current code only 1 item is used.
->>>
->>> If the second parameter of_bcm_voter_get would be used as non-NULL then
->>> qcom,bcm-voter-names gets looked up and the N-th value in qcom,bcm-voters
->>> used. But currently qcom,bcm-voter-names is not actively used so only
->>> one gets used.
->>>
->>> Do you have a recommendation what to put here? A synthetic limit like
->>> 32 just to have a number there?
->>
->> Let's go with maxItems:1, for both fields.
+>> I am also confused, especially that last time I pointed out that there
+>> is work already:
+>> https://lore.kernel.org/all/20220511161602.117772-7-sireeshkodali1@gmail.com/
 > 
-> Do you mean adjusting the example using:
+> https://lore.kernel.org/all/e3543961-1645-b02a-c869-f8fa1ad2d41c@quicinc.com/#t
 > 
->   qcom,bcm-voter-names = "apps", "disp";
->   qcom,bcm-voters = <&apps_bcm_voter>, <&disp_bcm_voter>;
-> 
-> in qcom,rpmh.yaml then? Otherwise validation fails with maxItems: 1
-> 
->>
->>>
->>>>
->>>>> +      maxItems: 1
->>>>> +    description: |
->>>>
->>>> No need for |
->>>
->>> ack
->>>
->>>>
->>>>> +      List of phandles to qcom,bcm-voter nodes that are required by
->>>>> +      this interconnect to send RPMh commands.
->>>>> +
->>>>> +  qcom,bcm-voter-names:
->>>>
->>>> What names do you expect here?
->>>
->>> Currently unused in mainline but newer downstream kernels[2] use "hlos"
->>> as first parameter, and e.g. "disp" as second one that goes to a
->>> qcom,bcm-voter that's a child of disp_rsc. Not sure exactly what that
->>> does.
->>>
->>> [2] https://github.com/atomsand/android_kernel_qcom_devicetree/blob/a6d50810116e8314d64eb63b8862c207b974e0c7/qcom/waipio.dtsi#L1701-L1793
->>
->> The bindings example uses apps and disp, so here would be only "apps".
-> 
-> Here also the above, allow only "apps" for now in the binding and remove
-> "disp" from example?
+> The reason for the split was discussed on the list ^^, thought it
+> wouldn't make much sense adding any of it to the commit message.
+> Also since Krzysztof said he wanted a alignment between Sireesh/me
+> we did exchange mails saying I'll take care of SC7180/SC7280 (since
+> they had pas compatible which is overridden by mss compatible) and
+> he could continue with the rest.
 
-I actually don't know what is the proper value, so choose a reasonable
-constraint matching existing sources. Since example uses two of them,
-then maybe "maxItems:2"?
+
+Sounds good to me, but Rob's got a point - this background should be
+better explained.
 
 
 Best regards,
