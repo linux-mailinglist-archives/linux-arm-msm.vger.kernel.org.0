@@ -2,73 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 676A6531FC9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 02:19:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BA2453200F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 02:59:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232110AbiEXATr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 May 2022 20:19:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33978 "EHLO
+        id S232017AbiEXA70 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 May 2022 20:59:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232520AbiEXATj (ORCPT
+        with ESMTP id S231967AbiEXA7Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 May 2022 20:19:39 -0400
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4547D95A0D;
-        Mon, 23 May 2022 17:18:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1653351533; x=1684887533;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ZriWVXpTBb1rmEbtXs+vi59sS36pz9Vpa0z2W2c2tv0=;
-  b=bfyEsH6V+ToixvQRGecfsTvH7kAOFOf5LGmW3RwPKuIGsW8Pf11JChiD
-   61Z8cNyh4HWnkF4h8cfEA+MwZXB/bonfchHZ9VGvHFQnwhXR/Jd7LAjRB
-   Fj2EPcN4pSm4TaAZR1u+zDW1KUxE5xBRI7D7UgGOhxBpJiWht5vRUer/M
-   9hQkyjqfmcPt3qmTwGDwXf6LwKHHNkA/BQAO3zXPZ54N8KajcHKgqy6Of
-   SQuGQ0apTRD7qqKK9K0ciVtuMuEp8mhcCCnzCcT/QvjwdL6j4hzdy8Ihx
-   FD/jKxXahncCC9i2DTS/1ksIN15YGIIFkgqOy7qgTynGGzS2QFS8Ekwmi
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10356"; a="273387786"
-X-IronPort-AV: E=Sophos;i="5.91,247,1647327600"; 
-   d="scan'208";a="273387786"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 17:18:51 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,247,1647327600"; 
-   d="scan'208";a="558909749"
-Received: from lkp-server01.sh.intel.com (HELO db63a1be7222) ([10.239.97.150])
-  by orsmga002.jf.intel.com with ESMTP; 23 May 2022 17:18:48 -0700
-Received: from kbuild by db63a1be7222 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1ntIG7-0001XK-ED;
-        Tue, 24 May 2022 00:18:47 +0000
-Date:   Tue, 24 May 2022 08:18:39 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <helgaas@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     kbuild-all@lists.01.org, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v12 6/8] PCI: dwc: Implement special ISR handler for
- split MSI IRQ setup
-Message-ID: <202205240801.7l6SF2Hv-lkp@intel.com>
-References: <20220523181836.2019180-7-dmitry.baryshkov@linaro.org>
+        Mon, 23 May 2022 20:59:25 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D239195A3F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 17:59:24 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id rq11so10115864ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 17:59:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=OFIx7s/L3YnWfFaGk/Iok1k3YIHu8uSKhlMvRjqHwqQ=;
+        b=KSe/i6TaqXpR9n9Kj7do5tEUVCruj9NeCfJis7lHPt4XCGpfoUSsdoXddyYwkGuok5
+         3r/Zv3GeYnYa3EkuzsUa+waSAnvXSIr8oza+OoPRxZNq0zKswJLBHr1tZeo9hc1oY5l1
+         INhxu0T4ehuftGE/tXzigmaJGDdwu9VGppBZ4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=OFIx7s/L3YnWfFaGk/Iok1k3YIHu8uSKhlMvRjqHwqQ=;
+        b=eLQAdgKdj5Fas53wqMNpIYoxgO8c0kTNKk+ZWZgYgc6EFapM9InUqR1gOCyh9vXZZ5
+         L4GPHr8mYuT01Cpk29v0vIm+duRWIdbeIU30nsK5Yb4wq8omZynBTVsh+HKhkWYPMJTQ
+         RsHQAqHYTaPnYK8nnCdYYjt6kbJ94hAvEP8TkIfg76vYhzme5Burz7yT3vKwZgRuCgD1
+         1Pu39oUA0Zapg1S+SINvKJTB+RbhrBPkNNJKcYfF1lJzTWEUBu3kY1uR+8jlR/G/8g3K
+         r6RRdc3iRMTjP3uVFoG/KshQDtsCnh7iTYFoMEnZAcFc3oZjQqdCHsdLauvZVFVEBi+E
+         uivg==
+X-Gm-Message-State: AOAM530QFTqR9y0OoWkTzkNmSsL9kpRvHgejDjBCTPLyNzoel1lrFij4
+        TAqrgiRa7WHzLET14NXS3x4HyzKCobXKfT2tsFk=
+X-Google-Smtp-Source: ABdhPJzsrUcCEJSm8M50/gDwOfRzxifvfSL7k5ZXwRk8VnOnmfq3NxtVUaNJAQ0/MYky7PFRzGlvDQ==
+X-Received: by 2002:a17:907:3e17:b0:6fe:c302:2fe9 with SMTP id hp23-20020a1709073e1700b006fec3022fe9mr10989244ejc.235.1653353963189;
+        Mon, 23 May 2022 17:59:23 -0700 (PDT)
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com. [209.85.221.44])
+        by smtp.gmail.com with ESMTPSA id gc4-20020a170906c8c400b006f3ef214e0esm2403700ejb.116.2022.05.23.17.59.15
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 May 2022 17:59:18 -0700 (PDT)
+Received: by mail-wr1-f44.google.com with SMTP id r23so23591740wrr.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 May 2022 17:59:15 -0700 (PDT)
+X-Received: by 2002:a05:6000:1548:b0:20f:c4e3:637a with SMTP id
+ 8-20020a056000154800b0020fc4e3637amr11832701wry.513.1653353955258; Mon, 23
+ May 2022 17:59:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220523181836.2019180-7-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
+ <5857c510-9783-a483-8414-65d7350618d6@suse.de> <CAD=FV=X99EWmRk82ako7cL7BWPEsTG=L7VVBVDFX5qKc1MifSA@mail.gmail.com>
+In-Reply-To: <CAD=FV=X99EWmRk82ako7cL7BWPEsTG=L7VVBVDFX5qKc1MifSA@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 23 May 2022 17:59:02 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U3Wywjev9tEhkL_zE1cV5NwEknH2YwHqyhd5TQtiJ=AQ@mail.gmail.com>
+Message-ID: <CAD=FV=U3Wywjev9tEhkL_zE1cV5NwEknH2YwHqyhd5TQtiJ=AQ@mail.gmail.com>
+Subject: Re: [PATCH v3] drm/probe-helper: Make 640x480 first if no EDID
+To:     Thomas Zimmermann <tzimmermann@suse.de>,
+        =?UTF-8?Q?St=C3=A9phane_Marchesin?= <marcheu@chromium.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,78 +92,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+Hi,
 
-Thank you for the patch! Perhaps something to improve:
+On Fri, May 20, 2022 at 5:01 PM Doug Anderson <dianders@chromium.org> wrote=
+:
+>
+> Hi,
+>
+> On Mon, May 16, 2022 at 3:28 AM Thomas Zimmermann <tzimmermann@suse.de> w=
+rote:
+> >
+> > Hi Douglas,
+> >
+> > I understand that you're trying to tell userspace that the modelist has
+> > been made up, but it's not something that should be done via fragile
+> > heuristics IMHO.
+> >
+> > I looked at the Chromium source code that you linked, but I cannot say
+> > whether it's doing the correct thing. It all depends on what your
+> > program needs.
+> >
+> > In that function, you could also search for 'DRM_MODE_TYPE_USERDEF'.
+> > It's the mode that the user specified on the kernel command line. If
+> > Chromium's automatic mode selection fails, you'd give your users direct
+> > control over it.
+>
+> That doesn't really work for Chrome OS. Certainly a kernel hacker
+> could do this, but it's not something I could imagine us exposing to
+> an average user of a Chromebook.
+>
+>
+> > When there's no flagged mode or if
+> > /sys/class/drm/card<...>/status contains "unconnected", you can assume
+> > that the modelist is artificial and try the modes in an appropriate ord=
+er.
+>
+> So "no flagged" means that nothing is marked as preferred, correct?
+>
+> ...so I guess what you're suggesting is that the order that the kernel
+> is presenting the modes to userspace is not ABI. If there are no
+> preferred modes then userspace shouldn't necessarily assume that the
+> first mode returned is the best mode. Instead it should assume that if
+> there is no preferred mode then the mode list is made up and it should
+> make its own decisions about the best mode to start with. If this is
+> the ABI from the kernel then plausibly I could convince people to
+> change userspace to pick 640x480 first in this case.
+>
+> > If we really want the kernel to give additional guarantees, we should
+> > have a broader discussion about this topic IMHO.
+>
+> Sure. I've added St=C3=A9phane Marchesin to this thread in case he wants =
+to
+> chime in about anything.
+>
+> Overall, my take on the matter:
+>
+> * Mostly I got involved because, apparently, a DP compliance test was
+> failing. The compliance test was upset that when it presented us with
+> no EDID that we didn't default to 640x480. There was a push to make a
+> fix for this in the Qualcomm specific driver but that didn't sit right
+> with me.
+>
+> * On all devices I'm currently working with (laptops), the DP is a
+> secondary display. If a user was trying to plug in a display with a
+> bad EDID and the max mode (1024x768) didn't work, they could just use
+> the primary display to choose a different resolution. It seems
+> unlikely a user would truly be upset and would probably be happy they
+> could get their broken display to work at all. Even if this is a
+> primary display, I believe there are documented key combos to change
+> the resolution of the primary display even if you can't see anything.
+>
+> * That all being said, defaulting to 640x480 when there's no EDID made
+> sense to me, especially since it's actually defined in the DP spec. So
+> I'm trying to do the right thing and solve this corner case. That
+> being said, if it's truly controversial I can just drop it.
+>
+>
+> So I guess my plan will be to give St=C3=A9phane a little while in case h=
+e
+> wants to chime in. If not then I guess I'll try a Chrome patch...
+> ...and if that doesn't work, I'll just drop it.
 
-[auto build test WARNING on helgaas-pci/next]
-[cannot apply to robh/for-next v5.18]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+OK, this userspace code seems to work:
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/PCI-qcom-Fix-higher-MSI-vectors-handling/20220524-024956
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/helgaas/pci.git next
-config: mips-allyesconfig (https://download.01.org/0day-ci/archive/20220524/202205240801.7l6SF2Hv-lkp@intel.com/config)
-compiler: mips-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/35aa0471e2ee4f0f21b01fbcfe6a4a425e968596
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Dmitry-Baryshkov/PCI-qcom-Fix-higher-MSI-vectors-handling/20220524-024956
-        git checkout 35aa0471e2ee4f0f21b01fbcfe6a4a425e968596
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=mips SHELL=/bin/bash drivers/pci/controller/dwc/
+https://crrev.com/c/3662501 - ozone/drm: Try 640x480 before picking
+the first mode if no EDID
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-
-All warnings (new ones prefixed by >>):
-
-   drivers/pci/controller/dwc/pcie-designware-host.c: In function 'dw_split_msi_isr':
->> drivers/pci/controller/dwc/pcie-designware-host.c:116:25: warning: variable 'pci' set but not used [-Wunused-but-set-variable]
-     116 |         struct dw_pcie *pci;
-         |                         ^~~
-
-
-vim +/pci +116 drivers/pci/controller/dwc/pcie-designware-host.c
-
-   108	
-   109	static void dw_split_msi_isr(struct irq_desc *desc)
-   110	{
-   111		struct irq_chip *chip = irq_desc_get_chip(desc);
-   112		int irq = irq_desc_get_irq(desc);
-   113		struct pcie_port *pp;
-   114		int i;
-   115		u32 num_ctrls;
- > 116		struct dw_pcie *pci;
-   117	
-   118		chained_irq_enter(chip, desc);
-   119	
-   120		pp = irq_desc_get_handler_data(desc);
-   121		pci = to_dw_pcie_from_pp(pp);
-   122	
-   123		/*
-   124		 * Unlike generic dw_handle_msi_irq(), we can determine which group of
-   125		 * MSIs triggered the IRQ, so process just that group.
-   126		 */
-   127		num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
-   128	
-   129		for (i = 0; i < num_ctrls; i++) {
-   130			if (pp->msi_irq[i] == irq) {
-   131				dw_handle_single_msi_group(pp, i);
-   132				break;
-   133			}
-   134		}
-   135	
-   136		WARN_ON_ONCE(i == num_ctrls);
-   137	
-   138		chained_irq_exit(chip, desc);
-   139	}
-   140	
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+...so we'll see how review of that goes. :-)
