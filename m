@@ -2,68 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8555A5322B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 07:57:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5744532390
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 May 2022 09:00:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234628AbiEXF5X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 01:57:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53016 "EHLO
+        id S234362AbiEXHAP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 03:00:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234676AbiEXF5N (ORCPT
+        with ESMTP id S229456AbiEXHAO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 01:57:13 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE84C13E93;
-        Mon, 23 May 2022 22:57:03 -0700 (PDT)
+        Tue, 24 May 2022 03:00:14 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01B00544C5;
+        Tue, 24 May 2022 00:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653371828; x=1684907828;
+  t=1653375613; x=1684911613;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=FHI8QRmyOTRfQUFkl+0Ym1ZbTysS5KsRUOlji7tis1M=;
-  b=XIAJDxnB7ybRtzkk0ZHzR/rD4PP84AbZY/hVKg/bLrzpRslRZOD3eZp7
-   LfHM1iNmnDAtVTGw990kuh/NGPx5dOoIUAkyFaFUyV2mkenuGsBZXswe6
-   vO0D52SmWiy9PASOTyMqyM+m1MLeFE6yBTystwExscTsUUvXR2N8LXfXe
-   Q=;
+  bh=wP6WJdvwPKQCVTFkQFeIUDg1EJfm95DI1FuINih206s=;
+  b=JAKDCJ6AOxITJaly2AM9xORVOT6hfZyly5PFBu7/dJ0IjuAs4hJU9Y5D
+   u1HupM+b7j+NHE/6eah1jGxGlxTfo5oKawC+3wq7FHAPXdR9xmfoLhZTj
+   kZ3PXzM+oSQ/L3bA/2wpr1l3yJgEV5PrelPSvK6tcKIDwhgAD9Ypzxkse
+   s=;
 Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 23 May 2022 22:57:03 -0700
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 24 May 2022 00:00:12 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2022 22:57:03 -0700
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 May 2022 00:00:11 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 23 May 2022 22:57:02 -0700
-Received: from [10.216.49.5] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ 15.2.986.22; Tue, 24 May 2022 00:00:11 -0700
+Received: from [10.239.133.9] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 23 May
- 2022 22:56:56 -0700
-Message-ID: <da3cc8d2-4f10-feb5-50fb-9b99c61db1ad@quicinc.com>
-Date:   Tue, 24 May 2022 11:26:51 +0530
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 24 May
+ 2022 00:00:07 -0700
+Message-ID: <ea720e1a-c0d2-84b0-8dbc-bb5031d32208@quicinc.com>
+Date:   Tue, 24 May 2022 15:00:05 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH V6 1/5] mmc: core: Capture eMMC and SD card errors
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v7 02/10] Coresight: Add coresight TPDM source driver
 Content-Language: en-US
-To:     Adrian Hunter <adrian.hunter@intel.com>, <ulf.hansson@linaro.org>,
-        <wsa+renesas@sang-engineering.com>, <shawn.lin@rock-chips.com>,
-        <yoshihiro.shimoda.uh@renesas.com>, <digetx@gmail.com>,
-        <quic_asutoshd@quicinc.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_rampraka@quicinc.com>,
-        <quic_pragalla@quicinc.com>, <quic_sartgarg@quicinc.com>,
-        <quic_nitirawa@quicinc.com>, <quic_sayalil@quicinc.com>,
-        Liangliang Lu <quic_luliang@quicinc.com>,
-        "Bao D . Nguyen" <quic_nguyenb@quicinc.com>
-References: <1652857340-6040-1-git-send-email-quic_c_sbhanu@quicinc.com>
- <1652857340-6040-2-git-send-email-quic_c_sbhanu@quicinc.com>
- <23b27e40-5b6d-22cb-8e87-19e7378db849@intel.com>
-From:   "Sajida Bhanu (Temp)" <quic_c_sbhanu@quicinc.com>
-In-Reply-To: <23b27e40-5b6d-22cb-8e87-19e7378db849@intel.com>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>
+CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20220509133947.20987-1-quic_jinlmao@quicinc.com>
+ <20220509133947.20987-3-quic_jinlmao@quicinc.com>
+ <38bb1ec9-56bc-0cdf-6c46-d448a46ec886@arm.com>
+From:   Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <38bb1ec9-56bc-0cdf-6c46-d448a46ec886@arm.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
@@ -75,108 +81,336 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/23/2022 12:44 PM, Adrian Hunter wrote:
-> On 18/05/22 10:02, Shaik Sajida Bhanu wrote:
->> Add changes to capture eMMC and SD card errors.
->> This is useful for debug and testing.
+Hi Suzuki,
+
+Thank you for the review.
+
+On 5/23/2022 4:57 PM, Suzuki K Poulose wrote:
+> Hi
+>
+> On 09/05/2022 14:39, Mao Jinlong wrote:
+>> Add driver to support Coresight device TPDM (Trace, Profiling and
+>> Diagnostics Monitor). TPDM is a monitor to collect data from
+>> different datasets. This change is to add probe/enable/disable
+>> functions for tpdm source.
 >>
->> Signed-off-by: Liangliang Lu <quic_luliang@quicinc.com>
->> Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
->> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
->> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
->> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-> Seems to need to be re-based on Ulf's next branch:
->
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/mmc.git next
-Sure Thank You for the review.
->
-> Otherwise:
->
-> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
->
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 >> ---
->>   drivers/mmc/core/core.c  | 10 +++++++++-
->>   include/linux/mmc/host.h | 26 ++++++++++++++++++++++++++
->>   2 files changed, 35 insertions(+), 1 deletion(-)
+>>   drivers/hwtracing/coresight/Kconfig          |  13 ++
+>>   drivers/hwtracing/coresight/Makefile         |   1 +
+>>   drivers/hwtracing/coresight/coresight-core.c |   5 +-
+>>   drivers/hwtracing/coresight/coresight-tpdm.c | 146 +++++++++++++++++++
+>>   drivers/hwtracing/coresight/coresight-tpdm.h |  26 ++++
+>>   include/linux/coresight.h                    |   1 +
+>>   6 files changed, 191 insertions(+), 1 deletion(-)
+>>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
+>>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
 >>
->> diff --git a/drivers/mmc/core/core.c b/drivers/mmc/core/core.c
->> index 368f104..5db5adf 100644
->> --- a/drivers/mmc/core/core.c
->> +++ b/drivers/mmc/core/core.c
->> @@ -943,9 +943,11 @@ int mmc_execute_tuning(struct mmc_card *card)
->>   	}
->>   
->>   	/* Only print error when we don't check for card removal */
->> -	if (!host->detect_change)
->> +	if (!host->detect_change) {
->>   		pr_err("%s: tuning execution failed: %d\n",
->>   			mmc_hostname(host), err);
->> +		mmc_debugfs_err_stats_inc(host, MMC_ERR_TUNING);
->> +	}
->>   
->>   	return err;
->>   }
->> @@ -2242,6 +2244,12 @@ void mmc_rescan(struct work_struct *work)
->>   		if (freqs[i] <= host->f_min)
->>   			break;
->>   	}
+>> diff --git a/drivers/hwtracing/coresight/Kconfig 
+>> b/drivers/hwtracing/coresight/Kconfig
+>> index 514a9b8086e3..5c506a1cd08f 100644
+>> --- a/drivers/hwtracing/coresight/Kconfig
+>> +++ b/drivers/hwtracing/coresight/Kconfig
+>> @@ -201,4 +201,17 @@ config CORESIGHT_TRBE
+>>           To compile this driver as a module, choose M here: the 
+>> module will be
+>>         called coresight-trbe.
 >> +
->> +	/*
->> +	 * Ignore the command timeout errors observed during
->> +	 * the card init as those are excepted.
->> +	 */
->> +	host->err_stats[MMC_ERR_CMD_TIMEOUT] = 0;
->>   	mmc_release_host(host);
->>   
->>    out:
->> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
->> index 0c0c9a0..0d7c0f7 100644
->> --- a/include/linux/mmc/host.h
->> +++ b/include/linux/mmc/host.h
->> @@ -93,6 +93,25 @@ struct mmc_clk_phase_map {
->>   
->>   struct mmc_host;
->>   
->> +enum mmc_err_stat {
->> +	MMC_ERR_CMD_TIMEOUT,
->> +	MMC_ERR_CMD_CRC,
->> +	MMC_ERR_DAT_TIMEOUT,
->> +	MMC_ERR_DAT_CRC,
->> +	MMC_ERR_AUTO_CMD,
->> +	MMC_ERR_ADMA,
->> +	MMC_ERR_TUNING,
->> +	MMC_ERR_CMDQ_RED,
->> +	MMC_ERR_CMDQ_GCE,
->> +	MMC_ERR_CMDQ_ICCE,
->> +	MMC_ERR_REQ_TIMEOUT,
->> +	MMC_ERR_CMDQ_REQ_TIMEOUT,
->> +	MMC_ERR_ICE_CFG,
->> +	MMC_ERR_CTRL_TIMEOUT,
->> +	MMC_ERR_UNEXPECTED_IRQ,
->> +	MMC_ERR_MAX,
->> +};
+>> +config CORESIGHT_TPDM
+>> +    tristate "CoreSight Trace, Profiling & Diagnostics Monitor driver"
+>> +    select CORESIGHT_LINKS_AND_SINKS
+>> +    help
+>> +      This driver provides support for configuring monitor. Monitors 
+>> are
+>> +      primarily responsible for data set collection and support the
+>> +      ability to collect any permutation of data set types. Monitors 
+>> are
+>> +      also responsible for interaction with system cross triggering.
+>
+> I find the last statement a bit confusing. Could this be :
+>
+>     "Monitors are also connected to the cross triggers."
+Some tpdm events can be triggered by CTI trigger out.
+>
 >> +
->>   struct mmc_host_ops {
->>   	/*
->>   	 * It is optional for the host to implement pre_req and post_req in
->> @@ -498,6 +517,7 @@ struct mmc_host {
->>   	/* Host Software Queue support */
->>   	bool			hsq_enabled;
->>   
->> +	u32			err_stats[MMC_ERR_MAX];
->>   	unsigned long		private[] ____cacheline_aligned;
->>   };
->>   
->> @@ -632,6 +652,12 @@ static inline enum dma_data_direction mmc_get_dma_dir(struct mmc_data *data)
->>   	return data->flags & MMC_DATA_WRITE ? DMA_TO_DEVICE : DMA_FROM_DEVICE;
->>   }
->>   
->> +static inline void mmc_debugfs_err_stats_inc(struct mmc_host *host,
->> +					     enum mmc_err_stat stat)
+>> +      To compile this driver as a module, choose M here: the module 
+>> will be
+>> +      called coresight-tpdm.
+>> +
+>>   endif
+>> diff --git a/drivers/hwtracing/coresight/Makefile 
+>> b/drivers/hwtracing/coresight/Makefile
+>> index 329a0c704b87..6bb9b1746bc7 100644
+>> --- a/drivers/hwtracing/coresight/Makefile
+>> +++ b/drivers/hwtracing/coresight/Makefile
+>> @@ -25,5 +25,6 @@ obj-$(CONFIG_CORESIGHT_CPU_DEBUG) += 
+>> coresight-cpu-debug.o
+>>   obj-$(CONFIG_CORESIGHT_CATU) += coresight-catu.o
+>>   obj-$(CONFIG_CORESIGHT_CTI) += coresight-cti.o
+>>   obj-$(CONFIG_CORESIGHT_TRBE) += coresight-trbe.o
+>> +obj-$(CONFIG_CORESIGHT_TPDM) += coresight-tpdm.o
+>>   coresight-cti-y := coresight-cti-core.o coresight-cti-platform.o \
+>>              coresight-cti-sysfs.o
+>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
+>> b/drivers/hwtracing/coresight/coresight-core.c
+>> index 23ab16dd9b5d..75fe1781df20 100644
+>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>> @@ -1047,7 +1047,8 @@ static int coresight_validate_source(struct 
+>> coresight_device *csdev,
+>>       }
+>>         if (subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_PROC &&
+>> -        subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE) {
+>> +        subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE &&
+>> +        subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY) {
+>>           dev_err(&csdev->dev, "wrong device subtype in %s\n", 
+>> function);
+>>           return -EINVAL;
+>>       }
+>> @@ -1116,6 +1117,7 @@ int coresight_enable(struct coresight_device 
+>> *csdev)
+>>           per_cpu(tracer_path, cpu) = path;
+>>           break;
+>>       case CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE:
+>> +    case CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY:
+>>           /*
+>>            * Use the hash of source's device name as ID
+>>            * and map the ID to the pointer of the path.
+>> @@ -1165,6 +1167,7 @@ void coresight_disable(struct coresight_device 
+>> *csdev)
+>>           per_cpu(tracer_path, cpu) = NULL;
+>>           break;
+>>       case CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE:
+>> +    case CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY:
+>>           hash = hashlen_hash(hashlen_string(NULL, 
+>> dev_name(&csdev->dev)));
+>>           /* Find the path by the hash. */
+>>           path = idr_find(&path_idr, hash);
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
+>> b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> new file mode 100644
+>> index 000000000000..6a4e2a35053d
+>> --- /dev/null
+>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> @@ -0,0 +1,146 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
+>> reserved.
+>> + */
+>> +
+>> +#include <linux/amba/bus.h>
+>> +#include <linux/bitmap.h>
+>> +#include <linux/coresight.h>
+>> +#include <linux/coresight-pmu.h>
+>> +#include <linux/device.h>
+>> +#include <linux/err.h>
+>> +#include <linux/fs.h>
+>> +#include <linux/io.h>
+>> +#include <linux/kernel.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+>> +
+>> +#include "coresight-priv.h"
+>> +#include "coresight-tpdm.h"
+>> +
+>> +DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
+>> +
+>> +/* TPDM enable operations */
+>> +static int tpdm_enable(struct coresight_device *csdev,
+>> +               struct perf_event *event, u32 mode)
 >> +{
->> +	host->err_stats[stat] += 1;
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+>> +
+>> +    mutex_lock(&drvdata->lock);
+>> +    if (drvdata->enable) {
+>> +        mutex_unlock(&drvdata->lock);
+>> +        return -EBUSY;
+>> +    }
+>> +
+>> +    drvdata->enable = true;
+>> +    mutex_unlock(&drvdata->lock);
+>> +
+>> +    dev_info(drvdata->dev, "TPDM tracing enabled\n");
+>> +    return 0;
 >> +}
 >> +
->>   int mmc_send_tuning(struct mmc_host *host, u32 opcode, int *cmd_error);
->>   int mmc_send_abort_tuning(struct mmc_host *host, u32 opcode);
->>   
+>> +/* TPDM disable operations */
+>> +static void tpdm_disable(struct coresight_device *csdev,
+>> +             struct perf_event *event)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+>> +
+>> +    mutex_lock(&drvdata->lock);
+>> +    if (!drvdata->enable) {
+>> +        mutex_unlock(&drvdata->lock);
+>> +        return;
+>> +    }
+>> +
+>> +    drvdata->enable = false;
+>> +    mutex_unlock(&drvdata->lock);
+>> +
+>> +    dev_info(drvdata->dev, "TPDM tracing disabled\n");
+>> +}
+>> +
+>> +static const struct coresight_ops_source tpdm_source_ops = {
+>> +    .enable        = tpdm_enable,
+>> +    .disable    = tpdm_disable,
+>> +};
+>> +
+>> +static const struct coresight_ops tpdm_cs_ops = {
+>> +    .source_ops    = &tpdm_source_ops,
+>> +};
+>> +
+>> +static int tpdm_probe(struct amba_device *adev, const struct amba_id 
+>> *id)
+>> +{
+>> +    struct device *dev = &adev->dev;
+>> +    struct coresight_platform_data *pdata;
+>> +    struct tpdm_drvdata *drvdata;
+>> +    struct coresight_desc desc = { 0 };
+>> +
+>> +    pdata = coresight_get_platform_data(dev);
+>> +    if (IS_ERR(pdata))
+>> +        return PTR_ERR(pdata);
+>> +    adev->dev.platform_data = pdata;
+>> +
+>> +    /* driver data*/
+>> +    drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+>> +    if (!drvdata)
+>> +        return -ENOMEM;
+>> +    drvdata->dev = &adev->dev;
+>> +    dev_set_drvdata(dev, drvdata);
+>> +
+>> +    drvdata->base = devm_ioremap_resource(dev, &adev->res);
+>> +    if (!drvdata->base)
+>> +        return -ENOMEM;
+>> +
+>> +    mutex_init(&drvdata->lock);
+>> +
+>> +    /* Set up coresight component description */
+>> +    desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
+>> +    if (!desc.name)
+>> +        return -ENOMEM;
+>> +    desc.type = CORESIGHT_DEV_TYPE_SOURCE;
+>> +    desc.subtype.source_subtype = 
+>> CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY;
+>> +    desc.ops = &tpdm_cs_ops;
+>> +    desc.pdata = adev->dev.platform_data;
+>> +    desc.dev = &adev->dev;
+>
+> desc.access must be initialised here.
+>
+>     desc.access = CSDEV_ACCESS_IOMEM(drvdata->base);
+>
+>> +    drvdata->csdev = coresight_register(&desc);
+>> +    if (IS_ERR(drvdata->csdev))
+>> +        return PTR_ERR(drvdata->csdev);
+>> +
+>> +    /* Decrease pm refcount when probe is done.*/
+>> +    pm_runtime_put(&adev->dev);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static void __exit tpdm_remove(struct amba_device *adev)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(&adev->dev);
+>> +
+>> +    coresight_unregister(drvdata->csdev);
+>> +}
+>> +
+>> +/*
+>> + * Different TPDM has different periph id.
+>> + * The difference is 0-7 bits' value. So ignore 0-7 bits.
+>> + */
+>> +static struct amba_id tpdm_ids[] = {
+>> +    {
+>> +        .id = 0x000f0e00,
+>> +        .mask = 0x000fff00,
+>> +    },
+>> +    { 0, 0},
+>> +};
+>> +
+>> +static struct amba_driver tpdm_driver = {
+>> +    .drv = {
+>> +        .name   = "coresight-tpdm",
+>> +        .owner    = THIS_MODULE,
+>> +        .suppress_bind_attrs = true,
+>> +    },
+>> +    .probe          = tpdm_probe,
+>> +    .id_table    = tpdm_ids,
+>> +    .remove        = tpdm_remove,
+>> +};
+>> +
+>> +module_amba_driver(tpdm_driver);
+>> +
+>> +MODULE_LICENSE("GPL v2");
+>> +MODULE_DESCRIPTION("Trace, Profiling & Diagnostic Monitor driver");
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h 
+>> b/drivers/hwtracing/coresight/coresight-tpdm.h
+>> new file mode 100644
+>> index 000000000000..94a7748a5426
+>> --- /dev/null
+>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+>> @@ -0,0 +1,26 @@
+>> +/* SPDX-License-Identifier: GPL-2.0 */
+>> +/*
+>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
+>> reserved.
+>> + */
+>> +
+>> +#ifndef _CORESIGHT_CORESIGHT_TPDM_H
+>> +#define _CORESIGHT_CORESIGHT_TPDM_H
+>> +
+>> +/**
+>> + * struct tpdm_drvdata - specifics associated to an TPDM component
+>> + * @base:       memory mapped base address for this component.
+>> + * @dev:        The device entity associated to this component.
+>> + * @csdev:      component vitals needed by the framework.
+>> + * @lock:       lock for the enable value.
+>> + * @enable:     enable status of the component.
+>> + */
+>> +
+>> +struct tpdm_drvdata {
+>> +    void __iomem        *base;
+>> +    struct device        *dev;
+>> +    struct coresight_device    *csdev;
+>> +    struct mutex        lock;
+>
+> Why mutex lock ? Couldn't this be a spinlock ?
+1. There is no irq for TPDM
+2. As there are 7 dataset types, there will be some FOR loop to configure
+tpdm registers which may cause some time.
+
+
+>
+>> +    bool            enable;
+>> +};
+>> +
+>> +#endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
+>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+>> index 247147c11231..a9efac55029d 100644
+>> --- a/include/linux/coresight.h
+>> +++ b/include/linux/coresight.h
+>> @@ -61,6 +61,7 @@ enum coresight_dev_subtype_source {
+>>       CORESIGHT_DEV_SUBTYPE_SOURCE_PROC,
+>>       CORESIGHT_DEV_SUBTYPE_SOURCE_BUS,
+>>       CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE,
+>> +    CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY,
+>
+> super minor nit: I find the choice of name a bit odd.
+> We could simply make it something like :
+>
+>     CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS:
+>
+> Suzuki
+I will check and update.
+>
+>>   };
+>>     enum coresight_dev_subtype_helper {
+>
+> _______________________________________________
+> CoreSight mailing list -- coresight@lists.linaro.org
+> To unsubscribe send an email to coresight-leave@lists.linaro.org
