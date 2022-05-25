@@ -2,63 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A9AD534246
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 19:37:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1BA053426C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 19:50:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237203AbiEYRhJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 13:37:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46086 "EHLO
+        id S1343542AbiEYRuh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 13:50:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229837AbiEYRhH (ORCPT
+        with ESMTP id S1343514AbiEYRug (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 13:37:07 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E497B9158D;
-        Wed, 25 May 2022 10:37:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1653500222;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=LkCr1nDsG4a9WOPwOju1ojVRo2OtcGaGaOl1mrXFyCo=;
-    b=K3J1sP+MSx4Gw/yu+LtUYd9vQc7DGk7hjxZQmHD4RmdNo3qeBVmVpQf3x745IsXgCP
-    FDM7jK6aqyQ36IUXkBra1nhrje94CmYAR7oOEh5JswmXMuORuujAFupbd38qs9nq/cVQ
-    fK/fcvl27P+B06++6MwzPC27/wyxXEmeP0QULj6Rh2emNKKayXNuvi2DJ5KGPwEvNWw8
-    Eo3UGwt+x61M70BS9XIvv4/7ey7KJ89kpogqfnyakiYIgmHaIkdfLT2vUSjw2bGmZvXb
-    uIlHZ0RqodPMwnu4O5CVTLyJQKUp+cwuxQP4GqoCLtD9RL3/tZWwOJJHBv1YjZcFOiIQ
-    EEqA==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrKsxlg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.45.0 AUTH)
-    with ESMTPSA id 9056edy4PHb2XpL
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Wed, 25 May 2022 19:37:02 +0200 (CEST)
-Date:   Wed, 25 May 2022 19:36:53 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        agross@kernel.org, arnd@arndb.de, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        olof@lixom.net, robh@kernel.org, sboyd@kernel.org
-Subject: Re: Removal of qcom,board-id and qcom,msm-id
-Message-ID: <Yo5pNRq/vBaamk0q@gerhold.net>
-References: <a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org>
- <20220522195138.35943-1-konrad.dybcio@somainline.org>
- <53d5999b-88ee-24db-fd08-ff9406e2b7b7@linaro.org>
- <YowBtNkZ678ns4Ob@builder.lan>
- <CAA8EJprArSF_363FyS+63XfB=ZK657X81u8TJLTRx5AbTYy1ag@mail.gmail.com>
+        Wed, 25 May 2022 13:50:36 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80BFE43EDE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 10:50:35 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id j7so14348923ila.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 10:50:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LM3ReL420FsBXX+XGSyRPdq/fubRwpogL9YcgPRaS0E=;
+        b=Q924Dm7ycuAYo3Y1WStJA7LSKi4PqoFJNApYmf4eGyAZGHwKqlEqF/hLBZHTBUvAoU
+         2WvdY2d49J2lnu1t4qW8z0DzQTCo3YXKYLzQYA30lM3WN6wkMKGVr+bn7zf28UcAjKE8
+         y8AWEUSKJaFsdStEKBLq/ysjVun50Gw/fVHZc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LM3ReL420FsBXX+XGSyRPdq/fubRwpogL9YcgPRaS0E=;
+        b=jySN1J+8XS5jh8aaakwoY+3Ln0zJ0j1ZGC7E/h5GDvAZxHcRvk+VmWhqzHyxsNBpoF
+         QLFnwQ8JXn2f3grfjLz7Q9f3ZUJ4XS76+LgmLrbgO8vYz5amcRq7Z3qooVDPJms1Wxnc
+         Bp9bLWEi3zPlBD8Wzj7wAyNrYbOR3YZ/gaKDAnzRYQ1KIA6yFGf2Rjp/u0TVD18tZzMI
+         ZEyCM772BVmgdePFF7zDMr1ZOgbHCtxdbjy9e2ERO37f8imBP147qvP9m1kEvX8Yq+k8
+         wfoxWPnb8LhduQYqzgyV6RmLk2caqentWfOehWwepD9nv+N8NlAp8H/ZV1CNgJzadftX
+         tJzg==
+X-Gm-Message-State: AOAM533JCZOxWyWNWv9UOEr7yQnNv5qfK74jjovV4Rh3q/x+cLCg/LWN
+        g8XjZnJx//ApgrWVq63ynCL41ednweEiOJT4OUQ=
+X-Google-Smtp-Source: ABdhPJz9XfghY/pg6NUEOmrcbzB6KdocBNyo7MC48lbfqrw6QaCYCacEDBMxFPmob27hyF2xeUKL+g==
+X-Received: by 2002:a05:6e02:1bcd:b0:2d0:ec65:5b90 with SMTP id x13-20020a056e021bcd00b002d0ec655b90mr17656900ilv.254.1653501034832;
+        Wed, 25 May 2022 10:50:34 -0700 (PDT)
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com. [209.85.166.45])
+        by smtp.gmail.com with ESMTPSA id g6-20020a056602150600b0066579afd3cbsm1334254iow.50.2022.05.25.10.50.33
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 May 2022 10:50:33 -0700 (PDT)
+Received: by mail-io1-f45.google.com with SMTP id q203so22192786iod.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 10:50:33 -0700 (PDT)
+X-Received: by 2002:a02:a595:0:b0:32e:7849:9777 with SMTP id
+ b21-20020a02a595000000b0032e78499777mr17220200jam.244.1653501033086; Wed, 25
+ May 2022 10:50:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJprArSF_363FyS+63XfB=ZK657X81u8TJLTRx5AbTYy1ag@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220525014308.1853576-1-judyhsiao@chromium.org> <20220525014308.1853576-2-judyhsiao@chromium.org>
+In-Reply-To: <20220525014308.1853576-2-judyhsiao@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 25 May 2022 10:50:19 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UYeXLZ=sTd4NUesMF0E4RCzOqCG2mhQToPPWKXmzmvKg@mail.gmail.com>
+Message-ID: <CAD=FV=UYeXLZ=sTd4NUesMF0E4RCzOqCG2mhQToPPWKXmzmvKg@mail.gmail.com>
+Subject: Re: [v3 1/3] arm64: dts: qcom: sc7280: herobrine: Add pinconf
+ settings for mi2s1
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
+        Judy Hsiao <judyhsiao@google.com>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,52 +85,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 24, 2022 at 01:18:53AM +0300, Dmitry Baryshkov wrote:
-> > We're following the bindings and don't pick board-id or msm-id unless
-> > there's a particular reason for it - which typically is that the
-> > downstream bootloader requires it - we don't use the properties on the
-> > kernel side.
-> 
-> Or unless we have another reason (like handling a single RB3+RB5 image).
-> I suspect PmOS might also like shipping a single image for some/all of
-> the supported devices. Or we might use that for the qcom-armv8a OE
-> machine.
-> 
+Hi,
 
-On a larger scale the qcom,msm-id/board-id properties are not very
-useful for automatic DTB selection. This is simply because they are not
-unique when you look beyond just the Qualcomm reference boards. I know
-at least 3 totally different smartphones (from different vendors) where
-the bootloader picks "msm8916-mtp", even though they have little in
-common with Qualcomm's original MTP board.
+On Tue, May 24, 2022 at 6:43 PM Judy Hsiao <judyhsiao@chromium.org> wrote:
+>
+> 1. Add drive strength property for mi2s1 on sc7280 based platforms.
+> 2. Disable the pull-up for mi2s1 lines.
+>
+> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 
-There are also vendors who made up their own broken numbering scheme,
-broken bootloaders that pick seemingly random DTBs or start modifying
-random properties etc etc. Perhaps it has improved on more recent
-devices but somehow I doubt it...
-
-This means that the qcom,msm-id/board-id properties are really just
-useful for making the bootloader happy, or if you have a number of
-devices in full control. It's not the consistently implemented standard
-that would actually be worth promoting for automatic DTB selection.
-
-> >
-> > > If the dtbTool support for the bindings is there, then there is no
-> > > breakage, because you had to use dtbTool before so you have to use now.
-> > >
-> >
-> > Among all the platforms I maintain, MSM8916 (db410c) is the only one
-> > where I use dtbTool - because it refuses to accept the concatenated
-> > dtb.
-> 
-> It's strange, I have been using concatenated dtb with db410c for ages.
-> 
-
-There is a patch in Linaro's LK fork for DB410c that selects the
-appended DTB even if the qcom,msm-id/board-id properties are missing:
-https://git.linaro.org/landing-teams/working/qualcomm/lk.git/commit/?id=3be1d459a546a24f2bf10b9551663a3e69a8214e
-
-If you don't have this commit or something equivalent, appended DTBs
-must have the qcom,msm-id/board-id properties for LK to accept them.
-
-Stephan
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
