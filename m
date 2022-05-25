@@ -2,73 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EC2E53366A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 07:30:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAF8B533706
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 09:10:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243970AbiEYFau (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 01:30:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57758 "EHLO
+        id S238383AbiEYHKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 03:10:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237184AbiEYFat (ORCPT
+        with ESMTP id S231301AbiEYHKg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 01:30:49 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BCB3546A8;
-        Tue, 24 May 2022 22:30:48 -0700 (PDT)
+        Wed, 25 May 2022 03:10:36 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 192EB62F8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 00:05:55 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id n10so18885702pjh.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 00:05:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653456649; x=1684992649;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=DsGKeqfSj16RFm5Jn2/AAf0C5X/Pb5reAu370lQ9uQ0=;
-  b=Op0vyJ52MfmK4RzOqGj0sYDD8weLxP9nEouqyCBGazok1Sfi5T8iH50M
-   4qE61kZ5WaOswl/zg1RT6RYRPgKtFuZVV8CS0nOIk4UUz/ogufp8ou/jo
-   mJ+XciY7zHIMZR1t31h3X9F/ya3AoIKcULOSgiPknboV6w7L1whx9dXfW
-   E=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 24 May 2022 22:30:48 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 May 2022 22:30:47 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 24 May 2022 22:30:47 -0700
-Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 24 May
- 2022 22:30:43 -0700
-Subject: Re: [PATCH v4 3/3] dt-bindings: remoteproc: qcom: Convert SC7180 MSS
- bindings to YAML
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh@kernel.org>
-CC:     <bjorn.andersson@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <ohad@wizery.com>, <agross@kernel.org>,
-        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <mka@chromium.org>
-References: <1652978825-5304-1-git-send-email-quic_sibis@quicinc.com>
- <1652978825-5304-4-git-send-email-quic_sibis@quicinc.com>
- <20220520224011.GA374485-robh@kernel.org>
- <371ce290-1deb-bff2-112b-71be8c005b37@linaro.org>
- <a5ad7884-d2c5-aeb0-405e-0121bb51f0a1@quicinc.com>
- <9badcfce-1db2-5381-bab8-8e52b875cebd@linaro.org>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <90645ff6-0446-af02-08fe-d8f022de941a@quicinc.com>
-Date:   Wed, 25 May 2022 11:00:40 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=GQOgQwVQ/waUJffCDtcivwSbqH5M+zW3KVOXOzVg+3I=;
+        b=hfxeN4TuHwZ+F26aVi1nDnyqqj9hzVXzKQLyUTyyseJ1iA2d76wNddPr+Rs8dRaw8U
+         6g2vsfECGDI/zklJP00Pvjz5teG9nmAJS5uNj3rHFuswYrxKgIoBmlWZoWXCgNjj86Nw
+         Vkffw8Z9LaoNwuAhLW48PfDj+fbdlnQyCDUcNUnhZPqLLqxucNyPXCbFCdNp7qMzjthM
+         mymx77ceQo5I2XfTuxYjsKmFpGcIReYXyG8UMB03cIeWtS+6g/6It1c3bKwQKOmb7bt/
+         dSvKqMiBn0YuUFNtMVFi8MhtNg134bEF2gpV9ILEW7JMJzgsd+aafYU9xoXS2GUdN3qU
+         /ARQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=GQOgQwVQ/waUJffCDtcivwSbqH5M+zW3KVOXOzVg+3I=;
+        b=2beTnUYqMEHjF4ij8E6ZzGmZPuDae/72oOv/FeaaUEjepkDB5rgmMlpeV5HXOzAH5i
+         lcRvFrYtVKTkG6Lt55YhCTO6rufOZZhx89kHk1j+YnkNqbs/5W9qQ6nGH1es0t+0ufwC
+         fgZgdNNF6L1xXnhsA8DDfT+Q74hWMhsLRqrbaXxkiSxe8plZipmDJiEEmf2cs4dQhyfY
+         mMv7jAuOfmwNGSKCpMDITxL1lasMq2GwK4p2i7aeS1KNyV5Cn/Pq38SnnLiWOUgEysfh
+         XnYEWxp/R9U1ECJztjZ76873mBvn8DfZDI6jGytWI+PWVVqRikjx83+DRnZCSg2owpqZ
+         aKlQ==
+X-Gm-Message-State: AOAM532szhHBNqkFKGVx7AJOWCfJyoWOgiB2xtt4e6MkBCn5a372I9wJ
+        fQhiLHtL8ZdettZOQZkBTPBXxA==
+X-Google-Smtp-Source: ABdhPJxXwWFCbgZ5LyQsmogKN6LaNXPGnyZsOSm+FR1qUQynXNNGcC3+iJkueuoaM9Wz9sT5XQO9IQ==
+X-Received: by 2002:a17:902:cf05:b0:156:9d:ca01 with SMTP id i5-20020a170902cf0500b00156009dca01mr30978527plg.111.1653462354436;
+        Wed, 25 May 2022 00:05:54 -0700 (PDT)
+Received: from localhost ([122.162.234.2])
+        by smtp.gmail.com with ESMTPSA id b14-20020a170902650e00b001624f2b71b4sm2310001plk.152.2022.05.25.00.05.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 May 2022 00:05:53 -0700 (PDT)
+Date:   Wed, 25 May 2022 12:35:51 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-scsi@vger.kernel.org
+Subject: Re: [RFC PATCH v2 4/6] PM: opp: allow control of multiple clocks
+Message-ID: <20220525070551.guv3csxi5kkqfr4f@vireshk-i7>
+References: <20220411154347.491396-1-krzysztof.kozlowski@linaro.org>
+ <20220411154347.491396-5-krzysztof.kozlowski@linaro.org>
+ <20220425072710.v6gwo4gu3aouezg4@vireshk-i7>
+ <dea39b1f-0091-2690-7f07-108d07ef9f3c@linaro.org>
+ <20220510044053.ykn6ygnbeokhzrsa@vireshk-i7>
+ <1e533194-7047-8342-b426-f607fddbfaa3@linaro.org>
+ <20220511050643.hd5tcrojb3wkbg7t@vireshk-i7>
+ <20220518235708.1A04CC385A9@smtp.kernel.org>
+ <65a4c28d-6702-3a9f-f837-1ea69a428777@linaro.org>
+ <20220520005934.8AB1DC385AA@smtp.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <9badcfce-1db2-5381-bab8-8e52b875cebd@linaro.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220520005934.8AB1DC385AA@smtp.kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,43 +93,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/24/22 11:03 PM, Krzysztof Kozlowski wrote:
-> On 24/05/2022 04:00, Sibi Sankar wrote:
->> Hey Rob/Krzysztof,
->>
->> On 5/21/22 8:04 PM, Krzysztof Kozlowski wrote:
->>> On 21/05/2022 00:40, Rob Herring wrote:
->>>> On Thu, May 19, 2022 at 10:17:05PM +0530, Sibi Sankar wrote:
->>>>> Convert SC7180 MSS PIL loading bindings to YAML.
->>>>
->>>> I suppose there is a reason the sc7180 is being split out and the only
->>>> one converted, but this doesn't tell me.
->>>
->>> I am also confused, especially that last time I pointed out that there
->>> is work already:
->>> https://lore.kernel.org/all/20220511161602.117772-7-sireeshkodali1@gmail.com/
->>
->> https://lore.kernel.org/all/e3543961-1645-b02a-c869-f8fa1ad2d41c@quicinc.com/#t
->>
->> The reason for the split was discussed on the list ^^, thought it
->> wouldn't make much sense adding any of it to the commit message.
->> Also since Krzysztof said he wanted a alignment between Sireesh/me
->> we did exchange mails saying I'll take care of SC7180/SC7280 (since
->> they had pas compatible which is overridden by mss compatible) and
->> he could continue with the rest.
+On 19-05-22, 17:59, Stephen Boyd wrote:
+> This is a general problem with OPP. It is single clk frequency centric,
+> which works well for CPU/GPU devices that work with cpufreq/devfreq.
+> When it comes to other devices though we have to fit OPP into what those
+> devices want, which is something like gears for UFS, or "4k@60" (a
+> resolution) for display hardware.
 > 
+> Would adding string labels and/or using an index based API work better
+> for these devices? I think we'd want to extend OPP for display devices
+> to have whatever set of use-cases the device driver wants to handle with
+> string labels. That naturally follows how some SoC manufacturers setup
+> their OPP tables anyway. They may want to bump only the bus bandwidth
+> for different display resolutions while maxing out the clk frequency.
+> Then we could let drivers either construct a string at probe time to get
+> a handle to those OPP entries or index directly. The frequency APIs
+> would stick around for OPP tables that have frequencies and for drivers
+> that want to do cpufreq/devfreq stuff.
 > 
-> Sounds good to me, but Rob's got a point - this background should be
-> better explained.
-> 
+> UFS may want to use an index based API that matches the gears per the
+> spec. I think it could do that with dev_pm_opp_find_level_exact(),
+> right?
 
-ack
+I think we can use "level" for all these use cases to find the OPP, if
+it aligns well with the requirements of all these frameworks.
 
--Sibi
+FWIW, we already have three ways to find the OPP currently, via
+frequency, level and bandwidth.
 
-> 
-> Best regards,
-> Krzysztof
-> 
+> Then the primary problem is the subject of this patch,
+> controlling multiple clks per OPP table. Could that be done by linking
+> one OPP table (for the gears) to an OPP table for each clk? Maybe
+> through 'required-opps'?
+
+Even in that case we will have an OPP table which will have multiple
+clocks. So it may not matter much which OPP table contains all the
+clocks.
+
+-- 
+viresh
