@@ -2,295 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32DA6534590
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 23:03:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 340FA534719
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 01:58:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345226AbiEYVCo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 17:02:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49708 "EHLO
+        id S231913AbiEYX6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 19:58:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345256AbiEYVCi (ORCPT
+        with ESMTP id S229824AbiEYX6q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 17:02:38 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F3EBBA575;
-        Wed, 25 May 2022 14:02:36 -0700 (PDT)
+        Wed, 25 May 2022 19:58:46 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C949C9E9C7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 16:58:44 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id h1so133119ljb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 16:58:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653512556; x=1685048556;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=u81JIzQvO0xTa6hdCkqCi0NLpD6qYSGmTgJneLqSkv0=;
-  b=VTxn0EIqZqiPGeq1c0qCljuDHNHZQpDQXZ9bZvT/s3OD0qEedfPuenqu
-   OQzeEef1n60GkL3r0BtYnCtDPdnLP64pcsPDpcgCBJjTECEM0BMH2vIYa
-   p50eg6Z6tRuxtriS/528/LSQ3rykwFl28zF4qFyk8VFTz47s22l7/PZkY
-   s=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 25 May 2022 14:02:36 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2022 14:02:36 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 25 May 2022 14:02:35 -0700
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 25 May 2022 14:02:35 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <bjorn.andersson@linaro.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v13 3/3] drm/msm/dp: delete vdda regulator related functions from eDP/DP controller
-Date:   Wed, 25 May 2022 14:02:20 -0700
-Message-ID: <1653512540-21956-4-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1653512540-21956-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1653512540-21956-1-git-send-email-quic_khsieh@quicinc.com>
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=M0etsjt3N3Ag/ghkmKC2eVWJ+UlMScMu38fKLV6Dh50=;
+        b=hE+V12yDph0Sx/2fqnXMiatAsnD2dZQbMuRzUsjyj7YfP1tDji7fJDS5PLhQ//S9eS
+         UMhd5SQsy22nSNl6ATkplBpIxEu3RrCFqrmYx54VUnvXNs1QxPrI+X9Bt1R97yCCeEtB
+         9OjeYq7cmnxLVFKz44iz/r1V4nczworDtKURfyGoBAAdtmYiRuXGKDS9kR37vPWHW6ao
+         n5pOV98PcTF1M1Om5Psj/bShidAbBKbtZIPnFm95rHj3jqT8llL0Rb60boU0UhWKRC2q
+         U89bNTWCzI7s3UxKxXwH6m69I4PwdsQZIsrDAbw6PD+seJoTaej4d4tOFhHZNJblaWMh
+         noOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=M0etsjt3N3Ag/ghkmKC2eVWJ+UlMScMu38fKLV6Dh50=;
+        b=o9KgfaJL+Z6pBRIo/w9BDdb5Prks0yRvRC3f1djxYi4BRO31UtHol452zzfojpMsNk
+         oEmzowWhNb7wJPiDtukckHQyc4oiS7lVrOqAtPT4NsuvhE5Sqmthi/KfSVfEl+a8wbxK
+         JbjFoZO+/NtgZLE4gHguaFQTmHNC9/nBQSMLcQcUmGXgJga53nxmv98kzMel9+DOhvbi
+         TCn0pP5t8a1ffFiY5hKtqXAEl7LXSqh5qRJbUVZ/Tr7oKPD3e+wJY3XQE8a8uWrkTXNr
+         cBAtQ6NL+AytuJe1gV+3GvS1BGHakrQ47YbGmkoooNKYXFYdn7vFY88UMLwCJ194I3Si
+         4GvQ==
+X-Gm-Message-State: AOAM531YDYw1VJtQLPfFxxTP5LoXER2um79K24oOKGzlFwG0qlYQmKKZ
+        WsZlOZzyvN+i/qmQhjD6kN2gwA==
+X-Google-Smtp-Source: ABdhPJzAl/VQBwjybEtdG3Q+pNXcG6IZKYTAx8FwbB3J8y9hJEXqVKTCtjKPrIA5IZVh1zdFi21YAg==
+X-Received: by 2002:a2e:b4b4:0:b0:253:fdf5:1a1d with SMTP id q20-20020a2eb4b4000000b00253fdf51a1dmr5587013ljm.18.1653523123160;
+        Wed, 25 May 2022 16:58:43 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id u28-20020a056512041c00b0047255d21203sm9557lfk.306.2022.05.25.16.58.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 May 2022 16:58:42 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: [RFC PATCH v2 00/34] phy: qcom-qmp: split the QMP PHY driver
+Date:   Thu, 26 May 2022 02:58:07 +0300
+Message-Id: <20220525235841.852301-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Vdda regulators are related to both eDP and DP phy so that it should be
-managed at eDP and DP phy driver instead of controller. This patch removes
-vdda regulators related functions out of eDP/DP controller.
+While adding support for the PCIe EP mode support to the QMP driver I
+couldn't help but notice that the QMP PHY driver has slowly become the a
+beast with tons of conditions and corner cases being inserted here and
+there.r
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
- drivers/gpu/drm/msm/dp/dp_parser.c | 14 ------
- drivers/gpu/drm/msm/dp/dp_parser.h |  8 ----
- drivers/gpu/drm/msm/dp/dp_power.c  | 95 +-------------------------------------
- 3 files changed, 2 insertions(+), 115 deletions(-)
+This an RFC for an attempt to to cleanup the QMP driver by splitting the
+QMP PHY driver into four smaller drivers, each targeting a particular
+family of PHY backends (DP/combo, PCIe, UFS and USB). Yes, this results
+in some code duplication, but I hope that the end result is still better
+than the current situation.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-index 8f9fed9..4ef2130 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.c
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-@@ -22,14 +22,6 @@
- #define DP_DEFAULT_P0_OFFSET	0x1000
- #define DP_DEFAULT_P0_SIZE	0x0400
- 
--static const struct dp_regulator_cfg sdm845_dp_reg_cfg = {
--	.num = 2,
--	.regs = {
--		{"vdda-1p2", 21800, 4 },	/* 1.2 V */
--		{"vdda-0p9", 36000, 32 },	/* 0.9 V */
--	},
--};
--
- static void __iomem *dp_ioremap(struct platform_device *pdev, int idx, size_t *len)
- {
- 	struct resource *res;
-@@ -298,12 +290,6 @@ static int dp_parser_parse(struct dp_parser *parser)
- 	if (rc)
- 		return rc;
- 
--	/* Map the corresponding regulator information according to
--	 * version. Currently, since we only have one supported platform,
--	 * mapping the regulator directly.
--	 */
--	parser->regulator_cfg = &sdm845_dp_reg_cfg;
--
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-index 3a4d797..47430e3 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.h
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-@@ -92,8 +92,6 @@ struct dp_pinctrl {
- 	struct pinctrl_state *state_suspend;
- };
- 
--#define DP_DEV_REGULATOR_MAX	4
--
- /* Regulators for DP devices */
- struct dp_reg_entry {
- 	char name[32];
-@@ -101,11 +99,6 @@ struct dp_reg_entry {
- 	int disable_load;
- };
- 
--struct dp_regulator_cfg {
--	int num;
--	struct dp_reg_entry regs[DP_DEV_REGULATOR_MAX];
--};
--
- /**
-  * struct dp_parser - DP parser's data exposed to clients
-  *
-@@ -121,7 +114,6 @@ struct dp_parser {
- 	struct dp_pinctrl pinctrl;
- 	struct dp_io io;
- 	struct dp_display_data disp_data;
--	const struct dp_regulator_cfg *regulator_cfg;
- 	u32 max_dp_lanes;
- 	struct drm_bridge *next_bridge;
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
-index d9e0117..b52ac1d 100644
---- a/drivers/gpu/drm/msm/dp/dp_power.c
-+++ b/drivers/gpu/drm/msm/dp/dp_power.c
-@@ -20,82 +20,10 @@ struct dp_power_private {
- 	struct clk *link_clk_src;
- 	struct clk *pixel_provider;
- 	struct clk *link_provider;
--	struct regulator_bulk_data supplies[DP_DEV_REGULATOR_MAX];
- 
- 	struct dp_power dp_power;
- };
- 
--static void dp_power_regulator_disable(struct dp_power_private *power)
--{
--	struct regulator_bulk_data *s = power->supplies;
--	const struct dp_reg_entry *regs = power->parser->regulator_cfg->regs;
--	int num = power->parser->regulator_cfg->num;
--	int i;
--
--	DBG("");
--	for (i = num - 1; i >= 0; i--)
--		if (regs[i].disable_load >= 0)
--			regulator_set_load(s[i].consumer,
--					   regs[i].disable_load);
--
--	regulator_bulk_disable(num, s);
--}
--
--static int dp_power_regulator_enable(struct dp_power_private *power)
--{
--	struct regulator_bulk_data *s = power->supplies;
--	const struct dp_reg_entry *regs = power->parser->regulator_cfg->regs;
--	int num = power->parser->regulator_cfg->num;
--	int ret, i;
--
--	DBG("");
--	for (i = 0; i < num; i++) {
--		if (regs[i].enable_load >= 0) {
--			ret = regulator_set_load(s[i].consumer,
--						 regs[i].enable_load);
--			if (ret < 0) {
--				pr_err("regulator %d set op mode failed, %d\n",
--					i, ret);
--				goto fail;
--			}
--		}
--	}
--
--	ret = regulator_bulk_enable(num, s);
--	if (ret < 0) {
--		pr_err("regulator enable failed, %d\n", ret);
--		goto fail;
--	}
--
--	return 0;
--
--fail:
--	for (i--; i >= 0; i--)
--		regulator_set_load(s[i].consumer, regs[i].disable_load);
--	return ret;
--}
--
--static int dp_power_regulator_init(struct dp_power_private *power)
--{
--	struct regulator_bulk_data *s = power->supplies;
--	const struct dp_reg_entry *regs = power->parser->regulator_cfg->regs;
--	struct platform_device *pdev = power->pdev;
--	int num = power->parser->regulator_cfg->num;
--	int i, ret;
--
--	for (i = 0; i < num; i++)
--		s[i].supply = regs[i].name;
--
--	ret = devm_regulator_bulk_get(&pdev->dev, num, s);
--	if (ret < 0) {
--		pr_err("%s: failed to init regulator, ret=%d\n",
--						__func__, ret);
--		return ret;
--	}
--
--	return 0;
--}
--
- static int dp_power_clk_init(struct dp_power_private *power)
- {
- 	int rc = 0;
-@@ -318,21 +246,10 @@ int dp_power_client_init(struct dp_power *dp_power)
- 
- 	pm_runtime_enable(&power->pdev->dev);
- 
--	rc = dp_power_regulator_init(power);
--	if (rc) {
--		DRM_ERROR("failed to init regulators %d\n", rc);
--		goto error;
--	}
--
- 	rc = dp_power_clk_init(power);
--	if (rc) {
-+	if (rc)
- 		DRM_ERROR("failed to init clocks %d\n", rc);
--		goto error;
--	}
--	return 0;
- 
--error:
--	pm_runtime_disable(&power->pdev->dev);
- 	return rc;
- }
- 
-@@ -365,22 +282,15 @@ int dp_power_init(struct dp_power *dp_power, bool flip)
- 	power = container_of(dp_power, struct dp_power_private, dp_power);
- 
- 	pm_runtime_get_sync(&power->pdev->dev);
--	rc = dp_power_regulator_enable(power);
--	if (rc) {
--		DRM_ERROR("failed to enable regulators, %d\n", rc);
--		goto exit;
--	}
- 
- 	rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
- 	if (rc) {
- 		DRM_ERROR("failed to enable DP core clocks, %d\n", rc);
--		goto err_clk;
-+		goto exit;
- 	}
- 
- 	return 0;
- 
--err_clk:
--	dp_power_regulator_disable(power);
- exit:
- 	pm_runtime_put_sync(&power->pdev->dev);
- 	return rc;
-@@ -393,7 +303,6 @@ int dp_power_deinit(struct dp_power *dp_power)
- 	power = container_of(dp_power, struct dp_power_private, dp_power);
- 
- 	dp_power_clk_enable(dp_power, DP_CORE_PM, false);
--	dp_power_regulator_disable(power);
- 	pm_runtime_put_sync(&power->pdev->dev);
- 	return 0;
- }
+If the idea looks good, I will continue polishing the drivers. A
+feedback regarding the common functions (ones, left in the
+phy-qcom-qmp-lib.c file) would be appreciated.
+
+Changes since RFC:
+ - Split the patchset to be able to get through the email size
+   limitations
+ - Minor correcions to the split drivers
+
+Dmitry Baryshkov (34):
+  phy: qcom-qmp: add library source code
+  phy: qcom-qmp: add QMP PCIe PHY driver
+  phy: qcom-qmp: move MSM8996 PCIe PHY to new QMP driver
+  phy: qcom-qmp: move MSM8998 PCIe PHY to new QMP driver
+  phy: qcom-qmp: move SDM845 PCIe PHY to new QMP driver
+  phy: qcom-qmp: move SM8250 PCIe PHY to new QMP driver
+  phy: qcom-qmp: move IPQ6018 PCIe PHY to new QMP driver
+  phy: qcom-qmp: move IPQ8074 PCIe PHY to new QMP driver
+  phy: qcom-qmp: move SC8180x PCIe PHY to new QMP driver
+  phy: qcom-qmp: move SDX55 PCIe PHY to new QMP driver
+  phy: qcom-qmp: move SM8450 PCIe PHY to new QMP driver
+  phy: qcom-qmp: add QMP UFS PHY driver
+  phy: qcom-qmp: move MSM8996 UFS PHY to new QMP driver
+  phy: qcom-qmp: move MSM8998, SDM845 and SM6350 UFS PHY to new QMP
+    driver
+  phy: qcom-qmp: move SC8180x, SM8150 and SM8250 UFS PHY to new QMP
+    driver
+  phy: qcom-qmp: move SM6116 UFS PHY to new QMP driver
+  phy: qcom-qmp: move SC8280xp, SM8350 and SM8450 UFS PHY to new QMP
+    driver
+  phy: qcom-qmp: add QMP USB PHY driver
+  phy: qcom-qmp: move MSM8996 USB PHY to new QMP driver
+  phy: qcom-qmp: move IPQ6018, IPQ8074 USB PHY to new QMP driver
+  phy: qcom-qmp: move MSM8998 USB PHY to new QMP driver
+  phy: qcom-qmp: move SDM845 USB PHY to new QMP driver
+  phy: qcom-qmp: move SC7180 USB PHY to new QMP driver
+  phy: qcom-qmp: move SC8180x, SM8150 USB PHY to new QMP driver
+  phy: qcom-qmp: move SM8250 USB PHY to new QMP driver
+  phy: qcom-qmp: move SM8350, SM8450 USB PHY to new QMP driver
+  phy: qcom-qmp: move SDX55 USB PHY to new QMP driver
+  phy: qcom-qmp: move SDX65 USB PHY to new QMP driver
+  phy: qcom-qmp: move QCM2290 USB PHY to new QMP driver
+  phy: qcom-qmp: add QMP combo DP+USB PHY driver
+  phy: qcom-qmp: move SC7180 DP PHY to new QMP driver
+  phy: qcom-qmp: move SC8180X DP PHY to new QMP driver
+  phy: qcom-qmp: move SM8250 DP PHY to new QMP driver
+  phy: qcom-qmp: drop old QMP PHY driver
+
+ drivers/phy/qualcomm/Makefile             |    8 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 1401 +++++
+ drivers/phy/qualcomm/phy-qcom-qmp-lib.c   |  417 ++
+ drivers/phy/qualcomm/phy-qcom-qmp-lib.h   |  311 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c  | 2098 +++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c   |  983 ++++
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c   | 2229 ++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp.c       | 6350 ---------------------
+ drivers/phy/qualcomm/phy-qcom-qmp.h       |    3 +
+ 9 files changed, 7449 insertions(+), 6351 deletions(-)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-lib.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-lib.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+ delete mode 100644 drivers/phy/qualcomm/phy-qcom-qmp.c
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.35.1
 
