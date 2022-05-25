@@ -2,246 +2,312 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D936A5340FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 18:04:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19C34534118
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 18:11:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238899AbiEYQEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 12:04:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57528 "EHLO
+        id S231700AbiEYQLc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 12:11:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232929AbiEYQEr (ORCPT
+        with ESMTP id S230195AbiEYQLb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 12:04:47 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D057BB41CB;
-        Wed, 25 May 2022 09:04:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653494687; x=1685030687;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=k/f8LeQRwzoJ8rkf565JWrHukwMfuZQ9pYAxd6Ti8gs=;
-  b=iM6E9XnRLq6dROl/mSLlOgjmUMheLcT5J/IKytIzHl5GI6vDZCfG2x1+
-   38f/jphpQ9FyPgw78BAEUo65Bb+2T9c4FXBpg/T661QKFatqb4E7CwIdW
-   IloKuK+arg1sncI50KrAeI/xNFGDGV/HhmY7KVTXuLqK3ZZ36dugQduit
-   w=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 25 May 2022 09:04:46 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2022 09:04:46 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 25 May 2022 09:04:45 -0700
-Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 25 May
- 2022 09:04:42 -0700
-Subject: Re: [PATCH 1/7] remoteproc: qcom: pas: Fixup the elf class for SM8450
- remoteprocs
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        <bjorn.andersson@linaro.org>
-CC:     <agross@kernel.org>, <mathieu.poirier@linaro.org>,
-        <dmitry.baryshkov@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Yogesh Lal" <quic_ylal@quicinc.com>
-References: <1653398017-28426-1-git-send-email-quic_sibis@quicinc.com>
- <1653398017-28426-2-git-send-email-quic_sibis@quicinc.com>
- <37267214-5edb-add6-c601-6df93043a2b3@somainline.org>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <8dea333d-544d-7c07-d560-a1a9c3a38ddc@quicinc.com>
-Date:   Wed, 25 May 2022 21:34:38 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Wed, 25 May 2022 12:11:31 -0400
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 238FBB36F6;
+        Wed, 25 May 2022 09:11:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1653495090; x=1685031090;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=P2oD2DLPDO4W+4LFDKXBXh+xzvJpJ5bumU6qG1oluDQ=;
+  b=X8+T+16tTvl8QjxuXMEc6H7VaHoCk2B+ebdaX9G2cTdQudFkRtNq5Ay/
+   OyMlDuwHBvVLOQbJm0+nHzMvFbuv9zjECfWG/AFkKv3sJJ948p92iGevE
+   v5/NJ/SaEDnCchvFL2Ge8Y8jfz9Z3TjBeBbtzKlzTj4H4GkojR2YiOnWz
+   KOaziTliNBJZu6A1TqBHkTyD7wrbZXwjPZR3AJj3FQYbMPd4SET2JPkMq
+   TpPyj/PsmeIi5NUTa3HHr1jkdS0c33Lr4zQugcOpwyZU/EFluqagNRNC/
+   nW1qk/icSRwzF5+JihXh3Ewhz0I1F16MxbZGGq6xAxr5WhnA9zd94pNMw
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10358"; a="272673049"
+X-IronPort-AV: E=Sophos;i="5.91,250,1647327600"; 
+   d="scan'208";a="272673049"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2022 09:11:29 -0700
+X-IronPort-AV: E=Sophos;i="5.91,250,1647327600"; 
+   d="scan'208";a="676926754"
+Received: from isobansk-mobl.ger.corp.intel.com (HELO [10.213.230.191]) ([10.213.230.191])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2022 09:11:26 -0700
+Message-ID: <1972f50b-d71a-9e2e-d10b-cc4f13bb208f@linux.intel.com>
+Date:   Wed, 25 May 2022 17:11:24 +0100
 MIME-Version: 1.0
-In-Reply-To: <37267214-5edb-add6-c601-6df93043a2b3@somainline.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v4 12/13] drm/msm: Utilize gpu scheduler priorities
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20210728010632.2633470-1-robdclark@gmail.com>
+ <20210728010632.2633470-13-robdclark@gmail.com>
+ <84e03c5f-a3af-6592-d19a-a2f5d20b92fb@linux.intel.com>
+ <CAJs_Fx6Nc337LPNh=p2GT2d2yDTdLWH934o4Cof3urDGhUJB6A@mail.gmail.com>
+ <904ae104-1c30-d130-129f-ccae381261d5@linux.intel.com>
+ <CAF6AEGuVhXuX63Od+kcJ0QtfAZ2-wqZsN0KOuEzKbivJdouzog@mail.gmail.com>
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Organization: Intel Corporation UK Plc
+In-Reply-To: <CAF6AEGuVhXuX63Od+kcJ0QtfAZ2-wqZsN0KOuEzKbivJdouzog@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
+        NICE_REPLY_A,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Konrad,
-Thanks for taking time to review the patch.
 
-On 5/25/22 2:47 AM, Konrad Dybcio wrote:
-> 
-> On 24/05/2022 15:13, Sibi Sankar wrote:
->> From: Yogesh Lal <quic_ylal@quicinc.com>
+On 24/05/2022 15:57, Rob Clark wrote:
+> On Tue, May 24, 2022 at 6:45 AM Tvrtko Ursulin
+> <tvrtko.ursulin@linux.intel.com> wrote:
 >>
->> The coredumps for the ADSP,CDSP and MPSS subsystems will be 64 bit from
->> SM8450 SoCs onward. Update the elf class as elf64 accordingly.
-> 
-> Hi,
-> 
-> 
-> the "will be" got me thinking, whether you meant that SM8450 is the 
-> first SoC that features 64-bit coredumps, or it is going to come in a 
-> firmware update, but it was 32-bit in an earlier version.
-> 
-> If the latter is true, did the consumer-release BSP for hardware vendors 
-> include that change? Otherwise it may differ between devices, as some 
-> vendors are known not to update their firmwares very often if at all.
-
-Given that you reported ^^ I found it odd that the firmware class would
-change mid-program. Since I picked up the patch from list I had to dig
-around for info internally. Looks like all the firmware released were
-just 32 bit and it's only the tooling that does the decryption of the
-dumps expects the coredumps elf to be 64 bit. Not sure why this happened
-though, probably tooling upgraded in anticipation of a future fw
-upgrade. Couldn't get the full history behind the decision. Anyway
-the commit message needs an update will fix that in the next re-spin.
-
--Sibi
-
-
-> 
-> 
-> Konrad
-> 
+>> On 23/05/2022 23:53, Rob Clark wrote:
+>>>
+>>> btw, one fun (but unrelated) issue I'm hitting with scheduler... I'm
+>>> trying to add an igt test to stress shrinker/eviction, similar to the
+>>> existing tests/i915/gem_shrink.c.  But we hit an unfortunate
+>>> combination of circumstances:
+>>> 1. Pinning memory happens in the synchronous part of the submit ioctl,
+>>> before enqueuing the job for the kthread to handle.
+>>> 2. The first run_job() callback incurs a slight delay (~1.5ms) while
+>>> resuming the GPU
+>>> 3. Because of that delay, userspace has a chance to queue up enough
+>>> more jobs to require locking/pinning more than the available system
+>>> RAM..
 >>
->> Fixes: 5cef9b48458d ("remoteproc: qcom: pas: Add SM8450 remoteproc 
->> support")
->> Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
->>   drivers/remoteproc/qcom_q6v5_pas.c | 68 
->> +++++++++++++++++++++++++++++++++++---
->>   1 file changed, 64 insertions(+), 4 deletions(-)
+>> Is that one or multiple threads submitting jobs?
+> 
+> In this case multiple.. but I think it could also happen with a single
+> thread (provided it didn't stall on a fence, directly or indirectly,
+> from an earlier submit), because of how resume and actual job
+> submission happens from scheduler kthread.
+> 
+>>> I'm not sure if we want a way to prevent userspace from getting *too*
+>>> far ahead of the kthread.  Or maybe at some point the shrinker should
+>>> sleep on non-idle buffers?
 >>
->> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c 
->> b/drivers/remoteproc/qcom_q6v5_pas.c
->> index 6ae39c5653b1..8ce68d0bb1bc 100644
->> --- a/drivers/remoteproc/qcom_q6v5_pas.c
->> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
->> @@ -34,6 +34,7 @@ struct adsp_data {
->>       const char *firmware_name;
->>       int pas_id;
->>       unsigned int minidump_id;
->> +    bool uses_elf64;
->>       bool has_aggre2_clk;
->>       bool auto_boot;
->> @@ -450,7 +451,11 @@ static int adsp_probe(struct platform_device *pdev)
->>       }
->>       rproc->auto_boot = desc->auto_boot;
->> -    rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
->> +
->> +    if (desc->uses_elf64)
->> +        rproc_coredump_set_elf_info(rproc, ELFCLASS64, EM_NONE);
->> +    else
->> +        rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
->>       adsp = (struct qcom_adsp *)rproc->priv;
->>       adsp->dev = &pdev->dev;
->> @@ -617,6 +622,24 @@ static const struct adsp_data 
->> sm8350_adsp_resource = {
->>       .ssctl_id = 0x14,
->>   };
->> +static const struct adsp_data sm8450_adsp_resource = {
->> +    .crash_reason_smem = 423,
->> +    .firmware_name = "adsp.mdt",
->> +    .pas_id = 1,
->> +    .uses_elf64 = true,
->> +    .has_aggre2_clk = false,
->> +    .auto_boot = true,
->> +    .proxy_pd_names = (char*[]){
->> +        "lcx",
->> +        "lmx",
->> +        NULL
->> +    },
->> +    .load_state = "adsp",
->> +    .ssr_name = "lpass",
->> +    .sysmon_name = "adsp",
->> +    .ssctl_id = 0x14,
->> +};
->> +
->>   static const struct adsp_data msm8996_adsp_resource = {
->>           .crash_reason_smem = 423,
->>           .firmware_name = "adsp.mdt",
->> @@ -751,6 +774,24 @@ static const struct adsp_data 
->> sm8350_cdsp_resource = {
->>       .ssctl_id = 0x17,
->>   };
->> +static const struct adsp_data sm8450_cdsp_resource = {
->> +    .crash_reason_smem = 601,
->> +    .firmware_name = "cdsp.mdt",
->> +    .pas_id = 18,
->> +    .uses_elf64 = true,
->> +    .has_aggre2_clk = false,
->> +    .auto_boot = true,
->> +    .proxy_pd_names = (char*[]){
->> +        "cx",
->> +        "mxc",
->> +        NULL
->> +    },
->> +    .load_state = "cdsp",
->> +    .ssr_name = "cdsp",
->> +    .sysmon_name = "cdsp",
->> +    .ssctl_id = 0x17,
->> +};
->> +
->>   static const struct adsp_data mpss_resource_init = {
->>       .crash_reason_smem = 421,
->>       .firmware_name = "modem.mdt",
->> @@ -785,6 +826,25 @@ static const struct adsp_data 
->> sc8180x_mpss_resource = {
->>       .ssctl_id = 0x12,
->>   };
->> +static const struct adsp_data sm8450_mpss_resource = {
->> +    .crash_reason_smem = 421,
->> +    .firmware_name = "modem.mdt",
->> +    .pas_id = 4,
->> +    .minidump_id = 3,
->> +    .uses_elf64 = true,
->> +    .has_aggre2_clk = false,
->> +    .auto_boot = false,
->> +    .proxy_pd_names = (char*[]){
->> +        "cx",
->> +        "mss",
->> +        NULL
->> +    },
->> +    .load_state = "modem",
->> +    .ssr_name = "mpss",
->> +    .sysmon_name = "modem",
->> +    .ssctl_id = 0x12,
->> +};
->> +
->>   static const struct adsp_data slpi_resource_init = {
->>           .crash_reason_smem = 424,
->>           .firmware_name = "slpi.mdt",
->> @@ -913,10 +973,10 @@ static const struct of_device_id adsp_of_match[] 
->> = {
->>       { .compatible = "qcom,sm8350-cdsp-pas", .data = 
->> &sm8350_cdsp_resource},
->>       { .compatible = "qcom,sm8350-slpi-pas", .data = 
->> &sm8350_slpi_resource},
->>       { .compatible = "qcom,sm8350-mpss-pas", .data = 
->> &mpss_resource_init},
->> -    { .compatible = "qcom,sm8450-adsp-pas", .data = 
->> &sm8350_adsp_resource},
->> -    { .compatible = "qcom,sm8450-cdsp-pas", .data = 
->> &sm8350_cdsp_resource},
->> +    { .compatible = "qcom,sm8450-adsp-pas", .data = 
->> &sm8450_adsp_resource},
->> +    { .compatible = "qcom,sm8450-cdsp-pas", .data = 
->> &sm8450_cdsp_resource},
->>       { .compatible = "qcom,sm8450-slpi-pas", .data = 
->> &sm8350_slpi_resource},
->> -    { .compatible = "qcom,sm8450-mpss-pas", .data = 
->> &mpss_resource_init},
->> +    { .compatible = "qcom,sm8450-mpss-pas", .data = 
->> &sm8450_mpss_resource},
->>       { },
->>   };
->>   MODULE_DEVICE_TABLE(of, adsp_of_match);
+>> On the direct reclaim path when invoked from the submit ioctl? In i915
+>> we only shrink idle objects on direct reclaim and leave active ones for
+>> the swapper. It depends on how your locking looks like whether you could
+>> do them, whether there would be coupling of locks and fs-reclaim context.
+> 
+> I think the locking is more or less ok, although lockdep is unhappy
+> about one thing[1] which is I think a false warning (ie. not
+> recognizing that we'd already successfully acquired the obj lock via
+> trylock).  We can already reclaim idle bo's in this path.  But the
+> problem with a bunch of submits queued up in the scheduler, is that
+> they are already considered pinned and active.  So at some point we
+> need to sleep (hopefully interruptabley) until they are no longer
+> active, ie. to throttle userspace trying to shove in more submits
+> until some of the enqueued ones have a chance to run and complete.
+
+Odd I did not think trylock could trigger that. Looking at your code it 
+indeed seems two trylocks. I am pretty sure we use the same trylock 
+trick to avoid it. I am confused..
+
+Otherwise if you can afford to sleep you can of course throttle 
+organically via direct reclaim. Unless I am forgetting some key gotcha - 
+it's been a while I've been active in this area.
+
+Regards,
+
+Tvrtko
+
+> 
+> BR,
+> -R
+> 
+> [1] https://gitlab.freedesktop.org/drm/msm/-/issues/14
+> 
+>> Regards,
 >>
+>> Tvrtko
+>>
+>>> BR,
+>>> -R
+>>>
+>>>>
+>>>> Regards,
+>>>>
+>>>> Tvrtko
+>>>>
+>>>>> + */
+>>>>> +static inline int msm_gpu_convert_priority(struct msm_gpu *gpu, int prio,
+>>>>> +             unsigned *ring_nr, enum drm_sched_priority *sched_prio)
+>>>>> +{
+>>>>> +     unsigned rn, sp;
+>>>>> +
+>>>>> +     rn = div_u64_rem(prio, NR_SCHED_PRIORITIES, &sp);
+>>>>> +
+>>>>> +     /* invert sched priority to map to higher-numeric-is-higher-
+>>>>> +      * priority convention
+>>>>> +      */
+>>>>> +     sp = NR_SCHED_PRIORITIES - sp - 1;
+>>>>> +
+>>>>> +     if (rn >= gpu->nr_rings)
+>>>>> +             return -EINVAL;
+>>>>> +
+>>>>> +     *ring_nr = rn;
+>>>>> +     *sched_prio = sp;
+>>>>> +
+>>>>> +     return 0;
+>>>>> +}
+>>>>> +
+>>>>>     /**
+>>>>>      * A submitqueue is associated with a gl context or vk queue (or equiv)
+>>>>>      * in userspace.
+>>>>> @@ -257,7 +310,8 @@ struct msm_gpu_perfcntr {
+>>>>>      * @id:        userspace id for the submitqueue, unique within the drm_file
+>>>>>      * @flags:     userspace flags for the submitqueue, specified at creation
+>>>>>      *             (currently unusued)
+>>>>> - * @prio:      the submitqueue priority
+>>>>> + * @ring_nr:   the ringbuffer used by this submitqueue, which is determined
+>>>>> + *             by the submitqueue's priority
+>>>>>      * @faults:    the number of GPU hangs associated with this submitqueue
+>>>>>      * @ctx:       the per-drm_file context associated with the submitqueue (ie.
+>>>>>      *             which set of pgtables do submits jobs associated with the
+>>>>> @@ -272,7 +326,7 @@ struct msm_gpu_perfcntr {
+>>>>>     struct msm_gpu_submitqueue {
+>>>>>         int id;
+>>>>>         u32 flags;
+>>>>> -     u32 prio;
+>>>>> +     u32 ring_nr;
+>>>>>         int faults;
+>>>>>         struct msm_file_private *ctx;
+>>>>>         struct list_head node;
+>>>>> diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
+>>>>> index 682ba2a7c0ec..32a55d81b58b 100644
+>>>>> --- a/drivers/gpu/drm/msm/msm_submitqueue.c
+>>>>> +++ b/drivers/gpu/drm/msm/msm_submitqueue.c
+>>>>> @@ -68,6 +68,8 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+>>>>>         struct msm_gpu_submitqueue *queue;
+>>>>>         struct msm_ringbuffer *ring;
+>>>>>         struct drm_gpu_scheduler *sched;
+>>>>> +     enum drm_sched_priority sched_prio;
+>>>>> +     unsigned ring_nr;
+>>>>>         int ret;
+>>>>>
+>>>>>         if (!ctx)
+>>>>> @@ -76,8 +78,9 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+>>>>>         if (!priv->gpu)
+>>>>>                 return -ENODEV;
+>>>>>
+>>>>> -     if (prio >= priv->gpu->nr_rings)
+>>>>> -             return -EINVAL;
+>>>>> +     ret = msm_gpu_convert_priority(priv->gpu, prio, &ring_nr, &sched_prio);
+>>>>> +     if (ret)
+>>>>> +             return ret;
+>>>>>
+>>>>>         queue = kzalloc(sizeof(*queue), GFP_KERNEL);
+>>>>>
+>>>>> @@ -86,24 +89,13 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+>>>>>
+>>>>>         kref_init(&queue->ref);
+>>>>>         queue->flags = flags;
+>>>>> -     queue->prio = prio;
+>>>>> +     queue->ring_nr = ring_nr;
+>>>>>
+>>>>> -     ring = priv->gpu->rb[prio];
+>>>>> +     ring = priv->gpu->rb[ring_nr];
+>>>>>         sched = &ring->sched;
+>>>>>
+>>>>> -     /*
+>>>>> -      * TODO we can allow more priorities than we have ringbuffers by
+>>>>> -      * mapping:
+>>>>> -      *
+>>>>> -      *    ring = prio / 3;
+>>>>> -      *    ent_prio = DRM_SCHED_PRIORITY_MIN + (prio % 3);
+>>>>> -      *
+>>>>> -      * Probably avoid using DRM_SCHED_PRIORITY_KERNEL as that is
+>>>>> -      * treated specially in places.
+>>>>> -      */
+>>>>>         ret = drm_sched_entity_init(&queue->entity,
+>>>>> -                     DRM_SCHED_PRIORITY_NORMAL,
+>>>>> -                     &sched, 1, NULL);
+>>>>> +                     sched_prio, &sched, 1, NULL);
+>>>>>         if (ret) {
+>>>>>                 kfree(queue);
+>>>>>                 return ret;
+>>>>> @@ -134,16 +126,19 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+>>>>>     int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx)
+>>>>>     {
+>>>>>         struct msm_drm_private *priv = drm->dev_private;
+>>>>> -     int default_prio;
+>>>>> +     int default_prio, max_priority;
+>>>>>
+>>>>>         if (!priv->gpu)
+>>>>>                 return -ENODEV;
+>>>>>
+>>>>> +     max_priority = (priv->gpu->nr_rings * NR_SCHED_PRIORITIES) - 1;
+>>>>> +
+>>>>>         /*
+>>>>> -      * Select priority 2 as the "default priority" unless nr_rings is less
+>>>>> -      * than 2 and then pick the lowest priority
+>>>>> +      * Pick a medium priority level as default.  Lower numeric value is
+>>>>> +      * higher priority, so round-up to pick a priority that is not higher
+>>>>> +      * than the middle priority level.
+>>>>>          */
+>>>>> -     default_prio = clamp_t(uint32_t, 2, 0, priv->gpu->nr_rings - 1);
+>>>>> +     default_prio = DIV_ROUND_UP(max_priority, 2);
+>>>>>
+>>>>>         INIT_LIST_HEAD(&ctx->submitqueues);
+>>>>>
+>>>>> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
+>>>>> index f075851021c3..6b8fffc28a50 100644
+>>>>> --- a/include/uapi/drm/msm_drm.h
+>>>>> +++ b/include/uapi/drm/msm_drm.h
+>>>>> @@ -73,11 +73,19 @@ struct drm_msm_timespec {
+>>>>>     #define MSM_PARAM_MAX_FREQ   0x04
+>>>>>     #define MSM_PARAM_TIMESTAMP  0x05
+>>>>>     #define MSM_PARAM_GMEM_BASE  0x06
+>>>>> -#define MSM_PARAM_NR_RINGS   0x07
+>>>>> +#define MSM_PARAM_PRIORITIES 0x07  /* The # of priority levels */
+>>>>>     #define MSM_PARAM_PP_PGTABLE 0x08  /* => 1 for per-process pagetables, else 0 */
+>>>>>     #define MSM_PARAM_FAULTS     0x09
+>>>>>     #define MSM_PARAM_SUSPENDS   0x0a
+>>>>>
+>>>>> +/* For backwards compat.  The original support for preemption was based on
+>>>>> + * a single ring per priority level so # of priority levels equals the #
+>>>>> + * of rings.  With drm/scheduler providing additional levels of priority,
+>>>>> + * the number of priorities is greater than the # of rings.  The param is
+>>>>> + * renamed to better reflect this.
+>>>>> + */
+>>>>> +#define MSM_PARAM_NR_RINGS   MSM_PARAM_PRIORITIES
+>>>>> +
+>>>>>     struct drm_msm_param {
+>>>>>         __u32 pipe;           /* in, MSM_PIPE_x */
+>>>>>         __u32 param;          /* in, MSM_PARAM_x */
+>>>>> @@ -304,6 +312,10 @@ struct drm_msm_gem_madvise {
+>>>>>
+>>>>>     #define MSM_SUBMITQUEUE_FLAGS (0)
+>>>>>
+>>>>> +/*
+>>>>> + * The submitqueue priority should be between 0 and MSM_PARAM_PRIORITIES-1,
+>>>>> + * a lower numeric value is higher priority.
+>>>>> + */
+>>>>>     struct drm_msm_submitqueue {
+>>>>>         __u32 flags;   /* in, MSM_SUBMITQUEUE_x */
+>>>>>         __u32 prio;    /* in, Priority level */
