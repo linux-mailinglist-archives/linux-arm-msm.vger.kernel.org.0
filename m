@@ -1,100 +1,128 @@
 Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01FD3533B7A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 13:15:16 +0200 (CEST)
+Received: from out1.vger.email (unknown [IPv6:2620:137:e000::1:20])
+	by mail.lfdr.de (Postfix) with ESMTP id 185CF533BCE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 13:33:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236666AbiEYLPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 07:15:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59372 "EHLO
+        id S235058AbiEYLdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 07:33:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242797AbiEYLO7 (ORCPT
+        with ESMTP id S230476AbiEYLdZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 07:14:59 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3802A9CF07;
-        Wed, 25 May 2022 04:14:51 -0700 (PDT)
+        Wed, 25 May 2022 07:33:25 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCE4B9E9DA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 04:33:23 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id t25so35526140lfg.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 04:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653477291; x=1685013291;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=jgWfAwXuuu0RIdbapJx7yHndhKxVFwzMF8fPwOYRIh4=;
-  b=FHl+WdBaBxvLr3XDf118L7ZXn3iHHB6OY9VHGoI6hqjsAnNpMNPHkybE
-   AyoQ5bHDWi9njzrT/2hbg7hqT/pVQTSvsT4A468PupnCZxZKMvVhcgWL3
-   zrquWB7LMB7dtTCKW1EjaP2hXINc61Z5rdeFW7SHfzI0hYIXJLM2p4JB4
-   4=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 25 May 2022 04:14:50 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2022 04:14:46 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 25 May 2022 04:14:46 -0700
-Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 25 May 2022 04:14:42 -0700
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Subject: [PATCH V8 7/7] arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support node
-Date:   Wed, 25 May 2022 16:43:22 +0530
-Message-ID: <dee4ed5d97e4bb64f6af14623bd0e6130a43eb45.1653475467.git.quic_schowdhu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1653475467.git.quic_schowdhu@quicinc.com>
-References: <cover.1653475467.git.quic_schowdhu@quicinc.com>
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=EZsTbG5Ghb36/veeiU7rdV///7+Ve3p/GIrx5IOFMMk=;
+        b=UNaoBdpvQ0Wuh39ejXqVAxIdtogtZgXrbpaaU46uoIDB3jLwniE+a2Gw/eeD8rR8Yx
+         IXV3H3QXBNtA1tMANean66atO0lGhtSaBj/Jzj5RNfrNPf8kn0oSAKPugUTe2FTz20/o
+         5TH60Q4367rsBz1G9RGjIz8XELgZW7TyE43vX+m7/UlPP+AwpSJmlD2QG95/0zMEZsWS
+         tr5G30OGEiKdG5GnVwT8nCeszSZH6QYxn2Btg/docx5if5P9QbJdALM7qEVNf96vCbI4
+         8PVPsXCLlqa2JHW3+x+10k92IUQqj7bsSWQeFQsKgTrtK1cAELhcGiPxPVFOQXESnO70
+         CPFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=EZsTbG5Ghb36/veeiU7rdV///7+Ve3p/GIrx5IOFMMk=;
+        b=WwhxSNPDb9vsdSjAOYEjK5HqJNImJTtQardTyDtzPEb7WroWbxoY8sBCOeUaEEsrbz
+         Lv8N2JgH3ovFaZP1Bzgf9XvX6W8IIaWkupZFwuHThYu5kXqTFFdiLiEBja727eq1w8xX
+         EGMluCtRImfEJeHPWTZmUOgOOmiqcOVEfwbThasOFzLK3V+ZC7uOdCOCpImGzA7OM9iE
+         xOxo3/8FyeOYjsZWsclJntqjvXPiS+6ZxUDIlx9cpsKWC0E8vLvqgB7KK3C7xjHYqnkx
+         /AWnSO1layDRgCqnj7nDBOPym2jFe849HsaR4jKObkgRjUw1s0hyd1vtmXGhocqKSpCr
+         j0pw==
+X-Gm-Message-State: AOAM531vvLOxwVjCnMG7Wir0T16vFRf4vwpFQ3B/rkOwpRCnKRAfT+y6
+        Fy5a+f9UOyCsMflzSm/c71Ojeg==
+X-Google-Smtp-Source: ABdhPJwxUQcyyc6kFYuWc0GAmuft5s7f8VFDf0BcrceocIyXBLKMhyRoxJLAZ62FMvqZdolc+cbblg==
+X-Received: by 2002:a05:6512:10c2:b0:478:8ea5:f6f9 with SMTP id k2-20020a05651210c200b004788ea5f6f9mr5197816lfg.1.1653478402086;
+        Wed, 25 May 2022 04:33:22 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id h26-20020a19701a000000b0047255d210fesm3063191lfc.45.2022.05.25.04.33.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 May 2022 04:33:20 -0700 (PDT)
+Message-ID: <1abe03bf-5de5-f73e-1043-46872a38e815@linaro.org>
+Date:   Wed, 25 May 2022 14:33:18 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v2 1/7] media: camss: ispif: Correctly reset based on the
+ VFE ID
+Content-Language: en-GB
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        kholk11@gmail.com, Robert Foss <robert.foss@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        robh+dt@kernel.org, marijns95@gmail.com, konradybcio@gmail.com,
+        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, todor.too@gmail.com
+References: <20201022174706.8813-1-kholk11@gmail.com>
+ <20201022174706.8813-2-kholk11@gmail.com>
+ <899412f2-5ee4-cd32-393f-688fc6351437@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <899412f2-5ee4-cd32-393f-688fc6351437@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the DCC(Data Capture and Compare) device tree node entry along with
-the address of the register region.
+Wow, a patchset from 2020.
 
-Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+On 25/05/2022 12:03, Vladimir Zapolskiy wrote:
+> On 10/22/20 20:47, kholk11@gmail.com wrote:
+>> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+>>
+>> Resetting the ISPIF VFE0 context is wrong if we are using the VFE1
+>> for dual-camera or simply because a secondary camera is connected
+>> to it: in this case the reset will always happen on the VFE0 ctx
+>> of the ISPIF, which is .. useless.
+>>
+>> Fix this usecase by adding the ISPIF_RST_CMD_1 address and choose
+>> where to do the (or what to) reset based on the VFE line id.
+>>
+>> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+>> Reviewed-by: Robert Foss <robert.foss@linaro.org>
+>> ---
+>>   .../media/platform/qcom/camss/camss-ispif.c   | 85 ++++++++++++-------
+>>   .../media/platform/qcom/camss/camss-ispif.h   |  2 +-
+>>   2 files changed, 56 insertions(+), 31 deletions(-)
+>>
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index ff6bda1..ee13b5f 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1968,6 +1968,12 @@
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		dma@10a2000 {
-+			compatible = "qcom,sdm845-dcc", "qcom,dcc";
-+			reg = <0x0 0x010a2000 0x0 0x1000>,
-+			      <0x0 0x010ae000 0x0 0x2000>;
-+		};
-+
- 		pcie0: pci@1c00000 {
- 			compatible = "qcom,pcie-sdm845", "snps,dw-pcie";
- 			reg = <0 0x01c00000 0 0x2000>,
+[skipped]
+
+>> @@ -355,7 +379,7 @@ static int ispif_set_power(struct v4l2_subdev *sd, 
+>> int on)
+>>               goto exit;
+>>           }
+>> -        ret = ispif_reset(ispif);
+>> +        ret = ispif_reset(ispif, line->vfe_id);
+> 
+> But in fact here is an error.
+> 
+> line->vfe_id is never set.
+> 
+> I'm unable to test any fix, since I don't have a correspondent hardware,
+> but I can write a fix for someone's testing.
+
+I have a sda660 device, but I don't have cameras attached. So one will 
+have to use TPG.
+
 -- 
-2.7.4
-
+With best wishes
+Dmitry
