@@ -2,79 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E929D5337EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 10:01:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D99E4533950
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 11:06:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231989AbiEYIBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 04:01:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40444 "EHLO
+        id S240270AbiEYJF3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 05:05:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231213AbiEYIBr (ORCPT
+        with ESMTP id S239578AbiEYJFU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 04:01:47 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6982B42ED8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 01:01:45 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id t2so12565738qkb.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 01:01:45 -0700 (PDT)
+        Wed, 25 May 2022 05:05:20 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E14C88FF8E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 02:03:34 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id h10so2415489ljb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 02:03:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=5llnQ0HkqBxFbZt5az1NecvFrmyi/1RVbD73twHaCqM=;
-        b=zZwgi2desRjXdWtXNwoEvX6wsB2Qhsj85lZVg/nLI8ghYM7OjRBlJ9Pi4V/DxPJ1Bb
-         WZX+2l4VDbos162+9LTh3lTgITVULB14ootMx8ZWnHPxrGJl2hSY1UiFq7OVYQweoBuf
-         qLOsguArxFrn6puv/z2Fc8rEjxR89d2kRFl2uwfq2nLOr2Q9fmjIB22aheH10RuXhgoY
-         6WODq69uvHhKl7jHwDQ+87jmzfLIflNyEp6/gCudMQhdFsI2Gj2Ztk6y9qG+CLJgxYb0
-         QOn/cB9uBnLShJowJr7E7LNRBNZ1wicPBHkaF0wf+jwMbmIYLpWF6Kaw2b0mBrZXddfy
-         pgLg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ZtbcQaswtU2dqjmT14F4zADH8LUSwksU8SwBMe4IBPA=;
+        b=opkz2jp/Z44y2hsPU1RrbzF5zxhN14QmhBsqNuW9Lf6TfUZsUmqQjM8b3sLjfIWRrO
+         hNcN75Hkau6oHoZK0HCfB+dwqg5e7VHB2G+CDaHopzaKbtDzoi6Ksp8SZT6t3G8fZcWE
+         F2gRZ3alg2G91mCAFdZ3U06Ne1VnkFOgAYAD485uiVB9MW3WJcSflFWaGYCu+RclKp9p
+         afSZ7gzuVH1M5RS+7r0r7dK67RjSSizBh8sAX+PROnsunxjrC22p7bhMWzYA9NGZaF84
+         zSThapjW/b7HyHtapuAXvkNbY/BNkN0LM62/3XAhQmH8nUvX/d/DnS6jJot3V3eN1LXg
+         u95w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=5llnQ0HkqBxFbZt5az1NecvFrmyi/1RVbD73twHaCqM=;
-        b=8JNZ0uhI7lCeo+5zwYcbnODcjLvqyBK1W/uDorbbF8z4HFrXJ0Cg9eMfmLG8otzHpS
-         mUnpTLOSD9Obpkm7kvNgGJXWcrsOG2kczDS0H4TOx3TCFzkX71XJbWAG1a+sskkF+DXf
-         WGNebYoehNxdB41Eh5ARp48l00z2aYLOPkxWiRy6XMVMmmDt2JCScSN7RGheym9WW2ep
-         WHhhYzh9nyIhHp4Ii6Y4Y8Omso/uykcGSe0uC1bCEphuPoTHyKk8wel8HD4aAa8yfps1
-         4dUeOVUwh+sJ7A5SfNNFr6drCuH1dQ0d78IMCmXBg50YsiUWivInx4TbNj2auL+wtS/i
-         0C2Q==
-X-Gm-Message-State: AOAM531MACV+kAm8wak+AfboowP3G8fzSvtj+2VpY5LTQkZOUY8Dg36v
-        FXOZv4UIYkIWM/wMYKvo2rv3K21btFrz2N+hJS/oZQ==
-X-Google-Smtp-Source: ABdhPJyLzdihFq5P1mvTRP2MzB7lIfIvefw77o57mf6LyputxZqyr2pOmunz6FAsXzFu9/HvX3f2WImcrWg1neFlU9Y=
-X-Received: by 2002:a05:620a:414e:b0:6a5:8dec:57bb with SMTP id
- k14-20020a05620a414e00b006a58dec57bbmr1765575qko.30.1653465704537; Wed, 25
- May 2022 01:01:44 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ZtbcQaswtU2dqjmT14F4zADH8LUSwksU8SwBMe4IBPA=;
+        b=1jw58Tn9JdpbFlInYvdgDtVTG4MFugRc0K4swPGDSiiIyYUUracg1i2gyxwW3YAfXS
+         Zs3NnITask7p5K9rJMDQFsnpzVJrB/m8xXvQrT/Sfc4wNmqPiWS+aXHMEdQ7pDHuIoay
+         Md/2Pgvgr2OsnqxPt3WzhMxCeo5ZDmyOvnA59M7+5Se/YspIR0OZGwXUtmNND6zfA5/Y
+         cxH1dc/6lAV0bU1yMNeEhGpS10r2O2oAyTX4mczulFE+yBXsfcMYphlC3wtc/m6bMZGJ
+         wM42Mtb+3s68y3zwXeQHoRf480XKpjnM6xt+cmoCNAMSswt+tdqAtfV7kgdzekHbonNQ
+         6VPQ==
+X-Gm-Message-State: AOAM5311BspA8LGyrW2mxu4yZ68SzWFBVKMka4G6cXnOQWUqduB7GaFS
+        fnEa6BB6cmbgV3kyBRYmmUTRsQ==
+X-Google-Smtp-Source: ABdhPJxF0Rcjya/efDJd558P1BUzVdJ3r8QP+mXxGK4ViSdnITnaRGcwqag+tWvCjGDLX7COUChMWQ==
+X-Received: by 2002:a2e:a447:0:b0:249:5d85:aa54 with SMTP id v7-20020a2ea447000000b002495d85aa54mr18397175ljn.528.1653469407942;
+        Wed, 25 May 2022 02:03:27 -0700 (PDT)
+Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id bd24-20020a05651c169800b00253bd515f88sm2917421ljb.68.2022.05.25.02.03.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 May 2022 02:03:27 -0700 (PDT)
+Message-ID: <899412f2-5ee4-cd32-393f-688fc6351437@linaro.org>
+Date:   Wed, 25 May 2022 12:03:26 +0300
 MIME-Version: 1.0
-References: <20220523213837.1016542-1-marijn.suijten@somainline.org>
- <CAA8EJprEjOWRh98V3sprjXZJZMeR25Bz1U3a_uX_KhRbU48srQ@mail.gmail.com> <20220524220312.jrdkolu7eoxtcyju@SoMainline.org>
-In-Reply-To: <20220524220312.jrdkolu7eoxtcyju@SoMainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 25 May 2022 11:01:33 +0300
-Message-ID: <CAA8EJpofvyxH22qWs5HLqG-EkKkecbFySXd36YDmK8cdeNaGUg@mail.gmail.com>
-Subject: Re: [PATCH 0/9] drm/msm/dsi_phy: Replace parent names with clk_hw pointers
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        phone-devel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rajeev Nandan <quic_rajeevny@quicinc.com>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 1/7] media: camss: ispif: Correctly reset based on the
+ VFE ID
+Content-Language: en-US
+To:     kholk11@gmail.com, Robert Foss <robert.foss@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        robh+dt@kernel.org, marijns95@gmail.com, konradybcio@gmail.com,
+        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, todor.too@gmail.com
+References: <20201022174706.8813-1-kholk11@gmail.com>
+ <20201022174706.8813-2-kholk11@gmail.com>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20201022174706.8813-2-kholk11@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,109 +80,170 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 25 May 2022 at 01:03, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> On 2022-05-24 02:43:01, Dmitry Baryshkov wrote:
-> > Hi,
-> >
-> > On Tue, 24 May 2022 at 00:38, Marijn Suijten
-> > <marijn.suijten@somainline.org> wrote:
-> > >
-> > > As stated in [1] I promised to tackle and send this series.
-> > >
-> > > parent_hw pointers are easier to manage and cheaper to use than
-> > > repeatedly formatting the parent name and subsequently leaving the clk
-> > > framework to perform lookups based on that name.
-> > >
-> > > This series starts out by adding extra constructors for divider, mux and
-> > > fixed-factor clocks that have parent_hw(s) pointer argument(s) instead
-> > > of some DT index or name.  Followed by individual patches performing the
-> > > conversion, one DSI PHY at a time.
-> > >
-> > > dsi_phy_28nm_8960 includes an extra fixup to replace "eternal"
-> > > devm_kzalloc allocations (for the lifetime of the device) with
-> > > stack-local char arrays, like all the other DSI PHY drivers.
-> > >
-> > > I couldn't help but notice that clock names are wildly varying:
-> > >
-> > > - Some use underscores in the _clk suffix where others have nothing;
-> > > - Some have an _ after the %d, others have not;
-> > > - Some use a _pll suffix after dsi%d or even _phy_pll suffix.
-> > >
-> > > Are there any thoughts or feelings towards unifying these?
-> > > Theoretically no clock names are used anywhere in the kernel, and
-> > > everything is based on a phandle + index in DT (I have yet to validate
-> > > this).  Obviously no .name/.fw_name will be updated to not break DT.
-> >
-> > I'd say, leave them as is. Even if they are historical, we don't have
-> > a strong pressure to change them.
->
-> Leave them as it is, or - as suggested below - clean them up?
+On 10/22/20 20:47, kholk11@gmail.com wrote:
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> 
+> Resetting the ISPIF VFE0 context is wrong if we are using the VFE1
+> for dual-camera or simply because a secondary camera is connected
+> to it: in this case the reset will always happen on the VFE0 ctx
+> of the ISPIF, which is .. useless.
+> 
+> Fix this usecase by adding the ISPIF_RST_CMD_1 address and choose
+> where to do the (or what to) reset based on the VFE line id.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> Reviewed-by: Robert Foss <robert.foss@linaro.org>
+> ---
+>   .../media/platform/qcom/camss/camss-ispif.c   | 85 ++++++++++++-------
+>   .../media/platform/qcom/camss/camss-ispif.h   |  2 +-
+>   2 files changed, 56 insertions(+), 31 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
+> index db94cfd6c508..754f0d044c38 100644
+> --- a/drivers/media/platform/qcom/camss/camss-ispif.c
+> +++ b/drivers/media/platform/qcom/camss/camss-ispif.c
+> @@ -26,6 +26,7 @@
+>   #define MSM_ISPIF_NAME "msm_ispif"
+>   
+>   #define ISPIF_RST_CMD_0			0x008
+> +#define ISPIF_RST_CMD_1			0x00c
+>   #define ISPIF_RST_CMD_0_STROBED_RST_EN		(1 << 0)
+>   #define ISPIF_RST_CMD_0_MISC_LOGIC_RST		(1 << 1)
+>   #define ISPIF_RST_CMD_0_SW_REG_RST		(1 << 2)
+> @@ -179,7 +180,10 @@ static irqreturn_t ispif_isr_8x96(int irq, void *dev)
+>   	writel(0x1, ispif->base + ISPIF_IRQ_GLOBAL_CLEAR_CMD);
+>   
+>   	if ((value0 >> 27) & 0x1)
+> -		complete(&ispif->reset_complete);
+> +		complete(&ispif->reset_complete[0]);
+> +
+> +	if ((value3 >> 27) & 0x1)
+> +		complete(&ispif->reset_complete[1]);
+>   
+>   	if (unlikely(value0 & ISPIF_VFE_m_IRQ_STATUS_0_PIX0_OVERFLOW))
+>   		dev_err_ratelimited(to_device(ispif), "VFE0 pix0 overflow\n");
+> @@ -237,7 +241,7 @@ static irqreturn_t ispif_isr_8x16(int irq, void *dev)
+>   	writel(0x1, ispif->base + ISPIF_IRQ_GLOBAL_CLEAR_CMD);
+>   
+>   	if ((value0 >> 27) & 0x1)
+> -		complete(&ispif->reset_complete);
+> +		complete(&ispif->reset_complete[0]);
+>   
+>   	if (unlikely(value0 & ISPIF_VFE_m_IRQ_STATUS_0_PIX0_OVERFLOW))
+>   		dev_err_ratelimited(to_device(ispif), "VFE0 pix0 overflow\n");
+> @@ -257,33 +261,18 @@ static irqreturn_t ispif_isr_8x16(int irq, void *dev)
+>   	return IRQ_HANDLED;
+>   }
+>   
+> -/*
+> - * ispif_reset - Trigger reset on ISPIF module and wait to complete
+> - * @ispif: ISPIF device
+> - *
+> - * Return 0 on success or a negative error code otherwise
+> - */
+> -static int ispif_reset(struct ispif_device *ispif)
+> +static int ispif_vfe_reset(struct ispif_device *ispif, u8 vfe_id)
+>   {
+>   	unsigned long time;
+>   	u32 val;
+> -	int ret;
+> -
+> -	ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE0);
+> -	if (ret < 0)
+> -		return ret;
+>   
+> -	ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE1);
+> -	if (ret < 0)
+> -		return ret;
+> -
+> -	ret = camss_enable_clocks(ispif->nclocks_for_reset,
+> -				  ispif->clock_for_reset,
+> -				  to_device(ispif));
+> -	if (ret < 0)
+> -		return ret;
+> +	if (vfe_id > (to_camss(ispif)->vfe_num - 1)) {
+> +		dev_err(to_device(ispif),
+> +			"Error: asked reset for invalid VFE%d\n", vfe_id);
+> +		return -ENOENT;
+> +	}
 
-Let's leave the names as is for now, convert all clock drivers to
-fetch clocks from DT and decide how to continue with clock names
-afterwards.
+I was stumbled upon this "vfe_num" usage, which seems unnecessary...
 
-> > Significant number of older platforms still use names to identify the
-> > clock. And moreover apq8096/msm8960 uses dsi1/dsi2 instead of
-> > dsi0/dsi1.
-> >
-> > Probably we should call the next cycle "The Cycle of clocks cleaning".
-> > I can volunteer to take care of 8960/8064/8016/8996, as at least I can
-> > test them. But if you wish, you (or anybody else of course) can take
-> > any of these platforms too, just ping me, so that I won't spend time
-> > duplicating somebody's efforts.
->
-> We can at least clean up the names of clocks that are not "exported" by
-> the drivers.  However, we should also convert all other clk drivers to
-> utilize DT to define clk dependencies instead of depending on global
-> names, and already got quite some platforms tackled.  At that point we
-> can just convert all names (give or take the often discussed "backwards
-> compatbility" between the kernel and some ancient DT someone may still
-> be running on their device).
->
-> I don't own any device for the SoCs you mentioned, all good from my
-> side if you take them.  We should probably note down all clock drivers
-> that still need conversion and split them across devs with physical
-> access, then I can check what I still have lying around here as well.
+>   
+> -	reinit_completion(&ispif->reset_complete);
+> +	reinit_completion(&ispif->reset_complete[vfe_id]);
+>   
+>   	val = ISPIF_RST_CMD_0_STROBED_RST_EN |
+>   		ISPIF_RST_CMD_0_MISC_LOGIC_RST |
+> @@ -303,15 +292,50 @@ static int ispif_reset(struct ispif_device *ispif)
+>   		ISPIF_RST_CMD_0_RDI_OUTPUT_1_MISR_RST |
+>   		ISPIF_RST_CMD_0_RDI_OUTPUT_2_MISR_RST;
+>   
+> -	writel_relaxed(val, ispif->base + ISPIF_RST_CMD_0);
+> +	if (vfe_id == 1)
+> +		writel_relaxed(val, ispif->base + ISPIF_RST_CMD_1);
+> +	else
+> +		writel_relaxed(val, ispif->base + ISPIF_RST_CMD_0);
+>   
+> -	time = wait_for_completion_timeout(&ispif->reset_complete,
+> +	time = wait_for_completion_timeout(&ispif->reset_complete[vfe_id],
+>   		msecs_to_jiffies(ISPIF_RESET_TIMEOUT_MS));
+>   	if (!time) {
+> -		dev_err(to_device(ispif), "ISPIF reset timeout\n");
+> -		ret = -EIO;
+> +		dev_err(to_device(ispif),
+> +			"ISPIF for VFE%d reset timeout\n", vfe_id);
+> +		return -EIO;
+>   	}
+>   
+> +	return 0;
+> +}
+> +
+> +/*
+> + * ispif_reset - Trigger reset on ISPIF module and wait to complete
+> + * @ispif: ISPIF device
+> + *
+> + * Return 0 on success or a negative error code otherwise
+> + */
+> +static int ispif_reset(struct ispif_device *ispif, u8 vfe_id)
+> +{
+> +	int ret;
+> +
+> +	ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE0);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE1);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = camss_enable_clocks(ispif->nclocks_for_reset,
+> +				  ispif->clock_for_reset,
+> +				  to_device(ispif));
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = ispif_vfe_reset(ispif, vfe_id);
+> +	if (ret)
+> +		dev_dbg(to_device(ispif), "ISPIF Reset failed\n");
+> +
+>   	camss_disable_clocks(ispif->nclocks_for_reset, ispif->clock_for_reset);
+>   
+>   	camss_pm_domain_off(to_camss(ispif), PM_DOMAIN_VFE0);
+> @@ -355,7 +379,7 @@ static int ispif_set_power(struct v4l2_subdev *sd, int on)
+>   			goto exit;
+>   		}
+>   
+> -		ret = ispif_reset(ispif);
+> +		ret = ispif_reset(ispif, line->vfe_id);
 
-Can you please make a google spreadsheet? Then anybody can take a look
-and volunteer (or check that the platform is being taken care of).
-I have 8064 (and thus I can cover 8960 too), 8016, 8096 on my desk and
-qcs404 and 8998 in the remote lab (but I can leave them to somebody
-else).
+But in fact here is an error.
 
-> > > Which, by the way, is there a particular reason for:
-> > >
-> > >   #define DSI_BYTE_PLL_CLK              0
-> > >   #define DSI_PIXEL_PLL_CLK             1
-> > >
-> > > To not be in the dt-bindings and used in the DT?
-> >
-> > Before my restructure of the DSI PHY subsys, each driver defined them
-> > separately. And the idea of moving them to a dt-bindings header didn't
-> > come to my mind. Feel free to do so, it looks like a good idea.
-> > Just as a note, DP PHY also uses 0 for the link clock and 1 for the
-> > pixel clock. What do you think about having a single header for these
-> > names?
->
-> No worries, it's already much better to have them defined once :), now
-> we can just go one step further and move it to dt-bindings.  Great to
-> clean up the "magic constant indices" for the DP PHY as well
-> (phy-qcom-qmp.c is the only one defining these clocks, right?)
+line->vfe_id is never set.
 
-No, phy-qcom-edp.c also uses these magic numbers.
+I'm unable to test any fix, since I don't have a correspondent hardware,
+but I can write a fix for someone's testing.
 
-> and I
-> think we're fine having them in one header, pending someone suggesting a
-> name as I have no idea what to call it nor where to put it.  Under
-> dt-bindings/clock most likely, but what common name would we choose?
-> Something including qcom and mdss?
-
-dt-bindings/phy/phy-qcom-dsi.h and dt-bindings/phy/phy-qcom-dp.h?
-
-
--- 
-With best wishes
-Dmitry
+--
+Best wishes,
+Vladimir
