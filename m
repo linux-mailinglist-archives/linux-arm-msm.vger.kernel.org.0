@@ -2,124 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (unknown [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90B1C533CA6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 14:29:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1209F533D01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 14:52:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237671AbiEYM2v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 08:28:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51762 "EHLO
+        id S234386AbiEYMvj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 08:51:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238624AbiEYM2u (ORCPT
+        with ESMTP id S238808AbiEYMvh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 08:28:50 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D8D46D3B5;
-        Wed, 25 May 2022 05:28:49 -0700 (PDT)
+        Wed, 25 May 2022 08:51:37 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4F6C9CF7E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 05:51:36 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id y24so4676675wmq.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 05:51:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653481730; x=1685017730;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=FwtFR9xmp2GlSe86mLIUtQ+27qGOvB2x+BZIKUG5EzM=;
-  b=VfyN7CTC7Lk2ZCl0y5wo6WqF8ZeAOgTZlwaDQcJ4AxrgYRPgVG/SUyXM
-   Nwv0Qba0ESukRI33hjsJS2RRuDBm2itn94sROsQE9L9eTr8+tN+0pEptT
-   UPWu1CO70V2ZTSNZN+dp/6q5f0rvFcSupKaLIXWZiJQt+C/f26Cg7HWzy
-   E=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 25 May 2022 05:28:50 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 May 2022 05:28:48 -0700
-X-QCInternal: smtphost
-Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 25 May 2022 17:58:30 +0530
-Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
-        id C837116F8; Wed, 25 May 2022 17:58:28 +0530 (IST)
-From:   Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, p.zabel@pengutronix.de,
-        chris@printf.net, venkatg@codeaurora.org, gdjakov@mm-sol.com,
-        quic_asutoshd@quicinc.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rampraka@quicinc.com,
-        quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com,
-        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>,
-        Liangliang Lu <quic_luliang@quicinc.com>,
-        "Bao D . Nguyen" <quic_nguyenb@quicinc.com>
-Subject: [PATCH V7 4/4] mmc: debugfs: Add debug fs error state entry for mmc driver
-Date:   Wed, 25 May 2022 17:58:21 +0530
-Message-Id: <1653481701-19642-5-git-send-email-quic_c_sbhanu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1653481701-19642-1-git-send-email-quic_c_sbhanu@quicinc.com>
-References: <1653481701-19642-1-git-send-email-quic_c_sbhanu@quicinc.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=O9h3T+Zmsq+gsSjavzG80oSaUN7uUIMz2AyYp3GE7EY=;
+        b=D5qx041TUB/Ueiuu9L+xJI9aIGJjacpJ0Ua9B8v4YTwn9+abXYd3va2HU3pbQBFVCY
+         TABWhlkGHbyv/z2k4fqApmmDNyto5jki5N4Makr135HVBQDIxZONHr4rU2ol0HNV6lh5
+         V1vVM1px9mo03P62GOk0tTIkeyktTXooDSB+hgreCFOHaLh1MZL8v++MELmuqHZWooFx
+         JRS/GwJmFpfIC1LVAA9kRddrRiPVW6xvAWgR+Qf7AcRRE8QNYe0YCklCJXoXSUmyx11j
+         BdiOhOTwlU+eM/4m+w2M5hxaSL56JvRTBnFVTp5zC7wgVXwEN9c1uHJzBZmEtGIvAgM5
+         LjLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=O9h3T+Zmsq+gsSjavzG80oSaUN7uUIMz2AyYp3GE7EY=;
+        b=fTHnAxBIgcYz6fDAlnJrPMgC34o8Nv4tLkHDv82J0C4+D0JHLDWvaV+kb70FlzHauZ
+         ta3L8lXKDwrABFhAHe09Vdd1PNhn2XHn3Ji9YCfRJs52pwVYeetwhH3BAZVSVeBqWId2
+         oQIf2811W0xFPlZWVsltSTS299v2a1S7NJGoUNjeOCS1HsvRNGmF+c3rCJJphfPbsoLT
+         rC45XtUiaOgx3Cpwc2fdsJ56JNcgI1ukRTp4N5a8qoNf94tCmFTvQGCYwnFHuY02vv05
+         +zrdSKqQ5rLeBBBPERV85yjqZkhAy4+Sc+rsJ/FLlB60s0TR6zrxs7V9RAsN/q7i9g0T
+         bV1w==
+X-Gm-Message-State: AOAM532an+zmBNtfyEFZHVs7OcBip8UP336Y5CA+GQ6N3oG+U4DuV1Oz
+        guPO5A/cTs96y74p1hkCVoAQ7Q==
+X-Google-Smtp-Source: ABdhPJy5XKfq1yokbHHFsQxJDwadX+psJHwzNX2vKGsEXTGquqSIJWW+fIEoDLvYg/ffeMQpKSJ66w==
+X-Received: by 2002:a05:600c:26d2:b0:397:49cd:2cda with SMTP id 18-20020a05600c26d200b0039749cd2cdamr8195843wmv.141.1653483095255;
+        Wed, 25 May 2022 05:51:35 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id 129-20020a1c1987000000b00397550b387bsm2270838wmz.23.2022.05.25.05.51.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 May 2022 05:51:34 -0700 (PDT)
+Message-ID: <ef871d78-12d2-e19e-9a12-6288256116a7@linaro.org>
+Date:   Wed, 25 May 2022 13:51:33 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH 0/5] qcom-cpufreq-nvmem: Add msm8939 with some fixups
+Content-Language: en-US
+To:     agross@kernel.org, bjorn.andersson@linaro.org, ilia.lin@kernel.org,
+        rafael@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20220418162226.2983117-1-bryan.odonoghue@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20220418162226.2983117-1-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add debug fs entry error state to query eMMC and SD card errors statistics.
-If any errors occurred in eMMC and SD card driver level then
-err_state value will be set to 1.
-
-Signed-off-by: Liangliang Lu <quic_luliang@quicinc.com>
-Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
-Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
-Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
----
- drivers/mmc/core/debugfs.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
-
-diff --git a/drivers/mmc/core/debugfs.c b/drivers/mmc/core/debugfs.c
-index f9fb51f..d8ff66f 100644
---- a/drivers/mmc/core/debugfs.c
-+++ b/drivers/mmc/core/debugfs.c
-@@ -234,6 +234,27 @@ static int mmc_clock_opt_set(void *data, u64 val)
- DEFINE_SIMPLE_ATTRIBUTE(mmc_clock_fops, mmc_clock_opt_get, mmc_clock_opt_set,
- 	"%llu\n");
- 
-+static int mmc_err_state_get(void *data, u64 *val)
-+{
-+	struct mmc_host *host = data;
-+	int i;
-+
-+	if (!host)
-+		return -EINVAL;
-+
-+	*val = 0;
-+	for (i = 0; i < MMC_ERR_MAX; i++) {
-+		if (host->err_stats[i]) {
-+			*val = 1;
-+			break;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+DEFINE_DEBUGFS_ATTRIBUTE(mmc_err_state, mmc_err_state_get, NULL, "%llu\n");
-+
- static int mmc_err_stats_show(struct seq_file *file, void *data)
- {
- 	struct mmc_host *host = (struct mmc_host *)file->private;
-@@ -309,6 +330,10 @@ void mmc_add_host_debugfs(struct mmc_host *host)
- 			&mmc_clock_fops))
- 		goto err_node;
- 
-+	if (!debugfs_create_file_unsafe("err_state", 0600, root, host,
-+			&mmc_err_state))
-+		goto err_node;
-+
- 	if (!debugfs_create_file("err_stats", 0600, root, host,
- 			&mmc_err_stats_fops))
- 		goto err_node;
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+On 18/04/2022 17:22, Bryan O'Donoghue wrote:
+> Fix up some missing compat strings for the qcom-cpufreq-nvmem yaml.
+> Add in msm8939 as a compatible qcom-cpufreq-nvmem.
+> 
+> Bryan O'Donoghue (5):
+>    dt-bindings: opp: Add missing compat devices
+>    dt-bindings: opp: Add msm8939 to the compatible list
+>    cpufreq: blocklist Qualcomm msm8939 in cpufreq-dt-platdev
+>    cpufreq: qcom-cpufreq-nvmem: Rename qcs404 data to cpr_genpd
+>    cpufreq: qcom-cpufreq-nvmem: Add msm8939 as cpr_genpd
+> 
+>   .../devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml  | 8 ++++++++
+>   drivers/cpufreq/cpufreq-dt-platdev.c                     | 1 +
+>   drivers/cpufreq/qcom-cpufreq-nvmem.c                     | 9 +++++----
+>   3 files changed, 14 insertions(+), 4 deletions(-)
+> 
+ping
