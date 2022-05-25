@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DDC7534271
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 19:51:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FE6453427B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 19:52:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343553AbiEYRvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 13:51:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55232 "EHLO
+        id S1343556AbiEYRwk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 13:52:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343541AbiEYRvJ (ORCPT
+        with ESMTP id S1343600AbiEYRwd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 13:51:09 -0400
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4981418F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 10:51:08 -0700 (PDT)
-Received: by mail-il1-x135.google.com with SMTP id t13so7450636ilm.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 10:51:08 -0700 (PDT)
+        Wed, 25 May 2022 13:52:33 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F0EC2BF5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 10:52:26 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id a15so1370271ilq.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 10:52:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=po4fZuhQjua5xFboKSeszJd6bmcTvYOuQalf/Wsj6NM=;
-        b=GbhWDbOof7USuznbJj3BOp8b+rV7AnZCEjomngAQ1Tm5K6yUmSM9VrF2rXhlIFjjxh
-         Ckx8hCMaloSM9IWCHuDmn+jYngmhlml2zbUjugw3WU1TYudDq+AFiXNlTNWyO3lXGFWV
-         QYHTlGr7/VhKpgW6q/UlmIRt1ynDNIl5jQp0o=
+        bh=pCOJwAVhHqabf7q+ofFTKhfH08ncrowINh8zKJmKO8o=;
+        b=fH5vloMgnO8q0+QKAIm8czJR7NH9BJmMdne5Ag+L/GDQCO0gBO5HLcleZSz3O+/WrY
+         Jov0PppgY6/ita+gQd8tm5Ri0XYd1n6NlOefOktjw+IPnLkpFgwbbp+iDrgqP9Emrwva
+         xOU3+QDLodh1nWYbHoJAVL+ToVbcVfbPiIGjc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=po4fZuhQjua5xFboKSeszJd6bmcTvYOuQalf/Wsj6NM=;
-        b=y+OPl0CUg+toF+R1IuSsIYlqi++VN0Gkzav94a413x2qPL88L4YxK1SQAUI4uhZlh4
-         hRxUVKcbqmVQHh5sH/N54isSSBGIN31sUHg+FEV1Zv+qYS7E6mRWNNqIdtcTXFrzFwAQ
-         oN/Gk8Xs/0c8E0uYyyRbmCzb64P2SD4Muxfzo3n+9rcQXRgZ6oquKvbvCSBdaAV0EYZl
-         KZW+q8yg+Me9E89UhWECKjWF07do76bdoHHjNg6fnH6kHGJV3LXkM69eXto9a18RL7kx
-         fuiiH6o2t8ajBxhdOSiBTfvuqhj13gNZBLs6usJkdDAppZvbUs+6LZykx8+lEFK4Za83
-         63AA==
-X-Gm-Message-State: AOAM533Q767h4e20x//K8bCXMmYDkwSh7ZfJIRA9Mn0CilCPg69T+1/U
-        Lr2i9iwArblbOq2bFBbgueA8dgXrYkH/r2IW9QA=
-X-Google-Smtp-Source: ABdhPJzM2wb+XEE09FQ/tZIq+n6R0s/2oywbQ0jUQ2hVPcuZ15mAZXFXYYZ55onM+08IXL1JCGQ1gA==
-X-Received: by 2002:a92:cb10:0:b0:2d1:4f95:29e9 with SMTP id s16-20020a92cb10000000b002d14f9529e9mr17000262ilo.249.1653501067171;
-        Wed, 25 May 2022 10:51:07 -0700 (PDT)
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com. [209.85.166.43])
-        by smtp.gmail.com with ESMTPSA id e16-20020a92d750000000b002cde6e352d9sm5483792ilq.35.2022.05.25.10.51.06
+        bh=pCOJwAVhHqabf7q+ofFTKhfH08ncrowINh8zKJmKO8o=;
+        b=b/xAQ6kBlmYVsTbCyDvLpTW36Lz8W67kiXILBMUgyY0MzSTqdD4L/q/gXRVURO+ALz
+         TRk7XDQ5HA1GUFEVgauuZdges/Fy54Sa1H20oUYTnQOWKKkGDGSAehnjSnF2+mkhOrcg
+         1NLpQz+K4Upl7N3mUmkKAxcZSiSrQMlul3uH+C18OLZu4ULn1bSP8+tsLBMZAFzF8XRI
+         /+De0kZS7NH0gNOfPO4oq9ArAJZXXmsHWjnIWbonrRYdNR/XpoN2/gG9/Y+vv96sdnXy
+         dR8RnYh0EVwak6Js+5jkC/uwdKkR72Per4/QPr/rHYW3xbuHXhWEGwozfVIe7kDaxd/v
+         N4lA==
+X-Gm-Message-State: AOAM532RD0cvK1TZBIrQbLFVq6VyV9quBUM29nsGxtSQiaC7fwgQVm+K
+        NcXmGv2uzE2bx+4lrDam731o4UAKP4rkBSH6ixs=
+X-Google-Smtp-Source: ABdhPJwZOEMT5w+EzpN9zEkamuzM7hmzutl7x/Qc2ze0X5glQ9TTi0OQbiy4xLdJ0cus4+rzpnU5eA==
+X-Received: by 2002:a05:6e02:66e:b0:2d0:f42d:33c2 with SMTP id l14-20020a056e02066e00b002d0f42d33c2mr17457753ilt.269.1653501145354;
+        Wed, 25 May 2022 10:52:25 -0700 (PDT)
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com. [209.85.166.48])
+        by smtp.gmail.com with ESMTPSA id f16-20020a056602039000b0065a47e16f50sm4625766iov.34.2022.05.25.10.52.24
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 May 2022 10:51:06 -0700 (PDT)
-Received: by mail-io1-f43.google.com with SMTP id 2so12312967iou.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 10:51:06 -0700 (PDT)
-X-Received: by 2002:a02:6d61:0:b0:32b:fb61:9d88 with SMTP id
- e33-20020a026d61000000b0032bfb619d88mr16675388jaf.184.1653501065709; Wed, 25
- May 2022 10:51:05 -0700 (PDT)
+        Wed, 25 May 2022 10:52:24 -0700 (PDT)
+Received: by mail-io1-f48.google.com with SMTP id d198so17093812iof.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 10:52:24 -0700 (PDT)
+X-Received: by 2002:a6b:6b10:0:b0:660:d279:31bb with SMTP id
+ g16-20020a6b6b10000000b00660d27931bbmr10484568ioc.47.1653501144197; Wed, 25
+ May 2022 10:52:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220525014308.1853576-1-judyhsiao@chromium.org> <20220525014308.1853576-3-judyhsiao@chromium.org>
-In-Reply-To: <20220525014308.1853576-3-judyhsiao@chromium.org>
+References: <20220525014308.1853576-1-judyhsiao@chromium.org> <20220525014308.1853576-4-judyhsiao@chromium.org>
+In-Reply-To: <20220525014308.1853576-4-judyhsiao@chromium.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 25 May 2022 10:50:53 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Uf6OhDBpr_-ennq0_c61x_sr4_ma6a=z8PWvaPGFyP_A@mail.gmail.com>
-Message-ID: <CAD=FV=Uf6OhDBpr_-ennq0_c61x_sr4_ma6a=z8PWvaPGFyP_A@mail.gmail.com>
-Subject: Re: [v3 2/3] arm64: dts: qcom: sc7280: Add sc7280-herobrine-audio-rt5682.dtsi
+Date:   Wed, 25 May 2022 10:52:08 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UfT_TuAS9DaKQ4D3dE_cY=rqPHvSuvkD7SS1egVuFKbA@mail.gmail.com>
+Message-ID: <CAD=FV=UfT_TuAS9DaKQ4D3dE_cY=rqPHvSuvkD7SS1egVuFKbA@mail.gmail.com>
+Subject: Re: [v3 3/3] arm64: dts: qcom: sc7280: include sc7280-herobrine-audio-rt5682.dtsi
+ in villager and herobrine-r1
 To:     Judy Hsiao <judyhsiao@chromium.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -88,14 +89,15 @@ Hi,
 
 On Tue, May 24, 2022 at 6:43 PM Judy Hsiao <judyhsiao@chromium.org> wrote:
 >
-> Audio dtsi for sc7280 boards that using rt5682 headset codec:
-> 1. Add dt nodes for sound card which use I2S playback and record
->    through rt5682s and I2S playback through max98357a.
-> 2. Enable lpass cpu node and add pin control and dai-links.
+> Include sc7280-herobrine-audio-rt5682.dtsi in villager and herobrine-r1 as
+> these boards use rt5682 codec.
 >
 > Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
 > ---
->  .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 121 ++++++++++++++++++
->  1 file changed, 121 insertions(+)
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts | 1 +
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dts  | 1 +
+>  2 files changed, 2 insertions(+)
+
+Should have carried my review from v2:
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
