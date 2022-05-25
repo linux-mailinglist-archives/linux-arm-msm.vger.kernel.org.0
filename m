@@ -2,127 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (unknown [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 185CF533BCE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 13:33:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A563533C9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 14:29:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235058AbiEYLdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 07:33:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52082 "EHLO
+        id S232867AbiEYM2u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 08:28:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230476AbiEYLdZ (ORCPT
+        with ESMTP id S229912AbiEYM2t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 07:33:25 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCE4B9E9DA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 04:33:23 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id t25so35526140lfg.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 04:33:23 -0700 (PDT)
+        Wed, 25 May 2022 08:28:49 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 230386D3B5;
+        Wed, 25 May 2022 05:28:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=EZsTbG5Ghb36/veeiU7rdV///7+Ve3p/GIrx5IOFMMk=;
-        b=UNaoBdpvQ0Wuh39ejXqVAxIdtogtZgXrbpaaU46uoIDB3jLwniE+a2Gw/eeD8rR8Yx
-         IXV3H3QXBNtA1tMANean66atO0lGhtSaBj/Jzj5RNfrNPf8kn0oSAKPugUTe2FTz20/o
-         5TH60Q4367rsBz1G9RGjIz8XELgZW7TyE43vX+m7/UlPP+AwpSJmlD2QG95/0zMEZsWS
-         tr5G30OGEiKdG5GnVwT8nCeszSZH6QYxn2Btg/docx5if5P9QbJdALM7qEVNf96vCbI4
-         8PVPsXCLlqa2JHW3+x+10k92IUQqj7bsSWQeFQsKgTrtK1cAELhcGiPxPVFOQXESnO70
-         CPFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=EZsTbG5Ghb36/veeiU7rdV///7+Ve3p/GIrx5IOFMMk=;
-        b=WwhxSNPDb9vsdSjAOYEjK5HqJNImJTtQardTyDtzPEb7WroWbxoY8sBCOeUaEEsrbz
-         Lv8N2JgH3ovFaZP1Bzgf9XvX6W8IIaWkupZFwuHThYu5kXqTFFdiLiEBja727eq1w8xX
-         EGMluCtRImfEJeHPWTZmUOgOOmiqcOVEfwbThasOFzLK3V+ZC7uOdCOCpImGzA7OM9iE
-         xOxo3/8FyeOYjsZWsclJntqjvXPiS+6ZxUDIlx9cpsKWC0E8vLvqgB7KK3C7xjHYqnkx
-         /AWnSO1layDRgCqnj7nDBOPym2jFe849HsaR4jKObkgRjUw1s0hyd1vtmXGhocqKSpCr
-         j0pw==
-X-Gm-Message-State: AOAM531vvLOxwVjCnMG7Wir0T16vFRf4vwpFQ3B/rkOwpRCnKRAfT+y6
-        Fy5a+f9UOyCsMflzSm/c71Ojeg==
-X-Google-Smtp-Source: ABdhPJwxUQcyyc6kFYuWc0GAmuft5s7f8VFDf0BcrceocIyXBLKMhyRoxJLAZ62FMvqZdolc+cbblg==
-X-Received: by 2002:a05:6512:10c2:b0:478:8ea5:f6f9 with SMTP id k2-20020a05651210c200b004788ea5f6f9mr5197816lfg.1.1653478402086;
-        Wed, 25 May 2022 04:33:22 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h26-20020a19701a000000b0047255d210fesm3063191lfc.45.2022.05.25.04.33.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 May 2022 04:33:20 -0700 (PDT)
-Message-ID: <1abe03bf-5de5-f73e-1043-46872a38e815@linaro.org>
-Date:   Wed, 25 May 2022 14:33:18 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v2 1/7] media: camss: ispif: Correctly reset based on the
- VFE ID
-Content-Language: en-GB
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        kholk11@gmail.com, Robert Foss <robert.foss@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        robh+dt@kernel.org, marijns95@gmail.com, konradybcio@gmail.com,
-        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, todor.too@gmail.com
-References: <20201022174706.8813-1-kholk11@gmail.com>
- <20201022174706.8813-2-kholk11@gmail.com>
- <899412f2-5ee4-cd32-393f-688fc6351437@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <899412f2-5ee4-cd32-393f-688fc6351437@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1653481728; x=1685017728;
+  h=from:to:cc:subject:date:message-id;
+  bh=q+sIWWHvJkiJx9dq972yy+3PK2bE23fEgXN1NW8gC/k=;
+  b=Sgyxs23iEfCIzzrw0oVTyoSZFOf1xVFq3EYm1BysROeIS6Z74hM+Cmax
+   1FNHK7yKZ9qy8xDlAK6eOWGRX9DB8LQoSgPmGfLlK8iiJqW7Jd0dX1jdR
+   mn2O4oIQkiOuT0NC3vK/X9EYXBz+p7lKjyFttTltVsw0jpWiJeFeHaMJ7
+   k=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 25 May 2022 05:28:48 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 May 2022 05:28:46 -0700
+X-QCInternal: smtphost
+Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 25 May 2022 17:58:24 +0530
+Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
+        id 497DB16F8; Wed, 25 May 2022 17:58:23 +0530 (IST)
+From:   Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, p.zabel@pengutronix.de,
+        chris@printf.net, venkatg@codeaurora.org, gdjakov@mm-sol.com,
+        quic_asutoshd@quicinc.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rampraka@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com,
+        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+Subject: [PATCH V7 0/4] mmc: add error statistics for eMMC and SD card
+Date:   Wed, 25 May 2022 17:58:17 +0530
+Message-Id: <1653481701-19642-1-git-send-email-quic_c_sbhanu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Wow, a patchset from 2020.
+Changes since V6:
+	- Rebased on Ulf's(Ulf Hansson) next branch as suggested by
+	  Adrain Hunter.
+	- Replaced debugfs_create_file() with debugfs_create_file_unsafe()
+	  as suggested by Adrain Hunter.
+	- "[V6,5/5] mmc: cqhci: Capture eMMC and SD card errors" not included
+	  in this Patch series as we don't have cqhci changes on Ulf's(Ulf Hansson)
+	  next branch.
 
-On 25/05/2022 12:03, Vladimir Zapolskiy wrote:
-> On 10/22/20 20:47, kholk11@gmail.com wrote:
->> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
->>
->> Resetting the ISPIF VFE0 context is wrong if we are using the VFE1
->> for dual-camera or simply because a secondary camera is connected
->> to it: in this case the reset will always happen on the VFE0 ctx
->> of the ISPIF, which is .. useless.
->>
->> Fix this usecase by adding the ISPIF_RST_CMD_1 address and choose
->> where to do the (or what to) reset based on the VFE line id.
->>
->> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
->> Reviewed-by: Robert Foss <robert.foss@linaro.org>
->> ---
->>   .../media/platform/qcom/camss/camss-ispif.c   | 85 ++++++++++++-------
->>   .../media/platform/qcom/camss/camss-ispif.h   |  2 +-
->>   2 files changed, 56 insertions(+), 31 deletions(-)
->>
+Changes since V5:
+	- Considered all error stats enums to set error state.
+	- Added missed tuning error related code changes which was
+	  missed in patch set V5 as Adrain Hunter pointed.
+	- Replaced DEFINE_SIMPLE_ATTRIBUTE with DEFINE_DEBUGFS_ATTRIBUTE
+	  as suggested by Adrain Hunter.
+	  
+Changes since V4:
+	- Defined new macro to increment err_stats members when error occurred
+	  as suggested by Adrain Hunter.
+	- Called err_stats members increment function after printing the error
+	  as suggested by Adrain Hunter.
+	- Considered INDEX and END_BIT errors same as CRC errors as suggested
+	  by Adrain Hunter.
+	- Removed Null check for host in debug fs functions and Reordered
+	  err_stats declarationas suggested by Adrain Hunter.
+	- Removed err_state variable stuff and updated err_state debug fs entry
+	  based on the err_stats members state as suggested by Adrain Hunter.
 
-[skipped]
+Changes since V3:
+	- Dropped error stats feature flag as suggested by Adrain Hunter.
+	- Separated error state related changes in separate patches as
+	  suggested by Adrain Hunter.
+	  [PATCH V4 4/7] : error state debug fs
+	  [PATCH V4 5/7] : error state enable function
+	  [PATCH V4 6/7] : error state enable in error case
+	- Note: we are enabling error state before calling sdhci_dumpregs
+	  we couldn't add the err state in error stats array as err state
+	  is not error type.
+	- Corrected Signed-off-by order as suggested by Bjron Andersson.
+	- Moved error state enable code from sdhci_dumpregs to error
+	  conditions as suggested by Adrain Hunter
 
->> @@ -355,7 +379,7 @@ static int ispif_set_power(struct v4l2_subdev *sd, 
->> int on)
->>               goto exit;
->>           }
->> -        ret = ispif_reset(ispif);
->> +        ret = ispif_reset(ispif, line->vfe_id);
-> 
-> But in fact here is an error.
-> 
-> line->vfe_id is never set.
-> 
-> I'm unable to test any fix, since I don't have a correspondent hardware,
-> but I can write a fix for someone's testing.
+Changes since V2:
+	- Removed userspace error stats clear debug fs entry as suggested
+	  by Adrain Hunter.
+	- Split patch into 4 patches
+	  [PATCH V3 1/4] : sdhci driver
+	  [PATCH V3 2/4] : debug fs entries
+	  [PATCH V3 3/4] : core driver
+	  [PATCH V3 4/4] : cqhci driver
+	- Used for loop to print error messages instead of using printf
+	  statements for all error messages as suggested by Adrain Hunter.
+	- Introduced one flag to enable error stats feature, if any other
+	  client wants to use this feature, they need to enable that flag.
+	- Moved reset command timeout error statement to card init flow
+	  as suggested by Adrain Hunter.
 
-I have a sda660 device, but I don't have cameras attached. So one will 
-have to use TPG.
+Changes since V1:
+	- Removed sysfs entry for eMMC and SD card error statistics and added
+	  debugfs entry as suggested by Adrian Hunter and Ulf Hansson.
+
+Shaik Sajida Bhanu (4):
+  mmc: core: Capture eMMC and SD card errors
+  mmc: sdhci: Capture eMMC and SD card errors
+  mmc: debugfs: Add debug fs entry for mmc driver
+  mmc: debugfs: Add debug fs error state entry for mmc driver
+
+ drivers/mmc/core/core.c    | 11 +++++--
+ drivers/mmc/core/debugfs.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++
+ drivers/mmc/host/sdhci.c   | 33 +++++++++++++++----
+ drivers/mmc/host/sdhci.h   |  3 ++
+ include/linux/mmc/host.h   | 26 +++++++++++++++
+ include/linux/mmc/mmc.h    |  6 ++++
+ 6 files changed, 151 insertions(+), 9 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
