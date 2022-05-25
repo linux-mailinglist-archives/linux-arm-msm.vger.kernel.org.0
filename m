@@ -2,71 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7517533D27
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 15:03:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64A74533DDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 15:26:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231933AbiEYND2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 09:03:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43066 "EHLO
+        id S243803AbiEYN0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 09:26:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233948AbiEYNDY (ORCPT
+        with ESMTP id S241644AbiEYN00 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 09:03:24 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B11FA5A92
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 06:03:22 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id p189so12446318wmp.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 06:03:22 -0700 (PDT)
+        Wed, 25 May 2022 09:26:26 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C4663466F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 06:26:25 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id o9so4807814wmd.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 06:26:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=SNO1m8U5Xj7Rbu3Wzqk6A1RHIHLARUnczB7VjexblOo=;
-        b=WgUMz38IMdM3gHf+Kw9OI9iMxdfzp4N+gZ4iB9mT/DEaxKgJ6ERdPjEokKSnfFaQVp
-         CEiN6D3OD278urpEMb9+i1Ecy9zdBPuPGcFWWfQYf1/eF7NUSI8999lAlgNTg1uvQpew
-         IFjY7eOfMoZqzX9GAZBGpAaU9NzyDMFP58KRokMaNL5qWsnTq0NP6fluXmmDoI/eTSjb
-         /3KHoCcNJdhIzs/Dgn0ZPPszMF0Smen7B0TVA2RtLSXizmFJ8Dk8tqent5Q0+/oGmNas
-         2mOoX0fSXVx9+ztAxyFT1HpRUVFz4dnDRCI4xOlUuDxDcLQ4r3jkdPgxxIdi4q9tIOT1
-         DrUA==
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=MpAJjoRKwGLkh3LcW90CCOydeHbiAiNXwW2FaiG7+5Y=;
+        b=QQ8HN/d+PVpdcmWvwIk13yOR6arO1frU91StcQ9M/kCJ8FdOEutASVqNnl0oFm/EZH
+         tEt0nVXQW764JiFG5GFiAGbr/Es2hBMAJ0BqVNCWdma0pXaFu0SUXYi0eyKowEidI3w3
+         7p7kfRhKxEPT55ahiSMGxdfw22s2xnhjVcBrc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=SNO1m8U5Xj7Rbu3Wzqk6A1RHIHLARUnczB7VjexblOo=;
-        b=mEo+SmYf2fbjYP7tZrCl4kSIYr/6h5EGgRNvsCbSA7fxWLezDAHN+ue23InDzIIzHJ
-         KOXTS0utjgvmZTYNDbPfJAjkiONtEg62S+NVlC2CxmzBaMkvFjro32nWMykAZqVWTO76
-         /CGw23qExcvHvX/GZsBOvaO2MCIsce7MRn1+IldZkUV/lNlyb5I4rE2sWOkk0itLAmD2
-         SdfViBzscta6U3JE0uHBNcgBpf5CmBTBTy4FBUyNcRmfqH2hxEOE5JI5ZfNV03xHtZAL
-         6PPcZG6b5/bzwPg2bvXfoeValOxecbVg/Ab92ZLeAcobXmT+m5rRiwCHreHIqlium84L
-         4phg==
-X-Gm-Message-State: AOAM531cRfV/qxQqX+3wJaFv5Q//woLfMgxtBsPKa18y0iWyThcDu649
-        ONzICXQ1wvHgoHeXfyC74eBzG4C2flwUlLX5
-X-Google-Smtp-Source: ABdhPJwXdCU0C5UhVtvR05q8q98D3UaG/PLio57u/H9iF2J5nXz1TeNIsQKAjN3zJgqdvfYfTSPKnA==
-X-Received: by 2002:a05:600c:3ba4:b0:397:49b8:262 with SMTP id n36-20020a05600c3ba400b0039749b80262mr8104872wms.77.1653483801030;
-        Wed, 25 May 2022 06:03:21 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id n11-20020a5d598b000000b0020c61af5e1fsm2307098wri.51.2022.05.25.06.03.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 May 2022 06:03:20 -0700 (PDT)
-Message-ID: <a59678f4-96ac-7edb-cfba-364aae396959@linaro.org>
-Date:   Wed, 25 May 2022 14:03:19 +0100
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=MpAJjoRKwGLkh3LcW90CCOydeHbiAiNXwW2FaiG7+5Y=;
+        b=6dPA42qLmBaLYOEO9Jpay+TR6I8c6o63jknI1uZw80LjF6N9SNLKwzT8dqNzWuPZzS
+         NBeOrP1Iul+eSNFTMaqnyqFn/ZOu4e/aX1ao8+Vimq3XZq17QwoulGd9rXh/1jt1ky8n
+         cmqme3kQwdR/9ZcSnRwQ+DhAnVN31bnqzmSVInyJbJ8MscKBzMZaVuB7CZ9LjxVnDJsV
+         kgQTkBqIk70GIxcpzDNCaGzorWiCH85qIAbuO5LIVspAVeH/JI1T88nCifGHSC+X1JHA
+         Cico16utB7IcfTQ5xTyBFWjskqvNF66JS9oGarbCMaT+TomgOgUSKUamOiEkE/pW+ryG
+         QNTw==
+X-Gm-Message-State: AOAM533b9sZx+vztgj+frxY56oIMcvupGVkez7pCtuv0a3lQPT16zdhh
+        lNW5ES+ngz4eRN1AunJa7oiJvA==
+X-Google-Smtp-Source: ABdhPJzAkynVKxqfhn4pVC8Fu0ef4gHIkJfVw0FJOU2QlVfLYEJ7eKnSnAbOa7QOcrhCIDLgMvWWWA==
+X-Received: by 2002:a05:600c:3b20:b0:397:6311:c0c7 with SMTP id m32-20020a05600c3b2000b003976311c0c7mr5836015wms.69.1653485184116;
+        Wed, 25 May 2022 06:26:24 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id t22-20020a1c7716000000b0039749bab534sm5164109wmi.1.2022.05.25.06.26.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 May 2022 06:26:23 -0700 (PDT)
+Date:   Wed, 25 May 2022 15:26:21 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Thomas Zimmermann <tzimmermann@suse.de>,
+        =?iso-8859-1?Q?St=E9phane?= Marchesin <marcheu@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Ville =?iso-8859-1?Q?Syrj=E4l=E4?= 
+        <ville.syrjala@linux.intel.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>
+Subject: Re: [PATCH v3] drm/probe-helper: Make 640x480 first if no EDID
+Message-ID: <Yo4ufWm5WiXsnRX8@phenom.ffwll.local>
+Mail-Followup-To: Doug Anderson <dianders@chromium.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        =?iso-8859-1?Q?St=E9phane?= Marchesin <marcheu@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>
+References: <20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
+ <5857c510-9783-a483-8414-65d7350618d6@suse.de>
+ <CAD=FV=X99EWmRk82ako7cL7BWPEsTG=L7VVBVDFX5qKc1MifSA@mail.gmail.com>
+ <CAD=FV=U3Wywjev9tEhkL_zE1cV5NwEknH2YwHqyhd5TQtiJ=AQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH 0/4] clk: qcom: msm8939: DDR and system_mm clock fixes
-Content-Language: en-US
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20220504163835.40130-1-bryan.odonoghue@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20220504163835.40130-1-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD=FV=U3Wywjev9tEhkL_zE1cV5NwEknH2YwHqyhd5TQtiJ=AQ@mail.gmail.com>
+X-Operating-System: Linux phenom 5.10.0-8-amd64 
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,29 +113,106 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/05/2022 17:38, Bryan O'Donoghue wrote:
-> There a few omissions/bugs I found recently which are worth fixing up.
-> The BIMC_DDR_CLK_SRC command RCGR points to a value off in the wilderness
-> and should be fixed.
+On Mon, May 23, 2022 at 05:59:02PM -0700, Doug Anderson wrote:
+> Hi,
 > 
-> More interestingly a number of Multi-media peripherals are defined as
-> pointing at the system NOC for their clocks, instead of at the System NOC
-> MM.
+> On Fri, May 20, 2022 at 5:01 PM Doug Anderson <dianders@chromium.org> wrote:
+> >
+> > Hi,
+> >
+> > On Mon, May 16, 2022 at 3:28 AM Thomas Zimmermann <tzimmermann@suse.de> wrote:
+> > >
+> > > Hi Douglas,
+> > >
+> > > I understand that you're trying to tell userspace that the modelist has
+> > > been made up, but it's not something that should be done via fragile
+> > > heuristics IMHO.
+> > >
+> > > I looked at the Chromium source code that you linked, but I cannot say
+> > > whether it's doing the correct thing. It all depends on what your
+> > > program needs.
+> > >
+> > > In that function, you could also search for 'DRM_MODE_TYPE_USERDEF'.
+> > > It's the mode that the user specified on the kernel command line. If
+> > > Chromium's automatic mode selection fails, you'd give your users direct
+> > > control over it.
+> >
+> > That doesn't really work for Chrome OS. Certainly a kernel hacker
+> > could do this, but it's not something I could imagine us exposing to
+> > an average user of a Chromebook.
+> >
+> >
+> > > When there's no flagged mode or if
+> > > /sys/class/drm/card<...>/status contains "unconnected", you can assume
+> > > that the modelist is artificial and try the modes in an appropriate order.
+> >
+> > So "no flagged" means that nothing is marked as preferred, correct?
+> >
+> > ...so I guess what you're suggesting is that the order that the kernel
+> > is presenting the modes to userspace is not ABI. If there are no
+> > preferred modes then userspace shouldn't necessarily assume that the
+> > first mode returned is the best mode. Instead it should assume that if
+> > there is no preferred mode then the mode list is made up and it should
+> > make its own decisions about the best mode to start with. If this is
+> > the ABI from the kernel then plausibly I could convince people to
+> > change userspace to pick 640x480 first in this case.
+> >
+> > > If we really want the kernel to give additional guarantees, we should
+> > > have a broader discussion about this topic IMHO.
+> >
+> > Sure. I've added Stéphane Marchesin to this thread in case he wants to
+> > chime in about anything.
+> >
+> > Overall, my take on the matter:
+> >
+> > * Mostly I got involved because, apparently, a DP compliance test was
+> > failing. The compliance test was upset that when it presented us with
+> > no EDID that we didn't default to 640x480. There was a push to make a
+> > fix for this in the Qualcomm specific driver but that didn't sit right
+> > with me.
+> >
+> > * On all devices I'm currently working with (laptops), the DP is a
+> > secondary display. If a user was trying to plug in a display with a
+> > bad EDID and the max mode (1024x768) didn't work, they could just use
+> > the primary display to choose a different resolution. It seems
+> > unlikely a user would truly be upset and would probably be happy they
+> > could get their broken display to work at all. Even if this is a
+> > primary display, I believe there are documented key combos to change
+> > the resolution of the primary display even if you can't see anything.
+> >
+> > * That all being said, defaulting to 640x480 when there's no EDID made
+> > sense to me, especially since it's actually defined in the DP spec. So
+> > I'm trying to do the right thing and solve this corner case. That
+> > being said, if it's truly controversial I can just drop it.
+> >
+> >
+> > So I guess my plan will be to give Stéphane a little while in case he
+> > wants to chime in. If not then I guess I'll try a Chrome patch...
+> > ...and if that doesn't work, I'll just drop it.
 > 
-> This turns out to be not much of a problem so far because we currently
-> aren't trying to set any of these clocks and the MM_SNOC clocks are derived
-> from the same source as regular SNOC clocks, except they can vote for
-> higher rates.
+> OK, this userspace code seems to work:
 > 
-> Bryan O'Donoghue (4):
->    clk: qcom: Add missing SYSTEM_MM_NOC_BFDCD_CLK_SRC
->    clk: qcom: add gcc-msm8939: Fix bimc_ddr_clk_src rcgr base address
->    clk: qcom: add gcc-msm8939: Add missing system_mm_noc_bfdcd_clk_src
->    clk: qcom: add gcc-msm8939: Point MM peripherals to system_mm_noc
->      clock
+> https://crrev.com/c/3662501 - ozone/drm: Try 640x480 before picking
+> the first mode if no EDID
 > 
->   drivers/clk/qcom/gcc-msm8939.c               | 31 ++++++++++++++------
->   include/dt-bindings/clock/qcom,gcc-msm8939.h |  1 +
->   2 files changed, 23 insertions(+), 9 deletions(-)
-> 
-ping !
+> ...so we'll see how review of that goes. :-)
+
+Yeah it sucks a bit but I'm mildly afraid that if we muck around with the
+absolute fallback mode list in upstream we get whacked by a regression
+report :-/
+
+There's the additional fun that on modern displays probably 720p (or maybe
+720i) is a lot more likely to work than anything else really, so best we
+can do here maybe is to make it an uapi guarantee that if there's no
+preferred mode, then most likely the kernel invent random noise out of
+thin air, and userspace has to be careful and do its own magic heuristics.
+Or maybe we should add a flag for "this stuff is invented, buyer beware".
+
+I think clarifying that would be good. Changing defaults feels a bit too
+risky, we had some really hilarious regression reports in the past along
+the lines of the infamous xkcd.
+-Daniel
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
