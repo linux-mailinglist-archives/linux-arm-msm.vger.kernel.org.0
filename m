@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E86B5334D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 03:43:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DDF65334DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 03:43:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243333AbiEYBnV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 21:43:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47488 "EHLO
+        id S243353AbiEYBnf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 21:43:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237628AbiEYBnU (ORCPT
+        with ESMTP id S243358AbiEYBne (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 21:43:20 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6081657B3D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 18:43:18 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id u12-20020a17090a1d4c00b001df78c7c209so405823pju.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 18:43:18 -0700 (PDT)
+        Tue, 24 May 2022 21:43:34 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D97A373556
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 18:43:30 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id q18so17326757pln.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 18:43:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=npLd/1Lsi6JSNLQFgzu2xb0z5npMHCtgiyGSryOfZ7c=;
-        b=CozoGz0XGdL/mwvq821vh9q5hpnpK3zkv9TCBQWm5RetnP/rWWpkJZktWgotaMOhh6
-         lvoR2rQ20CBHIVaSiskfG3GfGlos65goV2wvbcCZsci9umzFCqjCT1DMjeOScmMp/hqq
-         atPt+lPnH21SZsbFXnEdYkDGDezTI+sZT6iKE=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Xb/SxnzZRA8lvdgyOL4I+fRz/jFWMo6rTxKCV7Sryew=;
+        b=gr2Mj+T8LtdSFaoySl3h9txPZ72cOi2udZPda9NVxFE84EtTr8ZWeWVfZFfKvwD9NE
+         e4LsAjDKY4hKSrBdaVHiK4cftO4kM5gln9ulX9eUuLmCsRhFmb0p+N+OfTw09OfQ+6rP
+         ox4f/NaV67X94ZxkqJF4xVaf4rEwGbX/za8oo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=npLd/1Lsi6JSNLQFgzu2xb0z5npMHCtgiyGSryOfZ7c=;
-        b=OWi7aHlkksub/06g2UFkvWdVh0KEPBS25qBFiW76og8aSQFp3zlLN1iyhQKGOOwiiw
-         EPZkv9qzwKO4gxlP/qXBrH5wUts15pfDrXO0X/1px4OdH5WZ/LNH2zJBKNdhZhnCFy9X
-         Z8gZJ/XVdF5ZY/jz9jlGTZydO8I6u6EXvpXflhrhOfr2YiPETaW4TleMrECFT0HbBhn+
-         6uii1VaCJrivK6ZZ6y2ed+lRoWvPcPkies/QAEUOX556xKWtMKjv5BlRdeXr8K5qoyQE
-         sgzbAnNHSHcUG1Ltf4Ho+sp0bv4yiSxVxWvPriWQOUcHhWukMjky99Lqmf/XpqRXmo1v
-         xo5g==
-X-Gm-Message-State: AOAM533zvlAllWQsBVi2V4eQFOvdzaMWItL7aCd51j94eLZFdBVckZxG
-        eyGIXaeqL3bHJzmSdGDSUyJQtQ==
-X-Google-Smtp-Source: ABdhPJzgjy+dhROTUTjm6cU//L1D1t41Msk0mQDiVDwBvGZZIjwh6k3hHGXKOQKh8Wuf4Soy6f5yLw==
-X-Received: by 2002:a17:902:c2d8:b0:15e:fa17:56cc with SMTP id c24-20020a170902c2d800b0015efa1756ccmr30070131pla.40.1653442997893;
-        Tue, 24 May 2022 18:43:17 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Xb/SxnzZRA8lvdgyOL4I+fRz/jFWMo6rTxKCV7Sryew=;
+        b=8Rb3zbFZiOdtl068Z5w3Y0xnw6vX1GUHZYdAOZMkKmH6om1NvQWpDu9reX5Fz8K/sY
+         Qmpvqw3m8LDXlAnNZgmShuoBbWWhi9DWqES9Ww5ha9Q78FcgbmP1IcgZRUnlEH4L//lm
+         XmAzMWTUKLzqcmbB7NjRuzgjfUdRcEvnQ8fjPKKFRLkY+pJtI7+llVDUwyn++NDqaFDR
+         6kOYLBEigJfUe7VVvrFHph+tPbgfdQAzOwuCtvP71jZZGEXX9goZq7or6TWh0f3EbBkZ
+         Z/4TKGsMplXdxBG9GlLgqwC88ZYGOH3ZgwevbzN5/YxMF8eqCn2kZs36pXpWq3YTqDGH
+         zHkA==
+X-Gm-Message-State: AOAM532dUr77mZ+44zt4rkgfX1H9TIuZ2cmtj0CoNgFD7gPSdCgInoIh
+        Zt6x09aRZe9XpwEzcAYMY21uDw==
+X-Google-Smtp-Source: ABdhPJxdvJnWTu9cJaaIXlQgiul9IY8icRBYKEiFJLuy0e4pa6+lZ+unBwAiZ2v4cza/C/ndSFdiuA==
+X-Received: by 2002:a17:90b:4f4c:b0:1df:e74f:ebcc with SMTP id pj12-20020a17090b4f4c00b001dfe74febccmr7645453pjb.38.1653443010119;
+        Tue, 24 May 2022 18:43:30 -0700 (PDT)
 Received: from judyhsiao0319.c.googlers.com.com (164.135.233.35.bc.googleusercontent.com. [35.233.135.164])
-        by smtp.gmail.com with ESMTPSA id n11-20020a1709026a8b00b0015e8d4eb2bcsm7877317plk.262.2022.05.24.18.43.17
+        by smtp.gmail.com with ESMTPSA id n11-20020a1709026a8b00b0015e8d4eb2bcsm7877317plk.262.2022.05.24.18.43.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 May 2022 18:43:17 -0700 (PDT)
+        Tue, 24 May 2022 18:43:29 -0700 (PDT)
 From:   Judy Hsiao <judyhsiao@chromium.org>
 To:     Andy Gross <agross@kernel.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,15 +55,17 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Judy Hsiao <judyhsiao@chromium.org>
-Subject: [v3 0/3] Add dtsi for sc7280 herobrine boards that using rt5682 codec
-Date:   Wed, 25 May 2022 01:43:05 +0000
-Message-Id: <20220525014308.1853576-1-judyhsiao@chromium.org>
+Subject: [v3 1/3] arm64: dts: qcom: sc7280: herobrine: Add pinconf settings for mi2s1
+Date:   Wed, 25 May 2022 01:43:06 +0000
+Message-Id: <20220525014308.1853576-2-judyhsiao@chromium.org>
 X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
+In-Reply-To: <20220525014308.1853576-1-judyhsiao@chromium.org>
+References: <20220525014308.1853576-1-judyhsiao@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,43 +73,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Put sound node and lpass_cpu node settings for boards that use rt5682
-codec in the sc7280-herobrine-audio-rt5682.dtsi as there are different
-choices of headset codec for herobrine projects. Common audio setting
-for the internal speaker is in sc7280-herobrine.dtsi.
+1. Add drive strength property for mi2s1 on sc7280 based platforms.
+2. Disable the pull-up for mi2s1 lines.
 
-This series depends on:
-"Add lpass pin control support for audio on sc7280 based targets" [1]
-"Add soundcard support for sc7280 based platforms" [2]
+Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+---
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-[1]
-https://patchwork.kernel.org/project/linux-arm-msm/list/?series=638776
-[2]
-https://patchwork.kernel.org/project/linux-arm-msm/list/?series=643589
-
-
-Changes Since V2:
-    -- Add bias-disable for i2s ws line.
-    -- Fix typo in the commit message.
-
-Changes Since V1:
-    -- Remove sound-dai-cells in sound node.
-    -- Add dependency list.
-    -- Update patch subject.
-
-Judy Hsiao (3):
-  arm64: dts: qcom: sc7280: herobrine: Add pinconf settings for mi2s1
-  arm64: dts: qcom: sc7280: Add sc7280-herobrine-audio-rt5682.dtsi
-  arm64: dts: qcom: sc7280: include sc7280-herobrine-audio-rt5682.dtsi
-    in villager and herobrine-r1
-
- .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 121 ++++++++++++++++++
- .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 +
- .../dts/qcom/sc7280-herobrine-villager-r0.dts |   1 +
- .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  15 +++
- 4 files changed, 138 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index 9cb1bc8ed6b5..f3044b39ba66 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -612,6 +612,21 @@ &dp_hot_plug_det {
+ 	bias-disable;
+ };
+ 
++&mi2s1_data0 {
++	drive-strength = <6>;
++	bias-disable;
++};
++
++&mi2s1_sclk {
++	drive-strength = <6>;
++	bias-disable;
++};
++
++&mi2s1_ws {
++	drive-strength = <6>;
++	bias-disable;
++};
++
+ &pcie1_clkreq_n {
+ 	bias-pull-up;
+ 	drive-strength = <2>;
 -- 
 2.36.1.124.g0e6072fb45-goog
 
