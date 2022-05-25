@@ -2,130 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEC3F533557
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 04:32:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D28A35335DB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 May 2022 05:34:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243621AbiEYCcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 May 2022 22:32:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39364 "EHLO
+        id S238884AbiEYDeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 May 2022 23:34:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243523AbiEYCcL (ORCPT
+        with ESMTP id S235078AbiEYDeU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 May 2022 22:32:11 -0400
-Received: from sonic311-22.consmr.mail.sg3.yahoo.com (sonic311-22.consmr.mail.sg3.yahoo.com [106.10.244.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06204424B9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 May 2022 19:32:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com.tw; s=s2048; t=1653445926; bh=VnY5er+1i/iJfFZJ2Cn6HWbwgRK414QB8xauHQLJybI=; h=Date:From:Subject:To:Cc:References:In-Reply-To:From:Subject:Reply-To; b=VF5TJI/YE49qXiPMIUTCR6WuRVybXLLqvXrKLifQnW2zDfFz31l8PEUBYBM2eY/60yP7ijDuOMHmEMSibFHmUW4soFhaCAvW3UiPxVWsJDHjOjZQ29u/nudcsqTsdcFimghoO+1vo6ypdYJGtobNdEbxKmEJd7E3SWAHIy6KoPf3zYuTLaPHm4XdMgkajQQg39BZKfcXfI4rqcZ2Yg1FMQuWF3HZKAck0f98Z2HveHG1aOuImqOpUZ/wMMVyuWoXHRKex8N/ZiPa0YsvYhSozvt6kXxLi9XxmaeWs9ZJ9H9Jex85ZxPbSMZ+m8zLnvg9OKRxL6ahFhDfReUH5VKxIQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1653445926; bh=0jy1MpYxa3weoEKvTIy8gb3B3360rpPyva+btlgjj9w=; h=X-Sonic-MF:Date:From:Subject:To:From:Subject; b=XP5wlAPLCRgcDtP2IMu+vp4xxjxsRMAXjSaDVMviM7IZU2tFjD7FjGqCL5IA3+rNXgUEMTfgPgNT4SuPt06i0eu8Jzat9vq2g55ypCmFlMkQ8hfaMQLPR9sKpKYm7gqapB+Fy6bX6vcRyjZMyL8wYbev3ShBLJa5aXou35U7io/DB4KUA6lAo/aPtZu0Z+lItOjmyVobu+OcHwdZLyrbrdF1iuU3kni8j5hGL6Vp+Tbfp1s3e2C0T53dH5rZWmbWiqCNJQNvPdFZ2R6gmuoN7Vwr+Kj+bgVGm1TgxQJPvwzP4d0V/OtA4DkdKXUjo48A+j2K42PC6W5UGCy/OWQuwA==
-X-YMail-OSG: oeKMwLEVM1lwMbVSh7GTrehM_I7CgjLQTRoPSgPC5am6BXMSQp.VPb9v19TCmWB
- TAIk9.59YmxHhNJOETtLhRHEIiIkvBHdHhoFwlCeEnlw.yhKndqgNYDbYYwe5Tm6enBZOqfGW2bT
- NNQa4OKMllW.6CzyIBA3y0.u8pCqzxnpXSZA379JBWglQ1FyCw0nJj53QIGrknK.92JLZhgYHM7Z
- CQX2yY8kVDXLHIkmgHEPM0VtK4WWHFf3FHaMjJB2vsLMo.FfOH6QctsaJSEx0ogAJwtkBng5GpbS
- EMkcq7u.7sQ9L48kYQCEEgFlnNi1ZHYukZM4BC5nj07QeHfVl5x48jeFZ_1HImD0LOBRgzaa0a42
- qCO0BHVr7d1x2T1OPZlWnhep8RYsdZuoNQhNLRiFTLYlCu40HvT6zqK9QaiRjAvF3BVsweeMru3f
- utq.FHYl58_lb8vVz7oia2dBouGtH9wp12B4uZpv.a1zslvF927QxdJxKZRULliD5Z8aQdJdgexx
- 27ALXQ1FOqITCDH4PdyRYXXy3N.Ic6qR0SAOjQ2GHldo.S6.9k7HBP6VLZR_.y1YHNSy91cpFcyu
- cWkSHNKSx25zPn6q3GiGFwCJeY3WLLRBiDxJlm.kfHG7eMfZ4r0T_nB3kfB2tHwK9n6EwqpNOHc8
- 8XlNKOkKVHQAMKGdGoSt_thA2QteBYSzJcLetkNvnukjTKqQjpj5rSmo4QsvFiLKmfNPOcCdrAnX
- hJ7Jw67dzonXkhXMwIxsMeMrsUjtrRym5pdI5DGWVSFn26qrse5pc4qYHH55fYrlQqD4livffEdd
- ZPwuonvREZVzo8rwPHoln8vkaQ4ZriTs3fT2UyR7Y2zHv76xDhyIF0l6FGl5SQC7DB8m5Rycq3Aa
- HPz7fhKGBCZqtBySi7wCRieq4YaAqiI78HqiUoaGL_67pxEi40uQy_8xZCAZtJysuM0fgic4cfZV
- sY3X3lm8dvgytwq_WvwLSEgLf6cLByCsa4i32CtxL0LtHDITs6icF5h1BSQ90wsvHEuWJGsho0d1
- f7aHm4TGgvLToBs0NKpOT7qPv0qE0e9OJPICRmiFhRhSpQ3DwfDi4i_v6T42V4v5MFSHTN6CFOQg
- .kWBjhFKFr5OS5oPTItVbtpvKUJv_O3lD0jde6ErfCNQuZPSl1_jxl66FD7YGAtqk89uU.XRcC14
- DVVn_xF01eFGVTpAsQVGtJErPTtYJrJnNNnqLOQzcO8STGdTlmE3vuMeaAGifEJgWGt1JyNw4Ll.
- NRJnCly6wXxNRbcu3SCJAxHm4zgDFxhwR6f48ZOmg3U6xC9Vlwb8kWjGtwx9xsfiAUtGGPMIwjs7
- wIiEa4gpFo7l8O0Ejx_S0_47QkKvCZdNYljfsuekImFOE9MwGafB6WJR9DJriCYoeVyUY625fjbM
- UIZoS9OOTELrlN3.hsUouskGF8wgQTquBgj7peQ2v1rbQ_l1EqjIoR1hR71dtcCnz2vdWGzLjrlD
- wMpu_K1QA7RxltjubjRcwYQZ1TvcDrEgW9vTFB.lxladBhxDEA1WOgY2225gkURVMxJ_bPFD6zVE
- S.4N164h3j6Tk901zpJkNLfiIyoVp7kvuLSgxtGYStTVQ55hAgXJMLUPb6XH7y2HuwisHWNyht_b
- UHfk6rhifpv6zkyAadn56eTbeflRotBzmhj.8NAMU7T8Q3SxHflO8K6BAny6FFmqcPhRhgCdW10A
- YuupUCTrHz7BQuGfHg7Ix1ygr8aZtGPLs3EstyVorpCEK5ZJDWiELRPww6e0Wt6srVfmylG7qe4F
- 8qIvNxsm1bV4RwW.ZodwBHOaF5CXTfwDR0_fRS0n22OGQqy7T2xr29tLA0VB3qJLFFv8FcrB7F1T
- wH42NE3_0h5VnD.6Jm3.dPDJ_Mw8sZgmX.zrVZroPCOCz3u3aqXaqkuIQrL5LJ880lexsXWNhA0Q
- Pq1hJiMK0Bxeb2vvaxQDxleA3KOMyKG0l.cKbsUezKsspbD5VEVT3WealGqAwEhhP7c16WkMWzSL
- AsQS.F4Xk5NEFHY3i2pRu5bXaiYHdpy3EAAzXMcZadfibbe8KOnuZUKD0N7_bz6oiDGB.y.PyOL6
- vHUsTS0982NzIwnEBERuJ6exI7rJQtT2WWesNtDze3FvIqkYDJ0qZUE1KETHq85TK4zi1BudGIYv
- Cvdb3ZOhIFyBusZU8lV3rpFHYqtRAr9oIWvGltkmY5z.QSqs4vzULlEwMY6RNj2VC93Bahu2PEwq
- fpzXPRATImsPCzeDRvsvIeK3MSd36g6sCMUxWjIukGyU8RlkZYytzievc9NSQSDgm2Pwob_u1I5M
- WJorLC6.Qb_sKQyWgLoaU_PyJ
-X-Sonic-MF: <ae40515@yahoo.com.tw>
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic311.consmr.mail.sg3.yahoo.com with HTTP; Wed, 25 May 2022 02:32:06 +0000
-Received: by hermes--canary-production-sg3-7959d4d9bd-vdvd8 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 9adf84adf3e681998ec4f854c15dbbca;
-          Wed, 25 May 2022 02:32:05 +0000 (UTC)
-Message-ID: <2054ff7a-b529-3ecd-70ea-5897ac82d0de@yahoo.com.tw>
-Date:   Wed, 25 May 2022 10:32:03 +0800
+        Tue, 24 May 2022 23:34:20 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7F4277F3E;
+        Tue, 24 May 2022 20:34:19 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id bg25so11691336wmb.4;
+        Tue, 24 May 2022 20:34:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ghTmliHJ1zlOIVen0TpVTdOTHI7IMPCtAuqivGtm1FA=;
+        b=oWCLnghgdcyq4yUMAGTUGBPNNhyUsHEd8v9IT7LaU8iNh83h1n6qtnoeG5i4iAKzXX
+         ADgYJXmUjBQHeilPutKRVDOzX/Ur9kjRqW3sv/dxybsCh57tSMXrywI09VIHvGQD5TDn
+         x2zerml7MJk1DqAu+ft4MRmpxbzH+2Lzrrc4pRN/uhCw9TAWiMANxVmYIosTletuge8Y
+         Kto1z6wkrZRQ390+Wy+bOD420m9KFkSrDKYP3F8h6THa0w9zeVvsx66+mClDPNPgu4nt
+         7+7M2nXdJyyPf53HdtgRc5OHubtbUJKm7yinnQuk2AlXwnCA8DCOjFD8cZ4HszbwYcYp
+         aJdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ghTmliHJ1zlOIVen0TpVTdOTHI7IMPCtAuqivGtm1FA=;
+        b=WmqDpXV9CXO7YkcLDwyhlprhUrNITpBXeorhUHsSvMawbinstm1G9cTgroSUe0O7G3
+         +0Ft+nGMdIvbn7eOHSJlICuhMlk9cJe13FfNQa8EBdcPudSe0OeCePHKO9tldG/kOGCm
+         NQg12/HTKhqQNZwBWJUGmGmBAYjr4qeidXoKTlVWIM5DczoNNewyJqmyNJk1hH63C0w0
+         e44G6uPz4a4Dyy6LWwGJtufwHyw3X18DGPEDfM04qej6sjMbNZq8r3A7d4+bQLrmEbDE
+         Pq+WEu2TbpI+Z9Qql+nhoxnRNHEelXOBdjgZosf53iuep+fyHb62lupddZRT99fbT5fu
+         LQPg==
+X-Gm-Message-State: AOAM532OOLkoUTVA9QbStApMoDHLSRKG08zuDx5NKWjS0h4lw/fMSp9S
+        YDP5W5Uz7xtQcE8mfHue89NGWQKytgeaYMsSMgX4eb9Xc2c=
+X-Google-Smtp-Source: ABdhPJzisWPnePa2pcOTpW4mbLLsATmmpWfUtubqktbreIbKFQYGNlX90hGJB2Ao8zFa1A9xPxXl0vM8cdAq2oSgXgo=
+X-Received: by 2002:a05:600c:3d89:b0:397:104:b1c9 with SMTP id
+ bi9-20020a05600c3d8900b003970104b1c9mr6395333wmb.84.1653449658207; Tue, 24
+ May 2022 20:34:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-From:   Alec Su <ae40515@yahoo.com.tw>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: msm8996-xiaomi-natrium: Add support
- for Xiaomi Mi 5s Plus
-To:     kernel test robot <lkp@intel.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, sboyd@codeaurora.org
-Cc:     kbuild-all@lists.01.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        y.oudjana@protonmail.com
-References: <20220519074112.25600-2-ae40515@yahoo.com.tw>
- <202205200926.TE2gqa0N-lkp@intel.com>
-Content-Language: en-US
-In-Reply-To: <202205200926.TE2gqa0N-lkp@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: WebService/1.1.20225 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20210728010632.2633470-1-robdclark@gmail.com> <20210728010632.2633470-13-robdclark@gmail.com>
+ <84e03c5f-a3af-6592-d19a-a2f5d20b92fb@linux.intel.com> <CAJs_Fx6Nc337LPNh=p2GT2d2yDTdLWH934o4Cof3urDGhUJB6A@mail.gmail.com>
+ <904ae104-1c30-d130-129f-ccae381261d5@linux.intel.com> <CAF6AEGuVhXuX63Od+kcJ0QtfAZ2-wqZsN0KOuEzKbivJdouzog@mail.gmail.com>
+In-Reply-To: <CAF6AEGuVhXuX63Od+kcJ0QtfAZ2-wqZsN0KOuEzKbivJdouzog@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 24 May 2022 20:34:15 -0700
+Message-ID: <CAF6AEGvyiMGF-Him5VSHdBCufqoNF8kqMY5XhAic3mvpi_x75A@mail.gmail.com>
+Subject: Re: [PATCH v4 12/13] drm/msm: Utilize gpu scheduler priorities
+To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022/5/20 09:34, kernel test robot wrote:
-> Hi Alec,
-> 
-> Thank you for the patch! Yet something to improve:
-> 
-> [auto build test ERROR on robh/for-next]
-> [also build test ERROR on v5.18-rc7]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use '--base' as documented in
-> https://git-scm.com/docs/git-format-patch]
-> 
-> url:    https://github.com/intel-lab-lkp/linux/commits/Alec-Su/arm64-dts-qcom-msm8996-xiaomi-natrium-Add-support-for-Xiaomi-Mi-5s-Plus/20220519-164217
-> base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-> config: arm64-randconfig-r022-20220518 (https://download.01.org/0day-ci/archive/20220520/202205200926.TE2gqa0N-lkp@intel.com/config)
-> compiler: aarch64-linux-gcc (GCC) 11.3.0
-> reproduce (this is a W=1 build):
->         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
->         chmod +x ~/bin/make.cross
->         # https://github.com/intel-lab-lkp/linux/commit/b35e1afb49b50a1d68a67f66a3eb6c4259f329fb
->         git remote add linux-review https://github.com/intel-lab-lkp/linux
->         git fetch --no-tags linux-review Alec-Su/arm64-dts-qcom-msm8996-xiaomi-natrium-Add-support-for-Xiaomi-Mi-5s-Plus/20220519-164217
->         git checkout b35e1afb49b50a1d68a67f66a3eb6c4259f329fb
->         # save the config file
->         mkdir build_dir && cp config build_dir/.config
->         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
-> 
-> If you fix the issue, kindly add following tag as appropriate
-> Reported-by: kernel test robot <lkp@intel.com>
-> 
-> All errors (new ones prefixed by >>):
-> 
->>> Error: arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts:79.1-9 Label or path mss_pil not found
->>> Error: arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts:106.1-10 Label or path slpi_pil not found
->    FATAL ERROR: Syntax error parsing input tree
-> 
+On Tue, May 24, 2022 at 7:57 AM Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Tue, May 24, 2022 at 6:45 AM Tvrtko Ursulin
+> <tvrtko.ursulin@linux.intel.com> wrote:
+> >
+> > On 23/05/2022 23:53, Rob Clark wrote:
+> > >
+> > > btw, one fun (but unrelated) issue I'm hitting with scheduler... I'm
+> > > trying to add an igt test to stress shrinker/eviction, similar to the
+> > > existing tests/i915/gem_shrink.c.  But we hit an unfortunate
+> > > combination of circumstances:
+> > > 1. Pinning memory happens in the synchronous part of the submit ioctl,
+> > > before enqueuing the job for the kthread to handle.
+> > > 2. The first run_job() callback incurs a slight delay (~1.5ms) while
+> > > resuming the GPU
+> > > 3. Because of that delay, userspace has a chance to queue up enough
+> > > more jobs to require locking/pinning more than the available system
+> > > RAM..
+> >
+> > Is that one or multiple threads submitting jobs?
+>
+> In this case multiple.. but I think it could also happen with a single
+> thread (provided it didn't stall on a fence, directly or indirectly,
+> from an earlier submit), because of how resume and actual job
+> submission happens from scheduler kthread.
+>
+> > > I'm not sure if we want a way to prevent userspace from getting *too*
+> > > far ahead of the kthread.  Or maybe at some point the shrinker should
+> > > sleep on non-idle buffers?
+> >
+> > On the direct reclaim path when invoked from the submit ioctl? In i915
+> > we only shrink idle objects on direct reclaim and leave active ones for
+> > the swapper. It depends on how your locking looks like whether you could
+> > do them, whether there would be coupling of locks and fs-reclaim context.
+>
+> I think the locking is more or less ok, although lockdep is unhappy
+> about one thing[1] which is I think a false warning (ie. not
+> recognizing that we'd already successfully acquired the obj lock via
+> trylock).  We can already reclaim idle bo's in this path.  But the
+> problem with a bunch of submits queued up in the scheduler, is that
+> they are already considered pinned and active.  So at some point we
+> need to sleep (hopefully interruptabley) until they are no longer
+> active, ie. to throttle userspace trying to shove in more submits
+> until some of the enqueued ones have a chance to run and complete.
+>
+> BR,
+> -R
+>
+> [1] https://gitlab.freedesktop.org/drm/msm/-/issues/14
+>
 
-The labels mss_pil and slpi_pil are in a patch [1] which is already
-existed in linux-next but isn't in mainline yet. It should be fine in
-linux-next.
+btw, one thing I'm thinking about is __GFP_RETRY_MAYFAIL for gem
+bo's.. I'd need to think about the various code paths that could
+trigger us to need to allocate pages, but short-circuiting the
+out_of_memory() path deep in drm_gem_get_pages() ->
+shmem_read_mapping_page() -> ... -> __alloc_pages_may_oom() and
+letting the driver decide itself if there is queued work worth waiting
+on (and if not, calling out_of_memory() directly itself) seems like a
+possible solution.. that also untangles the interrupted-syscall case
+so we don't end up having to block in a non-interruptible way.  Seems
+like it might work?
 
-[1] https://lore.kernel.org/all/20210926190555.278589-6-y.oudjana@protonmail.com/
-
-Regards,
-Alec
+BR,
+-R
