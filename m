@@ -2,67 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D219E534E78
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 13:45:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F040B534E66
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 13:45:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347283AbiEZLpU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 07:45:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59128 "EHLO
+        id S238055AbiEZLpF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 07:45:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347272AbiEZLoj (ORCPT
+        with ESMTP id S1347330AbiEZLoy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 07:44:39 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E22E8D02BC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 04:44:25 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id c14so1506434pfn.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 04:44:25 -0700 (PDT)
+        Thu, 26 May 2022 07:44:54 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA083424AA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 04:44:38 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id d129so1121102pgc.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 04:44:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aFDZFO8zcq3mdOYMY85R5XhCqGoT7ekIVqfcal4vq9k=;
-        b=DdLAOSyeCe3VdSlghPOPR26L4TtMKKCTQ5eKXAKK+10kIhUkQ83tMrA/1RpbabSazS
-         kV6nbvicZrBGsl5IcdntaWX0fV6MCSW1wdiQJTxyHiodRUYUZ11tf5PZA2ahicLgxrUo
-         6ZacmpFJ5OF6b5gRWNANLmf6dpaESFfPH99GDIPXtJ3SwlNJutaOa3SCUTYIXpdBo+Vd
-         I8V9aMtIybOdUujY41iWsXh0sgD7XOPwT6wyHWCJDn/ZIfp5B3sfGTv08/HbdRdVSuce
-         kSLvoxCYkqh6y9ZDmfwO4qM+DWWM36B5cyqGUtzByYX9EUBXqpGlCNxEkh2MUme2AAB9
-         K6kA==
+        bh=sbZ69EBj+CLxahhE5rw5q494M5c4cxGAZWpQHb2IOAc=;
+        b=CYrVjUIuWd0zfRIJSi8HO31AD9AB7Z/b4ZGo/R1bvdZBPaGfQHMVsp9no9MCPRLZSu
+         Rx1UKPigFvdWFI3gG/HlfhuEFFhdBc8tINuYmFZ2So48AD+5LQVHGJMBlzObMv8wxjVS
+         yxTShzVoWieKyQP/hK9o+Iv3sCcjl67EpSLJ4d2H1lHxljTM5NdTslfMlya8H+j/wS4D
+         5jzP9DwrV/aPT9HOxUtxo26dGuXTskGfoJK1LPz5Wf7KLcG8wn5snDKw2cATPMw3anCP
+         5FnfmuUON+mH1UD1VSlbTe1asCjQWGQZLQNt973KfqWmp4KKOCgcij5STXxI/EUUQ76d
+         2vrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aFDZFO8zcq3mdOYMY85R5XhCqGoT7ekIVqfcal4vq9k=;
-        b=8J5JGoxT8yO/IfWwU5qi4oMmhElBds4aS14mNjUG+RehnqNScA+o+bV+hmrCWhxfyy
-         MBEPuKPGSQD7yJ9liw3B3wv/la7UmdFJPx0fIMWwUpaWbkhQ8XInVbv5jnqfyjZv/Tz2
-         IKzZalTYLYgwSPjb2dBMHUPy6BejK4pR3qpcb9MZLe1cuuBW+r3CIOd7xuSw7nyaJRe2
-         XIPQo6FO7fzgo1un0oqKsX5eePRrX1WTKpPlN6jnpwqvvcQFkyody8doFdDWwYrEXsKO
-         Cjm5H7b+7GZOwm+HGHBKlTNRgk7WvcyxdZlMw5vNHKuYLBov2OgICMXQelUMhViQ93b0
-         4K6A==
-X-Gm-Message-State: AOAM530yYOIxWfah9KDqif4cHUiGVS8ZKJ2JsP5A3Xj34QVuE1SUOAI3
-        ZvzoiaFcO3Z05pX8OF+FxZvBQg==
-X-Google-Smtp-Source: ABdhPJymmr3E7XzXOfh11AxGgFOnPpiUnAkMyJxfXNlpjU0Cl3k3slf4lmK7hGJQYeI+J0tXrl2TGQ==
-X-Received: by 2002:a63:8bc1:0:b0:3f9:f00b:f877 with SMTP id j184-20020a638bc1000000b003f9f00bf877mr21914328pge.378.1653565465428;
-        Thu, 26 May 2022 04:44:25 -0700 (PDT)
+        bh=sbZ69EBj+CLxahhE5rw5q494M5c4cxGAZWpQHb2IOAc=;
+        b=mvelmeWSsC2XfiaAOplJkKwh80hiVsISqgp9oZyZ/bdcRz1jg0hl7azvivYvKuB9td
+         DNPvfVN52ulPpS3Znjq6EkdnD/e/r6hqOXviBO7iQx43GjGKx1PEz9te6hK5TkFqagRG
+         AVupSY794ElP9uybVjfTG5eww9LZuawtSx4Sv0VVXsE1nOU3t4BQluzlPUhUEOneIPz2
+         I5b2zVYj6RN9UxMpTcOTNKB3ppF0ZDDcvrT5fjhPtGcodwvkVfZk7Qm8inaylEITlnhv
+         sQ4Xc7mwdYlZsEDK2T+CP0ofPBHYiheK1pk86747+rjdTr2nqtEnp/z7apWyieeviH6E
+         yB7g==
+X-Gm-Message-State: AOAM5310fDxXt0fyvZv0UjYrf7ZEtYkvxuL1nkTBbJ0SSC/IuqUP2UJi
+        Y2SxbyHJB/VcJV8fEJ+3vVzaIbR0P8IluA==
+X-Google-Smtp-Source: ABdhPJyI36Xh7JTRb61yxLCPh2nssAdsbatU80ZBS3PRQ6y4gvF9EpP1vtaAGYqIfWJADbOhRY1hSw==
+X-Received: by 2002:a05:6a00:ad2:b0:4f1:2734:a3d9 with SMTP id c18-20020a056a000ad200b004f12734a3d9mr38397886pfl.61.1653565478103;
+        Thu, 26 May 2022 04:44:38 -0700 (PDT)
 Received: from localhost ([122.162.234.2])
-        by smtp.gmail.com with ESMTPSA id f13-20020aa782cd000000b0051887e34143sm1269772pfn.129.2022.05.26.04.44.24
+        by smtp.gmail.com with ESMTPSA id d4-20020a170902c18400b001637d72b314sm1231655pld.10.2022.05.26.04.44.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 04:44:25 -0700 (PDT)
+        Thu, 26 May 2022 04:44:37 -0700 (PDT)
 From:   Viresh Kumar <viresh.kumar@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>
+        Mark Brown <broonie@kernel.org>
 Cc:     Viresh Kumar <viresh.kumar@linaro.org>, linux-pm@vger.kernel.org,
         Vincent Guittot <vincent.guittot@linaro.org>,
         Rafael Wysocki <rjw@rjwysocki.net>,
         Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 19/31] mmc: sdhci-msm: Migrate to dev_pm_opp_set_config()
-Date:   Thu, 26 May 2022 17:12:18 +0530
-Message-Id: <80314068d96eb53e0d9838736415b96015803844.1653564321.git.viresh.kumar@linaro.org>
+Subject: [PATCH 23/31] spi: qcom: Migrate to dev_pm_opp_set_config()
+Date:   Thu, 26 May 2022 17:12:22 +0530
+Message-Id: <09fde85449e0e189572ea847e86148943aff8b2e.1653564321.git.viresh.kumar@linaro.org>
 X-Mailer: git-send-email 2.31.1.272.g89b43f80a514
 In-Reply-To: <cover.1653564321.git.viresh.kumar@linaro.org>
 References: <cover.1653564321.git.viresh.kumar@linaro.org>
@@ -85,32 +84,56 @@ Lets start using it.
 
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 ---
- drivers/mmc/host/sdhci-msm.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/spi/spi-geni-qcom.c | 5 ++++-
+ drivers/spi/spi-qcom-qspi.c | 5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 50c71e0ba5e4..994f3f0231f7 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2496,6 +2496,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 	const struct sdhci_msm_offset *msm_offset;
- 	const struct sdhci_msm_variant_info *var_info;
- 	struct device_node *node = pdev->dev.of_node;
-+	struct dev_pm_opp_config opp_config = {
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 4e83cc5b445d..d869f270dcca 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -892,6 +892,9 @@ static int spi_geni_probe(struct platform_device *pdev)
+ 	void __iomem *base;
+ 	struct clk *clk;
+ 	struct device *dev = &pdev->dev;
++	struct dev_pm_opp_config config = {
++		.clk_name = "se",
++	};
+ 
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0)
+@@ -922,7 +925,7 @@ static int spi_geni_probe(struct platform_device *pdev)
+ 	mas->se.base = base;
+ 	mas->se.clk = clk;
+ 
+-	ret = devm_pm_opp_set_clkname(&pdev->dev, "se");
++	ret = devm_pm_opp_set_config(&pdev->dev, &config);
+ 	if (ret)
+ 		return ret;
+ 	/* OPP table is optional */
+diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+index c334dfec4117..5ab3ae406ef7 100644
+--- a/drivers/spi/spi-qcom-qspi.c
++++ b/drivers/spi/spi-qcom-qspi.c
+@@ -458,6 +458,9 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+ 	struct device *dev;
+ 	struct spi_master *master;
+ 	struct qcom_qspi *ctrl;
++	struct dev_pm_opp_config config = {
 +		.clk_name = "core",
 +	};
  
- 	host = sdhci_pltfm_init(pdev, &sdhci_msm_pdata, sizeof(*msm_host));
- 	if (IS_ERR(host))
-@@ -2564,7 +2567,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto bus_clk_disable;
+ 	dev = &pdev->dev;
+ 
+@@ -529,7 +532,7 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+ 	master->handle_err = qcom_qspi_handle_err;
+ 	master->auto_runtime_pm = true;
  
 -	ret = devm_pm_opp_set_clkname(&pdev->dev, "core");
-+	ret = devm_pm_opp_set_config(&pdev->dev, &opp_config);
++	ret = devm_pm_opp_set_config(&pdev->dev, &config);
  	if (ret)
- 		goto bus_clk_disable;
- 
+ 		return ret;
+ 	/* OPP table is optional */
 -- 
 2.31.1.272.g89b43f80a514
 
