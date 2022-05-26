@@ -2,113 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6914534900
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 04:47:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED0B0534935
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 05:16:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237725AbiEZCrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 22:47:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60134 "EHLO
+        id S230388AbiEZDP5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 23:15:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229707AbiEZCrx (ORCPT
+        with ESMTP id S229811AbiEZDP4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 22:47:53 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DB6CA30AA;
-        Wed, 25 May 2022 19:47:52 -0700 (PDT)
+        Wed, 25 May 2022 23:15:56 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6264DF82;
+        Wed, 25 May 2022 20:15:51 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id o29-20020a05600c511d00b00397697f172dso1819843wms.0;
+        Wed, 25 May 2022 20:15:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653533273; x=1685069273;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=PgRpioET2y7bZCb+Y89tJdhhFbeZkP6JLCvsB8i273g=;
-  b=ZjkqR4CnvbFaLKZJTq4b101n7xd2yd20wFot6JS2HYlYk15t/32eQaXm
-   06SfZV9IkkXPTOpnfnJFfUSHBws3AJK5ap9pfc7kheSZcWmZEmUXs36W4
-   +EzCT5A+prfdrEVVOJk+eeoWdGz7Bqqpp4rcGerJdfyobEUuo9jQDIZ1O
-   k=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 25 May 2022 19:47:52 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2022 19:47:51 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 25 May 2022 19:47:51 -0700
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 25 May 2022 19:47:45 -0700
-Date:   Thu, 26 May 2022 08:17:41 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        "Matthias Kaehlcke" <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Subject: Re: [PATCH v18 5/5] usb: dwc3: qcom: Keep power domain on to retain
- controller status
-Message-ID: <20220526024741.GP15121@hu-pkondeti-hyd.qualcomm.com>
-References: <1653502826-24256-1-git-send-email-quic_kriskura@quicinc.com>
- <1653502826-24256-6-git-send-email-quic_kriskura@quicinc.com>
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eGeMotmHD5kcwokKadCBWqHPNlO0Qvs0CVZPqUnOIwU=;
+        b=STPbaruw09QCXES5FDI15P7EnfhRJv83ICkhIygnvPTFFztNE3QMp+2HkzKr0MHCCL
+         vA13P4G9M+1adv/QOdjA4zKguI6NfBb99Puhm/tqNrB5bbfpnVqbXcxKrH+kH32KOrFo
+         HMFF7e4t//YJWSQez1Oune1sW8RhYrJZ1/DAvNr9nAFb5N2QrdmPgaD1/51V2R3Oc2M5
+         4JSjqZQAsd+Ss3GDdMJoEPIuDNkdvFOzpc222fcM/EhXyoxrHdZl+bcrqKhb3IoHjjmk
+         XQfHM6d95nts0V5Lo5/Zn7+uX+M0Qq1/53NK5LM62BqbRnif39q/O+EM7n0+iU8ahDcW
+         4MZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eGeMotmHD5kcwokKadCBWqHPNlO0Qvs0CVZPqUnOIwU=;
+        b=QHOvwGS03r3OU31I0zO8Lwd3rLzWWxQTD7dBWQEGSHANSe7kH5zxIcKymmrN8KOwJB
+         kkKCBk/frplDg+ZUcPcBGBbXG0TwLzKl14WG13swVyImaILuCs14p1d3/xgX0dBlfa6y
+         rSODZ79OBmfTk8sxjHy5E24IlaVGPVqkPArCNz+2XVsj/4CBajtky1o8DwWVdQ8IoaM4
+         VNRCEs6oV+MuRtkiRUn5z9PCbLuYwGkymH/o+FNl75ZiyUJ3J4ol9di/ThSXzgXS5tKi
+         /bZoYAvW+gAY9ntM+QPRyhVWdftoBloO+XdRArpXdKHs6OMWjmb3rRskcNVOxY+gEQnY
+         pSWw==
+X-Gm-Message-State: AOAM531OTBWNmUlbiQzUq8cgX4clumTGIn3iYpzEF6Z6WXhFLqkH3XHH
+        /kE1Wtjw2qXkqCIG2oAAlZFAKRg54rnGJKVFjYY=
+X-Google-Smtp-Source: ABdhPJxM/y4CWGrksx4gNScQ00GELDhe/3yND60YFdXQhe2SiNRzSPQjRttu0dMdsWj00S1f+XPDEvscDu7F5r9UUA0=
+X-Received: by 2002:a05:600c:3843:b0:397:476f:ceb8 with SMTP id
+ s3-20020a05600c384300b00397476fceb8mr234025wmr.200.1653534950360; Wed, 25 May
+ 2022 20:15:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1653502826-24256-6-git-send-email-quic_kriskura@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20210728010632.2633470-1-robdclark@gmail.com> <20210728010632.2633470-13-robdclark@gmail.com>
+ <84e03c5f-a3af-6592-d19a-a2f5d20b92fb@linux.intel.com> <CAJs_Fx6Nc337LPNh=p2GT2d2yDTdLWH934o4Cof3urDGhUJB6A@mail.gmail.com>
+ <904ae104-1c30-d130-129f-ccae381261d5@linux.intel.com> <CAF6AEGuVhXuX63Od+kcJ0QtfAZ2-wqZsN0KOuEzKbivJdouzog@mail.gmail.com>
+ <1972f50b-d71a-9e2e-d10b-cc4f13bb208f@linux.intel.com>
+In-Reply-To: <1972f50b-d71a-9e2e-d10b-cc4f13bb208f@linux.intel.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 25 May 2022 20:15:47 -0700
+Message-ID: <CAF6AEGsvmQYjzoFgEMTer3oDmb62y2Hq_unDbq2UEoZ6CA3CSw@mail.gmail.com>
+Subject: Re: [PATCH v4 12/13] drm/msm: Utilize gpu scheduler priorities
+To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 25, 2022 at 11:50:26PM +0530, Krishna Kurapati wrote:
-> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> 
-> If dwc3 is wakeup capable, keep the power domain always ON so that
-> wakeup from system suspend can be supported. Otherwise, keep the
-> power domain ON only during runtime suspend to support wakeup from
-> runtime suspend.
-> 
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 28 +++++++++++++++++++++-------
->  1 file changed, 21 insertions(+), 7 deletions(-)
-> 
->  
-<snip>
+On Wed, May 25, 2022 at 9:11 AM Tvrtko Ursulin
+<tvrtko.ursulin@linux.intel.com> wrote:
+>
+>
+> On 24/05/2022 15:57, Rob Clark wrote:
+> > On Tue, May 24, 2022 at 6:45 AM Tvrtko Ursulin
+> > <tvrtko.ursulin@linux.intel.com> wrote:
+> >>
+> >> On 23/05/2022 23:53, Rob Clark wrote:
+> >>>
+> >>> btw, one fun (but unrelated) issue I'm hitting with scheduler... I'm
+> >>> trying to add an igt test to stress shrinker/eviction, similar to the
+> >>> existing tests/i915/gem_shrink.c.  But we hit an unfortunate
+> >>> combination of circumstances:
+> >>> 1. Pinning memory happens in the synchronous part of the submit ioctl,
+> >>> before enqueuing the job for the kthread to handle.
+> >>> 2. The first run_job() callback incurs a slight delay (~1.5ms) while
+> >>> resuming the GPU
+> >>> 3. Because of that delay, userspace has a chance to queue up enough
+> >>> more jobs to require locking/pinning more than the available system
+> >>> RAM..
+> >>
+> >> Is that one or multiple threads submitting jobs?
+> >
+> > In this case multiple.. but I think it could also happen with a single
+> > thread (provided it didn't stall on a fence, directly or indirectly,
+> > from an earlier submit), because of how resume and actual job
+> > submission happens from scheduler kthread.
+> >
+> >>> I'm not sure if we want a way to prevent userspace from getting *too*
+> >>> far ahead of the kthread.  Or maybe at some point the shrinker should
+> >>> sleep on non-idle buffers?
+> >>
+> >> On the direct reclaim path when invoked from the submit ioctl? In i915
+> >> we only shrink idle objects on direct reclaim and leave active ones for
+> >> the swapper. It depends on how your locking looks like whether you could
+> >> do them, whether there would be coupling of locks and fs-reclaim context.
+> >
+> > I think the locking is more or less ok, although lockdep is unhappy
+> > about one thing[1] which is I think a false warning (ie. not
+> > recognizing that we'd already successfully acquired the obj lock via
+> > trylock).  We can already reclaim idle bo's in this path.  But the
+> > problem with a bunch of submits queued up in the scheduler, is that
+> > they are already considered pinned and active.  So at some point we
+> > need to sleep (hopefully interruptabley) until they are no longer
+> > active, ie. to throttle userspace trying to shove in more submits
+> > until some of the enqueued ones have a chance to run and complete.
+>
+> Odd I did not think trylock could trigger that. Looking at your code it
+> indeed seems two trylocks. I am pretty sure we use the same trylock
+> trick to avoid it. I am confused..
 
-> -	device_init_wakeup(&pdev->dev, 1);
-> +	if (device_can_wakeup(&qcom->dwc3->dev)) {
-> +		/*
-> +		 * Setting GENPD_FLAG_ALWAYS_ON flag takes care of keeping
-> +		 * GEMPD on in both RT suspend and System suspend cases.
+The sequence is,
 
-Few typos, otherwise looks good to me. 
+1. kref_get_unless_zero()
+2. trylock, which succeeds
+3. attempt to evict or purge (which may or may not have succeeded)
+4. unlock
 
-%s/GEMPD/genpd
+ ... meanwhile this has raced with submit (aka execbuf) finishing and
+retiring and dropping *other* remaining reference to bo...
 
-%s/RT/runtime
+5. drm_gem_object_put() which triggers drm_gem_object_free()
+6. in our free path we acquire the obj lock again and then drop it.
+Which arguably is unnecessary and only serves to satisfy some
+GEM_WARN_ON(!msm_gem_is_locked(obj)) in code paths that are also used
+elsewhere
 
-%s/System/system
+lockdep doesn't realize the previously successful trylock+unlock
+sequence so it assumes that the code that triggered recursion into
+shrinker could be holding the objects lock.
 
-Thanks,
-Pavan
+>
+> Otherwise if you can afford to sleep you can of course throttle
+> organically via direct reclaim. Unless I am forgetting some key gotcha -
+> it's been a while I've been active in this area.
+
+So, one thing that is awkward about sleeping in this path is that
+there is no way to propagate back -EINTR, so we end up doing an
+uninterruptible sleep in something that could be called indirectly
+from userspace syscall.. i915 seems to deal with this by limiting it
+to shrinker being called from kswapd.  I think in the shrinker we want
+to know whether it is ok to sleep (ie. not syscall trigggered
+codepath, and whether we are under enough memory pressure to justify
+sleeping).  For the syscall path, I'm playing with something that lets
+me pass __GFP_RETRY_MAYFAIL | __GFP_NOWARN to
+shmem_read_mapping_page_gfp(), and then stall after the shrinker has
+failed, somewhere where we can make it interruptable.  Ofc, that
+doesn't help with all the other random memory allocations which can
+fail, so not sure if it will turn out to be a good approach or not.
+But I guess pinning the GEM bo's is the single biggest potential
+consumer of pages in the submit path, so maybe it will be better than
+nothing.
+
+BR,
+-R
+
+>
+> Regards,
+>
+> Tvrtko
+>
+> >
+> > BR,
+> > -R
+> >
+> > [1] https://gitlab.freedesktop.org/drm/msm/-/issues/14
+> >
