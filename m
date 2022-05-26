@@ -2,62 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1984534DED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 13:17:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CFBF534E14
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 13:27:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244554AbiEZLRJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 07:17:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43492 "EHLO
+        id S235094AbiEZL1R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 07:27:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233141AbiEZLRI (ORCPT
+        with ESMTP id S230031AbiEZL1Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 07:17:08 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66CD395DD2;
-        Thu, 26 May 2022 04:17:06 -0700 (PDT)
+        Thu, 26 May 2022 07:27:16 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E9CAEE26;
+        Thu, 26 May 2022 04:27:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653563827; x=1685099827;
+  t=1653564434; x=1685100434;
   h=subject:to:cc:references:from:message-id:date:
    mime-version:in-reply-to:content-transfer-encoding;
-  bh=jl+F2eJ4nE5XySB40dAzATocGz6c62UCpxl8Gn1FUcA=;
-  b=mRFznUDzBIsyBtiz+JLuf77x100bQDEVvZSw7Oxi6LvFTVY2aabyAYwT
-   04uFG2dFZx42nISgDHSfr8qm23XVBCMMvYsNNu9nFmvpRGFsCn6OkemBJ
-   uF0TQFal/t6KUyW2nMAsFg9ESbtC1LDasTdV18n2VzWYZBZBGoJcfUpRU
-   Y=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 26 May 2022 04:17:06 -0700
+  bh=h7JfkcFQ6bOVl/3RPHdzVasYc4m6Djoiu/M+fsDvaKU=;
+  b=PH6Rglb46zrlkZRfahK66I4gtVO5wO995Im0NLjWL0KZFBchqaIN64jo
+   s2RvYP7FHC4ZSsLFzYpElixEdMnIvYe0d0n5GGDYIcasn6BWYljZPfkNq
+   rPNY5oVQNd+ApP55AZgALIJyuLLp6z0bJMT7eaEtO59GNgve3aXB7UkAM
+   A=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 26 May 2022 04:27:13 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 May 2022 04:17:06 -0700
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 May 2022 04:27:13 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 26 May 2022 04:17:06 -0700
+ 15.2.986.22; Thu, 26 May 2022 04:27:13 -0700
 Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 26 May
- 2022 04:17:02 -0700
-Subject: Re: [PATCH v4 1/3] arm64: dts: qcom: sc7280: Add proxy interconnect
- requirements for modem
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <ohad@wizery.com>, <agross@kernel.org>,
+ 2022 04:27:10 -0700
+Subject: Re: [V4 0/2] Add modem debug features
+To:     Pavel Machek <pavel@ucw.cz>
+CC:     <bjorn.andersson@linaro.org>, <agross@kernel.org>,
         <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mka@chromium.org>
-References: <1652978825-5304-1-git-send-email-quic_sibis@quicinc.com>
- <1652978825-5304-2-git-send-email-quic_sibis@quicinc.com>
- <YoaqDcB6wkd4zOWR@ripper> <031ebead-4b0d-8493-d8f8-96f2ff9d938a@quicinc.com>
- <CAE-0n53hDDoetQW0Bz7noq4peuNCyrGsXaJdjFj=4sMkGeZFgw@mail.gmail.com>
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1653396335-6295-1-git-send-email-quic_sibis@quicinc.com>
+ <20220526110840.GD5138@localhost>
 From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <3e7e8263-fdc1-ffa8-7b7f-188bb027fadf@quicinc.com>
-Date:   Thu, 26 May 2022 16:46:51 +0530
+Message-ID: <b575f100-dcc9-c67d-b594-06e74c5fc7e6@quicinc.com>
+Date:   Thu, 26 May 2022 16:57:07 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n53hDDoetQW0Bz7noq4peuNCyrGsXaJdjFj=4sMkGeZFgw@mail.gmail.com>
+In-Reply-To: <20220526110840.GD5138@localhost>
 Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -75,37 +69,25 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 5/21/22 12:37 AM, Stephen Boyd wrote:
-> Quoting Sibi Sankar (2022-05-20 11:08:52)
->> Hey Bjorn,
->> Thanks for taking time to review the series.
->>
->> On 5/20/22 2:05 AM, Bjorn Andersson wrote:
->>> On Thu 19 May 09:47 PDT 2022, Sibi Sankar wrote:
->>>
->>>> Add interconnects that are required to be proxy voted upon during modem
->>>> bootup on SC7280 SoCs.
->>>
->>> This looks reasonable, but how come the vote is only for DDR frequency?
->>> What about the buses between modem and ddr?
->>
->> The proxy votes that are put in aren't for perf related reasons, the
->> modem was getting llcc timeouts while trying to read contents from
->> memory. The hw team recommended the proxy votes as the fix.
-> 
-> Presumably the bootloader sets up some initial modem and ddr bus
-> bandwidth requests? Or the modem bootloader stage (MSA?) handles that
-> part?
 
-Stephen/Bjorn,
-Sorry for the delay, took a while to dig this up. The modem interconnect
-is connected directly to gemnoc ddr. The path info from modem --> ddr is
-split up into modem --> llcc and llcc --> ddr (Similar to CPUs) i.e. in
-the end scaling of the path involves scaling of the two clocks, gemnoc
-and ddr. There isn't any default vote for modem --> llcc as such but it
-gets implicitly scaled when we vote max for llcc --> ddr path due to
-dependency maintained between the two clocks by rpmh.
+On 5/26/22 4:38 PM, Pavel Machek wrote:
+> Hi!
+> 
+>> The series adds support for the following modem debug features:
+>>   * Pass on MBA log info to imem
+>>   * Add panic handler for mss
+> 
+> Can I get you to cc phone-devel mailing list?
+
+Pavel,
+I picked up the series when I noticed one of the patch had fallen
+through the cracks. IIRC you had already requested for the cc before
+as well, will make sure I cc the group if there is a re-spin.
 
 -Sibi
 
+> 
+> Thanks,
+> 							Pavel
+> 							
 > 
