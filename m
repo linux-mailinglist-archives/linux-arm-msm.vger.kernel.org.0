@@ -2,56 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88E64534849
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 03:41:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 836545348A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 04:14:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345620AbiEZBls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 May 2022 21:41:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59432 "EHLO
+        id S1345938AbiEZCOf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 May 2022 22:14:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345480AbiEZBls (ORCPT
+        with ESMTP id S233729AbiEZCOe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 May 2022 21:41:48 -0400
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44A919CCA0;
-        Wed, 25 May 2022 18:41:47 -0700 (PDT)
-Received: by mail-oi1-f172.google.com with SMTP id r68so600471oie.12;
-        Wed, 25 May 2022 18:41:47 -0700 (PDT)
+        Wed, 25 May 2022 22:14:34 -0400
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B49F8BD0A;
+        Wed, 25 May 2022 19:14:34 -0700 (PDT)
+Received: by mail-oi1-f171.google.com with SMTP id e189so675356oia.8;
+        Wed, 25 May 2022 19:14:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Ow0AIyaq7EGrDHL0uxoOhpgYh92bWgjMZ0SAJ89jsgk=;
-        b=NjbZhLHm8FBHeZ/+jJg6+t49282uuCXtDrcw6PFjDR14uAPWy2jdd5W8KqoyCnLRyF
-         AroGeqQDFCpdUrY/zKG//FK19vS9hvPGpKjdY4O2iN0SjW9wTvlSMU5UNY2jbs7Yck6v
-         T1iL2xAsIVJ+aLCAslzLcsltKAYbBenJh9nxDL3+4iKUpD9yowEBVl5EbZfKtwSMyWIF
-         MltFP494akjsuh+fLwFtpdX8ZRX0GIhlv4imAgqWXTgBNjKGC3PA29YPBmyjOwAKZJBZ
-         DQOBEDj2v0LVthiqhz45USp8dIYvkNY3DIjQtK4NyOuNAcr1vvz+5o5qJTFWWc2z9+Ue
-         GyXw==
-X-Gm-Message-State: AOAM530FiBzDdqEK7c3cBWj3g00xU8UJfQf59z+ui2LDloGnjs6Pcc0f
-        KSCHWQK8naXI07P3Wam1sQ==
-X-Google-Smtp-Source: ABdhPJwJKd/Mf58soX6Eu+14f9g0ga+xNoIALrnFl0zz+tE2ryYBeWFtR8NyOvcPnb1co44FQunEvw==
-X-Received: by 2002:a05:6808:1407:b0:32a:f4d8:932a with SMTP id w7-20020a056808140700b0032af4d8932amr6903268oiv.109.1653529306552;
-        Wed, 25 May 2022 18:41:46 -0700 (PDT)
-Received: from xps15.. (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.googlemail.com with ESMTPSA id bm22-20020a056820189600b0035eb4e5a6besm141759oob.20.2022.05.25.18.41.45
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=lXxPYdn4qOgK4BprlzzAunNk3cKD97maHWkf6/9DJSg=;
+        b=wTc09Agd3+VsYz2cC0Yz08ul//D+UZ2MKKuoeEKNCOKc5fqTUrJtsvQ+LnKwQsbAhC
+         QQzGdxmMeO8b1hGgIeb3771T7MIg4fRqvH7QU8uxFY6HZVpJkwjQLSBWGOpNxoZgxYS3
+         neCvHyBM+872F7RhlqwFGWAmy3N99JjJv8V74ClS0YuN9utWN4r7zQvq+dpcz5OQXQkB
+         CT1992riDwbeX6172R/L9sHz+rQbpL+xi4PT4Urbs3FgNSrreiiERegK0eykIaAvCeKo
+         w0we5WiI02likoJjDwH/xWYWIEbGzfyGjuPBTzgW85opPo1OHPU7HMnU/68cecMA5VJz
+         F2tA==
+X-Gm-Message-State: AOAM532ZsKdrhyAqqOVmlFoxEnDVVdpHR/xjYmq/EilRvJL3y0OE6RRy
+        baxWJrhSobGgAfdLOTc68g==
+X-Google-Smtp-Source: ABdhPJyF7P/cb/xoLtuv2ZlxCyA5nwcRib9hzf1YGh40Ijsszv+OU2oInZFkXbEziqd5Nh5QiQQoBQ==
+X-Received: by 2002:a05:6808:1827:b0:32b:3398:1382 with SMTP id bh39-20020a056808182700b0032b33981382mr54487oib.106.1653531273385;
+        Wed, 25 May 2022 19:14:33 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id m14-20020a056820050e00b0040eb1d3f43dsm184818ooj.2.2022.05.25.19.14.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 May 2022 18:41:45 -0700 (PDT)
+        Wed, 25 May 2022 19:14:32 -0700 (PDT)
+Received: (nullmailer pid 2923845 invoked by uid 1000);
+        Thu, 26 May 2022 02:14:31 -0000
+Date:   Wed, 25 May 2022 21:14:31 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Mark Brown <broonie@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Conor Dooley <conor.dooley@microchip.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] spi: dt-bindings: Fix unevaluatedProperties warnings in examples
-Date:   Wed, 25 May 2022 20:41:41 -0500
-Message-Id: <20220526014141.2872567-1-robh@kernel.org>
-X-Mailer: git-send-email 2.34.1
+        Stephen Boyd <sboyd@codeaurora.org>,
+        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/9] dt-bindings: arm: qcom: fix Alcatel OneTouch Idol 3
+ compatibles
+Message-ID: <20220526021431.GA2923811-robh@kernel.org>
+References: <20220520123252.365762-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220520123252.365762-1-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -63,42 +69,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The 'unevaluatedProperties' schema checks is not fully working and doesn't
-catch some cases where there's a $ref to another schema. A fix is pending,
-but results in new warnings in examples.
+On Fri, 20 May 2022 14:32:44 +0200, Krzysztof Kozlowski wrote:
+> The MSM8916 Alcatel OneTouch Idol 3 does not use MTP fallbacks in
+> compatibles:
+> 
+>   msm8916-alcatel-idol347.dtb: /: compatible: 'oneOf' conditional failed, one must be fixed:
+>     ['alcatel,idol347', 'qcom,msm8916'] is too short
+> 
+> Reported-by: Rob Herring <robh@kernel.org>
+> Fixes: e9dd2f7204ed ("dt-bindings: arm: qcom: Document alcatel,idol347 board")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
 
-'spi-max-frequency' is supposed to be a per SPI peripheral device property,
-not a SPI controller property, so drop it.
-
-Signed-off-by: Rob Herring <robh@kernel.org>
----
- Documentation/devicetree/bindings/spi/microchip,mpfs-spi.yaml | 1 -
- Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml | 1 -
- 2 files changed, 2 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/spi/microchip,mpfs-spi.yaml b/Documentation/devicetree/bindings/spi/microchip,mpfs-spi.yaml
-index ece261b8e963..7326c0a28d16 100644
---- a/Documentation/devicetree/bindings/spi/microchip,mpfs-spi.yaml
-+++ b/Documentation/devicetree/bindings/spi/microchip,mpfs-spi.yaml
-@@ -47,6 +47,5 @@ examples:
-         clocks = <&clkcfg CLK_SPI0>;
-         interrupt-parent = <&plic>;
-         interrupts = <54>;
--        spi-max-frequency = <25000000>;
-     };
- ...
-diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
-index e2c7b934c50d..78ceb9d67754 100644
---- a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
-+++ b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
-@@ -110,7 +110,6 @@ examples:
-         pinctrl-names = "default";
-         pinctrl-0 = <&qup_spi1_default>;
-         interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
--        spi-max-frequency = <50000000>;
-         #address-cells = <1>;
-         #size-cells = <0>;
-     };
--- 
-2.34.1
-
+Acked-by: Rob Herring <robh@kernel.org>
