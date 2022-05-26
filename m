@@ -2,90 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED2CF5351C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 18:01:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6154535266
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 19:07:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235014AbiEZQB2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 12:01:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59602 "EHLO
+        id S1348155AbiEZRH5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 13:07:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343507AbiEZQB1 (ORCPT
+        with ESMTP id S1344434AbiEZRH4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 12:01:27 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7B3DBB7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 09:01:24 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id fd25so2355130edb.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 09:01:24 -0700 (PDT)
+        Thu, 26 May 2022 13:07:56 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1673F4F9F4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 10:07:55 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id t26so2600288edt.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 10:07:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=muVoFK53cly8UGkO/IVCCGOOWf4SlvW8Ah8wz/JuMYA=;
-        b=AxVXi03p5UNt0Fr/8FDLRPX5zQexwuRutI6hUxd4KJvSUBo+WTG0kvpmKKylKzPIqu
-         1lWSrumYqzhq0Cvn7on/Uq/4WfbWeYVdE7dtbnD8vjC/Wi9w3PVjCHwFmAPpsJsqZJqp
-         jcyV/+yVBLz9Ii3IVSUC8uEj79X4+PYhrVtbg=
+         :cc;
+        bh=KmROjGleSmP0Q8SmkvRLiLJ4PJ/PkOeCsvLq+FzuZvw=;
+        b=eiXItexUv6JKb5q/26VIC/dSviGcdCxMSyuZ9CBMVkMP9yD3uyHhROwvHJixyYYJQg
+         sPa6KkCqD69ksfO8xCJMbMxJpsN4jR8zWfD0QNcK/ZU/wdOo/cFdfC1E7qBJocdu0GBL
+         0U3ZAtZre/r6nzRECXRqobecfv/oG/XnXRwZo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=muVoFK53cly8UGkO/IVCCGOOWf4SlvW8Ah8wz/JuMYA=;
-        b=CMPXe3X03CmyqG7mx9STmrGaQ8/uZ+rPTQhp4JdznL3gs1yVVVxUyh/SX+p4rtorUD
-         k2ii/a58oPL8TeG6651SoKiXqbjxtyeaY95gcjmDgv2/YziRDgv0V1hhZinwsonL5vtw
-         IQo0ad9vHCT0XthuQ+kyxXMG+/T1Q5DFJztmrSmnpMpb0VNsXavAV0A+Q1rrIbJwqEfL
-         mQNPpvW7MfhVfN+GeQ3ecK7CG51X4UL4zzFK/Qiz5UssZRgkUisFnT5zdBI7yyfZKO3c
-         C9RPn5kvD7Y34y98sxfMnB792F7D4VNQh1ZffLJXfbR2aRrVg5n/KaL/De848B4sqbLs
-         Zhow==
-X-Gm-Message-State: AOAM531hfezMg507j9nkjNJyzKlUUchT1DrUxJJ7sXTewnawY0lkZ/w6
-        MVJga3w5flyi/acCfomf3MY1sn71QQDGjGrWlAY=
-X-Google-Smtp-Source: ABdhPJy8vW4NSSgEhFwdf+RoBJL/Tq0AjRi+xmiLZitYc48vKVtrzTStYS51PGOs7VFwfdKHdPs1qw==
-X-Received: by 2002:a50:d0d5:0:b0:42a:ab4d:5635 with SMTP id g21-20020a50d0d5000000b0042aab4d5635mr39703754edf.271.1653580883007;
-        Thu, 26 May 2022 09:01:23 -0700 (PDT)
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com. [209.85.221.43])
-        by smtp.gmail.com with ESMTPSA id v17-20020a50f091000000b0042b5f857e2asm994530edl.34.2022.05.26.09.01.16
+         :message-id:subject:to:cc;
+        bh=KmROjGleSmP0Q8SmkvRLiLJ4PJ/PkOeCsvLq+FzuZvw=;
+        b=qmwVARaiBVAyPvd0T2o3aRTphVi+z4+HvrbwaYPdzKKaTcFj/cOwdsCvotoK+WCaiG
+         xO94a2NBx/YNpvok5QFq2nsc5rLZkmveymVboKtP4Wnqv5CP0B7SUZJ+i/Bed1myq+yh
+         au5ieIQxxqKgkoFz0kfvC1vcIVCY18fcSnb6rb16cL4SR1R3nsMXKXysD6D+XEEI4dIa
+         fTO5IREW+zndo4SA4fDZz3LOANz9m/GsvnbY6iqbSGuzM6rHovJRrQwZA+wJdBOkro/B
+         6Ov0ZEBuke/yH5v4rcv+gWmR05ocVxyErESn/U086H8yCsbVytJ8E7yewUHWEJIRQ4h1
+         YNrw==
+X-Gm-Message-State: AOAM530C5auYvMfEkdd+/RDNw+FgiywosGjUtxGoI97ErzsH7yNDQqFE
+        F25A470bqeHWXCDUzWeFwMuL43I7WwBD/MTEsIk=
+X-Google-Smtp-Source: ABdhPJwKviLs9QzUIv07zf6EbYHZTCo7AB7917Ov7tq2fmacTETd0ZXIzl44U2PlMinGFEbY8h/CwA==
+X-Received: by 2002:aa7:d412:0:b0:42a:b8bf:89f7 with SMTP id z18-20020aa7d412000000b0042ab8bf89f7mr41428077edq.410.1653584873203;
+        Thu, 26 May 2022 10:07:53 -0700 (PDT)
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com. [209.85.221.42])
+        by smtp.gmail.com with ESMTPSA id jw9-20020a170906e94900b006fea3702e56sm683677ejb.79.2022.05.26.10.07.50
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 May 2022 09:01:18 -0700 (PDT)
-Received: by mail-wr1-f43.google.com with SMTP id k30so2697023wrd.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 09:01:16 -0700 (PDT)
+        Thu, 26 May 2022 10:07:51 -0700 (PDT)
+Received: by mail-wr1-f42.google.com with SMTP id e2so2935814wrc.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 10:07:50 -0700 (PDT)
 X-Received: by 2002:a5d:5085:0:b0:20d:5f6:63fa with SMTP id
- a5-20020a5d5085000000b0020d05f663famr31419542wrt.679.1653580875415; Thu, 26
- May 2022 09:01:15 -0700 (PDT)
+ a5-20020a5d5085000000b0020d05f663famr31656209wrt.679.1653584869966; Thu, 26
+ May 2022 10:07:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220513130533.v3.1.I31ec454f8d4ffce51a7708a8092f8a6f9c929092@changeid>
- <5857c510-9783-a483-8414-65d7350618d6@suse.de> <CAD=FV=X99EWmRk82ako7cL7BWPEsTG=L7VVBVDFX5qKc1MifSA@mail.gmail.com>
- <CAD=FV=U3Wywjev9tEhkL_zE1cV5NwEknH2YwHqyhd5TQtiJ=AQ@mail.gmail.com>
- <Yo4ufWm5WiXsnRX8@phenom.ffwll.local> <CAOw6vbLu7TzTppUYv1cynMvn+ykTuGiYBCNhN7FO2kYqZj4DUg@mail.gmail.com>
- <CAKMK7uHTkQjQ5=HOb0MtXD4JZRj3Szt5vm9gQZ6BixZ8LtUpxQ@mail.gmail.com>
-In-Reply-To: <CAKMK7uHTkQjQ5=HOb0MtXD4JZRj3Szt5vm9gQZ6BixZ8LtUpxQ@mail.gmail.com>
+References: <1652697510-30543-1-git-send-email-quic_vnivarth@quicinc.com>
+In-Reply-To: <1652697510-30543-1-git-send-email-quic_vnivarth@quicinc.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 26 May 2022 09:01:03 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WgRjW2yFKvRkcKoj-nGEAhku6_d3kgs9WhTC6bVrzxeQ@mail.gmail.com>
-Message-ID: <CAD=FV=WgRjW2yFKvRkcKoj-nGEAhku6_d3kgs9WhTC6bVrzxeQ@mail.gmail.com>
-Subject: Re: [PATCH v3] drm/probe-helper: Make 640x480 first if no EDID
-To:     Daniel Vetter <daniel@ffwll.ch>
-Cc:     Sean Paul <seanpaul@chromium.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        =?UTF-8?Q?St=C3=A9phane_Marchesin?= <marcheu@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
+Date:   Thu, 26 May 2022 10:07:37 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WZQLpYAsdU4yTCGZCGp5+t+rJiadbSeppBaX0b6ZuUxg@mail.gmail.com>
+Message-ID: <CAD=FV=WZQLpYAsdU4yTCGZCGp5+t+rJiadbSeppBaX0b6ZuUxg@mail.gmail.com>
+Subject: Re: [V2] tty: serial: qcom-geni-serial: Remove uart frequency table.
+ Instead, find suitable frequency with call to clk_round_rate.
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Sean Paul <seanpaul@google.com>
+        linux-serial@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+        quic_msavaliy@quicinc.com, Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -98,169 +83,191 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Thu, May 26, 2022 at 8:42 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+On Mon, May 16, 2022 at 3:38 AM Vijaya Krishna Nivarthi
+<quic_vnivarth@quicinc.com> wrote:
 >
-> On Thu, 26 May 2022 at 03:28, Sean Paul <seanpaul@chromium.org> wrote:
-> >
-> > On Wed, May 25, 2022 at 9:26 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > >
-> > > On Mon, May 23, 2022 at 05:59:02PM -0700, Doug Anderson wrote:
-> > > > Hi,
-> > > >
-> > > > On Fri, May 20, 2022 at 5:01 PM Doug Anderson <dianders@chromium.or=
-g> wrote:
-> > > > >
-> > > > > Hi,
-> > > > >
-> > > > > On Mon, May 16, 2022 at 3:28 AM Thomas Zimmermann <tzimmermann@su=
-se.de> wrote:
-> > > > > >
-> > > > > > Hi Douglas,
-> > > > > >
-> > > > > > I understand that you're trying to tell userspace that the mode=
-list has
-> > > > > > been made up, but it's not something that should be done via fr=
-agile
-> > > > > > heuristics IMHO.
-> > > > > >
-> > > > > > I looked at the Chromium source code that you linked, but I can=
-not say
-> > > > > > whether it's doing the correct thing. It all depends on what yo=
-ur
-> > > > > > program needs.
-> > > > > >
-> > > > > > In that function, you could also search for 'DRM_MODE_TYPE_USER=
-DEF'.
-> > > > > > It's the mode that the user specified on the kernel command lin=
-e. If
-> > > > > > Chromium's automatic mode selection fails, you'd give your user=
-s direct
-> > > > > > control over it.
-> > > > >
-> > > > > That doesn't really work for Chrome OS. Certainly a kernel hacker
-> > > > > could do this, but it's not something I could imagine us exposing=
- to
-> > > > > an average user of a Chromebook.
-> > > > >
-> > > > >
-> > > > > > When there's no flagged mode or if
-> > > > > > /sys/class/drm/card<...>/status contains "unconnected", you can=
- assume
-> > > > > > that the modelist is artificial and try the modes in an appropr=
-iate order.
-> > > > >
-> > > > > So "no flagged" means that nothing is marked as preferred, correc=
-t?
-> > > > >
-> > > > > ...so I guess what you're suggesting is that the order that the k=
-ernel
-> > > > > is presenting the modes to userspace is not ABI. If there are no
-> > > > > preferred modes then userspace shouldn't necessarily assume that =
-the
-> > > > > first mode returned is the best mode. Instead it should assume th=
-at if
-> > > > > there is no preferred mode then the mode list is made up and it s=
-hould
-> > > > > make its own decisions about the best mode to start with. If this=
- is
-> > > > > the ABI from the kernel then plausibly I could convince people to
-> > > > > change userspace to pick 640x480 first in this case.
-> > > > >
-> > > > > > If we really want the kernel to give additional guarantees, we =
-should
-> > > > > > have a broader discussion about this topic IMHO.
-> > > > >
-> > > > > Sure. I've added St=C3=A9phane Marchesin to this thread in case h=
-e wants to
-> > > > > chime in about anything.
-> > > > >
-> > > > > Overall, my take on the matter:
-> > > > >
-> > > > > * Mostly I got involved because, apparently, a DP compliance test=
- was
-> > > > > failing. The compliance test was upset that when it presented us =
-with
-> > > > > no EDID that we didn't default to 640x480. There was a push to ma=
-ke a
-> > > > > fix for this in the Qualcomm specific driver but that didn't sit =
-right
-> > > > > with me.
-> > > > >
-> > > > > * On all devices I'm currently working with (laptops), the DP is =
-a
-> > > > > secondary display. If a user was trying to plug in a display with=
- a
-> > > > > bad EDID and the max mode (1024x768) didn't work, they could just=
- use
-> > > > > the primary display to choose a different resolution. It seems
-> > > > > unlikely a user would truly be upset and would probably be happy =
-they
-> > > > > could get their broken display to work at all. Even if this is a
-> > > > > primary display, I believe there are documented key combos to cha=
-nge
-> > > > > the resolution of the primary display even if you can't see anyth=
-ing.
-> > > > >
-> > > > > * That all being said, defaulting to 640x480 when there's no EDID=
- made
-> > > > > sense to me, especially since it's actually defined in the DP spe=
-c. So
-> > > > > I'm trying to do the right thing and solve this corner case. That
-> > > > > being said, if it's truly controversial I can just drop it.
-> > > > >
-> > > > >
-> > > > > So I guess my plan will be to give St=C3=A9phane a little while i=
-n case he
-> > > > > wants to chime in. If not then I guess I'll try a Chrome patch...
-> > > > > ...and if that doesn't work, I'll just drop it.
-> > > >
-> > > > OK, this userspace code seems to work:
-> > > >
-> > > > https://crrev.com/c/3662501 - ozone/drm: Try 640x480 before picking
-> > > > the first mode if no EDID
-> > > >
-> > > > ...so we'll see how review of that goes. :-)
-> >
-> > Mirroring some of my comments on that review here :-)
-> >
-> > IMO, this should be addressed in the kernel, or not at all. The kernel
-> > ensures other aspects of DisplayPort implementation are compliant, so
-> > I don't think this would be any exception. Further, the kernel is the
-> > one creating the "safe" mode list, so it seems odd that userspace
-> > would override that. Finally, relying on every userspace to do the
-> > right thing is asking for trouble (we have 3 places which would need
-> > this logic in CrOS).
+> Replace the UART frequency table 'root_freq[]' with logic around
+> clk_round_rate() so that SoC details like the available clk frequencies
+> can change and this driver still works. This reduces tight coupling
+> between this UART driver and the SoC clk driver because we no longer
+> have to update the 'root_freq[]' array for new SoCs. Instead the driver
+> determines the available frequencies at runtime.
 >
-> Oh I missed the part that this is defined in the DP spec as _the_ fallbac=
-k mode.
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+> v2: loops through clk dividers to zero-in quickly
+> v1: intial patch looped through available clk frequencies
+> ---
+>  drivers/tty/serial/qcom_geni_serial.c | 56 ++++++++++++++++++++++-------------
+>  1 file changed, 36 insertions(+), 20 deletions(-)
 >
-> I think the probe helpers could check whether it's a DP connector and
-> then dtrt per DP spec? I think that should have a solid chance of
-> avoiding the regression mess, since the really shoddy stuff tends to
-> be VGA/HDMI.
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index f496102..4733a23 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -149,12 +149,6 @@ static unsigned int qcom_geni_serial_tx_empty(struct uart_port *port);
+>  static void qcom_geni_serial_stop_rx(struct uart_port *uport);
+>  static void qcom_geni_serial_handle_rx(struct uart_port *uport, bool drop);
+>
+> -static const unsigned long root_freq[] = {7372800, 14745600, 19200000, 29491200,
+> -                                       32000000, 48000000, 51200000, 64000000,
+> -                                       80000000, 96000000, 100000000,
+> -                                       102400000, 112000000, 120000000,
+> -                                       128000000};
+> -
+>  #define to_dev_port(ptr, member) \
+>                 container_of(ptr, struct qcom_geni_serial_port, member)
+>
+> @@ -946,25 +940,43 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+>         return 0;
+>  }
+>
+> -static unsigned long get_clk_cfg(unsigned long clk_freq)
+> -{
+> -       int i;
+> -
+> -       for (i = 0; i < ARRAY_SIZE(root_freq); i++) {
+> -               if (!(root_freq[i] % clk_freq))
+> -                       return root_freq[i];
+> -       }
+> -       return 0;
+> -}
+> -
+> -static unsigned long get_clk_div_rate(unsigned int baud,
+> +static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+>                         unsigned int sampling_rate, unsigned int *clk_div)
+>  {
+>         unsigned long ser_clk;
+>         unsigned long desired_clk;
+> +       unsigned long freq, prev;
+> +       unsigned long div, maxdiv;
+> +       int64_t mult;
 
-I'm fine with making this DP-specific if that's what people think is best.
+Why is "mult" signed? Shouldn't it be type "u64" or something?
+
+>
+>         desired_clk = baud * sampling_rate;
+> -       ser_clk = get_clk_cfg(desired_clk);
+> +       if (!desired_clk) {
+> +               pr_err("%s: Invalid frequency\n", __func__);
+
+nit: IMO printing the __func__ in every printout is not a good
+practice. It uglifies the kernel log buffer. If you personally truly
+want the function in every printout then modify pr_err() to print it.
 
 
-> Also if DP says only 640x480 should be the fallback if there's no
-> other mode list source, then I think we should trim it down to only
-> that. But also only for DP.
+> +               return 0;
+> +       }
+> +
+> +       maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
+> +       prev = 0;
+> +
+> +       for (div = 1; div <= maxdiv; div++) {
+> +               mult = div * desired_clk;
+> +               if (mult > ULONG_MAX)
+> +                       break;
 
-So the DP spec says that 640x480 is _the_ default fallback, but it
-also says that we're also allowed to have some implementation-specific
-fall-back modes as well, so I'd rather not fully trim the list and
-just make it clear (somehow) that 640x480 ought to be the default.
-Would you be OK going back to v2 of this patch [1] but adding a check
-that the connector type is DP and also making sure that the spec is
-referenced?
+I'm pretty sure your "if" test is always false because you didn't cast
+properly. I even tested it for you:
+
+{
+    unsigned long a, b;
+    unsigned long long c;
+
+    printf("long size: %d, long long size: %d\n",
+           (int)(sizeof(a)), (int)(sizeof(c)));
+
+    a = 0xffffffff;
+    b = 2;
+
+    c = a * b;
+    printf("c is %#llx\n", c);
+
+    c = a * (unsigned long long)b;
+    printf("c is %#llx\n", c);
+}
+
+That prints out:
+
+long size: 4, long long size: 8
+c is 0xfffffffe
+c is 0x1fffffffe
 
 
-> Also ofc that patch should reference the right DP spec sections :-)
+> +
+> +               freq = clk_round_rate(clk, (unsigned long)mult);
+> +               if (!(freq % desired_clk)) {
+> +                       ser_clk = freq;
+> +                       break;
+> +               }
+> +
+> +               if (!prev)
+> +                       ser_clk = freq;
 
-My original patch description for this patch (v3) did reference
-section 4.2.2.6 (EDID Corruption Detection) of the DP 1.4a Link CTS.
-...or did you want this in inline comments in the patch itself?
+Instead of the above, why not just init ser_clk to "desired_clk"?
+...or perhaps leave it initted to 0 so your error check after the loop
+isn't dead code?
 
 
-[1] https://lore.kernel.org/r/20220510135101.v2.1.I31ec454f8d4ffce51a7708a8=
-092f8a6f9c929092@changeid
+> +               else if (prev == freq)
+> +                       break;
+
+Are you sure about this exit condition? It seems wrong. I guess you're
+assuming that clk_round_rate() will round up like it (almost always)
+does for the Qualcomm clock driver. So I guess let's say we're trying
+to make 10000 baud and your oversampling is 16. So "desired_clk" is
+160000, right? Now let's imagine that the clock driver can make three
+rates:
+
+7372800, 14745600, 19200000
+
+Your loop will run. The first time through we'll "round" 160000 and
+get back 7372800. It's not a match. Prev will now be 7372800.
+
+The second time through, we'll round (160000 * 2) and get back
+7372800. It's not a match and prev will be equal to freq so we'll
+break.
+
+...but we _should_ have found 19200000
+
+So I think this break condition is wrong.
+
+
+> +
+> +               prev = freq;
+> +       }
+> +
+>         if (!ser_clk) {
+>                 pr_err("%s: Can't find matching DFS entry for baud %d\n",
+>                                                                 __func__, baud);
+
+In the above, you _always_ init "ser_clk" to something, so how can
+this error condition ever occur in your new code?
+
+
+> @@ -972,6 +984,9 @@ static unsigned long get_clk_div_rate(unsigned int baud,
+>         }
+>
+>         *clk_div = ser_clk / desired_clk;
+> +       if (!(*clk_div))
+> +               *clk_div = 1;
+
+I _think_ this can be removed if you just don't allow inexact matches.
+...if you do allow inexact matches, maybe you should put a warning in
+the logs in that case?
+
+
+> +
+>         return ser_clk;
+>  }
+>
+> @@ -1003,7 +1018,8 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+>         if (ver >= QUP_SE_VERSION_2_5)
+>                 sampling_rate /= 2;
+>
+> -       clk_rate = get_clk_div_rate(baud, sampling_rate, &clk_div);
+> +       clk_rate = get_clk_div_rate(port->se.clk, baud,
+> +               sampling_rate, &clk_div);
+
+IMO it would look better to just let the above line be 81 columns
+rather than the ugly wrapping.
