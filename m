@@ -2,104 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37D86534A46
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 08:00:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C77A5534A7A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 08:50:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229813AbiEZGAI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 02:00:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54602 "EHLO
+        id S241644AbiEZGuD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 02:50:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232507AbiEZF77 (ORCPT
+        with ESMTP id S1346297AbiEZGt7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 01:59:59 -0400
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 335FEA502E;
-        Wed, 25 May 2022 22:59:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1653544798; x=1685080798;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=IbId82WCVDv7cpQcFi8e6oIhim/+07YWCKAjF9dj3EM=;
-  b=lC4phcRyLXf81nzGmdMY+TISLfkVUm4takyZ9T1wvCxsn8nd00T36em1
-   1eIKLyseprHlcsmIRGuxAZLg7pb9PAaJNYsIz6+gmCK7o9L9/2rr41KpQ
-   kZHQ6Wz8pHvfbjs9gnwyzAuIeCNtNjNO1OSgITUz26Rl135iM7dBdZJ+b
-   RrXggng0lyO9HGOdCaa4eXqgDsEwqPifWrQKzfcq3/Lvd//o/AsjMDwh2
-   myNFixJNZpTe87V2QMiuDqgETuKYk+Vaztk7aNVlL93YgwxvNy7zjbz7n
-   IKliPL6SOrN+5hHDXK3vdlVUXzEXSsW5lcatftABqu+LqI8AM19Qxxk7c
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10358"; a="299381457"
-X-IronPort-AV: E=Sophos;i="5.91,252,1647327600"; 
-   d="scan'208";a="299381457"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2022 22:59:54 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,252,1647327600"; 
-   d="scan'208";a="560039745"
-Received: from lkp-server01.sh.intel.com (HELO db63a1be7222) ([10.239.97.150])
-  by orsmga002.jf.intel.com with ESMTP; 25 May 2022 22:59:52 -0700
-Received: from kbuild by db63a1be7222 with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nu6XH-0003e2-Le;
-        Thu, 26 May 2022 05:59:51 +0000
-Date:   Thu, 26 May 2022 13:59:06 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Sibi Sankar <quic_sibis@quicinc.com>, bjorn.andersson@linaro.org
-Cc:     kbuild-all@lists.01.org, agross@kernel.org,
-        mathieu.poirier@linaro.org, dmitry.baryshkov@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Subject: Re: [PATCH 6/7] remoteproc: qcom: Check elf class before minidump
-Message-ID: <202205261332.p94yBoKE-lkp@intel.com>
-References: <1653398017-28426-7-git-send-email-quic_sibis@quicinc.com>
+        Thu, 26 May 2022 02:49:59 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73B8834BA3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 23:49:58 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id y13so1287363eje.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 May 2022 23:49:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=XCAsRM09jtriElzMaRXuyR7jPV9coelWngvvW7T8czY=;
+        b=RF4TBlKa0wU1x9vOdBMDQyXMIY377I+Z1SajP3zYMcFdP1S2VH9yvLApP7Y/saeZUc
+         sris9Jl4q0e0rx/D2u7UPeQeP5OvlxCIV1Bwlu9k+lPkJE7J0mlaLOrbiVnGel1ubSJ8
+         ZJs6WAfJ0xsVmeq9zY9jPDIDdxI/4P9UcRWzF0WPiEKAKk0MXIy4SOpXRuvlY8MCNX/F
+         tp5lfjCGirbOhmsJSP5FxrCXnqZSReWK08l/bj4FmUdl8MNrlKi8Joz9XlWc7mwsWz0V
+         TSwf1aBB2fVxHsWSIMk1+LYieExHkCFx5XxnDV0LpsOj7j3GPVGGVEMPY2KtTlyd2EDb
+         7uhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=XCAsRM09jtriElzMaRXuyR7jPV9coelWngvvW7T8czY=;
+        b=AooI0N2rBTvCdzon9ezotbIPAhg6z5nNRzUkaOz4bMC3RsMq5j6MTf/D6j6Ah8rFjV
+         n4s2jeTfHR6BhSudMO/J2DaxMJzCKZVz699pzlWEY3iYunSBGBhPLwazAkb+wtMLxs0W
+         TFGM1zRZBjUeJ3ckw+Qc6b+hIvD5lslYxsIQMLVzXts6JNDnWNpe3NUPLqeIC1MkceO2
+         xvd9S+7+CUz6Oe++kejrOKjirFQCIBX5kNn7aAlr6ISB/lV5XKc4LKeX/6onIxlmGRO4
+         JEX0r+/+ZzSyj+0kn0v/9udBTLi8fRghfYrjk5F2XvCy3jfXBOIS78I6FIXTKSyBsJI3
+         THLA==
+X-Gm-Message-State: AOAM530ZmYoTDKy2UL+45alNoHaQOzT8xI6ZTOFCffdh90y6gZvMJhIi
+        h/IxHWaj8+yYTKgyQFuRpXzzLw==
+X-Google-Smtp-Source: ABdhPJxifC25NIFivkw6AmYBXme8eX26Os49kwiNPDiGsKfQ4HhZ4LKX6LyalI1DvkFoShknZ2u+LQ==
+X-Received: by 2002:a17:907:3da1:b0:6fe:aab4:e7db with SMTP id he33-20020a1709073da100b006feaab4e7dbmr26406892ejc.1.1653547797043;
+        Wed, 25 May 2022 23:49:57 -0700 (PDT)
+Received: from [192.168.0.177] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id t15-20020a50d70f000000b0042617ba63a0sm391552edi.42.2022.05.25.23.49.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 May 2022 23:49:56 -0700 (PDT)
+Message-ID: <7e34f80b-d9e9-28ac-5a09-ba2c8875f4b1@linaro.org>
+Date:   Thu, 26 May 2022 08:49:55 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1653398017-28426-7-git-send-email-quic_sibis@quicinc.com>
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH] spi: dt-bindings: Fix unevaluatedProperties warnings in
+ examples
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Conor Dooley <conor.dooley@microchip.com>
+Cc:     linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20220526014141.2872567-1-robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220526014141.2872567-1-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sibi,
+On 26/05/2022 03:41, Rob Herring wrote:
+> The 'unevaluatedProperties' schema checks is not fully working and doesn't
+> catch some cases where there's a $ref to another schema. A fix is pending,
+> but results in new warnings in examples.
+> 
+> 'spi-max-frequency' is supposed to be a per SPI peripheral device property,
+> not a SPI controller property, so drop it.
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-Thank you for the patch! Yet something to improve:
 
-[auto build test ERROR on remoteproc/rproc-next]
-[cannot apply to linux/master linus/master v5.18]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Sibi-Sankar/Miscellaneous-PAS-fixes/20220524-211743
-base:   git://git.kernel.org/pub/scm/linux/kernel/git/remoteproc/linux.git rproc-next
-config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20220526/202205261332.p94yBoKE-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/0db77918ce08718d9dbaadd1ceed8dcfb6488abf
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Sibi-Sankar/Miscellaneous-PAS-fixes/20220524-211743
-        git checkout 0db77918ce08718d9dbaadd1ceed8dcfb6488abf
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>, old ones prefixed by <<):
-
->> ERROR: modpost: "rproc_coredump" [drivers/remoteproc/qcom_common.ko] undefined!
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Best regards,
+Krzysztof
