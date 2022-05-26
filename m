@@ -2,71 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75D76535469
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 22:29:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF30C5354C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 22:43:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232295AbiEZU32 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 16:29:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36482 "EHLO
+        id S1349004AbiEZUnO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 16:43:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229538AbiEZU30 (ORCPT
+        with ESMTP id S1348977AbiEZUnI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 16:29:26 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E9381145F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 13:29:25 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id l1so1946631qvh.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 13:29:25 -0700 (PDT)
+        Thu, 26 May 2022 16:43:08 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D4F8643E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 13:42:52 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id j28so3137703eda.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 13:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=w7U8ZxQJcCt/aMdBrHfCcBBglr9/HQ3epyWgRB+XBNQ=;
-        b=C1pwrXuf/a3Rus/0i1yLLGIWkl+ZKCRp1bMczp3YWWS5G0T10MNpbweX0RL4iJoFv1
-         fkvxJ/fUR/6MVoP2R7jpkm/XVkTOjRCwbMNe15mzo4Pr7wCFrRYnz6ShhMq516/aFqjF
-         YRZPXkVU8XE3II8CtsKYgiJ7H1gE203ju79VVaA+RIh4D6V2am+2apFH4QBorL72H9KY
-         6VEdOH15xkaG5Jps0xyfm8i0+rvlVVeLIbtI+YjooI9LaoNXVDYN/1SizRKytW5tQbX/
-         yB0hG7NFnqxiAyDr1+stokkDWBnsn4JHP7Vnh3AIoU345gwtJtKZ3FpD0eD8ihpkDYY7
-         nkAA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xaaIvzCyiYTJ4x9y6lOIIsQ5y/glSrLJjPzlXiGkmLs=;
+        b=zlRh0lo+MBxchiA1GCSyJ8xTlymp1YzbOmSKV5VlBVoHMtv42eD9SH2d6iDos2z8S6
+         TqFBnKxrfLx506s/wdQ+/Vu8pGrqd3v0n3n3p2qJX/YK3b/XRv4YdWCitJtfrRVR3H9f
+         2DOMzGPHS8DBrWS48siKy6pr4msijoxDcxv791/vTPxufCTaMlf+/gSXl5qL5KkvZ0I/
+         4kjudPv8sPzJHsXzS4UV3EowLvVOqN9TZYcxlo5kEcajB36OOyPhIApNfMUSgBmYMeTv
+         c6NVbAwsRf/FWIln+/fGJymKM1gujerQwJzhSs9ZVxW1wjXzMGQZG/r7sCNF2v0kwFSN
+         3pag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=w7U8ZxQJcCt/aMdBrHfCcBBglr9/HQ3epyWgRB+XBNQ=;
-        b=Z7ZfFdUsHfK9UVGgHmY78O3nvBXWWtlXiiz404mjpnjN+m+JMsdr9isAt1NR9HdLgl
-         ln0c3d0PGs8AoWq4jh+4VelUE0KCq0jy0wb5+JgssfoJy2rBbA8zgtIagaxsnwA0D8r6
-         edVJubpnoN7zLobqlFG2F1LG8SvYYbltJjTykZ5Wue8k10oNA856YXW8lHngIeeVIJJT
-         BUIwdzjONRJ/7ErTqC/U1FzmRvCe4BhrVZkS2JJ/DK5h7GtqjBKaFcYijNN8/LZqFVt9
-         Nu8SvgfF0vxP9VqDFBbvRjE5K4KAcOyOVtomoe3VxASFojDE3I+dIy60Ur1ThpQu63YT
-         utCQ==
-X-Gm-Message-State: AOAM533lO6ceG5anNmSous8VwlCD+IyGtooRa0bbUPMYfucEq8GD+8PC
-        Xyktl+xjnS4UJ1SYuXD+BEiPm9Sam8X/ERJi8pAKYA==
-X-Google-Smtp-Source: ABdhPJzWE6+/aFfASD6rZIFfbyF9nJaVk/sa/ZUHMyOQjnKRJ3h7r8yBH5vrbLsawyP3ZThVvAXaqR5lwwPSQ7yJ3X4=
-X-Received: by 2002:a05:6214:931:b0:461:d289:b7f6 with SMTP id
- dk17-20020a056214093100b00461d289b7f6mr32636342qvb.55.1653596964734; Thu, 26
- May 2022 13:29:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220523181836.2019180-1-dmitry.baryshkov@linaro.org>
- <20220523181836.2019180-7-dmitry.baryshkov@linaro.org> <20220526184228.GF54904-robh@kernel.org>
-In-Reply-To: <20220526184228.GF54904-robh@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 26 May 2022 23:29:13 +0300
-Message-ID: <CAA8EJpqWb5=Zt0EL5WF3GuPLZL-u-G-1WPL8F6Qp2hKL1sj6Qg@mail.gmail.com>
-Subject: Re: [PATCH v12 6/8] PCI: dwc: Implement special ISR handler for split
- MSI IRQ setup
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xaaIvzCyiYTJ4x9y6lOIIsQ5y/glSrLJjPzlXiGkmLs=;
+        b=DTehOw2AhhwNxXuVHM7dF9x3hoVKbXJKVTYwiC5L6/pK7Wo/8sx6n3yuuggbTWQH4F
+         V4MsykBqY2sMjHhTlPaT7zXT8WTcsyl3ZKxbnvyOpw40h0QTZ84FgvDt3T/TqrHQ5Fy/
+         WIWSLAX2Id4MY9F7zVScNoLGtVn47esz5W57QY0VoEKsmUU8vHbUyppIkGB+mjqAQiA6
+         fNAsAxEOTqyfMRuI+GyRxHGn8rdcSqs89HwLExAbmZVRVkJQ/GfhV9MaSfG0OmIUei0i
+         5WgGViyWGoR6PR/q6l6apr9VbxG3OmWnkyjp5vuacg1gfE7D5j1OQc+8MHPC8qv4sZTB
+         mO2A==
+X-Gm-Message-State: AOAM530mKvONvG4kgR9iPtJCl3Rki3Kg8zW1KwuX1iyNkBKbwDx/Z4Di
+        bqiHUKNwW+3xCZGCxoN7GtddUQ==
+X-Google-Smtp-Source: ABdhPJzoEtsGnAD99+S/M+sNtZowI6n7v289d+qLmqwN0oP9b/E7n0C30wg9quGaBFHk4qoQ6gafzQ==
+X-Received: by 2002:a50:ec87:0:b0:42b:dfd9:c0a1 with SMTP id e7-20020a50ec87000000b0042bdfd9c0a1mr3647980edr.193.1653597771732;
+        Thu, 26 May 2022 13:42:51 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id de30-20020a1709069bde00b006f3ef214debsm810551ejc.81.2022.05.26.13.42.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 May 2022 13:42:51 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        arm@kernel.org, soc@kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: adjust whitespace around '='
+Date:   Thu, 26 May 2022 22:42:47 +0200
+Message-Id: <20220526204248.832139-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -77,102 +73,597 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 26 May 2022 at 21:42, Rob Herring <robh@kernel.org> wrote:
->
-> On Mon, May 23, 2022 at 09:18:34PM +0300, Dmitry Baryshkov wrote:
-> > If the PCIe DWC controller uses split MSI IRQs for reporting MSI
-> > vectors, it is possible to detect, which group triggered the interrupt.
-> > Provide an optimized version of MSI ISR handler that will handle just a
-> > single MSI group instead of handling all of them.
->
-> A lot more complexity to save 7 register reads...
+Fix whitespace coding style: use single space instead of tabs or
+multiple spaces around '=' sign in property assignment.  No functional
+changes (same DTB).
 
-Thus it is a separate patch. It can be dropped w/o any issues.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
->
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  .../pci/controller/dwc/pcie-designware-host.c | 86 ++++++++++++++-----
-> >  1 file changed, 65 insertions(+), 21 deletions(-)
-> >
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > index 98a57249ecaf..2b2de517301a 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > @@ -52,34 +52,42 @@ static struct msi_domain_info dw_pcie_msi_domain_info = {
-> >       .chip   = &dw_pcie_msi_irq_chip,
-> >  };
-> >
-> > +static inline irqreturn_t dw_handle_single_msi_group(struct pcie_port *pp, int i)
-> > +{
-> > +     int pos;
-> > +     unsigned long val;
-> > +     u32 status;
-> > +     struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> > +
-> > +     status = dw_pcie_readl_dbi(pci, PCIE_MSI_INTR0_STATUS +
-> > +                                (i * MSI_REG_CTRL_BLOCK_SIZE));
-> > +     if (!status)
-> > +             return IRQ_NONE;
-> > +
-> > +     val = status;
-> > +     pos = 0;
-> > +     while ((pos = find_next_bit(&val, MAX_MSI_IRQS_PER_CTRL,
-> > +                                 pos)) != MAX_MSI_IRQS_PER_CTRL) {
->
-> for_each_set_bit() doesn't work here?
+---
 
-Good question, I just moved the existing DWC code.
+Output compared with dtx_diff and fdtdump.
+---
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts      | 10 ++++-----
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dts   | 12 +++++-----
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi         |  4 ++--
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi         |  4 ++--
+ .../boot/dts/qcom/msm8996-xiaomi-gemini.dts   |  2 +-
+ .../boot/dts/qcom/msm8996-xiaomi-scorpio.dts  |  2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         | 22 +++++++++----------
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |  4 ++--
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts       |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |  4 ++--
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |  6 ++---
+ .../dts/qcom/sdm630-sony-xperia-nile.dtsi     |  2 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sdm660.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi    |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |  4 ++--
+ .../boot/dts/qcom/sdm845-shift-axolotl.dts    |  2 +-
+ .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 16 +++++++-------
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |  6 ++---
+ .../boot/dts/qcom/sdm850-samsung-w737.dts     |  4 ++--
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  2 +-
+ 24 files changed, 60 insertions(+), 60 deletions(-)
 
->
-> > +             generic_handle_domain_irq(pp->irq_domain,
-> > +                                       (i * MAX_MSI_IRQS_PER_CTRL) +
-> > +                                       pos);
-> > +             pos++;
-> > +     }
-> > +
-> > +     return IRQ_HANDLED;
-> > +}
-> > +
-> >  /* MSI int handler */
-> >  irqreturn_t dw_handle_msi_irq(struct pcie_port *pp)
-> >  {
-> > -     int i, pos;
-> > -     unsigned long val;
-> > -     u32 status, num_ctrls;
-> > +     int i;
-> > +     u32 num_ctrls;
-> >       irqreturn_t ret = IRQ_NONE;
-> > -     struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> >
-> >       num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
-> >
-> > -     for (i = 0; i < num_ctrls; i++) {
-> > -             status = dw_pcie_readl_dbi(pci, PCIE_MSI_INTR0_STATUS +
-> > -                                        (i * MSI_REG_CTRL_BLOCK_SIZE));
-> > -             if (!status)
-> > -                     continue;
-> > -
-> > -             ret = IRQ_HANDLED;
-> > -             val = status;
-> > -             pos = 0;
-> > -             while ((pos = find_next_bit(&val, MAX_MSI_IRQS_PER_CTRL,
-> > -                                         pos)) != MAX_MSI_IRQS_PER_CTRL) {
-> > -                     generic_handle_domain_irq(pp->irq_domain,
-> > -                                               (i * MAX_MSI_IRQS_PER_CTRL) +
-> > -                                               pos);
-> > -                     pos++;
-> > -             }
-> > -     }
-> > +     for (i = 0; i < num_ctrls; i++)
-> > +             ret |= dw_handle_single_msi_group(pp, i);
-> >
-> >       return ret;
-> >  }
-
-
-
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+index 7c1eab605c15..6337ed8c1e19 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+@@ -20,11 +20,11 @@ aliases {
+ 		serial0 = &blsp1_uart2;
+ 		serial1 = &blsp1_uart1;
+ 		usid0 = &pm8916_0;
+-		i2c0	= &blsp_i2c2;
+-		i2c1	= &blsp_i2c6;
+-		i2c3	= &blsp_i2c4;
+-		spi0	= &blsp_spi5;
+-		spi1	= &blsp_spi3;
++		i2c0 = &blsp_i2c2;
++		i2c1 = &blsp_i2c6;
++		i2c3 = &blsp_i2c4;
++		spi0 = &blsp_spi5;
++		spi1 = &blsp_spi3;
+ 	};
+ 
+ 	chosen {
+diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+index 49afbb1a066a..08c8f9438050 100644
+--- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
++++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+@@ -49,11 +49,11 @@ aliases {
+ 		serial0 = &blsp2_uart2;
+ 		serial1 = &blsp2_uart3;
+ 		serial2 = &blsp1_uart2;
+-		i2c0	= &blsp1_i2c3;
+-		i2c1	= &blsp2_i2c1;
+-		i2c2	= &blsp2_i2c1;
+-		spi0	= &blsp1_spi1;
+-		spi1	= &blsp2_spi6;
++		i2c0 = &blsp1_i2c3;
++		i2c1 = &blsp2_i2c1;
++		i2c2 = &blsp2_i2c1;
++		spi0 = &blsp1_spi1;
++		spi1 = &blsp2_spi6;
+ 	};
+ 
+ 	chosen {
+@@ -957,7 +957,7 @@ dai@2 {
+ &sound {
+ 	compatible = "qcom,apq8096-sndcard";
+ 	model = "DB820c";
+-	audio-routing =	"RX_BIAS", "MCLK",
++	audio-routing = "RX_BIAS", "MCLK",
+ 		"MM_DL1",  "MultiMedia1 Playback",
+ 		"MM_DL2",  "MultiMedia2 Playback",
+ 		"MultiMedia3 Capture", "MM_UL3";
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+index 82893dddfdf4..8f528b8a5fec 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -321,7 +321,7 @@ i2c_0: i2c@78b6000 {
+ 			clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>,
+ 				 <&gcc GCC_BLSP1_AHB_CLK>;
+ 			clock-names = "core", "iface";
+-			clock-frequency  = <400000>;
++			clock-frequency = <400000>;
+ 			dmas = <&blsp_dma 14>, <&blsp_dma 15>;
+ 			dma-names = "tx", "rx";
+ 			status = "disabled";
+@@ -336,7 +336,7 @@ i2c_1: i2c@78b7000 { /* BLSP1 QUP2 */
+ 			clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>,
+ 				 <&gcc GCC_BLSP1_AHB_CLK>;
+ 			clock-names = "core", "iface";
+-			clock-frequency  = <400000>;
++			clock-frequency = <400000>;
+ 			dmas = <&blsp_dma 16>, <&blsp_dma 17>;
+ 			dma-names = "tx", "rx";
+ 			status = "disabled";
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index 4c38b15c6fd4..23b6dcaca691 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -119,7 +119,7 @@ ssphy_1: phy@58000 {
+ 				<&xo>;
+ 			clock-names = "aux", "cfg_ahb", "ref";
+ 
+-			resets =  <&gcc GCC_USB1_PHY_BCR>,
++			resets = <&gcc GCC_USB1_PHY_BCR>,
+ 				<&gcc GCC_USB3PHY_1_PHY_BCR>;
+ 			reset-names = "phy","common";
+ 			status = "disabled";
+@@ -162,7 +162,7 @@ ssphy_0: phy@78000 {
+ 				<&xo>;
+ 			clock-names = "aux", "cfg_ahb", "ref";
+ 
+-			resets =  <&gcc GCC_USB0_PHY_BCR>,
++			resets = <&gcc GCC_USB0_PHY_BCR>,
+ 				<&gcc GCC_USB3PHY_0_PHY_BCR>;
+ 			reset-names = "phy","common";
+ 			status = "disabled";
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
+index 22978d06f85b..12fe5b33b7fc 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
++++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
+@@ -156,7 +156,7 @@ &slpi_pil {
+ &sound {
+ 	compatible = "qcom,apq8096-sndcard";
+ 	model = "gemini";
+-	audio-routing =	"RX_BIAS", "MCLK",
++	audio-routing = "RX_BIAS", "MCLK",
+ 		"MM_DL1",  "MultiMedia1 Playback",
+ 		"MM_DL2",  "MultiMedia2 Playback",
+ 		"MultiMedia3 Capture", "MM_UL3";
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts
+index 1e2dd6763ad1..30a9e4bed4af 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts
++++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts
+@@ -137,7 +137,7 @@ &slpi_pil {
+ &sound {
+ 	compatible = "qcom,apq8096-sndcard";
+ 	model = "scorpio";
+-	audio-routing =	"RX_BIAS", "MCLK";
++	audio-routing = "RX_BIAS", "MCLK";
+ 
+ 	mm1-dai-link {
+ 		link-name = "MultiMedia1";
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 9932186f7ceb..dba25ce32c8b 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1001,7 +1001,7 @@ gpu: gpu@b00000 {
+ 			#cooling-cells = <2>;
+ 
+ 			gpu_opp_table: opp-table {
+-				compatible  ="operating-points-v2";
++				compatible = "operating-points-v2";
+ 
+ 				/*
+ 				 * 624Mhz and 560Mhz are only available on speed
+@@ -1623,7 +1623,7 @@ pcie0: pcie@600000 {
+ 					<&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+ 					<&gcc GCC_PCIE_0_SLV_AXI_CLK>;
+ 
+-				clock-names =  "pipe",
++				clock-names = "pipe",
+ 						"aux",
+ 						"cfg",
+ 						"bus_master",
+@@ -1637,7 +1637,7 @@ pcie1: pcie@608000 {
+ 				bus-range = <0x00 0xff>;
+ 				num-lanes = <1>;
+ 
+-				status  = "disabled";
++				status = "disabled";
+ 
+ 				reg = <0x00608000 0x2000>,
+ 				      <0x0d000000 0xf1d>,
+@@ -1677,7 +1677,7 @@ pcie1: pcie@608000 {
+ 					<&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
+ 					<&gcc GCC_PCIE_1_SLV_AXI_CLK>;
+ 
+-				clock-names =  "pipe",
++				clock-names = "pipe",
+ 						"aux",
+ 						"cfg",
+ 						"bus_master",
+@@ -1727,7 +1727,7 @@ pcie2: pcie@610000 {
+ 					<&gcc GCC_PCIE_2_MSTR_AXI_CLK>,
+ 					<&gcc GCC_PCIE_2_SLV_AXI_CLK>;
+ 
+-				clock-names =  "pipe",
++				clock-names = "pipe",
+ 						"aux",
+ 						"cfg",
+ 						"bus_master",
+@@ -3084,7 +3084,7 @@ slimbam: dma-controller@9184000 {
+ 			compatible = "qcom,bam-v1.7.0";
+ 			qcom,controlled-remotely;
+ 			reg = <0x09184000 0x32000>;
+-			num-channels  = <31>;
++			num-channels = <31>;
+ 			interrupts = <0 164 IRQ_TYPE_LEVEL_HIGH>;
+ 			#dma-cells = <1>;
+ 			qcom,ee = <1>;
+@@ -3096,7 +3096,7 @@ slim_msm: slim@91c0000 {
+ 			reg = <0x091c0000 0x2C000>;
+ 			reg-names = "ctrl";
+ 			interrupts = <0 163 IRQ_TYPE_LEVEL_HIGH>;
+-			dmas =	<&slimbam 3>, <&slimbam 4>,
++			dmas = <&slimbam 3>, <&slimbam 4>,
+ 				<&slimbam 5>, <&slimbam 6>;
+ 			dma-names = "rx", "tx", "tx2", "rx2";
+ 			#address-cells = <1>;
+@@ -3108,7 +3108,7 @@ ngd@1 {
+ 
+ 				tasha_ifd: tas-ifd {
+ 					compatible = "slim217,1a0";
+-					reg  = <0 0>;
++					reg = <0 0>;
+ 				};
+ 
+ 				wcd9335: codec@1{
+@@ -3116,17 +3116,17 @@ wcd9335: codec@1{
+ 					pinctrl-names = "default";
+ 
+ 					compatible = "slim217,1a0";
+-					reg  = <1 0>;
++					reg = <1 0>;
+ 
+ 					interrupt-parent = <&tlmm>;
+ 					interrupts = <54 IRQ_TYPE_LEVEL_HIGH>,
+ 						     <53 IRQ_TYPE_LEVEL_HIGH>;
+-					interrupt-names  = "intr1", "intr2";
++					interrupt-names = "intr1", "intr2";
+ 					interrupt-controller;
+ 					#interrupt-cells = <1>;
+ 					reset-gpios = <&tlmm 64 0>;
+ 
+-					slim-ifc-dev  = <&tasha_ifd>;
++					slim-ifc-dev = <&tasha_ifd>;
+ 
+ 					#sound-dai-cells = <1>;
+ 				};
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index 758c45bbbe78..83ee820e7a9a 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -929,7 +929,7 @@ pcie0: pci@1c00000 {
+ 			interrupts = <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "msi";
+ 			interrupt-map-mask = <0 0 0 0x7>;
+-			interrupt-map =	<0 0 0 1 &intc 0 0 135 IRQ_TYPE_LEVEL_HIGH>,
++			interrupt-map = <0 0 0 1 &intc 0 0 135 IRQ_TYPE_LEVEL_HIGH>,
+ 					<0 0 0 2 &intc 0 0 136 IRQ_TYPE_LEVEL_HIGH>,
+ 					<0 0 0 3 &intc 0 0 138 IRQ_TYPE_LEVEL_HIGH>,
+ 					<0 0 0 4 &intc 0 0 139 IRQ_TYPE_LEVEL_HIGH>;
+@@ -1416,7 +1416,7 @@ adreno_gpu: gpu@5000000 {
+ 			status = "disabled";
+ 
+ 			gpu_opp_table: opp-table {
+-				compatible  = "operating-points-v2";
++				compatible = "operating-points-v2";
+ 				opp-710000097 {
+ 					opp-hz = /bits/ 64 <710000097>;
+ 					opp-level = <RPM_SMD_LEVEL_TURBO>;
+diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+index 0e63f707b911..90a1810f8a31 100644
+--- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
++++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+@@ -915,7 +915,7 @@ platform {
+ 		};
+ 
+ 		codec {
+-			sound-dai =  <&lt9611_codec 0>;
++			sound-dai = <&lt9611_codec 0>;
+ 		};
+ 	};
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+index acdb36f4479f..1806e2cae776 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+@@ -389,7 +389,7 @@ &sdhc_2 {
+ 	pinctrl-names = "default","sleep";
+ 	pinctrl-0 = <&sdc2_on>;
+ 	pinctrl-1 = <&sdc2_off>;
+-	vmmc-supply  = <&vreg_l9c_2p9>;
++	vmmc-supply = <&vreg_l9c_2p9>;
+ 	vqmmc-supply = <&vreg_l6c_2p9>;
+ 
+ 	cd-gpios = <&tlmm 69 GPIO_ACTIVE_LOW>;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 8619311ff2fc..3a222ac71cca 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -2048,7 +2048,7 @@ adreno_smmu: iommu@5040000 {
+ 		};
+ 
+ 		gmu: gmu@506a000 {
+-			compatible="qcom,adreno-gmu-618.0", "qcom,adreno-gmu";
++			compatible = "qcom,adreno-gmu-618.0", "qcom,adreno-gmu";
+ 			reg = <0 0x0506a000 0 0x31000>, <0 0x0b290000 0 0x10000>,
+ 				<0 0x0b490000 0 0x10000>;
+ 			reg-names = "gmu", "gmu_pdc", "gmu_pdc_seq";
+@@ -3584,7 +3584,7 @@ lpass_cpu: lpass@62d87000 {
+ 			compatible = "qcom,sc7180-lpass-cpu";
+ 
+ 			reg = <0 0x62d87000 0 0x68000>, <0 0x62f00000 0 0x29000>;
+-			reg-names =  "lpass-hdmiif", "lpass-lpaif";
++			reg-names = "lpass-hdmiif", "lpass-lpaif";
+ 
+ 			iommus = <&apps_smmu 0x1020 0>,
+ 				<&apps_smmu 0x1021 0>,
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 6bc8d206a258..b387fab78bd8 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -2201,7 +2201,7 @@ lpass_aon: clock-controller@3380000 {
+ 		lpasscore: clock-controller@3900000 {
+ 			compatible = "qcom,sc7280-lpasscorecc";
+ 			reg = <0 0x03900000 0 0x50000>;
+-			clocks =  <&rpmhcc RPMH_CXO_CLK>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>;
+ 			clock-names = "bi_tcxo";
+ 			power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>;
+ 			#clock-cells = <1>;
+@@ -2305,7 +2305,7 @@ opp-900000000 {
+ 		};
+ 
+ 		gmu: gmu@3d6a000 {
+-			compatible="qcom,adreno-gmu-635.0", "qcom,adreno-gmu";
++			compatible = "qcom,adreno-gmu-635.0", "qcom,adreno-gmu";
+ 			reg = <0 0x03d6a000 0 0x34000>,
+ 				<0 0x3de0000 0 0x10000>,
+ 				<0 0x0b290000 0 0x10000>;
+@@ -3733,7 +3733,7 @@ mdss_dp: displayport-controller@ae90000 {
+ 					 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
+ 					 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
+ 					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
+-				clock-names =	"core_iface",
++				clock-names = "core_iface",
+ 						"core_aux",
+ 						"ctrl_link",
+ 						"ctrl_link_iface",
+diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+index 42af1fade461..03c18c74da30 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+@@ -34,7 +34,7 @@ framebuffer0: framebuffer@9d400000 {
+ 			height = <1920>;
+ 			stride = <(1080 * 4)>;
+ 			format = "a8r8g8b8";
+-			status= "okay";
++			status = "okay";
+ 		};
+ 	};
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index 1ec033834c1c..b4367339d8b9 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -1051,7 +1051,7 @@ adreno_gpu: gpu@5000000 {
+ 			operating-points-v2 = <&gpu_sdm630_opp_table>;
+ 
+ 			gpu_sdm630_opp_table: opp-table {
+-				compatible  = "operating-points-v2";
++				compatible = "operating-points-v2";
+ 				opp-775000000 {
+ 					opp-hz = /bits/ 64 <775000000>;
+ 					opp-level = <RPM_SMD_LEVEL_TURBO>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+index 1d748c5305f4..0ae36f8e9485 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+@@ -14,7 +14,7 @@ &adreno_gpu {
+ 	operating-points-v2 = <&gpu_sdm660_opp_table>;
+ 
+ 	gpu_sdm660_opp_table: opp-table {
+-		compatible  = "operating-points-v2";
++		compatible = "operating-points-v2";
+ 
+ 		/*
+ 		 * 775MHz is only available on the highest speed bin
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+index e7e4cc5936aa..fd79ec7d95de 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+@@ -130,7 +130,7 @@ pen-insert {
+ 	};
+ 
+ 	panel: panel {
+-		compatible ="innolux,p120zdg-bf1";
++		compatible = "innolux,p120zdg-bf1";
+ 		power-supply = <&pp3300_dx_edp>;
+ 		backlight = <&backlight>;
+ 		no-hpd;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index 194ebeb3259c..438877ee4937 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -718,7 +718,7 @@ platform {
+ 		};
+ 
+ 		codec {
+-			sound-dai =  <&lt9611_codec 0>;
++			sound-dai = <&lt9611_codec 0>;
+ 		};
+ 	};
+ 
+@@ -733,7 +733,7 @@ platform {
+ 		};
+ 
+ 		codec {
+-			sound-dai =  <&left_spkr>, <&right_spkr>, <&swm 0>, <&wcd9340 0>;
++			sound-dai = <&left_spkr>, <&right_spkr>, <&swm 0>, <&wcd9340 0>;
+ 		};
+ 	};
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+index 103cc40816fd..66d8f9900486 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+@@ -468,7 +468,7 @@ zap-shader {
+ };
+ 
+ &i2c5 {
+-	status="okay";
++	status = "okay";
+ 
+ 	touchscreen@38 {
+ 		compatible = "focaltech,fts8719";
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+index d88dc07205f7..521020f888e4 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+@@ -419,7 +419,7 @@ platform {
+ 		};
+ 
+ 		codec {
+-			sound-dai =  <&wcd9340 0>;
++			sound-dai = <&wcd9340 0>;
+ 		};
+ 	};
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 64318ef765cf..2e9d93d6b28a 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -3640,7 +3640,7 @@ slim: slim@171c0000 {
+ 			qcom,apps-ch-pipes = <0x780000>;
+ 			qcom,ea-pc = <0x270>;
+ 			status = "okay";
+-			dmas =	<&slimbam 3>, <&slimbam 4>,
++			dmas = <&slimbam 3>, <&slimbam 4>,
+ 				<&slimbam 5>, <&slimbam 6>;
+ 			dma-names = "rx", "tx", "tx2", "rx2";
+ 
+@@ -3655,13 +3655,13 @@ ngd@1 {
+ 
+ 				wcd9340_ifd: ifd@0{
+ 					compatible = "slim217,250";
+-					reg  = <0 0>;
++					reg = <0 0>;
+ 				};
+ 
+ 				wcd9340: codec@1{
+ 					compatible = "slim217,250";
+-					reg  = <1 0>;
+-					slim-ifc-dev  = <&wcd9340_ifd>;
++					reg = <1 0>;
++					slim-ifc-dev = <&wcd9340_ifd>;
+ 
+ 					#sound-dai-cells = <1>;
+ 
+@@ -3692,8 +3692,8 @@ swm: swm@c85 {
+ 						reg = <0xc85 0x40>;
+ 						interrupts-extended = <&wcd9340 20>;
+ 
+-						qcom,dout-ports	= <6>;
+-						qcom,din-ports	= <2>;
++						qcom,dout-ports = <6>;
++						qcom,din-ports = <2>;
+ 						qcom,ports-sinterval-low =/bits/ 8  <0x07 0x1F 0x3F 0x7 0x1F 0x3F 0x0F 0x0F>;
+ 						qcom,ports-offset1 = /bits/ 8 <0x01 0x02 0x0C 0x6 0x12 0x0D 0x07 0x0A >;
+ 						qcom,ports-offset2 = /bits/ 8 <0x00 0x00 0x1F 0x00 0x00 0x1F 0x00 0x00>;
+@@ -4574,7 +4574,7 @@ adreno_smmu: iommu@5040000 {
+ 		};
+ 
+ 		gmu: gmu@506a000 {
+-			compatible="qcom,adreno-gmu-630.2", "qcom,adreno-gmu";
++			compatible = "qcom,adreno-gmu-630.2", "qcom,adreno-gmu";
+ 
+ 			reg = <0 0x506a000 0 0x30000>,
+ 			      <0 0xb280000 0 0x10000>,
+@@ -4939,7 +4939,7 @@ slimbam: dma-controller@17184000 {
+ 			compatible = "qcom,bam-v1.7.0";
+ 			qcom,controlled-remotely;
+ 			reg = <0 0x17184000 0 0x2a000>;
+-			num-channels  = <31>;
++			num-channels = <31>;
+ 			interrupts = <GIC_SPI 164 IRQ_TYPE_LEVEL_HIGH>;
+ 			#dma-cells = <1>;
+ 			qcom,ee = <1>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index f1619b3f97ef..9efc3bb874bf 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -581,7 +581,7 @@ platform {
+ 		};
+ 
+ 		codec {
+-			sound-dai =  <&left_spkr>, <&right_spkr>, <&swm 0>, <&wcd9340 0>;
++			sound-dai = <&left_spkr>, <&right_spkr>, <&swm 0>, <&wcd9340 0>;
+ 		};
+ 	};
+ 
+@@ -611,7 +611,7 @@ platform {
+ 		};
+ 
+ 		codec {
+-			sound-dai =  <&wcd9340 2>;
++			sound-dai = <&wcd9340 2>;
+ 		};
+ 	};
+ };
+@@ -817,5 +817,5 @@ &wifi {
+ 
+ &crypto {
+ 	/* FIXME: qce_start triggers an SError */
+-	status= "disable";
++	status = "disable";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+index 2a552d817b03..b0315eeb1320 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+@@ -509,7 +509,7 @@ platform {
+ 		};
+ 
+ 		codec {
+-			sound-dai =  <&left_spkr>, <&right_spkr>, <&swm 0>, <&wcd9340 0>;
++			sound-dai = <&left_spkr>, <&right_spkr>, <&swm 0>, <&wcd9340 0>;
+ 		};
+ 	};
+ 
+@@ -539,7 +539,7 @@ platform {
+ 		};
+ 
+ 		codec {
+-			sound-dai =  <&wcd9340 2>;
++			sound-dai = <&wcd9340 2>;
+ 		};
+ 	};
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 0da88d843cbb..c0c96c557bb0 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -2187,7 +2187,7 @@ opp-257000000 {
+ 		};
+ 
+ 		gmu: gmu@2c6a000 {
+-			compatible="qcom,adreno-gmu-640.1", "qcom,adreno-gmu";
++			compatible = "qcom,adreno-gmu-640.1", "qcom,adreno-gmu";
+ 
+ 			reg = <0 0x02c6a000 0 0x30000>,
+ 			      <0 0x0b290000 0 0x10000>,
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index b0e7a7d47f4a..e13e0e8a786b 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2569,7 +2569,7 @@ opp-305000000 {
+ 		};
+ 
+ 		gmu: gmu@3d6a000 {
+-			compatible="qcom,adreno-gmu-650.2", "qcom,adreno-gmu";
++			compatible = "qcom,adreno-gmu-650.2", "qcom,adreno-gmu";
+ 
+ 			reg = <0 0x03d6a000 0 0x30000>,
+ 			      <0 0x3de0000 0 0x10000>,
 -- 
-With best wishes
-Dmitry
+2.34.1
+
