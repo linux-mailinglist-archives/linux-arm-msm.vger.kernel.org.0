@@ -2,103 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01A18534EEC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 14:14:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BCD7534EF3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 14:16:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241395AbiEZMOv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 08:14:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47962 "EHLO
+        id S231835AbiEZMQQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 08:16:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230487AbiEZMOu (ORCPT
+        with ESMTP id S1345117AbiEZMQO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 08:14:50 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25A23B0A5E;
-        Thu, 26 May 2022 05:14:50 -0700 (PDT)
+        Thu, 26 May 2022 08:16:14 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8301D22519
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 05:16:12 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id w2-20020a17090ac98200b001e0519fe5a8so1560006pjt.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 05:16:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1653567290; x=1685103290;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=muvrNAbA9KUhGpmb4Y3QN40P7gy4+uJmLvPE+pNb5js=;
-  b=gm26l0gp/eFjQXG1qf0vvX7OWwqbpNsm6G0gBQtizP3mqXWAnZ3HVWG6
-   5LSuEAMDZFozl3mdunEDDCQRCr6NBKA2OFlgt2qiOYWzzqbY2MQmL2U/o
-   ScbgjU3xlXdqfPwcvHcdtcwcfWDKnXZ+Rc+XTrtj1VTrRjEUzMAXJJYi6
-   Q=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 26 May 2022 05:14:50 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 26 May 2022 05:14:48 -0700
-X-QCInternal: smtphost
-Received: from hu-sartgarg-hyd.qualcomm.com (HELO hu-maiyas-hyd.qualcomm.com) ([10.213.105.147])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 26 May 2022 17:44:44 +0530
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2339771)
-        id 242BA5001B7; Thu, 26 May 2022 17:44:43 +0530 (+0530)
-From:   Sarthak Garg <quic_sartgarg@quicinc.com>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_kamasali@quicinc.com,
-        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
-        quic_sayalil@quicinc.com, Sarthak Garg <quic_sartgarg@quicinc.com>,
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pSsFxHfEMcrHOSBoFMEeUFcZhoPO+KxNjOCmccE7VEc=;
+        b=j1LakW1276mdhdZUQsSFgcp6av448PqaRz7jViMY+GiGwh5iEij2Cm5mimSgVPEdiL
+         Ozj3HVl3aUCQNnL22XjmDerl2WGv3ej+oU5YMVtYH9VIgXAWsX2inzVAfnyQqa2b5xnX
+         W2Y4WrZkxJ+HRox9oe5wjmagh65jqeEWGjW8fstEyuAjiqnZGpAs/+pspSCQIhlehDyP
+         xDU30Ahlo1lxgsqq/URVcKV4vlRa+Ug1dhRi/5993PYb81ygDBtRkwhfgFcpx+IwipjA
+         ioZ7k1tvfTIqVetbCWXoO8xV/OhK2fIufIzWIIGxVrM90tgy7w3bSaH4Mpz4weYTocdg
+         ER1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pSsFxHfEMcrHOSBoFMEeUFcZhoPO+KxNjOCmccE7VEc=;
+        b=Y3siVJUwjcuJNM3jSv3uRq0EvZiy5C0evbNfWAn3gclcvffLvBehF655kU8gWZVvDm
+         iVG2FzCyv7dUtFajlshWcAbkB+uFgMDJqmNWT86qBKrasjwdpNorz5EPXfRkN9EwfSCx
+         ksjKp0n1htdKOTX2D8BLjXAi0Ztj8Xg6/Ik0VOQIrKQDwF6CvMLQPvz1usW8HllPB+L/
+         EobJ/xxzzymTQkO+fSM3uX4MxTkoVf0HsUNksomt0qJuyF9aXkq9AU3YaSs8VNmDOu6E
+         sL9JDbgAEPBJpFVPFIxYdvj9M7Ll8aemXgRBq7iN1fuaw9CLWqogMwx1nzrTRXtzbrsU
+         9XLg==
+X-Gm-Message-State: AOAM533sF6VgGg94K+ffVMBP0732QXd9kJ3b1TXjMGwyg2Els7+9R1i3
+        C5ufi2LnPE2Wb/8pr294AajamN4kBbtsnM/A6pqMog==
+X-Google-Smtp-Source: ABdhPJyPE1Wcb5k1NYZNag1s+hH2MlPohRmJCsdM2BsWrYm5w9w9F6ArFLEhJ5Lmyc8aI7BQaEykL1CgVfGR0Wh+Ecc=
+X-Received: by 2002:a17:902:8f81:b0:161:f4a7:f2fc with SMTP id
+ z1-20020a1709028f8100b00161f4a7f2fcmr30701452plo.117.1653567371993; Thu, 26
+ May 2022 05:16:11 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220522162802.208275-1-luca@z3ntu.xyz> <20220522162802.208275-12-luca@z3ntu.xyz>
+In-Reply-To: <20220522162802.208275-12-luca@z3ntu.xyz>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Thu, 26 May 2022 14:16:01 +0200
+Message-ID: <CAG3jFys4o6vsqhDJXMkL2fFdjDGstdzaB59j=Md6KDinMDNVRg@mail.gmail.com>
+Subject: Re: [RFC PATCH 11/14] ARM: dts: qcom: msm8974: add CCI bus
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH V2 2/2] mmc: sdhci-msm: Add wakeup functionality to sdio cards
-Date:   Thu, 26 May 2022 17:42:15 +0530
-Message-Id: <20220526121215.25947-3-quic_sartgarg@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220526121215.25947-1-quic_sartgarg@quicinc.com>
-References: <20220526121215.25947-1-quic_sartgarg@quicinc.com>
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        matti.lehtimaki@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch initializes wakeup source if the detected card
-is a sdio card and enables the wakeup capability.
+This patch does not apply on upstream-media/master or
+upstream-next/master. Is there another branch this series should be
+applied to?
 
-Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
----
- drivers/mmc/host/sdhci-msm.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index e395411fb6fd..3bfc506e5c45 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2376,6 +2376,18 @@ static int sdhci_msm_start_signal_voltage_switch(struct mmc_host *mmc,
- 	return -EAGAIN;
- }
- 
-+static void sdhci_msm_card_init_wakeup(struct mmc_card *card)
-+{
-+	int ret;
-+
-+	if (mmc_card_sdio(card)) {
-+		ret = device_init_wakeup(&card->dev, true);
-+		if (ret)
-+			pr_err("%s: %s: failed to init wakeup: %d\n",
-+				mmc_hostname(card->host), __func__, ret);
-+	}
-+}
-+
- #define DRIVER_NAME "sdhci_msm"
- #define SDHCI_MSM_DUMP(f, x...) \
- 	pr_err("%s: " DRIVER_NAME ": " f, mmc_hostname(host->mmc), ## x)
-@@ -2794,6 +2806,8 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 	host->mmc_host_ops.start_signal_voltage_switch =
- 		sdhci_msm_start_signal_voltage_switch;
- 	host->mmc_host_ops.execute_tuning = sdhci_msm_execute_tuning;
-+	host->mmc_host_ops.card_init_wakeup = sdhci_msm_card_init_wakeup;
-+
- 	if (of_property_read_bool(node, "supports-cqe"))
- 		ret = sdhci_msm_cqe_add_host(host, pdev);
- 	else
--- 
-2.17.1
-
+On Sun, 22 May 2022 at 18:28, Luca Weiss <luca@z3ntu.xyz> wrote:
+>
+> Add a node for the camera-specific i2c bus found on msm8974.
+>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  arch/arm/boot/dts/qcom-msm8974.dtsi | 62 +++++++++++++++++++++++++++++
+>  1 file changed, 62 insertions(+)
+>
+> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> index ffa6f874917a..a80b4ae71745 100644
+> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
+> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> @@ -1434,6 +1434,34 @@ blsp2_i2c5_sleep: blsp2-i2c5-sleep {
+>
+>                         /* BLSP2_I2C6 info is missing - nobody uses it though? */
+>
+> +                       cci0_default: cci0-default {
+> +                               pins = "gpio19", "gpio20";
+> +                               function = "cci_i2c0";
+> +                               drive-strength = <2>;
+> +                               bias-disable;
+> +                       };
+> +
+> +                       cci0_sleep: cci0-sleep {
+> +                               pins = "gpio19", "gpio20";
+> +                               function = "gpio";
+> +                               drive-strength = <2>;
+> +                               bias-disable;
+> +                       };
+> +
+> +                       cci1_default: cci1-default {
+> +                               pins = "gpio21", "gpio22";
+> +                               function = "cci_i2c1";
+> +                               drive-strength = <2>;
+> +                               bias-disable;
+> +                       };
+> +
+> +                       cci1_sleep: cci1-sleep {
+> +                               pins = "gpio21", "gpio22";
+> +                               function = "gpio";
+> +                               drive-strength = <2>;
+> +                               bias-disable;
+> +                       };
+> +
+>                         spi8_default: spi8_default {
+>                                 mosi {
+>                                         pins = "gpio45";
+> @@ -1587,6 +1615,40 @@ dsi0_phy: dsi-phy@fd922a00 {
+>                         };
+>                 };
+>
+> +               cci: cci@fda0c000 {
+> +                       compatible = "qcom,msm8974-cci";
+> +                       #address-cells = <1>;
+> +                       #size-cells = <0>;
+> +                       reg = <0xfda0c000 0x1000>;
+> +                       interrupts = <GIC_SPI 50 IRQ_TYPE_EDGE_RISING>;
+> +                       clocks = <&mmcc CAMSS_TOP_AHB_CLK>,
+> +                                <&mmcc CAMSS_CCI_CCI_AHB_CLK>,
+> +                                <&mmcc CAMSS_CCI_CCI_CLK>;
+> +                       clock-names = "camss_top_ahb",
+> +                                     "cci_ahb",
+> +                                     "cci";
+> +
+> +                       pinctrl-names = "default", "sleep";
+> +                       pinctrl-0 = <&cci0_default &cci1_default>;
+> +                       pinctrl-1 = <&cci0_sleep &cci1_sleep>;
+> +
+> +                       status = "disabled";
+> +
+> +                       cci_i2c0: i2c-bus@0 {
+> +                               reg = <0>;
+> +                               clock-frequency = <400000>;
+> +                               #address-cells = <1>;
+> +                               #size-cells = <0>;
+> +                       };
+> +
+> +                       cci_i2c1: i2c-bus@1 {
+> +                               reg = <1>;
+> +                               clock-frequency = <400000>;
+> +                               #address-cells = <1>;
+> +                               #size-cells = <0>;
+> +                       };
+> +               };
+> +
+>                 gpu: adreno@fdb00000 {
+>                         compatible = "qcom,adreno-330.1", "qcom,adreno";
+>                         reg = <0xfdb00000 0x10000>;
+> --
+> 2.36.0
+>
