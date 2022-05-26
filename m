@@ -2,104 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 740D9535077
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 16:18:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BFB5535153
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 17:23:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344091AbiEZOSF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 10:18:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53506 "EHLO
+        id S238891AbiEZPXV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 11:23:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347621AbiEZOSC (ORCPT
+        with ESMTP id S237416AbiEZPXV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 10:18:02 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE474C5DA7;
-        Thu, 26 May 2022 07:18:01 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id r71so1501025pgr.0;
-        Thu, 26 May 2022 07:18:01 -0700 (PDT)
+        Thu, 26 May 2022 11:23:21 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC507B82C0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 08:23:19 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id b4so1850703iog.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 08:23:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=evzXCRElQX1dPpYOohRZm82+/mRQCembTUZz/W7nKE4=;
-        b=iW5Zb9cUbecEDmbuXsk3dtQB4EwsTes5v02W2nQGnMRr6eyZwUsyk6tPL+59fwNi1Z
-         yTFsJZ5L1yq7t/f/T5HHmKGTJB+ASW2IbG84b7uk82IwKe9QLXJHolSk3n68Zz4kBZts
-         Zx11dZzs2NYHPpgKkli++EMqYuf28rgCVUEHQWHJL5NJFKxA7+Hlmn9vweWHxevlhiCp
-         m0Mr8V73QKw95n030TB9qKsz3/3bQ2aG0IHidaxCyXg/gXOIKla0IzvumCXAJnsh9/EM
-         4tQLuN1XywXWMJaaL+rwiV4RggkqON4hn8bnfBZfO7RqAdkv+05WPl8RjhbVqlE3FNbO
-         EpxQ==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UlmIoIXHwMXi02CIUIbYx/gDCtgYsd+85qsswfbTi60=;
+        b=lcukDgRzh6gqWw1h4Mle/1Y2mwmaULeGkm0dSvmCLjxX12jRc6cTNrpe3/kQIxT6VR
+         BLFPWnpia3CncNic9LXJLWTKkCBk/Yl5RfugOYnyqcbxW8FC0MPaZUFSo6EOkEb66LyY
+         YyesJnY7SKTCOURIvcjvF2gghQy6pcRElIObu1Q2HpWpBNrHJhkr98uD54pYKMZyj+hU
+         AMxISzEFRMnoio7S9FzHH8F/a6ZkAJKul0WzTN+WSMGfYUVVnvWqSptpab+au9Qrs1Y2
+         9gQpq/vDsHRVDggbiBVgy9IzzOQ+w4ibpW4q9prTuCl0uH78qkayL5VaOxo1saThzq4P
+         N8+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=evzXCRElQX1dPpYOohRZm82+/mRQCembTUZz/W7nKE4=;
-        b=dnVByYczqT0LxJu1XeAc3WY9THYg57VhzBVaJf6p7K8fXYjt1ql0ycnenQ47C0xGvk
-         WPuA5naxSTeqUAQw2biRJJiTLjIemsQ+gyEpZsScMwSqOsMZ6HhyqKemmKikOwf+Pi7Q
-         k4LeG7XK7WupLujJ3bRPrs/bfF/fS0sDK4OnfZ7N4/0zxPM5ZeyEbOTP5UHKm1JhlWuq
-         wI2BsoB+e0Fl/hLcdNYkjc6XYriFuqBwbcxDkY6NE8eQelQsuWbysRkxKEQN4ZucmB4Q
-         Z27CblmZD/Z0DlhZ4dyigSxU4lT03csgxcHNw3zWql2XvEwp1n+TH1WMYP5FeZDzcV//
-         pS3Q==
-X-Gm-Message-State: AOAM530m2Bpuhuv2/wUqiGF5/gNzpfnbZptOweTi0jU4FbZkQQFaoa+I
-        jBSZgQ//rkbo3fpSMSpAb7+cmY3/aUOig7g4
-X-Google-Smtp-Source: ABdhPJxBiMhXstsS758IEH4GIK/QjbIPtooIepKzJSkYZqM53K/60JCKuzPaeeMM5odpjZqoqT6L1w==
-X-Received: by 2002:a63:d849:0:b0:3f5:eb01:ae2 with SMTP id k9-20020a63d849000000b003f5eb010ae2mr32608216pgj.230.1653574680711;
-        Thu, 26 May 2022 07:18:00 -0700 (PDT)
-Received: from skynet-linux.local ([122.173.191.164])
-        by smtp.googlemail.com with ESMTPSA id ei3-20020a17090ae54300b001dedb8bbe66sm1546622pjb.33.2022.05.26.07.17.57
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UlmIoIXHwMXi02CIUIbYx/gDCtgYsd+85qsswfbTi60=;
+        b=1dtY6LIng0vTbYmDTajJO7woFhiLQ5T5GFb2rV2OM4h/4X364tEesdra8jb7vG806Y
+         qyctkY6tSlBwuz7vdNIKr3Qb8zLA9gbc2+N+iHF8mBNgg/4yHu2PkW8isM65beV70LeD
+         62/QhtGaV+BG61C6BgGFVLUh1YF4ZDQF16ne0f0jBjRLpn3uvm7A4OJ+1JYWoS93zkB5
+         zDyAsYzeo4q5yQH3ZwWaZxSV4wId5QyqUWXIKqBYZ/K0n0np3UzVrUbCgETvbW9vjm8h
+         uvutNikZkmRr0gulZlYh9fBhkJYw7igjmuZaVSfTKrucuBGe61WkzSYsF+Ao1vK1NOHz
+         jgBA==
+X-Gm-Message-State: AOAM533ymlrA5piWGhhDg4HFyUWlMjikYo4x6mN8VItyTWqbkTh0bKrC
+        VAllQ/S9S18rnI8/hVxXWYkIlQ==
+X-Google-Smtp-Source: ABdhPJzWHC3ppTv3zcLqCIdHi4Ug4Ffpqkgm/RakXbW4uD5vam6wSj7sPIjK90QZ8w8eRdXhHFvMrA==
+X-Received: by 2002:a05:6638:1486:b0:32b:e870:b2a7 with SMTP id j6-20020a056638148600b0032be870b2a7mr19634359jak.200.1653578599316;
+        Thu, 26 May 2022 08:23:19 -0700 (PDT)
+Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id b59-20020a0295c1000000b0032b3a78176fsm466847jai.51.2022.05.26.08.23.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 07:18:00 -0700 (PDT)
-From:   Sireesh Kodali <sireeshkodali1@gmail.com>
-To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-Cc:     bjorn.andersson@linaro.org,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 2/2] arm64: dts: qcom: msm8916: Fix typo in pronto remoteproc node
-Date:   Thu, 26 May 2022 19:47:40 +0530
-Message-Id: <20220526141740.15834-3-sireeshkodali1@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220526141740.15834-1-sireeshkodali1@gmail.com>
-References: <20220526141740.15834-1-sireeshkodali1@gmail.com>
+        Thu, 26 May 2022 08:23:18 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH net v2 0/2] net: ipa: fix page free in two spots
+Date:   Thu, 26 May 2022 10:23:12 -0500
+Message-Id: <20220526152314.1405629-1-elder@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The smem-state properties for the pronto node were incorrectly labelled,
-reading `qcom,state*` rather than `qcom,smem-state*`. Fix that, allowing
-the stop state to be used.
+When a receive buffer is not wrapped in an SKB and passed to the
+network stack, the (compound) page gets freed within the IPA driver.
+This is currently quite rare.
 
-Fixes: 88106096cbf8 ("ARM: dts: msm8916: Add and enable wcnss node")
-Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The pages are freed using __free_pages(), but they should instead be
+freed using page_put().  This series fixes this, in two spots.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index e34963505e07..7ecd747dc624 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1758,8 +1758,8 @@ pronto: remoteproc@a21b000 {
- 					<&rpmpd MSM8916_VDDMX>;
- 			power-domain-names = "cx", "mx";
- 
--			qcom,state = <&wcnss_smp2p_out 0>;
--			qcom,state-names = "stop";
-+			qcom,smem-states = <&wcnss_smp2p_out 0>;
-+			qcom,smem-state-names = "stop";
- 
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&wcnss_pin_a>;
+These patches work for the current linus/master branch, but won't
+apply cleanly to earlier stable branches.  (Nevertheless, the fix is
+a trivial substitution everwhere __free_pages() is called.)
+
+Version 2 is just rebased on today's net/master branch.
+
+					-Alex
+
+Alex Elder (2):
+  net: ipa: fix page free in ipa_endpoint_trans_release()
+  net: ipa: fix page free in ipa_endpoint_replenish_one()
+
+ drivers/net/ipa/ipa_endpoint.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
+
 -- 
-2.36.1
+2.32.0
 
