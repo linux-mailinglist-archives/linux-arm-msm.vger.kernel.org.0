@@ -2,74 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 452E9535547
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 22:59:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D89D85355EF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 May 2022 00:04:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240545AbiEZU56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 16:57:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43708 "EHLO
+        id S1349781AbiEZWDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 18:03:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233647AbiEZU54 (ORCPT
+        with ESMTP id S1349775AbiEZWDy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 16:57:56 -0400
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6950AE7333
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 13:57:55 -0700 (PDT)
-Received: by mail-qt1-x830.google.com with SMTP id m13so3142018qtx.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 13:57:55 -0700 (PDT)
+        Thu, 26 May 2022 18:03:54 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA1DFE730B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 15:03:53 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id p4so4303094lfg.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 15:03:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NnCxigS7717S4njhAa3y/7BST7UjGl9n1OtAhplN6mo=;
-        b=iy8H4nTnpm0ptlxNnAfnptyOMTeebWks3Da6z5yaa83efvUxLdEFA6QiomkdP/+Hzy
-         yGPRJVd/DX4QjTA59rmSXFpGDgY4Cjm1YbVIXG19mzU9QK3+5lK9B+1PZRTK4IoE4s8T
-         9IPWTj4hxoPFqg+GicSYLid1B5BKBLnQsK90KqogfV78AMoAmiizhqdC9G94/eng6w0N
-         MCe1USh1na/Akozw674DMHIelIANS7AoTi2NuicYGT5cFAcKnJLARbxNLc4jzKdH+exG
-         LNaUOcbO3Ughtk1/OrNbJgA5hK+Votqe1UI80q5s3DFKTMCSindC8Xh83YVHkH28/t9S
-         lvWg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=qJs/grwr2pvDEsLIUfHDR0aBRbSDu/q3H641iXHa5hA=;
+        b=tlN1v8qBCAVlEin1MRqNmJ5XwrkS6y01KGkIJhirqgfMWxZzHeZ2OzJwZB97THKsN4
+         XuLeQXtDZJHI/ngBaBWkuwYbgf8cMHfxqZpnGkkXm34SolSdCwGbw5HbZbh4vP3Mf392
+         ytkW3ieorODoG0tNQjAwV7ojlJru1cOaF2/8sDtQQEdk5i9AfggsENU8oyLq0wM31HK6
+         FoIgImuOOm4I6x3GgsPLvjIrjvzuQvoqMLW/obqW8j3u54PJX08Ezo7yZFdn5lQHcerB
+         Oes7z8l4xy86Yj8ga+j3oL+KOfReaGjhLrIWoebJgjTore2Mck9Ee4b7DZHFuOmLRoeB
+         ILzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NnCxigS7717S4njhAa3y/7BST7UjGl9n1OtAhplN6mo=;
-        b=bh7t+WQdf9psRFzI7VlF7TdJCcb/53xSYnK+pqagN+SPRqK+R+l9K5OnEVadHaG3E+
-         5fB/jtzqzvUUYd/H+BzCsNzJ19bBk+4+7zCHvSX7F5a8XI4ALDJnTsbc/no8VsJR2Gtj
-         RRGJoKJ2OIj8G/G6tgJm8FA06XbtOF8rPe/PbHjxsiEnVYugMzyS7RHHyFzwFnDIDKGw
-         shyvuGnBfwvBrLAG1L6KyXAoMz+GD++5B6XRGMgjeqk9Gs862rjMbIFjSldY2EWv7bhY
-         5HEXZNFMafml9TQN9YPvzjpGRsrNLLTucE4JOXBnsTc2o9UCHbQ3coqhBUSrXYZTFBle
-         ptcA==
-X-Gm-Message-State: AOAM532n/fhw0K/3M4Q6zaa+/c03DjxvQ69ywHor2xLqCEdheDzNweos
-        65ils6E4qfsqJ8iPeeObkmKS78wkANou8nE7J6CVLg==
-X-Google-Smtp-Source: ABdhPJy9Iz128w6gl1rgxD4Wu4fUG4Ck/3/iu0g5XksP6rXdeZf88bLGlHne4Fhza3E/987ymifCxf9V9t82dGR0qjI=
-X-Received: by 2002:ac8:5e54:0:b0:2f3:f4ee:efbd with SMTP id
- i20-20020ac85e54000000b002f3f4eeefbdmr30013444qtx.295.1653598674574; Thu, 26
- May 2022 13:57:54 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=qJs/grwr2pvDEsLIUfHDR0aBRbSDu/q3H641iXHa5hA=;
+        b=Lod92tYJetsvwM2H/kCqugS2214JREGB+cBZ98AUiR7MREskHyCF3nB+D6hMsaTtX2
+         c1uIvPBeJ4WqSlWkpcuwJQoUYz5jLwTh3T1UdfW5ba1emhTBTD8vtKD3+JGJ9K9KGJep
+         Zj4OU3vArXrLrrqydLopf7kiVUfViQtoW9SiCCywB30/htVCbIeaRRYYNBn4eKS9qJoS
+         CmZUiU1uFhlkEdKgPFkN3uAQbNht2yZ12iQar8sz96nHRBK6oISJ+WTzTBaTXzoNlTat
+         Z5QbGo9CI9GAW6amd+qSe3c54LvTqOh9eICohdNVKjnyDKubdNuebIJOOTli+xUsndBN
+         vQSw==
+X-Gm-Message-State: AOAM533XyhcunyDlPXbUL4ii+pG8y/jeSh0QLMSVFXmaFSKf9aBz0xIb
+        wW0IP3eCC18TNeqRR+VhP75KKg==
+X-Google-Smtp-Source: ABdhPJy56yCKhdD3asKqWkOmtI0zEJvEAhWrPSGzs3OERYaX6QCLk71VovWV5iXtoQkRUPw125yWpg==
+X-Received: by 2002:a05:6512:3189:b0:478:5d83:5eda with SMTP id i9-20020a056512318900b004785d835edamr20847151lfe.519.1653602631826;
+        Thu, 26 May 2022 15:03:51 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id x23-20020ac25dd7000000b00478628920e1sm553702lfq.103.2022.05.26.15.03.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 May 2022 15:03:51 -0700 (PDT)
+Message-ID: <ad7106bb-ed7d-8d6f-0b3a-3e2dfeee0168@linaro.org>
+Date:   Fri, 27 May 2022 01:03:50 +0300
 MIME-Version: 1.0
-References: <20220523181836.2019180-1-dmitry.baryshkov@linaro.org>
- <20220523181836.2019180-5-dmitry.baryshkov@linaro.org> <20220526180955.GC54904-robh@kernel.org>
-In-Reply-To: <20220526180955.GC54904-robh@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v1 4/4] arm64: dts: Add msm8939 Sony Xperia M4 Aqua
+Content-Language: en-GB
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, shawn.guo@linaro.org,
+        jun.nie@linaro.org, benl@squareup.com, jwillcox@squareup.com,
+        jgates@squareup.com, mchen@squareup.com, zac@squareup.com
+References: <20220419010903.3109514-1-bryan.odonoghue@linaro.org>
+ <20220419010903.3109514-5-bryan.odonoghue@linaro.org>
+ <Yl8NLldCWaecisH5@gerhold.net>
+ <552547c1-36c3-8d7e-0fd5-1b22fd184b4b@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 26 May 2022 23:57:43 +0300
-Message-ID: <CAA8EJpoU5gife7K4FLz3XGLnGCRQ=hejvEFqXY2tBsG-4S8g7g@mail.gmail.com>
-Subject: Re: [PATCH v12 4/8] PCI: dwc: split MSI IRQ parsing/allocation to a
- separate function
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <552547c1-36c3-8d7e-0fd5-1b22fd184b4b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,25 +81,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 26 May 2022 at 21:09, Rob Herring <robh@kernel.org> wrote:
->
-> On Mon, May 23, 2022 at 09:18:32PM +0300, Dmitry Baryshkov wrote:
-> > Split handling of MSI host IRQs to a separate dw_pcie_msi_host_init()
-> > function. The code is complex enough to warrant a separate function.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  .../pci/controller/dwc/pcie-designware-host.c | 98 +++++++++++--------
-> >  1 file changed, 56 insertions(+), 42 deletions(-)
->
-> Reviewed-by: Rob Herring <robh@kernel.org>
->
-> Note that we should probably apply this[1] or whatever fix we end up
-> with first.
+On 20/04/2022 01:03, Bryan O'Donoghue wrote:
+> On 19/04/2022 20:27, Stephan Gerhold wrote:
+>> tulip seems to have qcom,usbid-gpio = <&msm_gpio 110 0>; downstream.
+>> Have you tried setting it up using linux,extcon-usb-gpio?
+>> See e.g. msm8916-longcheer-l8910, it has a similar setup (it also uses
+>> smb1360 for charging actually).
+>>
+>> The advantage is that you don't need the manual role switching using
+>> "usb-role-switch", USB OTG adapters should be detected automatically.
+> 
+> My understanding is "no new extcon" - certainly as driver 
+> implementations I assume that also extends to dts..
 
-Ack, I will rebase this patch series the fix gets merged.
+I think, if the driver supports only extcon interface, you have to use 
+it (leaving aside a good nice option of rewriting qcom,ci-hdrc/ulpi to 
+also support USB role switching mechanisms).
 
-> [1] https://lore.kernel.org/all/20220525223316.388490-1-willmcvicker@google.com/
 
 -- 
 With best wishes
