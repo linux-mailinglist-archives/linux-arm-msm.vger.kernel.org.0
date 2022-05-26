@@ -2,80 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C59B535519
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 22:53:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 452E9535547
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 22:59:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234547AbiEZUxJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 16:53:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57024 "EHLO
+        id S240545AbiEZU56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 16:57:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233403AbiEZUxI (ORCPT
+        with ESMTP id S233647AbiEZU54 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 16:53:08 -0400
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0392367D1E;
-        Thu, 26 May 2022 13:53:08 -0700 (PDT)
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-f16a3e0529so3641968fac.2;
-        Thu, 26 May 2022 13:53:07 -0700 (PDT)
+        Thu, 26 May 2022 16:57:56 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6950AE7333
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 13:57:55 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id m13so3142018qtx.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 13:57:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NnCxigS7717S4njhAa3y/7BST7UjGl9n1OtAhplN6mo=;
+        b=iy8H4nTnpm0ptlxNnAfnptyOMTeebWks3Da6z5yaa83efvUxLdEFA6QiomkdP/+Hzy
+         yGPRJVd/DX4QjTA59rmSXFpGDgY4Cjm1YbVIXG19mzU9QK3+5lK9B+1PZRTK4IoE4s8T
+         9IPWTj4hxoPFqg+GicSYLid1B5BKBLnQsK90KqogfV78AMoAmiizhqdC9G94/eng6w0N
+         MCe1USh1na/Akozw674DMHIelIANS7AoTi2NuicYGT5cFAcKnJLARbxNLc4jzKdH+exG
+         LNaUOcbO3Ughtk1/OrNbJgA5hK+Votqe1UI80q5s3DFKTMCSindC8Xh83YVHkH28/t9S
+         lvWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pc1NE8k39pHbtINYaHG41r5I5vQP7cYj1pZbQZyEc5A=;
-        b=dLXOTaZXl3uaoy+D4ovE5Vqv2dhWHvBDl31glpQZb96L4TwaEdbLgUkS1vIe9wKqCG
-         tHc6vh4t21eapdegkkjMXqf0guyiMGwugnZxYiX9UkWQJ0A78PSQrUpPi73A3JoTiIOo
-         E1ZWxLI7zlFMUepuW2BTyQC/tc6fSeNNpb0rtqgruzryLrwM70PyFPyNPpg1uzyhH9Rk
-         8H2TGU6Fm53fRz7I/Pmwiv5HRDingNtqNx9vQTEI55t1mtG4vWdX/OtSGL9qgLfKtF2R
-         OL0x7MyCRG161zzJJ/HZCMTGmxYEyxjwzsCWLM9iNTVHS6/mTDQM+G13Ej/d/2vNI7mm
-         l9Vg==
-X-Gm-Message-State: AOAM531n5TwoGW7qgLgA2CQSdIWFcswfIpH/azjy7ePZSYdOeZDacS+a
-        iTcw0+lOZ9vf9BjDUEtCSRyIMxAaYw==
-X-Google-Smtp-Source: ABdhPJwsNwYmZovbeLT/mlyxE9TxQhyDCMg+nsKKnuLDMaufWVf24gyTr7Jb6zt4qTS97ACRK01edQ==
-X-Received: by 2002:a05:6870:339a:b0:f2:d065:be1f with SMTP id w26-20020a056870339a00b000f2d065be1fmr2276522oae.69.1653598387346;
-        Thu, 26 May 2022 13:53:07 -0700 (PDT)
-Received: from robh.at.kernel.org (rrcs-192-154-179-37.sw.biz.rr.com. [192.154.179.37])
-        by smtp.gmail.com with ESMTPSA id v1-20020a056830090100b00605fd407259sm1057769ott.3.2022.05.26.13.53.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 13:53:06 -0700 (PDT)
-Received: (nullmailer pid 244609 invoked by uid 1000);
-        Thu, 26 May 2022 20:53:04 -0000
-Date:   Thu, 26 May 2022 15:53:04 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NnCxigS7717S4njhAa3y/7BST7UjGl9n1OtAhplN6mo=;
+        b=bh7t+WQdf9psRFzI7VlF7TdJCcb/53xSYnK+pqagN+SPRqK+R+l9K5OnEVadHaG3E+
+         5fB/jtzqzvUUYd/H+BzCsNzJ19bBk+4+7zCHvSX7F5a8XI4ALDJnTsbc/no8VsJR2Gtj
+         RRGJoKJ2OIj8G/G6tgJm8FA06XbtOF8rPe/PbHjxsiEnVYugMzyS7RHHyFzwFnDIDKGw
+         shyvuGnBfwvBrLAG1L6KyXAoMz+GD++5B6XRGMgjeqk9Gs862rjMbIFjSldY2EWv7bhY
+         5HEXZNFMafml9TQN9YPvzjpGRsrNLLTucE4JOXBnsTc2o9UCHbQ3coqhBUSrXYZTFBle
+         ptcA==
+X-Gm-Message-State: AOAM532n/fhw0K/3M4Q6zaa+/c03DjxvQ69ywHor2xLqCEdheDzNweos
+        65ils6E4qfsqJ8iPeeObkmKS78wkANou8nE7J6CVLg==
+X-Google-Smtp-Source: ABdhPJy9Iz128w6gl1rgxD4Wu4fUG4Ck/3/iu0g5XksP6rXdeZf88bLGlHne4Fhza3E/987ymifCxf9V9t82dGR0qjI=
+X-Received: by 2002:ac8:5e54:0:b0:2f3:f4ee:efbd with SMTP id
+ i20-20020ac85e54000000b002f3f4eeefbdmr30013444qtx.295.1653598674574; Thu, 26
+ May 2022 13:57:54 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220523181836.2019180-1-dmitry.baryshkov@linaro.org>
+ <20220523181836.2019180-5-dmitry.baryshkov@linaro.org> <20220526180955.GC54904-robh@kernel.org>
+In-Reply-To: <20220526180955.GC54904-robh@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 26 May 2022 23:57:43 +0300
+Message-ID: <CAA8EJpoU5gife7K4FLz3XGLnGCRQ=hejvEFqXY2tBsG-4S8g7g@mail.gmail.com>
+Subject: Re: [PATCH v12 4/8] PCI: dwc: split MSI IRQ parsing/allocation to a
+ separate function
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
         Bjorn Helgaas <bhelgaas@google.com>,
         Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom: Add support for modular builds
-Message-ID: <20220526205304.GK54904-robh@kernel.org>
-References: <20220519094646.23009-1-johan+linaro@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220519094646.23009-1-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 19, 2022 at 11:46:46AM +0200, Johan Hovold wrote:
-> Allow the Qualcomm PCIe controller driver to be built as a module, which
-> is useful for multi-platform kernels as well as during development.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  drivers/pci/controller/dwc/Kconfig     |  2 +-
->  drivers/pci/controller/dwc/pcie-qcom.c | 36 +++++++++++++++++++++++---
->  2 files changed, 34 insertions(+), 4 deletions(-)
+On Thu, 26 May 2022 at 21:09, Rob Herring <robh@kernel.org> wrote:
+>
+> On Mon, May 23, 2022 at 09:18:32PM +0300, Dmitry Baryshkov wrote:
+> > Split handling of MSI host IRQs to a separate dw_pcie_msi_host_init()
+> > function. The code is complex enough to warrant a separate function.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  .../pci/controller/dwc/pcie-designware-host.c | 98 +++++++++++--------
+> >  1 file changed, 56 insertions(+), 42 deletions(-)
+>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+>
+> Note that we should probably apply this[1] or whatever fix we end up
+> with first.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Ack, I will rebase this patch series the fix gets merged.
+
+> [1] https://lore.kernel.org/all/20220525223316.388490-1-willmcvicker@google.com/
+
+-- 
+With best wishes
+Dmitry
