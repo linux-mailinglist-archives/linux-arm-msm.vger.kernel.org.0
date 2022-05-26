@@ -2,75 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B590534E6F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 13:45:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1917534EA1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 13:52:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347252AbiEZLpM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 07:45:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59154 "EHLO
+        id S237347AbiEZLwv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 07:52:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347356AbiEZLo4 (ORCPT
+        with ESMTP id S243077AbiEZLwt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 07:44:56 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0567D0295
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 04:44:41 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id h13so1491750pfq.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 04:44:41 -0700 (PDT)
+        Thu, 26 May 2022 07:52:49 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E596CD0296
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 04:52:47 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id u7so1472794ljd.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 May 2022 04:52:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ea7OeFJXlMpFcPLCRl9ByzN+8R9kDLKU8gAyymKSibQ=;
-        b=M6bRg+ULJ96LPwVQ7+5mReEW6ZqyIV3Sw0mUefHoAbPfZkGsn0gU5r1icGCEjYkHeS
-         LZYzMws85x1JW1ZIVi11yxmJEZt9nPXRXAzUBUiJRa2eWGg/HEfMPMQxVATCKPOD+jrx
-         OdWVyEgzxpUBJzJcm/blvmIT/3RPW2UkGXrAjD/+ovhUmhml8N2JhwpaDLxJjLWK+yOA
-         UT0x1q9jF/CQPOmxPMdb8UK++Y+myFIm6xEWiyNyKBiN3dqv8crhWv2uDYjW7mTv+eVX
-         TZdFxHmBplkzg1lzvyh+YKaqrQJ/aFOtFsAR4POd2B9XTCgETMvLsA8VT1Wf3E+qIgb+
-         rZaw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=MVQ54/b1Bl5zWRXm8QvTFiSCRNNAIcNHd+D1lpI9ZC4=;
+        b=UmO31J8nUxjp24jXb9Co3KN+CJRVqgMArHtMvcSuJO9jKWXYfcw9VbrPq5AxzeSKve
+         XwfqJ/YWWzlM15YQ7L2Ar4pTSJS8dStrVzFwMFmeJMwAmPVRdVZIWB7lXBbtMiRV/L8u
+         29u8sVAXQFS16oufZNyiAaly3L2FSIJ1ztnAN8iBfmvpauGpqCbbqKEzm/2gYtzrNU6T
+         8zgAjq7HS3lwy70SilPNTgXtbtFb/g0QQ3CWw0wjAWNdSVwWw05wn4fSVjMrCMyN+SZ/
+         /WUfUezYDuuF7PU0JAQylw8BVe3pxpyp/5CEh9LrIjr7sHcFRJTrpqgKZsPsaeHdQa4h
+         dxNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ea7OeFJXlMpFcPLCRl9ByzN+8R9kDLKU8gAyymKSibQ=;
-        b=FkWUDLWWJX+7VtSN2bMhJ/nmpnDb6brDL8Bov+3sJX9BPgq6n+kpx296YJU7BOQMfU
-         DiOWdbltkpaW9rN59rwbt+fkzxUHLgERWk4sdFZ9kplFlo743TGySPzjcMVtwPzqK02s
-         iU4BOJKAtF+yFJX5yCj4y+yrOppBo+xpiz8ehPUu/2y/dei8Wc0fFAUutN4Q9CwAgYPI
-         sEhB1zeBl2Z7LxxY+HY1BbpxDWkdaVCZEzEB9YfonBJhCGagru4QDsi5V0aKNdKubCu6
-         2cf9/UUkoztCoRKbmx6cqu4rgyB2XgUdb0dUIoE8XkTCqOoaAii737GG/lwORmlom6B4
-         GXdw==
-X-Gm-Message-State: AOAM531U0sX426HAZxDzDPlJTtCjymFORTY2hnkwGKoamAIi3N/Qn1J8
-        5poVRbLtoGz5PhbgWlskWYzmXw==
-X-Google-Smtp-Source: ABdhPJxmzRiAXnitzctuPYAA9jUL7Rnfwu6jdDAlzlKlkWUlBLdlfPYGPy437OiWOPMUX61OXwUPFQ==
-X-Received: by 2002:a05:6a00:1d1d:b0:518:421c:b65e with SMTP id a29-20020a056a001d1d00b00518421cb65emr35712261pfx.43.1653565481268;
-        Thu, 26 May 2022 04:44:41 -0700 (PDT)
-Received: from localhost ([122.162.234.2])
-        by smtp.gmail.com with ESMTPSA id i13-20020a170902eb4d00b001635f9b6e2fsm1360265pli.61.2022.05.26.04.44.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 04:44:40 -0700 (PDT)
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>, linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Rafael Wysocki <rjw@rjwysocki.net>,
-        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 24/31] serial: qcom: Migrate to dev_pm_opp_set_config()
-Date:   Thu, 26 May 2022 17:12:23 +0530
-Message-Id: <49aff8c5f72dae52ef7e9acb4f821d0c3e097813.1653564321.git.viresh.kumar@linaro.org>
-X-Mailer: git-send-email 2.31.1.272.g89b43f80a514
-In-Reply-To: <cover.1653564321.git.viresh.kumar@linaro.org>
-References: <cover.1653564321.git.viresh.kumar@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=MVQ54/b1Bl5zWRXm8QvTFiSCRNNAIcNHd+D1lpI9ZC4=;
+        b=ogt6+X22Y+ToV4RrY7hV3b9ndbi5c0oR0GIrxSzhnV5Gq/hwiGRRyFvQP76KQRlg7q
+         M6ZoJrEFfSGL8AZ7ZCweGxERSHMobTCCAU1cmnbx2iS5K5ts+xGk6PLSc5nR4BoOm8KM
+         uo8pJFyhKX0qU4AqaODAUYfd5H2C3dEmGzjN6ABG9LZoEqMzLhc396f3d9L/WCgndIrC
+         FNANbz1Aa+UUQ++wfbkmH9Vs3nah3SwYEpzfiQXWd1YXNjzZqU7TpvQWpcdljFaKKp2j
+         ZYts8y6yf4+hnv2bQenmyKCcqas0YV/Npv30FiPsu9wlA96GMRFKK1F75P+xVdda+zTF
+         gUdg==
+X-Gm-Message-State: AOAM530ri6vHtvZ3+BWeXxgVXxZpxVY+qKVrA4FvpX1cLN5sQqwHStQ3
+        RBpe8lgGCI2JW1RJVrAic7TEsA==
+X-Google-Smtp-Source: ABdhPJztaBE9q35bXW9bdbc3Uh0AoR+2BUwqLHJO3rjZrvvCaUtOnyrtI6FYp/7+up8Ee6UQVdXDxQ==
+X-Received: by 2002:a2e:a60a:0:b0:253:dbf2:cf with SMTP id v10-20020a2ea60a000000b00253dbf200cfmr18285606ljp.498.1653565966201;
+        Thu, 26 May 2022 04:52:46 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id t4-20020a199104000000b0047255d211c8sm308410lfd.247.2022.05.26.04.52.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 May 2022 04:52:45 -0700 (PDT)
+Message-ID: <fbbb223b-c0cd-6cd9-ca1f-1c1ebaa5f6ce@linaro.org>
+Date:   Thu, 26 May 2022 14:52:45 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [GIT PULL] drm/msm: drm-msm-fixes-2022-05-19
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>
+References: <b011d51d-d634-123e-bf5f-27219ee33151@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <b011d51d-d634-123e-bf5f-27219ee33151@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,39 +83,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The OPP core now provides a unified API for setting all configuration
-types, i.e. dev_pm_opp_set_config().
+On 19/05/2022 19:21, Abhinav Kumar wrote:
+> Hi Rob
+> 
+> Here is the pull request for the fixes for 5.19.
+> 
+> Just a few more changes on top of msm-fixes-staging.
+> 
+> Mainly it has the foll fixes:
+> 
+> - Limiting WB modes to max sspp linewidth
+> - Fixing the supported rotations to add 180 back for IGT
+> - Fix to handle pm_runtime_get_sync() errors to avoid unclocked access
+>    in the bind() path for dpu driver
+> - Fix the irq_free() without request issue which was a big-time
+>    hitter in the CI-runs.
 
-Lets start using it.
+Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
----
- drivers/tty/serial/qcom_geni_serial.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> Thanks
+> 
+> Abhinav
+> 
+> 
+> 
+> The following changes since commit 
+> 947a844bb3ebff0f4736d244d792ce129f6700d7:
+> 
+>    drm: msm: fix possible memory leak in mdp5_crtc_cursor_set() 
+> (2022-05-18 11:05:21 -0700)
+> 
+> are available in the git repository at:
+> 
+>    https://gitlab.freedesktop.org/abhinavk/msm.git/ 
+> tags/msm-next-5.19-fixes
+> 
+> for you to fetch changes up to 64b22a0da12adb571c01edd671ee43634ebd7e41:
+> 
+>    drm/msm/dpu: handle pm_runtime_get_sync() errors in bind path 
+> (2022-05-18 18:32:03 -0700)
+> 
+> ----------------------------------------------------------------
+> 5.19 fixes for msm-next
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+> ----------------------------------------------------------------
+> Abhinav Kumar (3):
+>        drm/msm/dpu: limit writeback modes according to max_linewidth
+>        drm/msm/dpu: add DRM_MODE_ROTATE_180 back to supported rotations
+>        drm/msm/dpu: handle pm_runtime_get_sync() errors in bind path
+> 
+> Dmitry Baryshkov (1):
+>        drm/msm: don't free the IRQ if it was not requested
+> 
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 4 +++-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 2 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 4 +++-
+>   drivers/gpu/drm/msm/msm_drv.c                 | 7 ++++++-
+>   drivers/gpu/drm/msm/msm_kms.h                 | 1 +
+>   5 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 1543a6028856..391fcc3a0f61 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1331,6 +1331,9 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 	int irq;
- 	bool console = false;
- 	struct uart_driver *drv;
-+	struct dev_pm_opp_config config = {
-+		.clk_name = "se",
-+	};
- 
- 	if (of_device_is_compatible(pdev->dev.of_node, "qcom,geni-debug-uart"))
- 		console = true;
-@@ -1414,7 +1417,7 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 	if (of_property_read_bool(pdev->dev.of_node, "cts-rts-swap"))
- 		port->cts_rts_swap = true;
- 
--	ret = devm_pm_opp_set_clkname(&pdev->dev, "se");
-+	ret = devm_pm_opp_set_config(&pdev->dev, &config);
- 	if (ret)
- 		return ret;
- 	/* OPP table is optional */
+
 -- 
-2.31.1.272.g89b43f80a514
-
+With best wishes
+Dmitry
