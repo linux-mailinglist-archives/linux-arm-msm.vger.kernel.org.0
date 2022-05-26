@@ -2,71 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 199D553533C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 20:19:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF1B853535A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 May 2022 20:32:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348976AbiEZSTP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 May 2022 14:19:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38908 "EHLO
+        id S239554AbiEZScd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 May 2022 14:32:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348488AbiEZSTN (ORCPT
+        with ESMTP id S1347870AbiEZSca (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 May 2022 14:19:13 -0400
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 133BE579BB;
-        Thu, 26 May 2022 11:19:12 -0700 (PDT)
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-edeb6c3642so3155112fac.3;
-        Thu, 26 May 2022 11:19:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=kFD7k/6/Yi0uJtYta5YfK2y2lJGD9433Ffp8uwrqHc0=;
-        b=AtCWjeZgvboiqa/TpNzdV8tUDMjnNoXtdlbwHVd73J/41qWYTUFOhKFcSLiH72xsDV
-         4RyK/1Yyw7XtZ1tIHMTyE/jmPzkNqrbiO6K1/P+8WSz9GylAeLZuj+Y8mLXzm162pnG2
-         Qf1futYxVD+dFTYqJHbMZUlmduOMqTQHdNero8cCaWBUSggYCcY8gVi4/bCrMdvpMl0h
-         ac1jf2+d2dLvO+U2/nQvJfyznvemoRPuFducd7VDa6zZldy3cy2VaCJmDA+OX/ZZCcJS
-         8gxbdjxW+s6xnUc7jr24V0gbHCpcDh+KTlLhtiH2GDIyTVO8UUy/KjsvZSL4/wzDi3ze
-         6DqA==
-X-Gm-Message-State: AOAM530oNIuMFNFt7VFChqRbPuLIaYWMtOwHbb8pKvxIJfRshOZ86vt8
-        jHmhAEUUUEUL+1+a9RU62Q==
-X-Google-Smtp-Source: ABdhPJys8XnYAlw/I/F5WSYE/Waihvj/CEzaNGOWkZuSxhvF/Al8vYzot/X7QaqOchUE+xkYuy/QTg==
-X-Received: by 2002:a05:6870:e616:b0:f2:6a4e:2d7b with SMTP id q22-20020a056870e61600b000f26a4e2d7bmr1958068oag.67.1653589151260;
-        Thu, 26 May 2022 11:19:11 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id k3-20020a4ad103000000b0040e68c9dce6sm892227oor.31.2022.05.26.11.19.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 11:19:10 -0700 (PDT)
-Received: (nullmailer pid 91777 invoked by uid 1000);
-        Thu, 26 May 2022 18:19:09 -0000
-Date:   Thu, 26 May 2022 13:19:09 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v12 7/8] dt-bindings: PCI: qcom: Support additional MSI
- interrupts
-Message-ID: <20220526181909.GE54904-robh@kernel.org>
-References: <20220523181836.2019180-1-dmitry.baryshkov@linaro.org>
- <20220523181836.2019180-8-dmitry.baryshkov@linaro.org>
+        Thu, 26 May 2022 14:32:30 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5B665D5D9;
+        Thu, 26 May 2022 11:32:20 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 715C361253;
+        Thu, 26 May 2022 18:32:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F047C385A9;
+        Thu, 26 May 2022 18:32:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1653589939;
+        bh=LavzREuF1tBDqZDmhtBOmA5kmgbGDHnLoBNXRB/bOWg=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=UPWHODL6WD+wVDG/+wJJUbQbbHn+mju0PBArKtmCuLzc7lHss/MTPDqV8oW3mAJIi
+         oLWN99ts+wDm+XzUzmB2JqjSi0YB9999/o/idea9ody/aZ8FFFGFi3C70x/reAcihu
+         einOpXoQJc0b9C9K5/KpYWKcw9rP93s4soh4chExJCGN1hEINRnEWlGDBK21dR0gZE
+         VEt4dfYtMdm1Dpa6Hi7cYzlD67W7NriMEOlrtG0M7U4gXE7RpQ1iJMxt9JWD4UOAfX
+         2Vh6tg/7OL1JpWVbIYXWHrMBTpWaqa4aGVYviqYWyW9bDp5EtlNz43NRjL/3TfhFJA
+         8vD829Qv7i9bQ==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220523181836.2019180-8-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <Yot4XHaf6uHcJxTL@hovoldconsulting.com>
+References: <20220520100948.19622-1-johan+linaro@kernel.org> <20220520100948.19622-3-johan+linaro@kernel.org> <20220521035228.1FD9AC385A9@smtp.kernel.org> <Yot4XHaf6uHcJxTL@hovoldconsulting.com>
+Subject: Re: [PATCH 2/3] clk: qcom: gdsc: add support for collapse-vote registers
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+To:     Johan Hovold <johan@kernel.org>
+Date:   Thu, 26 May 2022 11:32:17 -0700
+User-Agent: alot/0.10
+Message-Id: <20220526183219.9F047C385A9@smtp.kernel.org>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,14 +59,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 23, 2022 at 09:18:35PM +0300, Dmitry Baryshkov wrote:
-> On Qualcomm platforms each group of 32 MSI vectors is routed to the
-> separate GIC interrupt. Document mapping of additional interrupts.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie.yaml    | 53 +++++++++++++++++--
->  1 file changed, 50 insertions(+), 3 deletions(-)
+Quoting Johan Hovold (2022-05-23 05:04:44)
+> On Fri, May 20, 2022 at 08:52:26PM -0700, Stephen Boyd wrote:
+> > Quoting Johan Hovold (2022-05-20 03:09:47)
+> > > Recent Qualcomm platforms have APCS collapse-vote registers that allow
+> > > for sharing GDSCs with other masters (e.g. LPASS).
+> >=20
+> > Maybe just say 'with other subsystems' because LPASS is an entire
+> > subsystem.
+>=20
+> The term "subsystem" is too broad and also has a different meaning in
+> Linux.
+>=20
+> The vendor kernel uses "masters" here which is clear enough and
+> presumably matches their documentation.
+>=20
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+How about "voter"? Then it isn't confused with linux subsystems.
